@@ -608,6 +608,7 @@ save = function() {
 window.DobbyFamilyUI = Object.freeze({
   getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
   authorized, meta, putMeta, esc, showMessage, repaint, openModal,
+  getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
   registerModules(provider) {
     f.provider = provider;
     // A provider may register before or after boot(), including while sync()
