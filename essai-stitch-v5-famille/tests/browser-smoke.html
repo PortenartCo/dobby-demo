@@ -98,24 +98,32 @@
       if(!d.querySelector('#fmsManual')?.textContent.includes('Mission test navigateur')) {
         throw Error('La mission créée n’est pas affichée');
       }
-      w.st.familyDocs.push({
-        id:'doc-smoke-1',title:'Assurance test',category:'Assurances',provider:'Assureur de test'
-      });
       w.go('documents');
+      const addDocument=d.querySelector('[data-doc="new"]');
+      if(!addDocument)throw Error('Le bouton de création de fiche est absent');
+      addDocument.click();
+      const documentForm=d.getElementById('familyDocForm');
+      if(!documentForm)throw Error('Le formulaire de fiche est absent');
+      documentForm.querySelector('[name="title"]').value='Assurance test';
+      documentForm.querySelector('[name="category"]').value='Assurances';
+      documentForm.querySelector('button[type="submit"]').click();
+      const storedDoc=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}')
+        .familyDocs?.find(x=>x.title==='Assurance test');
+      if(!storedDoc)throw Error('La fiche de document n’est pas enregistrée');
       const sharedDocs=d.querySelector('.fds-panel');
       if(!sharedDocs||!sharedDocs.textContent.includes('Documents communs')||
          !sharedDocs.textContent.includes('Assurance test')) {
         throw Error('Les documents du foyer ne sont pas intégrés à V5');
       }
-      const view=d.querySelector('.fds-list [data-doc="view"][data-id="doc-smoke-1"]');
+      const view=d.querySelector('.fds-list [data-doc="view"][data-id="'+storedDoc.id+'"]');
       if(!view)throw Error('Le dossier partagé ne peut pas être ouvert');
       view.click();
       const details=[...d.querySelectorAll('.fds-panel')].find(x=>
         x.textContent.includes('Partage avec le foyer'));
-      if(!details || !details.querySelector('[data-fds-file="doc-smoke-1"]')){
+      if(!details || !details.querySelector('[data-fds-file="'+storedDoc.id+'"]')){
         throw Error('L’envoi volontaire du fichier familial est inaccessible');
       }
-      if(!details.querySelector('[data-fds-file="doc-smoke-1"]').disabled){
+      if(!details.querySelector('[data-fds-file="'+storedDoc.id+'"]').disabled){
         throw Error('Un upload Cloud ne doit pas être autorisé avant la connexion Supabase');
       }
       completed=true;clearInterval(timer);
