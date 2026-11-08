@@ -146,8 +146,8 @@
 })();
 /* Isolated V5 family preview: legacy HTML remains unchanged. */
 (function(){
- const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-2';document.head.append(css);
- const js=document.createElement('script');js.src='./family-v2.js?v=20261108-2';js.defer=true;
- js.onload=function(){const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-2';document.body.append(modules);};
+ const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-3';document.head.append(css);
+ const js=document.createElement('script');js.src='./family-v2.js?v=20261108-3';js.defer=true;
+ js.onload=function(){const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-3';document.body.append(modules);};
  document.body.append(js);
 })();

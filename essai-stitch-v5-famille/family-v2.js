@@ -139,9 +139,12 @@ async function requireHousehold() {
     f.householdId = hh;
     await putMeta('verifiedContext', context);
     await loadItems();
-    if (f.provider?.start) await f.provider.start();
   }
   f.householdId = hh;
+  // Also initialize modules when an existing, previously verified household was
+  // restored from IndexedDB. The context-equality shortcut must not skip this.
+  // start() is idempotent once its backend probe has succeeded.
+  if (f.provider?.start) await f.provider.start();
 }
 async function restoreCachedHousehold() {
   if (!f.session?.user_id) return;
@@ -607,7 +610,10 @@ window.DobbyFamilyUI = Object.freeze({
   authorized, meta, putMeta, esc, showMessage, repaint, openModal,
   registerModules(provider) {
     f.provider = provider;
-    if (f.ready && f.context && provider?.start) void provider.start().then(repaint).catch(e => showMessage(fail(e)));
+    // A provider may register before or after boot(), including while sync()
+    // is already in progress. Always rerun membership verification before
+    // enabling its module UI, even if the grocery household is cached.
+    if (f.ready && f.session && provider?.start) void sync();
     repaint();
   }
 });

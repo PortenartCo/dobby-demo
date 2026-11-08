@@ -13,11 +13,15 @@ test('preview V5 source matches original except isolated browser storage names',
   const preview=source('../index.html');
   const normalized=preview.replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
-    .replaceAll('./stitch-v5.js?v=20261108-2','./stitch-v5.js?v=20261107-1');
+    .replaceAll('./stitch-v5.js?v=20261108-3','./stitch-v5.js?v=20261107-1');
   assert.equal(normalized,original);
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
   assert.doesNotMatch(preview,/indexedDB\.open\('dobby-stitch-preview-files-20261105'/);
+  assert.match(preview,/stitch-v5\.js\?v=20261108-3/);
+  const loader=source('../stitch-v5.js');
+  assert.match(loader,/family-v2\.js\?v=20261108-3/);
+  assert.match(loader,/family-modules\.js\?v=20261108-3/);
 });
 
 
@@ -67,7 +71,8 @@ test('module adapter fails closed when Supabase modules table is missing', async
   assert.ok(provider);
   await provider.start();
   const html=provider.html();
-  assert.match(html,/Partage des autres modules non activé/);
+  assert.match(html,/Erreur HTTP 404 sur les modules familiaux/);
+  assert.match(html,/Données locales \(non synchronisées\)/);
   assert.match(html,/Rendez-vous médicaux et santé/);
   assert.doesNotMatch(html,/data-fm-action="activate"/);
 });

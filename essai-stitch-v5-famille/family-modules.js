@@ -92,20 +92,31 @@ async function start() {
   const c = api.getContext();
   if (!c) return;
   const next = c.userId + '|' + c.householdId;
-  if (ctx && next === ctx.userId + '|' + ctx.householdId && checked) return;
+  // Keep the success fast-path but retry when network or API checks failed.
+  if (ctx && next === ctx.userId + '|' + ctx.householdId && checked && backendReady) return;
+  const changed = !ctx || next !== ctx.userId + '|' + ctx.householdId;
   ctx = c; checked = false; backendReady = false; lastError = '';
-  states = await api.meta(storageKey()) || {};
+  if (changed) states = await api.meta(storageKey()) || {};
+  const stillCurrent = () => {
+    const actual = api.getContext();
+    return actual?.userId === c.userId && actual?.householdId === c.householdId &&
+      ctx?.userId === c.userId && ctx?.householdId === c.householdId;
+  };
   try {
     const shared = await api.authorized('GET',
       'dobby_v2_modules?select=module&household_id=eq.' + encodeURIComponent(c.householdId));
+    if (!stillCurrent()) return;
     if (!Array.isArray(shared)) throw Error('Liste des modules partagés invalide');
     sharedAvailable = [...new Set(shared.map(row => row.module))].filter(id => byId.has(id));
     backendReady = true;
   } catch (e) {
+    if (!stillCurrent()) return;
     backendReady = false; sharedAvailable = [];
-    lastError = 'Partage des autres modules non activé sur Supabase (' +
-      (e.status || 'hors ligne') + '). Leurs données restent locales.';
+    lastError = e?.status
+      ? 'Erreur HTTP ' + e.status + ' sur les modules familiaux.'
+      : 'Modules familiaux indisponibles temporairement.';
   }
+  if (!stillCurrent()) return;
   checked = true;
   api.repaint();
 }
@@ -114,8 +125,8 @@ function reset() {
   if (timer) { clearTimeout(timer); timer = null; }
 }
 function stateLabel(def) {
-  if (!ctx) return 'Foyer non connecté';
-  if (!backendReady) return 'Données locales';
+  if (!ctx) return api.getContext() ? 'Initialisation du foyer' : 'Foyer non connecté';
+  if (!backendReady) return checked ? 'Données locales (non synchronisées)' : 'Vérification en cours';
   const info = states[def.id];
   if (!info?.active) return 'Partage désactivé';
   if (info.conflict) return 'Conflit à résoudre';
@@ -124,7 +135,7 @@ function stateLabel(def) {
 function html() {
   const description = '<p class="fv2-muted">Le partage des modules est volontaire : les données V5 déjà présentes sur cet appareil ne sont jamais téléversées automatiquement.</p>';
   const joinable = sharedAvailable.filter(id => !states[id]?.active);
-  const bulkJoin = backendReady && joinable.length ?
+  const bulkJoin = backendReady && ctx && joinable.length ?
     '<div class="fv2-module"><strong>Rejoindre les modules du foyer</strong>' +
     '<p>' + joinable.length + ' module(s) déjà partagés par un autre membre. Une seule opération récupère les données du foyer. Aucune donnée locale n’est publiée sans accord.</p>' +
     '<button type="button" data-fm-action="join-family">Récupérer les modules partagés (' + joinable.length + ')</button></div>' : '';
@@ -158,14 +169,18 @@ function html() {
       (def.id === 'contracts' ? '<p>Seules les fiches des catégories Contrats et Assurances sont partagées; aucune pièce jointe.</p>' : '') +
       actions + '</div>';
   }).join('');
-  const gate = !backendReady ? '<p class="fv2-error">Impossible de joindre les modules familiaux (réseau, accès ou configuration Supabase). Les données de cet appareil restent locales et aucune nouvelle synchronisation n’est activée.</p>' +
-    '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
+  const gate = !ctx || !checked ?
+    '<p class="fv2-muted">Vérification de la connexion des modules familiaux…</p>' :
+    !backendReady ? '<p class="fv2-error" role="status">' +
+      esc(lastError || 'Modules familiaux momentanément indisponibles.') +
+      ' Les données restent locales ; aucun partage supplémentaire n’est activé.</p>' +
+      '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
   return description + bulkJoin + shareAll + gate + rows +
     '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
     '<p>Les fiches de contrats peuvent être partagées après activation explicite; les fichiers, autres documents et mémos restent sur cet appareil.</p></div>' +
     '<div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Privé · local</span>' +
     '<p>Aucun dossier de santé n’est envoyé au panier ou aux modules communs.</p></div>' +
-    (lastError ? '<p class="fv2-minor">' + esc(lastError) + '</p>' : '');
+    '';
 }
 function labelFor(page) {
   if (page === 'documents') return 'Documents locaux · ' + stateLabel(byId.get('contracts')) + ' pour les fiches contrats';
