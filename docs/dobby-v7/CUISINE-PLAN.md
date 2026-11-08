@@ -6,12 +6,12 @@ Approche retenue : conserver l’iframe V5 comme moteur masqué unique, avec son
 
 ## Étapes
 
-- [ ] Générateur reproductible des 13 templates, provenance et inventaire Cuisine dans le manifeste. Ressources Stitch servies localement.
-- [ ] Repas → grimoire → fiche → mode cuisine/TM5 : données et actions du moteur existant, navigation V7 et retours.
-- [ ] Ajout/édition de recette et import JSON : validation native réutilisée, erreurs/confirmations, variantes de formulaire.
-- [ ] Préparation → validation → historique des courses et panier partagé : garder les deux périmètres de courses, les contrôles et la synchronisation d’origine.
-- [ ] Parcours navigateur complet, persistance après recharge, erreurs/imports invalides, variantes et actions de modification. Captures de chaque source et UI à 320/390 px.
-- [ ] Documentation des écarts visuels, statuts réels, tests et preuves ; commits de progression, mise à jour PR #3, CI. Aucune fusion ni publication.
+- [x] Générateur reproductible des 13 templates, provenance et inventaire Cuisine dans le manifeste. Ressources Stitch servies localement.
+- [x] Repas → grimoire → fiche → mode cuisine/TM5 : données et actions du moteur existant, navigation V7 et retours.
+- [x] Ajout/édition de recette et import JSON : validation native réutilisée, erreurs/confirmations, variantes de formulaire.
+- [x] Préparation → validation → historique des courses et panier partagé : garder les deux périmètres de courses, les contrôles et la synchronisation d’origine.
+- [x] Parcours navigateur complet, persistance après recharge, erreurs/imports invalides, variantes et actions de modification. Captures de chaque source et UI à 320/390 px.
+- [x] Documentation des écarts visuels, statuts réels, tests et preuves ; commits de progression, mise à jour PR #3, CI. Aucune fusion ni publication.
 
 ## Contrôles de revue
 
@@ -23,3 +23,5 @@ Approche retenue : conserver l’iframe V5 comme moteur masqué unique, avec son
 - `prefers-reduced-motion`, 320/390 px, navigation arrière et redémarrage.
 
 L’utilisateur a explicitement demandé l’exécution continue du domaine ; pas de validation intermédiaire par écran. Les 40 sources hors Cuisine ne sont pas réauditées.
+
+Preuves et limites : voir INTEGRATION.md et evidence/cuisine/README.md. Les deux URL Google indisponibles restent explicitement remplacées par une illustration Stitch disponible.
