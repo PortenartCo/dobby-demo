@@ -29,7 +29,18 @@ Valider la synchronisation automatique bidirectionnelle d'une liste de courses e
 Apres PASS de Courses : Missions, Calendrier, Repas et dependances recette minimales ; sauvegarde et migration controles.
 
 ## Etat
-Organisation personnelle Free : en attente de creation par le proprietaire du compte.
-Projet Supabase Dobby : non cree.
-Code de synchronisation : non implemente.
+Organisation Free Dobby Personnel : creee et verifiee dans le tableau de bord.
+Projet dobby-family-sync : cree, Healthy, region eu-central-1.
+Code de pilote autonome : cree sur la branche, tests unitaires du coeur 8/8 PASS en environnement local; pas encore publie ni teste sur iPhone.
+Deux comptes de test rattaches : retour SQL utilisateur 2 / 2 ; configuration RLS lue conforme. Authentification reelle, requetes REST et tests iPhone encore a verifier.
 Production : inchangee.
+
+## Pilotage et limites de validation
+- L'interface de test (index.html) ne modifie **pas** la liste de courses de Dobby V5.
+- Le projet Supabase conserve uniquement les articles de courses du laboratoire (aucune photo ou document).
+- Chaque iPhone doit saisir une fois la cle publique `sb_publishable_...` via les parametres du pilote, jamais une cle secrete.
+- L'URL Supabase est fixe ; compte et mot de passe sont saisis sur chaque iPhone sans etre inscrits dans GitHub.
+- Tests unitaires locaux du coeur executes : 8/8 PASS ; cette preuve **n'est pas** un test de production ou une recette de synchronisation iOS.
+- Pour tester, publier **uniquement** le repertoire `essai-sync-v1/` sur une URL isolee, sans modifier `/index.html` ni `essai-stitch-v5/`.
+- Avant l'utilisation reelle, controler requetes REST de deux comptes, acces refuse d'un tiers, fonctionnement hors ligne, conflits et rechargement iOS.
+- Supabase Auth : deux comptes creees ; envisager de desactiver les inscriptions publiques pour ce pilote ferme.
