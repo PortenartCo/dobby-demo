@@ -7,11 +7,13 @@ const before = process.argv.includes('--before');
 const evidence = path.resolve(__dirname, '../../docs/dobby-v6/evidence', before ? 'before' : 'after');
 const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const reports = [];
+const errors = [];
+let completed = false;
 (async () => {
   fs.mkdirSync(evidence, { recursive: true });
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox'] });
   try {
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce', locale: 'fr-BE', timezoneId: 'Europe/Paris' });
     // Local preview only: no Supabase, Apple, or other external writes/reads in this audit.
     await context.route('**/*', route => {
       const url = route.request().url();
@@ -19,11 +21,13 @@ const reports = [];
       return route.abort();
     });
     const page = await context.newPage();
-    const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     await page.goto(origin + '/essai-stitch-v5-famille/index.html');
     await page.waitForFunction(() => window.DobbyFamilyHealth && typeof go === 'function');
     if (!before) await page.waitForFunction(() => window.DobbyPresentation?.version === 6);
+    async function returnToParent(selector) {
+      await page.locator(before ? selector : '[data-dv6-back]').click();
+    }
     async function inspect(name, screenshot = true) {
       await page.evaluate(() => document.fonts.ready);
       const report = await page.evaluate(() => ({
@@ -31,6 +35,7 @@ const reports = [];
         headingCount: document.querySelectorAll('#screen h1').length,
         nav: [...document.querySelectorAll('.nav button')].map(x => (x.querySelector('.dv6-nav-label') || x).textContent.trim()),
         heroCount: document.querySelectorAll('#screen .dv6-hero').length,
+        panelColors: [...document.querySelectorAll('#screen .fp-panel, #screen .fms-panel, #screen .fds-panel, #screen .fh-panel, #screen .fv2-panel')].map(el => getComputedStyle(el).backgroundColor),
         overflow: [...document.querySelectorAll('#screen *, [role="dialog"] *')].filter(el => {
           const r = el.getBoundingClientRect();
           return r.width && (r.right > innerWidth + 1 || r.left < -1) && getComputedStyle(el).position !== 'absolute';
@@ -42,6 +47,7 @@ const reports = [];
         assert.equal(report.scrollWidth, report.width, name + ': horizontal overflow');
         assert.equal(report.overflow.length, 0, name + ': overflowing elements ' + report.overflow.join(', '));
         assert.equal(report.headingCount, 1, name + ': one page heading');
+        assert.ok(report.panelColors.every(color => color === 'rgb(44, 28, 24)'), name + ': shared surface colors');
       }
     }
     for (const width of before ? [390, 430] : [320, 390, 430, 1280]) {
@@ -82,25 +88,25 @@ const reports = [];
       await page.evaluate(() => go('documents'));
       await page.locator('[data-doc="new"]').click();
       await inspect('document-form-' + width);
-      await page.locator('[data-doc="cancel"]').click();
+      await returnToParent('[data-doc="cancel"]');
       await page.locator('[data-doc="view"][data-id="visual-document"]').first().click();
       await inspect('document-detail-' + width, width === 390);
-      await page.locator('[data-doc="back"]').click();
+      await returnToParent('[data-doc="back"]');
       await page.locator('[data-doc="newnote"]').click();
       await inspect('memo-form-' + width, width === 390);
-      await page.locator('[data-doc="cancel"]').click();
+      await returnToParent('[data-doc="cancel"]');
       await page.evaluate(() => go('house'));
       await page.locator('[data-house-action="new"]').first().click();
       await inspect('equipment-form-' + width, width === 390);
-      await page.locator('[data-house-action="cancel"]').click();
+      await returnToParent('[data-house-action="cancel"]');
       await page.locator('[data-house-action="view"][data-id="visual-equipment"]').click();
       await inspect('equipment-detail-' + width, width === 390);
-      await page.locator('[data-house-action="back"]').click();
+      await returnToParent('[data-house-action="back"]');
       await page.evaluate(() => { st.extraPage = 'health'; render(); });
       await page.locator('[data-v23-member="new"]').click();
       await inspect('member-form-' + width, width === 390);
-      await page.locator('[data-v23-member="cancel"]').click();
-      await page.evaluate(() => { st.extraPage = ''; st.detail = BASE[0].id; render(); });
+      await returnToParent('[data-v23-member="cancel"]');
+      await page.evaluate(() => { go('recipes'); st.detail = BASE[0].id; render(); });
       await inspect('recipe-detail-' + width, width === 390);
       await page.locator('[data-action="cook"]').click();
       await inspect('recipe-cooking-' + width, width === 390);
@@ -119,11 +125,11 @@ const reports = [];
       // Its real connected authorization is outside this offline visual audit.
     }
     if (!before) assert.deepEqual(errors, [], 'No uncaught browser errors');
-    fs.writeFileSync(path.join(evidence, 'audit.json'), JSON.stringify({ before, errors, reports }, null, 2) + '\n');
+    completed = true;
     console.log((before ? 'BASELINE' : 'PASS') + ' — ' + reports.length + ' viewport/view checks; ' + errors.length + ' uncaught errors');
     await context.close();
   } finally {
-    fs.writeFileSync(path.join(evidence, 'audit.json'), JSON.stringify({ before, reports }, null, 2) + '\n');
+    fs.writeFileSync(path.join(evidence, 'audit.json'), JSON.stringify({ status: completed ? before ? 'BASELINE' : 'PASS' : 'FAIL', before, errors, reports }, null, 2) + '\n');
     await browser.close();
   }
 })().catch(err => { console.error(err); process.exitCode = 1; });

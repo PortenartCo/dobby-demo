@@ -166,7 +166,8 @@
              const presentationCss=document.createElement('link');presentationCss.rel='stylesheet';presentationCss.href='./dobby-v6.css?v=20261108-1';
              const presentation=document.createElement('script');presentation.src='./dobby-v6.js?v=20261108-1';
              // Presentation is additive; failed assets never block the functional V5 loader.
-             presentationCss.onload=presentationCss.onerror=function(){document.body.append(presentation);};
+             presentationCss.onload=function(){document.body.append(presentation);};
+             presentationCss.onerror=function(){console.warn('[Dobby] V6 presentation unavailable; keeping the V5 interface.');};
              document.head.append(presentationCss);
            };
            document.body.append(health);

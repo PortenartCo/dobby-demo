@@ -25,36 +25,36 @@
 
 ## A — Audit et fondations
 
-- [ ] Inventorier les 53 HTML : routes existantes, variante retenue et capacités absentes.
-- [ ] Capturer la V5 avant modification à 390/430 px et quelques formulaires.
-- [ ] Créer `dobby-v6.css`, tokens et ressources locales avec provenance.
-- [ ] Vérifier les 54 tests existants ; commit A.
+- [x] Inventorier les 53 HTML : routes existantes, variante retenue et capacités absentes.
+- [x] Capturer la V5 avant modification à 390/430 px et quelques formulaires.
+- [x] Créer `dobby-v6.css`, tokens et ressources locales avec provenance.
+- [x] Vérifier les 54 tests existants ; commit A.
 
 ## B — Coquille commune
 
-- [ ] Ajouter `dobby-v6.js` après le dernier module, sans changer `index.html`.
-- [ ] En-tête partagé : menu/retour à gauche, cartouche DOBBY/rubrique au centre, accès au compte familial à droite.
-- [ ] Barre de navigation commune à quatre entrées et menu général existant.
-- [ ] Contrôler ouverture/fermeture menu, compte et retour ; commit B.
+- [x] Ajouter `dobby-v6.js` après le dernier module, sans changer `index.html`.
+- [x] En-tête partagé : menu/retour à gauche, cartouche DOBBY/rubrique au centre, accès au compte familial à droite.
+- [x] Barre de navigation commune à quatre entrées et menu général existant.
+- [x] Contrôler ouverture/fermeture menu, compte et retour ; commit B.
 
 ## C — Écrans principaux
 
-- [ ] Taverne, puis Traverse, Missions et Famille : hero partagé, titre et citation séparés, actions réelles conservées.
-- [ ] Conserver les panneaux dynamiques Agenda/Missions/Santé et leurs branchements.
-- [ ] Vérifier 390/430 px et l’absence de titre/illustration en double ; commit C.
+- [x] Taverne, puis Traverse, Missions et Famille : hero partagé, titre et citation séparés, actions réelles conservées.
+- [x] Conserver les panneaux dynamiques Agenda/Missions/Santé et leurs branchements.
+- [x] Vérifier 390/430 px et l’absence de titre/illustration en double ; commit C.
 
 ## D — Vues secondaires
 
-- [ ] Appliquer les tokens partagés aux cartes, onglets, champs, messages et boutons de toutes les vues et modales.
-- [ ] Uniformiser icônes et variantes primaire/secondaire/destructive sans modifier les attributs métier.
-- [ ] Vérifier recettes/cuisine/TM5, documents/mémos, équipements/historique, contacts/listes/santé, imports, recherche et compte.
-- [ ] Tests navigateur des formulaires et rendus directs ; commit D.
+- [x] Appliquer les tokens partagés aux cartes, onglets, champs, messages et boutons de toutes les vues et modales.
+- [x] Uniformiser icônes et variantes primaire/secondaire/destructive sans modifier les attributs métier.
+- [x] Vérifier recettes/cuisine/TM5, documents/mémos, équipements/historique, contacts/listes/santé, imports, recherche et compte.
+- [x] Tests navigateur des formulaires et rendus directs ; commit D.
 
 ## E — Recette et livraison
 
-- [ ] Exécuter le workflow local : syntaxe, tests Node, browser-smoke, bootstrap-smoke.
-- [ ] Exécuter `node essai-stitch-v5-famille/tests/visual-audit.cjs` à 320/390/430 px et desktop 1280 px ; examiner les captures et corriger.
-- [ ] Publier preuves avant/après, couverture des vues, limites et retour arrière dans `docs/dobby-v6/`.
+- [x] Exécuter le workflow local : syntaxe, tests Node, browser-smoke, bootstrap-smoke.
+- [x] Exécuter `node essai-stitch-v5-famille/tests/visual-audit.cjs` à 320/390/430 px et desktop 1280 px ; examiner les captures et corriger.
+- [x] Publier preuves avant/après, couverture des vues, limites et retour arrière dans `docs/dobby-v6/`.
 - [ ] Revue du diff, commit E, push de la branche et PR de revue ; observer CI. Aucune fusion ni publication.
 
 ## Journal
@@ -62,3 +62,10 @@
 - Cadrage : exécution directe autorisée explicitement par la mission ; pas de nouvelle validation du design.
 - Baseline : 54/54 tests Node passent. HEAD conforme à la référence fournie.
 - Choix : couche additive pour préserver l’égalité de `index.html` contrôlée par le test d’intégration existant.
+
+- A : cbb6f00, matrice 53 HTML, ressources et tokens ; baseline Node 54/54.
+- B : decd552, coquille et captures de départ ; tests V5 33/33.
+- C : f8e8fda, héros des quatre racines ; contrôles 320/390/430/1280 sans débordement sur les racines.
+- D : 4db66a5, composants communs et couverture des détails/formulaires ; suite Node 54/54.
+- E : revue indépendante en lecture seule ; deux constats corrigés (actions destructives composées et focus Échap), chacun reproduit en échec puis vérifié au vert.
+- Recette finale locale : 18 syntaxes, 54/54 tests Node, 3/3 pages navigateur, 103/103 contrôles visuels ; baseline immuable 37 vues/tailles. Aucune recette Supabase connectée, aucun déploiement.

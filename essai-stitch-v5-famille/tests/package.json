@@ -1,0 +1,11 @@
+{
+  "name": "dobby-browser-regression",
+  "private": true,
+  "scripts": {
+    "test:browser": "node browser-regression.cjs",
+    "test:visual": "node visual-audit.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

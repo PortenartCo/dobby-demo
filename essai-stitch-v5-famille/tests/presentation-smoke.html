@@ -58,6 +58,21 @@
     form.querySelector('[name="title"]').value = 'Mission de test présentation V6';
     form.querySelector('[type="submit"]').click(); await tick();
     assert(state().manualMissions.some(x => x.title === 'Mission de test présentation V6'), 'Mission non sauvegardée');
+    w.go('family'); await tick();
+    d.getElementById('menubtn').click(); await tick();
+    d.querySelector('#menu [role="menuitem"]').focus();
+    d.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); await tick();
+    assert(d.activeElement?.id === 'menubtn', 'Échap doit ramener le focus au bouton du menu');
+    d.querySelector('[data-extra="lists"]').click(); await tick();
+    form = d.getElementById('xListForm');
+    form.querySelector('[name="name"]').value = 'Liste test des actions destructives';
+    form.querySelector('[type="submit"]').click(); await tick();
+    d.querySelector('[data-extra="listopen"]').click(); await tick();
+    d.getElementById('xListInput').value = 'Élément à retirer explicitement';
+    d.querySelector('[data-extra="listadd"]').click(); await tick();
+    const remove = d.querySelector('[data-extra="listremove"]');
+    assert(remove?.dataset.dv6Variant === 'danger', 'Retirer un élément doit être une action destructive');
+    assert(remove.getAttribute('aria-label')?.startsWith('Supprimer'), 'Un bouton de suppression ne doit pas être nommé Fermer');
     status.dataset.result = 'PASS';
     status.textContent = 'PASS — navigation, compte, données inchangées, documents, équipements et missions';
   } catch (e) {

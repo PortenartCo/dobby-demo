@@ -18,11 +18,23 @@
     health: 'Carnet de santé', contacts: 'Répertoire du foyer', lists: 'Listes du foyer',
     contracts: 'Contrats & échéances', search: 'Rechercher', 'smart-import': 'Importer un document'
   };
+  const returnSelectors = '[data-v23-member="cancel"], [data-doc="cancel"], [data-doc="back"], [data-house-action="cancel"], [data-house-action="back"], [data-action="canceltm"], [data-action="back"], [data-extra="back"]';
+  function returnControl() {
+    // Prefer the current editor's cancel action over a recipe's parent back link.
+    return screen.querySelector('[data-action="canceltm"]') || screen.querySelector(returnSelectors);
+  }
   const pages = {
     plan: { image: 'taverne', seal: 'À la lueur du feu', kicker: 'Repas & menus du logis', title: 'La Taverne Gourmande', quote: 'Le feu crépite dans l’âtre et le chaudron mijote. Dobby vous aide à préparer les festins de la maisonnée.', action: 'Choisir un repas', attributes: 'data-st5-action="dinner"', symbol: 'restaurant' },
     home: { image: 'traverse', seal: 'Bienvenue au logis', kicker: 'Votre assistant de maison', title: 'Le Chemin de Traverse', quote: 'Chaque chose à sa place, un peu de magie au quotidien. Dobby veille sur les petites missions de votre foyer.', action: 'Parler à Dobby', attributes: 'data-action="voice"', symbol: 'auto_awesome' },
     missions: { image: 'missions', seal: 'Le grimoire du quotidien', kicker: 'Tâches & rituels du foyer', title: 'La Bibliothèque des Missions', quote: 'Chaque tâche est un petit sortilège d’ordre. Un parchemin à la fois, la maisonnée prend soin de son quotidien.', action: 'Créer une mission', attributes: 'data-fms-action="new"', symbol: 'add' },
     family: { image: 'famille', seal: 'Le cœur de la maisonnée', kicker: 'Famille & organisation', title: 'Le Salon des Curiosités', quote: 'Les rendez-vous, les souvenirs et les informations précieuses du foyer trouvent ici leur place.', action: 'Les membres de la maisonnée', attributes: 'data-extra="health"', symbol: 'groups' }
+  };
+  const destructiveLabels = {
+    delete: 'Supprimer', deletenote: 'Supprimer le mémo', remove: 'Retirer du foyer',
+    rmextra: 'Retirer cet achat', detach: 'Retirer la pièce jointe', removedoc: 'Supprimer la pièce jointe',
+    contactdelete: 'Supprimer le contact', listdelete: 'Supprimer la liste',
+    healthdelete: 'Supprimer le rendez-vous', listremove: 'Supprimer l’élément',
+    'remove-demo': 'Retirer les repas préchargés'
   };
   function icon(name) {
     return '<span class="dv6-icon" aria-hidden="true">' + name + '</span>';
@@ -62,8 +74,10 @@
     for (const button of container.querySelectorAll('button:not([data-dv6-control])')) {
       button.dataset.dv6Control = '';
       const text = button.textContent.trim();
-      const actions = [...button.attributes].filter(a => a.name.startsWith('data-')).map(a => a.value).join(' ');
-      const destructive = /(?:^|\s)(?:delete|deletenote|remove|rmextra|delete-member)(?:\s|$)/.test(actions) || /^Supprimer\b/i.test(text);
+      const actionValues = ['action','extra','doc','houseAction','v23Member','fvAction','fmAction','fmsAction','fpAction','fh','fds'].map(key => button.dataset[key]).filter(Boolean);
+      const actions = actionValues.join(' ');
+      const destructiveAction = actionValues.find(action => Object.hasOwn(destructiveLabels, action));
+      const destructive = Boolean(destructiveAction) || /^Supprimer\b/i.test(text);
       const primary = button.matches('[type="submit"], .dv6-primary, .st5-solid, .st-primary, .fms-main, .fp-main-btn, .fh-primary, .v21-main-button, .btn:not(.secondary):not(.outline)');
       button.dataset.dv6Variant = destructive ? 'danger' : primary ? 'primary' : 'secondary';
       // Only decorate controls, never user-supplied record titles inside cards.
@@ -78,7 +92,7 @@
       const label = text.replace(/^[^\p{L}\p{N}]+/u, '').trim();
       button.innerHTML = icon(symbol);
       if (label) button.append(document.createTextNode(label));
-      else if (!button.hasAttribute('aria-label')) button.setAttribute('aria-label', symbol === 'close' ? 'Fermer' : 'Ajouter');
+      else if (!button.hasAttribute('aria-label')) button.setAttribute('aria-label', destructive ? destructiveLabels[destructiveAction] || 'Supprimer' : symbol === 'close' ? 'Fermer' : 'Ajouter');
     }
     // V5 labels often precede their controls without an explicit association.
     let labelNumber = 0;
@@ -103,6 +117,7 @@
   nav.innerHTML = Object.entries(roots).map(([route, [label, symbol]]) =>
     '<button type="button" data-go="' + route + '">' + icon(symbol) + '<span class="dv6-nav-label">' + label + '</span></button>').join('');
   for (const button of menu.querySelectorAll('button')) button.setAttribute('role', 'menuitem');
+  decorateControls(menu);
   function closeMenu(restoreFocus) {
     menu.classList.add('hidden');
     if (restoreFocus) document.getElementById('menubtn').focus();
@@ -113,24 +128,40 @@
   }).observe(menu, { attributes: true, attributeFilter: ['class'] });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && !menu.classList.contains('hidden')) closeMenu(true);
-  });
+  }, true);
   document.addEventListener('click', event => {
     if (!event.target.closest('#menu, #menubtn')) closeMenu(false);
     if (!event.target.closest('[data-dv6-back]')) return;
     event.preventDefault(); event.stopImmediatePropagation();
-    const existing = screen.querySelector('[data-doc="cancel"], [data-doc="back"], [data-house-action="cancel"], [data-house-action="back"], [data-action="back"]');
+    const existing = returnControl();
     if (existing) { existing.click(); return; }
     const extra = String(st.extraPage || '').split(':');
     if (extra.length > 1) { st.extraPage = extra[0]; render(); return; }
     go(['recipes', 'pick', 'shop', 'import', 'batch'].includes(st.page) ? 'plan' : ['documents', 'house'].includes(st.page) || st.extraPage ? 'family' : 'home');
   }, true);
   function decorate() {
-    const key = String(st.extraPage || '').split(':')[0] || st.page;
+    const key = st.detail ? 'recipes' : String(st.extraPage || '').split(':')[0] || st.page;
     const root = Boolean(roots[key] && !st.detail && !st.extraPage);
     if (root) decorateRoot(key);
     if (!screen.querySelector('h1')) {
       const title = document.createElement('h1');
       title.textContent = chapters[key] || 'Le foyer'; screen.prepend(title);
+    }
+    screen.querySelectorAll('.st5-chapter').forEach(chapter => chapter.remove());
+    const existingReturn = returnControl();
+    if (existingReturn) existingReturn.dataset.dv6PageBack = '';
+    for (const empty of screen.querySelectorAll('.st5-empty')) {
+      if (empty.textContent === 'Aucun rendez-vous médical futur enregistré dans cette démonstration.') empty.textContent = 'Aucun rendez-vous médical à venir sur cet appareil.';
+    }
+    if (key === 'health') {
+      for (const warning of screen.querySelectorAll('.v21-health-warning')) {
+        if (/synchronisation iOS|Synchronisation entre iPhone/.test(warning.textContent)) warning.textContent = 'Les anciennes fiches de ce carnet restent sur cet appareil. Pour le suivi médical commun, utilisez les rendez-vous partagés de la rubrique Famille.';
+      }
+    }
+    if (key === 'lists') {
+      for (const note of screen.querySelectorAll('p.muted')) {
+        if (note.textContent === 'Liste de démonstration locale. Elle ne se synchronise pas encore entre iPhone.') note.textContent = 'Cette liste peut être partagée avec le foyer après connexion et activation du module Famille.';
+      }
     }
     for (const title of [...screen.querySelectorAll('h1')].slice(1)) {
       const heading = document.createElement('h2');
@@ -145,6 +176,15 @@
       }
     }
     decorateControls(screen);
+    for (const button of screen.querySelectorAll('.st5-quick-grid button, .st-shortcuts button, .v21-entry[data-extra], .v2-menu-item')) {
+      const route = button.dataset.go || button.dataset.extra;
+      const symbol = ({ family: 'groups', contacts: 'person', lists: 'checklist', health: 'groups', documents: 'description', house: 'home', recipes: 'menu_book', shop: 'shopping_basket', search: 'search' })[route];
+      const mark = button.querySelector('.v21-entry-icon, :scope > span:first-child, :scope > strong');
+      if (!symbol || !mark || mark.querySelector('.dv6-icon')) continue;
+      if (mark.tagName === 'STRONG') {
+        const text = mark.textContent.replace(/^[^\p{L}\p{N}]+/u, '').trim(); mark.innerHTML = icon(symbol); mark.append(document.createTextNode(text));
+      } else mark.innerHTML = icon(symbol);
+    }
     document.getElementById('dv6Chapter').textContent = roots[key]?.[0] || chapters[key] || 'Le foyer';
     back.hidden = root;
     document.getElementById('menubtn').hidden = !root;

@@ -38,6 +38,7 @@ jobs:
           node --check essai-sync-v2/app.js
           node --check essai-sync-v2/core.mjs
           node --check essai-sync-v2/sw.js
+          node --check essai-stitch-v5-famille/dobby-v6.js
           node --check essai-stitch-v5-famille/stitch-v5.js
           node --check essai-stitch-v5-famille/family-v2.js
           node --check essai-stitch-v5-famille/family-modules.js
@@ -56,7 +57,10 @@ jobs:
           node --test essai-stitch-v5-famille/tests/*.test.mjs
       - name: Check isolated Stitch V5 source and storage
         run: node --test essai-stitch-v5-famille/tests/integration.test.mjs
-      - name: Chromium browser smoke (Stitch V5 shell)
+      - name: Install pinned browser test tooling (no application dependencies)
+        working-directory: essai-stitch-v5-famille/tests
+        run: npm ci --ignore-scripts
+      - name: Chromium regression and V6 visual audit (local only)
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-http.log 2>&1 &
           sleep 1
@@ -70,19 +74,15 @@ jobs:
             echo "No Chromium browser installed on runner"
             exit 1
           fi
-          "$BROWSER" --no-sandbox --headless=new --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=16000 --dump-dom http://127.0.0.1:8765/essai-stitch-v5-famille/tests/browser-smoke.html > /tmp/dobby-dom.html 2>/tmp/dobby-chrome.log
-          if ! grep -q 'data-result="PASS"' /tmp/dobby-dom.html; then
-            echo 'BROWSER_SMOKE_FAILED'
-            grep -E 'data-result|RUNNING|FAIL' /tmp/dobby-dom.html | tail -n 8 || true
-            tail -n 40 /tmp/dobby-chrome.log || true
-            exit 1
-          fi
-          echo 'BROWSER_SMOKE_PASS'
-          "$BROWSER" --no-sandbox --headless=new --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=16000 --dump-dom http://127.0.0.1:8765/essai-stitch-v5-famille/tests/bootstrap-smoke.html > /tmp/dobby-bootstrap-dom.html 2>/tmp/dobby-bootstrap-chrome.log
-          if ! grep -q 'data-result="PASS"' /tmp/dobby-bootstrap-dom.html; then
-            echo 'BROWSER_BOOTSTRAP_FAILED'
-            grep -E 'data-result|RUNNING|FAIL' /tmp/dobby-bootstrap-dom.html | tail -n 8 || true
-            tail -n 40 /tmp/dobby-bootstrap-chrome.log || true
-            exit 1
-          fi
-          echo 'BROWSER_BOOTSTRAP_PASS'
+          export CHROMIUM_PATH="$BROWSER"
+          node essai-stitch-v5-famille/tests/browser-regression.cjs
+          node essai-stitch-v5-famille/tests/visual-audit.cjs
+      - name: Keep browser results and visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v6-browser-evidence
+          path: |
+            docs/dobby-v6/evidence/browser-results.json
+            docs/dobby-v6/evidence/after/
+          retention-days: 14

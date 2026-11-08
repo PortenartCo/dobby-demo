@@ -275,6 +275,9 @@ body.dobby-v6 #screen :is(.v2-calendar-grid .dot-night, .v2-cal-legend .dot-nigh
 body.dobby-v6 #screen :is(.v2-cal-legend, .v2-month-head strong) { color: var(--dobby-text-muted) !important; }
 body.dobby-v6 #screen .st4-top { margin: 0 0 24px !important; padding: 16px !important; border-radius: var(--dobby-radius); background: var(--dobby-surface) !important; }
 body.dobby-v6 #screen .st4-index { display: grid; gap: 10px; }
+body.dobby-v6 #screen header { background: transparent !important; color: var(--dobby-text); padding: 0; border: 0; }
+body.dobby-v6 #screen [data-dv6-page-back] { display: none !important; }
+body.dobby-v6 #screen p { font-family: var(--dobby-font-body); font-size: var(--dobby-size-body); line-height: 1.5; }
 @media (max-width: 359px) {
   body.dobby-v6 #screen :is(.two, .family-cols, .doc-grid, .house-fields, .st5-two, .st5-quick-grid, .tm-fields) { grid-template-columns: minmax(0, 1fr); }
   body.dobby-v6 #screen :is(.fv2-panel, .fp-panel, .fms-panel, .fds-panel, .fh-panel, .card) { padding: 12px !important; }
