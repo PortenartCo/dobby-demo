@@ -7,7 +7,7 @@ const PROJECT = 'https://pqcdkrwljgvgagzwrcmg.supabase.co';
 const DB = 'dobby-sync-pilot-v1';
 const KEY_PREFIX = 'sb_publishable_';
 const el = id => document.getElementById(id);
-const state = { db: null, key: null, session: null, working: false, again: false, editing: null, lastError: '', lastSync: null };
+const state = { db: null, key: null, session: null, working: false, again: false, editing: null, lastError: '', lastSync: null, sessionEpoch: 0 };
 
 function now() { return new Date().toISOString(); }
 function say(message, kind = '') {
@@ -48,6 +48,7 @@ async function items() { return idb('items', 'getAll'); }
 async function item(id) { return idb('items', 'get', id); }
 async function putItem(value) { await idb('items', 'put', value); }
 async function wipeSession() {
+  state.sessionEpoch += 1;
   await idb('items', 'clear');
   await idb('meta', 'delete', 'session');
   state.session = null;
@@ -123,18 +124,23 @@ async function checkMember() {
   if (!Array.isArray(rows) || rows.length !== 1) throw new Error('Compte non autorisé pour le foyer Dobby.');
 }
 
-async function pull() {
+async function pull(epoch) {
   const remote = await fetchRemote();
+  if (epoch !== state.sessionEpoch) throw new Error('Session modifiée.');
   if (!Array.isArray(remote)) throw new Error('Réponse de synchronisation inattendue.');
   for (const row of remote) {
+    if (epoch !== state.sessionEpoch) throw new Error('Session modifiée.');
     const current = await item(row.id);
+    if (epoch !== state.sessionEpoch) throw new Error('Session modifiée.');
     await putItem(mergeRemote(current, row));
   }
   return remote.length;
 }
 
-async function markConflict(snapshot, server) {
+async function markConflict(snapshot, server, epoch) {
+  if (epoch !== state.sessionEpoch) return;
   const current = await item(snapshot.id);
+  if (epoch !== state.sessionEpoch) return;
   if (!current || current.syncState === 'clean') return;
   if (server && sameFields(current, server)) {
     await putItem(cleanFromRemote(server));
@@ -143,7 +149,8 @@ async function markConflict(snapshot, server) {
   await putItem({ ...current, syncState: 'conflict', remoteShadow: server });
 }
 
-async function pushOne(snapshot) {
+async function pushOne(snapshot, epoch) {
+  if (epoch !== state.sessionEpoch) return;
   if (snapshot.syncState !== 'pending') return;
   const original = { ...snapshot };
   let returned;
@@ -158,7 +165,7 @@ async function pushOne(snapshot) {
       if (error.status !== 409) throw error;
       const remote = await fetchOne(original.id);
       if (!remote) throw new Error('Article déjà présent, mais lecture impossible : intervention nécessaire.');
-      await markConflict(original, remote);
+      await markConflict(original, remote, epoch);
       return;
     }
   } else {
@@ -172,28 +179,32 @@ async function pushOne(snapshot) {
     if (!Array.isArray(returned) || returned.length === 0) {
       const remote = await fetchOne(original.id);
       if (!remote) throw new Error('Modification refusée ou article inaccessible. Rien n’a été écrasé.');
-      await markConflict(original, remote);
+      await markConflict(original, remote, epoch);
       return;
     }
   }
   const remote = returned?.[0];
   if (!remote) throw new Error('Aucun reçu serveur après la modification ; nouvelle vérification nécessaire.');
+  if (epoch !== state.sessionEpoch) return;
   const current = await item(original.id);
-  if (current) await putItem(afterPush(current, original, remote));
+  if (epoch === state.sessionEpoch && current) await putItem(afterPush(current, original, remote));
 }
 
 async function performSync() {
   if (!state.session || !state.key || document.hidden) return;
   if (state.working) { state.again = true; return; }
   state.working = true; state.lastError = '';
-  renderStatus();
+  const epoch = state.sessionEpoch;
+  void renderStatus();
   try {
     await checkMember();
-    await pull();
+    if (epoch !== state.sessionEpoch) return;
+    await pull(epoch);
     const pending = (await items()).filter(x => x.syncState === 'pending')
       .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
-    for (const entry of pending) await pushOne(entry);
-    await pull();
+    for (const entry of pending) await pushOne(entry, epoch);
+    await pull(epoch);
+    if (epoch !== state.sessionEpoch) return;
     state.lastSync = new Date();
     say('Synchronisation terminée. Les modifications confirmées sont partagées entre les deux comptes.', 'ok');
   } catch (error) {
@@ -204,8 +215,8 @@ async function performSync() {
     await render();
     if (state.again) {
       state.again = false;
-      // Avoid recursive network retries after failures; next timer or user action retries.
-      if (!state.lastError) void performSync();
+      // No network retry loop; a changed session may begin its own first sync.
+      if (!state.lastError || epoch !== state.sessionEpoch) void performSync();
     }
   }
 }
