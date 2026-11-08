@@ -19,7 +19,7 @@
     ticks++;
     try {
       const w=iframe.contentWindow, d=iframe.contentDocument;
-      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !w.DobbyFamilyMissions || !w.DobbyFamilyFiles || !d.querySelector('#screen')) {
+      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !w.DobbyFamilyMissions || !w.DobbyFamilyFiles || !w.DobbyFamilyHealth || !d.querySelector('#screen')) {
         if(ticks<75)return;
         throw Error('Le chargeur familial n’a pas démarré');
       }
@@ -97,6 +97,14 @@
       }
       if(!d.querySelector('#fmsManual')?.textContent.includes('Mission test navigateur')) {
         throw Error('La mission créée n’est pas affichée');
+      }
+      w.go('family');
+      const healthPanel=d.getElementById('fhVisits');
+      if(!healthPanel || !healthPanel.textContent.includes('Rendez-vous médicaux du foyer')) {
+        throw Error('Le suivi médical choisi n’apparaît pas dans la page Famille');
+      }
+      if(!healthPanel.textContent.includes('Vos anciennes fiches du carnet de santé restent sur cet appareil')) {
+        throw Error('L’exclusion des anciennes fiches médicales n’est pas expliquée');
       }
       w.go('documents');
       const addDocument=d.querySelector('[data-doc="new"]');
