@@ -7,7 +7,7 @@ BEGIN;
 CREATE TABLE public.dobby_v2_modules (
   household_id uuid NOT NULL REFERENCES public.dobby_v2_households(id),
   module text NOT NULL CHECK (module IN (
-    'menus', 'recipes', 'missions', 'house', 'family'
+    'menus', 'recipes', 'missions', 'house', 'family', 'contracts'
   )),
   payload jsonb NOT NULL DEFAULT '{}'::jsonb
     CHECK (jsonb_typeof(payload) = 'object'
