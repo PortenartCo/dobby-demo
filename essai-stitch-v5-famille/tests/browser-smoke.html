@@ -19,7 +19,7 @@
     ticks++;
     try {
       const w=iframe.contentWindow, d=iframe.contentDocument;
-      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !d.querySelector('#screen')) {
+      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !w.DobbyFamilyMissions || !d.querySelector('#screen')) {
         if(ticks<75)return;
         throw Error('Le chargeur familial n’a pas démarré');
       }
@@ -79,9 +79,28 @@
       if(!d.querySelector('#screen').textContent.includes('événement Dobby')) {
         throw Error('Le résumé des événements Dobby est absent de l’accueil');
       }
+      w.go('missions');
+      const missions=d.querySelector('#fmsManual');
+      if(!missions || !missions.textContent.includes('À faire ensemble')) {
+        throw Error('Le module des missions familiales est absent');
+      }
+      missions.querySelector('[data-fms-action="new"]').click();
+      const missionForm=d.getElementById('fmsForm');
+      if(!missionForm)throw Error('Le formulaire de mission est absent');
+      missionForm.querySelector('[name="title"]').value='Mission test navigateur';
+      missionForm.querySelector('[name="due"]').value=
+        tomorrow.getFullYear()+'-'+pad(tomorrow.getMonth()+1)+'-'+pad(tomorrow.getDate());
+      missionForm.querySelector('button[type="submit"]').click();
+      const saved=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
+      if(!saved.manualMissions?.some(x=>x.title==='Mission test navigateur'&&x.status==='open')) {
+        throw Error('Une mission manuelle n’a pas été sauvegardée');
+      }
+      if(!d.querySelector('#fmsManual')?.textContent.includes('Mission test navigateur')) {
+        throw Error('La mission créée n’est pas affichée');
+      }
       completed=true;clearInterval(timer);
       const s=document.getElementById('status');
-      s.dataset.result='PASS';s.textContent='PASS - courses, agenda CRUD, confidentialité et stockage isolé';
+      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, missions familiales et stockage isolé';
     }catch(e){
       if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
       completed=true;clearInterval(timer);
