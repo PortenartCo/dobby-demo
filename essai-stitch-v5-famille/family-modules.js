@@ -148,7 +148,7 @@ function html() {
   const shareAll = backendReady && ctx && inactive.length > 1 && !joinable.length ?
     '<div class="fv2-module"><strong>Activer le foyer en une seule fois</strong>' +
     '<p>Partagez les ' + inactive.length + ' modules restants après une seule confirmation. ' +
-    'Les données médicales et fichiers joints ne seront pas transférés.</p>' +
+    'Les anciens carnets de santé et les pièces locales ne seront pas transférés.</p>' +
     '<button type="button" data-fm-action="activate-all">Activer les ' +
     inactive.length + ' modules du foyer</button></div>' : '';
   const rows = DEFINITIONS.map(def => {
@@ -171,7 +171,7 @@ function html() {
       (def.id === 'menus' && seededExampleMeals() ?
         '<p>Trois repas de démonstration préchargés sont encore dans le calendrier. Ils ne correspondent pas à des menus familiaux confirmés.</p>' +
         '<button type="button" data-fm-action="remove-demo" data-module="menus">Retirer les trois repas d’exemple</button>' : '') +
-      (def.id === 'contracts' ? '<p>Seules les fiches des catégories Contrats et Assurances sont partagées; aucune pièce jointe.</p>' : '') +
+      (def.id === 'contracts' ? '<p>Contrats et assurances partagés ; autres fiches sur décision explicite. Les PDF et photos s’envoient séparément.</p>' : '') +
       actions + '</div>';
   }).join('');
   const gate = !ctx || !checked ?
@@ -181,16 +181,16 @@ function html() {
       ' Les données restent locales ; aucun partage supplémentaire n’est activé.</p>' +
       '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
   return description + bulkJoin + shareAll + gate + rows +
-    '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
-    '<p>Les fiches de contrats peuvent être partagées après activation explicite; les fichiers, autres documents et mémos restent sur cet appareil.</p></div>' +
-    '<div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Privé · local</span>' +
-    '<p>Aucun dossier de santé n’est envoyé au panier ou aux modules communs.</p></div>' +
+    '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Partage volontaire</span>' +
+    '<p>Les fiches et PDF/photos sont partagés avec le foyer uniquement dans les conditions choisies depuis Documents. Les pièces locales ne sont pas envoyées automatiquement.</p></div>' +
+    '<div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Choix explicite</span>' +
+    '<p>Les anciens carnets restent locaux. Les rendez-vous créés dans le foyer et les documents Santé volontairement partagés sont communs.</p></div>' +
     '';
 }
 function labelFor(page) {
-  if (page === 'documents') return 'Documents locaux · ' + stateLabel(byId.get('contracts')) + ' pour les fiches contrats';
+  if (page === 'documents') return 'Documents · ' + stateLabel(byId.get('contracts')) + ' pour les fiches partagées';
   if (page === 'chat') return 'Conversations conservées sur cet appareil';
-  if (page === 'family' && String(st.extraPage || '').startsWith('health')) return 'Santé privée locale';
+  if (page === 'family' && String(st.extraPage || '').startsWith('health')) return 'Carnet de santé local · rendez-vous volontaires dans le foyer';
   const def = DEFINITIONS.find(x => x.pages.includes(page));
   return def ? (def.title + ' · ' + stateLabel(def)) : 'Données locales';
 }
@@ -241,7 +241,7 @@ async function activateRemaining() {
     !entries.find(e => e.id === 'menus')?.remote;
   let message = 'Activer le partage de ' + ids.length + ' modules avec les membres actifs du foyer ?\n' +
     'Les données enregistrées dans ces modules pourront être consultées et modifiées par les membres du foyer.\n' +
-    'Les données médicales et les fichiers joints ne seront pas envoyés.';
+    'Les anciens carnets de santé et les fichiers locaux ne seront pas envoyés.';
   if (existing) message += '\n' + existing +
     ' module(s) existent déjà : ils seront récupérés après sauvegarde de leur version locale.';
   if (removeDemo) message += '\nLes trois repas fictifs préchargés seront retirés après sauvegarde.';
