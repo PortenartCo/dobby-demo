@@ -30,7 +30,7 @@ function overview(){
     status()+
     (list.length?'<ul class="fds-list">'+list.slice(0,25).map(d=>
       '<li><div><strong>'+esc(d.title||'Sans titre')+'</strong><small>'+esc(d.category||'')+
-      (d.cloudPath?' · 📎 '+esc(d.cloudName||'Fichier'):' · Fiche sans fichier')+
+      (d.cloudPath?' · 📎 '+esc(d.cloudName||'Fichier'):' · PDF non encore partagé')+
       '</small></div>'+
       '<div class="fds-actions">'+
       (d.cloudPath?'<button type="button" data-fds="open" data-id="'+esc(d.id)+'">Ouvrir</button>':'')+
@@ -51,7 +51,9 @@ function detailPanel(d){
       '<button type="button" data-fds="toggle" data-id="'+esc(d.id)+'"'+(!enabled?' disabled':'')+'>'+
        (shared?'Arrêter le partage de cette fiche':'Partager cette fiche au foyer')+'</button>':'')+
     (shared?
-      '<p class="fds-desc">La fiche et sa référence de fichier sont visibles par les membres du foyer.</p>':
+      (d.cloudPath?
+        '<p class="fds-desc">La fiche et ce fichier sont accessibles aux membres du foyer après synchronisation.</p>':
+        '<p class="fds-hint"><strong>La fiche est commune, mais aucun PDF n’a été envoyé.</strong> Pour partager un PDF ou une photo avec l’autre téléphone, utilisez le bouton ci-dessous. Le bloc « Pièce jointe » au-dessus ne conserve les fichiers que sur cet appareil.</p>'):
       '<p class="fds-desc">La fiche ne sera pas envoyée tant que vous ne l’aurez pas partagée.</p>')+
     (shared && d.cloudPath?
       '<div class="fds-file"><strong>📎 '+esc(d.cloudName||'Fichier partagé')+'</strong>'+
@@ -62,7 +64,7 @@ function detailPanel(d){
       '<div class="fds-file">'+
       (d.attachmentName?'<button type="button" data-fds="local" data-id="'+esc(d.id)+'"'+(!pickable?' disabled':'')+
         '>Partager la pièce déjà enregistrée sur cet appareil</button>':'')+
-      '<label>Ou choisir un PDF / une photo<input type="file" data-fds-file="'+esc(d.id)+'"'+
+      '<label>Envoyer un PDF / une photo au foyer<input type="file" data-fds-file="'+esc(d.id)+'"'+
       ' accept=".pdf,image/jpeg,image/png,image/webp"'+(!pickable?' disabled':'')+'></label>'+
       '<small>10 Mo maximum, stockage partagé du foyer.</small></div>':'')+
     '</section>';
@@ -112,7 +114,7 @@ async function upload(d,file,name){
     doc.cloudPath=path;
     doc.cloudName=String(name||'Fichier').slice(0,140);
     doc.cloudType=file.type;doc.cloudSize=file.size;
-    message='Fichier transféré. La fiche sera synchronisée avec le foyer.';
+    message='PDF ou photo envoyé au foyer. La fiche sera synchronisée avec les autres appareils.';
     saveFiche();
   } finally {busy=false;redraw();}
 }
