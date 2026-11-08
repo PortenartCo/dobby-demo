@@ -52,7 +52,7 @@ function makeClient(uid, backend, seeded = false) {
     familyMembers:[],famContacts:[],famLists:[],
     famHealth:[{id:'medical-1',name:'private medical appointment'}],
     familyDocs:[
-      {id:'contract-1',category:'Contrats',title:'Électricité',provider:'Exemple',attachmentName:'secret.pdf',attachmentType:'application/pdf'},
+      ...(seeded?[{id:'contract-1',category:'Contrats',title:'Électricité',provider:'Exemple',attachmentName:'secret.pdf',attachmentType:'application/pdf'}]:[]),
       {id:'health-doc-1',category:'Santé',title:'Document médical'}
     ]
   };
