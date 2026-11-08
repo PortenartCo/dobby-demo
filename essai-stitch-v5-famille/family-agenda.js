@@ -1,7 +1,7 @@
 /* Dobby family agenda: ordinary household events only. Not an Apple Calendar connector. */
 (async function(){
 'use strict';
-const core=await import('./family-agenda-core.mjs?v=20261108-4');
+const core=await import('./family-agenda-core.mjs?v=20261108-5');
 const esc=window.DobbyFamilyUI?.esc || (v=>String(v||''));
 const TODAY=()=>{
   // Use the browser's local day, not UTC (important near Brussels midnight).
