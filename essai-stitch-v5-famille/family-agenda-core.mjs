@@ -59,7 +59,7 @@ export function collectUpcoming(state,today,horizonDays=30) {
   const horizon=nextDate(today,horizonDays),overdue=nextDate(today,-30),rows=[];
   const add=(id,title,date,kind,meta='',time='')=>{
     if (!validDate(date))return;
-    const lo=kind==='event'||kind==='birthday'?today:overdue;
+    const lo=kind==='event'||kind==='birthday'||kind==='medical'?today:overdue;
     if (date<lo||date>horizon)return;
     rows.push({id:String(id),title:String(title||''),date,kind,meta:String(meta||''),time:String(time||'')});
   };
