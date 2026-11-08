@@ -77,7 +77,8 @@
           (recorded.familyEvents?.length??'absent')+'; dialogHidden='+
           String(d.getElementById('fpDialogLayer')?.hidden)+'; trace='+
           JSON.stringify(flow)+'; connected='+form.isConnected+
-          '; page='+w.location.pathname);
+          '; page='+w.location.pathname+'; name='+form.nodeName+
+          '; attached='+form.dataset.handlerAttached+'; owner='+String(form.ownerDocument===d));
       }
       if(!d.querySelector('#fpAgenda')?.textContent.includes('Sortie de test navigateur')) {
         throw Error('Le nouvel événement ne figure pas dans l’agenda');
