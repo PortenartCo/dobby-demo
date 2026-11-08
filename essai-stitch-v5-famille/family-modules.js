@@ -429,6 +429,7 @@ document.addEventListener('click', async e => {
   }
 },true);
 api.registerModules({start,reset,html,labelFor,sync,onSave,
+  isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }
 });
 })();
