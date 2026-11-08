@@ -6,7 +6,7 @@ const api=window.DobbyFamilyUI;
 if(!api)throw Error('Foyer Dobby indisponible');
 let busy=false,message='';
 const esc=api.esc;
-const isShared=d=>d && d.category!=='Santé' &&
+const isShared=d=>Boolean(d) &&
   (['Contrats','Assurances'].includes(d.category)||d.sharedToHousehold===true);
 const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs:[];
 const byId=id=>documents().find(x=>x.id===id);
