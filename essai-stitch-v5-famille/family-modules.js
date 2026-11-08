@@ -17,8 +17,7 @@ let ctx = null, backendReady = false, checked = false, states = {}, inFlight = f
 let timer = null, applying = false, lastError = '', sharedAvailable = [];
 const esc = api.esc;
 function isSharedDocument(x) {
-  return x && x.category!=='Santé' &&
-    (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
+  return x && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
 }
 function pick(id) {
   if (id === 'contracts') {
@@ -75,10 +74,10 @@ function applyShared(id, payload) {
       const incoming = payload.contracts.filter(isSharedDocument);
       const incomingIds = new Set(incoming.map(x=>x.id));
       const old = Array.isArray(st.familyDocs)?st.familyDocs:[];
-      const protectedIds = new Set(old.filter(x=>x.category==='Santé').map(x=>x.id));
+      const protectedIds = new Set(old.filter(x=>x.category==='Santé' && !isSharedDocument(x)).map(x=>x.id));
       const attachments = new Map(old.map(x=>[x.id,x]));
       const retained = old.filter(x=>
-        x.category==='Santé' ||
+        (x.category==='Santé' && !isSharedDocument(x)) ||
         (!incomingIds.has(x.id) && (!isSharedDocument(x) || Boolean(x.attachmentName))));
       st.familyDocs = retained.concat(incoming.filter(x=>!protectedIds.has(x.id)).map(x=>{
         const prior = attachments.get(x.id);
