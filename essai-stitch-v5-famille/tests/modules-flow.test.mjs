@@ -44,7 +44,12 @@ function makeClient(uid, backend, seeded = false) {
   let handler, provider, changes = 0, localBackups = 0;
   const st = {
     page:'family',
-    planned: seeded ? {'2026-11-08-soir':{id:'chicken',people:4,status:'prévu'}}:{},
+    planned: seeded ? {
+      '2026-11-08-soir':{id:'chicken',people:4,status:'prévu'},
+      '2026-11-10-soir':{id:'pasta',people:4,status:'prévu'},
+      '2026-11-12-midi':{id:'toast',people:2,status:'prévu'}
+    }:{},
+    demoInitialized:seeded,
     shopHistory:{},shopFinal:null,shopChoice:{},
     customRecipes:[],tmAdaptations:{},
     autoTasks:[],
@@ -105,6 +110,14 @@ test('two accounts activate all six modules and receive a shared update without 
   assert.ok(b.st.planned['2026-11-08-soir']);
   assert.equal(b.st.familyDocs.find(x=>x.id==='contract-1')?.attachmentName,'');
   assert.equal(b.st.famHealth.length,1);
+  assert.match(a.provider.html(),/Retirer les trois repas d’exemple/);
+  await a.action('remove-demo','menus');
+  assert.equal(Object.keys(a.st.planned).length,0);
+  assert.equal(Object.keys(backend.rows.get('menus').payload.planned).length,0);
+  assert.equal(backend.rows.get('menus').revision,2);
+  assert.ok(a.localBackups > 0);
+  await b.provider.sync();
+  assert.equal(Object.keys(b.st.planned).length,0);
   a.st.autoTasks.push({key:'f001',title:'Changer le filtre',state:'open',due:'2026-11-20'});
   await a.provider.sync();
   assert.equal(backend.rows.get('missions').revision,2);
@@ -136,4 +149,11 @@ test('missing modules backend does not activate sharing',async()=>{
   const c=makeClient('a',backend);
   await c.provider.start();
   assert.doesNotMatch(c.provider.html(),/data-fm-action="activate"/);
+});
+
+test('customized or actual meal plans are never offered for automated demo deletion', async() => {
+  const backend=makeBackend(), c=makeClient('user-a',backend,true);
+  await c.provider.start();
+  c.st.planned['2026-11-10-soir']={id:'custom',people:3,status:'prévu'};
+  assert.doesNotMatch(c.provider.html(),/Retirer les trois repas d’exemple/);
 });
