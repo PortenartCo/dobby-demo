@@ -47,3 +47,25 @@ jobs:
           node --test essai-stitch-v5-famille/tests/*.test.mjs
       - name: Check isolated Stitch V5 source and storage
         run: node --test essai-stitch-v5-famille/tests/integration.test.mjs
+      - name: Chromium browser smoke (Stitch V5 shell)
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-http.log 2>&1 &
+          sleep 1
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          elif command -v chromium >/dev/null; then
+            BROWSER="$(command -v chromium)"
+          elif command -v chromium-browser >/dev/null; then
+            BROWSER="$(command -v chromium-browser)"
+          else
+            echo "No Chromium browser installed on runner"
+            exit 1
+          fi
+          "$BROWSER" --no-sandbox --headless=new --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=16000 --dump-dom http://127.0.0.1:8765/essai-stitch-v5-famille/tests/browser-smoke.html > /tmp/dobby-dom.html 2>/tmp/dobby-chrome.log
+          if ! grep -q 'data-result="PASS"' /tmp/dobby-dom.html; then
+            echo 'BROWSER_SMOKE_FAILED'
+            grep -E 'data-result|RUNNING|FAIL' /tmp/dobby-dom.html | tail -n 8 || true
+            tail -n 40 /tmp/dobby-chrome.log || true
+            exit 1
+          fi
+          echo 'BROWSER_SMOKE_PASS'
