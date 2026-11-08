@@ -188,7 +188,7 @@ document.addEventListener('click',event=>{
   }catch(error){alert(error?.message||'Action impossible');}
 },true);
 function submitFamilyEvent(event){
-  if(event.target?.id!=='fpEventForm')return;
+  if(event.target?.getAttribute('id')!=='fpEventForm')return;
   event.preventDefault();event.stopImmediatePropagation();
   try{
     const data=new FormData(event.target),existing=String(data.get('id')||'');
