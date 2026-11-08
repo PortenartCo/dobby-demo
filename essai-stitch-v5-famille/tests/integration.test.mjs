@@ -6,7 +6,7 @@ import vm from 'node:vm';
 const source = path => fs.readFileSync(new URL(path, import.meta.url), 'utf8');
 const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
-const sql = source('../../../sql-proposals/dobby-v2-modules.sql');
+const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
 test('Stitch V5 integration adds shared panier without removing original preparation UI', async () => {
   const listeners = [];
