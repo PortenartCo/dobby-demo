@@ -59,21 +59,56 @@ const reports = [];
         }
       }
     }
+    // Clearly marked synthetic fixtures, confined to this ephemeral browser profile.
+    await page.evaluate(() => {
+      st.familyMembers = [{ id: 'visual-member', name: 'TEST VISUEL — Membre du foyer', avatar: '👤' }];
+      st.v23HealthMemberId = 'visual-member';
+      st.famContacts = [{ id: 'visual-contact', name: 'TEST VISUEL — Contact de la maisonnée', role: 'Contact de test', phone: '', email: '', note: '' }];
+      st.famLists = [{ id: 'visual-list', name: 'TEST VISUEL — Préparatifs du foyer', items: [] }];
+      st.familyDocs = [{ id: 'visual-document', title: 'TEST VISUEL — Contrat du foyer à conserver dans les archives', category: 'Contrats', provider: 'Établissement de test', date: '2026-11-08', deadline: '2027-01-01', note: 'Métadonnées de test visuel. Aucun document réel.' }];
+      st.houseItems = [{ id: 'visual-equipment', name: 'TEST VISUEL — Équipement au nom long dans la pièce du fond', category: 'Chauffage', place: 'Pièce de test', brand: 'Marque de test', nextMaintenance: '2027-01-01' }];
+      save();
+    });
     for (const width of before ? [390] : [320, 390, 430]) {
       await page.setViewportSize({ width, height: 844 });
       for (const route of ['recipes', 'pick', 'shop', 'documents', 'house', 'chat', 'menu', 'import', 'batch']) {
         await page.evaluate(route => go(route), route);
-        await inspect(route + '-' + width, !before && width === 390);
+        await inspect(route + '-' + width, width === 390);
       }
-      for (const extra of ['contacts', 'lists', 'health', 'contracts', 'search', 'smart-import', 'contacts:edit', 'health:edit']) {
+      for (const extra of ['contacts', 'lists', 'lists:view:visual-list', 'health', 'contracts', 'search', 'smart-import', 'contacts:edit', 'health:edit']) {
         await page.evaluate(extra => { st.detail = null; st.extraPage = extra; render(); }, extra);
-        await inspect(extra.replace(':', '-') + '-' + width, !before && width === 390);
+        await inspect(extra.replaceAll(':', '-') + '-' + width, width === 390);
       }
       await page.evaluate(() => go('documents'));
       await page.locator('[data-doc="new"]').click();
       await inspect('document-form-' + width);
+      await page.locator('[data-doc="cancel"]').click();
+      await page.locator('[data-doc="view"][data-id="visual-document"]').first().click();
+      await inspect('document-detail-' + width, width === 390);
+      await page.locator('[data-doc="back"]').click();
+      await page.locator('[data-doc="newnote"]').click();
+      await inspect('memo-form-' + width, width === 390);
+      await page.locator('[data-doc="cancel"]').click();
+      await page.evaluate(() => go('house'));
+      await page.locator('[data-house-action="new"]').first().click();
+      await inspect('equipment-form-' + width, width === 390);
+      await page.locator('[data-house-action="cancel"]').click();
+      await page.locator('[data-house-action="view"][data-id="visual-equipment"]').click();
+      await inspect('equipment-detail-' + width, width === 390);
+      await page.locator('[data-house-action="back"]').click();
+      await page.evaluate(() => { st.extraPage = 'health'; render(); });
+      await page.locator('[data-v23-member="new"]').click();
+      await inspect('member-form-' + width, width === 390);
+      await page.locator('[data-v23-member="cancel"]').click();
+      await page.evaluate(() => { st.extraPage = ''; st.detail = BASE[0].id; render(); });
+      await inspect('recipe-detail-' + width, width === 390);
+      await page.locator('[data-action="cook"]').click();
+      await inspect('recipe-cooking-' + width, width === 390);
+      await page.evaluate(() => { st.cook = false; st.tmEditor = true; render(); });
+      await inspect('recipe-tm5-' + width, width === 390);
+      await page.evaluate(() => { st.tmEditor = false; st.tmView = false; st.cook = false; st.detail = null; });
       await page.evaluate(() => go('missions'));
-      await page.locator('[data-fms-action="new"]').click();
+      await page.locator('[data-fms-action="new"]').first().click();
       await inspect('mission-form-' + width);
       await page.locator('[data-fms-action="close"]').first().click();
       await page.evaluate(() => go('family'));

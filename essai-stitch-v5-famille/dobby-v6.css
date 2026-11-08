@@ -156,3 +156,126 @@ body.dobby-v6.dobby-v6 #screen .st5-dish-image { height: 176px; }
 @media (prefers-reduced-motion: reduce) {
   body.dobby-v6 *, body.dobby-v6 *::before, body.dobby-v6 *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Shared primitives. !important is confined to this bridge over historical
+   inline/important skins; module scripts, fields and event contracts stay intact. */
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) {
+  color: var(--dobby-text); font: 400 var(--dobby-size-body)/1.5 var(--dobby-font-body);
+  color-scheme: dark;
+}
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) :is(h1, h2, h3) {
+  color: var(--dobby-text) !important; font-family: var(--dobby-font-title) !important;
+  font-weight: 600 !important; line-height: 1.3 !important; letter-spacing: -.02em !important;
+}
+body.dobby-v6 #screen h1 { font-size: var(--dobby-size-title) !important; margin: 8px 0 18px; }
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) h2 { font-size: var(--dobby-size-section) !important; }
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) h3 { font-size: var(--dobby-size-card) !important; }
+body.dobby-v6 #screen :is(.eyebrow, .v2-screen-label, .v21-eyebrow, .st5-kicker, .fp-eyebrow, .fv2-mark, .fms-head small, .fds-heading small) {
+  color: var(--dobby-gold) !important; font: 600 var(--dobby-size-caption)/1.6 var(--dobby-font-label) !important;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+body.dobby-v6 #screen :is(.card, .v2-panel, .st5-card, .st5-recipe-hero, .st-feast-card, .st-agenda-card, .v21-meal-card, .v2-calendar, .fv2-panel, .fp-panel, .fms-panel, .fds-panel, .fh-panel, .v23-chat-quick, .v23-chat-keyboard, .v21-form-wrap form, .v2-menu-item, .st5-calendar-portal) {
+  background: var(--dobby-surface) !important; color: var(--dobby-text) !important;
+  border: 1px solid var(--dobby-line-soft) !important; border-radius: var(--dobby-radius) !important;
+  box-shadow: var(--dobby-shadow) !important;
+}
+body.dobby-v6 #screen :is(.card, .v2-panel, .st5-card, .fv2-panel, .fp-panel, .fms-panel, .fds-panel, .fh-panel) { padding: var(--dobby-space) !important; margin: 12px 0 20px !important; }
+body.dobby-v6 #screen :is(.fp-event, .fms-task, .fv2-item, .fds-list > li, .fh-list > li, .st5-day, .st5-task, .st5-quick-grid button, .st-shortcuts button, .v23-member, .v21-person, .v2-tools-drawer, .fv2-recipeprep, .fds-local-backup, .st-search) {
+  background: var(--dobby-surface-high) !important; color: var(--dobby-text) !important;
+  border-color: var(--dobby-line-soft) !important; border-radius: var(--dobby-radius) !important;
+}
+body.dobby-v6 #screen :is(.v2-meal-row, .v21-entry, .st-feast-head, .v21-ingredient-row, .doc-row, .tick, .ingredient, .step, .group-title, .st5-agenda-row) { border-color: var(--dobby-line-soft) !important; }
+body.dobby-v6 #screen :is(.v21-entry-icon, .v21-person-avatar, .v2-meal-art, .food-art, .st5-date-medal, .v23-chat-speech, .v21-softbox, .doc-preview-card, .move-panel, .tm-step, .st-feast-note) {
+  background: var(--dobby-surface-raised) !important; color: var(--dobby-gold) !important; border-color: var(--dobby-line-soft) !important;
+}
+body.dobby-v6 #screen :is(.muted, .helper, .v2-understated, .v21-mini-note, .v21-muted-label, .doc-meta, .st5-sub, .st5-meta, .fp-description, .fms-desc, .fds-desc, .fh-description, .fv2-muted, .fv2-minor, .family-note, .st-block-sub) {
+  color: var(--dobby-text-muted) !important; font: 500 var(--dobby-size-label)/1.65 var(--dobby-font-label) !important;
+}
+body.dobby-v6 #screen :is(.fp-event-details small, .fp-due small, .fp-home-today small, .fms-task-content small, .fms-task-content p, .fds-list small, .fds-file small, .fh-list small, .st5-day small, .v21-entry-main small, .v21-info-chips, .v2-meal-content small) { color: var(--dobby-text-muted) !important; font: 500 var(--dobby-size-caption)/1.6 var(--dobby-font-label) !important; }
+body.dobby-v6 #screen :is(.fp-event-details strong, .fv2-itemname, .fms-task-content strong, .fds-list strong, .fh-list strong, .v21-entry-main strong, .st5-day strong, .st5-task strong, .st5-agenda-row strong, .v2-meal-content strong) { color: var(--dobby-text) !important; font: 600 var(--dobby-size-card)/1.35 var(--dobby-font-title) !important; }
+body.dobby-v6 #screen :is(.fv2-strip, .fp-sharing, .fms-status, .fh-status, .fv2-status, .fds-count, .pill, .v2-count, .v21-chip, .v21-doc-tag, .v21-meal-status, .st5-summary, .fp-due-date, .fp-home-today li) {
+  background: var(--dobby-surface-low) !important; color: var(--dobby-text-muted) !important; border-color: var(--dobby-line-soft) !important;
+  font: 500 var(--dobby-size-caption)/1.6 var(--dobby-font-label) !important;
+}
+body.dobby-v6 #screen .fv2-strip { padding: 10px 12px; margin: 12px 0; }
+body.dobby-v6 #screen :is(.empty, .v2-empty, .st5-empty, .fp-empty, .fms-empty, .fds-empty, .fh-empty, .fv2-empty, .v21-placeholder, .v21-health-empty, .v23-health-empty, .v21-empty) {
+  background: var(--dobby-surface-low) !important; color: var(--dobby-text-muted) !important;
+  border: 1px dashed var(--dobby-line) !important; border-radius: var(--dobby-radius-control) !important;
+  padding: 16px !important; font: 400 var(--dobby-size-body)/1.5 var(--dobby-font-body) !important;
+}
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) :is(p, li) { color: inherit; }
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) :is(.notice, .fv2-error, .fv2-conflict, .fds-hint, .fds-notice, .house-alert, .v21-alert, .v21-health-warning) {
+  background: var(--dobby-surface-low) !important; color: var(--dobby-text-muted) !important; border-color: var(--dobby-gold-deep) !important;
+  border-radius: var(--dobby-radius-control) !important; font: 500 var(--dobby-size-label)/1.65 var(--dobby-font-label) !important;
+}
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) .fv2-error { color: var(--dobby-danger) !important; }
+
+/* Four reusable button variants, including their true existing disabled states. */
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) button,
+body.dobby-v6 #screen .family-action {
+  min-height: 44px !important; max-width: 100%; padding: 10px 12px;
+  border: 1px solid var(--dobby-line) !important; border-radius: var(--dobby-radius-control) !important;
+  background: var(--dobby-surface-raised) !important; color: var(--dobby-text) !important;
+  font: 600 var(--dobby-size-label)/1.5 var(--dobby-font-label) !important;
+  white-space: normal; overflow-wrap: anywhere; box-shadow: none !important;
+}
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) button[data-dv6-variant="primary"],
+body.dobby-v6 #screen :is(button.active, button.selected, button[aria-pressed="true"], .family-action:not(.secondary)) {
+  background: linear-gradient(110deg, var(--dobby-gold), var(--dobby-gold-deep)) !important;
+  color: var(--dobby-bg) !important; border-color: var(--dobby-gold) !important;
+}
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) button[data-dv6-variant="danger"] { color: var(--dobby-danger) !important; background: var(--dobby-surface-low) !important; border-color: var(--dobby-danger) !important; }
+body.dobby-v6 #screen :is(.dv6-quiet, .v21-text-link, .v2-text-link, .st-mini-link, .v2-search-link) { background: transparent !important; color: var(--dobby-gold) !important; border-color: transparent !important; }
+body.dobby-v6 #screen .dv6-primary { min-height: 52px !important; font-size: 14px !important; padding: 12px 18px !important; }
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) button .dv6-icon { margin-right: 5px; font-size: 20px; }
+body.dobby-v6 :is(button, input, select, textarea):disabled { opacity: .5 !important; cursor: not-allowed !important; }
+body.dobby-v6 button[aria-busy="true"] { cursor: progress; opacity: .7; }
+@media (hover: hover) { body.dobby-v6 button:not(:disabled):hover { filter: brightness(1.1); } }
+
+/* Fields and labels, shared by full-page editors and every family modal. */
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) label {
+  color: var(--dobby-text-muted) !important; font: 600 var(--dobby-size-label)/1.6 var(--dobby-font-label) !important;
+}
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
+  box-sizing: border-box; width: 100%; min-width: 0; max-width: 100%; min-height: 44px !important;
+  padding: 10px 12px !important; border: 1px solid var(--dobby-line) !important;
+  border-radius: var(--dobby-radius-control) !important; background: var(--dobby-surface-raised) !important;
+  color: var(--dobby-text) !important; font: 500 16px/1.5 var(--dobby-font-label) !important;
+}
+body.dobby-v6 :is(input, textarea)::placeholder { color: var(--dobby-text-muted) !important; opacity: .8 !important; }
+body.dobby-v6 input::file-selector-button { background: var(--dobby-surface-low); color: var(--dobby-gold); border: 1px solid var(--dobby-line); padding: 8px; border-radius: 8px; margin-right: 8px; font: inherit; }
+body.dobby-v6 :is(input, select, textarea)[aria-invalid="true"] { border-color: var(--dobby-danger) !important; }
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) input[type="checkbox"] { flex-shrink: 0; width: 22px; height: 22px; min-height: 22px; accent-color: var(--dobby-gold); background: var(--dobby-surface-low); border-color: var(--dobby-gold); }
+body.dobby-v6 #screen label:has(input[type="checkbox"]) { min-height: 44px; align-content: center; }
+body.dobby-v6 :is(#screen, #fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog) summary { color: var(--dobby-gold) !important; font: 600 var(--dobby-size-label)/1.6 var(--dobby-font-label) !important; min-height: 44px; align-content: center; cursor: pointer; }
+body.dobby-v6 :is(.fv2-modal, .fp-dialog, .fms-dialog, .fh-dialog) {
+  background: var(--dobby-surface) !important; color: var(--dobby-text) !important;
+  border: 1px solid var(--dobby-line) !important; border-radius: var(--dobby-radius) !important;
+  width: min(480px, 100%) !important; padding: 24px 16px !important; box-shadow: var(--dobby-shadow);
+}
+body.dobby-v6 :is(.fv2-module, .fv2-flag) { background: var(--dobby-surface-low) !important; color: var(--dobby-text-muted) !important; border-color: var(--dobby-line-soft) !important; }
+body.dobby-v6 :is(.fv2-modal, .fp-dialog, .fms-dialog, .fh-dialog) p { color: var(--dobby-text-muted) !important; font: 500 var(--dobby-size-label)/1.65 var(--dobby-font-label) !important; }
+body.dobby-v6 :is(.fv2-close, .fp-close, .fms-close, .fh-close) { width: 44px !important; height: 44px !important; padding: 0 !important; display: grid; place-items: center; }
+body.dobby-v6 :is(.fv2-close, .fp-close, .fms-close, .fh-close) .dv6-icon { margin: 0 !important; }
+
+/* Wrapping is deliberate: all filters remain visible and usable at 320px. */
+body.dobby-v6 #screen :is(.st5-tabs, .v21-filter-line, .v21-segment, .v23-mode-switch, .v21-card-actions) { display: flex; flex-wrap: wrap; gap: 8px; overflow: visible; }
+body.dobby-v6 #screen .st5-tab { flex: 1 1 110px; }
+body.dobby-v6 #screen :is(.st5-two, .st5-quick-grid, .st-shortcuts, .doc-grid, .house-fields, .two, .family-cols) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+body.dobby-v6 #screen :is(.row, .v2-panel-head, .v2-screen-heading, .st5-row, .topactions, .v21-health-heading) { flex-wrap: wrap; gap: 10px; }
+body.dobby-v6 #screen :is(.v21-entry, .v2-meal-row) { width: 100%; text-align: left; }
+body.dobby-v6 #screen .v21-entry { background: transparent !important; border-width: 0 0 1px !important; border-radius: 0 !important; }
+body.dobby-v6 #screen :is(.v21-entry-main, .v2-meal-content, .fp-event-details, .fms-task-content, .st5-agenda-row > span:last-child) { min-width: 0; overflow-wrap: anywhere; }
+body.dobby-v6 #screen :is(.v21-entry-main strong, .st5-quick-grid strong, .st-shortcuts button, .v21-entry-main small) { white-space: normal; }
+body.dobby-v6 #screen .v2-cal-day { min-height: 44px !important; height: auto; padding: 5px 1px !important; border-color: transparent !important; background: transparent !important; color: var(--dobby-text-muted) !important; }
+body.dobby-v6 #screen .v2-cal-day.selected { background: var(--dobby-gold) !important; color: var(--dobby-bg) !important; }
+body.dobby-v6 #screen .v2-weekdays span { color: var(--dobby-text-muted); }
+body.dobby-v6 #screen :is(.v2-calendar-grid .dot-mid, .v2-cal-legend .dot-mid) { background: var(--dobby-sage) !important; }
+body.dobby-v6 #screen :is(.v2-calendar-grid .dot-night, .v2-cal-legend .dot-night) { background: var(--dobby-gold) !important; }
+body.dobby-v6 #screen :is(.v2-cal-legend, .v2-month-head strong) { color: var(--dobby-text-muted) !important; }
+body.dobby-v6 #screen .st4-top { margin: 0 0 24px !important; padding: 16px !important; border-radius: var(--dobby-radius); background: var(--dobby-surface) !important; }
+body.dobby-v6 #screen .st4-index { display: grid; gap: 10px; }
+@media (max-width: 359px) {
+  body.dobby-v6 #screen :is(.two, .family-cols, .doc-grid, .house-fields, .st5-two, .st5-quick-grid, .tm-fields) { grid-template-columns: minmax(0, 1fr); }
+  body.dobby-v6 #screen :is(.fv2-panel, .fp-panel, .fms-panel, .fds-panel, .fh-panel, .card) { padding: 12px !important; }
+}

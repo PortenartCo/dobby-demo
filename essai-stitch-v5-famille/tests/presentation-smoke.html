@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><title>DOBBY V6 — parcours de présentation</title>
+<h1>Présentation V6 — navigateur hors ligne</h1>
+<div id="status" data-result="RUNNING">RUNNING</div>
+<iframe id="preview" src="../index.html" style="width:390px;height:844px"></iframe>
+<script>
+(async function () {
+  const status = document.getElementById('status');
+  const iframe = document.getElementById('preview');
+  const assert = (value, message) => { if (!value) throw Error(message); };
+  const tick = () => new Promise(resolve => setTimeout(resolve, 30));
+  try {
+    for (let n = 0; n < 180 && !iframe.contentWindow.DobbyPresentation; n++) await tick();
+    const w = iframe.contentWindow, d = iframe.contentDocument;
+    assert(w.DobbyPresentation?.version === 6, 'Chargeur V6 absent');
+    const state = () => JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108'));
+    const fields = ['familyMembers','familyDocs','familyNotes','famContacts','famLists','famHealth','manualMissions','sharedHealthVisits','houseItems','planned'];
+    const snapshot = JSON.stringify(fields.map(k => state()[k]));
+    for (const route of ['plan','home','missions','family']) {
+      w.go(route); await tick();
+      assert(d.querySelectorAll('.dv6-hero').length === 1, route + ': hero unique');
+      assert(d.querySelectorAll('#screen h1').length === 1, route + ': titre unique');
+      assert(d.querySelector('.nav [aria-current="page"]')?.dataset.go === route, route + ': navigation active');
+      assert(d.querySelectorAll('.nav button').length === 4, route + ': quatre entrées');
+    }
+    assert(JSON.stringify(fields.map(k => state()[k])) === snapshot, 'La présentation a modifié les données métier');
+    d.getElementById('menubtn').click(); await tick();
+    assert(!d.getElementById('menu').classList.contains('hidden'), 'Menu fermé après ouverture');
+    assert(d.getElementById('menubtn').getAttribute('aria-expanded') === 'true', 'État accessible du menu incorrect');
+    d.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); await tick();
+    assert(d.getElementById('menu').classList.contains('hidden'), 'Échap ne ferme pas le menu');
+    d.querySelector('.dv6-profile').click(); await tick();
+    assert(!d.getElementById('fv2Overlay').hidden, 'Compte familial inaccessible depuis l’en-tête');
+    d.querySelector('[data-fv-action="close"]').click();
+    w.go('documents'); await tick();
+    d.querySelector('[data-doc="new"]').click(); await tick();
+    let form = d.getElementById('familyDocForm');
+    assert(form && !d.querySelector('.dv6-hero'), 'Éditeur document sans hero');
+    const title = form.querySelector('[name="title"]');
+    assert(d.querySelector('label[for="' + title.id + '"]'), 'Label du titre non associé');
+    title.value = 'Document de test présentation V6';
+    form.querySelector('[type="submit"]').click(); await tick();
+    const saved = state().familyDocs.find(x => x.title === 'Document de test présentation V6');
+    assert(saved, 'Enregistrement du document après harmonisation');
+    assert(d.querySelector('[data-doc="edit"][data-id="' + saved.id + '"]'), 'Fiche document après rendu direct');
+    d.querySelector('[data-dv6-back]').click(); await tick();
+    assert(d.querySelector('[data-doc="view"][data-id="' + saved.id + '"]'), 'Retour document ne rejoint pas la liste');
+    w.go('house'); await tick();
+    d.querySelector('[data-house-action="new"]').click(); await tick();
+    assert(d.getElementById('houseForm'), 'Éditeur équipement inaccessible');
+    assert(d.querySelector('.v2-header').dataset.view === 'form', 'Rendu direct équipement sans en-tête de formulaire');
+    d.querySelector('[data-dv6-back]').click(); await tick();
+    assert(!d.getElementById('houseForm'), 'Retour équipement ne ferme pas l’éditeur');
+    w.go('missions'); await tick();
+    d.querySelector('.dv6-primary').click(); await tick();
+    form = d.getElementById('fmsForm');
+    assert(form, 'Action principale Missions non raccordée');
+    form.querySelector('[name="title"]').value = 'Mission de test présentation V6';
+    form.querySelector('[type="submit"]').click(); await tick();
+    assert(state().manualMissions.some(x => x.title === 'Mission de test présentation V6'), 'Mission non sauvegardée');
+    status.dataset.result = 'PASS';
+    status.textContent = 'PASS — navigation, compte, données inchangées, documents, équipements et missions';
+  } catch (e) {
+    status.dataset.result = 'FAIL'; status.textContent = 'FAIL — ' + e.message;
+  }
+})();
+</script></html>

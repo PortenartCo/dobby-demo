@@ -58,6 +58,40 @@
       screen.querySelector('.dv6-page-head').after(tabs);
     }
   }
+  function decorateControls(container) {
+    for (const button of container.querySelectorAll('button:not([data-dv6-control])')) {
+      button.dataset.dv6Control = '';
+      const text = button.textContent.trim();
+      const actions = [...button.attributes].filter(a => a.name.startsWith('data-')).map(a => a.value).join(' ');
+      const destructive = /(?:^|\s)(?:delete|deletenote|remove|rmextra|delete-member)(?:\s|$)/.test(actions) || /^Supprimer\b/i.test(text);
+      const primary = button.matches('[type="submit"], .dv6-primary, .st5-solid, .st-primary, .fms-main, .fp-main-btn, .fh-primary, .v21-main-button, .btn:not(.secondary):not(.outline)');
+      button.dataset.dv6Variant = destructive ? 'danger' : primary ? 'primary' : 'secondary';
+      // Only decorate controls, never user-supplied record titles inside cards.
+      if (button.children.length || button.closest('.nav, .v2-header') || button.matches('.st5-day, .v2-cal-day')) continue;
+      const route = button.dataset.go || button.dataset.extra;
+      const routeSymbol = roots[route]?.[1] || ({ recipes: 'menu_book', shop: 'shopping_basket', house: 'home', documents: 'description', contacts: 'person', lists: 'checklist', health: 'groups', search: 'search', chat: 'auto_awesome' })[route];
+      let symbol = destructive ? 'delete' : /close/.test(actions) || text === '×' ? 'close'
+        : /Retour|^[‹←]/i.test(text) ? 'arrow_back' : /^(?:＋|\+|Ajouter|Créer)/i.test(text) ? 'add'
+        : /Modifier/i.test(text) ? 'edit' : /Télécharger|Exporter/i.test(text) ? 'download'
+        : /Importer/i.test(text) ? 'upload' : /Enregistrer|Valider/i.test(text) ? 'check' : routeSymbol || '';
+      if (!symbol) continue;
+      const label = text.replace(/^[^\p{L}\p{N}]+/u, '').trim();
+      button.innerHTML = icon(symbol);
+      if (label) button.append(document.createTextNode(label));
+      else if (!button.hasAttribute('aria-label')) button.setAttribute('aria-label', symbol === 'close' ? 'Fermer' : 'Ajouter');
+    }
+    // V5 labels often precede their controls without an explicit association.
+    let labelNumber = 0;
+    for (const label of container.querySelectorAll('label:not([for])')) {
+      const field = label.nextElementSibling;
+      if (!label.querySelector('input, select, textarea') && field?.matches('input, select, textarea')) {
+        if (!field.id) {
+          do { field.id = 'dv6-field-' + (++labelNumber); } while (document.querySelectorAll('[id="' + field.id + '"]').length > 1);
+        }
+        label.htmlFor = field.id;
+      }
+    }
+  }
   header.innerHTML = '<button type="button" id="menubtn" class="dv6-header-button" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false">' + icon('menu') + '</button>'
     + '<button type="button" class="v2-brand dv6-brand" data-go="home" aria-label="Accueil Dobby"><strong>DOBBY</strong><small id="dv6Chapter">Traverse</small></button>'
     + '<button type="button" class="dv6-header-button dv6-profile" data-fv-action="open" aria-label="Compte et foyer">' + icon('person') + '</button>';
@@ -94,6 +128,23 @@
     const key = String(st.extraPage || '').split(':')[0] || st.page;
     const root = Boolean(roots[key] && !st.detail && !st.extraPage);
     if (root) decorateRoot(key);
+    if (!screen.querySelector('h1')) {
+      const title = document.createElement('h1');
+      title.textContent = chapters[key] || 'Le foyer'; screen.prepend(title);
+    }
+    for (const title of [...screen.querySelectorAll('h1')].slice(1)) {
+      const heading = document.createElement('h2');
+      for (const attr of title.attributes) heading.setAttribute(attr.name, attr.value);
+      heading.append(...title.childNodes); title.replaceWith(heading);
+    }
+    if (key === 'menu') {
+      for (const note of screen.querySelectorAll('.v2-panel .v2-understated')) {
+        if (note.textContent.includes('la synchronisation familiale ne sont pas encore raccordés')) {
+          note.textContent = 'Les données du foyer peuvent être synchronisées avec Supabase après connexion et activation des modules. Certaines fonctions et pièces jointes restent locales.';
+        }
+      }
+    }
+    decorateControls(screen);
     document.getElementById('dv6Chapter').textContent = roots[key]?.[0] || chapters[key] || 'Le foyer';
     back.hidden = root;
     document.getElementById('menubtn').hidden = !root;
@@ -110,6 +161,9 @@
   render = function () { previousRender(); decorate(); };
   // Documents and equipment also have direct DOM renderers in V5.
   new MutationObserver(decorate).observe(screen, { childList: true, subtree: true });
+  new MutationObserver(() => {
+    for (const layer of document.querySelectorAll('#fv2Overlay, #fpDialogLayer, #fmsLayer, #fhDialog')) decorateControls(layer);
+  }).observe(document.body, { childList: true, subtree: true });
   window.DobbyPresentation = Object.freeze({ version: 6 });
   decorate();
 })();
