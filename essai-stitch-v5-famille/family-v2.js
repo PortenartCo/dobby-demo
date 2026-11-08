@@ -5,6 +5,7 @@
 const PROJECT = 'https://pqcdkrwljgvgagzwrcmg.supabase.co';
 const DB_NAME = 'dobby-v5-household-preview-v2';
 const KEY_PREFIX = 'sb_publishable_';
+const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
   db: null, core: null, key: null, session: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
@@ -343,8 +344,10 @@ function createOverlay() {
 function refreshModal() {
   const target = document.getElementById('fv2ModalBody');
   if (!target) return;
+  const copyOld = localStorage.getItem(OLD_V5_KEY) ?
+    '<button type="button" data-fv-action="import-original">Importer mes données de l’ancien essai V5 (sans les fichiers joints)</button>' : '';
   if (!f.session || !f.context) {
-    target.innerHTML = '<h2>Connexion familiale</h2><p class="fv2-muted">Utilisez votre compte Supabase Dobby. Aucune clé secrète ne doit être saisie.</p>' +
+    target.innerHTML = '<h2>Connexion familiale</h2><p class="fv2-muted">Utilisez votre compte Supabase Dobby. Aucune clé secrète ne doit être saisie.</p>' + copyOld +
       '<button type="button" data-fv-action="pilot-key">Retrouver la clé publique du pilote Sync V2</button>' +
       '<form id="fv2LoginForm"><label>Clé publique<input name="key" autocomplete="off" placeholder="sb_publishable_…" value="' +
       esc(f.key || '') + '" required></label>' +
@@ -360,7 +363,7 @@ function refreshModal() {
     '<p class="fv2-muted">Panier familial partagé : ' + visible().length + ' article(s). Les fichiers médicaux et pièces jointes restent locaux.</p>' +
     '<p class="fv2-minor">' + esc(status()) + '</p>' +
     '<div class="fv2-actions"><button type="button" data-fv-action="sync">Synchroniser</button>' +
-    '<button type="button" data-fv-action="logout">Se déconnecter</button></div>' +
+    '<button type="button" data-fv-action="logout">Se déconnecter</button></div>' + copyOld +
     '<h3>Modules du foyer</h3>' + modules;
 }
 function openModal() {
@@ -374,6 +377,35 @@ function closeModal() {
   f.modalOpen = false;
   const overlay = document.getElementById('fv2Overlay');
   if (overlay) overlay.hidden = true;
+}
+function importOriginalLocal() {
+  const raw = localStorage.getItem(OLD_V5_KEY);
+  if (!raw) throw Error('Aucune donnée V5 locale précédente sur cet appareil');
+  const parsed = JSON.parse(raw);
+  if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') throw Error('Données V5 invalides');
+  if (!confirm('Importer les menus, recettes, missions, équipements et informations familiales de l’ancien essai V5 sur cet appareil ?\n' +
+    'Cette importation est uniquement locale, sans mise en ligne automatique. Les fichiers PDF et images restent dans l’ancien essai. Une sauvegarde du nouvel essai sera créée.')) return;
+  const snapshot = JSON.stringify(st);
+  localStorage.setItem('dobby-v5-familial-before-import-' + Date.now(), snapshot);
+  const fields = ['planned','customRecipes','tmAdaptations','shopHistory','shopFinal','shopChoice','extras',
+    'autoTasks','houseItems','houseLogs','familyMembers','famContacts','famLists','famHealth',
+    'familyNotes','v2ChatHistory'];
+  for (const key of fields) if (Object.prototype.hasOwnProperty.call(parsed,key)) {
+    st[key] = JSON.parse(JSON.stringify(parsed[key]));
+  }
+  if (Array.isArray(parsed.familyDocs)) {
+    st.familyDocs = parsed.familyDocs.map(x => {
+      const d = {...x};
+      d.attachmentName = ''; d.attachmentType = '';
+      return d;
+    });
+  }
+  if (Array.isArray(st.customRecipes)) custom = st.customRecipes;
+  st.demoInitialized = true;
+  st.page='home';st.extraPage='';st.detail=null;
+  save();render();
+  f.notice='Les données de l’ancien essai V5 ont été copiées localement. Aucune publication sur Supabase.';
+  refreshModal();
 }
 function validateKey(rawKey) {
   const value = String(rawKey || '').trim();
@@ -505,6 +537,7 @@ document.addEventListener('click', async e => {
     if (action === 'open') return openModal();
     if (action === 'close') return closeModal();
     if (action === 'pilot-key') return await usePilotPublicKey();
+    if (action === 'import-original') return importOriginalLocal();
     if (action === 'logout') return await logout();
     if (action === 'sync') return await sync();
     if (action === 'import') return await importIngredients();
