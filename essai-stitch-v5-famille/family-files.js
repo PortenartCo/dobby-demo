@@ -12,7 +12,7 @@ const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs:[];
 const byId=id=>documents().find(x=>x.id===id);
 const active=()=>Boolean(api.getContext() && api.isModuleActive('contracts'));
 const detail=()=>typeof docDetail==='string' && docDetail ? byId(docDetail):null;
-const categoryAllowed=d=>Boolean(d&&d.category!=='Santé');
+const categoryAllowed=d=>Boolean(d);
 const CloudFields=['cloudPath','cloudName','cloudType','cloudSize'];
 function status(){
   if(busy)return '<p class="fds-notice">Transfert en cours…</p>';
@@ -39,10 +39,6 @@ function overview(){
     '</section>';
 }
 function detailPanel(d){
-  if(!categoryAllowed(d)){
-    return '<section class="fds-panel"><h2>Document personnel</h2><p class="fds-desc">'+
-      'Cette fiche Santé reste sur cet appareil. Le carnet de santé sera traité séparément.</p></section>';
-  }
   const shared=isShared(d),enabled=active();
   const pickable=enabled&&shared&&!busy;
   return '<section class="fds-panel" aria-label="Partage de document">'+
@@ -50,6 +46,7 @@ function detailPanel(d){
     (shared?'Fiche commune':'Sur cet appareil')+'</span></div>'+
     status()+
     (!enabled?'<p class="fds-hint">Ouvrez « Gérer le foyer » et activez « Documents et contrats » pour partager.</p>':'')+
+    (d.category==='Santé'&&!shared?'<p class="fds-desc">Cette fiche médicale reste privée tant que vous ne choisissez pas de la partager.</p>':'')+
     ((!['Contrats','Assurances'].includes(d.category))?
       '<button type="button" data-fds="toggle" data-id="'+esc(d.id)+'"'+(!enabled?' disabled':'')+'>'+
        (shared?'Arrêter le partage de cette fiche':'Partager cette fiche au foyer')+'</button>':'')+
