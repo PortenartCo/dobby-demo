@@ -145,7 +145,10 @@ function showForm(id){
     '<div class="fp-dialog-actions"><button type="submit" class="fp-main-btn">Enregistrer</button>'+
       '<button type="button" data-fp-action="close">Annuler</button></div></form></div>';
   form.hidden=false;
-  form.querySelector('#fpEventForm')?.addEventListener('submit',submitFamilyEvent);
+  const activeForm=form.querySelector('#fpEventForm');
+  if(!activeForm)throw Error('Formulaire Dobby introuvable');
+  activeForm.dataset.handlerAttached='yes';
+  activeForm.addEventListener('submit',submitFamilyEvent);
   form.querySelector('input[name=title]')?.focus();
 }
 function closeDialog(){
