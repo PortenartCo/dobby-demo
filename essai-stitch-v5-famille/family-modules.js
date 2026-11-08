@@ -32,6 +32,19 @@ function pick(id) {
   return data;
 }
 function digest(value) { return JSON.stringify(value); }
+function seededExampleMeals() {
+  // Fresh V5 demos include exactly three placeholder meals. No silent deletions.
+  if (st.demoInitialized !== true || !st.planned || typeof st.planned !== 'object') return false;
+  const rows = Object.entries(st.planned);
+  if (rows.length !== 3 || st.shopFinal || Object.keys(st.shopHistory || {}).length) return false;
+  const samples = [['chicken','soir',4],['pasta','soir',4],['toast','midi',2]];
+  return samples.every(([id,slot,people]) => rows.some(([date,m]) =>
+    /^\d{4}-\d{2}-\d{2}-(midi|soir)$/.test(date) &&
+    date.endsWith('-' + slot) &&
+    m?.id === id && Number(m.people) === people && m.status === 'prévu' &&
+    Object.keys(m).every(key => ['id','people','status'].includes(key))
+  ));
+}
 function storageKey() { return 'v2-module-state:' + ctx.userId + '|' + ctx.householdId; }
 async function persist() { if (ctx) await api.putMeta(storageKey(), states); }
 function rowQuery(id) {
@@ -124,6 +137,9 @@ function html() {
     return '<div class="fv2-module"><strong>' + esc(def.title) + '</strong>' +
       '<span class="fv2-flag">' + esc(flag) + '</span>' +
       (def.id === 'house' ? '<p>Pièces et scans toujours locaux.</p>' : '') +
+      (def.id === 'menus' && seededExampleMeals() ?
+        '<p>Trois repas de démonstration préchargés sont encore dans le calendrier. Ils ne correspondent pas à des menus familiaux confirmés.</p>' +
+        '<button type="button" data-fm-action="remove-demo" data-module="menus">Retirer les trois repas d’exemple</button>' : '') +
       (def.id === 'contracts' ? '<p>Seules les fiches des catégories Contrats et Assurances sont partagées; aucune pièce jointe.</p>' : '') +
       actions + '</div>';
   }).join('');
@@ -252,6 +268,14 @@ document.addEventListener('click', async e => {
     if (action === 'retry') { checked = false; await start(); }
     if (action === 'activate') await activate(id);
     if (action === 'refresh') await syncOne(id);
+    if (action === 'remove-demo' && seededExampleMeals()) {
+      if (!confirm('Retirer uniquement les trois repas préchargés ? Une sauvegarde locale sera créée. Si les menus sont partagés, la modification sera proposée au foyer.')) return;
+      backupLocal('menus');
+      st.planned = {};
+      st.demoInitialized = true;
+      save(); render();
+      if (states.menus?.active) await syncOne('menus');
+    }
     if (action === 'disable') {
       if (confirm('Arrêter le partage de ce module sur cet appareil ? Les données déjà partagées sur Supabase ne sont pas supprimées.')) {
         states[id].active=false;await persist();
