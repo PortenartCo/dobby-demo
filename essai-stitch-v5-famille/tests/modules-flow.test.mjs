@@ -41,9 +41,10 @@ function makeBackend() {
   return {rows,journal,authorized};
 }
 
-function makeClient(uid, backend, seeded = false) {
+function makeClient(uid, backend, seeded = false, accept = true) {
   const metadata = new Map();
   let handler, provider, changes = 0, localBackups = 0;
+  const prompts = [];
   const st = {
     page:'family',
     planned: seeded ? {
@@ -74,14 +75,14 @@ function makeClient(uid, backend, seeded = false) {
   const env = {
     st, custom:st.customRecipes, window:{DobbyFamilyUI:api},
     document:{addEventListener:(type,fn)=>{if(type==='click') handler=fn;}},
-    save:()=>{changes++;},render:()=>{},confirm:()=>true,
+    save:()=>{changes++;},render:()=>{},confirm:(msg)=>{prompts.push(msg);return accept;},
     localStorage:{setItem:()=>{localBackups++;}},
     setTimeout,clearTimeout,console
   };
   vm.runInNewContext(implementation,env,{filename:'family-modules.js',timeout:2500});
   assert.ok(provider);
   return {
-    st,provider,metadata,
+    st,provider,metadata,prompts,
     get changes(){return changes;},
     get localBackups(){return localBackups;},
     async action(action,module) {
@@ -161,4 +162,37 @@ test('customized or actual meal plans are never offered for automated demo delet
   await c.provider.start();
   c.st.planned['2026-11-10-soir']={id:'custom',people:3,status:'prévu'};
   assert.doesNotMatch(c.provider.html(),/Retirer les trois repas d’exemple/);
+});
+
+
+test('a fresh household activates all six modules with one consent and excludes demo meals',async()=>{
+  const backend=makeBackend(), a=makeClient('user-a',backend,true);
+  await a.provider.start();
+  assert.match(a.provider.html(),/Activer les 6 modules du foyer/);
+  await a.action('activate-all');
+  assert.equal(a.prompts.length,1);
+  assert.equal(backend.rows.size,6);
+  assert.equal(Object.keys(backend.rows.get('menus').payload.planned).length,0);
+  assert.equal(Object.keys(a.st.planned).length,0);
+  assert.ok(a.localBackups > 0);
+  assert.doesNotMatch(a.provider.html(),/Activer les 6 modules du foyer/);
+  for (const name of MODULES) assert.ok(backend.rows.has(name));
+  assert.equal(JSON.stringify(backend.rows.get('family').payload).includes('private medical appointment'),false);
+  assert.equal(JSON.stringify(backend.rows.get('house').payload).includes('warranty'),false);
+  assert.equal(JSON.stringify(backend.rows.get('contracts').payload).includes('secret.pdf'),false);
+  const b=makeClient('user-b',backend,false);
+  await b.provider.start();
+  await b.action('join-family');
+  assert.equal(b.prompts.length,1);
+  assert.equal(backend.rows.size,6);
+});
+
+test('refusing group activation does not publish data or remove example meals',async()=>{
+  const backend=makeBackend(),a=makeClient('user-a',backend,true,false);
+  await a.provider.start();
+  await a.action('activate-all');
+  assert.equal(a.prompts.length,1);
+  assert.equal(backend.rows.size,0);
+  assert.equal(Object.keys(a.st.planned).length,3);
+  assert.equal(a.localBackups,0);
 });
