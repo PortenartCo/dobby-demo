@@ -146,13 +146,18 @@
 })();
 /* Isolated V5 family preview: legacy HTML remains unchanged. */
 (function(){
- const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-4';document.head.append(css);
- const agendaCss=document.createElement('link');agendaCss.rel='stylesheet';agendaCss.href='./family-agenda.css?v=20261108-4';document.head.append(agendaCss);
- const js=document.createElement('script');js.src='./family-v2.js?v=20261108-4';js.defer=true;
+ const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-5';document.head.append(css);
+ const agendaCss=document.createElement('link');agendaCss.rel='stylesheet';agendaCss.href='./family-agenda.css?v=20261108-5';document.head.append(agendaCss);
+ const js=document.createElement('script');js.src='./family-v2.js?v=20261108-5';js.defer=true;
  js.onload=function(){
-   const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-4';
+   const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-5';
    modules.onload=function(){
-     const agenda=document.createElement('script');agenda.src='./family-agenda.js?v=20261108-4';
+     const missionsCss=document.createElement('link');missionsCss.rel='stylesheet';missionsCss.href='./family-missions.css?v=20261108-5';document.head.append(missionsCss);
+     const agenda=document.createElement('script');agenda.src='./family-agenda.js?v=20261108-5';
+     agenda.onload=function(){
+       const missions=document.createElement('script');missions.src='./family-missions.js?v=20261108-5';
+       document.body.append(missions);
+     };
      document.body.append(agenda);
    };
    document.body.append(modules);
