@@ -8,7 +8,7 @@ const KEY_PREFIX = 'sb_publishable_';
 const f = {
   db: null, core: null, key: null, session: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
-  lastSync: null, error: '', ready: false, modalOpen: false, provider: null
+  lastSync: null, error: '', notice: '', ready: false, modalOpen: false, provider: null
 };
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
@@ -292,6 +292,7 @@ function shopPanel() {
     '<div class="fv2-head"><span class="fv2-mark">✧ Dobby · Foyer familial</span><span class="fv2-status">' + esc(syncStatus) + '</span></div>' +
     '<h2>Le panier commun</h2><div class="fv2-actions">' + actions + '</div>' +
     (f.error ? '<p class="fv2-error" role="status">' + esc(f.error) + '</p>' : '') +
+    (f.notice ? '<p class="fv2-minor" role="status">' + esc(f.notice) + '</p>' : '') +
     form + fromMeal + '</section>';
 }
 function strip() {
@@ -326,7 +327,7 @@ function repaint() {
   repaintQueued = true;
   queueMicrotask(() => {
     repaintQueued = false;
-    if (st.page === 'shop' || !document.activeElement?.closest('#screen form')) render();
+    if (!document.activeElement?.closest('#screen form')) render();
     if (f.modalOpen && !document.activeElement?.closest('#fv2LoginForm')) refreshModal();
   });
 }
@@ -490,7 +491,8 @@ async function importIngredients() {
     await add(title, row.quantity, row.unit, key, row.checked, key);
     active.add(label); added++;
   }
-  f.error = added + ' nouvel(le)(s) article(s) préparé(s), ' + duplicates + ' déjà présent(s).';
+  f.error = '';
+  f.notice = added + ' nouvel(le)(s) article(s) préparé(s), ' + duplicates + ' déjà présent(s).';
   repaint();
   if (added) void sync();
 }
