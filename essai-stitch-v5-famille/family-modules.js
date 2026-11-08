@@ -9,7 +9,7 @@ const DEFINITIONS = [
   { id:'recipes', title:'Recettes et Thermomix', keys:['customRecipes','tmAdaptations'], pages:['recipes'] },
   { id:'missions', title:'Missions familiales', keys:['autoTasks','manualMissions'], pages:['missions'] },
   { id:'house', title:'Maison et entretiens', keys:['houseItems','houseLogs'], pages:['house'] },
-  { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists','familyEvents'], pages:['family'] },
+  { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'], pages:['family'] },
   { id:'contracts', title:'Documents et contrats du foyer', keys:[], pages:['documents'] }
 ];
 const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));
