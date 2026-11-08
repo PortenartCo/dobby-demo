@@ -1,7 +1,7 @@
 /* Shared medical appointments: voluntary entries on existing household family module. */
 (async function(){
 'use strict';
-const core=await import('./family-health-core.mjs?v=20261108-6');
+const core=await import('./family-health-core.mjs?v=20261108-7');
 const api=window.DobbyFamilyUI,esc=api.esc;
 if(!Array.isArray(st.sharedHealthVisits))st.sharedHealthVisits=[];
 const today=()=>{
