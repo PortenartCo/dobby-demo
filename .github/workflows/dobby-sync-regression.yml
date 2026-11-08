@@ -45,5 +45,5 @@ jobs:
           node --test essai-sync-v1/tests/*.test.mjs
           node --test essai-sync-v2/tests/*.test.mjs
           node --test essai-stitch-v5-famille/tests/*.test.mjs
-      - name: Confirm original Stitch V5 HTML is unchanged
-        run: cmp essai-stitch-v5/index.html essai-stitch-v5-famille/index.html
+      - name: Check isolated Stitch V5 source and storage
+        run: node --test essai-stitch-v5-famille/tests/integration.test.mjs
