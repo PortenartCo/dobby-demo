@@ -5,7 +5,7 @@ const currentScreen=document.body.dataset.dv7Screen||'taverne';
 const ROOT_PAGES={home:'traverse.html',missions:'missions.html',plan:'index.html',family:'famille.html'};
 const panel=document.getElementById('dv7-panel');
 const title=document.getElementById('dv7-panel-title');
-let lastTrigger=null, booted=false;
+let lastTrigger=null, booted=false, starting=false;
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const displayNum=n=>Number(n||0).toLocaleString('fr-BE');
 const dateLabel=iso=>{const d=new Date(iso+'T12:00:00');return Number.isFinite(d.getTime())?d.toLocaleDateString('fr-BE',{weekday:'long',day:'numeric',month:'long'}):iso;};
@@ -45,7 +45,12 @@ if(currentScreen==='missions'){for(const el of document.querySelectorAll('main b
  const tip=[...document.querySelectorAll('main p')].find(x=>x.textContent.includes('Dobby a déjà regroupé les ingrédients'));if(tip)tip.textContent='Dobby vous aide à organiser les repas et les provisions réellement enregistrés dans votre foyer.';
 }
 function removeUnfounded(){const falseSecurity=sectionContaining('SCEAU DE PROTECTION LOCALE DOBBY');if(falseSecurity)falseSecurity.remove();const tip=sectionContaining('ASTUCE DE DOBBY');if(tip){const p=tip.querySelector('p');if(p)p.textContent='Dobby vous aide à organiser vos repas et provisions à partir des données de votre foyer.';}}
-function open(route,trigger,recipeId=null,date=null){lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;const activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}
+function open(route,trigger,recipeId=null,date=null){lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;if(window.DobbyCuisine?.handles(route)){
+ const view=recipeId?'recipe':route==='plan'?(date?'pick':'taverne'):route;
+ if(currentScreen==='taverne'){window.DobbyCuisine.open(view,{id:recipeId,date:date||undefined}).catch(e=>console.error(e));}
+ else location.href='./index.html#'+view+(recipeId?'?id='+encodeURIComponent(recipeId):'');
+ return;
+}const activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}
 try{if(date){w.eval('st.day='+JSON.stringify(date)+'; st.slot="soir"; save();');route='plan';}
 if(route==='mission-new'){w.eval('go("missions")');w.document.querySelector('[data-fms-action="new"]')?.click();title.textContent='Créer une mission';}
 else if(route==='event-new'){w.eval('go("family")');w.document.querySelector('[data-fp-action="new"]')?.click();title.textContent='Nouvel événement';}
@@ -55,7 +60,7 @@ else{w.eval('go('+JSON.stringify(route)+')');title.textContent=({recipes:'Grimoi
 panel.hidden=false;document.body.classList.add('dv7-panel-visible');document.getElementById('dv7-close').focus();}catch(e){console.error('Dobby V7: action non disponible',e);}
 }
 function close(){panel.hidden=true;document.body.classList.remove('dv7-panel-visible');try{renderReal();}catch(e){console.error(e)}lastTrigger?.focus?.();}
-function renderReal(){const data=read();if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}else{window.DobbyStitchRootAdapters.render(currentScreen,data);} sanitizeClaims();document.querySelector('main').style.visibility='visible';document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');}
+function renderReal(){if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();const data=read();if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}else{window.DobbyStitchRootAdapters.render(currentScreen,data);} sanitizeClaims();document.querySelector('main').style.visibility='visible';document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');}
 function bind(){document.getElementById('dv7-close').addEventListener('click',close);
 document.addEventListener('click',ev=>{if(panel.hidden===false)return;const rec=ev.target.closest('[data-dv7-recipe]');if(rec){ev.preventDefault();open('recipes',rec,rec.dataset.dv7Recipe);return;}const date=ev.target.closest('[data-dv7-date]');if(date){ev.preventDefault();open('plan',date,null,date.dataset.dv7Date);return;}const route=ev.target.closest('[data-dv7-route]');if(route){ev.preventDefault();open(route.dataset.dv7Route,route);return;}const tab=ev.target.closest('[data-tab]');if(tab){ev.preventDefault();const x=({menu:'plan',grimoire:'recipes',provisions:'shop'})[tab.dataset.tab];if(x&&x!=='plan')open(x,tab);return;}const nav=ev.target.closest('nav button, nav a');if(nav){ev.preventDefault();const t=nav.textContent.toLowerCase();const name=t.includes('traverse')?'home':t.includes('mission')?'missions':t.includes('famille')?'family':t.includes('taverne')?'plan':null;if(name&&name!=='plan')open(name,nav);return;}
 const b=ev.target.closest('button');if(!b)return;
@@ -72,7 +77,9 @@ const sound=document.getElementById('btn-sound-toggle');sound?.remove();
 for(const icon of document.querySelectorAll('header .material-symbols-outlined'))if(icon.textContent.trim()==='person'){const button=icon.closest('button,[role="button"],div.cursor-pointer');if(button){button.setAttribute('role','button');button.tabIndex=0;button.setAttribute('aria-label','Ouvrir le compte familial');button.addEventListener('click',e=>{e.preventDefault();open('account',button)});button.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open('account',button)}})}}
 const hero=document.querySelector('main img[alt*="Dobby"]');if(hero){const img=({taverne:'taverne',traverse:'traverse',missions:'missions',famille:'famille'})[currentScreen];hero.src='../essai-v6-preview/assets/v6/'+img+'.png';hero.alt='Dobby dans '+({taverne:'la Taverne',traverse:'la Traverse',missions:'la Bibliothèque des Missions',famille:'le Salon des Curiosités'})[currentScreen];}
 }
-function start(){if(booted)return;const w=engine();try{if(!w||w.eval('typeof st!=="object"||typeof go!=="function"||typeof shoppingDraft!=="function"'))return;}catch{return;}try{bind();renderReal();booted=true;}catch(e){console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';}}
+function start(){if(booted||starting)return;const w=engine();try{if(!w||!w.DobbyFamilyHealth||w.eval('typeof st!=="object"||typeof go!=="function"||typeof shoppingDraft!=="function"'))return;}catch{return;}
+starting=true;try{bind();Promise.resolve(currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):renderReal()).then(()=>{booted=true;starting=false;}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}
+
 frame.addEventListener('load',()=>{const attempt=()=>{if(booted)return;start();if(!booted)setTimeout(attempt,200);};attempt();});
 setTimeout(()=>{if(!booted){document.getElementById('dv7-loading').textContent='Dobby ne parvient pas à ouvrir le foyer. Réessayez en rechargeant la page.';}},20000);
 window.DobbyStitchV7=Object.freeze({version:7,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
