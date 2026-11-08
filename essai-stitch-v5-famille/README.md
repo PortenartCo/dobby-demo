@@ -11,10 +11,10 @@
 - Un compte doit appartenir à un seul foyer actif dans ce pilote.
 - Un même profil de navigateur est réservé à un seul foyer afin d'éviter de mélanger les données locales ; changer de foyer exige un profil navigateur distinct. Il ne s'agit pas encore d'une application multi-foyers complète sur appareil partagé.
 
-## Autres modules préparés, mais EN ATTENTE de migration SQL
-La synchronisation opt-in des modules menus, recipes, missions, house, family et contracts est codée dans family-modules.js. **La table Supabase correspondante n'existe pas encore** dans le projet personnel. Le SQL proposé est disponible sous sql-proposals/dobby-v2-modules.sql. Les commits GitHub ne l'exécutent pas.
+## Modules familiaux — socle SQL déployé, synchronisation à confirmer en sessions réelles
+La synchronisation opt-in des modules menus, recipes, missions, house, family et contracts est codée dans family-modules.js. **La table Supabase a été créée et le contrôle SQL simulant deux membres et un extérieur a renvoyé PASS, selon les résultats fournis par l'utilisateur.** Les scripts GitHub n'exécutent aucune migration Supabase. La synchronisation réelle des six modules reste à valider avec les deux comptes connectés.
 
-Après application de ce SQL et vérification RLS, la synchronisation de chaque module devra être activée explicitement depuis « Gérer le foyer » ; elle ne sera jamais enclenchée par une simple navigation.
+La synchronisation de chaque module doit être activée explicitement depuis « Gérer le foyer », et ne se déclenche pas par une simple navigation. L'utilisateur indique avoir procédé à cette activation sur son compte. Sur le deuxième compte, un bouton permet maintenant de récupérer d'un seul geste les modules déjà partagés, avec sauvegarde locale préalable et confirmation. L'absence de changement SQL et la réussite des tests simulés ne prouvent pas encore une synchronisation complète avec deux véritables sessions.
 - Menus et préparations : planned, shopHistory, shopFinal et shopChoice.
 - Recettes personnalisées et adaptations Thermomix déjà enregistrées : customRecipes et tmAdaptations.
 - Missions : autoTasks.
@@ -23,6 +23,8 @@ Après application de ce SQL et vérification RLS, la synchronisation de chaque 
 - Contrats et assurances : métadonnées des fiches uniquement, sans les fichiers joints.
 
 Les versions familiales existantes ne doivent pas écraser silencieusement les données locales : sauvegarde de préimage et résolution de conflit sur version de module.
+
+La V5 peut précharger trois repas **fictifs** (poulet, pâtes, tartines) sur un appareil vierge. Si leur structure est toujours celle d'origine, l'écran « Gérer le foyer » les signale et propose un bouton facultatif pour les retirer, après confirmation et sauvegarde. Aucun véritable menu personnalisé n'est effacé automatiquement.
 
 ## Données intentionnellement exclues du partage
 - Santé et rendez-vous médicaux : famHealth, ainsi que les catégories de documents Santé.

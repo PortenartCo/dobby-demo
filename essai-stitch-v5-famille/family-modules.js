@@ -14,7 +14,7 @@ const DEFINITIONS = [
 ];
 const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));
 let ctx = null, backendReady = false, checked = false, states = {}, inFlight = false;
-let timer = null, applying = false, lastError = '';
+let timer = null, applying = false, lastError = '', sharedAvailable = [];
 const esc = api.esc;
 function pick(id) {
   if (id === 'contracts') {
@@ -32,6 +32,19 @@ function pick(id) {
   return data;
 }
 function digest(value) { return JSON.stringify(value); }
+function seededExampleMeals() {
+  // Fresh V5 demos include exactly three placeholder meals. No silent deletions.
+  if (st.demoInitialized !== true || !st.planned || typeof st.planned !== 'object') return false;
+  const rows = Object.entries(st.planned);
+  if (rows.length !== 3 || st.shopFinal || Object.keys(st.shopHistory || {}).length) return false;
+  const samples = [['chicken','soir',4],['pasta','soir',4],['toast','midi',2]];
+  return samples.every(([id,slot,people]) => rows.some(([date,m]) =>
+    /^\d{4}-\d{2}-\d{2}-(midi|soir)$/.test(date) &&
+    date.endsWith('-' + slot) &&
+    m?.id === id && Number(m.people) === people && m.status === 'prévu' &&
+    Object.keys(m).every(key => ['id','people','status'].includes(key))
+  ));
+}
 function storageKey() { return 'v2-module-state:' + ctx.userId + '|' + ctx.householdId; }
 async function persist() { if (ctx) await api.putMeta(storageKey(), states); }
 function rowQuery(id) {
@@ -83,10 +96,13 @@ async function start() {
   ctx = c; checked = false; backendReady = false; lastError = '';
   states = await api.meta(storageKey()) || {};
   try {
-    await api.authorized('GET','dobby_v2_modules?select=module&limit=1');
+    const shared = await api.authorized('GET',
+      'dobby_v2_modules?select=module&household_id=eq.' + encodeURIComponent(c.householdId));
+    if (!Array.isArray(shared)) throw Error('Liste des modules partagés invalide');
+    sharedAvailable = [...new Set(shared.map(row => row.module))].filter(id => byId.has(id));
     backendReady = true;
   } catch (e) {
-    backendReady = false;
+    backendReady = false; sharedAvailable = [];
     lastError = 'Partage des autres modules non activé sur Supabase (' +
       (e.status || 'hors ligne') + '). Leurs données restent locales.';
   }
@@ -94,7 +110,7 @@ async function start() {
   api.repaint();
 }
 function reset() {
-  ctx = null; checked = false; backendReady = false; lastError = ''; states = {};
+  ctx = null; checked = false; backendReady = false; lastError = ''; states = {}; sharedAvailable = [];
   if (timer) { clearTimeout(timer); timer = null; }
 }
 function stateLabel(def) {
@@ -107,6 +123,11 @@ function stateLabel(def) {
 }
 function html() {
   const description = '<p class="fv2-muted">Le partage des modules est volontaire : les données V5 déjà présentes sur cet appareil ne sont jamais téléversées automatiquement.</p>';
+  const joinable = sharedAvailable.filter(id => !states[id]?.active);
+  const bulkJoin = backendReady && joinable.length ?
+    '<div class="fv2-module"><strong>Rejoindre les modules du foyer</strong>' +
+    '<p>' + joinable.length + ' module(s) déjà partagés par un autre membre. Une seule opération récupère les données du foyer. Aucune donnée locale n’est publiée sans accord.</p>' +
+    '<button type="button" data-fm-action="join-family">Récupérer les modules partagés (' + joinable.length + ')</button></div>' : '';
   const rows = DEFINITIONS.map(def => {
     const info = states[def.id];
     const flag = stateLabel(def);
@@ -124,12 +145,15 @@ function html() {
     return '<div class="fv2-module"><strong>' + esc(def.title) + '</strong>' +
       '<span class="fv2-flag">' + esc(flag) + '</span>' +
       (def.id === 'house' ? '<p>Pièces et scans toujours locaux.</p>' : '') +
+      (def.id === 'menus' && seededExampleMeals() ?
+        '<p>Trois repas de démonstration préchargés sont encore dans le calendrier. Ils ne correspondent pas à des menus familiaux confirmés.</p>' +
+        '<button type="button" data-fm-action="remove-demo" data-module="menus">Retirer les trois repas d’exemple</button>' : '') +
       (def.id === 'contracts' ? '<p>Seules les fiches des catégories Contrats et Assurances sont partagées; aucune pièce jointe.</p>' : '') +
       actions + '</div>';
   }).join('');
-  const gate = !backendReady ? '<p class="fv2-error">Le nouveau modèle de sécurité des modules doit d’abord être déployé dans le projet Supabase Dobby. Aucun partage n’est activé.</p>' +
+  const gate = !backendReady ? '<p class="fv2-error">Impossible de joindre les modules familiaux (réseau, accès ou configuration Supabase). Les données de cet appareil restent locales et aucune nouvelle synchronisation n’est activée.</p>' +
     '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
-  return description + gate + rows +
+  return description + bulkJoin + gate + rows +
     '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
     '<p>Les fiches de contrats peuvent être partagées après activation explicite; les fichiers, autres documents et mémos restent sur cet appareil.</p></div>' +
     '<div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Privé · local</span>' +
@@ -168,7 +192,45 @@ async function activate(id) {
     revision = Number(result[0].revision);
   }
   states[id] = {active:true,revision,synced:digest(pick(id)),conflict:false};
+  if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
   await persist();
+  api.repaint(); api.openModal();
+}
+async function joinFamily() {
+  if (!backendReady || !ctx) throw Error('Foyer non connecté');
+  const ids = sharedAvailable.filter(id => byId.has(id) && !states[id]?.active);
+  if (!ids.length) return;
+  if (!confirm('Récupérer les ' + ids.length + ' modules déjà partagés dans ce foyer ?\n' +
+    'Chaque version locale sera sauvegardée avant remplacement. Aucune donnée de cet appareil ne sera envoyée.')) return;
+  // Preflight all reads before replacing anything.
+  const remote = await Promise.all(ids.map(async id => ({id, row:await readRow(id)})));
+  for (const entry of remote) {
+    if (!entry.row || !entry.row.payload || Array.isArray(entry.row.payload) ||
+      typeof entry.row.payload !== 'object' || !Number.isInteger(Number(entry.row.revision)) ||
+      Number(entry.row.revision) < 1) {
+      throw Error('Un module familial est invalide ou inaccessible : ' + entry.id);
+    }
+  }
+  const oldStates = JSON.parse(JSON.stringify(states));
+  const before = new Map(remote.map(entry => [entry.id,pick(entry.id)]));
+  for (const entry of remote) backupLocal(entry.id);
+  try {
+    for (const entry of remote) {
+      applyShared(entry.id,entry.row.payload);
+      states[entry.id] = {
+        active:true,revision:Number(entry.row.revision),
+        synced:digest(pick(entry.id)),conflict:false
+      };
+    }
+    await persist();
+  } catch (e) {
+    for (const entry of remote) {
+      try { applyShared(entry.id,before.get(entry.id)); } catch {}
+    }
+    states = oldStates;
+    await persist();
+    throw e;
+  }
   api.repaint(); api.openModal();
 }
 async function syncOne(id) {
@@ -250,8 +312,17 @@ document.addEventListener('click', async e => {
   const action = b.dataset.fmAction, id = b.dataset.module;
   try {
     if (action === 'retry') { checked = false; await start(); }
+    if (action === 'join-family') await joinFamily();
     if (action === 'activate') await activate(id);
     if (action === 'refresh') await syncOne(id);
+    if (action === 'remove-demo' && seededExampleMeals()) {
+      if (!confirm('Retirer uniquement les trois repas préchargés ? Une sauvegarde locale sera créée. Si les menus sont partagés, la modification sera proposée au foyer.')) return;
+      backupLocal('menus');
+      st.planned = {};
+      st.demoInitialized = true;
+      save(); render();
+      if (states.menus?.active) await syncOne('menus');
+    }
     if (action === 'disable') {
       if (confirm('Arrêter le partage de ce module sur cet appareil ? Les données déjà partagées sur Supabase ne sont pas supprimées.')) {
         states[id].active=false;await persist();
