@@ -67,7 +67,8 @@ test('module adapter fails closed when Supabase modules table is missing', async
   assert.ok(provider);
   await provider.start();
   const html=provider.html();
-  assert.match(html,/Partage des autres modules non activé/);
+  assert.match(html,/Erreur HTTP 404 sur les modules familiaux/);
+  assert.match(html,/Données locales \(non synchronisées\)/);
   assert.match(html,/Rendez-vous médicaux et santé/);
   assert.doesNotMatch(html,/data-fm-action="activate"/);
 });
