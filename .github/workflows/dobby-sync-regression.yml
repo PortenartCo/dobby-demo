@@ -77,6 +77,7 @@ jobs:
           export CHROMIUM_PATH="$BROWSER"
           node essai-stitch-v5-famille/tests/browser-regression.cjs
           node essai-stitch-v5-famille/tests/visual-audit.cjs
+          node essai-stitch-v5-famille/tests/review-ui.cjs
       - name: Keep browser results and visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -85,4 +86,5 @@ jobs:
           path: |
             docs/dobby-v6/evidence/browser-results.json
             docs/dobby-v6/evidence/after/
+            docs/dobby-v6/evidence/review-final/after/
           retention-days: 14

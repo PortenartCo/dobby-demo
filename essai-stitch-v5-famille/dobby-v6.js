@@ -70,6 +70,112 @@
       screen.querySelector('.dv6-page-head').after(tabs);
     }
   }
+  function simplifyFamily() {
+    const view = screen.querySelector('.st5-family');
+    const agenda = screen.querySelector('#fpAgenda');
+    const health = screen.querySelector('#fhVisits');
+    if (!view || !agenda || !health) return;
+    const [members, local, shortcuts] = view.querySelectorAll(':scope > .st5-section');
+    if (!members || !local || !shortcuts) return;
+    members.querySelector('h2').textContent = 'Les membres du foyer';
+    members.querySelector('.st5-sub')?.remove();
+    members.querySelector('.st5-section-heading > button')?.remove();
+    // Preserve every old local appointment and its original edit action, separately
+    // from the shared medical register. The full local carnet remains accessible.
+    if (local.querySelector('[data-extra="healthedit"]')) {
+      const disclosure = document.createElement('details'); disclosure.className = 'dv6-local-records';
+      const summary = document.createElement('summary'); summary.textContent = 'Rendez-vous de l’ancien carnet local';
+      const records = local.querySelector('.st5-calendar-portal'); records.className = 'dv6-local-appointments';
+      disclosure.append(summary, records, local.querySelector('[data-extra="health"]')); health.append(disclosure);
+    }
+    shortcuts.querySelector('h2').textContent = 'Les outils du foyer';
+    shortcuts.querySelector('.st5-quick-grid').insertAdjacentHTML('beforeend',
+      '<button type="button" data-extra="health"><strong>Carnet local</strong>Personnes et anciennes fiches</button>'
+      + '<button type="button" data-go="missions"><strong>Missions</strong>Tâches du foyer et suivi automatique</button>');
+    (screen.querySelector('.fv2-strip') || screen.querySelector('.dv6-page-head')).after(members);
+    agenda.after(health); health.after(shortcuts);
+    // The legacy organisation hub repeats these same tools and auto-task sources.
+    // All domain records and handlers remain owned by their existing modules.
+    view.remove();
+  }
+  function simplifyMissions() {
+    const manual = screen.querySelector('#fmsManual');
+    const automatic = screen.querySelector('.st5-missions > .st5-section');
+    if (!manual || !automatic || automatic.classList.contains('dv6-auto-missions')) return;
+    manual.querySelector('.fms-head small').textContent = 'Missions créées par le foyer';
+    manual.querySelector('.fms-desc').textContent = 'Créez vos missions, attribuez-les à un membre et suivez leur échéance.';
+    manual.querySelector('.fms-status')?.remove();
+    manual.querySelectorAll('.fms-desc').forEach((note, index) => { if (index) note.remove(); });
+    automatic.classList.add('fms-panel', 'dv6-auto-missions');
+    automatic.querySelector('h2').textContent = 'Missions automatiques';
+    automatic.querySelector('.st5-card')?.remove();
+    const description = document.createElement('p'); description.className = 'fms-desc';
+    description.textContent = 'Tâches issues des échéances et entretiens de Dobby. Ce registre reste distinct des missions créées par le foyer. Aucun rappel Apple n’est créé automatiquement.';
+    automatic.querySelector('.st5-section-heading').after(description);
+    automatic.querySelector('.st5-tabs').setAttribute('aria-label', 'Filtrer les missions automatiques');
+    const tools = screen.querySelectorAll('.st5-missions > .st5-section')[1];
+    if (tools) {
+      const disclosure = document.createElement('details'); disclosure.className = 'dv6-local-records';
+      const summary = document.createElement('summary'); summary.textContent = 'Maisonnée et listes';
+      tools.querySelector('.st5-section-heading')?.remove();
+      disclosure.append(summary, ...tools.childNodes); tools.replaceWith(disclosure);
+    }
+  }
+  function presentAttachments() {
+    const sharing = screen.querySelector('.fds-panel[aria-label="Partage de document"]');
+    if (!sharing || sharing.hasAttribute('data-dv6-attachments')) return;
+    sharing.dataset.dv6Attachments = '';
+    const local = screen.querySelector('#familyDocFile');
+    const shared = sharing.querySelector('[data-fds-file]');
+    // Availability comes from the existing document module's controls, including
+    // its permission/busy checks; presentation does not reinterpret authentication.
+    const enabled = shared ? !shared.disabled : Boolean(sharing.querySelector('[data-fds]:not(:disabled)'));
+    const transferring = [...sharing.querySelectorAll('.fds-notice')].some(note => note.textContent === 'Transfert en cours…');
+    const hint = sharing.querySelector('.fds-hint');
+    if (!enabled && !transferring && hint) hint.textContent = 'Partage familial indisponible. Connectez le foyer et activez « Documents et contrats » pour envoyer un fichier. La copie locale reste disponible sur cet appareil.';
+    if (!enabled && !transferring && shared) {
+      shared.closest('.fds-file').hidden = true;
+      const explanation = sharing.querySelectorAll('.fds-hint')[1];
+      if (explanation) explanation.textContent = 'Cette fiche est destinée au partage familial. Aucun fichier ne sera envoyé depuis cet appareil sans votre action explicite.';
+    }
+    if (local) {
+      const card = local.closest('.card');
+      const location = document.createElement('small'); location.className = 'dv6-kicker'; location.textContent = 'Sur cet appareil';
+      card.querySelector('h2').before(location);
+      const label = card.querySelector('label');
+      if (label) label.textContent = 'Ajouter ou remplacer la copie locale';
+    }
+    // The connected shared renderer may retain a local backup in a disclosure.
+    // Keep both original inputs/handlers, expose only the selected destination.
+    if ((enabled || transferring) && local && shared) {
+      const choices = document.createElement('div'); choices.className = 'dv6-file-destinations';
+      choices.setAttribute('role', 'group'); choices.setAttribute('aria-label', 'Destination du fichier');
+      choices.innerHTML = '<button type="button" data-dv6-file-target="shared" aria-pressed="true">Partager au foyer</button>'
+        + '<button type="button" data-dv6-file-target="local" aria-pressed="false">Sur cet appareil</button>';
+      sharing.prepend(choices);
+    }
+    for (const input of screen.querySelectorAll('input[type="file"]')) {
+      const wrapper = document.createElement('span'); wrapper.className = 'dv6-file-picker';
+      const choose = document.createElement('span'); choose.className = 'dv6-file-button'; choose.textContent = 'Choisir un fichier'; choose.setAttribute('aria-hidden', 'true');
+      const filename = document.createElement('span'); filename.className = 'dv6-file-name'; filename.textContent = 'Aucun fichier sélectionné'; filename.setAttribute('aria-live', 'polite');
+      input.before(wrapper); wrapper.append(choose, filename, input);
+      input.classList.add('dv6-native-file');
+      input.setAttribute('aria-label', input === local ? 'Choisir un fichier pour cet appareil' : 'Choisir un fichier à partager au foyer');
+      input.addEventListener('change', () => { filename.textContent = input.files?.[0]?.name || 'Aucun fichier sélectionné'; });
+    }
+    if ((enabled || transferring) && local && shared) selectAttachmentTarget('shared');
+  }
+  function selectAttachmentTarget(target) {
+    const local = screen.querySelector('#familyDocFile');
+    const shared = screen.querySelector('[data-fds-file]');
+    if (!local || !shared) return;
+    local.closest('.dv6-file-picker').hidden = target !== 'local';
+    shared.closest('.dv6-file-picker').hidden = target !== 'shared';
+    if (target === 'local') {
+      const backup = local.closest('details'); if (backup) backup.open = true;
+    }
+    for (const button of screen.querySelectorAll('[data-dv6-file-target]')) button.setAttribute('aria-pressed', String(button.dataset.dv6FileTarget === target));
+  }
   function decorateControls(container) {
     for (const button of container.querySelectorAll('button:not([data-dv6-control])')) {
       button.dataset.dv6Control = '';
@@ -131,6 +237,8 @@
   }, true);
   document.addEventListener('click', event => {
     if (!event.target.closest('#menu, #menubtn')) closeMenu(false);
+    const target = event.target.closest('[data-dv6-file-target]');
+    if (target) { selectAttachmentTarget(target.dataset.dv6FileTarget); return; }
     if (!event.target.closest('[data-dv6-back]')) return;
     event.preventDefault(); event.stopImmediatePropagation();
     const existing = returnControl();
@@ -143,6 +251,9 @@
     const key = st.detail ? 'recipes' : String(st.extraPage || '').split(':')[0] || st.page;
     const root = Boolean(roots[key] && !st.detail && !st.extraPage);
     if (root) decorateRoot(key);
+    if (root && key === 'family') simplifyFamily();
+    if (root && key === 'missions') simplifyMissions();
+    if (key === 'documents') presentAttachments();
     if (!screen.querySelector('h1')) {
       const title = document.createElement('h1');
       title.textContent = chapters[key] || 'Le foyer'; screen.prepend(title);

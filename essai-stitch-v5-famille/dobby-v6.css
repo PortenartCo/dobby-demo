@@ -278,6 +278,16 @@ body.dobby-v6 #screen .st4-index { display: grid; gap: 10px; }
 body.dobby-v6 #screen header { background: transparent !important; color: var(--dobby-text); padding: 0; border: 0; }
 body.dobby-v6 #screen [data-dv6-page-back] { display: none !important; }
 body.dobby-v6 #screen p { font-family: var(--dobby-font-body); font-size: var(--dobby-size-body); line-height: 1.5; }
+body.dobby-v6 #screen .dv6-local-records { margin-top: 16px; border-top: 1px solid var(--dobby-line-soft); padding-top: 10px; }
+body.dobby-v6 #screen .dv6-auto-missions .st5-section-heading { margin-bottom: 12px; }
+body.dobby-v6 #screen .dv6-file-destinations { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+body.dobby-v6 #screen .dv6-file-picker { position: relative; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; min-height: 48px; padding: 8px; background: var(--dobby-surface-raised); border: 1px solid var(--dobby-line); border-radius: var(--dobby-radius-control); }
+body.dobby-v6 #screen .dv6-file-button { padding: 8px; border-radius: 8px; background: var(--dobby-surface-low); color: var(--dobby-gold); font: 600 var(--dobby-size-label)/1.5 var(--dobby-font-label); }
+body.dobby-v6 #screen .dv6-file-name { min-width: 0; overflow-wrap: anywhere; color: var(--dobby-text-muted); font: 500 var(--dobby-size-caption)/1.5 var(--dobby-font-label); }
+body.dobby-v6 #screen input.dv6-native-file { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; padding: 0 !important; cursor: pointer; }
+body.dobby-v6 #screen .dv6-file-picker:focus-within { outline: 3px solid var(--dobby-gold); outline-offset: 3px; }
+body.dobby-v6 #screen .dv6-file-picker:has(input:disabled) { opacity: .5; }
+body.dobby-v6 #screen :is(.fp-event-details, .fms-task-content) { flex: 1 0 100%; min-width: 0; }
 @media (max-width: 359px) {
   body.dobby-v6 #screen :is(.two, .family-cols, .doc-grid, .house-fields, .st5-two, .st5-quick-grid, .tm-fields) { grid-template-columns: minmax(0, 1fr); }
   body.dobby-v6 #screen :is(.fv2-panel, .fp-panel, .fms-panel, .fds-panel, .fh-panel, .card) { padding: 12px !important; }

@@ -1,5 +1,7 @@
 # DOBBY V6 — Mission 1 : dossier de revue
 
+Suite de la revue PR #2 : [corrections finales et captures ciblées à 320/390 px](corrections-pr2.md).
+
 Harmonisation de la V5 familiale autour de l’écran Stitch **La Taverne Gourmande**, sur la branche [`codex/dobby-v6-mission-1`](https://github.com/PortenartCo/dobby-demo/tree/codex/dobby-v6-mission-1). Base contrôlée : `94dfdd5ce1af177a5a07b2425344f2c3f1d280f6`.
 
 ## Résultat réalisé
