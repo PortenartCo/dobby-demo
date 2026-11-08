@@ -110,6 +110,8 @@
       const storedDoc=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}')
         .familyDocs?.find(x=>x.title==='Assurance test');
       if(!storedDoc)throw Error('La fiche de document n’est pas enregistrée');
+      const backToDocuments=d.querySelector('[data-doc="back"]');
+      if(backToDocuments)backToDocuments.click();
       const sharedDocs=d.querySelector('.fds-panel');
       if(!sharedDocs||!sharedDocs.textContent.includes('Documents communs')||
          !sharedDocs.textContent.includes('Assurance test')) {
