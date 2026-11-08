@@ -146,16 +146,21 @@
 })();
 /* Isolated V5 family preview: legacy HTML remains unchanged. */
 (function(){
- const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-5';document.head.append(css);
- const agendaCss=document.createElement('link');agendaCss.rel='stylesheet';agendaCss.href='./family-agenda.css?v=20261108-5';document.head.append(agendaCss);
- const js=document.createElement('script');js.src='./family-v2.js?v=20261108-5';js.defer=true;
+ const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-6';document.head.append(css);
+ const agendaCss=document.createElement('link');agendaCss.rel='stylesheet';agendaCss.href='./family-agenda.css?v=20261108-6';document.head.append(agendaCss);
+ const js=document.createElement('script');js.src='./family-v2.js?v=20261108-6';js.defer=true;
  js.onload=function(){
-   const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-5';
+   const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-6';
    modules.onload=function(){
-     const missionsCss=document.createElement('link');missionsCss.rel='stylesheet';missionsCss.href='./family-missions.css?v=20261108-5';document.head.append(missionsCss);
-     const agenda=document.createElement('script');agenda.src='./family-agenda.js?v=20261108-5';
+     const missionsCss=document.createElement('link');missionsCss.rel='stylesheet';missionsCss.href='./family-missions.css?v=20261108-6';document.head.append(missionsCss);
+     const agenda=document.createElement('script');agenda.src='./family-agenda.js?v=20261108-6';
      agenda.onload=function(){
-       const missions=document.createElement('script');missions.src='./family-missions.js?v=20261108-5';
+       const missions=document.createElement('script');missions.src='./family-missions.js?v=20261108-6';
+       missions.onload=function(){
+         const filesCss=document.createElement('link');filesCss.rel='stylesheet';filesCss.href='./family-files.css?v=20261108-6';document.head.append(filesCss);
+         const files=document.createElement('script');files.src='./family-files.js?v=20261108-6';
+         document.body.append(files);
+       };
        document.body.append(missions);
      };
      document.body.append(agenda);
