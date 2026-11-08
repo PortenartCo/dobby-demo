@@ -6,6 +6,7 @@ on:
       - 'essai-sync-v2/**'
       - 'essai-stitch-v5-famille/**'
       - 'sql-proposals/dobby-v2-modules.sql'
+      - 'sql-proposals/dobby-family-files.sql'
       - '.github/workflows/dobby-sync-regression.yml'
   pull_request:
     paths:
@@ -13,6 +14,7 @@ on:
       - 'essai-sync-v2/**'
       - 'essai-stitch-v5-famille/**'
       - 'sql-proposals/dobby-v2-modules.sql'
+      - 'sql-proposals/dobby-family-files.sql'
       - '.github/workflows/dobby-sync-regression.yml'
   workflow_dispatch:
 
@@ -43,6 +45,7 @@ jobs:
           node --check essai-stitch-v5-famille/family-agenda-core.mjs
           node --check essai-stitch-v5-famille/family-missions.js
           node --check essai-stitch-v5-famille/family-missions-core.mjs
+          node --check essai-stitch-v5-famille/family-files.js
           node --check essai-stitch-v5-famille/family-core.mjs
       - name: Deterministic offline/conflict regression
         run: |
