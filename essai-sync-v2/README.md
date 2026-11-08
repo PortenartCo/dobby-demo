@@ -1,46 +1,33 @@
-# Dobby Sync V1 - pilote isole
+# Dobby Sync V2 — essai isolé multi-foyers
 
-## Objectif
-Valider la synchronisation automatique bidirectionnelle d'une liste de courses entre deux iPhone, avec stockage local hors ligne, reprise et controle des conflits.
+## Statut au 08/11/2026
+- Dossier créé par copie exacte du pilote V1 puis adaptation de `app.js` et de l'interface.
+- Base visée : projet personnel `pqcdkrwljgvgagzwrcmg`, tables `dobby_v2_households`, `dobby_v2_memberships`, `dobby_v2_grocery`.
+- Les deux comptes du foyer existant ont été rattachés par l'utilisateur. Les trois articles ont été copiés V1 -> V2 par SQL Editor.
+- Les tests RLS sous rôle et identité simulés ont réussi : lecture membre 1 foyer / 1 appartenance / 3 articles, lecture non-membre 0 / 0 / 0, insertion non-membre refusée.
+- **Le client V2 modifié n'a PAS été testé en navigateur.** Les résultats RLS ne certifient pas le comportement du frontend ou l'isolation de deux foyers réels.
+- Production et pilote V1 inchangés. **Il ne s'agit pas encore de la vue intégrée Stitch V5.**
 
-## Isolation
-- Branche de developpement : `feature/dobby-sync-v1`.
-- Aucun changement de la production `main/index.html`.
-- Aucun changement des essais graphiques Stitch, notamment `essai-stitch-v5/`.
-- Base Supabase Dobby dans une organisation Free PERSONNELLE distincte de Portenart ; aucune reutilisation de secret ni de base professionnelle.
-- Aucun donnees reelles avant validation des permissions et de la restauration.
+## Adaptation du pilote
+- IndexedDB distinct `dobby-sync-pilot-v2` : aucune collision avec le cache V1.
+- Après authentification, l'utilisateur doit avoir exactement **un** foyer actif : refus explicite sinon; sélection multi-foyers future.
+- Toute lecture/écriture courses utilise `dobby_v2_grocery` **avec `household_id`**, et les INSERT l'incluent.
+- Le protocole de révisions, suppression logique, résolution de conflits et reprise hors ligne est repris de V1.
+- Vérification d'accès au foyer via `dobby_v2_households`, et cache effacé si le foyer change dans la même session.
+- **Ne pas utiliser pour des données essentielles** tant que les tests n'ont pas passé.
+- Attention : la table V2 contient une copie à un instant T. Une modification réalisée dans V1 ne se reporte pas automatiquement dans V2.
 
-## Conception minimale retenue
-1. Stockage local des articles et de la file de mutations en IndexedDB (IDs stables, versions, indicateurs de suppression).
-2. Ecriture locale immediate puis synchronisation a l'ouverture, a la reprise et au retour du reseau, et lorsqu'une mutation existe.
-3. Synchronisation enregistrements individuels ; detection des conflits (pas d'ecrasement silencieux).
-4. Un foyer, deux utilisateurs distincts via Supabase Auth ; RLS restrictive sur toutes les tables exposees.
-5. Cle publipubliable uniquement cote client ; aucune cle secrete / service_role dans le depot.
-6. Tests d'isolation, de reprise offline, d'idempotence et de restauration avant toute migration.
+## Recette minimale avant intégration V5
+1. Publier ce dossier sur une URL d'essai réellement isolée : ne pas changer la source de GitHub Pages utilisée en production.
+2. Vérifier que la connexion avec chaque membre du foyer renvoie exactement trois articles V2.
+3. Modification A -> B, B -> A, coche, suppression logique.
+4. Modification hors ligne, fermeture/rechargement, reconnexion, reprise puis conflit des deux côtés.
+5. Une identité extérieure, puis un vrai foyer B test, ne doivent ni lire ni modifier le foyer A.
+6. Les auteurs/revisions/household_id et timestamps doivent être observés côté Supabase.
+7. Vérifier le résultat sur les deux iPhone Safari avant bascule.
 
-## Gate de validation
-- Ajouter/modifier/cocher/supprimer un article sur iPhone A et verifier la repercussion sur B.
-- Creer des mutations hors ligne sur A et B ; verifier leur conservation et la reconciliation sans ecrasement.
-- Verifier que le client non autorise ne lit ni ne modifie aucun article.
-- Tester la fermeture puis reouverture, la perte/reprise de reseau et les erreurs serveur.
-- Ne basculer aucun module supplementaire avant un pilote reel PASS.
-
-## Etapes ulterieures
-Apres PASS de Courses : Missions, Calendrier, Repas et dependances recette minimales ; sauvegarde et migration controles.
-
-## Etat
-Organisation Free Dobby Personnel : creee et verifiee dans le tableau de bord.
-Projet dobby-family-sync : cree, Healthy, region eu-central-1.
-Code de pilote autonome : cree sur la branche, tests unitaires du coeur 8/8 PASS en environnement local; pas encore publie ni teste sur iPhone.
-Deux comptes de test rattaches : retour SQL utilisateur 2 / 2 ; configuration RLS lue conforme. Authentification reelle, requetes REST et tests iPhone encore a verifier.
-Production : inchangee.
-
-## Pilotage et limites de validation
-- L'interface de test (index.html) ne modifie **pas** la liste de courses de Dobby V5.
-- Le projet Supabase conserve uniquement les articles de courses du laboratoire (aucune photo ou document).
-- Chaque iPhone doit saisir une fois la cle publique `sb_publishable_...` via les parametres du pilote, jamais une cle secrete.
-- L'URL Supabase est fixe ; compte et mot de passe sont saisis sur chaque iPhone sans etre inscrits dans GitHub.
-- Tests unitaires locaux du coeur executes : 8/8 PASS ; cette preuve **n'est pas** un test de production ou une recette de synchronisation iOS.
-- Pour tester, publier **uniquement** le repertoire `essai-sync-v1/` sur une URL isolee, sans modifier `/index.html` ni `essai-stitch-v5/`.
-- Avant l'utilisation reelle, controler requetes REST de deux comptes, acces refuse d'un tiers, fonctionnement hors ligne, conflits et rechargement iOS.
-- Supabase Auth : deux comptes creees ; envisager de desactiver les inscriptions publiques pour ce pilote ferme.
+## Limitations connues
+- L'app de démonstration V2 reprend un seul foyer actif par compte; un utilisateur multi-foyers doit être bloqué au lieu d'accéder à un foyer arbitraire.
+- Pas encore d'import depuis le planning repas V5 ni de conversion IA.
+- Aucune migration SQL exécutée par les commits GitHub.
+- Les tests unitaires et e2e du client adapté restent à exécuter. Ne pas appeler ce prototype « intégré ».
