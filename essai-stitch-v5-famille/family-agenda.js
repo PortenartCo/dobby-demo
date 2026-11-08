@@ -147,7 +147,6 @@ function showForm(id){
   form.hidden=false;
   const activeForm=form.querySelector('#fpEventForm');
   if(!activeForm)throw Error('Formulaire Dobby introuvable');
-  activeForm.dataset.handlerAttached='yes';
   activeForm.addEventListener('submit',submitFamilyEvent);
   form.querySelector('input[name=title]')?.focus();
 }
