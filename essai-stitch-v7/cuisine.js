@@ -225,7 +225,7 @@ window.DobbyCuisine = (() => {
     const servingLabel=$('#servings-display')?.nextElementSibling;text(servingLabel,'portions');
     const counter=$('#servings-display');text(counter,ui.servings);bind($('#btn-decrease'),'servings',{delta:'-1'});bind($('#btn-increase'),'servings',{delta:'1'});
     bind($('#favorite-btn'),'favorite',{id:recipe.id});$('#favorite-btn')?.setAttribute('aria-pressed',String(Boolean(recipe.fav)));
-    bind($('#export-btn'),'export-recipes');bind($('#mode-trad-btn'),'ingredients');bind($('#mode-tm5-btn'),'tm5');
+    bind($('#export-btn'),'export-recipe');$('#export-btn')?.setAttribute('aria-label','Exporter cette recette au format JSON');bind($('#mode-trad-btn'),'ingredients');bind($('#mode-tm5-btn'),'tm5');
     text($('#method-banner'),'Recette du grimoire DOBBY · quantités adaptées aux portions choisies');
     bind($('#tab-btn-ingredients'),'ingredients');bind($('#tab-btn-steps'),'steps');
     text($('#tab-btn-ingredients'),`Garde-manger (${recipe.ingredients.length})`);text($('#tab-btn-steps'),`Préparation (${recipe.steps.length})`);
@@ -305,6 +305,7 @@ window.DobbyCuisine = (() => {
     if(action==='cooked'){E.mealAction('status',{date:el.dataset.date,slot:el.dataset.slot,status:'préparé'});return render();}
     if(action==='move-meal'||action==='cancel-meal'){E.mealAction(action==='move-meal'?'move':'status',{date:ui.date,slot:ui.slot,destination:$('#cu-move-date')?.value,status:'annulé'});return open('taverne');}
     if(action==='export-recipes'){E.exportRecipes();return;}
+    if(action==='export-recipe'){E.exportRecipes(ui.recipe);return;}
     return extraAction(action,el,data);
   }
   async function init(openLegacy) {

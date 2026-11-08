@@ -121,9 +121,9 @@ window.DobbyCuisineEngine = (() => {
     if (!input || input.disabled) throw Error('Résolvez le conflit avant de modifier cet article.');
     input.checked = checked; input.dispatchEvent(new (win().Event)('change', { bubbles: true }));
   }
-  function exportRecipes() {
-    evaluate(`const recipes=[...BASE,...custom].map(r=>({name:r.name,minutes:r.minutes,servings:r.servings,device:r.thermomix?'tm5':'classic',category:r.category,favorite:!!r.fav,
-      ingredients:r.ingredients.map(([name,quantity,unit])=>({name,quantity,unit})),steps:r.steps,source:r.source||'',reviewed:r.reviewed===true}));downloadJson('dobby-recettes.json',{format:'dobby-recipes',version:1,recipes});`);
+  function exportRecipes(id) {
+    evaluate(`const recipes=[...BASE,...custom].filter(r=>!p.id||r.id===p.id).map(r=>({name:r.name,minutes:r.minutes,servings:r.servings,device:r.thermomix?'tm5':'classic',category:r.category,favorite:!!r.fav,
+      ingredients:r.ingredients.map(([name,quantity,unit])=>({name,quantity,unit})),steps:r.steps,source:r.source||'',reviewed:r.reviewed===true}));downloadJson(p.id?'dobby-recette.json':'dobby-recettes.json',{format:'dobby-recipes',version:1,recipes});`,{id});
   }
   return Object.freeze({ win, evaluate, page, read, amount, portions, choose, mealAction, favorite, cook, tm5, saveTM, saveRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes });
 })();

@@ -7,6 +7,7 @@ const crypto = require('node:crypto');
 const { chromium } = require('playwright');
 const routes = require('../cuisine-routes.json');
 const provenance = require('../templates/provenance.json');
+const originals = require('../../design/stitch-53/manifest.json');
 const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const root = path.resolve(__dirname, '../..');
 const out = path.join(root, 'docs/dobby-v7/evidence/cuisine');
@@ -17,7 +18,7 @@ async function capture(page, file) {
 (async () => {
   fs.mkdirSync(path.join(out, 'before'), { recursive: true });
   fs.mkdirSync(path.join(out, 'after'), { recursive: true });
-  for (const entry of provenance) assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,entry.source))).digest('hex'),entry.sha256,'Immutable source '+entry.view);
+  for (const entry of provenance) {assert.equal(entry.sha256,originals.designs.find(source=>source.html===entry.source)?.source_sha256,'Supplied source fingerprint '+entry.view);assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,entry.source))).digest('hex'),entry.sha256,'Immutable source '+entry.view);}
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args:['--no-sandbox'] });
   const report=[];
   try {
