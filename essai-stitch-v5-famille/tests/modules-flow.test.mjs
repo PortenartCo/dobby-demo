@@ -72,7 +72,7 @@ function makeClient(uid, backend, seeded = false) {
     registerModules:ref=>{provider=ref;}
   };
   const env = {
-    st,window:{DobbyFamilyUI:api},
+    st, custom:st.customRecipes, window:{DobbyFamilyUI:api},
     document:{addEventListener:(type,fn)=>{if(type==='click') handler=fn;}},
     save:()=>{changes++;},render:()=>{},confirm:()=>true,
     localStorage:{setItem:()=>{localBackups++;}},
