@@ -1,7 +1,7 @@
 /* Dobby family agenda: ordinary household events only. Not an Apple Calendar connector. */
 (async function(){
 'use strict';
-const core=await import('./family-agenda-core.mjs?v=20261108-5');
+const core=await import('./family-agenda-core.mjs?v=20261108-7');
 const esc=window.DobbyFamilyUI?.esc || (v=>String(v||''));
 const TODAY=()=>{
   // Use the browser's local day, not UTC (important near Brussels midnight).
@@ -28,7 +28,7 @@ const htmlList=(arr,limit=10)=>arr.slice(0,limit).map(e=>
   '</div></li>').join('');
 const dueType=kind=>({
   event:'Événement',birthday:'Anniversaire',mission:'Mission',
-  contract:'Contrat',maintenance:'Entretien'
+  contract:'Contrat',maintenance:'Entretien',medical:'Rendez-vous médical'
 }[kind]||'Échéance');
 function summaryCard(rows,max=8){
   return rows.slice(0,max).map(entry=>{

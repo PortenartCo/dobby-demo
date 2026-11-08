@@ -1,5 +1,5 @@
-/* Optional Supabase household modules. Never uploads local V5 data without
-   explicit per-module consent. No medical or attachment payloads. */
+/* Supabase household modules. Files remain in Storage (never JSON), and medical
+   records stay outside the shared document payload. */
 (function(){
 'use strict';
 const api = window.DobbyFamilyUI;
@@ -9,17 +9,21 @@ const DEFINITIONS = [
   { id:'recipes', title:'Recettes et Thermomix', keys:['customRecipes','tmAdaptations'], pages:['recipes'] },
   { id:'missions', title:'Missions familiales', keys:['autoTasks','manualMissions'], pages:['missions'] },
   { id:'house', title:'Maison et entretiens', keys:['houseItems','houseLogs'], pages:['house'] },
-  { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists','familyEvents'], pages:['family'] },
-  { id:'contracts', title:'Contrats et assurances (fiches seulement)', keys:[], pages:['documents'] }
+  { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'], pages:['family'] },
+  { id:'contracts', title:'Documents et contrats du foyer', keys:[], pages:['documents'] }
 ];
 const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));
 let ctx = null, backendReady = false, checked = false, states = {}, inFlight = false;
 let timer = null, applying = false, lastError = '', sharedAvailable = [];
 const esc = api.esc;
+function isSharedDocument(x) {
+  return x && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
+}
 function pick(id) {
   if (id === 'contracts') {
-    const permitted = ['id','title','category','person','date','deadline','provider','reference','tags','note'];
-    return {contracts:(st.familyDocs || []).filter(x=>x.category === 'Contrats' || x.category === 'Assurances').map(x=>{
+    const permitted = ['id','title','category','person','date','deadline','provider','reference',
+      'tags','note','sharedToHousehold','cloudPath','cloudName','cloudType','cloudSize'];
+    return {contracts:(st.familyDocs || []).filter(isSharedDocument).map(x=>{
       const record={};for(const key of permitted)if(x[key]!==undefined)record[key]=x[key];return record;
     })};
   }
@@ -67,14 +71,15 @@ function applyShared(id, payload) {
   try {
     if (id === 'contracts') {
       if (!Array.isArray(payload.contracts)) throw Error('Fiches de contrats invalides');
-      const incoming = payload.contracts;
+      const incoming = payload.contracts.filter(isSharedDocument);
       const incomingIds = new Set(incoming.map(x=>x.id));
       const old = Array.isArray(st.familyDocs)?st.familyDocs:[];
+      const protectedIds = new Set(old.filter(x=>x.category==='Santé' && !isSharedDocument(x)).map(x=>x.id));
       const attachments = new Map(old.map(x=>[x.id,x]));
       const retained = old.filter(x=>
-        !['Contrats','Assurances'].includes(x.category) ||
-        (x.attachmentName && !incomingIds.has(x.id)));
-      st.familyDocs = retained.concat(incoming.map(x=>{
+        (x.category==='Santé' && !isSharedDocument(x)) ||
+        (!incomingIds.has(x.id) && (!isSharedDocument(x) || Boolean(x.attachmentName))));
+      st.familyDocs = retained.concat(incoming.filter(x=>!protectedIds.has(x.id)).map(x=>{
         const prior = attachments.get(x.id);
         return {...x, attachmentName:prior?.attachmentName || '',attachmentType:prior?.attachmentType || ''};
       }));
@@ -423,6 +428,7 @@ document.addEventListener('click', async e => {
   }
 },true);
 api.registerModules({start,reset,html,labelFor,sync,onSave,
+  isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }
 });
 })();

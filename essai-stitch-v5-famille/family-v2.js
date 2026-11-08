@@ -113,6 +113,38 @@ async function authorized(method, query, body, headers = {}) {
     return raw('/rest/v1/' + query, method, body, headers, bearer);
   }
 }
+const SHARED_BUCKET='dobby-family-files';
+function validStoragePath(path){
+  if(!f.context || !f.session || typeof path!=='string')return false;
+  const sections=path.split('/');
+  return sections.length===2 && sections[0]===f.householdId &&
+    /^[a-f0-9-]{36}\.(pdf|jpg|png|webp)$/i.test(sections[1]);
+}
+async function storageFetch(method,path,file){
+  if(!validStoragePath(path))throw Error('Fichier hors du foyer');
+  if(method==='POST' && (!file || !['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)
+      || file.size>10485760 || file.size<=0))throw Error('PDF ou image de 10 Mo maximum');
+  const send=async()=>{
+    const jwt=await token();
+    const target=method==='GET'?'authenticated/'+SHARED_BUCKET+'/'+path:
+      method==='DELETE'?SHARED_BUCKET:SHARED_BUCKET+'/'+path;
+    const headers={apikey:f.key,Authorization:'Bearer '+jwt};
+    let body;
+    if(method==='POST'){headers['Content-Type']=file.type;headers['x-upsert']='false';body=file;}
+    if(method==='DELETE'){headers['Content-Type']='application/json';body=JSON.stringify({prefixes:[path]});}
+    const response=await fetch(PROJECT+'/storage/v1/object/'+target,{method,headers,body,cache:'no-store'});
+    if(!response.ok){
+      let detail={};try{detail=await response.json()}catch{}
+      const e=Error(detail.message||detail.error||('Stockage Dobby HTTP '+response.status));
+      e.status=response.status;throw e;
+    }
+    return method==='GET'?await response.blob():true;
+  };
+  try{return await send()}catch(e){
+    if(e.status!==401)throw e;
+    await refreshToken();return send();
+  }
+}
 async function requireHousehold() {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
   const epoch = f.epoch;
@@ -608,7 +640,9 @@ save = function() {
 window.DobbyFamilyUI = Object.freeze({
   getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
   authorized, meta, putMeta, esc, showMessage, repaint, openModal,
+  storageFetch,
   getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
+  isModuleActive(module) {return Boolean(f.context && f.provider?.isActive?.(module));},
   registerModules(provider) {
     f.provider = provider;
     // A provider may register before or after boot(), including while sync()

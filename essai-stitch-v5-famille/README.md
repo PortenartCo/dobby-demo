@@ -20,7 +20,7 @@ La synchronisation nécessite un consentement explicite depuis « Gérer le foye
 - Missions : autoTasks (projections dérivées des équipements/contrats) et manualMissions (tâches familiales créées par les utilisateurs, séparées pour ne pas être marquées obsolètes par le moteur automatique).
 - Maison : houseItems et houseLogs (fichiers/attestations locaux).
 - Famille : familyMembers, famContacts, famLists et familyEvents (événements ordinaires, jamais médicaux).
-- Contrats et assurances : métadonnées des fiches uniquement, sans les fichiers joints.
+- Documents, contrats et assurances : fiches et références des pièces Cloud. Contrats et Assurances restent partagés. Les autres fiches, y compris Santé, exigent l'action explicite « Partager au foyer ». Aucun fichier local n'est téléversé automatiquement.
 
 Les versions familiales existantes ne doivent pas écraser silencieusement les données locales : sauvegarde de préimage et résolution de conflit sur version de module.
 
@@ -45,9 +45,19 @@ La V5 peut précharger trois repas **fictifs** (poulet, pâtes, tartines) sur un
 - Aucun rappel ni attribution Apple Rappels n'est envoyé automatiquement.
 - Vérification : tests unitaires, deux comptes simulés et création persistante dans Chromium. Les modifications entre deux comptes réellement connectés restent à confirmer.
 
+## Documents et rendez-vous médicaux — activation simple
+- Documents : une section « Documents communs » permet d'envoyer volontairement un PDF ou une image de 10 Mo maximum, soit depuis une pièce locale existante, soit depuis un fichier choisi. La lecture sur l'autre appareil utilise la session familiale déjà ouverte.
+- Fichiers : un seul bucket privé `dobby-family-files` ; accès via le dossier du foyer et trois politiques standard (lire, ajouter, supprimer). Aucun nouveau rôle ni code PIN.
+- SQL : `sql-proposals/dobby-family-files.sql` prépare l'espace privé. GitHub ne l'exécute pas. Le projet personnel Supabase doit l'appliquer une fois avant un véritable transfert.
+- Les anciennes fiches, les PDF locaux et les photos locales ne sont pas envoyés automatiquement. Les transferts ne commencent que sur action explicite.
+- Retirer une fiche liée à un fichier distant retire aussi ce fichier. Une modification de fiche se synchronise par le module Documents existant.
+- Rendez-vous médicaux : les anciens carnets famHealth restent locaux. Un nouvel écran Famille permet de créer volontairement des rendez-vous partagés, sous `sharedHealthVisits` dans le module Famille déjà actif.
+- Les fiches de catégorie Santé restent locales par défaut et peuvent être partagées explicitement comme n'importe quel document du foyer.
+- Tous les membres actifs du même foyer ont accès à ce qui a été partagé. Pas de système de rôles ni d'approbations supplémentaires.
+- Limites : transfert Storage réel non encore validé ; ni calendrier Apple ni Rappels Apple ne se synchronisent automatiquement.
 ## Données intentionnellement exclues du partage
-- Santé et rendez-vous médicaux : famHealth, ainsi que les catégories de documents Santé.
-- Documents personnels, pièces d'identité, autres documents, mémos familiaux et fichiers binaires.
+- Les anciennes fiches de santé (famHealth) restent locales. Les nouveaux rendez-vous médicaux partagés sont saisis volontairement et visibles aux membres actifs du foyer. Les documents Santé restent locaux tant qu'ils ne sont pas choisis pour le partage.
+- Les documents et mémos qui n'ont pas été volontairement partagés ainsi que les pièces jointes locales sont conservés sur cet appareil.
 - Contenu Apple Rappels/Calendrier : pas de connecteur actif.
 - Génération IA de recettes ou validation Thermomix : pas de service ajouté.
 

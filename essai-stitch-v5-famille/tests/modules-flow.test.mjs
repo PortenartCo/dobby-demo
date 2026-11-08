@@ -57,7 +57,7 @@ function makeClient(uid, backend, seeded = false, accept = true) {
     customRecipes:[],tmAdaptations:{},
     autoTasks:[],manualMissions:[],
     houseItems:[],houseLogs:[],houseDocs:[{id:'pdf-1',name:'warranty'}],
-    familyMembers:[],famContacts:[],famLists:[],familyEvents:[],
+    familyMembers:[],famContacts:[],famLists:[],familyEvents:[],sharedHealthVisits:[],
     famHealth:[{id:'medical-1',name:'private medical appointment'}],
     familyDocs:[
       ...(seeded?[{id:'contract-1',category:'Contrats',title:'Électricité',provider:'Exemple',attachmentName:'secret.pdf',attachmentType:'application/pdf'}]:[]),
@@ -148,6 +148,43 @@ test('two accounts activate all six modules and receive a shared update without 
   await b.provider.sync();
   assert.equal(b.st.manualMissions[0].title,'Sortir les poubelles');
   assert.equal(b.st.manualMissions[0].status,'open');
+
+  a.st.familyDocs.push(
+    {id:'doc-shared',title:'Facture familiale',category:'Factures et achats',
+      sharedToHousehold:true,cloudPath:HH+'/00000000-0000-4000-8000-000000000091.pdf',
+      cloudName:'facture.pdf',cloudType:'application/pdf',cloudSize:1024},
+    {id:'doc-local',title:'Note privée locale',category:'Factures et achats',note:'PRIVATE'},
+    {id:'doc-health',title:'Bilan médical',category:'Santé',
+      note:'MEDICAL_PRIVATE'},
+    {id:'doc-health-shared',title:'Ordonnance choisie',category:'Santé',
+      sharedToHousehold:true,note:'MEDICAL_SHARED'}
+  );
+  await a.provider.sync();
+  const sharedDocs=backend.rows.get('contracts').payload.contracts;
+  assert.ok(sharedDocs.find(x=>x.id==='doc-shared'));
+  assert.equal(sharedDocs.some(x=>x.id==='doc-local'),false);
+  assert.equal(sharedDocs.some(x=>x.id==='doc-health'),false);
+  assert.ok(sharedDocs.find(x=>x.id==='doc-health-shared'));
+  assert.equal(JSON.stringify(sharedDocs).includes('MEDICAL_PRIVATE'),false);
+  assert.equal(JSON.stringify(sharedDocs).includes('PRIVATE'),false);
+  await b.provider.sync();
+  assert.equal(b.st.familyDocs.find(x=>x.id==='doc-shared')?.cloudName,'facture.pdf');
+  assert.equal(b.st.familyDocs.find(x=>x.id==='doc-shared')?.cloudPath,
+    HH+'/00000000-0000-4000-8000-000000000091.pdf');
+  assert.ok(b.st.familyDocs.find(x=>x.id==='health-doc-1'));
+  assert.equal(b.st.familyDocs.some(x=>x.id==='doc-health'),false);
+  assert.equal(b.st.familyDocs.find(x=>x.id==='doc-health-shared')?.note,'MEDICAL_SHARED');
+  a.st.sharedHealthVisits.push({
+    id:'fh-test-1',title:'Rendez-vous médical choisi',date:'2026-11-19',
+    time:'14:30',person:'Enfant',provider:'Centre médical',location:'',note:''
+  });
+  await a.provider.sync();
+  assert.equal(backend.rows.get('family').payload.sharedHealthVisits.length,1);
+  assert.equal(JSON.stringify(backend.rows.get('family').payload).includes('private medical appointment'),false);
+  await b.provider.sync();
+  assert.equal(b.st.sharedHealthVisits[0].title,'Rendez-vous médical choisi');
+  assert.equal(b.st.famHealth[0].name,'private medical appointment');
+
   assert.equal(JSON.stringify(backend.rows.get('family').payload).includes('private medical appointment'),false);
   assert.match(b.provider.html(),/Partagé · à jour/);
 });

@@ -59,12 +59,15 @@ export function collectUpcoming(state,today,horizonDays=30) {
   const horizon=nextDate(today,horizonDays),overdue=nextDate(today,-30),rows=[];
   const add=(id,title,date,kind,meta='',time='')=>{
     if (!validDate(date))return;
-    const lo=kind==='event'||kind==='birthday'?today:overdue;
+    const lo=kind==='event'||kind==='birthday'||kind==='medical'?today:overdue;
     if (date<lo||date>horizon)return;
     rows.push({id:String(id),title:String(title||''),date,kind,meta:String(meta||''),time:String(time||'')});
   };
   for(const event of validEvents(state?.familyEvents))
     add(event.id,event.title,event.date,'event',event.category + (event.person?' · '+event.person:''),event.time);
+  for(const visit of Array.isArray(state?.sharedHealthVisits)?state.sharedHealthVisits:[])
+    add(visit.id,'Rendez-vous : '+String(visit.title||''),visit.date,'medical',
+      [visit.person,visit.provider].filter(Boolean).join(' · '),visit.time);
   for(const task of Array.isArray(state?.autoTasks)?state.autoTasks:[])
     if(task?.state==='open') add(task.key||task.id,task.title,task.due,'mission',task.sourceLabel||'');
   for(const mission of Array.isArray(state?.manualMissions)?state.manualMissions:[])

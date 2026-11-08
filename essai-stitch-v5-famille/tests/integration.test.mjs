@@ -13,19 +13,23 @@ test('preview V5 source matches original except isolated browser storage names',
   const preview=source('../index.html');
   const normalized=preview.replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
-    .replaceAll('./stitch-v5.js?v=20261108-5','./stitch-v5.js?v=20261107-1');
+    .replaceAll('./stitch-v5.js?v=20261108-7','./stitch-v5.js?v=20261107-1');
   assert.equal(normalized,original);
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
   assert.doesNotMatch(preview,/indexedDB\.open\('dobby-stitch-preview-files-20261105'/);
-  assert.match(preview,/stitch-v5\.js\?v=20261108-5/);
+  assert.match(preview,/stitch-v5\.js\?v=20261108-7/);
   const loader=source('../stitch-v5.js');
-  assert.match(loader,/family-v2\.js\?v=20261108-5/);
-  assert.match(loader,/family-modules\.js\?v=20261108-5/);
-  assert.match(loader,/family-agenda\.js\?v=20261108-5/);
-  assert.match(loader,/family-agenda\.css\?v=20261108-5/);
-  assert.match(loader,/family-missions\.js\?v=20261108-5/);
-  assert.match(loader,/family-missions\.css\?v=20261108-5/);
+  assert.match(loader,/family-v2\.js\?v=20261108-7/);
+  assert.match(loader,/family-modules\.js\?v=20261108-7/);
+  assert.match(loader,/family-agenda\.js\?v=20261108-7/);
+  assert.match(loader,/family-agenda\.css\?v=20261108-7/);
+  assert.match(loader,/family-missions\.js\?v=20261108-7/);
+  assert.match(loader,/family-missions\.css\?v=20261108-7/);
+  assert.match(loader,/family-files\.js\?v=20261108-7/);
+  assert.match(loader,/family-files\.css\?v=20261108-7/);
+  assert.match(loader,/family-health\.js\?v=20261108-7/);
+  assert.match(loader,/family-health\.css\?v=20261108-7/);
 });
 
 
@@ -98,12 +102,34 @@ test('preview denies cross-household browser reuse and drops unauthorized sessio
 });
 
 
-test('family events are shared only through the non-medical family module',()=>{
-  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents'\]/);
+test('family events and selected medical visits share the household without uploading private famHealth',()=>{
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
 });
 
 
 test('manual missions remain separate from automatic tasks',()=>{
   assert.match(modules,/keys:\['autoTasks','manualMissions'\]/);
+});
+
+test('binary file uploads do not use the JSON modules API',()=>{
+  const files=source('../family-files.js');
+  const bucketSql=source('../../sql-proposals/dobby-family-files.sql');
+  assert.match(bridge,/storageFetch/);
+  assert.match(bridge,/storage\/v1\/object/);
+  assert.match(files,/api\.storageFetch\('POST',path,file\)/);
+  assert.match(files,/api\.storageFetch\('GET',d\.cloudPath\)/);
+  assert.match(files,/api\.storageFetch\('DELETE',d\.cloudPath\)/);
+  assert.match(bucketSql,/dobby-family-files/);
+  assert.match(bucketSql,/m\.household_id::text=\(storage\.foldername\(name\)\)\[1\]/);
+  assert.match(bucketSql,/public=false/);
+  assert.doesNotMatch(files,/\bservice_role\b/);
+});
+
+test('shared health visits do not automatically upload previous local health records',()=>{
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'\]/);
+  assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
+  const health=source('../family-health.js');
+  assert.match(health,/sharedHealthVisits/);
+  assert.doesNotMatch(health,/st\.famHealth\s*=/);
 });
