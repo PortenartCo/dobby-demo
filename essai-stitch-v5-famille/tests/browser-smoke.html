@@ -19,7 +19,7 @@
     ticks++;
     try {
       const w=iframe.contentWindow, d=iframe.contentDocument;
-      if(!d || !w.go || !w.DobbyFamilyUI || !d.querySelector('#screen')) {
+      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !d.querySelector('#screen')) {
         if(ticks<75)return;
         throw Error('Le chargeur familial n’a pas démarré');
       }
@@ -40,9 +40,48 @@
       if(!dialog || dialog.hidden || !dialog.textContent.includes('Connexion familiale')) {
         throw Error('La connexion familiale ne peut pas être ouverte');
       }
+      w.go('family');
+      const agenda=d.querySelector('#fpAgenda');
+      if(!agenda || !agenda.textContent.includes('Agenda du foyer')) {
+        throw Error('L’agenda du foyer n’est pas intégré dans Famille');
+      }
+      const addEvent=d.querySelector('#fpAgenda [data-fp-action="new"]');
+      if(!addEvent)throw Error('Le formulaire familial est inaccessible');
+      addEvent.click();
+      const editor=d.getElementById('fpDialogLayer');
+      if(!editor || editor.hidden || !editor.textContent.includes('membres du foyer')) {
+        throw Error('Le formulaire ne prévient pas du caractère partagé des événements');
+      }
+      const form=d.getElementById('fpEventForm');
+      if(!form)throw Error('Le formulaire d’événement n’a pas été créé');
+      const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+      const pad=x=>String(x).padStart(2,'0');
+      form.querySelector('[name="title"]').value='Sortie de test navigateur';
+      form.querySelector('[name="date"]').value=
+        tomorrow.getFullYear()+'-'+pad(tomorrow.getMonth()+1)+'-'+pad(tomorrow.getDate());
+      form.querySelector('[name="time"]').value='14:30';
+      w.__dobbyLastAlert='';
+      w.alert=message=>{w.__dobbyLastAlert=String(message);};
+      if(!form.checkValidity()) {
+        throw Error('Formulaire invalide : '+[...form.elements].filter(x=>x.validity&&!x.validity.valid).map(x=>x.name).join(','));
+      }
+      form.querySelector('button[type="submit"]').click();
+      const recorded=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
+      if(!recorded.familyEvents?.some(x=>x.title==='Sortie de test navigateur')) {
+        throw Error('La création d’événement ne persiste pas localement : '+
+          (w.__dobbyLastAlert||'aucune alerte')+'; records='+
+          (recorded.familyEvents?.length??'absent'));
+      }
+      if(!d.querySelector('#fpAgenda')?.textContent.includes('Sortie de test navigateur')) {
+        throw Error('Le nouvel événement ne figure pas dans l’agenda');
+      }
+      w.go('home');
+      if(!d.querySelector('#screen').textContent.includes('événement Dobby')) {
+        throw Error('Le résumé des événements Dobby est absent de l’accueil');
+      }
       completed=true;clearInterval(timer);
       const s=document.getElementById('status');
-      s.dataset.result='PASS';s.textContent='PASS - intégration V5, panier, navigation, données isolées';
+      s.dataset.result='PASS';s.textContent='PASS - courses, agenda CRUD, confidentialité et stockage isolé';
     }catch(e){
       if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
       completed=true;clearInterval(timer);
