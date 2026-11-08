@@ -138,6 +138,26 @@ async function removeCloud(d){
   }finally{busy=false;redraw();}
 }
 document.addEventListener('click',async(event)=>{
+  // The original V5 'Supprimer' action knows only the local binary store.
+  // For a cloud attachment, delete its object before deleting the fiche.
+  const oldDelete=event.target.closest('[data-doc="delete"]');
+  if(oldDelete && byId(oldDelete.dataset.id)?.cloudPath){
+    event.preventDefault();event.stopImmediatePropagation();
+    if(busy)return;
+    const d=byId(oldDelete.dataset.id);
+    try{
+      if(!active())throw Error('Connectez le foyer pour retirer ce fichier partagé');
+      if(!confirm('Supprimer cette fiche et son fichier partagé du foyer ?'))return;
+      busy=true;
+      await api.storageFetch('DELETE',d.cloudPath);
+      await houseRead('family-'+d.id,true).catch(()=>{});
+      st.familyDocs=st.familyDocs.filter(x=>x.id!==d.id);
+      if(typeof docDetail!=='undefined')docDetail=null;
+      message='Fiche et fichier supprimés du foyer.';
+      saveFiche();
+    }catch(e){report(e);}finally{busy=false;redraw();}
+    return;
+  }
   const button=event.target.closest('[data-fds]');
   if(!button)return;
   event.preventDefault();event.stopImmediatePropagation();
@@ -150,7 +170,14 @@ document.addEventListener('click',async(event)=>{
       if(!active())throw Error('Le module Documents n’est pas actif');
       if(!categoryAllowed(d))throw Error('Cette fiche ne peut pas être partagée ici');
       if(d.sharedToHousehold){
-        if(!confirm('Arrêter de partager cette fiche ? La copie locale restera disponible.'))return;
+        if(!confirm('Arrêter de partager cette fiche ? La copie locale restera disponible. Le fichier commun sera retiré.'))return;
+        if(d.cloudPath){
+          busy=true;
+          try{
+            await api.storageFetch('DELETE',d.cloudPath);
+            for(const k of CloudFields)delete d[k];
+          } finally {busy=false;}
+        }
         d.sharedToHousehold=false;
       } else {
         if(!confirm('Partager cette fiche avec les membres connectés du foyer ?'))return;
