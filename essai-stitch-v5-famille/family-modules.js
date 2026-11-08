@@ -422,5 +422,7 @@ document.addEventListener('click', async e => {
     api.openModal();
   }
 },true);
-api.registerModules({start,reset,html,labelFor,sync,onSave});
+api.registerModules({start,reset,html,labelFor,sync,onSave,
+  statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }
+});
 })();
