@@ -67,6 +67,9 @@ export function collectUpcoming(state,today,horizonDays=30) {
     add(event.id,event.title,event.date,'event',event.category + (event.person?' · '+event.person:''),event.time);
   for(const task of Array.isArray(state?.autoTasks)?state.autoTasks:[])
     if(task?.state==='open') add(task.key||task.id,task.title,task.due,'mission',task.sourceLabel||'');
+  for(const mission of Array.isArray(state?.manualMissions)?state.manualMissions:[])
+    if(mission?.status==='open')
+      add(mission.id,'Mission : '+String(mission.title||''),mission.due,'mission',mission.category||'Famille');
   for(const x of Array.isArray(state?.houseItems)?state.houseItems:[])
     add(x.id,'Entretien : '+String(x.name||''),x.nextMaintenance,'maintenance',x.place||'');
   for(const x of Array.isArray(state?.familyDocs)?state.familyDocs:[])
