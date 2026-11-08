@@ -1,0 +1,400 @@
+{
+  "screenSources": 53,
+  "templatesUsedInActiveUI": 4,
+  "activeFunctionalScreens": 4,
+  "roots": [
+    {
+      "screen": "taverne",
+      "file": "index.html",
+      "id": "dobby_la_taverne_gourmande_repas_menus"
+    },
+    {
+      "screen": "traverse",
+      "file": "traverse.html",
+      "id": "dobby_l_choppe_du_chemin_de_traverse"
+    },
+    {
+      "screen": "missions",
+      "file": "missions.html",
+      "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques"
+    },
+    {
+      "screen": "famille",
+      "file": "famille.html",
+      "id": "dobby_le_salon_des_curiosit_s_famille_organisation"
+    }
+  ],
+  "screens": [
+    {
+      "id": "dobby_adaptation_thermomix_tm5",
+      "source": "design/stitch-53/dobby_adaptation_thermomix_tm5/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_agenda_almanach_du_foyer",
+      "source": "design/stitch-53/dobby_agenda_almanach_du_foyer/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_ajouter_ou_modifier_un_document",
+      "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_document/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_ajouter_ou_modifier_un_membre",
+      "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_membre/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_ajouter_ou_modifier_un_quipement",
+      "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_quipement/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_ajouter_une_recette_manuellement_1",
+      "source": "design/stitch-53/dobby_ajouter_une_recette_manuellement_1/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_ajouter_une_recette_manuellement_2",
+      "source": "design/stitch-53/dobby_ajouter_une_recette_manuellement_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_archives_biblioth_que_documentaire_1",
+      "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_1/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_archives_biblioth_que_documentaire_2",
+      "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_biblioth_que_des_m_mos_notes_familiales",
+      "source": "design/stitch-53/dobby_biblioth_que_des_m_mos_notes_familiales/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_carnet_de_sant_familial",
+      "source": "design/stitch-53/dobby_carnet_de_sant_familial/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_carnet_de_sant_individuel",
+      "source": "design/stitch-53/dobby_carnet_de_sant_individuel/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_choisir_un_repas_nombre_de_convives",
+      "source": "design/stitch-53/dobby_choisir_un_repas_nombre_de_convives/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_contrats_assurances_ch_ances_du_foyer_1",
+      "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_1/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_contrats_assurances_ch_ances_du_foyer_2",
+      "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_conversation_avec_dobby_1",
+      "source": "design/stitch-53/dobby_conversation_avec_dobby_1/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_conversation_avec_dobby_2",
+      "source": "design/stitch-53/dobby_conversation_avec_dobby_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_cr_er_et_attribuer_une_mission",
+      "source": "design/stitch-53/dobby_cr_er_et_attribuer_une_mission/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_cr_er_ou_modifier_un_contact",
+      "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_cr_er_ou_modifier_un_m_mo",
+      "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_m_mo/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
+      "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_rendez_vous_m_dical/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_d_clarer_ou_renouveler_un_contrat",
+      "source": "design/stitch-53/dobby_d_clarer_ou_renouveler_un_contrat/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_d_tail_d_une_liste_familiale",
+      "source": "design/stitch-53/dobby_d_tail_d_une_liste_familiale/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_fiche_document_aper_u",
+      "source": "design/stitch-53/dobby_fiche_document_aper_u/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_une_recette",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_une_recette/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_un_contrat_1",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_1/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_un_contrat_2",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_un_quipement",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_quipement/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_grimoire_des_recettes_favoris_du_logis",
+      "source": "design/stitch-53/dobby_grimoire_des_recettes_favoris_du_logis/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_grimoire_personnel_du_membre",
+      "source": "design/stitch-53/dobby_grimoire_personnel_du_membre/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_g_rer_les_donn_es_des_quipements_export_restauration",
+      "source": "design/stitch-53/dobby_g_rer_les_donn_es_des_quipements_export_restauration/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_historique_contacts_m_dicaux",
+      "source": "design/stitch-53/dobby_historique_contacts_m_dicaux/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_historique_des_listes_de_courses",
+      "source": "design/stitch-53/dobby_historique_des_listes_de_courses/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_historique_d_entretien_pi_ces_jointes",
+      "source": "design/stitch-53/dobby_historique_d_entretien_pi_ces_jointes/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_importer_un_lot_de_recettes_json",
+      "source": "design/stitch-53/dobby_importer_un_lot_de_recettes_json/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_import_intelligent_analyse_validation",
+      "source": "design/stitch-53/dobby_import_intelligent_analyse_validation/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_import_intelligent_s_lection_d_un_fichier",
+      "source": "design/stitch-53/dobby_import_intelligent_s_lection_d_un_fichier/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques",
+      "source": "design/stitch-53/dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter"
+    },
+    {
+      "id": "dobby_la_taverne_gourmande_repas_menus",
+      "source": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter"
+    },
+    {
+      "id": "dobby_le_salon_des_curiosit_s_famille_organisation",
+      "source": "design/stitch-53/dobby_le_salon_des_curiosit_s_famille_organisation/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter"
+    },
+    {
+      "id": "dobby_liste_de_courses_valid_e",
+      "source": "design/stitch-53/dobby_liste_de_courses_valid_e/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_l_choppe_du_chemin_de_traverse",
+      "source": "design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter"
+    },
+    {
+      "id": "dobby_maison_quipements_du_logis_1",
+      "source": "design/stitch-53/dobby_maison_quipements_du_logis_1/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_maison_quipements_du_logis_2",
+      "source": "design/stitch-53/dobby_maison_quipements_du_logis_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_membres_de_la_maisonn_e",
+      "source": "design/stitch-53/dobby_membres_de_la_maisonn_e/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_menu_g_n_ral_de_tous_les_modules",
+      "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_mode_cuisine_tape_par_tape",
+      "source": "design/stitch-53/dobby_mode_cuisine_tape_par_tape/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_pr_parer_la_liste_de_courses_1",
+      "source": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_1/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_pr_parer_la_liste_de_courses_2",
+      "source": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_2/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_rechercher_dans_dobby_recherche_transversale",
+      "source": "design/stitch-53/dobby_rechercher_dans_dobby_recherche_transversale/code.html",
+      "hasScreenshot": true,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_registre_des_listes_familiales",
+      "source": "design/stitch-53/dobby_registre_des_listes_familiales/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_r_pertoire_des_contacts_familiaux",
+      "source": "design/stitch-53/dobby_r_pertoire_des_contacts_familiaux/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    },
+    {
+      "id": "dobby_sauvegarde_et_restauration_compl_te",
+      "source": "design/stitch-53/dobby_sauvegarde_et_restauration_compl_te/code.html",
+      "hasScreenshot": false,
+      "linked": false,
+      "mode": "source-only"
+    }
+  ]
+}

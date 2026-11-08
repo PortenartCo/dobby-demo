@@ -1,0 +1,79 @@
+/* DOBBY V7: faithful Stitch layout + existing V5 functional engine, no additional writer. */
+(()=>{'use strict';
+const frame=document.getElementById('dv7-engine');
+const currentScreen=document.body.dataset.dv7Screen||'taverne';
+const ROOT_PAGES={home:'traverse.html',missions:'missions.html',plan:'index.html',family:'famille.html'};
+const panel=document.getElementById('dv7-panel');
+const title=document.getElementById('dv7-panel-title');
+let lastTrigger=null, booted=false;
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const displayNum=n=>Number(n||0).toLocaleString('fr-BE');
+const dateLabel=iso=>{const d=new Date(iso+'T12:00:00');return Number.isFinite(d.getTime())?d.toLocaleDateString('fr-BE',{weekday:'long',day:'numeric',month:'long'}):iso;};
+const plusDays=(iso,n)=>{const d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');};
+function section(text){const h=[...document.querySelectorAll('main h2')].find(x=>x.textContent.includes(text));return h?.closest('.px-gutter-mobile')||null;}
+function sectionContaining(text){return [...document.querySelectorAll('main .px-gutter-mobile')].find(x=>x.textContent.includes(text))||null;}
+function engine(){return frame.contentWindow;}
+function read(){const w=engine();return w.eval(`(()=>{const all=[...BASE,...(st.customRecipes||[])];return {day:st.day,planned:JSON.parse(JSON.stringify(st.planned||{})),recipes:all.map(r=>({id:r.id,name:r.name,emoji:r.emoji,minutes:r.minutes,servings:r.servings,ingredients:r.ingredients||[]})),basket:shoppingDraft().map(row=>({name:row.name,qty:row.qty,unit:row.unit})),manualMissions:JSON.parse(JSON.stringify(st.manualMissions||[])),autoTasks:JSON.parse(JSON.stringify(st.autoTasks||[])),familyMembers:JSON.parse(JSON.stringify(st.familyMembers||[])),familyEvents:JSON.parse(JSON.stringify(st.familyEvents||[])),sharedHealthVisits:JSON.parse(JSON.stringify(st.sharedHealthVisits||[])),familyNotes:JSON.parse(JSON.stringify(st.familyNotes||[])),familyDocs:JSON.parse(JSON.stringify(st.familyDocs||[])),famContacts:JSON.parse(JSON.stringify(st.famContacts||[])),famLists:JSON.parse(JSON.stringify(st.famLists||[])),houseItems:JSON.parse(JSON.stringify(st.houseItems||[]))}})()`);}
+function recipeOf(data,id){return data.recipes.find(r=>r.id===id);}
+function action(route,name){return `<button type="button" data-dv7-route="${esc(route)}" class="dv7-action dv7-focus rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold px-4 py-3 min-h-11">${esc(name)}</button>`;}
+function dinner(data){const date=data.day,meal=data.planned[date+'-soir'],r=meal?recipeOf(data,meal.id):null;const s=section('Le Festin de ce Soir');if(!s)throw Error('Stitch Festin section missing');
+const meta=r?`${displayNum(r.minutes)} min · ${displayNum(meal.people||r.servings)} personnes`:'Aucun repas prévu';
+const ingredients=r&&r.ingredients?.length?`<div class="rounded-lg bg-surface-container-low p-3"><p class="text-primary font-label-sm text-label-sm uppercase tracking-wide mb-2">Ingrédients de la recette</p><div class="grid grid-cols-2 gap-2">${r.ingredients.slice(0,6).map(i=>`<span class="text-on-surface-variant font-body-sm text-body-sm">${esc(i[0])}</span>`).join('')}</div></div>`:'';
+s.innerHTML=`<div class="flex items-center justify-between mb-3 gap-2"><h2 class="font-['Playfair_Display'] text-[18px] font-semibold text-[#fcf7ee]">♨ Le Festin de ce Soir</h2><span class="px-2.5 py-1 rounded-full border border-amber-900/40 text-xs text-[#d49b42] bg-surface-container-high/60">${esc(dateLabel(date))}</span></div>
+<div class="overflow-hidden bg-surface-container shadow-lg rounded-2xl border border-[#d49b42]/20"><div class="relative h-44 w-full dv7-meal-visual"><span aria-hidden="true">${esc(r?.emoji||'🍲')}</span><span class="absolute bottom-2 right-3 bg-surface-container-lowest/90 px-3 py-1 rounded-md text-on-surface text-label-sm font-label-sm">${esc(meta)}</span></div><div class="p-space-md flex flex-col gap-3"><h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">${esc(r?.name||'Le chaudron attend votre recette')}</h3><p class="font-body-sm text-body-sm text-on-surface-variant">${esc(r?'Repas enregistré dans votre planning DOBBY.':'Aucun repas choisi pour ce soir.')}</p>${ingredients}<div class="flex gap-2 flex-wrap">${r?`<button data-dv7-recipe="${esc(r.id)}" class="dv7-action rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md px-4 py-3 font-semibold flex-1 min-h-11">Voir la recette</button>`:''}${action('plan',r?'Gérer le repas':'Choisir un repas')}</div></div></div>`;}
+function week(data){const s=section('La Semaine de Festins');if(!s)throw Error('Stitch Semaine section missing');
+const cards=Array.from({length:7},(_,i)=>{const date=plusDays(data.day,i),mid=data.planned[date+'-midi'],soir=data.planned[date+'-soir'];const meal=soir||mid||null;const recipe=meal?recipeOf(data,meal.id):null;
+return `<button type="button" data-dv7-date="${esc(date)}" class="dv7-action dv7-focus w-full p-3 bg-surface-container flex items-center gap-3 shadow-md rounded-2xl border border-[#d49b42]/20 text-left"><div class="w-14 h-14 rounded-lg bg-surface-container-high flex-shrink-0 flex items-center justify-center text-3xl" aria-hidden="true">${esc(recipe?.emoji||'🍽️')}</div><div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-1"><span class="font-label-sm text-label-sm text-primary uppercase font-semibold">${esc(dateLabel(date))}</span><span class="font-label-sm text-label-sm text-on-surface-variant">${recipe?esc(String(recipe.minutes||''))+' min':''}</span></div><p class="font-headline-sm text-[16px] leading-tight text-on-surface font-semibold">${esc(recipe?.name||'Repas à prévoir')}</p><p class="font-body-sm text-[13px] text-on-surface-variant">${esc(recipe?((soir?'Dîner':'Midi')+' · '+(meal.people||recipe.servings||'')+' personnes'):'Aucun repas planifié')}</p></div><span class="material-symbols-outlined text-primary">chevron_right</span></button>`;}).join('');
+s.innerHTML=`<div class="flex items-center justify-between mb-3"><h2 class="font-['Playfair_Display'] text-[18px] font-semibold text-[#fcf7ee]">▦ La Semaine de Festins</h2><button class="dv7-action px-3 py-2 rounded-full border border-[#d49b42]/40 text-xs text-[#d49b42] bg-surface-container-high/60" data-dv7-route="plan">Modifier ✎</button></div><div class="flex flex-col gap-2.5">${cards}</div>`;}
+function basket(data){const s=sectionContaining('Le Panier de Dobby');if(!s)throw Error('Stitch Panier section missing');const items=data.basket;
+const rows=items.length?items.slice(0,4).map(item=>`<div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-surface-container-low border border-[#d49b42]/10"><span class="font-body-sm text-body-sm text-on-surface">${esc(item.name)} · ${displayNum(item.qty)} ${esc(item.unit)}</span><span class="material-symbols-outlined text-primary">shopping_basket</span></div>`).join(''):'<div class="dv7-empty">Votre panier est vide. Il se remplira à partir des repas du foyer.</div>';
+s.innerHTML=`<div class="p-4 bg-surface-container-high rounded-2xl border border-[#d49b42]/20 shadow-lg flex flex-col gap-3"><div class="flex items-center justify-between gap-2"><div><h2 class="font-headline-sm text-headline-sm text-on-surface">♧ Le Panier de Dobby</h2><p class="font-body-sm text-body-sm text-on-surface-variant">Contenu actuel du panier familial</p></div><span class="rounded-lg px-3 py-1 bg-surface-container-lowest text-primary font-label-sm text-label-sm">${displayNum(items.length)} articles</span></div><div class="flex flex-col gap-2">${rows}</div>${action('shop','Voir les provisions du foyer')}</div>`;}
+function sanitizeClaims(){
+if(currentScreen==='traverse'){
+ for(const span of document.querySelectorAll('main span')){
+  if(span.textContent.includes('CHEMIN DE TRAVERSE')&&/\d+°C/.test(span.textContent))span.textContent='CHEMIN DE TRAVERSE';
+  if(/\d+ hiboux/.test(span.textContent)){span.closest('.rounded-full')?.remove();}
+ }
+}
+if(currentScreen==='missions'){
+ for(const x of document.querySelectorAll('main *'))if(x.children.length===0&&x.textContent.trim()==='FILTRES DU SCRIPTOIRE'){x.closest('.flex')?.remove();break;}
+}
+
+if(currentScreen==='missions'){for(const el of document.querySelectorAll('main button'))if(/Toutes \(17\)|Urgentes \(3\)|Parchemins Actifs \(5\)|Archives \(12\)|Rituels Récurrents/i.test(el.textContent)){const row=el.parentElement;if(row?.querySelectorAll('button').length>=4)row.hidden=true;else el.hidden=true;}}
+ const markers=[...document.querySelectorAll('main h3,main h4,main span')].filter(x=>/^sceau de protection locale/i.test(x.textContent.trim()));
+ for(const marker of markers){const block=marker.closest('section')||marker.closest('.px-gutter-mobile')||marker.closest('.rounded-2xl');if(block&&block.closest('main'))block.remove();}
+ const tip=[...document.querySelectorAll('main p')].find(x=>x.textContent.includes('Dobby a déjà regroupé les ingrédients'));if(tip)tip.textContent='Dobby vous aide à organiser les repas et les provisions réellement enregistrés dans votre foyer.';
+}
+function removeUnfounded(){const falseSecurity=sectionContaining('SCEAU DE PROTECTION LOCALE DOBBY');if(falseSecurity)falseSecurity.remove();const tip=sectionContaining('ASTUCE DE DOBBY');if(tip){const p=tip.querySelector('p');if(p)p.textContent='Dobby vous aide à organiser vos repas et provisions à partir des données de votre foyer.';}}
+function open(route,trigger,recipeId=null,date=null){lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;const activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}
+try{if(date){w.eval('st.day='+JSON.stringify(date)+'; st.slot="soir"; save();');route='plan';}
+if(route==='mission-new'){w.eval('go("missions")');w.document.querySelector('[data-fms-action="new"]')?.click();title.textContent='Créer une mission';}
+else if(route==='event-new'){w.eval('go("family")');w.document.querySelector('[data-fp-action="new"]')?.click();title.textContent='Nouvel événement';}
+else if(route==='account'){w.eval('go("family")');w.document.querySelector('[data-fv-action="open"]')?.click();title.textContent='Compte et foyer';}
+else if(recipeId){w.eval('st.page="recipes"; st.detail='+JSON.stringify(recipeId)+'; st.cook=false; save();render();');title.textContent='Fiche recette';}
+else{w.eval('go('+JSON.stringify(route)+')');title.textContent=({recipes:'Grimoire des recettes',shop:'Provisions',home:'Chemin de Traverse',family:'Famille',missions:'Missions',plan:'Planning',menu:'Tous les outils',pick:'Choisir un repas'})[route]||'DOBBY';}
+panel.hidden=false;document.body.classList.add('dv7-panel-visible');document.getElementById('dv7-close').focus();}catch(e){console.error('Dobby V7: action non disponible',e);}
+}
+function close(){panel.hidden=true;document.body.classList.remove('dv7-panel-visible');try{renderReal();}catch(e){console.error(e)}lastTrigger?.focus?.();}
+function renderReal(){const data=read();if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}else{window.DobbyStitchRootAdapters.render(currentScreen,data);} sanitizeClaims();document.querySelector('main').style.visibility='visible';document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');}
+function bind(){document.getElementById('dv7-close').addEventListener('click',close);
+document.addEventListener('click',ev=>{if(panel.hidden===false)return;const rec=ev.target.closest('[data-dv7-recipe]');if(rec){ev.preventDefault();open('recipes',rec,rec.dataset.dv7Recipe);return;}const date=ev.target.closest('[data-dv7-date]');if(date){ev.preventDefault();open('plan',date,null,date.dataset.dv7Date);return;}const route=ev.target.closest('[data-dv7-route]');if(route){ev.preventDefault();open(route.dataset.dv7Route,route);return;}const tab=ev.target.closest('[data-tab]');if(tab){ev.preventDefault();const x=({menu:'plan',grimoire:'recipes',provisions:'shop'})[tab.dataset.tab];if(x&&x!=='plan')open(x,tab);return;}const nav=ev.target.closest('nav button, nav a');if(nav){ev.preventDefault();const t=nav.textContent.toLowerCase();const name=t.includes('traverse')?'home':t.includes('mission')?'missions':t.includes('famille')?'family':t.includes('taverne')?'plan':null;if(name&&name!=='plan')open(name,nav);return;}
+const b=ev.target.closest('button');if(!b)return;
+if(b.id==='btn-inspiration'){ev.preventDefault();open('pick',b);return;}
+if(b.id==='btn-nouvelle-mission'){ev.preventDefault();open('mission-new',b);return;}
+if(b.id==='btn-vocal'){ev.preventDefault();open('chat',b);return;}
+if(currentScreen==='famille'&&b.closest('main')&&/programmer un rituel|ajouter un événement/i.test(b.textContent)){ev.preventDefault();open('event-new',b);return;}
+if(currentScreen==='missions'&&b.closest('main')&&/créer une mission/i.test(b.textContent)){ev.preventDefault();open('mission-new',b);return;}
+if(b.closest('header')){ev.preventDefault();const icon=b.querySelector('.material-symbols-outlined')?.textContent.trim();open(icon==='person'?'account':'menu',b);return;}if(b.closest('main')){ev.preventDefault();open(({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen],b);return;}
+});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){e.preventDefault();close();}});
+const inspiration=document.getElementById('btn-inspiration');if(inspiration){const span=inspiration.querySelector('span:last-child');if(span)span.textContent='Choisir un repas';}
+for(const icon of document.querySelectorAll('header .material-symbols-outlined'))if(/^volume_(?:up|off|mute|down)$/.test(icon.textContent.trim()))icon.closest('button')?.remove();
+const sound=document.getElementById('btn-sound-toggle');sound?.remove();
+for(const icon of document.querySelectorAll('header .material-symbols-outlined'))if(icon.textContent.trim()==='person'){const button=icon.closest('button,[role="button"],div.cursor-pointer');if(button){button.setAttribute('role','button');button.tabIndex=0;button.setAttribute('aria-label','Ouvrir le compte familial');button.addEventListener('click',e=>{e.preventDefault();open('account',button)});button.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open('account',button)}})}}
+const hero=document.querySelector('main img[alt*="Dobby"]');if(hero){const img=({taverne:'taverne',traverse:'traverse',missions:'missions',famille:'famille'})[currentScreen];hero.src='../essai-v6-preview/assets/v6/'+img+'.png';hero.alt='Dobby dans '+({taverne:'la Taverne',traverse:'la Traverse',missions:'la Bibliothèque des Missions',famille:'le Salon des Curiosités'})[currentScreen];}
+}
+function start(){if(booted)return;const w=engine();try{if(!w||w.eval('typeof st!=="object"||typeof go!=="function"||typeof shoppingDraft!=="function"'))return;}catch{return;}try{bind();renderReal();booted=true;}catch(e){console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';}}
+frame.addEventListener('load',()=>{const attempt=()=>{if(booted)return;start();if(!booted)setTimeout(attempt,200);};attempt();});
+setTimeout(()=>{if(!booted){document.getElementById('dv7-loading').textContent='Dobby ne parvient pas à ouvrir le foyer. Réessayez en rechargeant la page.';}},20000);
+window.DobbyStitchV7=Object.freeze({version:7,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
+})();

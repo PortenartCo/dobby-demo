@@ -1,0 +1,62 @@
+﻿name: Dobby V7 - Stitch functional UI
+on:
+  push:
+    paths:
+      - 'essai-stitch-v7/**'
+      - 'design/stitch-53/**'
+      - 'docs/dobby-v7/**'
+      - '.github/workflows/dobby-stitch-v7.yml'
+  pull_request:
+    paths:
+      - 'essai-stitch-v7/**'
+      - 'design/stitch-53/**'
+      - 'docs/dobby-v7/**'
+      - '.github/workflows/dobby-stitch-v7.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-backed-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check V7 JavaScript syntax
+        run: |
+          node --check essai-stitch-v7/build-source.cjs
+          node --check essai-stitch-v7/bridge.js
+          node --check essai-stitch-v7/root-adapters.js
+          node --check essai-stitch-v7/tests/smoke.cjs
+      - name: Confirm the original Stitch source manifest
+        run: |
+          node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"
+      - name: Browser tooling (tests only)
+        working-directory: essai-stitch-v7/tests
+        run: npm ci --ignore-scripts
+      - name: Functional Stitch roots and source fidelity
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+          sleep 1
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          elif command -v chromium >/dev/null; then
+            BROWSER="$(command -v chromium)"
+          elif command -v chromium-browser >/dev/null; then
+            BROWSER="$(command -v chromium-browser)"
+          else
+            echo "No Chrome/Chromium available on runner"
+            exit 1
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/smoke.cjs
+      - name: Keep four source-backed screenshots (320/390px)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-stitch-visual-evidence
+          path: docs/dobby-v7/evidence/
+          retention-days: 14
