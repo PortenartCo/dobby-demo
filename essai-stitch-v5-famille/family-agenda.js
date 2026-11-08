@@ -145,6 +145,7 @@ function showForm(id){
     '<div class="fp-dialog-actions"><button type="submit" class="fp-main-btn">Enregistrer</button>'+
       '<button type="button" data-fp-action="close">Annuler</button></div></form></div>';
   form.hidden=false;
+  form.querySelector('#fpEventForm')?.addEventListener('submit',submitFamilyEvent);
   form.querySelector('input[name=title]')?.focus();
 }
 function closeDialog(){
@@ -183,7 +184,7 @@ document.addEventListener('click',event=>{
     }
   }catch(error){alert(error?.message||'Action impossible');}
 },true);
-document.addEventListener('submit',event=>{
+function submitFamilyEvent(event){
   if(event.target?.id!=='fpEventForm')return;
   event.preventDefault();event.stopImmediatePropagation();
   try{
@@ -201,7 +202,7 @@ document.addEventListener('submit',event=>{
       : [...st.familyEvents,record];
     closeDialog();mutate();
   }catch(error){alert(error?.message||'Enregistrement impossible');}
-},true);
+}
 document.addEventListener('keydown',event=>{
   if(event.key==='Escape' && !document.getElementById('fpDialogLayer')?.hidden)closeDialog();
 });
