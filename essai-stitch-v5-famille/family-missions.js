@@ -93,7 +93,7 @@ function saveForm(event){
       id:existing||('fm-'+crypto.randomUUID()),
       title:data.get('title'),due:data.get('due'),
       category:data.get('category'),assigneeId:data.get('assigneeId'),
-      note:data.get('note'),state:old?.status||'open',
+      note:data.get('note'),status:old?.status||'open',
       createdAt:old?.createdAt||now,completedAt:old?.completedAt||''
     });
     st.manualMissions=existing?st.manualMissions.map(x=>x.id===existing?row:x):
