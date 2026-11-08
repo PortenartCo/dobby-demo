@@ -1,0 +1,38 @@
+name: Dobby Sync regression (local)
+on:
+  push:
+    paths:
+      - 'essai-sync-v1/**'
+      - 'essai-sync-v2/**'
+      - '.github/workflows/dobby-sync-regression.yml'
+  pull_request:
+    paths:
+      - 'essai-sync-v1/**'
+      - 'essai-sync-v2/**'
+      - '.github/workflows/dobby-sync-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-core:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax (both pilots)
+        run: |
+          node --check essai-sync-v1/app.js
+          node --check essai-sync-v1/core.mjs
+          node --check essai-sync-v1/sw.js
+          node --check essai-sync-v2/app.js
+          node --check essai-sync-v2/core.mjs
+          node --check essai-sync-v2/sw.js
+      - name: Deterministic offline/conflict regression
+        run: |
+          node --test essai-sync-v1/tests/*.test.mjs
+          node --test essai-sync-v2/tests/*.test.mjs
