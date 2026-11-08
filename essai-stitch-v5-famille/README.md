@@ -17,7 +17,7 @@ La synchronisation opt-in des modules menus, recipes, missions, house, family et
 La synchronisation nécessite un consentement explicite depuis « Gérer le foyer ». Lorsque plusieurs modules sont encore inactifs et qu'aucun module familial n'est déjà publié, un bouton « Activer les 6 modules du foyer » effectue la mise en place en une seule confirmation, avec sauvegarde et exclusion des repas fictifs encore intacts. Le deuxième compte peut récupérer les modules déjà partagés en une seule opération, avec sauvegarde locale avant remplacement. Aucun de ces mécanismes ne lance automatiquement une importation ou une synchronisation sans action de l'utilisateur. Les tests simulés ne prouvent pas une synchronisation complète avec deux véritables sessions.
 - Menus et préparations : planned, shopHistory, shopFinal et shopChoice.
 - Recettes personnalisées et adaptations Thermomix déjà enregistrées : customRecipes et tmAdaptations.
-- Missions : autoTasks.
+- Missions : autoTasks (projections dérivées des équipements/contrats) et manualMissions (tâches familiales créées par les utilisateurs, séparées pour ne pas être marquées obsolètes par le moteur automatique).
 - Maison : houseItems et houseLogs (fichiers/attestations locaux).
 - Famille : familyMembers, famContacts, famLists et familyEvents (événements ordinaires, jamais médicaux).
 - Contrats et assurances : métadonnées des fiches uniquement, sans les fichiers joints.
@@ -35,6 +35,15 @@ La V5 peut précharger trois repas **fictifs** (poulet, pâtes, tartines) sur un
 - Les catégories médicales sont interdites dans ce module et un avertissement rappelle de ne pas saisir de données médicales ou confidentielles. Le carnet `famHealth` et les documents « Santé » ne sont jamais utilisés pour générer ce tableau.
 - Tests automatisés : validité des dates, agrégation, fuites de catégories sensibles, export iCalendar, partage entre deux comptes simulés, saisie et persistance réelle dans Chromium.
 - **Limite** : la synchronisation du nouvel agenda entre deux véritables sessions Supabase et Safari iOS n'est pas encore constatée.
+
+## Missions familiales — saisie et responsabilité
+- L'écran Missions comporte désormais une liste manuelle indépendante, dans laquelle on peut créer, modifier, attribuer, terminer, rouvrir et supprimer une mission.
+- Responsable = membre présent dans le module Famille, échéance facultative et note non confidentielle.
+- Ces missions sont sauvegardées dans `st.manualMissions`, au sein du même module `missions` partagé via Supabase V2. Aucune nouvelle table ni migration SQL.
+- Le moteur historique `autoTasks` conserve son propre fonctionnement ; il ne peut plus classer ces missions manuelles « obsolètes ».
+- Les missions datées figurent dans les échéances communes sur l'accueil et dans l'agenda.
+- Aucun rappel ni attribution Apple Rappels n'est envoyé automatiquement.
+- Vérification : tests unitaires, deux comptes simulés et création persistante dans Chromium. Les modifications entre deux comptes réellement connectés restent à confirmer.
 
 ## Données intentionnellement exclues du partage
 - Santé et rendez-vous médicaux : famHealth, ainsi que les catégories de documents Santé.
