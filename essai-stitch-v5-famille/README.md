@@ -1,7 +1,7 @@
 # Dobby V5 familial — intégration isolée (08/11/2026)
 
 ## Périmètre réellement raccordé
-- Maquette Stitch V5 préservée : HTML identique à l'essai V5 original à l'exception des deux clés de stockage navigateur (localStorage et IndexedDB des fichiers), volontairement isolées. CSS identique.
+- Maquette Stitch V5 préservée : HTML identique à l'essai V5 original à l'exception des deux clés de stockage navigateur volontairement isolées et du versionnement de chargement JS. CSS Stitch de référence inchangé ; CSS supplémentaire pour la famille.
 - Nouvelle section « Le panier commun » dans la page Courses, sans iframe et sans remplacement de la préparation d'origine.
 - Auth Supabase avec clé *publique* seulement et comptes familiaux existants.
 - Récupération possible de la clé publiable du pilote Sync V2 sur le même navigateur. Aucune copie de son mot de passe ou de ses jetons de session.
@@ -12,19 +12,29 @@
 - Un même profil de navigateur est réservé à un seul foyer afin d'éviter de mélanger les données locales ; changer de foyer exige un profil navigateur distinct. Il ne s'agit pas encore d'une application multi-foyers complète sur appareil partagé.
 
 ## Modules familiaux — socle SQL déployé, synchronisation à confirmer en sessions réelles
-La synchronisation opt-in des modules menus, recipes, missions, house, family et contracts est codée dans family-modules.js. **La table Supabase a été créée et le contrôle SQL simulant deux membres et un extérieur a renvoyé PASS, selon les résultats fournis par l'utilisateur.** Les scripts GitHub n'exécutent aucune migration Supabase. La synchronisation réelle des six modules reste à valider avec les deux comptes connectés.
+La synchronisation opt-in des modules menus, recipes, missions, house, family et contracts est codée dans family-modules.js. **La table Supabase a été créée et le contrôle SQL simulant deux membres et un extérieur a renvoyé PASS, selon les résultats fournis par l'utilisateur.** Les scripts GitHub n'exécutent aucune migration Supabase. L'utilisateur a confirmé que le deuxième compte a pu récupérer les six modules. La lecture et le rattachement fonctionnent donc en situation réelle ; les écritures concurrentes de chaque module et l'agenda restent à confirmer sur deux sessions réelles.
 
 La synchronisation nécessite un consentement explicite depuis « Gérer le foyer ». Lorsque plusieurs modules sont encore inactifs et qu'aucun module familial n'est déjà publié, un bouton « Activer les 6 modules du foyer » effectue la mise en place en une seule confirmation, avec sauvegarde et exclusion des repas fictifs encore intacts. Le deuxième compte peut récupérer les modules déjà partagés en une seule opération, avec sauvegarde locale avant remplacement. Aucun de ces mécanismes ne lance automatiquement une importation ou une synchronisation sans action de l'utilisateur. Les tests simulés ne prouvent pas une synchronisation complète avec deux véritables sessions.
 - Menus et préparations : planned, shopHistory, shopFinal et shopChoice.
 - Recettes personnalisées et adaptations Thermomix déjà enregistrées : customRecipes et tmAdaptations.
 - Missions : autoTasks.
 - Maison : houseItems et houseLogs (fichiers/attestations locaux).
-- Famille : familyMembers, famContacts et famLists.
+- Famille : familyMembers, famContacts, famLists et familyEvents (événements ordinaires, jamais médicaux).
 - Contrats et assurances : métadonnées des fiches uniquement, sans les fichiers joints.
 
 Les versions familiales existantes ne doivent pas écraser silencieusement les données locales : sauvegarde de préimage et résolution de conflit sur version de module.
 
 La V5 peut précharger trois repas **fictifs** (poulet, pâtes, tartines) sur un appareil vierge. Si leur structure est toujours celle d'origine, l'écran « Gérer le foyer » les signale et propose un bouton facultatif pour les retirer, après confirmation et sauvegarde. Aucun véritable menu personnalisé n'est effacé automatiquement.
+
+## Agenda, échéances et calendrier iPhone — essai fonctionnel
+- Nouveau panneau « Agenda du foyer » dans la page Famille : ajouter, modifier, supprimer des événements non médicaux (famille, école, activité, anniversaire, déplacement).
+- Les événements sont enregistrés dans `st.familyEvents` et empruntent le module `family` déjà sécurisé par la RLS du foyer. Pas de nouvelle table Supabase.
+- La page d'accueil résume les événements du jour sur la vraie maquette Stitch V5.
+- Les échéances combinent les missions ouvertes, entretiens de maison, contrats/assurances et anniversaires des membres ; les retards récents sont signalés. Aucun faux rappel Apple n'est annoncé.
+- Un bouton « Calendrier » exporte un `.ics` à importer manuellement sur iPhone ou ordinateur ; aucune synchronisation native Apple Calendar n'est revendiquée.
+- Les catégories médicales sont interdites dans ce module et un avertissement rappelle de ne pas saisir de données médicales ou confidentielles. Le carnet `famHealth` et les documents « Santé » ne sont jamais utilisés pour générer ce tableau.
+- Tests automatisés : validité des dates, agrégation, fuites de catégories sensibles, export iCalendar, partage entre deux comptes simulés, saisie et persistance réelle dans Chromium.
+- **Limite** : la synchronisation du nouvel agenda entre deux véritables sessions Supabase et Safari iOS n'est pas encore constatée.
 
 ## Données intentionnellement exclues du partage
 - Santé et rendez-vous médicaux : famHealth, ainsi que les catégories de documents Santé.
