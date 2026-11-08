@@ -102,8 +102,8 @@ test('preview denies cross-household browser reuse and drops unauthorized sessio
 });
 
 
-test('family events are shared only through the non-medical family module',()=>{
-  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents'\]/);
+test('family events and selected medical visits share the household without uploading private famHealth',()=>{
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
 });
 
