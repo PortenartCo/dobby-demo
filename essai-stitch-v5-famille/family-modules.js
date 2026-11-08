@@ -9,13 +9,20 @@ const DEFINITIONS = [
   { id:'recipes', title:'Recettes et Thermomix', keys:['customRecipes','tmAdaptations'], pages:['recipes'] },
   { id:'missions', title:'Missions familiales', keys:['autoTasks'], pages:['missions'] },
   { id:'house', title:'Maison et entretiens', keys:['houseItems','houseLogs'], pages:['house'] },
-  { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists'], pages:['family'] }
+  { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists'], pages:['family'] },
+  { id:'contracts', title:'Contrats et assurances (fiches seulement)', keys:[], pages:['documents'] }
 ];
 const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));
 let ctx = null, backendReady = false, checked = false, states = {}, inFlight = false;
 let timer = null, applying = false, lastError = '';
 const esc = api.esc;
 function pick(id) {
+  if (id === 'contracts') {
+    const permitted = ['id','title','category','person','date','deadline','provider','reference','tags','note'];
+    return {contracts:(st.familyDocs || []).filter(x=>x.category === 'Contrats' || x.category === 'Assurances').map(x=>{
+      const record={};for(const key of permitted)if(x[key]!==undefined)record[key]=x[key];return record;
+    })};
+  }
   const definition = byId.get(id);
   if (!definition) throw Error('Module inconnu');
   const data = {};
@@ -45,6 +52,20 @@ function applyShared(id, payload) {
   if (!def || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw Error('Payload invalide');
   applying = true;
   try {
+    if (id === 'contracts') {
+      if (!Array.isArray(payload.contracts)) throw Error('Fiches de contrats invalides');
+      const incoming = payload.contracts;
+      const incomingIds = new Set(incoming.map(x=>x.id));
+      const old = Array.isArray(st.familyDocs)?st.familyDocs:[];
+      const attachments = new Map(old.map(x=>[x.id,x]));
+      const retained = old.filter(x=>
+        !['Contrats','Assurances'].includes(x.category) ||
+        (x.attachmentName && !incomingIds.has(x.id)));
+      st.familyDocs = retained.concat(incoming.map(x=>{
+        const prior = attachments.get(x.id);
+        return {...x, attachmentName:prior?.attachmentName || '',attachmentType:prior?.attachmentType || ''};
+      }));
+    }
     for (const key of def.keys) {
       if (Object.prototype.hasOwnProperty.call(payload,key)) {
         st[key] = JSON.parse(JSON.stringify(payload[key]));
@@ -103,19 +124,20 @@ function html() {
     return '<div class="fv2-module"><strong>' + esc(def.title) + '</strong>' +
       '<span class="fv2-flag">' + esc(flag) + '</span>' +
       (def.id === 'house' ? '<p>Pièces et scans toujours locaux.</p>' : '') +
+      (def.id === 'contracts' ? '<p>Seules les fiches des catégories Contrats et Assurances sont partagées; aucune pièce jointe.</p>' : '') +
       actions + '</div>';
   }).join('');
   const gate = !backendReady ? '<p class="fv2-error">Le nouveau modèle de sécurité des modules doit d’abord être déployé dans le projet Supabase Dobby. Aucun partage n’est activé.</p>' +
     '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
   return description + gate + rows +
-    '<div class="fv2-module"><strong>Documents, contrats et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
-    '<p>Attente d’un stockage sécurisé avec permissions par foyer et gestion des fichiers.</p></div>' +
+    '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
+    '<p>Les fiches de contrats peuvent être partagées après activation explicite; les fichiers, autres documents et mémos restent sur cet appareil.</p></div>' +
     '<div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Privé · local</span>' +
     '<p>Aucun dossier de santé n’est envoyé au panier ou aux modules communs.</p></div>' +
     (lastError ? '<p class="fv2-minor">' + esc(lastError) + '</p>' : '');
 }
 function labelFor(page) {
-  if (page === 'documents') return 'Documents locaux, stockage sécurisé à préparer';
+  if (page === 'documents') return 'Documents locaux · ' + stateLabel(byId.get('contracts')) + ' pour les fiches contrats';
   if (page === 'chat') return 'Conversations conservées sur cet appareil';
   if (page === 'family' && String(st.extraPage || '').startsWith('health')) return 'Santé privée locale';
   const def = DEFINITIONS.find(x => x.pages.includes(page));
