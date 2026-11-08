@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Dobby - Test navigateur local</title>
+<style>body{font-family:system-ui;margin:25px}#status{font-weight:bold}iframe{width:420px;height:700px;border:1px solid #aaa}</style>
+</head><body>
+<h1>Dobby V5 - smoke-test</h1>
+<div id="status" data-result="RUNNING">RUNNING</div>
+<script>
+(function(){
+  'use strict';
+  const sentinel = '{"sentinel":"existing-stitch-data-must-remain"}';
+  const oldKey = 'dobby-stitch-preview-20261105';
+  localStorage.setItem(oldKey, sentinel);
+  const iframe = document.createElement('iframe');
+  iframe.id='preview';iframe.src='../index.html';
+  document.body.append(iframe);
+  let ticks=0, completed=false;
+  const timer=setInterval(() => {
+    if(completed)return;
+    ticks++;
+    try {
+      const w=iframe.contentWindow, d=iframe.contentDocument;
+      if(!d || !w.go || !w.DobbyFamilyUI || !d.querySelector('#screen')) {
+        if(ticks<75)return;
+        throw Error('Le chargeur familial n’a pas démarré');
+      }
+      w.go('shop');
+      const panier=d.querySelector('.fv2-panel');
+      if(!panier || !panier.textContent.includes('Le panier commun')) {
+        throw Error('Le panier partagé n’est pas rendu dans V5');
+      }
+      if(!d.querySelector('.fv2-recipeprep'))throw Error('La préparation des repas V5 a disparu');
+      if(localStorage.getItem(oldKey)!==sentinel)throw Error('Le stockage de l’ancien V5 a été modifié');
+      if(!localStorage.getItem('dobby-v5-familial-preview-20261108')) {
+        throw Error('La version familiale n’utilise pas son propre stockage');
+      }
+      const button=d.querySelector('.fv2-panel [data-fv-action="open"]');
+      if(!button)throw Error('Le bouton de connexion familiale est absent');
+      button.click();
+      const dialog=d.getElementById('fv2Overlay');
+      if(!dialog || dialog.hidden || !dialog.textContent.includes('Connexion familiale')) {
+        throw Error('La connexion familiale ne peut pas être ouverte');
+      }
+      completed=true;clearInterval(timer);
+      const s=document.getElementById('status');
+      s.dataset.result='PASS';s.textContent='PASS - intégration V5, panier, navigation, données isolées';
+    }catch(e){
+      if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
+      completed=true;clearInterval(timer);
+      const s=document.getElementById('status');
+      s.dataset.result='FAIL';s.textContent='FAIL - '+e.message;
+    }
+  },200);
+})();
+</script></body></html>
