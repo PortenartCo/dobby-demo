@@ -65,20 +65,12 @@
       if(!form.checkValidity()) {
         throw Error('Formulaire invalide : '+[...form.elements].filter(x=>x.validity&&!x.validity.valid).map(x=>x.name).join(','));
       }
-      const flow={doc:0,target:0,click:0};
-      d.addEventListener('submit',e=>{if(e.target.id==='fpEventForm')flow.doc++;},true);
-      form.addEventListener('submit',e=>{flow.target++;flow.targetId=e.target.id;flow.targetName=e.target.nodeName;flow.current=e.currentTarget.id;});
-      form.querySelector('button[type="submit"]').addEventListener('click',()=>{flow.click++;});
       form.querySelector('button[type="submit"]').click();
       const recorded=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
       if(!recorded.familyEvents?.some(x=>x.title==='Sortie de test navigateur')) {
         throw Error('La création d’événement ne persiste pas localement : '+
           (w.__dobbyLastAlert||'aucune alerte')+'; records='+
-          (recorded.familyEvents?.length??'absent')+'; dialogHidden='+
-          String(d.getElementById('fpDialogLayer')?.hidden)+'; trace='+
-          JSON.stringify(flow)+'; connected='+form.isConnected+
-          '; page='+w.location.pathname+'; name='+form.nodeName+
-          '; attached='+form.dataset.handlerAttached+'; owner='+String(form.ownerDocument===d));
+          (recorded.familyEvents?.length??'absent'));
       }
       if(!d.querySelector('#fpAgenda')?.textContent.includes('Sortie de test navigateur')) {
         throw Error('Le nouvel événement ne figure pas dans l’agenda');
