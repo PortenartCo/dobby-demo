@@ -19,7 +19,7 @@
     ticks++;
     try {
       const w=iframe.contentWindow, d=iframe.contentDocument;
-      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !w.DobbyFamilyMissions || !d.querySelector('#screen')) {
+      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !w.DobbyFamilyMissions || !w.DobbyFamilyFiles || !d.querySelector('#screen')) {
         if(ticks<75)return;
         throw Error('Le chargeur familial n’a pas démarré');
       }
@@ -98,9 +98,29 @@
       if(!d.querySelector('#fmsManual')?.textContent.includes('Mission test navigateur')) {
         throw Error('La mission créée n’est pas affichée');
       }
+      w.st.familyDocs.push({
+        id:'doc-smoke-1',title:'Assurance test',category:'Assurances',provider:'Assureur de test'
+      });
+      w.go('documents');
+      const sharedDocs=d.querySelector('.fds-panel');
+      if(!sharedDocs||!sharedDocs.textContent.includes('Documents communs')||
+         !sharedDocs.textContent.includes('Assurance test')) {
+        throw Error('Les documents du foyer ne sont pas intégrés à V5');
+      }
+      const view=d.querySelector('.fds-list [data-doc="view"][data-id="doc-smoke-1"]');
+      if(!view)throw Error('Le dossier partagé ne peut pas être ouvert');
+      view.click();
+      const details=[...d.querySelectorAll('.fds-panel')].find(x=>
+        x.textContent.includes('Partage avec le foyer'));
+      if(!details || !details.querySelector('[data-fds-file="doc-smoke-1"]')){
+        throw Error('L’envoi volontaire du fichier familial est inaccessible');
+      }
+      if(!details.querySelector('[data-fds-file="doc-smoke-1"]').disabled){
+        throw Error('Un upload Cloud ne doit pas être autorisé avant la connexion Supabase');
+      }
       completed=true;clearInterval(timer);
       const s=document.getElementById('status');
-      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, missions familiales et stockage isolé';
+      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, missions, documents volontaires et stockage isolé';
     }catch(e){
       if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
       completed=true;clearInterval(timer);
