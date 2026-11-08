@@ -7,7 +7,7 @@ if (!api) throw Error('Dobby Family UI unavailable');
 const DEFINITIONS = [
   { id:'menus', title:'Repas et menus', keys:['planned','shopHistory','shopFinal','shopChoice'], pages:['plan','pick','shop'] },
   { id:'recipes', title:'Recettes et Thermomix', keys:['customRecipes','tmAdaptations'], pages:['recipes'] },
-  { id:'missions', title:'Missions familiales', keys:['autoTasks'], pages:['missions'] },
+  { id:'missions', title:'Missions familiales', keys:['autoTasks','manualMissions'], pages:['missions'] },
   { id:'house', title:'Maison et entretiens', keys:['houseItems','houseLogs'], pages:['house'] },
   { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists','familyEvents'], pages:['family'] },
   { id:'contracts', title:'Contrats et assurances (fiches seulement)', keys:[], pages:['documents'] }
