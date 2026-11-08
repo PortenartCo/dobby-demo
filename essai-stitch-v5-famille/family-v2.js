@@ -526,13 +526,13 @@ document.addEventListener('submit', async e => {
     if (form.id === 'fv2AddForm') {
       const data = new FormData(form);
       await add(data.get('title'), validQuantity(data.get('quantity')), data.get('unit'));
-      form.reset(); void sync();
+      form.reset(); document.activeElement?.blur(); render(); void sync();
     }
     if (form.id === 'fv2EditForm') {
       const data = new FormData(form), id = form.dataset.id;
       await change(id, {title:String(data.get('title') || '').trim(),
         quantity:validQuantity(data.get('quantity')), unit:String(data.get('unit') || '').trim()});
-      f.editing = null; repaint();
+      f.editing = null; document.activeElement?.blur(); render();
     }
   } catch (error) { showMessage(fail(error)); }
   finally { if (submit?.isConnected) submit.disabled = false; }
