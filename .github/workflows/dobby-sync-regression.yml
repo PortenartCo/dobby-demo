@@ -4,11 +4,15 @@ on:
     paths:
       - 'essai-sync-v1/**'
       - 'essai-sync-v2/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'sql-proposals/dobby-v2-modules.sql'
       - '.github/workflows/dobby-sync-regression.yml'
   pull_request:
     paths:
       - 'essai-sync-v1/**'
       - 'essai-sync-v2/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'sql-proposals/dobby-v2-modules.sql'
       - '.github/workflows/dobby-sync-regression.yml'
   workflow_dispatch:
 
@@ -32,7 +36,14 @@ jobs:
           node --check essai-sync-v2/app.js
           node --check essai-sync-v2/core.mjs
           node --check essai-sync-v2/sw.js
+          node --check essai-stitch-v5-famille/stitch-v5.js
+          node --check essai-stitch-v5-famille/family-v2.js
+          node --check essai-stitch-v5-famille/family-modules.js
+          node --check essai-stitch-v5-famille/family-core.mjs
       - name: Deterministic offline/conflict regression
         run: |
           node --test essai-sync-v1/tests/*.test.mjs
           node --test essai-sync-v2/tests/*.test.mjs
+          node --test essai-stitch-v5-famille/tests/*.test.mjs
+      - name: Confirm original Stitch V5 HTML is unchanged
+        run: cmp essai-stitch-v5/index.html essai-stitch-v5-famille/index.html
