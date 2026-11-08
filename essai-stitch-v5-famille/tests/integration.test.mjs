@@ -12,7 +12,8 @@ test('preview V5 source matches original except isolated browser storage names',
   const original=source('../../essai-stitch-v5/index.html');
   const preview=source('../index.html');
   const normalized=preview.replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
-    .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105');
+    .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
+    .replaceAll('./stitch-v5.js?v=20261108-2','./stitch-v5.js?v=20261107-1');
   assert.equal(normalized,original);
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
