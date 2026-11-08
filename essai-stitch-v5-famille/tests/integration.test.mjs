@@ -26,7 +26,7 @@ test('preview V5 source matches original except isolated browser storage names',
   assert.match(loader,/family-agenda\.css\?v=20261108-7/);
   assert.match(loader,/family-missions\.js\?v=20261108-7/);
   assert.match(loader,/family-missions\.css\?v=20261108-7/);
-  assert.match(loader,/family-files\.js\?v=20261108-7/);
+  assert.match(loader,/family-files\.js\?v=20261108-8/);
   assert.match(loader,/family-files\.css\?v=20261108-7/);
   assert.match(loader,/family-health\.js\?v=20261108-7/);
   assert.match(loader,/family-health\.css\?v=20261108-7/);
