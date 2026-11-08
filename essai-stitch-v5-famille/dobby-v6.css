@@ -1,0 +1,37 @@
+@import url('./assets/v6/fonts.css');
+
+/* Canonical presentation tokens, calibrated against the supplied Taverne. */
+:root {
+  --dobby-bg: #1e100c;
+  --dobby-surface-low: #271814;
+  --dobby-surface: #2c1c18;
+  --dobby-surface-high: #372622;
+  --dobby-surface-raised: #43302c;
+  --dobby-gold: #f9bb5f;
+  --dobby-gold-deep: #d49b42;
+  --dobby-gold-bright: #fabc4d;
+  --dobby-text: #fadcd5;
+  --dobby-text-muted: #d4c4b1;
+  --dobby-sage: #afcdc0;
+  --dobby-danger: #ffb4a8;
+  --dobby-line: #76543a;
+  --dobby-line-soft: #50372b;
+  --dobby-font-title: 'Playfair Display', Georgia, serif;
+  --dobby-font-body: 'EB Garamond', Georgia, serif;
+  --dobby-font-label: 'Literata', Georgia, serif;
+  --dobby-size-title: 28px;
+  --dobby-size-section: 22px;
+  --dobby-size-card: 19px;
+  --dobby-size-body: 18px;
+  --dobby-size-label: 12px;
+  --dobby-size-caption: 11px;
+  --dobby-radius: 16px;
+  --dobby-radius-control: 12px;
+  --dobby-gutter: 12px;
+  --dobby-space: 16px;
+  --dobby-header: 80px;
+  --dobby-nav: 72px;
+  --dobby-hero: 220px;
+  --dobby-width: 480px;
+  --dobby-shadow: 0 8px 24px #09030266;
+}
