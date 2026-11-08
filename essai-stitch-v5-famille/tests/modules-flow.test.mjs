@@ -57,7 +57,7 @@ function makeClient(uid, backend, seeded = false, accept = true) {
     customRecipes:[],tmAdaptations:{},
     autoTasks:[],
     houseItems:[],houseLogs:[],houseDocs:[{id:'pdf-1',name:'warranty'}],
-    familyMembers:[],famContacts:[],famLists:[],
+    familyMembers:[],famContacts:[],famLists:[],familyEvents:[],
     famHealth:[{id:'medical-1',name:'private medical appointment'}],
     familyDocs:[
       ...(seeded?[{id:'contract-1',category:'Contrats',title:'Électricité',provider:'Exemple',attachmentName:'secret.pdf',attachmentType:'application/pdf'}]:[]),
@@ -130,6 +130,16 @@ test('two accounts activate all six modules and receive a shared update without 
   await b.provider.sync();
   assert.equal(b.st.autoTasks.length,1);
   assert.equal(b.st.autoTasks[0].key,'f001');
+  a.st.familyEvents.push({
+    id:'fp-family-1',title:'Sortie famille',category:'Famille',date:'2026-11-14',
+    time:'10:00',person:'',location:'',note:''
+  });
+  await a.provider.sync();
+  assert.equal(backend.rows.get('family').revision,2);
+  await b.provider.sync();
+  assert.equal(b.st.familyEvents.length,1);
+  assert.equal(b.st.familyEvents[0].title,'Sortie famille');
+  assert.equal(JSON.stringify(backend.rows.get('family').payload).includes('private medical appointment'),false);
   assert.match(b.provider.html(),/Partagé · à jour/);
 });
 
