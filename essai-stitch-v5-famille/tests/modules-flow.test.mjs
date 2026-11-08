@@ -55,7 +55,7 @@ function makeClient(uid, backend, seeded = false, accept = true) {
     demoInitialized:seeded,
     shopHistory:{},shopFinal:null,shopChoice:{},
     customRecipes:[],tmAdaptations:{},
-    autoTasks:[],
+    autoTasks:[],manualMissions:[],
     houseItems:[],houseLogs:[],houseDocs:[{id:'pdf-1',name:'warranty'}],
     familyMembers:[],famContacts:[],famLists:[],familyEvents:[],
     famHealth:[{id:'medical-1',name:'private medical appointment'}],
@@ -139,6 +139,15 @@ test('two accounts activate all six modules and receive a shared update without 
   await b.provider.sync();
   assert.equal(b.st.familyEvents.length,1);
   assert.equal(b.st.familyEvents[0].title,'Sortie famille');
+  a.st.manualMissions.push({
+    id:'fm-test-1',title:'Sortir les poubelles',status:'open',
+    due:'2026-11-18',category:'Maison',assigneeId:'',note:''
+  });
+  await a.provider.sync();
+  assert.equal(backend.rows.get('missions').payload.manualMissions.length,1);
+  await b.provider.sync();
+  assert.equal(b.st.manualMissions[0].title,'Sortir les poubelles');
+  assert.equal(b.st.manualMissions[0].status,'open');
   assert.equal(JSON.stringify(backend.rows.get('family').payload).includes('private medical appointment'),false);
   assert.match(b.provider.html(),/Partagé · à jour/);
 });
