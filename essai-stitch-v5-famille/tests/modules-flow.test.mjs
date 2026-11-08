@@ -17,6 +17,8 @@ function makeBackend() {
     const params = new URLSearchParams(path.split('?')[1]);
     const household = (params.get('household_id') || '').replace(/^eq\./,'');
     const module = (params.get('module') || '').replace(/^eq\./,'');
+    if (method === 'GET' && !params.has('module'))
+      return [...rows.values()].map(row => ({module:row.module}));
     if (method === 'GET') return rows.has(module) ? [clone(rows.get(module))] : [];
     if (method === 'POST') {
       if (!MODULES.includes(body.module) || body.household_id !== HH) throw Error('Invalid household write');
@@ -93,7 +95,6 @@ function makeClient(uid, backend, seeded = false) {
 test('two accounts activate all six modules and receive a shared update without exposing health or attachments',async()=>{
   const backend=makeBackend(),a=makeClient('user-a',backend,true),b=makeClient('user-b',backend,false);
   await a.provider.start();
-  await b.provider.start();
   for (const name of MODULES) await a.action('activate',name);
   assert.equal(backend.rows.size,6);
   const family=backend.rows.get('family').payload;
@@ -106,7 +107,11 @@ test('two accounts activate all six modules and receive a shared update without 
   assert.equal(Object.hasOwn(contract.contracts[0],'attachmentName'),false);
   assert.equal(JSON.stringify(contract).includes('secret.pdf'),false);
   assert.equal(JSON.stringify(contract).includes('Document médical'),false);
-  for (const name of MODULES) await b.action('activate',name);
+  await b.provider.start();
+  assert.match(b.provider.html(),/Récupérer les modules partagés \(6\)/);
+  await b.action('join-family');
+  assert.doesNotMatch(b.provider.html(),/Récupérer les modules partagés \(6\)/);
+  assert.ok(b.localBackups >= 6);
   assert.ok(b.st.planned['2026-11-08-soir']);
   assert.equal(b.st.familyDocs.find(x=>x.id==='contract-1')?.attachmentName,'');
   assert.equal(b.st.famHealth.length,1);
