@@ -78,3 +78,11 @@ jobs:
             exit 1
           fi
           echo 'BROWSER_SMOKE_PASS'
+          "$BROWSER" --no-sandbox --headless=new --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=16000 --dump-dom http://127.0.0.1:8765/essai-stitch-v5-famille/tests/bootstrap-smoke.html > /tmp/dobby-bootstrap-dom.html 2>/tmp/dobby-bootstrap-chrome.log
+          if ! grep -q 'data-result="PASS"' /tmp/dobby-bootstrap-dom.html; then
+            echo 'BROWSER_BOOTSTRAP_FAILED'
+            grep -E 'data-result|RUNNING|FAIL' /tmp/dobby-bootstrap-dom.html | tail -n 8 || true
+            tail -n 40 /tmp/dobby-bootstrap-chrome.log || true
+            exit 1
+          fi
+          echo 'BROWSER_BOOTSTRAP_PASS'

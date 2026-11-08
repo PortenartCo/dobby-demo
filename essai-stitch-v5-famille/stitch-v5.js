@@ -174,3 +174,27 @@
  };
  document.body.append(js);
 })();
+
+/* DOBBY_STARTUP_ROUTE_RESTORE_V1: resume after screen handlers are initialized. */
+(function(){
+  const route = window.__dobbyStartupRoute;
+  delete window.__dobbyStartupRoute;
+  if (!route || (route.page === 'home' && !route.detail)) return;
+  const allowed = new Set(['home','plan','pick','recipes','family','house','documents','chat','missions','menu','import','batch','shop']);
+  if (!allowed.has(route.page)) return;
+  try {
+    st.page = route.page;
+    st.detail = route.detail ?? null;
+    render();
+  } catch (error) {
+    console.error('[Dobby] Saved screen could not be rendered; keeping user data and returning home.', error);
+    st.page = 'home';
+    st.detail = null;
+    try { render(); }
+    catch (recoveryError) {
+      console.error('[Dobby] Home screen could not be rendered.', recoveryError);
+      const screen = document.getElementById('screen');
+      if (screen) screen.textContent = 'Affichage temporairement indisponible. Les données locales sont préservées. Rechargez cette page.';
+    }
+  }
+})();

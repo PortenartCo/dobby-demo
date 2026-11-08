@@ -1056,6 +1056,10 @@ function pendingMeals(){return Object.entries(st.planned).filter(([key,m])=>m&&m
 
 const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key='dobby-v5-familial-preview-20261108';let st;try{st=JSON.parse(localStorage.getItem(key))}catch{};st={page:'home',day:todayISO(),slot:'soir',choice:'dobby',filter:'',cat:'Toutes',favorites:false,selection:'chicken',note:'',people:4,adult:2,children:2,childFactor:0.65,detail:null,cook:false,cookStep:0,tmEditor:false,tmView:false,tmAdaptations:{},have:{},bought:{},extras:[],shopChoice:{},shopFinal:null,shopHistory:{},planned:{},...st};
+/* DOBBY_BOOT_ROUTE_SAFE_V1 */
+window.__dobbyStartupRoute = { page: st.page, detail: st.detail };
+st.page = 'home';
+st.detail = null;
 if(typeof st.day==='number'){let base='2026-10-19';st.planned=Object.fromEntries(Object.entries(st.planned||{}).map(([k,m])=>{let hit=k.match(/^(\d+)-(midi|soir)$/);return [hit?addDays(base,Number(hit[1]))+'-'+hit[2]:k,m]}));st.day=addDays(base,st.day)}
 if(!st.shopHistory)st.shopHistory={};if(st.shopFinal&&!st.shopFinal.meals){st.shopFinal=null}
 if(!Object.keys(st.planned||{}).length&&!st.demoInitialized){st.planned={[todayISO()+'-soir']:{id:'chicken',people:4,status:'prévu'},[addDays(todayISO(),2)+'-soir']:{id:'pasta',people:4,status:'prévu'},[addDays(todayISO(),4)+'-midi']:{id:'toast',people:2,status:'prévu'}};st.demoInitialized=true}
@@ -1969,5 +1973,5 @@ drawAppMenu=function(){
 
 render();
 
-</script><script src="./stitch-v5.js?v=20261108-7"></script>
+</script><script src="./stitch-v5.js?v=20261108-9"></script>
 </body></html>

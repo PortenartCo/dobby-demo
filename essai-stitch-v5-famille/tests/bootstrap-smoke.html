@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Dobby - reprise des pages sauvegardees</title></head>
+<body><h1>Reprise des pages sauvegardees</h1><div id="status" data-result="RUNNING">RUNNING</div>
+<script>
+(function(){
+  'use strict';
+  const KEY='dobby-v5-familial-preview-20261108';
+  const original=localStorage.getItem(KEY);
+  let finished=false,ticks=0;
+  const status=document.getElementById('status');
+  const frame=document.createElement('iframe');frame.hidden=true;document.body.append(frame);
+  function done(ok,detail) {
+    if(finished)return;finished=true;clearInterval(timer);
+    if(original===null)localStorage.removeItem(KEY);
+    else localStorage.setItem(KEY,original);
+    status.dataset.result=ok?'PASS':'FAIL';
+    status.textContent=(ok?'PASS - ':'FAIL - ')+detail;
+    frame.remove();
+  }
+  localStorage.setItem(KEY,JSON.stringify({
+    page:'documents',detail:null,
+    familyDocs:[{id:'boot-test-document',title:'Dobby bootstrap test',category:'Assurances'}],
+    familyNotes:[],famHealth:[],familyMembers:[],houseItems:[],houseLogs:[]
+  }));
+  let phase='documents';
+  frame.src='../index.html?bootstrap-smoke=documents';
+  const timer=setInterval(()=>{
+    if(finished)return;ticks++;
+    if(ticks>90)return done(false,'chargement trop long '+phase);
+    try {
+      const w=frame.contentWindow,d=frame.contentDocument;
+      const screen=d&&d.getElementById('screen');
+      if(!screen||!w.DobbyFamilyFiles||!w.DobbyFamilyMissions)return;
+      if(phase==='documents') {
+        if(!screen.textContent.includes('Dobby bootstrap test'))
+          return done(false,'page Documents non restauree');
+        phase='missions';
+        w.go('missions');
+        frame.src='../index.html?bootstrap-smoke=missions';
+        return;
+      }
+      if(!screen.textContent.includes('La Bibliothèque des Missions'))
+        return done(false,'page Missions non restauree');
+      done(true,'Documents et Missions recharges sans effacer les fiches');
+    }catch(e){done(false,e.message)}
+  },200);
+})();
+</script></body></html>
