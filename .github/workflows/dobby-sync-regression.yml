@@ -46,6 +46,8 @@ jobs:
           node --check essai-stitch-v5-famille/family-missions.js
           node --check essai-stitch-v5-famille/family-missions-core.mjs
           node --check essai-stitch-v5-famille/family-files.js
+          node --check essai-stitch-v5-famille/family-health.js
+          node --check essai-stitch-v5-famille/family-health-core.mjs
           node --check essai-stitch-v5-famille/family-core.mjs
       - name: Deterministic offline/conflict regression
         run: |
