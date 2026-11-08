@@ -9,6 +9,7 @@
 - Cache IndexedDB isolé pour ce preview, lecture et édition des articles, coche, suppression logique, reprise hors ligne, CAS de révision et conflit explicite.
 - Import depuis menus/recettes vers la liste partagée uniquement sur une action explicite, avec déduplication et identifiant d'import déterministe.
 - Un compte doit appartenir à un seul foyer actif dans ce pilote.
+- Un même profil de navigateur est réservé à un seul foyer afin d'éviter de mélanger les données locales ; changer de foyer exige un profil navigateur distinct. Il ne s'agit pas encore d'une application multi-foyers complète sur appareil partagé.
 
 ## Autres modules préparés, mais EN ATTENTE de migration SQL
 La synchronisation opt-in des modules menus, recipes, missions, house, family et contracts est codée dans family-modules.js. **La table Supabase correspondante n'existe pas encore** dans le projet personnel. Le SQL proposé est disponible sous sql-proposals/dobby-v2-modules.sql. Les commits GitHub ne l'exécutent pas.

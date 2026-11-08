@@ -79,3 +79,10 @@ test('module schema enforces household isolation and excludes health and attachm
   assert.doesNotMatch(sql,/module IN \([^)]*'documents'/s);
   assert.match(modules,/attachmentName/);
 });
+
+test('preview denies cross-household browser reuse and drops unauthorized session', () => {
+  assert.match(bridge,/deviceHouseholdId/);
+  assert.match(bridge,/deviceHousehold !== hh/);
+  assert.match(bridge,/profil de navigateur distinct/);
+  assert.match(bridge,/await delMeta\('session'\)/);
+});
