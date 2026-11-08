@@ -52,14 +52,29 @@
       if(!editor || editor.hidden || !editor.textContent.includes('membres du foyer')) {
         throw Error('Le formulaire ne prévient pas du caractère partagé des événements');
       }
-      d.querySelector('#fpDialogLayer [data-fp-action="close"]').click();
+      const form=d.getElementById('fpEventForm');
+      if(!form)throw Error('Le formulaire d’événement n’a pas été créé');
+      const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+      const pad=x=>String(x).padStart(2,'0');
+      form.querySelector('[name="title"]').value='Sortie de test navigateur';
+      form.querySelector('[name="date"]').value=
+        tomorrow.getFullYear()+'-'+pad(tomorrow.getMonth()+1)+'-'+pad(tomorrow.getDate());
+      form.querySelector('[name="time"]').value='14:30';
+      form.requestSubmit();
+      const recorded=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
+      if(!recorded.familyEvents?.some(x=>x.title==='Sortie de test navigateur')) {
+        throw Error('La création d’événement ne persiste pas localement');
+      }
+      if(!d.querySelector('#fpAgenda')?.textContent.includes('Sortie de test navigateur')) {
+        throw Error('Le nouvel événement ne figure pas dans l’agenda');
+      }
       w.go('home');
       if(!d.querySelector('#screen').textContent.includes('événement Dobby')) {
         throw Error('Le résumé des événements Dobby est absent de l’accueil');
       }
       completed=true;clearInterval(timer);
       const s=document.getElementById('status');
-      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, confidentialité et stockage isolé';
+      s.dataset.result='PASS';s.textContent='PASS - courses, agenda CRUD, confidentialité et stockage isolé';
     }catch(e){
       if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
       completed=true;clearInterval(timer);
