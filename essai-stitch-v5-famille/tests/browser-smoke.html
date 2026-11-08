@@ -60,10 +60,18 @@
       form.querySelector('[name="date"]').value=
         tomorrow.getFullYear()+'-'+pad(tomorrow.getMonth()+1)+'-'+pad(tomorrow.getDate());
       form.querySelector('[name="time"]').value='14:30';
+      w.__dobbyLastAlert='';
+      w.alert=message=>{w.__dobbyLastAlert=String(message);};
+      if(!form.checkValidity()) {
+        throw Error('Formulaire invalide : '+[...form.elements].filter(x=>x.validity&&!x.validity.valid).map(x=>x.name).join(','));
+      }
       form.requestSubmit();
       const recorded=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
       if(!recorded.familyEvents?.some(x=>x.title==='Sortie de test navigateur')) {
-        throw Error('La création d’événement ne persiste pas localement');
+        throw Error('La création d’événement ne persiste pas localement : '+
+          (w.__dobbyLastAlert||'aucune alerte')+'; records='+
+          (recorded.familyEvents?.length??'absent')+'; dialogHidden='+
+          String(d.getElementById('fpDialogLayer')?.hidden));
       }
       if(!d.querySelector('#fpAgenda')?.textContent.includes('Sortie de test navigateur')) {
         throw Error('Le nouvel événement ne figure pas dans l’agenda');
