@@ -133,3 +133,27 @@ test('shared health visits do not automatically upload previous local health rec
   assert.match(health,/sharedHealthVisits/);
   assert.doesNotMatch(health,/st\.famHealth\s*=/);
 });
+
+
+test('a health document remains local until the user chooses household sharing', () => {
+  const files = source('../family-files.js');
+  const sandbox = {
+    st: {page:'documents', familyDocs:[
+      {id:'private-health', title:'Fiche privée', category:'Santé'},
+      {id:'shared-health', title:'Fiche santé choisie', category:'Santé', sharedToHousehold:true},
+      {id:'shared-insurance', title:'Contrat maison', category:'Assurances'}
+    ]},
+    window: {DobbyFamilyUI: {esc:String, getContext:()=>null, isModuleActive:()=>false}},
+    drawDocuments:()=>'<div>Vue V5 initiale</div>',
+    docEdit:null, docNoteEdit:null, docDetail:null,
+    document: {addEventListener:()=>{}},
+    render:()=>{}, save:()=>{}, console
+  };
+  vm.runInNewContext(files, sandbox);
+  assert.equal(sandbox.window.DobbyFamilyFiles.sharedCount(), 2);
+  const html = sandbox.drawDocuments();
+  assert.match(html, /Fiche santé choisie/);
+  assert.match(html, /Contrat maison/);
+  assert.doesNotMatch(html, /Fiche privée/);
+  assert.match(html, /Vue V5 initiale/);
+});
