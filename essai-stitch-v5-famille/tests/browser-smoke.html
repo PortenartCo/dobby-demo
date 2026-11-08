@@ -67,7 +67,7 @@
       }
       const flow={doc:0,target:0,click:0};
       d.addEventListener('submit',e=>{if(e.target.id==='fpEventForm')flow.doc++;},true);
-      form.addEventListener('submit',()=>{flow.target++;});
+      form.addEventListener('submit',e=>{flow.target++;flow.targetId=e.target.id;flow.targetName=e.target.nodeName;flow.current=e.currentTarget.id;});
       form.querySelector('button[type="submit"]').addEventListener('click',()=>{flow.click++;});
       form.querySelector('button[type="submit"]').click();
       const recorded=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
