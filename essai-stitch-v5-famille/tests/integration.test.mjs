@@ -13,17 +13,19 @@ test('preview V5 source matches original except isolated browser storage names',
   const preview=source('../index.html');
   const normalized=preview.replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
-    .replaceAll('./stitch-v5.js?v=20261108-4','./stitch-v5.js?v=20261107-1');
+    .replaceAll('./stitch-v5.js?v=20261108-5','./stitch-v5.js?v=20261107-1');
   assert.equal(normalized,original);
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
   assert.doesNotMatch(preview,/indexedDB\.open\('dobby-stitch-preview-files-20261105'/);
-  assert.match(preview,/stitch-v5\.js\?v=20261108-4/);
+  assert.match(preview,/stitch-v5\.js\?v=20261108-5/);
   const loader=source('../stitch-v5.js');
-  assert.match(loader,/family-v2\.js\?v=20261108-4/);
-  assert.match(loader,/family-modules\.js\?v=20261108-4/);
-  assert.match(loader,/family-agenda\.js\?v=20261108-4/);
-  assert.match(loader,/family-agenda\.css\?v=20261108-4/);
+  assert.match(loader,/family-v2\.js\?v=20261108-5/);
+  assert.match(loader,/family-modules\.js\?v=20261108-5/);
+  assert.match(loader,/family-agenda\.js\?v=20261108-5/);
+  assert.match(loader,/family-agenda\.css\?v=20261108-5/);
+  assert.match(loader,/family-missions\.js\?v=20261108-5/);
+  assert.match(loader,/family-missions\.css\?v=20261108-5/);
 });
 
 
@@ -99,4 +101,9 @@ test('preview denies cross-household browser reuse and drops unauthorized sessio
 test('family events are shared only through the non-medical family module',()=>{
   assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
+});
+
+
+test('manual missions remain separate from automatic tasks',()=>{
+  assert.match(modules,/keys:\['autoTasks','manualMissions'\]/);
 });
