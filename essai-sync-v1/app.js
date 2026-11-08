@@ -414,6 +414,7 @@ el('logout').addEventListener('click', async () => {
 });
 el('addForm').addEventListener('submit', async event => {
   event.preventDefault();
+  const form = event.currentTarget;
   try {
     const title = el('itemTitle').value.trim();
     const quantity = Number(el('itemQuantity').value);
@@ -423,7 +424,7 @@ el('addForm').addEventListener('submit', async event => {
     }
     const entry = newLocal(crypto.randomUUID(), title, Math.round(quantity * 100) / 100, unit, now());
     await putItem(entry);
-    event.currentTarget.reset(); el('itemQuantity').value = 1;
+    form.reset(); el('itemQuantity').value = 1;
     await render();
     say('Article enregistré localement. Synchronisation dès que le réseau le permet.');
     void performSync();
