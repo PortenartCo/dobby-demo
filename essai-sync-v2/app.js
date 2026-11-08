@@ -4,10 +4,10 @@ import {
 } from './core.mjs';
 
 const PROJECT = 'https://pqcdkrwljgvgagzwrcmg.supabase.co';
-const DB = 'dobby-sync-pilot-v1';
+const DB = 'dobby-sync-pilot-v2';
 const KEY_PREFIX = 'sb_publishable_';
 const el = id => document.getElementById(id);
-const state = { db: null, key: null, session: null, working: false, again: false, editing: null, lastError: '', lastSync: null, sessionEpoch: 0 };
+const state = { db: null, key: null, session: null, working: false, again: false, editing: null, lastError: '', lastSync: null, sessionEpoch: 0, householdId: null };
 
 function now() { return new Date().toISOString(); }
 function say(message, kind = '') {
@@ -52,6 +52,7 @@ async function wipeSession() {
   await idb('items', 'clear');
   await idb('meta', 'delete', 'session');
   state.session = null;
+  state.householdId = null;
 }
 
 function failureMessage(error) {
@@ -112,16 +113,25 @@ async function authorized(method, url, body, options = {}) {
   }
 }
 async function fetchRemote() {
-  return authorized('GET', 'dobby_sync_grocery_items?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision&order=created_at.asc');
+  if (!state.householdId) throw new Error('Foyer non sélectionné.');
+  return authorized('GET', 'dobby_v2_grocery?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision&household_id=eq.' + encodeURIComponent(state.householdId) + '&order=created_at.asc');
 }
 async function fetchOne(id) {
-  const rows = await authorized('GET', 'dobby_sync_grocery_items?select=*&id=eq.' + encodeURIComponent(id));
+  if (!state.householdId) throw new Error('Foyer non sélectionné.');
+  const rows = await authorized('GET', 'dobby_v2_grocery?select=*&household_id=eq.' + encodeURIComponent(state.householdId) + '&id=eq.' + encodeURIComponent(id));
   return rows?.[0] || null;
 }
 async function checkMember() {
   if (!state.session?.user_id) throw new Error('Identifiant utilisateur absent.');
-  const rows = await authorized('GET', 'dobby_sync_members?select=user_id&active=eq.true&user_id=eq.' + encodeURIComponent(state.session.user_id));
-  if (!Array.isArray(rows) || rows.length !== 1) throw new Error('Compte non autorisé pour le foyer Dobby.');
+  const rows = await authorized('GET', 'dobby_v2_memberships?select=household_id&active=eq.true&user_id=eq.' + encodeURIComponent(state.session.user_id));
+  if (!Array.isArray(rows) || rows.length !== 1 || !rows[0]?.household_id) throw new Error('Compte sans foyer unique actif : accès suspendu.');
+  const household = rows[0].household_id;
+  if (state.householdId && state.householdId !== household) {
+    await idb('items', 'clear');
+  }
+  state.householdId = household;
+  const h = await authorized('GET', 'dobby_v2_households?select=id&id=eq.' + encodeURIComponent(household));
+  if (!Array.isArray(h) || h.length !== 1) throw new Error('Foyer inaccessible.');
 }
 
 async function pull(epoch) {
@@ -157,8 +167,8 @@ async function pushOne(snapshot, epoch) {
   if (original.baseRevision === 0) {
     try {
       returned = await authorized(
-        'POST', 'dobby_sync_grocery_items',
-        { id: original.id, ...toServerPayload(original) },
+        'POST', 'dobby_v2_grocery',
+        { id: original.id, household_id: state.householdId, ...toServerPayload(original) },
         { Prefer: 'return=representation' }
       );
     } catch (error) {
@@ -171,7 +181,8 @@ async function pushOne(snapshot, epoch) {
   } else {
     returned = await authorized(
       'PATCH',
-      'dobby_sync_grocery_items?id=eq.' + encodeURIComponent(original.id) +
+      'dobby_v2_grocery?id=eq.' + encodeURIComponent(original.id) +
+        '&household_id=eq.' + encodeURIComponent(state.householdId) +
         '&revision=eq.' + encodeURIComponent(original.baseRevision),
       toServerPayload(original),
       { Prefer: 'return=representation' }
@@ -206,7 +217,7 @@ async function performSync() {
     await pull(epoch);
     if (epoch !== state.sessionEpoch) return;
     state.lastSync = new Date();
-    say('Synchronisation terminée. Les modifications confirmées sont partagées entre les deux comptes.', 'ok');
+    say('Synchronisation V2 terminée. Modifications confirmées dans votre foyer.', 'ok');
   } catch (error) {
     state.lastError = failureMessage(error);
     say(state.lastError, 'error');
@@ -328,7 +339,7 @@ async function render() {
   el('itemsList').replaceChildren();
   if (!visible.length) el('itemsList').append(make('li', 'empty', 'Aucun article pour le moment.'));
   for (const data of visible) el('itemsList').append(buildItem(data));
-  el('accountLabel').textContent = state.session?.email || 'Compte familial';
+  el('accountLabel').textContent = (state.session?.email || 'Compte familial') + (state.householdId ? ' · foyer vérifié' : '');
   await renderStatus(all);
 }
 async function change(id, changes) {
@@ -363,8 +374,7 @@ async function boot() {
     if (!state.key) { show('configScreen'); say('Saisissez la clé publiable Supabase une seule fois.'); return; }
     if (!state.session) { show('authScreen'); say('Connectez-vous avec votre compte familial.'); return; }
     show('appScreen');
-    say('Session conservée sur cet appareil. Vérification de la synchronisation en cours.');
-    await render();
+    say('Session locale retrouvée. Vérification du foyer avant synchronisation.');
     void performSync();
   } catch (error) { say('Impossible d’utiliser le stockage local : ' + failureMessage(error), 'error'); }
 }
