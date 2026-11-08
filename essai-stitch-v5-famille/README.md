@@ -14,7 +14,7 @@
 ## Modules familiaux — socle SQL déployé, synchronisation à confirmer en sessions réelles
 La synchronisation opt-in des modules menus, recipes, missions, house, family et contracts est codée dans family-modules.js. **La table Supabase a été créée et le contrôle SQL simulant deux membres et un extérieur a renvoyé PASS, selon les résultats fournis par l'utilisateur.** Les scripts GitHub n'exécutent aucune migration Supabase. La synchronisation réelle des six modules reste à valider avec les deux comptes connectés.
 
-La synchronisation de chaque module doit être activée explicitement depuis « Gérer le foyer », et ne se déclenche pas par une simple navigation. L'utilisateur indique avoir procédé à cette activation sur son compte. Sur le deuxième compte, un bouton permet maintenant de récupérer d'un seul geste les modules déjà partagés, avec sauvegarde locale préalable et confirmation. L'absence de changement SQL et la réussite des tests simulés ne prouvent pas encore une synchronisation complète avec deux véritables sessions.
+La synchronisation nécessite un consentement explicite depuis « Gérer le foyer ». Lorsque plusieurs modules sont encore inactifs et qu'aucun module familial n'est déjà publié, un bouton « Activer les 6 modules du foyer » effectue la mise en place en une seule confirmation, avec sauvegarde et exclusion des repas fictifs encore intacts. Le deuxième compte peut récupérer les modules déjà partagés en une seule opération, avec sauvegarde locale avant remplacement. Aucun de ces mécanismes ne lance automatiquement une importation ou une synchronisation sans action de l'utilisateur. Les tests simulés ne prouvent pas une synchronisation complète avec deux véritables sessions.
 - Menus et préparations : planned, shopHistory, shopFinal et shopChoice.
 - Recettes personnalisées et adaptations Thermomix déjà enregistrées : customRecipes et tmAdaptations.
 - Missions : autoTasks.
@@ -35,7 +35,7 @@ La V5 peut précharger trois repas **fictifs** (poulet, pâtes, tartines) sur un
 Un modèle distinct de permissions privées et un stockage de fichiers sécurisé seront nécessaires avant de migrer ces données.
 
 ## Conservation, recette et rollback
-- La clé de stockage de l'ancien preview Stitch V5 reste inchangée dans cet ancien preview ; le nouveau dossier utilise deux espaces distincts. Un bouton permet d'importer volontairement les données V5 locales dans le nouvel essai, après sauvegarde. Les fichiers joints binaires ne sont pas copiés.
+- La clé de stockage de l'ancien preview Stitch V5 reste inchangée ; le nouveau dossier utilise deux espaces distincts. L'import volontaire des données de l'ancien essai, inutile pour une utilisation vierge, est désormais rangé dans une option repliée. Les fichiers joints binaires ne sont pas copiés.
 - La production racine, l'ancien essai Stitch V5 et Sync V2 restent indépendants.
 - GitHub Actions vérifie syntaxe, cœur offline, conflits, quantité nullable, contraintes statiques, smoke-tests simulés et égalité du grand HTML Stitch V5 après neutralisation des deux changements de noms de stockage.
 - Les tests automatisés ne remplacent pas un test Safari iOS ni un vrai test de sécurité inter-foyers. Aucun ami ou nouveau foyer ne doit être invité avant validation de ces tests.
