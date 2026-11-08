@@ -151,7 +151,7 @@ function html() {
       (def.id === 'contracts' ? '<p>Seules les fiches des catégories Contrats et Assurances sont partagées; aucune pièce jointe.</p>' : '') +
       actions + '</div>';
   }).join('');
-  const gate = !backendReady ? '<p class="fv2-error">Le nouveau modèle de sécurité des modules doit d’abord être déployé dans le projet Supabase Dobby. Aucun partage n’est activé.</p>' +
+  const gate = !backendReady ? '<p class="fv2-error">Impossible de joindre les modules familiaux (réseau, accès ou configuration Supabase). Les données de cet appareil restent locales et aucune nouvelle synchronisation n’est activée.</p>' +
     '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
   return description + bulkJoin + gate + rows +
     '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
