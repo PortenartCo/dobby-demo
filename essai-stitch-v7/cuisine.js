@@ -20,11 +20,13 @@ window.DobbyCuisine = (() => {
   const labelButton = (part, action) => { const el = $$('main button,main a').find(el => el.textContent.toLocaleLowerCase('fr').includes(part.toLocaleLowerCase('fr'))); bind(el, action); return el; };
   const heading = part => $$('main h1,main h2,main h3,main h4').find(el => el.textContent.includes(part));
   const empty = message => { const el = document.createElement('p'); el.className = 'dv7-empty'; el.textContent = message; return el; };
-  const input = (id, label, type = 'text', value = '', extra = '') => `<label class="cu-field">${label}<input id="${id}" type="${type}" value="${esc(value)}" ${extra}></label>`;
+  const input = (id, label, type = 'text', value = '', extra = '') => `<label class="cu-field">${label}<input id="${id}" type="${type}" ${type==='number'?'step="any" min="0" max="999999"':''} value="${esc(value)}" ${extra}></label>`;
   function notice(message, error = false) {
     let el = $('#cu-notice');
     if (!el) { el = document.createElement('div'); el.id = 'cu-notice'; el.setAttribute('role', 'status'); document.body.append(el); }
-    el.textContent = message; el.dataset.error = String(error); el.hidden = false;
+    el.textContent = message;
+    const close=document.createElement('button');close.type='button';close.textContent='Fermer';close.dataset.cuAction='dismiss';close.className='cu-button';el.append(close);
+    el.dataset.error = String(error); el.hidden = false;
   }
   async function template(view) {
     if (!cache.has(view)) {
@@ -41,14 +43,18 @@ window.DobbyCuisine = (() => {
   function replaceChildren(el, rows) { if (el) el.replaceChildren(...rows); }
   function markSource(el, selector) { if (el) el.dataset.stitchComponent = selector; return el; }
   function cleanDemo(root) {
+    for(const el of root.querySelectorAll('main *'))for(const node of [...el.childNodes])if(node.nodeType===3){
+      if(/chiffr|crypt|uniquement sur cet appareil|exclusivement sur cet appareil|exclusivement en local|sur iPhone|sur le stockage local de l.iPhone|ne quittent jamais|zéro fuite|aucun transfert|conservation locale garantie|point de restauration automatique/i.test(node.textContent))node.textContent='Données DOBBY · partage selon les modules activés';
+      else if(/potimarron|butternut|châtaignes|Isigny|morilles|noisettes|Risotto|Fondant au chocolat|Tarte rustique/i.test(node.textContent))node.textContent='Données du grimoire à renseigner';
+    }
     // Only original demo leaves are scrubbed, before injecting any household data.
     for (const el of root.querySelectorAll('main *')) {
       if (el.children.length || el.matches('style,script,textarea')) continue;
-      const value = el.textContent.trim();
+      const value = el.textContent.trim().replace(/\s+/g,' ');
       el.dataset.stitchText=value;
-      if (/AES.?256|hermétique|chiffr|crypt|Étalonnage Officiel|certifi|souverain|zéro cloud|aucun cloud|stockage local iPhone|privées, scellées|seule garde de votre appareil|conservation locale garantie|exclusivement sur cet appareil|0\.75|0,75|100% local/i.test(value)) text(el, 'Données DOBBY · partage selon les modules activés');
+      if (/AES.?256|hermétique|chiffr|crypt|Étalonnage Officiel|certifi|souverain|zéro cloud|aucun cloud|stockage local iPhone|privées, scellées|seule garde de votre appareil|conservation locale garantie|exclusivement sur cet appareil|0\.75|0,75|100% local|uniquement sur cet appareil|exclusivement en local|Aucun transfert vers|point de restauration automatique|AES.?256|exclusivement sur cet appareil/i.test(value)) text(el, 'Données DOBBY · partage selon les modules activés');
       else if (/potimarron|butternut|châtaignes|Isigny|morilles|noisettes|Risotto|Fondant au chocolat|Tarte rustique|recettes_famille_automne/i.test(value)) text(el,'Données du grimoire à renseigner');
-      else if (/\d/.test(value) && !el.matches('.material-symbols-outlined,button,code')) text(el, '—');
+      else if (/\d/.test(value) && !/^Rituel des Étapes TM5$/.test(value) && !el.matches('.material-symbols-outlined,button,code') && !el.closest('button')) text(el, '—');
     }
   }
   function scrub() {
@@ -59,18 +65,22 @@ window.DobbyCuisine = (() => {
     for (const id of ['toast','toast-notification','modal-schema']) { const el = $('#' + id); if (el) el.hidden = true; }
   }
   function shell() {
+    const currentRecipe=E.read().recipes.find(r=>r.id===ui.recipe);
+    for(const leaf of $$('header *'))if(!leaf.children.length&&/potimarron|butternut|châtaigne/i.test(leaf.textContent))text(leaf,currentRecipe?.name||'Cuisine DOBBY');
     for (const h of $$('header h1')) { const span = document.createElement('span'); span.className = h.className; span.textContent = h.textContent; h.replaceWith(span); }
     for (const control of $$('header button,header a,header .cursor-pointer')) {
       const symbol = control.querySelector('.material-symbols-outlined')?.textContent;
       if (/volume_/.test(symbol || '') || control.id === 'btn-sound-toggle') control.remove();
-      else bind(control, /arrow_back|chevron_left/.test(symbol || '') ? 'back' : symbol === 'person' ? 'account' : 'menu');
+      else if(symbol==='star')bind(control,'favorite',{id:ui.recipe||''});
+      else bind(control, /arrow_back|chevron_left|close/.test(symbol || '') ? 'back' : symbol === 'person' ? 'account' : 'menu');
     }
+    for(const symbol of $$('header .material-symbols-outlined'))if(symbol.textContent.trim()==='person'){const control=symbol.closest('button,a')||symbol.parentElement;bind(control,'account');control.tabIndex=0;control.setAttribute('role','button');control.setAttribute('aria-label','Ouvrir le compte familial');}
     for (const control of $$('body > nav a,body > nav button')) {
       const value = control.textContent.toLowerCase();
       bind(control, value.includes('traverse') ? 'home' : value.includes('mission') ? 'missions' : value.includes('famille') ? 'family' : 'taverne');
       if (control.tagName === 'A') control.href = '#';
     }
-    const navigation=$('body > nav');if(navigation)navigation.hidden=ui.view==='cook';
+    const navigation=$('body > nav');if(navigation)navigation.hidden=ui.view!=='taverne';
     if (!$('main h1')) {
       const title = $('main h2');
       if (title) { const h1 = document.createElement('h1'); h1.className = title.className; h1.append(...title.childNodes); title.replaceWith(h1); }
@@ -186,15 +196,15 @@ window.DobbyCuisine = (() => {
     $('main').append(extras);
   }
   function renderRecipes(data) {
-    const list = $('#recipes-list'), sample = list.querySelector('.recipe-card').cloneNode(true);
+    const list = $('#recipes-list'), sample = clone('#recipes-list .recipe-card');
     const query=ui.query.toLocaleLowerCase('fr');
     const rows=data.recipes.filter(r=>(!query||[r.name,...r.ingredients.map(i=>i[0])].join(' ').toLocaleLowerCase('fr').includes(query)) &&
       (ui.filter==='all'||ui.filter==='fav'&&r.fav||ui.filter==='tm5'&&r.thermomix||ui.filter==='trad'&&!r.thermomix||ui.filter==='quick'&&r.minutes<30||ui.filter==='veggie'&&r.category==='Végétarien'));
     replaceChildren(list, rows.map(r=>fillRecipeCard(sample.cloneNode(true),r)));
     if (!rows.length) list.append(empty('Aucune recette pour ces critères.'));
     $('#recipe-search').value=ui.query;
-    for(const chip of $$('#filters-container button')) {bind(chip,'filter',{filter:chip.dataset.filter});chip.textContent=({all:`Toutes (${data.recipes.length})`,fav:'Favoris',tm5:'Thermomix TM5',trad:'Traditionnelles',quick:'Moins de 30 min',veggie:'Végétarien',stew:'Toutes les catégories'})[chip.dataset.filter]||'Toutes';}
-    for(const id of ['btn-create-recipe','btn-hero-add-recipe'])bind($('#'+id),'recipe-add');
+    for(const chip of $$('#filters-container button')) {bind(chip,'filter',{filter:chip.dataset.filter});chip.textContent=({all:`Toutes (${data.recipes.length})`,fav:'Favoris',tm5:'Thermomix TM5',trad:'Traditionnelles',fast:'Moins de 30 min',veg:'Végétarien',stew:'Toutes les catégories'})[chip.dataset.filter]||'Toutes';}
+    for(const id of ['btn-create-recipe','btn-hero-add-recipe'])bind($('#'+id),'new-recipe');
     bind($('#btn-trigger-json'),'batch');bind($('#btn-export-json'),'export-recipes');
     const drop=$('#drop-zone');if(drop){drop.htmlFor='';bind(drop,'batch');drop.setAttribute('role','button');drop.tabIndex=0;}
     labelButton('Retour à la Taverne','taverne');
@@ -204,6 +214,15 @@ window.DobbyCuisine = (() => {
     ui.servings ??= data.detailPortions || recipe.servings;
     text($('main h1,main h2'),recipe.name);
     for(const image of $$('main img')) recipeVisual(image,recipe);
+    const sourceMeta=$$('main section')[1];
+    if(sourceMeta){
+      const subtitle=sourceMeta.querySelector('h2 + p,h1 + p');text(subtitle,recipe.source||'Recette enregistrée dans le grimoire du foyer.');
+      for(const badge of sourceMeta.querySelectorAll('.absolute.top-3 > span')){badge.textContent=recipe.thermomix?'Thermomix TM5':recipe.category||'Recette du foyer';}
+      for(const badge of sourceMeta.querySelectorAll('.absolute.bottom-3 span'))text(badge,recipe.fav?'Favori du foyer':'Recette du foyer');
+      const metrics=sourceMeta.querySelector('.grid');if(metrics)for(const [i,box]of [...metrics.children].entries()){const label=box.querySelector('.uppercase');const value=box.querySelector(':scope > span:last-child');text(label,['Durée totale','Portions de référence','Catégorie','Coût / part'][i]);text(value,[recipe.minutes+' min',recipe.servings,recipe.category||'Autre','Non renseigné'][i]);}
+    }
+    text($('#mode-tm5-btn'), 'Thermomix TM5');
+    const servingLabel=$('#servings-display')?.nextElementSibling;text(servingLabel,'portions');
     const counter=$('#servings-display');text(counter,ui.servings);bind($('#btn-decrease'),'servings',{delta:'-1'});bind($('#btn-increase'),'servings',{delta:'1'});
     bind($('#favorite-btn'),'favorite',{id:recipe.id});$('#favorite-btn')?.setAttribute('aria-pressed',String(Boolean(recipe.fav)));
     bind($('#export-btn'),'export-recipes');bind($('#mode-trad-btn'),'ingredients');bind($('#mode-tm5-btn'),'tm5');
@@ -214,8 +233,10 @@ window.DobbyCuisine = (() => {
     replaceChildren(list,recipe.ingredients.map(([name,qty,unit],i)=>{const row=sample.cloneNode(true);text(row.querySelector('.ingredient-name'),name);text(row.querySelector('.ingredient-name')?.nextElementSibling,qty==null?'Quantité à préciser':E.amount(qty,ui.servings,recipe.servings)+' '+unit);
       const check=row.querySelector('input');check.checked=ui.ingredients.has(i);check.dataset.cuIngredient=i;return markSource(row,'#ingredients-list > label');}));
     text($('#checked-counter'),`${ui.ingredients.size} / ${recipe.ingredients.length}`);
-    const steps=$('#tab-content-steps'); const sampleStep=steps.querySelector('.rounded-xl,.rounded-lg')?.cloneNode(true)||steps.firstElementChild.cloneNode(true);
-    replaceChildren(steps,recipe.steps.map((step,i)=>{const row=sampleStep.cloneNode(true);text(row.querySelector('h3'),`Étape ${i+1}`);text(row.querySelector('p'),step);row.querySelectorAll('button,input').forEach(el=>el.remove());return markSource(row,'#tab-content-steps');}));
+    const steps=$('#tab-content-steps'),stepBox=steps.firstElementChild;
+    const sampleStep=stepBox.querySelector(':scope > .relative').cloneNode(true),stepHeader=stepBox.firstElementChild;
+    text(stepHeader.lastElementChild,recipe.steps.length+' étapes');
+    replaceChildren(stepBox,[stepHeader,...recipe.steps.map((step,i)=>{const row=sampleStep.cloneNode(true);text(row.querySelector('h3'),`Étape ${i+1}`);text(row.querySelector('p'),step);text(row.querySelector('.w-8.h-8'),i+1);row.querySelector('h3')?.nextElementSibling?.remove();return markSource(row,'#tab-content-steps .relative');})]);
     $('#tab-content-ingredients').hidden=ui.recipeTab==='steps';steps.hidden=ui.recipeTab!=='steps';steps.classList.remove('hidden');
     bind($('#add-to-cart-btn'),'recipe-shop');bind($('#cook-mode-btn'),'cook');
     labelButton('Planifier au Menu','plan-recipe');labelButton('Au Grimoire','recipes');
@@ -242,35 +263,41 @@ window.DobbyCuisine = (() => {
     if(!routes.includes(view))return false;
     busy=true;
     try {
-      if(values.id&&values.id!==ui.recipe){ui.recipe=values.id;ui.servings=null;ui.ingredients.clear();}
+      if(values.id&&values.id!==ui.recipe){ui.recipe=values.id;ui.servings=null;ui.ingredients.clear();ui.tmDraft=null;ui.tmEditing=undefined;ui.recipeTab='ingredients';}
       if(values.date)ui.date=values.date;if(values.slot)ui.slot=values.slot;
-      if(view==='pick') {ui.date ||= E.read().state.day;ui.adult=null;ui.children=null;E.page('pick');}
+      if(view==='pick') {if(values.date||values.slot)ui.selected=values.id||null;ui.date ||= E.read().state.day;ui.adult=null;ui.children=null;E.page('pick');}
       else if(['recipe','cook','tm5'].includes(view)) {
         ui.recipe ||= E.read().recipes[0]?.id;
+        if(!E.read().recipes.some(r=>r.id===ui.recipe)){ui.recipe=null;notice('Cette recette n’est plus disponible dans votre grimoire.',true);return open('recipes',{},history);}
         if(view==='cook'){E.cook(ui.recipe);ui.timer=0;}
         else if(view==='tm5')E.tm5(ui.recipe);else E.page('recipes',ui.recipe);
       } else if(view==='recipe-add'||view==='recipe-add-1')E.page('import');
       else if(view==='batch')E.page('batch');
-      else if(view.startsWith('shop'))E.page('shop');
+      else if(view.startsWith('shop')){E.page('shop');if(['shop','shop-1'].includes(view)&&E.read().state.shopFinal)view='shop-final';}
       else E.page(view==='taverne'?'plan':'recipes');
       if(history)window.history.pushState({cuisine:view},'', '#'+view+(ui.recipe&&['recipe','cook','tm5'].includes(view)?'?id='+encodeURIComponent(ui.recipe):''));
       $('#cu-notice')?.setAttribute('hidden','');await render(view);window.scrollTo(0,0);return true;
     } finally {busy=false;}
   }
-  async function refresh() {if(ready&&!busy)await render();}
+  async function refresh() {if(!ready||busy)return;busy=true;try{if(ui.view.startsWith('shop')&&E.read().state.page!=='shop')E.page('shop');await render();}finally{busy=false;}}
   async function act(action, el) {
     const data=E.read();
-    if(routes.includes(action))return open(action,el.dataset);
+    if(action==='dismiss'){$('#cu-notice').hidden=true;return;}
+    if(routes.includes(action)){
+      if(action.startsWith('recipe-add')&&ui.view.startsWith('recipe-add'))ui.recipeDraft=readRecipeDraft();
+      return open(action,el.dataset);
+    }
+    if(action==='new-recipe'){ui.editId=null;ui.recipeDraft=null;return open('recipe-add');}
     if(['home','missions','family','account','menu'].includes(action))return legacy(action);
     if(action==='back'){if(ui.view==='taverne')return legacy('home');return open(['cook','tm5'].includes(ui.view)?'recipe':['recipe-add','recipe-add-1','batch','recipe'].includes(ui.view)?'recipes':'taverne');}
     if(action==='count'){ui[el.dataset.key]=Math.max(0,Number(ui[el.dataset.key])+Number(el.dataset.delta));return render();}
-    if(action==='date'){ui.date=el.dataset.date;ui.adult=null;ui.children=null;return render();}
+    if(action==='date'){ui.date=el.dataset.date;ui.adult=null;ui.children=null;ui.selected=null;return render();}
     if(action==='slot'){ui.slot=el.dataset.slot;ui.adult=null;ui.children=null;ui.selected=null;return render();}
     if(action==='select-recipe'){ui.selected=el.dataset.id;return render();}
     if(action==='suggestion'){ui.selected=data.recipes.find(r=>r.id!==ui.selected)?.id||data.recipes[0]?.id;notice('Une recette de votre grimoire est sélectionnée. Aucune suggestion IA n’est utilisée.');return render();}
     if(action==='save-meal'){ui.note=$('#prepNotes').value; if(E.choose({id:ui.selected,date:$('#cu-date').value,slot:ui.slot,adult:ui.adult,children:ui.children,note:ui.note}))return open('taverne');return;}
     if(action==='favorite'){E.favorite(el.dataset.id||ui.recipe);return render();}
-    if(action==='filter'){ui.filter=el.dataset.filter==='stew'?'all':el.dataset.filter;return render();}
+    if(action==='filter'){ui.filter=({stew:'all',fast:'quick',veg:'veggie'})[el.dataset.filter]||el.dataset.filter;return render();}
     if(action==='plan-recipe'){ui.selected=el.dataset.id||ui.recipe;return open('pick');}
     if(action==='servings'){ui.servings=Math.max(1,Math.min(30,Number(ui.servings)+Number(el.dataset.delta)));return render();}
     if(action==='ingredients'||action==='steps'){ui.recipeTab=action;return render();}
@@ -296,7 +323,7 @@ window.DobbyCuisine = (() => {
       if(event.target.id==='cu-date')ui.date=event.target.value;
       if(event.target.id==='prepNotes')ui.note=event.target.value;
     });
-    document.addEventListener('change',event=>{if(event.target.dataset.cuIngredient!==undefined){const i=Number(event.target.dataset.cuIngredient);event.target.checked?ui.ingredients.add(i):ui.ingredients.delete(i);text($('#checked-counter'),`${ui.ingredients.size} / ${E.read().recipes.find(r=>r.id===ui.recipe).ingredients.length}`);}});
+    document.addEventListener('change',event=>{if(event.target.id==='cu-date'){ui.date=event.target.value;ui.adult=null;ui.children=null;ui.selected=null;render();}if(event.target.dataset.cuIngredient!==undefined){const i=Number(event.target.dataset.cuIngredient);event.target.checked?ui.ingredients.add(i):ui.ingredients.delete(i);text($('#checked-counter'),`${ui.ingredients.size} / ${E.read().recipes.find(r=>r.id===ui.recipe).ingredients.length}`);}});
     bindForms();
     window.addEventListener('popstate',()=>{const route=parseHash();open(route.view,{id:route.id},false).catch(error=>notice(error.message,true));});
     const route=parseHash();await open(route.view,{id:route.id},false);ready=true;
@@ -309,9 +336,14 @@ window.DobbyCuisine = (() => {
     text($('main h1,main h2'),recipe.name);
     const article=$('main article');text(article.querySelector('h3'),`Étape ${index+1} sur ${recipe.steps.length}`);
     text(article.querySelector('.select-text'),recipe.steps[index]);
+    const progress=$('main .grid-cols-5');if(progress){const cell=progress.firstElementChild.cloneNode(true);progress.replaceChildren(...recipe.steps.map((step,i)=>{const el=cell.cloneNode(true);el.title='Étape '+(i+1);el.style.opacity=i<=index?'1':'.25';return el;}));progress.style.gridTemplateColumns=`repeat(${recipe.steps.length},minmax(0,1fr))`;}
+    for(const b of $$('main nav button')){const subtitle=b.querySelector('.font-body-sm,.text-body-sm');text(subtitle,'');b.setAttribute('aria-label',b.textContent.includes('Précédente')?'Étape précédente':'Étape suivante');const spans=b.querySelectorAll('span:not(.material-symbols-outlined)');if(spans.length>1)text(spans[spans.length-1],b.textContent.includes('Précédente')?(index?'Étape '+index:'Début'):index===recipe.steps.length-1?'Terminer':'Étape '+(index+2));}
+    const summary=$('main details summary .font-label-md');text(summary,`${recipe.ingredients.length} ingrédients de la recette`);
+
     const ingredients=article.querySelector('.grid');
     if(ingredients){const sample=ingredients.firstElementChild.cloneNode(true);replaceChildren(ingredients,recipe.ingredients.map(([name,qty,unit])=>{const row=sample.cloneNode(true);const labels=row.querySelectorAll('.font-label-md');text(labels[0],name);text(labels[1],qty==null?'Quantité à préciser':E.amount(qty,ui.servings||recipe.servings,recipe.servings)+' '+unit);row.querySelectorAll('small,.font-body-sm').forEach(el=>el.remove());return row;}));}
     for(const label of article.querySelectorAll('span'))if(label.textContent.includes('Vivres requis'))text(label,'Ingrédients de la recette (répartition par étape non renseignée)');
+    text($('#timer-display')?.nextElementSibling,'minuteur manuel');
     text($('#timer-display'),`${String(Math.floor(ui.timer/60)).padStart(2,'0')}:${String(ui.timer%60).padStart(2,'0')}`);
     bind($('#btn-timer-toggle'),'timer');text($('#timer-text'),timerId?'Pause':'Démarrer');
     for(const b of $$('main button')){if(b.textContent.trim()==='+1m')bind(b,'timer-add',{seconds:'60'});if(b.textContent.trim()==='+5m')bind(b,'timer-add',{seconds:'300'});}
@@ -321,7 +353,7 @@ window.DobbyCuisine = (() => {
     for(const b of $$('button,a')){if(/Précédent/i.test(b.textContent)){bind(b,'cook-prev');b.disabled=index===0;}if(/Suivant|Terminer|fin du rituel|Poursuivre/i.test(b.textContent))bind(b,'cook-next');}
     // Some mockup controls live outside main in a fixed footer.
     if(!$('[data-cu-action="cook-next"]')){$('main').insertAdjacentHTML('beforeend',button('cook-prev','Étape précédente')+button('cook-next',index===recipe.steps.length-1?'Terminer la cuisine':'Étape suivante'));}
-    for(const el of $$('main span'))if(!el.children.length && /Étape|PHASE|^III$|en cours/.test(el.textContent)&&!el.classList.contains('material-symbols-outlined'))text(el,`Étape ${index+1} / ${recipe.steps.length}`);
+    for(const el of $$('main span'))if(!el.children.length && /Étape|PHASE|^III$|en cours/.test(el.dataset.stitchText||el.textContent)&&!el.classList.contains('material-symbols-outlined'))text(el,`Étape ${index+1} / ${recipe.steps.length}`);
   }
   function renderTM5(data) {
     const recipe=data.recipes.find(r=>r.id===ui.recipe);if(!recipe)throw Error('Recette introuvable.');
@@ -330,24 +362,32 @@ window.DobbyCuisine = (() => {
     const warning=heading('Avertissement')?.parentElement.querySelector('p');text(warning,'Aucune adaptation automatique : vérifiez les instructions et paramètres auprès d’une source fiable pour votre TM5 avant validation. Respectez les limites du fabricant.');
     const recipeNote=$('main h1')?.parentElement.querySelector('p');text(recipeNote,'Adaptation manuelle de votre recette. Aucun réglage n’est inventé par Dobby.');
     const metricSection=$$('main section').find(section=>section.textContent.includes('Paramètres Synthétiques'));
-    if(metricSection){for(const box of metricSection.querySelectorAll('.grid > div')){const labels=box.querySelectorAll('div,span');for(const label of labels)if(!label.children.length&&!label.classList.contains('material-symbols-outlined'))text(label,'À vérifier dans les étapes');}}
+    if(metricSection){
+      const labels=['Durée','Température','Sens inverse','Vitesse'];
+      for(const [i,box]of [...metricSection.querySelectorAll('.grid > div')].entries()){
+        box.replaceChildren();const label=document.createElement('span');label.className='font-label-sm text-primary';label.textContent=labels[i];const value=document.createElement('p');value.className='font-headline-sm text-on-surface';value.textContent=adaptation?'Voir les étapes vérifiées':'Non renseigné';box.append(label,value);
+      }
+      const caption=metricSection.querySelector('.flex.items-center.justify-between > span:last-child');text(caption,'Réglages saisis manuellement');
+    }
+    const intro=$('main h1')?.closest('section');if(intro)for(const badge of intro.querySelectorAll('.flex.flex-wrap > span'))text(badge,'Paramètres à vérifier');
     const section=heading('Rituel des Étapes TM5')?.closest('section');const sample=section?.querySelector(':scope > .bg-surface-container');
     if(!sample)throw Error('Structure des étapes TM5 introuvable');
     const list=document.createElement('div');list.id='cu-tm-steps';list.className='flex flex-col gap-space-md';
     const steps=ui.tmDraft||adaptation?.steps||recipe.steps.map(step=>({text:step,tool:'',time:'',temp:'',speed:'',reverse:false}));
     for(const [i,step]of steps.entries()){
       const row=sample.cloneNode(true);row.dataset.stitchComponent='TM5 step';
-      text(row.querySelector('h4'),`Étape ${i+1}`);
+      text(row.querySelector('h4'),`Étape ${i+1}`);const badge=row.firstElementChild?.querySelector(':scope > span');text(badge,step.tool||'Méthode à renseigner');text(row.firstElementChild?.querySelector('.w-6.h-6'),i+1);
       for(const div of [...row.children].slice(1))div.remove();
       row.insertAdjacentHTML('beforeend',`<label class="cu-field">Instructions<textarea name="tm-text-${i}">${esc(step.text)}</textarea></label><div class="cu-grid">`+
         ['tool','time','temp','speed'].map(key=>input('cu-tm-'+key+'-'+i,({tool:'Méthode / accessoire',time:'Durée',temp:'Température',speed:'Vitesse'})[key],'text',step[key]||'',`data-tm-key="${key}"`)).join('')+`</div><label class="cu-check"><input type="checkbox" id="cu-tm-reverse-${i}" ${step.reverse?'checked':''}> Sens inverse</label>`);
       list.append(row);
     }
     for(const row of section.querySelectorAll(':scope > .bg-surface-container'))row.remove();section.append(list);
-    const equipment=heading('Ustensiles')?.closest('section');if(equipment)equipment.replaceChildren(empty('Accessoires et capacité à vérifier dans vos instructions TM5.'));
+    for(const originalCheck of $$('main input[type="checkbox"]:not([id^="cu-"])')){const equipment=originalCheck.closest('section');if(equipment)equipment.replaceChildren(empty('Accessoires et capacité à vérifier dans vos instructions TM5.'));}
     bind($('#btnEditMode'),'tm-edit');bind($('#btnGuidedMode'),'tm-view');bind($('#btnModifySettings'),'tm-edit');
-    for(const b of $$('main button'))if(/Mode Cuisine TM5/.test(b.textContent))bind(b,'cook');
+    for(const b of $$('main button')){if(/Mode Cuisine TM5/.test(b.textContent)){text(b,'Consulter les étapes TM5');bind(b,'tm-view');}if(/Annuler/.test(b.textContent))bind(b,'recipe');}
     const footer=document.createElement('div');footer.className='cu-context';footer.innerHTML=`<label class="cu-check"><input type="checkbox" id="cu-tm-verified"> J’ai vérifié les instructions et réglages auprès d’une source fiable.</label>`+button('save-tm','Enregistrer l’adaptation TM5')+button('recipe','Retour à la recette');section.append(footer);
+    if(recipe.thermomix){for(const field of list.querySelectorAll('input,textarea'))field.disabled=true;footer.querySelector('.cu-check').hidden=true;footer.querySelector('[data-cu-action="save-tm"]').hidden=true;footer.insertAdjacentHTML('afterbegin','<p>Cette recette est déjà destinée au TM5. Modifiez ses instructions depuis sa fiche ou créez une copie.</p>');}
     if(adaptation&&!ui.tmEditing){for(const field of list.querySelectorAll('input,textarea'))field.disabled=true;footer.querySelector('[data-cu-action="save-tm"]').hidden=true;text($('#editNoticeBanner'),'Adaptation enregistrée pour '+adaptation.portions+' portions.');}
   }
   function renderAdd(data) {
@@ -355,7 +395,7 @@ window.DobbyCuisine = (() => {
     const draft=ui.recipeDraft||{name:recipe?.name||'',servings:recipe?.servings||4,minutes:recipe?.minutes||'',category:recipe?.category||'Autre',device:recipe?.thermomix?'tm5':'classic',ingredients:recipe?.ingredients.map(([name,qty,unit])=>qty==null?name:`${qty} ; ${unit} ; ${name}`).join('\n')||'',steps:recipe?.steps||['']};
     $('#recipe-title').value=draft.name;$('#prep-time').value=0;$('#cook-time').value=draft.minutes;
     const count=$('#portions-count');count.innerHTML=`<input id="cu-recipe-servings" type="number" min="1" max="20" aria-label="Portions de référence" value="${Number(draft.servings)}">`;
-    for(const b of count.parentElement.querySelectorAll('button'))bind(b,'recipe-portions',{delta:b.textContent.includes('－')?'-1':'1'});
+    for(const b of count.parentElement.parentElement.querySelectorAll('button'))bind(b,'recipe-portions',{delta:b.textContent.includes('－')?'-1':'1'});
     bind($('#mode-trad'),'recipe-device',{device:'classic'});bind($('#mode-tm5'),'recipe-device',{device:'tm5'});$('#cooking-mode-val').value=draft.device;
     const categories=['Viande','Poisson','Végétarien','Rapide','Autre'];
     const pills=$$('#category-pills button');pills.forEach((b,i)=>{if(!categories[i])b.remove();else{text(b,categories[i]);bind(b,'recipe-category',{category:categories[i]});}});$('#category-val').value=draft.category;
@@ -364,7 +404,7 @@ window.DobbyCuisine = (() => {
     const steps=$('#steps-container');const sample=steps.firstElementChild.cloneNode(true);
     replaceChildren(steps,draft.steps.map((step,i)=>{const row=sample.cloneNode(true);const field=row.querySelector('textarea');field.value=step;field.dataset.cuStep=i;row.querySelectorAll('button').forEach(b=>bind(b,'remove-step',{index:String(i)}));return row;}));
     text($('#steps-counter'),draft.steps.length+' étape(s)');
-    labelButton('Ajouter une étape','add-step');labelButton('Annuler','recipes');
+    labelButton('Ajouter une étape','add-step');labelButton('Annuler','recipes');for(const b of $$('main button')){if(b.getAttribute('aria-label')==='Annuler')bind(b,'recipes');if(b.textContent.includes("Insérer l'exemple")){text(b,'Aide au format');bind(b,'ingredient-help');}}
     for(const b of $$('button'))if(/Enregistrer.*(?:Grimoire|recette)/i.test(b.textContent)){b.type='submit';b.setAttribute('form','recipe-form');b.dataset.cuAction='save-recipe';}
     const tm=$('#thermomix-section');tm.hidden=draft.device!=='tm5';tm.classList.remove('hidden');if(!tm.hidden)tm.replaceChildren(empty('Pour une recette TM5, renseignez des étapes fiables et spécifiques à l’appareil. Les adaptations détaillées se font depuis sa fiche.'));
     for(const file of form.querySelectorAll('input[type="file"]'))file.addEventListener('change',()=>text($('#file-status'),file.files[0]?file.files[0].name+' · référence temporaire, non enregistrée':'Aucune référence sélectionnée'));
@@ -378,15 +418,15 @@ window.DobbyCuisine = (() => {
     const candidate=data.batch;
     const blocks=$$('main > div > div');
     const fileBlock=blocks.find(el=>el.textContent.includes('Choisir un autre fichier'));
-    if(fileBlock){text(fileBlock.querySelector('.font-label-lg'),ui.batchName||'Aucun fichier JSON sélectionné');fileBlock.insertAdjacentHTML('beforeend','<label class="cu-field">Fichier DOBBY (.json, 2 Mo maximum)<input id="cu-batch-file" type="file" accept=".json,application/json"></label>');}
-    labelButton('Choisir un autre fichier','choose-batch');labelButton('Modèle officiel','batch-example');
+    if(fileBlock){text(fileBlock.querySelector('.font-label-lg'),ui.batchName||'Aucun fichier JSON sélectionné');fileBlock.insertAdjacentHTML('beforeend','<label class="cu-field">Fichier DOBBY (.json, 2 Mo maximum)<input class="sr-only" aria-label="Choisir un fichier JSON DOBBY" id="cu-batch-file" type="file" accept=".json,application/json"></label>');}
+    labelButton('Choisir un autre fichier','choose-batch');text(labelButton('Modèle officiel','batch-example'),'Exemple au format DOBBY');if(fileBlock){text(fileBlock.querySelector('.truncate'),ui.batchName||'Aucun fichier sélectionné');for(const el of fileBlock.querySelectorAll('.uppercase'))if(/Prêt/.test(el.textContent))text(el,candidate?.errors.length?'À corriger':candidate?'Analysé':'En attente');}
     const schema=$('#modal-schema');schema.hidden=false;text(schema.querySelector('p'),'Format DOBBY : {format:"dobby-recipes",version:1,recipes:[{name,minutes,servings,device,category,ingredients:[{name,quantity,unit}],steps:[...]}]}. Les quantités inconnues peuvent être null.');
-    const bilan=heading('Bilan du Crible')?.closest('.rounded-xl');if(bilan){const slot=bilan.querySelector('.grid');if(slot)slot.replaceChildren(empty(candidate?`${candidate.recipes.length} recette(s) valides · ${candidate.errors.length} erreur(s) · ${candidate.warnings?.length||0} avertissement(s)`:'Choisissez un fichier pour démarrer la validation.'));bilan.querySelectorAll('[style*="width"]').forEach(el=>el.style.width='0%');}
+    const bilan=heading('Bilan du Crible')?.closest('.rounded-xl');if(bilan){const slot=bilan.querySelector('.grid');if(slot){slot.style.gridTemplateColumns='minmax(0,1fr)';slot.replaceChildren(empty(candidate?`${candidate.recipes.length} recette(s) valides · ${candidate.errors.length} erreur(s) · ${candidate.warnings?.length||0} avertissement(s)`:'Choisissez un fichier pour démarrer la validation.'));}bilan.querySelectorAll('[style*="width"]').forEach(el=>el.style.width='0%');}
     const duplicates=heading('Arbitrage')?.closest('.rounded-xl');if(duplicates){duplicates.querySelectorAll('fieldset').forEach(el=>el.remove());const title=duplicates.querySelector('h3');duplicates.replaceChildren(title);}
     ui.batchChoices ||= {};
     if(candidate&&duplicates){for(const [i,r]of candidate.recipes.entries()){const existing=data.recipes.find(x=>x.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===r.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()&&Boolean(x.thermomix)===Boolean(r.thermomix));if(existing){const choice=document.createElement('label');choice.className='cu-field';choice.innerHTML=esc(r.name)+`<select data-cu-collision="${i}"><option value="skip">Conserver la recette existante</option>${data.customIds.includes(existing.id)?'<option value="replace">Remplacer la recette importée existante</option>':''}</select>`;choice.querySelector('select').value=ui.batchChoices[i]||'skip';duplicates.append(choice);}}}
-    const registry=heading('Registre Détaillé')?.closest('.rounded-xl');if(registry){const h=registry.querySelector('h3,h2');registry.replaceChildren(h);for(const message of candidate?.errors||[])registry.append(empty('Erreur : '+message));for(const message of candidate?.warnings||[])registry.append(empty('À vérifier : '+message));for(const r of candidate?.recipes||[]){const p=document.createElement('p');p.textContent=`${r.name} · ${r.minutes} min · ${r.servings} portions`;registry.append(p);}}
-    for(const b of $$('main button')){if(/Importer|Intégrer|Sceller|Confirmer|Valider/.test(b.textContent)&&!b.dataset.cuAction){bind(b,'batch-commit');b.disabled=!candidate?.recipes.length;}if(/Annuler|Grimoire/.test(b.textContent)&&!b.dataset.cuAction)bind(b,'recipes');}
+    const registry=heading('Registre Détaillé')?.closest('.space-y-space-sm');if(registry){const h=registry.querySelector('h3,h2');registry.replaceChildren(h);for(const message of candidate?.errors||[])registry.append(empty('Erreur : '+message));for(const message of candidate?.warnings||[])registry.append(empty('À vérifier : '+message));for(const r of candidate?.recipes||[]){const p=document.createElement('p');p.textContent=`${r.name} · ${r.minutes} min · ${r.servings} portions`;registry.append(p);}}
+    for(const b of $$('main button')){if(/Importer|Intégrer|Sceller|Confirmer|Valider/.test(b.dataset.stitchText||b.textContent)&&!b.dataset.cuAction){text(b,`Importer ${candidate?.recipes.length||0} recette(s) contrôlée(s)`);bind(b,'batch-commit');b.disabled=!candidate?.recipes.length;}if(/Annuler|Grimoire/.test(b.textContent)&&!b.dataset.cuAction)bind(b,'recipes');}
     const agree=document.createElement('label');agree.className='cu-check';agree.innerHTML='<input id="cu-batch-agree" type="checkbox"> Je confirme avoir contrôlé les recettes avant l’import.';$('main').append(agree);
     if(!$('[data-cu-action="batch-commit"]'))$('main').insertAdjacentHTML('beforeend',button('batch-commit','Importer les recettes contrôlées'));
   }
@@ -414,6 +454,7 @@ window.DobbyCuisine = (() => {
     const form=document.createElement('form');form.id='cu-extra-form';form.className='cu-context';form.innerHTML=input('cu-extra','Autre achat à prévoir')+'<button type="submit" class="cu-button">Ajouter cet achat</button>';list.after(form);
     const tools=document.createElement('div');tools.className='cu-context';tools.innerHTML=button('shop-history','Historique des listes')+button(ui.view==='shop'?'shop-1':'shop','Autre disposition des provisions');form.after(tools);
     for(const chip of $$('[data-category]'))if(chip.tagName==='BUTTON'){bind(chip,'shop-filter',{category:chip.dataset.category});text(chip,chip.dataset.category==='all'?'Tous les articles':chip.textContent.replace(/\(.*?\)/,''));}
+    for(const b of $$('main button,main a'))if(/Retour aux Menus|Retour aux Repas/.test(b.textContent))bind(b,'taverne');
     renderShared(data.shared||{connected:false,status:'Connectez le foyer pour le panier commun',items:[]},sample);
   }
   function renderShared(shared, sample) {
@@ -440,6 +481,7 @@ window.DobbyCuisine = (() => {
     replaceChildren(list,(final?.items||[]).map((item,i)=>{const row=sample.cloneNode(true);text(row.querySelector('.item-title'),item.name);text(row.querySelector('.item-subtitle'),item.detail);text(row.querySelector('.item-status'),item.done?'Dans le panier':'À acheter');row.classList.toggle('checked',Boolean(item.done));row.querySelector('.item-title').classList.toggle('line-through',Boolean(item.done));
       const b=row.querySelector('.check-btn');bind(b,'final-check',{index:String(i),checked:String(!item.done)});b.setAttribute('aria-label',(item.done?'Décocher ':'Cocher ')+item.name);row.querySelectorAll('.font-label-md').forEach(el=>{if(el!==row.querySelector('.item-title'))text(el,item.detail);});return markSource(row,'.shop-item');}));
     if(!final)list.append(empty('Aucune liste validée. Préparez vos courses puis validez-les.'));
+    for(const b of $$('main button,main a'))if(/Retour aux Repas/.test(b.textContent))bind(b,'taverne');
     const count=final?.items.filter(item=>item.done).length||0,total=final?.items.length||0;
     text($('#progress-count-text'),`${count} / ${total} articles trouvés`);text($('#remaining-count-text'),`${total-count} articles restants`);$('#progress-bar-fill').style.width=(total?count/total*100:0)+'%';
     for(const el of $$('main span'))if(!el.children.length&&/Validée le|repas couverts|ARTICLES PRÊTS/.test(el.dataset.stitchText||el.textContent))text(el,final?`${final.meals.length} repas couverts · ${new Date(final.validatedAt).toLocaleString('fr-BE')}`:'Aucune liste validée');
@@ -455,8 +497,16 @@ window.DobbyCuisine = (() => {
       const controls=card.querySelectorAll('button');controls.forEach((b,i)=>{text(b,i?'Reprendre les articles':'Consulter la liste');bind(b,i?'history-reuse':'history-open',{id});});list.append(markSource(card,'history article'));
     }
     if(!Object.keys(data.state.shopHistory||{}).length)list.append(empty('Aucune liste de courses archivée.'));
-    const recent=$$('main section').find(section=>section.querySelector('[data-path="provisions-validees"]'));if(recent)recent.hidden=true;
-    for(const link of $$('main [data-path="preparer-liste"]'))bind(link,'edit-shop');
+    const recent=heading('Liste en Cours')?.closest('section');
+    if(recent){
+      const final=data.state.shopFinal;
+      for(const el of recent.querySelectorAll('*')){
+        for(const node of [...el.childNodes])if(node.nodeType===3&&/potimarron|Risotto|butternut/i.test(node.textContent))node.textContent=' Articles de la liste validée DOBBY.';
+        if(!el.children.length&&!el.classList.contains('material-symbols-outlined')&&/Validée le|articles au total|vivres|festins couverts|prélevés|Cabas en main/.test(el.dataset.stitchText||el.textContent))text(el,final?`${final.items.length} articles · ${final.meals.length} repas · ${new Date(final.validatedAt).toLocaleDateString('fr-BE')}`:'Aucune liste en cours');
+      }
+      for(const b of recent.querySelectorAll('button,a'))bind(b,/modifier|Déverrouiller/.test(b.textContent)?'edit-shop':'shop-final');
+    }
+    for(const link of $$('main [data-path="preparer-liste"]'))bind(link,'edit-shop');for(const b of $$('main button')){if(/Déverrouiller|modifier la préparation/i.test(b.textContent))bind(b,'edit-shop');}
     for(const b of $$('main button'))if(/Purger/.test(b.textContent)){text(b,'Exporter les archives (aucun effacement)');bind(b,'export-history');}
   }
   function bindForms() {
@@ -479,19 +529,20 @@ window.DobbyCuisine = (() => {
     });
   }
   async function extraAction(action,el,data) {
+    if(action==='ingredient-help'){notice('Saisissez une ligne par ingrédient : quantité ; unité ; nom. Saisissez uniquement le nom si la quantité est inconnue.');return;}
     if(action==='edit-recipe'){const r=data.recipes.find(r=>r.id===ui.recipe);ui.editId=data.customIds.includes(r.id)?r.id:null;ui.recipeDraft={name:ui.editId?r.name:r.name+' (copie)',servings:r.servings,minutes:r.minutes,category:r.category,device:r.thermomix?'tm5':'classic',ingredients:r.ingredients.map(([name,qty,unit])=>qty==null?name:`${qty} ; ${unit} ; ${name}`).join('\n'),steps:r.steps};return open('recipe-add');}
     if(action==='recipe-portions'){const field=$('#cu-recipe-servings');field.value=Math.max(1,Math.min(20,Number(field.value)+Number(el.dataset.delta)));return;}
     if(['recipe-device','recipe-category','add-step','remove-step'].includes(action)){ui.recipeDraft=readRecipeDraft();if(action==='recipe-device')ui.recipeDraft.device=el.dataset.device;if(action==='recipe-category')ui.recipeDraft.category=el.dataset.category;if(action==='add-step')ui.recipeDraft.steps.push('');if(action==='remove-step'&&ui.recipeDraft.steps.length>1)ui.recipeDraft.steps.splice(Number(el.dataset.index),1);return render();}
     if(action==='save-recipe'){
       const draft=readRecipeDraft();const ingredients=draft.ingredients.split('\n').filter(line=>line.trim()).map(line=>{const parts=line.split(';').map(s=>s.trim());return parts.length===1?{name:parts[0],quantity:null,unit:''}:{name:parts[2]||'',quantity:Number((parts[0]||'').replace(',','.')),unit:parts[1]||''};});
-      const result=E.saveRecipe({format:'dobby-recipes',version:1,recipes:[{name:draft.name,minutes:draft.minutes,servings:draft.servings,device:draft.device,category:draft.category,ingredients,steps:draft.steps,reviewed:true,source:'Saisie vérifiée dans DOBBY'}]},ui.editId);
+      const result=E.saveRecipe({format:'dobby-recipes',version:1,recipes:[{name:draft.name,minutes:draft.minutes,servings:draft.servings,device:draft.device,category:draft.category,ingredients,steps:draft.steps,reviewed:false,source:'Saisie dans DOBBY'}]},ui.editId);
       if(result.errors.length){notice(result.errors.join('\n'),true);return;}ui.recipeDraft=null;ui.editId=null;return open('recipe',{id:result.id});
     }
     if(action==='cook-prev'||action==='cook-next'){E.cook(ui.recipe,action==='cook-prev'?'stepback':'stepnext');if(!E.read().state.cook)return open('recipe');return render();}
     if(action==='cook-jump'){E.cook(ui.recipe);const current=E.read().state.cookStep;for(let i=current;i<Number(el.dataset.index);i++)E.cook(ui.recipe,'stepnext');for(let i=current;i>Number(el.dataset.index);i--)E.cook(ui.recipe,'stepback');return render();}
     if(action==='timer-add'){ui.timer+=Number(el.dataset.seconds);return render();}
     if(action==='timer'){if(timerId){clearInterval(timerId);timerId=null;}else if(ui.timer>0){timerId=setInterval(()=>{ui.timer=Math.max(0,ui.timer-1);text($('#timer-display'),`${String(Math.floor(ui.timer/60)).padStart(2,'0')}:${String(ui.timer%60).padStart(2,'0')}`);if(!ui.timer){clearInterval(timerId);timerId=null;notice('Le minuteur est terminé. Vérifiez la cuisson.');}},1000);}return render();}
-    if(action==='tm-edit'||action==='tm-view'){ui.tmEditing=action==='tm-edit';return render();}
+    if(action==='tm-edit'||action==='tm-view'){ui.tmDraft=$$('#cu-tm-steps > div').map((row,i)=>({text:row.querySelector('textarea').value,...Object.fromEntries(['tool','time','temp','speed'].map(key=>[key,$('#cu-tm-'+key+'-'+i).value])),reverse:$('#cu-tm-reverse-'+i).checked}));ui.tmEditing=action==='tm-edit';return render();}
     if(action==='save-tm'){const steps=$$('#cu-tm-steps > div').map((row,i)=>({text:row.querySelector('textarea').value,...Object.fromEntries(['tool','time','temp','speed'].map(key=>[key,$('#cu-tm-'+key+'-'+i).value])),reverse:$('#cu-tm-reverse-'+i).checked}));ui.tmDraft=steps;if(E.saveTM(ui.recipe,steps,$('#cu-tm-verified').checked)){ui.tmDraft=null;ui.tmEditing=false;notice('Adaptation TM5 enregistrée.');return render();}return;}
     if(action==='choose-batch')return $('#cu-batch-file').click();
     if(action==='batch-example'){E.win().document.querySelector('[data-action="batchExample"]')?.click();return;}

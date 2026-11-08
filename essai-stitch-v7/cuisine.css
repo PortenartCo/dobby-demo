@@ -28,3 +28,16 @@ body.cu-active :is(h1,h2,h3,h4,p,span,strong) { overflow-wrap: break-word; }
 @media (prefers-reduced-motion: no-preference) { .cu-enter { animation: cu-enter 180ms ease-out; } }
 @media (prefers-reduced-motion: reduce) { body.cu-active *,body.cu-active *::before,body.cu-active *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media (max-width: 359px) { .cu-grid { grid-template-columns: minmax(0,1fr); } body.cu-active main .grid-cols-4 { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+/* Preserve source controls at 320px, including their longer real-data labels. */
+body.cu-active[data-cuisine-view="cook"] main nav button { min-width: 0; flex: 1; }
+body.cu-active[data-cuisine-view="cook"] main nav button > div { min-width: 0; }
+body.cu-active[data-cuisine-view="cook"] main nav { max-width: 100%; }
+body.cu-active[data-cuisine-view="cook"] #timer-display { font-size: 32px; }
+body.cu-active[data-cuisine-view="recipe"] #servings-display { white-space: nowrap; }
+body.cu-active[data-cuisine-view="recipe"] #servings-display + * { font-size: 10px; letter-spacing: 0; }
+@media (max-width: 359px) {
+  body.cu-active[data-cuisine-view="cook"] #timer-display { font-size: 28px; letter-spacing: 1px; }
+  body.cu-active[data-cuisine-view="cook"] #btn-timer-toggle { padding-inline: 8px; font-size: 12px; }
+  body.cu-active[data-cuisine-view="cook"] #timer-display + span { font-size: 9px; }
+}
+body.cu-active #cu-batch-file { position: absolute; left: 0; top: 0; width: 1px; height: 1px; min-height: 0; padding: 0; clip-path: inset(50%); overflow: hidden; }

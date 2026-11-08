@@ -38,7 +38,7 @@ window.DobbyCuisineEngine = (() => {
   const amount = (quantity, people, base) => evaluate('return amount(p.quantity,p.people,p.base);', { quantity, people, base });
   const portions = (adult, children) => evaluate('return portionCount({adult:p.adult,children:p.children,childFactor:st.childFactor??0.65});', { adult, children });
   function choose(values) {
-    evaluate('st.day=p.date;st.slot=p.slot;st.choice="library";st.note=p.note||"";', values);
+    evaluate('st.day=p.date;st.slot=p.slot;st.choice="library";st.filter="";st.cat="Toutes";st.favorites=false;st.note=p.note||"";', values);
     page('pick'); field('adults', values.adult); field('children', values.children);
     click('select', { id: values.id });
     return evaluate('return st.page==="plan" && st.planned[st.day+"-"+st.slot]?.id===p.id;', values);
@@ -84,12 +84,12 @@ window.DobbyCuisineEngine = (() => {
     return evaluate('return custom.length>p.previous?{id:custom[custom.length-1].id,errors:[]}:{errors:["La recette n’a pas été enregistrée. Vérifiez les champs ou confirmez l’enregistrement."]};', { previous });
   }
   async function batch(files) {
-    page('batch');
-    const input = win().document.getElementById('batchFile'); input.files = files;
-    input.dispatchEvent(new (win().Event)('change', { bubbles: true }));
-    const started = Date.now();
-    while (!evaluate('return batchCandidate!==null;') && Date.now() - started < 4000) await new Promise(resolve => setTimeout(resolve, 30));
-    return read().batch;
+    // Use the native validator and candidate. Normalize its invalid-JSON result
+    // for the native view, which assumes warnings is always present.
+    evaluate('batchCandidate=null;');page('batch');
+    const file=files[0];if(!file)return null;
+    if(file.size>2*1024*1024)throw Error('Fichier trop volumineux (2 Mo maximum).');
+    return evaluate('batchCandidate=validateBatch(p.text);batchCandidate.warnings ||= [];render();return batchCandidate;', {text:await file.text()});
   }
   function commitBatch(choices) {
     for (const [index, value] of Object.entries(choices)) field('collision' + index, value);
