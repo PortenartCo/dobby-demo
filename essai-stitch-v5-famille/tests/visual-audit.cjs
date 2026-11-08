@@ -29,7 +29,7 @@ const reports = [];
       const report = await page.evaluate(() => ({
         width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
         headingCount: document.querySelectorAll('#screen h1').length,
-        nav: [...document.querySelectorAll('.nav button')].map(x => x.textContent.trim()),
+        nav: [...document.querySelectorAll('.nav button')].map(x => (x.querySelector('.dv6-nav-label') || x).textContent.trim()),
         heroCount: document.querySelectorAll('#screen .dv6-hero').length,
         overflow: [...document.querySelectorAll('#screen *, [role="dialog"] *')].filter(el => {
           const r = el.getBoundingClientRect();

@@ -18,8 +18,45 @@
     health: 'Carnet de santé', contacts: 'Répertoire du foyer', lists: 'Listes du foyer',
     contracts: 'Contrats & échéances', search: 'Rechercher', 'smart-import': 'Importer un document'
   };
+  const pages = {
+    plan: { image: 'taverne', seal: 'À la lueur du feu', kicker: 'Repas & menus du logis', title: 'La Taverne Gourmande', quote: 'Le feu crépite dans l’âtre et le chaudron mijote. Dobby vous aide à préparer les festins de la maisonnée.', action: 'Choisir un repas', attributes: 'data-st5-action="dinner"', symbol: 'restaurant' },
+    home: { image: 'traverse', seal: 'Bienvenue au logis', kicker: 'Votre assistant de maison', title: 'Le Chemin de Traverse', quote: 'Chaque chose à sa place, un peu de magie au quotidien. Dobby veille sur les petites missions de votre foyer.', action: 'Parler à Dobby', attributes: 'data-action="voice"', symbol: 'auto_awesome' },
+    missions: { image: 'missions', seal: 'Le grimoire du quotidien', kicker: 'Tâches & rituels du foyer', title: 'La Bibliothèque des Missions', quote: 'Chaque tâche est un petit sortilège d’ordre. Un parchemin à la fois, la maisonnée prend soin de son quotidien.', action: 'Créer une mission', attributes: 'data-fms-action="new"', symbol: 'add' },
+    family: { image: 'famille', seal: 'Le cœur de la maisonnée', kicker: 'Famille & organisation', title: 'Le Salon des Curiosités', quote: 'Les rendez-vous, les souvenirs et les informations précieuses du foyer trouvent ici leur place.', action: 'Les membres de la maisonnée', attributes: 'data-extra="health"', symbol: 'groups' }
+  };
   function icon(name) {
     return '<span class="dv6-icon" aria-hidden="true">' + name + '</span>';
+  }
+  function pageHead(page) {
+    const data = pages[page];
+    const head = document.createElement('section');
+    head.className = 'dv6-page-head';
+    head.innerHTML = '<div class="dv6-hero"><img src="./assets/v6/' + data.image + '.png" alt="Dobby dans un intérieur chaleureux" decoding="async">'
+      + '<span class="dv6-hero-seal">' + icon('auto_awesome') + data.seal + '</span></div>'
+      + '<div class="dv6-page-title"><div class="dv6-kicker">' + data.kicker + '</div><h1>' + data.title + '</h1>'
+      + '<p>« ' + data.quote + ' »</p><button type="button" class="dv6-primary" ' + data.attributes + '>' + icon(data.symbol) + data.action + '</button>'
+      + (page === 'home' ? '<button type="button" class="dv6-quiet" data-action="photo">' + icon('upload') + 'Importer une photo ou un document</button>' : '') + '</div>';
+    return head;
+  }
+  function decorateRoot(key) {
+    if (screen.querySelector('.dv6-page-head')) return;
+    screen.querySelectorAll('.st5-cover, .st-hero, .st-intro').forEach(el => el.remove());
+    // Existing V5 content sometimes nests an entire previous page below the hero.
+    // Keep its actions and data, demote only the duplicate headings.
+    screen.querySelectorAll('h1').forEach(title => {
+      const heading = document.createElement('h2');
+      heading.className = title.className; heading.textContent = title.textContent;
+      title.replaceWith(heading);
+    });
+    screen.prepend(pageHead(key));
+    if (key === 'plan') {
+      const tabs = document.createElement('div'); tabs.className = 'dv6-route-tabs';
+      tabs.setAttribute('role', 'group'); tabs.setAttribute('aria-label', 'Les registres de la Taverne');
+      tabs.innerHTML = '<button type="button" class="active" data-go="plan" aria-pressed="true">' + icon('calendar_month') + 'Menus</button>'
+        + '<button type="button" data-go="recipes">' + icon('menu_book') + 'Grimoire</button>'
+        + '<button type="button" data-go="shop">' + icon('shopping_basket') + 'Provisions</button>';
+      screen.querySelector('.dv6-page-head').after(tabs);
+    }
   }
   header.innerHTML = '<button type="button" id="menubtn" class="dv6-header-button" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false">' + icon('menu') + '</button>'
     + '<button type="button" class="v2-brand dv6-brand" data-go="home" aria-label="Accueil Dobby"><strong>DOBBY</strong><small id="dv6Chapter">Traverse</small></button>'
@@ -56,6 +93,7 @@
   function decorate() {
     const key = String(st.extraPage || '').split(':')[0] || st.page;
     const root = Boolean(roots[key] && !st.detail && !st.extraPage);
+    if (root) decorateRoot(key);
     document.getElementById('dv6Chapter').textContent = roots[key]?.[0] || chapters[key] || 'Le foyer';
     back.hidden = root;
     document.getElementById('menubtn').hidden = !root;
