@@ -11,15 +11,15 @@ const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 test('preview V5 source matches original except isolated browser storage names', () => {
   const original=source('../../essai-stitch-v5/index.html');
   const preview=source('../index.html');
-  const normalized=preview.replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
+  const normalized=preview.replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
-    .replaceAll('./stitch-v5.js?v=20261108-9','./stitch-v5.js?v=20261107-1')
+    .replaceAll('./stitch-v5.js?v=20261108-10','./stitch-v5.js?v=20261107-1')
     .replace("/* DOBBY_BOOT_ROUTE_SAFE_V1 */\nwindow.__dobbyStartupRoute = { page: st.page, detail: st.detail };\nst.page = 'home';\nst.detail = null;\n", '');
-  assert.equal(normalized,original);
+  assert.equal(normalized,original.replaceAll('\r\n','\n'));
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
   assert.doesNotMatch(preview,/indexedDB\.open\('dobby-stitch-preview-files-20261105'/);
-  assert.match(preview,/stitch-v5\.js\?v=20261108-9/);
+  assert.match(preview,/stitch-v5\.js\?v=20261108-10/);
   const loader=source('../stitch-v5.js');
   assert.match(loader,/family-v2\.js\?v=20261108-7/);
   assert.match(loader,/family-modules\.js\?v=20261108-7/);
@@ -27,8 +27,8 @@ test('preview V5 source matches original except isolated browser storage names',
   assert.match(loader,/family-agenda\.css\?v=20261108-7/);
   assert.match(loader,/family-missions\.js\?v=20261108-7/);
   assert.match(loader,/family-missions\.css\?v=20261108-7/);
-  assert.match(loader,/family-files\.js\?v=20261108-8/);
-  assert.match(loader,/family-files\.css\?v=20261108-7/);
+  assert.match(loader,/family-files\.js\?v=20261108-9/);
+  assert.match(loader,/family-files\.css\?v=20261108-9/);
   assert.match(loader,/family-health\.js\?v=20261108-7/);
   assert.match(loader,/family-health\.css\?v=20261108-7/);
 });

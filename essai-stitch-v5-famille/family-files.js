@@ -53,7 +53,7 @@ function detailPanel(d){
     (shared?
       (d.cloudPath?
         '<p class="fds-desc">La fiche et ce fichier sont accessibles aux membres du foyer après synchronisation.</p>':
-        '<p class="fds-hint"><strong>La fiche est commune, mais aucun PDF n’a été envoyé.</strong> Pour partager un PDF ou une photo avec l’autre téléphone, utilisez le bouton ci-dessous. Le bloc « Pièce jointe » au-dessus ne conserve les fichiers que sur cet appareil.</p>'):
+        '<p class="fds-hint"><strong>La fiche est commune, mais aucun PDF n’a été envoyé.</strong> Pour partager un PDF ou une photo avec l’autre téléphone, utilisez le bouton ci-dessous. Une copie locale existante reste consultable dans la section repliée « Copie locale ».</p>'):
       '<p class="fds-desc">La fiche ne sera pas envoyée tant que vous ne l’aurez pas partagée.</p>')+
     (shared && d.cloudPath?
       '<div class="fds-file"><strong>📎 '+esc(d.cloudName||'Fichier partagé')+'</strong>'+
@@ -69,12 +69,34 @@ function detailPanel(d){
       '<small>10 Mo maximum, stockage partagé du foyer.</small></div>':'')+
     '</section>';
 }
+/* Shared documents use one main file picker; the original local attachment
+   remains available in a disclosure when it exists. Stored data is untouched. */
+function sharedDocumentDetail(rendered, doc) {
+  const shell=document.createElement('div');
+  shell.innerHTML=rendered;
+  const heading=[...shell.querySelectorAll('.card > h2')]
+    .find(h=>h.textContent.trim()==='Pièce jointe');
+  if(!heading) return rendered+detailPanel(doc);
+  const local=heading.parentElement;
+  let localBackup='';
+  if(doc.attachmentName){
+    const disclosure=document.createElement('details');
+    disclosure.className='fds-local-backup';
+    const summary=document.createElement('summary');
+    summary.textContent='Copie locale enregistrée sur cet appareil';
+    disclosure.append(summary,local);
+    localBackup=disclosure.outerHTML;
+  }else{
+    local.remove();
+  }
+  return shell.innerHTML+detailPanel(doc)+localBackup;
+}
 const previous=drawDocuments;
 drawDocuments=function(){
   const rendered=previous();
   if(typeof docEdit!=='undefined' && (docEdit!==null || docNoteEdit!==null))return rendered;
   const selected=detail();
-  if(selected)return rendered+detailPanel(selected);
+  if(selected)return isShared(selected)&&active()?sharedDocumentDetail(rendered,selected):rendered+detailPanel(selected);
   return overview()+rendered;
 };
 function redraw(){

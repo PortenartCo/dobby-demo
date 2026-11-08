@@ -133,7 +133,10 @@
       if(!details || !details.querySelector('[data-fds-file="'+storedDoc.id+'"]')){
         throw Error('L’envoi volontaire du fichier familial est inaccessible');
       }
-      if(!details.querySelector('[data-fds-file="'+storedDoc.id+'"]').disabled){
+       if(![...d.querySelectorAll('#screen .card > h2')].some(h=>h.textContent.trim()==='Pièce jointe')) {
+         throw Error('Sans connexion, les pièces locales doivent rester accessibles');
+       }
+       if(!details.querySelector('[data-fds-file="'+storedDoc.id+'"]').disabled){
         throw Error('Un upload Cloud ne doit pas être autorisé avant la connexion Supabase');
       }
       completed=true;clearInterval(timer);

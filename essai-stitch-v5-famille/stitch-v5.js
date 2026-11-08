@@ -157,8 +157,8 @@
      agenda.onload=function(){
        const missions=document.createElement('script');missions.src='./family-missions.js?v=20261108-7';
        missions.onload=function(){
-         const filesCss=document.createElement('link');filesCss.rel='stylesheet';filesCss.href='./family-files.css?v=20261108-7';document.head.append(filesCss);
-         const files=document.createElement('script');files.src='./family-files.js?v=20261108-8';
+         const filesCss=document.createElement('link');filesCss.rel='stylesheet';filesCss.href='./family-files.css?v=20261108-9';document.head.append(filesCss);
+         const files=document.createElement('script');files.src='./family-files.js?v=20261108-9';
          files.onload=function(){
            const healthCss=document.createElement('link');healthCss.rel='stylesheet';healthCss.href='./family-health.css?v=20261108-7';document.head.append(healthCss);
            const health=document.createElement('script');health.src='./family-health.js?v=20261108-7';
