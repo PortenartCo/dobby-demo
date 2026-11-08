@@ -1,7 +1,7 @@
 # Dobby V5 familial — intégration isolée (08/11/2026)
 
 ## Périmètre réellement raccordé
-- Maquette Stitch V5 intégralement préservée : fichier HTML et CSS identiques à ceux de l'essai V5 original.
+- Maquette Stitch V5 préservée : HTML identique à l'essai V5 original à l'exception des deux clés de stockage navigateur (localStorage et IndexedDB des fichiers), volontairement isolées. CSS identique.
 - Nouvelle section « Le panier commun » dans la page Courses, sans iframe et sans remplacement de la préparation d'origine.
 - Auth Supabase avec clé *publique* seulement et comptes familiaux existants.
 - Récupération possible de la clé publiable du pilote Sync V2 sur le même navigateur. Aucune copie de son mot de passe ou de ses jetons de session.
@@ -32,9 +32,9 @@ Les versions familiales existantes ne doivent pas écraser silencieusement les d
 Un modèle distinct de permissions privées et un stockage de fichiers sécurisé seront nécessaires avant de migrer ces données.
 
 ## Conservation, recette et rollback
-- La clé localStorage existante du preview Stitch V5 reste inchangée et aucune donnée existante n'est automatiquement téléversée ou effacée.
+- La clé de stockage de l'ancien preview Stitch V5 reste inchangée dans cet ancien preview ; le nouveau dossier utilise deux espaces distincts. Un bouton permet d'importer volontairement les données V5 locales dans le nouvel essai, après sauvegarde. Les fichiers joints binaires ne sont pas copiés.
 - La production racine, l'ancien essai Stitch V5 et Sync V2 restent indépendants.
-- GitHub Actions vérifie syntaxe, cœur offline, conflits, quantité nullable, contraintes statiques, smoke-tests simulés et identité byte-à-byte du grand HTML Stitch V5.
+- GitHub Actions vérifie syntaxe, cœur offline, conflits, quantité nullable, contraintes statiques, smoke-tests simulés et égalité du grand HTML Stitch V5 après neutralisation des deux changements de noms de stockage.
 - Les tests automatisés ne remplacent pas un test Safari iOS ni un vrai test de sécurité inter-foyers. Aucun ami ou nouveau foyer ne doit être invité avant validation de ces tests.
 - La synchronisation V1 -> V2 a été une copie à un instant T. Une réconciliation reste requise si la V1 évolue.
 - Rollback : rouvrir /essai-stitch-v5/ ou / ; ne pas effacer les caches du preview avant d'avoir récupéré les modifications en attente.
