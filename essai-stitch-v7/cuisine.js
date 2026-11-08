@@ -66,6 +66,7 @@ window.DobbyCuisine = (() => {
   }
   function shell() {
     const currentRecipe=E.read().recipes.find(r=>r.id===ui.recipe);
+    if(ui.view==='cook')for(const leaf of $$('header *'))if(!leaf.children.length&&/Mode Fourneaux/.test(leaf.textContent))text(leaf,`Mode cuisine · Étape ${(E.read().state.cookStep||0)+1}/${currentRecipe?.steps.length||0}`);
     for(const leaf of $$('header *'))if(!leaf.children.length&&/potimarron|butternut|châtaigne/i.test(leaf.textContent))text(leaf,currentRecipe?.name||'Cuisine DOBBY');
     for (const h of $$('header h1')) { const span = document.createElement('span'); span.className = h.className; span.textContent = h.textContent; h.replaceWith(span); }
     for (const control of $$('header button,header a,header .cursor-pointer')) {
@@ -354,7 +355,11 @@ window.DobbyCuisine = (() => {
     for(const b of $$('button,a')){if(/Précédent/i.test(b.textContent)){bind(b,'cook-prev');b.disabled=index===0;}if(/Suivant|Terminer|fin du rituel|Poursuivre/i.test(b.textContent))bind(b,'cook-next');}
     // Some mockup controls live outside main in a fixed footer.
     if(!$('[data-cu-action="cook-next"]')){$('main').insertAdjacentHTML('beforeend',button('cook-prev','Étape précédente')+button('cook-next',index===recipe.steps.length-1?'Terminer la cuisine':'Étape suivante'));}
-    for(const el of $$('main span'))if(!el.children.length && /Étape|PHASE|^III$|en cours/.test(el.dataset.stitchText||el.textContent)&&!el.classList.contains('material-symbols-outlined'))text(el,`Étape ${index+1} / ${recipe.steps.length}`);
+    for(const el of $$('main span'))if(!el.children.length && /Étape|PHASE|^III$|en cours/.test(el.dataset.stitchText||el.textContent)&&!el.classList.contains('material-symbols-outlined')){
+      const original=el.dataset.stitchText||el.textContent;text(el,original==='PHASE'?'ÉTAPE':original==='III'?index+1:`Étape ${index+1} / ${recipe.steps.length}`);
+    }
+    const hero=$('main > div:first-child > .relative');if(hero){const image=hero.querySelector('img');if(image){image.classList.add('cu-cook-scene');image.alt='Illustration Stitch du mode cuisine, cadrée pour masquer les textes fictifs incorporés';}for(const leaf of hero.querySelectorAll('span'))if(leaf.dataset.stitchText==='25 min • 4 parts')text(leaf,`${recipe.minutes} min · ${ui.servings||recipe.servings} portions`);}
+
   }
   function renderTM5(data) {
     const recipe=data.recipes.find(r=>r.id===ui.recipe);if(!recipe)throw Error('Recette introuvable.');

@@ -39,7 +39,7 @@ const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
     await page.reload();await page.waitForFunction(()=>window.DobbyCuisine?.ready);
     assert.equal(await page.evaluate(()=>window.DobbyCuisineEngine.read().recipes.find(r=>r.id==='cu-test').fav),true,'Custom recipe favorite persists');
     await page.locator('#cook-mode-btn').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='cook');
-    assert.ok((await page.locator('main article').innerText()).includes('Laver les légumes.'));
+    assert.ok((await page.locator('main article').innerText()).includes('Laver les légumes.'));assert.ok((await page.locator('header').textContent()).includes('Étape 1/2'),'Header step count uses the recipe, not the mockup');
     await page.locator('[data-cu-action="cook-next"]').click();
     await page.waitForFunction(()=>document.querySelector('main article')?.textContent.includes('Cuire les légumes.'));
     await page.locator('[data-cu-action="cook-next"]').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipe');

@@ -41,3 +41,7 @@ body.cu-active[data-cuisine-view="recipe"] #servings-display + * { font-size: 10
   body.cu-active[data-cuisine-view="cook"] #timer-display + span { font-size: 9px; }
 }
 body.cu-active #cu-batch-file { position: absolute; left: 0; top: 0; width: 1px; height: 1px; min-height: 0; padding: 0; clip-path: inset(50%); overflow: hidden; }
+
+/* This supplied scene contains baked-in demo instructions around the edges.
+   Keep the original artwork, framing only its central illustration. */
+body.cu-active .cu-cook-scene { transform: scale(2); transform-origin: 50% 65%; }
