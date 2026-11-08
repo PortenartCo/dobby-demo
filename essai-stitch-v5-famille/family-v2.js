@@ -127,6 +127,13 @@ async function requireHousehold() {
   const household = await authorized('GET', 'dobby_v2_households?select=id&id=eq.' + encodeURIComponent(hh));
   if (!Array.isArray(household) || household.length !== 1) throw Error('Accès au foyer non autorisé');
   if (epoch !== f.epoch) throw Error('Session remplacée');
+  // V5's local state is one namespace per browser profile; prevent sharing a
+  // single profile between households until full partitioning is implemented.
+  const deviceHousehold = await meta('deviceHouseholdId');
+  if (deviceHousehold && deviceHousehold !== hh) {
+    throw Error('Ce navigateur conserve les données locales d’un autre foyer. Utilisez un profil de navigateur distinct.');
+  }
+  if (!deviceHousehold) await putMeta('deviceHouseholdId', hh);
   if (f.context !== context) {
     f.context = context;
     f.householdId = hh;
@@ -347,7 +354,7 @@ function refreshModal() {
   const copyOld = localStorage.getItem(OLD_V5_KEY) ?
     '<button type="button" data-fv-action="import-original">Importer mes données de l’ancien essai V5 (sans les fichiers joints)</button>' : '';
   if (!f.session || !f.context) {
-    target.innerHTML = '<h2>Connexion familiale</h2><p class="fv2-muted">Utilisez votre compte Supabase Dobby. Aucune clé secrète ne doit être saisie.</p>' + copyOld +
+    target.innerHTML = '<h2>Connexion familiale</h2><p class="fv2-muted">Utilisez votre compte Supabase Dobby. Aucune clé secrète ne doit être saisie. Un profil navigateur distinct est requis pour chaque foyer.</p>' + copyOld +
       '<button type="button" data-fv-action="pilot-key">Retrouver la clé publique du pilote Sync V2</button>' +
       '<form id="fv2LoginForm"><label>Clé publique<input name="key" autocomplete="off" placeholder="sb_publishable_…" value="' +
       esc(f.key || '') + '" required></label>' +
@@ -439,9 +446,17 @@ async function login(form) {
   f.epoch += 1;
   await keepSession(result);
   f.context = null; f.householdId = null;
-  await requireHousehold();
-  await loadItems();
-  await sync();
+  try {
+    await requireHousehold();
+    await loadItems();
+    await sync();
+  } catch (e) {
+    // Never retain a new session after a refused household switch.
+    f.epoch += 1; f.session = null; f.context = null; f.householdId = null;
+    f.cache.clear();
+    await delMeta('session');
+    throw e;
+  }
   refreshModal(); repaint();
 }
 async function logout() {
