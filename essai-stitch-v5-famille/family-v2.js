@@ -352,7 +352,10 @@ function refreshModal() {
   const target = document.getElementById('fv2ModalBody');
   if (!target) return;
   const copyOld = localStorage.getItem(OLD_V5_KEY) ?
-    '<button type="button" data-fv-action="import-original">Importer mes données de l’ancien essai V5 (sans les fichiers joints)</button>' : '';
+    '<details class="fv2-legacy-options"><summary>Import facultatif d’un ancien essai V5</summary>' +
+    '<p class="fv2-muted">À utiliser seulement si vous aviez personnellement enregistré des données dans l’ancien essai. ' +
+    'Les données de démonstration ne nécessitent aucune migration.</p>' +
+    '<button type="button" data-fv-action="import-original">Importer les anciennes données locales</button></details>' : '';
   if (!f.session || !f.context) {
     target.innerHTML = '<h2>Connexion familiale</h2><p class="fv2-muted">Utilisez votre compte Supabase Dobby. Aucune clé secrète ne doit être saisie. Un profil navigateur distinct est requis pour chaque foyer.</p>' + copyOld +
       '<button type="button" data-fv-action="pilot-key">Retrouver la clé publique du pilote Sync V2</button>' +
