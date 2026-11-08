@@ -128,6 +128,13 @@ function html() {
     '<div class="fv2-module"><strong>Rejoindre les modules du foyer</strong>' +
     '<p>' + joinable.length + ' module(s) déjà partagés par un autre membre. Une seule opération récupère les données du foyer. Aucune donnée locale n’est publiée sans accord.</p>' +
     '<button type="button" data-fm-action="join-family">Récupérer les modules partagés (' + joinable.length + ')</button></div>' : '';
+  const inactive = DEFINITIONS.filter(def => !states[def.id]?.active);
+  const shareAll = backendReady && ctx && inactive.length > 1 && !joinable.length ?
+    '<div class="fv2-module"><strong>Activer le foyer en une seule fois</strong>' +
+    '<p>Partagez les ' + inactive.length + ' modules restants après une seule confirmation. ' +
+    'Les données médicales et fichiers joints ne seront pas transférés.</p>' +
+    '<button type="button" data-fm-action="activate-all">Activer les ' +
+    inactive.length + ' modules du foyer</button></div>' : '';
   const rows = DEFINITIONS.map(def => {
     const info = states[def.id];
     const flag = stateLabel(def);
@@ -153,7 +160,7 @@ function html() {
   }).join('');
   const gate = !backendReady ? '<p class="fv2-error">Impossible de joindre les modules familiaux (réseau, accès ou configuration Supabase). Les données de cet appareil restent locales et aucune nouvelle synchronisation n’est activée.</p>' +
     '<button type="button" data-fm-action="retry">Revérifier le raccordement</button>' : '';
-  return description + bulkJoin + gate + rows +
+  return description + bulkJoin + shareAll + gate + rows +
     '<div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Local uniquement</span>' +
     '<p>Les fiches de contrats peuvent être partagées après activation explicite; les fichiers, autres documents et mémos restent sur cet appareil.</p></div>' +
     '<div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Privé · local</span>' +
@@ -194,6 +201,69 @@ async function activate(id) {
   states[id] = {active:true,revision,synced:digest(pick(id)),conflict:false};
   if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
   await persist();
+  api.repaint(); api.openModal();
+}
+async function activateRemaining() {
+  if (!ctx || !backendReady) throw Error('Foyer non connecté');
+  const ids = DEFINITIONS.filter(def => !states[def.id]?.active).map(def => def.id);
+  if (!ids.length) return;
+  // Read first: existing remote data wins, after user confirmation and local backup.
+  const entries = await Promise.all(ids.map(async id => ({id, remote:await readRow(id)})));
+  const existing = entries.filter(entry => Boolean(entry.remote)).length;
+  for (const {id, remote} of entries) {
+    if (remote && (!remote.payload || Array.isArray(remote.payload) ||
+      typeof remote.payload !== 'object' ||
+      !Number.isInteger(Number(remote.revision)) || Number(remote.revision) < 1)) {
+      throw Error('Contenu familial non valide pour : ' + id);
+    }
+  }
+  const removeDemo = ids.includes('menus') && seededExampleMeals() &&
+    !entries.find(e => e.id === 'menus')?.remote;
+  let message = 'Activer le partage de ' + ids.length + ' modules avec les membres actifs du foyer ?\n' +
+    'Les données enregistrées dans ces modules pourront être consultées et modifiées par les membres du foyer.\n' +
+    'Les données médicales et les fichiers joints ne seront pas envoyés.';
+  if (existing) message += '\n' + existing +
+    ' module(s) existent déjà : ils seront récupérés après sauvegarde de leur version locale.';
+  if (removeDemo) message += '\nLes trois repas fictifs préchargés seront retirés après sauvegarde.';
+  if (!confirm(message)) return;
+  if (removeDemo) {
+    backupLocal('menus');
+    st.planned = {};
+    st.demoInitialized = true;
+    save(); render();
+  }
+  let activated = 0;
+  try {
+    for (const {id, remote} of entries) {
+      let revision;
+      if (remote) {
+        if (digest(pick(id)) !== digest(remote.payload)) {
+          backupLocal(id);
+          applyShared(id, remote.payload);
+        }
+        revision = Number(remote.revision);
+      } else {
+        const original = pick(id);
+        const result = await api.authorized('POST','dobby_v2_modules',{
+          household_id:ctx.householdId,module:id,payload:original
+        },{Prefer:'return=representation'});
+        if (!result?.[0] || Number(result[0].revision) < 1) {
+          throw Error('Module créé sans confirmation serveur : ' + id);
+        }
+        revision = Number(result[0].revision);
+      }
+      states[id] = {active:true,revision,synced:digest(pick(id)),conflict:false};
+      if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
+      await persist();
+      activated++;
+    }
+  } catch(e) {
+    lastError = activated + ' module(s) sur ' + ids.length +
+      ' activé(s). Les autres restent inactifs : ' + (e?.message || 'erreur inconnue');
+    api.repaint(); api.openModal();
+    return;
+  }
+  lastError = '';
   api.repaint(); api.openModal();
 }
 async function joinFamily() {
@@ -313,6 +383,7 @@ document.addEventListener('click', async e => {
   try {
     if (action === 'retry') { checked = false; await start(); }
     if (action === 'join-family') await joinFamily();
+    if (action === 'activate-all') await activateRemaining();
     if (action === 'activate') await activate(id);
     if (action === 'refresh') await syncOne(id);
     if (action === 'remove-demo' && seededExampleMeals()) {
