@@ -146,8 +146,16 @@
 })();
 /* Isolated V5 family preview: legacy HTML remains unchanged. */
 (function(){
- const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-3';document.head.append(css);
- const js=document.createElement('script');js.src='./family-v2.js?v=20261108-3';js.defer=true;
- js.onload=function(){const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-3';document.body.append(modules);};
+ const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-4';document.head.append(css);
+ const agendaCss=document.createElement('link');agendaCss.rel='stylesheet';agendaCss.href='./family-agenda.css?v=20261108-4';document.head.append(agendaCss);
+ const js=document.createElement('script');js.src='./family-v2.js?v=20261108-4';js.defer=true;
+ js.onload=function(){
+   const modules=document.createElement('script');modules.src='./family-modules.js?v=20261108-4';
+   modules.onload=function(){
+     const agenda=document.createElement('script');agenda.src='./family-agenda.js?v=20261108-4';
+     document.body.append(agenda);
+   };
+   document.body.append(modules);
+ };
  document.body.append(js);
 })();
