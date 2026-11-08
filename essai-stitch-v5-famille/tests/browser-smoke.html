@@ -65,7 +65,7 @@
       if(!form.checkValidity()) {
         throw Error('Formulaire invalide : '+[...form.elements].filter(x=>x.validity&&!x.validity.valid).map(x=>x.name).join(','));
       }
-      form.requestSubmit();
+      form.querySelector('button[type="submit"]').click();
       const recorded=JSON.parse(localStorage.getItem('dobby-v5-familial-preview-20261108')||'{}');
       if(!recorded.familyEvents?.some(x=>x.title==='Sortie de test navigateur')) {
         throw Error('La création d’événement ne persiste pas localement : '+
