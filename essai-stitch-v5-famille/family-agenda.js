@@ -63,28 +63,40 @@ function agendaPanel(){
 }
 function enhanceHome(){
   const screen=document.getElementById('screen');if(!screen)return;
+  const today=TODAY();
+  const events=core.validEvents(st.familyEvents).filter(x=>x.date===today).sort(core.eventSort);
   const sections=[...screen.querySelectorAll('.v2-panel')];
   const eventBlock=sections.find(x=>x.querySelector('h2')?.textContent?.trim()==='Événements du jour');
+  const content=events.length ? '<ul class="fp-home-today">'+
+    events.map(x=>'<li><strong>'+esc(x.title)+'</strong><small>'+
+      (x.time?esc(x.time)+' · ':'')+esc(x.category)+'</small></li>').join('')+
+    '</ul><p class="fp-description">Événements Dobby, sans liaison automatique à Apple Calendrier.</p>' :
+    '<p class="fp-description">Aucun événement Dobby aujourd’hui. Le calendrier Apple n’est pas connecté.</p>';
+  let anchor=eventBlock;
   if(eventBlock){
-    const today=TODAY();
-    const events=core.validEvents(st.familyEvents).filter(x=>x.date===today).sort(core.eventSort);
-    const content=events.length ? '<ul class="fp-home-today">'+
-      events.map(x=>'<li><strong>'+esc(x.title)+'</strong><small>'+
-        (x.time?esc(x.time)+' · ':'')+esc(x.category)+'</small></li>').join('')+
-      '</ul><p class="fp-description">Événements Dobby, sans liaison automatique à Apple Calendrier.</p>' :
-      '<p class="v2-empty">Aucun événement Dobby aujourd’hui. Le calendrier Apple n’est pas connecté.</p>';
     const placeholder=eventBlock.querySelector('.v2-empty');
     if(placeholder)placeholder.outerHTML=content;
     const badge=eventBlock.querySelector('.v2-count');
     if(badge)badge.textContent=String(events.length);
+  } else {
+    // Stitch V5 replaces the original v2 homepage. Always provide the actual
+    // family events in the newest homepage, without relying on removed selectors.
+    const card=document.createElement('section');
+    card.className='fp-panel fp-home-agenda';
+    card.innerHTML='<div class="fp-heading"><div><small class="fp-eyebrow">Aujourd’hui</small>'+
+      '<h2>Agenda familial</h2></div><button class="fp-main-btn" type="button" data-fp-action="family">Voir tout ›</button></div>'+content;
+    const hero=screen.querySelector('.st-hero')||screen.firstElementChild;
+    if(hero)hero.insertAdjacentElement('afterend',card);
+    else screen.append(card);
+    anchor=card;
   }
-  const due=core.collectUpcoming(st,TODAY(),14).filter(x=>x.kind!=='event').slice(0,5);
+  const due=core.collectUpcoming(st,today,14).filter(x=>x.kind!=='event').slice(0,5);
   if(due.length){
     const card=document.createElement('section');card.className='v2-panel fp-home-due';
     card.innerHTML='<div class="v2-panel-head"><h2>Échéances du foyer</h2>'+
       '<button type="button" data-fp-action="family">Voir tout ›</button></div>'+
       '<ul class="fp-due-list">'+summaryCard(due,5)+'</ul>';
-    (eventBlock||screen).insertAdjacentElement('afterend',card);
+    (anchor||screen.firstElementChild)?.insertAdjacentElement('afterend',card);
   }
 }
 function decorate(){
