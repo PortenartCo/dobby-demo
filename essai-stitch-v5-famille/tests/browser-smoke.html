@@ -19,7 +19,7 @@
     ticks++;
     try {
       const w=iframe.contentWindow, d=iframe.contentDocument;
-      if(!d || !w.go || !w.DobbyFamilyUI || !d.querySelector('#screen')) {
+      if(!d || !w.go || !w.DobbyFamilyUI || !w.DobbyFamilyAgenda || !d.querySelector('#screen')) {
         if(ticks<75)return;
         throw Error('Le chargeur familial n’a pas démarré');
       }
@@ -40,9 +40,26 @@
       if(!dialog || dialog.hidden || !dialog.textContent.includes('Connexion familiale')) {
         throw Error('La connexion familiale ne peut pas être ouverte');
       }
+      w.go('family');
+      const agenda=d.querySelector('#fpAgenda');
+      if(!agenda || !agenda.textContent.includes('Agenda du foyer')) {
+        throw Error('L’agenda du foyer n’est pas intégré dans Famille');
+      }
+      const addEvent=d.querySelector('#fpAgenda [data-fp-action="new"]');
+      if(!addEvent)throw Error('Le formulaire familial est inaccessible');
+      addEvent.click();
+      const editor=d.getElementById('fpDialogLayer');
+      if(!editor || editor.hidden || !editor.textContent.includes('membres du foyer')) {
+        throw Error('Le formulaire ne prévient pas du caractère partagé des événements');
+      }
+      d.querySelector('#fpDialogLayer [data-fp-action="close"]').click();
+      w.go('home');
+      if(!d.querySelector('#screen').textContent.includes('événement Dobby')) {
+        throw Error('Le résumé des événements Dobby est absent de l’accueil');
+      }
       completed=true;clearInterval(timer);
       const s=document.getElementById('status');
-      s.dataset.result='PASS';s.textContent='PASS - intégration V5, panier, navigation, données isolées';
+      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, confidentialité et stockage isolé';
     }catch(e){
       if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
       completed=true;clearInterval(timer);
