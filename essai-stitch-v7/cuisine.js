@@ -358,7 +358,7 @@ window.DobbyCuisine = (() => {
     for(const el of $$('main span'))if(!el.children.length && /Étape|PHASE|^III$|en cours/.test(el.dataset.stitchText||el.textContent)&&!el.classList.contains('material-symbols-outlined')){
       const original=el.dataset.stitchText||el.textContent;text(el,original==='PHASE'?'ÉTAPE':original==='III'?index+1:`Étape ${index+1} / ${recipe.steps.length}`);
     }
-    const hero=$('main > div:first-child > .relative');if(hero){const image=hero.querySelector('img');if(image){image.classList.add('cu-cook-scene');image.alt='Illustration Stitch du mode cuisine, cadrée pour masquer les textes fictifs incorporés';}for(const leaf of hero.querySelectorAll('span'))if(leaf.dataset.stitchText==='25 min • 4 parts')text(leaf,`${recipe.minutes} min · ${ui.servings||recipe.servings} portions`);}
+    const hero=$('main img')?.parentElement;if(hero){const image=hero.querySelector('img');if(image){image.classList.add('cu-cook-scene');image.alt='Illustration Stitch du mode cuisine, cadrée pour masquer les textes fictifs incorporés';}for(const leaf of hero.querySelectorAll('span'))if(leaf.dataset.stitchText==='25 min • 4 parts')text(leaf,`${recipe.minutes} min · ${ui.servings||recipe.servings} portions`);}
 
   }
   function renderTM5(data) {
