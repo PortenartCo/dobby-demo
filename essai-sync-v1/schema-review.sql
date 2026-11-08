@@ -1,5 +1,6 @@
 -- Dobby Sync V1 - isolated shopping-list pilot
--- REVIEW ONLY: not yet applied to any Supabase database.
+-- ALREADY EXECUTED by owner on 2026-11-08 against dobby-family-sync. DO NOT RE-RUN.
+-- Retained only for inspection and reconstruction in an empty database.
 -- Target: project dobby-family-sync in personal Free organization.
 -- Intended execution: once, with explicit target verification.
 -- No fixture family identifiers, real data or credentials in this file.
