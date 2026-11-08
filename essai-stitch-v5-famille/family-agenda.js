@@ -28,7 +28,7 @@ const htmlList=(arr,limit=10)=>arr.slice(0,limit).map(e=>
   '</div></li>').join('');
 const dueType=kind=>({
   event:'Événement',birthday:'Anniversaire',mission:'Mission',
-  contract:'Contrat',maintenance:'Entretien'
+  contract:'Contrat',maintenance:'Entretien',medical:'Rendez-vous médical'
 }[kind]||'Échéance');
 function summaryCard(rows,max=8){
   return rows.slice(0,max).map(entry=>{
