@@ -1,0 +1,114 @@
+[
+  {
+    "view": "house-1",
+    "source": "dobby_maison_quipements_du_logis_1",
+    "width": 320,
+    "sha256": "a5a7c725e3bb178d2978dba18fe412baa5ccfd6bc466ee80e1b10bf8f51f4a38",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "house",
+    "source": "dobby_maison_quipements_du_logis_2",
+    "width": 320,
+    "sha256": "aa4e2ba8fa33cdf2552a59c4485889cea9b4796cb6474643821aa2829a96f2c2",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "equipment-edit",
+    "source": "dobby_ajouter_ou_modifier_un_quipement",
+    "width": 320,
+    "sha256": "b42df07b8beb85e6549eca0b482126ace0731ff197e5f74601dec3f1e409a7f0",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "equipment",
+    "source": "dobby_fiche_d_taill_e_d_un_quipement",
+    "width": 320,
+    "sha256": "2fc2e7b42aed49c0fb2366b18f5d40eeca027f1e90bf1d95e3ff2bc56789bc81",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "maintenance",
+    "source": "dobby_historique_d_entretien_pi_ces_jointes",
+    "width": 320,
+    "sha256": "39a4d80f11d195362fff85f995c837f1e6f365beaf0ea1ed343fc87bb3ed09a5",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "house-backup",
+    "source": "dobby_g_rer_les_donn_es_des_quipements_export_restauration",
+    "width": 320,
+    "sha256": "2e55cd654e90d94f03c753fe12f0864f8ed39df0e8e68c1d977668dec965c1da",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "backup",
+    "source": "dobby_sauvegarde_et_restauration_compl_te",
+    "width": 320,
+    "sha256": "7c13f9ed03824c8ce2a596e529f3a34f842a05dd19fac68a29f7590f88f8525a",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "house-1",
+    "source": "dobby_maison_quipements_du_logis_1",
+    "width": 390,
+    "sha256": "a5a7c725e3bb178d2978dba18fe412baa5ccfd6bc466ee80e1b10bf8f51f4a38",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "house",
+    "source": "dobby_maison_quipements_du_logis_2",
+    "width": 390,
+    "sha256": "aa4e2ba8fa33cdf2552a59c4485889cea9b4796cb6474643821aa2829a96f2c2",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "equipment-edit",
+    "source": "dobby_ajouter_ou_modifier_un_quipement",
+    "width": 390,
+    "sha256": "b42df07b8beb85e6549eca0b482126ace0731ff197e5f74601dec3f1e409a7f0",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "equipment",
+    "source": "dobby_fiche_d_taill_e_d_un_quipement",
+    "width": 390,
+    "sha256": "2fc2e7b42aed49c0fb2366b18f5d40eeca027f1e90bf1d95e3ff2bc56789bc81",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "maintenance",
+    "source": "dobby_historique_d_entretien_pi_ces_jointes",
+    "width": 390,
+    "sha256": "39a4d80f11d195362fff85f995c837f1e6f365beaf0ea1ed343fc87bb3ed09a5",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "house-backup",
+    "source": "dobby_g_rer_les_donn_es_des_quipements_export_restauration",
+    "width": 390,
+    "sha256": "2e55cd654e90d94f03c753fe12f0864f8ed39df0e8e68c1d977668dec965c1da",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "backup",
+    "source": "dobby_sauvegarde_et_restauration_compl_te",
+    "width": 390,
+    "sha256": "7c13f9ed03824c8ce2a596e529f3a34f842a05dd19fac68a29f7590f88f8525a",
+    "overflow": [],
+    "status": "verified-partial"
+  }
+]

@@ -24,7 +24,7 @@ Profils Chromium éphémères, fixtures préfixées TEST ; aucun compte réel. R
 - **lists** : Listes natives : nom, éléments et coches. Catégories, attribution, échéances et renommage de liste non gérés.
 - **list-detail** : Listes natives : nom, éléments et coches. Catégories, attribution, échéances et renommage de liste non gérés.
 
-## États du client familial natif (API simulée)
+## États complémentaires de test
 
  - [list-connected-320.png](states/list-connected-320.png)
  - [list-connected-390.png](states/list-connected-390.png)

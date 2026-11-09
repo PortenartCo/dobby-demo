@@ -53,7 +53,7 @@ window.DobbyFamilyStitch=(()=>{
   const agenda=heading('La Gazette & Agenda Rituel')?.closest('section');if(agenda){const controls=agenda.querySelectorAll('button');controls.forEach((b,i)=>bind(b,i?'agenda':'event-new'));}
   const notes=heading('La Volière aux Messages')?.closest('section');if(notes)for(const b of notes.querySelectorAll('button'))bind(b,'memos');
   for(const b of $$('main button')){if(/Programmer un rituel|Ajouter un événement/.test(b.textContent)&&!b.dataset.faAction)bind(b,'event-new');if(b.dataset.dv7Route&&!b.dataset.faAction)bind(b,'legacy',{route:b.dataset.dv7Route});}
-  const links=heading('Archives & Accès Rapides')?.closest('section');if(links)links.append(button('health','Carnets de santé'),button('agenda','Agenda du foyer'),button('contacts','Contacts'),button('memos','Mémos'),button('lists','Listes familiales'));
+  const links=heading('Archives & Accès Rapides')?.closest('section');if(links)links.append(button('health','Carnets de santé'),button('agenda','Agenda du foyer'),button('contacts','Contacts'),button('memos','Mémos'),button('lists','Listes familiales'),button('house','Maison et équipements'),button('backup','Sauvegarde complète'));
  }
  function renderMembers(data){
   const list=$('#members-list'),sample=pristine.querySelector('#members-list .member-card').cloneNode(true),query=ui.query.toLocaleLowerCase('fr');
@@ -151,7 +151,7 @@ window.DobbyFamilyStitch=(()=>{
   if(view==='salon'){window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);
   shell(data);formContext=['member-edit','medical-edit'].includes(view)?availability(data):null;main.style.visibility='visible';document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);
  }
- async function open(view,values={},history=true){const requested=view;
+ async function open(view,values={},history=true){if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();const requested=view;
   if(!handles(view)&&view!=='salon')return false;busy=true;
   try{if(view==='member-edit'&&(values.mode==='new'||(!ui.person&&!values.person))){ui.memberNew=true;ui.person=null;ui.memberDraft ||= {name:'',birthdate:'',avatar:'👤'};}else if(view==='member-edit'&&values.person){ui.memberNew=false;ui.memberDraft=null;}if(values.person!==undefined&&values.person!==ui.person){ui.person=values.person||null;ui.memberDraft=null;ui.visitDraft=null;}
    if(values.record!==undefined){if((values.record||null)!==ui.record)ui.visitDraft=null;ui.record=values.record||null;}if(values.scope){const scope=values.scope==='shared'?'shared':'local';if(scope!==ui.scope)ui.visitDraft=null;ui.scope=scope;}
@@ -162,7 +162,7 @@ window.DobbyFamilyStitch=(()=>{
   }finally{busy=false;}
  }
  function memberDraft(){return{name:$('#member-firstname').value,birthdate:$('#member-birthdate').value,avatar:$('#fa-member-avatar').value};}
- async function act(action,el){
+ async function act(action,el){if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
   if(action==='dismiss'){$('#fa-notice').hidden=true;return;}
   if(handles(action)||action==='salon'){if(action==='member-edit'){ui.memberNew=false;ui.memberDraft=null;}return open(action,el.dataset);}
   if(action==='member-new'){ui.memberNew=true;ui.person=null;ui.memberDraft={name:'',birthdate:'',avatar:'👤'};await open('member-edit');return;}
@@ -177,7 +177,7 @@ window.DobbyFamilyStitch=(()=>{
   return extraAction(action,el);
  }
  async function refresh(){
-  if(!ready||busy||dialogDraft||document.querySelector('#rg-form'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
+  if(!ready||busy||dialogDraft||window.DobbyRegister?.busy||document.querySelector('#rg-form'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
   const form=['member-edit','medical-edit'].includes(ui.view);let focus;
   if(form){if(availability(data)===formContext)return;const field=document.activeElement;if(field?.matches('input,textarea,select'))focus={id:field.id,start:field.selectionStart,end:field.selectionEnd};if(ui.view==='member-edit')ui.memberDraft=memberDraft();else ui.visitDraft=visitDraft();}
   else if(document.activeElement?.matches('input,textarea,select'))return;

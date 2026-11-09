@@ -30,14 +30,14 @@
 - [x] Add and run failing browser path for source routes and actual native CRUD, reload, cancel deletion, empty/search, missing IDs.
 - [x] Derive six original templates/assets; bind source cards/forms, supported classifications, honest unsupported states; route root accesses to them.
 - [x] Run `register-family.cjs` at 320/390 and source/empty visual comparisons for lot 2B. Expected PASS; run common regression checks for shared shell changes.
-- [ ] Document six exact statuses/limits/proofs; commit, push, check targeted lot CI; checkpoint and continue.
+- [x] Document six exact statuses/limits/proofs; commit, push, check targeted lot CI; checkpoint and continue.
 
 ### Task 2: Lot 3 — house, equipment and backup
 **Files:** extend route config/generator, add `house-register.js`, `tests/register-house.cjs`; docs/evidence.
 **Interfaces:** Reuse Register shell and existing house/equipment/maintenance/backup validators/forms/actions; no direct persistent mutation.
-- [ ] Identify original house sources and native forms/validators; write/run failing equipment → detail → edit → log → history test and export/import preview/cancel safeguards.
-- [ ] Bind each source, preserve native file handling, expose safe preview/confirmation boundaries; partial where no native operation exists.
-- [ ] Run targeted house test plus 320/390 source/live/empty captures. Expected PASS, no destructive restore executed.
+- [x] Identify original house sources and native forms/validators; write/run failing equipment → detail → edit → log → history test and export/import preview/cancel safeguards.
+- [x] Bind each source, preserve native file handling, expose safe preview/confirmation boundaries; partial where no native operation exists.
+- [x] Run targeted house test plus 320/390 source/live/empty captures. Expected PASS, no destructive restore executed.
 - [ ] Document statuses/proofs/limits; commit, push, check lot CI; checkpoint and continue.
 
 ### Task 3: Lot 4 — documents, contracts and imports
