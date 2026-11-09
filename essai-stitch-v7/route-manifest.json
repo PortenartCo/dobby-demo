@@ -63,7 +63,12 @@
       "source": "design/stitch-53/dobby_agenda_almanach_du_foyer/code.html",
       "hasScreenshot": false,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#agenda",
+      "template": "templates/family/agenda.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_ajouter_ou_modifier_un_document",
@@ -77,7 +82,12 @@
       "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_membre/code.html",
       "hasScreenshot": true,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#member-edit",
+      "template": "templates/family/member-edit.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_ajouter_ou_modifier_un_quipement",
@@ -178,14 +188,24 @@
       "source": "design/stitch-53/dobby_carnet_de_sant_familial/code.html",
       "hasScreenshot": false,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#health",
+      "template": "templates/family/health.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_carnet_de_sant_individuel",
       "source": "design/stitch-53/dobby_carnet_de_sant_individuel/code.html",
       "hasScreenshot": false,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#health-person",
+      "template": "templates/family/health-person.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_choisir_un_repas_nombre_de_convives",
@@ -274,7 +294,12 @@
       "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_rendez_vous_m_dical/code.html",
       "hasScreenshot": true,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#medical-edit",
+      "template": "templates/family/medical-edit.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_d_clarer_ou_renouveler_un_contrat",
@@ -403,7 +428,12 @@
       "source": "design/stitch-53/dobby_historique_contacts_m_dicaux/code.html",
       "hasScreenshot": false,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#health-history",
+      "template": "templates/family/health-history.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_historique_des_listes_de_courses",
@@ -598,7 +628,12 @@
       "source": "design/stitch-53/dobby_membres_de_la_maisonn_e/code.html",
       "hasScreenshot": true,
       "linked": false,
-      "mode": "source-only"
+      "mode": "source-only",
+      "domain": "family-2a",
+      "route": "famille.html#members",
+      "template": "templates/family/members.html",
+      "integration": "prepared",
+      "unsupported": []
     },
     {
       "id": "dobby_menu_g_n_ral_de_tous_les_modules",
@@ -738,5 +773,10 @@
   "cuisine": {
     "sources": 13,
     "integrated": 13
+  },
+  "family2a": {
+    "sources": 7,
+    "functional": 0,
+    "partial": 0
   }
 }

@@ -1,0 +1,9 @@
+[
+ {"view":"members","id":"dobby_membres_de_la_maisonn_e","status":"prepared"},
+ {"view":"member-edit","id":"dobby_ajouter_ou_modifier_un_membre","status":"prepared"},
+ {"view":"agenda","id":"dobby_agenda_almanach_du_foyer","status":"prepared"},
+ {"view":"medical-edit","id":"dobby_cr_er_ou_modifier_un_rendez_vous_m_dical","status":"prepared"},
+ {"view":"health","id":"dobby_carnet_de_sant_familial","status":"prepared"},
+ {"view":"health-person","id":"dobby_carnet_de_sant_individuel","status":"prepared"},
+ {"view":"health-history","id":"dobby_historique_contacts_m_dicaux","status":"prepared"}
+]
