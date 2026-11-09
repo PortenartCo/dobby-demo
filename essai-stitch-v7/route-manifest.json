@@ -1,7 +1,7 @@
 {
   "screenSources": 53,
   "templatesUsedInActiveUI": 23,
-  "activeFunctionalScreens": 23,
+  "activeFunctionalScreens": 18,
   "roots": [
     {
       "screen": "taverne",
@@ -75,6 +75,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],
@@ -106,7 +107,7 @@
       "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_membre/code.html",
       "hasScreenshot": true,
       "linked": true,
-      "mode": "functional-adapter",
+      "mode": "partial-adapter",
       "domain": "family-2a",
       "route": "famille.html#member-edit",
       "template": "templates/family/member-edit.html",
@@ -118,6 +119,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],
@@ -236,7 +238,7 @@
       "source": "design/stitch-53/dobby_carnet_de_sant_familial/code.html",
       "hasScreenshot": false,
       "linked": true,
-      "mode": "functional-adapter",
+      "mode": "partial-adapter",
       "domain": "family-2a",
       "route": "famille.html#health",
       "template": "templates/family/health.html",
@@ -248,6 +250,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],
@@ -272,7 +275,7 @@
       "source": "design/stitch-53/dobby_carnet_de_sant_individuel/code.html",
       "hasScreenshot": false,
       "linked": true,
-      "mode": "functional-adapter",
+      "mode": "partial-adapter",
       "domain": "family-2a",
       "route": "famille.html#health-person",
       "template": "templates/family/health-person.html",
@@ -284,6 +287,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],
@@ -390,7 +394,7 @@
       "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_rendez_vous_m_dical/code.html",
       "hasScreenshot": true,
       "linked": true,
-      "mode": "functional-adapter",
+      "mode": "partial-adapter",
       "domain": "family-2a",
       "route": "famille.html#medical-edit",
       "template": "templates/family/medical-edit.html",
@@ -403,6 +407,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],
@@ -549,7 +554,7 @@
       "source": "design/stitch-53/dobby_historique_contacts_m_dicaux/code.html",
       "hasScreenshot": false,
       "linked": true,
-      "mode": "functional-adapter",
+      "mode": "partial-adapter",
       "domain": "family-2a",
       "route": "famille.html#health-history",
       "template": "templates/family/health-history.html",
@@ -562,6 +567,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],
@@ -786,6 +792,7 @@
         "tests": [
           "tests/family.cjs",
           "tests/family-edge.cjs",
+          "tests/family-review.cjs",
           "tests/family-shared.cjs",
           "tests/family-visual.cjs"
         ],

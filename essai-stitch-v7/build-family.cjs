@@ -16,10 +16,10 @@ fs.writeFileSync(path.join(target,'provenance.json'),JSON.stringify(provenance,n
 const manifestPath=path.join(__dirname,'route-manifest.json'),manifest=JSON.parse(fs.readFileSync(manifestPath));
 for(const route of routes){
  const active=route.status!=='prepared',record=manifest.screens.find(x=>x.id===route.id);
- Object.assign(record,{domain:'family-2a',route:'famille.html#'+route.view,template:'templates/family/'+route.view+'.html',linked:active,mode:active?'functional-adapter':'source-only',integration:route.status,unsupported:route.unsupported||[]});
- if(active)record.verification={tests:['tests/family.cjs','tests/family-edge.cjs','tests/family-shared.cjs','tests/family-visual.cjs'],widths:[320,390],captures:[320,390].map(width=>({reference:`docs/dobby-v7/evidence/family-2a/before/${route.view}-${width}.png`,integrated:`docs/dobby-v7/evidence/family-2a/after/${route.view}-${width}.png`}))};
+ Object.assign(record,{domain:'family-2a',route:'famille.html#'+route.view,template:'templates/family/'+route.view+'.html',linked:active,mode:active?(route.status==='verified-partial'?'partial-adapter':'functional-adapter'):'source-only',integration:route.status,unsupported:route.unsupported||[]});
+ if(active)record.verification={tests:['tests/family.cjs','tests/family-edge.cjs','tests/family-review.cjs','tests/family-shared.cjs','tests/family-visual.cjs'],widths:[320,390],captures:[320,390].map(width=>({reference:`docs/dobby-v7/evidence/family-2a/before/${route.view}-${width}.png`,integrated:`docs/dobby-v7/evidence/family-2a/after/${route.view}-${width}.png`}))};
 }
 manifest.family2a={sources:routes.length,functional:routes.filter(x=>x.status==='verified-functional').length,partial:routes.filter(x=>x.status==='verified-partial').length};
 manifest.partialSources=manifest.screens.filter(x=>x.integration==='verified-partial').length;manifest.sourceOnly=manifest.screens.filter(x=>!x.linked).length;
-manifest.templatesUsedInActiveUI=manifest.screens.filter(x=>x.linked).length;manifest.activeFunctionalScreens=manifest.templatesUsedInActiveUI;
+manifest.templatesUsedInActiveUI=manifest.screens.filter(x=>x.linked).length;manifest.activeFunctionalScreens=manifest.templatesUsedInActiveUI-manifest.partialSources;
 fs.writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');console.log('FAMILY_TEMPLATES='+routes.length);

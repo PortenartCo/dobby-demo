@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "test": "node smoke.cjs && node cuisine.cjs && node cuisine-family.cjs && node cuisine-visual.cjs && npm run test:family",
-    "test:family": "node family.cjs && node family-edge.cjs && node family-shared.cjs && node family-visual.cjs"
+    "test:family": "node family.cjs && node family-edge.cjs && node family-review.cjs && node family-shared.cjs && node family-visual.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
