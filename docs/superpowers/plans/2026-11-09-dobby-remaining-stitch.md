@@ -38,7 +38,7 @@
 - [x] Identify original house sources and native forms/validators; write/run failing equipment → detail → edit → log → history test and export/import preview/cancel safeguards.
 - [x] Bind each source, preserve native file handling, expose safe preview/confirmation boundaries; partial where no native operation exists.
 - [x] Run targeted house test plus 320/390 source/live/empty captures. Expected PASS, no destructive restore executed.
-- [ ] Document statuses/proofs/limits; commit, push, check lot CI; checkpoint and continue.
+- [x] Document statuses/proofs/limits; commit, push, check lot CI; checkpoint and continue.
 
 ### Task 3: Lot 4 — documents, contracts and imports
 **Files:** add `documents-register.js`, `tests/register-documents.cjs`; extend routes, docs/evidence.

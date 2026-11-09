@@ -53,7 +53,7 @@ window.DobbyFamilyStitch=(()=>{
   const agenda=heading('La Gazette & Agenda Rituel')?.closest('section');if(agenda){const controls=agenda.querySelectorAll('button');controls.forEach((b,i)=>bind(b,i?'agenda':'event-new'));}
   const notes=heading('La Volière aux Messages')?.closest('section');if(notes)for(const b of notes.querySelectorAll('button'))bind(b,'memos');
   for(const b of $$('main button')){if(/Programmer un rituel|Ajouter un événement/.test(b.textContent)&&!b.dataset.faAction)bind(b,'event-new');if(b.dataset.dv7Route&&!b.dataset.faAction)bind(b,'legacy',{route:b.dataset.dv7Route});}
-  const links=heading('Archives & Accès Rapides')?.closest('section');if(links)links.append(button('health','Carnets de santé'),button('agenda','Agenda du foyer'),button('contacts','Contacts'),button('memos','Mémos'),button('lists','Listes familiales'),button('house','Maison et équipements'),button('backup','Sauvegarde complète'));
+  const links=heading('Archives & Accès Rapides')?.closest('section');if(links)links.append(button('health','Carnets de santé'),button('agenda','Agenda du foyer'),button('contacts','Contacts'),button('memos','Mémos'),button('lists','Listes familiales'),button('house','Maison et équipements'),button('backup','Sauvegarde complète'),button('documents','Documents'),button('contracts','Contrats & Assurances'),button('import-file','Importer un fichier'));
  }
  function renderMembers(data){
   const list=$('#members-list'),sample=pristine.querySelector('#members-list .member-card').cloneNode(true),query=ui.query.toLocaleLowerCase('fr');

@@ -1,0 +1,178 @@
+[
+  {
+    "view": "document-edit",
+    "source": "dobby_ajouter_ou_modifier_un_document",
+    "width": 320,
+    "sha256": "be543031ecc9915a0453f7b2ad967c1de914a4fa8ffc3eae98e91c2d5aaf501b",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "documents-1",
+    "source": "dobby_archives_biblioth_que_documentaire_1",
+    "width": 320,
+    "sha256": "084ff3c43bb348e234808c7c09e0dfeb7b0370a6f423896a4b05e8c440154e5d",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "documents",
+    "source": "dobby_archives_biblioth_que_documentaire_2",
+    "width": 320,
+    "sha256": "b7748588250e0fc24cb0849056a1c08e3ce2cc74b68742b12ec1f240220b980b",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "contracts-1",
+    "source": "dobby_contrats_assurances_ch_ances_du_foyer_1",
+    "width": 320,
+    "sha256": "8679c9e8eff44d35fc7d9bda0376ca067df3f8626a3695154a278b828c8b93a9",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contracts",
+    "source": "dobby_contrats_assurances_ch_ances_du_foyer_2",
+    "width": 320,
+    "sha256": "dd7481087dde379b06678e7920ab5c030cdce5f279941a0cb6212ba4e39ddd6e",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contract-edit",
+    "source": "dobby_d_clarer_ou_renouveler_un_contrat",
+    "width": 320,
+    "sha256": "5e73677ad201f588d547bb9e030a41baa79ade5589322d81919ef8ccf635523c",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "document",
+    "source": "dobby_fiche_document_aper_u",
+    "width": 320,
+    "sha256": "d43fb7aa016b0d7978fba7cffc890a57ebb282a15253e07ae9bd9451ade9498e",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contract-1",
+    "source": "dobby_fiche_d_taill_e_d_un_contrat_1",
+    "width": 320,
+    "sha256": "a0b05960cbd41d681a2420020dece1a4c05649835bd73f3e83525644bc3e5303",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contract",
+    "source": "dobby_fiche_d_taill_e_d_un_contrat_2",
+    "width": 320,
+    "sha256": "9b06ffbfba48da075e8f97e00f3c743d0008f46014089b3fd43b534158cb36ca",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "import-review",
+    "source": "dobby_import_intelligent_analyse_validation",
+    "width": 320,
+    "sha256": "0e47c72c213b1924a73e7bc70a81e3ec70d2479bad1fd1a15cb6ce6d6ba0fca6",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "import-file",
+    "source": "dobby_import_intelligent_s_lection_d_un_fichier",
+    "width": 320,
+    "sha256": "e72587741325371b0bc7c8676912b68d58f7c05f5548ffd736d3db42416372bd",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "document-edit",
+    "source": "dobby_ajouter_ou_modifier_un_document",
+    "width": 390,
+    "sha256": "be543031ecc9915a0453f7b2ad967c1de914a4fa8ffc3eae98e91c2d5aaf501b",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "documents-1",
+    "source": "dobby_archives_biblioth_que_documentaire_1",
+    "width": 390,
+    "sha256": "084ff3c43bb348e234808c7c09e0dfeb7b0370a6f423896a4b05e8c440154e5d",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "documents",
+    "source": "dobby_archives_biblioth_que_documentaire_2",
+    "width": 390,
+    "sha256": "b7748588250e0fc24cb0849056a1c08e3ce2cc74b68742b12ec1f240220b980b",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "contracts-1",
+    "source": "dobby_contrats_assurances_ch_ances_du_foyer_1",
+    "width": 390,
+    "sha256": "8679c9e8eff44d35fc7d9bda0376ca067df3f8626a3695154a278b828c8b93a9",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contracts",
+    "source": "dobby_contrats_assurances_ch_ances_du_foyer_2",
+    "width": 390,
+    "sha256": "dd7481087dde379b06678e7920ab5c030cdce5f279941a0cb6212ba4e39ddd6e",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contract-edit",
+    "source": "dobby_d_clarer_ou_renouveler_un_contrat",
+    "width": 390,
+    "sha256": "5e73677ad201f588d547bb9e030a41baa79ade5589322d81919ef8ccf635523c",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "document",
+    "source": "dobby_fiche_document_aper_u",
+    "width": 390,
+    "sha256": "d43fb7aa016b0d7978fba7cffc890a57ebb282a15253e07ae9bd9451ade9498e",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contract-1",
+    "source": "dobby_fiche_d_taill_e_d_un_contrat_1",
+    "width": 390,
+    "sha256": "a0b05960cbd41d681a2420020dece1a4c05649835bd73f3e83525644bc3e5303",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contract",
+    "source": "dobby_fiche_d_taill_e_d_un_contrat_2",
+    "width": 390,
+    "sha256": "9b06ffbfba48da075e8f97e00f3c743d0008f46014089b3fd43b534158cb36ca",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "import-review",
+    "source": "dobby_import_intelligent_analyse_validation",
+    "width": 390,
+    "sha256": "0e47c72c213b1924a73e7bc70a81e3ec70d2479bad1fd1a15cb6ce6d6ba0fca6",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "import-file",
+    "source": "dobby_import_intelligent_s_lection_d_un_fichier",
+    "width": 390,
+    "sha256": "e72587741325371b0bc7c8676912b68d58f7c05f5548ffd736d3db42416372bd",
+    "overflow": [],
+    "status": "verified-partial"
+  }
+]

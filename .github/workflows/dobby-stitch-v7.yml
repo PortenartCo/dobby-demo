@@ -20,7 +20,7 @@ permissions:
 jobs:
   source-backed-browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -40,6 +40,7 @@ jobs:
           node --check essai-stitch-v7/tests/cuisine-family.cjs
           node --check essai-stitch-v7/build-family.cjs
           node --check essai-stitch-v7/family-engine.js
+          node --check essai-stitch-v7/import-runtime.js
           node --check essai-stitch-v7/family.js
           node --check essai-stitch-v7/tests/family.cjs
           node --check essai-stitch-v7/tests/family-edge.cjs

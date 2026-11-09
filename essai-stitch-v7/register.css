@@ -3,3 +3,4 @@ body.fa-active .rg-input,body.fa-active .rg-native-fields :is(input,select,texta
 body[data-register-lot] main .overflow-x-auto{overflow-x:visible!important;flex-wrap:wrap}body[data-register-lot] main .whitespace-nowrap{white-space:normal}body[data-register-lot] main :is(section,article,form,div){min-width:0}
 
 body[data-register-busy] :is(main,header){pointer-events:none;cursor:wait}
+body[data-register-lot="4"] main .rg-document-card{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:16px;background:#301d17;border-radius:12px;border:1px solid #d49b4240}body[data-register-lot="4"] main .rg-source-panel{overflow-wrap:anywhere}body[data-register-lot="4"] main :is(.rg-source-panel label,.rg-source-panel h3){display:block;margin:12px 0 8px}body[data-register-lot="4"] main form>div{margin:18px 0;padding:16px}body[data-register-lot="4"] main #rg-form>div{padding:0}body[data-register-lot="4"] main .rg-input{margin-bottom:12px}

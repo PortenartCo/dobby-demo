@@ -1,7 +1,7 @@
 {
   "screenSources": 53,
-  "templatesUsedInActiveUI": 36,
-  "activeFunctionalScreens": 21,
+  "templatesUsedInActiveUI": 47,
+  "activeFunctionalScreens": 23,
   "roots": [
     {
       "screen": "taverne",
@@ -99,8 +99,35 @@
       "id": "dobby_ajouter_ou_modifier_un_document",
       "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_document/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#document-edit",
+      "template": "templates/remaining/document-edit.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_ajouter_ou_modifier_un_membre",
@@ -243,15 +270,69 @@
       "id": "dobby_archives_biblioth_que_documentaire_1",
       "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_1/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-4",
+      "integration": "verified-functional",
+      "route": "famille.html#documents-1",
+      "template": "templates/remaining/documents-1.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-1-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_archives_biblioth_que_documentaire_2",
       "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_2/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-4",
+      "integration": "verified-functional",
+      "route": "famille.html#documents",
+      "template": "templates/remaining/documents.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_biblioth_que_des_m_mos_notes_familiales",
@@ -398,15 +479,69 @@
       "id": "dobby_contrats_assurances_ch_ances_du_foyer_1",
       "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_1/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contracts-1",
+      "template": "templates/remaining/contracts-1.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-1-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_contrats_assurances_ch_ances_du_foyer_2",
       "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_2/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contracts",
+      "template": "templates/remaining/contracts.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_conversation_avec_dobby_1",
@@ -539,8 +674,35 @@
       "id": "dobby_d_clarer_ou_renouveler_un_contrat",
       "source": "design/stitch-53/dobby_d_clarer_ou_renouveler_un_contrat/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contract-edit",
+      "template": "templates/remaining/contract-edit.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_d_tail_d_une_liste_familiale",
@@ -580,8 +742,35 @@
       "id": "dobby_fiche_document_aper_u",
       "source": "design/stitch-53/dobby_fiche_document_aper_u/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#document",
+      "template": "templates/remaining/document.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_fiche_d_taill_e_d_une_recette",
@@ -620,15 +809,69 @@
       "id": "dobby_fiche_d_taill_e_d_un_contrat_1",
       "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_1/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contract-1",
+      "template": "templates/remaining/contract-1.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-1-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_fiche_d_taill_e_d_un_contrat_2",
       "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_2/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contract",
+      "template": "templates/remaining/contract.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_fiche_d_taill_e_d_un_quipement",
@@ -880,15 +1123,69 @@
       "id": "dobby_import_intelligent_analyse_validation",
       "source": "design/stitch-53/dobby_import_intelligent_analyse_validation/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#import-review",
+      "template": "templates/remaining/import-review.html",
+      "unsupported": [
+        "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-review-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-review-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-review-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-review-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_import_intelligent_s_lection_d_un_fichier",
       "source": "design/stitch-53/dobby_import_intelligent_s_lection_d_un_fichier/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#import-file",
+      "template": "templates/remaining/import-file.html",
+      "unsupported": [
+        "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-file-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-file-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-file-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-file-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques",
@@ -1307,13 +1604,18 @@
     "functional": 2,
     "partial": 5
   },
-  "partialSources": 15,
-  "sourceOnly": 17,
+  "partialSources": 24,
+  "sourceOnly": 6,
   "sequentialLots": {
     "3": {
       "sources": 7,
       "functional": 2,
       "partial": 5
+    },
+    "4": {
+      "sources": 11,
+      "functional": 2,
+      "partial": 9
     },
     "2b": {
       "sources": 6,

@@ -115,5 +115,104 @@
     "unsupported": [
       "Format natif JSON dobby-complete-backup, pas .dobbyarchive. Archive non chiffrée, restauration locale avec confirmation native ; exécution destructive exclue des tests."
     ]
+  },
+  {
+    "view": "document-edit",
+    "id": "dobby_ajouter_ou_modifier_un_document",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+    ]
+  },
+  {
+    "view": "documents-1",
+    "id": "dobby_archives_biblioth_que_documentaire_1",
+    "lot": "4",
+    "status": "verified-functional",
+    "unsupported": [
+      "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+    ]
+  },
+  {
+    "view": "documents",
+    "id": "dobby_archives_biblioth_que_documentaire_2",
+    "lot": "4",
+    "status": "verified-functional",
+    "unsupported": [
+      "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+    ]
+  },
+  {
+    "view": "contracts-1",
+    "id": "dobby_contrats_assurances_ch_ances_du_foyer_1",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+    ]
+  },
+  {
+    "view": "contracts",
+    "id": "dobby_contrats_assurances_ch_ances_du_foyer_2",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+    ]
+  },
+  {
+    "view": "contract-edit",
+    "id": "dobby_d_clarer_ou_renouveler_un_contrat",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+    ]
+  },
+  {
+    "view": "document",
+    "id": "dobby_fiche_document_aper_u",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+    ]
+  },
+  {
+    "view": "contract-1",
+    "id": "dobby_fiche_d_taill_e_d_un_contrat_1",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+    ]
+  },
+  {
+    "view": "contract",
+    "id": "dobby_fiche_d_taill_e_d_un_contrat_2",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+    ]
+  },
+  {
+    "view": "import-review",
+    "id": "dobby_import_intelligent_analyse_validation",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
+    ]
+  },
+  {
+    "view": "import-file",
+    "id": "dobby_import_intelligent_s_lection_d_un_fichier",
+    "lot": "4",
+    "status": "verified-partial",
+    "unsupported": [
+      "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
+    ]
   }
 ]

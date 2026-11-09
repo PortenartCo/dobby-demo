@@ -39,4 +39,14 @@ Les formulaires de remplacement sont bloqués si des champs supplémentaires ou 
 
 Les régressions communes et 2B sont justifiées par le verrou du shell partagé. L’exécution réelle de restauration complète reste volontairement non validée ; ce statut partiel est conservé.
 
-Commit/CI finaux : à inscrire dans la PR après push et reporter au checkpoint suivant. Prochain lot : **4 — Documents, contrats, assurances et imports**.
+Commit final lot 3 : `d3e1287c50e7191917f7e6c3293cba5e46baea55` (avec `41bb3e5`). CI [push — succès](https://github.com/PortenartCo/dobby-demo/actions/runs/42598223037), [PR — succès](https://github.com/PortenartCo/dobby-demo/actions/runs/42598229512). Prochain lot : **4 — Documents, contrats, assurances et imports**.
+
+## Lot 4 — documents, contrats, assurances et imports
+
+Onze sources, deux fonctionnelles et neuf partielles : 47 actives = 23 fonctionnelles + 24 partielles ; six sources transversales restantes. [Comparaisons, états et limites](evidence/lot-4/README.md). Les contrats restent des fiches documentaires natives. Fichiers locaux/partagés distingués ; un seul sélecteur actif, destination explicite, mêmes validations et transferts. Import natif texte/PDF/OCR avec correction et confirmation, doublons refusés ; pas d’IA ni de garantie/prime/rappel inventés.
+
+Tests ciblés Documents, stockage/partage simulé, extraction réelle PDF/OCR et comparaisons des onze sources à 320/390 réussis. Les régressions communes sont justifiées par les nouveaux scripts et accès du shell. Les 54 tests natifs passent. Les confirmations de fusion JSON sont annulées ; les suppressions concernent exclusivement des fixtures. Les dépendances clientes existantes sont locales, avec empreintes et licences. Aucun compte réel, aucune modification du moteur V5, des originaux ou SQL/Supabase.
+
+Corrections observées : boucle de rafraîchissement import, cartes DIV de démonstration résiduelles, colonnes de carte trop étroites, verrou inutile sur téléchargement en lecture seule. Les défauts sont corrigés et les tests ciblés repassent. Les écarts de composition et illustrations indisponibles sont décrits dans INTEGRATION.md et la galerie.
+
+Commit/CI du lot 4 : à reporter après push du checkpoint. Prochain lot si CI réussie : **5 — Missions et outils transversaux**.
