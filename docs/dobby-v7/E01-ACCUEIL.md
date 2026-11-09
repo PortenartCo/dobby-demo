@@ -129,3 +129,7 @@ Micro-correction limitée à `home.js` : un conteneur Stitch commun englobe le t
 ## E01.3b — Cadre Gazette des Curiosités
 
 Harmonisation visuelle de la Gazette avec Missions et Festin : son en-tête source (titre, date) et son contenu source (état vide ou événements) sont regroupés dans une carte Stitch unique, avec les mêmes classes de fond, bordure, rayon, ombre et espacements que les deux autres sections. Les lignes d'événements, leurs identifiants, leur chronologie et les liens vers l'Agenda restent inchangés. Aucun contenu fictif, aucune modification de données ni de stockage. Les assertions E01 vérifient la carte en états vide et rempli aux deux largeurs.
+
+## Extension commune E02
+
+E02 réutilise les barres E01 et leurs préférences ; le bouton de l'accueil rejoint le chat désormais opérationnel. Le composant commun étend aussi l'ambiance dorée au chat, en respectant OFF et les mouvements réduits ; les autres destinations ne reçoivent pas cette nouvelle ambiance. Son OFF interrompt les réponses vocales E02. Les comportements d'E01 sont vérifiés par sa régression existante. Voir [le contrat E02](E02-PARLER-A-DOBBY.md).

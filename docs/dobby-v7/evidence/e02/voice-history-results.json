@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "browser": "Chromium",
+  "speech": "simulated API boundary, not real iPhone",
+  "storage": "real native IndexedDB meta; two simulated authenticated identities in same household",
+  "retainedMoreThan24": true,
+  "authorDeletion": true,
+  "anonymousNotAttributed": true,
+  "speechCases": [
+    "interim",
+    "final",
+    "duplicate",
+    "abort",
+    "stop",
+    "denied",
+    "silence",
+    "sound off/on",
+    "replay",
+    "interrupt"
+  ],
+  "realDevice": false
+}

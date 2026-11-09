@@ -139,3 +139,9 @@ Deux contrôles supplémentaires vérifient la saisie réelle au clavier dans la
 Le bilan fonctionnel reste **53 sources actives, 24 fonctionnelles et 29 partielles**. [La CI de la PR #3](https://github.com/PortenartCo/dobby-demo/pull/3/checks) et son bilan de livraison donnent le SHA exact et le résultat général final. La branche et la PR restent ouvertes ; aucune fusion ou mise en production n’est autorisée par cette mission.
 
 Les mentions de confidentialité Contacts/Mémos/Listes sont liées aux règles du module : les coordonnées, notes et listes peuvent être synchronisées avec le foyer quand Famille est activé ; les mémos restent locaux. Aucune promesse source de stockage Contacts exclusivement local, de certification ou de chiffrement n’est conservée. La neutralisation intervient avant les valeurs du foyer, qui restent intactes.
+
+## E02 — Parler à Dobby
+
+[Contrat et point de contrôle de l'historique individuel](E02-PARLER-A-DOBBY.md). Le parcours principal `famille.html#chat` conserve les véritables compositions Stitch 1 avec hero compact, bulles et confirmation, header/navigation E01 et saisie fixe. Commandes déterministes raccordées aux lectures et writers natifs ; aucune IA payante ou réponse factuelle inventée. Reconnaissance/synthèse selon les API et voix effectivement disponibles.
+
+Historique local par identité connectée dans le magasin natif ; sans identité, fil temporaire. Ancien historique sans auteur conservé et non réattribué. Synchronisation individuelle distante **bloquée**, sans table ni migration ajoutée. Les deux sources chat restent déclarées partielles, notamment pour cette synchronisation et la validation Safari iOS réelle. Le manifeste expose le contrat E02 et ses preuves sans modifier les autres intégrations.
