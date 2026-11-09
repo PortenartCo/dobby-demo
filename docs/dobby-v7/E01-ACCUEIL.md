@@ -80,3 +80,14 @@ Vérifications ciblées :
 [Comparaisons E01.1 : aujourd’hui, J+6, retour, repas vide, bandeaux accueil/autre section](evidence/e01-1/README.md). Les captures avant proviennent du runtime `e6be2f8`, prises avant modification. Les captures E01 historiques restent intactes. Les résultats CI du SHA livré sont reportés dans la PR #3 ; les tests E01.1 rejoignent le même contrôle automatique existant.
 
 Aucun écart E01.1 restant identifié dans les vérifications ciblées. Les écarts de source décrits pour E01 restent inchangés. Arrêt après E01.1 : aucune fusion, publication ou migration.
+
+
+## E01.2 — Conteneur du compte et effets visuels
+
+Correction ciblée de deux défauts observés sur l'essai E01.1 :
+- Le panneau natif « Compte et foyer » et son iframe sont désormais limités à la largeur 480 px et centrés dans le même cadre que les pages Stitch, entre les deux barres permanentes. Il reste une vue native, faute de maquette Stitch du profil.
+- Les effets visuels sont désactivés par défaut pour un nouveau profil ; toute préférence déjà enregistrée est conservée. L'étoile active le halo visuel persistant et un bref effet d'onde + étincelles provenant du CSS original Stitch. Elle ne joue aucun son et ne déclenche aucune vibration ; le bouton son reste indépendant.
+- Si l'appareil demande une réduction des animations, les particules animées sont évitées mais l'état activé reste visible sur le bouton.
+- Aucune modification des sources Stitch, des données ni de la navigation principale.
+
+Vérifications : tests E01 à 390 et 1440 px sur la géométrie du compte, le fonctionnement des cinq onglets, l'indépendance des préférences, la persistance, les particules avec animation autorisée et leur absence lorsque le système réduit les mouvements. Toute recette en conditions réelles reste à confirmer par l'utilisateur.
