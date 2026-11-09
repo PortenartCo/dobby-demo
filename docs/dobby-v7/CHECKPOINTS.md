@@ -50,3 +50,5 @@ Tests ciblés Documents, stockage/partage simulé, extraction réelle PDF/OCR et
 Corrections observées : boucle de rafraîchissement import, cartes DIV de démonstration résiduelles, colonnes de carte trop étroites, verrou inutile sur téléchargement en lecture seule. Les défauts sont corrigés et les tests ciblés repassent. Les écarts de composition et illustrations indisponibles sont décrits dans INTEGRATION.md et la galerie.
 
 Commit/CI du lot 4 : à reporter après push du checkpoint. Prochain lot si CI réussie : **5 — Missions et outils transversaux**.
+
+Complément lot 4 : les trois fiches détaillées conservent maintenant leurs vrais blocs héros/résumé/aperçu/registre/notes, y compris les variantes composées de DIV. Le test de composition a d’abord échoué puis passé. Un test de transfert sur deux fiches a détecté une référence obsolète du sélecteur temporaire partagé ; son destinataire est désormais actualisé à chaque envoi. Les deux objets restent distincts et la destination revient au local lors d’un changement de fiche.
