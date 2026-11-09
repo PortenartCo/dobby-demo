@@ -14,7 +14,7 @@ function temporary(node,duration){
  document.body.append(node);transients.set(node,setTimeout(()=>{node.remove();transients.delete(node);},duration));
 }
 function syncAmbience(effects=lastEffects){
- lastEffects=!!effects;const home=document.body.dataset.dv7Screen==='traverse',reduced=reducedMotion.matches;
+ lastEffects=!!effects;const home=document.body.dataset.dv7Screen==='traverse'||['chat','chat-2'].includes(document.body.dataset.familyView),reduced=reducedMotion.matches;
  const paused=document.hidden||pageAway||!document.getElementById('dv7-panel')?.hidden||document.documentElement.classList.contains('dv7-loading');
  if(!effects||reduced){clearTransient();}
  if(!home||!effects||reduced){ambientLayer?.remove();ambientLayer=null;ambientScene?.classList.remove('e013-scene');ambientScene=null;document.body.classList.remove('e013-paused');if(home)document.body.dataset.e013State=!effects?'off':'reduced';return;}
@@ -36,10 +36,11 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTransi
 window.addEventListener('pagehide',()=>{pageAway=true;clearTransient();syncAmbience();});
 const destinations=[['Traverse','explore','./traverse.html'],['Missions','history_edu','./missions.html'],['Taverne','skillet','./index.html'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
 const preferences=()=>E.evaluate('return {effects:false,sound:false,...st.stitchPreferences};');
-function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);}
+function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}
 function sectionTitle(){
  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
  const heading=document.querySelector('body > main h1')?.cloneNode(true);for(const icon of heading?.querySelectorAll('.material-symbols-outlined,[aria-hidden="true"]')||[])icon.remove();
+ if(['chat','chat-2'].includes(document.body.dataset.familyView))return 'Parler à Dobby';
  const name=(heading?.textContent||document.title).replace(/\s+/g,' ').trim();return document.body.dataset.dv7Screen==='traverse'?name.replace(/^Le /,''):name;
 }
 function mount(){if(!template)return;const current=document.querySelector('body > header');if(current){

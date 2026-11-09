@@ -233,7 +233,7 @@
     "lot": "5",
     "status": "verified-partial",
     "unsupported": [
-      "Commandes textuelles natives limitées et historique local. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+      "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
     ]
   },
   {
@@ -242,7 +242,7 @@
     "lot": "5",
     "status": "verified-partial",
     "unsupported": [
-      "Même moteur natif de commandes et historique. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+      "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
     ]
   },
   {

@@ -554,7 +554,7 @@
       "route": "famille.html#chat",
       "template": "templates/remaining/chat.html",
       "unsupported": [
-        "Commandes textuelles natives limitées et historique local. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+        "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
       ],
       "verification": {
         "tests": [
@@ -574,7 +574,27 @@
             "reference": "docs/dobby-v7/evidence/lot-5/before/chat-390.png",
             "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-390.png"
           }
-        ]
+        ],
+        "e02": {
+          "mission": "E02",
+          "document": "docs/dobby-v7/E02-PARLER-A-DOBBY.md",
+          "primarySource": "dobby_conversation_avec_dobby_1",
+          "route": "famille.html#chat",
+          "tests": [
+            "tests/e02.cjs",
+            "tests/e02-edge.cjs",
+            "tests/e02-voice-history.cjs"
+          ],
+          "widths": [
+            320,
+            390,
+            1440
+          ],
+          "history": "native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed",
+          "remoteSync": "blocked: no validated author-only backend",
+          "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
+          "captures": "docs/dobby-v7/evidence/e02/README.md"
+        }
       }
     },
     {
@@ -588,7 +608,7 @@
       "route": "famille.html#chat-2",
       "template": "templates/remaining/chat-2.html",
       "unsupported": [
-        "Même moteur natif de commandes et historique. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+        "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
       ],
       "verification": {
         "tests": [
@@ -608,7 +628,27 @@
             "reference": "docs/dobby-v7/evidence/lot-5/before/chat-2-390.png",
             "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-2-390.png"
           }
-        ]
+        ],
+        "e02": {
+          "mission": "E02",
+          "document": "docs/dobby-v7/E02-PARLER-A-DOBBY.md",
+          "primarySource": "dobby_conversation_avec_dobby_1",
+          "route": "famille.html#chat",
+          "tests": [
+            "tests/e02.cjs",
+            "tests/e02-edge.cjs",
+            "tests/e02-voice-history.cjs"
+          ],
+          "widths": [
+            320,
+            390,
+            1440
+          ],
+          "history": "native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed",
+          "remoteSync": "blocked: no validated author-only backend",
+          "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
+          "captures": "docs/dobby-v7/evidence/e02/README.md"
+        }
       }
     },
     {
@@ -1937,5 +1977,25 @@
         "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
       }
     ]
+  },
+  "chatContract": {
+    "mission": "E02",
+    "document": "docs/dobby-v7/E02-PARLER-A-DOBBY.md",
+    "primarySource": "dobby_conversation_avec_dobby_1",
+    "route": "famille.html#chat",
+    "tests": [
+      "tests/e02.cjs",
+      "tests/e02-edge.cjs",
+      "tests/e02-voice-history.cjs"
+    ],
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "history": "native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed",
+    "remoteSync": "blocked: no validated author-only backend",
+    "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
+    "captures": "docs/dobby-v7/evidence/e02/README.md"
   }
 }
