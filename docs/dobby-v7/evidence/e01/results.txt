@@ -1,0 +1,100 @@
+E01 — résultats locaux sur base cc1519b, modifications de présentation V7.
+Profils éphémères uniquement. Aucun compte réel. Les synchronisations utilisent des réponses HTTP simulées.
+Suite existante exécutée en passes ciblées après correction des en-têtes/notifications ; passe complète du SHA publiée dans la CI de PR #3.
+
+Natifs :
+ℹ tests 54
+ℹ suites 0
+ℹ pass 54
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 357.079832
+
+E01 final :
+E01_PASS 390 empty/dated/unlimited/completed/native persistence/card routes/five tabs/account/preferences
+E01_PASS 1440 empty/dated/unlimited/completed/native persistence/card routes/five tabs/account/preferences
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+
+Régressions existantes :
+DOBBY_V7_STITCH_BINDING_PASS [{"screen":"taverne","width":320,"status":"PASS"},{"screen":"traverse","width":320,"status":"PASS"},{"screen":"missions","width":320,"status":"PASS"},{"screen":"famille","width":320,"status":"PASS"},{"screen":"taverne","width":390,"status":"PASS"},{"screen":"traverse","width":390,"status":"PASS"},{"screen":"missions","width":390,"status":"PASS"},{"screen":"famille","width":390,"status":"PASS"}]
+CUISINE_PATH_PASS 320px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+CUISINE_PATH_PASS 390px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+CUISINE_FAMILY_PASS 320px native connection, add, fractional quantity, edit, offline check, conflict resolution, resync and recipe import (HTTP fixture only)
+CUISINE_FAMILY_PASS 390px native connection, add, fractional quantity, edit, offline check, conflict resolution, resync and recipe import (HTTP fixture only)
+CUISINE_VISUAL_PASS 13 original sources x 2 widths, 52 comparison screenshots
+FAMILY_PATH_PASS 320px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 320px
+FAMILY_PATH_PASS 390px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 390px
+FAMILY_EDGE_PASS stale bookmark, orphan reassignment, legacy identity, browser back/forward
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320
+FAMILY_REVIEW_PASS selected states match the current operation 320
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390
+FAMILY_REVIEW_PASS selected states match the current operation 390
+FAMILY_SHARED_PASS 320px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+FAMILY_SHARED_PASS 390px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+FAMILY_VISUAL_PASS 7 sources x 320/390, 28 comparisons + 14 empty states
+REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_VISUAL_PASS 3 7 sources x 320/390
+REGISTER_DOCUMENTS_PASS 320
+REGISTER_DOCUMENTS_PASS 390
+REGISTER_VISUAL_PASS 4 11 sources x 320/390
+REGISTER_TOOLS_PASS 320
+REGISTER_TOOLS_PASS 390
+REGISTER_VISUAL_PASS 5 6 sources x 320/390
+REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+REGISTER_VISUAL_PASS 2b 6 sources x 320/390
+REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+REGISTER_IMPORT_READING_PASS 320
+REGISTER_IMPORT_READING_PASS 390
+REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+REGISTER_REVIEW_PASS stale-memo-edit 320
+REGISTER_REVIEW_PASS stale-equipment-edit 320
+REGISTER_REVIEW_PASS stale-document-edit 320
+REGISTER_REVIEW_PASS list-rg-item-toggle 320
+REGISTER_REVIEW_PASS list-rg-item-remove 320
+REGISTER_REVIEW_PASS menu-member-draft 320
+REGISTER_REVIEW_PASS menu-contact-draft 320
+REGISTER_REVIEW_PASS menu-medical-draft 320
+REGISTER_REVIEW_PASS maintenance-file-draft 320
+REGISTER_REVIEW_PASS document-native-write-missing 320
+REGISTER_REVIEW_PASS document-native-write-replaced 320
+REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+REGISTER_REVIEW_PASS maintenance-source-facts 320
+REGISTER_REVIEW_PASS source-facts 320
+REGISTER_REVIEW_PASS stale-memo-edit 390
+REGISTER_REVIEW_PASS stale-equipment-edit 390
+REGISTER_REVIEW_PASS stale-document-edit 390
+REGISTER_REVIEW_PASS list-rg-item-toggle 390
+REGISTER_REVIEW_PASS list-rg-item-remove 390
+REGISTER_REVIEW_PASS menu-member-draft 390
+REGISTER_REVIEW_PASS menu-contact-draft 390
+REGISTER_REVIEW_PASS menu-medical-draft 390
+REGISTER_REVIEW_PASS maintenance-file-draft 390
+REGISTER_REVIEW_PASS document-native-write-missing 390
+REGISTER_REVIEW_PASS document-native-write-replaced 390
+REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+REGISTER_REVIEW_PASS maintenance-source-facts 390
+REGISTER_REVIEW_PASS source-facts 390
+REGISTER_REVIEW_ALL_PASS 14 cases × 320/390
+
+Source : E01_SOURCE_COMPARISONS_PASS 10
+Dérivation : E01_REPRODUCIBLE_BUILD_PASS 60 files
+Syntaxe : E01_SYNTAX_PASS
+git diff --check : PASS
+Revue E01 : P3 href Cuisine corrigé et vérifié dans e01.cjs.
+Chemins protégés : V5, design/stitch-53 et essai-v7-preview inchangés.

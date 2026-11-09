@@ -255,7 +255,7 @@ window.DobbyCuisine = (() => {
     document.body.dataset.cuisineView=view;document.body.dataset.stitchSource=doc.body.dataset.stitchSource;
     scrub();const data=E.read();
     ({taverne:renderTaverne,pick:renderPick,recipes:renderRecipes,recipe:renderRecipe,cook:renderCook,tm5:renderTM5,'recipe-add':renderAdd,'recipe-add-1':renderAdd,batch:renderBatch,shop:renderShop,'shop-1':renderShop,'shop-final':renderFinal,'shop-history':renderHistory})[view](data);
-    shell();
+    shell();window.DobbyChrome?.mount();
     for(const control of $$('main button,#cu-supplement button'))if(!control.dataset.cuAction && control.type!=='submit') {control.disabled=true;control.title='Commande décorative de la maquette, sans action métier disponible.';}
     document.querySelector('main').style.visibility='visible';
     document.documentElement.classList.remove('dv7-loading');
@@ -312,7 +312,7 @@ window.DobbyCuisine = (() => {
   async function init(openLegacy) {
     if(ready)return;legacy=openLegacy;document.body.classList.add('cu-active');
     E.win().alert=message=>notice(String(message),true);
-    const parseHash=()=>{const [view,query]=location.hash.slice(1).split('?');return {view:routes.includes(view)?view:'taverne',id:new URLSearchParams(query||'').get('id')}};
+    const parseHash=()=>{const [view,query]=location.hash.slice(1).split('?');return {view:routes.includes(view)?view:'taverne',id:new URLSearchParams(query||'').get('id'),date:new URLSearchParams(query||'').get('date')||undefined}};
     document.addEventListener('click',event=>{
       if(!document.body.classList.contains('cu-active')||event.target.closest('#dv7-panel'))return;
       const control=event.target.closest('[data-cu-action]');if(!control)return;
@@ -327,8 +327,8 @@ window.DobbyCuisine = (() => {
     });
     document.addEventListener('change',event=>{if(event.target.id==='cu-date'){ui.date=event.target.value;ui.adult=null;ui.children=null;ui.selected=null;render();}if(event.target.dataset.cuIngredient!==undefined){const i=Number(event.target.dataset.cuIngredient);event.target.checked?ui.ingredients.add(i):ui.ingredients.delete(i);text($('#checked-counter'),`${ui.ingredients.size} / ${E.read().recipes.find(r=>r.id===ui.recipe).ingredients.length}`);}});
     bindForms();
-    window.addEventListener('popstate',()=>{const route=parseHash();open(route.view,{id:route.id},false).catch(error=>notice(error.message,true));});
-    const route=parseHash();await open(route.view,{id:route.id},false);ready=true;
+    window.addEventListener('popstate',()=>{const route=parseHash();open(route.view,{id:route.id,date:route.date},false).catch(error=>notice(error.message,true));});
+    const route=parseHash();await open(route.view,{id:route.id,date:route.date},false);ready=true;
     new MutationObserver(()=>{if(ready&&!busy&&!document.activeElement?.matches('input,textarea,select'))refresh().catch(error=>notice(error.message,true));}).observe(E.win().document.getElementById('screen'),{childList:true});
   }
   // Additional source adapters are defined below, sharing this controller and engine.

@@ -1,19 +1,11 @@
-﻿/* Stitch DOM adapters: real V5 state; no sample person, task, event or record. */
+/* Stitch DOM adapters: real V5 state; no sample person, task, event or record. */
 window.DobbyStitchRootAdapters=(()=>{'use strict';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const date=v=>{try{return new Date((v||'').slice(0,10)+'T12:00:00').toLocaleDateString('fr-BE',{day:'numeric',month:'short'})}catch{return ''}};
 const card=(title,body,action=null,label='Ouvrir')=>`<div class="p-3 rounded-2xl bg-surface-container border border-primary/20 shadow-md flex flex-col gap-2"><strong class="font-headline-sm text-[18px] text-on-surface">${esc(title)}</strong><p class="text-on-surface-variant font-body-md text-body-md">${esc(body)}</p>${action?`<button data-dv7-route="${esc(action)}" class="dv7-action rounded-xl bg-primary text-on-primary font-label-md text-label-md p-3 min-h-11">${esc(label)}</button>`:''}</div>`;
 const empty=(s)=>`<div class="dv7-empty">${esc(s)}</div>`;
 const h2sec=text=>{const h=[...document.querySelectorAll('main h2')].find(x=>x.textContent.includes(text));return h?.closest('section')||h?.closest('.px-gutter-mobile')||null};
-function home(d){
-const miss=h2sec('Missions du Jour');const meal=h2sec('Festin du Soir');const gaz=h2sec('Gazette des Curiosités');if(!miss||!meal||!gaz)throw Error('Missing Stitch Traverse sections');
-const tasks=[...(d.manualMissions||[]).map(x=>({...x,kind:'Mission familiale'})),...(d.autoTasks||[]).filter(x=>x.state!=='done').map(x=>({...x,kind:'Mission automatique'}))];
-miss.innerHTML=`<div class="flex items-center justify-between mb-3"><h2 class="font-headline-sm text-headline-sm text-on-surface">✦ Missions du Jour</h2><button class="dv7-action bg-primary/90 rounded-xl text-on-primary px-3 py-2" data-dv7-route="missions">Voir les missions</button></div><div class="space-y-3">${tasks.length?tasks.slice(0,4).map(t=>card(t.title||'Mission du foyer',[t.kind,date(t.due||t.deadline)].filter(Boolean).join(' · '),'missions','Gérer la mission')).join(''):empty('Aucune mission du foyer à afficher.')}</div>`;
-const today=d.day;const pm=d.planned[today+'-soir'],r=pm?d.recipes.find(x=>x.id===pm.id):null;
-meal.innerHTML=`<div class="flex items-center justify-between mb-3"><h2 class="font-headline-sm text-headline-sm text-on-surface">♨ Festin du Soir</h2></div><div class="rounded-2xl p-4 border border-primary/20 bg-surface-container"><div class="text-center text-5xl pb-3" aria-hidden="true">${esc(r?.emoji||'🍲')}</div><h3 class="font-headline-sm text-headline-sm text-on-surface">${esc(r?.name||'Repas à prévoir')}</h3><p class="font-body-md text-body-md text-on-surface-variant my-3">${esc(r?(String(pm.people||r.servings)+' personnes · '+String(r.minutes||0)+' min'):'Aucun repas enregistré ce soir.')}</p><button class="rounded-xl p-3 bg-primary text-on-primary min-h-11" data-dv7-route="plan">Consulter la Taverne</button></div>`;
-const events=[...(d.familyEvents||[]).map(x=>({name:x.title||x.name||'Événement',date:x.date||x.when})),...(d.sharedHealthVisits||[]).map(x=>({name:x.title||x.reason||'Rendez-vous',date:x.date}))];
-gaz.innerHTML=`<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3">✧ Gazette des Curiosités</h2><div class="space-y-3">${events.length?events.slice(0,4).map(x=>card(x.name,date(x.date),'family','Voir le foyer')).join(''):empty('Aucun événement familial enregistré.')}</div><button class="mt-3 rounded-xl bg-primary text-on-primary p-3 min-h-11" data-dv7-route="family">Ouvrir le Salon des Curiosités</button>`;
-}
+function home(d){window.DobbyHome.render(d);}
 function missions(d){const first=h2sec('Missions Prioritaires')||document.querySelector('[data-stitch-missions]'),family=h2sec('Répartition de la Maisonnée'),note=h2sec('Note du Maître des Archives');if(!first||!family)throw Error('Missing Stitch Missions sections');
 const manual=d.manualMissions||[],auto=d.autoTasks||[];
 const manualRows=manual.filter(x=>x.status!=='done'&&x.state!=='done').map(x=>card(x.title||'Mission',`Mission créée par le foyer${x.due?' · '+date(x.due):''}`,'missions','Modifier ou terminer'));

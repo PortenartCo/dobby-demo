@@ -2,6 +2,12 @@
 
 Le lot Cuisine poursuit la PR #3, branche `feat/dobby-stitch-53-source-backed-v7`, depuis `08f66ce`. La mission 2A poursuit ce travail depuis `cb440793cc04079cd472a3cd1d8fcf3e14c1f84b`. Les 53 HTML originaux et leurs empreintes restent inchangés dans `design/stitch-53/`.
 
+## E01 — Accueil et liaisons permanentes
+
+Depuis la base `cc1519b`, l’accueil réutilise ses cartes HTML Stitch originales pour la synthèse datée : missions sans plafond, validation par gestionnaire natif, repas par identifiant et Gazette vers l’Agenda au jour choisi. Les deux barres issues du même HTML restent visibles sur les destinations existantes ; la cinquième destination est le Menu. Les préférences sont indépendantes et utilisent le stockage natif. Le premier démarrage V7 ne crée plus de repas de démonstration. Aucun repas déjà enregistré n’est supprimé.
+
+Le [contrat permanent E01](E01-ACCUEIL.md) décrit les règles, les routes et les écarts, dont le compte natif sans source de profil et l’ouverture de la source d’une mission automatique. [Comparaisons à 390 et 1440 px](evidence/e01/README.md). Le périmètre Agenda existant est conservé : aucune fiche médicale individuelle locale n’est copiée dans la Gazette ou l’Agenda familial. Le recensement des 53 sources reste inchangé. Aucun développement interne des pages secondaires, ni modification de `essai-v7-preview`, de la V5 ou du backend.
+
 ## Couverture vérifiée
 
 **13 sources Cuisine sont intégrées fonctionnellement**, avec leurs variantes de formulaire et de préparation. La Taverne appartenait déjà aux quatre racines intégrées : le lot Cuisine portait le total à 16 sources actives. La mission 2A ajoute sept compositions Famille/Agenda/Santé, puis les lots 2B et 3 poursuivent Contacts/Mémos/Listes et Maison. État courant : **53 sources actives sur 53, dont 29 partielles**, et **aucune source simplement importée restante**. Les lots 2B à 5 ont raccordé les 30 sources restantes. Les opérations principales déclarées intégrées utilisent leur composition Stitch ; les comptes et réglages hors de ces 53 sources gardent leur panneau natif. Le détail des 29 sources partielles et leurs limites figure dans [SOURCE-STATUS.md](SOURCE-STATUS.md). Lors du lot Cuisine, les 40 autres sources n’ont pas été réauditées. La mission 2A traite uniquement ses sept sources explicitement demandées ; elle ne réaudite pas Cuisine.

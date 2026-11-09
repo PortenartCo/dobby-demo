@@ -1451,7 +1451,45 @@
             "reference": "docs/dobby-v7/evidence/roots/before/traverse-390.png",
             "integrated": "docs/dobby-v7/evidence/roots/after/traverse-390.png"
           }
-        ]
+        ],
+        "e01": {
+          "mission": "E01",
+          "document": "docs/dobby-v7/E01-ACCUEIL.md",
+          "tests": [
+            "tests/e01.cjs",
+            "tests/e01-visual.cjs"
+          ],
+          "widths": [
+            390,
+            1440
+          ],
+          "navigation": [
+            "traverse.html",
+            "missions.html",
+            "index.html",
+            "famille.html",
+            "famille.html#menu"
+          ],
+          "preferences": "native st.stitchPreferences / native save()",
+          "account": "existing native account panel; no Stitch profile source",
+          "automaticMission": "source equipment/document fiche by originId; no independent mission fiche",
+          "captures": [
+            {
+              "width": 390,
+              "reference": "docs/dobby-v7/evidence/e01/source/traverse-390.png",
+              "baseline": "docs/dobby-v7/evidence/e01/before/traverse-390.png",
+              "empty": "docs/dobby-v7/evidence/e01/empty-390.png",
+              "populated": "docs/dobby-v7/evidence/e01/populated-390.png"
+            },
+            {
+              "width": 1440,
+              "reference": "docs/dobby-v7/evidence/e01/source/traverse-1440.png",
+              "baseline": "docs/dobby-v7/evidence/e01/before/traverse-1440.png",
+              "empty": "docs/dobby-v7/evidence/e01/empty-1440.png",
+              "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
+            }
+          ]
+        }
       }
     },
     {
@@ -1861,5 +1899,43 @@
       "functional": 1,
       "partial": 5
     }
+  },
+  "homeContract": {
+    "mission": "E01",
+    "document": "docs/dobby-v7/E01-ACCUEIL.md",
+    "tests": [
+      "tests/e01.cjs",
+      "tests/e01-visual.cjs"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "navigation": [
+      "traverse.html",
+      "missions.html",
+      "index.html",
+      "famille.html",
+      "famille.html#menu"
+    ],
+    "preferences": "native st.stitchPreferences / native save()",
+    "account": "existing native account panel; no Stitch profile source",
+    "automaticMission": "source equipment/document fiche by originId; no independent mission fiche",
+    "captures": [
+      {
+        "width": 390,
+        "reference": "docs/dobby-v7/evidence/e01/source/traverse-390.png",
+        "baseline": "docs/dobby-v7/evidence/e01/before/traverse-390.png",
+        "empty": "docs/dobby-v7/evidence/e01/empty-390.png",
+        "populated": "docs/dobby-v7/evidence/e01/populated-390.png"
+      },
+      {
+        "width": 1440,
+        "reference": "docs/dobby-v7/evidence/e01/source/traverse-1440.png",
+        "baseline": "docs/dobby-v7/evidence/e01/before/traverse-1440.png",
+        "empty": "docs/dobby-v7/evidence/e01/empty-1440.png",
+        "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
+      }
+    ]
   }
 }
