@@ -1,0 +1,28 @@
+{
+  "source": "Playwright recordVideo, actual CSS animation",
+  "engine": "Chromium",
+  "profile": "iPhone 13 emulated, not a physical iPhone",
+  "width": 390,
+  "height": 844,
+  "durationSeconds": 9,
+  "trimmedLoadingSeconds": 1.317,
+  "timeline": [
+    {
+      "seconds": 1.06,
+      "state": "ON"
+    },
+    {
+      "seconds": 5.12,
+      "state": "OFF"
+    },
+    {
+      "seconds": 6.18,
+      "state": "ON"
+    },
+    {
+      "seconds": 8.25,
+      "state": "OFF"
+    }
+  ],
+  "householdDataInjected": false
+}

@@ -44,3 +44,20 @@ body.dv7-panel-visible #dv7-engine{left:50%!important;right:auto!important;width
 .magical-ripple,.magic-sparkle-dot{z-index:11020!important}
 :root.e01-effects-on [data-e01-toggle="effects"]{border-color:#f9bb5f!important;box-shadow:0 0 14px rgba(249,187,95,.6),inset 0 0 8px rgba(249,187,95,.18)!important}
 :root.e01-effects-off [data-e01-toggle="effects"]{opacity:.72}
+
+/* E01.3 — Standard / Gold. A fixed population, no rendering loop or new storage.
+   Future palettes/shapes can change these variables and ambienceTheme.kind only. */
+:root{--e013-gold:#f9bb5f;--e013-soft:#ffdead;--e013-intensity:.85;--e013-drift-speed:12s;--e013-halo-speed:7.6s;--e013-halo:rgba(249,187,95,.55);--e013-halo-edge:rgba(250,188,77,.5)}
+#e013-ambience{position:fixed;top:var(--e01-top);bottom:var(--e01-bottom);left:50%;width:min(480px,100%);transform:translateX(-50%);overflow:hidden;pointer-events:none;contain:layout paint style;z-index:40;opacity:var(--e013-intensity)}
+.e013-particle{position:absolute;display:block;pointer-events:none;will-change:transform,opacity;animation:e013-drift var(--e013-drift-speed) ease-in-out infinite;opacity:0}
+.e013-mote{border-radius:50%;background:var(--e013-gold);box-shadow:0 0 6px var(--e013-gold)}
+.e013-mote:nth-child(3n){background:var(--e013-soft);box-shadow:0 0 7px var(--e013-soft)}
+@keyframes e013-drift{0%{transform:translate3d(0,15px,0);opacity:0}18%{opacity:var(--e013-alpha)}45%{transform:translate3d(var(--e013-dx),var(--e013-dy),0);opacity:calc(var(--e013-alpha) * .55)}75%{transform:translate3d(calc(var(--e013-dx) * -.45),calc(var(--e013-dy) * 1.3),0);opacity:var(--e013-alpha)}100%{transform:translate3d(calc(var(--e013-dx) * .6),calc(var(--e013-dy) * 1.7),0);opacity:0}}
+body[data-dv7-screen=traverse] .e013-scene{isolation:isolate}
+.e013-scene::before,.e013-scene::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;will-change:transform,opacity;mix-blend-mode:screen}
+.e013-scene::before{background:radial-gradient(ellipse at 2% 55%,var(--e013-halo),transparent 52%),radial-gradient(ellipse at 98% 30%,var(--e013-halo),transparent 48%);opacity:.5;animation:e013-lantern var(--e013-halo-speed) ease-in-out infinite alternate}
+.e013-scene::after{box-shadow:inset 0 0 28px 3px var(--e013-halo-edge);background:radial-gradient(ellipse at 55% 0%,var(--e013-halo),transparent 60%);opacity:.4;animation:e013-edge calc(var(--e013-halo-speed) * 1.4) ease-in-out infinite alternate}
+@keyframes e013-lantern{0%{opacity:.35;transform:scale(1)}47%{opacity:.75;transform:scale(1.045) translate3d(1%,0,0)}100%{opacity:.45;transform:scale(1.025) translate3d(-1%,1%,0)}}
+@keyframes e013-edge{0%{opacity:.4;transform:scale(1)}65%{opacity:.8;transform:scale(1.04)}100%{opacity:.5;transform:scale(1.02)}}
+.e013-paused .e013-particle,.e013-paused .e013-scene::before,.e013-paused .e013-scene::after,.e013-paused .animate-pulse{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){#e013-ambience,.e013-scene::before,.e013-scene::after{display:none!important;animation:none!important}body[data-dv7-screen=traverse] .animate-pulse{animation:none!important}}

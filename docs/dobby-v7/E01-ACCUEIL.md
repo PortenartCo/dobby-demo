@@ -91,3 +91,30 @@ Correction ciblée de deux défauts observés sur l'essai E01.1 :
 - Aucune modification des sources Stitch, des données ni de la navigation principale.
 
 Vérifications : tests E01 à 390 et 1440 px sur la géométrie du compte, le fonctionnement des cinq onglets, l'indépendance des préférences, la persistance, les particules avec animation autorisée et leur absence lorsque le système réduit les mouvements. Toute recette en conditions réelles reste à confirmer par l'utilisateur.
+
+
+## E01.3 — Ambiance magique animée, Standard / Doré
+
+Référence : `06f930cff4e72164c247fa1843f15c77f1a6b781`. La nouvelle ambiance concerne uniquement Traverse ; les autres pages conservent leurs contrôles et interactions visuelles existants. Les deux seuls fichiers applicatifs modifiés sont `chrome.js` et `chrome.css`. `home.js`, le générateur, les sources HTML, la structure des cartes, l’image, le moteur V5, la synchronisation, les données et le stockage restent inchangés.
+
+- OFF : scène Stitch normale, aucun hôte de particules, aucun pseudo-élément de halo, aucune onde ou étincelle résiduelle. Le passage OFF supprime immédiatement les effets possédés et annule leurs temporisateurs.
+- ON : 22 points lumineux dorés à positions, tailles, phases et vitesses variées, avec dérive lente et fondus ; deux lumières de bordure de l’illustration évoluent doucement. La photographie n’est ni remplacée ni filtrée. Le bouton étoile garde son éclairage statique et un libellé d’ambiance explicite sur Traverse.
+- Les halos utilisent des pseudo-éléments sur le cadre de l’image existant ; la population flottante est dans un seul calque décoratif fixe, limité à la largeur de DOBBY, entre les barres. `aria-hidden`, `inert` et `pointer-events:none` empêchent toute interférence avec les informations et les gestes. Aucun nouvel élément n’est inséré dans les cartes.
+- Les ondes et sept étincelles du CSS Stitch sont conservées aux interactions. Les éléments temporaires sont plafonnés à 40 et nettoyés à leur fin, à OFF, en mode réduit et au départ de la page.
+- La préférence reste exclusivement `st.stitchPreferences.effects`, enregistrée par le gestionnaire natif déjà existant. Aucun nouveau champ de stockage. L’étoile n’appelle jamais l’audio ni la vibration, même si le son est ON. Le bouton sonore reste indépendant.
+- `prefers-reduced-motion` : aucun calque ni halo animé ; seul l’indicateur statique de magie activée subsiste. Le changement de préférence système est pris en compte sans rechargement.
+- Onglet masqué ou page mise en cache : chronologies CSS en pause et éléments temporaires supprimés. Lorsque le compte couvre l’accueil, l’ambiance est également en pause. Reprise lorsque l’accueil est à nouveau visible. Les remontages de données ne recréent pas les particules.
+
+### Configuration légère et performance
+
+`ambienceTheme` dans `chrome.js` contient uniquement le nom `standard-gold`, la population (22) et la classe de forme (`e013-mote`). Les variables CSS `--e013-gold`, `--e013-soft`, `--e013-intensity`, `--e013-drift-speed`, `--e013-halo-speed`, `--e013-halo` et `--e013-halo-edge` regroupent la palette, l’intensité, la vitesse et les lumières. Ces points de réglage préparent des variantes futures sans calendrier, déclencheur saisonnier, sélecteur, registre de thèmes ou nouveau module de paramètres. E01.4 n’est pas développée.
+
+Aucune bibliothèque, aucun canvas, aucune boucle JavaScript de rendu. Les animations ambiantes portent uniquement sur `transform` et `opacity`, avec dégradés et ombres statiques. Les seuls nouveaux nœuds permanents sont l’hôte et ses 22 particules pendant ON. Les réactions brèves originales restent distinctes.
+
+### Vérifications et limites
+
+`tests/e01-3.cjs` vérifie dans des profils isolés : activation visible sous deux secondes, évolution effective des matrices/opacités, animation des lumières, retrait immédiat, répétitions sans accumulation, médias réduits, pause des chronologies, indépendance audio/vibration, persistance, absence d’ambiance sur les quatre autres destinations, données du foyer inchangées, cartes et image intactes, gestes et absence de débordement à 390/1440 px. Les régressions E01 conservent les parcours et bandeaux partagés.
+
+[Preuves E01.3, vidéo réelle de 9 secondes et résultats navigateur](evidence/e01-3/README.md). Les profils mobiles sont des émulations iPhone 13 ; WebKit est exécuté sous Linux, Chromium sur le même environnement de test. Les mesures de cadence sont des observations de cet environnement, pas une mesure de consommation électrique. La pause de visibilité est vérifiée par événements simulés et par lecture des chronologies CSS réellement arrêtées. Aucun compte réel ni aucune donnée familiale fictive n’est injecté pour les tests d’ambiance.
+
+La validation sur iPhone physique, Safari iOS et batterie en conditions réelles reste à faire par l’utilisateur. Les contrôles automatisés et la vidéo ne constituent pas cette validation utilisateur. Aucun défaut restant identifié dans le périmètre navigateur testé. Aucun déploiement, fusion ou début d’E01.4.
