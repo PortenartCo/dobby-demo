@@ -1,0 +1,306 @@
+<!DOCTYPE html><html class="dark dv7-loading" lang="fr"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type">
+
+<style>
+@layer base{
+  html,body{width:100vw;margin:0;padding:0;}
+  body{overscroll-behavior:none;}
+  .pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}
+  .pt-safe{padding-top:env(safe-area-inset-top,0px);}
+  main>:first-child{margin-top:0!important;}
+  main>:last-child{margin-bottom:0!important;}
+}
+::-webkit-scrollbar{display:none;}
+
+/* Animations Féeriques & Particules Magiques */
+@keyframes magicalFloat {
+  0% { transform: translateY(0px) rotate(0deg) scale(0.9); opacity: 0.2; }
+  50% { transform: translateY(-35px) rotate(180deg) scale(1.15); opacity: 0.85; }
+  100% { transform: translateY(-70px) rotate(360deg) scale(0.8); opacity: 0; }
+}
+
+@keyframes clockGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(249, 187, 95, 0.2), inset 0 1px 3px rgba(249, 187, 95, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(249, 187, 95, 0.55), inset 0 2px 6px rgba(249, 187, 95, 0.5);
+  }
+}
+
+@keyframes hearthFlicker {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px #f9bb5f) drop-shadow(0 0 10px #d49b42); }
+  25% { transform: scale(1.12) rotate(-2deg); filter: drop-shadow(0 0 7px #fabc4d) drop-shadow(0 0 14px #e59124); }
+  50% { transform: scale(0.94); filter: drop-shadow(0 0 3px #f9bb5f) drop-shadow(0 0 8px #9e4312); }
+  75% { transform: scale(1.08) rotate(2deg); filter: drop-shadow(0 0 8px #ffddb2) drop-shadow(0 0 16px #f9bb5f); }
+}
+
+@keyframes beaconSparkle {
+  0%, 100% { opacity: 0.75; transform: scale(0.95); box-shadow: 0 0 6px #afcdc0; }
+  50% { opacity: 1; transform: scale(1.18); box-shadow: 0 0 14px #cbe9dc, 0 0 24px #afcdc0; }
+}
+
+@keyframes spellCastRipple {
+  0% { transform: scale(0.2); opacity: 0.9; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes starSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.3); filter: drop-shadow(0 0 8px #f9bb5f); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.anim-sparkle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #ffeed6 10%, #fabc4d 60%, transparent 100%);
+  animation: magicalFloat 6s ease-in-out infinite;
+}
+
+.anim-hearth {
+  animation: hearthFlicker 2.2s infinite ease-in-out;
+}
+
+.anim-beacon {
+  animation: beaconSparkle 1.8s infinite ease-in-out;
+}
+
+.anim-clock-glow {
+  animation: clockGlowPulse 4s infinite ease-in-out;
+}
+
+/* Spell Cast Feedback */
+.spell-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.spell-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(249, 187, 95, 0.45);
+}
+.spell-btn:active {
+  transform: scale(0.97);
+}
+
+/* Interactive Message Letter */
+.message-letter {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.message-letter:hover {
+  border-color: rgba(249, 187, 95, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 155, 66, 0.25);
+}
+.message-letter.expanded {
+  background: linear-gradient(145deg, #372622, #2c1c18);
+  border: 1px solid rgba(249, 187, 95, 0.7);
+  box-shadow: 0 10px 30px rgba(249, 187, 95, 0.25), inset 0 0 15px rgba(249, 187, 95, 0.1);
+}
+
+/* Clock Hand Active Motion */
+.clock-card {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.clock-card:hover, .clock-card:active {
+  transform: scale(1.02);
+  border-color: rgba(249, 187, 95, 0.5);
+  box-shadow: 0 8px 20px rgba(249, 187, 95, 0.2), inset 0 1px 3px rgba(249, 187, 95, 0.3);
+}
+.clock-card:hover .clock-icon, .clock-card:active .clock-icon {
+  transform: rotate(18deg) scale(1.15);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+</style><link rel="stylesheet" href="./stitch-tailwind.css"><link rel="stylesheet" href="../essai-v6-preview/assets/v6/fonts.css"><style>
+@font-face{font-family:"Material Symbols Outlined";src:url("./assets/material-symbols-full.ttf") format("truetype");font-style:normal;font-weight:100 700;font-display:block}.material-symbols-outlined{font-family:"Material Symbols Outlined"!important;font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;font-feature-settings:"liga"}[hidden]{display:none!important}html,body{max-width:100%;overflow-x:clip}.dv7-loading main{visibility:hidden}#dv7-loading{position:fixed;z-index:999;top:45%;left:10%;width:80%;text-align:center;color:#f9bb5f;font:18px Georgia}body:not(.dv7-loading) #dv7-loading{display:none!important}
+#dv7-engine{position:fixed;left:-200vw;top:0;width:390px;height:844px;border:0;pointer-events:none}
+#dv7-panel[hidden]{display:none!important}#dv7-panel{position:fixed;z-index:9999;inset:0;background:#180b07;display:flex;flex-direction:column}#dv7-panel-top{height:56px;flex-shrink:0;padding:7px 12px;background:#271814;border-bottom:1px solid #d49b42;display:flex;align-items:center;gap:12px;color:#fadcd5;font:16px Georgia}
+body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{position:fixed;z-index:10000;left:0;top:56px;width:100%;height:calc(100dvh - 56px);pointer-events:auto}#dv7-panel-top{position:relative;z-index:10001}
+#dv7-close{background:#f9bb5f;color:#180b07;padding:10px 15px;border-radius:10px;min-height:42px;font-weight:bold}
+.dv7-empty{padding:16px;border:1px dashed #d49b42;border-radius:12px;color:#d4c4b1}.dv7-meal-visual{background:radial-gradient(circle at 50% 30%,#594025,#271814 75%);display:flex;align-items:center;justify-content:center;font-size:64px}.dv7-action{cursor:pointer}.dv7-focus:focus-visible{outline:3px solid #f9bb5f;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+</style></head><body class="bg-background font-body-md text-on-surface antialiased flex flex-col min-h-screen relative overflow-x-hidden" data-dv7-screen="famille">
+<!-- Poussières d'étoiles et étincelles féeriques flottantes d'arrière-plan -->
+<div aria-hidden="true" class="fixed inset-0 pointer-events-none z-10 overflow-hidden">
+<div class="anim-sparkle w-1.5 h-1.5 left-[12%] top-[18%]" style="animation-delay: 0s; animation-duration: 5.5s;"></div>
+<div class="anim-sparkle w-2 h-2 left-[82%] top-[25%]" style="animation-delay: 1.8s; animation-duration: 6.8s;"></div>
+<div class="anim-sparkle w-1 h-1 left-[34%] top-[42%]" style="animation-delay: 3.2s; animation-duration: 7.2s;"></div>
+<div class="anim-sparkle w-2.5 h-2.5 left-[88%] top-[65%]" style="animation-delay: 0.9s; animation-duration: 5.1s;"></div>
+<div class="anim-sparkle w-1.5 h-1.5 left-[8%] top-[78%]" style="animation-delay: 2.4s; animation-duration: 6.2s;"></div>
+<div class="anim-sparkle w-2 h-2 left-[55%] top-[86%]" style="animation-delay: 4.1s; animation-duration: 7s;"></div>
+</div>
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_12px_32px_rgba(212,155,66,0.12)]"><div class="flex items-center justify-between gap-2 px-4 pt-3 pb-2 relative z-20"><button aria-label="Menu Alchimique" class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#271814] border border-[#d49b42]/30 text-[#eec66a] shadow-inner hover:bg-surface-container-highest transition-transform active:scale-95 group"><svg class="w-6 h-6 text-[#eec66a] group-hover:rotate-45 transition-transform duration-300" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path></svg></button><div class="flex-1 h-12 rounded-xl flex flex-col items-center justify-center bg-[#2b1810] border border-[#d49b42]/30 px-3 shadow-md"><span class="font-serif font-bold text-lg tracking-widest text-[#eec66a] uppercase leading-none drop-shadow">DOBBY</span><span class="text-[9px] text-[#eec66a]/80 tracking-wider mt-1 font-medium whitespace-nowrap uppercase">FAMILLE &amp; FOYER • LE SALON DES CURIOSITÉS</span></div><button id="soundToggleBtn" aria-label="Basculer les effets sonores féeriques" class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#271814] border border-[#d49b42]/30 text-[#eec66a] relative shadow-inner cursor-pointer active:scale-90 transition-all group"><span id="soundToggleIcon" class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">volume_up</span><span id="soundStatusDot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span></button><button aria-label="Profil Sorcier" class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#eec66a] text-[#1e100c] shadow-lg cursor-pointer active:scale-90 transition-transform"><span class="material-symbols-outlined text-[22px] text-[#180b07]">person</span></button></div></header><div id="dv7-loading" role="status">Chargement des données du foyer…</div><main class="flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full px-margin-mobile pb-space-xl gap-space-lg">
+<!-- 1. SCÈNE IMMERSIVE D'OUVERTURE -->
+<section class="flex flex-col gap-space-md w-full">
+  <!-- Hero Image Banner standardisé hauteur 220px -->
+  <div class="group relative w-full h-[220px] rounded-2xl overflow-hidden border border-amber-900/40 relative shadow-lg bg-surface-container-lowest cursor-pointer">
+    <img alt="Dobby devant l'horloge enchantée du salon des curiosités" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-transparent to-transparent pointer-events-none"></div>
+    <div class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none mix-blend-color-dodge"></div>
+    <!-- Badge Flottant -->
+    <div class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-highest/90 backdrop-blur-md border border-primary/30">
+      <span class="material-symbols-outlined text-primary text-[14px]">auto_awesome</span>
+      <span class="font-label-sm text-[10px] text-primary uppercase tracking-wider font-semibold">Cabinet des Curiosités</span>
+    </div>
+    <!-- Statut foyer -->
+    <div class="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-low/90 backdrop-blur-sm border border-primary/25 shadow-md">
+      <span class="inline-block w-2 h-2 rounded-full bg-primary anim-hearth"></span>
+      <span class="font-label-sm text-[11px] text-[#fcf7ee] font-medium">Cheminée allumée</span>
+    </div>
+  </div>
+
+  <!-- Cartouche de Bienvenue unifié sous l'image -->
+  <div class="flex flex-col p-4 rounded-2xl bg-surface-container shadow-[0_8px_24px_rgba(12,7,5,0.6)] border border-amber-900/40">
+    <!-- Sur-titre (Eyebrow) -->
+    <div class="text-[11px] font-semibold tracking-[0.18em] text-[#d49b42] uppercase text-center mb-1 flex items-center justify-center gap-1.5">
+      <span class="material-symbols-outlined text-[13px]">auto_awesome</span>
+      <span class="">Famille &amp; Synchronisation</span>
+      <span class="material-symbols-outlined text-[13px]">auto_awesome</span>
+    </div>
+    <!-- Grand Titre (H1) -->
+    <h1 class="font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]">Le Salon des Curiosités</h1>
+    <!-- Citation de Dobby -->
+    <div class="px-2 mb-4">
+      <p class="font-body-md text-sm text-[#e6d7c3] text-center italic leading-relaxed">
+        « L’horloge enchantée veille sur chacun des vôtres ! Que ce soit à l’école, au travail ou en chemin, Dobby garde un œil bienveillant sur la maisonnée. »
+      </p>
+      <div class="text-center mt-1">
+        <span class="font-label-sm text-[11px] text-[#d49b42] font-semibold">— Note manuscrite de Dobby 📜</span>
+      </div>
+    </div>
+    <!-- Bouton CTA principal 48px standardisé -->
+    <button class="spell-btn w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer"><span class="material-symbols-outlined text-[20px] text-[#180b07]">calendar_add_on</span><span class="font-semibold">Programmer un rituel ou événement</span></button>
+  </div>
+</section>
+<!-- 2. L'HORLOGE ENCHANTÉE DE LA MAISONNÉE (Inspirée de l'horloge des Weasley) -->
+<section class="flex flex-col gap-space-sm w-full">
+<div class="flex items-center justify-between mb-0.5">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-[#d49b42] text-[20px]" style="font-variation-settings: 'FILL' 1;">nest_clock_farsight_analog</span>
+    <h2 class="font-headline-sm font-semibold text-[18px] leading-tight text-[#fcf7ee]">L’Horloge Enchantée</h2>
+  </div>
+  <div class="px-2.5 py-1 rounded-full border border-amber-900/40 text-xs text-[#d49b42] font-medium bg-surface-container-high/80">
+    <span class="">En direct</span>
+  </div>
+</div>
+<!-- Cadran & Aiguilles en Vitrine Sombre avec Aura Magique -->
+<div class="anim-clock-glow flex flex-col p-space-md rounded-2xl bg-surface-container-high shadow-[0_12px_28px_rgba(12,7,5,0.7)] gap-space-md border border-[#d49b42]/30 relative"><div class="absolute -top-12 -right-12 w-36 h-36 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div><div class="clock-card border border-[#d49b42]/20 flex items-center justify-between p-3.5 rounded-2xl bg-surface-container shadow-[inset_0_1px_2px_rgba(249,187,95,0.15)] cursor-pointer hover:border-primary/40 transition-all"><div class="flex items-center gap-3 min-w-0 flex-1"><div class="relative w-11 h-11 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center shadow-md"><span class="clock-icon material-symbols-outlined text-primary text-[22px] transition-transform">engineering</span><span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary flex items-center justify-center text-[9px] text-on-secondary font-bold ring-2 ring-surface">1</span></div><div class="flex flex-col min-w-0 pr-1"><div class="flex items-center gap-1.5"><span class="font-headline-sm font-semibold text-body-md text-on-surface">Thomas</span><span class="font-label-sm text-label-sm text-on-surface-variant font-normal">(Père)</span></div><div class="flex items-center gap-1 text-primary"><span class="material-symbols-outlined text-[15px] shrink-0">work</span><span class="font-label-md text-label-md font-semibold truncate">Au travail (Bureau sorcier)</span></div><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Arrivée à 18h30 • Réseau de cheminées</span></div></div><div class="flex flex-col items-end gap-1 shrink-0 ml-2"><span class="px-2.5 py-1 rounded-full bg-primary/20 text-primary font-label-sm text-[11px] font-semibold border border-primary/30 whitespace-nowrap">Fixe</span><span class="material-symbols-outlined text-primary text-[18px] anim-hearth">fireplace</span></div></div><div class="clock-card border border-[#d49b42]/20 flex items-center justify-between p-3.5 rounded-2xl bg-surface-container shadow-[inset_0_1px_2px_rgba(249,187,95,0.15)] cursor-pointer hover:border-tertiary/40 transition-all"><div class="flex items-center gap-3 min-w-0 flex-1"><div class="relative w-11 h-11 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center shadow-md"><span class="clock-icon material-symbols-outlined text-tertiary text-[22px] transition-transform">directions_transit</span><span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center text-[9px] text-on-primary font-bold ring-2 ring-surface">2</span></div><div class="flex flex-col min-w-0 pr-1"><div class="flex items-center gap-1.5"><span class="font-headline-sm font-semibold text-body-md text-on-surface">Léa</span><span class="font-label-sm text-label-sm text-on-surface-variant font-normal">(Mère)</span></div><div class="flex items-center gap-1 text-tertiary"><span class="material-symbols-outlined text-[15px] shrink-0">moving</span><span class="font-label-md text-label-md font-semibold truncate">En chemin (Diligence / Relais)</span></div><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Traverse le Val enchanté</span></div></div><div class="flex flex-col items-end gap-1 shrink-0 ml-2"><span class="px-2.5 py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-[11px] font-semibold border border-tertiary/40 whitespace-nowrap">Mobile</span><span class="material-symbols-outlined text-tertiary text-[18px] animate-bounce" style="animation-duration: 2.2s;">commute</span></div></div><div class="clock-card border border-[#d49b42]/20 flex items-center justify-between p-3.5 rounded-2xl bg-surface-container shadow-[inset_0_1px_2px_rgba(249,187,95,0.15)] cursor-pointer hover:border-secondary/40 transition-all"><div class="flex items-center gap-3 min-w-0 flex-1"><div class="relative w-11 h-11 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center shadow-md"><span class="clock-icon material-symbols-outlined text-secondary text-[22px] transition-transform">school</span><span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-secondary-fixed flex items-center justify-center text-[9px] text-on-secondary-fixed font-bold ring-2 ring-surface">3</span></div><div class="flex flex-col min-w-0 pr-1"><div class="flex items-center gap-1.5"><span class="font-headline-sm font-semibold text-body-md text-on-surface">Hugo &amp; Chloé</span><span class="font-label-sm text-label-sm text-on-surface-variant font-normal">(Enfants)</span></div><div class="flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-[15px] shrink-0">sports_martial_arts</span><span class="font-label-md text-label-md font-semibold truncate">École &amp; Académie</span></div><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Sortie à 16h30 • Sport de balai</span></div></div><div class="flex flex-col items-end gap-1 shrink-0 ml-2"><span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[11px] font-semibold border border-secondary/30 whitespace-nowrap">Cours</span><span class="material-symbols-outlined text-secondary text-[18px] hover:rotate-45 transition-transform">flight</span></div></div><div class="clock-card border border-[#d49b42]/20 flex items-center justify-between p-3.5 rounded-2xl bg-surface-container shadow-[inset_0_1px_2px_rgba(249,187,95,0.15)] cursor-pointer hover:border-primary/40 transition-all"><div class="flex items-center gap-3 min-w-0 flex-1"><div class="relative w-11 h-11 shrink-0 rounded-full bg-primary/20 flex items-center justify-center shadow-md"><span class="clock-icon material-symbols-outlined text-primary text-[22px]" style="font-variation-settings: 'FILL' 1;">cottage</span><span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center text-[9px] text-on-primary font-bold ring-2 ring-surface">✦</span></div><div class="flex flex-col min-w-0 pr-1"><div class="flex items-center gap-1.5"><span class="font-headline-sm font-semibold text-body-md text-primary">Dobby</span><span class="font-label-sm text-label-sm text-on-surface-variant font-normal">(Gardien du logis)</span></div><div class="flex items-center gap-1 text-primary"><span class="material-symbols-outlined text-[15px] shrink-0">soup_kitchen</span><span class="font-label-md text-label-md font-semibold truncate">Au logis (Foyer &amp; Cuisine)</span></div><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Feu entretenu • Tisane au chaud</span></div></div><div class="flex flex-col items-end gap-1 shrink-0 ml-2"><span class="px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-sm text-[11px] font-semibold shadow-[0_0_10px_rgba(249,187,95,0.5)] whitespace-nowrap">Présent</span><span class="material-symbols-outlined text-primary text-[18px] anim-hearth">favorite</span></div></div></div>
+</section>
+<!-- 3. LA GAZETTE FAMILIALE & AGENDA RITUEL -->
+<section class="flex flex-col gap-space-sm w-full">
+<div class="flex items-center justify-between mb-0.5">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-[#d49b42] text-[20px]">calendar_month</span>
+    <h2 class="font-headline-sm font-semibold text-[18px] leading-tight text-[#fcf7ee]">La Gazette &amp; Agenda Rituel</h2>
+  </div>
+  <div class="px-2.5 py-1 rounded-full border border-amber-900/40 text-xs text-[#d49b42] font-medium bg-surface-container-high/80">
+    <span class="">Semaine 42</span>
+  </div>
+</div>
+<!-- Sélecteur de Jours façon Cuir & Sceaux de Cire -->
+<div class="flex items-center justify-between p-1.5 rounded-xl bg-surface-container-high shadow-md overflow-x-auto gap-1 border border-outline-variant/30" id="calendarDays">
+<button class="day-chip flex flex-col items-center justify-center min-w-[42px] py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90">
+<span class="font-label-sm text-label-sm">Lun</span>
+<span class="font-label-md text-label-md font-semibold">14</span>
+</button>
+<button class="day-chip flex flex-col items-center justify-center min-w-[42px] py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90">
+<span class="font-label-sm text-label-sm">Mar</span>
+<span class="font-label-md text-label-md font-semibold">15</span>
+</button>
+<!-- Mercredi Actif (Sceau Doré) -->
+<button class="day-chip flex flex-col items-center justify-center min-w-[46px] py-1.5 rounded-lg bg-primary text-on-primary font-semibold shadow-[0_2px_8px_rgba(249,187,95,0.4)] ring-2 ring-primary/40 active:scale-90 transition-all">
+<span class="font-label-sm text-label-sm">Mer</span>
+<span class="font-label-md text-label-md font-bold">16</span>
+</button>
+<button class="day-chip flex flex-col items-center justify-center min-w-[42px] py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90">
+<span class="font-label-sm text-label-sm">Jeu</span>
+<span class="font-label-md text-label-md font-semibold">17</span>
+</button>
+<button class="day-chip flex flex-col items-center justify-center min-w-[42px] py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90">
+<span class="font-label-sm text-label-sm">Ven</span>
+<span class="font-label-md text-label-md font-semibold">18</span>
+</button>
+<button class="day-chip flex flex-col items-center justify-center min-w-[42px] py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90">
+<span class="font-label-sm text-label-sm">Sam</span>
+<span class="font-label-md text-label-md font-semibold">19</span>
+</button>
+<button class="day-chip flex flex-col items-center justify-center min-w-[42px] py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90">
+<span class="font-label-sm text-label-sm">Dim</span>
+<span class="font-label-md text-label-md font-semibold">20</span>
+</button>
+</div>
+<!-- Timeline & Cartes d'Événements Interagir -->
+<div class="flex flex-col gap-space-sm mt-1"><div class="p-3.5 rounded-2xl bg-surface-container shadow-[0_4px_16px_rgba(12,7,5,0.5)] flex flex-col gap-1.5 border border-[#d49b42]/20 hover:border-secondary/40 hover:bg-surface-container-high transition-all cursor-pointer"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold border border-secondary/30">16:30</span><span class="font-label-md text-label-md text-secondary font-semibold">Hugo &amp; Chloé</span></div><span class="material-symbols-outlined text-secondary text-[18px]">sports_handball</span></div><h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight">Tournoi de gymnastique &amp; vol sur balai</h4><div class="flex items-center gap-1.5 text-on-surface-variant"><span class="material-symbols-outlined text-[15px] text-primary">check_circle</span><span class="font-body-sm text-body-sm">Sacs de sport et tenues déjà vérifiés par Dobby</span></div></div><div class="p-3.5 rounded-2xl bg-surface-container shadow-[0_4px_16px_rgba(12,7,5,0.5)] flex flex-col gap-1.5 border border-[#d49b42]/20 hover:border-tertiary/40 hover:bg-surface-container-high transition-all cursor-pointer"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold border border-tertiary/40">18:00</span><span class="font-label-md text-label-md text-tertiary font-semibold">Léa</span></div><span class="material-symbols-outlined text-tertiary text-[18px]">local_shipping</span></div><h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight">Retour par le réseau de cheminées</h4><div class="flex items-center gap-1.5 text-on-surface-variant"><span class="material-symbols-outlined text-[15px] text-tertiary">inventory_2</span><span class="font-body-sm text-body-sm">Arrêt prévu au point relais magique (Colis de parchemins)</span></div></div><div class="p-3.5 rounded-2xl bg-surface-container shadow-[0_4px_16px_rgba(12,7,5,0.5)] flex flex-col gap-1.5 border border-[#d49b42]/20 hover:border-primary/40 hover:bg-surface-container-high transition-all cursor-pointer"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-full bg-primary/25 text-primary font-label-sm text-label-sm font-semibold border border-primary/30">20:00</span><span class="font-label-md text-label-md text-primary font-semibold">Toute la Famille</span></div><span class="material-symbols-outlined text-primary text-[18px] anim-hearth">local_fire_department</span></div><h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight">Soirée Veillée &amp; Cartes Enchantées</h4><div class="flex items-center gap-1.5 text-on-surface-variant"><span class="material-symbols-outlined text-[15px] text-primary">emoji_food_beverage</span><span class="font-body-sm text-body-sm">Tisane à la cannelle infusée au chaudron par Dobby</span></div></div><div class="p-3.5 rounded-2xl bg-surface-container-low shadow-[0_2px_8px_rgba(12,7,5,0.3)] flex flex-col gap-1 opacity-80 border border-[#d49b42]/20 hover:border-outline-variant hover:opacity-100 transition-all cursor-pointer"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold border border-outline-variant/30">Sam 10:00</span><span class="font-label-md text-label-md text-on-surface-variant">À venir</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">storefront</span></div><h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight">Marché du Chemin de Traverse</h4><span class="font-body-sm text-body-sm text-on-surface-variant">Achats d’ingrédients &amp; nouvelles plumes d’oie</span></div></div>
+</section>
+<!-- 4. LA VOLIÈRE AUX MESSAGES (Hiboux Postaux & Mémos Importants Dépliables) -->
+<section class="flex flex-col gap-space-sm w-full">
+<div class="flex items-center justify-between mb-0.5">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-[#d49b42] text-[20px]">mark_email_unread</span>
+    <h2 class="font-headline-sm font-semibold text-[18px] leading-tight text-[#fcf7ee]">La Volière aux Messages</h2>
+  </div>
+  <div class="px-2.5 py-1 rounded-full border border-amber-900/40 text-xs text-[#d49b42] font-medium bg-surface-container-high/80 flex items-center gap-1">
+    <span class="material-symbols-outlined text-[13px]">outgoing_mail</span>
+    <span class="">3 mémos</span>
+  </div>
+</div>
+<!-- Parchemins de Correspondance Dépliables -->
+<div class="flex flex-col gap-space-sm"><div class="message-letter p-3.5 rounded-2xl bg-surface-container-high shadow-md flex flex-col gap-1.5 border border-[#d49b42]/20 hover:border-primary/40 transition-all"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary text-[20px]">cruelty_free</span><span class="font-headline-sm text-label-lg font-semibold text-secondary">Lettre de l’Académie</span></div><div class="flex items-center gap-1.5"><span class="font-label-sm text-label-sm text-on-surface-variant">Chloé • 14:15</span><span class="material-symbols-outlined text-secondary text-[16px] letter-icon transition-transform duration-300">expand_more</span></div></div><p class="font-body-md text-body-md text-on-surface leading-snug">« L’autorisation signée pour la sortie botanique dans la forêt enchantée a bien été remise au maître d’armes. »</p><div class="letter-details overflow-hidden max-h-0 transition-all duration-300 flex flex-col gap-2 pt-0 opacity-0"><div class="p-2 rounded-xl bg-surface-container-lowest/80 border border-secondary/30 font-body-sm text-on-surface-variant">📜 <em>Instructions sorcières :</em> Prévoir gants en peau de dragon et flacon de récolte pour essences de mandragore.</div></div><div class="flex items-center gap-1 text-secondary text-label-sm font-label-sm mt-0.5"><span class="material-symbols-outlined text-[14px]">done_all</span><span class="">Sceau magique validé</span></div></div><div class="message-letter p-3.5 rounded-2xl bg-surface-container-high shadow-md flex flex-col gap-1.5 border border-[#d49b42]/20 hover:border-primary/40 transition-all"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[20px] anim-hearth">notifications_active</span><span class="font-headline-sm text-label-lg font-semibold text-primary">Rappel de Dobby</span></div><div class="flex items-center gap-1.5"><span class="font-label-sm text-label-sm text-on-surface-variant">Logis • Important</span><span class="material-symbols-outlined text-primary text-[16px] letter-icon transition-transform duration-300">expand_more</span></div></div><p class="font-body-md text-body-md text-on-surface leading-snug">« Remplacer les piles runiques du détecteur de fumée de la cheminée avant dimanche soir, s’il plaît aux maîtres ! »</p><div class="letter-details overflow-hidden max-h-0 transition-all duration-300 flex flex-col gap-2 pt-0 opacity-0"><div class="p-2 rounded-xl bg-surface-container-lowest/80 border border-primary/30 font-body-sm text-on-surface-variant">✨ <em>Note de Dobby :</em> Les piles sont rangées dans le coffret en noyer près de l'âtre. Dobby a astiqué les verres en prévision !</div></div><div class="flex items-center justify-between mt-1"><span class="font-label-sm text-label-sm text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">priority_high</span> Priorité modérée</span><button class="spell-btn w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer"><span class="material-symbols-outlined text-[20px] text-[#180b07]">calendar_add_on</span><span class="font-semibold">Programmer un rituel ou événement</span></button></div></div><div class="message-letter p-3.5 rounded-2xl bg-surface-container-high shadow-md flex flex-col gap-1.5 border border-[#d49b42]/20 hover:border-primary/40 transition-all"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-tertiary text-[20px]">favorite</span><span class="font-headline-sm text-label-lg font-semibold text-tertiary">Mot doux de Léa</span></div><div class="flex items-center gap-1.5"><span class="font-label-sm text-label-sm text-on-surface-variant">12:45</span><span class="material-symbols-outlined text-tertiary text-[16px] letter-icon transition-transform duration-300">expand_more</span></div></div><p class="font-body-md text-body-md text-on-surface italic leading-snug">« N’oubliez pas de prendre les belles pommes rouges au marché pour la tarte rustique de ce soir ! Bisous à toute la maisonnée. »</p><div class="letter-details overflow-hidden max-h-0 transition-all duration-300 flex flex-col gap-2 pt-0 opacity-0"><div class="p-2 rounded-xl bg-surface-container-lowest/80 border border-tertiary/30 font-body-sm text-on-surface-variant">🍎 <em>Ajout :</em> J'ai préparé la pâte au beurre doux et cannelle dans le buffet froid.</div></div></div></div>
+</section>
+<!-- 5. DOCUMENTS & ARCHIVES DU LOGIS (Accès rapide interactifs) -->
+<section class="flex flex-col gap-space-sm w-full">
+<div class="flex items-center justify-between mb-0.5">
+  <div class="flex items-center gap-2">
+    <span class="material-symbols-outlined text-[#d49b42] text-[20px]">folder_special</span>
+    <h2 class="font-headline-sm font-semibold text-[18px] leading-tight text-[#fcf7ee]">Archives &amp; Accès Rapides</h2>
+  </div>
+  <button class="px-2.5 py-1 rounded-full border border-amber-900/40 text-xs text-[#d49b42] font-medium bg-surface-container-high/80 flex items-center gap-1 hover:text-primary transition-colors cursor-pointer">
+    <span class="">Voir tout</span>
+    <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+  </button>
+</div>
+<!-- 3 Tuiles Raccourcis Élégantes avec Magie au clic -->
+<div class="grid grid-cols-3 gap-2 w-full">
+<!-- Tuile 1: Routines du matin -->
+<button class="flex flex-col items-center text-center p-3 rounded-xl bg-surface-container shadow-md gap-1.5 border border-transparent hover:border-secondary/40 hover:bg-surface-container-high active:scale-95 transition-all group">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[20px]">wb_sunny</span>
+</div>
+<span class="font-headline-sm text-body-sm font-bold text-on-surface leading-tight">Routines du matin</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4 étapes</span>
+</button>
+<!-- Tuile 2: Malles & Bagages -->
+<button class="flex flex-col items-center text-center p-3 rounded-xl bg-surface-container shadow-md gap-1.5 border border-transparent hover:border-tertiary/40 hover:bg-surface-container-high active:scale-95 transition-all group">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[20px]">luggage</span>
+</div>
+<span class="font-headline-sm text-body-sm font-bold text-on-surface leading-tight">Malles &amp; Bagages</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Toussaint</span>
+</button>
+<!-- Tuile 3: Contacts d'Urgence -->
+<button class="flex flex-col items-center text-center p-3 rounded-xl bg-surface-container shadow-md gap-1.5 border border-transparent hover:border-primary/40 hover:bg-surface-container-high active:scale-95 transition-all group">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[20px]">emergency_home</span>
+</div>
+<span class="font-headline-sm text-body-sm font-bold text-on-surface leading-tight">Contacts Urgence</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hibou express</span>
+</button>
+</div>
+</section><div class="flex flex-col items-center text-center p-4 rounded-2xl bg-[#180b07] border border-[#d49b42]/20 shadow-[0_8px_24px_rgba(12,7,5,0.6)] gap-2 mt-2"><div class="flex items-center justify-center gap-2"><div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center border border-[#d49b42]/30 text-primary shadow-[0_0_10px_rgba(249,187,95,0.5)]"><span class="material-symbols-outlined text-[18px] text-primary">security</span></div><span class="font-serif font-bold text-sm tracking-wider text-[#eec66a] uppercase leading-none drop-shadow">SCEAU DE PROTECTION LOCALE DOBBY</span></div><p class="font-body-sm text-[11px] text-[#e6d7c3]/70 leading-relaxed max-w-sm">Données stockées exclusivement en mémoire locale hermétique. Aucun cloud public, synchronisation externe ni télémétrie distante.</p><div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high/80 border border-amber-900/40 text-[10px] text-[#d49b42] font-semibold tracking-widest uppercase"><span class="material-symbols-outlined text-[12px] text-primary">verified_user</span><span class="">AES-256 CHIFFRÉ · v4.8</span></div></div>
+</div>
+</main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl border-t border-primary/10 shadow-[0_-8px_24px_rgba(12,7,5,0.85)]" data-active-classes="text-primary bg-surface-container-high/80 shadow-[inset_0_1px_2px_rgba(249,187,95,0.25)]"><div class="flex justify-around items-center h-16 px-2"><a class="flex flex-col items-center justify-center gap-1 min-w-[64px] py-1 rounded-xl text-on-surface-variant transition-all hover:text-on-surface active:scale-95 group" data-path="traverse-accueil" href="#"><span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">explore</span><span class="font-label-sm text-[11px] font-medium tracking-wide">Traverse</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[64px] py-1 rounded-xl text-on-surface-variant transition-all hover:text-on-surface active:scale-95 group" data-path="parchemins-missions" href="#"><span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">history_edu</span><span class="font-label-sm text-[11px] font-medium tracking-wide">Missions</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[64px] py-1 rounded-xl text-on-surface-variant transition-all hover:text-on-surface active:scale-95 group" data-path="taverne-repas" href="#"><span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">skillet</span><span class="font-label-sm text-[11px] font-medium tracking-wide">Taverne</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[68px] py-1.5 px-3 rounded-xl bg-surface-container-high/80 border border-primary/30 shadow-[inset_0_1px_2px_rgba(249,187,95,0.25)] text-primary transition-all active:scale-95 relative" data-path="famille-agenda" href="#"><span class="material-symbols-outlined text-[22px] text-[#eec66a]" style="font-variation-settings: 'FILL' 1;">family_restroom</span><span class="font-label-sm text-[11px] font-semibold tracking-wide text-[#eec66a]">Famille</span><span class="w-1 h-1 rounded-full bg-primary mt-0.5 shadow-[0_0_6px_#f9bb5f]"></span></a></div></nav>
+
+
+
+
+
+
+
+
+
+
+
+
+<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><script src="./family.js"></script><script src="./bridge.js"></script></body></html>

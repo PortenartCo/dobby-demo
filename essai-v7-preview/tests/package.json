@@ -1,0 +1,14 @@
+{
+  "name": "dobby-stitch-v7-smoke",
+  "private": true,
+  "scripts": {
+    "test": "node ci.cjs",
+    "test:family": "node family.cjs && node family-edge.cjs && node family-review.cjs && node family-shared.cjs && node family-visual.cjs",
+    "test:checkpoint": "node ci.cjs",
+    "test:register-family": "node register-family.cjs",
+    "test:all": "DOBBY_FINAL=1 node ci.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
