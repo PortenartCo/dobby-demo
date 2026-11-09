@@ -1,0 +1,98 @@
+[
+  {
+    "view": "mission-edit",
+    "source": "dobby_cr_er_et_attribuer_une_mission",
+    "width": 320,
+    "sha256": "f7af416d2c01e0b5afa0fdae5c40f79aff93efdb0274a7ade6b0aa2eabb6adf0",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "chat",
+    "source": "dobby_conversation_avec_dobby_1",
+    "width": 320,
+    "sha256": "a497e1dc3364242cba3aae692ef4ea1b9d38e01264db895642a79e603be6d75f",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "chat-2",
+    "source": "dobby_conversation_avec_dobby_2",
+    "width": 320,
+    "sha256": "97c7dbfd717eb5407e9da15aeb0e0207273fd249b4a7a996d55ee2d5e5b26f82",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "search",
+    "source": "dobby_rechercher_dans_dobby_recherche_transversale",
+    "width": 320,
+    "sha256": "1e84176a1a61ed5e52335e21a41fbd091777f135ccf9835a0411cd729df76f30",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "menu",
+    "source": "dobby_menu_g_n_ral_de_tous_les_modules",
+    "width": 320,
+    "sha256": "b07813aa052464a68f5219af35a8f15d674ed513599d3859cfdcf3b33a19b9f2",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "personal",
+    "source": "dobby_grimoire_personnel_du_membre",
+    "width": 320,
+    "sha256": "b14e00740c4a6c6babab28a302dccff1688f1853888f576987cbdff7434c14e5",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "mission-edit",
+    "source": "dobby_cr_er_et_attribuer_une_mission",
+    "width": 390,
+    "sha256": "f7af416d2c01e0b5afa0fdae5c40f79aff93efdb0274a7ade6b0aa2eabb6adf0",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "chat",
+    "source": "dobby_conversation_avec_dobby_1",
+    "width": 390,
+    "sha256": "a497e1dc3364242cba3aae692ef4ea1b9d38e01264db895642a79e603be6d75f",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "chat-2",
+    "source": "dobby_conversation_avec_dobby_2",
+    "width": 390,
+    "sha256": "97c7dbfd717eb5407e9da15aeb0e0207273fd249b4a7a996d55ee2d5e5b26f82",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "search",
+    "source": "dobby_rechercher_dans_dobby_recherche_transversale",
+    "width": 390,
+    "sha256": "1e84176a1a61ed5e52335e21a41fbd091777f135ccf9835a0411cd729df76f30",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "menu",
+    "source": "dobby_menu_g_n_ral_de_tous_les_modules",
+    "width": 390,
+    "sha256": "b07813aa052464a68f5219af35a8f15d674ed513599d3859cfdcf3b33a19b9f2",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "personal",
+    "source": "dobby_grimoire_personnel_du_membre",
+    "width": 390,
+    "sha256": "b14e00740c4a6c6babab28a302dccff1688f1853888f576987cbdff7434c14e5",
+    "overflow": [],
+    "status": "verified-partial"
+  }
+]

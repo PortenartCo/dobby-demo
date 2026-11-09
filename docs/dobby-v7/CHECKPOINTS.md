@@ -49,6 +49,16 @@ Tests ciblés Documents, stockage/partage simulé, extraction réelle PDF/OCR et
 
 Corrections observées : boucle de rafraîchissement import, cartes DIV de démonstration résiduelles, colonnes de carte trop étroites, verrou inutile sur téléchargement en lecture seule. Les défauts sont corrigés et les tests ciblés repassent. Les écarts de composition et illustrations indisponibles sont décrits dans INTEGRATION.md et la galerie.
 
-Commit/CI du lot 4 : à reporter après push du checkpoint. Prochain lot si CI réussie : **5 — Missions et outils transversaux**.
+Commit final lot 4 : `2c688833d717aedc32d3c623665c7e10367d0b4e` (avec `7dfc2da`). CI [push — succès](https://github.com/PortenartCo/dobby-demo/actions/runs/42603579952), [PR — succès](https://github.com/PortenartCo/dobby-demo/actions/runs/42603597512). Prochain lot si CI réussie : **5 — Missions et outils transversaux**.
 
 Complément lot 4 : les trois fiches détaillées conservent maintenant leurs vrais blocs héros/résumé/aperçu/registre/notes, y compris les variantes composées de DIV. Le test de composition a d’abord échoué puis passé. Un test de transfert sur deux fiches a détecté une référence obsolète du sélecteur temporaire partagé ; son destinataire est désormais actualisé à chaque envoi. Les deux objets restent distincts et la destination revient au local lors d’un changement de fiche.
+
+## Lot 5 — Missions et outils transversaux
+
+Six sources actives : création/modification de mission, deux conversations, recherche, menu et grimoire personnel. Une fonctionnelle, cinq partielles ; total **53 actives = 24 fonctionnelles + 29 partielles**, aucune page simplement importée restante. Les états exacts et fonctions manquantes sont dans [SOURCE-STATUS.md](SOURCE-STATUS.md). [Galeries générales](evidence/index.html), [lot 5](evidence/lot-5/README.md), [quatre racines](evidence/roots/README.md).
+
+Tests locaux ciblés et communs réussis : missions natives/attribution/édition/terminaison, sources automatiques distinctes, commandes conversationnelles/historique, recherche locale et vraies destinations, choix de membre et absence de faux dossier clinique ; client de synchronisation natif sur API simulée, coche hors ligne/recharge/reprise et exclusion des données privées. Les quinze accès du menu, les quatre racines, retour/avance/recharge et l’absence de réutilisation d’un ID entre domaines sont vérifiés à 320/390. Les contrôles Documents sont complétés par un vrai mode navigateur hors ligne. Les comparaisons finales couvrent aussi les quatre racines.
+
+Défauts corrigés avec preuves : gestionnaire de recherche déclenché dans le mauvais écran, nouvelle mission créée à partir d’un éditeur supprimé, lien Taverne ignoré, filtre du menu impossible à effacer, champ partagé pointant sur l’ancienne fiche, composeur conversationnel superposé aux messages. Les contrôles principaux restent dans les compositions Stitch. Les métadonnées, fichiers, modèles et synchronisations restent natifs. Aucun compte réel, aucune suppression hors fixture, aucune restauration destructive, aucun changement SQL/Supabase/V5 ou déploiement/fusion.
+
+Checkpoint d’implémentation lot 5 : commit/CI à reporter après push. Dernière étape : revue finale de l’ensemble 2B–5, correction des constats importants et validation CI générale sur le SHA final. Ce checkpoint ne déclare pas l’application finalisée.

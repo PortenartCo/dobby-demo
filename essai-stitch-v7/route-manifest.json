@@ -1,7 +1,7 @@
 {
   "screenSources": 53,
-  "templatesUsedInActiveUI": 47,
-  "activeFunctionalScreens": 23,
+  "templatesUsedInActiveUI": 53,
+  "activeFunctionalScreens": 24,
   "roots": [
     {
       "screen": "taverne",
@@ -547,22 +547,103 @@
       "id": "dobby_conversation_avec_dobby_1",
       "source": "design/stitch-53/dobby_conversation_avec_dobby_1/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#chat",
+      "template": "templates/remaining/chat.html",
+      "unsupported": [
+        "Commandes textuelles natives limitées et historique local. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_conversation_avec_dobby_2",
       "source": "design/stitch-53/dobby_conversation_avec_dobby_2/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#chat-2",
+      "template": "templates/remaining/chat-2.html",
+      "unsupported": [
+        "Même moteur natif de commandes et historique. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-2-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-2-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-2-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-2-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_cr_er_et_attribuer_une_mission",
       "source": "design/stitch-53/dobby_cr_er_et_attribuer_une_mission/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#mission-edit",
+      "template": "templates/remaining/mission-edit.html",
+      "unsupported": [
+        "Mission native : titre, catégorie, membre responsable, échéance et note. Pas de récurrence, heure, difficulté, runes ou récompense."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/mission-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/mission-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/mission-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/mission-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_cr_er_ou_modifier_un_contact",
@@ -944,8 +1025,35 @@
       "id": "dobby_grimoire_personnel_du_membre",
       "source": "design/stitch-53/dobby_grimoire_personnel_du_membre/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#personal",
+      "template": "templates/remaining/personal.html",
+      "unsupported": [
+        "Membre canonique et missions attribuées. Accès au carnet local et agenda ; pas d’agrégation automatique des documents par champ personne libre, contacts personnels, récompenses ou antécédents structurés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/personal-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/personal-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/personal-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/personal-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_g_rer_les_donn_es_des_quipements_export_restauration",
@@ -1192,7 +1300,30 @@
       "source": "design/stitch-53/dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
       "hasScreenshot": true,
       "linked": true,
-      "mode": "functional-adapter"
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "missions.html",
+      "verification": {
+        "tests": [
+          "tests/smoke.cjs",
+          "tests/register-root-visual.cjs",
+          "tests/register-navigation.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/missions-320.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/missions-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/missions-390.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/missions-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_la_taverne_gourmande_repas_menus",
@@ -1200,10 +1331,8 @@
       "hasScreenshot": true,
       "linked": true,
       "mode": "functional-adapter",
-      "domain": "cuisine",
-      "route": "index.html#taverne",
-      "template": "templates/taverne.html",
       "integration": "verified-functional",
+      "route": "index.html#taverne",
       "verification": {
         "tests": [
           "tests/cuisine.cjs",
@@ -1225,6 +1354,8 @@
           }
         ]
       },
+      "domain": "cuisine",
+      "template": "templates/taverne.html",
       "canonical": "taverne"
     },
     {
@@ -1232,7 +1363,30 @@
       "source": "design/stitch-53/dobby_le_salon_des_curiosit_s_famille_organisation/code.html",
       "hasScreenshot": true,
       "linked": true,
-      "mode": "functional-adapter"
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "famille.html",
+      "verification": {
+        "tests": [
+          "tests/smoke.cjs",
+          "tests/register-root-visual.cjs",
+          "tests/register-navigation.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/famille-320.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/famille-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/famille-390.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/famille-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_liste_de_courses_valid_e",
@@ -1272,7 +1426,30 @@
       "source": "design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html",
       "hasScreenshot": true,
       "linked": true,
-      "mode": "functional-adapter"
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "traverse.html",
+      "verification": {
+        "tests": [
+          "tests/smoke.cjs",
+          "tests/register-root-visual.cjs",
+          "tests/register-navigation.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/traverse-320.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/traverse-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/traverse-390.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/traverse-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_maison_quipements_du_logis_1",
@@ -1383,8 +1560,35 @@
       "id": "dobby_menu_g_n_ral_de_tous_les_modules",
       "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-5",
+      "integration": "verified-functional",
+      "route": "famille.html#menu",
+      "template": "templates/remaining/menu.html",
+      "unsupported": [
+        "Navigation vers les outils existants et filtre du menu ; aucun nouveau module inventé."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/menu-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/menu-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/menu-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/menu-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_mode_cuisine_tape_par_tape",
@@ -1489,8 +1693,35 @@
       "id": "dobby_rechercher_dans_dobby_recherche_transversale",
       "source": "design/stitch-53/dobby_rechercher_dans_dobby_recherche_transversale/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#search",
+      "template": "templates/remaining/search.html",
+      "unsupported": [
+        "Recherche locale native contacts, listes, fiches santé locales, documents, mémos, équipements, recettes ; 80 résultats maximum. Pas d’index des fichiers, Apple, membres, agenda, missions ou historique de recherches."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/search-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/search-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/search-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/search-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_registre_des_listes_familiales",
@@ -1604,8 +1835,8 @@
     "functional": 2,
     "partial": 5
   },
-  "partialSources": 24,
-  "sourceOnly": 6,
+  "partialSources": 29,
+  "sourceOnly": 0,
   "sequentialLots": {
     "3": {
       "sources": 7,
@@ -1616,6 +1847,11 @@
       "sources": 11,
       "functional": 2,
       "partial": 9
+    },
+    "5": {
+      "sources": 6,
+      "functional": 1,
+      "partial": 5
     },
     "2b": {
       "sources": 6,

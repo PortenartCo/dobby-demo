@@ -43,16 +43,16 @@
 ### Task 3: Lot 4 — documents, contracts and imports
 **Files:** add `documents-register.js`, `tests/register-documents.cjs`; extend routes, docs/evidence.
 **Interfaces:** Same shell, existing `familyDocForm`, attachment handlers and contract views over native records; native import validation and confirmation only.
-- [ ] Identify eleven original sources; write/run failing document CRUD/file lifecycle/import invalid/cancel and contract view/modify paths.
-- [ ] Bind originals, real metadata and native files; distinguish local and shared state; disable missing OCR/AI/extraction/guarantee features explicitly.
-- [ ] Run tests and 320/390 source/live/empty captures; verify file bytes retained and canceled imports unchanged. Expected PASS.
-- [ ] Document exact statuses/proofs; commit, push, check lot CI; checkpoint and continue.
+- [x] Identify eleven original sources; write/run failing document CRUD/file lifecycle/import invalid/cancel and contract view/modify paths.
+- [x] Bind originals, real metadata and native files; distinguish local and shared state; disable missing OCR/AI/extraction/guarantee features explicitly.
+- [x] Run tests and 320/390 source/live/empty captures; verify file bytes retained and canceled imports unchanged. Expected PASS.
+- [x] Document exact statuses/proofs; commit, push, check lot CI; checkpoint and continue.
 
 ### Task 4: Lot 5 — missions and cross-domain tools
 **Files:** add `tools-register.js`, `tests/register-tools.cjs`, `tests/register-navigation.cjs`; remaining route config and final docs/CI.
 **Interfaces:** Native mission, search, personal/settings/menu/chat handlers through same engine; unsupported conversation capabilities explicit.
-- [ ] Write/run failing source navigation/mission create/edit/assign and search real-result routing assertions.
-- [ ] Integrate remaining sources and both conversation variants to actual available contracts, without new conversational engine.
+- [x] Write/run failing source navigation/mission create/edit/assign and search real-result routing assertions.
+- [x] Integrate remaining sources and both conversation variants to actual available contracts, without new conversational engine.
 - [ ] Run targeted tests/captures at 320/390 and full cross-domain navigation/back/reload, shared regressions and final CI. Expected PASS.
 - [ ] Final fresh-context whole-mission review; one fix pass with RED→GREEN for important findings, then green relevant suites.
 - [ ] Final manifest counts, exact remaining/partial list and reasons, checkpoints and visual index; commits/push/PR #3 update and final-SHA CI proof. Stop.

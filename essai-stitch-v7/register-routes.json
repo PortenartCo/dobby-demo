@@ -214,5 +214,59 @@
     "unsupported": [
       "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
     ]
+  },
+  {
+    "view": "mission-edit",
+    "id": "dobby_cr_er_et_attribuer_une_mission",
+    "lot": "5",
+    "status": "verified-partial",
+    "unsupported": [
+      "Mission native : titre, catégorie, membre responsable, échéance et note. Pas de récurrence, heure, difficulté, runes ou récompense."
+    ]
+  },
+  {
+    "view": "chat",
+    "id": "dobby_conversation_avec_dobby_1",
+    "lot": "5",
+    "status": "verified-partial",
+    "unsupported": [
+      "Commandes textuelles natives limitées et historique local. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+    ]
+  },
+  {
+    "view": "chat-2",
+    "id": "dobby_conversation_avec_dobby_2",
+    "lot": "5",
+    "status": "verified-partial",
+    "unsupported": [
+      "Même moteur natif de commandes et historique. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
+    ]
+  },
+  {
+    "view": "search",
+    "id": "dobby_rechercher_dans_dobby_recherche_transversale",
+    "lot": "5",
+    "status": "verified-partial",
+    "unsupported": [
+      "Recherche locale native contacts, listes, fiches santé locales, documents, mémos, équipements, recettes ; 80 résultats maximum. Pas d’index des fichiers, Apple, membres, agenda, missions ou historique de recherches."
+    ]
+  },
+  {
+    "view": "menu",
+    "id": "dobby_menu_g_n_ral_de_tous_les_modules",
+    "lot": "5",
+    "status": "verified-functional",
+    "unsupported": [
+      "Navigation vers les outils existants et filtre du menu ; aucun nouveau module inventé."
+    ]
+  },
+  {
+    "view": "personal",
+    "id": "dobby_grimoire_personnel_du_membre",
+    "lot": "5",
+    "status": "verified-partial",
+    "unsupported": [
+      "Membre canonique et missions attribuées. Accès au carnet local et agenda ; pas d’agrégation automatique des documents par champ personne libre, contacts personnels, récompenses ou antécédents structurés."
+    ]
   }
 ]

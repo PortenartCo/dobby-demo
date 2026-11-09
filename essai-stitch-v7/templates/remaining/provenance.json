@@ -118,5 +118,35 @@
     "view": "import-file",
     "source": "design/stitch-53/dobby_import_intelligent_s_lection_d_un_fichier/code.html",
     "sha256": "e72587741325371b0bc7c8676912b68d58f7c05f5548ffd736d3db42416372bd"
+  },
+  {
+    "view": "mission-edit",
+    "source": "design/stitch-53/dobby_cr_er_et_attribuer_une_mission/code.html",
+    "sha256": "f7af416d2c01e0b5afa0fdae5c40f79aff93efdb0274a7ade6b0aa2eabb6adf0"
+  },
+  {
+    "view": "chat",
+    "source": "design/stitch-53/dobby_conversation_avec_dobby_1/code.html",
+    "sha256": "a497e1dc3364242cba3aae692ef4ea1b9d38e01264db895642a79e603be6d75f"
+  },
+  {
+    "view": "chat-2",
+    "source": "design/stitch-53/dobby_conversation_avec_dobby_2/code.html",
+    "sha256": "97c7dbfd717eb5407e9da15aeb0e0207273fd249b4a7a996d55ee2d5e5b26f82"
+  },
+  {
+    "view": "search",
+    "source": "design/stitch-53/dobby_rechercher_dans_dobby_recherche_transversale/code.html",
+    "sha256": "1e84176a1a61ed5e52335e21a41fbd091777f135ccf9835a0411cd729df76f30"
+  },
+  {
+    "view": "menu",
+    "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
+    "sha256": "b07813aa052464a68f5219af35a8f15d674ed513599d3859cfdcf3b33a19b9f2"
+  },
+  {
+    "view": "personal",
+    "source": "design/stitch-53/dobby_grimoire_personnel_du_membre/code.html",
+    "sha256": "b14e00740c4a6c6babab28a302dccff1688f1853888f576987cbdff7434c14e5"
   }
 ]
