@@ -53,6 +53,8 @@
 **Interfaces:** Native mission, search, personal/settings/menu/chat handlers through same engine; unsupported conversation capabilities explicit.
 - [x] Write/run failing source navigation/mission create/edit/assign and search real-result routing assertions.
 - [x] Integrate remaining sources and both conversation variants to actual available contracts, without new conversational engine.
-- [ ] Run targeted tests/captures at 320/390 and full cross-domain navigation/back/reload, shared regressions and final CI. Expected PASS.
+- [x] Run targeted tests/captures at 320/390 and full cross-domain navigation/back/reload, shared regressions and the general checkpoint CI. Expected PASS.
 - [x] Final fresh-context whole-mission review; one fix pass with RED→GREEN for important findings, then green relevant suites.
-- [ ] Final manifest counts, exact remaining/partial list and reasons, checkpoints and visual index; commits/push/PR #3 update and final-SHA CI proof. Stop.
+- [x] Final manifest counts, exact remaining/partial list and reasons, checkpoints and visual index.
+
+External delivery gate: push the final candidate into PR #3, verify its exact-head general CI, and record SHA/check URLs in the mutable PR description and delivery message. The committed plan cannot embed its own future check result. Stop after that gate.

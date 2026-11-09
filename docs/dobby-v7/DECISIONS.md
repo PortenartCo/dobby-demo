@@ -28,4 +28,6 @@ La demande utilisateur prime sur les procédures des compétences. Les arbitrage
 
 - Final: Ruling: finishing skill choice is already made by the user — push the existing PR branch, preserve checkout, never merge/deploy; no redundant permission menu — cost: integration remains for the user.
 
+- Final: Ruling: immutable code/docs cannot embed their own future final SHA/check result — record exact live completion in PR description and delivery; checkpoint keeps prior fully verified SHA — cost: final current-head CI is followed through PR Checks, not a self-referential committed SHA.
+
 Aucun mineur distinct différé n’a été relevé par la revue finale. Les fonctions manquantes, illustrations inaccessibles, essais sur comptes réels et exécution de restauration ne sont pas déclarés terminés ; voir [SOURCE-STATUS.md](SOURCE-STATUS.md) et [FINAL-REVIEW.md](FINAL-REVIEW.md).
