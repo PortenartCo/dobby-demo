@@ -34,6 +34,12 @@ Le premier lancement de la chaîne locale sans CHROMIUM_PATH s'est arrêté dans
   C:/Program Files/Google/Chrome/Application/chrome.exe
   at essai-stitch-v7/tests/smoke.cjs:8:81
 Relance avec CHROMIUM_PATH=/usr/bin/chromium : chaîne complète PASS. La CI existante fournit déjà ce paramètre.
+Incident CI E02 corrigé (exécution 42721274029, trace ci-initial-failure.txt) :
+le nouveau test de suppression d'un échange comparait le compteur (32 au lieu de 31)
+avant la fin de la transaction IndexedDB. Le test attend maintenant la fin de DobbyChat.busy ;
+la véritable écriture native est aussi retardée de 250 ms dans ce seul scénario pour exercer l'attente,
+puis la conservation après rechargement reste vérifiée. Aucune assertion de persistance retirée,
+aucune modification applicative pour cette correction. Nouvelle exécution ciblée : PASS.
 Les échecs attendus des scénarios ajoutés avant correction ont servi à vérifier les garde-fous ; aucun échec local restant.
 
 Revue ciblée indépendante : brouillons/changement de compte, reprise BFCache, erreurs de save natif,

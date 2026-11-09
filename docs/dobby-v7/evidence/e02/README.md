@@ -33,6 +33,6 @@ Les captures runtime et tests utilisent des profils Chromium éphémères, le r�
 
 [Contrat, diagnostic d'accès et blocage de synchronisation individuelle](../../E02-PARLER-A-DOBBY.md). Les tests d'identité locale ne prouvent pas une RLS serveur : aucune structure distante privée n'est créée ni utilisée. L'ancien historique sans auteur reste intact et n'est pas attribué à un utilisateur. Aucune synchronisation multi-appareils annoncée.
 
-[Fichiers modifiés](files-changed.txt) · [Chaîne navigateur](browser-tests.txt) · [Tests natifs](native-tests.txt) · [Résultats et incidents de recette](results.txt) · [Détails voix/historique](voice-history-results.json).
+[Fichiers modifiés](files-changed.txt) · [Chaîne navigateur](browser-tests.txt) · [Tests natifs](native-tests.txt) · [Résultats et incidents de recette](results.txt) · [Trace du premier échec CI, attente du test corrigée](ci-initial-failure.txt) · [Détails voix/historique](voice-history-results.json).
 
 Pas de fusion, de déploiement, de service payant ou de migration. Les essais microphone/synthèse/clavier et la recette Safari iOS sur un iPhone physique restent à réaliser.
