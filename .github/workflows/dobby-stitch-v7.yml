@@ -38,6 +38,13 @@ jobs:
           node --check essai-stitch-v7/tests/cuisine.cjs
           node --check essai-stitch-v7/tests/cuisine-visual.cjs
           node --check essai-stitch-v7/tests/cuisine-family.cjs
+          node --check essai-stitch-v7/build-family.cjs
+          node --check essai-stitch-v7/family-engine.js
+          node --check essai-stitch-v7/family.js
+          node --check essai-stitch-v7/tests/family.cjs
+          node --check essai-stitch-v7/tests/family-edge.cjs
+          node --check essai-stitch-v7/tests/family-shared.cjs
+          node --check essai-stitch-v7/tests/family-visual.cjs
       - name: Existing offline, family and conflict regressions
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
       - name: Source derivation remains reproducible
@@ -68,7 +75,8 @@ jobs:
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/cuisine.cjs
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/cuisine-family.cjs
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/cuisine-visual.cjs
-      - name: Keep root and Cuisine comparisons (320/390px)
+          CHROMIUM_PATH="$BROWSER" npm run test:family --prefix essai-stitch-v7/tests
+      - name: Keep root, Cuisine and Family comparisons (320/390px)
         if: always()
         uses: actions/upload-artifact@v4
         with:

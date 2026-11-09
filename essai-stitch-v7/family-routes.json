@@ -1,9 +1,60 @@
 [
- {"view":"members","id":"dobby_membres_de_la_maisonn_e","status":"prepared"},
- {"view":"member-edit","id":"dobby_ajouter_ou_modifier_un_membre","status":"prepared"},
- {"view":"agenda","id":"dobby_agenda_almanach_du_foyer","status":"prepared"},
- {"view":"medical-edit","id":"dobby_cr_er_ou_modifier_un_rendez_vous_m_dical","status":"prepared"},
- {"view":"health","id":"dobby_carnet_de_sant_familial","status":"prepared"},
- {"view":"health-person","id":"dobby_carnet_de_sant_individuel","status":"prepared"},
- {"view":"health-history","id":"dobby_historique_contacts_m_dicaux","status":"prepared"}
+  {
+    "view": "members",
+    "id": "dobby_membres_de_la_maisonn_e",
+    "status": "verified-functional",
+    "unsupported": [
+      "Filtres par rôle : aucun rôle stocké dans le modèle natif. Portraits réels et vœux du personnage Dobby non gérés."
+    ]
+  },
+  {
+    "view": "member-edit",
+    "id": "dobby_ajouter_ou_modifier_un_membre",
+    "status": "verified-partial",
+    "unsupported": [
+      "Un seul champ prénom / nom natif : nom de famille séparé, rôle, photo et notes de membre non enregistrés."
+    ]
+  },
+  {
+    "view": "agenda",
+    "id": "dobby_agenda_almanach_du_foyer",
+    "status": "verified-functional",
+    "unsupported": [
+      "Apple Calendar bidirectionnel et rappels automatiques absents. Export manuel ICS disponible."
+    ]
+  },
+  {
+    "view": "medical-edit",
+    "id": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
+    "status": "verified-partial",
+    "unsupported": [
+      "Téléphone / tarif du praticien, durée, rappels et pièces jointes absents.",
+      "Heure et lieu disponibles seulement pour le rendez-vous partagé natif, pas pour famHealth individuel. Référence de document : texte local seulement."
+    ]
+  },
+  {
+    "view": "health",
+    "id": "dobby_carnet_de_sant_familial",
+    "status": "verified-partial",
+    "unsupported": [
+      "Cycles de soins, vaccins, antécédents cliniques structurés et pièces jointes non implémentés. Les références / notes et rendez-vous existants sont consultables."
+    ]
+  },
+  {
+    "view": "health-person",
+    "id": "dobby_carnet_de_sant_individuel",
+    "status": "verified-partial",
+    "unsupported": [
+      "Groupe sanguin, constantes, vaccins, pièces jointes structurées et archivage du carnet absents."
+    ]
+  },
+  {
+    "view": "health-history",
+    "id": "dobby_historique_contacts_m_dicaux",
+    "status": "verified-partial",
+    "unsupported": [
+      "Historique des rendez-vous et notes natifs seulement ; pas de journal clinique structuré.",
+      "Répertoire médical global du foyer : aucune liaison native contact / patient. Pas de messagerie ni localisation des cabinets."
+    ]
+  }
 ]

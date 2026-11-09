@@ -1,7 +1,7 @@
 {
   "screenSources": 53,
-  "templatesUsedInActiveUI": 16,
-  "activeFunctionalScreens": 16,
+  "templatesUsedInActiveUI": 23,
+  "activeFunctionalScreens": 23,
   "roots": [
     {
       "screen": "taverne",
@@ -62,13 +62,37 @@
       "id": "dobby_agenda_almanach_du_foyer",
       "source": "design/stitch-53/dobby_agenda_almanach_du_foyer/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#agenda",
       "template": "templates/family/agenda.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-functional",
+      "unsupported": [
+        "Apple Calendar bidirectionnel et rappels automatiques absents. Export manuel ICS disponible."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/agenda-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/agenda-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/agenda-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/agenda-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_ajouter_ou_modifier_un_document",
@@ -81,13 +105,37 @@
       "id": "dobby_ajouter_ou_modifier_un_membre",
       "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_membre/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#member-edit",
       "template": "templates/family/member-edit.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-partial",
+      "unsupported": [
+        "Un seul champ prénom / nom natif : nom de famille séparé, rôle, photo et notes de membre non enregistrés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/member-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/member-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/member-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/member-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_ajouter_ou_modifier_un_quipement",
@@ -187,25 +235,73 @@
       "id": "dobby_carnet_de_sant_familial",
       "source": "design/stitch-53/dobby_carnet_de_sant_familial/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#health",
       "template": "templates/family/health.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-partial",
+      "unsupported": [
+        "Cycles de soins, vaccins, antécédents cliniques structurés et pièces jointes non implémentés. Les références / notes et rendez-vous existants sont consultables."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_carnet_de_sant_individuel",
       "source": "design/stitch-53/dobby_carnet_de_sant_individuel/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#health-person",
       "template": "templates/family/health-person.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-partial",
+      "unsupported": [
+        "Groupe sanguin, constantes, vaccins, pièces jointes structurées et archivage du carnet absents."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-person-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-person-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-person-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-person-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_choisir_un_repas_nombre_de_convives",
@@ -293,13 +389,38 @@
       "id": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
       "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_rendez_vous_m_dical/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#medical-edit",
       "template": "templates/family/medical-edit.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-partial",
+      "unsupported": [
+        "Téléphone / tarif du praticien, durée, rappels et pièces jointes absents.",
+        "Heure et lieu disponibles seulement pour le rendez-vous partagé natif, pas pour famHealth individuel. Référence de document : texte local seulement."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/medical-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/medical-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/medical-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/medical-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_d_clarer_ou_renouveler_un_contrat",
@@ -427,13 +548,38 @@
       "id": "dobby_historique_contacts_m_dicaux",
       "source": "design/stitch-53/dobby_historique_contacts_m_dicaux/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#health-history",
       "template": "templates/family/health-history.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-partial",
+      "unsupported": [
+        "Historique des rendez-vous et notes natifs seulement ; pas de journal clinique structuré.",
+        "Répertoire médical global du foyer : aucune liaison native contact / patient. Pas de messagerie ni localisation des cabinets."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-history-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-history-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-history-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-history-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_historique_des_listes_de_courses",
@@ -627,13 +773,37 @@
       "id": "dobby_membres_de_la_maisonn_e",
       "source": "design/stitch-53/dobby_membres_de_la_maisonn_e/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only",
+      "linked": true,
+      "mode": "functional-adapter",
       "domain": "family-2a",
       "route": "famille.html#members",
       "template": "templates/family/members.html",
-      "integration": "prepared",
-      "unsupported": []
+      "integration": "verified-functional",
+      "unsupported": [
+        "Filtres par rôle : aucun rôle stocké dans le modèle natif. Portraits réels et vœux du personnage Dobby non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/members-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/members-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/members-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/members-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_menu_g_n_ral_de_tous_les_modules",
@@ -776,7 +946,9 @@
   },
   "family2a": {
     "sources": 7,
-    "functional": 0,
-    "partial": 0
-  }
+    "functional": 2,
+    "partial": 5
+  },
+  "partialSources": 5,
+  "sourceOnly": 30
 }

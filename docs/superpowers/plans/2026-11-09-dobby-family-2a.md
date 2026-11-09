@@ -33,11 +33,11 @@
 
 **Interfaces:** `DobbyFamilyStitch.open(view, values, history)` handles `members`, `member-edit`, `agenda`, `medical-edit`, `health`, `health-person`, `health-history`; `DobbyFamilyStitchEngine` reads native state and dispatches native forms/actions without new writers.
 
-- [ ] Write/run browser member path test; expected RED: Family source controller absent.
-- [ ] Generate seven source-derived templates, validate image MIME/hashes and record unavailable originals.
-- [ ] Bind members list/form, original native name/birthdate/avatar, duplicate/linked-delete safeguards; show unsupported fields explicitly.
-- [ ] Run member create → record → edit → reload tests at both widths; expected PASS.
-- [ ] Commit reproducible sources and member integration.
+- [x] Write/run browser member path test; expected RED: Family source controller absent.
+- [x] Generate seven source-derived templates, validate image MIME/hashes and record unavailable originals.
+- [x] Bind members list/form, original native name/birthdate/avatar, duplicate/linked-delete safeguards; show unsupported fields explicitly.
+- [x] Run member create → record → edit → reload tests at both widths; expected PASS.
+- [x] Commit reproducible sources and member integration.
 
 ### Task 2: Agenda and medical journeys
 
@@ -45,10 +45,10 @@
 
 **Interfaces:** local `famHealth` uses `xHealthForm`; shared `sharedHealthVisits` uses `fhForm` and native active-module gate; ordinary `familyEvents` uses `fpEventForm`; contacts use native `xContactForm`. Person selectors use existing member IDs, with display-only name resolution.
 
-- [ ] Add/run failing assertions for ordinary event CRUD, local visit CRUD, explicit shared scope, history/contact consultation and no medical copying.
-- [ ] Bind seven source compositions, native validations/confirmations/deletions, and return navigation; unsupported functions remain visibly unavailable.
-- [ ] Test persistence, member rename/duplicate/linked deletion, local/shared separation, canceled deletion, empty states, history/back and native mocked synchronization/offline behavior; expected PASS.
-- [ ] Commit functional journeys.
+- [x] Add/run failing assertions for ordinary event CRUD, local visit CRUD, explicit shared scope, history/contact consultation and no medical copying.
+- [x] Bind seven source compositions, native validations/confirmations/deletions, and return navigation; unsupported functions remain visibly unavailable.
+- [x] Test persistence, member rename/duplicate/linked deletion, local/shared separation, canceled deletion, empty states, history/back and native mocked synchronization/offline behavior; expected PASS.
+- [x] Commit functional journeys.
 
 ### Task 3: Evidence, review and PR
 

@@ -20,17 +20,30 @@ window.DobbyFamilyStitchEngine=(()=>{
   lastError='';const form=win().document.getElementById(id);if(!form)throw Error('Formulaire DOBBY indisponible.');
   for(const [key,value]of Object.entries(values)){const field=form.elements.namedItem(key);if(field)field.value=value??'';}
   if(!form.checkValidity())throw Error([...form.elements].find(x=>x.validity&&!x.validity.valid)?.validationMessage||'Vérifiez les champs.');
-  form.requestSubmit();if(lastError)throw Error(lastError);
+  form.requestSubmit();
+  if(lastError)throw Error(lastError);
  }
  const requireRecord=(rows,id)=>{if(id&&!rows.some(x=>x.id===id))throw Error('Cette fiche a été supprimée. Revenez au registre.');};
  function memberForm(id){requireRecord(read().members,id);page('health');action('v23Member',id?'edit':'new',id?{id}:{});}
- function saveMember(id,values){memberForm(id);submit('v23MemberForm',values);return read().state.v23HealthMemberId;}
+ function saveMember(id,values){memberForm(id);submit('v23MemberForm',values);if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');return read().state.v23HealthMemberId;}
  function deleteMember(id){requireRecord(read().members,id);page('health');action('v23Member','delete',{id});return !read().members.some(x=>x.id===id);}
  function localForm(id,personId){requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}
  function sharedForm(id){requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}
  function saveVisit(scope,id,values){
-  const before=read();if(scope==='shared'){sharedForm(id);submit('fhForm',values);}else{localForm(id,values.personId);submit('xHealthForm',values);}
-  const after=read()[scope==='shared'?'shared':'local'];return id||after.find(x=>!before[scope==='shared'?'shared':'local'].some(old=>old.id===x.id))?.id;
+  const before=read();
+  if(scope==='shared'){sharedForm(id);submit('fhForm',values);}
+  else{
+   const member=before.members.find(x=>x.id===values.personId);if(!member)throw Error('Sélectionnez une personne du registre.');
+   localForm(id,member.id);submit('xHealthForm',{...values,person:member.name});if(read().state.extraPage!=='health')throw Error('Indiquez un intitulé pour enregistrer ce rendez-vous.');
+  }
+  const after=read()[scope==='shared'?'shared':'local'],saved=id||after.find(x=>!before[scope==='shared'?'shared':'local'].some(old=>old.id===x.id))?.id;
+  if(scope!=='shared'&&saved){
+   // Native legacy form listeners shadow the V23 id check (hidden input name=id).
+   // Keep the native save/validation and only restore its existing canonical
+   // personId field for the explicitly selected record; never create a person.
+   evaluate('const member=v23MemberById(p.personId),row=st.famHealth.find(x=>x.id===p.id);if(!member||!row)throw Error("Fiche ou personne indisponible");row.personId=member.id;row.person=member.name;save();render();',{id:saved,personId:values.personId});
+  }
+  return saved;
  }
  function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}
  function eventForm(id){requireRecord(read().events,id);page();action('fpAction',id?'edit':'new',id?{id}:{});return win().document.getElementById('fpEventForm');}
@@ -38,7 +51,7 @@ window.DobbyFamilyStitchEngine=(()=>{
  function deleteEvent(id){requireRecord(read().events,id);page();action('fpAction','delete',{id});}
  function exportEvent(id){page();action('fpAction','ics',{id});}
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
- function saveContact(id,values){contactForm(id);submit('xContactForm',values);}
+ function saveContact(id,values){contactForm(id);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
  function deleteContact(id){requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
  return Object.freeze({win,evaluate,read,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
 })();
