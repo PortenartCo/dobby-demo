@@ -124,3 +124,8 @@ La validation sur iPhone physique, Safari iOS et batterie en conditions réelles
 Micro-correction limitée à `home.js` : un conteneur Stitch commun englobe le titre, le compteur, Ajouter et le contenu, avec le même fond, rayon, bordure et ombre que le Festin. Les espacements de l'en-tête et du contenu reprennent ses classes existantes. Les groupes titre/actions passent à la ligne si nécessaire ; l'état vide en pointillés reste un sous-bloc. Les gestionnaires, données, routes, barres permanentes et autres cartes sont inchangés.
 
 [Comparaisons avant/après, états vide et liste à 390 et 1440 px](evidence/e01-3a/README.md). Contrôles Chromium ciblés : éléments contenus, aucun débordement, styles et paddings comparés au Festin, DOM des autres cartes/navigation identique, état et stockage inchangés pendant le rendu. Régression E01 existante : PASS aux deux largeurs, y compris validation des missions, Ajouter, consultation et navigation. Aucun compte réel testé. Aucun écart identifié dans ce périmètre ; aucune fusion ni publication. Arrêt après E01.3a.
+
+
+## E01.3b — Cadre Gazette des Curiosités
+
+Harmonisation visuelle de la Gazette avec Missions et Festin : son en-tête source (titre, date) et son contenu source (état vide ou événements) sont regroupés dans une carte Stitch unique, avec les mêmes classes de fond, bordure, rayon, ombre et espacements que les deux autres sections. Les lignes d'événements, leurs identifiants, leur chronologie et les liens vers l'Agenda restent inchangés. Aucun contenu fictif, aucune modification de données ni de stockage. Les assertions E01 vérifient la carte en états vide et rempli aux deux largeurs.
