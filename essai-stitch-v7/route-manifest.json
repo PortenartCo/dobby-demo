@@ -1,7 +1,7 @@
 {
   "screenSources": 53,
-  "templatesUsedInActiveUI": 23,
-  "activeFunctionalScreens": 18,
+  "templatesUsedInActiveUI": 29,
+  "activeFunctionalScreens": 19,
   "roots": [
     {
       "screen": "taverne",
@@ -230,8 +230,35 @@
       "id": "dobby_biblioth_que_des_m_mos_notes_familiales",
       "source": "design/stitch-53/dobby_biblioth_que_des_m_mos_notes_familiales/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#memos",
+      "template": "templates/remaining/memos.html",
+      "unsupported": [
+        "Mémos locaux : titre, contenu et mots-clés natifs seulement. Épinglage, auteur, partage familial et archivage non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memos-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memos-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memos-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memos-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_carnet_de_sant_familial",
@@ -379,15 +406,69 @@
       "id": "dobby_cr_er_ou_modifier_un_contact",
       "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
       "hasScreenshot": true,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#contact-edit",
+      "template": "templates/remaining/contact-edit.html",
+      "unsupported": [
+        "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contact-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contact-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contact-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contact-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_cr_er_ou_modifier_un_m_mo",
       "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_m_mo/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#memo-edit",
+      "template": "templates/remaining/memo-edit.html",
+      "unsupported": [
+        "Mémos locaux : titre, contenu et mots-clés natifs seulement. Épinglage, auteur, partage familial et archivage non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memo-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memo-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memo-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memo-edit-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
@@ -438,8 +519,35 @@
       "id": "dobby_d_tail_d_une_liste_familiale",
       "source": "design/stitch-53/dobby_d_tail_d_une_liste_familiale/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#list-detail",
+      "template": "templates/remaining/list-detail.html",
+      "unsupported": [
+        "Listes natives : nom, éléments et coches. Catégories, attribution, échéances et renommage de liste non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/list-detail-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/list-detail-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/list-detail-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/list-detail-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_fiche_document_aper_u",
@@ -929,15 +1037,69 @@
       "id": "dobby_registre_des_listes_familiales",
       "source": "design/stitch-53/dobby_registre_des_listes_familiales/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#lists",
+      "template": "templates/remaining/lists.html",
+      "unsupported": [
+        "Listes natives : nom, éléments et coches. Catégories, attribution, échéances et renommage de liste non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/lists-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/lists-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/lists-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/lists-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_r_pertoire_des_contacts_familiaux",
       "source": "design/stitch-53/dobby_r_pertoire_des_contacts_familiaux/code.html",
       "hasScreenshot": false,
-      "linked": false,
-      "mode": "source-only"
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-functional",
+      "route": "famille.html#contacts",
+      "template": "templates/remaining/contacts.html",
+      "unsupported": [
+        "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contacts-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contacts-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contacts-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contacts-390.png"
+          }
+        ]
+      }
     },
     {
       "id": "dobby_sauvegarde_et_restauration_compl_te",
@@ -956,6 +1118,6 @@
     "functional": 2,
     "partial": 5
   },
-  "partialSources": 5,
-  "sourceOnly": 30
+  "partialSources": 10,
+  "sourceOnly": 24
 }

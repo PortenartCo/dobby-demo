@@ -23,7 +23,7 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
 </style></head>`);
 html=html.replace(/(<main\b)/,'<div id="dv7-loading" role="status">Chargement des données du foyer…</div>$1');
-html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><script src="./family.js"></script><script src="./bridge.js"></script></body>`);
+html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./family.js"></script><script src="./bridge.js"></script></body>`);
 fs.writeFileSync(path.join(__dirname,file),html);console.log('STITCH_ROOT_BUILD='+screen+' SOURCE='+id);
 }
 const screens=manifest.designs.map(({id,html,screenshot})=>({id,source:html,hasScreenshot:screenshot,linked:false,mode:'source-only'}));
@@ -32,3 +32,5 @@ fs.writeFileSync(path.join(__dirname,'route-manifest.json'),JSON.stringify({scre
 
 require('./build-cuisine.cjs');
 require('./build-family.cjs');
+
+require('./build-register.cjs');

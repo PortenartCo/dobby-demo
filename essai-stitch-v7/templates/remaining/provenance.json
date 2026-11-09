@@ -1,0 +1,32 @@
+[
+  {
+    "view": "contacts",
+    "source": "design/stitch-53/dobby_r_pertoire_des_contacts_familiaux/code.html",
+    "sha256": "d056421d022e4b679991e32963a866b760497bfef9d6feb5cab0381a3fd1e169"
+  },
+  {
+    "view": "contact-edit",
+    "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
+    "sha256": "741479b6e8a2a920dcfd3194e32b0e429d138d74051636a7da08266e348ba643"
+  },
+  {
+    "view": "memos",
+    "source": "design/stitch-53/dobby_biblioth_que_des_m_mos_notes_familiales/code.html",
+    "sha256": "3e41967d84b31e109c7eb782e6d09c9802f5728877925303ea918ba41678d4d7"
+  },
+  {
+    "view": "memo-edit",
+    "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_m_mo/code.html",
+    "sha256": "e85ead878ca70e9eeea911389b6ae77023da25dbf7f470d2db98d7a0d3b98926"
+  },
+  {
+    "view": "lists",
+    "source": "design/stitch-53/dobby_registre_des_listes_familiales/code.html",
+    "sha256": "7b632571f9efecec680a721b6f9c91a85fe9f567eaff956a746d1cd93943108d"
+  },
+  {
+    "view": "list-detail",
+    "source": "design/stitch-53/dobby_d_tail_d_une_liste_familiale/code.html",
+    "sha256": "51f867b7aae1807f49c3fa16151fc7b4f5dc3ae0b3030f7cea8e843ab5561698"
+  }
+]

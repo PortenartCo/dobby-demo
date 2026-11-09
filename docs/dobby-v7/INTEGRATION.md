@@ -4,9 +4,9 @@ Le lot Cuisine poursuit la PR #3, branche `feat/dobby-stitch-53-source-backed-v7
 
 ## Couverture vérifiée
 
-**13 sources Cuisine sont intégrées fonctionnellement**, avec leurs variantes de formulaire et de préparation. La Taverne appartenait déjà aux quatre racines intégrées : le lot Cuisine portait le total à 16 sources actives. La mission 2A ajoute sept compositions Famille/Agenda/Santé : **23 sources actives sur 53, dont 5 partielles**, et **30 sources importées sans raccordement fonctionnel**. Hors des parcours Cuisine et 2A, les domaines conservent leur raccordement précédent et leur repli V5 pour les sous-écrans restants. Lors du lot Cuisine, les 40 autres sources n’ont pas été réauditées. La mission 2A traite uniquement ses sept sources explicitement demandées ; elle ne réaudite pas Cuisine.
+**13 sources Cuisine sont intégrées fonctionnellement**, avec leurs variantes de formulaire et de préparation. La Taverne appartenait déjà aux quatre racines intégrées : le lot Cuisine portait le total à 16 sources actives. La mission 2A ajoute sept compositions Famille/Agenda/Santé : **29 sources actives sur 53, dont 10 partielles**, et **24 sources importées sans raccordement fonctionnel**. Hors des parcours Cuisine et 2A, les domaines conservent leur raccordement précédent et leur repli V5 pour les sous-écrans restants. Lors du lot Cuisine, les 40 autres sources n’ont pas été réauditées. La mission 2A traite uniquement ses sept sources explicitement demandées ; elle ne réaudite pas Cuisine.
 
-Le registre exact est [route-manifest.json](../../essai-stitch-v7/route-manifest.json) : 23 templates actifs, dont 18 fonctionnels et 5 partiels ; les adaptateurs partiels sont identifiés séparément. Les états `verified-functional` renvoient aux tests et aux captures ; une simple importation reste `source-only`. Chaque variante est une route utilisable, issue de son propre HTML, et partage les mêmes actions métier que sa variante de référence.
+Le registre exact est [route-manifest.json](../../essai-stitch-v7/route-manifest.json) : 29 templates actifs, dont 19 fonctionnels et 10 partiels ; les adaptateurs partiels sont identifiés séparément. Les états `verified-functional` renvoient aux tests et aux captures ; une simple importation reste `source-only`. Chaque variante est une route utilisable, issue de son propre HTML, et partage les mêmes actions métier que sa variante de référence.
 
 | Route dans `essai-stitch-v7/index.html` | HTML Stitch (identifiant abrégé) | Opérations effectivement raccordées |
 |---|---|---|
@@ -33,6 +33,16 @@ Les personnes utilisent le registre `familyMembers` existant. Les fiches `famHea
 Les contrats exacts, règles de compatibilité, limites et tests sont dans [FAMILY-2A.md](FAMILY-2A.md). Preuves : [index des comparaisons](evidence/family-2a/README.md), [galerie](evidence/family-2a/index.html), [contrôles](evidence/family-2a/checks.json). Il y a 28 captures source/interface, 14 états vides et 6 états de partage/hors ligne/conflit ; les illustrations originales inaccessibles et les substituts sont déclarés.
 
 Les changements du pont partagé justifient les 54 régressions communes, le smoke des quatre racines et la CI existante. Les nouveaux parcours disposent de `npm run test:family --prefix essai-stitch-v7/tests`. Aucun réaudit Cuisine, aucune manipulation des comptes réels, aucune modification des fichiers V5/SQL/Supabase, fusion ou publication.
+
+## Mission séquentielle — lots 2B à 5
+
+La mission poursuit depuis `152cb89`, sans reprendre Cuisine ni 2A. Le [cahier des charges exact](MISSION-2B-5.md), le [plan](../superpowers/plans/2026-11-09-dobby-remaining-stitch.md) et les [checkpoints](CHECKPOINTS.md) permettent la reprise au premier lot non terminé.
+
+Le lot 2B utilise les six sources demandées : répertoire, formulaire contact, bibliothèque/formulaire mémo, registre/détail de liste. Les opérations natives de contacts, mémos et listes sont raccordées. Les mémos restent locaux ; contacts et listes conservent le module Famille. Le répertoire est fonctionnel pour son contrat principal ; les cinq autres sources sont partielles pour leurs fonctions Stitch absentes (portraits/blasons, épinglage/auteur/archives, catégories/attributions/renommage). [Comparaisons et limites 2B](evidence/lot-2b/README.md).
+
+`build-register.cjs` dérive les nouveaux templates des originaux et `register.js` étend le shell source Famille. `family-register.js` utilise `xContactForm`, `familyNoteForm`, `xListForm` et les gestionnaires natifs des éléments/coches. Il n’ajoute aucun stockage ni writer. Les six sources ne dépendent pas du panneau visuel V5 pour leur CRUD. Le petit dialogue médical 2A reste compatible avec son contrat déjà testé ; son action est distinguée de la nouvelle route du formulaire contact.
+
+La CI lit `essai-stitch-v7/ci-scope.json` : tests du lot courant et régressions ciblées si le shell commun change ; la livraison finale active tous les scripts existants et nouveaux. Les commandes sont `npm test --prefix essai-stitch-v7/tests` pour le checkpoint courant et `npm run test:all --prefix essai-stitch-v7/tests` pour la validation générale une fois les quatre lots présents. Les comparaisons se régénèrent avec `DOBBY_LOT=2b node essai-stitch-v7/tests/register-visual.cjs` (serveur local et Chromium requis).
 
 ## Sources et moteur
 
