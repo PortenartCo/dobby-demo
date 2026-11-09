@@ -6,6 +6,11 @@ let template=null,audio=null;
 const destinations=[['Traverse','explore','./traverse.html'],['Missions','history_edu','./missions.html'],['Taverne','skillet','./index.html'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
 const preferences=()=>E.evaluate('return st.stitchPreferences||{effects:true,sound:false};');
 function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b)b.setAttribute('aria-pressed',String(!!p[name]));}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;}
+function sectionTitle(){
+ const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
+ const heading=document.querySelector('body > main h1')?.cloneNode(true);for(const icon of heading?.querySelectorAll('.material-symbols-outlined,[aria-hidden="true"]')||[])icon.remove();
+ const name=(heading?.textContent||document.title).replace(/\s+/g,' ').trim();return document.body.dataset.dv7Screen==='traverse'?name.replace(/^Le /,''):name;
+}
 function mount(){if(!template)return;const current=document.querySelector('body > header');if(current){
  // Preserve contextual source title/actions below the permanent bar (save,
  // back, current cooking step). Global controls belong only to the bar.
@@ -17,7 +22,7 @@ function mount(){if(!template)return;const current=document.querySelector('body 
  const star=header.querySelector('button');star.dataset.e01Toggle='effects';star.setAttribute('aria-label','Activer ou désactiver les effets visuels');
  const sound=header.querySelector('#magic-sound-toggle');sound.dataset.e01Toggle='sound';sound.setAttribute('aria-label','Activer ou désactiver les sons et vibrations');
  const person=header.querySelector('span.material-symbols-outlined:last-child')?.closest('div.cursor-pointer');if(person){const b=document.createElement('button');b.type='button';b.className=person.className;b.innerHTML=person.innerHTML;b.dataset.e01Account='true';b.dataset.faAction='account';b.setAttribute('aria-label','Ouvrir le profil du compte');person.replaceWith(b);}
- const subtitle=header.querySelector('.whitespace-nowrap');if(subtitle)subtitle.textContent='MAISON & QUOTIDIEN';current.replaceWith(header);
+ const subtitle=header.querySelector('.whitespace-nowrap');if(subtitle){const section=sectionTitle().toLocaleUpperCase('fr'),label='MAISON & QUOTIDIEN · '+section;subtitle.dataset.e01Subtitle='true';const prefix=document.createElement('span'),name=document.createElement('span');prefix.className='e011-band-prefix';prefix.textContent='MAISON & QUOTIDIEN · ';name.className='e011-band-section';name.textContent=section;subtitle.replaceChildren(prefix,name);subtitle.title=label;}current.replaceWith(header);
  }
  let nav=document.querySelector('body > nav');if(!nav?.dataset.e01Chrome){const replacement=template.querySelector('nav').cloneNode(true);replacement.dataset.e01Chrome='true';const row=replacement.firstElementChild,source=[...row.children];row.replaceChildren();destinations.forEach(([label,icon,href],i)=>{const a=(source[i]||source[3]).cloneNode(true);a.href=href;a.dataset.e01Destination=String(i);a.removeAttribute('aria-current');a.removeAttribute('data-path');a.querySelector('.material-symbols-outlined').textContent=icon;a.lastElementChild.textContent=label;row.append(a);});if(nav)nav.replaceWith(replacement);else document.body.append(replacement);nav=replacement;}
  nav.hidden=false;const active=document.body.dataset.dv7Screen==='traverse'?0:document.body.dataset.dv7Screen==='missions'?1:document.body.dataset.dv7Screen==='taverne'?2:location.hash.startsWith('#menu')?4:3;
@@ -33,7 +38,7 @@ document.addEventListener('click',async event=>{
  if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event);}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
  feedback(event);
  if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
- if(account){window.DobbyStitchV7.open('account',account);return;}
+ if(account){window.DobbyStitchV7.open('account',account);mount();return;}
  const index=Number(nav.dataset.e01Destination);if(index===0&&location.pathname.endsWith('traverse.html')){window.DobbyStitchV7.close(false);window.DobbyHome.reset();return;}
  if(index===3&&window.DobbyFamilyStitch?.ready){window.DobbyStitchV7.close(false);window.DobbyFamilyStitch.open('salon').catch(console.error);return;}
  if(index===4&&window.DobbyFamilyStitch?.ready){window.DobbyStitchV7.close(false);window.DobbyFamilyStitch.open('menu').catch(console.error);return;}
