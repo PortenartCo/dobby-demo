@@ -1,6 +1,6 @@
 /* E02 uses the original Stitch 1 frames/bubbles; layout changes stay in chat. */
 body:is([data-family-view=chat],[data-family-view=chat-2]){--e02-keyboard-inset:0px;--e02-composer-height:140px;padding-bottom:0}
-body:is([data-family-view=chat],[data-family-view=chat-2]) > main{padding-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + 24px)!important;min-height:100dvh}
+body:is([data-family-view=chat],[data-family-view=chat-2]) > main{padding-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 24px)!important;min-height:100dvh}
 .e02-body{padding-bottom:0!important;flex:1}
 .e02-hero{gap:12px;margin-bottom:16px}
 [data-e02-hero]{height:140px!important;flex-shrink:0}
@@ -14,8 +14,8 @@ body:is([data-family-view=chat],[data-family-view=chat-2]) .e02-composer.fixed,b
 .e02-status{font-size:11px;line-height:16px;color:#d4c4b1;text-align:center;min-height:16px;margin:0;padding-bottom:6px}
 .e02-voice-controls,.e02-message-actions{display:flex;gap:8px;flex-wrap:wrap}
 .e02-text-action{display:inline-flex;align-items:center;min-height:32px;padding:4px 6px;color:#f9bb5f;font-size:12px;line-height:18px;text-decoration:underline;text-underline-offset:3px}
-[data-e02-thread]{flex:1;gap:16px;scroll-margin-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + 20px)}
-[data-e02-thread] > *{scroll-margin-block:90px calc(var(--e02-composer-height) + var(--e01-bottom) + 20px)}
+[data-e02-thread]{flex:1;gap:16px;scroll-margin-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 20px)}
+[data-e02-thread] > *{scroll-margin-block:90px calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 20px)}
 .e02-message{min-width:0}.e02-message p{white-space:pre-wrap;overflow-wrap:anywhere}.e02-message > div{min-width:0}
 body:is([data-family-view=chat],[data-family-view=chat-2]) .fa-sharing-status{display:none}
 #e02-confirmation{margin-inline:0;width:100%;max-width:100%}
