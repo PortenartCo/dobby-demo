@@ -61,4 +61,12 @@ Tests locaux ciblés et communs réussis : missions natives/attribution/édition
 
 Défauts corrigés avec preuves : gestionnaire de recherche déclenché dans le mauvais écran, nouvelle mission créée à partir d’un éditeur supprimé, lien Taverne ignoré, filtre du menu impossible à effacer, champ partagé pointant sur l’ancienne fiche, composeur conversationnel superposé aux messages. Les contrôles principaux restent dans les compositions Stitch. Les métadonnées, fichiers, modèles et synchronisations restent natifs. Aucun compte réel, aucune suppression hors fixture, aucune restauration destructive, aucun changement SQL/Supabase/V5 ou déploiement/fusion.
 
-Checkpoint d’implémentation lot 5 : commit/CI à reporter après push. Dernière étape : revue finale de l’ensemble 2B–5, correction des constats importants et validation CI générale sur le SHA final. Ce checkpoint ne déclare pas l’application finalisée.
+Checkpoint d’implémentation lot 5 : `9ee2d0c536c4bd28861b4cd010c46111300ca7a2`, CI [push — succès](https://github.com/PortenartCo/dobby-demo/actions/runs/42608244504) / [PR — succès](https://github.com/PortenartCo/dobby-demo/actions/runs/42608254172). Dernière étape : revue finale de l’ensemble 2B–5, correction des constats importants et validation CI générale sur le SHA final. Ce checkpoint ne déclare pas l’application finalisée.
+
+## Revue finale et qualification générale
+
+La revue indépendante du checkpoint `9ee2d0c` a relevé six problèmes importants, tous reproduits avant correction puis vérifiés dans la même passe, à 320 et 390 px. Treize scénarios dédiés passent (26 contrôles), ainsi que les 54 tests natifs. [Constats, corrections et limites](FINAL-REVIEW.md), [preuves](evidence/review/README.md), [décisions](DECISIONS.md).
+
+La CI est désormais configurée pour exécuter l’ensemble des tests Cuisine/Famille/2B/Maison/Documents/outils, les synchronisations simulées, les contrôles de préservation, la navigation, les comparaisons mobiles et les régressions de la revue. Le résultat général et le SHA exact du commit de livraison seront reportés dans la description de la PR et son onglet [Checks](https://github.com/PortenartCo/dobby-demo/pull/3/checks), sans prétendre qualifier les comptes réels ou une restauration exécutée.
+
+La suite générale locale a terminé avec succès, code de sortie 0 : Cuisine, 2A, quatre lots restants, clients natifs/API simulée, extraction réelle PDF/OCR, préservation et navigation ; les 26 contrôles de revue passent. La génération de 59 fichiers est reproductible octet pour octet. La qualification CI automatique du candidat corrigé est l’étape externe suivante.

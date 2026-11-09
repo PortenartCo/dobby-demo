@@ -55,5 +55,5 @@ window.DobbyFamilyStitchEngine=(()=>{
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
  function saveContact(id,values){const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
  function deleteContact(id){requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
- return Object.freeze({unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
+ return Object.freeze({requireRecord,unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
 })();

@@ -176,7 +176,8 @@
     "lot": "4",
     "status": "verified-partial",
     "unsupported": [
-      "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature.",
+      "Une écriture locale native déjà lancée n’est pas annulée par une suppression concurrente ; une copie peut subsister. L’interface signale ce résultat sans recréer de fiche ni nettoyer automatiquement le stockage."
     ]
   },
   {
@@ -185,7 +186,8 @@
     "lot": "4",
     "status": "verified-partial",
     "unsupported": [
-      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique.",
+      "Une écriture locale native déjà lancée n’est pas annulée par une suppression concurrente ; une copie peut subsister. L’interface signale ce résultat sans recréer de fiche ni nettoyer automatiquement le stockage."
     ]
   },
   {
@@ -194,7 +196,8 @@
     "lot": "4",
     "status": "verified-partial",
     "unsupported": [
-      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique.",
+      "Une écriture locale native déjà lancée n’est pas annulée par une suppression concurrente ; une copie peut subsister. L’interface signale ce résultat sans recréer de fiche ni nettoyer automatiquement le stockage."
     ]
   },
   {
