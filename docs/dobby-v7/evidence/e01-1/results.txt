@@ -1,0 +1,28 @@
+E01.1 — validation ciblée depuis e6be2f8c367df282f8d46bc698d0cfbc2ddc1b86
+Profils éphémères uniquement ; réseau externe bloqué, aucun compte réel.
+
+Commande : DOBBY_E01_EVIDENCE_DIR=/tmp/e011-flows node essai-stitch-v7/tests/e01.cjs
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+
+Commande : node essai-stitch-v7/tests/e01-1-visual.cjs
+E011_BAND after 390 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+E011_BAND after 1440 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+E011_VISUAL_PASS after 390/1440
+
+Référence avant : capture exécutée avant toute modification sur e6be2f8.
+E011_BAND before 390 MAISON & QUOTIDIEN
+E011_BAND before 1440 MAISON & QUOTIDIEN
+E011_VISUAL_PASS before 390/1440
+
+Couverts : J0..J+6 aller/retour, flèches inactives aux limites, retour direct Aujourd'hui, retour navigateur et retour depuis une autre page.
+Date seule : zéro appel au save natif, état et stockage strictement identiques.
+Missions/événements/repas de la date, validations natives, liens Agenda/recette/choix, cinq liens inférieurs et préférences : PASS.
+Sous-titres exacts des cinq destinations, transitions Salon/Menu sans rechargement, compte natif, bandeau unique : PASS.
+Repas absent ou métadonnées inconnues : aucun champ/valeur de substitution ni note artificielle.
+Captures et géométrie : 390x900 et 1440x900, aucun débordement horizontal ou chevauchement du sélecteur avec la navigation.
+node --check : home.js, chrome.js, tests/e01.cjs, tests/e01-1-visual.cjs, tests/ci.cjs : PASS.
+git diff --check : PASS.
+Sources Stitch, V5, stockage/moteur, bridge, engine-policy, dépendances et essais publiés : fichiers inchangés.
+Écarts E01.1 : aucun identifié. Aucune fusion ni publication.
