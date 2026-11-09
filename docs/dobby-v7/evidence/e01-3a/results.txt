@@ -1,0 +1,16 @@
+E01.3a — Résultats ciblés
+
+PASS — Captures Chromium avant/après, 390×900 et 1440×900, états vide et liste.
+PASS — Conteneur Missions : fond, rayon, bordure, ombre et paddings identiques aux traitements Stitch du Festin.
+PASS — Titre, compteur, Ajouter, état vide et boutons des missions contenus dans la carte ; aucun débordement horizontal.
+PASS — Barres haute/basse fixes ; DOM navigation, Festin et Gazette identique avant/après.
+PASS — Rafraîchissement de présentation : état et stockage natifs inchangés.
+PASS — DOBBY_E01_EVIDENCE_DIR=/tmp/e013a-flows node essai-stitch-v7/tests/e01.cjs
+       390/1440 : validation missions manuelles/automatiques, Ajouter, liens de consultation,
+       dates J0..J6 sans écriture, Agenda/recettes, cinq destinations, barres et préférences.
+       Contrôle des effets source hors accueil et réduction des animations : PASS.
+PASS — node --check essai-stitch-v7/home.js
+
+Réseau externe bloqué ; profils éphémères ; aucun compte réel.
+Seul fichier applicatif modifié : essai-stitch-v7/home.js (conteneur/classes de présentation).
+Aucune fusion, aucun déploiement. Mission arrêtée après E01.3a.

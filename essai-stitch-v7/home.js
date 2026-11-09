@@ -32,7 +32,12 @@ const check=card.querySelector('button');check.dataset.e01Complete=task.manual?t
 if(task.manual)card.dataset.e01Href='./famille.html#mission-edit?record='+encodeURIComponent(task.id);
 else card.dataset.e01Href='./famille.html#'+(task.origin==='equipment'?'equipment':'document')+'?record='+encodeURIComponent(task.originId);
 list.append(card);}
-if(!rows.length)list.append(empty('Aucune mission pour cette journée.'));section('Missions du Jour').replaceWith(missions);
+if(!rows.length)list.append(empty('Aucune mission pour cette journée.'));
+// Keep the source header, controls and rows inside one Stitch card, like the Festin.
+const missionCard=document.createElement('div'),missionHeader=missions.firstElementChild;missionCard.dataset.e013aCard='true';
+missionCard.className='bg-surface-container-high rounded-2xl overflow-hidden border border-amber-900/40 shadow-lg';
+missionHeader.className='bg-surface-container-highest/80 px-space-md py-3 flex flex-wrap items-center justify-between gap-2 border-b border-amber-900/30';
+list.classList.add('p-space-md');missionCard.append(missionHeader,list);missions.append(missionCard);section('Missions du Jour').replaceWith(missions);
 const mealSection=originals.meal.cloneNode(true),card=mealSection.firstElementChild;card.dataset.e01Meal='true';card.tabIndex=0;card.setAttribute('role','link');
 const planned=data.planned[day+'-soir'],recipe=planned&&planned.status!=='annulé'?data.recipes.find(r=>r.id===planned.id):null;
 const title=card.querySelector('h3');title.textContent=recipe?.name||'Aucun repas prévu';

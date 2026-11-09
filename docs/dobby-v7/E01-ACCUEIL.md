@@ -118,3 +118,9 @@ Aucune bibliothèque, aucun canvas, aucune boucle JavaScript de rendu. Les anima
 [Preuves E01.3, vidéo réelle de 9 secondes et résultats navigateur](evidence/e01-3/README.md). Les profils mobiles sont des émulations iPhone 13 ; WebKit est exécuté sous Linux, Chromium sur le même environnement de test. Les mesures de cadence sont des observations de cet environnement, pas une mesure de consommation électrique. La pause de visibilité est vérifiée par événements simulés et par lecture des chronologies CSS réellement arrêtées. Aucun compte réel ni aucune donnée familiale fictive n’est injecté pour les tests d’ambiance.
 
 La validation sur iPhone physique, Safari iOS et batterie en conditions réelles reste à faire par l’utilisateur. Les contrôles automatisés et la vidéo ne constituent pas cette validation utilisateur. Aucun défaut restant identifié dans le périmètre navigateur testé. Aucun déploiement, fusion ou début d’E01.4.
+
+## E01.3a — Harmonisation de Missions du Jour
+
+Micro-correction limitée à `home.js` : un conteneur Stitch commun englobe le titre, le compteur, Ajouter et le contenu, avec le même fond, rayon, bordure et ombre que le Festin. Les espacements de l'en-tête et du contenu reprennent ses classes existantes. Les groupes titre/actions passent à la ligne si nécessaire ; l'état vide en pointillés reste un sous-bloc. Les gestionnaires, données, routes, barres permanentes et autres cartes sont inchangés.
+
+[Comparaisons avant/après, états vide et liste à 390 et 1440 px](evidence/e01-3a/README.md). Contrôles Chromium ciblés : éléments contenus, aucun débordement, styles et paddings comparés au Festin, DOM des autres cartes/navigation identique, état et stockage inchangés pendant le rendu. Régression E01 existante : PASS aux deux largeurs, y compris validation des missions, Ajouter, consultation et navigation. Aucun compte réel testé. Aucun écart identifié dans ce périmètre ; aucune fusion ni publication. Arrêt après E01.3a.
