@@ -2,18 +2,12 @@ diff --git a/.github/workflows/dobby-stitch-v7.yml b/.github/workflows/dobby-sti
 index a9c42c4..456c266 100644
 --- a/.github/workflows/dobby-stitch-v7.yml
 +++ b/.github/workflows/dobby-stitch-v7.yml
-@@ -33,6 +33,11 @@ jobs:
-           node --check essai-stitch-v7/chrome.js
-           node --check essai-stitch-v7/home.js
-           node --check essai-stitch-v7/engine-policy.js
+@@ -35,0 +36,5 @@ jobs:
 +          node --check essai-stitch-v7/chat.js
 +          node --check essai-stitch-v7/chat-engine.js
 +          node --check essai-stitch-v7/tests/e02.cjs
 +          node --check essai-stitch-v7/tests/e02-edge.cjs
 +          node --check essai-stitch-v7/tests/e02-voice-history.cjs
-           node --check essai-stitch-v7/tests/e01.cjs
-           node --check essai-stitch-v7/tests/e01-3.cjs
-           node --check essai-stitch-v7/tests/e01-3-video.cjs
 diff --git a/docs/dobby-v7/plans/E02.md b/docs/dobby-v7/plans/E02.md
 new file mode 100644
 index 0000000..3947b86
@@ -34,23 +28,11 @@ diff --git a/essai-stitch-v7/build-source.cjs b/essai-stitch-v7/build-source.cjs
 index 39fde91..5ddc7e8 100644
 --- a/essai-stitch-v7/build-source.cjs
 +++ b/essai-stitch-v7/build-source.cjs
-@@ -27,7 +27,7 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
- @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
- </style></head>`);
- html=html.replace(/(<main\b)/,'<div id="dv7-loading" role="status">Chargement des données du foyer…</div>$1');
+@@ -30 +30 @@ html=html.replace(/(<main\b)/,'<div id="dv7-loading" role="status">Chargement de
 -html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body>`);
 +html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body>`);
- fs.writeFileSync(path.join(__dirname,file),html);console.log('STITCH_ROOT_BUILD='+screen+' SOURCE='+id);
- }
- const screens=manifest.designs.map(({id,html,screenshot})=>({id,source:html,hasScreenshot:screenshot,linked:false,mode:'source-only'}));
-@@ -43,6 +43,7 @@ require('./build-register.cjs');
- {
- const file=path.join(__dirname,'route-manifest.json'),m=JSON.parse(fs.readFileSync(file));
- m.homeContract={mission:'E01',document:'docs/dobby-v7/E01-ACCUEIL.md',tests:['tests/e01.cjs','tests/e01-visual.cjs'],widths:[390,1440],navigation:['traverse.html','missions.html','index.html','famille.html','famille.html#menu'],preferences:'native st.stitchPreferences / native save()',account:'existing native account panel; no Stitch profile source',automaticMission:'source equipment/document fiche by originId; no independent mission fiche',captures:[390,1440].map(width=>({width,reference:`docs/dobby-v7/evidence/e01/source/traverse-${width}.png`,baseline:`docs/dobby-v7/evidence/e01/before/traverse-${width}.png`,empty:`docs/dobby-v7/evidence/e01/empty-${width}.png`,populated:`docs/dobby-v7/evidence/e01/populated-${width}.png`}))};
+@@ -45,0 +46 @@ m.homeContract={mission:'E01',document:'docs/dobby-v7/E01-ACCUEIL.md',tests:['te
 +m.chatContract={mission:'E02',document:'docs/dobby-v7/E02-PARLER-A-DOBBY.md',primarySource:'dobby_conversation_avec_dobby_1',route:'famille.html#chat',tests:['tests/e02.cjs','tests/e02-edge.cjs','tests/e02-voice-history.cjs'],widths:[320,390,1440],history:'native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed',remoteSync:'blocked: no validated author-only backend',speech:'native browser APIs; logic tested with simulated API boundaries; physical iPhone pending',captures:'docs/dobby-v7/evidence/e02/README.md'};for(const row of m.screens.filter(s=>s.id==='dobby_conversation_avec_dobby_1'||s.id==='dobby_conversation_avec_dobby_2'))row.verification.e02=m.chatContract;
- const home=m.screens.find(s=>s.id==='dobby_l_choppe_du_chemin_de_traverse');home.verification.e01=m.homeContract;
- fs.writeFileSync(file,JSON.stringify(m,null,2)+'\n');
- }
 diff --git a/essai-stitch-v7/chat-engine.js b/essai-stitch-v7/chat-engine.js
 new file mode 100644
 index 0000000..313aeb0
@@ -216,19 +198,10 @@ diff --git a/essai-stitch-v7/chrome.css b/essai-stitch-v7/chrome.css
 index 26b175c..639edf4 100644
 --- a/essai-stitch-v7/chrome.css
 +++ b/essai-stitch-v7/chrome.css
-@@ -53,7 +53,7 @@ body.dv7-panel-visible #dv7-engine{left:50%!important;right:auto!important;width
- .e013-mote{border-radius:50%;background:var(--e013-gold);box-shadow:0 0 6px var(--e013-gold)}
- .e013-mote:nth-child(3n){background:var(--e013-soft);box-shadow:0 0 7px var(--e013-soft)}
- @keyframes e013-drift{0%{transform:translate3d(0,15px,0);opacity:0}18%{opacity:var(--e013-alpha)}45%{transform:translate3d(var(--e013-dx),var(--e013-dy),0);opacity:calc(var(--e013-alpha) * .55)}75%{transform:translate3d(calc(var(--e013-dx) * -.45),calc(var(--e013-dy) * 1.3),0);opacity:var(--e013-alpha)}100%{transform:translate3d(calc(var(--e013-dx) * .6),calc(var(--e013-dy) * 1.7),0);opacity:0}}
+@@ -56 +56 @@ body.dv7-panel-visible #dv7-engine{left:50%!important;right:auto!important;width
 -body[data-dv7-screen=traverse] .e013-scene{isolation:isolate}
 +.e013-scene{isolation:isolate}
- .e013-scene::before,.e013-scene::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;will-change:transform,opacity;mix-blend-mode:screen}
- .e013-scene::before{background:radial-gradient(ellipse at 2% 55%,var(--e013-halo),transparent 52%),radial-gradient(ellipse at 98% 30%,var(--e013-halo),transparent 48%);opacity:.5;animation:e013-lantern var(--e013-halo-speed) ease-in-out infinite alternate}
- .e013-scene::after{box-shadow:inset 0 0 28px 3px var(--e013-halo-edge);background:radial-gradient(ellipse at 55% 0%,var(--e013-halo),transparent 60%);opacity:.4;animation:e013-edge calc(var(--e013-halo-speed) * 1.4) ease-in-out infinite alternate}
-@@ -61,3 +61,8 @@ body[data-dv7-screen=traverse] .e013-scene{isolation:isolate}
- @keyframes e013-edge{0%{opacity:.4;transform:scale(1)}65%{opacity:.8;transform:scale(1.04)}100%{opacity:.5;transform:scale(1.02)}}
- .e013-paused .e013-particle,.e013-paused .e013-scene::before,.e013-paused .e013-scene::after,.e013-paused .animate-pulse{animation-play-state:paused!important}
- @media(prefers-reduced-motion:reduce){#e013-ambience,.e013-scene::before,.e013-scene::after{display:none!important;animation:none!important}body[data-dv7-screen=traverse] .animate-pulse{animation:none!important}}
+@@ -63,0 +64,5 @@ body[data-dv7-screen=traverse] .e013-scene{isolation:isolate}
 +
 +/* E02: shared effects respect OFF/reduced motion; chat uses the bounded E01 layer. */
 +.e01-effects-off .anim-sparkle{display:none!important}
@@ -238,36 +211,19 @@ diff --git a/essai-stitch-v7/chrome.js b/essai-stitch-v7/chrome.js
 index 644b866..b8ae905 100644
 --- a/essai-stitch-v7/chrome.js
 +++ b/essai-stitch-v7/chrome.js
-@@ -14,7 +14,7 @@ function temporary(node,duration){
-  document.body.append(node);transients.set(node,setTimeout(()=>{node.remove();transients.delete(node);},duration));
- }
- function syncAmbience(effects=lastEffects){
+@@ -17 +17 @@ function syncAmbience(effects=lastEffects){
 - lastEffects=!!effects;const home=document.body.dataset.dv7Screen==='traverse',reduced=reducedMotion.matches;
 + lastEffects=!!effects;const home=document.body.dataset.dv7Screen==='traverse'||['chat','chat-2'].includes(document.body.dataset.familyView),reduced=reducedMotion.matches;
-  const paused=document.hidden||pageAway||!document.getElementById('dv7-panel')?.hidden||document.documentElement.classList.contains('dv7-loading');
-  if(!effects||reduced){clearTransient();}
-  if(!home||!effects||reduced){ambientLayer?.remove();ambientLayer=null;ambientScene?.classList.remove('e013-scene');ambientScene=null;document.body.classList.remove('e013-paused');if(home)document.body.dataset.e013State=!effects?'off':'reduced';return;}
-@@ -36,10 +36,11 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTransi
- window.addEventListener('pagehide',()=>{pageAway=true;clearTransient();syncAmbience();});
- const destinations=[['Traverse','explore','./traverse.html'],['Missions','history_edu','./missions.html'],['Taverne','skillet','./index.html'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
- const preferences=()=>E.evaluate('return {effects:false,sound:false,...st.stitchPreferences};');
+@@ -39 +39 @@ const preferences=()=>E.evaluate('return {effects:false,sound:false,...st.stitch
 -function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);}
 +function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}
- function sectionTitle(){
-  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
-  const heading=document.querySelector('body > main h1')?.cloneNode(true);for(const icon of heading?.querySelectorAll('.material-symbols-outlined,[aria-hidden="true"]')||[])icon.remove();
+@@ -42,0 +43 @@ function sectionTitle(){
 + if(['chat','chat-2'].includes(document.body.dataset.familyView))return 'Parler à Dobby';
-  const name=(heading?.textContent||document.title).replace(/\s+/g,' ').trim();return document.body.dataset.dv7Screen==='traverse'?name.replace(/^Le /,''):name;
- }
- function mount(){if(!template)return;const current=document.querySelector('body > header');if(current){
 diff --git a/essai-stitch-v7/famille.html b/essai-stitch-v7/famille.html
 index 1473a4d..17f561e 100644
 --- a/essai-stitch-v7/famille.html
 +++ b/essai-stitch-v7/famille.html
-@@ -303,4 +303,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
- 
- 
- 
+@@ -306 +306 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
 -<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
 \ No newline at end of file
 +<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
@@ -276,10 +232,7 @@ diff --git a/essai-stitch-v7/index.html b/essai-stitch-v7/index.html
 index 542a4e8..bfd35c2 100644
 --- a/essai-stitch-v7/index.html
 +++ b/essai-stitch-v7/index.html
-@@ -195,4 +195,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
- 
- 
- 
+@@ -198 +198 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
 -<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
 \ No newline at end of file
 +<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
@@ -288,10 +241,7 @@ diff --git a/essai-stitch-v7/missions.html b/essai-stitch-v7/missions.html
 index 2030ff2..431f85b 100644
 --- a/essai-stitch-v7/missions.html
 +++ b/essai-stitch-v7/missions.html
-@@ -58,4 +58,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
- 
- 
- 
+@@ -61 +61 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
 -<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
 \ No newline at end of file
 +<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
@@ -307,41 +257,20 @@ diff --git a/essai-stitch-v7/register-routes.json b/essai-stitch-v7/register-rou
 index d794af1..c54ea06 100644
 --- a/essai-stitch-v7/register-routes.json
 +++ b/essai-stitch-v7/register-routes.json
-@@ -233,7 +233,7 @@
-     "lot": "5",
-     "status": "verified-partial",
-     "unsupported": [
+@@ -236 +236 @@
 -      "Commandes textuelles natives limitées et historique local. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
 +      "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
-     ]
-   },
-   {
-@@ -242,7 +242,7 @@
-     "lot": "5",
-     "status": "verified-partial",
-     "unsupported": [
+@@ -245 +245 @@
 -      "Même moteur natif de commandes et historique. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
 +      "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
-     ]
-   },
-   {
 diff --git a/essai-stitch-v7/route-manifest.json b/essai-stitch-v7/route-manifest.json
 index a086054..000dc95 100644
 --- a/essai-stitch-v7/route-manifest.json
 +++ b/essai-stitch-v7/route-manifest.json
-@@ -554,7 +554,7 @@
-       "route": "famille.html#chat",
-       "template": "templates/remaining/chat.html",
-       "unsupported": [
+@@ -557 +557 @@
 -        "Commandes textuelles natives limitées et historique local. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
 +        "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
-       ],
-       "verification": {
-         "tests": [
-@@ -574,7 +574,27 @@
-             "reference": "docs/dobby-v7/evidence/lot-5/before/chat-390.png",
-             "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-390.png"
-           }
+@@ -577 +577,21 @@
 -        ]
 +        ],
 +        "e02": {
@@ -364,22 +293,10 @@ index a086054..000dc95 100644
 +          "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
 +          "captures": "docs/dobby-v7/evidence/e02/README.md"
 +        }
-       }
-     },
-     {
-@@ -588,7 +608,7 @@
-       "route": "famille.html#chat-2",
-       "template": "templates/remaining/chat-2.html",
-       "unsupported": [
+@@ -591 +611 @@
 -        "Même moteur natif de commandes et historique. Pas d’IA générative, de pièce jointe, de dictée ou de synthèse vocale qualifiée."
 +        "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
-       ],
-       "verification": {
-         "tests": [
-@@ -608,7 +628,27 @@
-             "reference": "docs/dobby-v7/evidence/lot-5/before/chat-2-390.png",
-             "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-2-390.png"
-           }
+@@ -611 +631,21 @@
 -        ]
 +        ],
 +        "e02": {
@@ -402,13 +319,7 @@ index a086054..000dc95 100644
 +          "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
 +          "captures": "docs/dobby-v7/evidence/e02/README.md"
 +        }
-       }
-     },
-     {
-@@ -1937,5 +1977,25 @@
-         "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
-       }
-     ]
+@@ -1939,0 +1980,20 @@
 +  },
 +  "chatContract": {
 +    "mission": "E02",
@@ -429,33 +340,20 @@ index a086054..000dc95 100644
 +    "remoteSync": "blocked: no validated author-only backend",
 +    "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
 +    "captures": "docs/dobby-v7/evidence/e02/README.md"
-   }
- }
 diff --git a/essai-stitch-v7/tests/ci.cjs b/essai-stitch-v7/tests/ci.cjs
 index 10b56f0..6aa1551 100644
 --- a/essai-stitch-v7/tests/ci.cjs
 +++ b/essai-stitch-v7/tests/ci.cjs
-@@ -1,6 +1,6 @@
- /* Sequential checkpoints run their own lot; final delivery runs the complete suite. */
- const {spawnSync}=require('node:child_process'),path=require('node:path'),scope=require('../ci-scope.json');
- const run=(file,extra={})=>{const r=spawnSync(process.execPath,[path.join(__dirname,file)],{stdio:'inherit',env:{...process.env,...extra}});if(r.status!==0)process.exit(r.status||1);};
+@@ -4 +4 @@ const run=(file,extra={})=>{const r=spawnSync(process.execPath,[path.join(__dirn
 -run('e01.cjs');run('e01-3.cjs');run('e01-1-visual.cjs');run('e01-visual.cjs');
 +run('e02.cjs');run('e02-edge.cjs');run('e02-voice-history.cjs');run('e01.cjs');run('e01-3.cjs');run('e01-1-visual.cjs');run('e01-visual.cjs');
- if(scope.final||process.env.DOBBY_FINAL==='1'){for(const file of ['smoke.cjs','cuisine.cjs','cuisine-family.cjs','cuisine-visual.cjs','family.cjs','family-edge.cjs','family-review.cjs','family-shared.cjs','family-visual.cjs'])run(file);for(const [lot,file]of Object.entries({'2b':'family','3':'house','4':'documents','5':'tools'})){run('register-'+file+'.cjs');run('register-visual.cjs',{DOBBY_LOT:lot});}run('register-sync.cjs');run('register-documents-sync.cjs');run('register-import-reading.cjs');run('register-missions-sync.cjs');run('register-preservation.cjs');run('register-navigation.cjs');run('register-root-visual.cjs');run('register-review.cjs');}
- else{if(scope.shared){for(const file of ['smoke.cjs','family.cjs','family-edge.cjs','family-review.cjs','family-shared.cjs'])run(file);}run('register-'+({'2b':'family','3':'house','4':'documents','5':'tools'})[scope.lot]+'.cjs');run('register-visual.cjs',{DOBBY_LOT:scope.lot});if(scope.lot==='3'){run('register-family.cjs');run('register-sync.cjs');run('register-preservation.cjs');}if(scope.lot==='5'){run('register-review.cjs');run('register-house.cjs');run('register-root-visual.cjs');run('register-missions-sync.cjs');run('register-navigation.cjs');run('register-documents-sync.cjs');}if(scope.lot==='4'){run('register-documents-sync.cjs');run('register-import-reading.cjs');}if(scope.lot==='2b')run('register-sync.cjs');}
 diff --git a/essai-stitch-v7/tests/e01.cjs b/essai-stitch-v7/tests/e01.cjs
 index df3e41e..7f0c21b 100644
 --- a/essai-stitch-v7/tests/e01.cjs
 +++ b/essai-stitch-v7/tests/e01.cjs
-@@ -44,7 +44,7 @@ for(const originId of ['e01-equipment','e01-document']){const link=p.locator('[d
- await p.locator('[data-e01-meal]').click();await p.waitForURL(/index.html#recipe\?id=pasta/);await ready();assert.match(await p.locator('main').textContent(),/Pâtes aux courgettes/);await p.goBack();await ready();
- await p.locator('[data-e01-event]').first().click();await p.waitForURL(/famille.html#agenda/);await ready();assert.equal(await p.locator('#dv7-panel').isVisible(),false);await p.goBack();await ready();
- await p.locator('[data-e01-add]').click();await p.waitForURL(/famille.html#mission-edit$/);await ready();assert.equal(await p.locator('#quest-title').inputValue(),'');await p.goBack();await ready();
+@@ -47 +47 @@ await p.locator('[data-e01-add]').click();await p.waitForURL(/famille.html#missi
 -await p.locator('#btn-vocal').click();await p.waitForURL(/famille.html#chat/);await ready();assert.equal(await p.locator('[data-fa-action=rg-chat-voice]').isEnabled(),false);await p.goBack();await ready();
 +await p.locator('#btn-vocal').click();await p.waitForURL(/famille.html#chat/);await ready();assert.equal(await p.locator('[data-fa-action=rg-chat-voice]').isEnabled(),true,'E02 provides a real microphone path or an explicit compatibility explanation');await p.goBack();await ready();
- // Independent presentation preferences persist across pages and reloads.
- assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false','effects start disabled for new profiles');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'false','star does not enable sounds');assert.equal(await p.locator('html').evaluate(el=>el.classList.contains('e01-effects-on')),true,'active effect indicator');assert.equal(await p.locator('.magic-sparkle-dot').count(),0,'reduced motion prevents sparkles');assert.equal(await p.locator('#e013-ambience,.e013-scene').count(),0,'reduced motion keeps only the static indicator');await p.locator('[data-e01-toggle=sound]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');
- for(const [index,dest] of [[1,'missions.html'],[2,'index.html'],[3,'famille.html'],[4,'famille.html#menu']]){await p.locator(`[data-e01-destination="${index}"]`).click();await p.waitForURL(u=>u.href.endsWith(dest));await ready();assert.equal(await p.locator('body > nav a').count(),5);assert.deepEqual(await p.locator('body > nav a').evaluateAll(links=>links.map(a=>a.getAttribute('href'))),['./traverse.html','./missions.html','./index.html','./famille.html','./famille.html#menu'],'real hrefs survive source shell rendering and support opening in a new tab');assert.equal(await p.locator(`body > nav a[aria-current=page]`).getAttribute('data-e01-destination'),String(index));assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');const positions=await p.evaluate(()=>({top:document.querySelector('body > header').getBoundingClientRect().top,bottom:document.querySelector('body > nav').getBoundingClientRect().bottom,width:document.documentElement.scrollWidth}));assert.equal(positions.top,0);assert.equal(positions.bottom,900);assert.equal(positions.width,width);const subtitle=await p.locator('[data-e01-subtitle]').textContent();const names={1:'LA BIBLIOTHÈQUE DES MISSIONS',2:'LA TAVERNE GOURMANDE',3:'LE SALON DES CURIOSITÉS',4:'TOUS LES OUTILS DE DOBBY'};assert.equal(subtitle,'MAISON & QUOTIDIEN · '+names[index]);const fits=await p.locator('[data-e01-subtitle]').evaluate(el=>el.scrollWidth<=el.clientWidth&&el.scrollHeight<=el.clientHeight&&el.querySelector('.e011-band-section').scrollWidth<=el.querySelector('.e011-band-section').clientWidth);assert.equal(fits,true,'section label fits in the single permanent banner');await p.evaluate(()=>scrollTo(0,0));await p.screenshot({path:path.join(out,`destination-${index}-${width}.png`),fullPage:true});await p.reload();await ready();assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · '+names[index]);if(index===3){await p.locator('[data-e01-destination="4"]').click();await p.waitForFunction(()=>document.body.dataset.familyView==='menu');assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · '+names[4]);await p.locator('[data-e01-destination="3"]').click();await p.waitForFunction(()=>document.body.dataset.familyView==='salon');assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · '+names[3]);}await p.locator('[data-e01-destination="0"]').click();await p.waitForURL(/traverse.html/);await ready();}
 diff --git a/essai-stitch-v7/tests/e02-edge.cjs b/essai-stitch-v7/tests/e02-edge.cjs
 new file mode 100644
 index 0000000..7ed9ba0
@@ -527,47 +425,28 @@ diff --git a/essai-stitch-v7/tests/register-tools.cjs b/essai-stitch-v7/tests/re
 index 8c5233e..f776246 100644
 --- a/essai-stitch-v7/tests/register-tools.cjs
 +++ b/essai-stitch-v7/tests/register-tools.cjs
-@@ -2,5 +2,5 @@
- const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',out=path.resolve(__dirname,'../../docs/dobby-v7/evidence/lot-5/states');fs.mkdirSync(out,{recursive:true});
- (async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{for(const width of [320,390]){const c=await b.newContext({viewport:{width,height:844},locale:'fr-BE',reducedMotion:'reduce'});await c.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await c.newPage();p.setDefaultTimeout(12000);const errors=[];p.on('pageerror',e=>{errors.push(e.message);console.error(e.stack);});let accept=false;p.on('dialog',d=>accept?d.accept():d.dismiss());await p.goto(origin+'/essai-stitch-v7/famille.html');await p.waitForFunction(()=>DobbyFamilyStitch?.ready&&DobbyFamilyStitchEngine.win().DobbyFamilyMissions?.available);const open=(view,record=null)=>p.evaluate(({view,record})=>DobbyFamilyStitch.open(view,{record}),{view,record});const state=()=>p.evaluate(()=>DobbyFamilyStitchEngine.read().state);assert.equal(await p.evaluate(()=>DobbyFamilyStitch.handles('mission-edit')),true,'Mission creation must use its Stitch form');await p.evaluate(()=>DobbyFamilyStitchEngine.evaluate(`st.manualMissions=[];st.autoTasks=[];st.familyMembers=[{id:'test-member',name:'TEST — Membre',avatar:'👤',birthdate:''}];st.famContacts=[{id:'test-contact',name:'TEST — Contact Rechercher',role:'Artisan',phone:'',email:'',note:''}];st.familyDocs=[];st.houseItems=[];st.v2ChatHistory=[];save();`));
- await open('mission-edit');assert.equal(await p.locator('[data-fa-action=rg-save]').count(),1,'One source save action');await p.locator('#quest-title').fill('TEST — Mission manuelle');await p.locator('[name=assigneeId]').selectOption('test-member');await p.locator('[name=due]').fill('2027-01-01');await p.locator('[name=note]').fill('TEST — Consigne non confidentielle');await p.locator('[data-fa-action=rg-save]').click();await p.waitForURL(/missions\.html/);await p.waitForFunction(()=>DobbyStitchV7?.ready);assert.equal(await p.locator('#dv7-panel').isVisible(),false);let id=await p.evaluate(()=>DobbyFamilyStitchEngine.read().state.manualMissions[0].id);assert.equal(await p.evaluate(()=>DobbyFamilyStitchEngine.read().state.autoTasks.length),0);await p.locator('[data-dv7-mission-edit="'+id+'"]').click();await p.waitForURL(/famille.html#mission-edit/);await p.locator('#quest-title').fill('TEST — Mission modifiée');await p.locator('[data-fa-action=rg-save]').click();await p.waitForURL(/missions\.html/);await p.waitForFunction(()=>DobbyStitchV7?.ready);assert.equal((await state()).manualMissions[0].id,id);assert.equal((await state()).manualMissions.length,1,JSON.stringify((await state()).manualMissions));await p.locator('[data-dv7-manual=toggle]').first().click();await p.waitForFunction(()=>DobbyFamilyStitchEngine.read().state.manualMissions[0].status==='done');await p.locator('[data-dv7-manual=toggle]').first().click();await p.waitForFunction(()=>DobbyFamilyStitchEngine.read().state.manualMissions[0].status==='open');await p.locator('[data-dv7-manual=delete]').first().click();assert.equal((await state()).manualMissions.length,1,'Canceled native deletion leaves mission intact');await p.screenshot({path:path.join(out,'missions-manual-'+width+'.png'),fullPage:true});await p.evaluate(()=>DobbyFamilyStitchEngine.evaluate(`st.st4TaskFilter='done';st.houseItems=[{id:'auto-source',name:'TEST — Entretien automatique',nextMaintenance:'2027-01-01'}];save();`));await p.evaluate(()=>DobbyStitchV7.refresh());await p.locator('[data-dv7-automatic]').first().click();await p.waitForFunction(()=>DobbyFamilyStitchEngine.read().state.autoTasks[0].state==='done'||document.querySelector('main [role=alert]'));assert.equal((await state()).autoTasks[0].state,'done','Source automatic action must work regardless of a saved native view filter');assert.equal((await state()).manualMissions[0].status,'open','Automatic completion does not change a manual mission');await p.reload();await p.waitForFunction(()=>DobbyStitchV7?.ready);assert.equal((await state()).autoTasks[0].state,'done');assert.equal((await state()).manualMissions[0].status,'open');
+@@ -5 +5 @@ await open('mission-edit');assert.equal(await p.locator('[data-fa-action=rg-save
 -await p.goto(origin+'/essai-stitch-v7/famille.html#chat');await p.waitForFunction(()=>DobbyFamilyStitch?.ready);await p.locator('#user-input').fill('acheter du lait TEST');await p.locator('[data-fa-action=rg-chat-send]').click();await p.waitForFunction(()=>DobbyFamilyStitchEngine.read().state.v2ChatHistory.length===2);assert.ok((await state()).extras.includes('lait TEST'));await open('chat-2');assert.match(await p.locator('main').textContent(),/lait TEST/);await p.locator('#chat-input').fill('Une demande incompréhensible TEST');await p.locator('#chat-input').press('Enter');await p.waitForFunction(()=>DobbyFamilyStitchEngine.read().state.v2ChatHistory.length===4);assert.match(await p.locator('main').textContent(),/ne sait pas encore/);assert.equal(await p.locator('[data-fa-action=rg-chat-voice]').isEnabled(),false);await p.reload();await p.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal((await state()).v2ChatHistory.length,4);await p.screenshot({path:path.join(out,'chat-native-'+width+'.png'),fullPage:true});
 +await p.goto(origin+'/essai-stitch-v7/famille.html#chat');await p.waitForFunction(()=>DobbyFamilyStitch?.ready);await p.locator('#user-input').fill('acheter du lait TEST');await p.locator('[data-fa-action=rg-chat-send]').click();await p.waitForFunction(()=>document.querySelectorAll('[data-e02-message=user]').length===1);assert.ok((await state()).extras.includes('lait TEST'));await open('chat-2');assert.match(await p.locator('main').textContent(),/lait TEST/);await p.locator('#chat-input').fill('Une demande incompréhensible TEST');await p.locator('#chat-input').press('Enter');await p.waitForFunction(()=>document.querySelectorAll('[data-e02-message=user]').length===2);assert.match(await p.locator('main').textContent(),/ne sait pas encore/);assert.equal(await p.locator('[data-fa-action=rg-chat-voice]').isEnabled(),true);await p.reload();await p.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal((await state()).v2ChatHistory.length,0,'legacy history is never assigned to a new user');assert.equal(await p.locator('[data-e02-message=user]').count(),0,'anonymous history lasts only in the current tab runtime');await p.screenshot({path:path.join(out,'chat-native-'+width+'.png'),fullPage:true});
- await open('search');await p.locator('#search-input').pressSequentially('Rechercher');assert.equal(await p.locator('#search-input').inputValue(),'Rechercher','Typing accumulates the actual native search query');await p.waitForFunction(()=>document.querySelector('[data-fa-action=rg-search-open]'));await p.locator('[data-fa-action=rg-search-open]').first().click();await p.waitForFunction(()=>DobbyFamilyStitch.view==='contact-edit');assert.equal(await p.locator('#contact-name').inputValue(),'TEST — Contact Rechercher');await open('search');await p.locator('#search-input').fill('zzzz-absent');await p.waitForFunction(()=>document.querySelector('main')?.textContent.includes('Aucun résultat'));await open('menu');await p.locator('#global-module-search').fill('santé');assert.match(await p.locator('main').textContent(),/Carnets de santé/);await open('personal');await p.waitForFunction(()=>document.querySelector('main')?.textContent.includes('TEST — Membre'));assert.match(await p.locator('main').textContent(),/TEST — Mission modifiée/);assert.ok(!/Aucune allergie ni contre-indication|Certificat de Vol|Ordonnance & Tisanes/.test(await p.locator('main').textContent()));await p.screenshot({path:path.join(out,'personal-member-'+width+'.png'),fullPage:true});await open('mission-edit','missing-mission');assert.match(await p.locator('main').textContent(),/introuvable/);assert.equal((await state()).manualMissions.length,1);await open('mission-edit',id);await p.evaluate(()=>DobbyFamilyStitchEngine.evaluate('st.manualMissions=[];save();'));await p.locator('#quest-title').fill('TEST — Ne pas recréer');await p.locator('[data-fa-action=rg-save]').click();await p.waitForFunction(()=>document.querySelector('#fa-notice')?.textContent.includes('introuvable')||location.pathname.endsWith('missions.html'));assert.equal((await state()).manualMissions.length,0,'A stale editor must not create a replacement mission');assert.deepEqual(errors,[]);await c.close();console.log('REGISTER_TOOLS_PASS',width);}}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});
 diff --git a/essai-stitch-v7/tools-register.js b/essai-stitch-v7/tools-register.js
 index bc4723d..6a2281b 100644
 --- a/essai-stitch-v7/tools-register.js
 +++ b/essai-stitch-v7/tools-register.js
-@@ -16,11 +16,7 @@
-  for(const section of all('main section'))if(!form.contains(section)){const h=section.querySelector('h1,h2,h3')?.cloneNode(true);section.replaceChildren(...(h?[h]:[]),note(E.win().DobbyFamilyUI?.getModuleStatus('missions')||'Partage du module Missions à vérifier.'));}
-  const problem=missionIssue(row,native);if(problem){for(const f of form.elements)f.disabled=true;form.append(note(problem));}let h=q('main h1');if(!h){h=el('h1','','sr-only');c.main.prepend(h);}h.textContent=row?'Modifier une mission':'Nouvelle mission';const header=q('body > header h1');if(header)header.textContent=h.textContent;
-  }
+@@ -19,5 +19 @@
 - function chat(variant){const input=q(variant?'#chat-input':'#user-input'),thread=q(variant?'#chat-stream':'#chat-thread')||q('main section:last-child'),sourceThread=q(variant?'#chat-stream':'#chat-thread',c.pristine),prototype=sourceThread?.querySelector('[class*=rounded]');thread.replaceChildren();const history=(c.data.state.v2ChatHistory||[]).slice(-14);for(const row of history){const bubble=prototype?document.importNode(prototype,false):document.createElement('div');bubble.classList.add('rg-chat-bubble');bubble.append(el('strong',row.by==='user'?'Vous':'Dobby'),note(row.text));thread.append(bubble);}if(!history.length)thread.append(note('Aucun échange enregistré.'));const help=box('Commandes disponibles');help.append(note('Assistant à commandes textuelles limitées : retrouver le repas du soir, les tâches automatiques, rechercher un document ou ajouter un article à la préparation des courses. Aucune IA générative. L’historique reste dans le stockage DOBBY existant.'),button(variant?'chat':'chat-2','Autre présentation'),button('search','Recherche locale'),button('rg-shop','Voir les courses'));thread.append(help);
 - const composer=input.closest('footer')||input.closest('.fixed');if(composer){composer.classList.remove('fixed');composer.style.position='static';composer.style.transform='none';composer.style.width='100%';composer.style.paddingBottom='12px';for(const nav of all('nav',composer))nav.remove();for(const p of all('p',composer))if(/dictée|iPhone|privé/i.test(p.textContent))p.textContent='Commandes textuelles · dictée indisponible dans ce parcours.';c.main.append(composer);}for(const span of all('main span'))if(!span.children.length&&/conversation privée|strictement privés/i.test(span.textContent))span.textContent='Historique local';for(const b of all('main button'))if(!b.dataset.faAction&&/dîner|butternut|repas/.test(b.textContent)){b.textContent='Retrouver le dîner prévu';bind(b,'rg-chat-quick',{text:'Quel est le repas ce soir ?'});}input.value='';input.maxLength=1500;input.placeholder='Exemple : acheter du lait';input.setAttribute('aria-label','Message à Dobby');input.onkeydown=event=>{if(event.key==='Enter'){event.preventDefault();R.run(send);}};for(const b of all('main button,#fa-supplement button')){const icon=b.querySelector('.material-symbols-outlined')?.textContent.trim();if(/mic|keyboard_voice|record_voice_over/.test(icon||'')||/dictation/.test(b.id)){bind(b,'rg-chat-voice');b.disabled=true;b.title='Dictée vocale non qualifiée dans ce parcours.';}else if(/send|arrow_upward|north/.test(icon||''))bind(b,'rg-chat-send');}
 - if(!q('[data-fa-action=rg-chat-send]'))input.parentElement.append(button('rg-chat-send','Envoyer'));if(!q('[data-fa-action=rg-chat-voice]')){const voice=button('rg-chat-voice','Dictée vocale indisponible');voice.disabled=true;input.parentElement.append(voice);}for(const d of all('#action-card-butternut,#dynamic-messages,#dynamic-log'))if(!thread.contains(d))d.remove();
 - }
 - function send(){const input=q(c.ui.view==='chat-2'?'#chat-input':'#user-input'),value=input.value.trim();if(!value)throw Error('Écrivez une demande.');E.evaluate('v2SendChat(p.text);',{text:value});return target(c.ui.view);}
 + function chat(variant){window.DobbyChat.mount(c,variant);}
-  function search(){const query=E.read().state.globalQuery||'',input=q('#search-input');input.value=query;input.placeholder='Rechercher dans les fiches locales';input.setAttribute('aria-label','Recherche locale DOBBY');const result=q('#state-results-view'),empty=q('#state-empty-view'),zero=q('#state-zero-view');result.hidden=false;result.classList.remove('hidden');result.replaceChildren();empty?.remove();zero?.remove();for(const id of ['btn-state-results','btn-state-empty','btn-state-zero'])q('#'+id)?.remove();
-  const dom=new DOMParser().parseFromString(E.evaluate('return xsearch();'),'text/html'),nativeRows=[...dom.querySelectorAll('[data-extra]')].filter(b=>b.dataset.id);for(const b of nativeRows){const original=b.closest('.doc-row'),title=original.querySelector('strong')?.textContent||'',meta=original.querySelector('.muted')?.textContent||'',proto=q('#state-results-view h2',c.pristine)?.closest('[class*=rounded]'),card=proto?document.importNode(proto,false):box();card.classList.add('rg-search-card');card.append(el('h2',title,'font-headline-sm text-primary'),note(meta),button('rg-search-open','Ouvrir',{kind:b.dataset.extra,record:b.dataset.id}));result.append(card);}result.prepend(note(query.trim()?nativeRows.length+' résultat(s) affiché(s)':'Saisissez un mot pour rechercher.'));if(query.trim()&&!nativeRows.length)result.append(note('Aucun résultat.'));result.append(note('Recherche locale native : contacts, listes, santé locale, documents, mémos, équipements et recettes. Les fichiers joints, membres, missions, événements et services Apple ne sont pas indexés.'));input.oninput=()=>{E.evaluate('st.globalQuery=p.value;',{value:input.value});const pos=input.selectionStart;search();q('#search-input').focus();q('#search-input').setSelectionRange(pos,pos);};const clear=q('#clear-search');bind(clear,'rg-search-clear');if(clear){clear.classList.remove('hidden');clear.hidden=!query;}}
-  function result(kind,id){const view={contactedit:'contact-edit',listopen:'list-detail',docopen:'document',noteopen:'memo-edit',houseopen:'equipment'}[kind];if(view)return target(view,id);if(kind==='recipeopen'){location.href='./index.html#recipe?id='+encodeURIComponent(id);return;}if(kind==='healthedit'){const record=E.read().local.find(x=>x.id===id);if(!record)throw Error('Rendez-vous introuvable.');return c.open('medical-edit',{record:id,scope:'local',person:record.personId||null});}}
-@@ -36,7 +32,7 @@
-  const missionCards=[];for(const t of tasks)missionCards.push(el('h3',t.title,'font-headline-sm text-primary'),note((t.status==='done'?'Terminée':'À faire')+' · '+(t.due||'Sans échéance')),button('rg-mission-edit','Modifier',{record:t.id}));if(!tasks.length)missionCards.push(note('Aucune mission attribuée.'));replace(4,'Missions de la Maisonnée',missionCards);replace(5,'Contacts & Protecteurs',[note('Le répertoire ne conserve pas de rattachement personnel des contacts.'),button('contacts','Répertoire du foyer')]);replace(6,'Notes du Logis',[note('Les mémos sont locaux et ne possèdent pas de rattachement à un membre.'),button('memos','Consulter les mémos locaux')]);replace(7,'Carnet de santé individuel',[note('Antécédents, allergies et contre-indications structurés : non disponibles. Cette absence de fonction n’indique pas un dossier médical vierge.'),button('health-person','Consulter le carnet individuel',{person:member.id})]);
-  for(const b of all('main button,#fa-supplement button'))if(!b.dataset.faAction){if(/Revenir|Retour/.test(b.textContent))bind(b,'members');else if(/Archiver|Sceller/.test(b.textContent))c.unavailable(b,'Archivage individuel non enregistré.');}c.main.append(button('member-edit','Modifier le membre',{person:member.id}),button('members','Tous les membres'));
-  }
+@@ -39 +35 @@
 - R.register({views,prepare(view){if(view==='mission-edit')return R.until(()=>!!E.win().DobbyFamilyMissions?.available);},back(view){return view==='mission-edit'?goMissions():target(view==='chat-2'?'chat':'salon');},render(view,ctx){c=ctx;if(view==='mission-edit')mission();else if(view==='chat'||view==='chat-2')chat(view==='chat-2');else if(view==='search')search();else if(view==='menu')menu();else personal();},act(action,b,ctx){c={...c,...ctx};const id=b.dataset.record||c.ui.record;if(action==='rg-missions')return goMissions();if(action==='rg-home'){location.href='./traverse.html';return;}if(['rg-taverne','rg-recipes','rg-shop'].includes(action)){location.href='./index.html#'+({'rg-taverne':'taverne','rg-recipes':'recipes','rg-shop':'shop'})[action];return;}if(action==='rg-mission-edit')return target('mission-edit',id);if(action==='rg-chat-send')return send();if(action==='rg-chat-quick'){E.evaluate('v2SendChat(p.text);',{text:b.dataset.text});return target(c.ui.view);}if(action==='rg-search-clear'){E.evaluate('st.globalQuery="";');return search();}if(action==='rg-search-open')return result(b.dataset.kind,id);if(action==='rg-menu-clear'){menuQuery='';q('#global-module-search').value='';return filterMenu();}},submit(form,ctx){c={...c,...ctx};if(c.ui.view!=='mission-edit')return;const row=E.read().state.manualMissions.find(m=>m.id===c.ui.record);if(c.ui.record&&!row)throw Error('Mission introuvable. Aucune tâche recréée.');const native=nativeMission(row?.id),problem=missionIssue(row,native);if(problem)throw Error(problem);const values=Object.fromEntries(new FormData(form));if(values.assigneeId&&![...native.elements.assigneeId.options].some(o=>o.value===values.assigneeId))native.elements.assigneeId.add(new (E.win().Option)('Ancien membre',values.assigneeId));E.submit('fmsForm',values);if(!E.win().document.getElementById('fmsLayer').hidden)throw Error(E.lastError||'La mission n’a pas été enregistrée.');return goMissions();}});
 + R.register({views,prepare(view){if(view==='chat-2')return window.DobbyChat.prepare();if(view==='mission-edit')return R.until(()=>!!E.win().DobbyFamilyMissions?.available);},back(view){return view==='mission-edit'?goMissions():target(view==='chat-2'?'chat':'salon');},render(view,ctx){c=ctx;if(view==='mission-edit')mission();else if(view==='chat'||view==='chat-2')chat(view==='chat-2');else if(view==='search')search();else if(view==='menu')menu();else personal();},act(action,b,ctx){c={...c,...ctx};const id=b.dataset.record||c.ui.record;if(action==='rg-missions')return goMissions();if(action==='rg-home'){location.href='./traverse.html';return;}if(['rg-taverne','rg-recipes','rg-shop'].includes(action)){location.href='./index.html#'+({'rg-taverne':'taverne','rg-recipes':'recipes','rg-shop':'shop'})[action];return;}if(action==='rg-mission-edit')return target('mission-edit',id);if(action.startsWith('rg-chat-'))return window.DobbyChat.act(action,b);if(action==='rg-search-clear'){E.evaluate('st.globalQuery="";');return search();}if(action==='rg-search-open')return result(b.dataset.kind,id);if(action==='rg-menu-clear'){menuQuery='';q('#global-module-search').value='';return filterMenu();}},submit(form,ctx){c={...c,...ctx};if(c.ui.view!=='mission-edit')return;const row=E.read().state.manualMissions.find(m=>m.id===c.ui.record);if(c.ui.record&&!row)throw Error('Mission introuvable. Aucune tâche recréée.');const native=nativeMission(row?.id),problem=missionIssue(row,native);if(problem)throw Error(problem);const values=Object.fromEntries(new FormData(form));if(values.assigneeId&&![...native.elements.assigneeId.options].some(o=>o.value===values.assigneeId))native.elements.assigneeId.add(new (E.win().Option)('Ancien membre',values.assigneeId));E.submit('fmsForm',values);if(!E.win().document.getElementById('fmsLayer').hidden)throw Error(E.lastError||'La mission n’a pas été enregistrée.');return goMissions();}});
-  // The existing Missions root uses the same original source, with separate native manual/automatic actions.
-  window.DobbyToolsRoots={missions(data){const main=document.querySelector('main'),section=[...main.querySelectorAll('section')].find(s=>s.querySelector('h2')?.textContent.includes('Missions Prioritaires')||s.querySelector('h2')?.textContent.includes('Bibliothèque des Missions'));if(!section)return false;section.dataset.stitchMissions='true';const sample=section.querySelector('[class*=rounded]')?.cloneNode(false);function group(label,rows,manual){const block=document.createElement('section');block.className='space-y-3';block.append(el('h3',label,'font-headline-sm text-primary'));for(const row of rows){const card=sample?.cloneNode(false)||document.createElement('article');card.className='rg-root-mission rounded-xl bg-surface-container p-4 flex flex-col gap-2';card.append(el('h4',row.title,'font-headline-sm text-on-surface'),el('p',manual?[row.category,data.familyMembers?.find(m=>m.id===row.assigneeId)?.name||'Non attribuée',row.due||'Sans échéance'].join(' · '):[row.sourceLabel,row.due||'Sans échéance'].filter(Boolean).join(' · ')));if(manual){const edit=document.createElement('a');edit.href=rootUrl('mission-edit',row.id);edit.dataset.dv7MissionEdit=row.id;edit.className='fa-button';edit.textContent='Modifier';card.append(edit);for(const[action,label]of [['toggle',row.status==='done'?'Rouvrir':'Terminer'],['delete','Supprimer']]){const b=el('button',label,'fa-button');b.type='button';b.dataset.dv7Manual=action;b.dataset.record=row.id;card.append(b);}}else if(row.state==='open'){const b=el('button','Terminer','fa-button');b.type='button';b.dataset.dv7Automatic=row.key;card.append(b);}block.append(card);}if(!rows.length)block.append(el('p','Aucune mission dans ce registre.','font-body-md text-on-surface-variant'));return block;}section.replaceChildren(el('h2','La Bibliothèque des Missions','font-headline-sm text-on-surface'));const add=document.createElement('a');add.href=rootUrl('mission-edit');add.className='fa-button';add.textContent='Créer une mission';add.dataset.dv7MissionEdit='';const status=el('p',E.win().DobbyFamilyUI?.getModuleStatus('missions')||'Partage à vérifier','font-body-md text-on-surface-variant'),sync=el('button','Synchroniser le foyer','fa-button');sync.dataset.dv7MissionSync='true';section.append(status,sync,add,group('Missions manuelles — À faire ensemble',(data.manualMissions||[]).filter(m=>m.status!=='done'),true),group('Missions manuelles terminées',(data.manualMissions||[]).filter(m=>m.status==='done'),true),group('Missions automatiques',(data.autoTasks||[]).filter(m=>m.state==='open'),false),group('Missions automatiques terminées',(data.autoTasks||[]).filter(m=>m.state==='done'),false));return true;}};
-  document.addEventListener('click',event=>{const b=event.target.closest('[data-dv7-manual],[data-dv7-automatic],[data-dv7-mission-sync]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();try{E.evaluate('st.extraPage="";go("missions");');if(b.dataset.dv7MissionSync){E.action('fvAction','sync');return;}if(b.dataset.dv7Manual)E.action('fmsAction',b.dataset.dv7Manual,{id:b.dataset.record});else{const input=[...E.win().document.querySelectorAll('[data-autotask]')].find(n=>n.dataset.autotask===b.dataset.dv7Automatic);if(!input)throw Error('Mission automatique indisponible.');input.checked=true;input.dispatchEvent(new (E.win().Event)('change',{bubbles:true}));}window.DobbyStitchV7.refresh();}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}},true);
 diff --git a/essai-stitch-v7/traverse.html b/essai-stitch-v7/traverse.html
 index e3cd8f9..bfb3ed8 100644
 --- a/essai-stitch-v7/traverse.html
 +++ b/essai-stitch-v7/traverse.html
-@@ -67,4 +67,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
- 
- 
- 
+@@ -70 +70 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
 -<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
 \ No newline at end of file
 +<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
