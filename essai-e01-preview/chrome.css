@@ -14,7 +14,7 @@ body[data-dv7-screen=traverse],body[data-dv7-screen=missions]{max-width:480px;ma
 #dv7-panel{top:var(--e01-top)!important;bottom:var(--e01-bottom)!important;z-index:10900!important}
 body.dv7-panel-visible #dv7-engine{top:calc(var(--e01-top) + 56px)!important;height:calc(100dvh - var(--e01-top) - 56px - var(--e01-bottom))!important;z-index:10901!important}
 #dv7-panel-top{z-index:10902!important}
-.e01-effects-off *,.e01-effects-off *::before,.e01-effects-off *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+.e01-effects-off .magical-ripple,.e01-effects-off .magic-sparkle-dot,.e01-effects-off .animate-pulse{animation:none!important}
 [data-e01-days]{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px;padding:12px}
 [data-e011-shift]{display:flex;align-items:center;justify-content:center;min-height:52px;border:1px solid #d49b4266;border-radius:12px;background:#271814;color:#f9bb5f;box-shadow:inset 0 1px 3px #0004}
 [data-e011-shift]:disabled{opacity:.35;cursor:default}
@@ -35,3 +35,12 @@ body.dv7-panel-visible #dv7-engine{top:calc(var(--e01-top) + 56px)!important;hei
 #fa-notice,#cu-notice{bottom:calc(var(--e01-bottom) + var(--e01-footer-height,0px) + 8px)!important}
 
 .e01-effects-off .magical-ripple{display:none}
+
+/* E01.2 — Native account view must share DOBBY's 480px viewport and fixed bars. */
+#dv7-panel:not([hidden]){left:50%!important;right:auto!important;width:min(480px,100vw)!important;transform:translateX(-50%)!important;box-sizing:border-box}
+#dv7-panel-top{width:100%;box-sizing:border-box}
+body.dv7-panel-visible #dv7-engine{left:50%!important;right:auto!important;width:min(480px,100vw)!important;transform:translateX(-50%)!important}
+/* Original Stitch ripple and sparkle particles, above the permanent header. */
+.magical-ripple,.magic-sparkle-dot{z-index:11020!important}
+:root.e01-effects-on [data-e01-toggle="effects"]{border-color:#f9bb5f!important;box-shadow:0 0 14px rgba(249,187,95,.6),inset 0 0 8px rgba(249,187,95,.18)!important}
+:root.e01-effects-off [data-e01-toggle="effects"]{opacity:.72}

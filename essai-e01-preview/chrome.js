@@ -4,8 +4,8 @@ window.DobbyChrome=(()=>{'use strict';
 const E=window.DobbyFamilyStitchEngine;
 let template=null,audio=null;
 const destinations=[['Traverse','explore','./traverse.html'],['Missions','history_edu','./missions.html'],['Taverne','skillet','./index.html'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
-const preferences=()=>E.evaluate('return st.stitchPreferences||{effects:true,sound:false};');
-function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b)b.setAttribute('aria-pressed',String(!!p[name]));}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;}
+const preferences=()=>E.evaluate('return {effects:false,sound:false,...st.stitchPreferences};');
+function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){const b=document.querySelector(`[data-e01-toggle="${name}"]`);if(b){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const text=p.effects?'Désactiver les effets visuels':'Activer les effets visuels';b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;}
 function sectionTitle(){
  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
  const heading=document.querySelector('body > main h1')?.cloneNode(true);for(const icon of heading?.querySelectorAll('.material-symbols-outlined,[aria-hidden="true"]')||[])icon.remove();
@@ -31,11 +31,25 @@ function mount(){if(!template)return;const current=document.querySelector('body 
  apply();
 }
 const ready=fetch('./chrome-source.html').then(r=>{if(!r.ok)throw Error('Barres Stitch indisponibles');return r.text()}).then(html=>{template=new DOMParser().parseFromString(html,'text/html');document.head.append(document.importNode(template.querySelector('style'),true));});
-function feedback(event){if(!window.DobbyStitchV7?.ready)return;const p=preferences();if(p.effects&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const ripple=document.createElement('div');ripple.className='magical-ripple';ripple.style.left=event.clientX+'px';ripple.style.top=event.clientY+'px';document.body.append(ripple);setTimeout(()=>ripple.remove(),700);}if(p.sound){try{navigator.vibrate?.(20)}catch{}try{const Audio=window.AudioContext||window.webkitAudioContext;if(Audio){audio||=new Audio();audio.resume().catch(()=>{});const osc=audio.createOscillator(),gain=audio.createGain();osc.frequency.value=660;gain.gain.setValueAtTime(.025,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.12);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+.13);}}catch{}}}
+function animateSparkles(event){
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const button=event.target.closest?.('button,a'),bounds=button?.getBoundingClientRect();
+ const x=event.clientX>0?event.clientX:bounds?bounds.left+bounds.width/2:innerWidth/2;
+ const y=event.clientY>0?event.clientY:bounds?bounds.top+bounds.height/2:innerHeight/2;
+ const ripple=document.createElement('div');ripple.className='magical-ripple';ripple.style.left=x+'px';ripple.style.top=y+'px';document.body.append(ripple);setTimeout(()=>ripple.remove(),700);
+ const colors=['#f9bb5f','#fabc4d','#ffdead','#afcdc0','#ffffff'];
+ for(let i=0;i<7;i++){const spark=document.createElement('div'),angle=2*Math.PI*i/7,dist=24+Math.random()*25,size=3+Math.random()*3;
+  spark.className='magic-sparkle-dot';spark.style.left=x+'px';spark.style.top=y+'px';spark.style.width=size+'px';spark.style.height=size+'px';spark.style.backgroundColor=colors[i%colors.length];spark.style.boxShadow='0 0 8px '+colors[i%colors.length];spark.style.setProperty('--tx',Math.round(Math.cos(angle)*dist)+'px');spark.style.setProperty('--ty',Math.round(Math.sin(angle)*dist)+'px');document.body.append(spark);setTimeout(()=>spark.remove(),650);
+ }
+}
+function feedback(event,{visual=true,sound=true}={}){
+ const p=preferences();if(visual&&p.effects)animateSparkles(event);
+ if(sound&&p.sound){try{navigator.vibrate?.(20)}catch{}try{const Audio=window.AudioContext||window.webkitAudioContext;if(Audio){audio||=new Audio();audio.resume().catch(()=>{});const osc=audio.createOscillator(),gain=audio.createGain();osc.frequency.value=660;gain.gain.setValueAtTime(.025,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.12);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+.13);}}catch{}}
+}
 document.addEventListener('click',async event=>{
  const toggle=event.target.closest('[data-e01-toggle]');const account=event.target.closest('[data-e01-account]');const nav=event.target.closest('[data-e01-destination]');
  if(!toggle&&!account&&!nav){if(event.target.closest('button,a,[role=link],[role=button]'))feedback(event);return;}event.preventDefault();event.stopImmediatePropagation();
- if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event);}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
+ if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:false,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
  feedback(event);
  if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
  if(account){window.DobbyStitchV7.open('account',account);mount();return;}

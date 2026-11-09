@@ -8,8 +8,8 @@ const roots=[
 {screen:'missions',file:'missions.html',id:'dobby_la_biblioth_que_des_missions_t_ches_magiques'},
 {screen:'famille',file:'famille.html',id:'dobby_le_salon_des_curiosit_s_famille_organisation'}];
 const homeSource=fs.readFileSync(path.join(root,'design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html'),'utf8');
-const ripple=homeSource.slice(homeSource.indexOf('.magical-ripple {'),homeSource.indexOf('.magic-sparkle-dot {'));
-if(!ripple.includes('@keyframes magicPulse'))throw Error('Original Traverse ripple CSS missing');
+const ripple=homeSource.slice(homeSource.indexOf('.magical-ripple {'),homeSource.indexOf('.haptic-pulse-active {'));
+if(!ripple.includes('@keyframes magicPulse')||!ripple.includes('@keyframes sparkleFly'))throw Error('Original Traverse ripple CSS missing');
 fs.writeFileSync(path.join(__dirname,'chrome-source.html'),'<style>'+ripple+'</style>'+homeSource.match(/<header[\s\S]*?<\/header>/)[0]+homeSource.match(/<nav[\s\S]*?<\/nav>/)[0]);
 for(const {screen,file,id} of roots){
 const source=fs.readFileSync(path.join(root,'design','stitch-53',id,'code.html'),'utf8');
