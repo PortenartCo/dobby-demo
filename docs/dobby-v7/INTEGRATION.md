@@ -1,12 +1,12 @@
 # DOBBY V7 — État réel de l’intégration Stitch
 
-Le lot Cuisine poursuit la PR #3, branche `feat/dobby-stitch-53-source-backed-v7`, depuis `08f66ce`. Les 53 HTML originaux et leurs empreintes restent inchangés dans `design/stitch-53/`.
+Le lot Cuisine poursuit la PR #3, branche `feat/dobby-stitch-53-source-backed-v7`, depuis `08f66ce`. La mission 2A poursuit ce travail depuis `cb440793cc04079cd472a3cd1d8fcf3e14c1f84b`. Les 53 HTML originaux et leurs empreintes restent inchangés dans `design/stitch-53/`.
 
 ## Couverture vérifiée
 
-**13 sources Cuisine sont intégrées fonctionnellement**, avec leurs variantes de formulaire et de préparation. La Taverne appartenait déjà aux quatre racines intégrées : le total est donc **16 sources actives sur 53**, et **37 sources importées sans intégration fonctionnelle**. Traverse, Missions et Famille conservent leur raccordement précédent et leur repli V5 pour leurs sous-écrans. Les 40 sources hors Cuisine n’ont pas fait l’objet d’une nouvelle analyse.
+**13 sources Cuisine sont intégrées fonctionnellement**, avec leurs variantes de formulaire et de préparation. La Taverne appartenait déjà aux quatre racines intégrées : le lot Cuisine portait le total à 16 sources actives. La mission 2A ajoute sept compositions Famille/Agenda/Santé : **23 sources actives sur 53, dont 5 partielles**, et **30 sources importées sans raccordement fonctionnel**. Hors des parcours Cuisine et 2A, les domaines conservent leur raccordement précédent et leur repli V5 pour les sous-écrans restants. Lors du lot Cuisine, les 40 autres sources n’ont pas été réauditées. La mission 2A traite uniquement ses sept sources explicitement demandées ; elle ne réaudite pas Cuisine.
 
-Le registre exact est [route-manifest.json](../../essai-stitch-v7/route-manifest.json). Les états `verified-functional` renvoient aux tests et aux captures ; une simple importation reste `source-only`. Chaque variante est une route utilisable, issue de son propre HTML, et partage les mêmes actions métier que sa variante de référence.
+Le registre exact est [route-manifest.json](../../essai-stitch-v7/route-manifest.json) : 23 templates actifs, dont 18 fonctionnels et 5 partiels ; les adaptateurs partiels sont identifiés séparément. Les états `verified-functional` renvoient aux tests et aux captures ; une simple importation reste `source-only`. Chaque variante est une route utilisable, issue de son propre HTML, et partage les mêmes actions métier que sa variante de référence.
 
 | Route dans `essai-stitch-v7/index.html` | HTML Stitch (identifiant abrégé) | Opérations effectivement raccordées |
 |---|---|---|
@@ -23,6 +23,16 @@ Le registre exact est [route-manifest.json](../../essai-stitch-v7/route-manifest
 | `#shop` | `dobby_pr_parer_la_liste_de_courses_2` | mêmes actions, filtres par rayon, ajout/retrait, historique ; retour à la liste courante si déjà validée |
 | `#shop-final` | `dobby_liste_de_courses_valid_e` | liste arrêtée native, coches persistées, progression, copie/export, modification de la préparation |
 | `#shop-history` | `dobby_historique_des_listes_de_courses` | archives réelles, consultation, reprise des articles, nouvelle préparation, export des archives sans purge |
+
+## Mission 2A — Famille, Agenda et Santé
+
+Les sept HTML demandés sont désormais utilisés dans les parcours Famille. **Deux sources ont le statut `verified-functional`** (membres et agenda) ; **cinq ont le statut `verified-partial`** (formulaire membre, rendez-vous médical, les deux carnets et historique/contacts), car les rôles/photos/notes de membre, les constantes/vaccins/antécédents cliniques structurés, rappels, pièces jointes et archivage n’ont pas tous de gestionnaire natif. Les opérations natives de lecture/CRUD sont raccordées dans leurs cadres Stitch ; les fonctions absentes restent explicitement indisponibles.
+
+Les personnes utilisent le registre `familyMembers` existant. Les fiches `famHealth` restent locales, les `familyEvents` restent ordinaires et les `sharedHealthVisits` restent volontaires avec activation native du module Famille. Aucune fiche individuelle n’est copiée dans les deux registres partagés. Les tests inspectent aussi les écritures du client natif contre une API uniquement simulée en mémoire.
+
+Les contrats exacts, règles de compatibilité, limites et tests sont dans [FAMILY-2A.md](FAMILY-2A.md). Preuves : [index des comparaisons](evidence/family-2a/README.md), [galerie](evidence/family-2a/index.html), [contrôles](evidence/family-2a/checks.json). Il y a 28 captures source/interface, 14 états vides et 6 états de partage/hors ligne/conflit ; les illustrations originales inaccessibles et les substituts sont déclarés.
+
+Les changements du pont partagé justifient les 54 régressions communes, le smoke des quatre racines et la CI existante. Les nouveaux parcours disposent de `npm run test:family --prefix essai-stitch-v7/tests`. Aucun réaudit Cuisine, aucune manipulation des comptes réels, aucune modification des fichiers V5/SQL/Supabase, fusion ou publication.
 
 ## Sources et moteur
 

@@ -54,7 +54,8 @@
 
 **Files:** add `tests/family-visual.cjs`, `docs/dobby-v7/evidence/family-2a/`, `FAMILY-2A.md`; update manifest, `INTEGRATION.md`, CI and test scripts.
 
-- [ ] Capture reference/live for seven sources × two widths, plus empty/shared/offline states; assert source hashes, no sample identities, no visible V5 panel and usable controls.
-- [ ] Update truthful statuses including exact unsupported contracts and image substitutions.
-- [ ] Run targeted tests, 54 common regressions and root smoke because bridge/build wiring changed; existing Cuisine suites run in final CI to cover that shared change.
-- [ ] Run a fresh whole-lot review, fix important findings with regression evidence, commit and push PR #3; verify final CI on final SHA.
+- [x] Capture reference/live for seven sources × two widths, plus empty/shared/offline states; assert source hashes, no sample identities, no visible V5 panel and usable controls.
+- [x] Update truthful statuses including exact unsupported contracts and image substitutions.
+- [x] Run targeted tests, 54 common regressions and root smoke because bridge/build wiring changed; existing Cuisine suites run in final CI to cover that shared change.
+- [x] Run a fresh whole-lot review and fix important findings with regression evidence.
+Final release gate: push the delivery commits into PR #3 and record its final-SHA CI result directly in the PR, without changing the tested commit to add that result.

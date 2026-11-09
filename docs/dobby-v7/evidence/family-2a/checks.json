@@ -1,0 +1,336 @@
+[
+  {
+    "view": "members",
+    "width": 320,
+    "source": "dobby_membres_de_la_maisonn_e",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "Parents",
+        "reason": "Les rôles parent, enfant ou gardien ne sont pas enregistrés par le moteur."
+      },
+      {
+        "label": "Enfants",
+        "reason": "Les rôles parent, enfant ou gardien ne sont pas enregistrés par le moteur."
+      },
+      {
+        "label": "Gardien",
+        "reason": "Les rôles parent, enfant ou gardien ne sont pas enregistrés par le moteur."
+      }
+    ],
+    "characters": 1215
+  },
+  {
+    "view": "member-edit",
+    "width": 320,
+    "source": "dobby_ajouter_ou_modifier_un_membre",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "🧒\n        \n        Apprenti",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "🧒\n        \n        Herboriste",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "🧒\n        \n        Gardien",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "🧒\n        \n        Alchimiste",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "draw\n    Personnaliser le sceau & illustration",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "member-lastname",
+        "reason": "Le moteur conserve un seul champ prénom / nom."
+      },
+      {
+        "label": "",
+        "reason": "Le rôle familial n’est pas enregistré dans le moteur."
+      },
+      {
+        "label": "",
+        "reason": "Le rôle familial n’est pas enregistré dans le moteur."
+      },
+      {
+        "label": "",
+        "reason": "Le rôle familial n’est pas enregistré dans le moteur."
+      },
+      {
+        "label": "member-notes",
+        "reason": "Les notes sur un membre ne sont pas enregistrées dans le moteur."
+      }
+    ],
+    "characters": 2338
+  },
+  {
+    "view": "agenda",
+    "width": 320,
+    "source": "dobby_agenda_almanach_du_foyer",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "lock_clock\nBientôt disponible",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      }
+    ],
+    "characters": 1657
+  },
+  {
+    "view": "medical-edit",
+    "width": 320,
+    "source": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "practitioner-phone",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "consultation-fee",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "consultation-time",
+        "reason": "L’heure n’est pas enregistrée dans le carnet individuel actuel."
+      },
+      {
+        "label": "consultation-duration",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "location-input",
+        "reason": "Le lieu n’est pas enregistré dans le carnet individuel actuel."
+      },
+      {
+        "label": "reminder-toggle",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "post_addAssocier un autre parchemin ou analyse",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      }
+    ],
+    "characters": 1939
+  },
+  {
+    "view": "health",
+    "width": 320,
+    "source": "dobby_carnet_de_sant_familial",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "arrow_back\n—",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "Créer volontairement un rendez-vous partagé",
+        "reason": "Activez le module Famille dans Gérer le foyer pour ce registre partagé."
+      }
+    ],
+    "characters": 2968
+  },
+  {
+    "view": "health-person",
+    "width": 320,
+    "source": "dobby_carnet_de_sant_individuel",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "Constantes et rappels indisponibles",
+        "reason": "Le moteur ne gère pas les constantes, vaccinations ni rappels médicaux."
+      },
+      {
+        "label": "inventory_2\nArchiver",
+        "reason": "L’archivage d’un carnet n’existe pas dans le moteur."
+      }
+    ],
+    "characters": 2228
+  },
+  {
+    "view": "health-history",
+    "width": 320,
+    "source": "dobby_historique_contacts_m_dicaux",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "arrow_back\n—",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      }
+    ],
+    "characters": 2797
+  },
+  {
+    "view": "members",
+    "width": 390,
+    "source": "dobby_membres_de_la_maisonn_e",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "Parents",
+        "reason": "Les rôles parent, enfant ou gardien ne sont pas enregistrés par le moteur."
+      },
+      {
+        "label": "Enfants",
+        "reason": "Les rôles parent, enfant ou gardien ne sont pas enregistrés par le moteur."
+      },
+      {
+        "label": "Gardien",
+        "reason": "Les rôles parent, enfant ou gardien ne sont pas enregistrés par le moteur."
+      }
+    ],
+    "characters": 1215
+  },
+  {
+    "view": "member-edit",
+    "width": 390,
+    "source": "dobby_ajouter_ou_modifier_un_membre",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "🧒\n        \n        Apprenti",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "🧒\n        \n        Herboriste",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "🧒\n        \n        Gardien",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "🧒\n        \n        Alchimiste",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "draw\n    Personnaliser le sceau & illustration",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "member-lastname",
+        "reason": "Le moteur conserve un seul champ prénom / nom."
+      },
+      {
+        "label": "",
+        "reason": "Le rôle familial n’est pas enregistré dans le moteur."
+      },
+      {
+        "label": "",
+        "reason": "Le rôle familial n’est pas enregistré dans le moteur."
+      },
+      {
+        "label": "",
+        "reason": "Le rôle familial n’est pas enregistré dans le moteur."
+      },
+      {
+        "label": "member-notes",
+        "reason": "Les notes sur un membre ne sont pas enregistrées dans le moteur."
+      }
+    ],
+    "characters": 2338
+  },
+  {
+    "view": "agenda",
+    "width": 390,
+    "source": "dobby_agenda_almanach_du_foyer",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "lock_clock\nBientôt disponible",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      }
+    ],
+    "characters": 1657
+  },
+  {
+    "view": "medical-edit",
+    "width": 390,
+    "source": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "practitioner-phone",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "consultation-fee",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "consultation-time",
+        "reason": "L’heure n’est pas enregistrée dans le carnet individuel actuel."
+      },
+      {
+        "label": "consultation-duration",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "location-input",
+        "reason": "Le lieu n’est pas enregistré dans le carnet individuel actuel."
+      },
+      {
+        "label": "reminder-toggle",
+        "reason": "Cette information n’est pas prise en charge par les gestionnaires DOBBY."
+      },
+      {
+        "label": "post_addAssocier un autre parchemin ou analyse",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      }
+    ],
+    "characters": 1939
+  },
+  {
+    "view": "health",
+    "width": 390,
+    "source": "dobby_carnet_de_sant_familial",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "arrow_back\n—",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      },
+      {
+        "label": "Créer volontairement un rendez-vous partagé",
+        "reason": "Activez le module Famille dans Gérer le foyer pour ce registre partagé."
+      }
+    ],
+    "characters": 2968
+  },
+  {
+    "view": "health-person",
+    "width": 390,
+    "source": "dobby_carnet_de_sant_individuel",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "Constantes et rappels indisponibles",
+        "reason": "Le moteur ne gère pas les constantes, vaccinations ni rappels médicaux."
+      },
+      {
+        "label": "inventory_2\nArchiver",
+        "reason": "L’archivage d’un carnet n’existe pas dans le moteur."
+      }
+    ],
+    "characters": 2228
+  },
+  {
+    "view": "health-history",
+    "width": 390,
+    "source": "dobby_historique_contacts_m_dicaux",
+    "overflow": [],
+    "unavailable": [
+      {
+        "label": "arrow_back\n—",
+        "reason": "Cette fonction de la maquette n’existe pas dans le moteur actuel."
+      }
+    ],
+    "characters": 2797
+  }
+]

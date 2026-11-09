@@ -51,7 +51,8 @@ Les captures utilisent uniquement des profils Chromium éphémères et des donn�
 
 - `tests/family.cjs` : parcours membre → fiche → édition, doublons, création/modification/suppression médicale locale, absence de copie familiale, événements ordinaires et ICS, contacts, suppressions annulées, persistance, recherche vide, retour depuis le compte et menus, à 320/390 px.
 - `tests/family-edge.cjs` : lien supprimé, fiche orpheline et ancienne identité, nom/intitulé vide rejeté sans faux succès, retour/avance navigateur.
-- `tests/family-shared.cjs` : vrai client familial et module natif contre une API simulée : activation volontaire, rendez-vous partagé, identités uniques et cas Foyer, persistance hors ligne, conflit et résolution natifs. Les assertions examinent toutes les écritures du module : aucun `famHealth` ni marqueur privé ne figure dans les payloads.
+- `tests/family-review.cjs` : absence de faux registre clinique vide, mentions de visibilité conformes au périmètre, états sélectionnés des modes membre/consultation et semaine/mois, aux deux largeurs.
+- `tests/family-shared.cjs` : vrai client familial et module natif contre une API simulée : activation volontaire pendant une saisie (brouillon conservé, disponibilité vérifiée sur la propriété DOM et sélection réelle au clavier), rendez-vous partagé, identités uniques et cas Foyer, persistance hors ligne, conflit et résolution natifs. Les assertions examinent toutes les écritures du module : aucun `famHealth` ni marqueur privé ne figure dans les payloads.
 - `tests/family-visual.cjs` : **28 captures comparatives** (7 sources × 2 largeurs × référence/intégré) et **14 états vides** ; empreintes originales, identité de la source, absence des données fictives identifiées, H1 unique, contrôles dans le viewport et absence d’exception JS. Les états partagé/hors ligne/conflit ajoutent **6 captures**.
 - Les **54 régressions communes** et les quatre racines à 320/390 px sont vérifiées parce que le pont et le branchement du générateur ont changé. Les parcours Cuisine ne sont pas réaudités ; leurs scripts existants sont conservés dans la CI finale pour couvrir ce changement partagé.
 
@@ -66,3 +67,9 @@ CHROMIUM_PATH=/usr/bin/chromium node essai-stitch-v7/tests/smoke.cjs
 ```
 
 Les index des captures, contrôles détaillés et compte rendu final de vérification sont livrés dans `evidence/family-2a/`. Les fonctions médicales non disponibles et les deux illustrations inaccessibles constituent les limites restantes ; aucun écran importé seulement n’est compté comme actif.
+
+## Relecture indépendante et corrections
+
+La relecture a confirmé les parcours natifs et l’absence de données individuelles dans les payloads interceptés. Trois points importants ont été corrigés : disponibilité du partage après activation du module pendant une saisie, suppression de la fausse mention de registre d’antécédents vide, et libellés de visibilité de l’agenda/des notes. Les régressions ont d’abord reproduit les défauts puis passent après correction. Les états sélectionnés des modes et du calendrier ont également été raccordés à l’opération réelle, pour la fidélité de l’interface. La vérification finale des captures a aussi remplacé la notice de démonstration « Données purement fictives » par une notice d’organisation et de périmètre adaptée aux informations réellement saisies ; sa régression a reproduit le défaut avant correction.
+
+Le contrôle des options utilise maintenant `option.disabled` et une navigation clavier réelle : l’ancien test Playwright pouvait choisir programmatiquement une option pourtant indisponible pour l’utilisateur. Les rafraîchissements de contexte capturent les saisies et ne changent jamais le périmètre local en partage automatique. Aucun autre passage de revue ni audit Cuisine n’a été lancé.
