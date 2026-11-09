@@ -1,0 +1,321 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type">
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body data-stitch-source="dobby_registre_des_listes_familiales" class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-[#180b07]/90 backdrop-blur-xl border-b border-[#d49b42]/20 shadow-[0_4px_24px_rgba(24,11,7,0.6)]"><div class="h-14 px-3 flex items-center justify-between gap-2"><button aria-label="Retour" class="w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#d49b42] hover:border-[#d49b42] active:scale-95 transition-all shrink-0" type="button"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><div class="flex-1 h-12 bg-[#271814] border border-[#d49b42]/30 rounded-xl px-3 flex flex-col justify-center items-center shadow-inner overflow-hidden"><div class="flex items-center gap-1.5 leading-none"><span class="font-['Playfair_Display'] text-[15px] font-bold text-[#f3c25b] tracking-wider">DOBBY</span><span class="w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span></div><span class="text-[9px] font-medium tracking-[0.14em] text-[#d49b42] uppercase truncate mt-0.5">LISTES &amp; REGISTRES • GESTION DU FOYER</span></div><div class="flex items-center gap-1.5 shrink-0"><button aria-label="Ambiance sonore active" class="w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#d49b42] relative hover:border-[#d49b42] active:scale-95 transition-all" type="button"><span class="material-symbols-outlined text-[20px]">volume_up</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_6px_#10b981]"></span></button><button aria-label="Profil utilisateur" class="w-12 h-12 rounded-xl bg-[#f3c25b] border border-[#d49b42] flex items-center justify-center text-[#180b07] shadow-md active:scale-95 transition-all" type="button"><span class="material-symbols-outlined text-[22px]">person</span></button></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-12">
+<!-- 1. NOTICE INFORMATIVE PROTOYPE LOCAL -->
+<div class="px-margin-mobile pt-3 pb-2 flex flex-col"><div class="h-[220px] rounded-2xl relative overflow-hidden mb-4 border border-[#d49b42]/30 shadow-lg"><img src="../../assets/remaining/fallback-salon.png" alt="Dobby préparant les provisions et registres" class="w-full h-full object-cover object-center"><div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-[#180b07]/50 to-transparent"></div><div class="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180b07]/80 backdrop-blur-md border border-[#d49b42]/40 text-[#f3c25b] text-[11px] font-semibold tracking-wider uppercase shadow"><span class="w-2 h-2 rounded-full bg-[#d49b42] animate-pulse"></span><span class="">✦ REGISTRE DES LISTES ✦</span></div><div class="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180b07]/80 backdrop-blur-md border border-[#d49b42]/30 text-[#fcf7ee] text-[11px] font-medium tracking-wide shadow"><span class="">📜 6 LISTES ACTIVES</span></div><div class="absolute bottom-3 left-3 right-3 flex items-center gap-2 overflow-x-auto pb-0.5"><span class="px-2.5 py-1 rounded-lg bg-[#271814]/90 backdrop-blur-md border border-[#d49b42]/30 text-[#fcf7ee] text-[11px] font-medium shrink-0 flex items-center gap-1.5"><span class="material-symbols-outlined text-primary text-[14px]">cottage</span> Quotidien &amp; Foyer</span><span class="px-2.5 py-1 rounded-lg bg-[#271814]/90 backdrop-blur-md border border-[#d49b42]/30 text-[#fcf7ee] text-[11px] font-medium shrink-0 flex items-center gap-1.5"><span class="material-symbols-outlined text-primary text-[14px]">skillet</span> Provisions &amp; Rituels</span></div></div><div class="flex flex-col gap-1.5"><div class="flex items-center gap-2 text-primary"><span class="material-symbols-outlined text-[16px] text-[#d49b42]">stars</span><span class="text-[11px] font-medium tracking-wider text-[#d49b42] uppercase">✧ REGISTRE DES LISTES FAMILIALES • ORGANISATION DU LOGIS ✧</span></div><h1 class="font-['Playfair_Display'] text-[24px] font-bold text-[#fcf7ee] leading-tight tracking-tight">Registre des Listes Familiales</h1><div class="p-3.5 rounded-xl bg-[#271814] border border-[#d49b42]/30 shadow-md relative"><p class="font-body-sm text-body-sm text-[#fadcd5] italic leading-relaxed">« Les parchemins d'organisation empêchent tout oubli dans la maison ! Courses, bagages, corvées ou préparatifs de fête : Dobby garde chaque note bien scellée. »</p><div class="mt-2 pt-2 border-t border-[#d49b42]/20 flex items-center justify-between"><span class="font-label-sm text-[10px] tracking-widest text-[#d49b42] uppercase font-semibold">— NOTE BIENVEILLANTE DE DOBBY</span><span class="material-symbols-outlined text-[#d49b42] text-[16px]">verified</span></div></div><div class="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-[#d49b42]/20 text-[11px] text-on-surface-variant"><span class="material-symbols-outlined text-[#10b981] text-[16px]">shield</span><span class="">Protection 100% locale sur iPhone • Aucune synchronisation distante</span></div></div></div>
+<!-- 2. EN-TÊTE & CHIFFRES CLÉS DU REGISTRE -->
+<div class="px-margin-mobile pt-2 pb-space-sm"><div class="p-space-md rounded-xl bg-surface-container border border-[#d49b42]/20 shadow-md"><div class="grid grid-cols-3 gap-2 text-center divide-x-0"><div class="flex flex-col items-center"><span class="font-headline-sm text-headline-sm text-primary font-bold">4</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-0.5">Listes actives</span></div><div class="flex flex-col items-center"><span class="font-headline-sm text-headline-sm text-on-surface font-bold">38</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-0.5">Articles notés</span></div><div class="flex flex-col items-center"><span class="font-headline-sm text-headline-sm text-secondary font-bold">58%</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase mt-0.5">Accomplis (22)</span></div></div><div class="mt-3.5 w-full bg-surface-container-lowest rounded-full h-2.5 overflow-hidden"><div class="bg-gradient-to-r from-tertiary-container via-primary to-primary-fixed h-full rounded-full transition-all duration-500" style="width: 58%;"></div></div><div class="mt-1.5 flex justify-between items-center text-on-surface-variant"><span class="font-label-sm text-label-sm text-on-surface-variant">Remplissage du Grimoire</span><span class="font-label-sm text-label-sm text-primary font-semibold">22 / 38 items</span></div></div></div>
+<!-- 3. ACCÈS RAPIDE & TIROIR DE CRÉATION -->
+<section class="px-margin-mobile pt-space-sm pb-space-md">
+<!-- Bouton d'action principal tactile façon Sceau Doré -->
+<button aria-expanded="false" class="w-full min-h-[52px] px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-space-sm shadow-md active:scale-[0.98] transition-transform" id="btn-toggle-form" type="button"><span class="material-symbols-outlined text-[22px]">add_circle</span><span class="font-semibold tracking-wide">+ Créer une nouvelle liste familiale</span></button>
+<!-- Formulaire escamotable façon tiroir d'herboristerie -->
+<div class="hidden mt-space-md p-space-md rounded-xl bg-surface-container text-on-surface shadow-lg transition-all duration-300" id="drawer-new-list">
+<div class="flex items-center justify-between pb-space-xs mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">edit_note</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Encocher un Parchemin</h3>
+</div>
+<button aria-label="Fermer le tiroir" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary" id="btn-close-form" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-space-md" id="new-list-form">
+<!-- Champ Intitulé -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant" for="list-name">Intitulé de la liste</label>
+<div class="relative flex items-center">
+<input class="w-full h-12 px-3.5 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" id="list-name" placeholder="Ex: Marché de Traverse, Sacoches de Hugo..." type="text">
+</div>
+</div>
+<!-- Blason & Catégorie -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant">Blason &amp; Catégorie</label>
+<div class="grid grid-cols-2 gap-2">
+<label class="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-container-low cursor-pointer active:scale-95 transition-transform">
+<input checked="" class="accent-primary" name="category" type="radio" value="taverne">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">skillet</span>
+<span class="font-body-sm text-body-sm text-on-surface leading-none">Provisions</span>
+</div>
+</label>
+<label class="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-container-low cursor-pointer active:scale-95 transition-transform">
+<input class="accent-primary" name="category" type="radio" value="logis">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">cottage</span>
+<span class="font-body-sm text-body-sm text-on-surface leading-none">Quotidien</span>
+</div>
+</label>
+<label class="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-container-low cursor-pointer active:scale-95 transition-transform">
+<input class="accent-primary" name="category" type="radio" value="voyage">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">luggage</span>
+<span class="font-body-sm text-body-sm text-on-surface leading-none">Voyage</span>
+</div>
+</label>
+<label class="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-container-low cursor-pointer active:scale-95 transition-transform">
+<input class="accent-primary" name="category" type="radio" value="sorts">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">magic_button</span>
+<span class="font-body-sm text-body-sm text-on-surface leading-none">Ateliers</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Attribution du Responsable -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant" for="list-assignee">Scribe responsable</label>
+<div class="relative">
+<select class="w-full h-12 px-3.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md appearance-none focus:outline-none focus:ring-2 focus:ring-primary shadow-inner" id="list-assignee">
+<option value="famille">Toute la maisonnée (Collectif)</option>
+<option value="thomas">Thomas</option>
+<option value="lea">Léa</option>
+<option value="hugo">Hugo</option>
+<option value="chloe">Chloé</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-3 top-3 text-on-surface-variant text-[22px]">expand_more</span>
+</div>
+</div>
+<!-- Boutons de soumission -->
+<div class="flex items-center gap-2 pt-space-xs">
+<button class="flex-1 min-h-[48px] px-space-md rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-2 shadow active:scale-[0.98]" id="btn-seal-list" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="">Sceller et Créer</span>
+</button>
+<button class="min-h-[48px] px-space-md rounded-lg bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center active:scale-[0.98]" type="reset">
+            Réinitialiser
+          </button>
+</div>
+</form>
+</div>
+</section>
+<!-- 4. LISTE DES PARCHEMINS DU LOGIS -->
+<section class="px-margin-mobile flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Registres Actifs de la Demeure</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Triés par urgence</span>
+</div>
+<!-- CARTE 1 : MARCHÉ & TAVERNE GOURMANDE -->
+<article class="p-space-md rounded-xl bg-surface-container shadow-md flex flex-col gap-3.5 transition-transform">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">soup_kitchen</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-medium">Alimentation &amp; Cuisine</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-snug">Marché &amp; Taverne Gourmande</h3>
+</div>
+</div>
+<button aria-label="Supprimer Marché &amp; Taverne Gourmande" class="w-11 h-11 flex items-center justify-center rounded-lg text-error hover:bg-error-container/20 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">delete_outline</span>
+</button>
+</div>
+<!-- Progression -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Progression des emplettes</span>
+<span class="font-label-md text-label-md text-primary font-bold">8 / 12 articles (66%)</span>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-300" style="width: 66%;"></div>
+</div>
+</div>
+<!-- Derniers articles inscrits -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest/80 text-on-surface-variant flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-primary uppercase font-medium">Articles au calame :</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-tight">
+          Farine d'épeautre bio, Poires à cuire, Miel de sauge sauvage
+        </p>
+</div>
+<!-- Actions tactiles -->
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 min-h-[48px] px-space-md rounded-lg bg-surface-container-high text-primary hover:bg-surface-container-highest font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+<span class="">Consulter / Cocher</span>
+</button>
+<button class="min-h-[48px] px-3.5 rounded-lg bg-surface-container-low text-error hover:bg-error-container/20 font-label-sm text-label-sm flex items-center justify-center gap-1 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- CARTE 2 : VALISES & BAGAGES POUR LES FÊTES -->
+<article class="p-space-md rounded-xl bg-surface-container shadow-md flex flex-col gap-3.5 transition-transform">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/20 text-tertiary-fixed-dim flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">luggage</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-tertiary-fixed-dim font-medium">Voyage Familial</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">group</span> 4 scribes
+              </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-snug">Valises &amp; Bagages pour les Fêtes</h3>
+</div>
+</div>
+<button aria-label="Supprimer Valises &amp; Bagages pour les Fêtes" class="w-11 h-11 flex items-center justify-center rounded-lg text-error hover:bg-error-container/20 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">delete_outline</span>
+</button>
+</div>
+<!-- Progression -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Préparation des malles</span>
+<span class="font-label-md text-label-md text-primary font-bold">11 / 14 articles (78%)</span>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-full h-2 overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-300" style="width: 78%;"></div>
+</div>
+</div>
+<!-- Réf Responsable -->
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant px-1">
+<span class="">Attribué à : <strong class="text-on-surface">Toute la famille</strong></span>
+<span class="text-tertiary-fixed-dim">Départ dans 4 jours</span>
+</div>
+<!-- Actions tactiles -->
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 min-h-[48px] px-space-md rounded-lg bg-surface-container-high text-primary hover:bg-surface-container-highest font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+<span class="">Consulter / Cocher</span>
+</button>
+<button class="min-h-[48px] px-3.5 rounded-lg bg-surface-container-low text-error hover:bg-error-container/20 font-label-sm text-label-sm flex items-center justify-center gap-1 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- CARTE 3 : OFFICINE & PLANTES MÉDICINALES -->
+<article class="p-space-md rounded-xl bg-surface-container shadow-md flex flex-col gap-3.5 transition-transform">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/30 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">science</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-medium">Santé &amp; Apothicaire</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Léa</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-snug">Officine &amp; Plantes Médicinales</h3>
+</div>
+</div>
+<button aria-label="Supprimer Officine &amp; Plantes Médicinales" class="w-11 h-11 flex items-center justify-center rounded-lg text-error hover:bg-error-container/20 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">delete_outline</span>
+</button>
+</div>
+<!-- Progression -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Récolte d'onguents &amp; tisanes</span>
+<span class="font-label-md text-label-md text-tertiary font-bold">3 / 7 articles (42%)</span>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-full h-2 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full transition-all duration-300" style="width: 42%;"></div>
+</div>
+</div>
+<!-- Extrait contenu -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest/80 text-on-surface-variant flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-medium">Plantes requises :</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-tight">
+          Lavande vraie séchée, Teinture de propolis, Camomille matricaire
+        </p>
+</div>
+<!-- Actions tactiles -->
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 min-h-[48px] px-space-md rounded-lg bg-surface-container-high text-primary hover:bg-surface-container-highest font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+<span class="">Consulter / Cocher</span>
+</button>
+<button class="min-h-[48px] px-3.5 rounded-lg bg-surface-container-low text-error hover:bg-error-container/20 font-label-sm text-label-sm flex items-center justify-center gap-1 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- CARTE 4 : FOURNITURES DE RENTRÉE & PAPETERIE D'HUGO (100% COMPLÉTÉ) -->
+<article class="p-space-md rounded-xl bg-surface-container shadow-md flex flex-col gap-3.5 relative overflow-hidden">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-secondary-container text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">draw</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span> SCELLÉ &amp; PARFAIT
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hugo</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-snug">Fournitures &amp; Papeterie d'Hugo</h3>
+</div>
+</div>
+<!-- Sceau de cire visuel d'accomplissement -->
+<div class="w-11 h-11 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+</div>
+<!-- Progression 100% -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-secondary font-medium">Tous les rouleaux et encres acquis !</span>
+<span class="font-label-md text-label-md text-secondary font-bold">5 / 5 (100%)</span>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-full h-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Note poétique d'achèvement -->
+<div class="p-2.5 rounded-lg bg-secondary-container/20 text-on-secondary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">task_alt</span>
+<span class="font-body-sm text-body-sm italic">
+          Plumes taillées, cahiers toilés et compas alchimique prêts au pupitre.
+        </span>
+</div>
+<!-- Actions : Archiver & Supprimer -->
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 min-h-[48px] px-space-md rounded-lg bg-surface-container-high text-on-surface hover:text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+<span class="">Archiver dans l'Armoire</span>
+</button>
+<button class="min-h-[48px] px-3.5 rounded-lg bg-surface-container-low text-error hover:bg-error-container/20 font-label-sm text-label-sm flex items-center justify-center gap-1 active:scale-95 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+</section>
+<!-- 5. DIALOGUE / MODAL DE CONFIRMATION SÉCURISÉE -->
+<aside aria-hidden="true" aria-modal="true" class="hidden fixed inset-0 z-50 flex items-end justify-center p-margin-mobile bg-surface-container-lowest/80 backdrop-blur-sm" id="delete-modal" role="dialog">
+<div class="w-full max-w-sm rounded-xl bg-surface-container-high text-on-surface shadow-2xl p-space-lg flex flex-col gap-space-md transform transition-transform">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-error-container/30 text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">crisis_alert</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-error uppercase tracking-wider font-semibold">Effacement Irréversible</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Brûler ce Parchemin ?</h3>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        Vous vous apprêtez à détruire le registre <strong class="text-primary" id="modal-list-title">"Nom de la liste"</strong>. Les annotations et coches seront dissoutes de la mémoire locale.
+      </p>
+<div class="flex flex-col gap-2 pt-space-xs">
+<button class="w-full min-h-[48px] rounded-lg bg-error-container text-on-error-container hover:bg-error-container/80 font-label-md text-label-md font-bold flex items-center justify-center gap-2 active:scale-95 transition-colors" id="confirm-delete-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+<span class="">Confirmer l'effacement définitif</span>
+</button>
+<button class="w-full min-h-[48px] rounded-lg bg-surface-container text-on-surface hover:text-primary font-label-md text-label-md flex items-center justify-center active:scale-95 transition-colors" type="button">
+          Préserver le Parchemin
+        </button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+
+</body></html>
