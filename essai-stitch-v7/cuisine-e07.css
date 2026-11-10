@@ -26,3 +26,24 @@ body.e07-cuisine main .material-symbols-outlined{font-size:18px}
 body.e07-cuisine [data-e07-hero] .material-symbols-outlined{font-size:14px}
 body.e07-cuisine [data-e07-hero]>.absolute.bottom-2\.5{gap:6px}
 body.e07-cuisine [data-e07-hero]>.absolute.bottom-2\.5>div{min-width:0}
+body.e07-shop .e07-scope{white-space:normal;max-width:45%;text-align:center}
+body.e07-shop main h1{min-width:0}
+body.e07-shop .e07-progress{flex-wrap:wrap;gap:8px}
+body.e07-shop .e07-shop-actions{flex-wrap:wrap}
+body.e07-shop .e07-shop-actions>button:first-child{min-width:160px;padding:8px}
+body.e07-shop .e07-item{align-items:flex-start}
+body.e07-shop .e07-item .item-title{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+body.e07-shop .e07-item-heading{flex-wrap:wrap;gap:4px 8px}
+body.e07-shop .e07-item-heading .item-title{flex:1 1 130px}
+body.e07-shop .e07-quantity{white-space:normal;max-width:100%;flex-shrink:1}
+body.e07-shop .e07-item .check-btn{width:48px;height:48px;flex:none}
+body.e07-shop .e07-item .check-btn .material-symbols-outlined{font-size:24px}
+body.e07-shop .e07-item[data-checked=true] .check-btn{background:#f9bb5f;color:#442b00}
+body.e07-shop .e07-item[data-checked=false] .check-btn{background:#43302c;color:#f9bb5f}
+body.e07-shop .provision-card[data-state=skip]{opacity:.65}
+.e07-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+.e07-choices .cu-button{padding:8px 5px;font-size:11px;min-height:44px}
+.e07-choices [aria-pressed=true]{background:#d49b42;color:#180b07;border-color:#f9bb5f}
+body.e07-shop #btn-submit-cart{width:calc(100% - 24px);margin:8px 12px;min-height:52px}
+body.e07-shop #cu-shared .shop-item{flex-direction:column;align-items:stretch;min-width:0}
+body.e07-shop #cu-shared :is(strong,p,button){white-space:normal;overflow-wrap:anywhere}

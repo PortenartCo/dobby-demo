@@ -12,7 +12,7 @@ const hh='00000000-0000-4000-8000-000000000010',uid='00000000-0000-4000-8000-000
   async function eventually(test){const until=Date.now()+8000;while(!test()&&Date.now()<until)await new Promise(r=>setTimeout(r,30));assert.ok(test(),'Native sync reaches the HTTP fixture');}
   try{
     for(const width of [320,390]){
-    rows.clear();offline=false;
+    rows.clear();writes.length=0;offline=false;
     const context=await browser.newContext({viewport:{width,height:844},locale:'fr-BE',reducedMotion:'reduce'});
     await context.route('**/*',async route=>{
       const req=route.request(),url=new URL(req.url());
@@ -46,6 +46,11 @@ const hh='00000000-0000-4000-8000-000000000010',uid='00000000-0000-4000-8000-000
     await engine.locator('#fv2LoginForm button[type="submit"]').click();
     await page.waitForFunction(()=>DobbyCuisineEngine.win().DobbyFamilyUI.getContext()?.householdId);
     await page.locator('#dv7-close').click();
+    // A validated meal list is not automatically published to the grocery store.
+    await page.locator('#btn-submit-cart').click();await page.waitForFunction(()=>DobbyCuisine.view==='shop-final');
+    assert.equal(rows.size,0,'No automatic grocery publication on validation');
+    assert.equal(writes.filter(x=>x.method==='POST').length,0);
+    await page.locator('[data-cu-action="edit-shop"]').first().click();await page.waitForFunction(()=>DobbyCuisine.view==='shop');
     await page.locator('#cu-family-title').fill('TEST — Article commun');await page.locator('#cu-family-quantity').fill('0.5');await page.locator('#cu-family-unit').fill('kg');
     await page.locator('#cu-family-add button[type="submit"]').click();
     await page.waitForFunction(()=>document.querySelector('#cu-shared')?.textContent.includes('TEST — Article commun'));
@@ -61,6 +66,9 @@ const hh='00000000-0000-4000-8000-000000000010',uid='00000000-0000-4000-8000-000
     await page.waitForFunction(()=>DobbyCuisineEngine.read().shared.items[0]?.checked);
     assert.ok((await page.locator('#cu-shared').textContent()).includes('Article acheté'));
     await page.screenshot({path:path.join(evidence,`shop-offline-${width}.png`),fullPage:true});
+    await page.reload();await page.waitForFunction(()=>DobbyCuisine?.ready);
+    await page.waitForFunction(()=>DobbyCuisineEngine.read().shared?.items[0]?.checked===true);
+    assert.equal(await page.locator('[data-cu-family-check]').first().isChecked(),true,'Offline grocery checkbox survives reload');
     const shared=[...rows.values()][0];rows.set(shared.id,{...shared,title:'TEST — Modification concurrente',revision:shared.revision+1});
     offline=false;await page.locator('[data-cu-action="family-sync"]').click();
     await page.locator('[data-cu-action="family-conflict-local"]').first().waitFor();
@@ -71,6 +79,9 @@ const hh='00000000-0000-4000-8000-000000000010',uid='00000000-0000-4000-8000-000
     assert.equal([...rows.values()][0].checked,true,'Offline edit reaches the in-memory server through native sync');
     assert.ok(writes.some(x=>x.method==='POST')&&writes.some(x=>x.method==='PATCH'));
     assert.ok(writes.every(x=>x.method!=='POST'||x.body.household_id===hh));
+    assert.equal(rows.size,1,'Resync/conflict changes the existing item without duplicates');
+    // Native validation archives meal coverage; import uses a genuinely new pending meal.
+    await page.evaluate(()=>{DobbyCuisineEngine.evaluate('st.planned["2026-11-10-soir"]={id:"pasta",adult:2,children:1,childFactor:.65,status:"prévu"};save();');return DobbyCuisine.open('shop');});
     await page.locator('[data-cu-action="family-import"]').click();await eventually(()=>rows.size>1);
     console.log('CUISINE_FAMILY_PASS '+width+'px native connection, add, fractional quantity, edit, offline check, conflict resolution, resync and recipe import (HTTP fixture only)');
     await context.close();

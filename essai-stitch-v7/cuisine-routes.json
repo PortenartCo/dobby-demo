@@ -52,17 +52,26 @@
     "view": "shop-1",
     "id": "dobby_pr_parer_la_liste_de_courses_1",
     "canonical": "shop",
-    "integrated": true
+    "integrated": true,
+    "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+    "presentationId": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+    "asset": "e07-courses.png"
   },
   {
     "view": "shop",
     "id": "dobby_pr_parer_la_liste_de_courses_2",
-    "integrated": true
+    "integrated": true,
+    "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+    "presentationId": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+    "asset": "e07-courses.png"
   },
   {
     "view": "shop-final",
     "id": "dobby_liste_de_courses_valid_e",
-    "integrated": true
+    "integrated": true,
+    "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+    "presentationId": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+    "asset": "e07-courses.png"
   },
   {
     "view": "shop-history",

@@ -7,3 +7,7 @@
 - Task A complete: source assertion RED on original Taverne, E07_A_PASS 320/390/1440 after source derivation/native-data presentation. Native Cuisine baseline PASS 320/390 before change.
 - Source illustration framing retained 190px with local original; fixed source invalid sparkles glyph and overlapping meal/header controls. Midi/soir entries use explicit stored slot; existing recipe/pick actions only.
 - Task B starts: new shopping source assertion expected RED, original shared renderer/actions retained.
+- Task B complete: source Courses assertion RED; E07_PASS 320/390/1440 with native validation/check/uncheck/reload/long labels. Existing full Cuisine paths PASS 320/390; family fixture PASS 320/390, including no grocery POST on validation, offline reload, conflict and no duplicate of the edited item.
+- Test adaptation: validation archives meal coverage natively; the explicit import test now schedules a new pending fixture meal before import. No business change made to reopen covered meals.
+- Removed raw shopping back-header control before common mount to avoid a duplicated contextual DOBBY header. Common chrome untouched.
+- Menus module can share planned/shopFinal history if explicitly active. Do not claim exclusive local storage; meal list remains distinct from grocery basket. Native module status retained.

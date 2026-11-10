@@ -1447,6 +1447,12 @@
       "route": "index.html#shop-final",
       "template": "templates/shop-final.html",
       "integration": "verified-functional",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+        "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+        "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099",
+        "supersedes": "design/stitch-53/dobby_liste_de_courses_valid_e/code.html"
+      },
       "verification": {
         "tests": [
           "tests/cuisine.cjs",
@@ -1720,6 +1726,12 @@
       "route": "index.html#shop-1",
       "template": "templates/shop-1.html",
       "integration": "verified-functional",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+        "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+        "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099",
+        "supersedes": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_1/code.html"
+      },
       "verification": {
         "tests": [
           "tests/cuisine.cjs",
@@ -1753,6 +1765,12 @@
       "route": "index.html#shop",
       "template": "templates/shop.html",
       "integration": "verified-functional",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+        "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+        "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099",
+        "supersedes": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_2/code.html"
+      },
       "verification": {
         "tests": [
           "tests/cuisine.cjs",
@@ -1923,6 +1941,21 @@
           "view": "taverne",
           "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
           "id": "dobby_la_taverne_gourmande_version_simplifi_e_rapide"
+        },
+        {
+          "view": "shop-1",
+          "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+          "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi"
+        },
+        {
+          "view": "shop",
+          "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+          "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi"
+        },
+        {
+          "view": "shop-final",
+          "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+          "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi"
         }
       ]
     }
