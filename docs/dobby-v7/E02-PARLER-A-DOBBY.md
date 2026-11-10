@@ -55,3 +55,15 @@ Avant de lever le blocage, valider un périmètre de persistance **par utilisate
 [Captures source/runtime et résultats ciblés](evidence/e02/README.md). Chromium automatisé à 320/390/1440 px. Les tests vocaux simulent uniquement les API matérielles du navigateur ; actions métier et stockage IndexedDB restent réels dans des profils éphémères. Les identités de test simulent la sortie de l'API d'identité native ; elles ne constituent pas une validation de règles serveur inexistantes.
 
 Safari iOS, permissions réelles du microphone, reconnaissance et voix disponibles sur un iPhone, clavier physique, batterie et lecture après verrouillage restent à vérifier sur appareil réel. Aucun compte réel utilisé, aucune fusion, aucun déploiement.
+
+## Corrections finales et publication d'essai E02
+
+Nouvelle mission autorisée à partir de `859171a4f749960d714155f42242c04a88466b69` : publication statique d'un répertoire E02 isolé sur la branche GitHub Pages existante, sans fusion de la PR #3.
+
+- `safeLink()` valide les quatre fichiers internes (`index.html`, `famille.html`, `missions.html`, `traverse.html`) par rapport au répertoire actif de `location.href`. Les fragments et paramètres, y compris leurs formes seules sur la page courante, suivent la résolution URL native. Domaines externes, identifiants intégrés et autres chemins restent refusés. Aucun routeur ajouté.
+- Sans destination Courses explicite, les intentions d'achat de billet ou d'abonnement demandent une précision et ne déclenchent aucune écriture métier. Les formes courantes « acheter du lait » et « ajoute du chocolat à la liste de courses » sont conservées ; « ajoute un billet de train à la liste de courses » reste possible. Le garde-fou est déterministe, limité à ces types d'intention, sans classification IA ni catalogue artificiel de produits.
+- `tests/e02-edge.cjs` exerce la politique de liens via les ancres réellement rendues, en développement et au préfixe d'essai. Il compare l'état natif et sa représentation persistée pour les demandes ambiguës. Les confirmations d'écriture native restent couvertes.
+
+GitHub Pages est configuré en mode `legacy`, branche `main`, chemin `/`. E01 est une copie statique du dossier V7 dans `essai-e01-preview`. La publication E02 reprend cette opération sous `essai-e02-preview` ; le moteur V5 et les ressources V6 partagés existent déjà et leurs arbres Git sont identiques à ceux attendus par la PR. Le commit de publication doit ajouter exclusivement le nouveau répertoire, avec contrôle de tous les anciens arbres/fichiers de la racine. Aucune infrastructure ou workflow de publication permanent ajouté.
+
+Point d'entrée prévu : `https://portenartco.github.io/dobby-demo/essai-e02-preview/famille.html#chat`. `index.html` reste la Taverne pour conserver les liens natifs du parcours ; aucun nouveau mécanisme de redirection. La recette réelle, les SHA et les contrôles E01/V5 sont consignés dans [la fiche de publication](../dobby-e02-publication/RECEIPT.md), mise à jour après vérification hébergée. Les limites d'historique individuel et de validation Safari iOS physique décrites plus haut restent inchangées.

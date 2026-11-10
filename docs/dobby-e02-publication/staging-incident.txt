@@ -1,0 +1,6 @@
+567:127.0.0.1 - - [10/Nov/2026 00:03:58] code 404, message File not found
+568:127.0.0.1 - - [10/Nov/2026 00:03:58] "GET /design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html HTTP/1.1" 404 -
+page.evaluate: TypeError: Cannot read properties of undefined (reading 'querySelector')
+at essai-stitch-v7/tests/e01.cjs:24:116
+Cause: original Stitch test fixture absent from the temporary HTTP root, not an application regression.
+Correction: added the QA-only design/ symlink to the temporary root. E01 passed afterward.
