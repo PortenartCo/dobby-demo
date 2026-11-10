@@ -49,7 +49,7 @@ body[data-family-view="contracts"] [data-e08-badge]{position:absolute;top:auto;l
 body[data-family-view="contracts"] .e08-actions{align-items:stretch}
 body[data-family-view="contracts"] .e08-actions>button:first-child{background:#f9bb5f;color:#442b00;font-weight:700;flex:1 1 100%}
 body[data-family-view="contracts"] .e08-documents-link{background:transparent;border-color:transparent;text-decoration:underline;font-size:12px;align-self:center}
-@media(max-width:359px){
+@media(max-width:360px){
  body[data-family-view="contracts"] .e011-band-prefix{display:none}
  body[data-family-view="contracts"] .e011-band-section{white-space:normal;text-overflow:clip}
 }

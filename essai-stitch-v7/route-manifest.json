@@ -531,6 +531,7 @@
         ],
         "widths": [
           320,
+          360,
           390,
           1440
         ],
@@ -538,6 +539,10 @@
           {
             "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-320.png",
             "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-360.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-360.png"
           },
           {
             "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-390.png",
