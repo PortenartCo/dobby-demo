@@ -1,0 +1,590 @@
+[
+  {
+    "phase": "before",
+    "screen": "accueil",
+    "width": 320,
+    "title": {
+      "classes": "font-headline-lg text-[22px] font-bold text-[#fcf7ee] text-center mb-2 leading-tight",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "none",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 233.3125,
+      "top": 365,
+      "bottom": 392.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 21
+        }
+      ]
+    },
+    "button": {
+      "classes": "w-full h-[52px] rounded-2xl bg-gradient-to-r from-[#d49b42] via-[#f3c25b] to-[#d49b42] text-[#180b07] font-serif font-bold text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-[#d49b42]/25 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(212, 155, 66), rgb(243, 194, 91), rgb(212, 155, 66))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 262,
+      "top": 507.5,
+      "bottom": 559.5,
+      "renderedFonts": [
+        {
+          "familyName": "Liberation Serif",
+          "postScriptName": "LiberationSerif-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ]
+    },
+    "scrollWidth": 320,
+    "independent": null
+  },
+  {
+    "phase": "before",
+    "screen": "famille",
+    "width": 320,
+    "title": {
+      "classes": "font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "drop-shadow(rgba(249, 187, 95, 0.2) 0px 2px 4px)",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 254,
+      "top": 370,
+      "bottom": 397.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "button": {
+      "classes": "spell-btn w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(243, 194, 91), rgb(250, 188, 77))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 254,
+      "top": 540.5,
+      "bottom": 592.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display SemiBold",
+          "postScriptName": "PlayfairDisplay-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 32
+        }
+      ]
+    },
+    "scrollWidth": 320,
+    "independent": null
+  },
+  {
+    "phase": "before",
+    "screen": "missions",
+    "width": 320,
+    "title": {
+      "classes": "",
+      "fontFamily": "\"Playfair Display\", Georgia, serif",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "26.4px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "none",
+      "marginBottom": "12px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 52.78125,
+      "width": 288,
+      "top": 260,
+      "bottom": 312.78125,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 27
+        }
+      ]
+    },
+    "button": {
+      "classes": "e03-create",
+      "fontFamily": "Georgia, serif",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "lineHeight": "18.2px",
+      "letterSpacing": "0.52px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "6px",
+      "padding": "8px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(90deg, rgb(249, 187, 95), rgb(243, 194, 91), rgb(249, 187, 95))",
+      "boxShadow": "rgba(212, 155, 66, 0.184) 0px 5px 15px 0px",
+      "height": 54.375,
+      "width": 288,
+      "top": 324.78125,
+      "bottom": 379.15625,
+      "renderedFonts": [
+        {
+          "familyName": "Liberation Serif",
+          "postScriptName": "LiberationSerif-Bold",
+          "isCustomFont": false,
+          "glyphCount": 28
+        }
+      ]
+    },
+    "scrollWidth": 320,
+    "scene": 160,
+    "independent": true
+  },
+  {
+    "phase": "before",
+    "screen": "accueil",
+    "width": 390,
+    "title": {
+      "classes": "font-headline-lg text-[22px] font-bold text-[#fcf7ee] text-center mb-2 leading-tight",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "none",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 233.3125,
+      "top": 365,
+      "bottom": 392.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 21
+        }
+      ]
+    },
+    "button": {
+      "classes": "w-full h-[52px] rounded-2xl bg-gradient-to-r from-[#d49b42] via-[#f3c25b] to-[#d49b42] text-[#180b07] font-serif font-bold text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-[#d49b42]/25 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(212, 155, 66), rgb(243, 194, 91), rgb(212, 155, 66))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 332,
+      "top": 507.5,
+      "bottom": 559.5,
+      "renderedFonts": [
+        {
+          "familyName": "Liberation Serif",
+          "postScriptName": "LiberationSerif-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ]
+    },
+    "scrollWidth": 390,
+    "independent": null
+  },
+  {
+    "phase": "before",
+    "screen": "famille",
+    "width": 390,
+    "title": {
+      "classes": "font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "drop-shadow(rgba(249, 187, 95, 0.2) 0px 2px 4px)",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 324,
+      "top": 361,
+      "bottom": 388.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "button": {
+      "classes": "spell-btn w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(243, 194, 91), rgb(250, 188, 77))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 324,
+      "top": 508.75,
+      "bottom": 560.75,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display SemiBold",
+          "postScriptName": "PlayfairDisplay-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 33
+        }
+      ]
+    },
+    "scrollWidth": 390,
+    "independent": null
+  },
+  {
+    "phase": "before",
+    "screen": "missions",
+    "width": 390,
+    "title": {
+      "classes": "",
+      "fontFamily": "\"Playfair Display\", Georgia, serif",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "26.4px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "none",
+      "marginBottom": "12px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 26.390625,
+      "width": 358,
+      "top": 260,
+      "bottom": 286.390625,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ]
+    },
+    "button": {
+      "classes": "e03-create",
+      "fontFamily": "Georgia, serif",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "lineHeight": "18.2px",
+      "letterSpacing": "0.52px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "6px",
+      "padding": "8px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(90deg, rgb(249, 187, 95), rgb(243, 194, 91), rgb(249, 187, 95))",
+      "boxShadow": "rgba(212, 155, 66, 0.184) 0px 5px 15px 0px",
+      "height": 52,
+      "width": 358,
+      "top": 298.390625,
+      "bottom": 350.390625,
+      "renderedFonts": [
+        {
+          "familyName": "Liberation Serif",
+          "postScriptName": "LiberationSerif-Bold",
+          "isCustomFont": false,
+          "glyphCount": 29
+        }
+      ]
+    },
+    "scrollWidth": 390,
+    "scene": 160,
+    "independent": true
+  },
+  {
+    "phase": "before",
+    "screen": "accueil",
+    "width": 1440,
+    "title": {
+      "classes": "font-headline-lg text-[22px] font-bold text-[#fcf7ee] text-center mb-2 leading-tight",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "none",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 233.3125,
+      "top": 365,
+      "bottom": 392.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 21
+        }
+      ]
+    },
+    "button": {
+      "classes": "w-full h-[52px] rounded-2xl bg-gradient-to-r from-[#d49b42] via-[#f3c25b] to-[#d49b42] text-[#180b07] font-serif font-bold text-base tracking-wide flex items-center justify-center gap-2 shadow-lg shadow-[#d49b42]/25 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(212, 155, 66), rgb(243, 194, 91), rgb(212, 155, 66))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 422,
+      "top": 484.75,
+      "bottom": 536.75,
+      "renderedFonts": [
+        {
+          "familyName": "Liberation Serif",
+          "postScriptName": "LiberationSerif-Bold",
+          "isCustomFont": false,
+          "glyphCount": 14
+        }
+      ]
+    },
+    "scrollWidth": 1440,
+    "independent": null
+  },
+  {
+    "phase": "before",
+    "screen": "famille",
+    "width": 1440,
+    "title": {
+      "classes": "font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "drop-shadow(rgba(249, 187, 95, 0.2) 0px 2px 4px)",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 414,
+      "top": 361,
+      "bottom": 388.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    "button": {
+      "classes": "spell-btn w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(243, 194, 91), rgb(250, 188, 77))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 414,
+      "top": 486,
+      "bottom": 538,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display SemiBold",
+          "postScriptName": "PlayfairDisplay-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 33
+        }
+      ]
+    },
+    "scrollWidth": 1440,
+    "independent": null
+  },
+  {
+    "phase": "before",
+    "screen": "missions",
+    "width": 1440,
+    "title": {
+      "classes": "",
+      "fontFamily": "\"Playfair Display\", Georgia, serif",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "26.4px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "none",
+      "marginBottom": "12px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 26.390625,
+      "width": 448,
+      "top": 260,
+      "bottom": 286.390625,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ]
+    },
+    "button": {
+      "classes": "e03-create",
+      "fontFamily": "Georgia, serif",
+      "fontSize": "13px",
+      "fontWeight": "700",
+      "lineHeight": "18.2px",
+      "letterSpacing": "0.52px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "6px",
+      "padding": "8px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(90deg, rgb(249, 187, 95), rgb(243, 194, 91), rgb(249, 187, 95))",
+      "boxShadow": "rgba(212, 155, 66, 0.184) 0px 5px 15px 0px",
+      "height": 52,
+      "width": 448,
+      "top": 298.390625,
+      "bottom": 350.390625,
+      "renderedFonts": [
+        {
+          "familyName": "Liberation Serif",
+          "postScriptName": "LiberationSerif-Bold",
+          "isCustomFont": false,
+          "glyphCount": 29
+        }
+      ]
+    },
+    "scrollWidth": 1440,
+    "scene": 160,
+    "independent": true
+  }
+]

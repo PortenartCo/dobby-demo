@@ -1,0 +1,4 @@
+PASS 320/390/1440: computed title/button typography, color and effects equal Salon reference.
+PASS actual rendered fonts: PlayfairDisplay-Bold and PlayfairDisplay-SemiBold (custom local files), no system substitution.
+PASS scene 160px, illustration independent, CTA 52px, no horizontal overflow.
+PASS existing E03 tests 320/390/1440; generation byte-identical on a second invocation; other generated pages unchanged.

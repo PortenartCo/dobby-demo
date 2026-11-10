@@ -1,5 +1,7 @@
 # E03 — Bibliothèque des Missions
 
+Dernière revue : [harmonisation typographique et comparatifs avant/après](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/E03-TYPOGRAPHIE.md).
+
 Branche GitHub : [`feat/dobby-e03-missions`](https://github.com/PortenartCo/dobby-demo/tree/feat/dobby-e03-missions). Worktree : `/workspace/dobby-e03`, dépôt bare séparé `/workspace/dobby-e03-repo.git`.
 Base initiale : `258b0f923491b03d78c72ba1b1edd29ab72e6a84`. Base après raccordement : `9c73e845c7744315bdc7d03f59a09ae67572aa8e` (E02 final de la PR #3, ouverte et non fusionnée). La CI [42727078167](https://github.com/PortenartCo/dobby-demo/actions/runs/42727078167) est réussie ; l'exécution parallèle [42727070298](https://github.com/PortenartCo/dobby-demo/actions/runs/42727070298) avait échoué sur une mesure prématurée du panneau compte E01.
 

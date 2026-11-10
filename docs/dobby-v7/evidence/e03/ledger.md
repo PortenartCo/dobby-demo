@@ -28,3 +28,10 @@
 - Génération réutilisée ; tests existants E03 PASS 320/390/1440 ; comparaison géométrique/sous-titres E01/E02 PASS. Aucun code métier ou formulaire modifié.
 - Captures actuelles et avant correctif enregistrées ; push de la même branche et attente CI existante, sans fusion/Pages.
 - Attente historique Missions également présente dans tests/e01.cjs : alignée au libellé demandé ; E01 PASS 390/1440 et effets. Première CI arrêtée avant verdict pour éviter cet échec déterministe ; nouveau commit uniquement test/documentation, runtime et captures inchangés.
+
+## Harmonisation typographique demandée
+- Base 10e1662 identique locale/distante ; worktree propre. Mesures/captures natives avant pour Accueil, Famille, Missions aux 320/390/1440.
+- Constat navigateur : CTA E03 Georgia déclaré / LiberationSerif-Bold rendu, 13px/700 ; Salon PlayfairDisplay-SemiBold rendu, 16px/600. Titre E03 interligne/marge différaient également.
+- Reprise des classes/tokens existants du Salon pour titre/CTA, suppression de quatre règles personnalisées ; gouttières et gap existants, marge intérieure 8px pour le texte en capitales à 320px. Cadre illustré indépendant préservé.
+- Après : valeurs typographiques calculées identiques à Famille, fontes custom réellement rendues confirmées ; E03 PASS 320/390/1440 après correction finale de la marge. Aucun changement de code métier/JavaScript/formulaire/source originale.
+- Une seule CI sur le commit final, sans fusion/publication ; attente de revue visuelle humaine.

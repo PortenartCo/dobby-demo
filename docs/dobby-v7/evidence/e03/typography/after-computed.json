@@ -1,0 +1,200 @@
+[
+  {
+    "phase": "after",
+    "screen": "missions",
+    "width": 320,
+    "title": {
+      "classes": "font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "drop-shadow(rgba(249, 187, 95, 0.2) 0px 2px 4px)",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 55,
+      "width": 288,
+      "top": 258,
+      "bottom": 313,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 27
+        }
+      ]
+    },
+    "button": {
+      "classes": "e03-create px-space-sm w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px 8px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(243, 194, 91), rgb(250, 188, 77))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 288,
+      "top": 321,
+      "bottom": 373,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display SemiBold",
+          "postScriptName": "PlayfairDisplay-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ]
+    },
+    "scrollWidth": 320,
+    "scene": 160,
+    "independent": true
+  },
+  {
+    "phase": "after",
+    "screen": "missions",
+    "width": 390,
+    "title": {
+      "classes": "font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "drop-shadow(rgba(249, 187, 95, 0.2) 0px 2px 4px)",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 358,
+      "top": 258,
+      "bottom": 285.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ]
+    },
+    "button": {
+      "classes": "e03-create px-space-sm w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px 8px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(243, 194, 91), rgb(250, 188, 77))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 358,
+      "top": 293.5,
+      "bottom": 345.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display SemiBold",
+          "postScriptName": "PlayfairDisplay-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 29
+        }
+      ]
+    },
+    "scrollWidth": 390,
+    "scene": 160,
+    "independent": true
+  },
+  {
+    "phase": "after",
+    "screen": "missions",
+    "width": 1440,
+    "title": {
+      "classes": "font-headline-lg font-bold text-[22px] leading-tight text-[#fcf7ee] text-center mb-2 drop-shadow-[0_2px_4px_rgba(249,187,95,0.2)]",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "22px",
+      "fontWeight": "700",
+      "lineHeight": "27.5px",
+      "letterSpacing": "normal",
+      "textAlign": "center",
+      "color": "rgb(252, 247, 238)",
+      "filter": "drop-shadow(rgba(249, 187, 95, 0.2) 0px 2px 4px)",
+      "marginBottom": "8px",
+      "gap": "normal",
+      "padding": "0px",
+      "borderRadius": "0px",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "height": 27.5,
+      "width": 448,
+      "top": 258,
+      "bottom": 285.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display",
+          "postScriptName": "PlayfairDisplay-Bold",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ]
+    },
+    "button": {
+      "classes": "e03-create px-space-sm w-full h-[52px] flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#f3c25b] to-[#fabc4d] text-[#180b07] font-headline-sm font-semibold text-[16px] tracking-wide shadow-lg shadow-[#d49b42]/25 hover:brightness-105 active:scale-[0.98] transition-all duration-200 cursor-pointer",
+      "fontFamily": "\"Playfair Display\"",
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "lineHeight": "24px",
+      "letterSpacing": "0.4px",
+      "textAlign": "center",
+      "color": "rgb(24, 11, 7)",
+      "filter": "none",
+      "marginBottom": "0px",
+      "gap": "8px",
+      "padding": "0px 8px",
+      "borderRadius": "16px",
+      "backgroundImage": "linear-gradient(to right, rgb(243, 194, 91), rgb(250, 188, 77))",
+      "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(212, 155, 66, 0.25) 0px 10px 15px -3px, rgba(212, 155, 66, 0.25) 0px 4px 6px -4px",
+      "height": 52,
+      "width": 448,
+      "top": 293.5,
+      "bottom": 345.5,
+      "renderedFonts": [
+        {
+          "familyName": "Playfair Display SemiBold",
+          "postScriptName": "PlayfairDisplay-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 29
+        }
+      ]
+    },
+    "scrollWidth": 1440,
+    "scene": 160,
+    "independent": true
+  }
+]
