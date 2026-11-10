@@ -27,3 +27,4 @@
 - Composition seulement : cadre image autonome + bloc titre/CTA sans encadrement, cadrage/hauteur conservés ; libellé Missions conditionnel dans chrome.js.
 - Génération réutilisée ; tests existants E03 PASS 320/390/1440 ; comparaison géométrique/sous-titres E01/E02 PASS. Aucun code métier ou formulaire modifié.
 - Captures actuelles et avant correctif enregistrées ; push de la même branche et attente CI existante, sans fusion/Pages.
+- Attente historique Missions également présente dans tests/e01.cjs : alignée au libellé demandé ; E01 PASS 390/1440 et effets. Première CI arrêtée avant verdict pour éviter cet échec déterministe ; nouveau commit uniquement test/documentation, runtime et captures inchangés.

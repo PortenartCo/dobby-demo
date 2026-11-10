@@ -71,7 +71,8 @@
     "change": "separate illustration frame from title/action; Missions-only short subtitle",
     "scene_height_px": 160,
     "image_object_position": "50% 35%",
-    "tests": "existing e03.cjs PASS 320/390/1440; E01/E02 shared bar geometry and subtitles PASS",
-    "business_changes": false
+    "tests": "existing e03.cjs PASS 320/390/1440; e01.cjs PASS 390/1440 and motion; E01/E02 shared bar geometry and subtitles PASS",
+    "business_changes": false,
+    "missions_html_sha256": "8d02e07dc020f902b42875f2f7ce1aa3ea027bd70b43615489f4b12f6547ae07"
   }
 }
