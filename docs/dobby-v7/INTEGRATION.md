@@ -1,5 +1,10 @@
 # DOBBY V7 — État réel de l’intégration Stitch
 
+## E07 — Nouvelles présentations Taverne et Courses
+
+[Rapport, sources, preuves et limites E07](E07-TAVERNE-COURSES.md). Les treize routes Cuisine restent raccordées au moteur natif. Quatre présentations utilisent deux nouveaux HTML fournis, conservés hors du recensement original dans `design/stitch-e07/`. Les 53 HTML initiaux sont intacts ; les correspondances historiques ci-dessous sont complétées par les champs `presentation` et `cuisine.e07` du manifeste. Les autres pages Cuisine, writers et E06 ne sont pas modifiés. Aucun déploiement ni fonctionnement réel revendiqué.
+
+
 Le lot Cuisine poursuit la PR #3, branche `feat/dobby-stitch-53-source-backed-v7`, depuis `08f66ce`. La mission 2A poursuit ce travail depuis `cb440793cc04079cd472a3cd1d8fcf3e14c1f84b`. Les 53 HTML originaux et leurs empreintes restent inchangés dans `design/stitch-53/`.
 
 ## E01 — Accueil et liaisons permanentes

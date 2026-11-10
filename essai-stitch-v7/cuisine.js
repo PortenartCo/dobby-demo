@@ -565,7 +565,7 @@ window.DobbyCuisine = (() => {
     if(action==='history-open'){E.history(el.dataset.id);return open('shop-final');}
     if(action==='history-reuse'){const items=data.state.shopHistory[el.dataset.id].items;E.page('shop');E.shop('editshop');for(const item of items)E.shop('addextra',{value:item.name+(item.detail?' — '+item.detail:'')});return open('shop');}
     if(action==='export-history'){E.evaluate('downloadJson("dobby-historique-courses.json",st.shopHistory);');return;}
-    if(action==='shop-filter'){const category=el.dataset.category;for(const card of $$('.provision-card'))card.hidden=category!=='all'&&card.dataset.category!==category;return;}
+    if(action==='shop-filter'){const category=el.dataset.category;for(const card of $$('.provision-card'))card.hidden=category!=='all'&&card.dataset.category!==category;for(const group of $$('[data-e07-category]'))group.hidden=category!=='all'&&group.dataset.e07Category!==category;return;}
     const familyActions={'family-import':'import','family-sync':'sync','family-edit':'edit','family-delete':'delete','family-cancel':'cancel-edit','family-conflict-server':'conflict-server','family-conflict-local':'conflict-local'};
     if(familyActions[action]){E.family(familyActions[action],el.dataset.id);await new Promise(resolve=>setTimeout(resolve,50));return render();}
   }

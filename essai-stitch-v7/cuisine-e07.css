@@ -47,3 +47,6 @@ body.e07-shop .provision-card[data-state=skip]{opacity:.65}
 body.e07-shop #btn-submit-cart{width:calc(100% - 24px);margin:8px 12px;min-height:52px}
 body.e07-shop #cu-shared .shop-item{flex-direction:column;align-items:stretch;min-width:0}
 body.e07-shop #cu-shared :is(strong,p,button){white-space:normal;overflow-wrap:anywhere}
+.e07-category-filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+body.e07-shop [data-e07-category]>div:first-child{flex-wrap:wrap;gap:8px}
+body.e07-shop [data-e07-category] h2{min-width:0}

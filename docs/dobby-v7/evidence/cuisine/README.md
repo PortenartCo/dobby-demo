@@ -1,3 +1,7 @@
+# E07 — Complément aux comparaisons historiques
+
+Les nouvelles références Taverne/Courses et les comparaisons à 320/390/1440 px sont dans [le rapport E07](../../E07-TAVERNE-COURSES.md). Les autres routes gardent leur présentation. `checks.json` ci-dessous reste la recette historique ; les contrôles ciblés courants sont dans [e07/visual-checks.json](../e07/visual-checks.json), et la CI publie également la passe complète actualisée.
+
 # Cuisine — comparaisons des 13 sources
 
 Références HTML Stitch rendues localement et interfaces raccordées, à **320 et 390 px**. Les deux ressources Google inaccessibles utilisent le remplacement Taverne documenté dans [INTEGRATION.md](../../INTEGRATION.md). Les données après intégration proviennent de fixtures dans le moteur natif, sans compte réel.

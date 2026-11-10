@@ -23,22 +23,22 @@
 ### Task A — Sources et Taverne
 **Files:** source manifest/raw E07; `build-cuisine.cjs`, `build-source.cjs`, `cuisine-routes.json`, `cuisine-e07.js/css`, adaptation minimale `cuisine.js`, test `tests/e07.cjs`.
 **Interface:** E07 renderer consumes native read data/helpers, produces source-backed DOM with existing `data-cu-action` bindings; returns false for untouched views.
-- [ ] Baseline Cuisine existing tests, source/image provenance and local access.
-- [ ] Write/run E07 missing-source/local-image/real-week/empty-dinner assertions RED.
-- [ ] Derive raw sources, wire Taverne source clones to existing planning/recipes, local hero and corrected meal layout.
-- [ ] Targeted tests GREEN and commit A.
+- [x] Baseline Cuisine existing tests, source/image provenance and local access.
+- [x] Write/run E07 missing-source/local-image/real-week/empty-dinner assertions RED.
+- [x] Derive raw sources, wire Taverne source clones to existing planning/recipes, local hero and corrected meal layout.
+- [x] Targeted tests GREEN and commit A.
 
 ### Task B — Courses et panier
 **Files:** same isolated E07 presentation; source derivative templates/provenance; existing family test assertions where needed.
 **Interface:** prep/variant/final consume native `draft`, `shopChoice`, `shopFinal`, `shared`; bind existing native actions/forms only. Existing `renderShared` reused with source card sample.
-- [ ] Add/run preparation/unknown quantity/validation/check/reload/no-auto-publish assertions RED.
-- [ ] Derive new source for shopping views; remove sample quantities/categories/status/security claims before data; preserve native forms, explicit sharing/conflicts and history.
-- [ ] Existing Cuisine and family fixture tests; captures source/runtime 320/390/1440, empty/long lists.
-- [ ] Commit B.
+- [x] Add/run preparation/unknown quantity/validation/check/reload/no-auto-publish assertions RED.
+- [x] Derive new source for shopping views; remove sample quantities/categories/status/security claims before data; preserve native forms, explicit sharing/conflicts and history.
+- [x] Existing Cuisine and family fixture tests; captures source/runtime 320/390/1440, empty/long lists.
+- [x] Commit B.
 
 ### Task C — Evidence, regression and delivery
 **Files:** `tests/cuisine-visual.cjs` source provenance expectations; `tests/ci.cjs`; E07 report/evidence.
-- [ ] Reproducible build + unchanged raw-source/engine/writer checks, 13-route Cuisine regression.
-- [ ] Review final diff independently per requesting-code-review; fix only causal important defects.
+- [x] Reproducible build + unchanged raw-source/engine/writer checks, 13-route Cuisine regression.
+- [x] Review final diff independently per requesting-code-review; fix only causal important defects.
 - [ ] Relevant existing CI on final pushed E07 SHA; wait for result, no merge/Pages.
-- [ ] Report supplied sources, files/commits, actual operations/tests/fixtures, graphics limits and future E06 convergence checks. Stop for human review.
+- [x] Report supplied sources, files/commits, actual operations/tests/fixtures, graphics limits and future E06 convergence checks. Stop for human review.

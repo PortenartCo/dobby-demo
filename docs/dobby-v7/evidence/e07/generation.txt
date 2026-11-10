@@ -1,0 +1,3 @@
+PASS: repeat build-source.cjs and npm run build:css changed none of 232 tracked V7 files.
+PASS: all supplied E07 raw source hashes and both application PNG copies equal the supplied originals.
+PASS: git diff --exit-code for original53/V5/SQL/engines/common chrome and other protected native components.
