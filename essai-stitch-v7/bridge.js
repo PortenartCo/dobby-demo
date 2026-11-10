@@ -29,6 +29,8 @@ function basket(data){const s=sectionContaining('Le Panier de Dobby');if(!s)thro
 const rows=items.length?items.slice(0,4).map(item=>`<div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-surface-container-low border border-[#d49b42]/10"><span class="font-body-sm text-body-sm text-on-surface">${esc(item.name)} · ${displayNum(item.qty)} ${esc(item.unit)}</span><span class="material-symbols-outlined text-primary">shopping_basket</span></div>`).join(''):'<div class="dv7-empty">Votre panier est vide. Il se remplira à partir des repas du foyer.</div>';
 s.innerHTML=`<div class="p-4 bg-surface-container-high rounded-2xl border border-[#d49b42]/20 shadow-lg flex flex-col gap-3"><div class="flex items-center justify-between gap-2"><div><h2 class="font-headline-sm text-headline-sm text-on-surface">♧ Le Panier de Dobby</h2><p class="font-body-sm text-body-sm text-on-surface-variant">Contenu actuel du panier familial</p></div><span class="rounded-lg px-3 py-1 bg-surface-container-lowest text-primary font-label-sm text-label-sm">${displayNum(items.length)} articles</span></div><div class="flex flex-col gap-2">${rows}</div>${action('shop','Voir les provisions du foyer')}</div>`;}
 function sanitizeClaims(){
+// E03 has no sample claims. Never sanitize household text or real counters.
+if(currentScreen==='missions'&&document.querySelector('[data-e03-filters]'))return;
 if(currentScreen==='traverse'){
  for(const span of document.querySelectorAll('main span')){
   if(span.textContent.includes('CHEMIN DE TRAVERSE')&&/\d+°C/.test(span.textContent))span.textContent='CHEMIN DE TRAVERSE';

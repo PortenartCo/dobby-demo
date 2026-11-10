@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: 3 real missions keep all filters visible
+
+false !== true
+
+    at /workspace/dobby-e03/essai-stitch-v7/tests/e03-counts.cjs:5:367 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
