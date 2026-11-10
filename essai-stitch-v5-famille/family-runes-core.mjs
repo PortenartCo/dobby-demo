@@ -45,7 +45,7 @@ export function acceptRequests(credits=[],requests=[],revision){
 }
 export function gradeFor(total){
  if(!Number.isSafeInteger(total)||total<0)throw Error('Total de runes invalide');const levels=GRADE_CONFIG.levels;let index=0;while(index+1<levels.length&&total>=levels[index+1].threshold)index++;
- const current=levels[index],next=levels[index+1]||null;return {...current,next,provisional:true,progress:next?{value:total-current.threshold,max:next.threshold-current.threshold,remaining:next.threshold-total}:null};
+ const current=levels[index],next=levels[index+1]||null;return {...current,next,provisional:GRADE_CONFIG.provisional,progress:next?{value:total-current.threshold,max:next.threshold-current.threshold,remaining:next.threshold-total}:null};
 }
 export function memberSummary(memberId,credits=[],requests=[]){
  const rows=normalizeCredits(credits),known=new Map(rows.map(c=>[c.missionId,c])),mine=rows.filter(c=>c.memberId===memberId),queue=normalizeRequests(requests).filter(c=>c.memberId===memberId);

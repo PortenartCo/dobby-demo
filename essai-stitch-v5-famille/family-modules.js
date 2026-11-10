@@ -54,7 +54,7 @@ function missionPayload(payload){
 function rememberedCredits(){const raw=states.missions?.synced;if(!raw)return [];return JSON.parse(raw).runeCredits||[];}
 function retainedCredits(payload){missionPayload(payload);return runes.mergeCredits(payload.runeCredits||[],runes.mergeCredits(st.runeCredits||[],rememberedCredits()));}
 function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manualMissions:payload.manualMissions||[]};}
-function pendingRunes(){const ids=new Set((st.runeCredits||[]).map(c=>c.missionId));return(st.runeRequests||[]).some(c=>!ids.has(c.missionId));}
+function pendingRunes(){if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const ids=new Set((st.runeCredits||[]).map(c=>c?.missionId));return(st.runeRequests||[]).some(c=>!c||!ids.has(c.missionId));}
 function initialPayload(id){const payload=pick(id);return id==='missions'?{...payload,runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
 function synchronized(id,revision,payload){return{active:true,revision,synced:moduleDigest(id,id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:payload.runeLedgerVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
@@ -191,6 +191,7 @@ function stateLabel(def) {
   const info = states[def.id];
   if (!info?.active) return 'Partage désactivé';
   if (info.conflict) return 'Conflit à résoudre';
+  if(def.id==='missions'){try{runes.normalizeCredits(st.runeCredits||[]);runes.normalizeRequests(st.runeRequests||[]);}catch{return 'Historique de runes à vérifier';}if(pendingRunes())return 'Runes en attente de synchronisation';}
   return moduleDigest(def.id,pick(def.id)) === info.synced ? 'Partagé · à jour' : 'Modifications locales à envoyer';
 }
 function html() {
@@ -277,7 +278,7 @@ async function activate(id) {
   states[id] = synchronized(id,revision,acknowledged);markMissionsShared(id);
   if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
   await persist();
-  api.repaint(); api.openModal();
+  api.repaint(); api.openModal();onSave();
 }
 async function activateRemaining() {
   if (!ctx || !backendReady) throw Error('Foyer non connecté');
@@ -340,7 +341,7 @@ async function activateRemaining() {
     return;
   }
   lastError = '';
-  api.repaint(); api.openModal();
+  api.repaint(); api.openModal();onSave();
 }
 async function joinFamily() {
   if (!backendReady || !ctx) throw Error('Foyer non connecté');
@@ -375,7 +376,7 @@ async function joinFamily() {
     throw e;
   }
   if(states.missions?.active)markMissionsShared('missions');
-  api.repaint(); api.openModal();
+  api.repaint(); api.openModal();onSave();
 }
 async function syncOne(id) {
   const state = states[id];
