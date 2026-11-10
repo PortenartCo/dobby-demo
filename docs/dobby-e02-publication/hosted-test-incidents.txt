@@ -1,0 +1,9 @@
+Recette réelle GitHub Pages — ajustements du test uniquement
+
+1. Premier lancement : img.decode() a rejeté la promesse (« source image cannot be decoded ») pendant le montage asynchrone du hero. Diagnostic distinct : le DOM était prêt avant l'image (complete=false, naturalWidth=0) ; réponse HTTP 200, puis complete=true/naturalWidth=512. Le fichier servi a exactement les mêmes 46 685 octets et SHA256 que la source validée : 2d81b25fb96c0b076b4023505baad42afcac5bd5fd36ecf55e3356a821480451. Le test attend désormais l'image du DOM courant, complète et de largeur naturelle positive, avant de contrôler la hauteur 130..150 px. Aucun asset ni composant applicatif modifié.
+
+2. Extension de recette : les cinq destinations sont maintenant réellement cliquées, chacune suivie d'un retour par Traverse vers Dobby. La première assertion d'URL exacte sur Famille oubliait le fragment #salon ajouté par la navigation existante. Elle attend désormais le chemin de Famille et l'état réel salon ; Menu conserve le contrôle du fragment #menu. Aucune navigation applicative modifiée.
+
+Ces relances ont suivi les corrections causales ci-dessus. Aucun changement applicatif et aucune republication nécessaires.
+
+3. Après succès des actions métier et des cinq destinations, le client HTTP Node de Playwright a tenté une adresse IPv6 non routable (ENETUNREACH 2606:50c0:8003::153) au contrôle d'empreinte de chat.js. Chromium avait déjà chargé les pages normalement. Le réglage IPv4-first de Node n’a pas empêché ce client de retenter IPv6. Le contrôle final récupère donc les mêmes octets via fetch dans Chromium, le transport effectivement utilisé par l’application. Statut HTTP et empreintes attendues restent strictement contrôlés ; aucun contrôle retiré et aucune modification applicative.
