@@ -73,7 +73,7 @@ jobs:
       - name: Source derivation remains reproducible
         run: |
           node essai-stitch-v7/build-source.cjs
-          git diff --exit-code -- essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
+          git diff --exit-code -- essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/onboarding-route-data.js essai-stitch-v7/data/onboarding-scoring-v1.json essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
       - name: Confirm the original Stitch source manifest
         run: |
           node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"
