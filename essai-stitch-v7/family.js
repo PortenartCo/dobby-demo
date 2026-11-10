@@ -188,7 +188,7 @@ window.DobbyFamilyStitch=(()=>{
   return extraAction(action,el);
  }
  async function refresh(){
-  if(window.DobbyOnboarding?.handles(ui.view))return;
+  if(window.DobbyOnboarding?.handles(ui.view)){window.DobbyOnboarding.refresh();return;}
   if(!ready||busy||dialogDraft||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
   const form=['member-edit','medical-edit'].includes(ui.view);let focus;
   if(form){if(availability(data)===formContext)return;const field=document.activeElement;if(field?.matches('input,textarea,select'))focus={id:field.id,start:field.selectionStart,end:field.selectionEnd};if(ui.view==='member-edit')ui.memberDraft=memberDraft();else ui.visitDraft=visitDraft();}

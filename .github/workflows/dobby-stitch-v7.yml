@@ -68,6 +68,8 @@ jobs:
           for file in essai-stitch-v7/register*.js essai-stitch-v7/*-register.js essai-stitch-v7/build-register.cjs essai-stitch-v7/tests/register-*.cjs essai-stitch-v7/tests/ci.cjs; do node --check "$file"; done
       - name: Existing offline, family and conflict regressions
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+      - name: E06 exhaustive scoring and identity/draft conflicts
+        run: node --test essai-stitch-v7/tests/e06-*.test.mjs
       - name: Source derivation remains reproducible
         run: |
           node essai-stitch-v7/build-source.cjs

@@ -18,17 +18,17 @@ test('preview V5 source matches original except isolated storage and E05 native 
   assert.ok(originalMemberWriter,'Original native member writer boundary');
   const extendedMemberWriter=/  let member;\n  try\{member=window\.DobbyMagicIdentity\.patch[\s\S]*?  render\(\);return;/;
   assert.match(preview,extendedMemberWriter);
-  const normalized=preview.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e05-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
+  const normalized=preview.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e06-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
-    .replaceAll('./stitch-v5.js?v=20261108-10','./stitch-v5.js?v=20261107-1')
+    .replaceAll('./stitch-v5.js?v=20261110-e06-1','./stitch-v5.js?v=20261107-1')
     .replace("/* DOBBY_BOOT_ROUTE_SAFE_V1 */\nwindow.__dobbyStartupRoute = { page: st.page, detail: st.detail };\nst.page = 'home';\nst.detail = null;\n", '');
   assert.equal(normalized,original.replaceAll('\r\n','\n'));
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
   assert.doesNotMatch(preview,/indexedDB\.open\('dobby-stitch-preview-files-20261105'/);
-  assert.match(preview,/stitch-v5\.js\?v=20261108-10/);
+  assert.match(preview,/stitch-v5\.js\?v=20261110-e06-1/);
   const loader=source('../stitch-v5.js');
-  assert.match(loader,/family-v2\.js\?v=20261108-7/);
+  assert.match(loader,/family-v2\.js\?v=20261110-e06-1/);
   assert.match(loader,/family-modules\.js\?v=20261110-runes-1/);
   assert.match(loader,/family-agenda\.js\?v=20261108-7/);
   assert.match(loader,/family-agenda\.css\?v=20261108-7/);

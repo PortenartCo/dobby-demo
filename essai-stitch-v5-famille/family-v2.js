@@ -9,7 +9,7 @@ const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
   db: null, core: null, key: null, session: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
-  lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, modalOpen: false, provider: null
+  lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null
 };
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
@@ -50,6 +50,14 @@ function dbCall(db, store, operation, arg) {
 const meta = async id => (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;
 const putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });
 const delMeta = id => dbCall(f.db, 'meta', 'delete', id);
+// Atomic metadata mutation on the existing IndexedDB store. E06 draft updates
+// from different tabs must read the latest value inside the same transaction.
+function updateMeta(id,change){return new Promise((resolve,reject)=>{
+ const tx=f.db.transaction('meta','readwrite'),store=tx.objectStore('meta'),request=store.get(id);let result,error;
+ request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');store.put({id,value:result});}catch(e){error=e;tx.abort();}};
+ tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Métadonnées non enregistrées.'));tx.onerror=()=>reject(error||tx.error);
+});}
+
 async function loadItems() {
   const list = await dbCall(f.db, 'items', 'getAll');
   f.cache = new Map(list.filter(x => f.context && x.storageKey.startsWith(f.context + '|'))
@@ -148,22 +156,24 @@ async function storageFetch(method,path,file){
 async function requireHousehold() {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
   const epoch = f.epoch;
-  f.verifiedContext = null;
+  f.checkingEpoch=epoch;f.verifiedContext = null;
   const rows = await authorized('GET', 'dobby_v2_memberships?select=household_id&active=eq.true&user_id=eq.' +
     encodeURIComponent(f.session.user_id));
   if (epoch !== f.epoch) throw Error('Session remplacée');
   if (!Array.isArray(rows) || rows.length !== 1 || !rows[0]?.household_id) {
+    f.membershipRejected=true;
     throw Error('Ce compte doit appartenir à un seul foyer actif pour cette version.');
   }
   const hh = rows[0].household_id;
   const context = f.session.user_id + '|' + hh;
   const household = await authorized('GET', 'dobby_v2_households?select=id&id=eq.' + encodeURIComponent(hh));
-  if (!Array.isArray(household) || household.length !== 1) throw Error('Accès au foyer non autorisé');
+  if (!Array.isArray(household) || household.length !== 1){f.membershipRejected=true;throw Error('Accès au foyer non autorisé');}
   if (epoch !== f.epoch) throw Error('Session remplacée');
   // V5's local state is one namespace per browser profile; prevent sharing a
   // single profile between households until full partitioning is implemented.
   const deviceHousehold = await meta('deviceHouseholdId');
   if (deviceHousehold && deviceHousehold !== hh) {
+    f.membershipRejected=true;
     throw Error('Ce navigateur conserve les données locales d’un autre foyer. Utilisez un profil de navigateur distinct.');
   }
   if (!deviceHousehold) await putMeta('deviceHouseholdId', hh);
@@ -174,7 +184,7 @@ async function requireHousehold() {
     await loadItems();
   }
   f.householdId = hh;
-  f.verifiedContext = context;
+  f.verifiedContext = context;f.membershipRejected=false;if(f.checkingEpoch===epoch)f.checkingEpoch=null;
   // Also initialize modules when an existing, previously verified household was
   // restored from IndexedDB. The context-equality shortcut must not skip this.
   // start() is idempotent once its backend probe has succeeded.
@@ -267,8 +277,9 @@ async function sync() {
     f.lastSync = new Date();
     f.error = '';
   } catch (e) {
-    if (epoch === f.epoch) f.error = fail(e);
+    if (epoch === f.epoch){if([401,403].includes(e.status))f.membershipRejected=true;f.error = fail(e);}
   } finally {
+    if(f.checkingEpoch===epoch)f.checkingEpoch=null;
     f.syncing = false;
     repaint();
     if (f.again) {
@@ -485,14 +496,14 @@ async function login(form) {
   });
   f.epoch += 1;
   await keepSession(result);
-  f.context = null; f.householdId = null; f.verifiedContext = null;
+  f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   try {
     await requireHousehold();
     await loadItems();
     await sync();
   } catch (e) {
     // Never retain a new session after a refused household switch.
-    f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null;
+    f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
     f.cache.clear();
     await delMeta('session');
     throw e;
@@ -502,8 +513,8 @@ async function login(form) {
 async function logout() {
   const old = f.session;
   f.epoch += 1;
-  f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null;
-  f.cache.clear(); f.lastSync = null; f.error = '';
+  f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
+  f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
   await delMeta('session');
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
@@ -640,7 +651,7 @@ save = function() {
   return result;
 };
 // E06 facade: same native login and membership verification, no alternate auth.
-function connectionState(){return {userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),memberId:null};}
+function connectionState(){return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),memberId:null};}
 async function signIn(email,password){
  if(!f.ready)throw Error('Connexion en cours d’initialisation.');
  if(!f.key)throw Error('Configuration publique absente : connexion indisponible sur cet appareil.');
@@ -648,7 +659,7 @@ async function signIn(email,password){
 }
 window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
   getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
-  authorized, meta, putMeta, esc, showMessage, repaint, openModal,
+  authorized, meta, putMeta, updateMeta, esc, showMessage, repaint, openModal,
   storageFetch,
   getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
   isModuleActive(module) {return Boolean(f.context && f.provider?.isActive?.(module));},
