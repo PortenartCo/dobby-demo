@@ -38,3 +38,12 @@ Base exacte 8418682 ; branche E06 isolée. Aucun merge, main/Pages/production Su
 - [ ] Revue technique indépendante ; corriger les défauts établis avec tests causaux.
 - [ ] Une campagne générale adaptée aux fichiers partagés, E04/E05 et composition temporaire E03 si nécessaire ; CI au SHA final.
 - [ ] Rapport E06/manifeste honnête des parcours opérationnels et bloqués ; commits poussés E06 seulement ; arrêt pour revue.
+
+## Progression et décisions
+- A terminé : ff6f14e. Sources ZIP immuables inventoriées ; 25 600 comparaisons JS/Python PASS, toutes les sorties accessibles, qa-results identique. Aucun hasard/horloge/ID de membre dans le calcul.
+- Worktree isolé /workspace/dobby-e06-onboarding ; E05/main inchangés. Baseline ciblée E05 : 7 PASS, sans relancer la suite inchangée.
+- Cheminette absente : dépendance documentée, aucune recréation. Entrée E06 dédiée et accès depuis le profil ; l’application existante ne force pas une association de compte inexistante.
+- Auth native : quatre parcours HTTP simulés PASS (accepté, ambigu, identifiants refusés, autre foyer). Aucune recette réelle. Configuration publique absente des sources ; usage de la clé déjà configurée seulement. Création/invitation/lien compte–membre bloqués sans simulation.
+- Médias : Miroir original récupéré en local ; URL Choixpeau renvoie text/html (200), manque explicité. Aucun écran capturé utilisé comme illustration. Tous emblèmes/portraits/Patronus réutilisent E05.
+- B/C : moteur natif/metadata raccordés ; prénom/nom séparés seulement si explicitement fournis, nom legacy conservé sans découpage. Versions de calcul par résultat ; modification manuelle E05 retire seulement la provenance de calcul correspondante.
+- Tests causaux : brouillon retardé après changement de membre ne doit pas remplacer le brouillon actif (RED puis GREEN). Le routeur attend la sauvegarde temporaire avant de continuer ; les résultats ne sont écrits qu’après confirmation.

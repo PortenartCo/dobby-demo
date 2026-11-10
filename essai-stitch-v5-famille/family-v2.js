@@ -9,7 +9,7 @@ const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
   db: null, core: null, key: null, session: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
-  lastSync: null, error: '', notice: '', ready: false, modalOpen: false, provider: null
+  lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, modalOpen: false, provider: null
 };
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
@@ -148,6 +148,7 @@ async function storageFetch(method,path,file){
 async function requireHousehold() {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
   const epoch = f.epoch;
+  f.verifiedContext = null;
   const rows = await authorized('GET', 'dobby_v2_memberships?select=household_id&active=eq.true&user_id=eq.' +
     encodeURIComponent(f.session.user_id));
   if (epoch !== f.epoch) throw Error('Session remplacée');
@@ -173,6 +174,7 @@ async function requireHousehold() {
     await loadItems();
   }
   f.householdId = hh;
+  f.verifiedContext = context;
   // Also initialize modules when an existing, previously verified household was
   // restored from IndexedDB. The context-equality shortcut must not skip this.
   // start() is idempotent once its backend probe has succeeded.
@@ -483,14 +485,14 @@ async function login(form) {
   });
   f.epoch += 1;
   await keepSession(result);
-  f.context = null; f.householdId = null;
+  f.context = null; f.householdId = null; f.verifiedContext = null;
   try {
     await requireHousehold();
     await loadItems();
     await sync();
   } catch (e) {
     // Never retain a new session after a refused household switch.
-    f.epoch += 1; f.session = null; f.context = null; f.householdId = null;
+    f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null;
     f.cache.clear();
     await delMeta('session');
     throw e;
@@ -500,7 +502,7 @@ async function login(form) {
 async function logout() {
   const old = f.session;
   f.epoch += 1;
-  f.session = null; f.context = null; f.householdId = null;
+  f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null;
   f.cache.clear(); f.lastSync = null; f.error = '';
   await delMeta('session');
   if (f.provider?.reset) f.provider.reset();
@@ -637,7 +639,14 @@ save = function() {
   if (f.provider?.onSave) f.provider.onSave();
   return result;
 };
-window.DobbyFamilyUI = Object.freeze({
+// E06 facade: same native login and membership verification, no alternate auth.
+function connectionState(){return {userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),memberId:null};}
+async function signIn(email,password){
+ if(!f.ready)throw Error('Connexion en cours d’initialisation.');
+ if(!f.key)throw Error('Configuration publique absente : connexion indisponible sur cet appareil.');
+ const form=document.createElement('form');for(const[name,value]of Object.entries({key:f.key,email,password})){const input=document.createElement('input');input.name=name;input.value=String(value||'');form.append(input);}await login(form);return connectionState();
+}
+window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
   getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
   authorized, meta, putMeta, esc, showMessage, repaint, openModal,
   storageFetch,
