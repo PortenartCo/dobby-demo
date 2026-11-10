@@ -9,7 +9,7 @@ if(/\.html$/.test(file)){let text=raw.toString(),runtime=path.relative(path.dirn
 if(rel==='essai-stitch-v5-famille/family-v2.js')bytes=Buffer.from(raw.toString().replace('function openModal() {',"function openModal() {\n  if(window.DobbyReview){alert('Démonstration isolée : aucun compte familial réel. Les données restent dans cet aperçu.');return;}"));
 fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);records.push({path:rel,sourceSha256:sha(raw),sha256:sha(bytes),transformed:!bytes.equals(raw)});}
 function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){if(['node_modules','tests','.git'].includes(entry.name))continue;const file=path.join(dir,entry.name);entry.isDirectory()?walk(file):copy(file);}}
-for(const dir of ['essai-stitch-v7','essai-stitch-v5-famille','essai-v6-preview','essai-sync-v1','essai-sync-v2'])walk(path.join(repo,dir));
+for(const dir of ['essai-stitch-v7','essai-stitch-v5-famille','essai-v6-preview/assets'])walk(path.join(repo,dir));
 fs.copyFileSync(path.join(__dirname,'review/review-runtime.js'),path.join(out,'review-runtime.js'));
 fs.writeFileSync(path.join(out,'index.html'),'<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=./essai-stitch-v7/index.html#taverne"><title>DOBBY — Revue interactive</title></head><body><a href="./essai-stitch-v7/index.html#taverne">Ouvrir DOBBY en démonstration</a></body></html>\n');
 fs.writeFileSync(path.join(out,'.nojekyll'),'');
