@@ -1,0 +1,7 @@
+Independent read-only review of base 258b0f9 -> 1438fa1 and test adaptations.
+Critical: none.
+Important 1: historical sanitizer hides real counter rows at 3 urgent / 17 total.
+Important 2: historical sanitizer removes the entire list for a native title beginning 'Sceau de protection locale'.
+Resolution: commit 4971dce skips obsolete sample cleanup for the real E03 composition. e03-counts.cjs reproduced the hidden row before correction and passes for both counts and native title afterwards. E03, E01/E02 and smoke checked after correction.
+Minor deferred: native refresh replaces cards, dropping card focus and collapsing expanded automatic consultation details. Filter/member focus is retained. Native HTML links/details remain keyboard accessible.
+Reviewer did not assess visual fidelity, pending full-suite result, or existing absent Terminer/Supprimer commands. Executor inspected source/result screenshots, completed tests separately, and preserved the form as explicitly required.

@@ -1,0 +1,51 @@
+{
+  "base": "258b0f923491b03d78c72ba1b1edd29ab72e6a84",
+  "worktree": "/workspace/dobby-e03",
+  "branch": "feat/dobby-e03-missions",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "source": {
+    "path": "design/stitch-53/dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
+    "sha256": "a6d8a44f3bcb5e7ab57375facdeb032804631cb054725b834cb049281ce6aeab"
+  },
+  "captures": {
+    "automatic-readonly-1440.png": "fe01596f8f317484d35cce025d19c8cfca9db18ab8adeb72fe2a518aafe3f9c6",
+    "automatic-readonly-320.png": "fff8d67db26f507fff06cfca942dc925015e672c8208abcc68d35904ed505af5",
+    "automatic-readonly-390.png": "88f1f27ab3b86cabd96669446fb2ee0e8de069865e8f71c8bce9e314498d5745",
+    "before-1440.png": "b581703f004b25f5c94a19f294d77f708c25a8adc23e7d5e3b208b115c767bae",
+    "before-320.png": "580aa8715d9d8fe9226bf1bbb3a45b8426746529187de201f56c12131dc69aeb",
+    "before-390.png": "587ed8ad2f548d94814d502a8c13850fe89e7fa71e26942caaaefa8a65f30e06",
+    "done-1440.png": "1e0befb849472952af5da66feb380696add9972a0479f744c36e6250feda797c",
+    "done-320.png": "39066d65fea833cbdbf855617e7e21a28602b98eb8267ce674f7219e9755b40b",
+    "done-390.png": "7ea0e099345d67511d786bc2680ae9880b8be162edfc34ae4bb938e2b96dec2f",
+    "empty-1440.png": "747f0e6123fb5f9762319d69be05d409492eb3b648756c326cba297b585e7fbf",
+    "empty-320.png": "109d0050f445a633d9d978fe8bad1eb5e22dfbe4144a099653c5b958097e87bb",
+    "empty-390.png": "0ed902cb315abd6d6d465853eed37f9325380a84b4bfe28652b260cd5e61fc41",
+    "existing-form-1440.png": "a2b1a7616f7b78d763f91c633756a3ca0089bcb7e322b1db9eb2bd040c9022bf",
+    "existing-form-320.png": "57782db9a71c91b77a7837b98b75dc4d53f93308bdb7b06fc8f31085ace52235",
+    "existing-form-390.png": "c1a63d7e23559d73731a634d29a9c1e8054eb4568a7101b9cb9390e04c69b2be",
+    "open-1440.png": "c70051e3002b094be5cbfae801daa32b5ab4bc254ca8e2bdaee18afe01ea85cc",
+    "open-320.png": "6b420447d6dcac18961b1607f2f25a68171249ab2401e0b454c120aae4f03b3b",
+    "open-390.png": "8d806ab548306f79054c4117c65f89fa26b8fba268f2df4964519835c22e9efa",
+    "source-1440.png": "7884dd2382fc3bdfda6d5e072c3f1271bbd5eecda8d554475ca40265fe476c77",
+    "source-320.png": "d2ccc94fa2e8fc2799564af75a7901937239064cf2fd8c5f0c67c41f1afbcb55",
+    "source-390.png": "2d485b966193c291b993ad0988db35772d977e7a25dc9c3396ab9d164bd2c0a8",
+    "urgent-alice-1440.png": "dd0cc2a9349b186e6b883667b334b8fa5e843a42aa1147efb5c8d422f2b316d2",
+    "urgent-alice-320.png": "3a012ef6dbec50a3e9d4429f3d56559340bf2193b66620743439df4ac20a2158",
+    "urgent-alice-390.png": "c026a6d95c4af55de2c8028b9852084338baa44749b04eaf64407b3118a5e873",
+    "viewport-1440.png": "41d034aef925b9f65bef8636f2c71942487314e840b8af690386ae989f6205a3",
+    "viewport-320.png": "2908867e44a19e2412225e19f594feee7efdcad6ec780ab3a42807facb0bf9b0",
+    "viewport-390.png": "2c2425de9b3a53574a5cd4cef045417633bfdf76fc9223cef9e07481d7493841"
+  },
+  "verification": {
+    "targeted": "PASS 320/390/1440",
+    "real_counts_and_title": "PASS",
+    "regression": "PASS after environment correction and one targeted test-adaptation rerun",
+    "remote_ci": "not started; branch not pushed",
+    "real_data_used": false,
+    "deployed": false
+  }
+}

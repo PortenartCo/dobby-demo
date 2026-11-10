@@ -1,0 +1,10 @@
+All commands in the isolated /workspace/dobby-e03 worktree; test origin http://127.0.0.1:8873.
+1. Baseline: DOBBY_TEST_ORIGIN=... DOBBY_E02_EVIDENCE_DIR=/workspace/scratch/e03-baseline node essai-stitch-v7/tests/e02.cjs -> PASS 320/390/1440.
+2. E03_BASELINE=1 DOBBY_TEST_ORIGIN=... node essai-stitch-v7/tests/e03.cjs -> source/before captures.
+3. E03 red then green: DOBBY_TEST_ORIGIN=... node essai-stitch-v7/tests/e03.cjs -> red 0 status filters; green 320/390/1440.
+4. npm test in essai-stitch-v7/tests with test origin and scratch E01/E02 capture dirs -> E03/E02/E01 pass; smoke cannot launch historical default Windows executable.
+5. e03-counts.cjs red/green -> historical real-count sanitizer bug reproduced/fixed.
+6. Continuation with CHROMIUM_PATH=/usr/bin/chromium and same origin: sequential child-process checks recorded by CHECK lines in test-regression-final.txt. Includes E03/E02/E01 rechecks after shared sanitizer correction, then every remaining suite in ci.cjs final branch and register-visual for lots 2b/3/4/5. Continue after individual failures to finish all unaffected checks.
+7. CHROMIUM_PATH=/usr/bin/chromium DOBBY_TEST_ORIGIN=... node essai-stitch-v7/tests/register-tools.cjs -> targeted rerun after fixing test adaptation's lookup of a missing native checkbox. Uses the same native event path as existing E01 completion; no production change.
+8. node --check for changed JavaScript; git diff --check; git diff 258b0f9 --exit-code on protected source, V5, templates, form/tools-register, chrome, E01 and E02 files.
+No remote CI or publication: local branch only.

@@ -1,0 +1,226 @@
+CHECK e03-counts.cjs
+E03_COUNTS_PASS real 3/17 and native title never sanitized
+CHECK e03.cjs
+E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+CHECK e02.cjs
+E02_UI_ACTIONS_PASS 320
+E02_UI_ACTIONS_PASS 390
+E02_UI_ACTIONS_PASS 1440
+CHECK e01.cjs
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+CHECK smoke.cjs
+DOBBY_V7_STITCH_BINDING_PASS [{"screen":"taverne","width":320,"status":"PASS"},{"screen":"traverse","width":320,"status":"PASS"},{"screen":"missions","width":320,"status":"PASS"},{"screen":"famille","width":320,"status":"PASS"},{"screen":"taverne","width":390,"status":"PASS"},{"screen":"traverse","width":390,"status":"PASS"},{"screen":"missions","width":390,"status":"PASS"},{"screen":"famille","width":390,"status":"PASS"}]
+CHECK cuisine.cjs
+CUISINE_PATH_PASS 320px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+CUISINE_PATH_PASS 390px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+CHECK cuisine-family.cjs
+CUISINE_FAMILY_PASS 320px native connection, add, fractional quantity, edit, offline check, conflict resolution, resync and recipe import (HTTP fixture only)
+CUISINE_FAMILY_PASS 390px native connection, add, fractional quantity, edit, offline check, conflict resolution, resync and recipe import (HTTP fixture only)
+CHECK cuisine-visual.cjs
+CUISINE_VISUAL taverne 320 []
+CUISINE_VISUAL pick 320 []
+CUISINE_VISUAL recipes 320 []
+CUISINE_VISUAL recipe 320 []
+CUISINE_VISUAL cook 320 []
+CUISINE_VISUAL tm5 320 []
+CUISINE_VISUAL recipe-add-1 320 []
+CUISINE_VISUAL recipe-add 320 []
+CUISINE_VISUAL batch 320 []
+CUISINE_VISUAL shop-1 320 []
+CUISINE_VISUAL shop 320 []
+CUISINE_VISUAL shop-final 320 []
+CUISINE_VISUAL shop-history 320 []
+CUISINE_VISUAL taverne 390 []
+CUISINE_VISUAL pick 390 []
+CUISINE_VISUAL recipes 390 []
+CUISINE_VISUAL recipe 390 []
+CUISINE_VISUAL cook 390 []
+CUISINE_VISUAL tm5 390 []
+CUISINE_VISUAL recipe-add-1 390 []
+CUISINE_VISUAL recipe-add 390 []
+CUISINE_VISUAL batch 390 []
+CUISINE_VISUAL shop-1 390 []
+CUISINE_VISUAL shop 390 []
+CUISINE_VISUAL shop-final 390 []
+CUISINE_VISUAL shop-history 390 []
+CUISINE_VISUAL_PASS 13 original sources x 2 widths, 52 comparison screenshots
+CHECK family.cjs
+FAMILY_PATH_PASS 320px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 320px
+FAMILY_PATH_PASS 390px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 390px
+CHECK family-edge.cjs
+FAMILY_EDGE_PASS stale bookmark, orphan reassignment, legacy identity, browser back/forward
+CHECK family-review.cjs
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320
+FAMILY_REVIEW_PASS selected states match the current operation 320
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390
+FAMILY_REVIEW_PASS selected states match the current operation 390
+CHECK family-shared.cjs
+FAMILY_SHARED_PASS 320px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+FAMILY_SHARED_PASS 390px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+CHECK family-visual.cjs
+FAMILY_VISUAL members 320 []
+FAMILY_VISUAL member-edit 320 []
+FAMILY_VISUAL agenda 320 []
+FAMILY_VISUAL medical-edit 320 []
+FAMILY_VISUAL health 320 []
+FAMILY_VISUAL health-person 320 []
+FAMILY_VISUAL health-history 320 []
+FAMILY_VISUAL members 390 []
+FAMILY_VISUAL member-edit 390 []
+FAMILY_VISUAL agenda 390 []
+FAMILY_VISUAL medical-edit 390 []
+FAMILY_VISUAL health 390 []
+FAMILY_VISUAL health-person 390 []
+FAMILY_VISUAL health-history 390 []
+FAMILY_VISUAL_PASS 7 sources x 320/390, 28 comparisons + 14 empty states
+CHECK register-family.cjs
+REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+CHECK register-house.cjs
+REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+CHECK register-documents.cjs
+REGISTER_DOCUMENTS_PASS 320
+REGISTER_DOCUMENTS_PASS 390
+CHECK register-tools.cjs
+page.evaluate: TypeError: Cannot set properties of null (setting 'checked')
+    at eval (eval at evaluate (:311:30), <anonymous>:1:141)
+    at UtilityScript.evaluate (<anonymous>:313:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /workspace/dobby-e03/essai-stitch-v7/tests/register-tools.cjs:4:2195 {
+  log: []
+}
+CHECK register-sync.cjs
+REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+CHECK register-documents-sync.cjs
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+CHECK register-import-reading.cjs
+REGISTER_IMPORT_READING_PASS 320
+REGISTER_IMPORT_READING_PASS 390
+CHECK register-missions-sync.cjs
+REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+CHECK register-preservation.cjs
+REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+CHECK register-navigation.cjs
+REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+CHECK register-root-visual.cjs
+REGISTER_ROOT_VISUAL traverse 320
+REGISTER_ROOT_VISUAL missions 320
+REGISTER_ROOT_VISUAL famille 320
+REGISTER_ROOT_VISUAL taverne 320
+REGISTER_ROOT_VISUAL traverse 390
+REGISTER_ROOT_VISUAL missions 390
+REGISTER_ROOT_VISUAL famille 390
+REGISTER_ROOT_VISUAL taverne 390
+CHECK register-review.cjs
+REGISTER_REVIEW_PASS stale-memo-edit 320
+REGISTER_REVIEW_PASS stale-equipment-edit 320
+REGISTER_REVIEW_PASS stale-document-edit 320
+REGISTER_REVIEW_PASS list-rg-item-toggle 320
+REGISTER_REVIEW_PASS list-rg-item-remove 320
+REGISTER_REVIEW_PASS menu-member-draft 320
+REGISTER_REVIEW_PASS menu-contact-draft 320
+REGISTER_REVIEW_PASS menu-medical-draft 320
+REGISTER_REVIEW_PASS maintenance-file-draft 320
+REGISTER_REVIEW_PASS document-native-write-missing 320
+REGISTER_REVIEW_PASS document-native-write-replaced 320
+REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+REGISTER_REVIEW_PASS maintenance-source-facts 320
+REGISTER_REVIEW_PASS source-facts 320
+REGISTER_REVIEW_PASS stale-memo-edit 390
+REGISTER_REVIEW_PASS stale-equipment-edit 390
+REGISTER_REVIEW_PASS stale-document-edit 390
+REGISTER_REVIEW_PASS list-rg-item-toggle 390
+REGISTER_REVIEW_PASS list-rg-item-remove 390
+REGISTER_REVIEW_PASS menu-member-draft 390
+REGISTER_REVIEW_PASS menu-contact-draft 390
+REGISTER_REVIEW_PASS menu-medical-draft 390
+REGISTER_REVIEW_PASS maintenance-file-draft 390
+REGISTER_REVIEW_PASS document-native-write-missing 390
+REGISTER_REVIEW_PASS document-native-write-replaced 390
+REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+REGISTER_REVIEW_PASS maintenance-source-facts 390
+REGISTER_REVIEW_PASS source-facts 390
+REGISTER_REVIEW_ALL_PASS 14 cases × 320/390
+CHECK register-visual 2b
+REGISTER_VISUAL 2b contacts 320
+REGISTER_VISUAL 2b contact-edit 320
+REGISTER_VISUAL 2b memos 320
+REGISTER_VISUAL 2b memo-edit 320
+REGISTER_VISUAL 2b lists 320
+REGISTER_VISUAL 2b list-detail 320
+REGISTER_VISUAL 2b contacts 390
+REGISTER_VISUAL 2b contact-edit 390
+REGISTER_VISUAL 2b memos 390
+REGISTER_VISUAL 2b memo-edit 390
+REGISTER_VISUAL 2b lists 390
+REGISTER_VISUAL 2b list-detail 390
+REGISTER_VISUAL_PASS 2b 6 sources x 320/390
+CHECK register-visual 3
+REGISTER_VISUAL 3 house-1 320
+REGISTER_VISUAL 3 house 320
+REGISTER_VISUAL 3 equipment-edit 320
+REGISTER_VISUAL 3 equipment 320
+REGISTER_VISUAL 3 maintenance 320
+REGISTER_VISUAL 3 house-backup 320
+REGISTER_VISUAL 3 backup 320
+REGISTER_VISUAL 3 house-1 390
+REGISTER_VISUAL 3 house 390
+REGISTER_VISUAL 3 equipment-edit 390
+REGISTER_VISUAL 3 equipment 390
+REGISTER_VISUAL 3 maintenance 390
+REGISTER_VISUAL 3 house-backup 390
+REGISTER_VISUAL 3 backup 390
+REGISTER_VISUAL_PASS 3 7 sources x 320/390
+CHECK register-visual 4
+REGISTER_VISUAL 4 document-edit 320
+REGISTER_VISUAL 4 documents-1 320
+REGISTER_VISUAL 4 documents 320
+REGISTER_VISUAL 4 contracts-1 320
+REGISTER_VISUAL 4 contracts 320
+REGISTER_VISUAL 4 contract-edit 320
+REGISTER_VISUAL 4 document 320
+REGISTER_VISUAL 4 contract-1 320
+REGISTER_VISUAL 4 contract 320
+REGISTER_VISUAL 4 import-review 320
+REGISTER_VISUAL 4 import-file 320
+REGISTER_VISUAL 4 document-edit 390
+REGISTER_VISUAL 4 documents-1 390
+REGISTER_VISUAL 4 documents 390
+REGISTER_VISUAL 4 contracts-1 390
+REGISTER_VISUAL 4 contracts 390
+REGISTER_VISUAL 4 contract-edit 390
+REGISTER_VISUAL 4 document 390
+REGISTER_VISUAL 4 contract-1 390
+REGISTER_VISUAL 4 contract 390
+REGISTER_VISUAL 4 import-review 390
+REGISTER_VISUAL 4 import-file 390
+REGISTER_VISUAL_PASS 4 11 sources x 320/390
+CHECK register-visual 5
+REGISTER_VISUAL 5 mission-edit 320
+REGISTER_VISUAL 5 chat 320
+REGISTER_VISUAL 5 chat-2 320
+REGISTER_VISUAL 5 search 320
+REGISTER_VISUAL 5 menu 320
+REGISTER_VISUAL 5 personal 320
+REGISTER_VISUAL 5 mission-edit 390
+REGISTER_VISUAL 5 chat 390
+REGISTER_VISUAL 5 chat-2 390
+REGISTER_VISUAL 5 search 390
+REGISTER_VISUAL 5 menu 390
+REGISTER_VISUAL 5 personal 390
+REGISTER_VISUAL_PASS 5 6 sources x 320/390
+FINAL_FAILURES [{"file":"register-tools.cjs","status":1}]

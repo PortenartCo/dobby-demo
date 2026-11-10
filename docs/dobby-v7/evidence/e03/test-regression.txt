@@ -1,0 +1,27 @@
+
+> test
+> node ci.cjs
+
+E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E02_UI_ACTIONS_PASS 320
+E02_UI_ACTIONS_PASS 390
+E02_UI_ACTIONS_PASS 1440
+E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+E02_VOICE_HISTORY_PASS
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+E013_PASS chromium 390
+E013_PASS chromium 1440
+E011_BAND after 390 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+E011_BAND after 1440 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+E011_VISUAL_PASS after 390/1440
+E01_SOURCE_COMPARISONS_PASS 10
+browserType.launch: Failed to launch chromium because executable doesn't exist at C:/Program Files/Google/Chrome/Application/chrome.exe
+    at /workspace/dobby-e03/essai-stitch-v7/tests/smoke.cjs:8:81
+    at Object.<anonymous> (/workspace/dobby-e03/essai-stitch-v7/tests/smoke.cjs:13:103) {
+  log: [],
+  name: 'Error'
+}
