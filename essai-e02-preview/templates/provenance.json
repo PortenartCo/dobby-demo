@@ -1,0 +1,67 @@
+[
+  {
+    "view": "taverne",
+    "source": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html",
+    "sha256": "50f2190bf38f98e6d3618b3a9f5d18c8a9a4c7e02f195bc9981f4a2f8560b6f5"
+  },
+  {
+    "view": "pick",
+    "source": "design/stitch-53/dobby_choisir_un_repas_nombre_de_convives/code.html",
+    "sha256": "a5767dcf2131176ec0f2ee6b544b303d252e1ea4c2b6c9943cbb0a557e23e494"
+  },
+  {
+    "view": "recipes",
+    "source": "design/stitch-53/dobby_grimoire_des_recettes_favoris_du_logis/code.html",
+    "sha256": "2f13ba488eee25f4df4a922a2f465aa989870da61dfc6894ba484b25dcea6c08"
+  },
+  {
+    "view": "recipe",
+    "source": "design/stitch-53/dobby_fiche_d_taill_e_d_une_recette/code.html",
+    "sha256": "436a46e69f8f44c88f4efc0d451aea9a96030b5989158785ffe3e296298236d4"
+  },
+  {
+    "view": "cook",
+    "source": "design/stitch-53/dobby_mode_cuisine_tape_par_tape/code.html",
+    "sha256": "940631ed0e5bac44cb1295f14cd4994ab1b04a353f94f1b66be80c3a793db8f6"
+  },
+  {
+    "view": "tm5",
+    "source": "design/stitch-53/dobby_adaptation_thermomix_tm5/code.html",
+    "sha256": "3dbeb03ec068f5c19808e84a0c045b2219b4c89992375f99bc3131f8e1fce443"
+  },
+  {
+    "view": "recipe-add-1",
+    "source": "design/stitch-53/dobby_ajouter_une_recette_manuellement_1/code.html",
+    "sha256": "b7d84da11dac43bd740f072b0e603609ec6b2e2f197d3f9fbf041ad556e6ea03"
+  },
+  {
+    "view": "recipe-add",
+    "source": "design/stitch-53/dobby_ajouter_une_recette_manuellement_2/code.html",
+    "sha256": "066ccf09dcd00f9868942e0a8f9b64601be7c2fec62f89d006321c1aa53ad66d"
+  },
+  {
+    "view": "batch",
+    "source": "design/stitch-53/dobby_importer_un_lot_de_recettes_json/code.html",
+    "sha256": "8857663673818b5a77bfb787f13d83fe29c994cd82127f24abca928367f923d0"
+  },
+  {
+    "view": "shop-1",
+    "source": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_1/code.html",
+    "sha256": "3954ea09ff51c8f1c2f7002b566b26b307e8f8a77a233c25704f2013f6c3e557"
+  },
+  {
+    "view": "shop",
+    "source": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_2/code.html",
+    "sha256": "17421edd52c2f7a05d7c4058f45a1fc23a879038936d420463d9854ef4df62b1"
+  },
+  {
+    "view": "shop-final",
+    "source": "design/stitch-53/dobby_liste_de_courses_valid_e/code.html",
+    "sha256": "9a540ebebf647abefa3d35508d35f458d6ad4bfe1837b9e22bc0b86c90bbc3a0"
+  },
+  {
+    "view": "shop-history",
+    "source": "design/stitch-53/dobby_historique_des_listes_de_courses/code.html",
+    "sha256": "49ff67ced71094f4c6335bea742dc60a4397c3180d15a6f9b636d646185c99ff"
+  }
+]
