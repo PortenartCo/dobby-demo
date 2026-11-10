@@ -7,3 +7,32 @@ body[data-register-lot="4"] main .rg-document-card{display:flex;flex-direction:c
 body[data-register-lot="4"] .rg-ledger-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-block:10px;border-bottom:1px solid #d49b4226}body[data-register-lot="4"] .rg-ledger-row>span{display:flex;gap:6px;align-items:center}body[data-register-lot="4"] .rg-ledger-row strong{overflow-wrap:anywhere;min-width:0}body[data-register-lot="4"] #rg-document-preview{padding:16px;background:#30201b;border-radius:10px;transform:none!important}
 body[data-register-lot="5"] main .rg-input{margin-block:8px;width:100%;max-width:100%}body[data-register-lot="5"] main #rg-form label{display:block;margin-block:10px 4px}body[data-register-lot="5"] main #rg-form>section{margin-block:16px}body[data-register-lot="5"] main :is(.rg-chat-bubble,.rg-search-card){display:flex;flex-direction:column;gap:10px;padding:16px;background:#30201b;border:1px solid #d49b4240;border-radius:14px;min-width:0;overflow-wrap:anywhere}body[data-register-lot="5"] main .module-item[hidden]{display:none!important}body[data-register-lot="5"] #fa-supplement:empty{display:none}
 .rg-operation-status{position:fixed;z-index:14000;top:80px;left:50%;transform:translateX(-50%);width:min(450px,calc(100% - 24px));padding:14px;border:1px solid #f9bb5f;border-radius:12px;color:#fadcd5;background:#30201b;box-shadow:0 6px 22px #0009;font:600 15px/1.5 Literata,Georgia,serif}
+
+/* E04: original Stitch mission panels only; other register views keep their styles. */
+body[data-family-view="mission-edit"] main #rg-form>section{margin-block:0}
+body[data-family-view="mission-edit"] main #rg-form label{display:flex;flex-direction:row;align-items:center;margin-block:0}
+body[data-family-view="mission-edit"] .fa-sharing-status{display:none}
+body[data-family-view="mission-edit"] .e04-choice{position:relative;cursor:pointer;min-width:0;min-height:44px}
+body[data-family-view="mission-edit"] .e04-choice>input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+body[data-family-view="mission-edit"] .e04-choice:has(input:checked){box-shadow:0 0 0 2px #f9bb5f;background-color:#372622;color:#f9bb5f}
+body[data-family-view="mission-edit"] .e04-choice:has(input:focus-visible){outline:3px solid #f9bb5f;outline-offset:3px}
+body[data-family-view="mission-edit"] .e04-choice:has(input:disabled){opacity:.55;cursor:not-allowed}
+body[data-family-view="mission-edit"] .member-btn .member-check{display:none!important}
+body[data-family-view="mission-edit"] .member-btn:has(input:checked) .member-check{display:flex!important}
+body[data-family-view="mission-edit"] .e04-member-name{color:#fadcd5}
+body[data-family-view="mission-edit"] .member-btn:has(input:checked) .e04-member-name{color:#f9bb5f}
+body[data-family-view="mission-edit"] .e04-avatar{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:24px}
+body[data-family-view="mission-edit"] .e04-field-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#d49b42}
+body[data-family-view="mission-edit"] .e04-availability{font-size:12px;line-height:1.4;color:#d4c4b1;margin:0}
+body[data-family-view="mission-edit"] .recurrence-btn:disabled{opacity:.45}
+body[data-family-view="mission-edit"] .effort-btn{background:#180b07;border:1px solid #504537;box-shadow:none}
+body[data-family-view="mission-edit"] .effort-btn .text-tertiary{color:#d4c4b1}
+body[data-family-view="mission-edit"] .e04-date-row{grid-template-columns:minmax(0,1fr)}
+body[data-family-view="mission-edit"] #date-display{color-scheme:dark;width:100%;min-width:0;min-height:32px}
+body[data-family-view="mission-edit"] .quick-date-btn[aria-pressed="true"]{background:#f9bb5f;color:#442b00;font-weight:700;box-shadow:0 1px 3px #0004}
+body[data-family-view="mission-edit"] .recurrence-btn[aria-pressed="true"]{background:#372622;color:#f9bb5f;box-shadow:inset 0 1px 3px #0004}
+body[data-family-view="mission-edit"] .e04-runes{flex-wrap:wrap}
+body[data-family-view="mission-edit"] #custom-runes{flex:1;min-width:80px;width:80px}
+body[data-family-view="mission-edit"]{padding-bottom:0}
+body[data-family-view="mission-edit"] main>.pb-36{padding-bottom:0}
+body[data-family-view="mission-edit"] .e04-member-name{white-space:normal;line-height:1.25}
