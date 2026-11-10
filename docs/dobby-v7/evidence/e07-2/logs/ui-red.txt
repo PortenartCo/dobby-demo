@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: One directly usable list
+
+0 !== 1
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2.cjs:2:801 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

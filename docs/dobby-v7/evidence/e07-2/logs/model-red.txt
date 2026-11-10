@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Unified native list API exists
++ actual - expected
+
++ 'undefined'
+- 'object'
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-model.cjs:3:514 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'object',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

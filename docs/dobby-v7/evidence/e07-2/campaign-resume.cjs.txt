@@ -1,0 +1,4 @@
+// Resume the existing campaign at its first failure (fixed test server port).
+const fs=require('node:fs'),Module=require('node:module'),file='/workspace/dobby-e07/essai-stitch-v7/tests/ci.cjs',source=fs.readFileSync(file,'utf8');
+const code=source.slice(0,source.indexOf("run('e07-2-boot.cjs')"))+source.slice(source.indexOf("run('e05-edge.cjs')"));
+const m=new Module(file,module);m.filename=file;m.paths=Module._nodeModulePaths('/workspace/dobby-e07/essai-stitch-v7/tests');m._compile(code,file);

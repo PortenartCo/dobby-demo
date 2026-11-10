@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Reading an archive never replaces the active list
++ actual - expected
+
++ '{"items":[{"name":"TEST — Article manuel avec un nom très long qui doit rester entièrement lisible en magasin","qty":2,"unit":"L","detail":"2 L","id":"08340711-6281-4473-863e-6429981845b1","category":"Autres achats","done":true,"origin":"Ajout manuel"}],"validatedAt":"2026-11-10T18:32:59.345Z","meals":[],"scope":"local","imports":["2026-11-10-soir|e072-ui|2|1|0.65|test — farine|g","2026-11-10-soir|e072-ui|2|1|0.65|test — sel|"]}'
+- '{"items":[{"token":"2026-11-10-soir|e072-ui|2|1|0.65|test — farine|g","name":"TEST — Farine","qty":132.5,"unit":"g","origin":"2026-11-10-soir · TEST — Menu","meal":"2026-11-10-soir|e072-ui|2|1|0.65","id":"ec47f93c-5b69-44c1-890b-8462decb1555","detail":"132,5 g","category":"Épicerie","done":false,"provenance":["2026-11-10-soir|e072-ui|2|1|0.65|test — farine|g"]},{"token":"2026-11-10-soir|e072-ui|2|1|0.65|test — sel|","name":"TEST — Sel","qty":null,"unit":"","origin":"2026-11-10-soir · TEST — Menu","meal":"2026-11-10-soir|e072-ui|2|1|0.65","id":"19c2385b-8957-45ce-b0b6-7383e66285e9","detail":"À préciser","category":"Épicerie","done":false,"provenance":["2026-11-10-soir|e072-ui|2|1|0.65|test — sel|"]}],"meals":[],"validatedAt":"2026-11-10T18:32:57.834Z","id":"38632748-ff4e-4d65-8e8b-0237a8b96743","imports":["2026-11-10-soir|e072-ui|2|1|0.65|test — farine|g","2026-11-10-soir|e072-ui|2|1|0.65|test — sel|"],"e072":true}'
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2.cjs:6:1175 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '{"items":[{"name":"TEST — Article manuel avec un nom très long qui doit rester entièrement lisible en magasin","qty":2,"unit":"L","detail":"2 L","id":"08340711-6281-4473-863e-6429981845b1","category":"Autres achats","done":true,"origin":"Ajout manuel"}],"validatedAt":"2026-11-10T18:32:59.345Z","meals":[],"scope":"local","imports":["2026-11-10-soir|e072-ui|2|1|0.65|test — farine|g","2026-11-10-soir|e072-ui|2|1|0.65|test — sel|"]}',
+  expected: '26-11-10-soir|e072-ui|2|1|0.65","id":"19c2385b-8957-45ce-b0b6-7383e66285e9","detail":"À préciser","category":"Épicerie","done":false,"provenance":["2026-11-10-soir|e072-ui|2|1|0.65|test — sel|"]}],"meals":[],"validatedAt":"2026-11-10T18:32:57.834Z","id":"38632748-ff4e-4d65-8e8b-0237a8b96743","imports":["2026-11-10-soir|e072-ui|2|1|0.65|test — farine|g","2026-11-10-soir|e072-ui|2|1|0.65|test — sel|"],"e072":true}...',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

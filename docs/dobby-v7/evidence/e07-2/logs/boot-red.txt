@@ -1,0 +1,5 @@
+page.waitForFunction: Timeout 6000ms exceeded.
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-boot.cjs:3:590 {
+  log: [],
+  name: 'TimeoutError'
+}

@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Sync refresh preserves excluded ingredients
+
+true !== false
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2.cjs:5:274 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

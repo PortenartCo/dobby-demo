@@ -1,0 +1,8 @@
+page.evaluate: TypeError: DobbyCuisineList[method] is not a function
+    at eval (eval at evaluate (:311:30), <anonymous>:1:42)
+    at UtilityScript.evaluate (<anonymous>:313:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at call (/workspace/dobby-e07/essai-stitch-v7/tests/e07-2-model.cjs:4:102)
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-model.cjs:17:167 {
+  log: []
+}

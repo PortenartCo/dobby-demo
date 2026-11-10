@@ -142,3 +142,74 @@ Commits du correctif : `76a86f7` (présentation/contexte) et `3a58eaa` (attente 
 Code livré et intégration locale avec le moteur E07 existant ; tests réussis sur profils Chromium éphémères et fixtures, sans comptes familiaux réels. Aucun comportement serveur de production, usage multiappareils réel ou recette physique iPhone/Safari revendiqué. Photos externes du planning remplacées par un pictogramme ; aucune promesse de cache privé nouveau. Commandes secondaires décoratives restantes des sources sont inactives et explicitement identifiées par le mécanisme existant.
 
 Aucune fusion, publication Pages, modification Supabase ou donnée familiale réelle. Arrêt après livraison pour revue humaine.
+
+## E07.2 — Liste unique et aperçu interactif
+
+Base vérifiée : `010f3119cdf9c5cc4618f601333d6c96aa8dec51`, sans repartir d’E05. Le worktree indépendant reste `/workspace/dobby-e07`, branche `feat/dobby-e07-cuisine-courses`. Aucun `AGENTS.md` applicable. [Demande complète](E07.2-SPEC.md), [plan](../superpowers/plans/2026-11-10-e072-list-review.md), [journal des décisions et preuves](evidence/e07-2/ledger.md).
+
+### Décisions appliquées
+
+Les corrections Taverne E07.1 sont conservées et vérifiées par les tests existants : titre hors illustration, cartouche en bas à droite, un seul bouton principal « Voir la recette », menus Midi/Soir indépendants, vignettes locales ou pictogrammes honnêtes, ajout de recette et dock à cinq destinations.
+
+Courses utilise toujours la composition et le PNG originaux fournis. La phrase de préparation et le décor « Mode marché & supermarché » sont retirés ; « ✦ Panier enchanté du foyer ✦ » est en bas à droite. Titre, hero compact, boutons dorés et cartes Stitch sont conservés. Les données ne sont pas dessinées dans une nouvelle maquette.
+
+Les routes `#shop`, `#shop-1` et `#shop-final` rendent directement la même interface, sans boucle ni validation préalable imposée. `#shop-history` reste disponible. Une archive se consulte sans remplacer la liste active ; reprendre ses articles requiert une confirmation.
+
+### Conservation des données et opérations
+
+`cuisine-list.js` adapte `shopFinal` et `shopHistory` au moyen du `save()` natif, sans nouvelle clé de stockage ni nouveau registre. À la première ouverture, les articles de l’ancienne liste et leurs coches sont conservés ; les `extras` sont déplacés dans cette liste, puis retirés du tableau source pour éviter une double migration. Les archives et les choix natifs ne sont pas effacés. Les ingrédients du planning ne sont jamais ajoutés automatiquement.
+
+L’interface permet ajout, modification du nom/quantité/unité, retrait volontaire confirmé, coche, décoche, réactivation, progression et historique. Les quantités inconnues affichent « À préciser ». Les achats cochés restent dans une section repliable ouverte par défaut. Terminer les courses archive uniquement les achats terminés ; les articles non achetés restent actifs.
+
+La liste familiale devient la seule liste affichée lorsqu’un contexte de foyer vérifié ou son cache natif est disponible. Sinon, le mode est « Sur cet appareil ». Les erreurs, attentes et conflits viennent du client familial réel ; un compte connecté ne suffit pas à afficher un succès de synchronisation. Le transfert des articles de l’appareil vers le foyer possède son propre récapitulatif et sa confirmation. Aucune fusion silencieuse.
+
+`family-v2.js` reçoit une API additive qui appelle ses fonctions `add`, `change`, `choose`, `sync`, son cache IndexedDB et ses identifiants déterministes existants. Les writers, règles de fusion, tables, politiques et architecture de synchronisation ne sont pas remplacés. Aucun changement Supabase.
+
+### Import confirmé et limites de déduplication
+
+« Ajouter les ingrédients des menus » lit les repas natifs non annulés/non déjà couverts et leurs portions. Un récapitulatif avec quantités permet de sélectionner, confirmer ou annuler les ingrédients. La confirmation vérifie que les repas, ingrédients, quantités et foyer correspondent encore au récapitulatif. Les clics concurrents sont verrouillés pendant l’opération.
+
+En local, les reçus de provenance restent dans les listes/archives natives ; seules les quantités connues de même produit et même unité sont rapprochées, avant formatage. L’identité d’un apport est distincte des portions : une révision de 200 à 300 g ajoute uniquement le complément de 100 g en local, et propose une actualisation explicite de la ligne familiale. Une référence conservée dans le repas suit son déplacement natif. Les exclusions du récapitulatif restent mémorisées pendant les rafraîchissements. Les unités différentes ne sont jamais additionnées. Dans le foyer, chaque apport de repas possède un identifiant déterministe ; il reste distinct des achats manuels et est reconnu même après suppression/archivage ou rechargement du cache natif. Le writer familial conserve sa précision de deux décimales.
+
+Limites explicites : il n’existe pas de transaction serveur d’import ou d’archivage d’un ensemble d’articles. Les protections interclients restent celles du writer/révision/identifiant natifs ; la recette ne démontre pas toutes les courses entre appareils. Les archives familiales sont sauvegardées sur cet appareil avant les retraits familiaux en file native. Leur partage n’est pas garanti en l’absence de capacité serveur dédiée. Modifier une recette déjà importée ne réécrit pas automatiquement ses achats : les actualisations disponibles requièrent un nouveau récapitulatif. Les apports déjà achetés/archivés ne sont pas réactivés par simple consultation ; il faut réactiver l’article ou reprendre volontairement une archive. Les réductions locales et les modifications d’unités demandent un ajustement manuel, sans suppression arbitraire des achats. Remplacer un repas par une autre recette peut produire une nouvelle provenance à confirmer.
+
+### Vérifications et captures
+
+Recette ciblée : modèle natif, UI aux trois largeurs, Taverne E07.1, treize parcours Cuisine, client familial réel contre fixture HTTP isolée. Les régressions de précision, de consultation d’archive et de confirmation périmée ont été reproduites puis corrigées. Le test familial attend la fin des écritures avant de mesurer les doublons.
+
+| Largeur | Liste unique | État vide | Liste longue / défilement | Taverne préservée |
+|---|---|---|---|---|
+| 320 | [Liste](evidence/e07-2/after/list-viewport-320.png) | [Vide](evidence/e07-2/after/empty-320.png) | [Scroll](evidence/e07-2/after/scroll-320.png) | [Taverne](evidence/e07-2/taverne-viewport-top-320.png) |
+| 390 | [Liste](evidence/e07-2/after/list-viewport-390.png) | [Vide](evidence/e07-2/after/empty-390.png) | [Scroll](evidence/e07-2/after/scroll-390.png) | [Taverne](evidence/e07-2/taverne-viewport-top-390.png) |
+| 1440 | [Liste](evidence/e07-2/after/list-viewport-1440.png) | [Vide](evidence/e07-2/after/empty-1440.png) | [Scroll](evidence/e07-2/after/scroll-1440.png) | [Taverne](evidence/e07-2/taverne-viewport-top-1440.png) |
+
+[Scénarios familiaux connectés/hors ligne/conflit](evidence/e07-2/family/), [tests et journaux](evidence/e07-2/logs/), [génération reproductible](evidence/e07-2/generation.json). La campagne finale et la revue indépendante sont consignées dans le journal de livraison.
+
+### Aperçu interactif isolé
+
+Adresse publiée et réellement testée : **https://portenartco.github.io/dobby-demo/essai-dobby-review/**. L’entrée ouvre la véritable application V7 incluse, avec les moteurs, recettes, formulaires et autres modules disponibles dans cette base ; il ne s’agit pas d’une galerie. La base E05 + E07.2 ne compose pas les branches E03, E06 ou E08.
+
+Le builder `scripts/build-dobby-review.cjs` copie les ressources nécessaires dans un dossier autonome. Une enveloppe de démonstration précède les scripts applicatifs : clés Storage et bases IndexedDB préfixées, données fictives explicites, réinitialisation limitée à ce préfixe, compte réel désactivé, garde fetch/XHR et CSP interdisant le backend externe. Les sessions des autres aperçus ne sont pas réutilisées. Aucune donnée réelle n’a été utilisée pour la recette.
+
+Le [manifeste de l’aperçu](https://portenartco.github.io/dobby-demo/essai-dobby-review/review-manifest.json) donne le SHA source et l’empreinte de chaque fichier avant/après l’enveloppe. La preuve de correspondance compare ces empreintes aux fichiers effectivement testés. Les HTML reçoivent le chargement de l’enveloppe/CSP ; la connexion familiale est explicitement désactivée dans cette copie. Les contrôleurs, quantités et writers applicatifs restent ceux du code source identifié.
+
+**Recette de l’URL publiée : PASS, Chromium 390 et 1440 px.** Réponse HTTP 200, illustrations/polices locales, navigation Taverne → recette → Courses, cinq destinations, ajout/coche, persistance après rechargement et réinitialisation vérifiés. Une session sentinelle placée dans la vraie base non préfixée n’est pas réutilisée ; sa conservation après reset est contrôlée. Aucune mutation backend, erreur JavaScript bloquante ou ressource nécessaire manquante. [Reçu détaillé](evidence/e07-2/hosted-receipt.json), [journal](evidence/e07-2/logs/hosted.txt), [captures hébergées](evidence/e07-2/hosted/).
+
+SHA source de l’aperçu : **`e15b7d265ba3801c8627cbc2c791eeff2414c7ed`**. Commit statique de publication : **`d7c53e504b3a2f54d88b2a3e59c6954344430b9f`**, parent `0708d643d099999713e1538eb5043097ac591e6b`. Seul `essai-dobby-review/` a été ajouté ; les 17 entrées racine préexistantes ont les mêmes arbres/blobs Git. Les cinq ressources HTTP de référence ont également les mêmes empreintes après publication. [Périmètre Git](evidence/e07-2/publication-plan.json), [conservation HTTP](evidence/e07-2/pages-preservation.json), [correspondance du bundle](evidence/e07-2/bundle-correspondence.json).
+
+La campagne finale locale existante est PASS, reprise au seul point d’arrêt d’infrastructure (un test E05 impose le port 8765). Les tests déjà verts n’ont pas été rejoués. Les correctifs ultérieurs de l’enveloppe et du retrait d’article ont leurs vérifications causales propres. [Campagne et commandes](evidence/e07-2/campaign.json), [revue indépendante et corrections](evidence/e07-2/review.md), [empreintes des captures](evidence/e07-2/captures.json).
+
+Commits applicatifs : `48c32b3` (liste unique/enveloppe), `4fda360` (provenances, exclusions, archive et démarrage), `78faec7` (header de démonstration), `1ba28f3` (ressources nécessaires seulement), `e15b7d2` (retrait explicite conservé). Le commit final ajoute uniquement rapport et preuves. Les fichiers applicatifs de celui-ci et du SHA source publié sont identiques.
+
+CI du SHA final livré : [exécutions de la branche](https://github.com/PortenartCo/dobby-demo/actions?query=branch%3Afeat%2Fdobby-e07-cuisine-courses). La livraison finale cite son SHA et l’exécution exacte ; le résultat CI est suivi jusqu’à sa conclusion. Aucun workflow supplémentaire n’a été créé.
+
+| Niveau de preuve E07.2 | État |
+|---|---|
+| Code livré | Branche E07, base E07.1 ; source publié identifié par SHA/empreintes |
+| Tests exécutés | Tests ciblés, revue, campagne locale et CI du SHA final |
+| Aperçu déployé | Dossier autonome de démonstration sur Pages ; URL réelle testée |
+| Application officielle | Non publiée par cette mission ; tous les éléments antérieurs préservés |
+| Intégration E03/E06/E08 | Non effectuée |
+| Synchronisation réelle de foyer / Safari physique | Non revendiquée : fixtures HTTP natives et Chromium responsive |
+
+Arrêt pour revue humaine. Aucune fusion applicative, modification de Supabase de production, des réglages Pages ou du domaine.

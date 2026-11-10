@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Aggregate before formatting, as native shoppingDraft
+
+'0,02 g' !== '0,01 g'
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-model.cjs:12:411 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: '0,02 g',
+  expected: '0,01 g',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
