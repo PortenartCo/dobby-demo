@@ -3,7 +3,8 @@ body:is([data-family-view=chat],[data-family-view=chat-2]){--e02-keyboard-inset:
 body:is([data-family-view=chat],[data-family-view=chat-2]) > main{padding-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 24px)!important;min-height:100dvh}
 .e02-body{padding-bottom:0!important;flex:1}
 .e02-hero{gap:12px;margin-bottom:16px}
-[data-e02-hero]{height:140px!important;flex-shrink:0}
+[data-e02-hero]{height:clamp(252px,32dvh,300px)!important;flex-shrink:0}
+[data-e02-hero] > img{object-fit:cover;object-position:center}
 .e02-hero h1{font-size:24px;line-height:30px;margin:0}
 .e02-private-badge{top:auto!important;left:auto!important;right:10px!important;bottom:10px!important;max-width:calc(100% - 20px)}
 body:is([data-family-view=chat],[data-family-view=chat-2]) > nav[data-e01-chrome]{bottom:var(--e02-keyboard-inset)!important}

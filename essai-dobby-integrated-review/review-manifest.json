@@ -1,12 +1,12 @@
 {
   "version": "E01-E08",
-  "sourceSha": "1f0fa32deb3fd64b178148f09cc8e449ac5ca165",
+  "sourceSha": "ff7684704f282b239633284e993348ae8094393f",
   "base": "e0e88a06485018f5e94eb4aeae886cacbf41c67b",
   "entry": "essai-stitch-v7/traverse.html",
   "storagePrefix": "dobby-review-integrated-v1|",
   "realBackend": false,
   "demoMemberAssociation": "explicit-fictional-persona-only",
-  "configSha256": "cb060d42fa4c4be3ad652940c89637787d4b7c79a84481051d9112bd3143d224",
+  "configSha256": "85b0e039e73c465bca7fe95f01c984e79fc7c25e10d79dfa19b834d0035719a6",
   "files": [
     {
       "path": "essai-stitch-v5-famille/family-agenda-core.mjs",
@@ -543,6 +543,18 @@
       "transformed": false
     },
     {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.provenance.json",
+      "sourceSha256": "6ba16ddfc6a1bcabeac9a6d43a8645b66ff6ce17da5052d3769172219234953d",
+      "sha256": "6ba16ddfc6a1bcabeac9a6d43a8645b66ff6ce17da5052d3769172219234953d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.svg",
+      "sourceSha256": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f",
+      "sha256": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f",
+      "transformed": false
+    },
+    {
       "path": "essai-stitch-v7/assets/onboarding/soul-mirror.jpg",
       "sourceSha256": "04aaf1d77ab1129639d7026a1411da910381388115546f86c91d1a76c7fc29fa",
       "sha256": "04aaf1d77ab1129639d7026a1411da910381388115546f86c91d1a76c7fc29fa",
@@ -676,8 +688,8 @@
     },
     {
       "path": "essai-stitch-v7/bridge.js",
-      "sourceSha256": "772f3b6b746b6144baff48266c3ab0db23cec90225285648a00feaf52cabdb76",
-      "sha256": "772f3b6b746b6144baff48266c3ab0db23cec90225285648a00feaf52cabdb76",
+      "sourceSha256": "bd38906782a9a08e857848fa26c27eb53d60df733d4998e6362bf7af3dab85a9",
+      "sha256": "bd38906782a9a08e857848fa26c27eb53d60df733d4998e6362bf7af3dab85a9",
       "transformed": false
     },
     {
@@ -706,8 +718,8 @@
     },
     {
       "path": "essai-stitch-v7/build-source.cjs",
-      "sourceSha256": "00be930fa4ade93a62304f1bf2c0f7c7c5b408230f3000f112ee9f31dedb7437",
-      "sha256": "00be930fa4ade93a62304f1bf2c0f7c7c5b408230f3000f112ee9f31dedb7437",
+      "sourceSha256": "a099d974184178c8c13cc33a16b7f13515b6eca828b9ed00ecfc5798aa73b695",
+      "sha256": "a099d974184178c8c13cc33a16b7f13515b6eca828b9ed00ecfc5798aa73b695",
       "transformed": false
     },
     {
@@ -718,14 +730,14 @@
     },
     {
       "path": "essai-stitch-v7/chat.css",
-      "sourceSha256": "b39c17fc7c7dd815f943ca5cf867df6de0422062f4bc8c3d05b29638388bd724",
-      "sha256": "b39c17fc7c7dd815f943ca5cf867df6de0422062f4bc8c3d05b29638388bd724",
+      "sourceSha256": "986bfe9db58c5352e801ffde602512442cad8d6147a923db9f5a906f48c78153",
+      "sha256": "986bfe9db58c5352e801ffde602512442cad8d6147a923db9f5a906f48c78153",
       "transformed": false
     },
     {
       "path": "essai-stitch-v7/chat.js",
-      "sourceSha256": "ff1cb19c20659953a65d5b12df767417fdd704fc44cc74bac16182271b6f2363",
-      "sha256": "ff1cb19c20659953a65d5b12df767417fdd704fc44cc74bac16182271b6f2363",
+      "sourceSha256": "ada18c51fbf9c03327269aafd767c79463545562fc7514b608f3eb7814360485",
+      "sha256": "ada18c51fbf9c03327269aafd767c79463545562fc7514b608f3eb7814360485",
       "transformed": false
     },
     {
@@ -742,8 +754,8 @@
     },
     {
       "path": "essai-stitch-v7/chrome.js",
-      "sourceSha256": "138d000cb3e99267501a8d66f68ba23ac653310260cddf9d972750891bd66156",
-      "sha256": "138d000cb3e99267501a8d66f68ba23ac653310260cddf9d972750891bd66156",
+      "sourceSha256": "0302cbfd2109aef8a3a00eed9a585ecf2e0452f3dfbafc1bc376b301e03d3f69",
+      "sha256": "0302cbfd2109aef8a3a00eed9a585ecf2e0452f3dfbafc1bc376b301e03d3f69",
       "transformed": false
     },
     {
@@ -753,15 +765,21 @@
       "transformed": false
     },
     {
+      "path": "essai-stitch-v7/consolidation.css",
+      "sourceSha256": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "sha256": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "transformed": false
+    },
+    {
       "path": "essai-stitch-v7/cuisine-e07.css",
-      "sourceSha256": "69f09746ee3fe7b2dbd1443a77d83d738a7eb97eb974b1b4271638dfc34dedaf",
-      "sha256": "69f09746ee3fe7b2dbd1443a77d83d738a7eb97eb974b1b4271638dfc34dedaf",
+      "sourceSha256": "e7b5b2bbcb3e35bc1f0430a4550560f980b2989afa4f39199dd562226547ea16",
+      "sha256": "e7b5b2bbcb3e35bc1f0430a4550560f980b2989afa4f39199dd562226547ea16",
       "transformed": false
     },
     {
       "path": "essai-stitch-v7/cuisine-e07.js",
-      "sourceSha256": "9649033a8a611e0022bf543555ab7905bdee996ba508b6a13b70cf475ca9493c",
-      "sha256": "9649033a8a611e0022bf543555ab7905bdee996ba508b6a13b70cf475ca9493c",
+      "sourceSha256": "77f404993a26d3a17b0d0aa8c09cbd162e69ad81e7b5a7904eec33f3f08f516b",
+      "sha256": "77f404993a26d3a17b0d0aa8c09cbd162e69ad81e7b5a7904eec33f3f08f516b",
       "transformed": false
     },
     {
@@ -772,8 +790,8 @@
     },
     {
       "path": "essai-stitch-v7/cuisine-list.js",
-      "sourceSha256": "d004b6be0063a296129622abf26fc68f528b09480bc6e6f4724ffbdeeb05752f",
-      "sha256": "d004b6be0063a296129622abf26fc68f528b09480bc6e6f4724ffbdeeb05752f",
+      "sourceSha256": "c80907d0508e34e70713e295409df39ba7621d7f3b2f84ce36bcaaa41ccb2412",
+      "sha256": "c80907d0508e34e70713e295409df39ba7621d7f3b2f84ce36bcaaa41ccb2412",
       "transformed": false
     },
     {
@@ -790,8 +808,8 @@
     },
     {
       "path": "essai-stitch-v7/cuisine.js",
-      "sourceSha256": "c8d7bce130ed9a1ce660fa93ee16e09962c42fb8e7481e5fb9798b153ad5876a",
-      "sha256": "c8d7bce130ed9a1ce660fa93ee16e09962c42fb8e7481e5fb9798b153ad5876a",
+      "sourceSha256": "590de804d912a5e02a1a7b6a432b93c6ef0a112afc1eae8b1f470c371c59ecdd",
+      "sha256": "590de804d912a5e02a1a7b6a432b93c6ef0a112afc1eae8b1f470c371c59ecdd",
       "transformed": false
     },
     {
@@ -802,8 +820,8 @@
     },
     {
       "path": "essai-stitch-v7/documents-register.js",
-      "sourceSha256": "21e23eb6f66a954410e11a4a266f02281e5f14430ecb871498e330852a9615a4",
-      "sha256": "21e23eb6f66a954410e11a4a266f02281e5f14430ecb871498e330852a9615a4",
+      "sourceSha256": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a",
+      "sha256": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a",
       "transformed": false
     },
     {
@@ -814,8 +832,8 @@
     },
     {
       "path": "essai-stitch-v7/famille.html",
-      "sourceSha256": "f275d1c284664a877a1e2182286efd2b3c04277b21fd0c053abc500b0d67aa0e",
-      "sha256": "bd426df1769d48c8b7f3abd96e600727338bf017c77a7df7426b6d6c18f81bbf",
+      "sourceSha256": "6e1ffab6d57aa6d7648f94370b9e22e8c8ea6fba6bc85598f2b480805139a8f5",
+      "sha256": "5eaa0313f2ce4430f5408f224f5da1c871fff4529f10b9d20edb08b860a3a8de",
       "transformed": true
     },
     {
@@ -855,9 +873,15 @@
       "transformed": false
     },
     {
+      "path": "essai-stitch-v7/home-consolidation.css",
+      "sourceSha256": "ee2f7dc9226d53060b41f7eaf8aa7aa0eed02c4cf8b8b86faf4aed7e4356b11a",
+      "sha256": "ee2f7dc9226d53060b41f7eaf8aa7aa0eed02c4cf8b8b86faf4aed7e4356b11a",
+      "transformed": false
+    },
+    {
       "path": "essai-stitch-v7/home.js",
-      "sourceSha256": "7faf99649a29e6a3473b48c361eb00f03529cbc228337b75ec1d69d7bf1eaf09",
-      "sha256": "7faf99649a29e6a3473b48c361eb00f03529cbc228337b75ec1d69d7bf1eaf09",
+      "sourceSha256": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45",
+      "sha256": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45",
       "transformed": false
     },
     {
@@ -874,20 +898,26 @@
     },
     {
       "path": "essai-stitch-v7/index.html",
-      "sourceSha256": "73065360f8abc7da34a9655df9e3560fdc2050c8d0972a940988dd10114cd2c5",
-      "sha256": "34e6400a7f021c9c580d270d842e037cb7a3e431392255028687e20727ebdacd",
+      "sourceSha256": "9ae1966ad909f21f5e146a3541680f74a522246872372f9dc6cba27860f81c9c",
+      "sha256": "41749d196a7c77741d202112b90642b4ba9ff3fbae838f8568aa2880b7731936",
       "transformed": true
     },
     {
+      "path": "essai-stitch-v7/magic-content.js",
+      "sourceSha256": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "sha256": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "transformed": false
+    },
+    {
       "path": "essai-stitch-v7/magic-profile.css",
-      "sourceSha256": "7220fc7a2082955fa02e73ed4d3492eb071fbff46c1f5ab8d102abc1eb16f928",
-      "sha256": "7220fc7a2082955fa02e73ed4d3492eb071fbff46c1f5ab8d102abc1eb16f928",
+      "sourceSha256": "41bc6a8365952f61a4de0494b97143bd1042d11d753a80bd015da59592e4fbcf",
+      "sha256": "41bc6a8365952f61a4de0494b97143bd1042d11d753a80bd015da59592e4fbcf",
       "transformed": false
     },
     {
       "path": "essai-stitch-v7/magic-profile.js",
-      "sourceSha256": "cd6d87df7e69f80b97a9c6f28e88ed630a1d665040e66738fa4690a42efa7c87",
-      "sha256": "cd6d87df7e69f80b97a9c6f28e88ed630a1d665040e66738fa4690a42efa7c87",
+      "sourceSha256": "35a2f9268d3e17f5060638c8d3a328c1582da55a2b6aa04d4d80441d243937e0",
+      "sha256": "35a2f9268d3e17f5060638c8d3a328c1582da55a2b6aa04d4d80441d243937e0",
       "transformed": false
     },
     {
@@ -916,8 +946,8 @@
     },
     {
       "path": "essai-stitch-v7/missions.html",
-      "sourceSha256": "c2c7e39d0e281630fc596a7c114c220e34cf1f81a8d0c894cdb367f1a505f45d",
-      "sha256": "8cd9f7449dd2d48a6368782be2aba1291adb4661c149e42e441e5c75a9d53ebe",
+      "sourceSha256": "44abdf798811cbeed596cd2dde0fd7ecf3002e77242d0226cecbcecf9cf80ffc",
+      "sha256": "752c98706d7b908af096c273b812a7176b041451dcb7bfdb2b0e6b9bd5ee9a9f",
       "transformed": true
     },
     {
@@ -958,14 +988,14 @@
     },
     {
       "path": "essai-stitch-v7/onboarding.css",
-      "sourceSha256": "d29a6d82bda463b6ef7e55cca51c42dbfc1f4573a06a3b75af112317bc892de6",
-      "sha256": "d29a6d82bda463b6ef7e55cca51c42dbfc1f4573a06a3b75af112317bc892de6",
+      "sourceSha256": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4",
+      "sha256": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4",
       "transformed": false
     },
     {
       "path": "essai-stitch-v7/onboarding.js",
-      "sourceSha256": "c43f116d84f471558e4195be7d0eedea846cbb846f3be0cbef937aa48222ef84",
-      "sha256": "c43f116d84f471558e4195be7d0eedea846cbb846f3be0cbef937aa48222ef84",
+      "sourceSha256": "3aa8c0dc010062c594d34bf20925fed873b4466f61bef34fd91bd7e765e14d4e",
+      "sha256": "3aa8c0dc010062c594d34bf20925fed873b4466f61bef34fd91bd7e765e14d4e",
       "transformed": false
     },
     {
@@ -1012,14 +1042,14 @@
     },
     {
       "path": "essai-stitch-v7/route-manifest.json",
-      "sourceSha256": "068bbcb1f1ef360fa5c2b8b0e8c6b23d862997a46f2160a0326f9c4918e23e11",
-      "sha256": "068bbcb1f1ef360fa5c2b8b0e8c6b23d862997a46f2160a0326f9c4918e23e11",
+      "sourceSha256": "dc73f85bd46373e3becbc9cc4b139cf5a9a4bf379756998e01fe729702a3fc4d",
+      "sha256": "dc73f85bd46373e3becbc9cc4b139cf5a9a4bf379756998e01fe729702a3fc4d",
       "transformed": false
     },
     {
       "path": "essai-stitch-v7/stitch-tailwind.css",
-      "sourceSha256": "6722c394b6b6468c236ad4c9c844ecb293283f5fd7faf7792afddf7acc027be7",
-      "sha256": "6722c394b6b6468c236ad4c9c844ecb293283f5fd7faf7792afddf7acc027be7",
+      "sourceSha256": "8c242b32b2c4e80b0c539cfa781e065ec0efe5bd0662f60425e6167e2c7ff237",
+      "sha256": "8c242b32b2c4e80b0c539cfa781e065ec0efe5bd0662f60425e6167e2c7ff237",
       "transformed": false
     },
     {
@@ -1402,14 +1432,14 @@
     },
     {
       "path": "essai-stitch-v7/tools-register.js",
-      "sourceSha256": "55e37321e382b609d53a55fcd1b8567f0773865894e8d230394e015f1b848227",
-      "sha256": "55e37321e382b609d53a55fcd1b8567f0773865894e8d230394e015f1b848227",
+      "sourceSha256": "2dbe733e0bb5e40533f4db60c1b5d1094358a4dd598425f25fda121edfc90047",
+      "sha256": "2dbe733e0bb5e40533f4db60c1b5d1094358a4dd598425f25fda121edfc90047",
       "transformed": false
     },
     {
       "path": "essai-stitch-v7/traverse.html",
-      "sourceSha256": "bb39ed6ee3072a51fd2ed5500639cb8d52b3ca65d79d6faf79d4da04a2605c8a",
-      "sha256": "322c5c5616815036c0659546a3b78ecebc7dff1730d1bb221432c1b2d0d63211",
+      "sourceSha256": "0dbce8d9abbe5d81b5721e99cb2e629674fa85d6d23f08c6ec2647aa3795037c",
+      "sha256": "1c934f919c7131c05cc1433c590981a1cd8d1dbb7b96e2e7ab5b10bc2eff6561",
       "transformed": true
     },
     {
@@ -1527,5 +1557,5 @@
       "transformed": false
     }
   ],
-  "runtimeSha256": "4e249885bc9b5a329cb1333a6dc08bac2aabfb3f3f2a04540830064f23bf96ac"
+  "runtimeSha256": "ecef2aa48f35a98bcc44ae4af6413e06bd701e7874e5f84c21b42a1b4aa13748"
 }

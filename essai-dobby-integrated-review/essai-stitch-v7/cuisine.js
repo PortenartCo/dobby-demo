@@ -264,6 +264,7 @@ window.DobbyCuisine = (() => {
     document.documentElement.classList.remove('dv7-loading');
   }
   async function open(view, values = {}, history = true) {
+    if(view==='shop-history'){view='shop';history=false;window.history.replaceState({cuisine:view},'','#shop');}
     if(!routes.includes(view))return false;
     busy=true;
     try {
@@ -575,5 +576,5 @@ window.DobbyCuisine = (() => {
     const familyActions={'family-import':'import','family-sync':'sync','family-edit':'edit','family-delete':'delete','family-cancel':'cancel-edit','family-conflict-server':'conflict-server','family-conflict-local':'conflict-local'};
     if(familyActions[action]){E.family(familyActions[action],el.dataset.id);await new Promise(resolve=>setTimeout(resolve,50));return render();}
   }
-  return Object.freeze({init,open,refresh,get ready(){return ready},get view(){return ui.view},handles:route=>['plan','pick','recipes','shop'].includes(route)});
+  return Object.freeze({init,open,refresh,recipeVisual,get ready(){return ready},get view(){return ui.view},handles:route=>['plan','pick','recipes','shop'].includes(route)});
 })();
