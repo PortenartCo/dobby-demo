@@ -4,9 +4,9 @@ import * as R from '../family-runes-core.mjs';
 const date='2026-11-10T12:00:00.000Z';
 const mission=(effort='regular',id='fm-rune')=>({id,title:'TEST — Mission',status:'open',assigneeId:'member-a',effort,rewardVersion:1});
 const members=[{id:'member-a'},{id:'member-b'}];
-test('validated effort choices and provisional grades have one centralized definition',()=>{
+test('validated effort choices and approved V1 grades have one centralized definition',()=>{
  assert.deepEqual(R.EFFORTS.map(x=>[x.id,x.amount]),[['light',10],['regular',25],['major',50]]);
- assert.equal(R.GRADE_CONFIG.provisional,true);assert.equal(R.GRADE_CONFIG.levels.length,12);
+ assert.equal(R.GRADE_CONFIG.provisional,false);assert.equal(R.GRADE_CONFIG.levels.length,12);
  assert.deepEqual([...new Set(R.GRADE_CONFIG.levels.map(g=>g.shape))],['point','star4','star8']);
 });
 test('only new eligible assigned completions create a single durable request per mission',()=>{

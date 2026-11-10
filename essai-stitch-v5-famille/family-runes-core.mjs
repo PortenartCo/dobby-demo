@@ -1,4 +1,4 @@
-/* Mission rewards: pure rules, no storage/network. Grade thresholds are provisional. */
+/* Mission rewards: pure rules, no storage/network. Grade thresholds V1 approved (E05). */
 export const EFFORTS=Object.freeze([
  Object.freeze({id:'light',label:'Légère',amount:10}),
  Object.freeze({id:'regular',label:'Régulière',amount:25}),
@@ -7,7 +7,7 @@ export const EFFORTS=Object.freeze([
 const thresholds=[0,50,100,200,350,550,800,1100,1500,2000,2600,3300];
 const shapes=['point','star4','star8'],shapeNames=['Point','Étoile à 4 branches','Étoile à 8 branches'];
 const materials=['copper','silver','gold','diamond'],materialNames=['cuivre','argent','or','diamant'];
-export const GRADE_CONFIG=Object.freeze({provisional:true,version:1,levels:Object.freeze(thresholds.map((threshold,index)=>Object.freeze({index,threshold,cycle:Math.floor(index/4)+1,shape:shapes[Math.floor(index/4)],material:materials[index%4],label:shapeNames[Math.floor(index/4)]+' '+materialNames[index%4]})))});
+export const GRADE_CONFIG=Object.freeze({provisional:false,version:1,levels:Object.freeze(thresholds.map((threshold,index)=>Object.freeze({index,threshold,cycle:Math.floor(index/4)+1,shape:shapes[Math.floor(index/4)],material:materials[index%4],label:shapeNames[Math.floor(index/4)]+' '+materialNames[index%4]})))});
 export function effortFor(id){const effort=EFFORTS.find(e=>e.id===id);if(!effort)throw Error('Niveau d’effort invalide');return effort;}
 const keys=['missionId','memberId','effort','amount','date','title'];
 function request(raw){
