@@ -2,7 +2,10 @@
   {
     "view": "taverne",
     "id": "dobby_la_taverne_gourmande_repas_menus",
-    "integrated": true
+    "integrated": true,
+    "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+    "presentationId": "dobby_la_taverne_gourmande_version_simplifi_e_rapide",
+    "asset": "e07-taverne.png"
   },
   {
     "view": "pick",

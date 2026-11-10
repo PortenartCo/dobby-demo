@@ -254,6 +254,7 @@ window.DobbyCuisine = (() => {
     const sourceHeader=doc.querySelector('header');if(sourceHeader&&document.querySelector('body > header'))document.querySelector('body > header').replaceWith(document.importNode(sourceHeader,true));
     document.body.dataset.cuisineView=view;document.body.dataset.stitchSource=doc.body.dataset.stitchSource;
     scrub();const data=E.read();
+    if(!window.DobbyCuisineE07?.render(view,data,{E,ui,pristine,bind,text,button,input,empty,renderShared}))
     ({taverne:renderTaverne,pick:renderPick,recipes:renderRecipes,recipe:renderRecipe,cook:renderCook,tm5:renderTM5,'recipe-add':renderAdd,'recipe-add-1':renderAdd,batch:renderBatch,shop:renderShop,'shop-1':renderShop,'shop-final':renderFinal,'shop-history':renderHistory})[view](data);
     shell();window.DobbyChrome?.mount();
     for(const control of $$('main button,#cu-supplement button'))if(!control.dataset.cuAction && control.type!=='submit') {control.disabled=true;control.title='Commande décorative de la maquette, sans action métier disponible.';}
@@ -285,6 +286,7 @@ window.DobbyCuisine = (() => {
     const data=E.read();
     if(action==='dismiss'){$('#cu-notice').hidden=true;return;}
     if(routes.includes(action)){
+      if(action==='recipes'&&el.dataset.filter)ui.filter=el.dataset.filter;
       if(action.startsWith('recipe-add')&&ui.view.startsWith('recipe-add'))ui.recipeDraft=readRecipeDraft();
       return open(action,el.dataset);
     }

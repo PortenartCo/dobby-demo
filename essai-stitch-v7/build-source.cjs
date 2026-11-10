@@ -12,7 +12,8 @@ const ripple=homeSource.slice(homeSource.indexOf('.magical-ripple {'),homeSource
 if(!ripple.includes('@keyframes magicPulse')||!ripple.includes('@keyframes sparkleFly'))throw Error('Original Traverse ripple CSS missing');
 fs.writeFileSync(path.join(__dirname,'chrome-source.html'),'<style>'+ripple+'</style>'+homeSource.match(/<header[\s\S]*?<\/header>/)[0]+homeSource.match(/<nav[\s\S]*?<\/nav>/)[0]);
 for(const {screen,file,id} of roots){
-const source=fs.readFileSync(path.join(root,'design','stitch-53',id,'code.html'),'utf8');
+const cuisineRoute=screen==='taverne'?require('./cuisine-routes.json').find(r=>r.view==='taverne'):null;
+const source=fs.readFileSync(cuisineRoute?.source?path.join(root,cuisineRoute.source):path.join(root,'design','stitch-53',id,'code.html'),'utf8');
 let html=source.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<link\b[^>]*href="https:\/\/fonts\.googleapis\.com[^"]*"[^>]*>/gi,'').replace(/<link\b[^>]*href="https:\/\/fonts\.gstatic\.com[^"]*"[^>]*>/gi,'');
 html=html.replace(/\s+on(?:click|change|input|load|error|submit)\s*=\s*(?:"[^"]*"|'[^']*')/gi,'');
 html=html.replace(/<html class="dark"/,'<html class="dark dv7-loading"');
@@ -28,6 +29,10 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
 </style></head>`);
 html=html.replace(/(<main\b)/,'<div id="dv7-loading" role="status">Chargement des données du foyer…</div>$1');
 html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-profile.js"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./family.js"></script><link rel="stylesheet" href="./chrome.css"><script src="./chrome.js"></script><script src="./home.js"></script><script src="./bridge.js"></script></body>`);
+if(screen==='taverne'){
+ html=html.replace(/(<img\b[^>]*\bsrc=")[^"]*"/gi,'$1./assets/cuisine/'+cuisineRoute.asset+'"');
+ html=html.replace('<script src="./cuisine.js">','<link rel="stylesheet" href="./cuisine-e07.css"><script src="./cuisine-e07.js"></script><script src="./cuisine.js">');
+}
 fs.writeFileSync(path.join(__dirname,file),html);console.log('STITCH_ROOT_BUILD='+screen+' SOURCE='+id);
 }
 const screens=manifest.designs.map(({id,html,screenshot})=>({id,source:html,hasScreenshot:screenshot,linked:false,mode:'source-only'}));

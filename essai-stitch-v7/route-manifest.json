@@ -1399,6 +1399,12 @@
       },
       "domain": "cuisine",
       "template": "templates/taverne.html",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+        "id": "dobby_la_taverne_gourmande_version_simplifi_e_rapide",
+        "sha256": "444575d86527a677eedc66a00b9f8455c4f6bb51ea201acdd3b90211ca79a26d",
+        "supersedes": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html"
+      },
       "canonical": "taverne"
     },
     {
@@ -1909,7 +1915,17 @@
   ],
   "cuisine": {
     "sources": 13,
-    "integrated": 13
+    "integrated": 13,
+    "e07": {
+      "sourceManifest": "design/stitch-e07/manifest.json",
+      "overrides": [
+        {
+          "view": "taverne",
+          "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+          "id": "dobby_la_taverne_gourmande_version_simplifi_e_rapide"
+        }
+      ]
+    }
   },
   "family2a": {
     "sources": 7,
