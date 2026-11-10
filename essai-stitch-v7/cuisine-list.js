@@ -41,6 +41,7 @@ window.DobbyCuisineList=(()=>{
   async function edit(E,id,values){const x=valid(values),s=snapshot(E);if(s.shared)return family(E).edit(id,{title:x.name,quantity:x.qty,unit:x.unit});
     transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');Object.assign(item,p.x,{detail:p.detail,category:categoryOf(p.x.name)});`,{id,x,detail:detail(x)});
   }
+  async function remove(E,id){const s=snapshot(E);if(s.shared)return family(E).edit(id,{deleted_at:new Date().toISOString()});transaction(E,'st.shopFinal.items=st.shopFinal.items.filter(x=>x.id!==p.id);',{id});}
   async function check(E,id,done){const s=snapshot(E);if(s.shared)return family(E).edit(id,{checked:done});
     transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');item.done=p.done;`,{id,done});
   }
@@ -103,5 +104,5 @@ window.DobbyCuisineList=(()=>{
       if(p.scope==='local')st.shopFinal.items=st.shopFinal.items.filter(x=>!p.ids.includes(x.id));`,{id,stamp,items:done,ids:done.map(x=>x.id),scope:s.scope});
     if(s.shared)for(const item of done)await family(E).edit(item.id,{deleted_at:stamp});
   }
-  return Object.freeze({snapshot,add,edit,check,preview,confirmImport,transfer,archive,reuse,detail});
+  return Object.freeze({snapshot,add,edit,remove,check,preview,confirmImport,transfer,archive,reuse,detail});
 })();
