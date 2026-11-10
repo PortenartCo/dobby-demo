@@ -638,6 +638,34 @@ save = function() {
   return result;
 };
 window.DobbyFamilyUI = Object.freeze({
+  // V7 consumes the existing cache and writers directly, without a second basket.
+  grocery: Object.freeze({
+    read: () => ({context:f.context, status:status(), error:f.error, items:visible().map(x=>({...x})), ready:f.ready}),
+    async add(values) { await add(values.title,validQuantity(values.quantity),values.unit); void sync(); },
+    async edit(id,values) {
+      if(!f.context)throw Error('Foyer indisponible');
+      if(getItem(id)?.syncState==='conflict')throw Error('Résolvez le conflit avant de modifier cet article.');
+      const patch={...values};
+      if('title' in patch){patch.title=String(patch.title||'').trim();if(!patch.title||patch.title.length>200)throw Error('Nom de l’article invalide');}
+      if('quantity' in patch)patch.quantity=validQuantity(patch.quantity);
+      if('unit' in patch)patch.unit=String(patch.unit||'').trim().slice(0,40);
+      await change(id,patch);
+    },
+    async importRows(rows,context) {
+      if(!f.context||f.context!==context)throw Error('Le foyer a changé. Vérifiez le récapitulatif.');
+      let added=0;
+      for(const row of rows){
+        if(f.context!==context)throw Error('Le foyer a changé.');
+        const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token);
+        // Include tombstones: repeating an already archived import is not a new purchase.
+        if(getItem(id))continue;
+        await add(row.name,validQuantity(row.qty),row.unit,id,Boolean(row.done),id);added++;
+      }
+      if(added)void sync();
+      return added;
+    },
+    resolve: choose, sync
+  }),
   getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
   authorized, meta, putMeta, esc, showMessage, repaint, openModal,
   storageFetch,

@@ -5,6 +5,8 @@ on:
       - 'essai-stitch-v7/**'
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
+      - 'scripts/build-dobby-review.cjs'
+      - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
   pull_request:
@@ -12,6 +14,8 @@ on:
       - 'essai-stitch-v7/**'
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
+      - 'scripts/build-dobby-review.cjs'
+      - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
   workflow_dispatch:
@@ -51,6 +55,13 @@ jobs:
           node --check essai-stitch-v7/cuisine-engine.js
           node --check essai-stitch-v7/cuisine.js
           node --check essai-stitch-v7/cuisine-e07.js
+          node --check essai-stitch-v7/cuisine-list.js
+          node --check essai-stitch-v5-famille/family-v2.js
+          node --check scripts/build-dobby-review.cjs
+          node --check scripts/review/review-runtime.js
+          node --check essai-stitch-v7/tests/e07-2.cjs
+          node --check essai-stitch-v7/tests/e07-2-model.cjs
+          node --check essai-stitch-v7/tests/e07-2-preview.cjs
           node --check essai-stitch-v7/tests/e07.cjs
           node --check essai-stitch-v7/tests/e07-native-actions.cjs
           node --check essai-stitch-v7/tests/e07-1.cjs

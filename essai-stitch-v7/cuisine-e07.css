@@ -62,3 +62,23 @@ body.e07-cuisine .e071-with-image>.cu-button{grid-column:3}
 body.e07-cuisine .e071-meal-visual{grid-column:1;grid-row:1/3;width:48px;height:48px;align-self:center;overflow:hidden;border-radius:10px;border:1px solid #d49b4244;background:#372622}
 body.e07-cuisine .e071-meal-visual :is(img,.dv7-meal-visual){width:100%;height:100%;min-height:0;padding:0;object-fit:cover;border-radius:0;font-size:27px;display:flex;align-items:center;justify-content:center}
 body.e07-cuisine .e071-add-slot{margin-top:6px;font-size:11px;padding:8px}
+/* E07.2 uses the same source cards, gold controls and compact illustration. */
+body.e07-shop [data-e072-kicker]{position:absolute;bottom:10px;right:10px;top:auto;left:auto;max-width:calc(100% - 20px);padding:5px 8px;border:1px solid #d49b4277;border-radius:8px;background:#281712dc;font:10px/1.4 Literata,serif;color:#fcf7ee}
+body.e07-shop .e072-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+body.e07-shop .e072-actions>button{width:100%;height:auto;min-height:48px;padding:10px;white-space:normal}
+.e072-purchased{padding:12px;background:#281712;border:1px solid #d49b4244;border-radius:12px}
+.e072-purchased summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#f9bb5f;font:600 16px 'Playfair Display',serif}
+.e072-purchased article{margin-top:8px}
+.e072-item-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.e072-item-controls .cu-button{padding:6px 10px;min-height:44px}
+.e072-tools,.e072-status{display:flex;gap:8px;flex-wrap:wrap}
+.e072-tools .cu-button{flex:1 1 130px}
+.e072-status{font:12px/1.4 Literata,serif}
+.e072-status button{font-size:12px;padding:6px 10px}
+.e072-dialog{margin:0!important;border:1px solid #d49b4288!important}
+.e072-dialog h2{font:600 20px 'Playfair Display',serif;margin-bottom:8px}
+.e072-dialog p{font-size:14px;margin:8px 0}
+.e072-dialog .cu-field{min-width:0}
+.e072-import-row{display:flex;gap:8px;align-items:center;padding:8px 0;font-size:15px}
+.e072-import-row input{width:44px;height:44px;flex:none;accent-color:#d49b42}
+.e072-import-row small{display:block;font-size:11px;color:#d4c4b1}

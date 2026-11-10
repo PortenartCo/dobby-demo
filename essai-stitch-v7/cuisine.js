@@ -277,7 +277,7 @@ window.DobbyCuisine = (() => {
         else if(view==='tm5')E.tm5(ui.recipe);else E.page('recipes',ui.recipe);
       } else if(view==='recipe-add'||view==='recipe-add-1')E.page('import');
       else if(view==='batch')E.page('batch');
-      else if(view.startsWith('shop')){E.page('shop');if(['shop','shop-1'].includes(view)&&E.read().state.shopFinal)view='shop-final';}
+      else if(view.startsWith('shop'))E.page('shop');
       else E.page(view==='taverne'?'plan':'recipes');
       if(history)window.history.pushState({cuisine:view},'', '#'+view+(ui.recipe&&['recipe','cook','tm5'].includes(view)?'?id='+encodeURIComponent(ui.recipe):''));
       $('#cu-notice')?.setAttribute('hidden','');await render(view);window.scrollTo(0,0);return true;
@@ -286,6 +286,7 @@ window.DobbyCuisine = (() => {
   async function refresh() {if(!ready||busy)return;busy=true;try{if(ui.view.startsWith('shop')&&E.read().state.page!=='shop')E.page('shop');await render();}finally{busy=false;}}
   async function act(action, el) {
     const data=E.read();
+    if(action.startsWith('e072-')&&await window.DobbyCuisineE07.action(action,el,{E,render}))return;
     if(action==='dismiss'){$('#cu-notice').hidden=true;return;}
     if(routes.includes(action)){
       if(action==='recipes'&&el.dataset.filter)ui.filter=el.dataset.filter;
@@ -507,6 +508,9 @@ window.DobbyCuisine = (() => {
       const controls=card.querySelectorAll('button');controls.forEach((b,i)=>{text(b,i?'Reprendre les articles':'Consulter la liste');bind(b,i?'history-reuse':'history-open',{id});});list.append(markSource(card,'history article'));
     }
     if(!Object.keys(data.state.shopHistory||{}).length)list.append(empty('Aucune liste de courses archivée.'));
+    const selected=data.state.shopHistory?.[ui.historyId];
+    if(selected){const section=document.createElement('section');section.className='cu-context';section.dataset.e072Archive='';section.innerHTML='<h2>Articles archivés</h2>'+selected.items.map(item=>'<p>'+esc(item.name)+' — '+esc(item.detail||'À préciser')+'</p>').join('');list.prepend(section);}
+
     const recent=heading('Liste en Cours')?.closest('section');
     if(recent){
       const final=data.state.shopFinal;
@@ -561,11 +565,11 @@ window.DobbyCuisine = (() => {
     if(action==='remove-extra'){E.shop('rmextra',{dataset:{idx:el.dataset.index}});return render();}
     if(action==='focus-extra'){$('#cu-extra').focus();$('#cu-extra-form').scrollIntoView({block:'center'});return;}
     if(action==='validate-shop'){E.shop('validateshop');return open('shop-final');}
-    if(action==='edit-shop'){E.page('shop');E.shop('editshop');return open('shop');}
+    if(action==='edit-shop')return open('shop');
     if(action==='final-check'){E.finalCheck(Number(el.dataset.index),el.dataset.checked==='true');return render();}
     if(action==='export-final'){E.shop('exportfinal');return;}
-    if(action==='history-open'){E.history(el.dataset.id);return open('shop-final');}
-    if(action==='history-reuse'){const items=data.state.shopHistory[el.dataset.id].items;E.page('shop');E.shop('editshop');for(const item of items)E.shop('addextra',{value:item.name+(item.detail?' — '+item.detail:'')});return open('shop');}
+    if(action==='history-open'){ui.historyId=el.dataset.id;return render();}
+    if(action==='history-reuse'){const items=data.state.shopHistory[el.dataset.id].items;if(!window.confirm('Ajouter ces articles à la liste active ?\n'+items.map(x=>x.name+' — '+(x.detail||'À préciser')).join('\n')))return;await window.DobbyCuisineList.reuse(E,el.dataset.id);return open('shop');}
     if(action==='export-history'){E.evaluate('downloadJson("dobby-historique-courses.json",st.shopHistory);');return;}
     if(action==='shop-filter'){const category=el.dataset.category;for(const card of $$('.provision-card'))card.hidden=category!=='all'&&card.dataset.category!==category;for(const group of $$('[data-e07-category]'))group.hidden=category!=='all'&&group.dataset.e07Category!==category;return;}
     const familyActions={'family-import':'import','family-sync':'sync','family-edit':'edit','family-delete':'delete','family-cancel':'cancel-edit','family-conflict-server':'conflict-server','family-conflict-local':'conflict-local'};
