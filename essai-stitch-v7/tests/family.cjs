@@ -29,7 +29,8 @@ const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
  let state=await page.evaluate(()=>DobbyFamilyStitchEngine.read());assert.equal(state.local.length,1);assert.equal(state.local[0].personId,id,'The native-form adapter preserves the canonical member ID');assert.equal(state.shared.length,0);assert.equal(state.events.length,0);const visit=state.local[0].id;
  // Leaving a new draft for an account dialog must not contaminate another saved record.
  await page.locator('[data-fa-action="medical-new"]').first().click();await page.waitForFunction(()=>document.body.dataset.familyView==='medical-edit');await page.locator('#consultation-title').fill('TEST — Brouillon à ne pas copier');
- await page.locator('header [data-fa-action="account"]').first().click();await page.locator('#dv7-close').click();assert.equal(await page.locator('#consultation-title').inputValue(),'TEST — Brouillon à ne pas copier');
+ await page.evaluate(()=>DobbyStitchV7.open('account')); // Native settings portal; gold button now opens E05 profile.
+await page.locator('#dv7-close').click();assert.equal(await page.locator('#consultation-title').inputValue(),'TEST — Brouillon à ne pas copier');
  await page.locator('header [data-fa-action="back"]').first().click();await page.waitForFunction(()=>document.body.dataset.familyView==='health-person');
  await page.locator('[data-fa-action="medical-edit"][data-record="'+visit+'"]').first().click();await page.waitForFunction(()=>document.body.dataset.familyView==='medical-edit');assert.equal(await page.locator('#consultation-title').inputValue(),'TEST — Consultation privée','A saved record cannot inherit a different unsaved draft');
  await page.locator('header [data-fa-action="back"]').first().click();await page.waitForFunction(()=>document.body.dataset.familyView==='health-person');

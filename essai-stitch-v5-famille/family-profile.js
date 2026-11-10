@@ -6,8 +6,8 @@ window.DobbyMagicIdentity=(()=>{'use strict';
  {id:'slytherin',name:'Serpentard',animal:'Serpent',primary:'#d2e4d7',accent:'#67ad8e',surface:'#10281f'},
  {id:'ravenclaw',name:'Serdaigle',animal:'Aigle',primary:'#e8c798',accent:'#78a9d7',surface:'#142239'},
  {id:'hufflepuff',name:'Poufsouffle',animal:'Blaireau',primary:'#f5d270',accent:'#c69a43',surface:'#292316'}]);
- const patronuses=freeze([['stag','Cerf'],['otter','Loutre'],['fox','Renard'],['wolf','Loup'],['cat','Chat'],['owl','Hibou'],['horse','Cheval'],['hare','Lièvre'],['swan','Cygne'],['lynx','Lynx'],['badger','Blaireau'],['dolphin','Dauphin']].map(([id,name],index)=>({id,name,index,available:false,asset:null})));
- const avatars=freeze(Array.from({length:8},(_,index)=>({id:'portrait-'+(index+1),name:'Portrait '+(index+1),index,available:false,asset:null})));
+ const patronuses=freeze([['stag','Cerf'],['otter','Loutre'],['fox','Renard'],['wolf','Loup'],['cat','Chat'],['owl','Hibou'],['horse','Cheval'],['hare','Lièvre'],['swan','Cygne'],['lynx','Lynx'],['badger','Blaireau'],['dolphin','Dauphin']].map(([id,name],index)=>({id,name,index,available:true,asset:'../essai-stitch-v7/assets/magic/patronuses.png'})));
+ const avatars=freeze(Array.from({length:8},(_,index)=>({id:'portrait-'+(index+1),name:'Portrait '+(index+1),index,available:true,asset:'../essai-stitch-v7/assets/magic/avatars.png'})));
  function patch(member,values){
   const result={...member},fields=[['magicHouseId','houseId',houses,'Maison'],['magicPatronusId','patronusId',patronuses,'Patronus'],['magicAvatarId','avatarId',avatars,'Avatar']];
   if(!fields.some(([name])=>Object.hasOwn(values,name)))return result;

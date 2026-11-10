@@ -38,3 +38,11 @@
 - [ ] Captures quatre thèmes 320/390/1440 ; sélection/retour/reload/états vides/clavier/contraste/débordement.
 - [ ] Régression E04 ciblée, composition temporaire E03 sans fusion ; une passe adaptée non-régression ; CI SHA final.
 - [ ] Rapport E05 avec preuves, inventaire médias et blocages photos/droits/interversions/export ; commit final et push ; arrêt.
+
+## Progression et décisions d’exécution
+- A terminé : commit 3e3862e ; 7 tests purs/fixtures et e05-native PASS. Validation RED constatée avant implémentation.
+- B/C : profil unique et médias locaux opérationnels ; e05.cjs PASS 320/390/1440. Les 20 illustrations sont originales, générées en deux atlas locaux sans retouche ; fenêtres CSS par identifiant.
+- Décision : export `(4).zip` absent après recherche workspace/dépôt ; aucun asset de cet export prétendu récupéré. Fidélité à cette référence NON VÉRIFIÉE ; demande de pièce jointe émise et travaux indépendants poursuivis.
+- Décision : édition du registre familial existante conservée ; aucun rôle parental ni lien compte/membre inventé. Bouton doré = choix explicite tant que le modèle ne fournit pas ce lien.
+- Décision : photo personnelle NON LIVRÉE ; bucket documentaire privé repéré dans le code/proposition SQL, mais capacité et droits d’utilisation pour des profils non validés. Aucun appel production.
+- Décision : ancien writer peut effacer magicProfile ; scénario reproduit. Intégrité interversions NON LIVRÉE, pas de réécriture du protocole Famille pour masquer cette limite.

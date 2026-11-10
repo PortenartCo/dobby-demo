@@ -1511,7 +1511,7 @@
             "famille.html#menu"
           ],
           "preferences": "native st.stitchPreferences / native save()",
-          "account": "existing native account panel; no Stitch profile source",
+          "account": "E05 member profile or explicit member choice; native account settings in secondary disclosure",
           "automaticMission": "source equipment/document fiche by originId; no independent mission fiche",
           "captures": [
             {
@@ -1959,7 +1959,7 @@
       "famille.html#menu"
     ],
     "preferences": "native st.stitchPreferences / native save()",
-    "account": "existing native account panel; no Stitch profile source",
+    "account": "E05 member profile or explicit member choice; native account settings in secondary disclosure",
     "automaticMission": "source equipment/document fiche by originId; no independent mission fiche",
     "captures": [
       {
@@ -1977,6 +1977,26 @@
         "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
       }
     ]
+  },
+  "magicProfileContract": {
+    "mission": "E05",
+    "document": "docs/dobby-v7/E05-PROFIL-MAGIQUE.md",
+    "route": "famille.html#personal?person=<member-id>",
+    "identity": "native familyMembers[].magicProfile via v23MemberForm",
+    "source": "latest four-profile Stitch export missing; visual fidelity NOT verified",
+    "photos": "NOT DELIVERED",
+    "parentalPermissions": "NOT DELIVERED",
+    "interversionIntegrity": "NOT DELIVERED",
+    "tests": [
+      "tests/e05-native.cjs",
+      "tests/e05.cjs"
+    ],
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "captures": "docs/dobby-v7/evidence/e05/"
   },
   "chatContract": {
     "mission": "E02",
