@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import * as runes from '../family-runes-core.mjs';
 
 const source = path => fs.readFileSync(new URL(path, import.meta.url), 'utf8');
 const bridge = source('../family-v2.js');
@@ -22,10 +23,10 @@ test('preview V5 source matches original except isolated browser storage names',
   assert.match(preview,/stitch-v5\.js\?v=20261108-10/);
   const loader=source('../stitch-v5.js');
   assert.match(loader,/family-v2\.js\?v=20261108-7/);
-  assert.match(loader,/family-modules\.js\?v=20261108-7/);
+  assert.match(loader,/family-modules\.js\?v=20261110-runes-1/);
   assert.match(loader,/family-agenda\.js\?v=20261108-7/);
   assert.match(loader,/family-agenda\.css\?v=20261108-7/);
-  assert.match(loader,/family-missions\.js\?v=20261108-7/);
+  assert.match(loader,/family-missions\.js\?v=20261110-runes-1/);
   assert.match(loader,/family-missions\.css\?v=20261108-7/);
   assert.match(loader,/family-files\.js\?v=20261108-9/);
   assert.match(loader,/family-files\.css\?v=20261108-9/);
@@ -65,7 +66,7 @@ test('module adapter fails closed when Supabase modules table is missing', async
   const sandbox={
     st:{page:'family',familyDocs:[],famHealth:[{id:'test',name:'privé'}]},
     document:{addEventListener:()=>{}},
-    window:{DobbyFamilyUI:{
+    window:{DobbyRunesReady:Promise.resolve(runes),DobbyFamilyUI:{
       getContext:()=>({userId:'u1',householdId:'h1'}),
       meta:async()=>null,
       putMeta:async()=>{},
@@ -110,7 +111,7 @@ test('family events and selected medical visits share the household without uplo
 
 
 test('manual missions remain separate from automatic tasks',()=>{
-  assert.match(modules,/keys:\['autoTasks','manualMissions'\]/);
+  assert.match(modules,/keys:\['autoTasks','manualMissions','runeCredits'\]/);
 });
 
 test('binary file uploads do not use the JSON modules API',()=>{

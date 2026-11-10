@@ -1,3 +1,5 @@
+import * as runes from './family-runes-core.mjs';
+export {runes};
 import { validDate } from './family-agenda-core.mjs';
 export const MISSION_CATEGORIES=Object.freeze(['Famille','Maison','Administratif','Autre']);
 const short=(v,n)=>String(v??'').trim().slice(0,n);
@@ -11,7 +13,11 @@ export function normalizeMission(raw){
   if(!MISSION_CATEGORIES.includes(category))throw Error('Catégorie non autorisée');
   if(!['open','done'].includes(status))throw Error('État de mission invalide');
   const completedAt=raw.completedAt?short(raw.completedAt,40):'';
+  if(raw.effort!==undefined||raw.rewardVersion===1)runes.effortFor(raw.effort);
+  if(raw.rewardVersion!==undefined&&raw.rewardVersion!==1)throw Error('Version de récompense non prise en charge');
   return {id,title,due,category,status,
+    ...(raw.effort!==undefined?{effort:raw.effort}:{}),
+    ...(raw.rewardVersion===1?{rewardVersion:1}:{}),
     assigneeId:short(raw.assigneeId,100),
     note:short(raw.note,400),
     createdAt:short(raw.createdAt,40),

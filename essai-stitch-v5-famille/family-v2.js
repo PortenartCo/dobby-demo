@@ -643,6 +643,7 @@ window.DobbyFamilyUI = Object.freeze({
   storageFetch,
   getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
   isModuleActive(module) {return Boolean(f.context && f.provider?.isActive?.(module));},
+  isModuleConfigured(module) {return f.provider?.isConfigured?.(module)??null;},
   registerModules(provider) {
     f.provider = provider;
     // A provider may register before or after boot(), including while sync()

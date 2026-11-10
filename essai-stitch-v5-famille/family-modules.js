@@ -7,7 +7,7 @@ if (!api) throw Error('Dobby Family UI unavailable');
 const DEFINITIONS = [
   { id:'menus', title:'Repas et menus', keys:['planned','shopHistory','shopFinal','shopChoice'], pages:['plan','pick','shop'] },
   { id:'recipes', title:'Recettes et Thermomix', keys:['customRecipes','tmAdaptations'], pages:['recipes'] },
-  { id:'missions', title:'Missions familiales', keys:['autoTasks','manualMissions'], pages:['missions'] },
+  { id:'missions', title:'Missions familiales', keys:['autoTasks','manualMissions','runeCredits'], pages:['missions'] },
   { id:'house', title:'Maison et entretiens', keys:['houseItems','houseLogs'], pages:['house'] },
   { id:'family', title:'Membres, contacts et listes', keys:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'], pages:['family'] },
   { id:'contracts', title:'Documents et contrats du foyer', keys:[], pages:['documents'] }
@@ -33,9 +33,58 @@ function pick(id) {
   for (const key of definition.keys) {
     if (st[key] !== undefined) data[key] = JSON.parse(JSON.stringify(st[key]));
   }
+  if(id==='missions'){data.runeCredits=st.runeCredits||[];data.runeLedgerVersion=1;}
   return data;
 }
 function digest(value) { return JSON.stringify(value); }
+function canonical(value){return Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;}
+function missionDigest(value){return digest(canonical(value));}
+function moduleDigest(id,value){return id==='missions'?missionDigest(value):digest(value);}
+
+// Rewards are append-only; mutable mission conflicts still use the existing chooser.
+let runes;
+function missionPayload(payload){
+ if(!payload||typeof payload!=='object'||Array.isArray(payload))throw Error('Payload Missions invalide');
+ if(payload.runeLedgerVersion!==undefined&&payload.runeLedgerVersion!==1)throw Error('Version de runes incompatible');
+ if(payload.runeLedgerVersion===1&&!Array.isArray(payload.runeCredits))throw Error('Historique familial de runes invalide');
+ if(payload.runeCredits!==undefined&&payload.runeLedgerVersion!==1)throw Error('Version de runes absente');
+ for(const key of ['autoTasks','manualMissions'])if(payload[key]!==undefined&&!Array.isArray(payload[key]))throw Error('Registre Missions invalide');
+ return payload;
+}
+function rememberedCredits(){const raw=states.missions?.synced;if(!raw)return [];return JSON.parse(raw).runeCredits||[];}
+function retainedCredits(payload){missionPayload(payload);return runes.mergeCredits(payload.runeCredits||[],runes.mergeCredits(st.runeCredits||[],rememberedCredits()));}
+function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manualMissions:payload.manualMissions||[]};}
+function pendingRunes(){const ids=new Set((st.runeCredits||[]).map(c=>c.missionId));return(st.runeRequests||[]).some(c=>!ids.has(c.missionId));}
+function initialPayload(id){const payload=pick(id);return id==='missions'?{...payload,runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
+function synchronized(id,revision,payload){return{active:true,revision,synced:moduleDigest(id,id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:payload.runeLedgerVersion===1}:{})};}
+function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
+function applyCredits(credits){const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
+function verifyProtocol(state,remote){
+ missionPayload(remote.payload);
+ if((state.runeProtocol||JSON.parse(state.synced||'{}').runeLedgerVersion===1)&&remote.payload.runeLedgerVersion!==1)throw Error('Version Missions incompatible : historique de runes absent du partage. Synchronisation bloquée.');
+}
+async function syncMissions(state,remote){
+ let credits;
+ try{verifyProtocol(state,remote);credits=retainedCredits(remote.payload);}catch(error){state.conflict={remote,runes:true};await persist();throw error;}
+ const local=pick('missions'),base=JSON.parse(state.synced||'{}'),localEditable=missionDigest(editableMissions(local)),remoteEditable=missionDigest(editableMissions(remote.payload)),baseEditable=missionDigest(editableMissions(base));
+ if(localEditable!==baseEditable&&remoteEditable!==baseEditable&&localEditable!==remoteEditable){
+  applyCredits(credits);state.conflict={remote};await persist();return;
+ }
+ const revision=Number(remote.revision);if(!Number.isSafeInteger(revision)||revision<1)throw Error('Révision familiale invalide');
+ const fields=localEditable!==baseEditable?editableMissions(local):editableMissions(remote.payload);
+ const desired={...fields,runeCredits:runes.acceptRequests(credits,st.runeRequests||[],revision+1),runeLedgerVersion:1};
+ if(missionDigest(desired)===missionDigest(remote.payload)){
+  applyShared('missions',desired);Object.assign(state,synchronized('missions',revision,desired));await persist();return;
+ }
+ const result=await api.authorized('PATCH',rowQuery('missions')+'&revision=eq.'+encodeURIComponent(revision),{payload:desired},{Prefer:'return=representation'});
+ if(!result?.length){state.conflict={remote:await readRow('missions')};await persist();return;}
+ const confirmed=result[0];missionPayload(confirmed.payload);if(Number(confirmed.revision)!==revision+1||confirmed.payload.runeLedgerVersion!==1||missionDigest(confirmed.payload)!==missionDigest(desired))throw Error('Confirmation des runes incohérente');
+ // A user can still edit or delete a mission while PATCH is in flight. Never
+ // replace that newer local edit with the sent snapshot; only acknowledge credits.
+ if(missionDigest(editableMissions(pick('missions')))===localEditable)applyShared('missions',confirmed.payload);else applyCredits(confirmed.payload.runeCredits);
+ Object.assign(state,synchronized('missions',Number(confirmed.revision),confirmed.payload));await persist();
+}
+
 function seededExampleMeals() {
   // Fresh V5 demos include exactly three placeholder meals. No silent deletions.
   if (st.demoInitialized !== true || !st.planned || typeof st.planned !== 'object') return false;
@@ -67,6 +116,8 @@ function backupLocal(id) {
 function applyShared(id, payload) {
   const def = byId.get(id);
   if (!def || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw Error('Payload invalide');
+  if(id==='missions'&&states.missions&&(states.missions.runeProtocol||JSON.parse(states.missions.synced||'{}').runeLedgerVersion===1)&&payload.runeLedgerVersion!==1)throw Error('Version Missions incompatible : synchronisation des runes bloquée');
+  const credits=id==='missions'?retainedCredits(payload):null;
   applying = true;
   try {
     if (id === 'contracts') {
@@ -85,10 +136,12 @@ function applyShared(id, payload) {
       }));
     }
     for (const key of def.keys) {
+      if(id==='missions'&&key==='runeCredits')continue;
       if (Object.prototype.hasOwnProperty.call(payload,key)) {
         st[key] = JSON.parse(JSON.stringify(payload[key]));
       }
     }
+    if(id==='missions')st.runeCredits=credits;
     if (id === 'recipes') custom = Array.isArray(st.customRecipes) ? st.customRecipes : [];
     save(); render();
   } finally { applying = false; }
@@ -102,6 +155,9 @@ async function start() {
   const changed = !ctx || next !== ctx.userId + '|' + ctx.householdId;
   ctx = c; checked = false; backendReady = false; lastError = '';
   if (changed) states = await api.meta(storageKey()) || {};
+  runes=await window.DobbyRunesReady;if(!runes)throw Error('Règles de runes indisponibles');
+  if(states.missions?.synced)states.missions.synced=missionDigest(JSON.parse(states.missions.synced));
+  if(states.missions?.active&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}
   const stillCurrent = () => {
     const actual = api.getContext();
     return actual?.userId === c.userId && actual?.householdId === c.householdId &&
@@ -135,7 +191,7 @@ function stateLabel(def) {
   const info = states[def.id];
   if (!info?.active) return 'Partage désactivé';
   if (info.conflict) return 'Conflit à résoudre';
-  return digest(pick(def.id)) === info.synced ? 'Partagé · à jour' : 'Modifications locales à envoyer';
+  return moduleDigest(def.id,pick(def.id)) === info.synced ? 'Partagé · à jour' : 'Modifications locales à envoyer';
 }
 function html() {
   const description = '<p class="fv2-muted">Le partage des modules est volontaire : les données V5 déjà présentes sur cet appareil ne sont jamais téléversées automatiquement.</p>';
@@ -201,7 +257,7 @@ async function activate(id) {
   if (!confirm('Partager « ' + def.title + ' » avec les autres membres actifs du foyer ?\n' +
     'Les données actuelles de ce module pourront être consultées et modifiées par eux.')) return;
   const remote = await readRow(id);
-  let revision;
+  let revision,acknowledged;
   if (remote) {
     if (digest(pick(id)) !== digest(remote.payload)) {
       if (!confirm('Il existe déjà une version familiale de « ' + def.title +
@@ -209,16 +265,16 @@ async function activate(id) {
       backupLocal(id);
       applyShared(id, remote.payload);
     }
-    revision = Number(remote.revision);
+    revision = Number(remote.revision);acknowledged=remote.payload;
   } else {
-    const original = pick(id);
+    const original = initialPayload(id);
     const result = await api.authorized('POST', 'dobby_v2_modules', {
       household_id:ctx.householdId,module:id,payload:original
     }, { Prefer:'return=representation' });
     if (!result?.[0] || Number(result[0].revision) < 1) throw Error('Partage créé sans confirmation serveur');
-    revision = Number(result[0].revision);
+    revision = Number(result[0].revision);acknowledged=result[0].payload||original;if(id==='missions'){if(!result[0].payload||missionDigest(acknowledged)!==missionDigest(original))throw Error('Confirmation des runes incohérente');applyCredits(acknowledged.runeCredits);}
   }
-  states[id] = {active:true,revision,synced:digest(pick(id)),conflict:false};
+  states[id] = synchronized(id,revision,acknowledged);markMissionsShared(id);
   if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
   await persist();
   api.repaint(); api.openModal();
@@ -255,24 +311,24 @@ async function activateRemaining() {
   let activated = 0;
   try {
     for (const {id, remote} of entries) {
-      let revision;
+      let revision,acknowledged;
       if (remote) {
         if (digest(pick(id)) !== digest(remote.payload)) {
           backupLocal(id);
           applyShared(id, remote.payload);
         }
-        revision = Number(remote.revision);
+        revision = Number(remote.revision);acknowledged=remote.payload;
       } else {
-        const original = pick(id);
+        const original = initialPayload(id);
         const result = await api.authorized('POST','dobby_v2_modules',{
           household_id:ctx.householdId,module:id,payload:original
         },{Prefer:'return=representation'});
         if (!result?.[0] || Number(result[0].revision) < 1) {
           throw Error('Module créé sans confirmation serveur : ' + id);
         }
-        revision = Number(result[0].revision);
+        revision = Number(result[0].revision);acknowledged=result[0].payload||original;if(id==='missions'){if(!result[0].payload||missionDigest(acknowledged)!==missionDigest(original))throw Error('Confirmation des runes incohérente');applyCredits(acknowledged.runeCredits);}
       }
-      states[id] = {active:true,revision,synced:digest(pick(id)),conflict:false};
+      states[id] = synchronized(id,revision,acknowledged);markMissionsShared(id);
       if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
       await persist();
       activated++;
@@ -307,10 +363,7 @@ async function joinFamily() {
   try {
     for (const entry of remote) {
       applyShared(entry.id,entry.row.payload);
-      states[entry.id] = {
-        active:true,revision:Number(entry.row.revision),
-        synced:digest(pick(entry.id)),conflict:false
-      };
+      states[entry.id] = synchronized(entry.id,Number(entry.row.revision),entry.row.payload);
     }
     await persist();
   } catch (e) {
@@ -321,6 +374,7 @@ async function joinFamily() {
     await persist();
     throw e;
   }
+  if(states.missions?.active)markMissionsShared('missions');
   api.repaint(); api.openModal();
 }
 async function syncOne(id) {
@@ -333,6 +387,7 @@ async function syncOne(id) {
     await persist();
     return;
   }
+  if(id==='missions')return syncMissions(state,remote);
   const local = pick(id), localJson = digest(local), remoteRevision = Number(remote.revision);
   if (remoteRevision !== state.revision) {
     if (localJson !== state.synced) {
@@ -363,21 +418,27 @@ async function syncOne(id) {
 }
 async function sync() {
   if (!ctx || !checked || !backendReady || inFlight) return;
-  inFlight = true;
+  inFlight = true;let success=false;
   try {
     for (const def of DEFINITIONS) if (states[def.id]?.active) await syncOne(def.id);
-    lastError = '';
+    lastError = '';success=true;
   } catch(e) { lastError = e.message || 'Erreur de partage des modules'; }
-  finally { inFlight = false; api.repaint(); }
+  finally { inFlight = false; api.repaint();if(success)onSave(); }
 }
 function onSave() {
   if (!ctx || !backendReady || applying || inFlight || !DEFINITIONS.some(d=>
-    states[d.id]?.active && digest(pick(d.id)) !== states[d.id].synced)) return;
+    states[d.id]?.active && !states[d.id].conflict && (moduleDigest(d.id,pick(d.id)) !== states[d.id].synced || d.id==='missions'&&pendingRunes()))) return;
   if (timer) clearTimeout(timer);
   timer = setTimeout(() => { timer = null; void sync(); }, 1500);
 }
 async function resolve(id, preference) {
   const state = states[id];
+  if(id==='missions'){
+    const remote=await readRow(id);if(!remote)throw Error('Version familiale inaccessible');verifyProtocol(state,remote);const credits=retainedCredits(remote.payload);
+    if(preference==='local'&&!confirm('Conserver mes modifications locales ? Les gains de runes confirmés du foyer seront conservés.'))return;
+    backupLocal(id);if(preference==='server')applyShared(id,remote.payload);else applyCredits(credits);
+    Object.assign(state,synchronized(id,Number(remote.revision),remote.payload));await persist();await sync();api.repaint();api.openModal();return;
+  }
   const remote = state?.conflict?.remote || await readRow(id);
   if (!remote) throw Error('Version familiale inaccessible');
   if (preference === 'server') {
@@ -416,7 +477,7 @@ document.addEventListener('click', async e => {
     }
     if (action === 'disable') {
       if (confirm('Arrêter le partage de ce module sur cet appareil ? Les données déjà partagées sur Supabase ne sont pas supprimées.')) {
-        states[id].active=false;await persist();
+        states[id].active=false;if(id==='missions'){st.runeSyncRequired=false;save();}await persist();
       }
     }
     if (action === 'server' || action === 'local') await resolve(id,action);
@@ -428,6 +489,7 @@ document.addEventListener('click', async e => {
   }
 },true);
 api.registerModules({start,reset,html,labelFor,sync,onSave,
+  isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }
 });

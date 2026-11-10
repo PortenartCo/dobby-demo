@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import * as runes from '../family-runes-core.mjs';
 
 const bridge = fs.readFileSync(new URL('../family-v2.js', import.meta.url), 'utf8');
 const modules = fs.readFileSync(new URL('../family-modules.js', import.meta.url), 'utf8');
@@ -61,7 +62,7 @@ function environment() {
     queueMicrotask, setInterval:()=>1,clearInterval:()=>{},setTimeout,clearTimeout,
     confirm:()=>true, URL,URLSearchParams,console,
     localStorage:{getItem:()=>null,setItem:()=>{}},
-    window:{addEventListener:()=>{}},
+    window:{addEventListener:()=>{},DobbyRunesReady:Promise.resolve(runes)},
     document:{
       addEventListener:()=>{},getElementById:()=>null,
       createElement:()=>({id:'',hidden:false,innerHTML:''}),
