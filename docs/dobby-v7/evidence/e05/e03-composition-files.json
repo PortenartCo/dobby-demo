@@ -1,0 +1,33 @@
+{
+  "base": "6a86ead6341eb2f17e7552852621c21f496ad97c",
+  "overlay": "15c0337dae3fe138d5aa70527235f68c119a5eae",
+  "files": [
+    "essai-stitch-v5-famille/index.html",
+    "essai-stitch-v5-famille/family-profile.js",
+    "essai-stitch-v5-famille/family-runes-core.mjs",
+    "essai-stitch-v5-famille/family-missions-core.mjs",
+    "essai-stitch-v5-famille/family-missions.js",
+    "essai-stitch-v5-famille/family-modules.js",
+    "essai-stitch-v5-famille/family-v2.js",
+    "essai-stitch-v5-famille/stitch-v5.js",
+    "essai-stitch-v7/family-engine.js",
+    "essai-stitch-v7/member-avatar.js",
+    "essai-stitch-v7/member-avatar.css",
+    "essai-stitch-v7/magic-profile.js",
+    "essai-stitch-v7/magic-profile.css",
+    "essai-stitch-v7/family.js",
+    "essai-stitch-v7/chrome.js",
+    "essai-stitch-v7/tools-register.js",
+    "essai-stitch-v7/register.css",
+    "essai-stitch-v7/bridge.js"
+  ],
+  "generator": "E03 retained, profile assets added",
+  "tests": "e03.cjs selectors adapted for E04 real radios and E05 secondary native account portal; no assertions removed",
+  "merged": false,
+  "adaptations": [
+    "E03 generator and missions.js/css/root-adapters retained",
+    "E03 sectionTitle Missions retained",
+    "E03 bridge sanitizeClaims guard retained; E05 native overlay mount added",
+    "e03 tests wait for completed DOM render, not early ui.view assignment"
+  ]
+}

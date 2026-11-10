@@ -46,3 +46,7 @@
 - Décision : édition du registre familial existante conservée ; aucun rôle parental ni lien compte/membre inventé. Bouton doré = choix explicite tant que le modèle ne fournit pas ce lien.
 - Décision : photo personnelle NON LIVRÉE ; bucket documentaire privé repéré dans le code/proposition SQL, mais capacité et droits d’utilisation pour des profils non validés. Aucun appel production.
 - Décision : ancien writer peut effacer magicProfile ; scénario reproduit. Intégrité interversions NON LIVRÉE, pas de réécriture du protocole Famille pour masquer cette limite.
+- Revue finale indépendante : deux P2 reproduits (choix génériques/Retour, création refusée), corrigés 15c0337 avec tests rouges puis verts. Date ancienne non représentable protégée ; sous-titre portail natif corrigé après échec E01. Pas de P1 identifié.
+- Composition temporaire E03 finale : e03.cjs et e05.cjs PASS 320/390/1440, sans merge ; générateur/renderer/titre et garde des textes E03 conservés.
+- Natif final après corrections : 80/80 PASS. Médias : 20/20 disponibles, 12 captures quatre thèmes. Checkpoints A/B/C opérationnels sous les limites NON LIVRÉES consignées au rapport.
+- Campagne locale finale : 9 scripts initiaux réussis, E01 corrigé puis 29 scripts restants PASS ; total 38 scripts couverts. Captures hors E05 régénérées par les régressions puis restaurées pour conserver le périmètre de livraison. CI du SHA final à attendre après push.

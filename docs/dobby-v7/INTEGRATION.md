@@ -150,3 +150,7 @@ Historique local par identité connectée dans le magasin natif ; sans identité
 ## E04 — Runes et avatars, branche indépendante en revue
 
 Efforts 10/25/50, ledger natif distinct et grades SVG provisoires sont raccordés sur `feat/dobby-e04-runes`, base E04 `091fe0e`. [Règles, preuves et limites](E04-RUNES.md). Aucun nouveau recensement des sources ni intégration de branche E03 : les états fonctionnel/partiel restent inchangés. Synchronisation testée sur fixtures compatibles ; protection contre les anciens writers et ordre physique de complétions hors ligne non garantis par le serveur actuel. Aucune publication ni modification Supabase/SQL.
+
+## E05 — Profil magique
+
+[Rapport et limites E05](E05-PROFIL-MAGIQUE.md) : profil par identifiant natif, quatre thèmes, 12 Patronus et 8 portraits originaux locaux, avatar/insigne E04 partagé, seuils V1 approuvés et paramètres repliables. Writer membre natif étendu pour préserver les champs, aucun autre writer. Lien compte/membre, droits parentaux, import photo et intégrité face aux anciens writers NON LIVRÉS ; dernier export Profil magique absent, fidélité graphique à ses quatre variantes NON VÉRIFIÉE. Aucune source simplement importée ne change de statut d’intégration. Aucun merge ni publication.

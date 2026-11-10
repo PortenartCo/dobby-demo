@@ -1075,7 +1075,7 @@
       "route": "famille.html#personal",
       "template": "templates/remaining/personal.html",
       "unsupported": [
-        "Membre canonique, missions et progression de runes native à seuils provisoires. Pas d’agrégation automatique des documents par champ personne libre, contacts personnels ou antécédents structurés."
+        "E05 : profil magique fonctionnel, seuils de runes V1 approuvés. Dernier export Profil magique absent : fidélité à ses quatre variantes non vérifiée. Photo, lien compte/membre, droits parentaux et intégrité face aux anciens writers non livrés. Pas d’agrégation automatique des documents par champ personne libre, contacts personnels ou antécédents structurés."
       ],
       "verification": {
         "tests": [
@@ -1985,11 +1985,13 @@
     "identity": "native familyMembers[].magicProfile via v23MemberForm",
     "source": "latest four-profile Stitch export missing; visual fidelity NOT verified",
     "photos": "NOT DELIVERED",
+    "accountMemberAssociation": "NOT DELIVERED",
     "parentalPermissions": "NOT DELIVERED",
     "interversionIntegrity": "NOT DELIVERED",
     "tests": [
       "tests/e05-native.cjs",
-      "tests/e05.cjs"
+      "tests/e05.cjs",
+      "tests/e05-edge.cjs"
     ],
     "widths": [
       320,

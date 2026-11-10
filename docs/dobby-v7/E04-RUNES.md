@@ -1,5 +1,7 @@
 # E04 — Runes, grades et avatars évolutifs
 
+> Suite E05 : les douze seuils V1 sont maintenant approuvés et l’indication provisoire est retirée de l’interface. [Profil magique et limites actuelles](E05-PROFIL-MAGIQUE.md). Le présent rapport conserve le bilan historique E04.
+
 **Branche livrée pour revue : `feat/dobby-e04-runes`.** Base E04 vérifiée : `091fe0e049e496b678ba70b892605777a5e108cd`. Aucun commit E03 repris dans cette branche, aucune fusion ou publication Pages.
 
 Les runes fonctionnent réellement avec les formulaires, les événements et le stockage natifs. La synchronisation est vérifiée entre **clients compatibles sur fixtures**, avec les limites d'intégrité précisées ci-dessous ; aucune recette sur des comptes réels n'est revendiquée.
