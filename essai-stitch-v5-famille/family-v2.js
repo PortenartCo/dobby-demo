@@ -651,6 +651,19 @@ window.DobbyFamilyUI = Object.freeze({
       if('unit' in patch)patch.unit=String(patch.unit||'').trim().slice(0,40);
       await change(id,patch);
     },
+    async proposeRows(rows,context) {
+      if(!f.context||f.context!==context)throw Error('Le foyer a changé.');
+      const result=[];
+      for(const row of rows){
+        const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token),current=getItem(id),qty=validQuantity(row.qty);
+        if(!current){result.push({...row,qty});continue;}
+        if(current.deleted_at||current.checked)continue;
+        if(current.syncState==='conflict')throw Error('Résolvez le conflit de cet apport avant de le réimporter.');
+        if(norm(current.unit)!==norm(row.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
+        if(current.quantity!==qty)result.push({...row,qty,mode:'update',previousLabel:current.title,previousQty:current.quantity,expected:f.core.toServerPayload(current)});
+      }
+      return result;
+    },
     async importRows(rows,context) {
       if(!f.context||f.context!==context)throw Error('Le foyer a changé. Vérifiez le récapitulatif.');
       let added=0;
@@ -658,7 +671,12 @@ window.DobbyFamilyUI = Object.freeze({
         if(f.context!==context)throw Error('Le foyer a changé.');
         const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token);
         // Include tombstones: repeating an already archived import is not a new purchase.
-        if(getItem(id))continue;
+        const current=getItem(id);
+        if(row.mode==='update'){
+          if(!current||current.syncState==='conflict'||!f.core.sameFields(current,row.expected))throw Error('L’article a changé. Vérifiez un nouveau récapitulatif.');
+          await change(id,{quantity:validQuantity(row.qty)});added++;continue;
+        }
+        if(current)continue;
         await add(row.name,validQuantity(row.qty),row.unit,id,Boolean(row.done),id);added++;
       }
       if(added)void sync();

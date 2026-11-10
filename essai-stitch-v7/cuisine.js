@@ -301,7 +301,7 @@ window.DobbyCuisine = (() => {
     if(action==='slot'){ui.slot=el.dataset.slot;ui.adult=null;ui.children=null;ui.selected=null;return render();}
     if(action==='select-recipe'){ui.selected=el.dataset.id;return render();}
     if(action==='suggestion'){ui.selected=data.recipes.find(r=>r.id!==ui.selected)?.id||data.recipes[0]?.id;notice('Une recette de votre grimoire est sélectionnée. Aucune suggestion IA n’est utilisée.');return render();}
-    if(action==='save-meal'){ui.note=$('#prepNotes').value; if(E.choose({id:ui.selected,date:$('#cu-date').value,slot:ui.slot,adult:ui.adult,children:ui.children,note:ui.note}))return open('taverne');return;}
+    if(action==='save-meal'){ui.note=$('#prepNotes').value; const key=$('#cu-date').value+'-'+ui.slot,prior=data.state.planned[key];if(E.choose({id:ui.selected,date:$('#cu-date').value,slot:ui.slot,adult:ui.adult,children:ui.children,note:ui.note})){if(prior?.id===ui.selected&&prior._e072ImportRef)E.evaluate('st.planned[p.key]._e072ImportRef=p.ref;save();',{key,ref:prior._e072ImportRef});return open('taverne');}return;}
     if(action==='favorite'){E.favorite(el.dataset.id||ui.recipe);return render();}
     if(action==='filter'){ui.filter=({stew:'all',fast:'quick',veg:'veggie'})[el.dataset.filter]||el.dataset.filter;return render();}
     if(action==='plan-recipe'){ui.selected=el.dataset.id||ui.recipe;return open('pick');}

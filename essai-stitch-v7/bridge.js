@@ -82,7 +82,9 @@ const hero=document.querySelector('main img[alt*="Dobby"]');if(hero){const img=(
 function start(){if(booted||starting)return;const w=engine();try{if(!w||!w.DobbyFamilyHealth||!w.DobbyFamilyAgenda||!w.DobbyFamilyMissions?.available||w.eval('typeof st!=="object"||typeof go!=="function"||typeof shoppingDraft!=="function"'))return;}catch{return;}
 starting=true;try{bind();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?(renderReal(),window.DobbyFamilyStitch.init(route=>open(route,document.activeElement))):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}
 
-frame.addEventListener('load',()=>{const attempt=()=>{if(booted)return;start();if(!booted)setTimeout(attempt,200);};attempt();});
+const attempt=()=>{if(booted)return;start();if(!booted)setTimeout(attempt,200);};
+frame.addEventListener('load',attempt);
+if(frame.contentDocument?.readyState==='complete')attempt();
 setTimeout(()=>{if(!booted){document.getElementById('dv7-loading').textContent='Dobby ne parvient pas à ouvrir le foyer. Réessayez en rechargeant la page.';}},20000);
 window.DobbyStitchV7=Object.freeze({version:7,open,close,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
 })();

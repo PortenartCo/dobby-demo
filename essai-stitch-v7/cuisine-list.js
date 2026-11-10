@@ -44,28 +44,45 @@ window.DobbyCuisineList=(()=>{
   async function check(E,id,done){const s=snapshot(E);if(s.shared)return family(E).edit(id,{checked:done});
     transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');item.done=p.done;`,{id,done});
   }
-  function preview(E){
-    const s=snapshot(E),receipts=E.evaluate('return [...(st.shopFinal?.imports||[]),...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[])];');
+  async function preview(E){
+    const s=snapshot(E),receipts=E.evaluate('return [...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[]),...(st.shopFinal?.imports||[])];');
     const rows=E.evaluate(`const result=[];for(const [key,m]of pendingMeals()){
-      const r=getR(m.id);if(!r)continue;const grouped=new Map();
-      for(const [name,q,unit]of r.ingredients){const token=mealSignature(key,m)+'|'+name.trim().toLocaleLowerCase('fr-BE')+'|'+(unit||'').trim().toLocaleLowerCase('fr-BE');
+      const r=getR(m.id);if(!r)continue;const grouped=new Map(),ref=m._e072ImportRef||(key+'|'+m.id);
+      for(const [name,q,unit]of r.ingredients){const token=ref+'|'+name.trim().toLocaleLowerCase('fr-BE')+'|'+(unit||'').trim().toLocaleLowerCase('fr-BE');
         const qty=q==null?null:Number(q)*portionCount(m)/r.servings;
         const before=grouped.get(token);if(before)before.qty=before.qty==null||qty==null?null:before.qty+qty;
-        else grouped.set(token,{token,name,qty,unit:unit||'',origin:key+' · '+r.name,meal:mealSignature(key,m)});
+        else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+r.name,meal:mealSignature(key,m)});
       }result.push(...grouped.values());}return result;`);
-    const signature=JSON.stringify(rows.map(({token,name,qty,unit})=>({token,name,qty,unit})));
-    return {scope:s.scope,signature,rows:s.shared?rows:rows.filter(x=>!receipts.includes(x.token))};
+    const signature=JSON.stringify(rows.map(({token,name,qty,unit,origin})=>({token,name,qty,unit,origin})));
+    if(s.shared)return {scope:s.scope,signature,rows:await family(E).proposeRows(rows,s.scope)};
+    const seen=new Map(receipts.filter(x=>x&&typeof x==='object').map(x=>[x.token,x]));
+    const proposed=[];
+    for(const row of rows){
+      const prior=seen.get(row.token);
+      if(!prior){proposed.push({...row,targetQty:row.qty});continue;}
+      const item=s.items.find(x=>(x.provenance||[]).includes(row.token));
+      if(!item||item.done)continue; // Already purchased/archived contributions are not new purchases.
+      if(norm(item.unit)!==norm(row.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
+      if(prior.qty!=null&&row.qty!=null&&row.qty>prior.qty)proposed.push({...row,targetQty:row.qty,qty:row.qty-prior.qty,previousQty:prior.qty,mode:'delta'});
+    }
+    return {scope:s.scope,signature,rows:proposed};
   }
   async function confirmImport(E,proposal){
-    const current=preview(E);
+    const current=await preview(E);
     if(proposal.scope!==current.scope||proposal.signature!==current.signature)throw Error('Les menus ou le foyer ont changé. Ouvrez un nouveau récapitulatif.');
-    const tokens=new Set(proposal.rows.map(x=>x.token)),rows=current.rows.filter(x=>tokens.has(x.token));
-    if(current.scope!=='local')return family(E).importRows(rows,current.scope);
-    transaction(E,`const list=st.shopFinal;for(const row of p.rows){if(list.imports.includes(row.token))continue;
-      const found=list.items.find(x=>!x.done&&x.qty!=null&&row.qty!=null&&x.name.trim().toLocaleLowerCase('fr-BE')===row.name.trim().toLocaleLowerCase('fr-BE')&&(x.unit||'').trim().toLocaleLowerCase('fr-BE')===row.unit.trim().toLocaleLowerCase('fr-BE'));
-      if(found){found.qty=Number(found.qty)+row.qty;found.detail=fmt(found.qty)+(found.unit?' '+found.unit:'');(found.provenance ||= []).push(row.token);}
+    const selected=new Map(proposal.rows.map(x=>[x.token,x])),rows=current.rows.filter(x=>selected.has(x.token));
+    for(const row of rows){const approved=selected.get(row.token);for(const key of ['qty','previousQty','targetQty','expected'])if(JSON.stringify(row[key])!==JSON.stringify(approved[key]))throw Error('Un apport a changé. Ouvrez un nouveau récapitulatif.');}
+    if(!rows.length)return 0;
+    const tag=`for(const row of p.rows)if(st.planned[row.key])st.planned[row.key]._e072ImportRef=row.ref;`;
+    if(current.scope!=='local'){
+      transaction(E,tag,{rows});
+      return family(E).importRows(rows,current.scope);
+    }
+    transaction(E,tag+`const list=st.shopFinal;for(const row of p.rows){
+      const found=list.items.find(x=>(x.provenance||[]).includes(row.token))||list.items.find(x=>!x.done&&x.qty!=null&&row.qty!=null&&x.name.trim().toLocaleLowerCase('fr-BE')===row.name.trim().toLocaleLowerCase('fr-BE')&&(x.unit||'').trim().toLocaleLowerCase('fr-BE')===row.unit.trim().toLocaleLowerCase('fr-BE'));
+      if(found){found.qty=Number(found.qty)+row.qty;found.detail=fmt(found.qty)+(found.unit?' '+found.unit:'');if(!(found.provenance||[]).includes(row.token))(found.provenance ||= []).push(row.token);}
       else list.items.push({...row,id:crypto.randomUUID(),detail:row.qty==null?'À préciser':fmt(row.qty)+(row.unit?' '+row.unit:''),category:categoryOf(row.name),done:false,provenance:[row.token]});
-      list.imports.push(row.token);
+      const receipt={token:row.token,qty:row.targetQty};const at=list.imports.findIndex(x=>x?.token===row.token);if(at<0)list.imports.push(receipt);else list.imports[at]=receipt;
     }`,{rows});
   }
   async function transfer(E){const s=snapshot(E);if(!s.shared)throw Error('Foyer indisponible.');
@@ -74,7 +91,7 @@ window.DobbyCuisineList=(()=>{
   }
   async function reuse(E,id){
     const state=snapshot(E),entry=E.read().state.shopHistory[id];if(!entry)throw Error('Archive introuvable.');
-    const rows=entry.items.map(parse).map((x,i)=>({...x,done:false,token:'archive|'+id+'|'+(x.id||i)}));
+    const session=crypto.randomUUID(),rows=entry.items.map(parse).map((x,i)=>({...x,done:false,token:'archive|'+id+'|'+session+'|'+(x.id||i)}));
     if(state.shared)return family(E).importRows(rows,state.scope);
     transaction(E,`for(const row of p.rows){if(st.shopFinal.imports.includes(row.token))continue;st.shopFinal.items.push({...row,id:crypto.randomUUID(),done:false});st.shopFinal.imports.push(row.token);}`,{rows});
   }
