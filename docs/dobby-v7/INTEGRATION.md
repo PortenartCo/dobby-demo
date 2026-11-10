@@ -1,5 +1,7 @@
 # DOBBY V7 — État réel de l’intégration Stitch
 
+> Revue commune actuelle : [E01–E08](INTEGRATED-REVIEW.md), [registre des décisions](REVIEW-CONSOLIDATION.md). Ce document conserve le recensement historique des 53 sources ; il ne constitue pas une validation graphique de ces anciens écrans dans la démonstration intégrée.
+
 ## E07 — Nouvelles présentations Taverne et Courses
 
 [Rapport, sources, preuves et limites E07](E07-TAVERNE-COURSES.md). Les treize routes Cuisine restent raccordées au moteur natif. Quatre présentations utilisent deux nouveaux HTML fournis, conservés hors du recensement original dans `design/stitch-e07/`. Les 53 HTML initiaux sont intacts ; les correspondances historiques ci-dessous sont complétées par les champs `presentation` et `cuisine.e07` du manifeste. Les autres pages Cuisine, writers et E06 ne sont pas modifiés. Aucun déploiement ni fonctionnement réel revendiqué.
