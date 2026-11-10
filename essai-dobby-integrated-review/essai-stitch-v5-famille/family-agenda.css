@@ -1,0 +1,53 @@
+/* Family agenda — responsive, additive to Stitch V5. */
+.fp-panel{padding:18px 16px;margin:12px 0 24px;border:1px solid #d4b98f;border-radius:19px;background:linear-gradient(145deg,#fffaf0,#f9f0df);color:#3d2b1e;box-shadow:0 5px 18px rgba(60,45,28,.07)}
+.fp-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+.fp-eyebrow{display:block;text-transform:uppercase;letter-spacing:.1em;font-size:10px;font-weight:750;color:#886643}
+.fp-heading h2{font-size:24px;font-family:Georgia,'Times New Roman',serif;margin:4px 0 0;color:#573922}
+.fp-panel h3{font-size:17px;font-family:Georgia,'Times New Roman',serif;margin:18px 0 9px;color:#573922}
+.fp-description{font-size:12px;line-height:1.5;color:#715a45;margin:8px 0 12px}
+.fp-sharing{font-size:11px;padding:7px 11px;border-radius:9px;background:#eddfc9;color:#654a30}
+.fp-panel button,.fp-dialog button,.fp-home-due button{font:inherit;font-size:12px;cursor:pointer;border-radius:10px;padding:9px 12px;min-height:37px;border:1px solid #d7c0a0;background:#f3e6d2;color:#55402b}
+.fp-panel .fp-main-btn,.fp-dialog .fp-main-btn{border:0;background:#3e513d;color:#fff;font-weight:650}
+.fp-events,.fp-due-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+.fp-event{background:#fffefa;border:1px solid #e5d5b9;border-radius:12px;padding:12px;display:flex;align-items:flex-start;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.fp-event-details{display:flex;flex-direction:column;gap:4px;flex:2;min-width:185px}
+.fp-event-details strong{font-size:14px;color:#3b2d22;overflow-wrap:anywhere}
+.fp-event-details small,.fp-due small{color:#786751;font-size:11px;line-height:1.5}
+.fp-type{font-weight:650;font-size:10px;color:#815e34;text-transform:uppercase;letter-spacing:.06em}
+.fp-event-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.fp-event-actions button{min-height:32px;padding:6px 8px;font-size:11px}
+.fp-history{margin-top:13px;border:1px solid #dfc9a8;border-radius:11px;padding:11px}
+.fp-history>summary{cursor:pointer;color:#715235;font-size:12px;font-weight:650}
+.fp-history[open] .fp-events{margin-top:11px}
+.fp-empty{background:#fcf5e8;border-radius:12px;padding:13px;color:#79664c;font-size:12px}
+.fp-deadlines{margin-top:18px;padding-top:4px;border-top:1px solid #e5d3b8}
+.fp-due{display:flex;align-items:flex-start;gap:10px;padding:10px 2px;border-bottom:1px solid #efe3ce}
+.fp-due:last-child{border:0}
+.fp-due-date{display:block;min-width:100px;max-width:115px;background:#eae1cf;color:#765939;border-radius:9px;padding:5px 7px;font-size:11px;font-weight:700;line-height:1.4}
+.fp-due-date.fp-overdue{background:#f5dfd7;color:#923c2b}
+.fp-due>span:last-child{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.fp-due strong{font-size:12px;overflow-wrap:anywhere}
+.fp-home-today{list-style:none;padding:0;margin:9px 0;display:flex;flex-direction:column;gap:6px}
+.fp-home-today li{background:#fff7e9;border-radius:10px;padding:9px 11px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.fp-home-today small{font-size:11px;color:#756044}
+.fp-home-due button{background:transparent;border:0;color:#765a3d}
+.fp-home-due .fp-due-date{min-width:90px}
+#fpDialogLayer[hidden]{display:none!important}
+#fpDialogLayer{position:fixed;z-index:9250;inset:0;background:rgba(24,18,13,.79);display:flex;justify-content:center;align-items:center;overflow-y:auto;padding:15px}
+.fp-dialog{position:relative;max-width:540px;width:100%;max-height:calc(100dvh - 30px);overflow-y:auto;background:#fffaef;color:#3a2d20;border:1px solid #dfc4a0;border-radius:20px;padding:24px 18px;box-shadow:0 20px 65px rgba(18,12,7,.35)}
+.fp-dialog h2{font-size:22px;font-family:Georgia,'Times New Roman',serif;margin:0 45px 12px 0;color:#55371e}
+.fp-dialog form{display:grid;gap:11px}
+.fp-dialog label{display:grid;gap:5px;font-size:12px;font-weight:650;color:#60472f}
+.fp-dialog input,.fp-dialog select,.fp-dialog textarea{box-sizing:border-box;display:block;width:100%;min-height:40px;padding:9px 11px;border:1px solid #cab899;background:#fff;color:#2f261c;border-radius:9px;font:inherit;font-size:14px;min-width:0}
+.fp-dialog textarea{min-height:65px;resize:vertical}
+.fp-form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fp-dialog-actions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}
+.fp-dialog .fp-close{position:absolute;right:12px;top:12px;width:42px;height:42px;font-size:23px;padding:0;border-radius:11px}
+@media(max-width:440px){
+  .fp-panel{padding:14px 11px}
+  .fp-heading h2{font-size:21px}
+  .fp-event-actions{justify-content:flex-start}
+  .fp-form-row{grid-template-columns:1fr}
+  .fp-dialog{padding:20px 12px}
+  .fp-due-date{min-width:80px;max-width:90px}
+}

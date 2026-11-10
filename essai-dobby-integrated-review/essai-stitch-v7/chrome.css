@@ -1,0 +1,68 @@
+:root{--e01-top:calc(72px + env(safe-area-inset-top,0px));--e01-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+/* E01 retains source bar surfaces, spacing, symbols and active treatment. */
+body > header[data-e01-chrome],body > nav[data-e01-chrome]{position:fixed!important;left:50%!important;transform:translateX(-50%)!important;width:min(480px,100%)!important;z-index:11000!important}
+body > header[data-e01-chrome]{top:0!important}
+body > nav[data-e01-chrome]{bottom:0!important;display:block!important}
+body > nav[data-e01-chrome] a{min-width:0!important;flex:1;margin:0 2px}
+body > header[data-e01-chrome] .flex-1{min-width:0}
+body > header[data-e01-chrome] .whitespace-nowrap{letter-spacing:.03em;white-space:normal;text-align:center;max-width:100%;display:block;overflow:hidden}
+.e011-band-prefix{display:block;font-size:8px;line-height:10px;white-space:nowrap}
+.e011-band-section{display:block;font-size:10px;line-height:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+body > header[data-e01-chrome] button{flex-shrink:0}
+body > main{padding-top:calc(80px + env(safe-area-inset-top,0px))!important;padding-bottom:calc(108px + var(--e01-footer-height,0px) + env(safe-area-inset-bottom,0px))!important}
+body[data-dv7-screen=traverse],body[data-dv7-screen=missions]{max-width:480px;margin:auto;width:100%}
+#dv7-panel{top:var(--e01-top)!important;bottom:var(--e01-bottom)!important;z-index:10900!important}
+body.dv7-panel-visible #dv7-engine{top:calc(var(--e01-top) + 56px)!important;height:calc(100dvh - var(--e01-top) - 56px - var(--e01-bottom))!important;z-index:10901!important}
+#dv7-panel-top{z-index:10902!important}
+.e01-effects-off .magical-ripple,.e01-effects-off .magic-sparkle-dot,.e01-effects-off .animate-pulse{animation:none!important}
+[data-e01-days]{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px;padding:12px}
+[data-e011-shift]{display:flex;align-items:center;justify-content:center;min-height:52px;border:1px solid #d49b4266;border-radius:12px;background:#271814;color:#f9bb5f;box-shadow:inset 0 1px 3px #0004}
+[data-e011-shift]:disabled{opacity:.35;cursor:default}
+.e011-date-center{min-width:0;min-height:88px;padding:10px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;text-align:center;border:1px solid #d49b4266;border-radius:12px;background:#372622;box-shadow:0 4px 8px #0003}
+[data-e011-date]{font-size:14px;line-height:20px;color:#f9bb5f;overflow-wrap:anywhere}
+[data-e011-today]{min-height:32px;padding:4px 12px;border:1px solid #d49b4266;border-radius:12px;background:#43302c;color:#f9bb5f;font-size:12px}
+[data-e01-days] :is(button,time):focus-visible{outline:2px solid #f9bb5f;outline-offset:3px}
+[data-e01-mission] h3{white-space:normal;overflow-wrap:anywhere}
+[data-e01-complete]{color:#afcdc0!important;border:1px solid #afcdc088!important;min-width:36px;min-height:36px}
+[data-e01-complete][disabled]{opacity:.65}
+[data-e01-event]{width:100%;text-align:left}
+[data-e01-meal]{cursor:pointer}
+
+.e01-context{position:relative!important;inset:auto!important;transform:none!important;width:100%!important;z-index:auto!important;padding-top:0!important}
+:is(main,#fa-supplement,#cu-supplement) .fixed.bottom-0{bottom:var(--e01-bottom)!important;left:50%!important;right:auto!important;width:min(480px,100%)!important;transform:translateX(-50%)!important}
+#fa-dialog{top:var(--e01-top);bottom:var(--e01-bottom);padding-top:16px;z-index:10950}
+/* Notices sit above both the permanent navigation and source action footer. */
+#fa-notice,#cu-notice{bottom:calc(var(--e01-bottom) + var(--e01-footer-height,0px) + 8px)!important}
+
+.e01-effects-off .magical-ripple{display:none}
+
+/* E01.2 — Native account view must share DOBBY's 480px viewport and fixed bars. */
+#dv7-panel:not([hidden]){left:50%!important;right:auto!important;width:min(480px,100vw)!important;transform:translateX(-50%)!important;box-sizing:border-box}
+#dv7-panel-top{width:100%;box-sizing:border-box}
+body.dv7-panel-visible #dv7-engine{left:50%!important;right:auto!important;width:min(480px,100vw)!important;transform:translateX(-50%)!important}
+/* Original Stitch ripple and sparkle particles, above the permanent header. */
+.magical-ripple,.magic-sparkle-dot{z-index:11020!important}
+:root.e01-effects-on [data-e01-toggle="effects"]{border-color:#f9bb5f!important;box-shadow:0 0 14px rgba(249,187,95,.6),inset 0 0 8px rgba(249,187,95,.18)!important}
+:root.e01-effects-off [data-e01-toggle="effects"]{opacity:.72}
+
+/* E01.3 — Standard / Gold. A fixed population, no rendering loop or new storage.
+   Future palettes/shapes can change these variables and ambienceTheme.kind only. */
+:root{--e013-gold:#f9bb5f;--e013-soft:#ffdead;--e013-intensity:.85;--e013-drift-speed:12s;--e013-halo-speed:7.6s;--e013-halo:rgba(249,187,95,.55);--e013-halo-edge:rgba(250,188,77,.5)}
+#e013-ambience{position:fixed;top:var(--e01-top);bottom:var(--e01-bottom);left:50%;width:min(480px,100%);transform:translateX(-50%);overflow:hidden;pointer-events:none;contain:layout paint style;z-index:40;opacity:var(--e013-intensity)}
+.e013-particle{position:absolute;display:block;pointer-events:none;will-change:transform,opacity;animation:e013-drift var(--e013-drift-speed) ease-in-out infinite;opacity:0}
+.e013-mote{border-radius:50%;background:var(--e013-gold);box-shadow:0 0 6px var(--e013-gold)}
+.e013-mote:nth-child(3n){background:var(--e013-soft);box-shadow:0 0 7px var(--e013-soft)}
+@keyframes e013-drift{0%{transform:translate3d(0,15px,0);opacity:0}18%{opacity:var(--e013-alpha)}45%{transform:translate3d(var(--e013-dx),var(--e013-dy),0);opacity:calc(var(--e013-alpha) * .55)}75%{transform:translate3d(calc(var(--e013-dx) * -.45),calc(var(--e013-dy) * 1.3),0);opacity:var(--e013-alpha)}100%{transform:translate3d(calc(var(--e013-dx) * .6),calc(var(--e013-dy) * 1.7),0);opacity:0}}
+.e013-scene{isolation:isolate}
+.e013-scene::before,.e013-scene::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;will-change:transform,opacity;mix-blend-mode:screen}
+.e013-scene::before{background:radial-gradient(ellipse at 2% 55%,var(--e013-halo),transparent 52%),radial-gradient(ellipse at 98% 30%,var(--e013-halo),transparent 48%);opacity:.5;animation:e013-lantern var(--e013-halo-speed) ease-in-out infinite alternate}
+.e013-scene::after{box-shadow:inset 0 0 28px 3px var(--e013-halo-edge);background:radial-gradient(ellipse at 55% 0%,var(--e013-halo),transparent 60%);opacity:.4;animation:e013-edge calc(var(--e013-halo-speed) * 1.4) ease-in-out infinite alternate}
+@keyframes e013-lantern{0%{opacity:.35;transform:scale(1)}47%{opacity:.75;transform:scale(1.045) translate3d(1%,0,0)}100%{opacity:.45;transform:scale(1.025) translate3d(-1%,1%,0)}}
+@keyframes e013-edge{0%{opacity:.4;transform:scale(1)}65%{opacity:.8;transform:scale(1.04)}100%{opacity:.5;transform:scale(1.02)}}
+.e013-paused .e013-particle,.e013-paused .e013-scene::before,.e013-paused .e013-scene::after,.e013-paused .animate-pulse{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){#e013-ambience,.e013-scene::before,.e013-scene::after{display:none!important;animation:none!important}body[data-dv7-screen=traverse] .animate-pulse{animation:none!important}}
+
+/* E02: shared effects respect OFF/reduced motion; chat uses the bounded E01 layer. */
+.e01-effects-off .anim-sparkle{display:none!important}
+body:is([data-family-view=chat],[data-family-view=chat-2]) > [aria-hidden=true]:has(.anim-sparkle){display:none}
+@media(prefers-reduced-motion:reduce){.anim-sparkle{display:none!important}}
