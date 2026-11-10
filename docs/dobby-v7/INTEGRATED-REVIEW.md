@@ -43,7 +43,7 @@ Le manifeste du bundle porte le SHA source, les empreintes source et transformé
 - 80 tests unitaires natifs/sync et 12 tests scoring/identité/build de démonstration ; scoring exhaustif Python/JS : 25 600 comparaisons.
 - Campagne finale source et CI : résultats et éventuelles adaptations causales consignés dans `evidence/integrated-review/logs/` ; références CI et publication dans le reçu final.
 
-Les premiers échecs de recette distinguent défauts réels (pont E02 vers E07.2, reset multionglet) et synchronisation de test (attendre navigation/écriture asynchrone avant assertions/reload). Un test E05 utilisait encore le port 8765 en dur : il respecte maintenant `DOBBY_TEST_ORIGIN`, avec le même port par défaut pour la CI. La campagne locale reprend au test interrompu ; les tests déjà verts ne sont pas recommencés. Aucune assertion métier n’est supprimée.
+Les premiers échecs de recette distinguent défauts réels (pont E02 vers E07.2, reset multionglet) et synchronisation de test (attendre navigation/écriture asynchrone avant assertions/reload). Un test E05 utilisait encore le port 8765 en dur : il respecte maintenant `DOBBY_TEST_ORIGIN`, avec le même port par défaut pour la CI. La campagne locale reprend au test interrompu ; les tests déjà verts ne sont pas recommencés. La CI a également révélé que le test de reprise E06 rechargeait avant la fin de l’écriture IDB : il attend désormais le brouillon confirmé avant reload, sans changer le code applicatif. Le test ciblé corrigé passe. Aucune assertion métier n’est supprimée.
 
 ## Limites conservées pour la revue
 
