@@ -224,7 +224,7 @@
     "lot": "5",
     "status": "verified-partial",
     "unsupported": [
-      "Mission native : titre, catégorie, membre responsable, échéance et note. Pas de récurrence, heure, difficulté, runes ou récompense."
+      "Effort et runes 10/25/50 natifs ; grades à seuils provisoires. Pas de récurrence, heure, rappel ni récompense personnalisée. Synchronisation des gains entre clients compatibles ; intégrité serveur contre les anciennes versions non garantie."
     ]
   },
   {
@@ -269,7 +269,7 @@
     "lot": "5",
     "status": "verified-partial",
     "unsupported": [
-      "Membre canonique et missions attribuées. Accès au carnet local et agenda ; pas d’agrégation automatique des documents par champ personne libre, contacts personnels, récompenses ou antécédents structurés."
+      "Membre canonique, missions et progression de runes native à seuils provisoires. Pas d’agrégation automatique des documents par champ personne libre, contacts personnels ou antécédents structurés."
     ]
   }
 ]

@@ -53,6 +53,11 @@ jobs:
           node --check essai-stitch-v7/tests/cuisine-family.cjs
           node --check essai-stitch-v7/build-family.cjs
           node --check essai-stitch-v7/family-engine.js
+          node --check essai-stitch-v7/member-avatar.js
+          node --check essai-stitch-v7/tests/e04.cjs
+          node --check essai-stitch-v7/tests/e04-runes.cjs
+          node --check essai-stitch-v7/tests/runes-native.cjs
+          node --check essai-stitch-v7/tests/e04-runes-capture.cjs
           node --check essai-stitch-v7/import-runtime.js
           node --check essai-stitch-v7/family.js
           node --check essai-stitch-v7/tests/family.cjs

@@ -10,6 +10,7 @@ window.DobbyFamilyStitchEngine=(()=>{
   data.active=Boolean(win().DobbyFamilyUI?.isModuleActive('family'));data.status=win().DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';
   data.upcoming=win().DobbyFamilyAgenda?.upcoming()||[];return data;
  }
+ function rewardSummary(memberId){return win().DobbyFamilyMissions?.summary(memberId)||null;}
  function page(extra=''){evaluate('st.page="family";st.extraPage=p.extra;st.detail=null;v23MemberEdit=null;render();',{extra});}
  function action(key,value,values={}){
   lastError='';const button=win().document.createElement('button');button.type='button';button.hidden=true;button.dataset[key]=value;
@@ -55,5 +56,5 @@ window.DobbyFamilyStitchEngine=(()=>{
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
  function saveContact(id,values){const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
  function deleteContact(id){requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
- return Object.freeze({requireRecord,unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
+ return Object.freeze({requireRecord,unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
 })();

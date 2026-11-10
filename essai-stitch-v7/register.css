@@ -26,7 +26,7 @@ body[data-family-view="mission-edit"] .e04-field-label{font-size:11px;font-weigh
 body[data-family-view="mission-edit"] .e04-availability{font-size:12px;line-height:1.4;color:#d4c4b1;margin:0}
 body[data-family-view="mission-edit"] .recurrence-btn:disabled{opacity:.45}
 body[data-family-view="mission-edit"] .effort-btn{background:#180b07;border:1px solid #504537;box-shadow:none}
-body[data-family-view="mission-edit"] .effort-btn .text-tertiary{color:#d4c4b1}
+body[data-family-view="mission-edit"] .effort-btn:not(:has(input:checked)) .text-tertiary{color:#d4c4b1}
 body[data-family-view="mission-edit"] .e04-date-row{grid-template-columns:minmax(0,1fr)}
 body[data-family-view="mission-edit"] #date-display{color-scheme:dark;width:100%;min-width:0;min-height:32px}
 body[data-family-view="mission-edit"] .quick-date-btn[aria-pressed="true"]{background:#f9bb5f;color:#442b00;font-weight:700;box-shadow:0 1px 3px #0004}
@@ -36,3 +36,6 @@ body[data-family-view="mission-edit"] #custom-runes{flex:1;min-width:80px;width:
 body[data-family-view="mission-edit"]{padding-bottom:0}
 body[data-family-view="mission-edit"] main>.pb-36{padding-bottom:0}
 body[data-family-view="mission-edit"] .e04-member-name{white-space:normal;line-height:1.25}
+
+body[data-family-view="mission-edit"] main #rg-form label.effort-btn{flex-direction:column;justify-content:center;gap:4px}
+body[data-family-view="mission-edit"] .effort-btn:has(input:checked) .e04-effort-name{color:#f9bb5f}

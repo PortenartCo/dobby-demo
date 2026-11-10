@@ -23,7 +23,7 @@ window.DobbyFamilyStitch=(()=>{
  const current=data=>data.members.find(x=>x.id===ui.person)||null;
  const belongs=(record,member,members)=>Boolean(member&&(record.personId?record.personId===member.id:record.person===member.name&&members.filter(m=>m.name===record.person).length===1));
  const nameFor=(record,data)=>data.members.find(x=>x.id===record.personId)?.name||record.person||'Foyer';
- function avatar(image,member){if(!image)return;const el=document.createElement('span');el.className=image.className+' fa-avatar';el.textContent=member?.avatar||'👤';el.setAttribute('aria-label',member?.name||'Personne non sélectionnée');image.replaceWith(el);}
+ function avatar(image,member){if(!image)return;const frame=image.parentElement;for(const decoration of frame.parentElement.querySelectorAll(':scope > span.absolute'))if(decoration.querySelector('.material-symbols-outlined'))decoration.remove();const el=window.DobbyMemberAvatar.create(member,{className:image.className+' fa-avatar'});frame.classList.remove('overflow-hidden');image.replaceWith(el);}
  function clean(doc){
   const sample=/Thomas|Léa|Hugo|Chloé|Granger|Valombre|Flamel|Barnabé|Weasley|potions?|élixir|tisane|rhume|entorse|O\+|sanguin|sensible aux courants|chiffr|protection locale|sur iPhone|aucune transmission|strictement restreints|aucun parchemin|crypt|AES.?256|seul appareil|exclusivement|hermétique|souverain|jamais transmis|ne quittent|stockage local iPhone|garant|Dans 2 jours|hier|Collégien|Chef de foyer|Père|Mère|Fils aîné|Fille cadette|Apprenti de|14 Rue|végétal/i;
   for(const el of doc.querySelectorAll('main *')){
@@ -77,7 +77,7 @@ window.DobbyFamilyStitch=(()=>{
   $('#member-birthdate').value=draft.birthdate||'';
   unavailable($('#member-lastname'),'Le moteur conserve un seul champ prénom / nom.');unavailable($('#member-notes'),'Les notes sur un membre ne sont pas enregistrées dans le moteur.');
   for(const input of $$('main input[name="role"]'))unavailable(input,'Le rôle familial n’est pas enregistré dans le moteur.');
-  for(const img of $$('main img'))avatar(img,draft);
+  for(const img of $$('main img'))avatar(img,{...member,...draft});
   const icons=context('Icône du membre');const select=document.createElement('select');select.id='fa-member-avatar';select.setAttribute('aria-label','Icône du membre');for(const icon of ['👤','👩','👨','👧','👦','🧒'])select.add(new Option(icon,icon));select.value=draft.avatar||'👤';icons.append(select,paragraph('Photos, rôles et notes : non disponibles dans le moteur. Le prénom / nom, la date de naissance et l’icône sont enregistrés.'));$('#member-form').prepend(icons);
   bind($('#tab-create'),'member-new');bind($('#tab-edit'),'members');selected($('#tab-create'),Boolean(ui.memberNew));selected($('#tab-edit'),!ui.memberNew);
   for(const b of $$('button[form="member-form"],#member-form button[type="submit"],#fa-supplement button'))if(/Enregistrer|Confirmer|Consigner|Sauver/.test(b.textContent))bind(b,'member-save');
