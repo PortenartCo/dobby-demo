@@ -1,0 +1,31 @@
+source-backed-browser	Functional Stitch roots and source fidelity	﻿2026-11-10T00:16:59.9804370Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9805068Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9805503Z [36;1msleep 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9805778Z [36;1mif command -v google-chrome >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9806152Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9806500Z [36;1melif command -v chromium >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9807126Z [36;1m  BROWSER="$(command -v chromium)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9807872Z [36;1melif command -v chromium-browser >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9808286Z [36;1m  BROWSER="$(command -v chromium-browser)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9808587Z [36;1melse[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9808845Z [36;1m  echo "No Chrome/Chromium available on runner"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9809158Z [36;1m  exit 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9809363Z [36;1mfi[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9809659Z [36;1mCHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9858506Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:16:59.9858785Z ##[endgroup]
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:04.1746466Z E02_UI_ACTIONS_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:06.1568724Z E02_UI_ACTIONS_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:08.2979026Z E02_UI_ACTIONS_PASS 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:11.5002141Z E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:17.8341032Z E02_VOICE_HISTORY_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0687795Z AssertionError [ERR_ASSERTION]: native iframe aligned with overlay
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0689418Z     at /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/e01.cjs:56:756 {
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0690353Z   generatedMessage: false,
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0690856Z   code: 'ERR_ASSERTION',
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0691269Z   actual: false,
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0691634Z   expected: true,
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0692031Z   operator: '==',
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0692482Z   diff: 'simple'
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0692890Z }
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T00:17:40.0980333Z ##[error]Process completed with exit code 1.

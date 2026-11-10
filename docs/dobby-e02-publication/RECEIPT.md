@@ -10,6 +10,8 @@ PASS : les quatre destinations internes restent dans le répertoire actif. Param
 
 PASS : interface E02 à 320/390/1440, voix simulée et historique individuel ; régression E01 à 390/1440 et Missions/Outils à 320/390. [Traces locales](local-results.txt). Un premier lancement d'E01 dans le serveur temporaire ne trouvait pas la fixture `design/stitch-53` ; le montage de cette seule fixture QA a été corrigé, puis le script E01 a réussi sans changement de code applicatif.
 
+Un incident CI indépendant des deux fonctions corrigées a touché la mesure immédiate d'alignement du profil dans l'ancien test E01 : [trace](e01-ci-incident.txt), exécution `42727070298`. La même révision `258b0f9` a réussi l'autre CI (`42727078167`), et E01 a réussi localement. Le test attend désormais deux frames de rendu avant la mesure, conserve toutes les assertions et leur tolérance, et ajoute les coordonnées au diagnostic en cas d'échec. [Vérification ciblée après stabilisation](e01-stable-results.txt). Aucun composant applicatif E01 modifié.
+
 ## Publication
 
 En attente de la CI du code corrigé, puis de la copie statique et de la recette publique. URL prévue : https://portenartco.github.io/dobby-demo/essai-e02-preview/famille.html#chat
