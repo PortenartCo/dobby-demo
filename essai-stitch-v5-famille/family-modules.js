@@ -476,8 +476,10 @@ document.addEventListener('click', async e => {
       if (states.menus?.active) await syncOne('menus');
     }
     if (action === 'disable') {
-      if (confirm('Arrêter le partage de ce module sur cet appareil ? Les données déjà partagées sur Supabase ne sont pas supprimées.')) {
-        states[id].active=false;if(id==='missions'){st.runeSyncRequired=false;save();}await persist();
+      if (confirm('Arrêter le partage de ce module sur cet appareil ? Les données déjà partagées sur Supabase ne sont pas supprimées.'+(id==='missions'?' Les runes resteront en attente jusqu’au rétablissement du partage.':''))) {
+        // Keep runeSyncRequired sticky: shared mission identities cannot earn a
+        // second, local-only confirmation after opting out of synchronization.
+        states[id].active=false;await persist();
       }
     }
     if (action === 'server' || action === 'local') await resolve(id,action);
