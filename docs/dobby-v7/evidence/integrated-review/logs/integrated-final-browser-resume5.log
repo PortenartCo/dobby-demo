@@ -1,0 +1,10 @@
+locator.click: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-e01-complete][data-e01-kind=automatic]').first()[22m
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/register-tools.cjs:4:2456 {
+  log: [
+    "  - waiting for locator('[data-e01-complete][data-e01-kind=automatic]').first()"
+  ],
+  name: 'TimeoutError'
+}

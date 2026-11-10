@@ -22,7 +22,7 @@
 | E05 Runes | Retravailler la présentation : rune réellement illustrée selon le grade, jauge plus qualitative, historique lisible ; conserver les règles de gains et seuils existants | À appliquer (design) |
 | E07 Courses | « 1 articles » doit être accordé en « 1 article » | À appliquer |
 | E07.1 Taverne & E07.2 Courses | Deux pages à revoir en fonctionnement réel après intégration, malgré leurs tests et captures réussis | Revue utilisateur obligatoire |
-| E08 Contrats | Interface acceptée en revue ; corriger plus tard « 1 contrats et assurances enregistrés » sans intervention Codex isolée | Accepté visuellement, non-régression à contrôler |
+| E08 Contrats | Interface acceptée en revue ; corriger plus tard « 1 contrats et assurances enregistrés » sans intervention Codex isolée | Accepté visuellement ; non-régression source contrôlée à 320/360/390/1440, revue utilisateur commune attendue |
 
 ## Limites à ne pas présenter comme validées
 - L'aperçu E07.2 est un environnement fictif isolé ; il n'atteste pas la synchronisation entre deux vrais comptes familiaux.

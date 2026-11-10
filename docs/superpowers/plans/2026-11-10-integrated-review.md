@@ -42,7 +42,7 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - [ ] Bundle final reproductible et manifesté, branche poussée, CI exacte SHA.
 
 ## Task 5 — Publish only the static preview
-- [ ] Lire configuration Pages et parent main actuel ; snapshot arbres et empreintes HTTP existants.
+- [x] Lire configuration Pages et parent main actuel ; snapshot arbres et empreintes HTTP existants.
 - [ ] Commit statique isolé ajoutant exclusivement essai-dobby-integrated-review ; aucun fichier applicatif main modifié, aucun merge. Push normal, jamais force.
 - [ ] Attendre Pages, puis URL réelle aux trois largeurs : ressources/clics/CRUD/persistance/reset/isolation. Manifestes identiques aux octets testés.
 - [ ] Rapport, inventaire réel/indisponibilités, SHA/CI/URL/captures et conflits ; arrêt pour revue humaine.
@@ -58,3 +58,6 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - Task 3 complete: E08 PASS320/360/390/1440, volumes0/1/10/50 et dates exploitables, E07.2 UI PASS320/390/1440 (liste unique, CRUD, import/confirmations, archives, routeslegacy etscroll). Preuves E08 originales restaurées exactes depuiscb937d4, nouvelles captures séparées.
 
 - Task 4 checkpoint: aperçu local PASS320/390/1440 sur les six parcours. Pont E02→liste E072 corrigé après échec causal ; articles/archives et doublons vérifiés. Revue indépendante P2 reset multionglet corrigé ; deux onglets et sentinelles Storage/IDB testés. 80+12 tests unitaires PASS. Campagne finale source en cours ; publication pas encore effectuée.
+
+- Campagne finale source terminée, exit0 : 150 traces de réussite. Reprises ciblées uniquement aux contrôles interrompus (port local E05, sélecteurs de création/suppression/automatique E03, Chromium explicite sur Linux, action globale native de synchronisation après reload hors ligne). Aucune assertion métier retirée. Captures historiques restaurées ; preuves de cette mission séparées.
+- CI : les attentes de persistance E06 et de navigation interdocument de l’aperçu ont été corrigées après échecs causaux. Confirmation locale du nouvel aperçu PASS320/390/1440 avec les attentes d’URL effectives. Code applicatif identique au bundle f015c2d ; seul le test a changé. CI finale avant publication à attendre.

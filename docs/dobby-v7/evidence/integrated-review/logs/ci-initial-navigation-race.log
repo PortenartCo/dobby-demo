@@ -1,0 +1,74 @@
+source-backed-browser	Functional Stitch roots and source fidelity	﻿2026-11-10T21:16:52.5957905Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5958260Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5958475Z [36;1msleep 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5958615Z [36;1mif command -v google-chrome >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5958803Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5958981Z [36;1melif command -v chromium >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5959152Z [36;1m  BROWSER="$(command -v chromium)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5959336Z [36;1melif command -v chromium-browser >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5959530Z [36;1m  BROWSER="$(command -v chromium-browser)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5959700Z [36;1melse[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5959836Z [36;1m  echo "No Chrome/Chromium available on runner"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5960001Z [36;1m  exit 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5960109Z [36;1mfi[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5960267Z [36;1mCHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.5999861Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:16:52.6000011Z ##[endgroup]
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:01.5105755Z E06_AUTH_PASS accepted native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:02.5973267Z E06_AUTH_PASS ambiguous native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:03.6411695Z E06_AUTH_PASS denied native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:04.6835779Z E06_AUTH_PASS cross-household native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:09.3412739Z E06_JOURNEY_PASS 320 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:13.4513454Z E06_JOURNEY_PASS 390 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:17.7717947Z E06_JOURNEY_PASS 1440 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:21.2536403Z E06_EDGE_PASS existing member/85 runes, repeat/skip/resume/back, 4 houses/12 Patronus, native storage refusal, metadata refusal, stale profile/context isolation
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:23.0022135Z E06_RECOVERY_PASS failed temporary save remains escapable; no member created; identity draft resumes after reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:24.7046373Z E06_REVIEW_CREATION_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:25.2336537Z E06_REVIEW_MULTITAB_PASS native IndexedDB, distinct-member merge and same-member revision refusal
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:27.0527200Z E06_REVIEW_MEMBERSHIP_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:30.5368026Z E06_SHARED_PASS 320 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:33.5126618Z E06_SHARED_PASS 390 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:35.1316252Z E06_SOURCE_VISUAL_PASS 320 seven immutable source compositions; source missing media explicitly unfilled
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:36.2819790Z E06_SOURCE_VISUAL_PASS 390 seven immutable source compositions; source missing media explicitly unfilled
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:37.7010054Z E06_SOURCE_VISUAL_PASS 1440 seven immutable source compositions; source missing media explicitly unfilled
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:38.8215127Z E08_COUNT_PASS 320 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:38.9654372Z E08_COUNT_PASS 320 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:39.2665675Z E08_COUNT_PASS 320 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:39.8198920Z E08_COUNT_PASS 320 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:40.1052016Z E08_BROWSER_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:40.8173384Z E08_COUNT_PASS 360 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:40.9822077Z E08_COUNT_PASS 360 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:41.2640336Z E08_COUNT_PASS 360 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:41.8400866Z E08_COUNT_PASS 360 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:42.1188102Z E08_BROWSER_PASS 360
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:42.8006595Z E08_COUNT_PASS 390 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:42.9487221Z E08_COUNT_PASS 390 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:43.2476372Z E08_COUNT_PASS 390 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:43.8032172Z E08_COUNT_PASS 390 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:44.1012575Z E08_BROWSER_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:44.8923453Z E08_COUNT_PASS 1440 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:45.0838753Z E08_COUNT_PASS 1440 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:45.4648918Z E08_COUNT_PASS 1440 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:46.2683306Z E08_COUNT_PASS 1440 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:46.6347140Z E08_BROWSER_PASS 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:47.7586253Z E03_COUNTS_PASS real 3/17 and native title never sanitized
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:17:57.1286334Z E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:06.0482126Z E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:15.3088992Z E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:17.9783465Z E072_BOOT_PASS already-loaded native engine starts once
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:19.6962154Z E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:22.4141848Z E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:24.8301438Z E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:27.3811982Z E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:27.5646305Z REVIEW_BUILD f448558e659eb5f87924c1f3e88f2d3d60d5105e 253 files /home/runner/work/dobby-demo/dobby-demo/essai-dobby-integrated-review
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:27.9962981Z SENTINELS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:28.0643291Z ENTRY 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:28.0983364Z LOADED http://127.0.0.1:8765/essai-dobby-integrated-review/
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:28.4430205Z READY 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4054759Z page.evaluate: Execution context was destroyed, most likely because of a navigation
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4055319Z     at native (/home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/integrated-preview.cjs:5:83)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4055729Z     at /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/integrated-preview.cjs:14:964 {
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4055983Z   log: [],
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4056102Z   name: 'Error'
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4056240Z }
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:18:33.4280792Z ##[error]Process completed with exit code 1.
