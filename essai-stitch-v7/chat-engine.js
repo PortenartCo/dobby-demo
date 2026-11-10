@@ -25,9 +25,19 @@ window.DobbyChatEngine=(()=>{'use strict';
   let stored;try{stored=persisted();}catch{stored=before;}const values={};for(const field of fields)values[field]=Object.hasOwn(stored,field)?stored[field]:before[field];E.evaluate('for(const field of p.fields){if(Object.hasOwn(p.values,field))st[field]=p.values[field];else delete st[field];}',{fields,values});
   throw Error('L’enregistrement natif n’a pas été confirmé. Vérifiez les données avant de réessayer.');}}
  function persisted(){return E.evaluate('return JSON.parse(localStorage.getItem(key)||"{}");');}
- function reply(input){const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;
+ async function reply(input){const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;
   const add=text.match(/^(?:s['’]il (?:te|vous) pla[iî]t[, ]+)?(?:ajoute[r]?|acheter|mets?|mettre)\s+(.+?)(?:\s+(?:aux courses|[àa] (?:la |ma )?liste (?:de |des )?courses|dans (?:la |ma )?liste (?:de |des )?courses))?[.!]?$/i);
   if(add){const destination=/(?:aux courses|liste (?:de |des )?courses)/i.test(text);if(!destination&&(/^(?:un|une)\s/.test(norm(add[1]))||/\b(?:billets?|abonnements?)\b/.test(norm(add[1]))))return {text:'Souhaitez-vous l’ajouter à la liste de courses ? Écrivez la demande avec cette destination. Aucune modification effectuée.',links:[]};if(!/^acheter\b/i.test(text)&&!destination)return {text:'Dobby a besoin de la destination : précisez « ajoute cet article aux courses ». Aucune modification effectuée.',links:[]};const name=add[1].replace(/^(?:du|de la|des|le|la|les|un|une)\s+|^de l['’]/i,'').trim();if(name.length<2||name.length>119||/[\n;]/.test(name)||/\b(?:puis|ensuite|supprime|ajoute)\b/i.test(name))return unknown();
+   // E07.2 keeps an active list independently of its archives. Use its existing
+   // adapter rather than the legacy editshop action, which clears shopFinal.
+   if(state.shopFinal?.e072){
+    const list=window.DobbyCuisineList;if(!list)throw Error('La liste de courses est indisponible. Ouvrez les courses avant de réessayer.');
+    const guard=token(),current=list.snapshot(E);
+    if(current.items.some(x=>norm(x.name)===norm(name)))return {text:'« '+name+' » figure déjà dans les courses. Dobby n’a pas créé de doublon.',links:[link('Voir les courses','./index.html#shop')]};
+    await list.add(E,{name,qty:null,unit:''});check(guard);
+    if(!list.snapshot(E).items.some(x=>norm(x.name)===norm(name)))throw Error('L’article n’a pas été ajouté. Consultez les courses avant de réessayer.');
+    return {text:'Dobby a ajouté « '+name+' » aux courses.',links:[link('Voir les courses','./index.html#shop')]};
+   }
    const existing=(state.extras||[]).some(x=>norm(x)===norm(name));if(existing)return {text:'« '+name+' » figure déjà dans la préparation des courses. Dobby n’a pas créé de doublon.',links:[link('Voir les courses','./index.html#shop')]};
    if(state.shopFinal&&!Object.values(state.shopHistory||{}).some(row=>JSON.stringify(row)===JSON.stringify(state.shopFinal)))throw Error('La liste validée n’est pas retrouvée dans l’historique. Ouvrez les courses pour vérifier sa conservation avant tout ajout.');
    nativeWrite(()=>{if(state.shopFinal)C.shop('editshop');C.shop('addextra',{value:name});},['extras','shopFinal']);if(!(E.read().state.extras||[]).some(x=>norm(x)===norm(name))||!(persisted().extras||[]).some(x=>norm(x)===norm(name)))throw Error('L’article n’a pas été ajouté. Consultez la préparation des courses avant de réessayer.');

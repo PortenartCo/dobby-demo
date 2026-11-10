@@ -1,6 +1,6 @@
 # DOBBY — Registre de revue et intégration E01–E08
 
-État au 10 novembre 2026. Ce fichier consigne des décisions de revue utilisateur et des limites, sans déclarer les corrections réalisées.
+État au 10 novembre 2026. Registre de revue conservé ; les états ci-dessous distinguent intégration fonctionnelle et corrections graphiques encore attendues.
 
 ## Contrat de revue
 - Référence : pages reconstruites progressivement E01–E08, **pas** le raccordement historique des 53 maquettes Stitch.
@@ -13,12 +13,12 @@
 | Périmètre | Décision de revue | État |
 |---|---|---|
 | E01 Accueil | Harmoniser les états vides « Missions du Jour » et « Gazette des Curiosités » sur la mise en forme du « Festin du Soir » (titre mis en évidence, sous-texte, sans encadré pointillé) | À appliquer, non livré dans la démo actuelle |
-| E03 Missions | Dans le hero, supprimer « Tome VII · Rayon D » et remplacer par « Grimoire des Missions » en bas à droite ; retirer l'ancien cartouche haut gauche | À appliquer |
-| E03 Missions | Le vieux registre Missions montré dans l'aperçu E07.2 ne doit plus être soumis à revue ; lui substituer la branche E03 reconstruite | Intégration requise |
-| E05 Profil magique | Le membre de démo devrait accéder naturellement à son profil sans état ambigu « aucun profil associé », tout en restant sans authentification réelle | À vérifier sur aperçu intégré |
+| E03 Missions | Dans le hero, supprimer « Tome VII · Rayon D » et remplacer par « Grimoire des Missions » en bas à droite ; retirer l'ancien cartouche haut gauche | Intégré : cartouche bas droit « Grimoire des Missions », ancien cartouche absent |
+| E03 Missions | Le vieux registre Missions montré dans l'aperçu E07.2 ne doit plus être soumis à revue ; lui substituer la branche E03 reconstruite | Vraie page E03 intégrée à la branche commune |
+| E05 Profil magique | Le membre de démo devrait accéder naturellement à son profil sans état ambigu « aucun profil associé », tout en restant sans authentification réelle | Persona fictive explicitement associée uniquement dans le bundle de démonstration ; parcours PASS320/390/1440 |
 | E05 Maison | Reprendre les blasons des quatre Maisons : animal et héraldique plus reconnaissables et détaillés ; conserver l'univers visuel retenu | À appliquer (design) |
 | E05 Maison & Patronus | Ajouter une brève description narrative des caractéristiques/symboles de chaque Maison et Patronus, sans profilage psychologique | À appliquer |
-| E05 / E06 | Raccorder « Refaire le test » aux questionnaires E06 pour Maison et Patronus ; aucune perte des choix avant confirmation | Intégration et test requis |
+| E05 / E06 | Raccorder « Refaire le test » aux questionnaires E06 pour Maison et Patronus ; aucune perte des choix avant confirmation | Raccordé aux vrais questionnaires E06 ; confirmation préserve les choix précédents, PASS320/390/1440 |
 | E05 Runes | Retravailler la présentation : rune réellement illustrée selon le grade, jauge plus qualitative, historique lisible ; conserver les règles de gains et seuils existants | À appliquer (design) |
 | E07 Courses | « 1 articles » doit être accordé en « 1 article » | À appliquer |
 | E07.1 Taverne & E07.2 Courses | Deux pages à revoir en fonctionnement réel après intégration, malgré leurs tests et captures réussis | Revue utilisateur obligatoire |
@@ -38,3 +38,6 @@
 - E06 : feat/dobby-e06-onboarding @ 1a71f9608dd29514e8fdc5743f7041aeccf5c4ab.
 - E07.2 : feat/dobby-e07-cuisine-courses @ bba5b0255acc4834dbd54303df66c61decbed546.
 - E08 : feat/dobby-e08-contrats @ cb937d48d136561c826a2adc707692fb00c6faf1.
+
+## Assemblage de revue
+[Rapport commun E01–E08](INTEGRATED-REVIEW.md). Le Salon signale les rubriques hors revue, et les autres vues familiales historiques portent « non validé ». Les corrections graphiques ouvertes ci-dessus ne sont pas déclarées terminées. La publication du seul nouveau dossier de démonstration est autorisée par la demande de convergence actuelle ; aucune fusion applicative dans main.

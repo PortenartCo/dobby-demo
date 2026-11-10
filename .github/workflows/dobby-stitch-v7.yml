@@ -59,6 +59,8 @@ jobs:
           node --check essai-stitch-v5-famille/family-v2.js
           node --check scripts/build-dobby-review.cjs
           node --check scripts/review/review-runtime.js
+          node --check scripts/review/integrated-config.js
+          node --check essai-stitch-v7/tests/integrated-preview.cjs
           node --check essai-stitch-v7/tests/e07-2-boot.cjs
           node --check essai-stitch-v7/tests/e07-2.cjs
           node --check essai-stitch-v7/tests/e07-2-model.cjs
@@ -87,6 +89,8 @@ jobs:
           for file in essai-stitch-v7/register*.js essai-stitch-v7/*-register.js essai-stitch-v7/build-register.cjs essai-stitch-v7/tests/register-*.cjs essai-stitch-v7/tests/ci.cjs; do node --check "$file"; done
       - name: Existing offline, family and conflict regressions
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+      - name: Integrated preview builder and byte provenance
+        run: node --test essai-stitch-v7/tests/integrated-build.test.cjs
       - name: E06 exhaustive scoring, identity and draft isolation
         run: node --test essai-stitch-v7/tests/e06-*.test.mjs
       - name: Source derivation remains reproducible

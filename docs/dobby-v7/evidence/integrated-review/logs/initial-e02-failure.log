@@ -1,0 +1,9 @@
+SENTINELS 320
+ENTRY 320
+LOADED http://127.0.0.1:8775/essai-dobby-integrated-review/
+READY 320
+page.waitForFunction: Timeout 15000ms exceeded.
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/integrated-preview.cjs:20:275 {
+  log: [],
+  name: 'TimeoutError'
+}

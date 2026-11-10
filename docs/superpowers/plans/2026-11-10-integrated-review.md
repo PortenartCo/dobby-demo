@@ -34,10 +34,10 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - [x] Test E08 0/1/10/50 et test liste E07.2 ciblé ; commit.
 
 ## Task 4 — Isolated integrated preview and journeys
-- [ ] Paramétrer builder/enveloppe E07.2 (defaults historiques conservés), nouveau profil et préfixe isolé, seul nouveau dossier généré.
-- [ ] Persona DÉMO explicitement fictive accessible naturellement ; aucune fausse association réelle ni création/invitation simulée.
-- [ ] Annoter les vues familiales non reconstruites/non validées ; conserver les contrôles indisponibles explicites.
-- [ ] Tester six parcours, formulaires/CRUD/reload/history/deep links, 320/390/1440 ; sentinelles Storage/IDB E072 et réel intactes après reset, aucune mutation réseau externe.
+- [x] Paramétrer builder/enveloppe E07.2 (defaults historiques conservés), nouveau profil et préfixe isolé, seul nouveau dossier généré.
+- [x] Persona DÉMO explicitement fictive accessible naturellement ; aucune fausse association réelle ni création/invitation simulée.
+- [x] Annoter les vues familiales non reconstruites/non validées ; conserver les contrôles indisponibles explicites.
+- [x] Tester six parcours, formulaires/CRUD/reload/history/deep links, 320/390/1440 ; sentinelles Storage/IDB E072 et réel intactes après reset, aucune mutation réseau externe.
 - [ ] Registre mis à jour ; corrections graphiques complexes restent à revoir et ne retardent pas l’assemblage. Revue indépendante, une campagne générale finale adaptée + CI.
 - [ ] Bundle final reproductible et manifesté, branche poussée, CI exacte SHA.
 
@@ -56,3 +56,5 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - Task 2 complete: E06 11/11 tests dont25 600 comparaisons Python/JS, isolation native10/10, parcours7scènes PASS320/390/1440, edge et revue causale PASS, E07.2 boot/modèle PASS. Références historiques E06 restaurées exactes depuis1a71f96 ; nouvelles captures checkpoint séparées.
 - E08 conflit résolu : chrome conserve les libellés Missions/Taverne et la délégation cérémonie, ajoute Contrats & Assurances. CSS scoped et suppression du partage uniquement sur contracts.
 - Task 3 complete: E08 PASS320/360/390/1440, volumes0/1/10/50 et dates exploitables, E07.2 UI PASS320/390/1440 (liste unique, CRUD, import/confirmations, archives, routeslegacy etscroll). Preuves E08 originales restaurées exactes depuiscb937d4, nouvelles captures séparées.
+
+- Task 4 checkpoint: aperçu local PASS320/390/1440 sur les six parcours. Pont E02→liste E072 corrigé après échec causal ; articles/archives et doublons vérifiés. Revue indépendante P2 reset multionglet corrigé ; deux onglets et sentinelles Storage/IDB testés. 80+12 tests unitaires PASS. Campagne finale source en cours ; publication pas encore effectuée.
