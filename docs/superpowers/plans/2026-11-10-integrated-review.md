@@ -30,8 +30,8 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - [x] Tests E06 calcul/identité/reprise et UI ; test E07.2 boot/modèle après API commune ; commit.
 
 ## Task 3 — E08 checkpoint
-- [ ] Porter le rendu canonique contrats, image/provenance et styles scoped sans écraser chrome/family E06.
-- [ ] Test E08 0/1/10/50 et test liste E07.2 ciblé ; commit.
+- [x] Porter le rendu canonique contrats, image/provenance et styles scoped sans écraser chrome/family E06.
+- [x] Test E08 0/1/10/50 et test liste E07.2 ciblé ; commit.
 
 ## Task 4 — Isolated integrated preview and journeys
 - [ ] Paramétrer builder/enveloppe E07.2 (defaults historiques conservés), nouveau profil et préfixe isolé, seul nouveau dossier généré.
@@ -54,3 +54,5 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - Task 1 complete: e03-counts PASS3/17, e03.cjs PASS320/390/1440, e04.cjs PASS320/390/1440. Cartouche Grimoire des Missions bas droit déjà dans la composition E03, libellé harmonisé au registre.
 - E06 conflits : fusion additive dans family-v2 (grocery E07.2 conservé octet pour octet, connexion/meta E06 ajoutés), générateur garde branches E03/E07.2 et ajoute loaders/versionnements E06. Délégation de chrome à la cérémonie ajoutée après test UI rouge sur dock visible.
 - Task 2 complete: E06 11/11 tests dont25 600 comparaisons Python/JS, isolation native10/10, parcours7scènes PASS320/390/1440, edge et revue causale PASS, E07.2 boot/modèle PASS. Références historiques E06 restaurées exactes depuis1a71f96 ; nouvelles captures checkpoint séparées.
+- E08 conflit résolu : chrome conserve les libellés Missions/Taverne et la délégation cérémonie, ajoute Contrats & Assurances. CSS scoped et suppression du partage uniquement sur contracts.
+- Task 3 complete: E08 PASS320/360/390/1440, volumes0/1/10/50 et dates exploitables, E07.2 UI PASS320/390/1440 (liste unique, CRUD, import/confirmations, archives, routeslegacy etscroll). Preuves E08 originales restaurées exactes depuiscb937d4, nouvelles captures séparées.

@@ -525,22 +525,39 @@
       "verification": {
         "tests": [
           "tests/register-documents.cjs",
-          "tests/register-visual.cjs"
+          "tests/register-visual.cjs",
+          "tests/e08.cjs",
+          "tests/register-documents-sync.cjs"
         ],
         "widths": [
           320,
-          390
+          360,
+          390,
+          1440
         ],
         "captures": [
           {
-            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-320.png",
-            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-320.png"
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-320.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-320.png"
           },
           {
-            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-390.png",
-            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-390.png"
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-360.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-360.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-390.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-390.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-1440.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-1440.png"
           }
         ]
+      },
+      "presentation": {
+        "mission": "E08",
+        "document": "docs/dobby-v7/E08-CONTRATS.md",
+        "illustration": "assets/contracts/screen.png"
       }
     },
     {

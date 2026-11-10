@@ -39,3 +39,17 @@ body[data-family-view="mission-edit"] .e04-member-name{white-space:normal;line-h
 
 body[data-family-view="mission-edit"] main #rg-form label.effort-btn{flex-direction:column;justify-content:center;gap:4px}
 body[data-family-view="mission-edit"] .effort-btn:has(input:checked) .e04-effort-name{color:#f9bb5f}
+
+/* E08 canonical Contracts only: source composition, common DOBBY typography. */
+body[data-family-view="contracts"] main .fa-context{margin-inline:0}
+body[data-family-view="contracts"] main .rg-document-card{width:100%;margin-inline:0;overflow-wrap:anywhere}
+body[data-family-view="contracts"] [data-e08-illustration]{height:auto;aspect-ratio:1376/768;margin-bottom:0}
+body[data-family-view="contracts"] [data-e08-illustration] img{display:block;width:100%;height:100%;object-fit:contain}
+body[data-family-view="contracts"] [data-e08-badge]{position:absolute;top:auto;left:auto;bottom:8px;right:8px;font-size:10px;background:#180b07e6;white-space:normal}
+body[data-family-view="contracts"] .e08-actions{align-items:stretch}
+body[data-family-view="contracts"] .e08-actions>button:first-child{background:#f9bb5f;color:#442b00;font-weight:700;flex:1 1 100%}
+body[data-family-view="contracts"] .e08-documents-link{background:transparent;border-color:transparent;text-decoration:underline;font-size:12px;align-self:center}
+@media(max-width:360px){
+ body[data-family-view="contracts"] .e011-band-prefix{display:none}
+ body[data-family-view="contracts"] .e011-band-section{white-space:normal;text-overflow:clip}
+}

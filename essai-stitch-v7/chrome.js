@@ -43,6 +43,7 @@ function sectionTitle(){
  if(['chat','chat-2'].includes(document.body.dataset.familyView))return 'Parler à Dobby';
  if(document.body.dataset.dv7Screen==='taverne'&&document.body.dataset.cuisineView==='taverne')return 'Taverne';
  if(document.body.dataset.dv7Screen==='missions')return 'Missions';
+ if(document.body.dataset.familyView==='contracts')return 'Contrats & Assurances';
  const name=(heading?.textContent||document.title).replace(/\s+/g,' ').trim();return document.body.dataset.dv7Screen==='traverse'?name.replace(/^Le /,''):name;
 }
 function mount(){if(window.DobbyOnboarding?.chrome())return;if(!template)return;const current=document.querySelector('body > header');if(current){
