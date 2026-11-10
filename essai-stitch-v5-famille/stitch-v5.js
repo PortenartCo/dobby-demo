@@ -148,7 +148,7 @@
 (function(){
  const css=document.createElement('link');css.rel='stylesheet';css.href='./family-v2.css?v=20261108-7';document.head.append(css);
  const agendaCss=document.createElement('link');agendaCss.rel='stylesheet';agendaCss.href='./family-agenda.css?v=20261108-7';document.head.append(agendaCss);
- const js=document.createElement('script');js.src='./family-v2.js?v=20261108-7';js.defer=true;
+ const js=document.createElement('script');js.src='./family-v2.js?v=20261110-e06-1';js.defer=true;
  js.onload=function(){
    window.DobbyRunesReady=import('./family-runes-core.mjs');
    const modules=document.createElement('script');modules.src='./family-modules.js?v=20261110-runes-1';

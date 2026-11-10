@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Playfair+Display:ital,wght@0,600..800;1,600..800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;color:#fadcd5;font-family:'EB Garamond',serif;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "tertiary-fixed": "#ffdead", "secondary-fixed-dim": "#afcdc0", "on-primary-fixed": "#291800", "on-tertiary": "#432c00", "secondary-fixed": "#cbe9dc", "on-secondary-fixed": "#042018", "on-surface-variant": "#d4c4b1", "on-secondary-fixed-variant": "#314c42", "surface": "#1e100c", "tertiary-container": "#d59b2f", "surface-bright": "#483530", "inverse-on-surface": "#3e2c28", "surface-container-lowest": "#180b07", "on-tertiary-fixed-variant": "#604100", "on-surface": "#fadcd5", "on-primary": "#442b00", "secondary-container": "#334e44", "on-primary-fixed-variant": "#624000", "primary": "#f9bb5f", "surface-tint": "#f9bb5f", "on-error": "#690005", "outline": "#9d8e7e", "primary-fixed": "#ffddb2", "on-error-container": "#ffdad6", "inverse-primary": "#815500", "error-container": "#93000a", "on-secondary-container": "#a1bfb2", "on-primary-container": "#533500", "inverse-surface": "#fadcd5", "primary-fixed-dim": "#f9bb5f", "background": "#1e100c", "surface-container-low": "#271814", "on-background": "#fadcd5", "tertiary": "#fabc4d", "surface-container-highest": "#43302c", "surface-dim": "#1e100c", "primary-container": "#d49b42", "surface-container-high": "#372622", "secondary": "#afcdc0", "surface-container": "#2c1c18", "on-tertiary-fixed": "#281900", "on-tertiary-container": "#513600", "on-secondary": "#1a352c", "tertiary-fixed-dim": "#fabc4d", "outline-variant": "#504537", "surface-variant": "#43302c", "error": "#ffb4ab" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "space-lg": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "gutter": "1.25rem", "space-md": "1rem", "margin-mobile": "1rem", "space-xl": "2.5rem", "margin": "2.5rem", "gutter-mobile": "0.75rem" }, fontFamily: { "headline-sm": ["Playfair Display"], "display-lg-mobile": ["Playfair Display"], "body-md": ["EB Garamond"], "display-lg": ["Playfair Display"], "headline-lg": ["Playfair Display"], "label-md": ["Literata"], "headline-md": ["Playfair Display"], "headline-lg-mobile": ["Playfair Display"], "body-sm": ["EB Garamond"], "body-lg": ["EB Garamond"], "label-sm": ["Literata"], "label-lg": ["Literata"] }, fontSize: { "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }], "display-lg-mobile": ["34px", { lineHeight: "42px", letterSpacing: "-0.01em", fontWeight: "700" }], "body-md": ["17px", { lineHeight: "24px", fontWeight: "400" }], "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.01em", fontWeight: "700" }], "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }], "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-lg-mobile": ["26px", { lineHeight: "34px", fontWeight: "600" }], "body-sm": ["15px", { lineHeight: "22px", fontWeight: "400" }], "body-lg": ["19px", { lineHeight: "28px", fontWeight: "400" }], "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.08em", fontWeight: "500" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.04em", fontWeight: "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface min-h-screen flex flex-col"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(12,7,5,0.6)]"><div class="h-20 px-gutter-mobile flex items-center justify-between"><button aria-label="Retour" class="w-11 h-11 flex items-center justify-center text-primary hover:text-primary-fixed transition-colors rounded-full hover:bg-surface-container-high/40" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><div class="flex flex-col items-center justify-center"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span><span class="font-headline-sm text-headline-sm tracking-[0.2em] uppercase text-primary drop-shadow-[0_2px_8px_rgba(249,187,95,0.3)]">DOBBY</span><span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span></div><div class="flex items-center gap-1.5 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_#f9bb5f]"></span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span><span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span></div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_0_10px_rgba(249,187,95,0.25)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex-1 flex flex-col relative w-full pt-20 pb-safe bg-surface"><div class="flex flex-col w-full pb-10 px-margin-mobile">
+<!-- Progress Stepper: Étape 2 sur 7 -->
+<div class="flex flex-col gap-space-xs mt-space-sm mb-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history_edu</span>
+        Étape 2 sur 7
+      </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Grand Registre</span>
+</div>
+<!-- Alchemical Phial Progress Tracker -->
+<div class="relative w-full h-2.5 bg-surface-container-lowest rounded-full overflow-hidden p-0.5 shadow-inner">
+<div class="h-full rounded-full bg-gradient-to-r from-primary-container via-primary to-tertiary shadow-[0_0_12px_rgba(249,187,95,0.7)] transition-all duration-700 ease-out" style="width: 28.5%;"></div>
+</div>
+</div>
+<!-- Intimate Grimoire Header Card -->
+<section class="relative bg-surface-container rounded-xl p-space-md shadow-md mb-space-lg overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-xs">
+<div class="inline-flex items-center gap-1.5 self-start px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px]">clock_loader_40</span>
+        Parchemin d'Appartenance
+      </div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight mt-1">
+        Faisons connaissance…
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        Comment Dobby doit-il inscrire votre nom sur le grand registre du foyer ?
+      </p>
+</div>
+</section>
+<!-- Main Grimoire Entry Form -->
+<form class="flex flex-col gap-space-lg" id="identity-form" onsubmit="event.preventDefault();">
+<!-- Wizard Name & Lineage Slot Inputs -->
+<div class="flex flex-col gap-space-md bg-surface-container-low p-space-md rounded-xl shadow-sm">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]">edit_note</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold tracking-wide">État Civil Enchanteur</span>
+</div>
+<!-- Prénom -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="first-name">
+<span>Prénom de sorcier</span>
+<span class="text-primary font-label-sm text-label-sm italic">Requis</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full h-13 py-3 pl-4 pr-11 bg-surface-container-lowest text-primary placeholder:text-outline/60 font-body-lg text-body-lg rounded-lg shadow-inner focus:outline-none focus:ring-1 focus:ring-primary transition-all" id="first-name" name="firstName" placeholder="ex. Albus, Hermione, James..." required="" type="text"/>
+<span class="material-symbols-outlined absolute right-3.5 text-outline text-[20px] pointer-events-none">ink_pen</span>
+</div>
+</div>
+<!-- Nom de famille -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="last-name">
+<span>Lignée ou Maison</span>
+<span class="text-primary font-label-sm text-label-sm italic">Requis</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full h-13 py-3 pl-4 pr-11 bg-surface-container-lowest text-primary placeholder:text-outline/60 font-body-lg text-body-lg rounded-lg shadow-inner focus:outline-none focus:ring-1 focus:ring-primary transition-all" id="last-name" name="lastName" placeholder="ex. Dumbledore, Granger, Potter..." required="" type="text"/>
+<span class="material-symbols-outlined absolute right-3.5 text-outline text-[20px] pointer-events-none">shield_moon</span>
+</div>
+</div>
+<!-- Date de Naissance (Optionnelle) -->
+<div class="flex flex-col gap-1.5 pt-1">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center justify-between" for="birth-date">
+<span class="flex items-center gap-1.5">
+<span>Date d'apparition en ce monde</span>
+</span>
+<span class="text-outline font-label-sm text-label-sm italic">Facultatif</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full h-13 py-3 pl-4 pr-11 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg shadow-inner focus:outline-none focus:ring-1 focus:ring-primary transition-all appearance-none" id="birth-date" name="birthDate" type="date"/>
+<span class="material-symbols-outlined absolute right-3.5 text-primary text-[20px] pointer-events-none">calendar_month</span>
+</div>
+<p class="font-label-sm text-label-sm text-outline mt-0.5">Permet à Dobby de préparer les gâteaux d'anniversaire magiques au bon moment.</p>
+</div>
+</div>
+<!-- Avatar Gallery Section -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-space-md rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">portrait</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold tracking-wide">Choix du Portrait d'Aura</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary">8 modèles</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Sélectionnez l'incarnation féerique qui reflète le mieux votre tempérament :
+      </p>
+<!-- 8 Fantasy Avatars Grid -->
+<div aria-label="Portraits féeriques" class="grid grid-cols-4 gap-2.5 my-1" id="avatar-grid" role="radiogroup">
+<!-- Avatar 1 (Selected by default) -->
+<button aria-checked="true" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-md ring-2 ring-primary transition-all transform active:scale-95 flex flex-col items-center justify-center" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Enchanting warm oil painting portrait of an earnest young wizard apprentice with curly auburn hair, inquisitive bright hazel eyes, wearing a modest wool-spun mantle with vintage brass brooches, soft sepia candle-glow chiaroscuro background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0j42kphTPk-uXbaseKRLBpAlytcOO_YZgyfEv6MFN3VrHIpAl0SV3p5ft9Dx1_j52FJNYLkt6kibW_DDS7tkQD-L4DCscSjgtxoaHnoG3ozYNltS1qPsuStUxMKrLUHrO-pSDPE-a_yyK0SShgbtA9wkvDFv6wYM8HUZROBfgiHHnYGtA8_5RCLNsHt_MNoLxUKZnfHCfm37HIyHbkrFNRr6Tehj2SKq0ooaIC6Ky"/>
+<div class="selected-badge absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Jeune Apprenti Cuivré</span>
+</button>
+<!-- Avatar 2 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Luminous historical style portrait of a benevolent magical mother smiling with tender warm crinkled eyes, braided chestnut hair draped over an embroidered velvet robe, surrounded by golden hearth embers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJz7G1sENRzdijKsjQoyKSTrTRnJjhabT-_BoAvhTMxZ6i36dAFvZ4zBW40A2_U-8gJZGL8PyjmSUdujdS6rqfH22q-Ht8qfKHindUndOyH5GXuTs27__Jhd1quxB0HHkElJbB0Pw18mNdwuB6oseabr1c4-Jlxe93Af_exZn_Mw-eoZzmmDpv7BtF0U272LWhF1fRzHeBNShnrjkHD4pJKxSr6r5bCcVmdKBsNyse"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Mère Bienveillante du Foyer</span>
+</button>
+<!-- Avatar 3 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Intimate textured portrait of a kind-hearted wizard father with a neatly trimmed salt-and-pepper beard, wearing brass spectacles and an earthy brown scholar waistcoat, warm library ambient light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDviGCPodQvgL7ouMFGooSGa1Dj1UR1wvrqtNIBAzajfnjtj21h3CWAcDrjY4UZNSaSjViI4BdW98ONTzsYcYov1IJBP7bRHaK6jFm_bHHpFw_JtOVBa6Lxcgrk4-JQ-iFhhITLXOqUTYALGhEV3maPhAZEa3R2NGoVR8rt0kiEMMfrDWqO-SBFbC7-aIcOcQ92pfOLx3UGeNAkW_poOG95Q3uqho5nqyhPLCLXaozC"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Père Érudit et Protecteur</span>
+</button>
+<!-- Avatar 4 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Noble and gentle portrait of an elderly wizard sage with cascading silver beard, wise smiling eyes full of celestial wonder, donning deep indigo astrological robes, soft lantern backlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeVwn42st1CTIiBm-eMpLbwmITN8he1dL-IfDYCZSVX_wX4FH3tLlPKDzz1YLoUd4dNg7u6cUcJjesP04LIqBHuTl7Vxg27OouDQ2tNsCmvsgVio-gOPSyn2Ba7MipVVX3p0FwJm7WLty4cg-Dqdrd3x6YLYJBbhFpprGbiYHJKVuwJSXiL-3Ethuwcg4p5LjW6vlcYWdOcolO_wXn37tBjvZaLmG0LS7k_xkm4n5e"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Vénérable Sage Cosmique</span>
+</button>
+<!-- Avatar 5 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Charismatic whimsical portrait of a young girl sorceress with braided raven locks, a tiny green garden sprite resting on her collar, joyful sparkling gaze, warm amber sunset glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqvq16hPTTOJSRFS-y6EOCRXXkTxJhbFjzv-MMT4nQtDi538k923gb4Ge8hE4Hz1jlKmXMqAj0DtzSVQVd4g9j-FMNCDHfba5GzxXKCNAard6l0EErlb6q6cZmmSiSzFOmFHH_VL2jUyF2j8yFB12fO-xaowj_G5jppfqpO9z7ySVqoMpBs9-g1upq8cTWN-RsJ1vQO5xegNSyQAKW6sQn3ATWTsfXliDDfeJe4EoF"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Petite Magicienne des Forêts</span>
+</button>
+<!-- Avatar 6 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Warm and welcoming portrait of a mature sorceress botanist with warm olive skin, green botanical linen tunic, gentle confident smile, surrounded by dried lavender and hanging apothecary vials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCon7bkMWG81AVNC8ZV38bKAR5x6N3k-aVyMc6H2Op7AffhMEs-R--SRFemHsz6TSLX1vN7Wv0W-RijmoAZw1FC85edZc1Ku0BG4JrFueNIDMvGPiTtvJaIluGHRst47UgVD_LxlFZR7Nt3k2CfU_dyyUbKJYd_e7QnI8gvWlz81htvh-CoPci3TGaB1EJsiXSuCDHJy8d-75y7CBZNPCrNV29nkyCsWKUN4Zte42ko"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Botaniste Apothicaire</span>
+</button>
+<!-- Avatar 7 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Playful portrait of a mischievous young boy wizard with golden blonde unruly hair, a quill tucked behind his ear, laughing eyes, warm candlelight highlighting antique spellbook pages." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJe3WP9anYA0b0G3NTFYA1-09aKZtKZ5USjp8NZJRjSM53lc81fT9xMV7ejSnRlCPnzgHdBK0w9tJKslWHAu3Ee_WZefQAxuelXcoHiNPqldr-zTWFD0hDiQ31hOVk_l7WcaVEwP4h43XfcwcBSqq9XDprAucSriSEnfn3ybHqGqhyWVzCSCJEfiDA2w3-b2zKThW0CXsJpT4QEnDwlOawDSzUdZZBnSrSt2cj4YmJ"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Espiègle Arpenteur</span>
+</button>
+<!-- Avatar 8 -->
+<button aria-checked="false" class="avatar-card group relative aspect-square rounded-xl bg-surface-container-high overflow-hidden shadow-sm transition-all transform active:scale-95 flex flex-col items-center justify-center opacity-85 hover:opacity-100" onclick="selectAvatar(this)" role="radio" type="button">
+<img class="w-full h-full object-cover" data-alt="Regal yet deeply maternal portrait of an archmage matriarch with silver-streaked dark hair, wearing a high-collared burgundy damask coat with a glowing amber talisman pendant, comforting serene gaze." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRSfET2ZL51Lr6_T8wXAH3sg8fVAsPqxdxCnd-efqFMqAAkREBk58FeLyXxPlLj9aaRN2mGZC4JXtaD8WdwGIz22-V0raPAJoCRi5C6QsNeTlQucxjhVWw2USdaHaa8PxQzDGoWpaiS6SfPU32TssGngLx0daPnkm-eoYxwmA9q8mToIoX2C4jq8uMJLTzUI2i-1W2vor2LR8AxjddXlqeY2sa_ASfu6Mqub6RXc4I"/>
+<div class="selected-badge hidden absolute top-1 right-1 w-4 h-4 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[11px]" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="sr-only">Matriarche Bienfaitrice</span>
+</button>
+</div>
+<!-- Secondary Parchment Button: Custom Import -->
+<div class="flex flex-col items-center mt-2">
+<label class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-label-md cursor-pointer transition-colors shadow-sm" for="custom-avatar-file">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+<span>Importer mon propre portrait</span>
+</label>
+<input accept="image/*" class="hidden" id="custom-avatar-file" onchange="handleCustomPhoto(this)" type="file"/>
+<span class="font-label-sm text-label-sm text-outline mt-1 italic">Selon compatibilité appareil photo ou galerie</span>
+</div>
+</div>
+<!-- Alternative Selector: Already Existing Household Member -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">family_restroom</span>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium leading-snug">
+            Profil créé pour un proche sans compte ?
+          </span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Idéal pour les parents inscrivant un enfant sans adresse e-mail personnelle.
+          </p>
+<button class="self-start mt-2 inline-flex items-center gap-1.5 text-primary hover:text-primary-fixed font-label-md text-label-md underline underline-offset-4 decoration-primary/50 transition-colors" onclick="toggleExistingSelector(this)" type="button">
+<span>Lier à un membre déjà recensé</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Collapsible Profile Linker -->
+<div class="hidden pt-2 mt-1 flex flex-col gap-2" id="existing-profiles-panel">
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary font-label-md text-label-md">
+              H
+            </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Hugo Potter</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Petit sorcier (6 ans)</span>
+</div>
+</div>
+<button class="px-2.5 py-1 rounded bg-primary/20 text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm transition-colors" type="button">
+            Sélectionner
+          </button>
+</div>
+</div>
+</div>
+<!-- Dobby Delight Quote Box -->
+<div class="relative bg-surface-container rounded-xl p-3.5 flex items-center gap-3 shadow-inner">
+<div class="w-10 h-10 rounded-full bg-primary/15 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">magic_button</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic leading-snug">
+        « Dobby brodera vos initiales sur les tapisseries dès que vous aurez franchi le grand seuil ! »
+      </p>
+</div>
+<!-- CTA & Navigation Block -->
+<div class="flex flex-col gap-3 mt-space-sm">
+<!-- Main Primary CTA Button 52px (Brass Wax Seal Inspiration) -->
+<button class="w-full h-[52px] bg-primary text-on-primary hover:bg-primary-fixed active:scale-[0.98] font-label-lg text-label-lg font-bold rounded-lg shadow-lg flex items-center justify-center gap-2 transition-all" type="submit">
+<span>Poursuivre vers le Choixpeau</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<!-- Stepper Controls: Retour & Passer pour plus tard -->
+<div class="flex items-center justify-between px-2 pt-1">
+<button class="flex items-center gap-1 text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors py-1.5" onclick="history.back()" type="button">
+<span class="material-symbols-outlined text-[16px]">west</span>
+<span>Retour</span>
+</button>
+<button class="text-outline hover:text-on-surface font-label-md text-label-md underline underline-offset-4 decoration-outline-variant hover:decoration-on-surface transition-colors py-1.5" type="button">
+          Passer pour plus tard
+        </button>
+</div>
+</div>
+</form>
+</div>
+<script>
+  function selectAvatar(btn) {
+    const grid = document.getElementById('avatar-grid');
+    const cards = grid.querySelectorAll('.avatar-card');
+    
+    cards.forEach(card => {
+      card.setAttribute('aria-checked', 'false');
+      card.classList.remove('ring-2', 'ring-primary', 'opacity-100');
+      card.classList.add('opacity-85');
+      const badge = card.querySelector('.selected-badge');
+      if (badge) badge.classList.add('hidden');
+    });
+
+    btn.setAttribute('aria-checked', 'true');
+    btn.classList.add('ring-2', 'ring-primary', 'opacity-100');
+    btn.classList.remove('opacity-85');
+    const activeBadge = btn.querySelector('.selected-badge');
+    if (activeBadge) activeBadge.classList.remove('hidden');
+  }
+
+  function handleCustomPhoto(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        // Uncheck all predefined avatars
+        const cards = document.querySelectorAll('.avatar-card');
+        cards.forEach(c => {
+          c.setAttribute('aria-checked', 'false');
+          c.classList.remove('ring-2', 'ring-primary');
+          const b = c.querySelector('.selected-badge');
+          if (b) b.classList.add('hidden');
+        });
+
+        // Set the first card as preview with gold border
+        const firstCard = cards[0];
+        const img = firstCard.querySelector('img');
+        if (img) img.src = e.target.result;
+        firstCard.setAttribute('aria-checked', 'true');
+        firstCard.classList.add('ring-2', 'ring-primary', 'opacity-100');
+        const badge = firstCard.querySelector('.selected-badge');
+        if (badge) badge.classList.remove('hidden');
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function toggleExistingSelector(btn) {
+    const panel = document.getElementById('existing-profiles-panel');
+    if (panel) {
+      panel.classList.toggle('hidden');
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.textContent = panel.classList.contains('hidden') ? 'expand_more' : 'expand_less';
+      }
+    }
+  }
+</script></main></body></html>

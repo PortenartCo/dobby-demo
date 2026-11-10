@@ -25,9 +25,9 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - [x] Tests E03 et création E04 ciblés PASS ; commit.
 
 ## Task 2 — E06 checkpoint
-- [ ] Porter fichiers neufs et références immuables E06, scoring exhaustif, brouillons, templates. Patchs communs via diff base E05 et résolution fonctionnelle.
-- [ ] Conserver API liste E07.2 de family-v2 ; ajouter façade Auth/metadata E06, provenance profil, retakes sans moteur parallèle.
-- [ ] Tests E06 calcul/identité/reprise et UI ; test E07.2 boot/modèle après API commune ; commit.
+- [x] Porter fichiers neufs et références immuables E06, scoring exhaustif, brouillons, templates. Patchs communs via diff base E05 et résolution fonctionnelle.
+- [x] Conserver API liste E07.2 de family-v2 ; ajouter façade Auth/metadata E06, provenance profil, retakes sans moteur parallèle.
+- [x] Tests E06 calcul/identité/reprise et UI ; test E07.2 boot/modèle après API commune ; commit.
 
 ## Task 3 — E08 checkpoint
 - [ ] Porter le rendu canonique contrats, image/provenance et styles scoped sans écraser chrome/family E06.
@@ -52,3 +52,5 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - E03 conflits : build-source conserve les scripts avatars/profil E05 et le chargement cuisine-list E07.2 ; ajoute seulement layout/CSS/JS Missions. chrome conserve libellé Taverne, ajoute Missions. bridge conserve garde-fou E03 contre nettoyage des données réelles ; root-adapters délègue à DobbyMissions.
 - E03 tests adaptés aux vrais radios/date E04 et au Profil E05 depuis le bouton compte (plus de panneau V5 attendu), sans retirer les assertions métier. Tests des anciens registres utilisent la carte E03 et les actions natives de synchronisation/statut quand ces contrôles n’appartiennent plus à la page de lecture E03.
 - Task 1 complete: e03-counts PASS3/17, e03.cjs PASS320/390/1440, e04.cjs PASS320/390/1440. Cartouche Grimoire des Missions bas droit déjà dans la composition E03, libellé harmonisé au registre.
+- E06 conflits : fusion additive dans family-v2 (grocery E07.2 conservé octet pour octet, connexion/meta E06 ajoutés), générateur garde branches E03/E07.2 et ajoute loaders/versionnements E06. Délégation de chrome à la cérémonie ajoutée après test UI rouge sur dock visible.
+- Task 2 complete: E06 11/11 tests dont25 600 comparaisons Python/JS, isolation native10/10, parcours7scènes PASS320/390/1440, edge et revue causale PASS, E07.2 boot/modèle PASS. Références historiques E06 restaurées exactes depuis1a71f96 ; nouvelles captures checkpoint séparées.

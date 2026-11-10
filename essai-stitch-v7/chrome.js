@@ -45,7 +45,7 @@ function sectionTitle(){
  if(document.body.dataset.dv7Screen==='missions')return 'Missions';
  const name=(heading?.textContent||document.title).replace(/\s+/g,' ').trim();return document.body.dataset.dv7Screen==='traverse'?name.replace(/^Le /,''):name;
 }
-function mount(){if(!template)return;const current=document.querySelector('body > header');if(current){
+function mount(){if(window.DobbyOnboarding?.chrome())return;if(!template)return;const current=document.querySelector('body > header');if(current){
  // Preserve contextual source title/actions below the permanent bar (save,
  // back, current cooking step). Global controls belong only to the bar.
  if(!current.dataset.e01Chrome&&!document.querySelector('main [data-e01-context]')){

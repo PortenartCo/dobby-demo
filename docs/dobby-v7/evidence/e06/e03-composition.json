@@ -1,0 +1,45 @@
+{
+  "base": "6a86ead6341eb2f17e7552852621c21f496ad97c",
+  "overlay": "65b094c6a0157c4cedca5bcb41e216a762158c94",
+  "files": [
+    "essai-stitch-v5-famille/index.html",
+    "essai-stitch-v5-famille/family-profile.js",
+    "essai-stitch-v5-famille/family-runes-core.mjs",
+    "essai-stitch-v5-famille/family-missions-core.mjs",
+    "essai-stitch-v5-famille/family-missions.js",
+    "essai-stitch-v5-famille/family-modules.js",
+    "essai-stitch-v5-famille/family-v2.js",
+    "essai-stitch-v5-famille/stitch-v5.js",
+    "essai-stitch-v7/family-engine.js",
+    "essai-stitch-v7/member-avatar.js",
+    "essai-stitch-v7/member-avatar.css",
+    "essai-stitch-v7/magic-profile.js",
+    "essai-stitch-v7/magic-profile.css",
+    "essai-stitch-v7/family.js",
+    "essai-stitch-v7/chrome.js",
+    "essai-stitch-v7/tools-register.js",
+    "essai-stitch-v7/register.css",
+    "essai-stitch-v7/build-onboarding.cjs",
+    "essai-stitch-v7/onboarding.js",
+    "essai-stitch-v7/onboarding-routes.json",
+    "essai-stitch-v7/onboarding-scoring.mjs",
+    "essai-stitch-v7/onboarding-drafts.mjs",
+    "essai-stitch-v7/onboarding-engine.js",
+    "essai-stitch-v7/onboarding-route-data.js",
+    "essai-stitch-v7/onboarding.css"
+  ],
+  "directories": [
+    "assets/magic",
+    "assets/onboarding",
+    "data",
+    "design/e06"
+  ],
+  "preserved": [
+    "E03 generator and Missions renderer/styles",
+    "E03 section title",
+    "E03 safeguard preserving user counters/text"
+  ],
+  "tests": "selectors adapted to real E04 radios; native account portal secondary to E05; await DOM rendered instead of early ui.view; no assertions removed",
+  "merged": false,
+  "additionalChanges": "Scoped Patronus reveal dimensions and House scene background from final E06 presentation patch; E06 journey rerun at 320/390/1440, PASS."
+}
