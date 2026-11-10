@@ -1,5 +1,7 @@
 # E04 — Formulaire Nouvelle Mission
 
+> Évolution sur la branche runes : les trois efforts et leurs récompenses sont désormais raccordés. Les limites historiques décrites ici correspondent à la restauration initiale ; voir [E04 — Runes, grades et avatars](E04-RUNES.md) pour les capacités et blocages actuels.
+
 **Restauration et tests ciblés : PASS.** Branche indépendante `feat/dobby-e04-mission-form`, worktree `/workspace/dobby-e04-mission-form`, base E02 `9c73e845c7744315bdc7d03f59a09ae67572aa8e`. Commit applicatif `8292189`.
 
 Le formulaire s'appuie sur le véritable HTML `design/stitch-53/dobby_cr_er_et_attribuer_une_mission/code.html`, déjà dérivé sans scripts dans `essai-stitch-v7/templates/remaining/mission-edit.html`. Le fichier source et son template sont inchangés. [Provenance de la comparaison](evidence/e04/source/provenance.json).

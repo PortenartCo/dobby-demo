@@ -1,0 +1,18 @@
+AssertionError [ERR_ASSERTION]: No source decoration masks the actual earned grade
++ actual - expected
+
++ [
++   'shield'
++ ]
+- []
+
+    at /workspace/dobby-e04-runes/essai-stitch-v7/tests/e04-runes.cjs:14:260
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:502:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

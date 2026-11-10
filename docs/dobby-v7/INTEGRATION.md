@@ -145,3 +145,8 @@ Les mentions de confidentialité Contacts/Mémos/Listes sont liées aux règles 
 [Contrat et point de contrôle de l'historique individuel](E02-PARLER-A-DOBBY.md). Le parcours principal `famille.html#chat` conserve les véritables compositions Stitch 1 avec hero compact, bulles et confirmation, header/navigation E01 et saisie fixe. Commandes déterministes raccordées aux lectures et writers natifs ; aucune IA payante ou réponse factuelle inventée. Reconnaissance/synthèse selon les API et voix effectivement disponibles.
 
 Historique local par identité connectée dans le magasin natif ; sans identité, fil temporaire. Ancien historique sans auteur conservé et non réattribué. Synchronisation individuelle distante **bloquée**, sans table ni migration ajoutée. Les deux sources chat restent déclarées partielles, notamment pour cette synchronisation et la validation Safari iOS réelle. Le manifeste expose le contrat E02 et ses preuves sans modifier les autres intégrations.
+
+
+## E04 — Runes et avatars, branche indépendante en revue
+
+Efforts 10/25/50, ledger natif distinct et grades SVG provisoires sont raccordés sur `feat/dobby-e04-runes`, base E04 `091fe0e`. [Règles, preuves et limites](E04-RUNES.md). Aucun nouveau recensement des sources ni intégration de branche E03 : les états fonctionnel/partiel restent inchangés. Synchronisation testée sur fixtures compatibles ; protection contre les anciens writers et ordre physique de complétions hors ligne non garantis par le serveur actuel. Aucune publication ni modification Supabase/SQL.

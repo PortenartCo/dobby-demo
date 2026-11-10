@@ -1,0 +1,38 @@
+✔ concurrent distinct credits survive server conflict resolution and mission deletion (36.599782ms)
+✔ concurrent distinct credits survive local conflict resolution and mission deletion (11.904259ms)
+✔ same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted (8.406242ms)
+✔ accepted PATCH with lost response and reload confirms the same request without replay credit (7.497641ms)
+✔ CAS loss between GET/PATCH retains pending intent, then existing resolver converges (13.061175ms)
+✔ activation/retrieval preserves local pending requests and never credits legacy done rows (7.194606ms)
+✔ a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized (4.740855ms)
+✔ JSON object key order from jsonb cannot trigger a repeated reward PATCH (5.149635ms)
+✔ a second native completion during PATCH keeps newer local data and its unconfirmed request (6.231599ms)
+✔ a malformed confirmation or server refusal never fabricates a confirmed gain (5.261023ms)
+✖ disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain (4.383427ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 217.870364
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/runes-sync.test.mjs:42:1
+✖ disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain (4.383427ms)
+  AssertionError [ERR_ASSERTION]: a previously shared identity still requires CAS confirmation
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e04-runes/essai-stitch-v5-famille/tests/runes-sync.test.mjs:43:175)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

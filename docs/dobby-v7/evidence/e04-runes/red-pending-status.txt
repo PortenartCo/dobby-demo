@@ -1,0 +1,36 @@
+✔ concurrent distinct credits survive server conflict resolution and mission deletion (26.950616ms)
+✔ concurrent distinct credits survive local conflict resolution and mission deletion (7.627498ms)
+✔ same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted (6.246727ms)
+✔ accepted PATCH with lost response and reload confirms the same request without replay credit (5.959749ms)
+✔ CAS loss between GET/PATCH retains pending intent, then existing resolver converges (6.526304ms)
+✔ activation/retrieval preserves local pending requests and never credits legacy done rows (5.300289ms)
+✔ a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized (3.651886ms)
+✔ JSON object key order from jsonb cannot trigger a repeated reward PATCH (4.313203ms)
+✔ a second native completion during PATCH keeps newer local data and its unconfirmed request (5.1817ms)
+✔ a malformed confirmation or server refusal never fabricates a confirmed gain (3.17057ms)
+✔ disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain (4.314186ms)
+✖ retrieval queues retained offline rewards and reports pending until actual confirmation (5.450436ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 181.347508
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/runes-sync.test.mjs:45:1
+✖ retrieval queues retained offline rewards and reports pending until actual confirmation (5.450436ms)
+  AssertionError [ERR_ASSERTION]: pending requests cannot be labelled up to date
+      at TestContext.<anonymous> (file:///workspace/dobby-e04-runes/essai-stitch-v5-famille/tests/runes-sync.test.mjs:46:326)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '<p class="fv2-muted">Le partage des modules est volontaire : les données V5 déjà présentes sur cet appareil ne sont jamais téléversées automatiquement.</p><div class="fv2-module"><strong>Activer le foyer en une seule fois</strong><p>Partagez les 5 modules restants après une seule confirmation. Les anciens carnets de santé et les pièces locales ne seront pas transférés.</p><button type="button" data-fm-action="activate-all">Activer les 5 modules du foyer</button></div><div class="fv2-module"><strong>Repas et menus</strong><span class="fv2-flag">Partage désactivé</span><button type="button" data-fm-action="activate" data-module="menus">Activer le partage</button></div><div class="fv2-module"><strong>Recettes et Thermomix</strong><span class="fv2-flag">Partage désactivé</span><button type="button" data-fm-action="activate" data-module="recipes">Activer le partage</button></div><div class="fv2-module"><strong>Missions familiales</strong><span class="fv2-flag">Partagé · à jour</span><button type="button" data-fm-action="refresh" data-module="missions">Synchroniser</button><button type="button" data-fm-action="disable" data-module="missions">Garder local seulement</button></div><div class="fv2-module"><strong>Maison et entretiens</strong><span class="fv2-flag">Partage désactivé</span><p>Pièces et scans toujours locaux.</p><button type="button" data-fm-action="activate" data-module="house">Activer le partage</button></div><div class="fv2-module"><strong>Membres, contacts et listes</strong><span class="fv2-flag">Partage désactivé</span><button type="button" data-fm-action="activate" data-module="family">Activer le partage</button></div><div class="fv2-module"><strong>Documents et contrats du foyer</strong><span class="fv2-flag">Partage désactivé</span><p>Contrats et assurances partagés ; autres fiches sur décision explicite. Les PDF et photos s’envoient séparément.</p><button type="button" data-fm-action="activate" data-module="contracts">Activer le partage</button></div><div class="fv2-module"><strong>Documents et fichiers joints</strong><span class="fv2-flag">Partage volontaire</span><p>Les fiches et PDF/photos sont partagés avec le foyer uniquement dans les conditions choisies depuis Documents. Les pièces locales ne sont pas envoyées automatiquement.</p></div><div class="fv2-module"><strong>Rendez-vous médicaux et santé</strong><span class="fv2-flag">Choix explicite</span><p>Les anciens carnets restent locaux. Les rendez-vous créés dans le foyer et les documents Santé volontairement partagés sont communs.</p></div>',
+    expected: /Runes en attente de synchronisation/,
+    operator: 'match',
+    diff: 'simple'
+  }

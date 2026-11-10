@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "base": "091fe0e049e496b678ba70b892605777a5e108cd",
+  "codeCommit": "299bc4fb4dbd809b4cc99ab9e6f62d8ae2e8d27b",
+  "protectedObjects": [
+    {
+      "path": "design/stitch-53",
+      "gitObject": "90c61c98916f285128e612afed07898b758fa1cf",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "gitObject": "2aa28828a019484e17f818d19027afe9f534e746",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chrome.js",
+      "gitObject": "b8ae90577bdd6c2a96a7748190c282b7da489555",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chrome.css",
+      "gitObject": "639edf4673239bef48b11fbf4a39d1917416ab60",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/home.js",
+      "gitObject": "c01247aa6a29d79545f2ece79ddceed92df56acf",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chat.js",
+      "gitObject": "84717acbd2ca6f0995257a79498f4830f7f407a5",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "gitObject": "d93c22e2ddc8ea8c31b255f3f07471db404e24e2",
+      "unchanged": true
+    },
+    {
+      "path": "sql-proposals",
+      "gitObject": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "unchanged": true
+    }
+  ],
+  "remoteReferencesReadOnly": {
+    "refs/heads/feat/dobby-e03-missions": "6a86ead6341eb2f17e7552852621c21f496ad97c",
+    "refs/heads/feat/dobby-e04-mission-form": "091fe0e049e496b678ba70b892605777a5e108cd",
+    "refs/heads/feat/dobby-stitch-53-source-backed-v7": "9c73e845c7744315bdc7d03f59a09ae67572aa8e",
+    "refs/heads/main": "0708d643d099999713e1538eb5043097ac591e6b"
+  },
+  "e03UsedOnlyInDetachedQA": true,
+  "pagesPublished": false,
+  "sqlOrProductionModified": false
+}
