@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Date choice reflects the restored browser-back draft
+
+'false' !== 'true'
+
+    at /workspace/dobby-e04-mission-form/essai-stitch-v7/tests/e04.cjs:14:456 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'false',
+  expected: 'true',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
