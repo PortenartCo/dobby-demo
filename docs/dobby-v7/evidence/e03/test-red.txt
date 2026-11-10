@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: four real status filters
+
+0 !== 4
+
+    at /workspace/dobby-e03/essai-stitch-v7/tests/e03.cjs:10:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 4,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
