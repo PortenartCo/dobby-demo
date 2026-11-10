@@ -1,0 +1,102 @@
+[
+  {
+    "file": "design/e06/README.txt",
+    "bytes": 489,
+    "sha256": "3b5871f9f4b17306e09f8e203f27ce4ceb94313145e58faebe3a64abd2fbf120"
+  },
+  {
+    "file": "design/e06/references/scoring/validate.py",
+    "bytes": 7933,
+    "sha256": "5611d244dd82ad22618b580e38b38754d94381faa72fb94a5fa03759c1b6fefb"
+  },
+  {
+    "file": "design/e06/references/scoring/README.md",
+    "bytes": 5961,
+    "sha256": "1eb970adfb7d0b2037e85c4ccb3bb508d29ae3ea495a7d9016dca62065cfc122"
+  },
+  {
+    "file": "design/e06/references/scoring/dobby-e06-scoring-v1.json",
+    "bytes": 17971,
+    "sha256": "ef033928f193d0c526092deac25a9a72f1cfc3f7c07bdb01cf75546e21e7e515"
+  },
+  {
+    "file": "design/e06/references/scoring/qa-results.json",
+    "bytes": 3746,
+    "sha256": "349b2755889edecd8eee2728388f42d6762157a989326b535b022c5af1735db9"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_mon_identit/code.html",
+    "bytes": 28238,
+    "sha256": "a114ca55bc390997bd510108b73f7b718c867c423ff96b708cae9e7a8146d8a5"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_mon_identit/screen.png",
+    "bytes": 318099,
+    "sha256": "b6c3ea58ecfa28914d990138999581328e440636356d180dc7531d99ce394748"
+  },
+  {
+    "file": "design/e06/references/stitch/apothecary_curiosities/DESIGN.md",
+    "bytes": 12042,
+    "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_la_r_v_lation_de_la_maison/code.html",
+    "bytes": 19231,
+    "sha256": "10a78709e77a743e6944f5f4cfb2b9ead285c8bb8e77d016e0618fbc2e50c083"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_la_r_v_lation_de_la_maison/screen.png",
+    "bytes": 287692,
+    "sha256": "a0ec46b5219d98d93fb65c03bec52acb3a456377ac0e3a4990d21f68fa134dfa"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_le_miroir_des_mes/code.html",
+    "bytes": 18011,
+    "sha256": "e1ba3b214ff57a779d5af80c6b347050096d611d8e2019456c54e17820af32da"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_le_miroir_des_mes/screen.png",
+    "bytes": 404353,
+    "sha256": "348862d7d819116a00a1e46889488f83f6ef184319346ff782cd2cd088f75dc2"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_mon_foyer_magique/code.html",
+    "bytes": 22494,
+    "sha256": "39c6a79bd3b89b9aed5353d1276ea5feaccf6c5a95a70aa44933b121c8ff4ed5"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_mon_foyer_magique/screen.png",
+    "bytes": 267010,
+    "sha256": "b169034a6d718b4fd8dc3a0124a8f510cfdd2f194cec49de3f50c12e8b226056"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_le_myst_re_des_quatre_maisons/code.html",
+    "bytes": 17351,
+    "sha256": "2dd3c906ddffcf2e8d2b78b7796a246c25d7ca477b104071471c03445c3ba7cc"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_le_myst_re_des_quatre_maisons/screen.png",
+    "bytes": 239605,
+    "sha256": "83240a584718dc8d30d310b835640c6e623ab0394985aa612faabded3e4bf6b4"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_mon_identit_magique_consacr_e/code.html",
+    "bytes": 14503,
+    "sha256": "46ee832bd3a94cfb8624d13e0c6fd3d3f32bf334f3a02b4fa1af4f2b7e67b0b5"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_mon_identit_magique_consacr_e/screen.png",
+    "bytes": 345714,
+    "sha256": "bbc08b0a7634b15ffbcd84f621a16f60ed3a9c7fd57c87ba70b07041df35814b"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_l_apparition_du_patronus/code.html",
+    "bytes": 19534,
+    "sha256": "b48a7ed0ce7b307ab13ab0ac6840695976f37164183a59a9ff44bf0a5c987db2"
+  },
+  {
+    "file": "design/e06/references/stitch/dobby_l_apparition_du_patronus/screen.png",
+    "bytes": 307081,
+    "sha256": "dee74f29f1f85f4e38efe7f27bdcb46cf3e4fe6178d00245e336a24d8aab3248"
+  }
+]
