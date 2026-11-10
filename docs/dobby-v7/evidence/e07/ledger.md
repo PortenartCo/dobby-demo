@@ -11,3 +11,8 @@
 - Test adaptation: validation archives meal coverage natively; the explicit import test now schedules a new pending fixture meal before import. No business change made to reopen covered meals.
 - Removed raw shopping back-header control before common mount to avoid a duplicated contextual DOBBY header. Common chrome untouched.
 - Menus module can share planned/shopFinal history if explicitly active. Do not claim exclusive local storage; meal list remains distinct from grocery basket. Native module status retained.
+- Independent review: Important missing native cooked action; restored source-styled control bound to cooked(date,slot), disabled once prepared and persisted. Review quantity-origin finding upgraded to requirement compliance (unknown extra quantity must read À préciser); origin retained separately. Both reproduced RED together and GREEN via e07-native-actions.cjs.
+- No new grocery grouping/classifier introduced; preserve native existing flat V7 presentation and native category fields/exports rather than invent source demo groups.
+- CSS build initially removed 3 old unused-scan utilities. Safelist preserves them; semantic comparison confirms all 1448 old rule sets unchanged, 33 additions only.
+- After review: E07 PASS 320/390/1440, full native Cuisine path PASS 320/390, 4-root smoke PASS. Full 13-route visual pass before local fixes, then only 4 affected E07 presentations rerun at 320/390/1440, all zero overflow; original/new source hashes verified.
+- Review exclusions remain bounded: no real backend/device behavior, no E06 composition; native covered-meal/portion contracts preserved, not reimplemented.

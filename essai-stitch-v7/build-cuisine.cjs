@@ -17,7 +17,10 @@ for (const route of routes) {
     .replace(/<link\b[^>]*href="https:\/\/fonts\.(?:googleapis|gstatic)\.com[^"]*"[^>]*>/gi, '')
     .replace(/\s+on\w+\s*=\s*(?:"[^"]*"|'[^']*')/gi, '');
   for (const asset of assets) if (asset.file || asset.fallback) html = html.replaceAll(asset.url, '../assets/cuisine/' + (asset.file || asset.fallback)).replaceAll(asset.url.replaceAll('&','&amp;'), '../assets/cuisine/' + (asset.file || asset.fallback));
-  if(route.asset)html=html.replace(/(<img\b[^>]*\bsrc=")[^"]*"/gi,'$1../assets/cuisine/'+route.asset+'"');
+  if(route.asset){
+    fs.copyFileSync(path.join(root,route.imageSource),path.join(__dirname,'assets/cuisine',route.asset));
+    html=html.replace(/(<img\b[^>]*\bsrc=")[^"]*"/gi,'$1../assets/cuisine/'+route.asset+'"');
+  }
   html = html.replace(/<body\b/, `<body data-stitch-source="${route.presentationId || route.id}"`);
   fs.writeFileSync(path.join(__dirname, 'templates', route.view + '.html'), html);
   provenance.push({ view: route.view, source, sha256: crypto.createHash('sha256').update(original).digest('hex') });

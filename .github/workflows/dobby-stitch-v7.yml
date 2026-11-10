@@ -4,12 +4,14 @@ on:
     paths:
       - 'essai-stitch-v7/**'
       - 'design/stitch-53/**'
+      - 'design/stitch-e07/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
   pull_request:
     paths:
       - 'essai-stitch-v7/**'
       - 'design/stitch-53/**'
+      - 'design/stitch-e07/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
   workflow_dispatch:
@@ -48,6 +50,9 @@ jobs:
           node --check essai-stitch-v7/build-cuisine.cjs
           node --check essai-stitch-v7/cuisine-engine.js
           node --check essai-stitch-v7/cuisine.js
+          node --check essai-stitch-v7/cuisine-e07.js
+          node --check essai-stitch-v7/tests/e07.cjs
+          node --check essai-stitch-v7/tests/e07-native-actions.cjs
           node --check essai-stitch-v7/tests/cuisine.cjs
           node --check essai-stitch-v7/tests/cuisine-visual.cjs
           node --check essai-stitch-v7/tests/cuisine-family.cjs
@@ -70,8 +75,10 @@ jobs:
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
       - name: Source derivation remains reproducible
         run: |
+          npm ci --ignore-scripts --prefix essai-stitch-v7
           node essai-stitch-v7/build-source.cjs
-          git diff --exit-code -- essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
+          npm run build:css --prefix essai-stitch-v7
+          git diff --exit-code -- essai-stitch-v7/stitch-tailwind.css essai-stitch-v7/assets/cuisine/e07-taverne.png essai-stitch-v7/assets/cuisine/e07-courses.png essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
       - name: Confirm the original Stitch source manifest
         run: |
           node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"

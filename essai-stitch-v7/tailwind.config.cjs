@@ -2,3 +2,6 @@ module.exports = { darkMode: "class", theme: { extend: { colors: { "inverse-on-s
 
 module.exports.content = ['./*.html','./*.js','../design/stitch-53/**/*.html','../design/stitch-e07/**/*.html'];
 
+
+// Retain legacy utilities already shipped but absent from the current source scan.
+module.exports.safelist = ['my-3','bg-primary/90','text-5xl'];

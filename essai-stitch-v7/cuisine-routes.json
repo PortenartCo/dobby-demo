@@ -5,7 +5,8 @@
     "integrated": true,
     "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
     "presentationId": "dobby_la_taverne_gourmande_version_simplifi_e_rapide",
-    "asset": "e07-taverne.png"
+    "asset": "e07-taverne.png",
+    "imageSource": "design/stitch-e07/illustrations/taverne.png"
   },
   {
     "view": "pick",
@@ -55,7 +56,8 @@
     "integrated": true,
     "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
     "presentationId": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
-    "asset": "e07-courses.png"
+    "asset": "e07-courses.png",
+    "imageSource": "design/stitch-e07/illustrations/courses.png"
   },
   {
     "view": "shop",
@@ -63,7 +65,8 @@
     "integrated": true,
     "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
     "presentationId": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
-    "asset": "e07-courses.png"
+    "asset": "e07-courses.png",
+    "imageSource": "design/stitch-e07/illustrations/courses.png"
   },
   {
     "view": "shop-final",
@@ -71,7 +74,8 @@
     "integrated": true,
     "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
     "presentationId": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
-    "asset": "e07-courses.png"
+    "asset": "e07-courses.png",
+    "imageSource": "design/stitch-e07/illustrations/courses.png"
   },
   {
     "view": "shop-history",
