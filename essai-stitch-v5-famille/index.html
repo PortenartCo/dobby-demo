@@ -1740,7 +1740,7 @@ document.addEventListener('submit',e=>{
   let member;
   try{member=window.DobbyMagicIdentity.patch({...existing,id:existing?.id||xuid(),name,birthdate:String(d.get('birthdate')||''),avatar:String(d.get('avatar')||'👤')},Object.fromEntries(d));}
   catch(error){alert(error.message);return;}
-  const previousMembers=st.familyMembers,previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;
+  const previousMembers=[...st.familyMembers],previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;
   if(existing){const oldName=existing.name;st.familyMembers=st.familyMembers.map(x=>x.id===existing.id?member:x);(st.famHealth||[]).forEach(x=>{if(x.personId===existing.id||(!x.personId&&x.person===oldName)){x.personId=member.id;x.person=member.name}})}
   else st.familyMembers.push(member);
   st.v23HealthMemberId=member.id;v23MemberEdit=null;

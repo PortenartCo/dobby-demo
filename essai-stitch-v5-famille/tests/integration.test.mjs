@@ -9,10 +9,16 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated browser storage names', () => {
+test('preview V5 source matches original except isolated storage and E05 native member writer extension', () => {
   const original=source('../../essai-stitch-v5/index.html');
   const preview=source('../index.html');
-  const normalized=preview.replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
+  // E05 deliberately extends this one existing writer. Browser e05-native.cjs
+  // verifies its preservation, validation and atomic failure behavior.
+  const originalMemberWriter=original.match(/  const member=\{id:existing\?\.id\|\|xuid\(\),name,[\s\S]*?st\.v23HealthMemberId=member\.id;v23MemberEdit=null;save\(\);render\(\);return;/)?.[0];
+  assert.ok(originalMemberWriter,'Original native member writer boundary');
+  const extendedMemberWriter=/  let member;\n  try\{member=window\.DobbyMagicIdentity\.patch[\s\S]*?  render\(\);return;/;
+  assert.match(preview,extendedMemberWriter);
+  const normalized=preview.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e05-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
     .replaceAll('./stitch-v5.js?v=20261108-10','./stitch-v5.js?v=20261107-1')
     .replace("/* DOBBY_BOOT_ROUTE_SAFE_V1 */\nwindow.__dobbyStartupRoute = { page: st.page, detail: st.detail };\nst.page = 'home';\nst.detail = null;\n", '');
