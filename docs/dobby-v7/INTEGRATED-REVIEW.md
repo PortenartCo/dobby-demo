@@ -39,11 +39,11 @@ Le manifeste du bundle porte le SHA source, les empreintes source et transformé
 
 - Checkpoints E03, E06, E08 : preuves séparées dans [evidence/integrated-review](evidence/integrated-review/). Les captures historiques ne sont pas remplacées par celles de cette mission.
 - `tests/integrated-preview.cjs` : six parcours à 320/390/1440, clics réels, édition/enregistrement, runes, deux retakes avec réponses exactes/confirmation, rechargement, historique, liens directs, aucun doublon, reset deux onglets. Sentinelles de stockage réel et E07.2 conservées ; aucune requête de mutation backend.
-- Captures des onze étapes (questions et résultats séparés pour chaque questionnaire) : `local/*-{320,390,1440}.png`, puis `hosted/*-{320,390,1440}.png` sous `evidence/integrated-review/`.
+- Captures des treize étapes (questions et résultats séparés pour chaque questionnaire) : `local/*-{320,390,1440}.png`, puis `hosted/*-{320,390,1440}.png` sous `evidence/integrated-review/`.
 - 80 tests unitaires natifs/sync et 12 tests scoring/identité/build de démonstration ; scoring exhaustif Python/JS : 25 600 comparaisons.
 - Campagne finale source et CI : résultats et éventuelles adaptations causales consignés dans `evidence/integrated-review/logs/` ; références CI et publication dans le reçu final.
 
-Les premiers échecs de recette distinguent défauts réels (pont E02 vers E07.2, reset multionglet) et synchronisation de test (attendre navigation/écriture asynchrone avant assertions/reload). Aucune assertion métier n’est supprimée.
+Les premiers échecs de recette distinguent défauts réels (pont E02 vers E07.2, reset multionglet) et synchronisation de test (attendre navigation/écriture asynchrone avant assertions/reload). Un test E05 utilisait encore le port 8765 en dur : il respecte maintenant `DOBBY_TEST_ORIGIN`, avec le même port par défaut pour la CI. La campagne locale reprend au test interrompu ; les tests déjà verts ne sont pas recommencés. Aucune assertion métier n’est supprimée.
 
 ## Limites conservées pour la revue
 
