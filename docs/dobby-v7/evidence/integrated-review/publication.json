@@ -1,0 +1,39 @@
+{
+  "publicationSha": "beff93cebe2ec558c9b8d3cd345045b22e0c816e",
+  "parent": "d7c53e504b3a2f54d88b2a3e59c6954344430b9f",
+  "preservedRootEntries": 18,
+  "oldPreviewTree": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1",
+  "onlyAddedFolder": "essai-dobby-integrated-review",
+  "timeUTC": "2026-11-10T21:40:30.040538+00:00",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+  "applicationSourceSha": "1f0fa32deb3fd64b178148f09cc8e449ac5ca165",
+  "sourceBranch": "feat/dobby-e01-e08-review-integration",
+  "pagesStatus": "built",
+  "applicationCI": "https://github.com/PortenartCo/dobby-demo/actions/runs/42904244391",
+  "applicationCIConclusion": "success",
+  "nativeSyncCI": "https://github.com/PortenartCo/dobby-demo/actions/runs/42900563364",
+  "unitTests": {
+    "nativeSync": 80,
+    "scoringIdentityBuilder": 12,
+    "pythonJsComparisons": 25600
+  },
+  "localAndHostedJourneys": {
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "journeysPerWidth": 6,
+    "result": "PASS",
+    "capturesPerWidth": 13,
+    "hostedResume": "Only1440 rerun after awaiting health-specific validation marker; 320/390 retained."
+  },
+  "hostedFilesByteEqual": 258,
+  "existingHTTPEndpointsUnchanged": 5,
+  "protectedSourceBranchesUnchanged": 8,
+  "realBackend": false,
+  "officialApplicationChanged": false,
+  "infrastructureChanged": false,
+  "sqlApplied": false,
+  "applicationBranchMergedIntoMain": false
+}

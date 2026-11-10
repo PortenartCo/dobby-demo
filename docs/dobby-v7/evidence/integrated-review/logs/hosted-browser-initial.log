@@ -1,0 +1,26 @@
+SENTINELS 320
+ENTRY 320
+LOADED https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/traverse.html
+READY 320
+INTEGRATED_PREVIEW_PASS 320 https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+SENTINELS 390
+ENTRY 390
+LOADED https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/traverse.html
+READY 390
+INTEGRATED_PREVIEW_PASS 390 https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+SENTINELS 1440
+ENTRY 1440
+LOADED https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/traverse.html
+READY 1440
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /non validé/. Input:
+
+'Accès familiaux : Profil, Cérémonie et Contrats intégrés. Les autres rubriques restent hors revue.'
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/integrated-preview.cjs:22:199 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Accès familiaux : Profil, Cérémonie et Contrats intégrés. Les autres rubriques restent hors revue.',
+  expected: /non validé/,
+  operator: 'match',
+  diff: 'simple'
+}

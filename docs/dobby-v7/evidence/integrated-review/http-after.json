@@ -1,0 +1,21 @@
+{
+  "index.html": {
+    "status": 200,
+    "sha256": "72de30105ed567c19be7f2b99dd81414c63fc7aa5110fdfdd71572f26f3cf6a6"
+  },
+  "essai-stitch-v5-famille/index.html": {
+    "status": 200,
+    "sha256": "928a238cbe6fa5315e4877a9e93977a0e2c48d0c709365424e3ec30f5945af9f"
+  },
+  "essai-stitch-v7/index.html": {
+    "error": "HTTP Error 404: Not Found"
+  },
+  "essai-dobby-review/review-manifest.json": {
+    "status": 200,
+    "sha256": "87795cbc4735dd3405a3ee38f355ac8383759033eae65d2011e84e2e01b0da41"
+  },
+  "essai-dobby-review/review-runtime.js": {
+    "status": 200,
+    "sha256": "ad1d02067b0801771c4bfdc8415ad21eda2c5165a1640d5113c69cf8e2987076"
+  }
+}

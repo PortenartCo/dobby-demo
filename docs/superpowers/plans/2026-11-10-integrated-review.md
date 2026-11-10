@@ -38,14 +38,14 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 - [x] Persona DÉMO explicitement fictive accessible naturellement ; aucune fausse association réelle ni création/invitation simulée.
 - [x] Annoter les vues familiales non reconstruites/non validées ; conserver les contrôles indisponibles explicites.
 - [x] Tester six parcours, formulaires/CRUD/reload/history/deep links, 320/390/1440 ; sentinelles Storage/IDB E072 et réel intactes après reset, aucune mutation réseau externe.
-- [ ] Registre mis à jour ; corrections graphiques complexes restent à revoir et ne retardent pas l’assemblage. Revue indépendante, une campagne générale finale adaptée + CI.
-- [ ] Bundle final reproductible et manifesté, branche poussée, CI exacte SHA.
+- [x] Registre mis à jour ; corrections graphiques complexes restent à revoir et ne retardent pas l’assemblage. Revue indépendante, une campagne générale finale adaptée + CI.
+- [x] Bundle final reproductible et manifesté, branche poussée, CI exacte SHA.
 
 ## Task 5 — Publish only the static preview
 - [x] Lire configuration Pages et parent main actuel ; snapshot arbres et empreintes HTTP existants.
-- [ ] Commit statique isolé ajoutant exclusivement essai-dobby-integrated-review ; aucun fichier applicatif main modifié, aucun merge. Push normal, jamais force.
-- [ ] Attendre Pages, puis URL réelle aux trois largeurs : ressources/clics/CRUD/persistance/reset/isolation. Manifestes identiques aux octets testés.
-- [ ] Rapport, inventaire réel/indisponibilités, SHA/CI/URL/captures et conflits ; arrêt pour revue humaine.
+- [x] Commit statique isolé ajoutant exclusivement essai-dobby-integrated-review ; aucun fichier applicatif main modifié, aucun merge. Push normal, jamais force.
+- [x] Attendre Pages, puis URL réelle aux trois largeurs : ressources/clics/CRUD/persistance/reset/isolation. Manifestes identiques aux octets testés.
+- [x] Rapport, inventaire réel/indisponibilités, SHA/CI/URL/captures et conflits ; arrêt pour revue humaine.
 
 ## Ledger / checkpoints
 - E03 RED : filtres E03 absents sur e0e88a0, test des 3/17 vrais compteurs échoue comme attendu.
@@ -61,3 +61,5 @@ Ne modifier aucune branche source E03/E06/E07/E08 ; aucun merge applicatif dans 
 
 - Campagne finale source terminée, exit0 : 150 traces de réussite. Reprises ciblées uniquement aux contrôles interrompus (port local E05, sélecteurs de création/suppression/automatique E03, Chromium explicite sur Linux, action globale native de synchronisation après reload hors ligne). Aucune assertion métier retirée. Captures historiques restaurées ; preuves de cette mission séparées.
 - CI : les attentes de persistance E06 et de navigation interdocument de l’aperçu ont été corrigées après échecs causaux. Confirmation locale du nouvel aperçu PASS320/390/1440 avec les attentes d’URL effectives. Code applicatif identique au bundle f015c2d ; seul le test a changé. CI finale avant publication à attendre.
+
+- DONE : CI applicative complète42904244391 SUCCESS à1f0fa32. Publication statiquebeff93c via Pages existant, aucun réglage modifié, seul nouveau sous-arbre ajouté. 258/258 fichiers HTTP identiques ; six parcours hébergés PASS320/390/1440, 39 captures. 320/390 conservés ; seule1440 reprise pour attendre le marqueur Santé après rendu. 18 arbres/blobs main, ancien aperçu et8branches sources préservés. Preuves et reçu versés au rapport ; arrêt pour revue humaine après CI finale des preuves.
