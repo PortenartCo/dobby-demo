@@ -90,12 +90,13 @@ window.DobbyCuisine = (() => {
     status.textContent = E.win().DobbyFamilyUI?.getModuleStatus?.(['shop','shop-1','shop-final','shop-history'].includes(ui.view) ? 'menus' : 'recipes') || 'Données du moteur DOBBY';
     $('main').append(status);
   }
-  function recipeVisual(el, recipe) {
+  function recipeVisual(el, recipe, localOnly = false) {
     if (!el) return;
     // Do not present a fictitious Stitch dish photograph as a real household meal.
     const image = recipe?.image || recipe?.photo;
-    if (image) { el.src = image; el.alt = recipe.name; }
-    else { const visual = document.createElement('div'); visual.className = el.className + ' dv7-meal-visual'; visual.textContent = recipe?.emoji || '🍽'; visual.setAttribute('aria-label', 'Aucune photographie enregistrée pour cette recette'); el.replaceWith(visual); }
+    const local = !localOnly || (typeof image === 'string' && (()=>{try{return new URL(image,location.href).origin===location.origin || /^data:image\/(png|jpeg|webp|gif);base64,/i.test(image);}catch{return false;}})());
+    const fallback = () => { const visual = document.createElement('div'); visual.className = el.className + ' dv7-meal-visual'; visual.textContent = recipe?.emoji || '🍽'; visual.setAttribute('aria-label', localOnly?'Illustration générique : photographie locale indisponible':'Aucune photographie enregistrée pour cette recette'); el.replaceWith(visual); };
+    if (image && local) { if(localOnly)el.onerror=fallback;el.src = image; el.alt = recipe.name; } else fallback();
   }
   function fillRecipeCard(card, recipe, selected = false) {
     card.dataset.cuRecipe = recipe.id;
@@ -170,6 +171,7 @@ window.DobbyCuisine = (() => {
     const tip=$$('main p').find(p=>p.textContent.includes('Dobby a déjà regroupé'));text(tip,'Les besoins du panier sont calculés à partir des repas enregistrés. Aucune commande ni livraison n’est effectuée par Dobby.');
   }
   function renderPick(data) {
+    window.history.replaceState({cuisine:'pick'},'', '#pick?date='+encodeURIComponent(ui.date)+'&slot='+encodeURIComponent(ui.slot));
     const meal = data.state.planned[ui.date + '-' + ui.slot];
     ui.adult ??= meal?.adult ?? meal?.people ?? data.state.adult ?? 2; ui.children ??= meal?.children ?? data.state.children ?? 0;
     ui.selected ||= meal?.id || data.recipes[0]?.id;
@@ -193,7 +195,7 @@ window.DobbyCuisine = (() => {
     // No fixed, invented dietary tags are persisted from the mockup.
     for (const b of $$('main button')) if (/Végétarien|Moins de 30|Fromage au choix|Pain frais/.test(b.textContent) && !b.dataset.cuAction) b.hidden=true;
     const extras = document.createElement('div'); extras.className='cu-context';
-    extras.innerHTML = `<p>Repas : ${esc(ui.slot)} · ${esc(meal?.status || 'à prévoir')}</p>` + (meal ? input('cu-move-date','Déplacer ce repas vers','date',ui.date)+button('move-meal','Déplacer le repas')+button('cancel-meal','Annuler ce repas dans le planning') : '');
+    extras.innerHTML = `<p>Repas : ${esc(ui.slot)} · ${esc(meal?.status || 'à prévoir')}</p>` + (meal ? input('cu-move-date','Déplacer ce repas vers','date',ui.date)+button('move-meal','Déplacer le repas')+button('cancel-meal','Annuler ce repas dans le planning')+`<p>Repas enregistré : ${esc(data.recipes.find(r=>r.id===meal.id)?.name||'Recette indisponible')}</p>`+button('cooked',meal.status==='préparé'?'Repas déjà préparé':'Marquer comme préparé',`data-date="${esc(ui.date)}" data-slot="${esc(ui.slot)}" ${meal.status==='préparé'?'disabled':''}`) : '');
     $('main').append(extras);
   }
   function renderRecipes(data) {
@@ -254,7 +256,7 @@ window.DobbyCuisine = (() => {
     const sourceHeader=doc.querySelector('header');if(sourceHeader&&document.querySelector('body > header'))document.querySelector('body > header').replaceWith(document.importNode(sourceHeader,true));
     document.body.dataset.cuisineView=view;document.body.dataset.stitchSource=doc.body.dataset.stitchSource;
     scrub();const data=E.read();
-    if(!window.DobbyCuisineE07?.render(view,data,{E,ui,pristine,bind,text,button,input,empty,renderShared}))
+    if(!window.DobbyCuisineE07?.render(view,data,{E,ui,pristine,bind,text,button,input,empty,renderShared,recipeVisual}))
     ({taverne:renderTaverne,pick:renderPick,recipes:renderRecipes,recipe:renderRecipe,cook:renderCook,tm5:renderTM5,'recipe-add':renderAdd,'recipe-add-1':renderAdd,batch:renderBatch,shop:renderShop,'shop-1':renderShop,'shop-final':renderFinal,'shop-history':renderHistory})[view](data);
     shell();window.DobbyChrome?.mount();
     for(const control of $$('main button,#cu-supplement button'))if(!control.dataset.cuAction && control.type!=='submit') {control.disabled=true;control.title='Commande décorative de la maquette, sans action métier disponible.';}
@@ -314,7 +316,7 @@ window.DobbyCuisine = (() => {
   async function init(openLegacy) {
     if(ready)return;legacy=openLegacy;document.body.classList.add('cu-active');
     E.win().alert=message=>notice(String(message),true);
-    const parseHash=()=>{const [view,query]=location.hash.slice(1).split('?');return {view:routes.includes(view)?view:'taverne',id:new URLSearchParams(query||'').get('id'),date:new URLSearchParams(query||'').get('date')||undefined}};
+    const parseHash=()=>{const [view,query]=location.hash.slice(1).split('?');return {view:routes.includes(view)?view:'taverne',id:new URLSearchParams(query||'').get('id'),date:new URLSearchParams(query||'').get('date')||undefined,slot:['midi','soir'].includes(new URLSearchParams(query||'').get('slot'))?new URLSearchParams(query||'').get('slot'):undefined}};
     document.addEventListener('click',event=>{
       if(!document.body.classList.contains('cu-active')||event.target.closest('#dv7-panel'))return;
       const control=event.target.closest('[data-cu-action]');if(!control)return;
@@ -329,8 +331,8 @@ window.DobbyCuisine = (() => {
     });
     document.addEventListener('change',event=>{if(event.target.id==='cu-date'){ui.date=event.target.value;ui.adult=null;ui.children=null;ui.selected=null;render();}if(event.target.dataset.cuIngredient!==undefined){const i=Number(event.target.dataset.cuIngredient);event.target.checked?ui.ingredients.add(i):ui.ingredients.delete(i);text($('#checked-counter'),`${ui.ingredients.size} / ${E.read().recipes.find(r=>r.id===ui.recipe).ingredients.length}`);}});
     bindForms();
-    window.addEventListener('popstate',()=>{const route=parseHash();open(route.view,{id:route.id,date:route.date},false).catch(error=>notice(error.message,true));});
-    const route=parseHash();await open(route.view,{id:route.id,date:route.date},false);ready=true;
+    window.addEventListener('popstate',()=>{const route=parseHash();open(route.view,{id:route.id,date:route.date,slot:route.slot},false).catch(error=>notice(error.message,true));});
+    const route=parseHash();await open(route.view,{id:route.id,date:route.date,slot:route.slot},false);ready=true;
     new MutationObserver(()=>{if(ready&&!busy&&!document.activeElement?.matches('input,textarea,select'))refresh().catch(error=>notice(error.message,true));}).observe(E.win().document.getElementById('screen'),{childList:true});
   }
   // Additional source adapters are defined below, sharing this controller and engine.

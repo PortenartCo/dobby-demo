@@ -53,6 +53,8 @@ jobs:
           node --check essai-stitch-v7/cuisine-e07.js
           node --check essai-stitch-v7/tests/e07.cjs
           node --check essai-stitch-v7/tests/e07-native-actions.cjs
+          node --check essai-stitch-v7/tests/e07-1.cjs
+          node --check essai-stitch-v7/tests/e07-1-context.cjs
           node --check essai-stitch-v7/tests/cuisine.cjs
           node --check essai-stitch-v7/tests/cuisine-visual.cjs
           node --check essai-stitch-v7/tests/cuisine-family.cjs
