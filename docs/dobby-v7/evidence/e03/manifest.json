@@ -44,8 +44,17 @@
     "targeted": "PASS 320/390/1440",
     "real_counts_and_title": "PASS",
     "regression": "PASS after environment correction and one targeted test-adaptation rerun",
-    "remote_ci": "not started; branch not pushed",
+    "remote_ci": "existing push-triggered Dobby V7 workflow; final run linked in delivery",
     "real_data_used": false,
     "deployed": false
+  },
+  "integration": {
+    "e02_base": "9c73e845c7744315bdc7d03f59a09ae67572aa8e",
+    "rebase": "three patches unchanged; no conflict",
+    "capture_regeneration": false,
+    "capture_reason": "runtime E03 HTML/JS/CSS unchanged; source rebuild byte-identical",
+    "pages_publication": false,
+    "targeted_tests": "PASS e03-counts/e03/e01/e02",
+    "missions_html_sha256": "993717b0809cb32e13bf768978a51e3248fb1d69a7516c1498b09d2b8b69eda9"
   }
 }

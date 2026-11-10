@@ -1,7 +1,7 @@
 # E03 — Bibliothèque des Missions
 
-Branche locale : `feat/dobby-e03-missions`. Worktree : `/workspace/dobby-e03`, dépôt bare séparé `/workspace/dobby-e03-repo.git`.
-Base figée : `258b0f923491b03d78c72ba1b1edd29ab72e6a84` (référence fournie et tête de PR #3 à l'ouverture). La CI [42727078167](https://github.com/PortenartCo/dobby-demo/actions/runs/42727078167) est réussie ; l'exécution parallèle [42727070298](https://github.com/PortenartCo/dobby-demo/actions/runs/42727070298) avait échoué sur une mesure prématurée du panneau compte E01.
+Branche GitHub : [`feat/dobby-e03-missions`](https://github.com/PortenartCo/dobby-demo/tree/feat/dobby-e03-missions). Worktree : `/workspace/dobby-e03`, dépôt bare séparé `/workspace/dobby-e03-repo.git`.
+Base initiale : `258b0f923491b03d78c72ba1b1edd29ab72e6a84`. Base après raccordement : `9c73e845c7744315bdc7d03f59a09ae67572aa8e` (E02 final de la PR #3, ouverte et non fusionnée). La CI [42727078167](https://github.com/PortenartCo/dobby-demo/actions/runs/42727078167) est réussie ; l'exécution parallèle [42727070298](https://github.com/PortenartCo/dobby-demo/actions/runs/42727070298) avait échoué sur une mesure prématurée du panneau compte E01.
 
 ## Résultat
 
@@ -30,15 +30,15 @@ Profils Playwright temporaires, réseau externe bloqué, aucune donnée familial
 
 Tous les contrôles ciblés et de non-régression passent après reprise et relance ciblée. Voir `evidence/e03/test-regression.txt`, `test-regression-final.txt` et `test-register-tools-final.txt`. La première invocation `npm test` a passé E03, E02 et E01, puis s'est arrêtée car `smoke.cjs` utilisait un chemin Chrome Windows par défaut. La reprise définit explicitement `CHROMIUM_PATH=/usr/bin/chromium`. Les parcours Missions et E01/E02 sont revérifiés après la correction commune ; les suites restantes sont exécutées une fois. La continuation signale un échec de `register-tools.cjs` : son adaptation cherchait une case native absente de la vue utilisée. Le test a été corrigé pour utiliser le même événement natif qu’E01 puis relancé seul : `REGISTER_TOOLS_PASS 320/390`. Aucun échec restant. Les autres contrôles n’ont pas été relancés après ce changement limité au test.
 
-CI distante E03 : non lancée (branche non poussée, aucune PR E03 ouverte). Les résultats locaux ne sont pas présentés comme une CI GitHub.
+CI distante E03 : workflow existant [Dobby V7 — Stitch functional UI](https://github.com/PortenartCo/dobby-demo/actions/workflows/dobby-stitch-v7.yml?query=branch%3Afeat%2Fdobby-e03-missions), déclenché par push de la branche E03. Le SHA final, le résultat et le lien de son exécution sont fournis dans le compte rendu de livraison. Aucune draft PR requise pour déclencher ce workflow. Aucun workflow ajouté.
 
 ## Captures comparatives
 
 | Largeur | Source Stitch | Avant E03 | Résultat | État vide | Formulaire existant |
 | --- | --- | --- | --- | --- | --- |
-| 320 | [Source](evidence/e03/source-320.png) | [Avant](evidence/e03/before-320.png) | [Missions](evidence/e03/open-320.png) | [Vide](evidence/e03/empty-320.png) | [Formulaire](evidence/e03/existing-form-320.png) |
-| 390 | [Source](evidence/e03/source-390.png) | [Avant](evidence/e03/before-390.png) | [Missions](evidence/e03/open-390.png) | [Vide](evidence/e03/empty-390.png) | [Formulaire](evidence/e03/existing-form-390.png) |
-| 1440 | [Source](evidence/e03/source-1440.png) | [Avant](evidence/e03/before-1440.png) | [Missions](evidence/e03/open-1440.png) | [Vide](evidence/e03/empty-1440.png) | [Formulaire](evidence/e03/existing-form-1440.png) |
+| 320 | [Source](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/source-320.png) | [Avant](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/before-320.png) | [Missions](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/open-320.png) | [Vide](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/empty-320.png) | [Formulaire](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/existing-form-320.png) |
+| 390 | [Source](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/source-390.png) | [Avant](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/before-390.png) | [Missions](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/open-390.png) | [Vide](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/empty-390.png) | [Formulaire](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/existing-form-390.png) |
+| 1440 | [Source](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/source-1440.png) | [Avant](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/before-1440.png) | [Missions](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/open-1440.png) | [Vide](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/empty-1440.png) | [Formulaire](https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-e03-missions/docs/dobby-v7/evidence/e03/existing-form-1440.png) |
 
 Captures additionnelles : `done-*`, `urgent-alice-*`, `automatic-readonly-*`, `viewport-*`. Aux 1440 px, conserver le cadre 480 px des pages E01/E02 est intentionnel. Les originaux sont servis avec leurs styles/polices/illustration locales pour rendre la comparaison possible sans dépendance CDN ; ils ne sont pas modifiés.
 
@@ -50,8 +50,14 @@ Limite existante du formulaire : il offre actuellement enregistrement et annulat
 
 Point mineur différé : un rafraîchissement natif remplace les cartes, ce qui peut perdre le focus d'une carte et refermer une consultation automatique. Le focus des filtres est conservé. Les cartes restent des liens HTML et les consultations des éléments `details/summary` utilisables au clavier.
 
-## Coexistence E02
+## Raccordement à E02 final
 
-Au contrôle intermédiaire, E02 avait avancé à `6c667cebc5f786e5c99c64b8d20008638891c849` : modifications de `tests/e01.cjs` et des documents E02, sans recouvrement avec les fichiers E03. Aucun rebase/cherry-pick/intégration effectué. Le futur rapprochement devra préserver ce correctif E01 ; un nouveau changement E02 de `bridge.js`, `root-adapters.js` ou `tests/ci.cjs` nécessiterait une revue de l'intégration.
+Le worktree était propre et contenait exactement trois commits E03. Rebase sans conflit sur `9c73e845c7744315bdc7d03f59a09ae67572aa8e`. `git range-diff` confirme les trois changements logiques identiques : `1438fa1` → `9f5a9db`, `4971dce` → `3d1f59d`, `b19a904` → `cf91b4e`.
 
-**Aucune fusion, publication, mise en production, modification de PR #3, migration, modification du formulaire Ajouter une mission, ni accès au répertoire ou aux changements non commités de l'autre session. Arrêt après E03, revue humaine avant publication.**
+Contrôle `bridge.js` : fichier identique entre la base initiale et E02 final ; seul ajout E03 = sortie du nettoyage de démonstration lorsque `currentScreen === 'missions'` et que `[data-e03-filters]` existe. Les parcours E01/E02 conservent leur code. Tests ciblés existants après rebase : `e03-counts.cjs`, `e03.cjs`, `e01.cjs`, `e02.cjs` ; résultat dans `evidence/e03/test-integration.txt`.
+
+Correction causale du contrat CI : `build-source.cjs` régénérait l'ancienne page Missions, faisant échouer le contrôle existant de reproductibilité. Il reprend maintenant `missions-layout.html`, extrait sans modification de la composition E03 déjà validée, et recharge les mêmes CSS/JS Missions. Le HTML régénéré est strictement identique à celui d'E03 ; aucune modification de la maquette. Les autres fichiers générés sont inchangés. Les trois captures `open-320/390/1440.png` existent et sont conservées : les fichiers runtime E03 sont identiques avant/après rebase et reconstruction. Pas de nouvelle campagne fonctionnelle ni de nouveaux visuels.
+
+Formulaire « Ajouter une mission », `tools-register.js`, templates, V5, sources originales, E01/E02, writers natifs, SQL et Supabase : aucun changement E03 par rapport à E02 final. Aucun accès au worktree ou aux fichiers non commités des autres sessions.
+
+La branche E03 seule est poussée, sans force-push. Pages reste configuré sur `main` ; aucune publication d'application, aucune fusion et aucune modification de la branche de PR #3. Arrêt après vérifications Git/CI et accès aux captures ; revue visuelle humaine avant publication.

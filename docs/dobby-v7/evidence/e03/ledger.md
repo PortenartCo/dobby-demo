@@ -14,3 +14,10 @@
 - Task 2: complète ; toutes les suites de la CI finale couvertes. Lancement initial arrêté sur chemin Windows, reprise avec Chromium Linux. Unique échec de reprise : register-tools.cjs (adaptation de test, case absente), corrigé via événement natif identique à E01 ; relance ciblée PASS 320/390. Aucun échec restant.
 - Revue finale : défauts importants corrigés dans 4971dce ; mineur focus/repli conservé dans limites. Comparaison visuelle source/résultat inspectée, fichiers interdits inchangés, données réelles et E02 jamais modifiés.
 - Livraison : conserver branche et worktree ; pas de push/PR/CI distante/fusion/déploiement. Base E02 figée, nouveau commit E02 6c667ce hors intégration.
+
+## Raccordement demandé après E02 final
+- Base E02 finale 9c73e845 ; rebase sans conflit, trois patches identiques selon range-diff (9f5a9db / 3d1f59d / cf91b4e).
+- bridge.js compatible : aucune évolution E02 depuis la base initiale ; garde strictement Missions E03 conservée.
+- Défaut causal CI identifié avant push : build-source.cjs reconstruisait l’ancienne page Missions. Composition déjà validée extraite dans missions-layout.html et intégrée au générateur ; HTML résultant strictement identique, autres sorties inchangées.
+- Tests ciblés existants e03-counts/e03/e01/e02 : PASS après rebase. Captures conservées (hashes et runtime E03 inchangés), liens GitHub dans le rapport.
+- Nouvelle autorisation utilisateur : push de la branche E03 seule et CI, sans force-push/fusion/Pages ; PR E02 préservée. CI existante déclenchée par push, pas de draft PR nécessaire.
