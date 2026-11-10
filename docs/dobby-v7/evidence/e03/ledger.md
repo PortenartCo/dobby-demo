@@ -21,3 +21,9 @@
 - Défaut causal CI identifié avant push : build-source.cjs reconstruisait l’ancienne page Missions. Composition déjà validée extraite dans missions-layout.html et intégrée au générateur ; HTML résultant strictement identique, autres sorties inchangées.
 - Tests ciblés existants e03-counts/e03/e01/e02 : PASS après rebase. Captures conservées (hashes et runtime E03 inchangés), liens GitHub dans le rapport.
 - Nouvelle autorisation utilisateur : push de la branche E03 seule et CI, sans force-push/fusion/Pages ; PR E02 préservée. CI existante déclenchée par push, pas de draft PR nécessaire.
+
+## Harmonisation graphique finale demandée
+- Base 9aaeaa1 confirmée locale/distante ; worktree propre. E04 non consulté/non modifié.
+- Composition seulement : cadre image autonome + bloc titre/CTA sans encadrement, cadrage/hauteur conservés ; libellé Missions conditionnel dans chrome.js.
+- Génération réutilisée ; tests existants E03 PASS 320/390/1440 ; comparaison géométrique/sous-titres E01/E02 PASS. Aucun code métier ou formulaire modifié.
+- Captures actuelles et avant correctif enregistrées ; push de la même branche et attente CI existante, sans fusion/Pages.

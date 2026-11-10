@@ -3,6 +3,16 @@
 Branche GitHub : [`feat/dobby-e03-missions`](https://github.com/PortenartCo/dobby-demo/tree/feat/dobby-e03-missions). Worktree : `/workspace/dobby-e03`, dépôt bare séparé `/workspace/dobby-e03-repo.git`.
 Base initiale : `258b0f923491b03d78c72ba1b1edd29ab72e6a84`. Base après raccordement : `9c73e845c7744315bdc7d03f59a09ae67572aa8e` (E02 final de la PR #3, ouverte et non fusionnée). La CI [42727078167](https://github.com/PortenartCo/dobby-demo/actions/runs/42727078167) est réussie ; l'exécution parallèle [42727070298](https://github.com/PortenartCo/dobby-demo/actions/runs/42727070298) avait échoué sur une mesure prématurée du panneau compte E01.
 
+## Correctif graphique final après revue humaine
+
+Base vérifiée : `9aaeaa1cfcc47e3b337492d5bdeb7390fdc7a1fb`, branche distante et worktree propres, sans évolution concurrente E03. Travail E04 laissé dans son environnement indépendant.
+
+Le cadre de `.e03-hero` se termine désormais sous l'illustration. Le titre complet et le bouton de création sont dans une section sœur `.e03-hero-copy`, sans fond, bordure ou encadrement commun avec l'image. Image, cadrage (`50% 35%`), proportions et hauteur de scène (160 px) inchangés ; badge conservé. Espacement entre cadre et bloc titre/action : 18 px. Le sous-titre permanent affiche uniquement sur Missions « MAISON & QUOTIDIEN · MISSIONS » ; les libellés, dimensions et commandes E01/E02 restent identiques.
+
+Fichiers produit : `missions-layout.html`, `missions.css`, `missions.html` régénéré, une ligne conditionnelle dans `chrome.js`. Générateur `build-source.cjs` inchangé et réutilisé. Seule adaptation du test existant `tests/e03.cjs` : attente du nouveau libellé du header. Aucun changement métier, carte, filtre, writer, formulaire, Supabase, SQL ou source Stitch.
+
+Tests existants E03 PASS à 320/390/1440 ; vérification rapide de géométrie/absence de débordement et comparaison des barres/sous-titres E01/E02 PASS aux trois largeurs. Journaux : `evidence/e03/visual-final/tests.txt`, `geometry.txt`. Captures E03 actualisées ci-dessous ; références avant correctif et captures de comparaison E01/E02 dans `evidence/e03/visual-final/`. Aucun écart visuel résiduel identifié ; Safari physique non testé. Résultat/lien de la CI du SHA final dans la livraison.
+
 ## Résultat
 
 - Header/navigation : composants communs `DobbyChrome`, cinq destinations, Missions active ; mêmes dimensions E01. Préférences étoile/son natives persistées et profil natif accessibles.
@@ -18,7 +28,7 @@ Produit : `essai-stitch-v7/missions.html`, `missions.js`, `missions.css`, foncti
 
 Tests : `tests/e03.cjs`, `tests/e03-counts.cjs`, `tests/ci.cjs`, `tests/register-tools.cjs`, `tests/register-missions-sync.cjs`. Les tests historiques de gros boutons retirés utilisent les mêmes actions natives ; les tests E03 couvrent leur parcours utilisateur depuis E01/E02.
 
-Aucun changement dans `chrome.js`, `chrome.css`, `tools-register.js`, les formulaires/templates Stitch, E01/E02, V5, les HTML originaux ou SQL.
+`chrome.js` : seule adaptation du sous-titre de Missions (voir correctif visuel ci-dessous). Aucun changement dans `chrome.css`, `tools-register.js`, les formulaires/templates Stitch, E01/E02, V5, les HTML originaux ou SQL.
 
 ## Vérifications
 

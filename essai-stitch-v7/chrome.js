@@ -41,6 +41,7 @@ function sectionTitle(){
  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
  const heading=document.querySelector('body > main h1')?.cloneNode(true);for(const icon of heading?.querySelectorAll('.material-symbols-outlined,[aria-hidden="true"]')||[])icon.remove();
  if(['chat','chat-2'].includes(document.body.dataset.familyView))return 'Parler à Dobby';
+ if(document.body.dataset.dv7Screen==='missions')return 'Missions';
  const name=(heading?.textContent||document.title).replace(/\s+/g,' ').trim();return document.body.dataset.dv7Screen==='traverse'?name.replace(/^Le /,''):name;
 }
 function mount(){if(!template)return;const current=document.querySelector('body > header');if(current){
