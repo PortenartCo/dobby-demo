@@ -33,6 +33,11 @@ if(screen==='taverne'){
  html=html.replace(/(<img\b[^>]*\bsrc=")[^"]*"/gi,'$1./assets/cuisine/'+cuisineRoute.asset+'"');
  html=html.replace('<script src="./cuisine.js">','<link rel="stylesheet" href="./cuisine-e07.css"><script src="./cuisine-list.js"></script><script src="./cuisine-e07.js"></script><script src="./cuisine.js">');
 }
+// Preserve the reviewed E03 composition when rebuilding the original sources.
+if(screen==='missions'){
+ html=html.replace(/<main\b[\s\S]*?<\/main>/,()=>fs.readFileSync(path.join(__dirname,'missions-layout.html'),'utf8').trimEnd());
+ html=html.replace('<script src="./root-adapters.js">','<link rel="stylesheet" href="./missions.css"><script src="./missions.js"></script><script src="./root-adapters.js">');
+}
 fs.writeFileSync(path.join(__dirname,file),html);console.log('STITCH_ROOT_BUILD='+screen+' SOURCE='+id);
 }
 const screens=manifest.designs.map(({id,html,screenshot})=>({id,source:html,hasScreenshot:screenshot,linked:false,mode:'source-only'}));
