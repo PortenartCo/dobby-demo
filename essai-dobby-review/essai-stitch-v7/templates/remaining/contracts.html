@@ -1,0 +1,333 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../review-runtime.js"></script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type">
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;}body{overscroll-behavior:none;-webkit-font-smoothing:antialiased;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body data-stitch-source="dobby_contrats_assurances_ch_ances_du_foyer_2" class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-[#1e100c]/90 backdrop-blur-xl border-b border-[#d49b42]/20 shadow-[0_8px_30px_rgba(0,0,0,0.7)]">
+<div class="h-[60px] max-w-md mx-auto px-4 flex items-center justify-between gap-2">
+<button aria-label="Menu Alchimique" class="w-12 h-12 shrink-0 flex items-center justify-center rounded-xl bg-[#271814] border border-[#d49b42]/30 text-[#eec66a] shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all hover:bg-[#372622]">
+<svg class="w-6 h-6 text-[#eec66a]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+</svg>
+</button>
+<div class="flex-1 flex items-center justify-center min-w-0">
+<div class="h-12 w-full max-w-[230px] px-2 rounded-xl bg-[#271814]/80 border border-[#d49b42]/30 shadow-[inset_0_1px_2px_rgba(249,187,95,0.2),0_4px_16px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center text-center">
+<h1 class="font-headline-sm text-[16px] tracking-[0.2em] text-[#fbe8c7] uppercase leading-none font-bold drop-shadow-[0_2px_4px_rgba(212,155,66,0.3)]">DOBBY</h1>
+<span class="font-label-sm text-[9.5px] text-amber-200/80 tracking-wider uppercase leading-tight mt-0.5 truncate max-w-full">CONTRATS &amp; BAUX • ÉCHÉANCIER DU FOYER</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button aria-label="Activer ou couper le son magique" class="relative w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 text-[#eec66a] flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all hover:bg-[#372622]" id="btn-sound-toggle">
+<span class="material-symbols-outlined text-[22px]">volume_up</span>
+<span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span>
+</button>
+<div class="w-12 h-12 rounded-xl bg-[#f3c25b] border border-[#d49b42] flex items-center justify-center shadow-md cursor-pointer active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[#180b07] text-[24px]">person</span>
+</div>
+</div>
+</div>
+</header><main class="flex flex-col relative w-full pt-14 bg-surface px-margin-mobile pb-space-xl"><div class="w-full max-w-md mx-auto pt-7 pb-28 flex flex-col space-y-5">
+<!-- HERO SECTION ÉTALON CONTRATS & ASSURANCES -->
+<div class="w-full flex flex-col">
+<!-- Conteneur d'image h-[220px] avec badges dépolis -->
+<div class="w-full h-[220px] rounded-2xl border border-[#d49b42]/30 relative overflow-hidden shadow-2xl bg-[#180b07] mb-3.5">
+<img alt="Dobby examinant un contrat en parchemin sur son pupitre" class="w-full h-full object-cover object-center" src="../../assets/remaining/fallback-salon.png">
+<!-- Dégradé progressif de fusion vers le bas -->
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#180b07]/30 to-[#180b07]/90 pointer-events-none"></div>
+<!-- Badges en verre dépoli -->
+<div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#180b07]/80 backdrop-blur-md border border-[#d49b42]/40 text-[11px] font-semibold text-[#fbe8c7] flex items-center gap-1.5 shadow-md">
+<span class="relative flex h-2 w-2 items-center justify-center">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f9bb5f] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#f9bb5f]"></span>
+</span>
+<span class="tracking-wider uppercase font-label-sm">✦ REGISTRE DES CONTRATS ✦</span>
+</div>
+<div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-[#180b07]/80 backdrop-blur-md border border-[#d49b42]/40 text-[11px] font-semibold text-[#eec66a] shadow-md tracking-wider uppercase font-label-sm flex items-center gap-1">
+<span class="">📜 6 CONTRATS ACTIFS</span>
+</div>
+</div>
+<!-- Cartouche textuel sous l'image -->
+<div class="flex flex-col items-center text-center">
+<div class="text-[11px] font-semibold tracking-widest text-[#d49b42] uppercase font-['Playfair_Display'] mb-1">
+        ✧ ACTES SCELLÉS &amp; ÉCHÉANCES DU FOYER ✧
+      </div>
+<h1 class="font-['Playfair_Display'] text-2xl font-bold text-[#fbe8c7] mb-1 drop-shadow-sm">
+        Contrats &amp; Assurances
+      </h1>
+<p class="italic text-[13px] text-[#fbe8c7]/80 mb-3 px-4 font-['EB_Garamond'] leading-relaxed max-w-sm">
+        « Dobby garde l'œil sur chaque reconduction et date anniversaire. Aucun parchemin ne prendra la maisonnée par surprise ! »
+        <br>
+<span class="not-italic text-[11px] font-semibold text-[#d49b42] block mt-0.5">— Note de vigilance de Dobby</span>
+</p>
+<!-- Bouton d'action principal CTA -->
+<button class="w-full py-3.5 bg-gradient-to-r from-[#d49b42] to-[#eec66a] text-[#180b07] font-['Playfair_Display'] font-bold text-base rounded-xl shadow-lg flex items-center justify-center gap-2 hover:brightness-105 active:scale-[0.98] transition-all mb-1" type="button">
+<span class="material-symbols-outlined text-[20px] font-bold">add_circle</span>
+<span class="">+ Déclarer ou renouveler un contrat</span>
+</button>
+</div>
+</div>
+<!-- BANNIÈRE DE SÉCURITÉ LOCALE & ÉCHÉANCIER -->
+<div class="rounded-xl bg-[#271814] border border-[#d49b42]/25 p-3 flex items-start gap-3 shadow-md">
+<div class="w-9 h-9 rounded-full bg-[#334e44] flex items-center justify-center shrink-0 border border-[#afcdc0]/30 text-[#afcdc0]">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-sm text-[11px] text-[#afcdc0] tracking-wider uppercase font-semibold block">Protection Locale &amp; Échéancier</span>
+<p class="font-body-sm text-[13px] text-[#d4c4b1] leading-snug mt-0.5">
+        Scellé dans la mémoire de l'iPhone. Les baux et polices restent sous chiffrement direct sans cloud tiers.
+      </p>
+</div>
+</div>
+<!-- MÉTRIQUES CLÉS (4 COMPTEURS ÉTALONS) -->
+<div class="grid grid-cols-4 gap-2">
+<div class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/20 p-2.5 flex flex-col items-center text-center shadow-sm">
+<span class="font-headline-sm text-[18px] font-bold text-[#f9bb5f]">4</span>
+<span class="font-label-sm text-[10px] text-[#fadcd5] font-semibold mt-0.5">Assurances</span>
+<span class="font-label-sm text-[9px] text-[#9d8e7e]">actives</span>
+</div>
+<div class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/20 p-2.5 flex flex-col items-center text-center shadow-sm">
+<span class="font-headline-sm text-[18px] font-bold text-[#fabc4d]">2</span>
+<span class="font-label-sm text-[10px] text-[#fadcd5] font-semibold mt-0.5">Baux &amp; Abos</span>
+<span class="font-label-sm text-[9px] text-[#9d8e7e]">en vigueur</span>
+</div>
+<div class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/20 p-2.5 flex flex-col items-center text-center shadow-sm">
+<span class="font-headline-sm text-[18px] font-bold text-[#ffddb2]">1</span>
+<span class="font-label-sm text-[10px] text-[#fadcd5] font-semibold mt-0.5">Échéance</span>
+<span class="font-label-sm text-[9px] text-[#ffb4ab]">30 jours</span>
+</div>
+<div class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/20 p-2.5 flex flex-col items-center text-center shadow-sm">
+<span class="font-headline-sm text-[18px] font-bold text-[#afcdc0]">0</span>
+<span class="font-label-sm text-[10px] text-[#fadcd5] font-semibold mt-0.5">Litige</span>
+<span class="font-label-sm text-[9px] text-[#9d8e7e]">parfait</span>
+</div>
+</div>
+<!-- SÉLECTEUR DE FILTRES TACTILES -->
+<div class="space-y-2">
+<div class="flex items-center justify-between px-1">
+<span class="text-[11px] font-semibold tracking-widest text-[#d49b42] uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">filter_list</span>
+<span class="">Catégories d'Actes</span>
+</span>
+<div class="flex items-center gap-1 text-primary font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[14px]">swap_vert</span>
+<span class="">Par date d'échéance</span>
+</div>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 -mx-4 px-4 scroll-smooth">
+  <button class="h-9 shrink-0 flex items-center gap-1.5 px-4 py-2 whitespace-nowrap text-xs tracking-wide rounded-xl bg-[#d49b42] text-[#180b07] font-semibold shadow-sm shadow-[#d49b42]/30 active:scale-95 transition-all" type="button">
+    <span class="material-symbols-outlined text-[16px]">auto_stories</span>
+    <span class="">Tous les contrats</span>
+  </button>
+  <button class="h-9 shrink-0 flex items-center gap-1.5 px-4 py-2 whitespace-nowrap text-xs tracking-wide rounded-xl bg-[#271814] border border-[#d49b42]/25 text-[#eec66a]/80 hover:text-[#fadcd5] active:scale-95 transition-all" type="button">
+    <span class="material-symbols-outlined text-[16px]">shield</span>
+    <span class="">Assurances</span>
+  </button>
+  <button class="h-9 shrink-0 flex items-center gap-1.5 px-4 py-2 whitespace-nowrap text-xs tracking-wide rounded-xl bg-[#271814] border border-[#d49b42]/25 text-[#eec66a]/80 hover:text-[#fadcd5] active:scale-95 transition-all" type="button">
+    <span class="material-symbols-outlined text-[16px]">bolt</span>
+    <span class="">Énergie &amp; Logis</span>
+  </button>
+  <button class="h-9 shrink-0 flex items-center gap-1.5 px-4 py-2 whitespace-nowrap text-xs tracking-wide rounded-xl bg-[#271814] border border-[#d49b42]/25 text-[#eec66a]/80 hover:text-[#fadcd5] active:scale-95 transition-all" type="button">
+    <span class="material-symbols-outlined text-[16px]">history_edu</span>
+    <span class="">Baux &amp; Abonnements</span>
+  </button>
+</div>
+</div>
+<!-- LISTE DES CONTRATS SCELLÉS DÉTAILLÉS -->
+<div class="space-y-3.5 pt-1">
+<!-- CARTE 1 : Assurance Habitation & Manoir -->
+<article class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/30 p-3.5 shadow-lg space-y-2.5">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-[#372622] border border-[#d49b42]/30 flex items-center justify-center shrink-0 text-[#f9bb5f]">
+<span class="material-symbols-outlined text-[22px]">shield</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-[#271814] text-[#f9bb5f] border border-[#f9bb5f]/30 font-label-sm text-[10px] font-semibold">Assurance Habitation</span>
+<span class="font-label-sm text-[11px] text-[#afcdc0] font-medium">42 € / mois</span>
+</div>
+<h3 class="font-headline-sm text-[16px] font-bold text-[#fcf7ee] truncate mt-0.5">Assurance Habitation &amp; Manoir</h3>
+</div>
+</div>
+<button aria-label="Détails" class="w-8 h-8 rounded-lg flex items-center justify-center text-[#9d8e7e] hover:text-[#fadcd5]">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<p class="font-body-sm text-[13px] text-[#d4c4b1]">
+        Couverture complète du logis, bris de glaces, dégâts des eaux et responsabilités civiles familiales.
+      </p>
+<div class="rounded-lg bg-[#180b07] border border-[#d49b42]/15 p-2 flex items-center justify-between text-[11.5px] text-[#d4c4b1]">
+<span class="text-[#f9bb5f] font-medium">Compagnie Le Phénix</span>
+<span class="text-[#afcdc0] flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+          Statut : Couvert
+        </span>
+<span class="text-[#9d8e7e]">Échéance : 1er Fév. 2026</span>
+</div>
+<div class="flex items-center gap-2 pt-0.5">
+<button class="flex-1 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#f9bb5f] font-label-md text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span class="">Consulter l'échéance</span>
+</button>
+<button aria-label="Rappel d'échéance" class="h-9 px-2.5 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center gap-1 text-[11px]" title="Rappel d'échéance">
+<span class="material-symbols-outlined text-[15px]">alarm</span>
+<span class="">Rappel</span>
+</button>
+<button aria-label="Télécharger l'acte" class="w-9 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center transition-colors" title="Télécharger l'acte">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+</article>
+<!-- CARTE 2 : Bail de Location & Maisonnette -->
+<article class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/30 p-3.5 shadow-lg space-y-2.5">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-[#372622] border border-[#d49b42]/30 flex items-center justify-center shrink-0 text-[#f9bb5f]">
+<span class="material-symbols-outlined text-[22px]">history_edu</span>
+</div>
+<div class="min-w-0">
+<span class="px-1.5 py-0.5 rounded bg-[#271814] text-[#d49b42] border border-[#d49b42]/30 font-label-sm text-[10px] font-semibold">Bail Notarié</span>
+<h3 class="font-headline-sm text-[16px] font-bold text-[#fcf7ee] truncate mt-0.5">Bail de Location &amp; Maisonnette</h3>
+</div>
+</div>
+<button aria-label="Détails" class="w-8 h-8 rounded-lg flex items-center justify-center text-[#9d8e7e] hover:text-[#fadcd5]">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="space-y-1 font-body-sm text-[13px] text-[#d4c4b1]">
+<div class="flex items-center justify-between">
+<span class="text-[#9d8e7e]">Étude :</span>
+<span class="text-[#fbe8c7] font-medium">Me Notaire du Chaudron</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[#9d8e7e]">Échéance :</span>
+<span class="text-[#f9bb5f] font-medium">Sept. 2026 (Tacite reconduction)</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-0.5">
+<button class="flex-1 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#f9bb5f] font-label-md text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span class="">Consulter le bail</span>
+</button>
+<button aria-label="Rappel d'échéance" class="h-9 px-2.5 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center gap-1 text-[11px]" title="Rappel d'échéance">
+<span class="material-symbols-outlined text-[15px]">alarm</span>
+<span class="">Rappel</span>
+</button>
+<button aria-label="Télécharger l'acte" class="w-9 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center transition-colors" title="Télécharger l'acte">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+</article>
+<!-- CARTE 3 : Contrat d'Énergie & Magie Domestique -->
+<article class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/30 p-3.5 shadow-lg space-y-2.5">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-[#372622] border border-[#d49b42]/30 flex items-center justify-center shrink-0 text-[#fabc4d]">
+<span class="material-symbols-outlined text-[22px]">bolt</span>
+</div>
+<div class="min-w-0">
+<span class="px-1.5 py-0.5 rounded bg-[#271814] text-[#fabc4d] border border-[#fabc4d]/30 font-label-sm text-[10px] font-semibold">Énergie du Foyer</span>
+<h3 class="font-headline-sm text-[16px] font-bold text-[#fcf7ee] truncate mt-0.5">Contrat d'Énergie &amp; Magie Domestique</h3>
+</div>
+</div>
+<button aria-label="Détails" class="w-8 h-8 rounded-lg flex items-center justify-center text-[#9d8e7e] hover:text-[#fadcd5]">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="space-y-1 font-body-sm text-[13px] text-[#d4c4b1]">
+<div class="flex items-center justify-between">
+<span class="text-[#9d8e7e]">Fournisseur :</span>
+<span class="text-[#fbe8c7] font-medium">Compagnie Éther &amp; Flamme</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[#9d8e7e]">Révision tarifaire :</span>
+<span class="text-[#ffddb2] font-medium">Nov. 2025</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-0.5">
+<button class="flex-1 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#f9bb5f] font-label-md text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span class="">Consulter le tarif</span>
+</button>
+<button aria-label="Rappel d'échéance" class="h-9 px-2.5 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center gap-1 text-[11px]" title="Rappel d'échéance">
+<span class="material-symbols-outlined text-[15px]">alarm</span>
+<span class="">Rappel</span>
+</button>
+<button aria-label="Télécharger l'acte" class="w-9 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center transition-colors" title="Télécharger l'acte">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+</article>
+<!-- CARTE 4 : Assurance Santé Familiale & Soins -->
+<article class="rounded-xl bg-[#2c1c18] border border-[#d49b42]/30 p-3.5 shadow-lg space-y-2.5">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-[#334e44] border border-[#afcdc0]/30 flex items-center justify-center shrink-0 text-[#afcdc0]">
+<span class="material-symbols-outlined text-[22px]">health_and_safety</span>
+</div>
+<div class="min-w-0">
+<span class="px-1.5 py-0.5 rounded bg-[#334e44] text-[#afcdc0] font-label-sm text-[10px] font-semibold">Santé &amp; Soins</span>
+<h3 class="font-headline-sm text-[16px] font-bold text-[#fcf7ee] truncate mt-0.5">Assurance Santé Familiale &amp; Soins</h3>
+</div>
+</div>
+<button aria-label="Détails" class="w-8 h-8 rounded-lg flex items-center justify-center text-[#9d8e7e] hover:text-[#fadcd5]">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+<div class="space-y-1 font-body-sm text-[13px] text-[#d4c4b1]">
+<div class="flex items-center justify-between">
+<span class="text-[#9d8e7e]">Organisme :</span>
+<span class="text-[#fbe8c7] font-medium">Mutuelle Botanique</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[#9d8e7e]">Modalité :</span>
+<span class="text-[#afcdc0] font-medium">Renouvellement automatique (Déc. 2025)</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-0.5">
+<button class="flex-1 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#f9bb5f] font-label-md text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span class="">Consulter les garanties</span>
+</button>
+<button aria-label="Rappel d'échéance" class="h-9 px-2.5 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center gap-1 text-[11px]" title="Rappel d'échéance">
+<span class="material-symbols-outlined text-[15px]">alarm</span>
+<span class="">Rappel</span>
+</button>
+<button aria-label="Télécharger l'acte" class="w-9 h-9 rounded-lg bg-[#372622] hover:bg-[#43302c] border border-[#d49b42]/30 text-[#fadcd5] flex items-center justify-center transition-colors" title="Télécharger l'acte">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+</div>
+</article>
+</div>
+<!-- BOUTON RETOUR & SCEAU DE PROTECTION DOBBY -->
+<div class="pt-2 space-y-3.5 text-center">
+<button class="w-full h-12 rounded-xl bg-[#271814] border border-[#d49b42]/40 hover:bg-[#372622] text-[#fcf7ee] font-semibold text-[14px] flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-[#f9bb5f]">arrow_back</span>
+<span class="">Retour au Salon des Curiosités</span>
+</button>
+<div class="rounded-2xl bg-[#180b07] border border-[#d49b42]/25 p-4 my-6 shadow-md flex flex-col items-center text-center space-y-2.5"><div class="w-10 h-10 rounded-full bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#f9bb5f] shadow-inner"><span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">shield_lock</span></div><div class="space-y-1"><h4 class="font-['Playfair_Display'] text-[#eec66a] text-sm tracking-wide font-bold uppercase">SCEAU DE PROTECTION LOCALE DOBBY</h4><p class="font-body-sm text-[12px] text-[#d4c4b1] leading-relaxed max-w-sm mx-auto">Échéances et contrats du foyer conservés exclusivement en mémoire locale hermétique sur cet appareil. Aucun cloud public, synchronisation externe ni télémétrie distante.</p></div><div class="inline-flex items-center gap-1.5 rounded-full border border-[#d49b42]/20 bg-[#271814] px-3 py-1 text-[11px] text-[#eec66a]/90 font-label-sm tracking-wide"><span class="w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span><span class="font-semibold tracking-wider">AES-256 CHIFFRÉ · v4.8</span></div></div>
+</div>
+</div></main><nav class="fixed bottom-0 w-full z-50 bg-[#1e100c]/95 backdrop-blur-lg border-t border-[#d49b42]/20 pb-safe">
+<div class="max-w-md mx-auto h-[62px] px-3 flex items-center justify-around">
+<button class="flex flex-col items-center justify-center text-[#9d8e7e] hover:text-[#f9bb5f] transition-colors py-1">
+<span class="material-symbols-outlined text-[22px]">cottage</span>
+<span class="font-label-sm text-[10px] mt-0.5">Accueil</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#9d8e7e] hover:text-[#f9bb5f] transition-colors py-1">
+<span class="material-symbols-outlined text-[22px]">task_alt</span>
+<span class="font-label-sm text-[10px] mt-0.5">Missions</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#9d8e7e] hover:text-[#f9bb5f] transition-colors py-1">
+<span class="material-symbols-outlined text-[22px]">restaurant</span>
+<span class="font-label-sm text-[10px] mt-0.5">Taverne</span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#d49b42] py-1 relative">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+<span class="font-label-sm text-[10px] font-semibold mt-0.5">Archives</span>
+<span class="w-1 h-1 rounded-full bg-[#d49b42] mt-0.5"></span>
+</button>
+<button class="flex flex-col items-center justify-center text-[#9d8e7e] hover:text-[#f9bb5f] transition-colors py-1">
+<span class="material-symbols-outlined text-[22px]">diversity_1</span>
+<span class="font-label-sm text-[10px] mt-0.5">Famille</span>
+</button>
+</div>
+</nav>
+
+
+</body></html>
