@@ -1,0 +1,33 @@
+# E06 — Consolidation de revue
+
+Le parcours conserve le routeur Famille, le writer canonique des membres, les brouillons natifs et le barème E06. Aucun service de compte ou de foyer n'est créé. Le mode fictif est réservé à l'enveloppe isolée `DobbyReview` du générateur de revue.
+
+| Repère | Résultat de ce lot | Preuve / limite |
+|---|---|---|
+| E06-01 | **BLOQUÉ — archive source absente** | [Inventaire](source-inventory.txt). L'archive demandée `stitch_dobby_assistant_mobile_app (9).zip` n'est présente ni dans `/workspace` (pièces jointes et copies des dépôts), ni dans `/tmp`, `/mnt` ou `/root`. Le ZIP E06 accessible contient les sept scènes déjà importées. Le simple scrim d'arrivée du foyer ne constitue pas le rituel manquant. Aucun rituel ni faux média original n'a été inventé. La séquence « Rituel → Traverser », passer et « Ne plus afficher » attend donc sa source. |
+| E06-02 | Parcours fictif complet implémenté | Dans le bundle isolé, l'entrée du foyer propose directement de créer un membre local, de choisir un membre existant, de reprendre la cérémonie et de réinitialiser les données fictives. Aucun email ou mot de passe demandé ; aucune inscription serveur annoncée. L'entrée finale sélectionne explicitement le membre de démonstration créé via l'API locale de l'enveloppe. |
+| E06-03 | Corrigé | Illustration locale originale du chapeau de cérémonie ; provenance distincte du média Stitch manquant. Aucun message d'illustration indisponible. Une seule indication `Question n / 6` (ou `Question complémentaire`), sans duplication dans la carte. |
+| E06-04 | **Correction graphique vérifiée ; grand blason officiel BLOQUÉ** | Le résultat Maison utilise un cadre en flux normal : masque noir supprimé et titres entiers à 320/390/1440. Origine, fondateur et valeurs viennent du catalogue commun E05. Les blasons officiels autorisés ne sont pas disponibles ; l'emplacement neutre fourni par E05 le signale, sans imitation présentée comme officielle. Confirmation explicite conservée. |
+| E06-05 | Corrigé | Questions et réponses en romain, corps 18 px pour la question, interligne 1,65 ; contrôle du style calculé et captures aux trois largeurs. Les questions et réponses canoniques ne sont pas reformulées. |
+| E06-06 | Corrigé | Grandes illustrations existantes conservées pour les douze Patronus ; description exactement identique à `DobbyMagicContent.patronuses[id].description` utilisée en E05. Plus de message sur les runes dans la description narrative. |
+| E06-07 | Écran final vérifié dans le parcours local | Avatar, Maison, Patronus, grade natif, 0 rune pour un nouveau membre, confirmation puis entrée Traverse et rechargement. Vérification complémentaire de l'ancien membre à 85 runes dans `e06-edge.cjs`. |
+| E06-08 | **REPORTÉ — AUTORISÉ, chantier serveur distinct** | Création réelle de compte/foyer, invitations, liaison vérifiée et permissions parentales restent hors périmètre. Aucun changement Supabase, migration ou donnée familiale réelle. |
+
+## Sources visuelles et contenu
+
+- [Avant](before/) : 21 captures, sept scènes × 320/390/1440, avant les corrections E06.
+- [Après source](after/) : 69 captures, sept scènes puis quatre Maisons et douze Patronus à chaque largeur.
+- Le chapeau est une illustration SVG originale de remplacement, explicitement permise par E06-03. Son [fichier de provenance](../../../../../essai-stitch-v7/assets/onboarding/sorting-hat-original.provenance.json) distingue cette création du média Stitch original inaccessible ; l'inventaire original `assets/onboarding/provenance.json` est conservé.
+- Maisons et Patronus lisent directement le [catalogue commun E05](../../../../../essai-stitch-v7/magic-content.js). Aucun texte de description n'est recopié dans le renderer E06.
+
+## Contrôles exécutés
+
+- `node --test essai-stitch-v7/tests/e06-*.test.mjs` : **11/11 PASS**, calcul exhaustif de référence, brouillons, conflits natifs et limite interversions inchangée.
+- Le premier passage complet source a contrôlé les quatre Maisons et les douze Patronus aux trois largeurs, avec les vecteurs de réponses canoniques et les descriptions exactes du catalogue ; ses 69 captures sont conservées dans `after/`.
+- [Contrôle source final ciblé](source-test.log), `DOBBY_E06_JOURNEY_ONLY=1` : **PASS 320/390/1440**, création via formulaire réel, deux questionnaires par l'UI, reprise explicite et rechargement, confirmations, final, entrée Traverse et aucun changement du ledger. Ce passage vérifie également que l'emplacement neutre du blason reste entièrement dans son médaillon : la [régression intermédiaire observée](final-neutral-slot-before-fix-320.png) a été corrigée puis les trois écrans finaux recapturés.
+- [Non-régression native E06](source-edge.log) : **PASS**, ancien membre à 85 runes intactes, retests E05, maintien des anciens résultats sans confirmation, reprise/retour, quatre Maisons/douze Patronus, refus de stockage et de métadonnées, changements de contexte et profil périmé.
+- Le test source initial a d'abord échoué sur la duplication du compteur (`Question 1 sur 6 · titre`), avant correction.
+- Une relance a rencontré un serveur local arrêté sur le port 8789 : [incident d'infrastructure](source-retry-infra.log), sans échec applicatif. La recette finale ciblée a réussi sur le serveur stable 8790.
+- Revue technique indépendante en lecture seule : aucun défaut applicatif confirmé. Writers, barème, confirmation et sélection fictive après sauvegarde ont été relus ; les captures finales à 320 px et la provenance du SVG ont été contrôlées. Aucune suite relancée par ce reviewer.
+
+Les contrôles de bundle et de non-régression complémentaires sont consignés dans les journaux voisins une fois exécutés. Ces preuves locales ne constituent pas une authentification réelle, une validation des droits serveur ou une recette hébergée.

@@ -1,0 +1,6 @@
+Targeted Chromium geometry check, 320 x 900, isolated native TEST mission.
+Origin: http://127.0.0.1:8790
+RED before selector correction: completion button width 107 px; assertion width <= 40 failed.
+Cause: [data-e01-mission] > .flex also selected the flex completion button.
+GREEN after restricting the selector to div.flex: x=238, y=865.5, width=36, height=36; exit 0.
+The same compact-width assertion is retained in tests/e01-consolidation.cjs.

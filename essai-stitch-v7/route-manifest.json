@@ -2237,5 +2237,36 @@
         ]
       }
     ]
+  },
+  "reviewConsolidation": {
+    "reference": "a84f67acf8f5cbfd59475c2137ec70e1a20732f7",
+    "matrix": "docs/dobby-v7/CONSOLIDATION-MATRIX.json",
+    "report": "docs/dobby-v7/CONSOLIDATION.md",
+    "protected": [
+      "E03",
+      "E08 design"
+    ],
+    "blocked": [
+      "E04-02 native series/occurrence protocol",
+      "E05-01 official crest publication rights",
+      "E06-01 missing ritual source",
+      "E06-04 official crest dependency only"
+    ],
+    "deferred": [
+      "E06-08 server operations",
+      "E07-01",
+      "E07-02",
+      "E07-03",
+      "E07-09",
+      "Menu reconstruction",
+      "Family reconstruction"
+    ],
+    "sortingHat": {
+      "type": "original substitute; not original Stitch media",
+      "asset": "assets/onboarding/sorting-hat-original.svg",
+      "provenance": "assets/onboarding/sorting-hat-original.provenance.json"
+    },
+    "speech": "explicit send; browser natural end pauses and keeps transcript; physical Safari not verified",
+    "preferences": "one native st.stitchPreferences record including ceremony"
   }
 }

@@ -1,5 +1,8 @@
 # E07 — Taverne Gourmande et Courses essentielles
 
+> Ce document conserve la livraison historique. Les décisions du 11 novembre et leurs corrections actuelles sont suivies dans [la consolidation](CONSOLIDATION.md) et [la matrice exhaustive](CONSOLIDATION-MATRIX.md). Les points bloqués/reportés ne sont pas déclarés terminés.
+
+
 Branche : [`feat/dobby-e07-cuisine-courses`](https://github.com/PortenartCo/dobby-demo/tree/feat/dobby-e07-cuisine-courses). Base E05 : `8418682e5094b66ee879fbf18dcd1e6a3b6d5a05`. Worktree indépendant `/workspace/dobby-e07`. Aucun AGENTS.md applicable trouvé. E06 n’a été ni modifié, ni fusionné.
 
 ## Sources et dérivation

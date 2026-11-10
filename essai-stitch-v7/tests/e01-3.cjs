@@ -1,7 +1,7 @@
 /* E01.3: actual CSS motion in isolated profiles; no household records injected. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium,webkit,devices}=require('playwright');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',engine=process.env.DOBBY_E013_BROWSER||'chromium';
-const out=path.resolve(__dirname,'../../docs/dobby-v7/evidence/e01-3');
+const out=process.env.DOBBY_E013_EVIDENCE_DIR||path.resolve(__dirname,'../../docs/dobby-v7/evidence/e01-3');
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 (async()=>{
  fs.mkdirSync(out,{recursive:true});

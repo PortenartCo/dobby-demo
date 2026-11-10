@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Inclusive start/end contain both Midi and Soir only
+
+16 !== 8
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e07-consolidation.cjs:11:51 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 16,
+  expected: 8,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

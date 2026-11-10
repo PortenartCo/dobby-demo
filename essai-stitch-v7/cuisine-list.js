@@ -45,17 +45,26 @@ window.DobbyCuisineList=(()=>{
   async function check(E,id,done){const s=snapshot(E);if(s.shared)return family(E).edit(id,{checked:done});
     transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');item.done=p.done;`,{id,done});
   }
-  async function preview(E){
+  function importRange(E,range){
+    const today=E.evaluate('return todayISO();'),start=range?.start??today,end=range?.end??E.evaluate('return addDays(p.start,6);',{start});
+    const date=value=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;const d=new Date(value+'T12:00:00');return !Number.isNaN(d.getTime())&&[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')===value;};
+    if(!date(start)||!date(end))throw Error('Choisissez des dates de début et de fin valides.');
+    if(end<start)throw Error('La date de fin doit suivre ou correspondre à la date de début.');
+    return {start,end};
+  }
+  async function preview(E,range){
+    range=importRange(E,range);
     const s=snapshot(E),receipts=E.evaluate('return [...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[]),...(st.shopFinal?.imports||[])];');
     const rows=E.evaluate(`const result=[];for(const [key,m]of pendingMeals()){
+      const date=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)$/.test(key)||date<p.start||date>p.end)continue;
       const r=getR(m.id);if(!r)continue;const grouped=new Map(),ref=m._e072ImportRef||(key+'|'+m.id);
       for(const [name,q,unit]of r.ingredients){const token=ref+'|'+name.trim().toLocaleLowerCase('fr-BE')+'|'+(unit||'').trim().toLocaleLowerCase('fr-BE');
         const qty=q==null?null:Number(q)*portionCount(m)/r.servings;
         const before=grouped.get(token);if(before)before.qty=before.qty==null||qty==null?null:before.qty+qty;
         else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+r.name,meal:mealSignature(key,m)});
-      }result.push(...grouped.values());}return result;`);
-    const signature=JSON.stringify(rows.map(({token,name,qty,unit,origin})=>({token,name,qty,unit,origin})));
-    if(s.shared)return {scope:s.scope,signature,rows:await family(E).proposeRows(rows,s.scope)};
+      }result.push(...grouped.values());}return result;`,range);
+    const signature=JSON.stringify({range,rows:rows.map(({token,name,qty,unit,origin})=>({token,name,qty,unit,origin}))});
+    if(s.shared)return {scope:s.scope,range,signature,rows:await family(E).proposeRows(rows,s.scope)};
     const seen=new Map(receipts.filter(x=>x&&typeof x==='object').map(x=>[x.token,x]));
     const proposed=[];
     for(const row of rows){
@@ -66,10 +75,10 @@ window.DobbyCuisineList=(()=>{
       if(norm(item.unit)!==norm(row.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
       if(prior.qty!=null&&row.qty!=null&&row.qty>prior.qty)proposed.push({...row,targetQty:row.qty,qty:row.qty-prior.qty,previousQty:prior.qty,mode:'delta'});
     }
-    return {scope:s.scope,signature,rows:proposed};
+    return {scope:s.scope,range,signature,rows:proposed};
   }
   async function confirmImport(E,proposal){
-    const current=await preview(E);
+    const current=await preview(E,proposal.range);
     if(proposal.scope!==current.scope||proposal.signature!==current.signature)throw Error('Les menus ou le foyer ont changé. Ouvrez un nouveau récapitulatif.');
     const selected=new Map(proposal.rows.map(x=>[x.token,x])),rows=current.rows.filter(x=>selected.has(x.token));
     for(const row of rows){const approved=selected.get(row.token);for(const key of ['qty','previousQty','targetQty','expected'])if(JSON.stringify(row[key])!==JSON.stringify(approved[key]))throw Error('Un apport a changé. Ouvrez un nouveau récapitulatif.');}
@@ -80,7 +89,7 @@ window.DobbyCuisineList=(()=>{
       return family(E).importRows(rows,current.scope);
     }
     transaction(E,tag+`const list=st.shopFinal;for(const row of p.rows){
-      const found=list.items.find(x=>(x.provenance||[]).includes(row.token))||list.items.find(x=>!x.done&&x.qty!=null&&row.qty!=null&&x.name.trim().toLocaleLowerCase('fr-BE')===row.name.trim().toLocaleLowerCase('fr-BE')&&(x.unit||'').trim().toLocaleLowerCase('fr-BE')===row.unit.trim().toLocaleLowerCase('fr-BE'));
+      const found=list.items.find(x=>(x.provenance||[]).includes(row.token))||list.items.find(x=>!x.done&&(x.provenance||[]).length&&x.origin!=='Ajout manuel'&&x.qty!=null&&row.qty!=null&&x.name.trim().toLocaleLowerCase('fr-BE')===row.name.trim().toLocaleLowerCase('fr-BE')&&(x.unit||'').trim().toLocaleLowerCase('fr-BE')===row.unit.trim().toLocaleLowerCase('fr-BE'));
       if(found){found.qty=Number(found.qty)+row.qty;found.detail=fmt(found.qty)+(found.unit?' '+found.unit:'');if(!(found.provenance||[]).includes(row.token))(found.provenance ||= []).push(row.token);}
       else list.items.push({...row,id:crypto.randomUUID(),detail:row.qty==null?'À préciser':fmt(row.qty)+(row.unit?' '+row.unit:''),category:categoryOf(row.name),done:false,provenance:[row.token]});
       const receipt={token:row.token,qty:row.targetQty};const at=list.imports.findIndex(x=>x?.token===row.token);if(at<0)list.imports.push(receipt);else list.imports[at]=receipt;
@@ -96,13 +105,14 @@ window.DobbyCuisineList=(()=>{
     if(state.shared)return family(E).importRows(rows,state.scope);
     transaction(E,`for(const row of p.rows){if(st.shopFinal.imports.includes(row.token))continue;st.shopFinal.items.push({...row,id:crypto.randomUUID(),done:false});st.shopFinal.imports.push(row.token);}`,{rows});
   }
-  async function archive(E){
-    const s=snapshot(E),done=s.items.filter(x=>x.done&&!x.conflict);if(!done.length)return;
+  async function archive(E,ids){
+    const s=snapshot(E),done=s.items.filter(x=>x.done&&!x.conflict&&(!ids||ids.includes(x.id)));if(!done.length)return 0;
     const id='e072-'+crypto.randomUUID(),stamp=new Date().toISOString();
     // Snapshot first. Pending deletes can be retried by the native family queue.
     transaction(E,`st.shopHistory[p.id]={items:p.items.map(x=>({...x,detail:x.qty==null?'À préciser':fmt(x.qty)+(x.unit?' '+x.unit:''),done:true})),validatedAt:p.stamp,meals:[],scope:p.scope,imports:[...(st.shopFinal.imports||[])]};
       if(p.scope==='local')st.shopFinal.items=st.shopFinal.items.filter(x=>!p.ids.includes(x.id));`,{id,stamp,items:done,ids:done.map(x=>x.id),scope:s.scope});
     if(s.shared)for(const item of done)await family(E).edit(item.id,{deleted_at:stamp});
+    return done.length;
   }
   return Object.freeze({snapshot,add,edit,remove,check,preview,confirmImport,transfer,archive,reuse,detail});
 })();

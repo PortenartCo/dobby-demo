@@ -1,5 +1,8 @@
 # DOBBY — Revue intégrée E01 à E08
 
+> Ce document conserve la livraison historique. Les décisions du 11 novembre et leurs corrections actuelles sont suivies dans [la consolidation](CONSOLIDATION.md) et [la matrice exhaustive](CONSOLIDATION-MATRIX.md). Les points bloqués/reportés ne sont pas déclarés terminés.
+
+
 Branche `feat/dobby-e01-e08-review-integration`, départ `e0e88a06485018f5e94eb4aeae886cacbf41c67b`. Contrat : [demande utilisateur](INTEGRATED-REVIEW-SPEC.md), [registre conservé](REVIEW-CONSOLIDATION.md). Les sources jointes sont des références ; les limites de la demande actuelle régissent cette convergence.
 
 Aperçu destiné à la revue : <https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/>. Données explicitement fictives, persona Camille Démo, aucune authentification réelle. Publication isolée réalisée et vérifiée le 10 novembre 2026 : [reçu de publication](evidence/integrated-review/publication.json). Source applicative `1f0fa32deb3fd64b178148f09cc8e449ac5ca165`, commit statique `beff93cebe2ec558c9b8d3cd345045b22e0c816e`. [CI applicative complète réussie](https://github.com/PortenartCo/dobby-demo/actions/runs/42904244391).

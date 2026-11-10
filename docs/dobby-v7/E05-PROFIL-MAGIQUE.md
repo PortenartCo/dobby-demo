@@ -1,5 +1,8 @@
 # E05 — Profil magique par membre
 
+> Ce document conserve la livraison historique. Les décisions du 11 novembre et leurs corrections actuelles sont suivies dans [la consolidation](CONSOLIDATION.md) et [la matrice exhaustive](CONSOLIDATION-MATRIX.md). Les points bloqués/reportés ne sont pas déclarés terminés.
+
+
 Branche indépendante `feat/dobby-e05-magic-profile`, base exacte `8bcd49c1c2250879e2fd5a96641cd77747ef9ea0`. Demande complète : [E05-SPEC.md](E05-SPEC.md).
 
 ## Livré et opérationnel

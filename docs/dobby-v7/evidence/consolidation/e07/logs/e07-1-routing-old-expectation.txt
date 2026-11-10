@@ -1,0 +1,8 @@
+page.waitForURL: Timeout 12000ms exceeded.
+=========================== logs ===========================
+waiting for navigation until "load"
+============================================================
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e07-1.cjs:15:1128 {
+  log: [],
+  name: 'TimeoutError'
+}

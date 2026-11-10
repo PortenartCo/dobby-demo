@@ -82,3 +82,18 @@ body.e07-shop .e072-actions>button{width:100%;height:auto;min-height:48px;paddin
 .e072-import-row{display:flex;gap:8px;align-items:center;padding:8px 0;font-size:15px}
 .e072-import-row input{width:44px;height:44px;flex:none;accent-color:#d49b42}
 .e072-import-row small{display:block;font-size:11px;color:#d4c4b1}
+/* Review consolidation: the three principal controls share the source gold CTA. */
+body.e07-shop :is(.e072-actions>button,.e072-tools>button){width:100%;min-height:52px;padding:12px;font:600 16px/1.35 'Playfair Display',Georgia,serif;justify-content:center;border-radius:12px}
+body.e07-shop .e072-tools{display:flex;flex-direction:column;gap:8px}
+body.e07-shop .e072-tools>button{flex:none}
+body.e07-shop .e072-tools>button:disabled{opacity:.55}
+body.e07-shop .e072-tools p{margin:0;color:#d4c4b1;font:14px/1.5 Literata,serif}
+body.e07-shop .e072-tools [data-e072-success]{padding:12px;border:1px solid #d49b4288;border-radius:10px;color:#f9dca7;background:#332619}
+.e072-range{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.e072-range input{width:100%;min-width:0;font-size:16px;color-scheme:dark}
+.e072-range-shortcuts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.e072-range-shortcuts .cu-button{min-height:44px;padding:8px;font-size:14px;flex:1 1 70px}
+.e072-range-shortcuts [aria-pressed=true]{background:#d49b42;color:#180b07}
+.e072-dialog h3{font:600 16px/1.4 'Playfair Display',Georgia,serif;margin-top:14px}
+.e072-dialog [data-e072-range-stale]{color:#f9bb5f}
+@media(max-width:359px){.e072-range{grid-template-columns:minmax(0,1fr)}}

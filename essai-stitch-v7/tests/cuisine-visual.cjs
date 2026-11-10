@@ -44,7 +44,7 @@ async function capture(page, file) {
           await DobbyCuisine.open(view,{id:'cu-visual'});
         },route.view);
         assert.equal(await page.locator('#dv7-panel').isVisible(),false);
-        assert.equal(await page.locator('body').getAttribute('data-stitch-source'),route.presentationId||route.id);
+        assert.equal(await page.locator('body').getAttribute('data-stitch-source'),route.view==='shop-history'?routes.find(x=>x.view==='shop').presentationId||routes.find(x=>x.view==='shop').id:route.presentationId||route.id);
         assert.equal(await page.locator('main h1').count(),1,'One main heading '+route.view);
         const content=await page.locator('main').textContent();
         await page.locator('main img').evaluateAll(es=>Promise.all(es.map(e=>e.decode().catch(()=>{}))));

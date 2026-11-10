@@ -1,5 +1,8 @@
 # E01 — Contrat permanent de l’accueil
 
+> Ce document conserve la livraison historique. Les décisions du 11 novembre et leurs corrections actuelles sont suivies dans [la consolidation](CONSOLIDATION.md) et [la matrice exhaustive](CONSOLIDATION-MATRIX.md). Les points bloqués/reportés ne sont pas déclarés terminés.
+
+
 Périmètre : essai `essai-stitch-v7`, PR #3, branche `feat/dobby-stitch-53-source-backed-v7`. Base E01 : `cc1519b926e6e73cba14ac2659fa5df05d66dadb`. Correction E01.1 depuis la référence vérifiée `e6be2f8c367df282f8d46bc698d0cfbc2ddc1b86`. Aucun développement des fonctions secondaires, changement SQL/Supabase, effacement de données, modification de la V5 publiée ou de `essai-v7-preview`, fusion ou déploiement.
 
 ## Composition et navigation

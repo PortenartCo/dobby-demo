@@ -1,5 +1,8 @@
 # E06 — Première connexion et cérémonie magique
 
+> Ce document conserve la livraison historique. Les décisions du 11 novembre et leurs corrections actuelles sont suivies dans [la consolidation](CONSOLIDATION.md) et [la matrice exhaustive](CONSOLIDATION-MATRIX.md). Les points bloqués/reportés ne sont pas déclarés terminés.
+
+
 Branche indépendante `feat/dobby-e06-onboarding`, depuis E05 `8418682e5094b66ee879fbf18dcd1e6a3b6d5a05`. Spécification utilisateur : [E06-SPEC.md](E06-SPEC.md). Livraison bornée pour revue humaine ; aucune fusion, publication Pages, opération serveur ou utilisation de comptes familiaux réels.
 
 ## Périmètre livré et sources

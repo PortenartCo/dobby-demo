@@ -1,6 +1,6 @@
 /* E01.1 comparisons: same ephemeral native TEST records before/after; no real accounts. */
 const assert=require('node:assert/strict'),{chromium}=require('playwright'),fs=require('node:fs'),path=require('node:path');
-const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',phase=process.env.DOBBY_E011_PHASE||'after',out=path.resolve(__dirname,'../../docs/dobby-v7/evidence/e01-1',phase);
+const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',phase=process.env.DOBBY_E011_PHASE||'after',out=process.env.DOBBY_E011_EVIDENCE_DIR||path.resolve(__dirname,'../../docs/dobby-v7/evidence/e01-1',phase);
 if(!['before','after'].includes(phase))throw Error('Unknown comparison phase');
 (async()=>{fs.mkdirSync(out,{recursive:true});const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});const checks=[];try{for(const width of [390,1440]){
  const c=await b.newContext({viewport:{width,height:900},locale:'fr-BE',timezoneId:'Europe/Paris',reducedMotion:'reduce'});await c.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await c.newPage();p.setDefaultTimeout(15000);const errors=[];p.on('pageerror',e=>errors.push(e.message));
