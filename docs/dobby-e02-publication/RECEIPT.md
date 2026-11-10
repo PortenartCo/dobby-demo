@@ -4,7 +4,7 @@ Base : `859171a4f749960d714155f42242c04a88466b69`. Branche de travail et PR #3 c
 
 ## Corrections et recette locale
 
-PASS : commandes ordinaires conservées ; achat de billet ou abonnement sans destination → clarification sans mutation native ; destination Courses explicite → writer natif et résultat persisté vérifiés.
+PASS : commandes ordinaires conservées ; achat indéfini « un/une… », de billet ou d’abonnement sans destination → clarification sans mutation native ; destination Courses explicite → writer natif et résultat persisté vérifiés.
 
 PASS : les quatre destinations internes restent dans le répertoire actif. Paramètres/fragments conservés, y compris liens sous forme de fragment ou de query seuls. Domaines externes, chemins d'autres applications et sous-répertoires refusés. Tests réalisés depuis `/essai-stitch-v7/` et `/essai-e02-preview/`.
 
