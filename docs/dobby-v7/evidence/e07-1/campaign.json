@@ -1,0 +1,30 @@
+{
+  "totalScripts": 42,
+  "initial": {
+    "passedScripts": [
+      "e07-1-context.cjs",
+      "e07-1.cjs",
+      "e07-native-actions.cjs",
+      "e07.cjs",
+      "e05-native.cjs",
+      "e05.cjs",
+      "e05-edge.cjs",
+      "e04.cjs",
+      "runes-native.cjs",
+      "e04-runes.cjs",
+      "e02.cjs",
+      "e02-edge.cjs",
+      "e02-voice-history.cjs"
+    ],
+    "stoppedAt": "e01.cjs",
+    "cause": "Expected old LA TAVERNE GOURMANDE while the user-requested short header correctly displays TAVERNE"
+  },
+  "change": "Only Taverne expected name in shared E01 test changed; all other destination/preference/reload assertions preserved",
+  "resumed": {
+    "from": "e01.cjs",
+    "scripts": 29,
+    "exitCode": 0,
+    "log": "logs/general-resumed.log"
+  },
+  "finalCI": "All42 run at exact final SHA, no production/server account claim"
+}

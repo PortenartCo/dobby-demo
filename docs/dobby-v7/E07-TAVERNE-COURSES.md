@@ -80,3 +80,65 @@ Commits de progression : `a0f49dd` (sources/Taverne), `6d15259` (Courses), `9d86
 | Fonctionnement réel en foyer/magasin | Non revendiqué |
 
 Aucune fusion, publication Pages, migration ou action sur un backend réel. Arrêt pour revue humaine.
+
+
+## E07.1 — Correctifs de revue
+
+Suite de la branche existante `feat/dobby-e07-cuisine-courses` depuis `914780287c4545e47deed6597f93e36ae6a38647`, sans reprise depuis E05 ni intégration E06/E08. [Demande utilisateur E07.1](E07.1-SPEC.md). Le rapport, les sources et les preuves E07 ci-dessus restent conservés comme historique ; ce chapitre décrit leur correction de présentation.
+
+### Six corrections livrées
+
+| Correction | État et comportement vérifié |
+|---|---|
+| Header et illustration | Bandeau `DobbyChrome` commun, court libellé réel « Taverne » ; titre « La Taverne Gourmande » sous l’image avec classes communes. Compteur de repas et effet superposé retirés. Cartouche « Cuisine du Logis & Chaudron magique » en bas à droite. PNG, personnage et cadrage antérieurs conservés. Commandes d’effets/sons communes conservées. |
+| Dîner | Un seul bouton principal, doré, pleine largeur utile : Voir la recette réelle, ou Choisir un repas si absent. Remplacement disponible depuis chaque entrée du planning ; statut préparé accessible explicitement dans les détails existants du repas (`pick`). |
+| Dock | Déjà correctement fixe avant modification : même position en bas de la fenêtre après vrai défilement aux trois largeurs. Aucun changement CSS de son positionnement, de safe-area ou des cinq destinations. Dernier contenu Courses accessible au-dessus du dock. |
+| Menus hebdomadaires | Sept jours visibles ; chaque repas enregistré affiche Midi/Soir, nom entier, durée/convives/portions/statut existants, consultation et modification. Deux repas dans la même journée sont deux entrées distinctes. Avec un seul repas, bouton pour ajouter le second ; journée libre, action de planification claire. |
+| Grimoire | Mes Recettes et Favoris conservés. Ajouter une recette reprend la même classe source, fond doré, hauteur 52 px, arrondi 12 px, police/graisse et centrage que le bouton du dîner. Chaque bouton occupe 100 % de la zone utile de son propre conteneur. Formulaire `recipe-add` réellement ouvert. |
+| Raccordements | Clics réels : recette, bibliothèque complète et filtrée, ajout, choix/remplacement pour le bon jour/créneau, préparé, préparation Courses, ajout d’article, validation, historique et retour. Cinq destinations du dock vérifiées. Aucun nouveau panneau de substitution. |
+
+Les vignettes réutilisent le helper `recipeVisual` et ses champs existants `image`/`photo`. Sur le planning E07 uniquement, image locale de même origine, image raster embarquée ou blob local ; photo absente, externe ou échouée : pictogramme de repas/emoji existant, avec libellé explicite « photographie locale indisponible ». Aucune photographie de démonstration n’est attribuée à une recette réelle, aucun téléchargement/stockage/générateur ajouté. Les vues secondaires conservent le comportement par défaut du helper. Les photos de recette déjà enregistrées restent intactes dans le modèle ; cette mission n’ajoute pas de stockage pour l’import photo du formulaire.
+
+### Statut préparé et contexte du planning
+
+`cooked` réutilise le raccordement préexistant `E.mealAction('status', {date, slot, status:'préparé'})`. La commande est placée dans le bloc de détails du repas enregistré du planning, avec son nom, et devient inactive lorsqu’il est déjà préparé. Elle concerne ce repas enregistré, même si une autre recette est sélectionnée sans sauvegarde ; elle ne suppose jamais que le mode cuisson met à jour ce statut. Midi et soir sont testés séparément après rechargement, avec conservation de l’autre créneau.
+
+Un défaut de reprise a été établi : `#pick` perdait le créneau Midi et le jour choisi au rechargement. Le contrôleur garde maintenant `date` et `slot` dans les paramètres du hash existant ; le parseur et le retour/avance les réutilisent. Aucun nouveau routeur, stockage ou changement du planning métier simplement en consultant un autre jour. Test causal RED→GREEN, incluant changement de date/créneau et retour/avance navigateur.
+
+### Fichiers modifiés
+
+- `cuisine-e07.js/css` : structure ciblée de Taverne, images de repas et deux créneaux, styles des deux boutons ; aucune reconstruction des écrans secondaires.
+- `cuisine.js` : helper visuel réutilisé avec option locale pour les nouvelles vignettes, commande préparé dans les détails existants, paramètres de contexte du hash.
+- `chrome.js` : condition de libellé court de Taverne uniquement ; géométrie et commandes communes inchangées.
+- Tests `e07-1.cjs`, `e07-1-context.cjs`, adaptations de `e07.cjs` / `e07-native-actions.cjs` préservant leurs assertions à la nouvelle destination ; `e05-native.cjs` utilise DOBBY_TEST_ORIGIN pour réellement tester ce worktree. Le test partagé `e01.cjs` attend désormais « TAVERNE » pour cette seule destination ; les assertions de navigation/préférences et les autres noms de sections restent intactes. Ordonnanceur et vérifications syntaxiques CI complétés.
+
+Aucun changement de `cuisine-engine.js`, V5, writers, synchronisation, SQL, sources Stitch ou PNG originaux. E06/E08 ne sont ni modifiés ni intégrés.
+
+### Vérifications et preuves E07.1
+
+[36 captures avant/après et persistance](evidence/e07-1/README.md), [galerie comparative](evidence/e07-1/index.html) à **320, 390 et 1440 px**, avec priorité aux fenêtres mobiles. Les captures avant reproduisent le dernier E07 au SHA 9147802 avec les mêmes fixtures ; les captures historiques `evidence/e07/` restent inchangées dans le commit livré. Les coordonnées du dock sont enregistrées dans `before/checks.json` et les preuves de navigation/persistance dans `after/checks.json`.
+
+| Test | Résultat |
+|---|---|
+| `e07-1.cjs` | PASS 320/390/1440 : dîner présent/absent, vrais clics, CTA homogènes, photos locales/absentes/échouées/externes, noms longs, 7 jours et deux créneaux indépendants, ajout second repas, préparé Midi/Soir après reload, Courses et 5 destinations, dock pendant scroll |
+| `e07-1-context.cjs` | PASS : date/créneau après reload et retour/avance, sans écriture des repas |
+| `e07.cjs` | PASS 320/390/1440 : sources E07, états vides, quantités, validation/coches, longs compléments et contenu accessible |
+| `e07-native-actions.cjs` | PASS : statut préparé natif/reload depuis sa nouvelle destination, rayons/filtres et quantités inconnues préservés |
+| `cuisine.cjs` | PASS 320/390 : treize parcours Cuisine, favoris persistants, édition/import, cuisson/TM5, historique et retours |
+| `cuisine-family.cjs` | PASS 320/390 : HTTP simulé, partage explicite, hors ligne, conflit et resynchronisation |
+| Tests Node V1/V2/Famille | 80/80 PASS |
+| Génération / sources | Reproductible, sources Stitch et PNG inchangés |
+
+[Journaux ciblés](evidence/e07-1/logs/). Les échecs causaux ont été observés avant correction : titre encore dans l’image ; perte du créneau/jour à la reprise ; texte de repli prétendant à tort qu’aucune photo n’était enregistrée alors qu’une photo externe était renseignée. La largeur des CTA est comparée à la zone utile hors padding des parents. [Revue technique indépendante](evidence/e07-1/review.md) : aucun défaut établi, y compris le cas d’une sélection de remplacement non enregistrée avant de marquer le repas préparé.
+
+Campagne générale : les treize premiers scripts passent, puis `e01.cjs` s’arrête sur son ancien libellé long du bandeau Taverne. Le seul nom attendu est adapté au libellé court demandé, E01 repasse, et la campagne reprend à E01 puis poursuit les contrôles restants sans répéter les treize scripts verts. La CI finale exécute les 42 scripts sur le même SHA livré. **42 scripts couverts et réussis : 13 avant l’arrêt, puis 29 après adaptation de l’attente E01 (reprise sortie 0).** [Campagne](evidence/e07-1/campaign.json), [journal initial](evidence/e07-1/logs/general-initial.log), [reprise](evidence/e07-1/logs/general-resumed.log). Aucun autre échec résiduel.
+
+### Commits, SHA livré et CI
+
+Commits du correctif : `76a86f7` (présentation/contexte) et `3a58eaa` (attente E01 et traces de persistance). Le [SHA final de la branche E07](https://github.com/PortenartCo/dobby-demo/commit/feat/dobby-e07-cuisine-courses) résout le commit de livraison contenant ces preuves ; sa valeur exacte et les IDs des exécutions réussies sont fournis dans le bilan final. [CI interface au SHA livré](https://github.com/PortenartCo/dobby-demo/actions/workflows/dobby-stitch-v7.yml?query=branch%3Afeat%2Fdobby-e07-cuisine-courses) · [CI native au SHA livré](https://github.com/PortenartCo/dobby-demo/actions/workflows/dobby-sync-regression.yml?query=branch%3Afeat%2Fdobby-e07-cuisine-courses). Aucun nouveau commit de métadonnées ne doit invalider le SHA après ces contrôles.
+
+### Limites et niveau de preuve
+
+Code livré et intégration locale avec le moteur E07 existant ; tests réussis sur profils Chromium éphémères et fixtures, sans comptes familiaux réels. Aucun comportement serveur de production, usage multiappareils réel ou recette physique iPhone/Safari revendiqué. Photos externes du planning remplacées par un pictogramme ; aucune promesse de cache privé nouveau. Commandes secondaires décoratives restantes des sources sont inactives et explicitement identifiées par le mécanisme existant.
+
+Aucune fusion, publication Pages, modification Supabase ou donnée familiale réelle. Arrêt après livraison pour revue humaine.

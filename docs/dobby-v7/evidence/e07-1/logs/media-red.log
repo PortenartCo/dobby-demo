@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Existing external image metadata must not be described as an absent record
+    at /workspace/dobby-e07-cuisine-courses/essai-stitch-v7/tests/e07-1.cjs:10:921 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Aucune photographie enregistrée pour cette recette',
+  expected: /photographie locale indisponible/i,
+  operator: 'match',
+  diff: 'simple'
+}
