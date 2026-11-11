@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Original E05 gallery must offer eight direct choices (baseline reproduction)
+
+0 !== 8
+
+    at /workspace/dobby-review-e01-e05/essai-stitch-v7/tests/review-avatars-20261111.cjs:11:58 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 8,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
