@@ -1,0 +1,50 @@
+[
+  {
+    "width": 390,
+    "courses": true,
+    "effects": [
+      "shop",
+      "taverne",
+      "recipes",
+      "recipe",
+      "cook",
+      "recipe-ai"
+    ],
+    "movingParticles": true,
+    "offPersists": true,
+    "reducedMotion": true,
+    "audio": 0
+  },
+  {
+    "width": 320,
+    "courses": true,
+    "effects": [
+      "shop",
+      "taverne",
+      "recipes",
+      "recipe",
+      "cook",
+      "recipe-ai"
+    ],
+    "movingParticles": true,
+    "offPersists": true,
+    "reducedMotion": true,
+    "audio": 0
+  },
+  {
+    "width": 1440,
+    "courses": true,
+    "effects": [
+      "shop",
+      "taverne",
+      "recipes",
+      "recipe",
+      "cook",
+      "recipe-ai"
+    ],
+    "movingParticles": true,
+    "offPersists": true,
+    "reducedMotion": true,
+    "audio": 0
+  }
+]

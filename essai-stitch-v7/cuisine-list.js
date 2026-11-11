@@ -3,6 +3,23 @@
 window.DobbyCuisineList=(()=>{
   'use strict';
   const norm=s=>String(s||'').trim().toLocaleLowerCase('fr-BE').replace(/\s+/g,' ');
+  // Only exact product names and explicit compatible units are grouped.
+  const units={g:['g',1],kg:['g',1000],mg:['g',.001],ml:['ml',1],cl:['ml',10],dl:['ml',100],l:['ml',1000]};
+  const measure=x=>{const [unit,factor]=units[norm(x.unit)]||[norm(x.unit),1];return {unit,qty:x.qty==null?null:Number(x.qty)*factor};};
+  const keyOf=x=>JSON.stringify([norm(x.name),measure(x).unit]);
+  const precise=n=>Math.round(n*1e9)/1e9;
+  const homeKey=x=>x.groupKey||JSON.stringify((x.ids||[x.id]).slice().sort());
+  function decorate(items,annotations){return items.map(x=>{const note=annotations?.[homeKey(x)],current=!note?.ids||note.ids.some(id=>(x.ids||[x.id]).includes(id)),atHomeQty=current?Math.min(x.qty??0,Number(note?.qty??note??0)):0;return {...x,requiredQty:x.qty,atHomeQty,qty:x.qty==null?null:precise(Math.max(0,x.qty-atHomeQty))};});}
+  const adjustHome=`for(const entries of Object.values(st.shopFinal.homeByScope||{})){const note=entries[p.homeKey];if(note){if(p.factor==null)delete entries[p.homeKey];else if(typeof note==='object')note.qty*=p.factor;else entries[p.homeKey]*=p.factor;}}`;
+  const clearSession=`for(const item of p.items){for(const entries of Object.values(st.shopFinal.homeByScope||{}))delete entries[item.homeKey];if(st.shopFinal.manualCoverage)delete st.shopFinal.manualCoverage[item.productKey];for(const origins of Object.values(st.shopFinal.sharedOrigins||{}))delete origins[item.productKey];}`;
+  function sharedItems(E,items){
+    const groups=new Map();
+    for(const raw of items){const x={id:raw.id,name:raw.title,qty:raw.quantity,unit:raw.unit,done:raw.checked,conflict:raw.syncState==='conflict',pending:raw.syncState==='pending',category:E.evaluate('return categoryOf(p.name);',{name:raw.title})};
+      const m=measure(x),key=x.qty==null||x.conflict?x.id:keyOf(x)+'|'+x.done;
+      const before=groups.get(key);if(before){before.qty=precise(before.qty+m.qty);before.ids.push(x.id);before.pending ||= x.pending;}
+      else groups.set(key,{...x,qty:m.qty,unit:m.unit,ids:[x.id],groupKey:'shared|'+keyOf(x)});
+    }return [...groups.values()];
+  }
   const parse=item=>{
     const match=/^([\d\s.,]+)\s+(.*)$/.exec(item.detail||'');
     return {...item,qty:item.qty!==undefined?item.qty:match?Number(match[1].replace(/\s/g,'').replace(',','.')):null,unit:item.unit!==undefined?item.unit:match?match[2]:''};
@@ -23,11 +40,13 @@ window.DobbyCuisineList=(()=>{
   function snapshot(E) {
     ensure(E);
     const local=E.read().state.shopFinal,shared=family(E)?.read();
+    const scope=shared?.context||'local',annotations=local.homeByScope?.[scope]||{};
     return shared?.context?{
-      scope:shared.context,shared:true,status:shared.status,error:shared.error,
-      items:shared.items.map(x=>({id:x.id,name:x.title,qty:x.quantity,unit:x.unit,done:x.checked,conflict:x.syncState==='conflict',pending:x.syncState==='pending',category:E.evaluate('return categoryOf(p.name);',{name:x.title})})),localCount:local.items.length
-    }:{scope:'local',shared:false,status:'Sur cet appareil',error:'',items:local.items.map(parse),localCount:local.items.length};
+      scope,shared:true,status:shared.status,error:shared.error,
+      items:decorate(sharedItems(E,shared.items).map(x=>({...x,origin:local.sharedOrigins?.[scope]?.[keyOf(x)]||''})),annotations),localCount:local.items.length
+    }:{scope,shared:false,status:'Sur cet appareil',error:'',items:decorate(local.items.map(parse),annotations),localCount:local.items.length};
   }
+
   function valid(values){
     const name=String(values.name||'').trim(),raw=values.qty,qty=raw==null||raw===''?null:Number(String(raw).replace(',','.'));
     if(!name||name.length>200)throw Error('Nom requis (200 caractères maximum).');
@@ -38,11 +57,21 @@ window.DobbyCuisineList=(()=>{
   async function add(E,values){const x=valid(values),s=snapshot(E);if(s.shared)return family(E).add({title:x.name,quantity:x.qty,unit:x.unit});
     transaction(E,`st.shopFinal.items.push({...p,id:crypto.randomUUID(),category:categoryOf(p.name),done:false,origin:'Ajout manuel'});`,{...x,detail:detail(x)});
   }
-  async function edit(E,id,values){const x=valid(values),s=snapshot(E);if(s.shared)return family(E).edit(id,{title:x.name,quantity:x.qty,unit:x.unit});
-    transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');Object.assign(item,p.x,{detail:p.detail,category:categoryOf(p.x.name)});`,{id,x,detail:detail(x)});
+  async function edit(E,id,values){const x=valid(values),s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
+    const compatible=norm(item.name)===norm(x.name)&&measure(item).unit===measure(x).unit,factor=compatible?measure({qty:1,unit:item.unit}).qty/measure({qty:1,unit:x.unit}).qty:null;
+    if(s.shared){const total=measure(x);for(const [i,rawId]of (item.ids||[id]).entries())await family(E).edit(rawId,{title:x.name,quantity:i===0?total.qty:0,unit:total.unit});if(!compatible)transaction(E,adjustHome,{homeKey:homeKey(item),factor:null});return;}
+    transaction(E,adjustHome+`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');Object.assign(item,p.x,{detail:p.detail,category:categoryOf(p.x.name)});delete item.manualQty;`,{id,x,detail:detail(x),homeKey:homeKey(item),factor});
   }
-  async function remove(E,id){const s=snapshot(E);if(s.shared)return family(E).edit(id,{deleted_at:new Date().toISOString()});transaction(E,'st.shopFinal.items=st.shopFinal.items.filter(x=>x.id!==p.id);',{id});}
-  async function check(E,id,done){const s=snapshot(E);if(s.shared)return family(E).edit(id,{checked:done});
+  async function home(E,id,quantity){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item||item.done||item.conflict)throw Error('Article indisponible.');
+    const qty=Number(String(quantity).replace(',','.'));if(item.requiredQty==null||!Number.isFinite(qty)||qty<0||qty>item.requiredQty)throw Error('Indiquez une quantité disponible entre 0 et '+(item.requiredQty??'la quantité requise')+'.');
+    transaction(E,`const scopes=st.shopFinal.homeByScope ||= {};const entries=scopes[p.scope] ||= {};if(p.qty)entries[p.key]={qty:p.qty,ids:p.ids};else delete entries[p.key];`,{scope:s.scope,key:homeKey(item),qty,ids:item.ids||[item.id]});
+  }
+  async function remove(E,id){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
+    if(s.shared)for(const rawId of item.ids||[id])await family(E).edit(rawId,{deleted_at:new Date().toISOString()});
+    transaction(E,clearSession+(s.shared?'':'st.shopFinal.items=st.shopFinal.items.filter(x=>x.id!==p.id);'),{id,items:[{homeKey:homeKey(item),productKey:keyOf(item)}]});
+  }
+  async function check(E,id,done){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');if(done&&item.qty===0)throw Error('Cet article est déjà disponible à la maison.');
+    if(s.shared){for(const rawId of item.ids||[id])await family(E).edit(rawId,{checked:done});return;}
     transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');item.done=p.done;`,{id,done});
   }
   function importRange(E,range){
@@ -56,44 +85,65 @@ window.DobbyCuisineList=(()=>{
     range=importRange(E,range);
     const s=snapshot(E),receipts=E.evaluate('return [...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[]),...(st.shopFinal?.imports||[])];');
     const rows=E.evaluate(`const result=[];for(const [key,m]of pendingMeals()){
-      const date=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)$/.test(key)||date<p.start||date>p.end)continue;
+      const date=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)$/.test(key))continue;
       const r=getR(m.id);if(!r)continue;const grouped=new Map(),ref=m._e072ImportRef||(key+'|'+m.id);
       for(const [name,q,unit]of r.ingredients){const token=ref+'|'+name.trim().toLocaleLowerCase('fr-BE')+'|'+(unit||'').trim().toLocaleLowerCase('fr-BE');
         const qty=q==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0?null:Number(q)*portionCount(m)/r.servings;
         const before=grouped.get(token);if(before)before.qty=before.qty==null||qty==null?null:before.qty+qty;
         else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+r.name,meal:mealSignature(key,m)});
       }result.push(...grouped.values());}return result;`,range);
-    const signature=JSON.stringify({range,rows:rows.map(({token,name,qty,unit,origin})=>({token,name,qty,unit,origin}))});
-    if(s.shared)return {scope:s.scope,range,signature,rows:await family(E).proposeRows(rows,s.scope)};
-    const seen=new Map(receipts.filter(x=>x&&typeof x==='object').map(x=>[x.token,x]));
-    const proposed=[];
-    for(const row of rows){
-      const prior=seen.get(row.token);
-      if(!prior){proposed.push({...row,targetQty:row.qty});continue;}
-      const item=s.items.find(x=>(x.provenance||[]).includes(row.token));
-      if(!item||item.done)continue; // Already purchased/archived contributions are not new purchases.
-      if(norm(item.unit)!==norm(row.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
-      if(prior.qty!=null&&row.qty!=null&&row.qty>prior.qty)proposed.push({...row,targetQty:row.qty,qty:row.qty-prior.qty,previousQty:prior.qty,mode:'delta'});
+    // Normalize quantities without changing provenance tokens from E07.2.
+    for(const row of rows){const m=measure(row);row.originalUnit=row.unit;row.qty=m.qty;row.unit=m.unit;}
+    const inRange=row=>row.key.slice(0,10)>=range.start&&row.key.slice(0,10)<=range.end;
+    let proposed;
+    if(s.shared){
+      // Allocate manual coverage over the complete source set before asking the
+      // native deterministic-id facade about deltas. Repeating it is stable.
+      const manual=new Map();for(const item of s.items){if(item.done||item.requiredQty==null)continue;const raw=family(E).read().items.filter(x=>(item.ids||[item.id]).includes(x.id)&&!x.import_source_id);for(const x of raw){const k=keyOf({name:x.title,unit:x.unit}),q=measure({qty:x.quantity,unit:x.unit}).qty;if(q!=null)manual.set(k,(manual.get(k)||0)+q);}}
+      for(const row of [...rows].sort((a,b)=>a.token.localeCompare(b.token))){const key=keyOf(row),available=manual.get(key)||0,covered=row.qty==null?0:Math.min(row.qty,available);manual.set(key,available-covered);row.sourceQty=row.qty;row.qty=row.qty==null?null:precise(row.qty-covered);}
+      proposed=await family(E).proposeRows(rows,s.scope);
+      if(proposed.some(x=>!inRange(x)&&x.mode==='update')&&proposed.some(inRange))throw Error('La répartition des articles déjà présents a changé. Élargissez la période à tous les repas concernés.');
+      proposed=proposed.filter(inRange);
+    }else{
+      const seen=new Map(receipts.filter(x=>x&&typeof x==='object').map(x=>[x.token,x]));proposed=[];
+      for(const row of rows.filter(inRange)){const prior=seen.get(row.token);
+        if(!prior){proposed.push({...row,targetQty:row.qty});continue;}
+        const item=s.items.find(x=>(x.provenance||[]).includes(row.token));if(!item||item.done)continue;
+        if(measure(item).unit!==measure(row).unit)throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
+        const priorQty=measure({qty:prior.qty,unit:prior.unit??row.originalUnit}).qty;
+        if(priorQty!=null&&row.qty!=null&&row.qty>priorQty)proposed.push({...row,targetQty:row.qty,qty:precise(row.qty-priorQty),previousQty:priorQty,mode:'delta'});
+      }
     }
-    return {scope:s.scope,range,signature,rows:proposed};
+    const groups=new Map();for(const row of proposed){const quantity=measure(row).qty,change=row.mode==='update'&&quantity!=null?precise(quantity-measure({qty:row.previousQty,unit:row.unit}).qty):quantity;const key=row.qty==null?row.token:keyOf(row);let group=groups.get(key);if(!group){group={token:'group|'+key,name:row.name,qty:0,unit:measure(row).unit,contributions:[],origins:[]};groups.set(key,group);}group.qty=group.qty==null||row.qty==null?null:precise(group.qty+change);group.contributions.push(row);if(!group.origins.includes(row.origin))group.origins.push(row.origin);}
+    for(const group of groups.values()){
+      group.origin=group.origins.join(' ; ');const matches=s.items.filter(x=>!x.done&&!x.conflict&&x.requiredQty!=null&&group.qty!=null&&keyOf(x)===keyOf(group));
+      group.existingQty=matches.reduce((n,x)=>n+measure({qty:x.requiredQty,unit:x.unit}).qty,0);
+      const manualTotal=matches.reduce((n,x)=>{const manual=x.manualQty??((x.provenance||[]).length?0:x.requiredQty);return n+measure({qty:manual,unit:x.unit}).qty;},0),consumed=E.read().state.shopFinal.manualCoverage?.[keyOf(group)]??matches.reduce((n,x)=>n+(x.coveredQty||0),0);
+      const coverage=s.shared?0:Math.max(0,manualTotal-consumed);
+      group.coveredQty=group.qty==null?0:Math.max(0,Math.min(group.qty,coverage));if(group.qty!=null)group.qty=precise(group.qty-group.coveredQty);
+      group.atHomeQty=matches.reduce((n,x)=>n+measure({qty:x.atHomeQty,unit:x.unit}).qty,0);
+      group.toBuyQty=group.qty==null?null:precise(Math.max(0,group.existingQty+group.qty-group.atHomeQty));
+    }
+    const signature=JSON.stringify({range,rows:rows.filter(inRange).map(({token,name,qty,unit,origin})=>({token,name,qty,unit,origin}))});
+    return {scope:s.scope,range,signature,rows:[...groups.values()]};
   }
   async function confirmImport(E,proposal){
     const current=await preview(E,proposal.range);
     if(proposal.scope!==current.scope||proposal.signature!==current.signature)throw Error('Les menus ou le foyer ont changé. Ouvrez un nouveau récapitulatif.');
-    const selected=new Map(proposal.rows.map(x=>[x.token,x])),rows=current.rows.filter(x=>selected.has(x.token));
-    for(const row of rows){const approved=selected.get(row.token);for(const key of ['qty','previousQty','targetQty','expected'])if(JSON.stringify(row[key])!==JSON.stringify(approved[key]))throw Error('Un apport a changé. Ouvrez un nouveau récapitulatif.');}
-    if(!rows.length)return 0;
+    const selected=new Map(proposal.rows.map(x=>[x.token,x])),groups=current.rows.filter(x=>selected.has(x.token));
+    for(const group of groups)if(JSON.stringify(group)!==JSON.stringify(selected.get(group.token)))throw Error('Les articles ou un apport ont changé. Ouvrez un nouveau récapitulatif.');
+    if(!groups.length)return 0;const rows=groups.flatMap(x=>x.contributions);
     const tag=`for(const row of p.rows)if(st.planned[row.key])st.planned[row.key]._e072ImportRef=row.ref;`;
-    if(current.scope!=='local'){
-      transaction(E,tag,{rows});
-      return family(E).importRows(rows,current.scope);
+    if(current.scope!=='local'){const result=await family(E).importRows(rows,current.scope);transaction(E,tag+`const scopes=st.shopFinal.sharedOrigins ||= {};const origins=scopes[p.scope] ||= {};for(const item of p.origins)origins[item.key]=[...new Set([origins[item.key],item.origin].filter(Boolean))].join(' ; ');`,{rows,scope:current.scope,origins:groups.map(x=>({key:keyOf(x),origin:x.origin}))});return result;}
+    // Prepare one update per compatible product, using the native transaction.
+    const items=E.read().state.shopFinal.items.map(parse),updates=[];
+    for(const group of groups){const found=group.qty==null?null:items.find(x=>!x.done&&x.qty!=null&&keyOf(x)===keyOf(group));
+      const id=found?.id||crypto.randomUUID(),qty=group.qty==null?null:precise((found?measure(found).qty:0)+group.qty);
+      updates.push({homeFactor:found?measure({qty:1,unit:found.unit}).qty:1,coverageKey:keyOf(group),newCoverage:group.coveredQty,id,name:found?.name||group.name,qty,unit:group.unit,detail:detail({qty,unit:group.unit}),manualQty:found?(found.manualQty??((found.provenance||[]).length?0:measure(found).qty)):0,coveredQty:(found?.coveredQty||0)+group.coveredQty,origin:[found?.origin,...group.origins].filter(Boolean).join(' ; '),provenance:[...new Set([...(found?.provenance||[]),...group.contributions.map(x=>x.token)])]});
     }
-    transaction(E,tag+`const list=st.shopFinal;for(const row of p.rows){
-      const found=list.items.find(x=>(x.provenance||[]).includes(row.token))||list.items.find(x=>!x.done&&(x.provenance||[]).length&&x.origin!=='Ajout manuel'&&x.qty!=null&&row.qty!=null&&x.name.trim().toLocaleLowerCase('fr-BE')===row.name.trim().toLocaleLowerCase('fr-BE')&&(x.unit||'').trim().toLocaleLowerCase('fr-BE')===row.unit.trim().toLocaleLowerCase('fr-BE'));
-      if(found){found.qty=Number(found.qty)+row.qty;found.detail=fmt(found.qty)+(found.unit?' '+found.unit:'');if(!(found.provenance||[]).includes(row.token))(found.provenance ||= []).push(row.token);}
-      else list.items.push({...row,id:crypto.randomUUID(),detail:row.qty==null?'À préciser':fmt(row.qty)+(row.unit?' '+row.unit:''),category:categoryOf(row.name),done:false,provenance:[row.token]});
-      const receipt={token:row.token,qty:row.targetQty};const at=list.imports.findIndex(x=>x?.token===row.token);if(at<0)list.imports.push(receipt);else list.imports[at]=receipt;
-    }`,{rows});
+    transaction(E,tag+`const list=st.shopFinal;for(const update of p.updates){const {homeFactor,coverageKey,newCoverage,...fields}=update;list.manualCoverage ||= {};list.manualCoverage[coverageKey]=(list.manualCoverage[coverageKey]||0)+newCoverage;if(homeFactor!==1)for(const entries of Object.values(list.homeByScope||{})){const key=JSON.stringify([update.id]);if(entries[key]){if(typeof entries[key]==='object')entries[key].qty*=homeFactor;else entries[key]*=homeFactor;}}const found=list.items.find(x=>x.id===update.id);if(found)Object.assign(found,fields);else list.items.push({...fields,category:categoryOf(update.name),done:false});}
+      for(const row of p.rows){const receipt={token:row.token,qty:row.targetQty,unit:row.unit};const at=list.imports.findIndex(x=>x?.token===row.token);if(at<0)list.imports.push(receipt);else list.imports[at]=receipt;}`,{rows,updates});
+    return rows.length;
   }
   async function transfer(E){const s=snapshot(E);if(!s.shared)throw Error('Foyer indisponible.');
     const local=E.read().state.shopFinal;
@@ -111,8 +161,9 @@ window.DobbyCuisineList=(()=>{
     // Snapshot first. Pending deletes can be retried by the native family queue.
     transaction(E,`st.shopHistory[p.id]={items:p.items.map(x=>({...x,detail:x.qty==null?'À préciser':fmt(x.qty)+(x.unit?' '+x.unit:''),done:true})),validatedAt:p.stamp,meals:[],scope:p.scope,imports:[...(st.shopFinal.imports||[])]};
       if(p.scope==='local')st.shopFinal.items=st.shopFinal.items.filter(x=>!p.ids.includes(x.id));`,{id,stamp,items:done,ids:done.map(x=>x.id),scope:s.scope});
-    if(s.shared)for(const item of done)await family(E).edit(item.id,{deleted_at:stamp});
+    if(s.shared)for(const item of done)for(const rawId of item.ids||[item.id])await family(E).edit(rawId,{deleted_at:stamp});
+    transaction(E,clearSession,{items:done.map(x=>({homeKey:homeKey(x),productKey:keyOf(x)}))});
     return done.length;
   }
-  return Object.freeze({snapshot,add,edit,remove,check,preview,confirmImport,transfer,archive,reuse,detail});
+  return Object.freeze({snapshot,add,edit,remove,check,home,preview,confirmImport,transfer,archive,reuse,detail});
 })();

@@ -31,6 +31,10 @@ function syncAmbience(effects=lastEffects){
  }
  const scene=document.querySelector('main img[alt*="Dobby"]')?.parentElement;if(ambientScene!==scene){ambientScene?.classList.remove('e013-scene');ambientScene=scene;}ambientScene?.classList.add('e013-scene');
 }
+// Loading may finish after mount/apply. Observe that transition itself so
+// resuming never depends on a later click, focus event or unrelated render.
+let wasLoading=document.documentElement.classList.contains('dv7-loading');
+new MutationObserver(()=>{const loading=document.documentElement.classList.contains('dv7-loading');if(loading!==wasLoading){wasLoading=loading;syncAmbience();}}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 reducedMotion.addEventListener('change',()=>{if(window.DobbyStitchV7?.ready)apply();else syncAmbience();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTransient();syncAmbience();});
 window.addEventListener('pagehide',()=>{pageAway=true;clearTransient();syncAmbience();});

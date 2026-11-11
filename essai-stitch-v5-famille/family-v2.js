@@ -206,7 +206,7 @@ async function pull(epoch) {
   for (const row of rows) {
     if (epoch !== f.epoch) return;
     const merged = f.core.mergeRemote(getItem(row.id), row);
-    await putItem(merged);
+    await putItem({...merged,import_source_id:row.import_source_id||merged.import_source_id||null});
   }
 }
 async function readOne(id) {
@@ -218,7 +218,7 @@ async function conflict(snapshot, server, epoch) {
   if (epoch !== f.epoch) return;
   const local = getItem(snapshot.id);
   if (!local || local.syncState === 'clean') return;
-  if (server && f.core.sameFields(local, server)) return putItem(f.core.cleanFromRemote(server));
+  if (server && f.core.sameFields(local, server)) return putItem({...f.core.cleanFromRemote(server),import_source_id:server.import_source_id||local.import_source_id||null});
   await putItem({ ...local, syncState: 'conflict', remoteShadow: server });
 }
 async function push(snapshot, epoch) {
@@ -254,7 +254,7 @@ async function push(snapshot, epoch) {
   if (!server) throw Error('Modification reçue sans confirmation serveur');
   if (epoch !== f.epoch) return;
   const current = getItem(snapshot.id);
-  if (current) await putItem(f.core.afterPush(current, snapshot, server));
+  if (current) await putItem({...f.core.afterPush(current, snapshot, server),import_source_id:server.import_source_id||current.import_source_id||null});
 }
 async function sync() {
   if (!f.ready || !f.session || !f.key) return;
@@ -675,12 +675,14 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
       if(!f.context||f.context!==context)throw Error('Le foyer a changé.');
       const result=[];
       for(const row of rows){
-        const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token),current=getItem(id),qty=validQuantity(row.qty);
-        if(!current){result.push({...row,qty});continue;}
+        let candidate={...row};const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token),current=getItem(id);
+        if(current&&norm(current.unit)!==norm(candidate.unit)){const units={g:['mass',1],kg:['mass',1000],mg:['mass',.001],ml:['volume',1],cl:['volume',10],dl:['volume',100],l:['volume',1000]},from=units[norm(candidate.unit)],to=units[norm(current.unit)];if(from&&to&&from[0]===to[0])candidate={...candidate,qty:candidate.qty==null?null:candidate.qty*from[1]/to[1],unit:current.unit};}
+        const qty=validQuantity(candidate.qty);
+        if(!current){result.push({...candidate,qty});continue;}
         if(current.deleted_at||current.checked)continue;
         if(current.syncState==='conflict')throw Error('Résolvez le conflit de cet apport avant de le réimporter.');
-        if(norm(current.unit)!==norm(row.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
-        if(current.quantity!==qty)result.push({...row,qty,mode:'update',previousLabel:current.title,previousQty:current.quantity,expected:f.core.toServerPayload(current)});
+        if(norm(current.unit)!==norm(candidate.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
+        if(current.quantity!==qty)result.push({...candidate,qty,mode:'update',previousLabel:current.title,previousQty:current.quantity,expected:f.core.toServerPayload(current)});
       }
       return result;
     },
