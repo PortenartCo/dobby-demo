@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T16:17:55.540223+00:00",
+  "generatedAt": "2026-11-11T16:32:50.735048+00:00",
   "base": "9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a",
   "previousTestedCode": "b381fc74bc1b529514a3bf9c35e5b29bb21ce045",
   "branch": "feat/dobby-shared-runes-v2-20261111",
@@ -35,6 +35,11 @@
     "nativeRecurrenceCoreUnchanged": true,
     "publishedFilesChanged": false,
     "remoteRefsAtVerification": [
+      "9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a\trefs/heads/fix/dobby-e03-e06-review-20261111",
+      "84e254f485a22ac4f5b880217c02902c22b39c73\trefs/heads/main"
+    ],
+    "remoteRefsAtFinalVerification": [
+      "3ceb14bbf76c7534f6862a7cb1921c894ea3f325\trefs/heads/feat/dobby-shared-runes-v2-20261111",
       "9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a\trefs/heads/fix/dobby-e03-e06-review-20261111",
       "84e254f485a22ac4f5b880217c02902c22b39c73\trefs/heads/main"
     ]
@@ -87,8 +92,263 @@
     }
   },
   "ci": {
-    "status": "PENDING_COMPATIBILITY_PUSH",
-    "initialCodeCommit": "fff0c8e0fee23b6bce3709659bd09513d935ee76",
+    "status": "PASS",
+    "testedCodeCommit": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+    "finalRuns": [
+      {
+        "id": 43056963193,
+        "name": "Dobby shared runes V2 - isolated PostgreSQL",
+        "head_sha": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43056963193",
+        "created_at": "2026-11-11T16:18:09Z",
+        "updated_at": "2026-11-11T16:19:49Z",
+        "jobs": [
+          {
+            "id": 130648883187,
+            "name": "native-and-postgres",
+            "status": "completed",
+            "conclusion": "success",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Native offline, family, grades, recurrence and conflict regressions",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Existing ceremony, identity and profile contracts",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Start pinned local PostgreSQL without network or exposed port",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Real transactions, independent connections, old writer exclusion and rollback",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Native client integration with the real PostgreSQL writer",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload PostgreSQL and client evidence",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Remove only this workflow's labelled ephemeral fixture",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 43056963304,
+        "name": "Dobby V7 - Stitch functional UI",
+        "head_sha": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+        "status": "completed",
+        "conclusion": "success",
+        "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43056963304",
+        "created_at": "2026-11-11T16:18:10Z",
+        "updated_at": "2026-11-11T16:30:55Z",
+        "jobs": [
+          {
+            "id": 130648883007,
+            "name": "source-backed-browser",
+            "status": "completed",
+            "conclusion": "success",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify immutable continuation checkpoint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Exhaustive review registry coverage",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Check V7 JavaScript syntax",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Existing offline, family and conflict regressions",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Integrated preview builder and byte provenance",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "E06 exhaustive scoring, identity and draft isolation",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Source derivation remains reproducible",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Confirm the original Stitch source manifest",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Browser tooling (tests only)",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Functional Stitch roots and source fidelity",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Keep root, Cuisine and Family comparisons (320/390px)",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 130648883552,
+            "name": "integrated-corrections",
+            "status": "completed",
+            "conclusion": "success",
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Verify immutable continuation checkpoint",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Retain the passed correction checkpoints",
+                "status": "completed",
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Browser tooling (tests only)",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Integrated E03-E06 correction checkpoints (no publication)",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Keep integrated correction evidence",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      }
+    ],
     "initialRuns": [
       {
         "id": 43054928097,
@@ -97,6 +357,7 @@
         "status": "completed",
         "conclusion": "success",
         "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43054928097",
+        "created_at": "2026-11-11T16:06:07Z",
         "updated_at": "2026-11-11T16:08:11Z",
         "jobs": [
           {
@@ -181,6 +442,7 @@
         "status": "completed",
         "conclusion": "success",
         "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43054927954",
+        "created_at": "2026-11-11T16:06:07Z",
         "updated_at": "2026-11-11T16:06:57Z",
         "jobs": [
           {
@@ -247,16 +509,17 @@
         "id": 43054927916,
         "name": "Dobby V7 - Stitch functional UI",
         "head_sha": "fff0c8e0fee23b6bce3709659bd09513d935ee76",
-        "status": "in_progress",
-        "conclusion": null,
+        "status": "completed",
+        "conclusion": "failure",
         "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43054927916",
-        "updated_at": "2026-11-11T16:06:17Z",
+        "created_at": "2026-11-11T16:06:07Z",
+        "updated_at": "2026-11-11T16:23:19Z",
         "jobs": [
           {
             "id": 130641707598,
             "name": "source-backed-browser",
-            "status": "in_progress",
-            "conclusion": null,
+            "status": "completed",
+            "conclusion": "success",
             "steps": [
               {
                 "name": "Set up job",
@@ -320,23 +583,28 @@
               },
               {
                 "name": "Functional Stitch roots and source fidelity",
-                "status": "in_progress",
-                "conclusion": null
+                "status": "completed",
+                "conclusion": "success"
               },
               {
                 "name": "Keep root, Cuisine and Family comparisons (320/390px)",
-                "status": "pending",
-                "conclusion": null
+                "status": "completed",
+                "conclusion": "success"
               },
               {
                 "name": "Post Run actions/setup-node@v4",
-                "status": "pending",
-                "conclusion": null
+                "status": "completed",
+                "conclusion": "success"
               },
               {
                 "name": "Post Run actions/checkout@v4",
-                "status": "pending",
-                "conclusion": null
+                "status": "completed",
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success"
               }
             ]
           },
@@ -407,7 +675,7 @@
       }
     ],
     "initialFailure": "ci-initial-e03-failure.txt",
-    "nextRunIncludes": "SQL legacy ISO-date compatibility and explicit E03 visibility wait; application JS unchanged."
+    "resolvedBy": "E03 visibility wait; all previous count assertions retained. SQL compatibility regression separately verified on real PostgreSQL."
   },
   "statuses": {
     "CODE_MODIFIÉ": true,
@@ -415,7 +683,7 @@
     "TESTS_POSTGRESQL_RÉELS": true,
     "CONCURRENCE_VALIDÉE": true,
     "INTÉGRATION_CLIENT": true,
-    "PRÊT_À_DÉPLOYER": false,
+    "PRÊT_À_DÉPLOYER": true,
     "DÉPLOYÉ": false,
     "TESTÉ_AVEC_DEUX_COMPTES_RÉELS": false
   },
@@ -425,5 +693,8 @@
     "Initial local history adoption is a trust boundary; distinct existing remote histories are not silently merged.",
     "Pending reward parameter edits/deletion are guarded; old incompatible orphan requests are preserved and explicitly refused.",
     "Existing 256 KiB JSONB capacity is enforced without truncation."
-  ]
+  ],
+  "codeCommit": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+  "readinessDefinition": "Prepared and verified for human validation; no real Supabase migration, publication or true-account acceptance performed. Those stages require separate authorization.",
+  "closingCommit": "Documentation only; code identical to codeCommit. Uses [skip ci] to avoid repeating successful checks."
 }

@@ -28,6 +28,14 @@ Les crédits V1, y compris `revision: 0`, sont préservés par provenance et san
 
 ## Vérification et preuves
 
+Code final vérifié : **`3ceb14bbf76c7534f6862a7cb1921c894ea3f325`**. Premier commit d’implémentation : `fff0c8e0fee23b6bce3709659bd09513d935ee76` ; le second conserve les dates V1 et stabilise le test E03, sans autre modification du JavaScript applicatif.
+
+- **158 tests unitaires PASS** : 137 natifs/synchronisation et 21 identité/cérémonie/profil, aucun échec ni test ignoré.
+- **51 scénarios PostgreSQL réels PASS**, dont quatre scénarios de concurrence avec connexions/PIDs indépendants, rollback injecté, sauvegarde/restauration, anciens writers et capacité.
+- **10 tests client natif → PostgreSQL réel PASS**, dont rejeu après COMMIT, reprise, refus de persistance et préservation exacte des dates V1.
+- Contrôles locaux de récompenses/formulaires/profil et Missions à 320, 390 et 1440 px ; **12 checkpoints navigateur E03–E06 PASS en CI**, puis campagne générale E01–E08 et registres PASS.
+- [CI PostgreSQL finale PASS](https://github.com/PortenartCo/dobby-demo/actions/runs/43056963193), [CI Stitch finale PASS — deux jobs](https://github.com/PortenartCo/dobby-demo/actions/runs/43056963304). La [CI Sync distincte PASS](https://github.com/PortenartCo/dobby-demo/actions/runs/43054927954) porte sur le premier commit ; tous ses tests natifs sont également réexécutés dans la CI PostgreSQL au SHA final.
+
 Les tests PostgreSQL utilisent la version **17.11**, image officielle figée par digest, dans un conteneur local sans réseau ni port exposé et avec stockage tmpfs. Trois identités et tous les foyers sont fictifs. Le rôle de connexion des tests non privilégiés n’est ni superutilisateur ni BYPASSRLS. Les variables JWT sont une fixture d’authentification ; aucun GUC n’autorise le writer.
 
 Les scénarios de concurrence emploient des connexions PostgreSQL indépendantes, des PIDs distincts, des barrières de transaction et des observations de `pg_locks`. Les tests du client exécutent le véritable `family-modules.js` dans deux contextes et transmettent ses appels au véritable writer SQL. Leur transport remplace HTTP/Auth ; ils ne testent ni la délivrance JWT ni un PostgREST déployé, ni deux comptes réels.
@@ -81,4 +89,19 @@ Après correction et nouvelle vérification isolée, une autorisation future peu
 
 ## État de livraison
 
-Le bilan machine ci-dessus distingue code, tests unitaires, PostgreSQL réel, concurrence, intégration et préparation au déploiement. **DÉPLOYÉ : NON. TESTÉ_AVEC_DEUX_COMPTES_RÉELS : NON.** La préparation est destinée à une validation humaine ; la migration réelle et la recette des comptes restent expressément différées.
+| Statut | Résultat |
+|---|---|
+| CODE_MODIFIÉ | OUI |
+| TESTS_UNITAIRES | OUI — 158 PASS |
+| TESTS_POSTGRESQL_RÉELS | OUI — 51 PASS |
+| CONCURRENCE_VALIDÉE | OUI — quatre scénarios, connexions indépendantes |
+| INTÉGRATION_CLIENT | OUI — 10 PASS, transport Auth/HTTP de fixture vers PostgreSQL réel |
+| PRÊT_À_DÉPLOYER | OUI — livraison préparée pour validation humaine |
+| DÉPLOYÉ | NON |
+| TESTÉ_AVEC_DEUX_COMPTES_RÉELS | NON |
+
+Le [bilan machine](evidence/shared-runes-v2/verification.json) contient les empreintes exactes des sources, les deux phases CI et les références distantes de préservation. [Revue indépendante](evidence/shared-runes-v2/independent-review.md), [vérification des logs PostgreSQL CI](evidence/shared-runes-v2/ci-postgres.json), [checkpoints E03–E06](evidence/shared-runes-v2/ci-e03-e06-checkpoints.txt), [campagne générale](evidence/shared-runes-v2/ci-general-browser.txt), [CI finales](evidence/shared-runes-v2/ci-final.json) et [nettoyage des seuls environnements temporaires](evidence/shared-runes-v2/cleanup.json).
+
+Les 3 487 fichiers de départ sont conservés. Seuls deux writers applicatifs, leur helper de tests et l’attente de visibilité du test E03 existant changent ; le reste est constitué de propositions SQL, tests, CI et documentation nouveaux. Les moteurs purs, recettes/courses, profils, contrats et dossiers publiés ne sont pas réécrits. `main` reste `84e254f485a22ac4f5b880217c02902c22b39c73` et la branche E03–E06 reste `9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a` lors du contrôle final.
+
+Le commit de clôture ajoute uniquement documentation et preuves ; son code est identique au SHA testé ci-dessus. `[skip ci]` évite de répéter les contrôles verts. Aucune migration réelle, fusion ou publication ; la recette des deux comptes reste expressément différée. Arrêt après préparation et vérification de la branche.

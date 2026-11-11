@@ -1,0 +1,91 @@
+{
+  "verifiedAt": "2026-11-11T16:23:04.213Z",
+  "repository": "PortenartCo/dobby-demo",
+  "method": "GitHub plugin fetch_workflow_job_logs: decoded structuredContent.content; run/jobs API and source files at the tested commit. No rerun.",
+  "run": {
+    "id": 43056963193,
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43056963193",
+    "headSha": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+    "branch": "feat/dobby-shared-runes-v2-20261111",
+    "status": "completed",
+    "conclusion": "success",
+    "createdAt": "2026-11-11T16:18:09Z",
+    "completedAt": "2026-11-11T16:19:49Z"
+  },
+  "job": {
+    "id": 130648883187,
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43056963193/job/130648883187",
+    "name": "native-and-postgres",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "confirmedCounts": {
+    "nativeOfflineFamily": {
+      "tests": 137,
+      "pass": 137,
+      "fail": 0
+    },
+    "ceremonyIdentityProfile": {
+      "tests": 21,
+      "pass": 21,
+      "fail": 0
+    },
+    "nativeUnitTotal": 158,
+    "realPostgres": {
+      "pass": 51,
+      "fail": 0,
+      "total": 51
+    },
+    "nativeClientToPostgres": {
+      "tests": 10,
+      "pass": 10,
+      "fail": 0
+    }
+  },
+  "environment": {
+    "postgres": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit|dobby_runes_tests",
+    "image": "postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+    "dockerSocket": "unix:///var/run/docker.sock",
+    "socketExplicitInStartAndHarness": true,
+    "network": "none",
+    "tmpfs": true,
+    "cleanup": {
+      "stepConclusion": "success",
+      "localSocketExplicit": true,
+      "exactFixtureLabelRequired": "shared-runes-v2-20261111",
+      "removedContainer": "dobby-runes-v2-test-20261111"
+    }
+  },
+  "sourceChecks": {
+    "commit": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+    "paths": [
+      "tests/shared-runes-v2/start-isolated-postgres.sh",
+      "tests/shared-runes-v2/pg-harness.mjs",
+      ".github/workflows/dobby-shared-runes-v2.yml"
+    ]
+  },
+  "logExcerpts": [
+    "2026-11-11T16:18:30.3755836Z # tests 137",
+    "2026-11-11T16:18:30.3756078Z # pass 137",
+    "2026-11-11T16:18:30.3756188Z # fail 0",
+    "2026-11-11T16:18:31.0019645Z # tests 21",
+    "2026-11-11T16:18:31.0019866Z # pass 21",
+    "2026-11-11T16:18:31.0019978Z # fail 0",
+    "2026-11-11T16:18:34.8696920Z Digest: sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+    "2026-11-11T16:18:42.4266343Z PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit|dobby_runes_tests",
+    "2026-11-11T16:18:44.4314849Z PASS legacy V1 date without milliseconds survives migration, RPC, reopen and regrant exactly",
+    "2026-11-11T16:18:44.7397392Z PASS explicit local V1 adoption retains a confirmed no-milliseconds date verbatim",
+    "2026-11-11T16:18:46.3056566Z PASS legacy V1 fractional milliseconds and ISO offsets preserve raw dates through migration and reopen",
+    "2026-11-11T16:19:31.7565777Z {\"pass\":51,\"fail\":0,\"total\":51}",
+    "2026-11-11T16:19:44.0077228Z # tests 10",
+    "2026-11-11T16:19:44.0077723Z # pass 10",
+    "2026-11-11T16:19:44.0077930Z # fail 0",
+    "2026-11-11T16:19:45.4239134Z ##[group]Run docker() { command docker --host unix:///var/run/docker.sock \"$@\"; }",
+    "2026-11-11T16:19:45.4239483Z docker() { command docker --host unix:///var/run/docker.sock \"$@\"; }",
+    "2026-11-11T16:19:45.4240449Z   fixture_label=$(docker inspect \"$fixture_container\" --format '{{index .Config.Labels \"org.dobby.task\"}}')",
+    "2026-11-11T16:19:45.4240783Z   test \"$fixture_label\" = shared-runes-v2-20261111",
+    "2026-11-11T16:19:45.4240992Z   docker rm --force \"$fixture_container\"",
+    "2026-11-11T16:19:45.5334279Z dobby-runes-v2-test-20261111"
+  ],
+  "scope": "Read-only CI verification. Only this evidence JSON was written; no SQL, local tests, workflow rerun, deployment or real family data access."
+}

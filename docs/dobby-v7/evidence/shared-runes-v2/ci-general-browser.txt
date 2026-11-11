@@ -1,0 +1,186 @@
+Run https://github.com/PortenartCo/dobby-demo/actions/runs/43056963304
+Job source-backed-browser 130648883007 SUCCESS
+Source 3ceb14bbf76c7534f6862a7cb1921c894ea3f325
+PASS markers extracted from the decoded GitHub job log:
+
+2026-11-11T16:18:27.4769037Z REVIEW_MATRIX_COVERAGE_PASS 122 rows,41 IDs final evidence required
+2026-11-11T16:18:48.8964439Z E06_ART_PASS 320 4 native results/confirmations, shared crests in3contexts, cinematic hat, unchanged questions/avatar/ledger
+2026-11-11T16:18:52.4397401Z E06_ART_PASS 390 4 native results/confirmations, shared crests in3contexts, cinematic hat, unchanged questions/avatar/ledger
+2026-11-11T16:18:56.6240691Z E06_ART_PASS 1440 4 native results/confirmations, shared crests in3contexts, cinematic hat, unchanged questions/avatar/ledger
+2026-11-11T16:19:08.4771388Z E06_EFFECTS_TRANSITION_PASS 320 default ON/sound OFF, explicit OFF/reload/shared routes, real emerald Canvas+button+badge+flash, replay twice and saved native data
+2026-11-11T16:19:20.1626926Z E06_EFFECTS_TRANSITION_PASS 390 default ON/sound OFF, explicit OFF/reload/shared routes, real emerald Canvas+button+badge+flash, replay twice and saved native data
+2026-11-11T16:19:31.6374726Z E06_EFFECTS_TRANSITION_PASS 1440 default ON/sound OFF, explicit OFF/reload/shared routes, real emerald Canvas+button+badge+flash, replay twice and saved native data
+2026-11-11T16:19:39.4927869Z CONSOLIDATION_SHARED_PASS 320 E08 decoded/0-1-2; E01..E08 prefs, reload, dock, reduced motion, no auto sound
+2026-11-11T16:19:46.8391082Z CONSOLIDATION_SHARED_PASS 390 E08 decoded/0-1-2; E01..E08 prefs, reload, dock, reduced motion, no auto sound
+2026-11-11T16:19:54.4514856Z CONSOLIDATION_SHARED_PASS 1440 E08 decoded/0-1-2; E01..E08 prefs, reload, dock, reduced motion, no auto sound
+2026-11-11T16:20:02.0541767Z E01_E04_CONSOLIDATION_PASS 320 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+2026-11-11T16:20:09.1281237Z E01_E04_CONSOLIDATION_PASS 390 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+2026-11-11T16:20:16.3291016Z E01_E04_CONSOLIDATION_PASS 1440 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+2026-11-11T16:20:21.2521690Z E02_CONSOLIDATION_PASS 390
+2026-11-11T16:20:22.0504878Z E02_CONSOLIDATION_PASS 320
+2026-11-11T16:20:23.0777871Z E02_CONSOLIDATION_PASS 1440
+2026-11-11T16:20:26.4746381Z E05_CONSOLIDATION_PASS 320 4 houses, 12 animals, supplied original Stitch crest, native illustrated grade/progress, unchanged ledger and persisted identity
+2026-11-11T16:20:29.5936530Z E05_CONSOLIDATION_PASS 390 4 houses, 12 animals, supplied original Stitch crest, native illustrated grade/progress, unchanged ledger and persisted identity
+2026-11-11T16:20:32.6035671Z E05_CONSOLIDATION_PASS 1440 4 houses, 12 animals, supplied original Stitch crest, native illustrated grade/progress, unchanged ledger and persisted identity
+2026-11-11T16:20:39.2057918Z E06_CONSOLIDATION_PASS source 320 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes
+2026-11-11T16:20:45.6412915Z E06_CONSOLIDATION_PASS source 390 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes
+2026-11-11T16:20:52.5875378Z E06_CONSOLIDATION_PASS source 1440 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes
+2026-11-11T16:20:55.3892438Z E07_CONSOLIDATION_PASS 320 inclusive range/Midi+Soir/manual quantities/receipts/finish/history removal/CTA/singular
+2026-11-11T16:20:57.7440610Z E07_CONSOLIDATION_PASS 390 inclusive range/Midi+Soir/manual quantities/receipts/finish/history removal/CTA/singular
+2026-11-11T16:21:00.2750189Z E07_CONSOLIDATION_PASS 1440 inclusive range/Midi+Soir/manual quantities/receipts/finish/history removal/CTA/singular
+2026-11-11T16:21:02.2177573Z E06_AUTH_PASS accepted native login/requireHousehold, configured public key, no inferred member
+2026-11-11T16:21:03.3516328Z E06_AUTH_PASS ambiguous native login/requireHousehold, configured public key, no inferred member
+2026-11-11T16:21:04.4281826Z E06_AUTH_PASS denied native login/requireHousehold, configured public key, no inferred member
+2026-11-11T16:21:05.5052547Z E06_AUTH_PASS cross-household native login/requireHousehold, configured public key, no inferred member
+2026-11-11T16:21:10.2406123Z E06_JOURNEY_PASS 320 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+2026-11-11T16:21:14.4219959Z E06_JOURNEY_PASS 390 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+2026-11-11T16:21:19.1411544Z E06_JOURNEY_PASS 1440 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+2026-11-11T16:21:22.8056003Z E06_EDGE_PASS existing member/85 runes, repeat/skip/resume/back, 4 houses/12 Patronus, native storage refusal, metadata refusal, stale profile/context isolation
+2026-11-11T16:21:24.5535794Z E06_RECOVERY_PASS failed temporary save remains escapable; no member created; identity draft resumes after reload
+2026-11-11T16:21:26.1255964Z E06_REVIEW_CREATION_PASS
+2026-11-11T16:21:26.6607996Z E06_REVIEW_MULTITAB_PASS native IndexedDB, distinct-member merge and same-member revision refusal
+2026-11-11T16:21:28.5216273Z E06_REVIEW_MEMBERSHIP_PASS
+2026-11-11T16:21:32.1084442Z E06_SHARED_PASS 320 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+2026-11-11T16:21:35.1943922Z E06_SHARED_PASS 390 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+2026-11-11T16:21:36.8816688Z E06_SOURCE_VISUAL_PASS 320 seven immutable source compositions; source missing media explicitly unfilled
+2026-11-11T16:21:38.0706430Z E06_SOURCE_VISUAL_PASS 390 seven immutable source compositions; source missing media explicitly unfilled
+2026-11-11T16:21:39.5951166Z E06_SOURCE_VISUAL_PASS 1440 seven immutable source compositions; source missing media explicitly unfilled
+2026-11-11T16:21:40.6555197Z E08_COUNT_PASS 320 0
+2026-11-11T16:21:40.8166057Z E08_COUNT_PASS 320 1
+2026-11-11T16:21:41.1169116Z E08_COUNT_PASS 320 10
+2026-11-11T16:21:41.6725671Z E08_COUNT_PASS 320 50
+2026-11-11T16:21:41.9556187Z E08_BROWSER_PASS 320
+2026-11-11T16:21:42.7033864Z E08_COUNT_PASS 360 0
+2026-11-11T16:21:42.8833485Z E08_COUNT_PASS 360 1
+2026-11-11T16:21:43.1830011Z E08_COUNT_PASS 360 10
+2026-11-11T16:21:43.7388474Z E08_COUNT_PASS 360 50
+2026-11-11T16:21:44.0675207Z E08_BROWSER_PASS 360
+2026-11-11T16:21:44.8022691Z E08_COUNT_PASS 390 0
+2026-11-11T16:21:44.9696033Z E08_COUNT_PASS 390 1
+2026-11-11T16:21:45.2834977Z E08_COUNT_PASS 390 10
+2026-11-11T16:21:45.8384446Z E08_COUNT_PASS 390 50
+2026-11-11T16:21:46.1206535Z E08_BROWSER_PASS 390
+2026-11-11T16:21:46.7500259Z E08_COUNT_PASS 1440 0
+2026-11-11T16:21:46.9309123Z E08_COUNT_PASS 1440 1
+2026-11-11T16:21:47.3171198Z E08_COUNT_PASS 1440 10
+2026-11-11T16:21:48.1226621Z E08_COUNT_PASS 1440 50
+2026-11-11T16:21:48.4870967Z E08_BROWSER_PASS 1440
+2026-11-11T16:21:49.6266936Z E03_COUNTS_PASS real 3/17 and native title never sanitized
+2026-11-11T16:22:01.0482855Z E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+2026-11-11T16:22:11.8112003Z E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+2026-11-11T16:22:23.0513059Z E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+2026-11-11T16:22:25.6860065Z E072_BOOT_PASS already-loaded native engine starts once
+2026-11-11T16:22:27.5155373Z E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+2026-11-11T16:22:30.3492463Z E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+2026-11-11T16:22:32.5991953Z E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+2026-11-11T16:22:35.0502902Z E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+2026-11-11T16:22:46.6319157Z INTEGRATED_PREVIEW_PASS 320 http://127.0.0.1:8765/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+2026-11-11T16:22:58.2485608Z INTEGRATED_PREVIEW_PASS 390 http://127.0.0.1:8765/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+2026-11-11T16:23:10.9218165Z INTEGRATED_PREVIEW_PASS 1440 http://127.0.0.1:8765/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+2026-11-11T16:23:14.5941191Z E071_CONTEXT_PASS date/slot reload/back/forward, planned records unchanged
+2026-11-11T16:23:20.1424596Z E071_PASS 320 header/CTA/photos/slots/prepared/native navigation/real scroll
+2026-11-11T16:23:25.3431823Z E071_PASS 390 header/CTA/photos/slots/prepared/native navigation/real scroll
+2026-11-11T16:23:30.8061030Z E071_PASS 1440 header/CTA/photos/slots/prepared/native navigation/real scroll
+2026-11-11T16:23:32.4796250Z E07_PREPARED_PASS native status and reload
+2026-11-11T16:23:32.5676956Z E07_NATIVE_CATEGORY_UNKNOWN_PASS native categories and explicit unknown quantities
+2026-11-11T16:23:32.5797679Z E07_NATIVE_ACTIONS_PASS
+2026-11-11T16:23:34.5937512Z E07_PASS 320 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+2026-11-11T16:23:36.1495589Z E07_PASS 390 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+2026-11-11T16:23:37.6224877Z E07_PASS 1440 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+2026-11-11T16:23:39.1984294Z E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+2026-11-11T16:23:42.6114043Z E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+2026-11-11T16:23:45.6794458Z E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+2026-11-11T16:23:49.1144883Z E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+2026-11-11T16:23:55.4873365Z E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity
+2026-11-11T16:24:01.4972125Z E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+2026-11-11T16:24:06.9441462Z E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+2026-11-11T16:24:12.3113958Z E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+2026-11-11T16:24:14.7281173Z RUNES_NATIVE_PASS actual forms/10-25-50/idempotence/reassignment/deletion/atomic storage failure/pending reload
+2026-11-11T16:24:25.6475055Z E04_RUNES_PASS 320 three native efforts, exact compensations and one active gain, real avatars/profile, legacy/unassigned, reload
+2026-11-11T16:24:35.6631805Z E04_RUNES_PASS 390 three native efforts, exact compensations and one active gain, real avatars/profile, legacy/unassigned, reload
+2026-11-11T16:24:46.0907132Z E04_RUNES_PASS 1440 three native efforts, exact compensations and one active gain, real avatars/profile, legacy/unassigned, reload
+2026-11-11T16:24:48.0157839Z E02_UI_ACTIONS_PASS 320
+2026-11-11T16:24:49.4145277Z E02_UI_ACTIONS_PASS 390
+2026-11-11T16:24:51.0070172Z E02_UI_ACTIONS_PASS 1440
+2026-11-11T16:24:53.7121776Z E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+2026-11-11T16:24:59.3621558Z E02_VOICE_HISTORY_PASS
+2026-11-11T16:25:18.3112295Z E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+2026-11-11T16:25:37.2574227Z E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+2026-11-11T16:25:37.8814242Z E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+2026-11-11T16:25:47.6640882Z E013_PASS chromium 390
+2026-11-11T16:25:56.4911512Z E013_PASS chromium 1440
+2026-11-11T16:26:01.8271341Z E011_VISUAL_PASS after 390/1440
+2026-11-11T16:26:05.4810824Z E01_SOURCE_COMPARISONS_PASS 10
+2026-11-11T16:26:19.0005479Z DOBBY_V7_STITCH_BINDING_PASS [{"screen":"taverne","width":320,"status":"PASS"},{"screen":"traverse","width":320,"status":"PASS"},{"screen":"missions","width":320,"status":"PASS"},{"screen":"famille","width":320,"status":"PASS"},{"screen":"taverne","width":390,"status":"PASS"},{"screen":"traverse","width":390,"status":"PASS"},{"screen":"missions","width":390,"status":"PASS"},{"screen":"famille","width":390,"status":"PASS"}]
+2026-11-11T16:26:24.0899953Z CUISINE_PATH_PASS 320px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+2026-11-11T16:26:28.7301697Z CUISINE_PATH_PASS 390px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+2026-11-11T16:26:33.4427667Z CUISINE_FAMILY_PASS 320px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+2026-11-11T16:26:37.4514493Z CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+2026-11-11T16:27:04.6239382Z CUISINE_VISUAL_PASS 13 native routes at 320/390 plus E07 overrides at 1440 original and E07 source hashes verified
+2026-11-11T16:27:09.1249844Z FAMILY_PATH_PASS 320px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+2026-11-11T16:27:09.1253697Z FAMILY_MEMBER_PASS 320px
+2026-11-11T16:27:13.0086211Z FAMILY_PATH_PASS 390px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+2026-11-11T16:27:13.0086793Z FAMILY_MEMBER_PASS 390px
+2026-11-11T16:27:14.6407767Z FAMILY_EDGE_PASS stale bookmark, orphan reassignment, legacy identity, browser back/forward
+2026-11-11T16:27:15.8110878Z FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320
+2026-11-11T16:27:15.8731129Z FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320
+2026-11-11T16:27:15.9856596Z FAMILY_REVIEW_PASS selected states match the current operation 320
+2026-11-11T16:27:16.6635333Z FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390
+2026-11-11T16:27:16.7176565Z FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390
+2026-11-11T16:27:16.8318555Z FAMILY_REVIEW_PASS selected states match the current operation 390
+2026-11-11T16:27:22.3113310Z FAMILY_SHARED_PASS 320px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+2026-11-11T16:27:27.5920673Z FAMILY_SHARED_PASS 390px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+2026-11-11T16:27:38.3098303Z FAMILY_VISUAL_PASS 7 sources x 320/390, 28 comparisons + 14 empty states
+2026-11-11T16:27:42.7309423Z REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+2026-11-11T16:27:47.0112635Z REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+2026-11-11T16:28:09.4954637Z REGISTER_VISUAL_PASS 3 7 sources x 320/390
+2026-11-11T16:28:12.5102992Z REGISTER_DOCUMENTS_PASS 320
+2026-11-11T16:28:14.9782477Z REGISTER_DOCUMENTS_PASS 390
+2026-11-11T16:28:31.2235780Z REGISTER_VISUAL_PASS 4 11 sources x 320/390
+2026-11-11T16:28:36.6951099Z REGISTER_TOOLS_PASS 320
+2026-11-11T16:28:41.5290848Z REGISTER_TOOLS_PASS 390
+2026-11-11T16:28:53.8176318Z REGISTER_VISUAL_PASS 5 6 sources x 320/390
+2026-11-11T16:28:57.0400803Z REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+2026-11-11T16:28:59.6884739Z REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+2026-11-11T16:29:13.1121483Z REGISTER_VISUAL_PASS 2b 6 sources x 320/390
+2026-11-11T16:29:18.5352575Z REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+2026-11-11T16:29:23.5170038Z REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+2026-11-11T16:29:27.6611497Z REGISTER_DOCUMENTS_SYNC_PASS 320
+2026-11-11T16:29:31.4135801Z REGISTER_DOCUMENTS_SYNC_PASS 390
+2026-11-11T16:29:33.4020505Z REGISTER_IMPORT_READING_PASS 320
+2026-11-11T16:29:34.9344816Z REGISTER_IMPORT_READING_PASS 390
+2026-11-11T16:29:37.4560100Z REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+2026-11-11T16:29:39.4742970Z REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+2026-11-11T16:29:40.9212825Z REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+2026-11-11T16:29:41.9232372Z REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+2026-11-11T16:29:52.5541042Z REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+2026-11-11T16:30:02.5727452Z REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+2026-11-11T16:30:18.8494526Z REGISTER_REVIEW_PASS stale-memo-edit 320
+2026-11-11T16:30:19.5788186Z REGISTER_REVIEW_PASS stale-equipment-edit 320
+2026-11-11T16:30:20.2949649Z REGISTER_REVIEW_PASS stale-document-edit 320
+2026-11-11T16:30:21.0813590Z REGISTER_REVIEW_PASS list-rg-item-toggle 320
+2026-11-11T16:30:21.8817520Z REGISTER_REVIEW_PASS list-rg-item-remove 320
+2026-11-11T16:30:22.6434800Z REGISTER_REVIEW_PASS menu-member-draft 320
+2026-11-11T16:30:23.4848427Z REGISTER_REVIEW_PASS menu-contact-draft 320
+2026-11-11T16:30:24.2452637Z REGISTER_REVIEW_PASS menu-medical-draft 320
+2026-11-11T16:30:25.1199048Z REGISTER_REVIEW_PASS maintenance-file-draft 320
+2026-11-11T16:30:25.7235272Z REGISTER_REVIEW_PASS document-native-write-missing 320
+2026-11-11T16:30:26.5893362Z REGISTER_REVIEW_PASS document-native-write-replaced 320
+2026-11-11T16:30:27.2874983Z REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+2026-11-11T16:30:27.9808154Z REGISTER_REVIEW_PASS maintenance-source-facts 320
+2026-11-11T16:30:28.7872156Z REGISTER_REVIEW_PASS source-facts 320
+2026-11-11T16:30:29.5124905Z REGISTER_REVIEW_PASS stale-memo-edit 390
+2026-11-11T16:30:30.2611612Z REGISTER_REVIEW_PASS stale-equipment-edit 390
+2026-11-11T16:30:30.9938521Z REGISTER_REVIEW_PASS stale-document-edit 390
+2026-11-11T16:30:31.8643981Z REGISTER_REVIEW_PASS list-rg-item-toggle 390
+2026-11-11T16:30:32.7654178Z REGISTER_REVIEW_PASS list-rg-item-remove 390
+2026-11-11T16:30:33.5256583Z REGISTER_REVIEW_PASS menu-member-draft 390
+2026-11-11T16:30:34.4073791Z REGISTER_REVIEW_PASS menu-contact-draft 390
+2026-11-11T16:30:35.1899800Z REGISTER_REVIEW_PASS menu-medical-draft 390
+2026-11-11T16:30:36.0749911Z REGISTER_REVIEW_PASS maintenance-file-draft 390
+2026-11-11T16:30:36.8705428Z REGISTER_REVIEW_PASS document-native-write-missing 390
+2026-11-11T16:30:37.6732958Z REGISTER_REVIEW_PASS document-native-write-replaced 390
+2026-11-11T16:30:38.3624457Z REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+2026-11-11T16:30:39.0286929Z REGISTER_REVIEW_PASS maintenance-source-facts 390
+2026-11-11T16:30:39.8230290Z REGISTER_REVIEW_PASS source-facts 390
+2026-11-11T16:30:39.8285344Z REGISTER_REVIEW_ALL_PASS 14 cases × 320/390

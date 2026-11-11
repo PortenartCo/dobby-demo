@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-11T16:26:33.549209+00:00",
+  "fixtureContainerRemoved": "dobby-runes-v2-test-20261111",
+  "onlyLocalUnixDocker": true,
+  "guardedByLabelNetworkImage": true,
+  "fictionalTmpfsDatabasesRemoved": true,
+  "taskHTTPServerStoppedPids": [
+    508184
+  ],
+  "realDatabaseTouched": false,
+  "reproduce": "bash tests/shared-runes-v2/start-isolated-postgres.sh"
+}

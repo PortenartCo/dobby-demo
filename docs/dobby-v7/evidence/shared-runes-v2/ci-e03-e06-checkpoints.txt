@@ -1,0 +1,50 @@
+Run https://github.com/PortenartCo/dobby-demo/actions/runs/43056963304
+Job integrated-corrections 130648883552 SUCCESS
+Source 3ceb14bbf76c7534f6862a7cb1921c894ea3f325
+PASS markers extracted from the decoded GitHub job log:
+
+2026-11-11T16:18:32.3141249Z INTEGRATED_REWARDS_BROWSER_PASS 320
+2026-11-11T16:18:35.7212572Z INTEGRATED_REWARDS_BROWSER_PASS 390
+2026-11-11T16:18:39.3412364Z INTEGRATED_REWARDS_BROWSER_PASS 1440
+2026-11-11T16:18:40.7278097Z INTEGRATED_REWARDS_WRITER_PASS invalid/zero/native-series revisions/unknown-fields/storage rollback/shared refusal/safe aggregate
+2026-11-11T16:18:43.4715154Z INTEGRATED_REWARDS_PRESET_PASS abandoned invalid amount never blocks V7 or native preset
+2026-11-11T16:18:46.5999637Z INTEGRATED_LARGE_AMOUNT_PASS 320/390/1440 exact safe integer visible, no clipping, data unchanged
+2026-11-11T16:18:50.0004448Z INTEGRATED_E03_MISSIONS_PASS 320
+2026-11-11T16:18:52.9287531Z INTEGRATED_E03_MISSIONS_PASS 390
+2026-11-11T16:18:55.8965856Z INTEGRATED_E03_MISSIONS_PASS 1440
+2026-11-11T16:18:55.9580805Z INTEGRATED_E03_MISSIONS_COMPLETE PASS
+2026-11-11T16:19:00.2614014Z REVIEW_INTEGRATED_CEREMONY 320 PASS native radios/reload/back,12 natural atlas cells, balanced cards, historical results
+2026-11-11T16:19:03.9288885Z REVIEW_INTEGRATED_CEREMONY 390 PASS native radios/reload/back,12 natural atlas cells, balanced cards, historical results
+2026-11-11T16:19:08.1516845Z REVIEW_INTEGRATED_CEREMONY 1440 PASS native radios/reload/back,12 natural atlas cells, balanced cards, historical results
+2026-11-11T16:19:10.1142780Z REVIEW_INTEGRATED_CEREMONY_COMPAT_PASS 320
+2026-11-11T16:19:11.5388129Z REVIEW_INTEGRATED_CEREMONY_COMPAT_PASS 390
+2026-11-11T16:19:13.0296812Z REVIEW_INTEGRATED_CEREMONY_COMPAT_PASS 1440
+2026-11-11T16:19:15.3155554Z REVIEW_INTEGRATED_CEREMONY_EXTRAS_PASS 320 house/patronus genuine conditional radios, one visible check and reload, no implicit confirmation
+2026-11-11T16:19:17.1962885Z REVIEW_INTEGRATED_CEREMONY_EXTRAS_PASS 390 house/patronus genuine conditional radios, one visible check and reload, no implicit confirmation
+2026-11-11T16:19:19.1361691Z REVIEW_INTEGRATED_CEREMONY_EXTRAS_PASS 1440 house/patronus genuine conditional radios, one visible check and reload, no implicit confirmation
+2026-11-11T16:19:27.8619723Z INTEGRATED_EFFECTS_PASS 320 canonical fresh ON, sound OFF; historical/explicit OFF preserved; replay/green/reduced/lifecycle; old namespace untouched
+2026-11-11T16:19:36.1676803Z INTEGRATED_EFFECTS_PASS 390 canonical fresh ON, sound OFF; historical/explicit OFF preserved; replay/green/reduced/lifecycle; old namespace untouched
+2026-11-11T16:19:44.6069960Z INTEGRATED_EFFECTS_PASS 1440 canonical fresh ON, sound OFF; historical/explicit OFF preserved; replay/green/reduced/lifecycle; old namespace untouched
+2026-11-11T16:19:45.9057371Z PASS final-only default 3s
+2026-11-11T16:19:46.0195804Z PASS multi-segment speech resets pause
+2026-11-11T16:19:46.2618466Z PASS continue and cancel
+2026-11-11T16:19:46.4151595Z PASS immediate final Send and stale callbacks
+2026-11-11T16:19:46.5293257Z PASS manual correction
+2026-11-11T16:19:46.7104997Z PASS interrupted provisional prefix
+2026-11-11T16:19:46.9161794Z PASS configurable 1.5–5s
+2026-11-11T16:19:46.9777210Z PASS interruption end
+2026-11-11T16:19:47.0278919Z PASS interruption error
+2026-11-11T16:19:47.1110493Z PASS interruption stop
+2026-11-11T16:19:47.1655461Z PASS interruption hidden
+2026-11-11T16:19:47.2174712Z PASS interruption pagehide
+2026-11-11T16:19:47.3227621Z PASS navigation
+2026-11-11T16:19:47.4388203Z PASS identity isolation
+2026-11-11T16:19:47.8300363Z PASS microphone errors and manual fallback
+2026-11-11T16:19:48.5863977Z PASS replay pauses dictation before speech
+2026-11-11T16:19:48.9100067Z PASS sound and sensitive confirmation
+2026-11-11T16:19:49.3111247Z PASS history persistence and runtime
+2026-11-11T16:19:55.6945172Z REVIEW_CONTEXT_20261111_PASS {"status":"PASS","origin":"http://127.0.0.1:8765","appPath":"/essai-stitch-v7","cases":["positive replacement","stable ID","quantity unspecified and existing","remove after reload","native persistence","unknown fields","ambiguity","tomorrow topic correction","stale record","owner and household isolation","save failure rollback","legacy canonical transition","disabled model contract and rejected target","deleted source exchange","legacy draft ambiguity","legacy final source mismatch","sole extra consultation"],"externalRequests":"blocked","identity":"native identity output simulated; no real account","writers":"real CuisineList add/edit/remove and native storage","generalAI":false,"shared":{"status":"PASS","transport":"fully intercepted HTTP fixture, no real account","nativeWriters":true,"nativeIndexedDB":true,"cases":["pending-to-clean stable reference","remote content change blocks","connected fresh list canonical writer"]}}
+2026-11-11T16:20:04.5390117Z INTEGRATED_EFFECTS_PASS 320 preview fresh ON, sound OFF; historical/explicit OFF preserved; replay/green/reduced/lifecycle; old namespace untouched
+2026-11-11T16:20:12.3913706Z INTEGRATED_EFFECTS_PASS 390 preview fresh ON, sound OFF; historical/explicit OFF preserved; replay/green/reduced/lifecycle; old namespace untouched
+2026-11-11T16:20:20.8447844Z INTEGRATED_EFFECTS_PASS 1440 preview fresh ON, sound OFF; historical/explicit OFF preserved; replay/green/reduced/lifecycle; old namespace untouched
+2026-11-11T16:20:20.9378314Z INTEGRATED_REVIEW_CHECKPOINTS_PASS 12 browser scripts including isolated preview

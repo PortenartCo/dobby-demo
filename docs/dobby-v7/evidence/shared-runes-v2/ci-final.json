@@ -1,0 +1,258 @@
+{
+  "testedCodeCommit": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+  "runs": [
+    {
+      "id": 43056963193,
+      "name": "Dobby shared runes V2 - isolated PostgreSQL",
+      "head_sha": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43056963193",
+      "created_at": "2026-11-11T16:18:09Z",
+      "updated_at": "2026-11-11T16:19:49Z",
+      "jobs": [
+        {
+          "id": 130648883187,
+          "name": "native-and-postgres",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Native offline, family, grades, recurrence and conflict regressions",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Existing ceremony, identity and profile contracts",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Start pinned local PostgreSQL without network or exposed port",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Real transactions, independent connections, old writer exclusion and rollback",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Native client integration with the real PostgreSQL writer",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Upload PostgreSQL and client evidence",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Remove only this workflow's labelled ephemeral fixture",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43056963304,
+      "name": "Dobby V7 - Stitch functional UI",
+      "head_sha": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43056963304",
+      "created_at": "2026-11-11T16:18:10Z",
+      "updated_at": "2026-11-11T16:30:55Z",
+      "jobs": [
+        {
+          "id": 130648883007,
+          "name": "source-backed-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify immutable continuation checkpoint",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Exhaustive review registry coverage",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Check V7 JavaScript syntax",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Existing offline, family and conflict regressions",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Integrated preview builder and byte provenance",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "E06 exhaustive scoring, identity and draft isolation",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Source derivation remains reproducible",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Confirm the original Stitch source manifest",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Browser tooling (tests only)",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Functional Stitch roots and source fidelity",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Keep root, Cuisine and Family comparisons (320/390px)",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 130648883552,
+          "name": "integrated-corrections",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Verify immutable continuation checkpoint",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Retain the passed correction checkpoints",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "name": "Browser tooling (tests only)",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Integrated E03-E06 correction checkpoints (no publication)",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Keep integrated correction evidence",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
