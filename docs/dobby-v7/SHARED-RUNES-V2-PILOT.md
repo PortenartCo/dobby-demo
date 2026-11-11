@@ -11,7 +11,7 @@ Le builder `scripts/build-dobby-runes-pilot.cjs` reprend les trois arborescences
 
 Le projet personnel `pqcdkrwljgvgagzwrcmg` est déjà fixé dans `family-v2.js`. La CSP autorise uniquement ce projet et l'origine locale pour les connexions. Aucune clé, session, identité réelle ou mot de passe n'est embarqué dans le dossier publié. Les clés secrètes et JWT anciens sont refusés par le formulaire natif existant. Le connecteur Supabase a refusé les deux lectures de métadonnées (URL et clés publiques) pour ce projet : aucune configuration distante n'a donc été récupérée. Une configuration présente sur le navigateur de l'utilisateur reste nécessaire ; elle n'a pas été vérifiée ici.
 
-Les sources applicatives restent identiques à la référence. Deux copies générées comportent des gardes tracées dans `pilot-manifest.json` :
+Les sources applicatives restent identiques à la référence. Deux copies générées comportent des gardes obligatoires, indépendantes du chargement du bandeau et tracées dans `pilot-manifest.json` :
 
 - `family-modules.js` : refus de tout fallback Missions V1, y compris après un changement de contexte pendant un `await`. Activation, récupération et résolution ne remplacent pas les données locales lorsque les capacités V2 sont absentes. La synchronisation saute Missions sans arrêter les autres modules. La capacité n'est jamais simulée ni persistée comme autorité.
 - `family-missions.js` : les nouvelles actions du pilote utilisent la file native de demandes, même hors connexion. Les runes confirmées existantes restent intactes ; aucune conversion ni réinitialisation du stockage.
