@@ -1,0 +1,62 @@
+/* E02 facade: native reads/writers and native metadata store; no remote sync or LLM. */
+window.DobbyChatEngine=(()=>{'use strict';
+ const E=window.DobbyFamilyStitchEngine,C=window.DobbyCuisineEngine;
+ let owner=undefined,rows=[],loaded=false;
+ const api=()=>E.win().DobbyFamilyUI;
+ const identity=()=>{const c=api()?.getContext();return {user:typeof c?.userId==='string'&&c.userId?c.userId:null,household:c?.householdId||null};};
+ const token=()=>JSON.stringify(identity());
+ const check=expected=>{if(token()!==expected)throw Error('Le compte ou le foyer a changé. La demande n’a pas été exécutée.');};
+ const key=user=>'v7-private-chat:'+encodeURIComponent(user);
+ async function load(){const current=identity().user,guard=token();if(loaded&&owner===current)return rows;owner=current;loaded=false;rows=[];
+  if(current){const stored=await api().meta(key(current));check(guard);if(stored&&(stored.version!==1||stored.owner!==current||!Array.isArray(stored.rows)))throw Error('Historique individuel invalide. Aucune donnée remplacée.');if(stored?.rows.some(r=>!r||typeof r.id!=='string'||typeof r.input!=='string'||typeof r.answer!=='string'))throw Error('Historique individuel invalide. Aucune donnée remplacée.');rows=stored?.rows||[];}
+  loaded=true;return rows;
+ }
+ function current(){if(!loaded||owner!==identity().user)throw Error('Le compte a changé ou l’historique est indisponible. Revenez au fil.');return rows;}
+ async function persist(){current();const guard=token();if(owner)await api().putMeta(key(owner),{version:1,owner,rows:JSON.parse(JSON.stringify(rows))});check(guard);}
+ async function append(row){current().push(row);await persist();}
+ async function update(id,answer,links=[]){const row=current().find(r=>r.id===id);if(!row)throw Error('Échange introuvable.');row.answer=answer;row.links=links;await persist();}
+ async function remove(id){current();rows=rows.filter(r=>r.id!==id);await persist();}
+ const norm=s=>String(s||'').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/\s+/g,' ').trim();
+ const link=(label,href)=>({label,href});
+ const unknown=()=>({text:'Dobby ne sait pas encore interpréter cette demande. Il peut consulter les courses, le repas, les missions, l’agenda, les équipements et les documents, ajouter un article aux courses ou préparer la suppression d’une mission.',links:[]});
+ function nativeWrite(task,fields){const w=E.win(),original=w.save,before=E.evaluate('return JSON.parse(JSON.stringify(Object.fromEntries(p.fields.map(k=>[k,st[k]]))));',{fields});let failure=null;E.clearError();w.save=function(...args){try{return original.apply(this,args);}catch(error){failure=error;}};try{task();}finally{w.save=original;}if(failure||E.lastError){
+  // A native writer may mutate memory before save() fails. Reflect only the
+  // last stored values for its own fields so a later preference save cannot commit a failed action.
+  let stored;try{stored=persisted();}catch{stored=before;}const values={};for(const field of fields)values[field]=Object.hasOwn(stored,field)?stored[field]:before[field];E.evaluate('for(const field of p.fields){if(Object.hasOwn(p.values,field))st[field]=p.values[field];else delete st[field];}',{fields,values});
+  throw Error('L’enregistrement natif n’a pas été confirmé. Vérifiez les données avant de réessayer.');}}
+ function persisted(){return E.evaluate('return JSON.parse(localStorage.getItem(key)||"{}");');}
+ async function reply(input){const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;
+  const add=text.match(/^(?:s['’]il (?:te|vous) pla[iî]t[, ]+)?(?:ajoute[r]?|acheter|mets?|mettre)\s+(.+?)(?:\s+(?:aux courses|[àa] (?:la |ma )?liste (?:de |des )?courses|dans (?:la |ma )?liste (?:de |des )?courses))?[.!]?$/i);
+  if(add){const destination=/(?:aux courses|liste (?:de |des )?courses)/i.test(text);if(!destination&&(/^(?:un|une)\s/.test(norm(add[1]))||/\b(?:billets?|abonnements?)\b/.test(norm(add[1]))))return {text:'Souhaitez-vous l’ajouter à la liste de courses ? Écrivez la demande avec cette destination. Aucune modification effectuée.',links:[]};if(!/^acheter\b/i.test(text)&&!destination)return {text:'Dobby a besoin de la destination : précisez « ajoute cet article aux courses ». Aucune modification effectuée.',links:[]};const name=add[1].replace(/^(?:du|de la|des|le|la|les|un|une)\s+|^de l['’]/i,'').trim();if(name.length<2||name.length>119||/[\n;]/.test(name)||/\b(?:puis|ensuite|supprime|ajoute)\b/i.test(name))return unknown();
+   // E07.2 keeps an active list independently of its archives. Use its existing
+   // adapter rather than the legacy editshop action, which clears shopFinal.
+   if(state.shopFinal?.e072){
+    const list=window.DobbyCuisineList;if(!list)throw Error('La liste de courses est indisponible. Ouvrez les courses avant de réessayer.');
+    const guard=token(),current=list.snapshot(E);
+    if(current.items.some(x=>norm(x.name)===norm(name)))return {text:'« '+name+' » figure déjà dans les courses. Dobby n’a pas créé de doublon.',links:[link('Voir les courses','./index.html#shop')]};
+    await list.add(E,{name,qty:null,unit:''});check(guard);
+    if(!list.snapshot(E).items.some(x=>norm(x.name)===norm(name)))throw Error('L’article n’a pas été ajouté. Consultez les courses avant de réessayer.');
+    return {text:'Dobby a ajouté « '+name+' » aux courses.',links:[link('Voir les courses','./index.html#shop')]};
+   }
+   const existing=(state.extras||[]).some(x=>norm(x)===norm(name));if(existing)return {text:'« '+name+' » figure déjà dans la préparation des courses. Dobby n’a pas créé de doublon.',links:[link('Voir les courses','./index.html#shop')]};
+   if(state.shopFinal&&!Object.values(state.shopHistory||{}).some(row=>JSON.stringify(row)===JSON.stringify(state.shopFinal)))throw Error('La liste validée n’est pas retrouvée dans l’historique. Ouvrez les courses pour vérifier sa conservation avant tout ajout.');
+   nativeWrite(()=>{if(state.shopFinal)C.shop('editshop');C.shop('addextra',{value:name});},['extras','shopFinal']);if(!(E.read().state.extras||[]).some(x=>norm(x)===norm(name))||!(persisted().extras||[]).some(x=>norm(x)===norm(name)))throw Error('L’article n’a pas été ajouté. Consultez la préparation des courses avant de réessayer.');
+   return {text:'Dobby a ajouté « '+name+' » à la préparation des courses ! Une mission accomplie pour la maisonnée !',links:[link('Voir les courses','./index.html#shop')]};
+  }
+  const deletion=text.match(/^supprime(?:r)?\s+(?:la\s+)?mission\s+(.+?)[.!]?$/i);
+  if(deletion){const matches=(state.manualMissions||[]).filter(r=>norm(r.title)===norm(deletion[1]));if(matches.length!==1)return {text:matches.length?'Plusieurs missions portent ce nom. Ouvrez les missions pour choisir la bonne.':'Dobby ne trouve pas de mission portant exactement ce nom. Aucune suppression effectuée.',links:[link('Voir les missions','./missions.html')]};const row=matches[0];return {text:'La suppression de « '+row.title+' » dans le foyer demande votre confirmation.',links:[],pending:{kind:'mission-delete',record:JSON.stringify(row),id:row.id,title:row.title,identity:token()}};}
+  if(/^(?:supprime|modifie|annule|change|cree|enregistre|partage|envoie|reserve|termine)\b/.test(q))return unknown();
+  if(/\b(?:medical|sante|urgence|douleur|medicament)\b/.test(q))return {text:'Dobby peut ouvrir le carnet de santé. Il ne fournit pas de diagnostic ni de conseil médical.',links:[link('Carnets de santé','./famille.html#health')]};
+  if(/\b(?:repas|mange|diner|ce soir)\b/.test(q)){if(/\b(?:lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche|hier)\b|\d{1,2}[/-]\d/.test(q))return {text:'Dobby peut consulter le repas d’aujourd’hui ou de demain. Pour une autre date, ouvrez le planning.',links:[link('Ouvrir le planning','./index.html#plan')]};const day=E.evaluate('return addDays(todayISO(),p.offset);',{offset:q.includes('demain')?1:0}),meal=state.planned?.[day+'-soir'],recipe=meal&&meal.status!=='annulé'?C.read().recipes.find(r=>r.id===meal.id):null;return {text:recipe?'Pour le soir du '+day+', Dobby a trouvé au planning : '+recipe.name+'.':'Dobby ne voit aucun repas prévu pour le soir du '+day+'.',links:[recipe?link('Voir la recette','./index.html#recipe?id='+encodeURIComponent(recipe.id)):link('Choisir un repas','./index.html#pick?date='+day)]};}
+  if(/\b(?:course|courses|panier)\b/.test(q)){const final=state.shopFinal;if(final&&!Array.isArray(final.items))throw Error('La liste validée est illisible. Ouvrez les courses pour la vérifier.');const names=final?final.items.map(r=>r.name):[...C.read().draft.map(r=>r.name),...(state.extras||[])],label=final?'La liste validée':'La préparation des courses';return {text:names.length?label+' contient '+names.length+' article(s) : '+names.slice(0,8).join(', ')+(names.length>8?'…':'.'):label+' ne contient aucun article.',links:[link('Voir les courses',final?'./index.html#shop-final':'./index.html#shop')]};}
+  if(/\b(?:mission|missions|tache|taches|a faire|entretien)\b/.test(q)){const tasks=[...(state.manualMissions||[]).filter(t=>t.status!=='done'),...(state.autoTasks||[]).filter(t=>t.state==='open')];return {text:tasks.length?'Dobby a trouvé '+tasks.length+' mission(s) ouverte(s) : '+tasks.slice(0,5).map(t=>t.title).join(' ; ')+'.':'Dobby ne voit aucune mission ouverte.',links:[link('Voir les missions','./missions.html')]};}
+  if(/\b(?:agenda|rendez-vous|evenement|evenements)\b/.test(q)){const events=(E.win().DobbyFamilyAgenda?.upcoming()||[]).filter(e=>['event','medical'].includes(e.kind));return {text:events.length?'Dans l’agenda partagé : '+events.slice(0,4).map(e=>[e.date,e.time,e.title].filter(Boolean).join(' · ')).join(' ; ')+'.':'Aucun événement à venir dans l’agenda partagé. Les fiches individuelles restent dans leur carnet.',links:[link('Ouvrir l’Agenda','./famille.html#agenda')]};}
+  for(const [pattern,records,view,label]of [[/\b(?:document|documents|facture|contrat|contrats|garantie)\b/,state.familyDocs||[],'document','Documents'],[/\b(?:equipement|equipements|appareil|appareils|maison)\b/,state.houseItems||[],'equipment','Équipements']])if(pattern.test(q)){const needle=q.replace(/^.*?(?:documents?|facture|contrats?|garantie|equipements?|appareils?|maison)\b/,'').replace(/^(?:\s*(?:de|du|des|sur|pour|le|la))?\s*/,''),found=records.filter(r=>!needle||norm([r.title,r.name,r.provider,r.brand,r.model].join(' ')).includes(needle)).slice(0,5);return {text:found.length?'Dobby a trouvé : '+found.map(r=>r.title||r.name).join(' ; ')+'.':'Dobby n’a trouvé aucune fiche correspondante.',links:found.length?found.map(r=>link(r.title||r.name,'./famille.html#'+view+'?record='+encodeURIComponent(r.id))):[link(label,'./famille.html#'+(view==='document'?'documents':'house'))]};}
+  return unknown();
+ }
+ function execute(pending){check(pending.identity);const row=E.read().state.manualMissions.find(r=>r.id===pending.id);if(!row||JSON.stringify(row)!==pending.record)throw Error('La mission a changé ou a été supprimée. Aucune suppression effectuée.');
+  E.evaluate('st.extraPage="";go("missions");');const w=E.win(),original=w.confirm;try{w.confirm=message=>message==='Supprimer définitivement « '+row.title+' » de la liste familiale ?';nativeWrite(()=>E.action('fmsAction','delete',{id:row.id}),['manualMissions']);}finally{w.confirm=original;}
+  if(E.read().state.manualMissions.some(r=>r.id===row.id)||(persisted().manualMissions||[]).some(r=>r.id===row.id))throw Error('La mission n’a pas été supprimée.');return {text:'Dobby a supprimé la mission « '+row.title+' » du foyer.',links:[link('Voir les missions','./missions.html')]};
+ }
+ return Object.freeze({identity,token,check,load,current,append,update,remove,reply,execute});
+})();
