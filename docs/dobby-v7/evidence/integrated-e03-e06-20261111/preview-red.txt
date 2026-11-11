@@ -1,0 +1,33 @@
+✖ E03–E06 corrected preview uses canonical sources and a fresh isolated namespace (479.796399ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 585.360034
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/review-integrated-preview.test.cjs:3:1
+✖ E03–E06 corrected preview uses canonical sources and a fresh isolated namespace (479.796399ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'dobby-review-e072|'
+  - 'dobby-review-e03-e06-20261111|'
+                    ^
+
+      at TestContext.<anonymous> (/workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-preview.test.cjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'dobby-review-e072|',
+    expected: 'dobby-review-e03-e06-20261111|',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
