@@ -1,0 +1,15 @@
+{
+  "command": "node essai-stitch-v7/build-onboarding.cjs",
+  "runsInRealWorktree": 1,
+  "canonicalBytesUnchanged": true,
+  "canonicalSha256": "0a86ad9a58fcb162dfc3a4739f6a39684b8b68326c2f40ea7a0af887631fcbcb",
+  "sourceConfiguration": "essai-stitch-v7/data/onboarding-scoring-v1.json",
+  "versions": {
+    "house": "e06-v2",
+    "patronus": "e06-v1"
+  },
+  "historicalReference": "design/e06/references/scoring/dobby-e06-scoring-v1.json",
+  "changedGeneratedOutputs": [
+    "essai-stitch-v7/route-manifest.json"
+  ]
+}

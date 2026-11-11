@@ -45,3 +45,25 @@ L’atlas source mesure 1254×1254, quatre colonnes et trois lignes ; chaque cel
 [Mesures des douze Patronus à chaque largeur](evidence/integrated-e03-e06-20261111/ceremony/after/results.json) · [Toutes les captures après, incluant cerf/hibou/dauphin et Profil](evidence/integrated-e03-e06-20261111/ceremony/after/).
 
 Statut : code corrigé et tests ciblés PASS. Intégration globale, CI et nouvel aperçu sont consignés séparément par l’orchestrateur. Aucune fusion ni publication effectuée par ce sous-lot.
+
+## Correction D-01 après revue indépendante
+
+La [revue de `87d9459`](evidence/integrated-e03-e06-20261111/ceremony/review.md) a identifié un défaut de navigation après migration : l’interception des liens vers une question ultérieure ramenait aussi le Retour de q2 vers q1 à q2 tant que la notice existait. Le test de compatibilité vérifie désormais le véritable bouton Retour, l’ancienne réponse q1 conservée, puis Continuer vers la nouvelle q2 qui reste non répondue et obligatoire. Un lien q6 reste intercepté après cette séquence.
+
+La correction borne uniquement l’index maximal autorisé pendant cette migration à q2 ; q1 reste accessible. Elle ne restaure pas l’ancienne réponse q2, ne modifie aucun résultat confirmé et n’ajoute pas d’état de sélection.
+
+- RED sur la base de correction : `REVIEW_CEREMONY_WIDTHS=390 node essai-stitch-v7/tests/review-integrated-ceremony-compat.cjs`, sortie 1 ; [Retour q1 n’aboutit pas](evidence/integrated-e03-e06-20261111/ceremony-d1-back-red.log).
+- GREEN après correction : `node essai-stitch-v7/tests/review-integrated-ceremony-compat.cjs`, sortie 0 aux trois largeurs 320/390/1440 ; [journal](evidence/integrated-e03-e06-20261111/ceremony-d1-back-green.log), [résultats avec `backAfterMigration`](evidence/integrated-e03-e06-20261111/ceremony/compat/results.json).
+
+Seul ce test de compatibilité a été relancé pour D-01 ; aucune campagne générale ni ancien script déjà vert n’a été rejoué. La revue d’origine est conservée sans réécriture.
+
+## Génération du barème canonique
+
+La vérification couplée de génération a identifié une cause indépendante du rendu : `build-onboarding.cjs` copiait systématiquement le JSON V1 archivé sur le JSON canonique suivi, effaçant ainsi la nouvelle q2 et sa version à chaque génération. Le [journal de découverte](evidence/integrated-e03-e06-20261111/generation-coupled-red.txt) conserve les trois échecs de contrat que cette substitution a provoqués.
+
+Le générateur lit désormais le fichier canonique comme une entrée et ne l’écrit plus. Le manifeste référence `essai-stitch-v7/data/onboarding-scoring-v1.json`, son empreinte et les versions effectives Maison v2 / Patronus v1 ; le chemin et l’empreinte de la référence historique sont indiqués séparément. Une entrée canonique absente entraîne un échec, sans restauration silencieuse de V1.
+
+- Test isolé : `node --test essai-stitch-v7/tests/review-integrated-ceremony-build.test.cjs` ; [RED](evidence/integrated-e03-e06-20261111/ceremony-generation-red.txt), puis [GREEN, 2 tests](evidence/integrated-e03-e06-20261111/ceremony-generation-green.txt). Le générateur s’exécute dans une fixture temporaire minimale ; octets V2, copie exacte, versions, provenance réelle, autres sections du manifeste et régénération identique sont contrôlés. Aucun asset image n’est nécessaire dans cette fixture.
+- Générateur réel exécuté **une seule fois** après correction : `node essai-stitch-v7/build-onboarding.cjs` ; [sortie](evidence/integrated-e03-e06-20261111/ceremony-generation-real.txt), [preuve d’empreinte et sorties](evidence/integrated-e03-e06-20261111/ceremony-generation-real.json). Le JSON V2 reste identique octet pour octet (`0a86ad9a…631fcbcb`) ; seul `route-manifest.json` change parmi les sorties générées. Templates, données de route et effets du Rituel sont inchangés.
+
+Aucun test D navigateur ni campagne générale n’a été relancé pour ce correctif de génération. La génération globale suivante reste séquentielle et relève du contrôle d’intégration.

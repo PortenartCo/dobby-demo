@@ -2090,7 +2090,15 @@
     "mission": "E06",
     "document": "docs/dobby-v7/E06-PREMIERE-CONNEXION.md",
     "sourceCount": 8,
-    "scoring": "design/e06/references/scoring/dobby-e06-scoring-v1.json",
+    "scoring": "essai-stitch-v7/data/onboarding-scoring-v1.json",
+    "scoringSha256": "0a86ad9a58fcb162dfc3a4739f6a39684b8b68326c2f40ea7a0af887631fcbcb",
+    "scoringVersion": "e06-v2",
+    "scoringVersions": {
+      "house": "e06-v2",
+      "patronus": "e06-v1"
+    },
+    "historicalScoring": "design/e06/references/scoring/dobby-e06-scoring-v1.json",
+    "historicalScoringSha256": "ef033928f193d0c526092deac25a9a72f1cfc3f7c07bdb01cf75546e21e7e515",
     "cheminette": {
       "status": "source-backed-functional",
       "view": "onboarding-ritual",
