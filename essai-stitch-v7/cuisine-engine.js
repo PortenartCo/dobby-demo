@@ -46,6 +46,9 @@ window.DobbyCuisineEngine = (() => {
     click('select', { id: values.id });
     return evaluate('return st.page==="plan" && st.planned[st.day+"-"+st.slot]?.id===p.id;', values);
   }
+  function cookAt(id,index=null,method='classic') {
+    return transaction(`const r=getR(p.id);if(!r)throw Error('Recette introuvable.');if(!['classic','tm5'].includes(p.method))throw Error('Méthode de préparation invalide.');const steps=p.method==='tm5'?(st.tmAdaptations?.[p.id]?.steps||(r.thermomix?r.steps:null)):(r.thermomix?null:r.steps);if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible ; complétez ses étapes.');if(p.index!==null&&(!Number.isInteger(p.index)||p.index<0||p.index>=steps.length))throw Error('Étape de préparation invalide.');st.cookProgress||={};if(typeof st.cookProgress!=='object'||Array.isArray(st.cookProgress))throw Error('Progression de cuisson invalide.');const progress=st.cookProgress[p.id]||{},saved=progress[p.method],index=p.index===null?(Number.isInteger(saved)&&saved>=0?Math.min(saved,steps.length-1):0):p.index;st.cookProgress[p.id]={...progress,[p.method]:index};st.extraPage='';st.detail=p.id;st.page='recipes';st.cook=true;st.cookStep=index;st.cookMethod=p.method;st.tmEditor=false;st.tmView=false;result={id:p.id,index,method:p.method};`,{id,index,method});
+  }
   function mealAction(action, values) {
     evaluate('st.day=p.date;st.slot=p.slot;', values); page('plan');
     if (action === 'status') {
@@ -209,5 +212,5 @@ window.DobbyCuisineEngine = (() => {
       ingredients:r.ingredients.map(([name,quantity,unit],i)=>({id:d.ingredientIds?.[i]||'ingredient-'+i,name,quantity,unit})),steps:r.steps,stepDetails:[...(d.stepDetails||[]).filter(s=>s.method!=='tm5'),...(st.tmAdaptations?.[r.id]?.stepDetails||d.stepDetails?.filter(s=>s.method==='tm5')||[])].map(s=>({...s,images:[]})),source:r.source||'',reviewed:r.reviewed===true,durations:{preparation:null,cooking:null,rest:null,...d.durations,total:r.minutes??null},equipment:d.equipment||[],notes:d.notes||[],missing:d.missing||[],uncertain:d.uncertain||[],image:null,images:[],tm5:st.tmAdaptations?.[r.id]||null,mediaNotice:r.localMedia?'Photographies conservées sur cet appareil, non comprises dans cet export JSON.':''};});downloadJson(p.id?'dobby-recette.json':'dobby-recettes.json',{format:'dobby-recipes',version:2,recipes});`,{id});
   }
 
-  return Object.freeze({ win, evaluate, page, read, amount, portions, choose, mealAction, favorite, cook, tm5, saveTM, saveRecipe, saveRecipeWithMedia, prepareRecipeMedia, recipeUsage, removeRecipe, restoreRecipe, planRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });
+  return Object.freeze({ win, evaluate, page, read, amount, portions, choose, mealAction, favorite, cook, cookAt, tm5, saveTM, saveRecipe, saveRecipeWithMedia, prepareRecipeMedia, recipeUsage, removeRecipe, restoreRecipe, planRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });
 })();

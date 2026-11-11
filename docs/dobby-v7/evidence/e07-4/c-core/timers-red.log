@@ -1,0 +1,168 @@
+✖ explicit French durations and ranges are seconds; no quantities, temperatures or invented timer (1.15068ms)
+✖ independent timers use persistent deadlines and reload catches suspension without duplicate ends (0.337051ms)
+✖ pause, resume, adjustment, custom duration, reset and removal do not affect other timers (0.705546ms)
+✖ two deadlines in the same millisecond notify individually once; reset permits one new run (0.258548ms)
+✖ lists and running ticks never write each second; only actual transitions persist (0.258249ms)
+✖ quota failure preserves persisted timers and pending completion remains retryable (0.325831ms)
+✖ post-write storage rejection restores original bytes and cannot erase an older timer (0.198615ms)
+✖ scope, limits, corrupt data and strict inputs are isolated and never silently reset (1.324792ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 119.91177
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:8:1
+✖ explicit French durations and ranges are seconds; no quantities, temperatures or invented timer (1.15068ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:8:134)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:9:1
+✖ independent timers use persistent deadlines and reload catches suspension without duplicate ends (0.337051ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:9:140)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:10:1
+✖ pause, resume, adjustment, custom duration, reset and removal do not affect other timers (0.705546ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:10:124)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:11:1
+✖ two deadlines in the same millisecond notify individually once; reset permits one new run (0.258548ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:11:125)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:12:1
+✖ lists and running ticks never write each second; only actual transitions persist (0.258249ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:12:118)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:13:1
+✖ quota failure preserves persisted timers and pending completion remains retryable (0.325831ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:13:119)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:14:1
+✖ post-write storage rejection restores original bytes and cannot erase an older timer (0.198615ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:14:114)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:15:1
+✖ scope, limits, corrupt data and strict inputs are isolated and never silently reset (1.324792ms)
+  Error: ENOENT: no such file or directory, open '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+      at Object.readFileSync (node:fs:484:20)
+      at source (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:3:21)
+      at api (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:4:112)
+      at setup (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:6:47)
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:15:115)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/dobby-e074/essai-stitch-v7/cuisine-timers.js'
+  }

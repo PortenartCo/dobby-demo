@@ -54,12 +54,12 @@
 **Files:** `cuisine.js`, composant de minuteurs borné, CSS E07.4, actif Festin fourni et provenance ; adaptateur natif uniquement si requis.
 **Interfaces:** consommer liaisons étape/méthode de A ; instructions classiques et TM5 attachées. Un seul registre local de minuteurs identifiés, deadlines en millisecondes et contexte recette/étape/méthode.
 
-- [ ] RED visuel encombré, image/mapping de mauvaise étape, chronomètre unique/perdu, navigation et fin de cuisson.
-- [ ] Hero avec seul badge Étape ; photo exacte ou repli neutre, ingrédients de l’étape fiables ; supprimer les deux encarts et déplacer parcours complet tout en bas.
-- [ ] Liste minuteurs indépendants : durée explicite/fourchette choisie ou saisie, ±1min, start/pause/reprise/reset/suppression ; aucun démarrage implicite.
-- [ ] Deadlines persistantes, changement écran/méthode/recette et reload, rattrapage reprise, fin visible/acquittable et son selon préférence ; limites iOS explicites.
-- [ ] Festin Stitch modal sur la fiche, image locale, message exact, unique Retour à la recette, focus/Escape, aucun faux enregistrement/route/son automatique.
-- [ ] Tests ciblés et captures3largeurs ; revue et commit C.
+- [x] RED visuel encombré, image/mapping de mauvaise étape, chronomètre unique/perdu, navigation et fin de cuisson.
+- [x] Hero avec seul badge Étape ; photo exacte ou repli neutre, ingrédients de l’étape fiables ; supprimer les deux encarts et déplacer parcours complet tout en bas.
+- [x] Liste minuteurs indépendants : durée explicite/fourchette choisie ou saisie, ±1min, start/pause/reprise/reset/suppression ; aucun démarrage implicite.
+- [x] Deadlines persistantes, changement écran/méthode/recette et reload, rattrapage reprise, fin visible/acquittable et son selon préférence ; limites iOS explicites.
+- [x] Festin Stitch modal sur la fiche, image locale, message exact, unique Retour à la recette, focus/Escape, aucun faux enregistrement/route/son automatique.
+- [x] Tests ciblés et captures3largeurs ; revue et commit C.
 
 ## Checkpoint D — Intégration et publication
 

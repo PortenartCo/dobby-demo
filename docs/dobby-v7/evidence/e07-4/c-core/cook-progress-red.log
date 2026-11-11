@@ -1,0 +1,7 @@
+page.evaluate: TypeError: DobbyCuisineEngine.cookAt is not a function
+    at eval (eval at evaluate (:311:30), <anonymous>:1:24)
+    at UtilityScript.evaluate (<anonymous>:313:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /workspace/dobby-e074/essai-stitch-v7/tests/e07-4-cook-progress.cjs:4:16 {
+  log: []
+}

@@ -100,5 +100,5 @@ document.addEventListener('click',async event=>{
 },true);
 window.addEventListener('pageshow',()=>{pageAway=false;if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});
 window.addEventListener('popstate',()=>setTimeout(mount,0));
-return {ready,mount,apply};
+return {ready,mount,apply,timerAlert:()=>feedback({}, {visual:false,sound:true})};
 })();
