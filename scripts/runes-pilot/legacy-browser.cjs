@@ -4,7 +4,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {chromium}=require('../../essai-stitch-v7/tests/node_modules/playwright');
 const repo=path.resolve(__dirname,'../..'),argument=name=>{const i=process.argv.indexOf(name);return i<0?null:process.argv[i+1];};
-const base=new URL(argument('--base-url')||process.env.DOBBY_LEGACY_BASE||(process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8898')+'/essai-dobby-runes-v2-legacy-review-20261112/');
+const base=new URL(argument('--base-url')||process.env.DOBBY_LEGACY_BASE||(process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765')+'/essai-dobby-runes-v2-legacy-review-20261112/');
 const evidence=argument('--output')||process.env.DOBBY_LEGACY_EVIDENCE||path.join(repo,'docs/dobby-v7/evidence/legacy-missions/browser');
 const uid='00000000-0000-4000-8000-000000000801',hh='00000000-0000-4000-8000-000000000802';
 const key='dobby-v5-familial-preview-20261108',metadataKey='v2-module-state:'+uid+'|'+hh;
