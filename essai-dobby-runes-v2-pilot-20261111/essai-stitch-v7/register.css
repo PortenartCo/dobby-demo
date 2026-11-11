@@ -1,0 +1,73 @@
+body.fa-active .rg-input,body.fa-active .rg-native-fields :is(input,select,textarea){max-width:100%;min-width:0;min-height:44px;width:100%;font-size:16px;background:#271814;color:#fadcd5;border:1px solid #d49b4266;border-radius:10px;padding:10px}body.fa-active .rg-native-fields label{display:block;margin-top:14px;margin-bottom:6px}body.fa-active .rg-native-fields [type=hidden]{display:none}body.fa-active .rg-stack{display:flex;flex-direction:column;gap:14px}body.fa-active .rg-actions{display:flex;flex-wrap:wrap;gap:10px}body.fa-active [data-rg-label]{overflow-wrap:anywhere}body.fa-active main article{min-width:0}body.fa-active .rg-form{min-width:0}body.fa-active .rg-fields{padding:16px}
+
+body[data-register-lot] main .overflow-x-auto{overflow-x:visible!important;flex-wrap:wrap}body[data-register-lot] main .whitespace-nowrap{white-space:normal}body[data-register-lot] main :is(section,article,form,div){min-width:0}
+
+body[data-register-busy] :is(main,header){pointer-events:none;cursor:wait}
+body[data-register-lot="4"] main .rg-document-card{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:16px;background:#301d17;border-radius:12px;border:1px solid #d49b4240}body[data-register-lot="4"] main .rg-source-panel{overflow-wrap:anywhere}body[data-register-lot="4"] main :is(.rg-source-panel label,.rg-source-panel h3){display:block;margin:12px 0 8px}body[data-register-lot="4"] main form>div{margin:18px 0;padding:16px}body[data-register-lot="4"] main #rg-form>div{padding:0}body[data-register-lot="4"] main .rg-input{margin-bottom:12px}
+body[data-register-lot="4"] .rg-ledger-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-block:10px;border-bottom:1px solid #d49b4226}body[data-register-lot="4"] .rg-ledger-row>span{display:flex;gap:6px;align-items:center}body[data-register-lot="4"] .rg-ledger-row strong{overflow-wrap:anywhere;min-width:0}body[data-register-lot="4"] #rg-document-preview{padding:16px;background:#30201b;border-radius:10px;transform:none!important}
+body[data-register-lot="5"] main .rg-input{margin-block:8px;width:100%;max-width:100%}body[data-register-lot="5"] main #rg-form label{display:block;margin-block:10px 4px}body[data-register-lot="5"] main #rg-form>section{margin-block:16px}body[data-register-lot="5"] main :is(.rg-chat-bubble,.rg-search-card){display:flex;flex-direction:column;gap:10px;padding:16px;background:#30201b;border:1px solid #d49b4240;border-radius:14px;min-width:0;overflow-wrap:anywhere}body[data-register-lot="5"] main .module-item[hidden]{display:none!important}body[data-register-lot="5"] #fa-supplement:empty{display:none}
+.rg-operation-status{position:fixed;z-index:14000;top:80px;left:50%;transform:translateX(-50%);width:min(450px,calc(100% - 24px));padding:14px;border:1px solid #f9bb5f;border-radius:12px;color:#fadcd5;background:#30201b;box-shadow:0 6px 22px #0009;font:600 15px/1.5 Literata,Georgia,serif}
+
+/* E04: original Stitch mission panels only; other register views keep their styles. */
+body[data-family-view="mission-edit"] main #rg-form>section{margin-block:0}
+body[data-family-view="mission-edit"] main #rg-form label{display:flex;flex-direction:row;align-items:center;margin-block:0}
+body[data-family-view="mission-edit"] .fa-sharing-status{display:none}
+body[data-family-view="mission-edit"] .e04-choice{position:relative;cursor:pointer;min-width:0;min-height:44px}
+body[data-family-view="mission-edit"] .e04-choice>input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;z-index:1}
+body[data-family-view="mission-edit"] .e04-choice:has(input:checked){box-shadow:0 0 0 2px #f9bb5f;background-color:#372622;color:#f9bb5f}
+body[data-family-view="mission-edit"] .e04-choice:has(input:focus-visible){outline:3px solid #f9bb5f;outline-offset:3px}
+body[data-family-view="mission-edit"] .e04-choice:has(input:disabled){opacity:.55;cursor:not-allowed}
+body[data-family-view="mission-edit"] .member-btn .member-check{display:none!important}
+body[data-family-view="mission-edit"] .member-btn:has(input:checked) .member-check{display:flex!important}
+body[data-family-view="mission-edit"] .e04-member-name{color:#fadcd5}
+body[data-family-view="mission-edit"] .member-btn:has(input:checked) .e04-member-name{color:#f9bb5f}
+body[data-family-view="mission-edit"] .e04-avatar{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:24px}
+body[data-family-view="mission-edit"] .e04-field-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#d49b42}
+body[data-family-view="mission-edit"] .e04-availability{font-size:12px;line-height:1.4;color:#d4c4b1;margin:0}
+body[data-family-view="mission-edit"] .recurrence-btn:disabled{opacity:.45}
+body[data-family-view="mission-edit"] .effort-btn{background:#180b07;border:1px solid #504537;box-shadow:none}
+body[data-family-view="mission-edit"] .effort-btn:not(:has(input:checked)) .text-tertiary{color:#d4c4b1}
+body[data-family-view="mission-edit"] .e04-date-row{grid-template-columns:minmax(0,1fr)}
+body[data-family-view="mission-edit"] .e04-date-row>div{min-height:76px;height:auto;align-items:center;padding:12px;gap:10px}
+body[data-family-view="mission-edit"] .e04-date-row>div>div{flex:1;min-width:0;gap:4px}
+body[data-family-view="mission-edit"] #date-display{color-scheme:dark;display:block;box-sizing:border-box;width:100%;min-width:0;min-height:44px;height:44px;font-size:16px;line-height:24px;padding:8px 4px;color:#fadcd5;overflow:visible;text-overflow:clip}
+body[data-family-view="mission-edit"] #date-display::-webkit-datetime-edit{padding:0;line-height:24px}
+body[data-family-view="mission-edit"] #date-display::-webkit-calendar-picker-indicator{flex-shrink:0;margin-left:4px;opacity:1}
+body[data-family-view="mission-edit"] .quick-date-btn[aria-pressed="true"]{background:#f9bb5f;color:#442b00;font-weight:700;box-shadow:0 1px 3px #0004}
+body[data-family-view="mission-edit"] .recurrence-btn[aria-pressed="true"]{background:#372622;color:#f9bb5f;box-shadow:inset 0 1px 3px #0004}
+body[data-family-view="mission-edit"] .e04-recurrence{display:flex;flex-direction:column;gap:12px}
+body[data-family-view="mission-edit"] .e04-recurrence [hidden]{display:none!important}
+body[data-family-view="mission-edit"] .e04-recurrence>div:has(.rg-input){display:flex;flex-direction:column;align-items:stretch;gap:4px}
+body[data-family-view="mission-edit"] .e04-weekdays{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;min-width:0}
+body[data-family-view="mission-edit"] .e04-weekdays legend{font-size:14px;color:#fadcd5;margin-bottom:8px}
+body[data-family-view="mission-edit"] main #rg-form .e04-weekdays label{display:flex;gap:6px;min-height:44px;padding:6px;border:1px solid #504537;border-radius:8px}
+body[data-family-view="mission-edit"] .e04-weekdays input{width:18px;height:18px;accent-color:#f9bb5f}
+body[data-family-view="mission-edit"] .e04-runes{flex-wrap:wrap}
+body[data-family-view="mission-edit"] #custom-runes{flex:1;min-width:80px;width:80px}
+body[data-family-view="mission-edit"]{padding-bottom:0}
+body[data-family-view="mission-edit"] main>.pb-36{padding-bottom:0}
+body[data-family-view="mission-edit"] .e04-member-name{white-space:normal;line-height:1.25}
+
+body[data-family-view="mission-edit"] main #rg-form label.effort-btn{flex-direction:column;justify-content:center;gap:4px}
+body[data-family-view="mission-edit"] .effort-btn:has(input:checked) .e04-effort-name{color:#f9bb5f}
+
+/* E08 canonical Contracts only: source composition, common DOBBY typography. */
+body[data-family-view="contracts"] main .fa-context{margin-inline:0}
+body[data-family-view="contracts"] main .rg-document-card{width:100%;margin-inline:0;overflow-wrap:anywhere}
+body[data-family-view="contracts"] [data-e08-illustration]{height:auto;aspect-ratio:1376/768;margin-bottom:0}
+body[data-family-view="contracts"] [data-e08-illustration] img{display:block;width:100%;height:100%;object-fit:contain}
+body[data-family-view="contracts"] [data-e08-badge]{position:absolute;top:auto;left:auto;bottom:8px;right:8px;font-size:10px;background:#180b07e6;white-space:normal}
+body[data-family-view="contracts"] .e08-actions{align-items:stretch}
+body[data-family-view="contracts"] .e08-actions>button:first-child{background:#f9bb5f;color:#442b00;font-weight:700;flex:1 1 100%}
+body[data-family-view="contracts"] .e08-documents-link{background:transparent;border-color:transparent;text-decoration:underline;font-size:12px;align-self:center}
+@media(max-width:360px){
+ body[data-family-view="contracts"] .e011-band-prefix{display:none}
+ body[data-family-view="contracts"] .e011-band-section{white-space:normal;text-overflow:clip}
+}
+
+/* Integrated E04 review: one selected reward and a legible, wrapping native action. */
+body[data-family-view="mission-edit"] [data-fa-action="rg-save"]{font-size:18px;line-height:1.4;font-weight:700;min-height:52px;height:auto;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;white-space:normal;text-align:center;color:#180b07}
+body[data-family-view="mission-edit"] [data-fa-action="rg-save"] .material-symbols-outlined{flex:none;font-size:22px}
+body[data-family-view="mission-edit"] .e04-custom-choice{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;font-weight:600;color:#f8e6bf;cursor:pointer}
+body[data-family-view="mission-edit"] .e04-custom-choice input{width:18px;height:18px;accent-color:#d49b42}
+body[data-family-view="mission-edit"] #custom-runes{font-size:16px;min-height:44px;min-width:0;flex:1 1 140px}

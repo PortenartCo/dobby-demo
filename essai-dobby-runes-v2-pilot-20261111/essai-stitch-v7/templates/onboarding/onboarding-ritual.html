@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#120805]" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://lh3.googleusercontent.com; font-src 'self' data:; connect-src 'self' https://pqcdkrwljgvgagzwrcmg.supabase.co; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../pilot-runtime.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>DOBBY - Le Rituel de la Cheminée</title>
+
+
+
+
+
+<style>
+    /* Respiration très douce et contemplative */
+    @keyframes cinematicBreathe {
+      0% { transform: scale(1.005) translate(0px, 0px); }
+      50% { transform: scale(1.02) translate(-0.8px, -1px); }
+      100% { transform: scale(1.005) translate(0px, 0px); }
+    }
+    .cinematic-subtle-motion {
+      animation: cinematicBreathe 14s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Pulsation magique tamisée du bouton d'action */
+    @keyframes buttonMagicHalo {
+      0%, 100% { box-shadow: 0 0 14px rgba(212, 155, 66, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+      50% { box-shadow: 0 0 24px rgba(249, 187, 95, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+    }
+    .btn-magic-glow {
+      animation: buttonMagicHalo 3.5s ease-in-out infinite;
+    }
+
+    /* Empêcher la sélection textuelle sur mobile */
+    .no-tap-highlight {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+  </style>
+</head>
+<body data-stitch-source="dobby_le_rituel_de_la_chemin_e" class="h-full bg-[#120805] text-[#f7ecd5] font-sans antialiased overflow-x-hidden flex justify-center items-start sm:p-4">
+<!-- Mockup Container format iPhone 16 Pro (393px × 852px) -->
+<main class="relative w-full max-w-[412px] h-[100dvh] sm:h-[844px] bg-[#180b07] sm:rounded-[44px] shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_0_1px_rgba(212,155,66,0.25)] overflow-hidden flex flex-col justify-between select-none border-t border-[#d49b42]/30 sm:border" id="iphone-app-frame">
+<!-- Îlot dynamique / Barre d'état iOS -->
+<header class="relative z-30 pt-3 px-7 flex justify-between items-center text-xs text-[#eec66a]/80 font-medium transition-opacity duration-700" id="ios-status-bar">
+<span class="tracking-wide">09:41</span>
+<!-- Dynamic Island pilule discrète -->
+<div class="w-24 h-5 bg-[#0a0402] rounded-full mx-auto border border-[#2a1710] flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" id="dynamic-island-dot"></div>
+</div>
+<div class="flex items-center space-x-1.5">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 18.25c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l.64-.64C8.01 20.24 9.93 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M2 17h20v2H2zm2-4h16v2H4zm4-4h8v2H8zm3-4h2v2h-2z"></path></svg>
+<div class="w-5 h-2.5 border border-[#eec66a]/70 rounded-sm p-0.5 flex items-center">
+<div class="h-full w-full bg-[#eec66a] rounded-2xs"></div>
+</div>
+</div>
+</header>
+<!-- Scène Visuelle : Grande Cheminée en Pierre & Dobby + Moteur Canvas Doux & Apaisé -->
+<section class="relative flex-1 w-full overflow-hidden flex items-end justify-center">
+<!-- Conteneur d'image cinématique conservant parfaitement Dobby et la cheminée -->
+<div class="absolute inset-0 w-full h-full transition-[transform,filter] duration-[2500ms] cubic-bezier(0.2,0.8,0.2,1) origin-[50%_60%]" id="scene-wrapper">
+<img alt="Dobby debout avec bienveillance devant la grande cheminée sculptée en pierre de Poudlard" class="w-full h-full object-cover object-center cinematic-subtle-motion transition-[filter] duration-[2500ms]" id="dobby-hearth-img" data-e06-missing-media="true"/>
+<!-- Couche d'illumination volumétrique subtile et délicate confinée à l'âtre -->
+<div class="absolute inset-0 pointer-events-none mix-blend-screen opacity-40 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_50%_72%,rgba(245,158,11,0.28)_0%,rgba(180,83,9,0.12)_35%,transparent_62%)]" id="volumetric-hearth-light"></div>
+<!-- Dégradé ombré d'ancrage bas très subtil pour préserver la lisibilité du texte sans occulter l'image -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-[#180b07]/30 to-transparent pointer-events-none"></div>
+<!-- CANVAS DOUX 60FPS : Flammes tamisées, braises lentes superposées au-dessus de l'image -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none z-10 mix-blend-screen opacity-90" id="fireCanvas"></canvas>
+<!-- Flash d'immersion féerique émeraude délicat lors de la traversée -->
+<div class="absolute inset-0 pointer-events-none z-20 opacity-0 transition-opacity duration-1000 bg-gradient-to-t from-emerald-950/80 via-emerald-700/30 to-emerald-400/20 mix-blend-screen" id="floo-vortex-flash"></div>
+</div>
+<!-- Badge discret du Rituel Ancestral -->
+<div class="relative z-20 mb-2 px-3.5 py-1 rounded-full bg-[#1e100c]/85 border border-[#d49b42]/40 backdrop-blur-md flex items-center space-x-2 shadow-lg transition-all duration-700" id="ritual-badge">
+<span class="w-1.5 h-1.5 rounded-full bg-[#d49b42] animate-ping" id="badge-ping"></span>
+<span class="font-cinzel text-[10px] tracking-widest uppercase text-[#f9bb5f]" id="badge-text">Chemin de Traverse · Âtre N° 7</span>
+</div>
+</section>
+<!-- Panneau Inférieur : Titres Évoquant le Grimoire, Bouton CTA 52px et Actions -->
+<footer class="relative z-20 w-full px-5 pb-7 pt-3 bg-gradient-to-t from-[#120805] via-[#1a0e0a]/95 to-transparent backdrop-blur-md border-t border-[#d49b42]/25 transition-all duration-700" id="interaction-panel">
+<!-- Titres & Typographies nobles Playfair & Cinzel -->
+<div class="text-center mb-4 transition-all duration-700" id="panel-content-text">
+<h1 class="font-serif text-[28px] leading-tight font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#fbe3b5] via-[#f9bb5f] to-[#d49b42] drop-shadow-[0_2px_12px_rgba(212,155,66,0.35)]" id="intro-title">Bienvenue chez Dobby</h1>
+<p class="font-sans text-xs text-[#eec66a]/90 font-light mt-1.5 italic tracking-wide max-w-[320px] mx-auto" id="intro-subtitle">« Votre maison n’attend plus qu’un peu de magie… »</p>
+</div>
+<!-- Bouton Principal CTA Étalon 52px -->
+<div class="space-y-3 transition-all duration-700" id="panel-actions-wrapper">
+<button class="btn-magic-glow relative w-full h-[52px] rounded-2xl bg-gradient-to-r from-[#f9bb5f] via-[#e6a847] to-[#d49b42] text-[#180b07] font-cinzel font-bold text-sm tracking-wider uppercase flex items-center justify-center space-x-2.5 shadow-[0_4px_24px_rgba(212,155,66,0.4)] border border-[#fff2d1]/50 active:scale-[0.98] transition-all duration-500 no-tap-highlight" id="btn-floo-trigger">
+<span class="text-base transition-transform duration-300" id="btn-sparkle-icon">✨</span>
+<span class="tracking-widest" id="btn-label">Traverser la cheminée</span>
+<span class="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#180b07] shadow-[0_0_8px_#10b981]" id="btn-beacon-dot"></span>
+</button>
+<!-- Actions Secondaires : Passer l'intro & Ne plus afficher -->
+<div class="flex items-center justify-between text-xs px-2 pt-0.5 font-sans text-[#cfb095]">
+<!-- Case à cocher styled Grimoire -->
+<label class="flex items-center space-x-2 cursor-pointer group no-tap-highlight">
+<input class="hidden peer" id="chk-never-again" type="checkbox"/>
+<div class="w-4 h-4 rounded border border-[#d49b42]/60 bg-[#271814] peer-checked:bg-[#d49b42] peer-checked:border-[#f9bb5f] flex items-center justify-center transition-all duration-200 shadow-inner">
+<svg class="w-3 h-3 text-[#180b07] stroke-[3] hidden peer-checked:block" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<span class="group-hover:text-[#f9bb5f] transition-colors text-[11px] font-normal tracking-tight">Ne plus afficher</span>
+</label>
+<!-- Lien discret passer l'introduction -->
+<button class="text-[11px] text-[#eec66a]/70 hover:text-[#fbe3b5] hover:underline underline-offset-4 transition-colors font-medium tracking-wide no-tap-highlight">
+            Passer l’introduction →
+          </button>
+</div>
+</div>
+<!-- Sceau de Protection et Confidentialité Locale Dobby -->
+<div class="mt-3.5 pt-2.5 border-t border-[#d49b42]/15 flex items-center justify-center space-x-2 text-[10px] text-[#a88a6d] transition-opacity duration-700" id="panel-security-seal">
+<svg class="w-3 h-3 text-[#d49b42]" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<span>Sanctuaire du Logis · Chiffrement hermétique local</span>
+</div>
+<!-- Barre d'accueil inférieure iOS (Home Indicator) -->
+<div class="w-32 h-1 bg-[#d49b42]/30 rounded-full mx-auto mt-3"></div>
+</footer>
+<!-- Écran de Bienvenue Féerique / Message discret d'Arrivée au Logis -->
+<div class="absolute inset-0 z-50 bg-[#120805]/95 opacity-0 pointer-events-none transition-all duration-1000 flex flex-col items-center justify-center p-6 text-center backdrop-blur-xl" id="home-arrival-modal">
+<div class="w-20 h-20 rounded-full bg-gradient-to-tr from-[#d49b42] via-[#10b981] to-[#6ee7b7] p-1 shadow-[0_0_50px_rgba(16,185,129,0.65)] mb-6 animate-pulse">
+<div class="w-full h-full rounded-full bg-[#180b07] flex items-center justify-center text-3xl">
+          🧙‍♂️
+        </div>
+</div>
+<span class="font-cinzel text-xs tracking-widest uppercase text-[#34d399] mb-2">Voyage accompli</span>
+<h2 class="font-serif text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#fbe3b5] via-[#f9bb5f] to-[#34d399] mb-3">Arrivée au Logis</h2>
+<p class="font-sans text-xs text-[#eec66a]/90 max-w-xs leading-relaxed mb-7">
+        « Dobby a réchauffé votre foyer et préparé vos enchantements. Bienvenue dans votre maison. »
+      </p>
+<button class="py-3 px-8 rounded-2xl bg-gradient-to-r from-[#f9bb5f] via-[#e6a847] to-[#d49b42] text-[#180b07] font-cinzel font-bold text-xs uppercase tracking-widest shadow-[0_4px_24px_rgba(212,155,66,0.5)] active:scale-95 transition-transform no-tap-highlight">
+        Revenir à la cheminée
+      </button>
+</div>
+</main>
+<!-- MOTEUR CANVAS DOUX, FLUIDE ET CONTEMPLATIF -->
+
+</body></html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://lh3.googleusercontent.com; font-src 'self' data:; connect-src 'self' https://pqcdkrwljgvgagzwrcmg.supabase.co; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../pilot-runtime.js"></script>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<meta content="mobile_stack" name="shell-type">
+
+
+
+
+
+
+<style>
+    @layer base {
+      html, body {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        background-color: #180b07;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body data-stitch-source="dobby_conversation_avec_dobby_2" class="bg-[#180b07] font-body-md text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary/20 selection:text-primary">
+<!-- 1. EN-TÊTE / TOP APP BAR (hauteur standardisée 48px, padding px-4 pt-3 pb-2) -->
+<header class="fixed top-0 left-0 right-0 z-50 pt-safe bg-[#180b07]/90 backdrop-blur-md border-b border-[#d49b42]/20">
+<div class="h-12 px-4 flex items-center justify-between gap-3">
+<!-- Bouton carré 48x48px à gauche avec icône étoile/sparkles en SVG doré direct -->
+<button aria-label="Menu Mystique" class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl bg-surface-container-high/90 text-primary border border-[#d49b42]/30 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-transform">
+<svg class="w-5 h-5 text-[#f9bb5f]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+</svg>
+</button>
+<!-- Cartouche central sombre aux coins arrondis -->
+<div class="flex-1 min-w-0 h-10 px-3 rounded-xl bg-[#271814]/95 border border-[#d49b42]/30 shadow-inner flex flex-col items-center justify-center text-center">
+<h1 class="font-headline-sm font-bold text-[15px] tracking-[0.2em] text-[#f9bb5f] uppercase leading-tight truncate drop-shadow-[0_1px_3px_rgba(249,187,95,0.4)]">
+          DOBBY
+        </h1>
+<span class="font-label-sm text-[9.5px] text-[#e6d7c3]/80 tracking-wider uppercase leading-none mt-0.5 truncate">ASSISTANT DU LOGIS • DIALOGUE AVEC DOBBY</span>
+</div>
+<!-- Actions droites : Sonore & Profil -->
+<div class="flex items-center gap-2 flex-shrink-0">
+<!-- Bouton sonore 48x48px avec voyant vert émeraude vibrant (#10b981) -->
+<button aria-label="Son magique" class="relative w-12 h-12 rounded-xl bg-surface-container-high/90 text-primary border border-[#d49b42]/30 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-transform" id="btn-sound-toggle">
+<span class="material-symbols-outlined text-[20px] text-[#f9bb5f]">volume_up</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span>
+</button>
+<!-- Bouton profil 48x48px jaune doré chaud (#f3c25b) avec silhouette acajou sombre (#180b07) -->
+<button aria-label="Profil du maître" class="w-12 h-12 rounded-xl bg-[#f3c25b] flex items-center justify-center shadow-[0_0_12px_rgba(243,194,91,0.4)] active:scale-95 transition-transform flex-shrink-0">
+<svg class="w-5 h-5 text-[#180b07]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- CONTENU PRINCIPAL -->
+<main class="flex-1 flex flex-col pt-20 pb-44 px-4 max-w-md mx-auto w-full">
+<!-- 2. HERO GÉOMÉTRIQUEMENT IDENTIQUE À LA TAVERNE GOURMANDE -->
+<section class="mt-2 flex flex-col items-center">
+<!-- Conteneur h-[220px] rounded-2xl overflow-hidden relative border border-[#d49b42]/30 avec dégradé d'ombre inférieur vers #180b07 -->
+<div class="w-full h-[220px] rounded-2xl overflow-hidden relative border border-[#d49b42]/30 shadow-[0_8px_24px_rgba(0,0,0,0.6)] bg-surface-container-lowest">
+<img alt="Dobby assis et attentif au coin du feu dans le salon chaleureux" class="w-full h-full object-cover object-center transform scale-100" src="../../assets/remaining/fallback-salon.png">
+<!-- Dégradé vers le fond sombre #180b07 -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-transparent to-black/20"></div>
+<!-- Badges superposés en verre dépoli -->
+<div class="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180b07]/75 backdrop-blur-md border border-[#d49b42]/40 shadow-md">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#fabc4d] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#fabc4d]"></span>
+</span>
+<span class="text-[10px] text-[#fabc4d] tracking-widest uppercase font-semibold font-label-sm">✦ FOYER &amp; ÉCOUTE DU LOGIS ✦</span>
+</div>
+<div class="absolute top-3 right-3 flex items-center gap-1 px-3 py-1 rounded-full bg-[#180b07]/75 backdrop-blur-md border border-[#d49b42]/40 shadow-md">
+<span class="material-symbols-outlined text-[13px] text-[#afcdc0]">lock</span>
+<span class="text-[10px] text-[#afcdc0] tracking-wider uppercase font-semibold font-label-sm">CONVERSATION PRIVÉE</span>
+</div>
+</div>
+<!-- Cartouche textuel sous l'image -->
+<div class="w-full pt-4 pb-2 flex flex-col items-center text-center">
+<!-- Eyebrow -->
+<div class="text-[11px] font-semibold tracking-[0.2em] text-[#d49b42] uppercase text-center mb-1 flex items-center justify-center gap-1.5">
+<svg class="w-3.5 h-3.5 text-[#d49b42]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+</svg>
+<span class="">✧ SANCTUAIRE DU LOGIS &amp; DIALOGUE ✧</span>
+<svg class="w-3.5 h-3.5 text-[#d49b42]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+</svg>
+</div>
+<!-- H1 Playfair Display 24px bold crème ambrée (#fbe8c7) -->
+<h1 class="font-headline-md font-bold text-[24px] text-[#fbe8c7] tracking-wide text-center leading-tight">
+          Discuter avec Dobby
+        </h1>
+<!-- Note manuscrite -->
+<div class="mt-2 px-3 max-w-sm">
+<p class="text-[14px] text-[#e6d7c3] text-center italic font-body-md leading-relaxed">
+            « Dobby est tout ouïe pour sa noble famille ! Qu'il s'agisse d'une course, d'un repas ou d'un mémo, confiez tout à Dobby. »
+          </p>
+<span class="block text-[11px] text-[#d49b42] font-label-sm tracking-wide mt-1 font-medium text-center">
+            — Note manuscrite de Dobby
+          </span>
+</div>
+<!-- Badge de sécurité locale -->
+<div class="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-surface-container-high/80 border border-[#d49b42]/20 text-[#d4c4b1] text-[11px] font-label-sm shadow-sm">
+<span class="material-symbols-outlined text-[13px] text-[#f9bb5f]">security</span>
+<span class="">Moteur de règles locales · Exécution sur iPhone hors cloud</span>
+</div>
+</div>
+</section>
+<!-- 3. SUGGESTIONS RAPIDES TACTILES EN PILULES HORIZONTALES -->
+<section class="mt-4 mb-2">
+<div class="flex items-center justify-between px-1 mb-2">
+<span class="font-label-sm text-[11px] text-[#d4c4b1] uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-[#f9bb5f]">bolt</span>
+          Suggestions du logis
+        </span>
+<span class="font-label-sm text-[10px] text-outline">Glisser</span>
+</div>
+<div class="flex overflow-x-auto gap-2 no-scrollbar py-1 -mx-1 px-1">
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-container border border-[#d49b42]/25 hover:border-[#d49b42]/50 text-left active:scale-95 transition-all shadow-md flex items-center gap-2 group">
+<span class="text-[15px]">🍲</span>
+<span class="font-label-md text-xs text-[#fadcd5] group-hover:text-[#f9bb5f] transition-colors whitespace-nowrap">Qu'avons-nous prévu pour dîner ?</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-container border border-[#d49b42]/25 hover:border-[#d49b42]/50 text-left active:scale-95 transition-all shadow-md flex items-center gap-2 group">
+<span class="text-[15px]">🧺</span>
+<span class="font-label-md text-xs text-[#fadcd5] group-hover:text-[#f9bb5f] transition-colors whitespace-nowrap">Ajouter du butternut aux courses</span>
+</button>
+<button class="flex-shrink-0 px-3.5 py-2 rounded-full bg-surface-container border border-[#d49b42]/25 hover:border-[#d49b42]/50 text-left active:scale-95 transition-all shadow-md flex items-center gap-2 group">
+<span class="text-[15px]">🧺</span>
+<span class="font-label-md text-xs text-[#fadcd5] group-hover:text-[#f9bb5f] transition-colors whitespace-nowrap">Qui s'occupe du linge aujourd'hui ?</span>
+</button>
+</div>
+</section>
+<!-- 4. FIL DE DISCUSSION FAÇON GRIMOIRE / PARCHEMINS -->
+<section class="mt-4 flex flex-col gap-4" id="chat-stream">
+<!-- ÉCHANGE 1 : COMMANDE DE BUTTERNOT -->
+<!-- Message Utilisateur -->
+<div class="flex justify-end items-end gap-2 pl-8">
+<div class="flex flex-col items-end max-w-[85%]">
+<div class="bg-surface-container-highest text-[#fdfbf7] rounded-2xl rounded-br-sm px-4 py-2.5 shadow-[0_4px_14px_rgba(0,0,0,0.5)] border border-[#d49b42]/20">
+<p class="font-body-md text-[16px] leading-relaxed">
+              Peux-tu ajouter 500g de courge butternut pour le dîner de jeudi ?
+            </p>
+</div>
+<span class="font-label-sm text-[11px] text-[#d4c4b1]/70 mt-1 mr-1">18:42</span>
+</div>
+</div>
+<!-- Réponse Dobby (avec étincelle dorée SVG, aucun avatar photo doublon) -->
+<div class="flex justify-start items-start gap-2.5 pr-6">
+<div class="w-8 h-8 rounded-full flex-shrink-0 bg-surface-container-high border border-[#d49b42]/40 flex items-center justify-center shadow-md mt-1">
+<svg class="w-4 h-4 text-[#f9bb5f]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+</svg>
+</div>
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container text-[#fadcd5] rounded-2xl rounded-tl-sm px-4 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.6)] border border-[#d49b42]/20 flex flex-col gap-2">
+<div class="flex items-center gap-1.5 text-[#f9bb5f]">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span class="font-label-sm text-[11px] font-semibold tracking-wide uppercase">Ravitaillement pris en note</span>
+</div>
+<p class="font-body-md text-[16px] leading-relaxed text-[#fdfbf7]">
+              C'est noté avec grand soin ! Dobby a inscrit la courge butternut dans la liste des courses pour le festin de jeudi. Tout est sous contrôle pour la maisonnée.
+            </p>
+</div>
+<span class="font-label-sm text-[11px] text-[#d4c4b1]/70 mt-1 ml-1">18:43 · Sanctuaire du Logis</span>
+</div>
+</div>
+<!-- ÉCHANGE 2 : CAS DU BILLET DE TRAIN (REFUS BIENVEILLANT PÉRIMÈTRE LOCAL) -->
+<!-- Message Utilisateur -->
+<div class="flex justify-end items-end gap-2 pl-8 pt-1">
+<div class="flex flex-col items-end max-w-[85%]">
+<div class="bg-surface-container-highest text-[#fdfbf7] rounded-2xl rounded-br-sm px-4 py-2.5 shadow-[0_4px_14px_rgba(0,0,0,0.5)] border border-[#d49b42]/20">
+<p class="font-body-md text-[16px] leading-relaxed">
+              Réserve-moi un billet de train pour Paris vendredi prochain.
+            </p>
+</div>
+<span class="font-label-sm text-[11px] text-[#d4c4b1]/70 mt-1 mr-1">18:45</span>
+</div>
+</div>
+<!-- Réponse Dobby bienveillante (rappel du périmètre local du logis) -->
+<div class="flex justify-start items-start gap-2.5 pr-6">
+<div class="w-8 h-8 rounded-full flex-shrink-0 bg-surface-container-high border border-[#d49b42]/40 flex items-center justify-center shadow-md mt-1">
+<svg class="w-4 h-4 text-[#f9bb5f]" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path>
+</svg>
+</div>
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container text-[#fadcd5] rounded-2xl rounded-tl-sm px-4 py-3 shadow-[0_4px_16px_rgba(0,0,0,0.6)] border border-[#fabc4d]/30 flex flex-col gap-2">
+<div class="flex items-center gap-1.5 text-[#fabc4d]">
+<span class="material-symbols-outlined text-[16px]">shield</span>
+<span class="font-label-sm text-[11px] font-semibold tracking-wide uppercase">Périmètre du Logis</span>
+</div>
+<p class="font-body-md text-[16px] leading-relaxed text-[#fdfbf7]">
+              Dobby veille uniquement sur votre logis (repas, tâches, équipements et famille). Dobby ne peut pas réserver de billets sur des services externes. Votre sanctuaire reste ainsi protégé et privé !
+            </p>
+<div class="p-2 rounded-lg bg-surface-container-lowest/80 border border-[#d49b42]/20 text-[11px] font-label-sm text-[#d4c4b1] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-[#f9bb5f]">lock_person</span>
+<span class="">Vos paiements et données ne quittent jamais votre logis.</span>
+</div>
+</div>
+<span class="font-label-sm text-[11px] text-[#d4c4b1]/70 mt-1 ml-1">18:46 · Règle de sanctuaire respectée</span>
+</div>
+</div>
+<!-- Emplacement des futurs messages -->
+<div class="flex flex-col gap-4" id="dynamic-log"></div>
+</section>
+</main>
+<!-- 5. BARRE DE SAISIE INFÉRIEURE FIXE & TAB BAR iOS -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-[#180b07]/95 backdrop-blur-xl border-t border-[#d49b42]/20 shadow-[0_-8px_30px_rgba(0,0,0,0.85)] flex flex-col">
+<!-- Barre de saisie style parchemin -->
+<div class="px-4 pt-2.5 pb-1 max-w-md mx-auto w-full flex flex-col gap-1.5">
+<div class="flex items-center gap-2 bg-surface-container-high rounded-full px-2 py-1.5 border border-[#d49b42]/30 shadow-inner">
+<!-- Bouton microphone pour dictée vocale iPhone -->
+<button aria-label="Dictée vocale iPhone" class="w-10 h-10 rounded-full bg-surface-container text-[#d4c4b1] hover:text-[#f9bb5f] active:scale-90 transition-all flex items-center justify-center flex-shrink-0 border border-[#d49b42]/20" id="dictation-btn">
+<span class="material-symbols-outlined text-[20px]" id="mic-icon">mic</span>
+</button>
+<!-- Champ de texte parchemin -->
+<input class="flex-1 bg-transparent border-0 outline-none font-body-md text-[15px] text-[#fadcd5] placeholder:text-[#9d8e7e] caret-[#f9bb5f] min-w-0 px-2 focus:ring-0" id="chat-input" placeholder="Parler ou écrire à Dobby..." type="text">
+<!-- Bouton doré d'envoi -->
+<button aria-label="Envoyer" class="w-10 h-10 rounded-full bg-[#f9bb5f] hover:bg-[#ffddb2] text-[#291800] active:scale-95 transition-transform flex items-center justify-center flex-shrink-0 shadow-[0_2px_10px_rgba(249,187,95,0.4)]">
+<span class="material-symbols-outlined text-[19px]">send</span>
+</button>
+</div>
+<!-- Mention de sécurité locale -->
+<div class="flex items-center justify-center gap-1 text-center py-0.5">
+<span class="material-symbols-outlined text-[12px] text-[#9d8e7e]">verified_user</span>
+<span class="font-label-sm text-[10px] text-[#d4c4b1]/75 leading-none">
+          Clavier &amp; dictée vocale gérés directement par votre iPhone. Échanges strictement privés.
+        </span>
+</div>
+</div>
+<!-- 6. BARRE DE NAVIGATION BASSE TAB BAR iOS (Accueil, Missions, Taverne, Famille) -->
+<nav class="pb-safe pt-1 border-t border-[#d49b42]/15">
+<div class="h-14 px-6 max-w-md mx-auto flex items-center justify-between">
+<!-- Accueil (actif) -->
+<button class="flex flex-col items-center justify-center gap-0.5 text-[#f9bb5f] flex-1">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">cottage</span>
+<span class="font-label-sm text-[10px] tracking-wide font-semibold">Accueil</span>
+</button>
+<!-- Missions -->
+<button class="flex flex-col items-center justify-center gap-0.5 text-[#d4c4b1]/70 hover:text-[#fadcd5] active:scale-95 transition-colors flex-1">
+<span class="material-symbols-outlined text-[22px]">checklist</span>
+<span class="font-label-sm text-[10px] tracking-wide">Missions</span>
+</button>
+<!-- Taverne -->
+<button class="flex flex-col items-center justify-center gap-0.5 text-[#d4c4b1]/70 hover:text-[#fadcd5] active:scale-95 transition-colors flex-1">
+<span class="material-symbols-outlined text-[22px]">soup_kitchen</span>
+<span class="font-label-sm text-[10px] tracking-wide">Taverne</span>
+</button>
+<!-- Famille -->
+<button class="flex flex-col items-center justify-center gap-0.5 text-[#d4c4b1]/70 hover:text-[#fadcd5] active:scale-95 transition-colors flex-1">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span class="font-label-sm text-[10px] tracking-wide">Famille</span>
+</button>
+</div>
+</nav>
+</div>
+
+
+
+</body></html>
