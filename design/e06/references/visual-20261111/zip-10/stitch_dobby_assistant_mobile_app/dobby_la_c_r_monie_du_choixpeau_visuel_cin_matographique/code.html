@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-tint": "#f9bb5f", "secondary-fixed": "#cbe9dc", "error": "#ffb4ab", "on-secondary-fixed-variant": "#314c42", "error-container": "#93000a", "inverse-primary": "#815500", "surface-dim": "#1e100c", "secondary-fixed-dim": "#afcdc0", "surface-container-lowest": "#180b07", "tertiary": "#fabc4d", "on-primary": "#442b00", "surface": "#1e100c", "on-surface": "#fadcd5", "on-surface-variant": "#d4c4b1", "inverse-surface": "#fadcd5", "on-error": "#690005", "on-error-container": "#ffdad6", "on-primary-container": "#533500", "on-primary-fixed": "#291800", "primary": "#f9bb5f", "secondary-container": "#334e44", "primary-fixed": "#ffddb2", "surface-container-highest": "#43302c", "on-tertiary-container": "#513600", "tertiary-fixed-dim": "#fabc4d", "on-secondary-container": "#a1bfb2", "primary-container": "#d49b42", "surface-bright": "#483530", "surface-container-low": "#271814", "on-primary-fixed-variant": "#624000", "inverse-on-surface": "#3e2c28", "outline-variant": "#504537", "surface-container": "#2c1c18", "on-background": "#fadcd5", "background": "#1e100c", "surface-container-high": "#372622", "on-tertiary-fixed-variant": "#604100", "primary-fixed-dim": "#f9bb5f", "on-tertiary-fixed": "#281900", "on-tertiary": "#432c00", "surface-variant": "#43302c", "on-secondary": "#1a352c", "tertiary-container": "#d59b2f", "outline": "#9d8e7e", "tertiary-fixed": "#ffdead", "on-secondary-fixed": "#042018", "secondary": "afcdc0" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "space-xl": "2.5rem", "gutter": "1.25rem", "space-sm": "0.5rem", "margin": "2.5rem", "space-xs": "0.25rem", "space-md": "1rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "gutter-mobile": "0.75rem" }, fontFamily: { "body-md": ["EB Garamond"], "display-lg": ["Playfair Display"], "body-sm": ["EB Garamond"], "display-lg-mobile": ["Playfair Display"], "body-lg": ["EB Garamond"], "label-md": ["Literata"], "label-lg": ["Literata"], "headline-md": ["Playfair Display"], "label-sm": ["Literata"], "headline-lg-mobile": ["Playfair Display"], "headline-lg": ["Playfair Display"], "headline-sm": ["Playfair Display"] }, fontSize: { "body-md": ["17px", { "lineHeight": "24px", "fontWeight": "400" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg-mobile": ["34px", { "lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-lg": ["19px", { "lineHeight": "28px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }], "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_24px_rgba(12,7,5,0.65)]"><div class="h-16 px-gutter-mobile flex items-center justify-between"><button aria-label="Retour" class="min-w-[44px] min-h-[44px] flex items-center gap-space-xs text-primary hover:text-primary-fixed transition-colors duration-200 group" onclick="history.back()"><span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:-translate-x-0.5">arrow_back</span><span class="font-label-md text-label-md tracking-wider uppercase font-semibold">Retour</span></button><div class="flex-1 px-space-sm text-center truncate"><h1 class="font-headline-sm text-headline-sm text-primary tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] truncate">Dobby   La Cérémonie Du Choixpeau</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Ambiance sonore" class="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-primary hover:text-primary-fixed hover:bg-surface-container-high/60 transition-colors duration-200"><span class="material-symbols-outlined text-[20px]">volume_up</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs shadow-[0_2px_8px_rgba(249,187,95,0.25)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full min-h-screen pt-16 pb-safe bg-surface"><div class="flex flex-col w-full text-on-surface select-none pb-space-xl">
+<!-- Audio Sparkle & Sound Toggle Utility Header Bar -->
+<div class="flex items-center justify-between px-gutter-mobile py-space-xs">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high shadow-inner">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Rituel d'Initiation</span>
+</div>
+<div class="flex items-center gap-1">
+<button aria-label="Effets sonores enchantés" class="flex items-center gap-1 px-2 py-1 rounded-md bg-surface-container-low text-primary-fixed hover:bg-surface-container-high transition-colors text-label-sm font-label-sm shadow-sm" id="soundToggleBtn">
+<span class="material-symbols-outlined text-[15px]" id="soundIcon">volume_up</span>
+<span id="soundLabel">Sons magiques</span>
+</button>
+<button aria-label="Vibrations arcaniques" class="flex items-center justify-center w-7 h-7 rounded-md bg-surface-container-low text-on-surface-variant hover:text-primary transition-colors shadow-sm" id="hapticToggleBtn">
+<span class="material-symbols-outlined text-[16px]">vibration</span>
+</button>
+</div>
+</div>
+<!-- Header & Progress Section -->
+<div class="px-gutter-mobile mt-space-xs">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold" id="questionStepBadge">Question 1 sur 10</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant italic" id="stageLabel">Épreuve du Tempérament</span>
+</div>
+<!-- Alchemical Golden Progress Bar -->
+<div class="relative w-full h-2 rounded-full bg-surface-container-lowest mt-1.5 overflow-hidden shadow-inner">
+<div class="h-full bg-gradient-to-r from-primary-container via-primary to-primary-fixed rounded-full transition-all duration-500 ease-out shadow-[0_0_12px_rgba(249,187,95,0.7)]" id="ritualProgressBar" style="width: 10%;"></div>
+</div>
+</div>
+<!-- Enchanted Sorting Hat Visual Vitrine Card -->
+<div class="px-gutter-mobile mt-space-md">
+<div class="relative w-full rounded-2xl bg-surface-container-low shadow-[0_12px_36px_rgba(12,7,5,0.85)] overflow-hidden">
+<!-- Ambient Candle Glow Underlay -->
+<div class="absolute inset-0 bg-radial from-primary/15 via-transparent to-surface-container-lowest/90 pointer-events-none z-10"></div>
+<!-- Canvas for Floating Golden Embers and Magic Sparks -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none z-20" id="sparksCanvas"></canvas>
+<!-- Frame & Hat Image with Skeuomorphic Breathing Animation -->
+<div class="relative w-full aspect-[16/10] overflow-hidden flex items-center justify-center">
+<div class="relative w-full h-full transform transition-transform duration-700 ease-in-out" id="hatImageWrapper">
+<img alt="Le Choixpeau Magique millénaire aux détails de cuir patiné et braises mystiques, reposant sur un tabouret de chêne sculpté dans la grande salle gothique" class="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBokl_53KBpLS2zC7UQQe3PYif0yzmyVBBn6w_K9skcnlLNAALHIgyWM-SjjAaRdsJsmxDU3Rp-8DfK5Gn6YzTeCBBJnMJQfIkcHEl5-D5JjyjsSWZhDHWOx1Pvjr8av74MHSqsqmfx93MnhXPPdzQY-F5MSy6XlZYJL4ty1db5Fm_UM7UBsz7b3pjcBibPYNeZX-UPhV13YZ1PhFnuI_BwcYwJxUzgBTKR3PtDaJ0u"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent z-10"></div>
+</div>
+<!-- Sorting Hat's Living Telepathic Voice Box -->
+<div class="relative z-30 px-space-md pb-space-sm -mt-6">
+<div class="relative rounded-xl bg-surface-container-highest/95 backdrop-blur-md p-space-sm shadow-[0_4px_20px_rgba(0,0,0,0.6)] flex items-start gap-2.5 transition-all duration-300" id="whisperBubble">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5 animate-pulse">auto_awesome</span>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md text-primary-fixed italic leading-tight transition-opacity duration-300" id="hatVoiceText">
+              « Approche ton esprit... Laisse-moi sonder tes intentions les plus sincères. »
+            </p>
+<span class="block text-[11px] font-label-sm uppercase tracking-widest text-on-surface-variant mt-1">Le Choixpeau observe vos pensées</span>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-primary/40 shrink-0 self-center shadow-[0_0_8px_rgba(249,187,95,0.8)]" id="glowOrb"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- The Parchment Sealed Question Container -->
+<div class="px-gutter-mobile mt-space-md">
+<div class="rounded-xl bg-surface-container p-space-md shadow-xl transition-all duration-300" id="questionContainer">
+<!-- Question Prompt Label -->
+<div class="flex items-center gap-1.5 mb-1.5">
+<span class="material-symbols-outlined text-primary text-[16px]">menu_book</span>
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary font-semibold">Parchemin Divinatoire</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface leading-snug drop-shadow-sm" id="questionPrompt">
+        Tu découvres une porte secrète close dans les couloirs du château. Que fais-tu en premier lieu ?
+      </h2>
+<!-- Answer Options Grid Stack -->
+<div aria-labelledby="questionPrompt" class="mt-space-md flex flex-col gap-2.5" id="optionsList" role="radiogroup">
+<!-- Dynamically injected via JavaScript -->
+</div>
+</div>
+</div>
+<!-- Fixed-Feel Floating Navigation Actions -->
+<div class="px-gutter-mobile mt-space-lg flex items-center gap-space-sm">
+<!-- Secondary 'Précédent' Button -->
+<button class="flex-1 min-h-[50px] rounded-lg bg-surface-container-high text-on-surface-variant disabled:opacity-35 disabled:cursor-not-allowed hover:bg-surface-bright active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 font-label-lg text-label-lg font-semibold shadow-md" disabled="" id="prevBtn">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Précédent</span>
+</button>
+<!-- Primary 'Question Suivante' Button -->
+<button class="flex-[2] min-h-[50px] rounded-lg bg-primary-container text-on-primary-container disabled:opacity-35 disabled:cursor-not-allowed hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-label-lg text-label-lg font-bold shadow-[0_4px_16px_rgba(212,155,66,0.35)]" disabled="" id="nextBtn">
+<span id="nextBtnText">Question suivante</span>
+<span class="material-symbols-outlined text-[20px]">magic_button</span>
+</button>
+</div>
+<!-- Micro Footer & Local Consecration Seal -->
+<div class="px-gutter-mobile mt-space-md text-center">
+<div class="inline-flex items-center justify-center gap-1 px-3 py-1 rounded-full bg-surface-container-lowest/60 text-outline text-[11px] font-label-sm tracking-wide">
+<span class="material-symbols-outlined text-[13px] text-primary">lock_clock</span>
+<span>✦ RITUEL DE CONSÉCRATION LOCALE · VOS RÉPONSES SONT CONSERVÉES EN TOUTE DISCRÉTION</span>
+</div>
+</div>
+</div>
+<script>
+(() => {
+  // Sound & Synthesis Module using Web Audio API
+  let audioCtx = null;
+  let soundEnabled = true;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playBellChime(freq = 520, decay = 0.5) {
+    if (!soundEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const now = audioCtx.currentTime;
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + 0.1);
+
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + decay);
+    } catch (e) {
+      // Audio fallback silent
+    }
+  }
+
+  function playHarpStrum() {
+    if (!soundEnabled) return;
+    const chords = [440, 554.37, 659.25, 880];
+    chords.forEach((note, idx) => {
+      setTimeout(() => playBellChime(note, 0.7), idx * 60);
+    });
+  }
+
+  function triggerHaptic(type = 'light') {
+    if (navigator.vibrate) {
+      if (type === 'light') navigator.vibrate(15);
+      if (type === 'medium') navigator.vibrate([25, 40, 30]);
+    }
+  }
+
+  // Questionnaire Data Set (10 Balanced Thematic Questions)
+  const questionsData = [
+    {
+      stage: "Épreuve du Tempérament",
+      question: "Tu découvres une porte secrète close dans les couloirs du château. Que fais-tu en premier lieu ?",
+      options: [
+        { text: "Je l'ouvre sans hésiter pour affronter l'inconnu !", icon: "local_fire_department", whisper: "« Ah ! Un élan de pure audace, le cœur avant la prudence... »" },
+        { text: "J'observe les inscriptions et déchiffre les indices.", icon: "menu_book", whisper: "« Curieux esprit... La sagacité précède toujours le geste. »" },
+        { text: "Je cherche le moyen le plus habile de crocheter le verrou.", icon: "vpn_key", whisper: "« Rusé... L'ingéniosité fait plier les obstacles les plus coriaces. »" },
+        { text: "J'appelle mes camarades pour explorer ensemble.", icon: "groups", whisper: "« La force du lien et de la concorde. Une âme loyale et bienveillante. »" }
+      ]
+    },
+    {
+      stage: "Épreuve du Danger",
+      question: "Face à une créature inconnue qui bloque le passage, ton réflexe est...",
+      options: [
+        { text: "M'interposer fermement pour protéger ceux qui m'entourent.", icon: "shield", whisper: "« Un bouclier pour les autres, voilà une noblesse qui ne trompe pas. »" },
+        { text: "Identifier son espèce et analyser son comportement faunique.", icon: "psychology", whisper: "« Le savoir transforme la menace en simple énigme à résoudre... »" },
+        { text: "Trouver une ruse pour la contourner sans gaspiller d'énergie.", icon: "directions_run", whisper: "« Pourquoi se battre quand l'esprit peut triompher sans heurt ? »" },
+        { text: "Tenter de l'apaiser avec calme, douceur et patience.", icon: "favorite", whisper: "« Une profonde patience... Les bêtes reconnaissent la bienveillance. »" }
+      ]
+    },
+    {
+      stage: "Épreuve du Savoir",
+      question: "Quel livre interdit attire immédiatement ton regard dans la Réserve ?",
+      options: [
+        { text: "Le recueil des faits d'armes des grands duellistes disparus.", icon: "swords", whisper: "« L'écho de la gloire et des prouesses guerrières résonne en toi. »" },
+        { text: "L'encyclopédie des arcanes cosmologiques et des étoiles oubliées.", icon: "auto_stories", whisper: "« La soif de percer les secrets même de la création céleste. »" },
+        { text: "Le grimoire des pactes d'influence et des magies de domination.", icon: "visibility", whisper: "« L'ambition d'atteindre le faîte du pouvoir... Intrigant. »" },
+        { text: "Le traité d'herboristerie médicinale et de soins curatifs.", icon: "spa", whisper: "« L'humble art de guérir et de prendre soin de son prochain... »" }
+      ]
+    },
+    {
+      stage: "Épreuve des Ambitions",
+      question: "Si tu devais léguer un souvenir indélébile à ce monde, ce serait...",
+      options: [
+        { text: "Le récit d'un exploit légendaire ayant sauvé des vies.", icon: "military_tech", whisper: "« Le courage immortalisé dans la mémoire des hommes. »" },
+        { text: "Une découverte philosophique qui élève l'humanité.", icon: "lightbulb", whisper: "« La trace lumineuse d'une vérité enfin dévoilée. »" },
+        { text: "Un empire d'influence et une dynastie d'excellence.", icon: "workspace_premium", whisper: "« Une grandeur qui défie les âges et plie le destin. »" },
+        { text: "Le souvenir d'un ami fidèle sur qui chacun pouvait compter.", icon: "handshake", whisper: "« Rien n'est plus doux qu'un coeur sincère gravé dans les mémoires. »" }
+      ]
+    },
+    {
+      stage: "Épreuve du Dilemme",
+      question: "On t'accuse à tort d'une infraction alchimique. Quelle est ta riposte ?",
+      options: [
+        { text: "Clamer ma fierté et exiger un duel d'honneur sur-le-champ.", icon: "gavel", whisper: "« Fier et incandescent, tu ne courberas jamais l'échine ! »" },
+        { text: "Présenter un exposé méthodologique irréfutable de mon innocence.", icon: "fact_check", whisper: "« La logique pure balaye les calomnies comme un souffle d'air. »" },
+        { text: "Découvrir qui m'a dénoncé et retourner la situation à mon avantage.", icon: "theater_comedy", whisper: "« Le piègeur piégé... Tu joues plusieurs coups à l'avance. »" },
+        { text: "Expliquer posément la vérité en évitant d'incriminer un innocent.", icon: "balance", whisper: "« L'équité avant la vengeance, la probité avant tout. »" }
+      ]
+    },
+    {
+      stage: "Épreuve des Sens",
+      question: "Dans l'effluve magique d'une potion d'Amortentia, que ressens-tu ?",
+      options: [
+        { text: "Le feu de bois crépitant et l'odeur du vent d'orage.", icon: "air", whisper: "« L'électricité des éléments déchaînés... Une nature vivante ! »" },
+        { text: "Le parchemin neuf, l'encre fraîche et le thé fumant.", icon: "draw", whisper: "« Le parfum sacré de l'étude nocturne et des révélations. »" },
+        { text: "Le velours soyeux, l'ambre précieux et la cire raffinée.", icon: "diamond", whisper: "« Le goût du prestige et des matières d'exception... »" },
+        { text: "L'herbe mouillée du verger et le pain doré sortant du four.", icon: "bakery_dining", whisper: "« La chaleur d'un foyer partagé et la paix champêtre. »" }
+      ]
+    },
+    {
+      stage: "Épreuve de la Nuit",
+      question: "Seul dans les bois obscurs, un chant mystérieux s'élève. Que ressens-tu ?",
+      options: [
+        { text: "Un frisson d'excitation guerrière : je dégaine ma baguette.", icon: "crisis_alert", whisper: "« Toujours prompt à braver l'ombre sans ciller ! »" },
+        { text: "La fascination d'étudier un phénomène acoustique surnaturel.", icon: "explore", whisper: "« Même dans la brume, l'esprit cherche à comprendre. »" },
+        { text: "Le calcul de ce que ce secret sylvestre pourrait m'apporter.", icon: "hourglass_empty", whisper: "« Chaque mystère recèle une opportunité à saisir. »" },
+        { text: "L'inquiétude pour les créatures égarées qui pourraient souffrir.", icon: "pets", whisper: "« Une empathie profonde qui embrasse chaque être vivant. »" }
+      ]
+    },
+    {
+      stage: "Épreuve des Allégeances",
+      question: "Quelle valeur te semble impardonnable de trahir ?",
+      options: [
+        { text: "La bravoure face à la tyrannie.", icon: "pan_tool", whisper: "« Se dresser contre l'oppression est ton commandement intérieur. »" },
+        { text: "La quête de la vérité absolue.", icon: "search", whisper: "« L'obscurantisme est ton ennemi juré. »" },
+        { text: "L'engagement envers ses propres objectifs vitaux.", icon: "trending_up", whisper: "« Rester fidèle à ses desseins, sans jamais faiblir. »" },
+        { text: "La fraternité et la parole donnée à un compagnon.", icon: "diversity_1", whisper: "« La trahison d'un serment te briserait l'âme. »" }
+      ]
+    },
+    {
+      stage: "Épreuve du Destin",
+      question: "Devant le Miroir du Destin, quelle vision se reflète ?",
+      options: [
+        { text: "Moi-même triomphant d'un fléau ancien acclamé de tous.", icon: "trophy", whisper: "« Les lauriers de la victoire te siéent si bien... »" },
+        { text: "Moi-même ayant décodé les secrets occultes de l'univers.", icon: "school", whisper: "« L'illumination totale de l'esprit universel. »" },
+        { text: "Moi-même paré de pourpre, dirigeant une cour prestigieuse.", icon: "crown", whisper: "« L'aura de l'autorité suprême et de la souveraineté. »" },
+        { text: "Moi-même entouré des miens, riant dans un havre de paix.", icon: "cottage", whisper: "« La félicité du cœur simple et des liens chaleureux. »" }
+      ]
+    },
+    {
+      stage: "Consécration Finale",
+      question: "L'ultime murmure : quel élément résonne le plus puissamment en ton être ?",
+      options: [
+        { text: "L'Or de la Flamme Éternelle (Le Feu)", icon: "whatshot", whisper: "« Le Feu dévore, protège et transcende ! Ton esprit flamboie ! »" },
+        { text: "L'Éther du Vent Céleste (L'Air)", icon: "cloud", whisper: "« L'Air agile et impalpable, souverain des hauteurs ! »" },
+        { text: "L'Onde Profonde du Miroir (L'Eau)", icon: "water_drop", whisper: "« L'Eau sinueuse trouve toujours son chemin dans la roche. »" },
+        { text: "La Pierre Fertile du Sillon (La Terre)", icon: "nature", whisper: "« La Terre solide, inaltérable, pilier de toutes choses. »" }
+      ]
+    }
+  ];
+
+  // State Management
+  let currentQuestionIdx = 0;
+  const userAnswers = new Array(questionsData.length).fill(null);
+
+  // DOM Elements
+  const stageLabel = document.getElementById('stageLabel');
+  const questionStepBadge = document.getElementById('questionStepBadge');
+  const ritualProgressBar = document.getElementById('ritualProgressBar');
+  const questionPrompt = document.getElementById('questionPrompt');
+  const optionsList = document.getElementById('optionsList');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const nextBtnText = document.getElementById('nextBtnText');
+  const hatVoiceText = document.getElementById('hatVoiceText');
+  const whisperBubble = document.getElementById('whisperBubble');
+  const hatImageWrapper = document.getElementById('hatImageWrapper');
+  const soundToggleBtn = document.getElementById('soundToggleBtn');
+  const soundIcon = document.getElementById('soundIcon');
+  const soundLabel = document.getElementById('soundLabel');
+  const hapticToggleBtn = document.getElementById('hapticToggleBtn');
+
+  // Sparkles Particle Canvas Engine
+  const canvas = document.getElementById('sparksCanvas');
+  const ctx = canvas.getContext('2d');
+  let sparks = [];
+
+  function resizeCanvas() {
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  class Spark {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height + Math.random() * 20;
+      this.size = Math.random() * 2 + 0.8;
+      this.speedY = Math.random() * 0.8 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.opacity = Math.random() * 0.7 + 0.3;
+      this.life = 0;
+      this.maxLife = Math.random() * 120 + 80;
+    }
+    update() {
+      this.y -= this.speedY;
+      this.x += this.speedX;
+      this.life++;
+      if (this.life > this.maxLife || this.y < 0) {
+        this.reset();
+      }
+    }
+    draw() {
+      ctx.save();
+      ctx.fillStyle = `rgba(249, 187, 95, ${this.opacity * (1 - this.life / this.maxLife)})`;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = '#d49b42';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  for (let i = 0; i < 28; i++) {
+    sparks.push(new Spark());
+  }
+
+  function animateSparks() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sparks.forEach(s => {
+      s.update();
+      s.draw();
+    });
+    requestAnimationFrame(animateSparks);
+  }
+  animateSparks();
+
+  // Subtle Natural Hat Movement (Breathing)
+  let breathCount = 0;
+  function updateHatBreathing() {
+    breathCount += 0.03;
+    const sway = Math.sin(breathCount) * 1.2;
+    const scale = 1 + Math.sin(breathCount * 0.6) * 0.012;
+    hatImageWrapper.style.transform = `scale(${scale}) rotate(${sway * 0.4}deg)`;
+    requestAnimationFrame(updateHatBreathing);
+  }
+  updateHatBreathing();
+
+  // Pulse effect on Hat when reacting
+  function animateHatReaction() {
+    hatImageWrapper.style.transform = 'scale(1.04) rotate(-1.5deg)';
+    whisperBubble.classList.add('bg-primary/20');
+    setTimeout(() => {
+      hatImageWrapper.style.transform = 'scale(1) rotate(0deg)';
+      whisperBubble.classList.remove('bg-primary/20');
+    }, 450);
+  }
+
+  // Render Current Question
+  function renderQuestion(idx, isBack = false) {
+    const qData = questionsData[idx];
+
+    // Update Header indicators
+    questionStepBadge.textContent = `Question ${idx + 1} sur ${questionsData.length}`;
+    stageLabel.textContent = qData.stage;
+    const progressPercent = ((idx + 1) / questionsData.length) * 100;
+    ritualProgressBar.style.width = `${progressPercent}%`;
+
+    // Question Text with subtle fade
+    questionPrompt.style.opacity = '0';
+    setTimeout(() => {
+      questionPrompt.textContent = qData.question;
+      questionPrompt.style.opacity = '1';
+    }, 150);
+
+    // Default Hat Voice if unselected
+    const selectedOptIdx = userAnswers[idx];
+    if (selectedOptIdx !== null && selectedOptIdx !== undefined) {
+      hatVoiceText.textContent = qData.options[selectedOptIdx].whisper;
+      nextBtn.disabled = false;
+    } else {
+      hatVoiceText.textContent = idx === 0 
+        ? "« Approche ton esprit... Laisse-moi sonder tes intentions les plus sincères. »"
+        : "« Le mystère s'épaissit... Que dicte ton impulsion première ? »";
+      nextBtn.disabled = true;
+    }
+
+    // Render Options
+    optionsList.innerHTML = '';
+    qData.options.forEach((opt, optIndex) => {
+      const isSelected = selectedOptIdx === optIndex;
+      const optionBtn = document.createElement('button');
+      optionBtn.setAttribute('role', 'radio');
+      optionBtn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      optionBtn.className = `w-full text-left p-space-sm rounded-xl transition-all duration-200 flex items-center justify-between gap-3 shadow-md ${
+        isSelected
+          ? 'bg-surface-bright text-primary-fixed shadow-[0_4px_16px_rgba(249,187,95,0.22)]'
+          : 'bg-surface-container-high/80 text-on-surface hover:bg-surface-bright/70 hover:text-primary-fixed'
+      }`;
+
+      optionBtn.innerHTML = `
+        <div class="flex items-center gap-3 min-w-0 flex-1">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+            isSelected ? 'bg-primary text-on-primary font-bold shadow-sm' : 'bg-surface-container-lowest text-primary'
+          }">
+            <span class="material-symbols-outlined text-[18px]">${opt.icon}</span>
+          </div>
+          <span class="font-body-md text-body-md leading-snug truncate ${isSelected ? 'font-semibold' : ''}">${opt.text}</span>
+        </div>
+        <div class="w-5 h-5 rounded-full shrink-0 flex items-center justify-center transition-all ${
+          isSelected ? 'bg-primary text-on-primary' : 'bg-surface-container-lowest text-transparent'
+        }">
+          <span class="material-symbols-outlined text-[13px] font-bold">check</span>
+        </div>
+      `;
+
+      optionBtn.addEventListener('click', () => {
+        selectOption(optIndex);
+      });
+
+      optionsList.appendChild(optionBtn);
+    });
+
+    // Update Navigation Buttons
+    prevBtn.disabled = (idx === 0);
+    if (idx === questionsData.length - 1) {
+      nextBtnText.textContent = "Révéler ma Maison ✨";
+    } else {
+      nextBtnText.textContent = "Question suivante";
+    }
+  }
+
+  // Handle Option Selection
+  function selectOption(optionIndex) {
+    userAnswers[currentQuestionIdx] = optionIndex;
+    const selectedOption = questionsData[currentQuestionIdx].options[optionIndex];
+
+    // Trigger feedback
+    playBellChime(580 + (optionIndex * 85), 0.45);
+    triggerHaptic('light');
+    animateHatReaction();
+
+    // Voice mutation
+    hatVoiceText.style.opacity = '0';
+    setTimeout(() => {
+      hatVoiceText.textContent = selectedOption.whisper;
+      hatVoiceText.style.opacity = '1';
+    }, 180);
+
+    // Re-render list state
+    renderQuestion(currentQuestionIdx);
+  }
+
+  // Next Question Action
+  nextBtn.addEventListener('click', () => {
+    if (userAnswers[currentQuestionIdx] === null) return;
+
+    if (currentQuestionIdx < questionsData.length - 1) {
+      currentQuestionIdx++;
+      playHarpStrum();
+      triggerHaptic('medium');
+      renderQuestion(currentQuestionIdx);
+    } else {
+      // Final Sorting Climax Experience
+      playHarpStrum();
+      triggerHaptic('medium');
+      showCompletionModal();
+    }
+  });
+
+  // Previous Question Action
+  prevBtn.addEventListener('click', () => {
+    if (currentQuestionIdx > 0) {
+      currentQuestionIdx--;
+      playBellChime(420, 0.3);
+      triggerHaptic('light');
+      renderQuestion(currentQuestionIdx, true);
+    }
+  });
+
+  // Sound Toggle Handler
+  soundToggleBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
+      soundIcon.textContent = 'volume_up';
+      soundLabel.textContent = 'Sons magiques';
+      playBellChime(640, 0.3);
+    } else {
+      soundIcon.textContent = 'volume_off';
+      soundLabel.textContent = 'Sons muets';
+    }
+  });
+
+  // Haptic Button Manual Ping
+  hapticToggleBtn.addEventListener('click', () => {
+    triggerHaptic('medium');
+    playBellChime(500, 0.2);
+  });
+
+  // Final Ceremonial House Deliberation Modal
+  function showCompletionModal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'fixed inset-0 z-50 flex items-center justify-center p-gutter-mobile bg-surface-container-lowest/90 backdrop-blur-xl animate-fade-in';
+    overlay.innerHTML = `
+      <div class="relative w-full max-w-sm rounded-2xl bg-surface-container p-space-lg text-center shadow-[0_20px_50px_rgba(0,0,0,0.9)]">
+        <div class="w-16 h-16 mx-auto rounded-full bg-primary-container/30 flex items-center justify-center text-primary mb-3">
+          <span class="material-symbols-outlined text-[36px] animate-spin">cyclone</span>
+        </div>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Le Choixpeau a Délibéré</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface mt-1">« Ton âme est transparente à mes yeux ! »</h3>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">
+          Dix épreuves de tempérament, de courage et d'ambition ont scellé ton destin. La grande salle retient son souffle...
+        </p>
+        <div class="mt-space-md p-space-sm rounded-lg bg-surface-container-high/80 text-primary-fixed font-headline-sm text-headline-sm italic">
+          ✦ GRYFFONDOR ! ✦
+        </div>
+        <p class="font-body-sm text-body-sm text-outline mt-2">
+          (Un accord secret d'audace, de feu et de fraternité indomptable)
+        </p>
+        <button id="restartRitualBtn" class="w-full min-h-[48px] rounded-lg bg-primary text-on-primary font-label-lg text-label-lg font-bold mt-space-lg shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">restart_alt</span>
+          <span>Recommencer le questionnaire</span>
+        </button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('#restartRitualBtn').addEventListener('click', () => {
+      overlay.remove();
+      currentQuestionIdx = 0;
+      userAnswers.fill(null);
+      renderQuestion(0);
+      playHarpStrum();
+    });
+  }
+
+  // Initial Boot
+  renderQuestion(0);
+})();
+</script></main></body></html>

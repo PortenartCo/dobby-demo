@@ -13,7 +13,7 @@ const credits=[{missionId:'e05-major',memberId:member.id,effort:'major',amount:5
  assert.match(await page.locator('.mp-house').innerText(),/Poudlard/,'The house explains its origin');
  assert.match(await page.locator('.mp-patronus').innerText(),/adaptation/i,'Fox protective symbolism is visible');
  assert.equal(await page.locator('.mp-house svg').count(),0,'No redrawn crest is passed off as an official crest');
- assert.match(await page.locator('.mp-house').innerText(),/Blason officiel.*indisponible/s,'The public crest limitation is explicit');
+ const suppliedCrest=page.locator('.mp-house img[data-house-crest=slytherin]');assert.equal(await suppliedCrest.count(),1,'The supplied original Stitch crest replaces the old placeholder');await suppliedCrest.evaluate(i=>i.decode());assert.equal(await suppliedCrest.evaluate(i=>i.naturalWidth),1024);assert.doesNotMatch(await suppliedCrest.getAttribute('alt'),/officiel/i);assert.equal(await page.locator('.mp-crest-unavailable').count(),0);
  assert.equal(await page.locator('.mp-grade-art svg').count(),1,'A large illustrated native grade is present');
  assert.match(await page.locator('[data-rune-profile]').innerText(),/Pastille d’argent/);assert.equal(await page.locator('[data-rune-profile] progress').getAttribute('max'),'50');assert.equal(await page.locator('[data-rune-profile] progress').getAttribute('value'),'35');assert.match(await page.locator('[data-rune-profile]').innerText(),/15 runes avant Pastille d’or/);
  await page.locator('[data-rune-profile] details').evaluate(e=>e.open=true);for(const credit of credits)assert.match(await page.locator('[data-rune-profile] details').innerText(),new RegExp(credit.title));
@@ -30,5 +30,5 @@ const credits=[{missionId:'e05-major',memberId:member.id,effort:'major',amount:5
   // usable; decorating it must not turn the handled read error into a crash.
   await native('st.runeCredits=[{unsupported:"TEST incompatible ledger"}];');await page.evaluate(id=>DobbyFamilyStitch.open('personal',{person:id,record:null}),member.id);assert.match(await page.locator('[data-rune-profile]').innerText(),/Historique de runes indisponible/);assert.equal(await page.locator('#magic-house-edit').isVisible(),true);assert.deepEqual(await native('return st.runeCredits;'),[{unsupported:'TEST incompatible ledger'}],'Reading preserves the unsupported native data');
  }
- assert.deepEqual(errors,[]);await context.close();console.log('E05_CONSOLIDATION_PASS',width,'4 houses, 12 animals, explicit crest blocker, native illustrated grade/progress, unchanged ledger and persisted identity');}
+ assert.deepEqual(errors,[]);await context.close();console.log('E05_CONSOLIDATION_PASS',width,'4 houses, 12 animals, supplied original Stitch crest, native illustrated grade/progress, unchanged ledger and persisted identity');}
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

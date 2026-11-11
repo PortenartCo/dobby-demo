@@ -17,7 +17,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   await page.goto(origin+'/essai-stitch-v7/traverse.html');await ready();await page.locator('main img[alt*="Dobby"]').evaluate(img=>img.decode());
   const original=await business(),image=await page.locator('main img[alt*="Dobby"]').getAttribute('src');
   const cards=await page.locator('[data-e01-meal]').evaluate(el=>el.outerHTML);
-  assert.equal(await star().getAttribute('aria-pressed'),'false');
+  assert.equal(await star().getAttribute('aria-pressed'),'true','effects are initially enabled without a preference');await toggle();assert.equal(await star().getAttribute('aria-pressed'),'false');
   await page.screenshot({path:path.join(out,`${engine}-off-${width}.png`),scale:'css'});
   const start=Date.now();await toggle();
   await page.locator('#e013-ambience .e013-particle').first().waitFor({state:'visible',timeout:1900});

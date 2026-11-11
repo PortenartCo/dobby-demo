@@ -35,7 +35,7 @@ reducedMotion.addEventListener('change',()=>{if(window.DobbyStitchV7?.ready)appl
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTransient();syncAmbience();});
 window.addEventListener('pagehide',()=>{pageAway=true;clearTransient();syncAmbience();});
 const destinations=[['Traverse','explore','./traverse.html'],['Missions','history_edu','./missions.html'],['Taverne','skillet','./index.html'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
-const preferences=()=>E.evaluate('return {effects:false,sound:false,...st.stitchPreferences};');
+const preferences=()=>E.evaluate('return {effects:true,sound:false,...st.stitchPreferences};');
 function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){for(const b of document.querySelectorAll(`[data-e01-toggle="${name}"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}
 function sectionTitle(){
  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
@@ -88,7 +88,7 @@ function feedback(event,{visual=true,sound=true}={}){
 document.addEventListener('click',async event=>{
  const toggle=event.target.closest('[data-e01-toggle]');const account=event.target.closest('[data-e01-account]');const nav=event.target.closest('[data-e01-destination]');
  if(!toggle&&!account&&!nav){if(event.target.closest('button,a,[role=link],[role=button]'))feedback(event);return;}event.preventDefault();event.stopImmediatePropagation();
- if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:false,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
+ if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
  feedback(event);
  if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
  if(account){window.DobbyStitchV7.close(false);window.DobbyMagicProfile.openAccount()?.catch?.(console.error);return;}
@@ -100,5 +100,5 @@ document.addEventListener('click',async event=>{
 },true);
 window.addEventListener('pageshow',()=>{pageAway=false;if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});
 window.addEventListener('popstate',()=>setTimeout(mount,0));
-return {ready,mount,apply};
+return {ready,mount,apply,preferences};
 })();
