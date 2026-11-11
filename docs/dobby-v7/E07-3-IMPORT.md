@@ -1,0 +1,36 @@
+# E07.3 — Contrat de l’import externe
+
+Cette évolution utilise le validateur et le writer natifs Cuisine, `customRecipes`, `tmAdaptations` et le module familial `recipes` existants. Aucun appel IA, second registre de recettes, base ou dépendance supplémentaire. La page guidée est `index.html#recipe-ai`, accessible depuis l’unique entrée d’ajout et son choix manuel/IA.
+
+## Format et compatibilité
+
+Les enveloppes `{"format":"dobby-recipes","version":1,"recipes":[...]}` restent importables selon leurs contrôles natifs historiques. Le format V2 ajoute des champs structurés et autorise une durée totale **inconnue**, enregistrée `null`. Une recette reste tenue de présenter un nom, des portions de référence valides (1 à 30), des ingrédients et des étapes ; une entrée incomplète sur ces points affiche ses erreurs et ne peut être sélectionnée. Aucune quantité, portion ou durée de remplacement n’est fabriquée.
+
+Champs V2 : `id` ou `importKey` stable, `name`, `category`, `source`, `servings`, `minutes`, `durations:{preparation,cooking,rest,total}`, ingrédients `{name,quantity,unit}`, `steps` classiques ordonnées, `equipment`, `notes`, `missing`, `uncertain`, `image` relative ou `null`, `images` relatives facultatives, `tm5` facultatif. Les types, tailles et valeurs sont contrôlés ; aucune liste d’annotations n’est silencieusement tronquée. Une unité connue reste conservée en V2 lorsque la quantité est inconnue.
+
+Le total explicite est la valeur affichée et utilisée dans `minutes` ; des durées détaillées différentes sont conservées, avec avertissement lors de l’analyse. Sans total, une somme est calculée seulement si préparation, cuisson et repos sont tous connus ; sinon le total reste inconnu. L’édition manuelle conserve l’origine et les métadonnées, et actualise les seuls champs de durée effectivement saisis. L’export JSON natif produit désormais V2 pour conserver durées inconnues, notes, matériel et variante TM5 ; il ne contient aucun binaire, URL blob ou photographie base64.
+
+## Import et conservation
+
+L’analyse ne modifie pas les recettes. Un aperçu expose les avertissements, erreurs et doublons ; une case de contrôle humain et une confirmation sont requises avant écriture. Les doublons sont détectés par clé stable/ID puis par nom canonique natif et mode. Deux entrées visant une même recette existante sont signalées avant enregistrement. Les doublons restent conservés par défaut ; seules les recettes personnalisées peuvent être remplacées explicitement. Le writer conserve ID, favoris, annotations et historique des révisions. Une réimportation inchangée n’ajoute aucun doublon.
+
+Une variante TM5 appartient à la même recette dans `st.tmAdaptations[recipe.id]`. Ses instructions, accessoires, champs de réglage fournis, opérations externes et incertitudes sont conservés. Tout import externe reste **À vérifier**, même si le fichier prétend le contraire. Une adaptation existante n’est jamais remplacée sans choix explicite ; sa révision précédente est conservée. La confirmation humaine native ultérieure préserve les annotations et renseigne sa véritable date de validation. Le libellé natif ne présente plus une variante importée comme contrôlée manuellement.
+
+Les échecs d’écriture rétablissent la mémoire native et la valeur persistée antérieure, contrôlée par relecture. Si cette restauration elle-même échoue, l’interface indique précisément qu’elle ne peut être confirmée. Les vérifications d’epoch/contexte et de snapshot du Grimoire s’effectuent avant et après les attentes binaires, puis immédiatement avant le writer ; une annulation ou un changement de foyer refuse la suite de l’import.
+
+## Photographies et limites
+
+ZIP autorisé : un seul JSON et des JPEG/PNG/WebP réels, dans des chemins relatifs sûrs. Limites : **40 Mio compressés**, **80 Mio décompressés**, **2 Mio JSON**, **150 recettes**, **180 entrées**, **10 Mio par image**, **40 mégapixels** et **16 000 px par côté**. Les tailles du fichier sont contrôlées avant lecture mémoire. Les chemins ambigus/dangereux, liens, chiffrement, ZIP64/multi-disques, formats non autorisés, CRC ou en-têtes incohérents et bombes d’expansion sont refusés. Les dimensions sont contrôlées dans les en-têtes avant décodage réel ; WebP animé explicitement non pris en charge.
+
+Les images ne sont jamais incorporées au JSON. Leurs octets originaux et leurs SHA-256 passent par `houseStore` / `houseRead`, dans le **store binaire natif existant**. La recette ne garde que des références techniques `localMedia` / `localMediaArchive` (clé, empreinte, type), sans nom de fichier privé ni URL ; les anciennes images ne sont pas supprimées. `hydrate()` fournit seulement une URL blob éphémère à la copie de présentation. Un JSON peut être importé sans ses images, puis une photographie peut être ajoutée ultérieurement depuis le même parcours guidé, avec aperçu et confirmation.
+
+**Photos locales uniquement.** Le contrat de stockage privé distant vérifié ne couvre pas les photos des recettes ; aucun upload ni nouveau bucket n’est créé. Le module familial existant peut synchroniser les textes et variantes quand il est effectivement actif, mais une référence technique ne signifie pas qu’un autre appareil possède la photographie. L’aperçu public est fictif et ne vérifie aucune synchronisation de comptes réels. La portée locale du profil et de son store binaire natif reste inchangée ; aucune nouvelle garantie d’isolation entre plusieurs foyers sur un même profil n’est revendiquée.
+
+## Vérifications
+
+- [33 tests purs et natifs extraits — PASS](evidence/e07-3/import/unit-green.log) : format V1/V2, données inconnues, absence de coercition/troncature, prompt cumulatif, validation native, ZIP et limites raster.
+- [Parcours Chromium — PASS à 320/390/1440](evidence/e07-3/import/browser-green.log), [résultats](evidence/e07-3/import/browser/results.json), [captures](evidence/e07-3/import/browser/) : multi-recettes V1, V2 inconnu/incomplet, confirmation, annulation, réimport, ZIP/photos originales et rechargement, photo ajoutée ultérieurement, TM5 puis vraie confirmation humaine, remplacement/ID/favoris/annotations/historique, refus d’écriture au premier et au troisième save après écriture métier réussie, restauration mémoire et stockage brut puis rechargement, export V2 et réimport.
+- [Deux clés vers la même cible — PASS](evidence/e07-3/import/duplicate-target-green.log).
+- [Changement de contexte après lecture native retournant un blob absent — PASS](evidence/e07-3/import/missing-blob-context-green.log) : zéro appel à `houseStore`, aucune recette enregistrée. La façade de connexion est instrumentée uniquement dans ce test éphémère ; aucune authentification réelle n’est simulée comme validation serveur.
+
+Les premières intégrations navigateur ont révélé une séquence d’échappement invalide dans le code envoyé à l’évaluateur natif et une priorité d’opérateur incorrecte lors de la construction d’un Blob du contexte natif. Ces deux défauts sont corrigés ; leurs journaux initiaux sont conservés séparément : [évaluateur](evidence/e07-3/import/initial-eval-syntax-fail.log), [Blob](evidence/e07-3/import/initial-blob-constructor-fail.log). La validation visuelle utilisateur et la synchronisation réelle restent distinctes de ces contrôles techniques.

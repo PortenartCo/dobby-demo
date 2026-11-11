@@ -1,0 +1,41 @@
+✔ V1 remains compatible; no default duration or servings fabricated (5.739064ms)
+✔ V2 keeps explicit total as single authority and preserves detailed durations (1.989748ms)
+✔ V2 permits unknown total, and sums only complete known components (0.703871ms)
+✔ One classic recipe carries an unverified TM5 adaptation without invented parameters (0.516606ms)
+✔ Version and media references reject unsafe input; ordinary missing image stays explicit (4.752343ms)
+✔ Prompt collects all successive photos, final explicit consent and exact question (0.52009ms)
+✔ Actual native validator keeps V1 strict and accepts only V2 unknown duration (18.401571ms)
+✔ Oversized ZIP is refused before allocating arrayBuffer (1.500675ms)
+✔ Extended metadata rejects truncation/coercion and normalizes Unicode media consistently (2.324031ms)
+✔ Actual native V2 keeps a known ingredient unit when quantity is unknown (31.354554ms)
+✔ Actual native TM5 presentation never calls an imported unverified variant human-verified (13.341933ms)
+✔ V2 never turns boolean/array ingredient quantities into real amounts (0.968639ms)
+✔ reads a stored descriptor and byte-identical nested raster image (3.986735ms)
+✔ reads deflate and data descriptors through the native bounded stream (29.99634ms)
+✔ normalizes safe UTF-8 names to NFC and accepts spaces (1.015025ms)
+✔ rejects traversal, encoded aliases and ambiguous/platform paths (6.734144ms)
+✔ rejects duplicate names, Unicode normalization and directory-case aliases (0.687087ms)
+✔ requires exactly one JSON and only approved raster files (0.672164ms)
+✔ sniffs image content rather than trusting extensions (1.072219ms)
+✔ rejects symlinks, special files and hidden/system attributes (0.925636ms)
+✔ refuses encryption, unsupported flags and compression methods (1.10589ms)
+✔ rejects multipart, ZIP64 and corrupt central-directory bounds (1.95906ms)
+✔ rejects local-central metadata and filename disagreement (1.119003ms)
+✔ rejects corrupt stored/deflated content by CRC (15.295845ms)
+✔ rejects truncated archives, trailers and orphan/prepended data (3.278175ms)
+✔ enforces entry, image, JSON and total compressed limits before decompression (3.918742ms)
+✔ bounds the actual decompressed stream even when declared size is a lie (8.675676ms)
+✔ bounds the complete declared image volume without allocating the announced output (1.264687ms)
+✔ rejects corrupt data descriptors and malformed extra fields (1.036886ms)
+✔ checks ordinary PNG, JPEG and all three WebP dimension headers before bitmap decoding (3.75342ms)
+✔ rejects raster pixel bombs from their headers before allocating a bitmap (2.138269ms)
+✔ refuses missing, zero, truncated or conflicting raster dimensions explicitly (4.105213ms)
+✔ allows the exact40MP limit and refuses animated WebP (0.729692ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 253.999056

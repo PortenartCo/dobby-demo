@@ -1,0 +1,54 @@
+{
+  "project": "DOBBY",
+  "date": "2026-11-11",
+  "scope": "E07 Taverne et Grimoire/creation-import",
+  "screenshots": [
+    {
+      "filename": "captures/01-taverne-repas-soir.png",
+      "sha256": "165e74b6491140d2b6d1d9146d39c9de5453a4657204c8fe607c177603724ce4",
+      "description": "Taverne: image du repas; Midi et Soir dans carte principale"
+    },
+    {
+      "filename": "captures/02-taverne-semaine.png",
+      "sha256": "4cf63c8291ee0577f97eb157216f371c417f1ca4985de35fcfab1868c6d5d9c1",
+      "description": "Calendrier compact, deux creneaux par jour"
+    },
+    {
+      "filename": "captures/03-taverne-grimoire-courses.png",
+      "sha256": "d9211ce0b0336e928cb361adc256a4bf86a6acea2f572b8db5a645fd1f63d8e9",
+      "description": "Lisibilite compteurs/titres/CTA du Grimoire et des Courses"
+    },
+    {
+      "filename": "captures/04-grimoire-hero.png",
+      "sha256": "cd0ffc76e8a4b6f6581f3aeae6defbdb2f02e0df3e2a324f230ca5a64ea0aa21",
+      "description": "Cartouche Grimoire en bas a droite, hero intact"
+    },
+    {
+      "filename": "captures/05-grimoire-bouton-principal.png",
+      "sha256": "5facad293420c340b26a6ef4e9c6144e92719cdfe67505160b4293c07fb436e5",
+      "description": "Inscrire une nouvelle recette: pleine largeur, texte lisible"
+    },
+    {
+      "filename": "captures/06-grimoire-sanctuaire.png",
+      "sha256": "80607758e263f264dddd2a70f7d20cd2835e3216a9fb4e0abf0f627e8f645c88",
+      "description": "Supprimer encart de conservation locale non fiable"
+    },
+    {
+      "filename": "captures/07-grimoire-boutons-secondaires.png",
+      "sha256": "1b6e98a4e2d0f96aff3c9bb265a5fd4d4bbc4825279c71c4a7bd062f7e802e99",
+      "description": "Supprimer Inscription Manuelle et Import lot JSON en doublon"
+    },
+    {
+      "filename": "captures/08-grimoire-catalogue.png",
+      "sha256": "689e8d1c25c508f2b27f17eb8f73638c4294af1024bac961e75758d33632522d",
+      "description": "Titre Mes recettes, filtres visibles, cartes, temps, favoris, Consulter/Planifier"
+    },
+    {
+      "filename": "captures/09-grimoire-pied-de-page.png",
+      "sha256": "30c2b9ec98edc9dea5c5ebcaa2bacbd65e922ae39c00641a2a67bdabdb069391",
+      "description": "Supprimer encart export technique; retour Taverne plein format"
+    }
+  ],
+  "source": "User review captures in this conversation",
+  "note": "No original pictures edited. No source code modified."
+}

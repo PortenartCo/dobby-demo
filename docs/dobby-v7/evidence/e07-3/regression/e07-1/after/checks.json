@@ -1,0 +1,173 @@
+[
+  {
+    "width": 320,
+    "check": "dock-scroll",
+    "pass": true,
+    "beforeTop": 819,
+    "afterScroll": 819
+  },
+  {
+    "width": 320,
+    "check": "prepared-dinner-reload",
+    "status": "préparé",
+    "otherSlotUnchanged": true,
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "prepared-lunch-reload",
+    "status": "préparé",
+    "otherSlotUnchanged": true,
+    "slot": "midi",
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "both-slots-independent/prepared-reload/real-clicks",
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "dock-destination-0",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/traverse.html",
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "dock-destination-1",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/missions.html",
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "dock-destination-2",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/index.html",
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "dock-destination-3",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/famille.html",
+    "pass": true
+  },
+  {
+    "width": 320,
+    "check": "dock-destination-4",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/famille.html#menu",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "dock-scroll",
+    "pass": true,
+    "beforeTop": 819,
+    "afterScroll": 819
+  },
+  {
+    "width": 390,
+    "check": "prepared-dinner-reload",
+    "status": "préparé",
+    "otherSlotUnchanged": true,
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "prepared-lunch-reload",
+    "status": "préparé",
+    "otherSlotUnchanged": true,
+    "slot": "midi",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "both-slots-independent/prepared-reload/real-clicks",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "dock-destination-0",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/traverse.html",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "dock-destination-1",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/missions.html",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "dock-destination-2",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/index.html",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "dock-destination-3",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/famille.html",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "check": "dock-destination-4",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/famille.html#menu",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "dock-scroll",
+    "pass": true,
+    "beforeTop": 819,
+    "afterScroll": 819
+  },
+  {
+    "width": 1440,
+    "check": "prepared-dinner-reload",
+    "status": "préparé",
+    "otherSlotUnchanged": true,
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "prepared-lunch-reload",
+    "status": "préparé",
+    "otherSlotUnchanged": true,
+    "slot": "midi",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "both-slots-independent/prepared-reload/real-clicks",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "dock-destination-0",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/traverse.html",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "dock-destination-1",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/missions.html",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "dock-destination-2",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/index.html",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "dock-destination-3",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/famille.html",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "check": "dock-destination-4",
+    "url": "http://127.0.0.1:8894/essai-stitch-v7/famille.html#menu",
+    "pass": true
+  }
+]

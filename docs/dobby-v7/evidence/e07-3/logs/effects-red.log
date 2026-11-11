@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Common ambience is actually mounted in Grimoire
+
+0 !== 22
+
+    at /workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-effects.cjs:6:180 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 22,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

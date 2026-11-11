@@ -1,0 +1,7 @@
+page.waitForFunction: Timeout 20000ms exceeded.
+    at view (/workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-preview.cjs:16:205)
+    at confirmImport (/workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-preview.cjs:32:154)
+    at async /workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-preview.cjs:35:343 {
+  log: [],
+  name: 'TimeoutError'
+}

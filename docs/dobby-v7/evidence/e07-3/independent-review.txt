@@ -1,0 +1,8 @@
+E07.3 independent static review, completed before source delivery
+
+No remaining blocking finding. Reviewed native validator/writer, V1/V2/ZIP/raster bounds before allocation, unsafe paths and archive metadata, preview/no-write/explicit confirm, stable-ID/duplicate target detection, TM5 unverified status and historical annotations, native blob store and local-only photo transfer status.
+Generation/context/snapshot are checked after native asynchronous reads before binary writes and immediately before the native recipe writer; tests include absent-blob branch and zero late houseStore calls.
+The generated E07.3 preview alone neutralizes unavailable external Stitch CDN images; source and transformed byte hashes remain recorded. Other profiles are preserved.
+The native guard removes eight fixed literal approved amendments, then performs whole-source equality with the original after the earlier E05 normalization. No broad function exemption or discarded business assertions identified.
+Chrome adds three library routes to existing ambience and leaves preference defaults unchanged. Existing complete CI remains available with DOBBY_FINAL=1; the E07.3 campaign propagates failures.
+Reviewer performed no edits, database actions or additional test campaign. User visual validation and real Supabase synchronization are not implied.

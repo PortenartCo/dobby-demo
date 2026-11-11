@@ -1,0 +1,458 @@
+[
+  {
+    "width": 320,
+    "phase": "before",
+    "status": "PASS",
+    "origin": "http://127.0.0.1:8895",
+    "app": "/essai-stitch-v7",
+    "captured": [
+      "taverne-empty-320.png",
+      "taverne-planned-320.png",
+      "taverne-meals-320.png",
+      "taverne-week-320.png",
+      "taverne-links-320.png",
+      "recipes-full-320.png",
+      "recipes-hero-320.png",
+      "recipes-intro-320.png",
+      "recipes-catalogue-320.png",
+      "recipes-card-320.png",
+      "recipes-footer-320.png",
+      "recipes-favorites-320.png",
+      "recipes-empty-320.png"
+    ],
+    "taverne": {
+      "viewport": 320,
+      "documentWidth": 320,
+      "filters": [],
+      "images": [
+        {
+          "alt": "Dobby dans sa taverne enchantée",
+          "loaded": true,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "actions": [
+      {
+        "label": "Préparer ma liste de courses arrow_forward",
+        "height": 52,
+        "font": 15,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(243, 194, 91), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Préparer ma liste de courses",
+            "font": 15,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      }
+    ],
+    "catalogue": {
+      "viewport": 320,
+      "documentWidth": 320,
+      "filters": [
+        {
+          "label": "Toutes (7)",
+          "left": 16,
+          "right": 102.78125,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Favoris",
+          "left": 106.78125,
+          "right": 179.96875,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Thermomix TM5",
+          "left": 183.96875,
+          "right": 309.53125,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Traditionnelles",
+          "left": 313.53125,
+          "right": 433.140625,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Moins de 30 min",
+          "left": 437.140625,
+          "right": 560.515625,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Toutes les catégories",
+          "left": 564.515625,
+          "right": 712.765625,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Végétarien",
+          "left": 716.765625,
+          "right": 809.03125,
+          "top": -2710.75,
+          "height": 30,
+          "font": 10
+        }
+      ],
+      "images": [
+        {
+          "alt": "Dobby consultant son grimoire de recettes culinaires",
+          "loaded": true,
+          "width": 512,
+          "height": 286
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": [
+        {
+          "id": "filters-container",
+          "class": "flex gap-space-xs overflow-x-auto px-margin-mobile no-scrollbar",
+          "width": 320,
+          "content": 825
+        }
+      ]
+    },
+    "protectedData": "unchanged",
+    "imagesDecoded": true,
+    "fixture": "explicit TEST recipes, isolated native state; no real family account"
+  },
+  {
+    "width": 390,
+    "phase": "before",
+    "status": "PASS",
+    "origin": "http://127.0.0.1:8895",
+    "app": "/essai-stitch-v7",
+    "captured": [
+      "taverne-empty-390.png",
+      "taverne-planned-390.png",
+      "taverne-meals-390.png",
+      "taverne-week-390.png",
+      "taverne-links-390.png",
+      "recipes-full-390.png",
+      "recipes-hero-390.png",
+      "recipes-intro-390.png",
+      "recipes-catalogue-390.png",
+      "recipes-card-390.png",
+      "recipes-footer-390.png",
+      "recipes-favorites-390.png",
+      "recipes-empty-390.png"
+    ],
+    "taverne": {
+      "viewport": 390,
+      "documentWidth": 390,
+      "filters": [],
+      "images": [
+        {
+          "alt": "Dobby dans sa taverne enchantée",
+          "loaded": true,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "actions": [
+      {
+        "label": "Préparer ma liste de courses arrow_forward",
+        "height": 52,
+        "font": 15,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(243, 194, 91), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Préparer ma liste de courses",
+            "font": 15,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      }
+    ],
+    "catalogue": {
+      "viewport": 390,
+      "documentWidth": 390,
+      "filters": [
+        {
+          "label": "Toutes (7)",
+          "left": 16,
+          "right": 102.78125,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Favoris",
+          "left": 106.78125,
+          "right": 179.96875,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Thermomix TM5",
+          "left": 183.96875,
+          "right": 309.53125,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Traditionnelles",
+          "left": 313.53125,
+          "right": 433.140625,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Moins de 30 min",
+          "left": 437.140625,
+          "right": 560.515625,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Toutes les catégories",
+          "left": 564.515625,
+          "right": 712.765625,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Végétarien",
+          "left": 716.765625,
+          "right": 809.03125,
+          "top": -2593.75,
+          "height": 30,
+          "font": 10
+        }
+      ],
+      "images": [
+        {
+          "alt": "Dobby consultant son grimoire de recettes culinaires",
+          "loaded": true,
+          "width": 512,
+          "height": 286
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": [
+        {
+          "id": "filters-container",
+          "class": "flex gap-space-xs overflow-x-auto px-margin-mobile no-scrollbar",
+          "width": 390,
+          "content": 825
+        }
+      ]
+    },
+    "protectedData": "unchanged",
+    "imagesDecoded": true,
+    "fixture": "explicit TEST recipes, isolated native state; no real family account"
+  },
+  {
+    "width": 1440,
+    "phase": "before",
+    "status": "PASS",
+    "origin": "http://127.0.0.1:8895",
+    "app": "/essai-stitch-v7",
+    "captured": [
+      "taverne-empty-1440.png",
+      "taverne-planned-1440.png",
+      "taverne-meals-1440.png",
+      "taverne-week-1440.png",
+      "taverne-links-1440.png",
+      "recipes-full-1440.png",
+      "recipes-hero-1440.png",
+      "recipes-intro-1440.png",
+      "recipes-catalogue-1440.png",
+      "recipes-card-1440.png",
+      "recipes-footer-1440.png",
+      "recipes-favorites-1440.png",
+      "recipes-empty-1440.png"
+    ],
+    "taverne": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "filters": [],
+      "images": [
+        {
+          "alt": "Dobby dans sa taverne enchantée",
+          "loaded": true,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "actions": [
+      {
+        "label": "Préparer ma liste de courses arrow_forward",
+        "height": 52,
+        "font": 15,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(243, 194, 91), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Préparer ma liste de courses",
+            "font": 15,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      }
+    ],
+    "catalogue": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "filters": [
+        {
+          "label": "Toutes (7)",
+          "left": 496,
+          "right": 582.78125,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Favoris",
+          "left": 586.78125,
+          "right": 659.96875,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Thermomix TM5",
+          "left": 663.96875,
+          "right": 789.53125,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Traditionnelles",
+          "left": 793.53125,
+          "right": 913.140625,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Moins de 30 min",
+          "left": 917.140625,
+          "right": 1040.515625,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Toutes les catégories",
+          "left": 1044.515625,
+          "right": 1192.765625,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        },
+        {
+          "label": "Végétarien",
+          "left": 1196.765625,
+          "right": 1289.03125,
+          "top": -2482.5,
+          "height": 30,
+          "font": 10
+        }
+      ],
+      "images": [
+        {
+          "alt": "Dobby consultant son grimoire de recettes culinaires",
+          "loaded": true,
+          "width": 512,
+          "height": 286
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": [
+        {
+          "id": "filters-container",
+          "class": "flex gap-space-xs overflow-x-auto px-margin-mobile no-scrollbar",
+          "width": 480,
+          "content": 825
+        }
+      ]
+    },
+    "protectedData": "unchanged",
+    "imagesDecoded": true,
+    "fixture": "explicit TEST recipes, isolated native state; no real family account"
+  }
+]

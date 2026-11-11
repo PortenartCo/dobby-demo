@@ -1,0 +1,29 @@
+✔ reads a stored descriptor and byte-identical nested raster image (5.534445ms)
+✔ reads deflate and data descriptors through the native bounded stream (29.118833ms)
+✔ normalizes safe UTF-8 names to NFC and accepts spaces (1.292472ms)
+✔ rejects traversal, encoded aliases and ambiguous/platform paths (3.127628ms)
+✔ rejects duplicate names, Unicode normalization and directory-case aliases (0.872498ms)
+✔ requires exactly one JSON and only approved raster files (0.991965ms)
+✔ sniffs image content rather than trusting extensions (1.212783ms)
+✔ rejects symlinks, special files and hidden/system attributes (0.739202ms)
+✔ refuses encryption, unsupported flags and compression methods (1.053014ms)
+✔ rejects multipart, ZIP64 and corrupt central-directory bounds (0.957541ms)
+✔ rejects local-central metadata and filename disagreement (0.798358ms)
+✔ rejects corrupt stored/deflated content by CRC (11.700033ms)
+✔ rejects truncated archives, trailers and orphan/prepended data (0.720113ms)
+✔ enforces entry, image, JSON and total compressed limits before decompression (3.520261ms)
+✔ bounds the actual decompressed stream even when declared size is a lie (6.253909ms)
+✔ bounds the complete declared image volume without allocating the announced output (1.138222ms)
+✔ rejects corrupt data descriptors and malformed extra fields (0.751631ms)
+✔ checks ordinary PNG, JPEG and all three WebP dimension headers before bitmap decoding (0.844183ms)
+✔ rejects raster pixel bombs from their headers before allocating a bitmap (1.133779ms)
+✔ refuses missing, zero, truncated or conflicting raster dimensions explicitly (2.269508ms)
+✔ allows the exact40MP limit and refuses animated WebP (0.648745ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 166.451921

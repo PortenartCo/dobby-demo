@@ -1,0 +1,8 @@
+IMPORT_CONFIRM_DIAGNOSTIC {"url":"http://127.0.0.1:8894/e073-preview-test/essai-stitch-v7/index.html#recipe-ai","view":"recipe-ai","notice":"Invalid or unexpected tokenFermer","status":["Invalid or unexpected token"],"errors":[]}
+page.waitForFunction: Timeout 20000ms exceeded.
+    at view (/workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-preview.cjs:16:205)
+    at confirmImport (/workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-preview.cjs:32:158)
+    at async /workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-preview.cjs:35:343 {
+  log: [],
+  name: 'TimeoutError'
+}

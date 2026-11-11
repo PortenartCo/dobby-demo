@@ -1,0 +1,22 @@
+DOBBY - Revue E07, lot 1 (11 novembre 2026)
+
+Perimetre de cette livraison de revue:
+- Page principale Taverne Gourmande.
+- Menus de la semaine.
+- Page Grimoire des Recettes, catalogue et favoris.
+- Entree unique Ajouter/Inscrire une nouvelle recette, avec choix manuel ou importer avec IA externe.
+- Recuperation JSON/ZIP, validation, dedoublonnage et variante TM5 liee a la recette.
+- Raccordement au moteur natif et a la synchronisation familiale existante, sans nouvelle migration serveur.
+- Ambiance visuelle/sonore dans E07 selon les preferences communes.
+
+Sont hors perimetre de cette revue (a examiner ensuite):
+- Fiche recette detaillee et sous-pages Consulter.
+- Choisir/Planifier un repas: ne changer que les raccordements minimaux pour conserver la navigation.
+- Mode Cuisine guide, TM5 en cours de cuisson.
+- Ecran complet Courses et ses sous-pages.
+
+Notes importantes:
+- Le pack de captures illustre les defauts; les corrections sont dans le prompt Codex de cette conversation.
+- Les captures sont les originaux non modifies.
+- Ne pas effacer les archives/recettes/preferences existantes.
+- Toute publication doit etre isolee du site canonique et des preview concurrentes.

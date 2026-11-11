@@ -1,7 +1,7 @@
 {
   "sourceCommit": "a84f67acf8f5cbfd59475c2137ec70e1a20732f7",
   "sourcePath": "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
-  "sourceSha256": "92fe405fd9651be0e8038831655c4a3a873bdf807f789ffaff098cd6d7d87538",
+  "sourceSha256": "d2b7e8de49bfc7e32b5ba6ac055dbd30bbcc2ef23db0f08b9fa88f4a40d61a03",
   "gate0": "PASS — audit indépendant 95/95,41IDs ; mappings E03/E08/limites précisés avantcode",
   "rows": [
     {
@@ -1772,6 +1772,134 @@
         "docs/dobby-v7/evidence/consolidation/publication.json",
         "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
       ]
+    },
+    {
+      "id": "RC-L176",
+      "sourceLine": 176,
+      "sourceText": "Cette section consigne les retours utilisateur **postérieurs** à la consolidation initiale et au correctif E06-01 \\`f60f9f8\\`. Ces observations ne sont **pas** des corrections déjà réalisées. Elles sont prioritaires sur les anciennes descriptions de rendu pour les points concernés, sans réécrire ni renuméroter la matrice historique.",
+      "demande": "Cette section consigne les retours utilisateur **postérieurs** à la consolidation initiale et au correctif E06-01 \\`f60f9f8\\`. Ces observations ne sont **pas** des corrections déjà réalisées. Elles sont prioritaires sur les anciennes descriptions de rendu pour les points concernés, sans réécrire ni renuméroter la matrice historique.",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Transcription et préservation de la règle vérifiées ; aucune réalisation graphique E06 nouvelle déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L178",
+      "sourceLine": 178,
+      "sourceText": "| Référence | Demande utilisateur et contrat de conformité | État |",
+      "demande": "| Référence | Demande utilisateur et contrat de conformité | État |",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Transcription et préservation de la règle vérifiées ; aucune réalisation graphique E06 nouvelle déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L180",
+      "sourceLine": 180,
+      "sourceText": "| E06-03 — nouvelle référence Choixpeau | **Remplacer le Choixpeau dessiné/cartoon par le visuel cinématographique explicitement fourni** dans \\`stitch_dobby_assistant_mobile_app (10).zip\\` (pièce jointe de la conversation du 11/11). L'archive contient \\`cinematic_photorealistic_dark_fantasy_still_of_the_ancient_magical_sorting_hat/screen.png\\` (1376 × 768) : chapeau textile/cuir patiné réaliste, visage expressif, vieux tabouret sculpté, grande salle gothique, chandelles, braises, éclairage de cinéma. Une deuxième \\`screen.png\\` (582 × 1600) illustre son insertion dans \\`dobby_la_c_r_monie_du_choixpeau_visuel_cin_matographique/code.html\\`. **Source artistique choisie : image 1376 × 768 ; mise en page mobile seulement à titre de référence.** Vérifier la disponibilité/traçabilité de la pièce jointe avant exécution et sa publication dans l'aperçu. L'image de référence n'est pas encore importée dans GitHub par cette mise à jour du registre. | À INTÉGRER, revue utilisateur requise |",
+      "demande": "| E06-03 — nouvelle référence Choixpeau | **Remplacer le Choixpeau dessiné/cartoon par le visuel cinématographique explicitement fourni** dans \\`stitch_dobby_assistant_mobile_app (10).zip\\` (pièce jointe de la conversation du 11/11). L'archive contient \\`cinematic_photorealistic_dark_fantasy_still_of_the_ancient_magical_sorting_hat/screen.png\\` (1376 × 768) : chapeau textile/cuir patiné réaliste, visage expressif, vieux tabouret sculpté, grande salle gothique, chandelles, braises, éclairage de cinéma. Une deuxième \\`screen.png\\` (582 × 1600) illustre son insertion dans \\`dobby_la_c_r_monie_du_choixpeau_visuel_cin_matographique/code.html\\`. **Source artistique choisie : image 1376 × 768 ; mise en page mobile seulement à titre de référence.** Vérifier la disponibilité/traçabilité de la pièce jointe avant exécution et sa publication dans l'aperçu. L'image de référence n'est pas encore importée dans GitHub par cette mise à jour du registre. | À INTÉGRER, revue utilisateur requise |",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Conserver cet arbitrage66a1395 sans le modifier. La mission E07.3 exclut les corrections E06 et conserve les préférences existantes ; aucune réalisation E06 ni validation utilisateur n’est déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "REPORTÉ — AUTORISÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L181",
+      "sourceLine": 181,
+      "sourceText": "| E06-03 — logique questionnaire protégée | Le nouveau HTML Stitch contient un **autre questionnaire à 10 questions**. Il ne faut **pas** le recopier dans DOBBY : conserver impérativement le questionnaire existant à 6 questions, ses réponses, son scoring, la reprise, les confirmations, les contenus Maison/Patronus et le modèle natif. Adapter uniquement le visuel du Choixpeau et son cadrage responsive, sans régression fonctionnelle. | RÈGLE IMPÉRATIVE |",
+      "demande": "| E06-03 — logique questionnaire protégée | Le nouveau HTML Stitch contient un **autre questionnaire à 10 questions**. Il ne faut **pas** le recopier dans DOBBY : conserver impérativement le questionnaire existant à 6 questions, ses réponses, son scoring, la reprise, les confirmations, les contenus Maison/Patronus et le modèle natif. Adapter uniquement le visuel du Choixpeau et son cadrage responsive, sans régression fonctionnelle. | RÈGLE IMPÉRATIVE |",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Transcription et préservation de la règle vérifiées ; aucune réalisation graphique E06 nouvelle déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L182",
+      "sourceLine": 182,
+      "sourceText": "| T-01 — défaut Effets initiaux | L'utilisateur a constaté une traversée sans feu vert, car \\`stitchPreferences.effects\\` est à \\`false\\` par défaut. **Effets = true lors de la première utilisation / sans préférence existante**, sur tous les écrans, **Son = false** par défaut ; conserver toute décision explicite \\`effects:false\\` après rechargement ; respecter \\`prefers-reduced-motion\\`. La correction doit agir sur la source canonique des préférences et non forcer \\`true\\` à chaque montage. La traversée spectaculaire verte de la Cheminée doit être effectivement visible lorsque les effets sont actifs. | À CORRIGER |",
+      "demande": "| T-01 — défaut Effets initiaux | L'utilisateur a constaté une traversée sans feu vert, car \\`stitchPreferences.effects\\` est à \\`false\\` par défaut. **Effets = true lors de la première utilisation / sans préférence existante**, sur tous les écrans, **Son = false** par défaut ; conserver toute décision explicite \\`effects:false\\` après rechargement ; respecter \\`prefers-reduced-motion\\`. La correction doit agir sur la source canonique des préférences et non forcer \\`true\\` à chaque montage. La traversée spectaculaire verte de la Cheminée doit être effectivement visible lorsque les effets sont actifs. | À CORRIGER |",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Conserver cet arbitrage66a1395 sans le modifier. La mission E07.3 exclut les corrections E06 et conserve les préférences existantes ; aucune réalisation E06 ni validation utilisateur n’est déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "REPORTÉ — AUTORISÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L183",
+      "sourceLine": 183,
+      "sourceText": "| E06-01 — accessibilité du replay | Après première traversée, \\`seen\\` entraîne le saut de l'introduction pour les ouvertures ordinaires, ce qui a donné l'impression d'être bloqué sur le Foyer. Prévoir un chemin « Revoir le Rituel » clairement découvrable et exploitable depuis la page suivante, avec relecture même si \\`seen=true\\`, sans réinitialiser membre ou réponses. Le paramètre interne de relecture existe : l'enjeu est l'accès utilisateur et sa compréhension. | À VÉRIFIER / AMÉLIORER |",
+      "demande": "| E06-01 — accessibilité du replay | Après première traversée, \\`seen\\` entraîne le saut de l'introduction pour les ouvertures ordinaires, ce qui a donné l'impression d'être bloqué sur le Foyer. Prévoir un chemin « Revoir le Rituel » clairement découvrable et exploitable depuis la page suivante, avec relecture même si \\`seen=true\\`, sans réinitialiser membre ou réponses. Le paramètre interne de relecture existe : l'enjeu est l'accès utilisateur et sa compréhension. | À VÉRIFIER / AMÉLIORER |",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Conserver cet arbitrage66a1395 sans le modifier. La mission E07.3 exclut les corrections E06 et conserve les préférences existantes ; aucune réalisation E06 ni validation utilisateur n’est déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "REPORTÉ — AUTORISÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L184",
+      "sourceLine": 184,
+      "sourceText": "| E06-04 et E05-01 — blasons | L'utilisateur constate **un cadre vide « Blason officiel indisponible dans cette démonstration »** au résultat Gryffondor et exige un **grand blason visible** conforme à la Maison sélectionnée, cohérent avec E05. L'exigence antérieure de blasons officiels demeure. Ne pas présenter un placeholder ni un pictogramme générique comme solution définitive ; les droits de redistribution des blasons officiels pour une URL publique restent à établir, distincts d'un usage familial privé. Rechercher une solution autorisée sans changer silencieusement le choix artistique de l'utilisateur. | TOUJOURS BLOQUÉ / REVUE VISUELLE NON VALIDÉE |",
+      "demande": "| E06-04 et E05-01 — blasons | L'utilisateur constate **un cadre vide « Blason officiel indisponible dans cette démonstration »** au résultat Gryffondor et exige un **grand blason visible** conforme à la Maison sélectionnée, cohérent avec E05. L'exigence antérieure de blasons officiels demeure. Ne pas présenter un placeholder ni un pictogramme générique comme solution définitive ; les droits de redistribution des blasons officiels pour une URL publique restent à établir, distincts d'un usage familial privé. Rechercher une solution autorisée sans changer silencieusement le choix artistique de l'utilisateur. | TOUJOURS BLOQUÉ / REVUE VISUELLE NON VALIDÉE |",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Conserver cet arbitrage66a1395 sans le modifier. La mission E07.3 exclut les corrections E06 et conserve les préférences existantes ; aucune réalisation E06 ni validation utilisateur n’est déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "BLOQUÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
+    },
+    {
+      "id": "RC-L186",
+      "sourceLine": 186,
+      "sourceText": "**Ne pas confondre maquette et fonctionnalité :** le ZIP \\`(10)\\` est une **référence visuelle du Choixpeau**, pas l'autorisation de remplacer les questionnaires E06, ni de remodeler E05/E07. L'ordre de développement antérieurement approuvé reste : consolidation et corrections de revue → écrans complémentaires Taverne E07.3 → Menu → Famille → reste à définir. Le prochain lot de corrections devra tracer ces nouvelles exigences explicitement, sans les englober dans les 95 lignes historiques comme déjà vérifiées.",
+      "demande": "**Ne pas confondre maquette et fonctionnalité :** le ZIP \\`(10)\\` est une **référence visuelle du Choixpeau**, pas l'autorisation de remplacer les questionnaires E06, ni de remodeler E05/E07. L'ordre de développement antérieurement approuvé reste : consolidation et corrections de revue → écrans complémentaires Taverne E07.3 → Menu → Famille → reste à définir. Le prochain lot de corrections devra tracer ces nouvelles exigences explicitement, sans les englober dans les 95 lignes historiques comme déjà vérifiées.",
+      "initial": "Complément de revue66a1395 absent de la matrice95lignes préexistante.",
+      "code": "Registre historique conservé octet pour octet ; branche E06 indépendante non fusionnée.",
+      "action": "Transcription et préservation de la règle vérifiées ; aucune réalisation graphique E06 nouvelle déclarée.",
+      "verification": "Comparaison du blob66a1395, empreinteSHA256 et couverture mécanique ; périmètre autorisé dans E07-3-SPEC.md.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/E07-3-REGISTRY-NOTE.md",
+        "docs/dobby-v7/E07-3-SPEC.md",
+        "docs/dobby-v7/evidence/e07-3/preflight.json"
+      ]
     }
   ],
   "finalSummary": {
@@ -1804,6 +1932,25 @@
         "E06-01"
       ],
       "source": "docs/dobby-v7/E06-01-SPEC.md"
+    }
+  ],
+  "supplements": [
+    {
+      "mission": "E07.3 preflight registry coverage only",
+      "base": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+      "registryUnchanged": true,
+      "historicalRowsPreserved": 95,
+      "addedRows": [
+        "RC-L176",
+        "RC-L178",
+        "RC-L180",
+        "RC-L181",
+        "RC-L182",
+        "RC-L183",
+        "RC-L184",
+        "RC-L186"
+      ],
+      "note": "Adds mechanical coverage of8 already recorded66a1395 lines. No historical decision or finalSummary rewritten, no E06 correction merged."
     }
   ]
 }

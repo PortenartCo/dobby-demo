@@ -1,0 +1,56 @@
+[
+  {
+    "viewport": 320,
+    "before": [
+      296,
+      220
+    ],
+    "after": [
+      296,
+      220
+    ],
+    "comparedBox": [
+      20,
+      55,
+      276,
+      165
+    ],
+    "identicalCenterPixels": true
+  },
+  {
+    "viewport": 390,
+    "before": [
+      366,
+      220
+    ],
+    "after": [
+      366,
+      220
+    ],
+    "comparedBox": [
+      20,
+      55,
+      346,
+      165
+    ],
+    "identicalCenterPixels": true
+  },
+  {
+    "viewport": 1440,
+    "before": [
+      456,
+      220
+    ],
+    "after": [
+      456,
+      220
+    ],
+    "comparedBox": [
+      20,
+      55,
+      436,
+      165
+    ],
+    "identicalCenterPixels": true
+  }
+]

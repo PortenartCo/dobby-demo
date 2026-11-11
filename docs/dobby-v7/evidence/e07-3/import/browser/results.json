@@ -1,0 +1,44 @@
+[
+  {
+    "width": 320,
+    "status": "PASS",
+    "v1": 2,
+    "v2UnknownDuration": true,
+    "zipPhotoSha256": "886eca293713dd0dc77ee8c492c64e81359f6e0286b79d5f6df20c506466d1e2",
+    "tm5HumanConfirmation": true,
+    "replacementHistory": true,
+    "reimportIdempotent": true,
+    "quotaRollback": true,
+    "postAwaitContextGuard": true,
+    "addPhotoLater": true,
+    "exportVersion": 2
+  },
+  {
+    "width": 390,
+    "status": "PASS",
+    "v1": 2,
+    "v2UnknownDuration": true,
+    "zipPhotoSha256": "886eca293713dd0dc77ee8c492c64e81359f6e0286b79d5f6df20c506466d1e2",
+    "tm5HumanConfirmation": true,
+    "replacementHistory": true,
+    "reimportIdempotent": true,
+    "quotaRollback": true,
+    "postAwaitContextGuard": true,
+    "addPhotoLater": true,
+    "exportVersion": 2
+  },
+  {
+    "width": 1440,
+    "status": "PASS",
+    "v1": 2,
+    "v2UnknownDuration": true,
+    "zipPhotoSha256": "886eca293713dd0dc77ee8c492c64e81359f6e0286b79d5f6df20c506466d1e2",
+    "tm5HumanConfirmation": true,
+    "replacementHistory": true,
+    "reimportIdempotent": true,
+    "quotaRollback": true,
+    "postAwaitContextGuard": true,
+    "addPhotoLater": true,
+    "exportVersion": 2
+  }
+]

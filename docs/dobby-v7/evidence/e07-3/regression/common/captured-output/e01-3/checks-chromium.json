@@ -1,0 +1,36 @@
+[
+  {
+    "engine": "chromium",
+    "browserVersion": "154.0.8037.57",
+    "width": 390,
+    "profile": "iPhone 13 emulated",
+    "activationMs": 89,
+    "particles": 22,
+    "cadence": {
+      "frames": 72,
+      "medianMs": 16.699999999999932,
+      "over50ms": 0
+    },
+    "visibilityTest": "simulated visibilitychange; paused timelines measured",
+    "scrollTest": "native wheel",
+    "touchInput": true,
+    "result": "PASS"
+  },
+  {
+    "engine": "chromium",
+    "browserVersion": "154.0.8037.57",
+    "width": 1440,
+    "profile": "desktop",
+    "activationMs": 75,
+    "particles": 22,
+    "cadence": {
+      "frames": 72,
+      "medianMs": 16.700000000000045,
+      "over50ms": 0
+    },
+    "visibilityTest": "simulated visibilitychange; paused timelines measured",
+    "scrollTest": "native wheel",
+    "touchInput": false,
+    "result": "PASS"
+  }
+]
