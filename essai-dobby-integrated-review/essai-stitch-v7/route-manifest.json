@@ -2089,9 +2089,14 @@
   "onboarding": {
     "mission": "E06",
     "document": "docs/dobby-v7/E06-PREMIERE-CONNEXION.md",
-    "sourceCount": 7,
+    "sourceCount": 8,
     "scoring": "design/e06/references/scoring/dobby-e06-scoring-v1.json",
-    "cheminette": "SOURCE MISSING, NOT RECREATED",
+    "cheminette": {
+      "status": "source-backed-functional",
+      "view": "onboarding-ritual",
+      "document": "docs/dobby-v7/E06-01-RITUEL.md",
+      "illustration": "original local adaptation; not the unavailable Stitch media"
+    },
     "accountMemberAssociation": "NOT DELIVERED",
     "parentalPermissions": "NOT DELIVERED",
     "serverProvisioning": "NOT DELIVERED",
@@ -2235,6 +2240,24 @@
           390,
           1440
         ]
+      },
+      {
+        "view": "onboarding-ritual",
+        "id": "dobby_le_rituel_de_la_chemin_e",
+        "status": "source-backed-functional",
+        "blocked": [],
+        "route": "famille.html#onboarding-ritual",
+        "template": "templates/onboarding/onboarding-ritual.html",
+        "source": "design/e06/references/stitch/dobby_le_rituel_de_la_chemin_e/code.html",
+        "tests": [
+          "tests/e06-ritual.cjs",
+          "tests/e06-ritual-errors.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
       }
     ]
   },
@@ -2249,7 +2272,6 @@
     "blocked": [
       "E04-02 native series/occurrence protocol",
       "E05-01 official crest publication rights",
-      "E06-01 missing ritual source",
       "E06-04 official crest dependency only"
     ],
     "deferred": [

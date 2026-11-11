@@ -1,7 +1,7 @@
 /* Fictional persona and review scope only; native writers/calculators stay unchanged. */
 window.DobbyReviewConfig=Object.freeze({
- version:'E01-E08',storagePrefix:'dobby-review-integrated-v1|',demoMemberId:'review-person',label:'Démo E01–E08',reviewEntry:'essai-stitch-v7/famille.html#onboarding-foyer',
- info:'Démonstration fictive E01 à E08. Camille Démo est une persona de revue, sans compte authentifié. Vous pouvez modifier ces données et les réinitialiser. Connexion, invitations et partage réels désactivés. Les rubriques familiales historiques sont signalées non validées. Le parcours de première connexion crée uniquement des membres locaux fictifs. Blasons officiels, source du Rituel et récurrences restent des dépendances explicitement documentées.',
+ version:'E01-E08',storagePrefix:'dobby-review-integrated-v1|',demoMemberId:'review-person',label:'Démo E01–E08',reviewEntry:'essai-stitch-v7/famille.html#onboarding-ritual',
+ info:'Démonstration fictive E01 à E08. Camille Démo est une persona de revue, sans compte authentifié. Vous pouvez modifier ces données et les réinitialiser. Connexion, invitations et partage réels désactivés. Les rubriques familiales historiques sont signalées non validées. Le parcours de première connexion crée uniquement des membres locaux fictifs. Blasons officiels et récurrences restent des dépendances explicitement documentées. Le Rituel utilise sa source Stitch et une illustration originale de remplacement tracée.',
  styles:'body.e06-active>header{top:44px!important}[data-review-validation]{padding:8px 12px;margin:8px 12px;border:1px solid #d49b4266;border-radius:10px;color:#f9bb5f;background:#2c1c18;font:13px/1.4 Literata,Georgia,serif}',
  initialState(day){
   const after=n=>{const date=new Date(day+'T12:00:00');date.setDate(date.getDate()+n);return date.toLocaleDateString('en-CA');};
