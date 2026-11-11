@@ -1,0 +1,544 @@
+{
+  "observedAt": "2026-11-11T16:23:12.949Z",
+  "base": "c121027e53b335800d1559a39481c774a137a3fa",
+  "refs": {
+    "head": "31d5232baa331bc724f133a96f2a4e51494e9fe7",
+    "originMain": "0708d643d099999713e1538eb5043097ac591e6b",
+    "localMain": "637619aeda03326435e2397d4b95eee0efb3494d",
+    "otherActiveLocal": "9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a"
+  },
+  "sourcePinnedCommitPresent": true,
+  "e073ObservedPinnedCommitPresent": true,
+  "otherActiveLocalBranchUnchanged": true,
+  "protectedMainBaseline": "84e254f485a22ac4f5b880217c02902c22b39c73",
+  "protectedMainCount": 21,
+  "currentObservedMainEntries": 17,
+  "protectedMain": [
+    {
+      "path": ".github",
+      "before": "3244db043d545d773f91a1ec88c3195cc1777fb7",
+      "observed": "3244db043d545d773f91a1ec88c3195cc1777fb7",
+      "unchanged": true
+    },
+    {
+      "path": ".nojekyll",
+      "before": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "observed": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "unchanged": true
+    },
+    {
+      "path": "README.md",
+      "before": "ff9e5d39c6621eed152da967628e52287c412598",
+      "observed": "ff9e5d39c6621eed152da967628e52287c412598",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-e01-e06-review-20261111",
+      "before": "ba8fbb93adf4e46f2ae6bc87fb859691ce9923b8",
+      "observed": null,
+      "unchanged": false
+    },
+    {
+      "path": "essai-dobby-e07-review-20261111",
+      "before": "ef0d46b60f967d7c05b830adbeb0331b9064fc9c",
+      "observed": null,
+      "unchanged": false
+    },
+    {
+      "path": "essai-dobby-integrated-review",
+      "before": "79ea83b939ddaf29d0b4c3e8ec50f47d9d8f4ed4",
+      "observed": null,
+      "unchanged": false
+    },
+    {
+      "path": "essai-dobby-review",
+      "before": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1",
+      "observed": null,
+      "unchanged": false
+    },
+    {
+      "path": "essai-e01-preview",
+      "before": "d819e55f6924471364533e9ec2d36510afdcf89a",
+      "observed": "d819e55f6924471364533e9ec2d36510afdcf89a",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e02-preview",
+      "before": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db",
+      "observed": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v2",
+      "before": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f",
+      "observed": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v3",
+      "before": "d24babe19d5f496596749c525a9e215030d3c8fe",
+      "observed": "d24babe19d5f496596749c525a9e215030d3c8fe",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v4",
+      "before": "b38d97db05a7db4310aebaf8ddfd910c6007d991",
+      "observed": "b38d97db05a7db4310aebaf8ddfd910c6007d991",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille",
+      "before": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "observed": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5",
+      "before": "9791d1c1d56a4d1d56f4361157652d40f3537107",
+      "observed": "9791d1c1d56a4d1d56f4361157652d40f3537107",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch",
+      "before": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0",
+      "observed": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0",
+      "unchanged": true
+    },
+    {
+      "path": "essai-sync-v1",
+      "before": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "observed": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "unchanged": true
+    },
+    {
+      "path": "essai-sync-v2",
+      "before": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "observed": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v6-preview",
+      "before": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "observed": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v7-preview",
+      "before": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a",
+      "observed": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a",
+      "unchanged": true
+    },
+    {
+      "path": "index.html",
+      "before": "78f15c3e970f17a884cd52c10623b821b5985cb8",
+      "observed": "78f15c3e970f17a884cd52c10623b821b5985cb8",
+      "unchanged": true
+    },
+    {
+      "path": "sql-proposals",
+      "before": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "observed": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "unchanged": true
+    }
+  ],
+  "mainAddedEntries": [],
+  "sourceProtectedPaths": [
+    {
+      "path": "design/stitch-53",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "design/stitch-e07",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-stitch-v5",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-stitch",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-stitch-v2",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-stitch-v3",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-stitch-v4",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-sync-v1",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-sync-v2",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-v6-preview",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-v7-preview",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "sql-proposals",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "docs/dobby-v7/E07-3-IMPORT.md",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "docs/dobby-v7/E07-3-TAVERNE-GRIMOIRE.md",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "docs/dobby-v7/CONSOLIDATION-MATRIX.json",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "docs/dobby-v7/CONSOLIDATION-MATRIX.md",
+      "unchanged": true,
+      "changed": []
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/fixtures/e07-3-native-extensions.json",
+      "unchanged": true,
+      "changed": []
+    }
+  ],
+  "sourceBaselineFileCount": 2909,
+  "missingSourceFiles": [],
+  "changedFromBase": [
+    "design/e07-4-consolidation/references/INDEX_CAPTURES.md",
+    "design/e07-4-consolidation/references/LIRE_D_ABORD.md",
+    "design/e07-4-consolidation/references/MANIFEST.json",
+    "design/e07-4-consolidation/references/MATRICE_DECISIONS_E07.csv",
+    "design/e07-4-consolidation/references/NOTES_TECHNIQUES_ET_ARBITRAGES.md",
+    "design/e07-4-consolidation/references/PROMPT_CODEX.md",
+    "design/e07-4-consolidation/references/SCENARIOS_ACCEPTATION.md",
+    "design/e07-4-consolidation/references/SPEC_E07_CONSOLIDATION.md",
+    "design/e07-4-consolidation/references/assets/PREMIERE_TRANCHE_E07_REFERENCE.zip",
+    "design/e07-4-consolidation/references/assets/STITCH_FESTIN_ORIGINAL.zip",
+    "design/e07-4-consolidation/references/assets/STITCH_FESTIN_art_original.png",
+    "design/e07-4-consolidation/references/assets/STITCH_FESTIN_code_reference.html",
+    "design/e07-4-consolidation/references/assets/STITCH_FESTIN_preview.png",
+    "design/e07-4-consolidation/references/captures/E07-I01_bouton_inscrire_recette.png",
+    "design/e07-4-consolidation/references/captures/E07-I02_creation_choix_manuel_ia.png",
+    "design/e07-4-consolidation/references/captures/E07-I03_export_grimoire.png",
+    "design/e07-4-consolidation/references/captures/E07-M01_hero_cuisine_surcharge.png",
+    "design/e07-4-consolidation/references/captures/E07-M03_ingredients_par_etape.png",
+    "design/e07-4-consolidation/references/captures/E07-M05_encarts_superflus.png",
+    "design/e07-4-consolidation/references/captures/E07-M06_navigation_etapes.png",
+    "design/e07-4-consolidation/references/captures/E07-M07_minuteur_unique.png",
+    "design/e07-4-consolidation/references/captures/E07-R01_fiche_globale.png",
+    "design/e07-4-consolidation/references/captures/E07-R02_bandeau_donnees_et_favori.png",
+    "design/e07-4-consolidation/references/captures/E07-R03_photo_badges_favoris.png",
+    "design/e07-4-consolidation/references/captures/E07-R04_titre_double.png",
+    "design/e07-4-consolidation/references/captures/E07-R05_metriques_4_cartes.png",
+    "design/e07-4-consolidation/references/captures/E07-R06_choix_methode.png",
+    "design/e07-4-consolidation/references/captures/E07-R08_onglets_incoherents.png",
+    "design/e07-4-consolidation/references/captures/E07-R09_garde_manger_cases.png",
+    "design/e07-4-consolidation/references/captures/E07-R11_boutons_planifier_grimoire.png",
+    "design/e07-4-consolidation/references/captures/E07-R13_authenticite.png",
+    "design/e07-4-consolidation/references/captures/E07-R14_copie_modifiable.png",
+    "design/e07-4-consolidation/references/captures/E07-S01_creation_manuelle_bandeau.png",
+    "design/e07-4-consolidation/references/captures/E07-S02_piece_reference.png",
+    "design/e07-4-consolidation/references/captures/E07-S03_rangement_direct.png",
+    "docs/dobby-v7/E07-4-ENGINE.md",
+    "docs/dobby-v7/E07-4-FICHE.md",
+    "docs/dobby-v7/E07-4-IMPORT.md",
+    "docs/dobby-v7/E07-4-TIMERS.md",
+    "docs/dobby-v7/evidence/e07-4/a-editor-b-regression.txt",
+    "docs/dobby-v7/evidence/e07-4/a-editor-green.txt",
+    "docs/dobby-v7/evidence/e07-4/a-editor-red.txt",
+    "docs/dobby-v7/evidence/e07-4/a-editor/after-1440.png",
+    "docs/dobby-v7/evidence/e07-4/a-editor/after-320.png",
+    "docs/dobby-v7/evidence/e07-4/a-editor/after-390.png",
+    "docs/dobby-v7/evidence/e07-4/a-editor/before-1440.png",
+    "docs/dobby-v7/evidence/e07-4/a-editor/before-320.png",
+    "docs/dobby-v7/evidence/e07-4/a-editor/before-390.png",
+    "docs/dobby-v7/evidence/e07-4/a-editor/before-results.json",
+    "docs/dobby-v7/evidence/e07-4/a-editor/results.json",
+    "docs/dobby-v7/evidence/e07-4/a-import-b-regression.txt",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-320-1440-green.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-green-initial.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-green.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-red.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-results-1440.json",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-results-320-1440.json",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-results-320.json",
+    "docs/dobby-v7/evidence/e07-4/a-import/browser-results.json",
+    "docs/dobby-v7/evidence/e07-4/a-import/courses-regression.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/format-green-initial.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/format-red.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/media-red.log",
+    "docs/dobby-v7/evidence/e07-4/a-import/unit-green.log",
+    "docs/dobby-v7/evidence/e07-4/a-ui-b-regression.txt",
+    "docs/dobby-v7/evidence/e07-4/a-ui-first-label-assertion.txt",
+    "docs/dobby-v7/evidence/e07-4/a-ui-green.txt",
+    "docs/dobby-v7/evidence/e07-4/a-ui-red.txt",
+    "docs/dobby-v7/evidence/e07-4/a-ui/after-catalogue-1440.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/after-catalogue-320.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/after-catalogue-390.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/after-entry-1440.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/after-entry-320.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/after-entry-390.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-catalogue-1440.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-catalogue-320.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-catalogue-390.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-entry-1440.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-entry-320.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-entry-390.png",
+    "docs/dobby-v7/evidence/e07-4/a-ui/before-results.json",
+    "docs/dobby-v7/evidence/e07-4/a-ui/results.json",
+    "docs/dobby-v7/evidence/e07-4/b-editor-green.txt",
+    "docs/dobby-v7/evidence/e07-4/b-editor/edition-1440.png",
+    "docs/dobby-v7/evidence/e07-4/b-editor/edition-320.png",
+    "docs/dobby-v7/evidence/e07-4/b-editor/edition-390.png",
+    "docs/dobby-v7/evidence/e07-4/b-editor/results.json",
+    "docs/dobby-v7/evidence/e07-4/b-engine/green-initial.log",
+    "docs/dobby-v7/evidence/e07-4/b-engine/green.log",
+    "docs/dobby-v7/evidence/e07-4/b-engine/native-guard-green.log",
+    "docs/dobby-v7/evidence/e07-4/b-engine/red.log",
+    "docs/dobby-v7/evidence/e07-4/b-engine/results-320-390-1440.json",
+    "docs/dobby-v7/evidence/e07-4/b-engine/results-390.json",
+    "docs/dobby-v7/evidence/e07-4/b-engine/stale-editor-green.log",
+    "docs/dobby-v7/evidence/e07-4/b-engine/stale-editor-red.log",
+    "docs/dobby-v7/evidence/e07-4/b-ui-green.txt",
+    "docs/dobby-v7/evidence/e07-4/b-ui-red.txt",
+    "docs/dobby-v7/evidence/e07-4/b-ui/after-calendrier-1440.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/after-calendrier-320.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/after-calendrier-390.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/after-fiche-1440.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/after-fiche-320.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/after-fiche-390.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/before-fiche-1440.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/before-fiche-320.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/before-fiche-390.png",
+    "docs/dobby-v7/evidence/e07-4/b-ui/before-results.json",
+    "docs/dobby-v7/evidence/e07-4/b-ui/results.json",
+    "docs/dobby-v7/evidence/e07-4/baseline.json",
+    "docs/dobby-v7/evidence/e07-4/c-core/cook-progress-green.log",
+    "docs/dobby-v7/evidence/e07-4/c-core/cook-progress-red.log",
+    "docs/dobby-v7/evidence/e07-4/c-core/cook-progress-results.json",
+    "docs/dobby-v7/evidence/e07-4/c-core/timers-edge-red.log",
+    "docs/dobby-v7/evidence/e07-4/c-core/timers-green-initial.log",
+    "docs/dobby-v7/evidence/e07-4/c-core/timers-green.log",
+    "docs/dobby-v7/evidence/e07-4/c-core/timers-red.log",
+    "docs/dobby-v7/evidence/e07-4/c-render-race-green.txt",
+    "docs/dobby-v7/evidence/e07-4/c-render-race-red.txt",
+    "docs/dobby-v7/evidence/e07-4/c-ui-green.txt",
+    "docs/dobby-v7/evidence/e07-4/c-ui-red.txt",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-cuisine-1440.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-cuisine-320.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-cuisine-390.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-festin-1440.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-festin-320.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-festin-390.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-timers-1440.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-timers-320.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/after-timers-390.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/before-cuisine-1440.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/before-cuisine-320.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/before-cuisine-390.png",
+    "docs/dobby-v7/evidence/e07-4/c-ui/before-results.json",
+    "docs/dobby-v7/evidence/e07-4/c-ui/results.json",
+    "docs/dobby-v7/evidence/e07-4/main-before.json",
+    "docs/superpowers/plans/2026-11-11-e074-consolidation.md",
+    "essai-stitch-v5-famille/index.html",
+    "essai-stitch-v5-famille/tests/fixtures/e07-4-native-extensions.json",
+    "essai-stitch-v5-famille/tests/integration.test.mjs",
+    "essai-stitch-v7/assets/cuisine/e074-festin.png",
+    "essai-stitch-v7/build-source.cjs",
+    "essai-stitch-v7/chrome.js",
+    "essai-stitch-v7/cuisine-e073.css",
+    "essai-stitch-v7/cuisine-e074.css",
+    "essai-stitch-v7/cuisine-e074.js",
+    "essai-stitch-v7/cuisine-engine.js",
+    "essai-stitch-v7/cuisine-list.js",
+    "essai-stitch-v7/cuisine-timers.js",
+    "essai-stitch-v7/cuisine.js",
+    "essai-stitch-v7/index.html",
+    "essai-stitch-v7/recipe-import-format.mjs",
+    "essai-stitch-v7/recipe-import.js",
+    "essai-stitch-v7/tests/e07-3-import-format.test.mjs",
+    "essai-stitch-v7/tests/e07-4-a-incomplete-editor.cjs",
+    "essai-stitch-v7/tests/e07-4-a-ui.cjs",
+    "essai-stitch-v7/tests/e07-4-b-editor.cjs",
+    "essai-stitch-v7/tests/e07-4-b-ui.cjs",
+    "essai-stitch-v7/tests/e07-4-c-ui.cjs",
+    "essai-stitch-v7/tests/e07-4-cook-progress.cjs",
+    "essai-stitch-v7/tests/e07-4-edit-stale.cjs",
+    "essai-stitch-v7/tests/e07-4-engine.cjs",
+    "essai-stitch-v7/tests/e07-4-import-format.test.mjs",
+    "essai-stitch-v7/tests/e07-4-import.cjs",
+    "essai-stitch-v7/tests/e07-4-render-race.cjs",
+    "essai-stitch-v7/tests/e07-4-timers.test.cjs",
+    "essai-stitch-v7/tests/fixtures/e07-4/rollback.zip",
+    "essai-stitch-v7/tests/fixtures/e07-4/source.png",
+    "essai-stitch-v7/tests/fixtures/e07-4/steps.zip"
+  ],
+  "scope": "Read-only local Git objects/ref cache; no fetch/push. Publication and actual current remote refs remain the root final gate.",
+  "verdict": "BLOQUÉ",
+  "baselineMainEntries": [
+    {
+      "path": ".github",
+      "expected": "3244db043d545d773f91a1ec88c3195cc1777fb7",
+      "observed": "3244db043d545d773f91a1ec88c3195cc1777fb7",
+      "unchanged": true
+    },
+    {
+      "path": ".nojekyll",
+      "expected": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "observed": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "unchanged": true
+    },
+    {
+      "path": "README.md",
+      "expected": "ff9e5d39c6621eed152da967628e52287c412598",
+      "observed": "ff9e5d39c6621eed152da967628e52287c412598",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-e01-e06-review-20261111",
+      "expected": "ba8fbb93adf4e46f2ae6bc87fb859691ce9923b8",
+      "observed": "ba8fbb93adf4e46f2ae6bc87fb859691ce9923b8",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-e07-review-20261111",
+      "expected": "ef0d46b60f967d7c05b830adbeb0331b9064fc9c",
+      "observed": "ef0d46b60f967d7c05b830adbeb0331b9064fc9c",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-integrated-review",
+      "expected": "79ea83b939ddaf29d0b4c3e8ec50f47d9d8f4ed4",
+      "observed": "79ea83b939ddaf29d0b4c3e8ec50f47d9d8f4ed4",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-review",
+      "expected": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1",
+      "observed": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e01-preview",
+      "expected": "d819e55f6924471364533e9ec2d36510afdcf89a",
+      "observed": "d819e55f6924471364533e9ec2d36510afdcf89a",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e02-preview",
+      "expected": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db",
+      "observed": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v2",
+      "expected": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f",
+      "observed": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v3",
+      "expected": "d24babe19d5f496596749c525a9e215030d3c8fe",
+      "observed": "d24babe19d5f496596749c525a9e215030d3c8fe",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v4",
+      "expected": "b38d97db05a7db4310aebaf8ddfd910c6007d991",
+      "observed": "b38d97db05a7db4310aebaf8ddfd910c6007d991",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille",
+      "expected": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "observed": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5",
+      "expected": "9791d1c1d56a4d1d56f4361157652d40f3537107",
+      "observed": "9791d1c1d56a4d1d56f4361157652d40f3537107",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch",
+      "expected": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0",
+      "observed": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0",
+      "unchanged": true
+    },
+    {
+      "path": "essai-sync-v1",
+      "expected": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "observed": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "unchanged": true
+    },
+    {
+      "path": "essai-sync-v2",
+      "expected": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "observed": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v6-preview",
+      "expected": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "observed": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v7-preview",
+      "expected": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a",
+      "observed": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a",
+      "unchanged": true
+    },
+    {
+      "path": "index.html",
+      "expected": "78f15c3e970f17a884cd52c10623b821b5985cb8",
+      "observed": "78f15c3e970f17a884cd52c10623b821b5985cb8",
+      "unchanged": true
+    },
+    {
+      "path": "sql-proposals",
+      "expected": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "observed": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "unchanged": true
+    }
+  ],
+  "sourceVerdict": "PASS",
+  "immutablePublishedBaselineVerdict": "PASS",
+  "cachedOriginMainIsAncestorOfPublishedBaseline": true,
+  "cachedOriginMainComparison": "NON_VÉRIFIÉ_CACHE_ANTÉRIEUR",
+  "pending": "Current remote main must be read by the root publication gate; the observed origin/main cache predates the already published baseline, so its missing review folders are not evidence of a remote deletion.",
+  "stitchSourceManifest": {
+    "htmlPages": 53,
+    "designCount": 53,
+    "unchangedFromBase": true
+  }
+}

@@ -1,0 +1,131 @@
+[
+  {
+    "width": 320,
+    "initial": {
+      "effects": "true",
+      "sound": "false"
+    },
+    "views": [
+      {
+        "view": "taverne",
+        "particles": 22,
+        "changedPixels": 59400
+      },
+      {
+        "view": "recipes",
+        "particles": 22,
+        "changedPixels": 46718
+      },
+      {
+        "view": "recipe",
+        "particles": 22,
+        "changedPixels": 442
+      },
+      {
+        "view": "cook",
+        "particles": 22,
+        "changedPixels": 667
+      },
+      {
+        "view": "recipe-ai",
+        "particles": 22,
+        "changedPixels": 511
+      },
+      {
+        "view": "shop",
+        "particles": 22,
+        "changedPixels": 36414
+      }
+    ],
+    "offPersists": true,
+    "reducedMotion": true,
+    "noAutomaticAudio": true,
+    "nativeBusinessUnchanged": true
+  },
+  {
+    "width": 390,
+    "initial": {
+      "effects": "true",
+      "sound": "false"
+    },
+    "views": [
+      {
+        "view": "taverne",
+        "particles": 22,
+        "changedPixels": 78999
+      },
+      {
+        "view": "recipes",
+        "particles": 22,
+        "changedPixels": 57744
+      },
+      {
+        "view": "recipe",
+        "particles": 22,
+        "changedPixels": 490
+      },
+      {
+        "view": "cook",
+        "particles": 22,
+        "changedPixels": 642
+      },
+      {
+        "view": "recipe-ai",
+        "particles": 22,
+        "changedPixels": 490
+      },
+      {
+        "view": "shop",
+        "particles": 22,
+        "changedPixels": 44862
+      }
+    ],
+    "offPersists": true,
+    "reducedMotion": true,
+    "noAutomaticAudio": true,
+    "nativeBusinessUnchanged": true
+  },
+  {
+    "width": 1440,
+    "initial": {
+      "effects": "true",
+      "sound": "false"
+    },
+    "views": [
+      {
+        "view": "taverne",
+        "particles": 22,
+        "changedPixels": 92778
+      },
+      {
+        "view": "recipes",
+        "particles": 22,
+        "changedPixels": 71309
+      },
+      {
+        "view": "recipe",
+        "particles": 22,
+        "changedPixels": 485
+      },
+      {
+        "view": "cook",
+        "particles": 22,
+        "changedPixels": 469
+      },
+      {
+        "view": "recipe-ai",
+        "particles": 22,
+        "changedPixels": 364
+      },
+      {
+        "view": "shop",
+        "particles": 22,
+        "changedPixels": 55714
+      }
+    ],
+    "offPersists": true,
+    "reducedMotion": true,
+    "noAutomaticAudio": true,
+    "nativeBusinessUnchanged": true
+  }
+]

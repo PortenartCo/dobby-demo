@@ -65,9 +65,9 @@
 
 **Files:** `chrome.js/css` adaptations compatibles, générateur/profil E07.4 et tests/CI existants si requis ; rapport `docs/dobby-v7/E07-4-CONSOLIDATION.md`, matrice indépendante61IDs et preuves.
 
-- [ ] Effets ON/SonOFF sans préférence, OFF explicite conservé ; pixels/classes sur Taverne/Grimoire/Fiche/Cuisine/Import/Courses, réduction système et absence de son automatique.
-- [ ] Réutiliser tests E07.3 concernés, adapter uniquement attentes devenues caduques avec preuve ; frontières natives et un vrai parcours E07 complet aux3largeurs, sans répétition sans cause.
-- [ ] Rapprocher les61IDs :42corrections,10préservations,4remplacements,5reports. Chaque résultat a code/test/preuve ou vrai blocage ; vérifier conservation des arbres historiques.
+- [x] Effets ON/SonOFF sans préférence, OFF explicite conservé ; pixels/classes sur Taverne/Grimoire/Fiche/Cuisine/Import/Courses, réduction système et absence de son automatique.
+- [x] Réutiliser tests E07.3 concernés, adapter uniquement attentes devenues caduques avec preuve ; frontières natives et un vrai parcours E07 complet aux3largeurs, sans répétition sans cause.
+- [x] Rapprocher les61IDs :42corrections,10préservations,4remplacements,5reports. Chaque résultat a code/test/preuve ou vrai blocage ; vérifier conservation des arbres historiques.
 - [ ] Source/build propres et reproductibles, nouveau profil `e074`, nouveau préfixe `dobby-review-e074-20261111|`, CI sur SHA réel et aperçu local sans backend.
 - [ ] Revue finale et corrections causales, pousser seule branche source ; si tous contrôles verts, checkout publication indépendant depuis main récent et ajout du seul sous-arbre statique autorisé.
 - [ ] Vérifier commit publication, Pages, octets HTTP et parcours hébergés/sentinelles ; rapport des cinq niveaux d’état et URL. E07 reste partiel pour les deux pages reportées. Arrêt après publication vérifiée ou blocage réel.

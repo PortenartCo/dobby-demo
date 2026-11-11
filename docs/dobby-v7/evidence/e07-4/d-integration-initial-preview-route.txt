@@ -1,0 +1,56 @@
+E074_CI_START e07-4-a-ui.cjs
+E074_CI_PASS e07-4-a-ui.cjs
+E074_CI_START e07-4-a-incomplete-editor.cjs
+E074_CI_PASS e07-4-a-incomplete-editor.cjs
+E074_CI_START e07-4-import.cjs
+E074_CI_PASS e07-4-import.cjs
+E074_CI_START e07-4-engine.cjs
+E074_CI_PASS e07-4-engine.cjs
+E074_CI_START e07-4-edit-stale.cjs
+E074_CI_PASS e07-4-edit-stale.cjs
+E074_CI_START e07-4-b-ui.cjs
+E074_CI_PASS e07-4-b-ui.cjs
+E074_CI_START e07-4-b-editor.cjs
+E074_CI_PASS e07-4-b-editor.cjs
+E074_CI_START e07-4-cook-progress.cjs
+E074_CI_PASS e07-4-cook-progress.cjs
+E074_CI_START e07-4-render-race.cjs
+E074_CI_PASS e07-4-render-race.cjs
+E074_CI_START e07-4-c-ui.cjs
+E074_CI_PASS e07-4-c-ui.cjs
+E074_CI_START e07-4-effects.cjs
+E074_CI_PASS e07-4-effects.cjs
+E074_CI_START e07-3-taverne.cjs
+E074_CI_PASS e07-3-taverne.cjs
+E074_CI_START e07-3-catalogue.cjs
+E074_CI_PASS e07-3-catalogue.cjs
+E074_CI_START e07-3-effects.cjs
+E074_CI_PASS e07-3-effects.cjs
+E074_CI_START e07-2-boot.cjs
+E074_CI_PASS e07-2-boot.cjs
+E074_CI_START e07-2-model.cjs
+E074_CI_PASS e07-2-model.cjs
+E074_CI_START e07-2.cjs
+E074_CI_PASS e07-2.cjs
+E074_CI_START cuisine-family.cjs
+E074_CI_PASS cuisine-family.cjs
+E074_CI_START consolidation-shared.cjs
+E074_CI_PASS consolidation-shared.cjs
+E074_CI_START e03-counts.cjs
+E074_CI_PASS e03-counts.cjs
+E074_CI_START e04-runes.cjs
+E074_CI_PASS e04-runes.cjs
+E074_CI_START e05-native.cjs
+E074_CI_PASS e05-native.cjs
+E074_CI_START e06-edge.cjs
+E074_CI_PASS e06-edge.cjs
+E074_CI_START e08.cjs
+E074_CI_PASS e08.cjs
+REVIEW_BUILD 31d5232baa331bc724f133a96f2a4e51494e9fe7 278 files /workspace/dobby-e074/essai-dobby-e07-consolidation-review-20261111
+E074_CI_START e07-4-preview.cjs
+ page.waitForFunction: Timeout 20000ms exceeded.
+    at view (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-preview.cjs:17:205)
+    at /workspace/dobby-e074/essai-stitch-v7/tests/e07-4-preview.cjs:49:303 {
+  log: [],
+  name: 'TimeoutError'
+}

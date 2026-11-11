@@ -1,0 +1,123 @@
+{
+  "sourceShaAtExecution": "31d5232baa331bc724f133a96f2a4e51494e9fe7",
+  "sourceState": "working-tree-before-D-commit",
+  "sourceInputs": {
+    "essai-stitch-v7/cuisine.js": "ad7fce49d9a4b656df7cb2a57564b02a7b447d56c0cc5b701b10d0de9b5a43da",
+    "essai-stitch-v7/cuisine-e074.js": "29bd775e7820347e93aab8a6981f791e4c9045eb5145b1d59896fa1649642db8",
+    "essai-stitch-v7/cuisine-timers.js": "7492217e618c2a88d0bfb015c2dc1430f06df933769013e0057fc0dc768f05f0",
+    "essai-stitch-v7/cuisine-engine.js": "420e61c7dc26965a323a61ba90d9ea9c6552c5674b188467a5f71b2d69fd6a65",
+    "essai-stitch-v7/chrome.js": "8a06983e3c96b1f00b0e8695fb39c73752a6f181ef22481a9971a52e343ed8de",
+    "essai-stitch-v7/recipe-import.js": "2eb087d8ba64c479ba52936a9e2fbd845ca85fe0fe81a6577f6e79b32bf370ed",
+    "scripts/build-dobby-review.cjs": "360eb01386dff1389eab7d3d1f14587f58b8e0f9b5440065073a74bb000217d4",
+    "scripts/review/e074-config.js": "444d84d2067bc3d41f5acb972df90f502b2c13b210ed2ee69134844303f12995"
+  },
+  "results": [
+    {
+      "test": "e07-4-a-ui.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-a-incomplete-editor.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-import.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-engine.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-edit-stale.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-b-ui.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-b-editor.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-cook-progress.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-render-race.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-c-ui.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-effects.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-3-taverne.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-3-catalogue.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-3-effects.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-2-boot.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-2-model.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-2.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "cuisine-family.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "consolidation-shared.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e03-counts.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e04-runes.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e05-native.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e06-edge.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e08.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-preview.cjs",
+      "status": "PASS",
+      "widths": [
+        320,
+        390,
+        1440
+      ]
+    }
+  ],
+  "status": "PASS",
+  "note": "24 source suites passed without rerun; preview-only retry corrected the reset test’s expected route after added flows. Exact committed SHA is verified by subsequent GitHub CI."
+}

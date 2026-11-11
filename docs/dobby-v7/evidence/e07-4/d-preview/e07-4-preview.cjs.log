@@ -1,0 +1,6 @@
+page.waitForFunction: Timeout 20000ms exceeded.
+    at view (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-preview.cjs:17:205)
+    at /workspace/dobby-e074/essai-stitch-v7/tests/e07-4-preview.cjs:49:303 {
+  log: [],
+  name: 'TimeoutError'
+}

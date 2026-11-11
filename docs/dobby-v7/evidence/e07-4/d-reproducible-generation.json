@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "files": {
+    "essai-stitch-v7/index.html": "48cc6695e7f29aac0e845c3a0508d5013cdbfc18cee9279429bd35ba47cc1647",
+    "essai-stitch-v7/traverse.html": "173f48a7e411fd3d5c0f894059e6f99d2de42ca4c0a6cfd33df9c388ba20f65b",
+    "essai-stitch-v7/missions.html": "e0bf30917e8af5c9b5167b8ec95c7b338c977a0b9f749329486777c9a72ef840",
+    "essai-stitch-v7/famille.html": "f59f4f2e55732b9cf9bf3bbf4f5c10c8af1e3f3a8bd8155335b5069de144cf28",
+    "essai-stitch-v7/stitch-tailwind.css": "5ef84140838420a77e620acdee094213c960b8d0c7e523f54d7413ca253f0849",
+    "essai-stitch-v7/chrome-source.html": "2a61515a534d7c11eaf6bd708e8252b5b1d4c85d1b3481f90aed63f94cdd25ca",
+    "essai-stitch-v7/route-manifest.json": "e70fa62d0e8b24a93fcea94778b3cdb4fa24ba5a4c7c2f9fe6ad8173df5344f1",
+    "essai-stitch-v7/register-route-data.js": "7210810057c52e7cbc70fc5c81ce2221b3e402e6eb22224598038b863e11e22a",
+    "essai-stitch-v7/ritual-effects.js": "38d6c0b7840e5ecc3c3b15f8ca494ffce97224df62e112870950fcbee77a042e"
+  },
+  "sourceGenerator": "essai-stitch-v7/build-source.cjs",
+  "tailwindVersion": "3.4.17",
+  "sameBytesAcrossRuns": true
+}
