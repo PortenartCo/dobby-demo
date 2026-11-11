@@ -1,0 +1,68 @@
+✖ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (1.909636ms)
+✔ revised scoring stays deterministic, reaches all four houses, and leaves Patronus rules unchanged (202.148635ms)
+✖ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (1.196349ms)
+✔ old confirmed answers/results and untouched drafts survive adoption of the new version (1.017456ms)
+✔ future draft versions remain blocked without an overwrite (0.984287ms)
+✔ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (2.185071ms)
+✖ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (1.462734ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 4
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.359948
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:14:1
+✖ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (1.909636ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'Une invitation inattendue'
+  - 'Une salle capricieuse'
+         ^
+
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:15:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Une invitation inattendue',
+    expected: 'Une salle capricieuse',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:28:1
+✖ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (1.196349ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'C' !== null
+
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:29:129)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'C',
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:53:1
+✖ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (1.462734ms)
+  Error: Version ou résultat confirmé invalide.
+      at Object.patch (evalmachine.<anonymous>:20:88)
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:56:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

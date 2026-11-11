@@ -1,0 +1,63 @@
+{
+  "version": "e06-v2",
+  "reference": "design/e06/references/scoring/validate.py",
+  "referenceSha256": "5611d244dd82ad22618b580e38b38754d94381faa72fb94a5fa03759c1b6fefb",
+  "referenceSourceModified": false,
+  "input": "Only canonical V2 question axes supplied to historical mathematical rule functions",
+  "weightedCombinations": 16384,
+  "distribution": {
+    "serdaigle": 3830,
+    "poufsouffle": 3403,
+    "serpentard": 4505,
+    "gryffondor": 4646
+  },
+  "maximumRelativeDeviationFromUniform": 0.169189453125,
+  "legacyUniformityLimitClaimed": false,
+  "otherQuestionsRebalanced": false,
+  "examples": {
+    "serdaigle": {
+      "q1_to_q6": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "q7": null
+    },
+    "poufsouffle": {
+      "q1_to_q6": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        2
+      ],
+      "q7": 2
+    },
+    "serpentard": {
+      "q1_to_q6": [
+        0,
+        0,
+        0,
+        2,
+        3,
+        0
+      ],
+      "q7": 2
+    },
+    "gryffondor": {
+      "q1_to_q6": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "q7": null
+    }
+  }
+}

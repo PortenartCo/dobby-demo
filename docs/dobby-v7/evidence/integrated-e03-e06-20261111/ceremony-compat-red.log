@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Old deep link resumes the revised q2, not a later question
++ actual - expected
+
++ "Tu découvres un couloir que tu n'avais jamais remarqué, alors que tu passes devant chaque jour. Quel détail te marque le plus ?"
+- 'Tu dois organiser une soirée dans une salle du château. Mais la salle choisie disparaît et réapparaît de manière imprévisible. Comment réagis-tu ?'
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-compat.cjs:11:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: "Tu découvres un couloir que tu n'avais jamais remarqué, alors que tu passes devant chaque jour. Quel détail te marque le plus ?",
+  expected: 'Tu dois organiser une soirée dans une salle du château. Mais la salle choisie disparaît et réapparaît de manière imprévisible. Comment réagis-tu ?',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

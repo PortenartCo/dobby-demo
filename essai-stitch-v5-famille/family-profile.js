@@ -17,7 +17,7 @@ window.DobbyMagicIdentity=(()=>{'use strict';
   for(const [name,key,rows,label]of fields)if(Object.hasOwn(values,name)){const value=values[name];if(typeof value!=='string'||value!==''&&!rows.some(x=>x.id===value))throw Error(label+' invalide.');profile[key]=value;}
   for(const [field,idField,key]of [['magicHouseAlgorithm','magicHouseId','houseAlgorithmVersion'],['magicPatronusAlgorithm','magicPatronusId','patronusAlgorithmVersion']]){
    if(Object.hasOwn(values,idField))delete profile[key];
-   if(Object.hasOwn(values,field)){if(!values[idField]||values[field]!=='e06-v1')throw Error('Version ou résultat confirmé invalide.');profile[key]=values[field];}
+   if(Object.hasOwn(values,field)){if(!values[idField]||!(field==='magicHouseAlgorithm'?['e06-v1','e06-v2']:['e06-v1']).includes(values[field]))throw Error('Version ou résultat confirmé invalide.');profile[key]=values[field];}
   }
   if(Object.hasOwn(values,'magicCeremony')){if(!['complete','deferred'].includes(values.magicCeremony))throw Error('État de cérémonie invalide.');profile.ceremonyStatus=values.magicCeremony;}
   result.magicProfile=profile;return result;

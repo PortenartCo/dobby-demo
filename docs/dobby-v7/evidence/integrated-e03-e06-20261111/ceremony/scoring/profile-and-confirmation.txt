@@ -1,0 +1,22 @@
+✔ E05 catalogues have stable French identities without inferring a house or a member (3.861707ms)
+✔ partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards (5.771274ms)
+✔ E05 approves the exact E04 thresholds without changing reward values (0.344362ms)
+✔ family profile revision conflict retains the explicitly chosen version: server (40.837773ms)
+✔ family profile revision conflict retains the explicitly chosen version: local (9.04736ms)
+✔ native family sync preserves fields through reload and does not include medical records or rewards (7.485738ms)
+✔ LIMIT demonstrated: an old member writer can erase identity extensions server-side (6.375379ms)
+✔ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (1.966517ms)
+✔ revised scoring stays deterministic, reaches all four houses, and leaves Patronus rules unchanged (249.664156ms)
+✔ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (1.469258ms)
+✔ old confirmed answers/results and untouched drafts survive adoption of the new version (0.543715ms)
+✔ future draft versions remain blocked without an overwrite (0.75709ms)
+✔ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (2.569082ms)
+✔ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (1.55862ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 567.251138

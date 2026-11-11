@@ -1,0 +1,9 @@
+page.evaluate: TypeError: Cannot read properties of null (reading 'nextElementSibling')
+    at question (http://127.0.0.1:8893/essai-stitch-v7/onboarding.js:66:172)
+    at Object.render (http://127.0.0.1:8893/essai-stitch-v7/onboarding.js:16:376)
+    at render (http://127.0.0.1:8893/essai-stitch-v7/family.js?v=20261110-e06-1:160:170)
+    at async Object.open (http://127.0.0.1:8893/essai-stitch-v7/family.js?v=20261110-e06-1:172:564)
+    at async <anonymous>:337:30
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-compat.cjs:10:10 {
+  log: []
+}

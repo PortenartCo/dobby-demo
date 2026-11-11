@@ -1,4 +1,4 @@
-/* E06 deterministic rules only, from the immutable supplied JSON. No storage,
+/* E06 deterministic rules only, from the versioned canonical JSON. No storage,
    clock, random source, user identity or presentation order participates. */
 const catalogue=Object.freeze({house:Object.freeze({gryffondor:'gryffindor',serpentard:'slytherin',serdaigle:'ravenclaw',poufsouffle:'hufflepuff'}),patronus:Object.freeze({cerf:'stag',loutre:'otter',renard:'fox',loup:'wolf',chat:'cat',hibou:'owl',cheval:'horse',lievre:'hare',cygne:'swan',lynx:'lynx',blaireau:'badger',dauphin:'dolphin'})});
 const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
@@ -20,5 +20,7 @@ export function createScoring(raw){
   picks.forEach((v,q)=>add(q,v));const tie=s=>s.filter(x=>x===Math.max(...s)).length>1,need=tie(m)||tie(u);if(need&&optional===undefined)return {needs_extra:true};if(need){const n=extra(P,optional);picks.push(n);add(P.baseQuestionCount,n);}const im=winner(m,mt,picks),ju=winner(u,ut,picks);return {needs_extra:need,result:P.animalGrid[im][ju],mode:P.modes[im],nuance:P.nuances[ju]};
  }
  function catalogueId(kind,label){const id=catalogue[kind]?.[label];if(!id)throw Error('Résultat non pris en charge.');return id;}
- return Object.freeze({house,patronus,catalogueId,version:cfg.globalRules.algorithmVersion,config:cfg});
+ function versionFor(kind){if(!catalogue[kind])throw Error('Questionnaire inconnu.');return cfg.globalRules.algorithmVersions?.[kind]||cfg.globalRules.algorithmVersion;}
+ function acceptsVersion(kind,version){return !!catalogue[kind]&&(cfg.globalRules.compatibleConfirmedVersions?.[kind]||[versionFor(kind)]).includes(version);}
+ return Object.freeze({house,patronus,catalogueId,version:cfg.globalRules.algorithmVersion,versionFor,acceptsVersion,config:cfg});
 }

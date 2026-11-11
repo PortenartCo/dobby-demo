@@ -1,13 +1,27 @@
 {
-  "id": "DOBBY-E06-TESTS-V1",
-  "date": "2026-11-10",
+  "id": "DOBBY-E06-TESTS-V2",
+  "date": "2026-11-11",
   "status": "functional_rules_ready_for_review",
   "purpose": "Ludique et narratif ; ne constitue pas une evaluation psychologique validee.",
   "globalRules": {
     "notSaved": "Reponses brutes non necessaires a la persistance du profil",
     "resultsEditableManually": true,
     "independentResults": true,
-    "algorithmVersion": "e06-v1"
+    "algorithmVersion": "e06-v2",
+    "algorithmVersions": {
+      "house": "e06-v2",
+      "patronus": "e06-v1"
+    },
+    "compatibleConfirmedVersions": {
+      "house": [
+        "e06-v1",
+        "e06-v2"
+      ],
+      "patronus": [
+        "e06-v1"
+      ]
+    },
+    "revision": "Question Maison q2 reformulée ; réponses C et D réinterprétées. Résultats confirmés antérieurs conservés ; q2 temporaire à reconfirmer."
   },
   "house": {
     "labels": [
@@ -88,32 +102,32 @@
       },
       {
         "id": "q2",
-        "title": "Une invitation inattendue",
-        "prompt": "On t'invite à organiser une soirée dans une salle du château que tu n'as jamais visitée. Quelle idée te semble la plus intéressante ?",
+        "title": "Une salle capricieuse",
+        "prompt": "Tu dois organiser une soirée dans une salle du château. Mais la salle choisie disparaît et réapparaît de manière imprévisible. Comment réagis-tu ?",
         "answers": [
           {
             "id": "A",
-            "text": "Modifier le programme sans que personne ne s'en aperçoive.",
+            "text": "Modifier la date en attendant que la situation se calme.",
             "primary": "anticipation",
             "secondary": "investigation"
           },
           {
             "id": "B",
-            "text": "Trouver une autre salle qui offrirait de nouvelles possibilités.",
+            "text": "Trouver une autre salle.",
             "primary": "action",
             "secondary": "anticipation"
           },
           {
             "id": "C",
-            "text": "Conserver l'idée initiale, mais changer la manière de l'organiser.",
-            "primary": "investigation",
-            "secondary": "lien"
+            "text": "Conserver l'idée initiale : ces disparitions feront partie du spectacle !",
+            "primary": "action",
+            "secondary": "investigation"
           },
           {
             "id": "D",
-            "text": "Attendre de connaître l'avis des personnes concernées.",
+            "text": "Attendre l'avis du corps enseignant.",
             "primary": "lien",
-            "secondary": "action"
+            "secondary": "anticipation"
           }
         ]
       },

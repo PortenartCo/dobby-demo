@@ -1,0 +1,5 @@
+REVIEW_INTEGRATED_CEREMONY 320 baseline missing marker and narrow Patronus
+REVIEW_INTEGRATED_CEREMONY 390 baseline missing marker and narrow Patronus
+REVIEW_INTEGRATED_CEREMONY 1440 baseline missing marker and narrow Patronus
+Error: RED: selected answers have no visible gold V and final Patronus remains 64 px wide
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony.cjs:30:210

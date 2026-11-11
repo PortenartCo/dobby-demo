@@ -28,3 +28,7 @@ body[data-family-view=personal] main.mp-page{--mp-primary:#f9bb5f;--mp-accent:#b
 .mp-page .mp-gain-ledger li:last-child{border-bottom:0}
 .mp-page .mp-gain-ledger .mp-gain-meta{margin-top:4px;color:var(--mp-primary);font:600 13px/1.6 'Inter',sans-serif}
 @media(min-width:700px){body[data-family-view=personal] main.mp-page{padding:28px 24px 40px;gap:24px}.mp-card{padding:24px}}
+
+/* One atlas frame reused by the profile and final ceremony, with no crop or stretch. */
+.mp-identity-art{display:flex;align-items:center;justify-content:center;width:min(100%,240px);aspect-ratio:3/4;align-self:center;min-width:0;border-radius:12px;background:radial-gradient(ellipse at center,#b8dace16,transparent 72%)}
+.mp-identity-art>.mp-patronus-sprite{width:100%;height:100%;aspect-ratio:3/4;min-width:0}

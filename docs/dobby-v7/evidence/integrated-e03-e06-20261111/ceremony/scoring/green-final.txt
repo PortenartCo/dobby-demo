@@ -1,0 +1,16 @@
+✔ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (2.216271ms)
+✔ revised scoring stays deterministic, reaches all four houses, and leaves Patronus rules unchanged (203.585556ms)
+✔ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (1.945777ms)
+✔ old confirmed answers/results and untouched drafts survive adoption of the new version (0.566235ms)
+✔ future draft versions remain blocked without an overwrite (0.811202ms)
+✔ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (3.189643ms)
+✔ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (1.346427ms)
+✔ frozen V1 QA answer vectors still reach the named four Houses in V2; changed distribution is explicit (63.481302ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 369.07624

@@ -1,0 +1,5 @@
+page.waitForFunction: Timeout 12000ms exceeded.
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/e06-edge.cjs:7:1042 {
+  log: [],
+  name: 'TimeoutError'
+}

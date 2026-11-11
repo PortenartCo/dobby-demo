@@ -1,0 +1,26 @@
+✔ E06 draft resume keeps stable answer IDs and isolates members, users and households (4.368579ms)
+✔ E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten (0.643465ms)
+✔ a delayed draft write cannot replace the active draft after switching member (0.722948ms)
+✔ two loaded instances cannot erase drafts of distinct members (0.546886ms)
+✔ E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch (2.604174ms)
+✔ manual E05 house/patronus changes remove only the corresponding computed-version attribution (0.464704ms)
+✔ E06 JavaScript matches every Python base/optional combination and supplied QA result (661.322979ms)
+✔ E06 validates stable answer IDs and does not use optional answers that were never asked (1.170388ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: server (10.18814ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: local (4.467965ms)
+✔ E06 interversion LIMIT: an old native member writer can erase result provenance and structured names (2.504794ms)
+✔ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (1.892315ms)
+✔ revised scoring stays deterministic, reaches all four houses, and leaves Patronus rules unchanged (275.676352ms)
+✔ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (2.39866ms)
+✔ old confirmed answers/results and untouched drafts survive adoption of the new version (0.627843ms)
+✔ future draft versions remain blocked without an overwrite (0.581147ms)
+✔ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (2.871421ms)
+✔ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (1.410516ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 764.997259
