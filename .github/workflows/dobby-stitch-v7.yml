@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: '22'
       - name: Exhaustive review registry coverage
-        run: node scripts/check-review-consolidation.cjs
+        run: node scripts/check-review-consolidation.cjs --final
       - name: Check V7 JavaScript syntax
         run: |
           node --check essai-stitch-v7/build-source.cjs

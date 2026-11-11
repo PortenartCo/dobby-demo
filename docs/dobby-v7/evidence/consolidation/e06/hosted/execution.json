@@ -1,0 +1,73 @@
+{
+  "startedAt": "2026-11-11T00:28:28.789Z",
+  "finishedAt": "2026-11-11T00:31:26.842Z",
+  "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-foyer",
+  "origin": "https://portenartco.github.io",
+  "reviewPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "passedWidths": [
+    320,
+    390,
+    1440
+  ],
+  "exitCode": 0,
+  "latestPhaseExitCode": 0,
+  "expectedSourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "observedSourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "realBackend": false,
+  "storagePrefix": "dobby-review-integrated-v1|",
+  "pngCaptureCount": 69,
+  "evidenceDirectory": "/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted",
+  "productChanges": false,
+  "publicationChanges": false,
+  "phases": [
+    {
+      "phase": "Full capture after CSS-atlas readiness fix",
+      "startedAt": "2026-11-11T00:28:28.789Z",
+      "finishedAt": "2026-11-11T00:29:23.730Z",
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "passedWidths": [
+        320,
+        390
+      ],
+      "exitCode": 1,
+      "log": "../avatar-diagnostic/background-readiness-first-attempt.log",
+      "execution": "../avatar-diagnostic/background-readiness-first-attempt.json",
+      "failure": "1440 stopped at the sorting-hat img naturalWidth assertion, which preceded its decode wait; 320 and 390 passed fully."
+    },
+    {
+      "phase": "Targeted 1440 retry after moving img decode before the unchanged loaded-image assertion",
+      "startedAt": "2026-11-11T00:31:00.797Z",
+      "finishedAt": "2026-11-11T00:31:26.842Z",
+      "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-foyer",
+      "widths": [
+        1440
+      ],
+      "passedWidths": [
+        1440
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "log": "hosted-test-1440.log",
+      "command": "DOBBY_TEST_ORIGIN=https://portenartco.github.io DOBBY_REVIEW_PATH=/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7 DOBBY_E06_EVIDENCE_DIR=/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted DOBBY_E06_WIDTHS=1440 node essai-stitch-v7/tests/e06-consolidation.cjs"
+    }
+  ],
+  "initialUnpaintedCapture": "../avatar-diagnostic/initial-hosted-final-320.png",
+  "initialExecution": "../avatar-diagnostic/initial-hosted-execution.json",
+  "readiness": [
+    "DOM img decode before loaded-image assertions",
+    "CSS background Image.decode()",
+    "visible portrait geometry and chosen portrait ID",
+    "two requestAnimationFrame paint frames"
+  ],
+  "manifestURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/review-manifest.json"
+}

@@ -20,3 +20,5 @@ Commandes réellement exécutées avec `DOBBY_TEST_ORIGIN=http://127.0.0.1:8789`
 - `node --check` sur `chat.js`, `e02-consolidation.cjs` et `e02-voice-history.cjs` : PASS.
 
 `results.json` provient du nouveau scénario. Les captures et le résultat de la suite historique sont isolés dans `legacy-suite/`. Les profils de test sont éphémères ; le stockage IndexedDB et les écritures dans la liste native sont réels. `SpeechRecognition`, `speechSynthesis` et la sortie d'identité native sont simulés à leurs frontières. Aucun résultat n'atteste la synchronisation entre vrais comptes, une voix Safari disponible, une permission matérielle ou la tolérance réelle aux pauses sur iPhone.
+
+La [recette du bundle intégré local](bundle/README.md), puis la [recette réellement hébergée du 11 novembre 2026](hosted/README.md), ont également passé 320/390/1440 px. La recette hébergée conserve son journal, ses résultats JSON, ses captures et son exécution horodatée avec `exitCode: 0`. Les mêmes limites matérielles et d'identité simulée s'appliquent.

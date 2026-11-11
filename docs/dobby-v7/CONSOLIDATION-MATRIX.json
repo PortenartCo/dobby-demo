@@ -11,10 +11,15 @@
       "demande": "État consolidé au 11 novembre 2026. Ce registre est le référentiel des décisions de revue, distinct des preuves de tests et de l'état réellement livré.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver le registre original et sa priorité datée ; rendre compte des changements et preuves dans la matrice/rapport distincts, sans présenter le document de décisions comme une réalisation. Portée du statut : VÉRIFIÉ signifie ici intégrité et application du référentiel, pas certification des 95 demandes.",
+      "verification": "SHA256 et 95 textes source inchangés ; décisions plus récentes prioritaires ; preuve technique, publication et acceptation utilisateur distinguées.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "RC-L006",
@@ -23,10 +28,17 @@
       "demande": "- Référence : pages reconstruites progressivement E01–E08, **pas** le raccordement historique des 53 maquettes Stitch.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver une application de revue intégrée E01–E08, les pages reconstruites prioritaires et les anciens écrans explicitement non validés ; même URL mise à jour par publication isolée.",
+      "verification": "Parcours du bundle aux trois largeurs ; octets publiés identiques au bundle testé ; navigation et marqueurs hors revue préservés.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L007",
@@ -35,10 +47,17 @@
       "demande": "- Ne plus faire valider une interface ancienne à la place d'une page reconstruite.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver une application de revue intégrée E01–E08, les pages reconstruites prioritaires et les anciens écrans explicitement non validés ; même URL mise à jour par publication isolée.",
+      "verification": "Parcours du bundle aux trois largeurs ; octets publiés identiques au bundle testé ; navigation et marqueurs hors revue préservés.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L008",
@@ -47,10 +66,17 @@
       "demande": "- Fournir une application de démonstration **unique** assemblant les versions reconstruites E01 à E08, avec navigation et boutons testables, avant de reprendre la revue globale.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver une application de revue intégrée E01–E08, les pages reconstruites prioritaires et les anciens écrans explicitement non validés ; même URL mise à jour par publication isolée.",
+      "verification": "Parcours du bundle aux trois largeurs ; octets publiés identiques au bundle testé ; navigation et marqueurs hors revue préservés.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L009",
@@ -59,10 +85,17 @@
       "demande": "- Les tests automatisés ne remplacent ni la revue visuelle de l'utilisateur ni les essais authentifiés de partage familial.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-05, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter la séparation entre tests sur fixtures, livraison intégrée, publication, validation visuelle humaine et synchronisation familiale réelle ; maintenir les limites sans les déclarer levées. Portée du statut : VÉRIFIÉ signifie respect de la limite et exactitude du compte rendu ; aucune validation serveur ou humaine supplémentaire.",
+      "verification": "Rapport et écran Infos qualifient la démonstration fictive ; aucune preuve de compte familial réel ni de recette physique Safari/iPhone revendiquée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L010",
@@ -71,10 +104,17 @@
       "demande": "- La condition de convergence E03/E06/E08 a été satisfaite par l'aperçu intégré publié. La revue de cet aperçu ne valide toutefois pas automatiquement les fonctionnalités métier ni les corrections ouvertes.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver le constat historique de convergence E03/E06/E08 ; ne pas en déduire la validation des fonctions ou la résolution des corrections encore ouvertes. Portée du statut : VÉRIFIÉ porte sur la conservation du constat et de sa réserve, pas une recertification globale de l’ancien aperçu.",
+      "verification": "Référence historique conservée ; état courant établi par les corrections, quatre dépendances bloquées et cinq reports identifiés.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L015",
@@ -83,10 +123,18 @@
       "demande": "| E01 Accueil | Harmoniser les états vides « Missions du Jour » et « Gazette des Curiosités » sur la mise en forme du « Festin du Soir » (titre mis en évidence, sous-texte, sans encadré pointillé) | À appliquer, non livré dans la démo actuelle |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; home.js render/empty; chrome.css",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E01-01, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Appliquer E01-01 : états vides Missions et Gazette avec titre/description et sans pointillés, sur les surfaces et espacements communs des repas.",
+      "verification": "Quatre états vides mesurés et capturés à 320/390/1440 ; harmonisation distincte de la nouvelle présentation Midi/Soir.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/after/empty-320.png",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/after/empty-390.png",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/after/empty-1440.png"
+      ]
     },
     {
       "id": "RC-L016",
@@ -95,10 +143,18 @@
       "demande": "| E03 Missions | Dans le hero, supprimer « Tome VII · Rayon D » et remplacer par « Grimoire des Missions » en bas à droite ; retirer l'ancien cartouche haut gauche | Intégré : cartouche bas droit « Grimoire des Missions », ancien cartouche absent |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "missions.js render; missions-layout.html; build-source.cjs",
-      "action": "Cartouche Grimoire des Missions bas droit et hero protégés ; aucune refonte",
-      "verification": "e03.cjs/e03-counts.cjs ; comparer DOM/CSS et captures3largeurs",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver la page E03 validée et son hero : Grimoire des Missions en bas à droite, ancien cartouche Tome VII supprimé ; aucune refonte.",
+      "verification": "Fichier missions-layout.html et CSS du hero préservés ; image décodée, badge situé dans la partie basse droite et aucune ancienne mention aux trois largeurs ; régression E03.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "essai-stitch-v7/missions-layout.html",
+        "essai-stitch-v7/missions.css"
+      ]
     },
     {
       "id": "RC-L017",
@@ -107,10 +163,18 @@
       "demande": "| E03 Missions | Le vieux registre Missions montré dans l'aperçu E07.2 ne doit plus être soumis à revue ; lui substituer la branche E03 reconstruite | Vraie page E03 intégrée ; revue visuelle utilisateur E03 validée le 11/11 |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver l’acceptation utilisateur de la page reconstruite E03 du 11 novembre ; ne pas remplacer cette page par le vieux registre ni demander une nouvelle validation de son design. Portée du statut : VÉRIFIÉ signifie non-régression et respect de l’acceptation déjà donnée, pas nouvelle revue utilisateur.",
+      "verification": "Route Missions rend la composition E03 ; seules les interactions transversales nécessaires sont adaptées ; aucune nouvelle acceptation visuelle humaine prétendue.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L018",
@@ -119,10 +183,19 @@
       "demande": "| E05 Profil magique | Le membre de démo devrait accéder naturellement à son profil sans état ambigu « aucun profil associé », tout en restant sans authentification réelle | Persona fictive explicitement associée uniquement dans le bundle de démonstration ; parcours locaux et hébergés PASS320/390/1440 |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; scripts/review/integrated-config.js; family-profile.js linkedMember; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-05, T-05, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver l’association explicite et exclusivement fictive du profil de démonstration ; après la cérémonie, sélectionner le nouveau membre local sans créer de liaison compte–foyer réelle.",
+      "verification": "Gold ouvre naturellement la persona initiale puis le membre fictif sélectionné ; entrée finale, reload et reset vérifiés dans le bundle, contexte natif non authentifié.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/e06/bundle-test.log",
+        "docs/dobby-v7/evidence/consolidation/e06/bundle-native-context.json",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/review-runtime.js"
+      ]
     },
     {
       "id": "RC-L019",
@@ -131,10 +204,16 @@
       "demande": "| E05 Maison | Reprendre les blasons des quatre Maisons : animal et héraldique plus reconnaissables et détaillés ; conserver l'univers visuel retenu | À appliquer (design) |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; magic-profile.js houseEmblem; assets/magic/MEDIA.md",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-01, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Appliquer l’arbitrage plus récent E05-01 : les blasons officiels souhaités ne sont pas remplacés par des imitations ; le besoin demeure bloqué faute de fichiers autorisés et de droits de republication. Portée du statut : BLOQUÉ, comme E05-01 ; le retrait des anciens pictogrammes ne satisfait pas la demande de blasons officiels.",
+      "verification": "Audit des sources et droits documenté ; emplacement neutre explicite, nom/couleurs conservés ; aucun blason officiel nouvellement publié.",
+      "final": "BLOQUÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md"
+      ]
     },
     {
       "id": "RC-L020",
@@ -143,10 +222,19 @@
       "demande": "| E05 Maison & Patronus | Ajouter une brève description narrative des caractéristiques/symboles de chaque Maison et Patronus, sans profilage psychologique | À appliquer |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; magic-content.js partagé; magic-profile.js; onboarding.js",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-02, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Appliquer E05-02 et E06-06 : source narrative unique pour quatre Maisons et douze Patronus, adaptée au profil et symbolique ludique sans profilage réel.",
+      "verification": "Sélections et résultats des 4+12 identifiants ; descriptions E05/E06 exactement communes ; fondateur/origine/valeurs et caractéristiques/symbolique présents.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/e06/source-test.log",
+        "docs/dobby-v7/evidence/consolidation/e06/bundle-test.log",
+        "essai-stitch-v7/magic-content.js"
+      ]
     },
     {
       "id": "RC-L021",
@@ -155,10 +243,19 @@
       "demande": "| E05 / E06 | Raccorder « Refaire le test » aux questionnaires E06 pour Maison et Patronus ; aucune perte des choix avant confirmation | Raccordé aux vrais questionnaires E06 ; confirmation préserve les choix précédents, PASS local/hébergé320/390/1440 |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; magic-profile.js restart; onboarding-engine.js confirm",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-04, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver les deux retests E05→questionnaires E06 ; conserver le résultat canonique précédent jusqu’à la confirmation explicite du nouveau.",
+      "verification": "Reprise, reload, retests Maison/Patronus et refus de writer couverts ; aucun changement non confirmé ni crédit de runes ajouté.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/e06/source-edge.log",
+        "docs/dobby-v7/evidence/consolidation/e06/bundle-test.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L022",
@@ -167,10 +264,18 @@
       "demande": "| E05 Runes | Retravailler la présentation : rune réellement illustrée selon le grade, jauge plus qualitative, historique lisible ; conserver les règles de gains et seuils existants | À appliquer (design) |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; magic-profile.js/css; member-avatar.js profile; native summary",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver les montants/grades/seuils et ledger natifs E04/E05 ; enrichir seulement la présentation des runes avec insigne natif, grade, total, progression, palier et historique.",
+      "verification": "Douze frontières de grades contrôlées ; total/ledger inchangés, aucun faux prochain palier au dernier grade et pas de double gain après réouverture.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/logs/unit-92.log",
+        "docs/dobby-v7/evidence/consolidation/e05/unsupported-ledger-green.log"
+      ]
     },
     {
       "id": "RC-L023",
@@ -179,10 +284,18 @@
       "demande": "| E07 Courses | « 1 articles » doit être accordé en « 1 article » | À appliquer |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; cuisine-e07.js compteurs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E07-08, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Appliquer E07-08 : accorder les compteurs d’articles au singulier/pluriel sans changer hero/cartouche ni créer une seconde liste.",
+      "verification": "Libellés et confirmations 0/1/2 articles ; liste native et régression E07 aux trois largeurs.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/e07/logs/green.txt",
+        "docs/dobby-v7/evidence/consolidation/e07/logs/e07-2.txt",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L024",
@@ -191,10 +304,16 @@
       "demande": "| E07.1 Taverne & E07.2 Courses | Deux pages à revoir en fonctionnement réel après intégration, malgré leurs tests et captures réussis | Revue utilisateur obligatoire |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respect de la revue utilisateur obligatoire encore en cours : fournir Taverne/Courses intégrées et testables pour la revue commune, sans présenter tests ou publication comme acceptation UX. Portée du statut : VÉRIFIÉ porte exclusivement sur le respect et la conservation de cette obligation ; la revue humaine reste à faire.",
+      "verification": "E07-10, rapport et livraison indiquent explicitement revue humaine en cours ; aucune preuve d’acceptation utilisateur nouvelle attribuée aux tests.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "RC-L025",
@@ -203,10 +322,17 @@
       "demande": "| E08 Contrats | Interface acceptée en revue ; corriger plus tard « 1 contrats et assurances enregistrés » sans intervention Codex isolée | Accepté visuellement ; non-régression source contrôlée à 320/360/390/1440, revue utilisateur commune attendue |",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "documents-register.js registerDocuments/compteurs",
-      "action": "Accorder contrats/assurances et préserver design accepté",
-      "verification": "Compteurs0/1/2 et contrat CRUD",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver le design E08 accepté ; corriger les accords dans le lot intégré. La mention historique de revue attendue est interprétée selon l’acceptation plus récente en ligne136. Portée du statut : VÉRIFIÉ signifie correction technique et non-régression ; la décision visuelle demeure celle de l’utilisateur.",
+      "verification": "Compteurs 0/1/2 et assurance singulière ; image chargée/décodée ; filtres/échéances et consultation/modification natifs préservés, sans nouvelle validation humaine revendiquée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "RC-L028",
@@ -215,10 +341,17 @@
       "demande": "- L'aperçu E07.2 est un environnement fictif isolé ; il n'atteste pas la synchronisation entre deux vrais comptes familiaux.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-05, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter la séparation entre tests sur fixtures, livraison intégrée, publication, validation visuelle humaine et synchronisation familiale réelle ; maintenir les limites sans les déclarer levées. Portée du statut : VÉRIFIÉ signifie respect de la limite et exactitude du compte rendu ; aucune validation serveur ou humaine supplémentaire.",
+      "verification": "Rapport et écran Infos qualifient la démonstration fictive ; aucune preuve de compte familial réel ni de recette physique Safari/iPhone revendiquée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L029",
@@ -227,10 +360,20 @@
       "demande": "- E06 comprend des limites documentées sur la liaison vérifiée compte–foyer–membre et certaines opérations de création/invitation ; ne pas simuler ces étapes.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "onboarding.js/onboarding-engine.js; scripts/review/integrated-config.js",
-      "action": "Conserver limites de liaison serveur, aucune simulation de compte réel",
-      "verification": "Création locale distincte et réseau protégé",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver les limites de liaison vérifiée compte–foyer–membre, création et invitation réelles ; distinguer le parcours local fictif nouvellement disponible.",
+      "verification": "Aucun identifiant réel demandé dans la démonstration ; contexte natif sans compte/foyer réel ; réseau et enveloppe isolés ; E06-08 reporté.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/e06/bundle-native-context.json",
+        "docs/dobby-v7/evidence/consolidation/e06/bundle-test.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/review-runtime.js"
+      ]
     },
     {
       "id": "RC-L030",
@@ -239,10 +382,16 @@
       "demande": "- Les pages familiales de l'ancien raccordement qui n'ont pas été reconstruites ne doivent pas être affichées comme pages finales ; rendre cette limite visible sans inventer une nouvelle interface métier.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "scripts/review/integrated-config.js mount",
-      "action": "Conserver marqueur non validé des anciens écrans familiaux",
-      "verification": "Menu→Santé et Salon affichent statut explicite",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver les marqueurs visibles hors revue/non validé sur le Salon et les pages familiales historiques ; ne pas les présenter comme reconstruites ou finales.",
+      "verification": "Navigation réelle Salon/Menu→Santé et avertissements conservés dans le bundle puis sur l’URL de revue.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L031",
@@ -251,10 +400,15 @@
       "demande": "- Aucune fusion des branches applicatives dans main ni migration Supabase n'a été approuvée.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, T-05, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter l’interdiction de fusion applicative dans main et de migration Supabase/SQL ; mettre à jour uniquement le sous-arbre autorisé de l’aperçu intégré. Portée du statut : VÉRIFIÉ porte sur la préservation de ces limites ; la publication du dossier statique n’est pas une fusion applicative.",
+      "verification": "Diff applicatif sans SQL ni moteur natif V5 modifié ; reçu de publication établit le seul préfixe modifié et la conservation des autres arbres/aperçus.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L034",
@@ -263,10 +417,16 @@
       "demande": "- Intégration : branche feat/dobby-e01-e08-review-integration créée depuis E07.2 bba5b0255acc4834dbd54303df66c61decbed546.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver exactement la référence de branche et le SHA historique inscrits au registre ; ne pas les remplacer par le SHA de la consolidation ou les présenter comme nouvelle validation fonctionnelle. Portée du statut : VÉRIFIÉ signifie référence historique conservée et identifiée, pas test réexécuté de l’ancienne version.",
+      "verification": "Texte source de la référence et SHA256 du registre inchangés ; filiation historique distincte du SHA source du bundle et des commits de livraison.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L035",
@@ -275,10 +435,16 @@
       "demande": "- E03 : feat/dobby-e03-missions @ 6a86ead6341eb2f17e7552852621c21f496ad97c.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver exactement la référence de branche et le SHA historique inscrits au registre ; ne pas les remplacer par le SHA de la consolidation ou les présenter comme nouvelle validation fonctionnelle. Portée du statut : VÉRIFIÉ signifie référence historique conservée et identifiée, pas test réexécuté de l’ancienne version.",
+      "verification": "Texte source de la référence et SHA256 du registre inchangés ; filiation historique distincte du SHA source du bundle et des commits de livraison.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L036",
@@ -287,10 +453,20 @@
       "demande": "- E04 runes : feat/dobby-e04-runes @ 8bcd49c1c2250879e2fd5a96641cd77747ef9ea0 ; intégrée à E05.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; magic-profile.js/css; member-avatar.js profile; native summary",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver la référence historique exacte de la branche E04 Runes et de son SHA, distincts du SHA actuel ; préserver les montants/grades/seuils et ledger natifs lors de l’enrichissement graphique E05. Portée du statut : VÉRIFIÉ signifie conservation de la référence historique et non-régression des règles natives ; pas nouvelle certification de l’ancienne version.",
+      "verification": "Texte de la référence et SHA256 du registre inchangés ; douze frontières de grades et ledger natifs contrôlés sans prétendre réexécuter l’ancienne branche E04.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/logs/unit-92.log",
+        "docs/dobby-v7/evidence/consolidation/e05/unsupported-ledger-green.log",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L037",
@@ -299,10 +475,16 @@
       "demande": "- E05 : feat/dobby-e05-magic-profile @ 8418682e5094b66ee879fbf18dcd1e6a3b6d5a05.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver exactement la référence de branche et le SHA historique inscrits au registre ; ne pas les remplacer par le SHA de la consolidation ou les présenter comme nouvelle validation fonctionnelle. Portée du statut : VÉRIFIÉ signifie référence historique conservée et identifiée, pas test réexécuté de l’ancienne version.",
+      "verification": "Texte source de la référence et SHA256 du registre inchangés ; filiation historique distincte du SHA source du bundle et des commits de livraison.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L038",
@@ -311,10 +493,16 @@
       "demande": "- E06 : feat/dobby-e06-onboarding @ 1a71f9608dd29514e8fdc5743f7041aeccf5c4ab.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver exactement la référence de branche et le SHA historique inscrits au registre ; ne pas les remplacer par le SHA de la consolidation ou les présenter comme nouvelle validation fonctionnelle. Portée du statut : VÉRIFIÉ signifie référence historique conservée et identifiée, pas test réexécuté de l’ancienne version.",
+      "verification": "Texte source de la référence et SHA256 du registre inchangés ; filiation historique distincte du SHA source du bundle et des commits de livraison.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L039",
@@ -323,10 +511,16 @@
       "demande": "- E07.2 : feat/dobby-e07-cuisine-courses @ bba5b0255acc4834dbd54303df66c61decbed546.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver exactement la référence de branche et le SHA historique inscrits au registre ; ne pas les remplacer par le SHA de la consolidation ou les présenter comme nouvelle validation fonctionnelle. Portée du statut : VÉRIFIÉ signifie référence historique conservée et identifiée, pas test réexécuté de l’ancienne version.",
+      "verification": "Texte source de la référence et SHA256 du registre inchangés ; filiation historique distincte du SHA source du bundle et des commits de livraison.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L040",
@@ -335,10 +529,16 @@
       "demande": "- E08 : feat/dobby-e08-contrats @ cb937d48d136561c826a2adc707692fb00c6faf1.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver exactement la référence de branche et le SHA historique inscrits au registre ; ne pas les remplacer par le SHA de la consolidation ou les présenter comme nouvelle validation fonctionnelle. Portée du statut : VÉRIFIÉ signifie référence historique conservée et identifiée, pas test réexécuté de l’ancienne version.",
+      "verification": "Texte source de la référence et SHA256 du registre inchangés ; filiation historique distincte du SHA source du bundle et des commits de livraison.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md"
+      ]
     },
     {
       "id": "RC-L043",
@@ -347,10 +547,18 @@
       "demande": "[Rapport commun E01–E08](INTEGRATED-REVIEW.md). Le Salon signale les rubriques hors revue, et les autres vues familiales historiques portent « non validé ». Les corrections graphiques ouvertes ci-dessus ne sont pas déclarées terminées. La publication du seul nouveau dossier de démonstration est autorisée par la demande de convergence actuelle ; aucune fusion applicative dans main.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver le rapport historique d’assemblage, les marqueurs hors revue et l’autorisation limitée au dossier de démonstration. Décrire séparément l’état actuel : corrections vérifiées, blocages et reports conservés. Portée du statut : VÉRIFIÉ porte sur la conservation et le respect du cadre historique ; son ancien état des corrections n’est pas recertifié comme état courant.",
+      "verification": "Référence historique inchangée ; arbitrages du 11 novembre prioritaires ; seul aperçu intégré actualisé, aucune correction bloquée annoncée terminée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L045",
@@ -359,10 +567,17 @@
       "demande": "Aperçu commun publié et vérifié : <https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/>. Les huit lots sont réunis, les six parcours passent aux trois largeurs. Les états graphiques encore ouverts et les limites E06 restent applicables ; revue utilisateur attendue.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver le reçu historique de l’aperçu commun. Distinguer les acceptations plus récentes E03/E08 de la revue humaine encore ouverte des nouvelles corrections et de Taverne/Courses. Portée du statut : VÉRIFIÉ signifie continuité de l’aperçu et priorité des décisions datées ; ni nouvelle acceptation UX ni reproduction automatique de l’ancien wording.",
+      "verification": "Même URL de revue ; reçu actuel donne source/commits/empreintes/recette hébergée. Les mentions historiques de revue attendue ne remettent pas en cause les décisions ultérieures.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L052",
@@ -371,10 +586,15 @@
       "demande": "Ce complément prend le pas sur les mentions « revue attendue » lorsqu'une décision plus récente existe. Il **ne constitue ni une correction de code ni une certification de fonctionnement**. Les décisions sont formulées pour être réutilisées dans des missions Codex sans demander de répéter les retours.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver le registre original et sa priorité datée ; rendre compte des changements et preuves dans la matrice/rapport distincts, sans présenter le document de décisions comme une réalisation. Portée du statut : VÉRIFIÉ signifie ici intégrité et application du référentiel, pas certification des 95 demandes.",
+      "verification": "SHA256 et 95 textes source inchangés ; décisions plus récentes prioritaires ; preuve technique, publication et acceptation utilisateur distinguées.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "RC-L055",
@@ -383,10 +603,16 @@
       "demande": "- **VALIDÉ** : page ou décision explicitement acceptée par l'utilisateur.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver la définition d’avancement comme légende du registre ; utiliser les preuves et décisions humaines correspondant à chaque état, sans assimiler intégré, PASS ou publié à VALIDÉ. Portée du statut : VÉRIFIÉ porte seulement sur le respect de la légende, pas sur toutes les pages qualifiées par ce terme.",
+      "verification": "Légende source inchangée ; matrice finale distingue vérifié techniquement, bloqué, reporté, revue utilisateur et limites serveur.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L056",
@@ -395,10 +621,16 @@
       "demande": "- **À CORRIGER** : changement souhaité, pas encore prouvé intégré.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver la définition d’avancement comme légende du registre ; utiliser les preuves et décisions humaines correspondant à chaque état, sans assimiler intégré, PASS ou publié à VALIDÉ. Portée du statut : VÉRIFIÉ porte seulement sur le respect de la légende, pas sur toutes les pages qualifiées par ce terme.",
+      "verification": "Légende source inchangée ; matrice finale distingue vérifié techniquement, bloqué, reporté, revue utilisateur et limites serveur.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L057",
@@ -407,10 +639,16 @@
       "demande": "- **À DÉVELOPPER** : fonctionnalité non disponible ou incomplète.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver la définition d’avancement comme légende du registre ; utiliser les preuves et décisions humaines correspondant à chaque état, sans assimiler intégré, PASS ou publié à VALIDÉ. Portée du statut : VÉRIFIÉ porte seulement sur le respect de la légende, pas sur toutes les pages qualifiées par ce terme.",
+      "verification": "Légende source inchangée ; matrice finale distingue vérifié techniquement, bloqué, reporté, revue utilisateur et limites serveur.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L058",
@@ -419,10 +657,16 @@
       "demande": "- **À RECONSTRUIRE** : ancienne interface écartée, pas de revue utile du rendu historique.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver la définition d’avancement comme légende du registre ; utiliser les preuves et décisions humaines correspondant à chaque état, sans assimiler intégré, PASS ou publié à VALIDÉ. Portée du statut : VÉRIFIÉ porte seulement sur le respect de la légende, pas sur toutes les pages qualifiées par ce terme.",
+      "verification": "Légende source inchangée ; matrice finale distingue vérifié techniquement, bloqué, reporté, revue utilisateur et limites serveur.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L059",
@@ -431,10 +675,16 @@
       "demande": "- **À VÉRIFIER** : symptôme observé, cause ou effet réel à confirmer.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver la définition d’avancement comme légende du registre ; utiliser les preuves et décisions humaines correspondant à chaque état, sans assimiler intégré, PASS ou publié à VALIDÉ. Portée du statut : VÉRIFIÉ porte seulement sur le respect de la légende, pas sur toutes les pages qualifiées par ce terme.",
+      "verification": "Légende source inchangée ; matrice finale distingue vérifié techniquement, bloqué, reporté, revue utilisateur et limites serveur.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     },
     {
       "id": "RC-L060",
@@ -443,10 +693,17 @@
       "demande": "- **LIMITE SERVEUR** : démonstration isolée ne permet pas la recette réelle.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-05, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter la séparation entre tests sur fixtures, livraison intégrée, publication, validation visuelle humaine et synchronisation familiale réelle ; maintenir les limites sans les déclarer levées. Portée du statut : VÉRIFIÉ signifie respect de la limite et exactitude du compte rendu ; aucune validation serveur ou humaine supplémentaire.",
+      "verification": "Rapport et écran Infos qualifient la démonstration fictive ; aucune preuve de compte familial réel ni de recette physique Safari/iPhone revendiquée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "E01-01",
@@ -457,8 +714,14 @@
       "code": "home.js render/empty; chrome.css",
       "action": "États vides titre/description sans pointillé, cadres Stitch conservés",
       "verification": "0 missions/repas/événements à 320/390/1440",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E01-02",
@@ -469,8 +732,14 @@
       "code": "home.js click; family-missions.js toggle; index.html autotask",
       "action": "Case ouverte vide ; confirmer réalisation ; rouvrir manuel via writer natif. Automatique terminé reste lié à sa source sans contournement du moteur.",
       "verification": "Annulation/confirmation/reload/E03 et reopen/recomplete sans double gain ; automatique consultable/source",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E01-03",
@@ -481,8 +750,14 @@
       "code": "home.js click; family-missions.js toggle; index.html autotask",
       "action": "Case ouverte vide ; confirmer réalisation ; rouvrir manuel via writer natif. Automatique terminé reste lié à sa source sans contournement du moteur.",
       "verification": "Annulation/confirmation/reload/E03 et reopen/recomplete sans double gain ; automatique consultable/source",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E01-04",
@@ -493,8 +768,14 @@
       "code": "home.js render; cuisine.js recipeVisual",
       "action": "Midi/Soir séparés, photographie/repli E07, portions et liens recette/choix par créneau",
       "verification": "2 créneaux indépendants ; photo absente/échouée ; date consultée ne modifie pas modèle",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E01-05",
@@ -505,8 +786,14 @@
       "code": "home.js render; cuisine.js recipeVisual",
       "action": "Midi/Soir séparés, photographie/repli E07, portions et liens recette/choix par créneau",
       "verification": "2 créneaux indépendants ; photo absente/échouée ; date consultée ne modifie pas modèle",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E01-06",
@@ -517,8 +804,14 @@
       "code": "home.js; cuisine-list.js snapshot/add",
       "action": "Formulaire ajout rapide, doublon explicite et statut réel de la liste unique",
       "verification": "Accueil→Courses→reload, données et quantités conservées",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E02-01",
@@ -529,8 +822,14 @@
       "code": "chat.js mount; chat.css hero",
       "action": "Hero 240–300px selon espace, cadrage du personnage sans coupe verticale",
       "verification": "Mesures et captures 320/390/1440",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e02/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E02-02",
@@ -541,8 +840,14 @@
       "code": "chat.js listen/cancelVoice/send",
       "action": "Session multisegments, pauses/end/error sans autosend, stop/reprise/annulation/envoi explicite",
       "verification": "SpeechRecognition simulée, callbacks tardifs/identité/navigation ; Safari physique non garanti",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e02/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E02-03",
@@ -553,8 +858,14 @@
       "code": "chat-engine.js reply/execute; chat.js",
       "action": "Conserver commandes natives, tester ajout/consultations/liens",
       "verification": "Writers véritables sous fixture/démo ; reload Courses ; pas IA simulée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e02/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "RC-L083",
@@ -563,10 +874,18 @@
       "demande": "- **VALIDÉ par l'utilisateur** : page reconstruite E03, ne plus réclamer de revue de cette page ni la remplacer par l'ancien registre.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver l’acceptation utilisateur de la page reconstruite E03 du 11 novembre ; ne pas remplacer cette page par le vieux registre ni demander une nouvelle validation de son design. Portée du statut : VÉRIFIÉ signifie non-régression et respect de l’acceptation déjà donnée, pas nouvelle revue utilisateur.",
+      "verification": "Route Missions rend la composition E03 ; seules les interactions transversales nécessaires sont adaptées ; aucune nouvelle acceptation visuelle humaine prétendue.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/INTEGRATED-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L084",
@@ -575,10 +894,18 @@
       "demande": "- Cartouche hero « Grimoire des Missions » en bas à droite, avec suppression de « Tome VII · Rayon D » : déjà intégré dans l'aperçu commun ; préserver.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "missions.js render; missions-layout.html",
-      "action": "Préserver le cartouche et hero E03 validés",
-      "verification": "Captures E03 et fichier layout inchangé",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver la page E03 validée et son hero : Grimoire des Missions en bas à droite, ancien cartouche Tome VII supprimé ; aucune refonte.",
+      "verification": "Fichier missions-layout.html et CSS du hero préservés ; image décodée, badge situé dans la partie basse droite et aucune ancienne mention aux trois largeurs ; régression E03.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "essai-stitch-v7/missions-layout.html",
+        "essai-stitch-v7/missions.css"
+      ]
     },
     {
       "id": "RC-L085",
@@ -587,10 +914,17 @@
       "demande": "- Les changements de statut issus d'E01/E04 doivent rester cohérents avec E03, sans entraîner de refonte visuelle non demandée.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "missions.js render; home.js click; family-engine.js; family-missions.js toggle",
-      "action": "Vérifier cohérence E01/E04→E03 sans refonte",
-      "verification": "Créer/modifier/compléter/rouvrir/reload ; ledger idempotent",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver la cohérence des statuts natifs E01/E04→E03 sans refonte de la page validée ; maintenir l’idempotence des crédits.",
+      "verification": "Création/modification, annulation de complétion, complétion/réouverture/recomplétion et reload ; statut partagé E03 et un seul crédit natif.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/logs/unit-92.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "E04-01",
@@ -601,8 +935,14 @@
       "code": "tools-register.js mission",
       "action": "Supprimer propositions en préservant prototype catégorie, saisie libre/consignes/membres",
       "verification": "Formulaire créé/modifié et DOM sans suggestions",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E04-02",
@@ -614,7 +954,13 @@
       "action": "Documenter dépendance bloquante : normalizers retirent série/occurrence, plafond 200, ledger missionId, protocole non versionné pour séries ; aucune activation cosmétique",
       "verification": "Audit natif et test normalizer ; nécessite évolution significative modèle/protocole/compatibilité des anciens clients",
       "final": "BLOQUÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E04-03",
@@ -625,8 +971,14 @@
       "code": "chrome.js mount; tools-register.js goMissions",
       "action": "Dock Missions actif pour mission-edit ; Retour/X vers Missions, tester depuis accueil",
       "verification": "Clics Retour/X et actif après reload",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E04-04",
@@ -637,8 +989,14 @@
       "code": "tools-register.js mission; member-avatar.js create",
       "action": "Conserver avatars des IDs canoniques",
       "verification": "Mêmes avatar/ID en E04 et E05",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E05-01",
@@ -650,7 +1008,13 @@
       "action": "Ne pas publier blasons officiels sans autorisation ; distinguer public/privé et retirer imitation présentée conforme",
       "verification": "Provenance/terms officiels documentés ; aucune licence publique établie",
       "final": "BLOQUÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E05-02",
@@ -661,8 +1025,14 @@
       "code": "magic-content.js partagé; magic-profile.js; onboarding.js",
       "action": "Catalogue original 4 Maisons origine/fondateur/valeurs et 12 animaux/symboliques ; texte commun E05/E06",
       "verification": "4+12 IDs exhaustifs ; même texte aux résultats, romain lisible",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E05-03",
@@ -673,8 +1043,14 @@
       "code": "magic-profile.js/css; member-avatar.js profile; native summary",
       "action": "Insigne SVG natif illustré, grade/total/palier/jauge/historique mieux lisibles ; barème intact",
       "verification": "0/10/85 et frontières grades ; ledger identique, captures 3 largeurs",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E05-04",
@@ -685,8 +1061,14 @@
       "code": "magic-profile.js restart; onboarding-engine.js confirm",
       "action": "Préserver retakes avec ancien résultat jusqu’à confirmation",
       "verification": "Abandon/reload/confirmation Maison et Patronus ; ledger intact",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E05-05",
@@ -697,8 +1079,14 @@
       "code": "scripts/review/integrated-config.js; family-profile.js linkedMember",
       "action": "Persona fictive explicite seulement dans copie générée ; aucune liaison réelle déduite",
       "verification": "getContext null et source linkedMember null ; Gold profil démo",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E06-01",
@@ -710,7 +1098,13 @@
       "action": "Archive (9) absente et aucun HTML Rituel trouvé ; ne pas fabriquer une source prétendument originale ni séquence validée",
       "verification": "Inventaire des ZIP et recherche de Traverser/Ne plus afficher ; fichier source requis",
       "final": "BLOQUÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E06-02",
@@ -721,8 +1115,14 @@
       "code": "onboarding.js foyer/refresh; scripts/review/integrated-config.js",
       "action": "Entrée revue explicite vers création locale, identité, tests, final et reset ; aucune inscription serveur",
       "verification": "Parcours nouveau membre fictif complet aux 3 largeurs, persistance et réseau isolé",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E06-03",
@@ -733,8 +1133,14 @@
       "code": "onboarding.js question; onboarding.css; nouveau chapeau local avec provenance",
       "action": "Illustration substitutive autorisée distincte de Stitch, retirer texte technique et numéro doublé",
       "verification": "Asset présent/décodé ; une indication Question n/6 ; captures",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E06-04",
@@ -745,8 +1151,14 @@
       "code": "onboarding.js reveal; onboarding.css; magic-content.js",
       "action": "Corriger bande noire, titres et texte Maison ; grand blason officiel reste dépendance E05-01 bloquée",
       "verification": "Quatre Maisons 3 largeurs, SERDAIGLE non tronqué, confirmation ; aucun faux officiel",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "BLOQUÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E06-05",
@@ -757,8 +1169,14 @@
       "code": "onboarding.css questionnaires",
       "action": "Corps romain avec interligne/contraste",
       "verification": "Style calculé et captures 320/390/1440",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E06-06",
@@ -769,8 +1187,14 @@
       "code": "onboarding.js reveal; magic-content.js",
       "action": "Grand Patronus existant, descriptif partagé pour 12 animaux, enlever mentions techniques du bloc principal",
       "verification": "12 descriptions exactes E05/E06 ; illustration conservée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E06-07",
@@ -780,9 +1204,20 @@
       "initial": "À vérifier",
       "code": "onboarding.js final; onboarding-engine.js finish",
       "action": "Vérifier avatar/Maison/Patronus/runes et entrée Traverse après parcours fictif",
-      "verification": "Nouveau membre 0 rune ; membre existant conserve ledger ; reload",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "verification": "Nouveau membre 0 rune ; membre existant conserve ledger ; reload ; portrait sélectionné décodé et réellement peint, fonds CSS attendus et reprises causales tracées",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e06/avatar-diagnostic/hosted-diagnostic.json",
+        "docs/dobby-v7/evidence/consolidation/e06/hosted/execution.json",
+        "docs/dobby-v7/evidence/consolidation/e06/hosted/background-readiness-320.json",
+        "docs/dobby-v7/evidence/consolidation/e06/hosted/background-readiness-390.json",
+        "docs/dobby-v7/evidence/consolidation/e06/hosted/background-readiness-1440.json"
+      ]
     },
     {
       "id": "E06-08",
@@ -794,7 +1229,13 @@
       "action": "Hors périmètre : comptes, foyer serveur, invitations, binding vérifié, parents",
       "verification": "Contrôles explicitement indisponibles, aucune mutation réelle",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E07-01",
@@ -806,7 +1247,13 @@
       "action": "Conserver besoins détaillés et fonctions actuelles ; ne pas reconstruire calendrier/Grimoire/choix/fiche/cuisson/TM5 ; contrôler raccord vivres au lot suivant",
       "verification": "Absence refonte de ces écrans, conservation navigation existante",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E07-02",
@@ -818,7 +1265,13 @@
       "action": "Conserver besoins détaillés et fonctions actuelles ; ne pas reconstruire calendrier/Grimoire/choix/fiche/cuisson/TM5 ; contrôler raccord vivres au lot suivant",
       "verification": "Absence refonte de ces écrans, conservation navigation existante",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E07-03",
@@ -830,7 +1283,13 @@
       "action": "Conserver besoins détaillés et fonctions actuelles ; ne pas reconstruire calendrier/Grimoire/choix/fiche/cuisson/TM5 ; contrôler raccord vivres au lot suivant",
       "verification": "Absence refonte de ces écrans, conservation navigation existante",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E07-04",
@@ -841,8 +1300,14 @@
       "code": "cuisine-list.js preview/confirmImport; cuisine-e07.js",
       "action": "Plage début/fin inclusive et 3/7/14/perso, Midi+Soir ; preview confirmé, manuel distinct, provenance dédupliquée",
       "verification": "Bornes incluses/exclues, annulation, confirmation périmée, reload, quantités et achats manuels",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E07-05",
@@ -853,8 +1318,14 @@
       "code": "cuisine-e07.js shop/action; cuisine-e07.css",
       "action": "Terminer doré pleine largeur ≥16px, explication zéro coches, confirmation/succès ; trois CTA lisibles",
       "verification": "Retrait uniquement cochés, non achetés et archives préservés ; 320/390/1440",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E07-06",
@@ -865,8 +1336,14 @@
       "code": "cuisine-e07.js; cuisine.js open",
       "action": "Retirer historique de navigation courante ; ancienne route redirigée ; conserver archives/reçus",
       "verification": "Aucun bouton courant, ancien lien mène liste, archives identiques",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E07-07",
@@ -877,8 +1354,14 @@
       "code": "cuisine-e07.js shop/action; cuisine-e07.css",
       "action": "Terminer doré pleine largeur ≥16px, explication zéro coches, confirmation/succès ; trois CTA lisibles",
       "verification": "Retrait uniquement cochés, non achetés et archives préservés ; 320/390/1440",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E07-08",
@@ -889,8 +1372,14 @@
       "code": "cuisine-e07.js compteurs",
       "action": "Singulier/pluriel correct, hero/cartouche existants inchangés",
       "verification": "0/1/2 ; images décodées ; captures 3 largeurs",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "E07-09",
@@ -902,7 +1391,13 @@
       "action": "Conserver besoins détaillés et fonctions actuelles ; ne pas reconstruire calendrier/Grimoire/choix/fiche/cuisson/TM5 ; contrôler raccord vivres au lot suivant",
       "verification": "Absence refonte de ces écrans, conservation navigation existante",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+      ]
     },
     {
       "id": "E07-10",
@@ -911,10 +1406,16 @@
       "demande": "| E07-10 | Taverne E07.1 et Courses E07.2 ont été techniquement testées, mais l'utilisateur a demandé une revue finale commune ; plusieurs évolutions sont désormais décidées. | Ne pas considérer la présence de la route ou le succès CI comme validation de l'UX. | REVUE EN COURS |",
       "initial": "Revue utilisateur en cours",
       "code": "Registre et rapport",
-      "action": "Revue utilisateur distincte des succès techniques ; livrer preuves actuelles sans s’auto-valider",
+      "action": "Respect de la revue utilisateur en cours vérifié : aucune acceptation UX auto-déclarée ; les corrections techniques ne valent pas validation utilisateur.",
       "verification": "Statut revue en cours conservé",
-      "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "RC-L136",
@@ -923,10 +1424,18 @@
       "demande": "- **VALIDÉ visuellement par l'utilisateur** ; ne pas rouvrir le design accepté, sauf régression.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "documents-register.js; register.css; assets/contracts/screen.png",
-      "action": "Préserver E08 validé, limiter aux accords et reproduction réelle",
-      "verification": "Hash asset/CSShero et tests filtres/échéances/consultation/modification",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver le design E08 visuellement accepté et les opérations existantes ; limiter les changements aux accords, aucune panne mobile reproduite ne justifiant une refonte. Portée du statut : VÉRIFIÉ signifie non-régression technique du design accepté ; pas nouvelle validation visuelle utilisateur.",
+      "verification": "Hero/CSS/asset inchangés ; filtres/échéances/consultation/modification préservés ; image décodée avant capture à320/390/1440.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "essai-stitch-v7/register.css",
+        "essai-stitch-v7/assets/contracts/screen.png"
+      ]
     },
     {
       "id": "RC-L137",
@@ -935,10 +1444,16 @@
       "demande": "- Corriger le singulier « 1 contrats et assurances enregistrés » dans le prochain lot.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "documents-register.js registerDocuments/compteurs",
-      "action": "Corriger singulier sans reconstruction",
-      "verification": "Compteurs0/1/2",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Corriger les compteurs E08 : contrat/assurance au singulier et accords pluriels, sans reconstruction.",
+      "verification": "Cas 0/1/2 contrats et un cas1assurance contrôlés dans le registre canonique.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L138",
@@ -947,10 +1462,17 @@
       "demande": "- Capture de la version intégrée : l'illustration du hero est vide à 320/390 mais présente à 1440. Le fichier existe dans le bundle ; **vérifier chargement réel sur mobile / timing de capture** avant de qualifier la cause. Aucune certification visuelle mobile prématurée.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "documents-register.js contractIntro; register.css; tests/e08.cjs",
-      "action": "Attendre img.decode avant capture ; aucune panne mobile reproduite donc préserver image/design",
-      "verification": "NaturalWidth1376, visible et décodée 320/390/1440",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Attendre le chargement et img.decode avant capture ; faute de panne mobile reproduite, conserver illustration et design E08.",
+      "verification": "NaturalWidth1376/naturalHeight768, image visible/décodée aux trois largeurs ; captures après décodage ; distinguer contrôle actuel et capture historique prise trop tôt.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "essai-stitch-v7/tests/e08.cjs"
+      ]
     },
     {
       "id": "T-01",
@@ -961,8 +1483,14 @@
       "code": "chrome.js apply/mount; onboarding.js chrome; chat.js preferencesChanged",
       "action": "Préférence native unique st.stitchPreferences ; rendre contrôles aussi en cérémonie, Son synthèse et effets/reduced motion",
       "verification": "8 modules navigation/reload/mute/animations, audio simulé ; limites Safari explicites",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "T-02",
@@ -973,8 +1501,14 @@
       "code": "chrome.js apply/mount; onboarding.js chrome; chat.js preferencesChanged",
       "action": "Préférence native unique st.stitchPreferences ; rendre contrôles aussi en cérémonie, Son synthèse et effets/reduced motion",
       "verification": "8 modules navigation/reload/mute/animations, audio simulé ; limites Safari explicites",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "T-03",
@@ -985,8 +1519,14 @@
       "code": "build-source.cjs; review runtime/config/builder; moteurs natifs",
       "action": "Une branche/URL isolée, vrais writers, historique non validé signalé ; publier seul sous-arbre de démo",
       "verification": "Intégration 3 largeurs + données persistantes ; sentinelles Storage/IDB ; octets HTTP et anciens arbres préservés",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "T-04",
@@ -997,8 +1537,14 @@
       "code": "build-source.cjs; review runtime/config/builder; moteurs natifs",
       "action": "Une branche/URL isolée, vrais writers, historique non validé signalé ; publier seul sous-arbre de démo",
       "verification": "Intégration 3 largeurs + données persistantes ; sentinelles Storage/IDB ; octets HTTP et anciens arbres préservés",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "T-05",
@@ -1009,8 +1555,14 @@
       "code": "build-source.cjs; review runtime/config/builder; moteurs natifs",
       "action": "Une branche/URL isolée, vrais writers, historique non validé signalé ; publier seul sous-arbre de démo",
       "verification": "Intégration 3 largeurs + données persistantes ; sentinelles Storage/IDB ; octets HTTP et anciens arbres préservés",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "docs/dobby-v7/evidence/consolidation/publication.json"
+      ]
     },
     {
       "id": "RC-L152",
@@ -1019,10 +1571,16 @@
       "demande": "**Étape 0 : consolider les corrections recensées E01–E08** (cette section constitue le cahier des corrections, pas leur réalisation). Travailler par lots responsables des fichiers communs ; une seule intégration continue et un seul aperçu utilisateur. Priorité aux blocages fonctionnels, puis UX sans oublier les corrections différées. Ne pas répéter toutes les campagnes de tests à chaque retouche mineure.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Travailler par lots et checkpoints, centraliser la réconciliation des fichiers communs et conserver les reprises causales ; livrer du code et des preuves, pas seulement le registre.",
+      "verification": "Gate0 figé avant code, commits bornés et comptes rendus des reprises ; suites ciblées puis campagne commune/CI, limites et blocages maintenus.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/logs/final-campaign-resumed.log",
+        "docs/dobby-v7/evidence/consolidation/logs/unit-92.log"
+      ]
     },
     {
       "id": "RC-L154",
@@ -1031,10 +1589,17 @@
       "demande": "**1 — Écrans complémentaires de la Taverne :** calendrier, Grimoire des Recettes, Choisir un repas, Fiche Recette, Mode Cuisine et continuité des actions vers les Courses. Construire E07.3 avec le moteur natif, pas un nouveau backend.",
       "initial": "Futur chantier",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver ordre et besoins ; ne pas anticiper ce chantier.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
+      "action": "Conserver l’ordre futur approuvé : E07.3, Menu, Famille, autres besoins à définir ; aucune reconstruction anticipée ni nouveau module inventé dans cette consolidation. Portée du statut : REPORTÉ — AUTORISÉ ; la conservation documentaire et des parcours actuels ne constitue pas réalisation de ces chantiers.",
+      "verification": "Demandes détaillées conservées au registre/matrice ; diff limité aux corrections autorisées et raccords transversaux nécessaires ; E07-01/02/03/09 reportés.",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md"
+      ]
     },
     {
       "id": "RC-L156",
@@ -1043,10 +1608,17 @@
       "demande": "**2 — Menu :** réorganisation et reconstruction de la navigation. Définir les destinations exactes et les états non disponibles ; l'étape Menu ne prétend pas finir les futurs modules Famille.",
       "initial": "Futur chantier",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver ordre et besoins ; ne pas anticiper ce chantier.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
+      "action": "Conserver l’ordre futur approuvé : E07.3, Menu, Famille, autres besoins à définir ; aucune reconstruction anticipée ni nouveau module inventé dans cette consolidation. Portée du statut : REPORTÉ — AUTORISÉ ; la conservation documentaire et des parcours actuels ne constitue pas réalisation de ces chantiers.",
+      "verification": "Demandes détaillées conservées au registre/matrice ; diff limité aux corrections autorisées et raccords transversaux nécessaires ; E07-01/02/03/09 reportés.",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md"
+      ]
     },
     {
       "id": "RC-L158",
@@ -1055,10 +1627,17 @@
       "demande": "**3 — Famille :** reconstruire le Salon des Curiosités et ses sous-parcours familiaux. Les anciennes interfaces génériques ne constituent pas des écrans validés.",
       "initial": "Futur chantier",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver ordre et besoins ; ne pas anticiper ce chantier.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
+      "action": "Conserver l’ordre futur approuvé : E07.3, Menu, Famille, autres besoins à définir ; aucune reconstruction anticipée ni nouveau module inventé dans cette consolidation. Portée du statut : REPORTÉ — AUTORISÉ ; la conservation documentaire et des parcours actuels ne constitue pas réalisation de ces chantiers.",
+      "verification": "Demandes détaillées conservées au registre/matrice ; diff limité aux corrections autorisées et raccords transversaux nécessaires ; E07-01/02/03/09 reportés.",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md"
+      ]
     },
     {
       "id": "RC-L160",
@@ -1067,10 +1646,17 @@
       "demande": "**4 — Autres pages :** périmètre à définir après examen des besoins restants. Ne pas inventer une liste de lots non approuvés.",
       "initial": "Futur chantier",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver ordre et besoins ; ne pas anticiper ce chantier.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
+      "action": "Conserver l’ordre futur approuvé : E07.3, Menu, Famille, autres besoins à définir ; aucune reconstruction anticipée ni nouveau module inventé dans cette consolidation. Portée du statut : REPORTÉ — AUTORISÉ ; la conservation documentaire et des parcours actuels ne constitue pas réalisation de ces chantiers.",
+      "verification": "Demandes détaillées conservées au registre/matrice ; diff limité aux corrections autorisées et raccords transversaux nécessaires ; E07-01/02/03/09 reportés.",
       "final": "REPORTÉ — AUTORISÉ",
-      "preuves": []
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md"
+      ]
     },
     {
       "id": "RC-L164",
@@ -1079,10 +1665,16 @@
       "demande": "1. Les **modifications de code** se font par missions bornées et preuves ciblées, pas par la seule mise à jour de ce registre.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Travailler par lots et checkpoints, centraliser la réconciliation des fichiers communs et conserver les reprises causales ; livrer du code et des preuves, pas seulement le registre.",
+      "verification": "Gate0 figé avant code, commits bornés et comptes rendus des reprises ; suites ciblées puis campagne commune/CI, limites et blocages maintenus.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/logs/final-campaign-resumed.log",
+        "docs/dobby-v7/evidence/consolidation/logs/unit-92.log"
+      ]
     },
     {
       "id": "RC-L165",
@@ -1091,10 +1683,19 @@
       "demande": "2. Aucune correction visuelle E05/E06 ne doit supprimer les fonctions E07/E08 ni les liens E03/E04.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Préserver les fonctionnalités E07/E08 et les liens E03/E04 pendant les changements E05/E06 ; conserver les moteurs, writers et données natifs.",
+      "verification": "Régressions source des modules et parcours intégrés ; courses/repas/contrats consultables et éditables, parcours Missions opérationnel ; mêmes octets testés/publiés.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/evidence/consolidation/e06/README.md",
+        "docs/dobby-v7/evidence/consolidation/e07/README.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L166",
@@ -1103,10 +1704,17 @@
       "demande": "3. E03 reste validé ; E08 reste accepté ; ne les redessiner que sur anomalie de non-régression prouvée.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Conserver E03 validé et E08 accepté ; aucune refonte de leurs designs en l’absence de régression reproduite.",
+      "verification": "E03 hero/layout/filtres/cartes préservés ; E08 hero/CSS/asset préservés ; contrôles métier croisés et images décodées.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e01-e04/README.md",
+        "docs/dobby-v7/evidence/consolidation/logs/shared-3widths.log",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json"
+      ]
     },
     {
       "id": "RC-L167",
@@ -1115,10 +1723,17 @@
       "demande": "4. La revue utilisateur est séparée de « tests PASS », « intégré », « publié » et « fonctionnel sous compte réel ».",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; fichiers des modules concernés",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Priorité aux arbitrages datés du 11 novembre ; aucune auto-validation de revue.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter la séparation entre tests sur fixtures, livraison intégrée, publication, validation visuelle humaine et synchronisation familiale réelle ; maintenir les limites sans les déclarer levées. Portée du statut : VÉRIFIÉ signifie respect de la limite et exactitude du compte rendu ; aucune validation serveur ou humaine supplémentaire.",
+      "verification": "Rapport et écran Infos qualifient la démonstration fictive ; aucune preuve de compte familial réel ni de recette physique Safari/iPhone revendiquée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "docs/dobby-v7/evidence/consolidation/hosted-results.json",
+        "scripts/review/integrated-config.js"
+      ]
     },
     {
       "id": "RC-L168",
@@ -1127,10 +1742,17 @@
       "demande": "5. L'URL publique de démonstration ne doit pas exposer d'assets officiels protégés sans autorisation ; les souhaits d'emblèmes officiels concernent la version privée tant que les droits de publication ne sont pas établis.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; magic-profile.js houseEmblem; assets/magic/MEDIA.md; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec E05-01, T-03, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter la séparation public/privé pour les emblèmes officiels ; maintenir leur demande bloquée faute de provenance/droits adéquats, sans exposer de nouveau visuel officiel dans GitHub Pages. Portée du statut : VÉRIFIÉ porte sur le respect de la restriction de publication ; E05-01 et la partie blason E06-04 restent BLOQUÉS.",
+      "verification": "Audit de droits E05 et inventaire du bundle ; emplacement neutre explicite ; aucune imitation présentée comme conforme.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/evidence/consolidation/e05/README.md",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
+        "essai-stitch-v7/magic-profile.js"
+      ]
     },
     {
       "id": "RC-L169",
@@ -1139,10 +1761,38 @@
       "demande": "6. Aucune fusion des branches applicatives dans main, migration SQL ni publication officielle implicite.",
       "initial": "À vérifier (règle/référence ou décision historique)",
       "code": "Référentiel/rapport ; build-source.cjs; review runtime/config/builder; moteurs natifs; build-source.cjs; review runtime/config/builder; moteurs natifs",
-      "action": "Conserver cette décision/référence exacte ; vérifier sa réalisation séparément des tests. Application commune avec T-03, T-05, sans supprimer cette ligne.",
-      "verification": "Seconde lecture indépendante, comparaison source Git et matrice ; preuves natives/UI/publication selon portée",
-      "final": "NON VÉRIFIÉ",
-      "preuves": []
+      "action": "Respecter l’interdiction de fusion applicative dans main et de migration Supabase/SQL ; mettre à jour uniquement le sous-arbre autorisé de l’aperçu intégré. Portée du statut : VÉRIFIÉ porte sur la préservation de ces limites ; la publication du dossier statique n’est pas une fusion applicative.",
+      "verification": "Diff applicatif sans SQL ni moteur natif V5 modifié ; reçu de publication établit le seul préfixe modifié et la conservation des autres arbres/aperçus.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/CONSOLIDATION.md",
+        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
+        "docs/dobby-v7/evidence/consolidation/publication.json",
+        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md"
+      ]
     }
-  ]
+  ],
+  "finalSummary": {
+    "verifiedIDs": 32,
+    "blockedIDs": [
+      "E04-02",
+      "E05-01",
+      "E06-01",
+      "E06-04"
+    ],
+    "deferredIDs": [
+      "E06-08",
+      "E07-01",
+      "E07-02",
+      "E07-03",
+      "E07-09"
+    ],
+    "allRowsByState": {
+      "VÉRIFIÉ": 81,
+      "BLOQUÉ": 5,
+      "REPORTÉ — AUTORISÉ": 9
+    },
+    "globalDone": false,
+    "note": "Corrections réalisables vérifiées ; quatre IDs courants comportent une dépendance bloquée, dont grand blason E06-04 seulement. E07-10 = respect de revue ouverte, pas validation UX. Les RC de règles et références certifient leur respect/conservation, jamais une acceptation utilisateur."
+  }
 }

@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-11-11T00:31:00.797Z",
+  "finishedAt": "2026-11-11T00:31:26.842Z",
+  "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-foyer",
+  "widths": [
+    1440
+  ],
+  "passedWidths": [
+    1440
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "log": "hosted-test-1440.log",
+  "command": "DOBBY_TEST_ORIGIN=https://portenartco.github.io DOBBY_REVIEW_PATH=/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7 DOBBY_E06_EVIDENCE_DIR=/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted DOBBY_E06_WIDTHS=1440 node essai-stitch-v7/tests/e06-consolidation.cjs"
+}

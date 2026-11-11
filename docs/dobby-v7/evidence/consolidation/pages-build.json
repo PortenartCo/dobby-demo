@@ -1,0 +1,32 @@
+{
+  "url": "https://api.github.com/repos/PortenartCo/dobby-demo/pages/builds/1358679840",
+  "status": "built",
+  "error": {
+    "message": null
+  },
+  "pusher": {
+    "login": "PortenartCo",
+    "id": 335781834,
+    "node_id": "U_kgDOFAOfyg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/335781834?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/PortenartCo",
+    "html_url": "https://github.com/PortenartCo",
+    "followers_url": "https://api.github.com/users/PortenartCo/followers",
+    "following_url": "https://api.github.com/users/PortenartCo/following{/other_user}",
+    "gists_url": "https://api.github.com/users/PortenartCo/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/PortenartCo/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/PortenartCo/subscriptions",
+    "organizations_url": "https://api.github.com/users/PortenartCo/orgs",
+    "repos_url": "https://api.github.com/users/PortenartCo/repos",
+    "events_url": "https://api.github.com/users/PortenartCo/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/PortenartCo/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "commit": "7b8ba5dec2c56852234133b544a56bde66cd96ff",
+  "duration": 32243,
+  "created_at": "2026-11-11T00:15:18Z",
+  "updated_at": "2026-11-11T00:15:50Z"
+}

@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "origin": "https://portenartco.github.io",
+  "appPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "speech": "simulated SpeechRecognition and speechSynthesis API boundaries",
+  "identity": "simulated native identity output",
+  "writers": "real native grocery writer and storage",
+  "storageEvidence": {
+    "prefix": "dobby-review-integrated-v1|",
+    "nativeKey": "dobby-v5-familial-preview-20261108",
+    "physicalKey": "dobby-review-integrated-v1|dobby-v5-familial-preview-20261108",
+    "containsWrittenGrocery": true,
+    "databaseNames": [
+      "dobby-review-integrated-v1|dobby-v5-household-preview-v2"
+    ]
+  },
+  "cases": [
+    "multisegment",
+    "no autosend on final/end/error",
+    "stop",
+    "resume",
+    "cancel",
+    "interim preservation",
+    "late callbacks",
+    "navigation",
+    "identity isolation",
+    "sound preference",
+    "native grocery persistence and duplicate",
+    "canonical document link and native empty fallback",
+    "module navigation",
+    "decoded hero",
+    "reduced viewport"
+  ],
+  "realIPhone": false
+}

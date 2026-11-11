@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-11-11T00:19:09.072176+00:00",
+  "endedAt": "2026-11-11T00:19:35.452124+00:00",
+  "exitCode": 0,
+  "origin": "https://portenartco.github.io",
+  "appPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#chat",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "command": "node essai-stitch-v7/tests/e02-consolidation.cjs",
+  "sourceBundleSha": "ff7684704f282b239633284e993348ae8094393f",
+  "speech": "SpeechRecognition and speechSynthesis API boundaries simulated; physical Safari/iPhone not tested"
+}

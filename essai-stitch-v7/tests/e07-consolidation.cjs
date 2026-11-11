@@ -1,6 +1,6 @@
 /* Consolidation E07: real native list and DOM, isolated browser contexts. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
-const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',evidence=path.resolve(__dirname,'../../docs/dobby-v7/evidence/consolidation/e07');
+const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',evidence=process.env.DOBBY_E07_EVIDENCE_DIR||path.resolve(__dirname,'../../docs/dobby-v7/evidence/consolidation/e07');
 const before=process.env.DOBBY_E07_BEFORE==='1';
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{
 for(const width of [320,390,1440]){const context=await browser.newContext({viewport:{width,height:900},locale:'fr-BE',reducedMotion:'reduce'});await context.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(30000);

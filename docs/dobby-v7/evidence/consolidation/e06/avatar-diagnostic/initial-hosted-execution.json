@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-11-11T00:16:29.821Z",
+  "finishedAt": "2026-11-11T00:17:41.577Z",
+  "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-foyer",
+  "origin": "https://portenartco.github.io",
+  "reviewPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "evidenceDirectory": "/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted",
+  "command": "DOBBY_TEST_ORIGIN=https://portenartco.github.io DOBBY_REVIEW_PATH=/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7 DOBBY_E06_EVIDENCE_DIR=/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted node essai-stitch-v7/tests/e06-consolidation.cjs",
+  "expectedSourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "manifestURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/review-manifest.json",
+  "observedSourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "realBackend": false,
+  "storagePrefix": "dobby-review-integrated-v1|",
+  "passedWidths": [
+    320,
+    390,
+    1440
+  ],
+  "pngCaptureCount": 69
+}

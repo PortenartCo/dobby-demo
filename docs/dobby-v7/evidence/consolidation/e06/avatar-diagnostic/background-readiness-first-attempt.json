@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-11-11T00:28:28.789Z",
+  "finishedAt": "2026-11-11T00:29:23.730Z",
+  "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-foyer",
+  "origin": "https://portenartco.github.io",
+  "reviewPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "evidenceDirectory": "/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted",
+  "command": "DOBBY_TEST_ORIGIN=https://portenartco.github.io DOBBY_REVIEW_PATH=/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7 DOBBY_E06_EVIDENCE_DIR=/workspace/dobby-integrated-review/docs/dobby-v7/evidence/consolidation/e06/hosted node essai-stitch-v7/tests/e06-consolidation.cjs",
+  "expectedSourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "observedSourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "realBackend": false,
+  "storagePrefix": "dobby-review-integrated-v1|",
+  "exitCode": 1,
+  "signal": null,
+  "error": null,
+  "passedWidths": [
+    320,
+    390
+  ],
+  "pngCaptureCount": 69,
+  "rerunReason": "Visual review caught an unpainted CSS avatar atlas in the initial capture. Harness now waits for CSS image decode, visible geometry and two paint frames. Product unchanged.",
+  "initialExecution": "../avatar-diagnostic/initial-hosted-execution.json",
+  "manifestURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/review-manifest.json"
+}
