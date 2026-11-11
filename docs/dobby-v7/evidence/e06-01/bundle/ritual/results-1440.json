@@ -1,0 +1,24 @@
+{
+  "width": 1440,
+  "status": "PASS",
+  "skipMs": 65,
+  "traversalMs": 2604,
+  "image": {
+    "loaded": true,
+    "width": 410,
+    "height": 502.40625,
+    "visible": true,
+    "src": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png"
+  },
+  "preference": {
+    "seen": false,
+    "suppressed": true,
+    "version": 1
+  },
+  "browserAudio": {
+    "audioContexts": 2,
+    "vibrations": 2
+  },
+  "audioSupported": true,
+  "blockedLegacyDecorationRequests": 0
+}

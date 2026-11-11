@@ -1,0 +1,163 @@
+[
+  {
+    "scene": "foyer",
+    "assets": [
+      {
+        "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png",
+        "width": 1254,
+        "height": 1254
+      }
+    ],
+    "portraits": [
+      {
+        "avatarId": "portrait-3",
+        "width": 48,
+        "height": 48,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "66.6667% 16.6667%"
+      }
+    ]
+  },
+  {
+    "scene": "identity",
+    "assets": [
+      {
+        "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png",
+        "width": 1254,
+        "height": 1254
+      }
+    ],
+    "portraits": [
+      {
+        "avatarId": "portrait-1",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "0% 16.6667%"
+      },
+      {
+        "avatarId": "portrait-2",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "33.3333% 16.6667%"
+      },
+      {
+        "avatarId": "portrait-3",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "66.6667% 16.6667%"
+      },
+      {
+        "avatarId": "portrait-4",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "100% 16.6667%"
+      },
+      {
+        "avatarId": "portrait-5",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "0% 83.3333%"
+      },
+      {
+        "avatarId": "portrait-6",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "33.3333% 83.3333%"
+      },
+      {
+        "avatarId": "portrait-7",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "66.6667% 83.3333%"
+      },
+      {
+        "avatarId": "portrait-8",
+        "width": 92.5,
+        "height": 92.5,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "100% 83.3333%"
+      },
+      {
+        "avatarId": "portrait-3",
+        "width": 48,
+        "height": 48,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "66.6667% 16.6667%"
+      }
+    ]
+  },
+  {
+    "scene": "house",
+    "assets": [],
+    "portraits": []
+  },
+  {
+    "scene": "house-result",
+    "assets": [],
+    "portraits": []
+  },
+  {
+    "scene": "patronus",
+    "assets": [
+      {
+        "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/soul-mirror.jpg",
+        "width": 512,
+        "height": 279
+      }
+    ],
+    "portraits": []
+  },
+  {
+    "scene": "patronus-result",
+    "assets": [
+      {
+        "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/patronuses.png",
+        "width": 1254,
+        "height": 1254
+      }
+    ],
+    "portraits": []
+  },
+  {
+    "scene": "final",
+    "assets": [
+      {
+        "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png",
+        "width": 1254,
+        "height": 1254
+      },
+      {
+        "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/patronuses.png",
+        "width": 1254,
+        "height": 1254
+      }
+    ],
+    "portraits": [
+      {
+        "avatarId": "portrait-3",
+        "width": 104,
+        "height": 104,
+        "visible": true,
+        "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+        "backgroundPosition": "66.6667% 16.6667%"
+      }
+    ]
+  }
+]

@@ -1,0 +1,133 @@
+{
+  "status": "PASS",
+  "sourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "publicationSha": "e24682d34f01c26c40da2399754749ced35f0bad",
+  "parentSha": "7b8ba5dec2c56852234133b544a56bde66cd96ff",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+  "filesVerified": 274,
+  "applicationRecords": 269,
+  "changedFiles": [
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/fonts/cinzel-OFL.txt",
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/fonts/cinzel.ttf",
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/fonts/jakarta-OFL.txt",
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/fonts/jakarta.ttf",
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/fonts/provenance.json",
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png",
+    "essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/ritual-hearth-original.provenance.json",
+    "essai-dobby-integrated-review/essai-stitch-v7/build-onboarding.cjs",
+    "essai-dobby-integrated-review/essai-stitch-v7/build-source.cjs",
+    "essai-dobby-integrated-review/essai-stitch-v7/ci-scope.json",
+    "essai-dobby-integrated-review/essai-stitch-v7/famille.html",
+    "essai-dobby-integrated-review/essai-stitch-v7/index.html",
+    "essai-dobby-integrated-review/essai-stitch-v7/magic-profile.js",
+    "essai-dobby-integrated-review/essai-stitch-v7/missions.html",
+    "essai-dobby-integrated-review/essai-stitch-v7/onboarding-route-data.js",
+    "essai-dobby-integrated-review/essai-stitch-v7/onboarding-routes.json",
+    "essai-dobby-integrated-review/essai-stitch-v7/onboarding.js",
+    "essai-dobby-integrated-review/essai-stitch-v7/ritual-effects.js",
+    "essai-dobby-integrated-review/essai-stitch-v7/ritual.css",
+    "essai-dobby-integrated-review/essai-stitch-v7/ritual.js",
+    "essai-dobby-integrated-review/essai-stitch-v7/route-manifest.json",
+    "essai-dobby-integrated-review/essai-stitch-v7/templates/onboarding/onboarding-ritual.html",
+    "essai-dobby-integrated-review/essai-stitch-v7/templates/onboarding/provenance.json",
+    "essai-dobby-integrated-review/essai-stitch-v7/traverse.html",
+    "essai-dobby-integrated-review/review-config.js",
+    "essai-dobby-integrated-review/review-manifest.json"
+  ],
+  "preservedRootEntries": [
+    {
+      "name": ".github",
+      "before": "3244db043d545d773f91a1ec88c3195cc1777fb7",
+      "after": "3244db043d545d773f91a1ec88c3195cc1777fb7"
+    },
+    {
+      "name": ".nojekyll",
+      "before": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "after": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "name": "README.md",
+      "before": "ff9e5d39c6621eed152da967628e52287c412598",
+      "after": "ff9e5d39c6621eed152da967628e52287c412598"
+    },
+    {
+      "name": "essai-dobby-review",
+      "before": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1",
+      "after": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1"
+    },
+    {
+      "name": "essai-e01-preview",
+      "before": "d819e55f6924471364533e9ec2d36510afdcf89a",
+      "after": "d819e55f6924471364533e9ec2d36510afdcf89a"
+    },
+    {
+      "name": "essai-e02-preview",
+      "before": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db",
+      "after": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db"
+    },
+    {
+      "name": "essai-stitch-v2",
+      "before": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f",
+      "after": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f"
+    },
+    {
+      "name": "essai-stitch-v3",
+      "before": "d24babe19d5f496596749c525a9e215030d3c8fe",
+      "after": "d24babe19d5f496596749c525a9e215030d3c8fe"
+    },
+    {
+      "name": "essai-stitch-v4",
+      "before": "b38d97db05a7db4310aebaf8ddfd910c6007d991",
+      "after": "b38d97db05a7db4310aebaf8ddfd910c6007d991"
+    },
+    {
+      "name": "essai-stitch-v5-famille",
+      "before": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "after": "89282a46b453970ea907265e8dab4293f0eb72b1"
+    },
+    {
+      "name": "essai-stitch-v5",
+      "before": "9791d1c1d56a4d1d56f4361157652d40f3537107",
+      "after": "9791d1c1d56a4d1d56f4361157652d40f3537107"
+    },
+    {
+      "name": "essai-stitch",
+      "before": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0",
+      "after": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0"
+    },
+    {
+      "name": "essai-sync-v1",
+      "before": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "after": "07454efbf1d19cc7cbd55eb71eb98c820382baae"
+    },
+    {
+      "name": "essai-sync-v2",
+      "before": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "after": "ba82dd8e68f52424542dd61b2dd1acea5b52887b"
+    },
+    {
+      "name": "essai-v6-preview",
+      "before": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "after": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47"
+    },
+    {
+      "name": "essai-v7-preview",
+      "before": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a",
+      "after": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a"
+    },
+    {
+      "name": "index.html",
+      "before": "78f15c3e970f17a884cd52c10623b821b5985cb8",
+      "after": "78f15c3e970f17a884cd52c10623b821b5985cb8"
+    },
+    {
+      "name": "sql-proposals",
+      "before": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "after": "a2214c48115e303b51d7c607f11ee79ad605f9f0"
+    }
+  ],
+  "sourceCI": "https://github.com/PortenartCo/dobby-demo/actions/runs/42986826380",
+  "scope": "Only the pre-existing isolated static preview folder; no app merge",
+  "protectedHttp": 5,
+  "protectedSourceBranches": 8
+}

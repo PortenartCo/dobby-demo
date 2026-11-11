@@ -2,7 +2,7 @@
 
 Mission limitée depuis `a61a140e94b81893ad5b3cc4624ff4d6796c3ff7`, branche `feat/dobby-e01-e08-review-integration`. [Demande](E06-01-SPEC.md).
 
-État source : **corrigé**, tests ciblés et parcours E06 existant PASS à 320, 390 et 1440 px. Publication isolée et recette hébergée à compléter avant remise. La validation visuelle utilisateur reste ouverte.
+État source : **corrigé**, tests ciblés et parcours E06 existant PASS à 320, 390 et 1440 px. L’aperçu isolé est publié et vérifié ; la recette hébergée est PASS. La validation visuelle utilisateur reste ouverte.
 
 ## Source et illustration
 
@@ -40,3 +40,16 @@ La CI utilise le périmètre Rituel, ces erreurs et ce parcours ; la campagne hi
 | 1440 | [capture](evidence/e06-01/after/ritual-1440.png) | [capture](evidence/e06-01/after/traversal-1440.png) | [capture](evidence/e06-01/after/foyer-arrival-1440.png) |
 
 Les captures attendent le décodage réel des images et des fontes. Aucun compte réel, Supabase, SQL, autre aperçu ou application officielle modifié. Arrêt après recette de l’aperçu et livraison pour revue visuelle.
+
+## Livraison et version réellement servie
+
+- Code applicatif : `b1bfd43871be81fea67eb70b9ea3960c3ce13337`, [CI ciblée verte](https://github.com/PortenartCo/dobby-demo/actions/runs/42986826380). Les ajouts suivants concernent uniquement tests et preuves.
+- Publication statique : `e24682d34f01c26c40da2399754749ced35f0bad`, parent `7b8ba5dec2c56852234133b544a56bde66cd96ff`. [Reçu de publication](evidence/e06-01/publication.json) : 26 fichiers du seul dossier autorisé modifiés, 18 autres entrées racine identiques.
+- [Aperçu](https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/) · [Entrée directe du Rituel](https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-ritual). Le bandeau « Démo · Commencer » ouvre la même première entrée E06 ; une introduction déjà vue est passée, sauf relecture explicite depuis les paramètres.
+- **274 fichiers HTTP identiques au bundle testé**, dont 269 fichiers applicatifs : [empreintes servies](evidence/e06-01/hosted-hashes.json), [manifeste source](evidence/e06-01/bundle-manifest.json). Les cinq endpoints protégés et huit branches sources sont inchangés.
+- [Recette réelle hébergée](evidence/e06-01/hosted/execution.json) : Rituel 320/390/1440, erreurs 320, parcours E06 existant 320/390/1440, puis chemin continu Rituel → traversée → Foyer → identité → Maison → Patronus → identité finale à 390. [Captures du Rituel](evidence/e06-01/hosted/ritual/), [parcours complet](evidence/e06-01/hosted/journey/), [chaîne continue](evidence/e06-01/hosted/continuous/).
+- La première extension du harnais continu contrôlait le Foyer dès le changement d’URL, alors que `ready` désigne le bootstrap déjà terminé. L’attente de l’action Foyer réellement visible précède désormais les assertions conservées ; reprise ciblée 390 PASS, [trace initiale](evidence/e06-01/hosted/continuous-initial-spa-wait.log). Aucun changement applicatif pour ce cas.
+
+Le lancement CI final reprend le chemin continu depuis le Rituel aux trois largeurs, sans campagne historique des autres modules. Sa conclusion au SHA final est jointe à la remise pour conserver cet artefact immuable. Recette Chromium responsive ; Safari/iPhone physique non essayé. Le son est vérifié aux frontières réelles WebAudio, avec dégradation silencieuse lorsque le navigateur ne l’autorise pas.
+
+[Fichiers de cette mission](evidence/e06-01/changed-files.txt). Aucun autre arbitrage du registre n’a changé : seule E06-01 passe à corrigé. Aucun compte réel, SQL, Supabase ou application officielle modifié ; aucun code applicatif fusionné dans main. **Arrêt pour revue visuelle utilisateur.**

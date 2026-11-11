@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "sourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "checkedUTC": "2026-11-11T08:32:53.237694+00:00",
+  "type": "manual inspection of the actual hosted PNG files; technical evidence, not user visual acceptance",
+  "captures": [
+    {
+      "width": 320,
+      "capture": "docs/dobby-v7/evidence/e06-01/hosted/ritual/ritual-320.png",
+      "manualVisualInspection": "PASS",
+      "observed": [
+        "central original illustration visibly decoded and detailed",
+        "Dobby and fireplace visible without character crop",
+        "no permanent dock overlay",
+        "Traverse / Ne plus afficher / Passer controls visible",
+        "isolated demo banner retained",
+        "mobile width fits without horizontal overflow"
+      ]
+    },
+    {
+      "width": 390,
+      "capture": "docs/dobby-v7/evidence/e06-01/hosted/ritual/ritual-390.png",
+      "manualVisualInspection": "PASS",
+      "observed": [
+        "central original illustration visibly decoded and detailed",
+        "Dobby and fireplace visible without character crop",
+        "no permanent dock overlay",
+        "Traverse / Ne plus afficher / Passer controls visible",
+        "isolated demo banner retained",
+        "mobile width fits without horizontal overflow"
+      ]
+    },
+    {
+      "width": 1440,
+      "capture": "docs/dobby-v7/evidence/e06-01/hosted/ritual/ritual-1440.png",
+      "manualVisualInspection": "PASS",
+      "observed": [
+        "central original illustration visibly decoded and detailed",
+        "Dobby and fireplace visible without character crop",
+        "no permanent dock overlay",
+        "Traverse / Ne plus afficher / Passer controls visible",
+        "isolated demo banner retained",
+        "desktop retains centered source phone composition"
+      ]
+    }
+  ]
+}

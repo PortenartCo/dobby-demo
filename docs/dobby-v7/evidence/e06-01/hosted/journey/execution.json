@@ -1,0 +1,16 @@
+{
+  "suite": "e06-consolidation.cjs",
+  "status": "PASS",
+  "exitCode": 0,
+  "checkedUTC": "2026-11-11T08:38:50.277052+00:00",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+  "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "entry": "Foyer \u2192 native ceremony",
+  "businessMocks": false,
+  "sourceTests": "Native UI, writers, drafts, reload, confirmed results, profile and reset"
+}

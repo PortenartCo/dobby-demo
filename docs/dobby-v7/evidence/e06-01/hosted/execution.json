@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "expectedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "suites": [
+    {
+      "suite": "e06-ritual.cjs",
+      "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-ritual",
+      "origin": "https://portenartco.github.io",
+      "reviewPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+      "expectedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+      "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "startedUTC": "2026-11-11T08:30:59.765554+00:00",
+      "command": "node essai-stitch-v7/tests/e06-ritual.cjs",
+      "finishedUTC": "2026-11-11T08:31:52.491683+00:00",
+      "exitCode": 0,
+      "realBackend": false,
+      "evidenceDirectory": "docs/dobby-v7/evidence/e06-01/hosted/ritual"
+    },
+    {
+      "suite": "e06-ritual-errors.cjs",
+      "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-ritual",
+      "origin": "https://portenartco.github.io",
+      "reviewPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+      "expectedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+      "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+      "widths": [
+        320
+      ],
+      "startedUTC": "2026-11-11T08:31:52.492297+00:00",
+      "command": "node essai-stitch-v7/tests/e06-ritual-errors.cjs",
+      "finishedUTC": "2026-11-11T08:32:09.921173+00:00",
+      "exitCode": 0,
+      "realBackend": false,
+      "evidenceDirectory": "docs/dobby-v7/evidence/e06-01/hosted/errors"
+    },
+    {
+      "suite": "e06-consolidation.cjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "checkedUTC": "2026-11-11T08:38:50.277052+00:00",
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+      "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "entry": "Foyer \u2192 native ceremony",
+      "businessMocks": false,
+      "sourceTests": "Native UI, writers, drafts, reload, confirmed results, profile and reset"
+    },
+    {
+      "suite": "e06-consolidation.cjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "checkedUTC": "2026-11-11T08:38:50.277405+00:00",
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+      "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+      "widths": [
+        390
+      ],
+      "entry": "Ritual \u2192 Foyer \u2192 native ceremony in one browser context",
+      "businessMocks": false,
+      "sourceTests": "Native UI, writers, drafts, reload, confirmed results, profile and reset"
+    }
+  ],
+  "allExitCodes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "byteProof": "hosted-hashes.json",
+  "filesVerified": 274
+}
