@@ -13,6 +13,7 @@
   },
   "reviewProfile": "integrated-e03-e06",
   "runesPilot": {
+    "legacyRecovery": true,
     "reference": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
     "protectedTreeSha256": "368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114"
   }

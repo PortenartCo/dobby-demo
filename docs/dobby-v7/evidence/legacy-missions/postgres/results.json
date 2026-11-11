@@ -1,0 +1,165 @@
+{
+  "generatedAt": "2026-11-11T23:35:30.554Z",
+  "command": "node --test scripts/runes-pilot/legacy-postgres.test.mjs",
+  "environment": {
+    "container": "dobby-runes-v2-legacy-test-20261112",
+    "database": "dobby_runes_legacy_tests",
+    "dockerHost": "unix:///var/run/docker.sock",
+    "image": "postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+    "imageId": "sha256:eb0fb2377534e65aad04f37838956b3dfb888e1a3dd3c1acf957bc6557eb6c7d",
+    "network": "none",
+    "label": "shared-runes-v2-legacy-20261112",
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "sqlReference": "04c58d9ebaf84374820a5e6a727c45dfa4ee3527",
+    "sqlSha256": {
+      "sql-proposals/dobby-v2-modules.sql": "7feb02f2b0053eaf89bc9ba5fbc092deebb75fed225f224b78a282175b70a9c5",
+      "sql-proposals/dobby-shared-runes-v2.sql": "e4e4b2463da88eefb2cca25c648ff71fcbd8d99b9ee061f751442ca252bd8796",
+      "sql-proposals/dobby-shared-runes-v2-auth-42501.sql": "fbcde774e1155045b494538c4f2ced340fd85b5464dfc9b367aca1abc48b308e"
+    },
+    "authenticationBoundary": "Invented UUID claims and local fixture roles; real SQL/RLS/transactions, no Supabase JWT or PostgREST service."
+  },
+  "nativeSourceSha256": "a97ab87d5ed6ec3311b262db30b23f25e4d1b94aff0c1e7db2d8817274a32572",
+  "generatedClientSha256": "0205252621204f92e4ef1f0467897e6731ea61a970a5cc6b5d6ebfe47c18447a",
+  "scope": "Two invented users in independent native client VMs; real PostgreSQL SQL, constraints, CAS, receipts and transactions. HTTP transport translation and response-loss/corruption injection only; no deployed Supabase or JWT issuance.",
+  "passed": 13,
+  "failed": 0,
+  "scenarios": [
+    {
+      "name": "explicit legacy review backs up, preserves both auto-task sets, and two native actors converge through grant/reversal/regrant",
+      "status": "passed",
+      "evidence": {
+        "initialRevision": 2,
+        "migratedRevision": 3,
+        "replayOperationRevision": 3,
+        "replayCurrentRevision": 4,
+        "finalRevision": 6,
+        "receipts": 4,
+        "credits": 3,
+        "finalTotal": 10
+      }
+    },
+    {
+      "name": "a competing native CAS writer produces 40001 without erasing local mission data or the durable recovery operation",
+      "status": "passed",
+      "evidence": {
+        "sqlstate": "40001",
+        "mappedHTTPStatus": 500,
+        "durableOperation": "7da40237-9f10-461e-9350-af80bc557567",
+        "serverRevision": 3,
+        "receipts": 1,
+        "localIntentPreserved": true
+      }
+    },
+    {
+      "name": "a lost response after migration commits is recovered by the original durable operation after reload",
+      "status": "passed",
+      "evidence": {
+        "operation": "e6b43eed-18d6-43cc-b362-4ccc900c21aa",
+        "attempts": 2,
+        "replayed": true,
+        "serverRevision": 3,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "a corrupt response receipt retains the exact outbox and pending rune request until a valid SQL receipt replay",
+      "status": "passed",
+      "evidence": {
+        "operation": "5c8c8d28-27e6-4610-bf90-3970c5d19f4f",
+        "invalidReceiptPreservedOutbox": true,
+        "replayConfirmedTotal": 10,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "local confirmed history blocks client-only adoption without an RPC or any local data loss",
+      "status": "passed",
+      "evidence": {
+        "localConfirmedCreditsPreserved": 1,
+        "serverRevision": 2,
+        "rpcWrites": 0
+      }
+    },
+    {
+      "name": "an unknown existing operation is neither mutated nor archived during recovery review and choices",
+      "status": "passed",
+      "evidence": {
+        "unknownOperation": "3d3b7b9d-0a82-48ab-bdff-2e8ba9a981dd",
+        "rpcWrites": 0,
+        "serverRevision": 2,
+        "operationUnchanged": true
+      }
+    },
+    {
+      "name": "a safe existing operation is replayed from the legacy review with exactly its original identity, revision and payload",
+      "status": "passed",
+      "evidence": {
+        "operation": "f745473d-e747-41ef-95a1-5ae34d3705b6",
+        "expectedRevision": 2,
+        "revision": 3,
+        "receipts": 1,
+        "exactPayload": true
+      }
+    },
+    {
+      "name": "a definitively rejected operation is backed up and archived before a distinct recovery operation is submitted",
+      "status": "passed",
+      "evidence": {
+        "archivedOperation": "98470e1a-1abc-43c1-bdd0-08221a1c6324",
+        "replacementOperation": "be205094-e21f-4c93-9aa0-a468057f698e",
+        "archivedIntact": true,
+        "revision": 3,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "old V1 direct writes remain forbidden by the real SQL guard after the auth patch",
+      "status": "passed",
+      "evidence": {
+        "sqlstate": "42501",
+        "revision": 2,
+        "receipts": 0
+      }
+    },
+    {
+      "name": "declining recovery leaves SQL and every local field untouched",
+      "status": "passed",
+      "evidence": {
+        "rpcWrites": 0,
+        "revision": 2
+      }
+    },
+    {
+      "name": "automatic-task collision choice local preserves unique tasks on both sides",
+      "status": "passed",
+      "evidence": {
+        "preference": "local",
+        "revision": 3,
+        "automaticTasks": 2,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "automatic-task collision choice server preserves unique tasks on both sides",
+      "status": "passed",
+      "evidence": {
+        "preference": "server",
+        "revision": 3,
+        "automaticTasks": 2,
+        "receipts": 1
+      }
+    },
+    {
+      "name": "a fresh converted-household review preserves a remembered remote task, an unchanged local mission, and the other actor additional task",
+      "status": "passed",
+      "evidence": {
+        "convertedRevision": 3,
+        "finalRevision": 4,
+        "receipts": 2,
+        "automaticTasks": 2,
+        "localManualPreserved": true,
+        "newConvertedBackup": true
+      }
+    }
+  ]
+}

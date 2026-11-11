@@ -13,8 +13,15 @@ function run(){
  const tests=fs.readdirSync(path.join(repo,'essai-stitch-v5-famille/tests')).filter(x=>x.endsWith('.test.mjs')).map(x=>'essai-stitch-v5-famille/tests/'+x);
  for(const dir of ['essai-sync-v1/tests','essai-sync-v2/tests'])tests.push(...fs.readdirSync(path.join(repo,dir)).filter(x=>x.endsWith('.test.mjs')).map(x=>dir+'/'+x));
  tests.push(...fs.readdirSync(path.join(repo,'essai-stitch-v7/tests')).filter(x=>/^e06-.*\.test\.mjs$/.test(x)).map(x=>'essai-stitch-v7/tests/'+x));
+ const legacyRecovery=require('../../essai-stitch-v7/ci-scope.json').runesPilot?.legacyRecovery===true;
+ if(legacyRecovery)tests.push('scripts/runes-pilot/legacy-recovery.test.mjs');
  call(['--test',...tests,'scripts/runes-pilot/guard.test.mjs','scripts/runes-pilot/build.test.cjs']);
- call(['scripts/build-dobby-runes-pilot.cjs']);
- call(['scripts/runes-pilot/browser.cjs']);
+ if(legacyRecovery){
+  call(['scripts/build-dobby-runes-pilot.cjs','--legacy-recovery']);
+  call(['scripts/runes-pilot/legacy-browser.cjs']);
+ }else{
+  call(['scripts/build-dobby-runes-pilot.cjs']);
+  call(['scripts/runes-pilot/browser.cjs']);
+ }
 }
 module.exports={fingerprint,verify,run};

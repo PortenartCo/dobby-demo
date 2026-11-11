@@ -133,3 +133,32 @@ test('source anchor changes stop packaging transforms instead of silently omitti
   assert.throws(() => transformMissions(modules + '\nfunction assertLocalRewardSharing(){if(runesV2Available())return;'), /Native pilot anchor changed/);
   assert.throws(() => transformMissionActions(actions.replace('function requiresSync(){', 'function changedSyncRequirement(){')), /Native pilot anchor changed/);
 });
+
+test('legacy recovery packaging is opt-in, deterministic and restricted to the copied Missions client', () => {
+  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'dobby-legacy-build-'));
+  try {
+    const output=path.join(temp,'legacy'),again=path.join(temp,'again'),old=path.join(temp,'original');
+    const originals=new Map([nativeModules,nativeActions,'essai-stitch-v5-famille/index.html'].map(file=>[file,read(repo,file)]));
+    const manifest=build({output,sourceSha,legacyRecovery:true});
+    const second=build({output:again,sourceSha,legacyRecovery:true});
+    build({output:old,sourceSha});
+    assert.deepEqual(second,manifest);
+    assert.match(manifest.legacyRecovery,/explicit reviewed union/);
+    assert.equal(manifest.legacyFeatureSha256,sha(read(repo,'scripts/runes-pilot/legacy-missions-recovery.js')));
+    assert.equal(manifest.legacyTransformSha256,sha(read(repo,'scripts/runes-pilot/legacy-recovery-transform.cjs')));
+    new vm.Script(text(output,nativeModules));
+    assert.match(text(output,nativeModules),/function legacyUnversioned/);
+    assert.doesNotMatch(text(old,nativeModules),/function legacyUnversioned/);
+    for(const file of filesUnder(output)) {
+      assert.deepEqual(read(output,file),read(again,file),file+': deterministic legacy build');
+      if(!['pilot-manifest.json',nativeModules,'essai-stitch-v5-famille/index.html'].includes(file))
+        assert.deepEqual(read(output,file),read(old,file),file+': unrelated pilot resources unchanged');
+    }
+    const originalHTML=text(old,'essai-stitch-v5-famille/index.html');
+    const expectedHTML=originalHTML.replace("if(t.state==='open'&&!current.has(t.key)){","if(t.state==='open'&&!current.has(t.key)&&false /* legacy review preserves automatic Missions */){");
+    assert.notEqual(expectedHTML,originalHTML,'missing-source automatic task projection must be an explicit, bounded transform');
+    assert.equal(text(output,'essai-stitch-v5-famille/index.html'),expectedHTML);
+    for(const [file,bytes] of originals)assert.deepEqual(read(repo,file),bytes,file+': no canonical source modification');
+    assert.throws(()=>build({output,sourceSha,legacyRecovery:true}),/Output must be a new directory/);
+  } finally { fs.rmSync(temp,{recursive:true,force:true}); }
+});

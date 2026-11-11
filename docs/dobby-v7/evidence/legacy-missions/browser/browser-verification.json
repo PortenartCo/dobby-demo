@@ -1,0 +1,2509 @@
+{
+  "base": "http://127.0.0.1:8898/essai-dobby-runes-v2-legacy-review-20261112/",
+  "generatedAt": "2026-11-11T23:37:36.656Z",
+  "realSupabaseVerified": false,
+  "allSupabaseTraffic": "intercepted and fulfilled with invented fixture data; no real requests",
+  "results": [
+    {
+      "name": "without-remote-auto-320",
+      "width": 320,
+      "mode": "union",
+      "withRemoteAutomaticTasks": false,
+      "pass": true,
+      "assertions": 35,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "c1adb1c4-abbd-4403-a8fc-f8c47d7e5989",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "with-remote-auto-320",
+      "width": 320,
+      "mode": "union",
+      "withRemoteAutomaticTasks": true,
+      "pass": true,
+      "assertions": 35,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "4c16cc68-fb63-4316-b83c-e3cf7ce4ba03",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "remote-auto",
+                  "title": "TEST — remote-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "remote-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "remote-auto"
+                    ]
+                  }
+                },
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "without-remote-auto-390",
+      "width": 390,
+      "mode": "union",
+      "withRemoteAutomaticTasks": false,
+      "pass": true,
+      "assertions": 35,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "81c51a5c-ebea-45a8-b560-4abcb70d7a21",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "with-remote-auto-390",
+      "width": 390,
+      "mode": "union",
+      "withRemoteAutomaticTasks": true,
+      "pass": true,
+      "assertions": 35,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "77e7353f-30b7-454f-950d-21f52a59c0c3",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "remote-auto",
+                  "title": "TEST — remote-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "remote-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "remote-auto"
+                    ]
+                  }
+                },
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "without-remote-auto-1440",
+      "width": 1440,
+      "mode": "union",
+      "withRemoteAutomaticTasks": false,
+      "pass": true,
+      "assertions": 35,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "432b4bac-a9b8-4759-b739-214ad2fdbbd8",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "with-remote-auto-1440",
+      "width": 1440,
+      "mode": "union",
+      "withRemoteAutomaticTasks": true,
+      "pass": true,
+      "assertions": 35,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "ffa3573c-1eec-4fd4-9859-ced8cf7cc3d7",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "remote-auto",
+                  "title": "TEST — remote-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "remote-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "remote-auto"
+                    ]
+                  }
+                },
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "collision-390",
+      "width": 390,
+      "mode": "collision",
+      "withRemoteAutomaticTasks": true,
+      "pass": true,
+      "assertions": 37,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "da909bbc-0b67-45e7-83a6-d4ff681ec617",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "remote-auto",
+                  "title": "TEST — remote-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "remote-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "remote-auto"
+                    ]
+                  }
+                },
+                {
+                  "key": "same-identity",
+                  "title": "TEST — same-identity",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "same-identity",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "same-identity"
+                    ]
+                  },
+                  "note": "TEST — détail appareil"
+                },
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    },
+    {
+      "name": "pending-320",
+      "width": 320,
+      "mode": "pending",
+      "withRemoteAutomaticTasks": true,
+      "pass": true,
+      "assertions": 39,
+      "source": "fictional browser HTTP fixture",
+      "realSupabaseRequests": 0,
+      "initialRevision": 2,
+      "confirmedRevision": 3,
+      "ledgerVersion": 2,
+      "confirmedCredits": 0,
+      "cases": [
+        "initial gate",
+        "durable backup",
+        "download exact backup",
+        "confirmation cancellation",
+        "explicit union",
+        "native CAS+receipt",
+        "automatic task status across render/save",
+        "reload",
+        "no duplicate write",
+        "other local and IDB sentinels"
+      ],
+      "pageErrors": [],
+      "missingResources": [],
+      "blockedExternalResources": [
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        },
+        {
+          "method": "GET",
+          "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru"
+        }
+      ],
+      "journal": [
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "POST",
+          "path": "/rest/v1/rpc/dobby_missions_v2_write",
+          "query": "",
+          "body": {
+            "p_household_id": "00000000-0000-4000-8000-000000000802",
+            "p_expected_revision": 2,
+            "p_operation_id": "00000000-0000-4000-8000-000000000803",
+            "p_payload": {
+              "autoTasks": [
+                {
+                  "key": "remote-auto",
+                  "title": "TEST — remote-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "remote-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "remote-auto"
+                    ]
+                  }
+                },
+                {
+                  "key": "local-auto",
+                  "title": "TEST — local-auto",
+                  "state": "open",
+                  "due": "2026-11-12",
+                  "sourceDate": "2026-11-12",
+                  "origin": "equipment",
+                  "originId": "local-auto",
+                  "sourceLabel": "TEST — source absente de cet appareil",
+                  "opaque": {
+                    "preserve": [
+                      "nested",
+                      "local-auto"
+                    ]
+                  }
+                }
+              ],
+              "manualMissions": [
+                {
+                  "id": "local-mission",
+                  "title": "TEST — local-mission",
+                  "category": "Famille",
+                  "due": "",
+                  "note": "",
+                  "status": "open",
+                  "assigneeId": "fixture-member",
+                  "effort": "light",
+                  "rewardVersion": 1
+                }
+              ],
+              "runeCredits": [],
+              "runeRequests": [],
+              "runeLedgerVersion": 2
+            }
+          }
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000801"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000802"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000802&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module,payload,revision,updated_at&household_id=eq.00000000-0000-4000-8000-000000000802&module=eq.missions"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "sourceSha": "b92f5f398ecf5a70aa6591215c8a100c53e39c71",
+    "sourceDirty": true,
+    "legacyFeatureSha256": "a4bdff99580ae2f7ed192e07cf0a02a6e2a0538a69dec4aaa8872a9f01a8cc80",
+    "legacyTransformSha256": "e90384313ed746133d6aee7ffdd4cbb7ca91d621baf162a92b5c4a3b9cd0f57f",
+    "generatedClientSha256": "0205252621204f92e4ef1f0467897e6731ea61a970a5cc6b5d6ebfe47c18447a"
+  }
+}

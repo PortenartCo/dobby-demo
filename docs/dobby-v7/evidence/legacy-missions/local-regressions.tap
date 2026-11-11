@@ -1,0 +1,1492 @@
+TAP version 13
+# Subtest: validates actual calendar dates and time instead of accepting malformed input
+ok 1 - validates actual calendar dates and time instead of accepting malformed input
+  ---
+  duration_ms: 1.992536
+  type: 'test'
+  ...
+# Subtest: shared agenda rejects medical category and normalizes ordinary events
+ok 2 - shared agenda rejects medical category and normalizes ordinary events
+  ---
+  duration_ms: 0.777631
+  type: 'test'
+  ...
+# Subtest: aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+ok 3 - aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+  ---
+  duration_ms: 8.858109
+  type: 'test'
+  ...
+# Subtest: birthdays are re-evaluated annually and leap-day policy is defined
+ok 4 - birthdays are re-evaluated annually and leap-day policy is defined
+  ---
+  duration_ms: 0.302227
+  type: 'test'
+  ...
+# Subtest: ics export contains correct floating local time and escapes injection
+ok 5 - ics export contains correct floating local time and escapes injection
+  ---
+  duration_ms: 3.163064
+  type: 'test'
+  ...
+# Subtest: create and CAS transition
+ok 6 - create and CAS transition
+  ---
+  duration_ms: 1.755931
+  type: 'test'
+  ...
+# Subtest: offline edit is pending until remote acknowledges
+ok 7 - offline edit is pending until remote acknowledges
+  ---
+  duration_ms: 0.514953
+  type: 'test'
+  ...
+# Subtest: independent updates never silently overwrite
+ok 8 - independent updates never silently overwrite
+  ---
+  duration_ms: 0.31011
+  type: 'test'
+  ...
+# Subtest: unknown quantity is not silently converted into 0 or 1
+ok 9 - unknown quantity is not silently converted into 0 or 1
+  ---
+  duration_ms: 0.337722
+  type: 'test'
+  ...
+# Subtest: logical deletion preserved
+ok 10 - logical deletion preserved
+  ---
+  duration_ms: 0.417146
+  type: 'test'
+  ...
+# Subtest: medical visit requires an explicit valid record, date and time
+ok 11 - medical visit requires an explicit valid record, date and time
+  ---
+  duration_ms: 1.595865
+  type: 'test'
+  ...
+# Subtest: only appointments explicitly shared with the household appear in global due list
+ok 12 - only appointments explicitly shared with the household appear in global due list
+  ---
+  duration_ms: 0.889401
+  type: 'test'
+  ...
+# Subtest: manual mission normalization validates due date and does not use medical categories
+ok 13 - manual mission normalization validates due date and does not use medical categories
+  ---
+  duration_ms: 2.101945
+  type: 'test'
+  ...
+# Subtest: manual open tasks are ordered by date and completed remain distinct
+ok 14 - manual open tasks are ordered by date and completed remain distinct
+  ---
+  duration_ms: 26.176428
+  type: 'test'
+  ...
+# Subtest: manual missions appear in due summary without polluting autoTasks
+ok 15 - manual missions appear in due summary without polluting autoTasks
+  ---
+  duration_ms: 2.201948
+  type: 'test'
+  ...
+# Subtest: preview V5 source matches original except isolated storage and E05 native member writer extension
+ok 16 - preview V5 source matches original except isolated storage and E05 native member writer extension
+  ---
+  duration_ms: 79.643225
+  type: 'test'
+  ...
+# Subtest: Stitch V5 integration adds shared panier without removing original preparation UI
+ok 17 - Stitch V5 integration adds shared panier without removing original preparation UI
+  ---
+  duration_ms: 2.473923
+  type: 'test'
+  ...
+# Subtest: module adapter fails closed when Supabase modules table is missing
+ok 18 - module adapter fails closed when Supabase modules table is missing
+  ---
+  duration_ms: 2.408108
+  type: 'test'
+  ...
+# Subtest: module schema enforces household isolation and excludes health and attachments
+ok 19 - module schema enforces household isolation and excludes health and attachments
+  ---
+  duration_ms: 0.224053
+  type: 'test'
+  ...
+# Subtest: preview denies cross-household browser reuse and drops unauthorized session
+ok 20 - preview denies cross-household browser reuse and drops unauthorized session
+  ---
+  duration_ms: 0.174615
+  type: 'test'
+  ...
+# Subtest: family events and selected medical visits share the household without uploading private famHealth
+ok 21 - family events and selected medical visits share the household without uploading private famHealth
+  ---
+  duration_ms: 0.214926
+  type: 'test'
+  ...
+# Subtest: manual missions remain separate from automatic tasks
+ok 22 - manual missions remain separate from automatic tasks
+  ---
+  duration_ms: 0.203279
+  type: 'test'
+  ...
+# Subtest: binary file uploads do not use the JSON modules API
+ok 23 - binary file uploads do not use the JSON modules API
+  ---
+  duration_ms: 0.49766
+  type: 'test'
+  ...
+# Subtest: shared health visits do not automatically upload previous local health records
+ok 24 - shared health visits do not automatically upload previous local health records
+  ---
+  duration_ms: 1.295156
+  type: 'test'
+  ...
+# Subtest: a health document remains local until the user chooses household sharing
+ok 25 - a health document remains local until the user chooses household sharing
+  ---
+  duration_ms: 1.62211
+  type: 'test'
+  ...
+# Subtest: two accounts activate all six modules and receive a shared update without exposing health or attachments
+ok 26 - two accounts activate all six modules and receive a shared update without exposing health or attachments
+  ---
+  duration_ms: 44.611478
+  type: 'test'
+  ...
+# Subtest: simultaneous module edits create a conflict, not a lost update
+ok 27 - simultaneous module edits create a conflict, not a lost update
+  ---
+  duration_ms: 5.995118
+  type: 'test'
+  ...
+# Subtest: missing modules backend does not activate sharing
+ok 28 - missing modules backend does not activate sharing
+  ---
+  duration_ms: 1.565171
+  type: 'test'
+  ...
+# Subtest: customized or actual meal plans are never offered for automated demo deletion
+ok 29 - customized or actual meal plans are never offered for automated demo deletion
+  ---
+  duration_ms: 2.550598
+  type: 'test'
+  ...
+# Subtest: a fresh household activates all six modules with one consent and excludes demo meals
+ok 30 - a fresh household activates all six modules with one consent and excludes demo meals
+  ---
+  duration_ms: 6.292056
+  type: 'test'
+  ...
+# Subtest: refusing group activation does not publish data or remove example meals
+ok 31 - refusing group activation does not publish data or remove example meals
+  ---
+  duration_ms: 2.616646
+  type: 'test'
+  ...
+# Subtest: E05 catalogues have stable French identities without inferring a house or a member
+ok 32 - E05 catalogues have stable French identities without inferring a house or a member
+  ---
+  duration_ms: 5.718111
+  type: 'test'
+  ...
+# Subtest: partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+ok 33 - partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+  ---
+  duration_ms: 7.696018
+  type: 'test'
+  ...
+# Subtest: E05 approves the exact E04 thresholds without changing reward values
+ok 34 - E05 approves the exact E04 thresholds without changing reward values
+  ---
+  duration_ms: 0.38172
+  type: 'test'
+  ...
+# Subtest: family profile revision conflict retains the explicitly chosen version: server
+ok 35 - family profile revision conflict retains the explicitly chosen version: server
+  ---
+  duration_ms: 50.917179
+  type: 'test'
+  ...
+# Subtest: family profile revision conflict retains the explicitly chosen version: local
+ok 36 - family profile revision conflict retains the explicitly chosen version: local
+  ---
+  duration_ms: 8.152937
+  type: 'test'
+  ...
+# Subtest: native family sync preserves fields through reload and does not include medical records or rewards
+ok 37 - native family sync preserves fields through reload and does not include medical records or rewards
+  ---
+  duration_ms: 10.646077
+  type: 'test'
+  ...
+# Subtest: LIMIT demonstrated: an old member writer can erase identity extensions server-side
+ok 38 - LIMIT demonstrated: an old member writer can erase identity extensions server-side
+  ---
+  duration_ms: 7.257384
+  type: 'test'
+  ...
+# Subtest: cached household reinitializes family modules after membership check
+ok 39 - cached household reinitializes family modules after membership check
+  ---
+  duration_ms: 5.926757
+  type: 'test'
+  ...
+# Subtest: module API unavailability does not masquerade as disconnected household and retries
+ok 40 - module API unavailability does not masquerade as disconnected household and retries
+  ---
+  duration_ms: 2.513873
+  type: 'test'
+  ...
+# Subtest: sharing confirmed-v2 refuses before any POST and preserves every local record
+ok 41 - sharing confirmed-v2 refuses before any POST and preserves every local record
+  ---
+  duration_ms: 10.939392
+  type: 'test'
+  ...
+# Subtest: sharing pending-v2 refuses before any POST and preserves every local record
+ok 42 - sharing pending-v2 refuses before any POST and preserves every local record
+  ---
+  duration_ms: 4.087029
+  type: 'test'
+  ...
+# Subtest: sharing custom-mission refuses before any POST and preserves every local record
+ok 43 - sharing custom-mission refuses before any POST and preserves every local record
+  ---
+  duration_ms: 2.776179
+  type: 'test'
+  ...
+# Subtest: two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver
+ok 44 - two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver
+  ---
+  duration_ms: 9.820867
+  type: 'test'
+  ...
+# Subtest: existing remote retrieval cannot overwrite a local V2 history or its mission snapshot
+ok 45 - existing remote retrieval cannot overwrite a local V2 history or its mission snapshot
+  ---
+  duration_ms: 5.321475
+  type: 'test'
+  ...
+# Subtest: identical unsupported remote snapshot cannot be marked configured during activation
+ok 46 - identical unsupported remote snapshot cannot be marked configured during activation
+  ---
+  duration_ms: 3.203541
+  type: 'test'
+  ...
+# Subtest: custom reward accepts zero and safe integers, rejects coercion and overflow
+ok 47 - custom reward accepts zero and safe integers, rejects coercion and overflow
+  ---
+  duration_ms: 2.48151
+  type: 'test'
+  ...
+# Subtest: required example is auditable +10 -> 0 -> 10 without replacing original grant
+ok 48 - required example is auditable +10 -> 0 -> 10 without replacing original grant
+  ---
+  duration_ms: 11.161166
+  type: 'test'
+  ...
+# Subtest: zero custom grants and compensations retain event identities and history
+ok 49 - zero custom grants and compensations retain event identities and history
+  ---
+  duration_ms: 0.883434
+  type: 'test'
+  ...
+# Subtest: amount and responsible edits do not rewrite old gains or their reversal
+ok 50 - amount and responsible edits do not rewrite old gains or their reversal
+  ---
+  duration_ms: 0.48461
+  type: 'test'
+  ...
+# Subtest: concurrent duplicate transitions and replay produce one active event
+ok 51 - concurrent duplicate transitions and replay produce one active event
+  ---
+  duration_ms: 1.229968
+  type: 'test'
+  ...
+# Subtest: contradictory compensation, event identities and unsafe aggregate fail closed
+ok 52 - contradictory compensation, event identities and unsafe aggregate fail closed
+  ---
+  duration_ms: 0.589889
+  type: 'test'
+  ...
+# Subtest: legacy credits and legacy ineligibility remain unchanged
+ok 53 - legacy credits and legacy ineligibility remain unchanged
+  ---
+  duration_ms: 1.157581
+  type: 'test'
+  ...
+# Subtest: recurrence templates carry custom reward to independent occurrence without altering old row
+ok 54 - recurrence templates carry custom reward to independent occurrence without altering old row
+  ---
+  duration_ms: 1.591983
+  type: 'test'
+  ...
+# Subtest: acknowledged recurrence survives incompatible legacy write: root-metadata
+ok 55 - acknowledged recurrence survives incompatible legacy write: root-metadata
+  ---
+  duration_ms: 16.603056
+  type: 'test'
+  ...
+# Subtest: acknowledged recurrence survives incompatible legacy write: child-metadata
+ok 56 - acknowledged recurrence survives incompatible legacy write: child-metadata
+  ---
+  duration_ms: 5.069997
+  type: 'test'
+  ...
+# Subtest: acknowledged recurrence survives incompatible legacy write: root-deleted
+ok 57 - acknowledged recurrence survives incompatible legacy write: root-deleted
+  ---
+  duration_ms: 6.783945
+  type: 'test'
+  ...
+# Subtest: acknowledged recurrence survives incompatible legacy write: child-deleted
+ok 58 - acknowledged recurrence survives incompatible legacy write: child-deleted
+  ---
+  duration_ms: 4.995107
+  type: 'test'
+  ...
+# Subtest: acknowledged recurrence survives incompatible legacy write: child-identity
+ok 59 - acknowledged recurrence survives incompatible legacy write: child-identity
+  ---
+  duration_ms: 4.93636
+  type: 'test'
+  ...
+# Subtest: legacy local edit cannot publish missing acknowledged recurrence metadata
+ok 60 - legacy local edit cannot publish missing acknowledged recurrence metadata
+  ---
+  duration_ms: 3.010091
+  type: 'test'
+  ...
+# Subtest: fresh client refuses an unsupported recurrence version without replacing its local data
+ok 61 - fresh client refuses an unsupported recurrence version without replacing its local data
+  ---
+  duration_ms: 4.106937
+  type: 'test'
+  ...
+# Subtest: supported series edits and new offline occurrences use the unchanged native sync payload
+ok 62 - supported series edits and new offline occurrences use the unchanged native sync payload
+  ---
+  duration_ms: 5.999342
+  type: 'test'
+  ...
+# Subtest: distinct occurrences earn independently; replay and lost-response reload remain idempotent
+ok 63 - distinct occurrences earn independently; replay and lost-response reload remain idempotent
+  ---
+  duration_ms: 19.988908
+  type: 'test'
+  ...
+# Subtest: monthly clamp, leap year, year rollover and deterministic replay
+ok 64 - monthly clamp, leap year, year rollover and deterministic replay
+  ---
+  duration_ms: 4.703879
+  type: 'test'
+  ...
+# Subtest: projection bounded to 30 previous days and today, not future, no infinite catchup
+ok 65 - projection bounded to 30 previous days and today, not future, no infinite catchup
+  ---
+  duration_ms: 0.797055
+  type: 'test'
+  ...
+# Subtest: weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop
+ok 66 - weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop
+  ---
+  duration_ms: 2.780949
+  type: 'test'
+  ...
+# Subtest: Europe Brussels civil days across DST and leap/calendar boundaries
+ok 67 - Europe Brussels civil days across DST and leap/calendar boundaries
+  ---
+  duration_ms: 26.374466
+  type: 'test'
+  ...
+# Subtest: per occurrence reward dedup, independent completion and unknown data preservation
+ok 68 - per occurrence reward dedup, independent completion and unknown data preservation
+  ---
+  duration_ms: 1.374311
+  type: 'test'
+  ...
+# Subtest: bad metadata or occurrence identity is rejected, never coerced into unique mission
+ok 69 - bad metadata or occurrence identity is rejected, never coerced into unique mission
+  ---
+  duration_ms: 0.21591
+  type: 'test'
+  ...
+# Subtest: validated effort choices and approved V1 grades have one centralized definition
+ok 70 - validated effort choices and approved V1 grades have one centralized definition
+  ---
+  duration_ms: 1.66482
+  type: 'test'
+  ...
+# Subtest: only new eligible assigned completions create a single durable request per mission
+ok 71 - only new eligible assigned completions create a single durable request per mission
+  ---
+  duration_ms: 3.625226
+  type: 'test'
+  ...
+# Subtest: 10/25/50 credits are validated, durable without mission rows, and deterministic
+ok 72 - 10/25/50 credits are validated, durable without mission rows, and deterministic
+  ---
+  duration_ms: 9.629485
+  type: 'test'
+  ...
+# Subtest: first confirmed CAS result wins over a divergent offline request without transfer
+ok 73 - first confirmed CAS result wins over a divergent offline request without transfer
+  ---
+  duration_ms: 0.653091
+  type: 'test'
+  ...
+# Subtest: pending requests do not inflate totals, and all twelve grade boundaries are stable
+ok 74 - pending requests do not inflate totals, and all twelve grade boundaries are stable
+  ---
+  duration_ms: 0.503821
+  type: 'test'
+  ...
+# Subtest: the reward history is not truncated to the 200 current mission limit
+ok 75 - the reward history is not truncated to the 200 current mission limit
+  ---
+  duration_ms: 9.663108
+  type: 'test'
+  ...
+# Subtest: concurrent distinct credits survive server conflict resolution and mission deletion
+ok 76 - concurrent distinct credits survive server conflict resolution and mission deletion
+  ---
+  duration_ms: 22.422438
+  type: 'test'
+  ...
+# Subtest: concurrent distinct credits survive local conflict resolution and mission deletion
+ok 77 - concurrent distinct credits survive local conflict resolution and mission deletion
+  ---
+  duration_ms: 6.85241
+  type: 'test'
+  ...
+# Subtest: same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+ok 78 - same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+  ---
+  duration_ms: 6.155256
+  type: 'test'
+  ...
+# Subtest: accepted PATCH with lost response and reload confirms the same request without replay credit
+ok 79 - accepted PATCH with lost response and reload confirms the same request without replay credit
+  ---
+  duration_ms: 5.159789
+  type: 'test'
+  ...
+# Subtest: CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+ok 80 - CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+  ---
+  duration_ms: 5.711228
+  type: 'test'
+  ...
+# Subtest: activation/retrieval preserves local pending requests and never credits legacy done rows
+ok 81 - activation/retrieval preserves local pending requests and never credits legacy done rows
+  ---
+  duration_ms: 5.738516
+  type: 'test'
+  ...
+# Subtest: a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+ok 82 - a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+  ---
+  duration_ms: 5.377029
+  type: 'test'
+  ...
+# Subtest: JSON object key order from jsonb cannot trigger a repeated reward PATCH
+ok 83 - JSON object key order from jsonb cannot trigger a repeated reward PATCH
+  ---
+  duration_ms: 3.633657
+  type: 'test'
+  ...
+# Subtest: a second native completion during PATCH keeps newer local data and its unconfirmed request
+ok 84 - a second native completion during PATCH keeps newer local data and its unconfirmed request
+  ---
+  duration_ms: 7.734526
+  type: 'test'
+  ...
+# Subtest: a malformed confirmation or server refusal never fabricates a confirmed gain
+ok 85 - a malformed confirmation or server refusal never fabricates a confirmed gain
+  ---
+  duration_ms: 2.417069
+  type: 'test'
+  ...
+# Subtest: disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+ok 86 - disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+  ---
+  duration_ms: 4.083535
+  type: 'test'
+  ...
+# Subtest: retrieval queues retained offline rewards and reports pending until actual confirmation
+ok 87 - retrieval queues retained offline rewards and reports pending until actual confirmation
+  ---
+  duration_ms: 1524.043731
+  type: 'test'
+  ...
+# Subtest: malformed request storage is reported without throwing after an unrelated native save
+ok 88 - malformed request storage is reported without throwing after an unrelated native save
+  ---
+  duration_ms: 4.132392
+  type: 'test'
+  ...
+# Subtest: V2 capability gates sharing, persistent operation precedes POST, native +10/0/10 and duplicates stay exact
+ok 89 - V2 capability gates sharing, persistent operation precedes POST, native +10/0/10 and duplicates stay exact
+  ---
+  duration_ms: 35.140444
+  type: 'test'
+  ...
+# Subtest: custom zero and MAX_SAFE rewards use native V2 event identities, not invented balances
+ok 90 - custom zero and MAX_SAFE rewards use native V2 event identities, not invented balances
+  ---
+  duration_ms: 22.024949
+  type: 'test'
+  ...
+# Subtest: offline full cycle queue keeps grant/reversal/regrant even though net mission status is unchanged
+ok 91 - offline full cycle queue keeps grant/reversal/regrant even though net mission status is unchanged
+  ---
+  duration_ms: 8.229139
+  type: 'test'
+  ...
+# Subtest: lost response survives reload with the same UUID, revision and payload
+ok 92 - lost response survives reload with the same UUID, revision and payload
+  ---
+  duration_ms: 11.746901
+  type: 'test'
+  ...
+# Subtest: a replay receipt with a newer module never re-completes a remotely reopened mission
+ok 93 - a replay receipt with a newer module never re-completes a remotely reopened mission
+  ---
+  duration_ms: 10.558519
+  type: 'test'
+  ...
+# Subtest: different-device completions merge independent missions without erasing either confirmed gain
+ok 94 - different-device completions merge independent missions without erasing either confirmed gain
+  ---
+  duration_ms: 8.729094
+  type: 'test'
+  ...
+# Subtest: a new edit while a merged RPC is in flight retains only the new delta, not stale remote rows
+ok 95 - a new edit while a merged RPC is in flight retains only the new delta, not stale remote rows
+  ---
+  duration_ms: 9.735582
+  type: 'test'
+  ...
+# Subtest: CAS conflict retains operation and requests; explicit local rebase preserves independent remote work
+ok 96 - CAS conflict retains operation and requests; explicit local rebase preserves independent remote work
+  ---
+  duration_ms: 14.645216
+  type: 'test'
+  ...
+# Subtest: an explicit SQL rollback can be corrected and rebased while unknown network results keep their original operation
+ok 97 - an explicit SQL rollback can be corrected and rebased while unknown network results keep their original operation
+  ---
+  duration_ms: 6.467073
+  type: 'test'
+  ...
+# Subtest: malformed confirmation never credits requests and preserves a retryable exact operation
+ok 98 - malformed confirmation never credits requests and preserves a retryable exact operation
+  ---
+  duration_ms: 5.4136
+  type: 'test'
+  ...
+# Subtest: contradictory same event key remains pending, never acknowledged by ID alone
+ok 99 - contradictory same event key remains pending, never acknowledged by ID alone
+  ---
+  duration_ms: 5.005395
+  type: 'test'
+  ...
+# Subtest: capability is bound to auth epoch and reprobed; late RPC response cannot write into another context
+ok 100 - capability is bound to auth epoch and reprobed; late RPC response cannot write into another context
+  ---
+  duration_ms: 2.79529
+  type: 'test'
+  ...
+# Subtest: known V2 cannot fall back to direct writes if capability becomes unavailable
+ok 101 - known V2 cannot fall back to direct writes if capability becomes unavailable
+  ---
+  duration_ms: 3.566804
+  type: 'test'
+  ...
+# Subtest: a V1 server snapshot keeps raw confirmed dates and revision zero during monotone V2 adoption
+ok 102 - a V1 server snapshot keeps raw confirmed dates and revision zero during monotone V2 adoption
+  ---
+  duration_ms: 3.496648
+  type: 'test'
+  ...
+# Subtest: parallel refresh clicks share one durable operation instead of racing before metadata persistence
+ok 103 - parallel refresh clicks share one durable operation instead of racing before metadata persistence
+  ---
+  duration_ms: 20.053747
+  type: 'test'
+  ...
+# Subtest: a Missions GET returning after auth context changes cannot apply or create an operation
+ok 104 - a Missions GET returning after auth context changes cannot apply or create an operation
+  ---
+  duration_ms: 4.373797
+  type: 'test'
+  ...
+# Subtest: unknown transaction outcome 40003 never archives or re-identifies pending intent
+ok 105 - unknown transaction outcome 40003 never archives or re-identifies pending intent
+  ---
+  duration_ms: 7.04786
+  type: 'test'
+  ...
+# Subtest: unknown transaction outcome 08007 never archives or re-identifies pending intent
+ok 106 - unknown transaction outcome 08007 never archives or re-identifies pending intent
+  ---
+  duration_ms: 8.129152
+  type: 'test'
+  ...
+# Subtest: join-family later-module rollback restores exact pending requests, credits and module configuration
+ok 107 - join-family later-module rollback restores exact pending requests, credits and module configuration
+  ---
+  duration_ms: 4.63153
+  type: 'test'
+  ...
+# Subtest: join-family metadata rollback restores exact pending requests, credits and module configuration
+ok 108 - join-family metadata rollback restores exact pending requests, credits and module configuration
+  ---
+  duration_ms: 3.344583
+  type: 'test'
+  ...
+# Subtest: activate-all and join-family use RPC V2 for Missions while other module writers keep their existing paths
+ok 109 - activate-all and join-family use RPC V2 for Missions while other module writers keep their existing paths
+  ---
+  duration_ms: 7.732441
+  type: 'test'
+  ...
+# Subtest: verified V2 native shared writer queues +10/0/10 and preserves sticky sync instead of confirming offline
+ok 110 - verified V2 native shared writer queues +10/0/10 and preserves sticky sync instead of confirming offline
+  ---
+  duration_ms: 25.676943
+  type: 'test'
+  ...
+# Subtest: unavailable server protocol preserves legacy shared reopening guard and all records
+ok 111 - unavailable server protocol preserves legacy shared reopening guard and all records
+  ---
+  duration_ms: 2.250904
+  type: 'test'
+  ...
+# Subtest: shared unconfirmed grant blocks changing beneficiary, reward and deleting before mutation, retains form
+ok 112 - shared unconfirmed grant blocks changing beneficiary, reward and deleting before mutation, retains form
+  ---
+  duration_ms: 3.838498
+  type: 'test'
+  ...
+# Subtest: confirmed reward permits later beneficiary/amount edit without transferring or rewriting old grant
+ok 113 - confirmed reward permits later beneficiary/amount edit without transferring or rewriting old grant
+  ---
+  duration_ms: 2.175937
+  type: 'test'
+  ...
+# Subtest: unshared native custom reward and deletion keep their original local behavior
+ok 114 - unshared native custom reward and deletion keep their original local behavior
+  ---
+  duration_ms: 1.779576
+  type: 'test'
+  ...
+# Subtest: a queued reversal blocks deletion before mutation while a confirmed ordinary deletion retains credits
+ok 115 - a queued reversal blocks deletion before mutation while a confirmed ordinary deletion retains credits
+  ---
+  duration_ms: 2.141819
+  type: 'test'
+  ...
+# Subtest: shared verified completion rejects an unknown responsible member before creating a poisoned pending status
+ok 116 - shared verified completion rejects an unknown responsible member before creating a poisoned pending status
+  ---
+  duration_ms: 1.134754
+  type: 'test'
+  ...
+# Subtest: E06 draft resume keeps stable answer IDs and isolates members, users and households
+ok 117 - E06 draft resume keeps stable answer IDs and isolates members, users and households
+  ---
+  duration_ms: 3.656438
+  type: 'test'
+  ...
+# Subtest: E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten
+ok 118 - E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten
+  ---
+  duration_ms: 0.688465
+  type: 'test'
+  ...
+# Subtest: a delayed draft write cannot replace the active draft after switching member
+ok 119 - a delayed draft write cannot replace the active draft after switching member
+  ---
+  duration_ms: 0.457943
+  type: 'test'
+  ...
+# Subtest: two loaded instances cannot erase drafts of distinct members
+ok 120 - two loaded instances cannot erase drafts of distinct members
+  ---
+  duration_ms: 0.543305
+  type: 'test'
+  ...
+# Subtest: E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch
+ok 121 - E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch
+  ---
+  duration_ms: 4.40655
+  type: 'test'
+  ...
+# Subtest: manual E05 house/patronus changes remove only the corresponding computed-version attribution
+ok 122 - manual E05 house/patronus changes remove only the corresponding computed-version attribution
+  ---
+  duration_ms: 0.357928
+  type: 'test'
+  ...
+# Subtest: E06 JavaScript matches every Python base/optional combination and supplied QA result
+ok 123 - E06 JavaScript matches every Python base/optional combination and supplied QA result
+  ---
+  duration_ms: 666.317059
+  type: 'test'
+  ...
+# Subtest: E06 validates stable answer IDs and does not use optional answers that were never asked
+ok 124 - E06 validates stable answer IDs and does not use optional answers that were never asked
+  ---
+  duration_ms: 1.464118
+  type: 'test'
+  ...
+# Subtest: E06 native family conflict preserves the chosen identity and algorithm versions: server
+ok 125 - E06 native family conflict preserves the chosen identity and algorithm versions: server
+  ---
+  duration_ms: 13.663928
+  type: 'test'
+  ...
+# Subtest: E06 native family conflict preserves the chosen identity and algorithm versions: local
+ok 126 - E06 native family conflict preserves the chosen identity and algorithm versions: local
+  ---
+  duration_ms: 3.862638
+  type: 'test'
+  ...
+# Subtest: E06 interversion LIMIT: an old native member writer can erase result provenance and structured names
+ok 127 - E06 interversion LIMIT: an old native member writer can erase result provenance and structured names
+  ---
+  duration_ms: 2.572091
+  type: 'test'
+  ...
+# Subtest: new entry is pending and preserves a stable UUID
+ok 128 - new entry is pending and preserves a stable UUID
+  ---
+  duration_ms: 1.109659
+  type: 'test'
+  ...
+# Subtest: equivalent server echo resolves an uncertain successful POST
+ok 129 - equivalent server echo resolves an uncertain successful POST
+  ---
+  duration_ms: 0.339209
+  type: 'test'
+  ...
+# Subtest: editing an unchanged server revision remains pending
+ok 130 - editing an unchanged server revision remains pending
+  ---
+  duration_ms: 0.227371
+  type: 'test'
+  ...
+# Subtest: simultaneous edits require a decision, never auto overwrite
+ok 131 - simultaneous edits require a decision, never auto overwrite
+  ---
+  duration_ms: 1.350658
+  type: 'test'
+  ...
+# Subtest: resolve conflict with server version
+ok 132 - resolve conflict with server version
+  ---
+  duration_ms: 0.293481
+  type: 'test'
+  ...
+# Subtest: resolve conflict with local version creates pending update against new revision
+ok 133 - resolve conflict with local version creates pending update against new revision
+  ---
+  duration_ms: 0.196308
+  type: 'test'
+  ...
+# Subtest: new edit during an in-flight update remains pending with new server revision
+ok 134 - new edit during an in-flight update remains pending with new server revision
+  ---
+  duration_ms: 0.38068
+  type: 'test'
+  ...
+# Subtest: soft deletion is part of the synchronized state
+ok 135 - soft deletion is part of the synchronized state
+  ---
+  duration_ms: 0.252183
+  type: 'test'
+  ...
+# Subtest: new entry is pending and preserves a stable UUID
+ok 136 - new entry is pending and preserves a stable UUID
+  ---
+  duration_ms: 1.304754
+  type: 'test'
+  ...
+# Subtest: equivalent server echo resolves an uncertain successful POST
+ok 137 - equivalent server echo resolves an uncertain successful POST
+  ---
+  duration_ms: 0.265658
+  type: 'test'
+  ...
+# Subtest: editing an unchanged server revision remains pending
+ok 138 - editing an unchanged server revision remains pending
+  ---
+  duration_ms: 0.375002
+  type: 'test'
+  ...
+# Subtest: simultaneous edits require a decision, never auto overwrite
+ok 139 - simultaneous edits require a decision, never auto overwrite
+  ---
+  duration_ms: 0.262027
+  type: 'test'
+  ...
+# Subtest: resolve conflict with server version
+ok 140 - resolve conflict with server version
+  ---
+  duration_ms: 0.267805
+  type: 'test'
+  ...
+# Subtest: resolve conflict with local version creates pending update against new revision
+ok 141 - resolve conflict with local version creates pending update against new revision
+  ---
+  duration_ms: 0.189953
+  type: 'test'
+  ...
+# Subtest: new edit during an in-flight update remains pending with new server revision
+ok 142 - new edit during an in-flight update remains pending with new server revision
+  ---
+  duration_ms: 0.167828
+  type: 'test'
+  ...
+# Subtest: soft deletion is part of the synchronized state
+ok 143 - soft deletion is part of the synchronized state
+  ---
+  duration_ms: 0.249693
+  type: 'test'
+  ...
+# Subtest: V2 uses a distinct offline IndexedDB namespace
+ok 144 - V2 uses a distinct offline IndexedDB namespace
+  ---
+  duration_ms: 0.646603
+  type: 'test'
+  ...
+# Subtest: V2 never accesses legacy V1 grocery or membership tables
+ok 145 - V2 never accesses legacy V1 grocery or membership tables
+  ---
+  duration_ms: 0.458717
+  type: 'test'
+  ...
+# Subtest: V2 rejects ambiguous household membership
+ok 146 - V2 rejects ambiguous household membership
+  ---
+  duration_ms: 0.194779
+  type: 'test'
+  ...
+# Subtest: V2 includes household binding on GET, INSERT and optimistic PATCH
+ok 147 - V2 includes household binding on GET, INSERT and optimistic PATCH
+  ---
+  duration_ms: 0.110373
+  type: 'test'
+  ...
+# Subtest: V2 service worker has isolated cache and route scope
+ok 148 - V2 service worker has isolated cache and route scope
+  ---
+  duration_ms: 0.131137
+  type: 'test'
+  ...
+# RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-runes-pilot-build-ZjtHrc/first
+# RUNES_PILOT_BUILD 3ceb14bbf76c7534f6862a7cb1921c894ea3f325 281 files /tmp/dobby-runes-pilot-build-ZjtHrc/second
+# RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-legacy-build-YZjITU/legacy
+# RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-legacy-build-YZjITU/again
+# RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-legacy-build-YZjITU/original
+# Subtest: pilot packaging preserves native sources and exports a reproducible, guarded real-backend bundle
+    # Subtest: every source and output hash matches its actual bytes; only HTML and two copied guards transform
+    ok 1 - every source and output hash matches its actual bytes; only HTML and two copied guards transform
+      ---
+      duration_ms: 304.465517
+      type: 'test'
+      ...
+    # Subtest: every complete HTML document loads the pilot guard first and permits only the intended Supabase connection
+    ok 2 - every complete HTML document loads the pilot guard first and permits only the intended Supabase connection
+      ---
+      duration_ms: 23.967906
+      type: 'test'
+      ...
+    # Subtest: the runtime retains native storage, has no demo/reset transport, and adds no embedded credentials
+    ok 3 - the runtime retains native storage, has no demo/reset transport, and adds no embedded credentials
+      ---
+      duration_ms: 40.744323
+      type: 'test'
+      ...
+    # Subtest: repeated packaging differs only in declared source metadata and never overwrites an existing output
+    ok 4 - repeated packaging differs only in declared source metadata and never overwrites an existing output
+      ---
+      duration_ms: 415.491421
+      type: 'test'
+      ...
+    1..4
+ok 149 - pilot packaging preserves native sources and exports a reproducible, guarded real-backend bundle
+  ---
+  duration_ms: 1293.056735
+  type: 'test'
+  ...
+# Subtest: source anchor changes stop packaging transforms instead of silently omitting protection
+ok 150 - source anchor changes stop packaging transforms instead of silently omitting protection
+  ---
+  duration_ms: 0.377088
+  type: 'test'
+  ...
+# Subtest: legacy recovery packaging is opt-in, deterministic and restricted to the copied Missions client
+ok 151 - legacy recovery packaging is opt-in, deterministic and restricted to the copied Missions client
+  ---
+  duration_ms: 478.447803
+  type: 'test'
+  ...
+# Subtest: pilot 404: fresh individual and grouped activation never create a V1 Missions row
+ok 152 - pilot 404: fresh individual and grouped activation never create a V1 Missions row
+  ---
+  duration_ms: 8.89771
+  type: 'test'
+  ...
+# Subtest: pilot 404: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+ok 153 - pilot 404: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+  ---
+  duration_ms: 12.624961
+  type: 'test'
+  ...
+# Subtest: pilot 404: native menus POST and PATCH remain available
+ok 154 - pilot 404: native menus POST and PATCH remain available
+  ---
+  duration_ms: 2.16988
+  type: 'test'
+  ...
+# Subtest: pilot 404: blocked active Missions do not interrupt writers before or after them
+ok 155 - pilot 404: blocked active Missions do not interrupt writers before or after them
+  ---
+  duration_ms: 3.145679
+  type: 'test'
+  ...
+# Subtest: pilot 401: fresh individual and grouped activation never create a V1 Missions row
+ok 156 - pilot 401: fresh individual and grouped activation never create a V1 Missions row
+  ---
+  duration_ms: 4.416869
+  type: 'test'
+  ...
+# Subtest: pilot 401: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+ok 157 - pilot 401: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+  ---
+  duration_ms: 17.124802
+  type: 'test'
+  ...
+# Subtest: pilot 401: native menus POST and PATCH remain available
+ok 158 - pilot 401: native menus POST and PATCH remain available
+  ---
+  duration_ms: 1.952831
+  type: 'test'
+  ...
+# Subtest: pilot 401: blocked active Missions do not interrupt writers before or after them
+ok 159 - pilot 401: blocked active Missions do not interrupt writers before or after them
+  ---
+  duration_ms: 1.819183
+  type: 'test'
+  ...
+# Subtest: pilot 403: fresh individual and grouped activation never create a V1 Missions row
+ok 160 - pilot 403: fresh individual and grouped activation never create a V1 Missions row
+  ---
+  duration_ms: 3.576119
+  type: 'test'
+  ...
+# Subtest: pilot 403: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+ok 161 - pilot 403: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+  ---
+  duration_ms: 14.37275
+  type: 'test'
+  ...
+# Subtest: pilot 403: native menus POST and PATCH remain available
+ok 162 - pilot 403: native menus POST and PATCH remain available
+  ---
+  duration_ms: 1.916329
+  type: 'test'
+  ...
+# Subtest: pilot 403: blocked active Missions do not interrupt writers before or after them
+ok 163 - pilot 403: blocked active Missions do not interrupt writers before or after them
+  ---
+  duration_ms: 2.248833
+  type: 'test'
+  ...
+# Subtest: pilot malformed: fresh individual and grouped activation never create a V1 Missions row
+ok 164 - pilot malformed: fresh individual and grouped activation never create a V1 Missions row
+  ---
+  duration_ms: 3.313114
+  type: 'test'
+  ...
+# Subtest: pilot malformed: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+ok 165 - pilot malformed: existing V1 retrieval, sync, conflict choices and group paths preserve local intent
+  ---
+  duration_ms: 13.057425
+  type: 'test'
+  ...
+# Subtest: pilot malformed: native menus POST and PATCH remain available
+ok 166 - pilot malformed: native menus POST and PATCH remain available
+  ---
+  duration_ms: 2.003235
+  type: 'test'
+  ...
+# Subtest: pilot malformed: blocked active Missions do not interrupt writers before or after them
+ok 167 - pilot malformed: blocked active Missions do not interrupt writers before or after them
+  ---
+  duration_ms: 2.440872
+  type: 'test'
+  ...
+# Subtest: unavailable V2 preserves the exact durable operation, pending requests, confirmed credits and sticky protection across reload
+ok 168 - unavailable V2 preserves the exact durable operation, pending requests, confirmed credits and sticky protection across reload
+  ---
+  duration_ms: 7.795242
+  type: 'test'
+  ...
+# Subtest: valid V2 still uses the existing RPC and durable operation before +10 / 0 / 10 confirmation
+ok 169 - valid V2 still uses the existing RPC and durable operation before +10 / 0 / 10 confirmation
+  ---
+  duration_ms: 20.13708
+  type: 'test'
+  ...
+# Subtest: a missing writer after successful capability keeps its exact outbox and never falls back to direct writes
+ok 170 - a missing writer after successful capability keeps its exact outbox and never falls back to direct writes
+  ---
+  duration_ms: 2.69014
+  type: 'test'
+  ...
+# Subtest: an auth epoch changing during grouped activation cannot open the direct V1 Missions writer
+ok 171 - an auth epoch changing during grouped activation cannot open the direct V1 Missions writer
+  ---
+  duration_ms: 4.439324
+  type: 'test'
+  ...
+# Subtest: individual activation and conflict choices keep local state when their Missions read crosses an auth epoch
+ok 172 - individual activation and conflict choices keep local state when their Missions read crosses an auth epoch
+  ---
+  duration_ms: 5.31999
+  type: 'test'
+  ...
+# Subtest: group retrieval cannot replace Missions when auth changes after the Missions read but before another module returns
+ok 173 - group retrieval cannot replace Missions when auth changes after the Missions read but before another module returns
+  ---
+  duration_ms: 12.045041
+  type: 'test'
+  ...
+# Subtest: the packaged client remains guarded even if its banner runtime did not load
+ok 174 - the packaged client remains guarded even if its banner runtime did not load
+  ---
+  duration_ms: 3.026664
+  type: 'test'
+  ...
+# Subtest: the original native source retains V1 compatibility outside the packaged pilot
+ok 175 - the original native source retains V1 compatibility outside the packaged pilot
+  ---
+  duration_ms: 8.375167
+  type: 'test'
+  ...
+# Subtest: legacy review is read-only, freshly reads revision 2, and verifies a complete durable backup before exposing choices
+ok 176 - legacy review is read-only, freshly reads revision 2, and verifies a complete durable backup before exposing choices
+  ---
+  duration_ms: 14.952089
+  type: 'test'
+  ...
+# Subtest: review backup retains previous conflict details, synchronization metadata and archived operations
+ok 177 - review backup retains previous conflict details, synchronization metadata and archived operations
+  ---
+  duration_ms: 4.703677
+  type: 'test'
+  ...
+# Subtest: explicit legacy merge preserves all unique local missions and remote automatic rows: absent autos
+ok 178 - explicit legacy merge preserves all unique local missions and remote automatic rows: absent autos
+  ---
+  duration_ms: 6.292025
+  type: 'test'
+  ...
+# Subtest: explicit legacy merge preserves all unique local missions and remote automatic rows: 0 autos
+ok 179 - explicit legacy merge preserves all unique local missions and remote automatic rows: 0 autos
+  ---
+  duration_ms: 5.929324
+  type: 'test'
+  ...
+# Subtest: explicit legacy merge preserves all unique local missions and remote automatic rows: 1 autos
+ok 180 - explicit legacy merge preserves all unique local missions and remote automatic rows: 1 autos
+  ---
+  duration_ms: 4.296207
+  type: 'test'
+  ...
+# Subtest: local completion requests become confirmed only through the V2 receipt
+ok 181 - local completion requests become confirmed only through the V2 receipt
+  ---
+  duration_ms: 4.135697
+  type: 'test'
+  ...
+# Subtest: explicit local choice resolves only automatic-row collisions and retains every unique row
+ok 182 - explicit local choice resolves only automatic-row collisions and retains every unique row
+  ---
+  duration_ms: 7.133894
+  type: 'test'
+  ...
+# Subtest: explicit server choice resolves only automatic-row collisions and retains every unique row
+ok 183 - explicit server choice resolves only automatic-row collisions and retains every unique row
+  ---
+  duration_ms: 8.581276
+  type: 'test'
+  ...
+# Subtest: a cancelled explicit choice preserves local data, requests, remote revision and outbox
+ok 184 - a cancelled explicit choice preserves local data, requests, remote revision and outbox
+  ---
+  duration_ms: 4.205435
+  type: 'test'
+  ...
+# Subtest: generic activate cannot turn an unversioned row into permission to overwrite local Missions
+ok 185 - generic activate cannot turn an unversioned row into permission to overwrite local Missions
+  ---
+  duration_ms: 3.496453
+  type: 'test'
+  ...
+# Subtest: generic refresh cannot turn an unversioned row into permission to overwrite local Missions
+ok 186 - generic refresh cannot turn an unversioned row into permission to overwrite local Missions
+  ---
+  duration_ms: 2.925525
+  type: 'test'
+  ...
+# Subtest: generic sync cannot turn an unversioned row into permission to overwrite local Missions
+ok 187 - generic sync cannot turn an unversioned row into permission to overwrite local Missions
+  ---
+  duration_ms: 2.569254
+  type: 'test'
+  ...
+# Subtest: generic server cannot turn an unversioned row into permission to overwrite local Missions
+ok 188 - generic server cannot turn an unversioned row into permission to overwrite local Missions
+  ---
+  duration_ms: 2.956244
+  type: 'test'
+  ...
+# Subtest: generic local cannot turn an unversioned row into permission to overwrite local Missions
+ok 189 - generic local cannot turn an unversioned row into permission to overwrite local Missions
+  ---
+  duration_ms: 3.275289
+  type: 'test'
+  ...
+# Subtest: unsupported legacy unknown root key remains blocked with its raw backup preserved
+ok 190 - unsupported legacy unknown root key remains blocked with its raw backup preserved
+  ---
+  duration_ms: 2.412021
+  type: 'test'
+  ...
+# Subtest: unsupported legacy nonempty manual missions remains blocked with its raw backup preserved
+ok 191 - unsupported legacy nonempty manual missions remains blocked with its raw backup preserved
+  ---
+  duration_ms: 2.530565
+  type: 'test'
+  ...
+# Subtest: unsupported legacy nonempty credits remains blocked with its raw backup preserved
+ok 192 - unsupported legacy nonempty credits remains blocked with its raw backup preserved
+  ---
+  duration_ms: 3.634413
+  type: 'test'
+  ...
+# Subtest: unsupported legacy nonempty requests remains blocked with its raw backup preserved
+ok 193 - unsupported legacy nonempty requests remains blocked with its raw backup preserved
+  ---
+  duration_ms: 4.240567
+  type: 'test'
+  ...
+# Subtest: unsupported legacy malformed automatic registry remains blocked with its raw backup preserved
+ok 194 - unsupported legacy malformed automatic registry remains blocked with its raw backup preserved
+  ---
+  duration_ms: 2.766277
+  type: 'test'
+  ...
+# Subtest: unsupported legacy null automatic registry remains blocked with its raw backup preserved
+ok 195 - unsupported legacy null automatic registry remains blocked with its raw backup preserved
+  ---
+  duration_ms: 2.052182
+  type: 'test'
+  ...
+# Subtest: unsupported legacy malformed manual registry remains blocked with its raw backup preserved
+ok 196 - unsupported legacy malformed manual registry remains blocked with its raw backup preserved
+  ---
+  duration_ms: 3.343326
+  type: 'test'
+  ...
+# Subtest: unsupported legacy malformed credit registry remains blocked with its raw backup preserved
+ok 197 - unsupported legacy malformed credit registry remains blocked with its raw backup preserved
+  ---
+  duration_ms: 1.788865
+  type: 'test'
+  ...
+# Subtest: unsupported legacy malformed request registry remains blocked with its raw backup preserved
+ok 198 - unsupported legacy malformed request registry remains blocked with its raw backup preserved
+  ---
+  duration_ms: 1.836521
+  type: 'test'
+  ...
+# Subtest: unsupported legacy missing automatic key remains blocked with its raw backup preserved
+ok 199 - unsupported legacy missing automatic key remains blocked with its raw backup preserved
+  ---
+  duration_ms: 2.537566
+  type: 'test'
+  ...
+# Subtest: unsupported legacy nonstring automatic key remains blocked with its raw backup preserved
+ok 200 - unsupported legacy nonstring automatic key remains blocked with its raw backup preserved
+  ---
+  duration_ms: 1.981707
+  type: 'test'
+  ...
+# Subtest: unsupported legacy duplicate automatic keys remains blocked with its raw backup preserved
+ok 201 - unsupported legacy duplicate automatic keys remains blocked with its raw backup preserved
+  ---
+  duration_ms: 2.309552
+  type: 'test'
+  ...
+# Subtest: an explicit unsupported protocol null stays outside unversioned recovery and is preserved
+ok 202 - an explicit unsupported protocol null stays outside unversioned recovery and is preserved
+  ---
+  duration_ms: 1.654707
+  type: 'test'
+  ...
+# Subtest: an explicit unsupported protocol 7 stays outside unversioned recovery and is preserved
+ok 203 - an explicit unsupported protocol 7 stays outside unversioned recovery and is preserved
+  ---
+  duration_ms: 1.231794
+  type: 'test'
+  ...
+# Subtest: ambiguous local identities cannot be merged or normalized away: {"autoTasks":[{"key":"duplicate","title":"TEST — duplicate","state":"open","due":"2026-11-12"},{"key":"duplicate","title":"TEST — duplicate","state":"open","due":"2026-11-12","note":"TEST conflicting local key"}]}
+ok 204 - ambiguous local identities cannot be merged or normalized away: {"autoTasks":[{"key":"duplicate","title":"TEST — duplicate","state":"open","due":"2026-11-12"},{"key":"duplicate","title":"TEST — duplicate","state":"open","due":"2026-11-12","note":"TEST conflicting local key"}]}
+  ---
+  duration_ms: 3.272065
+  type: 'test'
+  ...
+# Subtest: ambiguous local identities cannot be merged or normalized away: {"autoTasks":[{"title":"TEST missing local key"}]}
+ok 205 - ambiguous local identities cannot be merged or normalized away: {"autoTasks":[{"title":"TEST missing local key"}]}
+  ---
+  duration_ms: 2.210357
+  type: 'test'
+  ...
+# Subtest: ambiguous local identities cannot be merged or normalized away: {"manualMissions":[{"id":"duplicate","title":"TEST — duplicate","category":"Famille","due":"","note":"","status":"open","assigneeId":"fixture-member-a","effort":"light","rewardVersion":1},{"id":"duplicate","title":"TEST — duplicate","category":"Famille","due":"","note":"TEST duplicate local id","status":"open","assigneeId":"fixture-member-a","effort":"light","rewardVersion":1}]}
+ok 206 - ambiguous local identities cannot be merged or normalized away: {"manualMissions":[{"id":"duplicate","title":"TEST — duplicate","category":"Famille","due":"","note":"","status":"open","assigneeId":"fixture-member-a","effort":"light","rewardVersion":1},{"id":"duplicate","title":"TEST — duplicate","category":"Famille","due":"","note":"TEST duplicate local id","status":"open","assigneeId":"fixture-member-a","effort":"light","rewardVersion":1}]}
+  ---
+  duration_ms: 2.089339
+  type: 'test'
+  ...
+# Subtest: local confirmed credits cannot be reset, imported or transformed into requests to join an empty legacy ledger
+ok 207 - local confirmed credits cannot be reset, imported or transformed into requests to join an empty legacy ledger
+  ---
+  duration_ms: 3.87395
+  type: 'test'
+  ...
+# Subtest: remembered known-v2-empty history blocks a versionless regression even when the current local ledger is empty
+ok 208 - remembered known-v2-empty history blocks a versionless regression even when the current local ledger is empty
+  ---
+  duration_ms: 2.536987
+  type: 'test'
+  ...
+# Subtest: remembered known-v1-credit history blocks a versionless regression even when the current local ledger is empty
+ok 209 - remembered known-v1-credit history blocks a versionless regression even when the current local ledger is empty
+  ---
+  duration_ms: 2.090253
+  type: 'test'
+  ...
+# Subtest: storage failure at backup-put cannot expose an executable review or send any RPC
+ok 210 - storage failure at backup-put cannot expose an executable review or send any RPC
+  ---
+  duration_ms: 1.81758
+  type: 'test'
+  ...
+# Subtest: storage failure at backup-readback cannot expose an executable review or send any RPC
+ok 211 - storage failure at backup-readback cannot expose an executable review or send any RPC
+  ---
+  duration_ms: 1.620008
+  type: 'test'
+  ...
+# Subtest: storage failure at module-state-put cannot expose an executable review or send any RPC
+ok 212 - storage failure at module-state-put cannot expose an executable review or send any RPC
+  ---
+  duration_ms: 2.469179
+  type: 'test'
+  ...
+# Subtest: backup completion is awaited before the review becomes writable
+ok 213 - backup completion is awaited before the review becomes writable
+  ---
+  duration_ms: 3.308365
+  type: 'test'
+  ...
+# Subtest: local Missions edited while the backup is being persisted require another reviewed snapshot
+ok 214 - local Missions edited while the backup is being persisted require another reviewed snapshot
+  ---
+  duration_ms: 2.124662
+  type: 'test'
+  ...
+# Subtest: a reviewed snapshot changed through revision needs a fresh explicit review before writing
+ok 215 - a reviewed snapshot changed through revision needs a fresh explicit review before writing
+  ---
+  duration_ms: 6.656349
+  type: 'test'
+  ...
+# Subtest: a reviewed snapshot changed through remote-content needs a fresh explicit review before writing
+ok 216 - a reviewed snapshot changed through remote-content needs a fresh explicit review before writing
+  ---
+  duration_ms: 5.720368
+  type: 'test'
+  ...
+# Subtest: a reviewed snapshot changed through local-content needs a fresh explicit review before writing
+ok 217 - a reviewed snapshot changed through local-content needs a fresh explicit review before writing
+  ---
+  duration_ms: 2.753287
+  type: 'test'
+  ...
+# Subtest: an auth-context switch during backup cannot publish or apply a legacy review
+ok 218 - an auth-context switch during backup cannot publish or apply a legacy review
+  ---
+  duration_ms: 1.935326
+  type: 'test'
+  ...
+# Subtest: an auth-context switch during fresh-read cannot publish or apply a legacy review
+ok 219 - an auth-context switch during fresh-read cannot publish or apply a legacy review
+  ---
+  duration_ms: 1.04094
+  type: 'test'
+  ...
+# Subtest: parallel recovery clicks share the native durable flight and never issue a second operation
+ok 220 - parallel recovery clicks share the native durable flight and never issue a second operation
+  ---
+  duration_ms: 17.030507
+  type: 'test'
+  ...
+# Subtest: a lost response survives reload and a fresh converted-household review replays its exact operation
+ok 221 - a lost response survives reload and a fresh converted-household review replays its exact operation
+  ---
+  duration_ms: 8.341993
+  type: 'test'
+  ...
+# Subtest: unknown pending operation replays exactly when it preserves legacy remote automatic rows
+ok 222 - unknown pending operation replays exactly when it preserves legacy remote automatic rows
+  ---
+  duration_ms: 5.674529
+  type: 'test'
+  ...
+# Subtest: unknown pending operation is blocked when it omits legacy remote automatic rows
+ok 223 - unknown pending operation is blocked when it omits legacy remote automatic rows
+  ---
+  duration_ms: 3.892813
+  type: 'test'
+  ...
+# Subtest: unknown transaction result 40003 never archives, rebases or credits a pending legacy operation
+ok 224 - unknown transaction result 40003 never archives, rebases or credits a pending legacy operation
+  ---
+  duration_ms: 2.153777
+  type: 'test'
+  ...
+# Subtest: unknown transaction result 08007 never archives, rebases or credits a pending legacy operation
+ok 225 - unknown transaction result 08007 never archives, rebases or credits a pending legacy operation
+  ---
+  duration_ms: 2.19969
+  type: 'test'
+  ...
+# Subtest: an explicit new choice after a known atomic rejection archives the immutable old operation and uses a new UUID
+ok 226 - an explicit new choice after a known atomic rejection archives the immutable old operation and uses a new UUID
+  ---
+  duration_ms: 3.940879
+  type: 'test'
+  ...
+# Subtest: local Missions edited while a rejected operation is being archived are never overwritten by the earlier choice
+ok 227 - local Missions edited while a rejected operation is being archived are never overwritten by the earlier choice
+  ---
+  duration_ms: 7.597192
+  type: 'test'
+  ...
+# Subtest: a second fixture account converting the row forces a fresh review before preserving both accounts unique missions
+ok 228 - a second fixture account converting the row forces a fresh review before preserving both accounts unique missions
+  ---
+  duration_ms: 12.105616
+  type: 'test'
+  ...
+# Subtest: converted-household merge review preserves a remembered remote automatic row and unchanged local manual row
+ok 229 - converted-household merge review preserves a remembered remote automatic row and unchanged local manual row
+  ---
+  duration_ms: 13.169395
+  type: 'test'
+  ...
+# Subtest: converted-household local review preserves a remembered remote automatic row and unchanged local manual row
+ok 230 - converted-household local review preserves a remembered remote automatic row and unchanged local manual row
+  ---
+  duration_ms: 6.925522
+  type: 'test'
+  ...
+# Subtest: converted-household server review preserves a remembered remote automatic row and unchanged local manual row
+ok 231 - converted-household server review preserves a remembered remote automatic row and unchanged local manual row
+  ---
+  duration_ms: 8.287702
+  type: 'test'
+  ...
+# Subtest: a converted review preserves remote manual missions and exact confirmed credits while adding local unique missions
+ok 232 - a converted review preserves remote manual missions and exact confirmed credits while adding local unique missions
+  ---
+  duration_ms: 9.339071
+  type: 'test'
+  ...
+# Subtest: pending replay at the current converted revision preserves every remote row
+ok 233 - pending replay at the current converted revision preserves every remote row
+  ---
+  duration_ms: 13.219401
+  type: 'test'
+  ...
+# Subtest: pending replay at the current converted revision cannot omit remote autoTasks
+ok 234 - pending replay at the current converted revision cannot omit remote autoTasks
+  ---
+  duration_ms: 6.627862
+  type: 'test'
+  ...
+# Subtest: pending replay at the current converted revision cannot omit remote manualMissions
+ok 235 - pending replay at the current converted revision cannot omit remote manualMissions
+  ---
+  duration_ms: 3.876928
+  type: 'test'
+  ...
+# Subtest: an older lost-response operation replays its receipt after another fixture account has added remote rows
+ok 236 - an older lost-response operation replays its receipt after another fixture account has added remote rows
+  ---
+  duration_ms: 9.681237
+  type: 'test'
+  ...
+# Subtest: receipt replay after a full local restore cannot turn an absent cached automatic row into a later remote deletion
+ok 237 - receipt replay after a full local restore cannot turn an absent cached automatic row into a later remote deletion
+  ---
+  duration_ms: 7.770573
+  type: 'test'
+  ...
+# Subtest: a receipt newer than its operation keeps a unique current local mission deleted by another fixture account for explicit conflict resolution
+ok 238 - a receipt newer than its operation keeps a unique current local mission deleted by another fixture account for explicit conflict resolution
+  ---
+  duration_ms: 8.0212
+  type: 'test'
+  ...
+# Subtest: blocked legacy Missions do not mutate other modules or interrupt their existing direct writers
+ok 239 - blocked legacy Missions do not mutate other modules or interrupt their existing direct writers
+  ---
+  duration_ms: 6.165101
+  type: 'test'
+  ...
+# Subtest: legacy recovery retains the pilot V2 capability guard when the capability is missing
+ok 240 - legacy recovery retains the pilot V2 capability guard when the capability is missing
+  ---
+  duration_ms: 2.109198
+  type: 'test'
+  ...
+# Subtest: legacy recovery retains the pilot V2 capability guard when the capability is malformed
+ok 241 - legacy recovery retains the pilot V2 capability guard when the capability is malformed
+  ---
+  duration_ms: 1.239296
+  type: 'test'
+  ...
+# Subtest: the native source stays byte-identical and strict when legacy recovery is not explicitly enabled
+ok 242 - the native source stays byte-identical and strict when legacy recovery is not explicitly enabled
+  ---
+  duration_ms: 3.124511
+  type: 'test'
+  ...
+1..242
+# tests 246
+# suites 0
+# pass 246
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2945.068674

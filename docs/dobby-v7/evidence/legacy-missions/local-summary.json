@@ -1,0 +1,23 @@
+{
+  "baseline": "b92f5f398ecf5a70aa6591215c8a100c53e39c71",
+  "testResults": {
+    "passed": 246,
+    "failed": 0,
+    "skipped": 0,
+    "legacyClientCases": 67,
+    "buildAndProvenanceCases": 7
+  },
+  "campaign": "Native offline/family/conflicts + sync V1/V2 + E06 + existing pilot guards/build + legacy recovery tests; TAP contains exact executed test names.",
+  "tap": "local-regressions.tap",
+  "localPostgreSQL": "postgres/results.json",
+  "applicationFingerprint": "368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114",
+  "protectedApplicationUnchanged": true,
+  "supabaseContacted": false,
+  "hashes": {
+    "scripts/runes-pilot/legacy-missions-recovery.js": "a4bdff99580ae2f7ed192e07cf0a02a6e2a0538a69dec4aaa8872a9f01a8cc80",
+    "scripts/runes-pilot/legacy-recovery-transform.cjs": "e90384313ed746133d6aee7ffdd4cbb7ca91d621baf162a92b5c4a3b9cd0f57f",
+    "scripts/build-dobby-runes-pilot.cjs": "ba24f8bfdb3bfc41961cb57bfca312926a6b0de3e02928ce162fee916b210c35",
+    "scripts/runes-pilot/legacy-recovery.test.mjs": "6ff0c98f77ed3ee51499494d7766a4e4c1f41e50dd6256f79a49d8c10f023d13",
+    "scripts/runes-pilot/build.test.cjs": "4752dba88c21a33fc5eaf21237b2625d20e1c3c59b00481dc75af5e6a0cdd01a"
+  }
+}
