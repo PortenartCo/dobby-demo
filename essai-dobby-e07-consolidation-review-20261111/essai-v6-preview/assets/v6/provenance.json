@@ -1,0 +1,30 @@
+{
+  "export": "stitch_dobby_assistant_mobile_app.zip fourni le 8 novembre 2026",
+  "scenes": [
+    {
+      "asset": "taverne.png",
+      "source": "dobby_la_taverne_gourmande_repas_menus/code.html",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBIvteT5Eb3pIkai-hg5r37oVZWGHpVSMUFEfSCQ1ouxyx4bkjcYFt_o9mBtuBFvM1PAqS8KYNRJHm1D35zvjzrvkrGsV-QcRFH5z2ZiLFtRcuxM8b5TUfdFrruzSPcVEFH0dHDIuw0AN4aWD-3ow_oA8D1t62TWVIqhIRoaB4wCbVBhli5ULluP4dspL2Xr_wCZg8n6d_oB1W-xdGEetMKKKqXY3OrgG3hoopC-Si6",
+      "sha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd"
+    },
+    {
+      "asset": "missions.png",
+      "source": "dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBDXsXuZ2p3tNIWB3WSYinQYyHF5QweAKaXHozcfdpMspqdTzfCJuJYEkTGbsFYaolqrb6nf665cX38aBcX7IqnTxWEre6GV_3GgtV3TwdhUPEYGHbQXwJmTgy6p5DbFuGpjBlPBi_bTOAJUVa5Vv9Zr-_9-o0adJVqT3DPw1KIRJL2t79g8UR2S9b2gHF9I44QuBMP1-jVvLMfBtd--jv_0Nq3d002TnPfQ97dwgPk",
+      "sha256": "506a7cc84050be7c2778288241ed6ce744f1d7c9228e6561f4dfe5457146c83d"
+    },
+    {
+      "asset": "famille.png",
+      "source": "dobby_le_salon_des_curiosit_s_famille_organisation/code.html",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru",
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e"
+    },
+    {
+      "asset": "traverse.png",
+      "source": "dobby_l_choppe_du_chemin_de_traverse/code.html",
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "sha256": "ee369ba1493c160e326ed9fe402851a959aa1078e0dbe19556b58ecd911c5c05"
+    }
+  ],
+  "fonts": "Familles déjà référencées par la V5 et le HTML Stitch ; Google Fonts, servies localement avec repli Georgia."
+}
