@@ -9,7 +9,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3 native extensions', () => {
+test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4 native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html');
   const preview=source('../index.html');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs
@@ -23,8 +23,8 @@ test('preview V5 source matches original except isolated storage and explicitly 
   const amendments=JSON.parse(source('./fixtures/e07-3-native-extensions.json'));
   let e073Normalized=preview;
   const e074=JSON.parse(source('./fixtures/e07-4-native-extensions.json'));
-  for(const amendment of [...e074.patches].reverse()){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each E07.4 amendment occurs exactly once');e073Normalized=e073Normalized.replace(amendment.after,amendment.before);}
-  for(const amendment of amendments.patches){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each approved amendment occurs exactly once');e073Normalized=e073Normalized.replace(amendment.after,amendment.before);}
+  for(const amendment of [...e074.patches].reverse()){assert.equal(e073Normalized.split(amendment.after).length-1,amendment.occurrences||1,'Each E07.4 amendment occurs exactly once');e073Normalized=e073Normalized.replaceAll(amendment.after,amendment.before);}
+  for(const amendment of amendments.patches){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each approved amendment occurs exactly once');e073Normalized=e073Normalized.replaceAll(amendment.after,amendment.before);}
   const normalized=e073Normalized.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e06-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
     .replaceAll('./stitch-v5.js?v=20261110-e06-1','./stitch-v5.js?v=20261107-1')

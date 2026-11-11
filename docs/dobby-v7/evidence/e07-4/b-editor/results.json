@@ -1,0 +1,29 @@
+[
+  {
+    "width": 320,
+    "status": "PASS",
+    "realPhotoSameIdentity": true,
+    "stepRemovalRemapsPhoto": true,
+    "tm5EditAndUncertaintyPreserved": true,
+    "baseOverlayNoDuplication": true,
+    "nativePlanningRetained": true
+  },
+  {
+    "width": 390,
+    "status": "PASS",
+    "realPhotoSameIdentity": true,
+    "stepRemovalRemapsPhoto": true,
+    "tm5EditAndUncertaintyPreserved": true,
+    "baseOverlayNoDuplication": true,
+    "nativePlanningRetained": true
+  },
+  {
+    "width": 1440,
+    "status": "PASS",
+    "realPhotoSameIdentity": true,
+    "stepRemovalRemapsPhoto": true,
+    "tm5EditAndUncertaintyPreserved": true,
+    "baseOverlayNoDuplication": true,
+    "nativePlanningRetained": true
+  }
+]

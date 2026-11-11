@@ -43,11 +43,11 @@
 **Files:** `cuisine.js`, CSS bornée E07.4 ; `cuisine-engine.js` et noyau natif pour les seules opérations nouvelles ; tests dédiés.
 **Interfaces:** même ID user ; surcharge BASE rattachée au même ID, résolution unique via read/getR ; retrait récupérable avec restauration et conservation des références. Planning via `choose`/writer natif, `planned[date+'-'+slot]`.
 
-- [ ] RED titre90caractères, étoile unique/confirmation/catalogue, métriques3colonnes, onglets exclusifs et méthodes localement commutées sans mutation ingrédients/portions/courses.
-- [ ] Retirer blocs/badges/actions remplacés ; liste ingrédients simple avec calculs justes ou À compléter.
-- [ ] Modale semaine7jours/14créneaux, navigation, convives, remplacement confirmé, annulation/Escape/focus et Taverne/reload ; aucun ajout panier.
-- [ ] Édition complète sans clone, images/étapes/TM5 conservées ou associations explicitement corrigées ; retrait récupérable et avertissement planning, sans perte.
-- [ ] Tests writers/deltas/persistance et captures3largeurs ; revue et commit B.
+- [x] RED titre90caractères, étoile unique/confirmation/catalogue, métriques3colonnes, onglets exclusifs et méthodes localement commutées sans mutation ingrédients/portions/courses.
+- [x] Retirer blocs/badges/actions remplacés ; liste ingrédients simple avec calculs justes ou À compléter.
+- [x] Modale semaine7jours/14créneaux, navigation, convives, remplacement confirmé, annulation/Escape/focus et Taverne/reload ; aucun ajout panier.
+- [x] Édition complète sans clone, images/étapes/TM5 conservées ou associations explicitement corrigées ; retrait récupérable et avertissement planning, sans perte.
+- [x] Tests writers/deltas/persistance et captures3largeurs ; revue et commit B.
 
 ## Checkpoint C — Mode Cuisine
 

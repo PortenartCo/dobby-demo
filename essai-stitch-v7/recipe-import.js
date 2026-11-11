@@ -57,6 +57,27 @@ window.DobbyRecipeImport=(()=>{'use strict';
    if(!committed){const referenced=E.evaluate('return JSON.stringify({custom,tm:st.tmAdaptations||{}});');const failures=[];for(const key of created){if(referenced.includes(key))continue;try{await E.win().houseRead(key,true);}catch{failures.push(key);}}if(failures.length)throw Error('Import annulé ; le nettoyage de fichiers locaux temporaires ne peut pas être confirmé. Aucune ancienne photo n’a été supprimée.');}
   }
  }
+ async function prepareMedia(file,target,{E}){
+  await ready;const token=context(E),original=snapshot(E),recipe=E.read().recipes.find(r=>r.id===target?.recipeId);if(!recipe)throw Error('Recette introuvable.');
+  if(!['cover','step'].includes(target?.target)||target.provenance!=null&&!['photo-originale','illustration-IA'].includes(target.provenance))throw Error('Cible ou provenance de photo invalide.');
+  const method=target.method||'classic';if(target.target==='step'&&(!['classic','tm5'].includes(method)||!Number.isInteger(target.stepIndex)||target.stepIndex<0))throw Error('Étape de photo invalide.');
+  const zip=await import(new URL('recipe-import-zip.mjs',base));if(!file||file.size>zip.RECIPE_ZIP_LIMITS.imageBytes)throw Error('Photo attendue : 10 Mo maximum.');const bytes=new Uint8Array(await file.arrayBuffer()),{type}=zip.inspectRecipeImage(file.name,bytes);await decodeMedia(bytes,type);const hash=await F.sha256(bytes);
+  if(context(E)!==token||snapshot(E)!==original)throw Error('Le foyer ou le grimoire a changé pendant la préparation de la photo.');
+  const previewURL=URL.createObjectURL(new Blob([bytes],{type}));return {recipeId:recipe.id,target:target.target,method,stepIndex:target.stepIndex??null,provenance:target.provenance??null,description:typeof target.description==='string'?target.description.slice(0,400):'',bytes,type,key:'recipe-media-'+hash,sha256:hash,previewURL,context:token,snapshot:original};
+ }
+ async function saveEdit(payload,id,options,{E}){
+  await ready;const token=context(E),original=snapshot(E),media=options.media||[],created=[];let saved=false;
+  if(options._context!==undefined&&options._context!==token)throw Error('Le foyer a changé depuis l’ouverture de l’éditeur.');if(options._snapshot!==undefined&&options._snapshot!==original)throw Error('Le grimoire a changé depuis l’ouverture de l’éditeur.');
+  for(const m of media)if(m.recipeId!==id||m.context!==token||m.snapshot!==original)throw Error('La recette ou le foyer a changé depuis la préparation des photos.');
+  const validation=E.evaluate('return validateBatch(JSON.stringify(p));',payload);if(validation.errors.length)return {errors:validation.errors};
+  const guard=()=>{if(context(E)!==token||snapshot(E)!==original)throw Error('Le foyer ou le grimoire a changé pendant l’édition.');};
+  try{
+   const refs=[];for(const m of media){guard();if(await F.sha256(m.bytes)!==m.sha256)throw Error('La photo préparée ne correspond plus à son empreinte.');guard();const existing=await E.win().houseRead(m.key);guard();if(existing){if(await F.sha256(new Uint8Array(await existing.arrayBuffer()))!==m.sha256)throw Error('La photo locale ne correspond pas à son empreinte.');guard();}else{await E.win().houseStore(new (E.win().Blob)([m.bytes],{type:m.type}),m.key);created.push(m.key);guard();}refs.push({target:m.target,method:m.method,stepIndex:m.stepIndex,ref:{key:m.key,sha256:m.sha256,type:m.type,provenance:m.provenance??null,description:m.description||''}});}
+   guard();const result=E.saveRecipe(payload,id,{...options,media:refs,_context:token,_snapshot:original});if(result.errors?.length)throw Error(result.errors.join(' · '));saved=true;return result;
+  }finally{
+   if(!saved){const referenced=E.evaluate('return JSON.stringify({custom,tm:st.tmAdaptations||{}});');let cleanupFailed=false;for(const key of created)if(!referenced.includes(key)){try{await E.win().houseRead(key,true);}catch{cleanupFailed=true;}}if(cleanupFailed)throw Error('Édition annulée ; le nettoyage des seules nouvelles photos ne peut pas être confirmé.');}
+  }
+ }
  function render(data,{E}){
   const main=$('main');main.classList.add('e073-import');main.replaceChildren();clearPreview();
   main.innerHTML='<h1>Importer avec mon IA</h1><p>Photographiez vos recettes, utilisez le prompt ci-dessous dans votre IA personnelle, puis récupérez et choisissez le fichier obtenu. DOBBY n’appelle aucune IA et ne reçoit aucun fichier automatiquement.</p><ol><li>Copiez le prompt et transmettez vos photos successives à votre IA.</li><li>Confirmez que toutes vos recettes sont transmises pour obtenir le fichier final.</li><li>Téléchargez le JSON ou le ZIP sur votre appareil, puis sélectionnez-le ici.</li></ol>'+button('copy','Copier le prompt pour mon IA')+'<details class="e073-import-prompt"><summary>Lire ou sélectionner le prompt</summary><textarea id="e073-import-prompt" readonly aria-label="Prompt complet pour mon IA">'+esc(F?.externalPrompt||'Chargement du prompt…')+'</textarea></details><label class="cu-field">Importer mes recettes<input id="e073-import-file" data-e073-import-file="batch" type="file" accept=".json,.zip,application/json,application/zip" '+(busy?'disabled':'')+'></label><p class="e073-import-help">JSON : 2 Mo et 150 recettes maximum. ZIP : 40 Mo, images JPEG/PNG/WebP de 10 Mo maximum chacune. Les photos sont conservées sur cet appareil ; leur partage familial n’est pas raccordé. Le texte suit le module Recettes existant, lorsqu’il est actif.</p>';
@@ -81,5 +102,5 @@ window.DobbyRecipeImport=(()=>{'use strict';
   if(!el.matches('[data-e073-import-file]')||busy)return;const file=el.files?.[0];if(!file)return;const current=++generation;busy=true;for(const input of document.querySelectorAll('[data-e073-import-file]'))input.disabled=true;message='Analyse du fichier, sans enregistrement…';const photoID=$('#e073-import-photo-recipe')?.value;try{const result=el.dataset.e073ImportFile==='photo'?await preparePhoto(file,photoID,{E:ctx.E}):await ctx.E.prepareRecipeImport(file);if(current!==generation||ctx.ui.view!=='recipe-ai')return;clearPreview();prepared=result;choices={};replaceTM5={};for(const row of prepared.entries)choices[row.index]=prepared.photoOnly?'replace':row.existingId?'skip':row.errors.length?'skip':'add';message='Analyse terminée. Vérifiez les données et confirmez explicitement les recettes à enregistrer.';}catch(error){if(current===generation){prepared=null;message=error.message;ctx.notice(error.message,true);}}finally{if(current===generation){busy=false;if(ctx.ui.view==='recipe-ai')await ctx.render();}}
  }
  addEventListener('pagehide',()=>{generation++;clearPreview();clearCache();});
- return Object.freeze({ready,prepare,hydrate,render,action,change,totalMinutes,commit});
+ return Object.freeze({ready,prepare,preparePhoto,prepareMedia,saveEdit,hydrate,render,action,change,totalMinutes,commit});
 })();

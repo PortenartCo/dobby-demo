@@ -52,6 +52,41 @@
     {
       "before": "||[...custom,...BASE].find(x=>normalizedName(x.name)===normalizedName(r.name)&&Boolean(x.thermomix)===Boolean(r.thermomix));if(existing)",
       "after": "||(normalizedName(r.name)?[...custom,...BASE].find(x=>normalizedName(x.name)===normalizedName(r.name)&&Boolean(x.thermomix)===Boolean(r.thermomix)):null);if(existing)"
+    },
+    {
+      "before": "function getR(id){return [...BASE,...custom].find(x=>x.id===id)}",
+      "after": "function allRecipes(){const overrides=new Map();for(const r of custom)if(!overrides.has(r.id))overrides.set(r.id,r);const recipes=new Map(BASE.map(r=>[r.id,overrides.get(r.id)||r]));for(const [id,r]of overrides)if(!recipes.has(id))recipes.set(id,r);return [...recipes.values()]}function getR(id){return allRecipes().find(x=>x.id===id)}",
+      "occurrences": 1
+    },
+    {
+      "before": "${[...BASE,...custom].filter(r=>",
+      "after": "${allRecipes().filter(r=>!r.removedAt).filter(r=>",
+      "occurrences": 1
+    },
+    {
+      "before": "${[...custom,...BASE].map(r=>",
+      "after": "${allRecipes().filter(r=>!r.removedAt).map(r=>",
+      "occurrences": 2
+    },
+    {
+      "before": "[...custom,...BASE].forEach(r=>add('Recette'",
+      "after": "allRecipes().filter(r=>!r.removedAt).forEach(r=>add('Recette'",
+      "occurrences": 1
+    },
+    {
+      "before": "if(BASE.includes(recipe)){st.baseRecipeFavorites",
+      "after": "if(BASE.some(x=>x.id===recipe.id)){st.baseRecipeFavorites",
+      "occurrences": 1
+    },
+    {
+      "before": "function portionFields(){",
+      "after": "function planSelectedMeal(id,config){const r=getR(id);if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');const prior=meal(st.day,st.slot);st.planned[mealKey(st.day,st.slot)]={id,...config,status:'prévu',...(prior?.id===id&&prior._e072ImportRef?{_e072ImportRef:prior._e072ImportRef}:{})};go('plan')}function portionFields(){",
+      "occurrences": 1
+    },
+    {
+      "before": "case 'select':{let config=pickPortions();if(!config)break;st.planned[mealKey(st.day,st.slot)]={id:t.dataset.id,...config,status:'prévu'};go('plan');break}",
+      "after": "case 'select':{let config=pickPortions();if(!config)break;planSelectedMeal(t.dataset.id,config);break}",
+      "occurrences": 1
     }
   ]
 }
