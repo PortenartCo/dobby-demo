@@ -1,0 +1,829 @@
+{
+  "started": "2026-11-11T16:02:12.608Z",
+  "finished": "2026-11-11T16:03:44.124Z",
+  "environment": {
+    "container": "dobby-runes-v2-test-20261111",
+    "dockerSocket": "unix:///var/run/docker.sock",
+    "network": "none",
+    "imageId": "sha256:eb0fb2377534e65aad04f37838956b3dfb888e1a3dd3c1acf957bc6557eb6c7d",
+    "labels": {
+      "org.dobby.task": "shared-runes-v2-20261111"
+    }
+  },
+  "postgres": {
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "database": "dobby_runes_tests"
+  },
+  "migrationSHA256": "fb353eca8f2a533cca97d10b9757aab4ae58e56aea8ea3d5788d136629790e15",
+  "fixtureOnly": true,
+  "realSupabaseTouched": false,
+  "summary": {
+    "pass": 48,
+    "fail": 0,
+    "total": 48
+  },
+  "results": [
+    {
+      "name": "baseline V1: old direct PATCH can delete a confirmed credit",
+      "status": "PASS",
+      "milliseconds": 595,
+      "detail": {
+        "beforeRevision": 1,
+        "afterRevision": 3,
+        "diagnosis": "Real PostgreSQL accepts destructive V1 PATCH before prepared migration"
+      }
+    },
+    {
+      "name": "migration preserves existing V1 event, revision 0, balance and row",
+      "status": "PASS",
+      "milliseconds": 358,
+      "detail": {
+        "event": {
+          "missionId": "legacy-v1",
+          "memberId": "member-a",
+          "effort": "light",
+          "amount": 10,
+          "date": "2026-11-11T12:00:00.000Z",
+          "title": "Gain V1 antérieur",
+          "revision": 0
+        },
+        "moduleRevision": 4
+      }
+    },
+    {
+      "name": "explicit V2 local adoption preserves existing cycle identities and revision zero",
+      "status": "PASS",
+      "milliseconds": 251,
+      "detail": {
+        "adoptedEvents": 3,
+        "originalRevisions": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "capability and authenticator are real non-superuser boundaries",
+      "status": "PASS",
+      "milliseconds": 490,
+      "detail": {
+        "identity": {
+          "session": "dobby_fixture_authenticator",
+          "role": "authenticated",
+          "superuser": false,
+          "bypass": false,
+          "writer_member": false,
+          "uid": "11111111-1111-4111-8111-111111111111"
+        },
+        "capability": {
+          "protocol": 2,
+          "ledgerVersions": [
+            1,
+            2
+          ],
+          "maxPayloadBytes": 262144,
+          "directWritesBlocked": true
+        }
+      }
+    },
+    {
+      "name": "first grant + double completion + reopen + regrant use one canonical ledger",
+      "status": "PASS",
+      "milliseconds": 1936,
+      "detail": {
+        "creditCount": 3,
+        "balance": 10,
+        "confirmations": [
+          2,
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "name": "lost-response operation replay returns original receipt and latest reopened module",
+      "status": "PASS",
+      "milliseconds": 1435,
+      "detail": {
+        "appliedRevision": 2,
+        "currentRevision": 3,
+        "balance": 0
+      }
+    },
+    {
+      "name": "operation UUID is bound to payload, expected revision and actor",
+      "status": "PASS",
+      "milliseconds": 1589
+    },
+    {
+      "name": "stale revision is explicit 40001 and has no partial effect",
+      "status": "PASS",
+      "milliseconds": 917,
+      "detail": {
+        "sqlstate": "40001",
+        "message": "ERROR:  40001: Conflit de révision Missions : relisez le foyer sans écraser les opérations en attente"
+      }
+    },
+    {
+      "name": "RPC expected revision bounds reject null, negative and unsafe numbers",
+      "status": "PASS",
+      "milliseconds": 2078
+    },
+    {
+      "name": "beneficiary and reward edits preserve confirmed past gain; reopen targets that gain",
+      "status": "PASS",
+      "milliseconds": 2165
+    },
+    {
+      "name": "normal mission deletion preserves its confirmed event and balance",
+      "status": "PASS",
+      "milliseconds": 979
+    },
+    {
+      "name": "offline grant → reversal → regrant batch is atomic and cycle-safe",
+      "status": "PASS",
+      "milliseconds": 467,
+      "detail": {
+        "requestCount": 3,
+        "creditCount": 3,
+        "oneConfirmationRevision": 2
+      }
+    },
+    {
+      "name": "offline grant then reward/beneficiary edit is explicitly refused without losing history",
+      "status": "PASS",
+      "milliseconds": 1219,
+      "detail": {
+        "policy": "Sync pending gain before changing its reward/beneficiary; no fabricated intermediate history"
+      }
+    },
+    {
+      "name": "offline unconfirmed mission deletion is refused atomically",
+      "status": "PASS",
+      "milliseconds": 806,
+      "detail": {
+        "sqlstate": "23514",
+        "message": "ERROR:  23514: Une nouvelle demande de runes exige une mission présente"
+      }
+    },
+    {
+      "name": "custom rewards zero and 37 are exact, genuine active grants",
+      "status": "PASS",
+      "milliseconds": 1236
+    },
+    {
+      "name": "MAX_SAFE integer reward accepted; active per-beneficiary overflow rejected",
+      "status": "PASS",
+      "milliseconds": 1780
+    },
+    {
+      "name": "MAX_SAFE limit applies to each beneficiary, not household aggregate",
+      "status": "PASS",
+      "milliseconds": 851,
+      "detail": {
+        "memberA": 9007199254740991,
+        "memberB": 1
+      }
+    },
+    {
+      "name": "legacy noneligible mission cannot acquire rewardVersion retroactively",
+      "status": "PASS",
+      "milliseconds": 1100,
+      "detail": {
+        "sqlstate": "23514",
+        "message": "ERROR:  23514: Une ancienne mission ne devient pas rétroactivement éligible aux runes"
+      }
+    },
+    {
+      "name": "all confirmed event fields are immutable, including semantic-equivalent date text",
+      "status": "PASS",
+      "milliseconds": 3969
+    },
+    {
+      "name": "new confirmed credits cannot be injected after activation",
+      "status": "PASS",
+      "milliseconds": 893,
+      "detail": {
+        "sqlstate": "23514",
+        "message": "ERROR:  23514: Un crédit confirmé ne peut pas être ajouté, retiré ou réécrit directement"
+      }
+    },
+    {
+      "name": "new pending grant must match current eligible mission and final status",
+      "status": "PASS",
+      "milliseconds": 2439
+    },
+    {
+      "name": "reopen without reversal and reversal against wrong gain are refused",
+      "status": "PASS",
+      "milliseconds": 3760
+    },
+    {
+      "name": "duplicate first cycle under V1/V2 identities and skipped cycles are refused",
+      "status": "PASS",
+      "milliseconds": 1899
+    },
+    {
+      "name": "UTF16 length and JavaScript whitespace boundaries match the native runes core",
+      "status": "PASS",
+      "milliseconds": 2632,
+      "detail": {
+        "acceptedTitleUTF16": 140,
+        "acceptedMemberIdUTF16": 100,
+        "rejectedBlankSet": "ECMAScript whitespace including TAB/BOM/NBSP/VT"
+      }
+    },
+    {
+      "name": "malformed requests: types, negative/fractional/unsafe values, nulls and dates",
+      "status": "PASS",
+      "milliseconds": 11031,
+      "detail": {
+        "refusedVariants": 19
+      }
+    },
+    {
+      "name": "malformed mission and payload versions are refused",
+      "status": "PASS",
+      "milliseconds": 5759
+    },
+    {
+      "name": "eligible completion requires its gain; reward eligibility cannot be removed",
+      "status": "PASS",
+      "milliseconds": 1865
+    },
+    {
+      "name": "receipt storage contains only operation identity and no second rune ledger",
+      "status": "PASS",
+      "milliseconds": 154,
+      "detail": {
+        "columns": [
+          "household_id",
+          "operation_id",
+          "actor_id",
+          "expected_revision",
+          "applied_revision",
+          "request_digest",
+          "created_at"
+        ],
+        "duplicateBalanceOrLedger": false
+      }
+    },
+    {
+      "name": "new occurrence requires its actual root; existing legacy orphan remains preserved",
+      "status": "PASS",
+      "milliseconds": 1303,
+      "detail": {
+        "newOrphan": "refused",
+        "previouslyPersistedOrphan": "preserved without invented root"
+      }
+    },
+    {
+      "name": "two recurrence occurrences grant/reopen independently",
+      "status": "PASS",
+      "milliseconds": 1517
+    },
+    {
+      "name": "series/occurrence identities and previous rule prefix cannot be removed or rewritten",
+      "status": "PASS",
+      "milliseconds": 3369
+    },
+    {
+      "name": "inactive membership, outsiders and anonymous callers cannot read/write/replay",
+      "status": "PASS",
+      "milliseconds": 1687,
+      "detail": {
+        "outsiderRows": 0,
+        "replayAfterRevocation": "refused"
+      }
+    },
+    {
+      "name": "legacy direct INSERT/PATCH/upsert/DELETE/module move cannot bypass protocol",
+      "status": "PASS",
+      "milliseconds": 4299,
+      "detail": {
+        "blockedStatements": 8
+      }
+    },
+    {
+      "name": "normal family/menus/recipes/house/contracts module writes remain possible",
+      "status": "PASS",
+      "milliseconds": 1324,
+      "detail": {
+        "modules": 5
+      }
+    },
+    {
+      "name": "SQL role, arbitrary GUC, trigger, RLS, private-receipt privilege bypasses fail",
+      "status": "PASS",
+      "milliseconds": 6366,
+      "detail": {
+        "blockedPrivilegeVariants": 14
+      }
+    },
+    {
+      "name": "search_path/temp shadowing cannot redirect SECURITY DEFINER storage",
+      "status": "PASS",
+      "milliseconds": 556
+    },
+    {
+      "name": "256 KiB exact stored boundary accepts; larger input refuses without truncating history",
+      "status": "PASS",
+      "milliseconds": 1736,
+      "detail": {
+        "acceptedStoredBytes": 262144,
+        "rejectedInputBytes": 262146,
+        "confirmedEventsPreserved": 1
+      }
+    },
+    {
+      "name": "input <=256 KiB but server confirmation expansion overflow refuses atomically",
+      "status": "PASS",
+      "milliseconds": 1258,
+      "detail": {
+        "inputBytes": 262144,
+        "policy": "No silent compaction, truncation or history deletion"
+      }
+    },
+    {
+      "name": "post-write injected receipt failure rolls back module and receipt in one transaction",
+      "status": "PASS",
+      "milliseconds": 1249,
+      "detail": {
+        "fault": "AFTER INSERT receipt fixture trigger, never a production RPC hook",
+        "moduleAndReceiptRolledBack": true
+      }
+    },
+    {
+      "name": "privileged normal direct write is also blocked without the dedicated writer role",
+      "status": "PASS",
+      "milliseconds": 544
+    },
+    {
+      "name": "REAL concurrent same-mission completions: independent connections, one grant",
+      "status": "PASS",
+      "milliseconds": 1413,
+      "detail": {
+        "confirmedEvents": 1,
+        "balance": 10,
+        "rebasedDuplicateGain": false
+      }
+    },
+    {
+      "name": "REAL concurrent reopenings: one reversal, balance zero",
+      "status": "PASS",
+      "milliseconds": 1377
+    },
+    {
+      "name": "REAL concurrent different missions same household: loser rebases without lost gain",
+      "status": "PASS",
+      "milliseconds": 1473,
+      "detail": {
+        "finalMissionStatuses": [
+          "done",
+          "done"
+        ],
+        "balance": 20
+      }
+    },
+    {
+      "name": "REAL different households are not serialized by a global module lock",
+      "status": "PASS",
+      "milliseconds": 1177
+    },
+    {
+      "name": "reapplying prepared migration preserves all missions, receipts and protections",
+      "status": "PASS",
+      "milliseconds": 1240,
+      "detail": {
+        "moduleRows": 49,
+        "receipts": 88
+      }
+    },
+    {
+      "name": "invalid legacy history aborts migration atomically without cleaning or losing it",
+      "status": "PASS",
+      "milliseconds": 1356,
+      "detail": {
+        "invalidHistoricalEventRetained": true,
+        "automaticDeletionOrRepair": false
+      }
+    },
+    {
+      "name": "safe protocol rollback disables RPC but keeps direct-write guard and all history",
+      "status": "PASS",
+      "milliseconds": 2073,
+      "detail": {
+        "historyKept": true,
+        "oldDestructiveEndpointReopened": false
+      }
+    },
+    {
+      "name": "local logical backup/restoration preserves full payloads, receipts and guard",
+      "status": "PASS",
+      "milliseconds": 818,
+      "detail": {
+        "format": "PostgreSQL custom logical dump",
+        "bytes": 71502,
+        "sha256": "681652b329f0cc58e312609d7d50ef3ef41e51bb2ba24cbb92ecc8cb420835c1",
+        "moduleRows": 52,
+        "receiptRows": 93,
+        "restoredGuardCount": 1
+      }
+    }
+  ],
+  "concurrency": [
+    {
+      "label": "same-complete",
+      "blocked": [
+        {
+          "pid": 25322,
+          "application": "same-complete-b",
+          "wait": "transactionid",
+          "waitType": "Lock",
+          "query": "SELECT public.dobby_missions_v2_write('7a21be9d-000d-4d2d-b353-f1c3d05cadcb'::uuid,1::bigi"
+        },
+        {
+          "pid": 25323,
+          "application": "same-complete-a",
+          "wait": "advisory",
+          "waitType": "Lock",
+          "query": "SELECT public.dobby_missions_v2_write('7a21be9d-000d-4d2d-b353-f1c3d05cadcb'::uuid,1::bigi"
+        }
+      ],
+      "locks": [
+        {
+          "pid": 25322,
+          "locktype": "advisory",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "relation",
+          "mode": "AccessShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "relation",
+          "mode": "AccessShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "transactionid",
+          "mode": "ShareLock",
+          "granted": false
+        },
+        {
+          "pid": 25322,
+          "locktype": "transactionid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "tuple",
+          "mode": "AccessExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25322,
+          "locktype": "virtualxid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25323,
+          "locktype": "advisory",
+          "mode": "ExclusiveLock",
+          "granted": false
+        },
+        {
+          "pid": 25323,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25323,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25323,
+          "locktype": "transactionid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25323,
+          "locktype": "virtualxid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        }
+      ],
+      "results": [
+        {
+          "status": 3,
+          "sqlstate": "40001"
+        },
+        {
+          "status": 0,
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "label": "same-reopen",
+      "blocked": [
+        {
+          "pid": 25436,
+          "application": "same-reopen-b",
+          "wait": "transactionid",
+          "waitType": "Lock",
+          "query": "SELECT public.dobby_missions_v2_write('ca0f15ed-017d-4eb4-addd-98add6b42362'::uuid,2::bigi"
+        },
+        {
+          "pid": 25437,
+          "application": "same-reopen-a",
+          "wait": "advisory",
+          "waitType": "Lock",
+          "query": "SELECT public.dobby_missions_v2_write('ca0f15ed-017d-4eb4-addd-98add6b42362'::uuid,2::bigi"
+        }
+      ],
+      "locks": [
+        {
+          "pid": 25436,
+          "locktype": "advisory",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "relation",
+          "mode": "AccessShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "relation",
+          "mode": "AccessShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "transactionid",
+          "mode": "ShareLock",
+          "granted": false
+        },
+        {
+          "pid": 25436,
+          "locktype": "transactionid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "tuple",
+          "mode": "AccessExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25436,
+          "locktype": "virtualxid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25437,
+          "locktype": "advisory",
+          "mode": "ExclusiveLock",
+          "granted": false
+        },
+        {
+          "pid": 25437,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25437,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25437,
+          "locktype": "transactionid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25437,
+          "locktype": "virtualxid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        }
+      ],
+      "results": [
+        {
+          "status": 3,
+          "sqlstate": "40001"
+        },
+        {
+          "status": 0,
+          "sqlstate": "00000"
+        }
+      ]
+    },
+    {
+      "label": "different-missions",
+      "blocked": [
+        {
+          "pid": 25512,
+          "application": "different-missions-a",
+          "wait": "transactionid",
+          "waitType": "Lock",
+          "query": "SELECT public.dobby_missions_v2_write('44adda43-7bf7-4701-a248-76b5ce2a10cf'::uuid,1::bigi"
+        },
+        {
+          "pid": 25513,
+          "application": "different-missions-b",
+          "wait": "advisory",
+          "waitType": "Lock",
+          "query": "SELECT public.dobby_missions_v2_write('44adda43-7bf7-4701-a248-76b5ce2a10cf'::uuid,1::bigi"
+        }
+      ],
+      "locks": [
+        {
+          "pid": 25512,
+          "locktype": "advisory",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "relation",
+          "mode": "AccessShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "relation",
+          "mode": "AccessShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "transactionid",
+          "mode": "ShareLock",
+          "granted": false
+        },
+        {
+          "pid": 25512,
+          "locktype": "transactionid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "tuple",
+          "mode": "AccessExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25512,
+          "locktype": "virtualxid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25513,
+          "locktype": "advisory",
+          "mode": "ExclusiveLock",
+          "granted": false
+        },
+        {
+          "pid": 25513,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25513,
+          "locktype": "relation",
+          "mode": "RowShareLock",
+          "granted": true
+        },
+        {
+          "pid": 25513,
+          "locktype": "transactionid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        },
+        {
+          "pid": 25513,
+          "locktype": "virtualxid",
+          "mode": "ExclusiveLock",
+          "granted": true
+        }
+      ],
+      "results": [
+        {
+          "status": 0,
+          "sqlstate": "00000"
+        },
+        {
+          "status": 3,
+          "sqlstate": "40001"
+        }
+      ]
+    },
+    {
+      "label": "different-households",
+      "blocked": [
+        {
+          "pid": 25624,
+          "application": "different-household-a",
+          "wait": "transactionid"
+        }
+      ],
+      "unrelatedCommittedBeforeUnlock": true
+    }
+  ]
+}

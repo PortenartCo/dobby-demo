@@ -1,0 +1,394 @@
+[
+  {
+    "label": "same-complete",
+    "blocked": [
+      {
+        "pid": 25322,
+        "application": "same-complete-b",
+        "wait": "transactionid",
+        "waitType": "Lock",
+        "query": "SELECT public.dobby_missions_v2_write('7a21be9d-000d-4d2d-b353-f1c3d05cadcb'::uuid,1::bigi"
+      },
+      {
+        "pid": 25323,
+        "application": "same-complete-a",
+        "wait": "advisory",
+        "waitType": "Lock",
+        "query": "SELECT public.dobby_missions_v2_write('7a21be9d-000d-4d2d-b353-f1c3d05cadcb'::uuid,1::bigi"
+      }
+    ],
+    "locks": [
+      {
+        "pid": 25322,
+        "locktype": "advisory",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "relation",
+        "mode": "AccessShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "relation",
+        "mode": "AccessShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "transactionid",
+        "mode": "ShareLock",
+        "granted": false
+      },
+      {
+        "pid": 25322,
+        "locktype": "transactionid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "tuple",
+        "mode": "AccessExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25322,
+        "locktype": "virtualxid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25323,
+        "locktype": "advisory",
+        "mode": "ExclusiveLock",
+        "granted": false
+      },
+      {
+        "pid": 25323,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25323,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25323,
+        "locktype": "transactionid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25323,
+        "locktype": "virtualxid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      }
+    ],
+    "results": [
+      {
+        "status": 3,
+        "sqlstate": "40001"
+      },
+      {
+        "status": 0,
+        "sqlstate": "00000"
+      }
+    ]
+  },
+  {
+    "label": "same-reopen",
+    "blocked": [
+      {
+        "pid": 25436,
+        "application": "same-reopen-b",
+        "wait": "transactionid",
+        "waitType": "Lock",
+        "query": "SELECT public.dobby_missions_v2_write('ca0f15ed-017d-4eb4-addd-98add6b42362'::uuid,2::bigi"
+      },
+      {
+        "pid": 25437,
+        "application": "same-reopen-a",
+        "wait": "advisory",
+        "waitType": "Lock",
+        "query": "SELECT public.dobby_missions_v2_write('ca0f15ed-017d-4eb4-addd-98add6b42362'::uuid,2::bigi"
+      }
+    ],
+    "locks": [
+      {
+        "pid": 25436,
+        "locktype": "advisory",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "relation",
+        "mode": "AccessShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "relation",
+        "mode": "AccessShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "transactionid",
+        "mode": "ShareLock",
+        "granted": false
+      },
+      {
+        "pid": 25436,
+        "locktype": "transactionid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "tuple",
+        "mode": "AccessExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25436,
+        "locktype": "virtualxid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25437,
+        "locktype": "advisory",
+        "mode": "ExclusiveLock",
+        "granted": false
+      },
+      {
+        "pid": 25437,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25437,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25437,
+        "locktype": "transactionid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25437,
+        "locktype": "virtualxid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      }
+    ],
+    "results": [
+      {
+        "status": 3,
+        "sqlstate": "40001"
+      },
+      {
+        "status": 0,
+        "sqlstate": "00000"
+      }
+    ]
+  },
+  {
+    "label": "different-missions",
+    "blocked": [
+      {
+        "pid": 25512,
+        "application": "different-missions-a",
+        "wait": "transactionid",
+        "waitType": "Lock",
+        "query": "SELECT public.dobby_missions_v2_write('44adda43-7bf7-4701-a248-76b5ce2a10cf'::uuid,1::bigi"
+      },
+      {
+        "pid": 25513,
+        "application": "different-missions-b",
+        "wait": "advisory",
+        "waitType": "Lock",
+        "query": "SELECT public.dobby_missions_v2_write('44adda43-7bf7-4701-a248-76b5ce2a10cf'::uuid,1::bigi"
+      }
+    ],
+    "locks": [
+      {
+        "pid": 25512,
+        "locktype": "advisory",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "relation",
+        "mode": "AccessShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "relation",
+        "mode": "AccessShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "transactionid",
+        "mode": "ShareLock",
+        "granted": false
+      },
+      {
+        "pid": 25512,
+        "locktype": "transactionid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "tuple",
+        "mode": "AccessExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25512,
+        "locktype": "virtualxid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25513,
+        "locktype": "advisory",
+        "mode": "ExclusiveLock",
+        "granted": false
+      },
+      {
+        "pid": 25513,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25513,
+        "locktype": "relation",
+        "mode": "RowShareLock",
+        "granted": true
+      },
+      {
+        "pid": 25513,
+        "locktype": "transactionid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      },
+      {
+        "pid": 25513,
+        "locktype": "virtualxid",
+        "mode": "ExclusiveLock",
+        "granted": true
+      }
+    ],
+    "results": [
+      {
+        "status": 0,
+        "sqlstate": "00000"
+      },
+      {
+        "status": 3,
+        "sqlstate": "40001"
+      }
+    ]
+  },
+  {
+    "label": "different-households",
+    "blocked": [
+      {
+        "pid": 25624,
+        "application": "different-household-a",
+        "wait": "transactionid"
+      }
+    ],
+    "unrelatedCommittedBeforeUnlock": true
+  }
+]

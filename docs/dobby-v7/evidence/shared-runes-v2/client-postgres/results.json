@@ -1,0 +1,138 @@
+{
+  "generatedAt": "2026-11-11T16:02:56.929Z",
+  "command": "node --test tests/shared-runes-v2/client-postgres.mjs",
+  "environment": {
+    "container": "dobby-runes-v2-test-20261111",
+    "dockerHost": "unix:///var/run/docker.sock",
+    "network": "none",
+    "imageId": "sha256:eb0fb2377534e65aad04f37838956b3dfb888e1a3dd3c1acf957bc6557eb6c7d",
+    "image": "postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+    "labels": {
+      "org.dobby.task": "shared-runes-v2-20261111"
+    },
+    "database": "dobby_runes_client_tests",
+    "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "authenticationBoundary": "Synthetic UUID claims and fixture roles; no Supabase JWT issuance or real accounts."
+  },
+  "sourceSha256": {
+    "essai-stitch-v5-famille/family-modules.js": "a97ab87d5ed6ec3311b262db30b23f25e4d1b94aff0c1e7db2d8817274a32572",
+    "essai-stitch-v5-famille/family-runes-core.mjs": "5f90167122a88042b35846ee6887de115724ac3c45938434f1aca06cf47cbf7c",
+    "essai-stitch-v5-famille/family-missions-core.mjs": "9a170534936d1f0c8c2d5cbced305dd32498c49e80f2063e138e1c10d36227eb",
+    "sql-proposals/dobby-shared-runes-v2.sql": "fb353eca8f2a533cca97d10b9757aab4ae58e56aea8ea3d5788d136629790e15"
+  },
+  "sourceUnchanged": true,
+  "scope": "Actual PostgreSQL SQL, locks, constraints and transactions; two independent native client VMs. REST transport and UUID auth claims are local fixtures, not PostgREST/JWT or real-account validation.",
+  "passed": 9,
+  "failed": 0,
+  "scenarios": [
+    {
+      "name": "native grant/reversal/custom reward edits keep the confirmed historical beneficiary and zero is active",
+      "status": "passed",
+      "evidence": {
+        "revision": 5,
+        "credits": 7,
+        "receipts": 5,
+        "totals": {
+          "a": 25,
+          "b": 11
+        },
+        "zeroActive": true
+      }
+    },
+    {
+      "name": "two native clients completing distinct missions rebase per mission without restoring an already completed row",
+      "status": "passed",
+      "evidence": {
+        "revision": 3,
+        "credits": 2,
+        "missionStatuses": [
+          [
+            "distinct-a",
+            "done"
+          ],
+          [
+            "distinct-b",
+            "done"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "actual concurrent SQL CAS loss is retained and explicit native resolution converges without a duplicate grant",
+      "status": "passed",
+      "evidence": {
+        "actualSQLState": "40001",
+        "mappedHTTPStatus": 500,
+        "credits": 1,
+        "receipts": 2,
+        "revision": 2,
+        "archivedRejectedOperations": 1
+      }
+    },
+    {
+      "name": "lost response after a real commit replays the original durable operation and applies the current reopened module after reload",
+      "status": "passed",
+      "evidence": {
+        "operation": "ef3b5fdf-95ab-4de3-bc8b-79e0ed1cdc86",
+        "attempts": 2,
+        "replayed": true,
+        "receiptCount": 3,
+        "currentRevision": 3,
+        "currentMissionStatus": "open",
+        "total": 0
+      }
+    },
+    {
+      "name": "offline transport keeps unconfirmed intent and disable does not clear runeSyncRequired before recovery",
+      "status": "passed",
+      "evidence": {
+        "sameOperation": true,
+        "runeSyncRequired": true,
+        "revision": 2,
+        "confirmedAfterRecovery": 1
+      }
+    },
+    {
+      "name": "metadata refusal before RPC sends no business write and preserves the native pending request",
+      "status": "passed",
+      "evidence": {
+        "writeRefusedBeforeRPC": true,
+        "pendingPreserved": 1,
+        "runeSyncRequired": true,
+        "confirmedAfterRetry": 1
+      }
+    },
+    {
+      "name": "metadata refusal after SQL confirmation retains the durable operation for safe replay after reload",
+      "status": "passed",
+      "evidence": {
+        "durableOperation": "6d771b78-34f6-4f1f-96cb-49076943d80c",
+        "replayed": true,
+        "credits": 1,
+        "receipts": 2
+      }
+    },
+    {
+      "name": "native projected recurring occurrence synchronizes once and historical identity cannot silently disappear",
+      "status": "passed",
+      "evidence": {
+        "occurrence": "series-r20261111",
+        "projectedRows": 3,
+        "confirmedOnce": true,
+        "historicalDeletionBlocked": true,
+        "revision": 2
+      }
+    },
+    {
+      "name": "server refuses grant for an absent mission atomically while native request and durable rejected operation remain recoverable",
+      "status": "passed",
+      "evidence": {
+        "initialSQLState": "23514",
+        "atomicRefusal": true,
+        "pendingPreserved": 1,
+        "recoveredByExplicitNativeResolution": true,
+        "total": 25
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+✔ E06 draft resume keeps stable answer IDs and isolates members, users and households (6.539963ms)
+✔ E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten (1.343463ms)
+✔ a delayed draft write cannot replace the active draft after switching member (0.666234ms)
+✔ two loaded instances cannot erase drafts of distinct members (0.898331ms)
+✔ E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch (1.937164ms)
+✔ manual E05 house/patronus changes remove only the corresponding computed-version attribution (0.282918ms)
+✔ E06 JavaScript matches every Python base/optional combination and supplied QA result (1167.647561ms)
+✔ E06 validates stable answer IDs and does not use optional answers that were never asked (2.779504ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: server (17.332981ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: local (7.649069ms)
+✔ E06 interversion LIMIT: an old native member writer can erase result provenance and structured names (3.159004ms)
+✔ onboarding generation preserves canonical V2 bytes, exact approved copy and actual manifest provenance (137.560293ms)
+✔ missing canonical scoring fails rather than silently rebuilding it from the V1 archive (50.284142ms)
+✔ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (3.193127ms)
+✔ revised scoring stays deterministic, reaches all four houses, and leaves Patronus rules unchanged (471.152101ms)
+✔ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (3.952979ms)
+✔ old confirmed answers/results and untouched drafts survive adoption of the new version (1.135254ms)
+✔ future draft versions remain blocked without an overwrite (1.259538ms)
+✔ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (5.506949ms)
+✔ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (2.6587ms)
+✔ frozen V1 QA answer vectors still reach the named four Houses in V2; changed distribution is explicit (147.324728ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1269.498847

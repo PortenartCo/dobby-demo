@@ -1,0 +1,63 @@
+name: Dobby shared runes V2 - isolated PostgreSQL
+
+on:
+  push:
+    paths:
+      - 'sql-proposals/dobby-shared-runes-v2.sql'
+      - 'sql-proposals/dobby-v2-modules.sql'
+      - 'tests/shared-runes-v2/**'
+      - 'essai-stitch-v5-famille/family-modules.js'
+      - 'essai-stitch-v5-famille/family-missions*.js'
+      - 'essai-stitch-v5-famille/family-*-core.mjs'
+      - 'essai-stitch-v5-famille/tests/**'
+      - '.github/workflows/dobby-shared-runes-v2.yml'
+  pull_request:
+    paths:
+      - 'sql-proposals/dobby-shared-runes-v2.sql'
+      - 'sql-proposals/dobby-v2-modules.sql'
+      - 'tests/shared-runes-v2/**'
+      - 'essai-stitch-v5-famille/family-modules.js'
+      - 'essai-stitch-v5-famille/family-missions*.js'
+      - 'essai-stitch-v5-famille/family-*-core.mjs'
+      - 'essai-stitch-v5-famille/tests/**'
+      - '.github/workflows/dobby-shared-runes-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-and-postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Native offline, family, grades, recurrence and conflict regressions
+        run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+      - name: Existing ceremony, identity and profile contracts
+        run: node --test essai-stitch-v7/tests/e06-*.test.mjs essai-stitch-v7/tests/review-integrated-ceremony*.test.*
+      - name: Start pinned local PostgreSQL without network or exposed port
+        run: bash tests/shared-runes-v2/start-isolated-postgres.sh
+      - name: Real transactions, independent connections, old writer exclusion and rollback
+        run: node tests/shared-runes-v2/run-postgres.mjs
+      - name: Native client integration with the real PostgreSQL writer
+        run: node --test tests/shared-runes-v2/client-postgres.mjs
+      - name: Upload PostgreSQL and client evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-runes-v2-postgres-${{ github.sha }}
+          path: docs/dobby-v7/evidence/shared-runes-v2/
+      - name: Remove only this workflow's labelled ephemeral fixture
+        if: always()
+        run: |
+          docker() { command docker --host unix:///var/run/docker.sock "$@"; }
+          fixture_container=dobby-runes-v2-test-20261111
+          if docker inspect "$fixture_container" >/dev/null 2>&1; then
+            fixture_label=$(docker inspect "$fixture_container" --format '{{index .Config.Labels "org.dobby.task"}}')
+            test "$fixture_label" = shared-runes-v2-20261111
+            docker rm --force "$fixture_container"
+          fi

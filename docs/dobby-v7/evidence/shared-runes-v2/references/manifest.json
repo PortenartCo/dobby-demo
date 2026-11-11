@@ -1,0 +1,44 @@
+{
+  "checkedAtUTC": "2026-11-11T15:41:07.575522+00:00",
+  "references": [
+    {
+      "url": "https://supabase.com/docs/guides/database/functions.md",
+      "file": "supabase-functions.md",
+      "sha256": "a1555ebb75232fb7b517a558199857ef9dbebf68ab935904015045882d3bb006"
+    },
+    {
+      "url": "https://supabase.com/docs/guides/database/postgres/row-level-security.md",
+      "file": "supabase-rls.md",
+      "sha256": "f59323752afcad187709f128ca41602491d495f252a71676e7ef489f1bbeb460"
+    },
+    {
+      "url": "https://www.postgresql.org/docs/17/sql-createfunction.html",
+      "file": "postgres-function.html",
+      "sha256": "b9c80ecf090b15cdd89d76a2109917a98b21fa448a9de5610617d3b67bbf595d"
+    },
+    {
+      "url": "https://www.postgresql.org/docs/17/explicit-locking.html",
+      "file": "postgres-locks.html",
+      "sha256": "8936a65ba0e306ba789f894aa763cbb5d981151f557a4e9175bbc000b9bd0d38"
+    },
+    {
+      "url": "https://www.postgresql.org/docs/17/ddl-rowsecurity.html",
+      "file": "postgres-policies.html",
+      "sha256": "bbca1e98d4389f1528f04ba3e4e0918e00de06d09a3f443637cbd2353ff284e3"
+    },
+    {
+      "url": "https://supabase.com/changelog.md",
+      "file": "supabase-changelog.md",
+      "sha256": "14088b4223b54d1cc56bfe3d44c268e92825401956d2a9b3755b743c00a374c8"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/PostgREST/postgrest/main/docs/references/errors.rst",
+      "file": "postgrest-errors.rst",
+      "sha256": "3d983e098a4a89790aa97da640d159661500840a2d06c2564a15a431dbbebf12",
+      "checkedAtUTC": "2026-11-11T15:58:32.217525+00:00"
+    }
+  ],
+  "applicableChanges": "CLI v3 targets local by default; no CLI or hosted operation used. Flutter/.NET changes irrelevant. TLS deprecation does not change existing browser authorized adapter; isolated PostgreSQL tests use no remote endpoint.",
+  "snapshotArchive": "public-documentation-20261111.zip",
+  "archiveSha256": "cc07a7c3a5b52aad77a2187db9928e710f7d1da442bfe6c05cb93ab0b14640cb"
+}
