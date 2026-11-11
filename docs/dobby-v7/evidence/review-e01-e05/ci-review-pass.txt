@@ -1,0 +1,933 @@
+review-regressions	Set up job	﻿2026-11-11T10:44:42.9940462Z Current runner version: '2.338.2'
+review-regressions	Set up job	2026-11-11T10:44:42.9962726Z ##[group]Runner Image Provisioner
+review-regressions	Set up job	2026-11-11T10:44:42.9963485Z Hosted Compute Agent
+review-regressions	Set up job	2026-11-11T10:44:42.9963979Z Version: 20261028.624
+review-regressions	Set up job	2026-11-11T10:44:42.9964531Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+review-regressions	Set up job	2026-11-11T10:44:42.9965189Z Build Date: 2026-10-28T21:51:42Z
+review-regressions	Set up job	2026-11-11T10:44:42.9965750Z Worker ID: {f89aeb6c-b20f-4d46-9083-3d5b5579ba9c}
+review-regressions	Set up job	2026-11-11T10:44:42.9966314Z Region: centralus
+review-regressions	Set up job	2026-11-11T10:44:42.9966844Z Cloud: Azure
+review-regressions	Set up job	2026-11-11T10:44:42.9967353Z ##[endgroup]
+review-regressions	Set up job	2026-11-11T10:44:42.9968499Z ##[group]Operating System
+review-regressions	Set up job	2026-11-11T10:44:42.9969004Z Ubuntu
+review-regressions	Set up job	2026-11-11T10:44:42.9969417Z 26.04.1
+review-regressions	Set up job	2026-11-11T10:44:42.9969892Z LTS
+review-regressions	Set up job	2026-11-11T10:44:42.9970587Z ##[endgroup]
+review-regressions	Set up job	2026-11-11T10:44:42.9971084Z ##[group]Runner Image
+review-regressions	Set up job	2026-11-11T10:44:42.9971589Z Image: ubuntu-26.04
+review-regressions	Set up job	2026-11-11T10:44:42.9972056Z Version: 20261101.186.1
+review-regressions	Set up job	2026-11-11T10:44:42.9972952Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+review-regressions	Set up job	2026-11-11T10:44:42.9974403Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+review-regressions	Set up job	2026-11-11T10:44:42.9975181Z ##[endgroup]
+review-regressions	Set up job	2026-11-11T10:44:42.9976108Z ##[group]GITHUB_TOKEN Permissions
+review-regressions	Set up job	2026-11-11T10:44:42.9977698Z Contents: read
+review-regressions	Set up job	2026-11-11T10:44:42.9978192Z Metadata: read
+review-regressions	Set up job	2026-11-11T10:44:42.9978740Z ##[endgroup]
+review-regressions	Set up job	2026-11-11T10:44:42.9981062Z Secret source: Actions
+review-regressions	Set up job	2026-11-11T10:44:42.9981934Z Cache mode: write
+review-regressions	Set up job	2026-11-11T10:44:42.9982665Z Prepare workflow directory
+review-regressions	Set up job	2026-11-11T10:44:43.0247900Z Prepare all required actions
+review-regressions	Set up job	2026-11-11T10:44:43.0287221Z Getting action download info
+review-regressions	Set up job	2026-11-11T10:44:43.2662999Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+review-regressions	Set up job	2026-11-11T10:44:43.3921448Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+review-regressions	Set up job	2026-11-11T10:44:43.4818334Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+review-regressions	Set up job	2026-11-11T10:44:43.6797585Z Complete job name: review-regressions
+review-regressions	Run actions/checkout@v4	﻿2026-11-11T10:44:43.7483582Z ##[group]Run actions/checkout@v4
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7484261Z with:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7484642Z   repository: PortenartCo/dobby-demo
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7487819Z   token: ***
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7488183Z   ssh-strict: true
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7488549Z   ssh-user: git
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7488919Z   persist-credentials: true
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7489326Z   clean: true
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7489695Z   sparse-checkout-cone-mode: true
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7490127Z   fetch-depth: 1
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7490626Z   fetch-tags: false
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7490994Z   show-progress: true
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7491356Z   lfs: false
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7491687Z   submodules: false
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7492059Z   set-safe-directory: true
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7492481Z   allow-unsafe-pr-checkout: false
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.7493064Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9513289Z Syncing repository: PortenartCo/dobby-demo
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9514905Z ##[group]Getting Git version info
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9515504Z Working directory is '/home/runner/work/dobby-demo/dobby-demo'
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9516423Z [command]/usr/bin/git version
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9534248Z git version 2.56.0
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9551271Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9563688Z Temporarily overriding HOME='/home/runner/work/_temp/b03546c6-0f51-4772-b9d0-01ac4d872ee0' before making global git config changes
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9567944Z Adding repository directory to the temporary git global config as a safe directory
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9569065Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9622742Z Deleting the contents of '/home/runner/work/dobby-demo/dobby-demo'
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9625582Z ##[group]Initializing the repository
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9629143Z [command]/usr/bin/git init /home/runner/work/dobby-demo/dobby-demo
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9717398Z hint: Using 'master' as the name for the initial branch. This default branch name
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9718918Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9719805Z hint: to use in all of your new repositories, which will suppress this warning,
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9720757Z hint: call:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9721180Z hint:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9721683Z hint: 	git config --global init.defaultBranch <name>
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9722412Z hint:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9722970Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9724068Z hint: 'development'. The just-created branch can be renamed via this command:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9728441Z hint:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9732015Z hint: 	git branch -m <name>
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9732924Z hint:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9733926Z hint: Disable this message with "git config set advice.defaultBranchName false"
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9735574Z Initialized empty Git repository in /home/runner/work/dobby-demo/dobby-demo/.git/
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9739448Z [command]/usr/bin/git remote add origin https://github.com/PortenartCo/dobby-demo
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9784854Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9787496Z ##[group]Disabling automatic garbage collection
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9788449Z [command]/usr/bin/git config --local gc.auto 0
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9816828Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9818092Z ##[group]Setting up auth
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9822193Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:43.9851242Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0251631Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0285639Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0542621Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0577893Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0827691Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0862598Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0863621Z ##[group]Fetching the repository
+review-regressions	Run actions/checkout@v4	2026-11-11T10:44:44.0871631Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a7d637f74f5d9430cbf3a7c9b43eeae831c1a77c:refs/remotes/origin/feat/dobby-review-e01-e05-20261111
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0530423Z From https://github.com/PortenartCo/dobby-demo
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0531462Z  * [new ref]         a7d637f74f5d9430cbf3a7c9b43eeae831c1a77c -> origin/feat/dobby-review-e01-e05-20261111
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0533787Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0534682Z ##[group]Determining the checkout info
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0541328Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0543097Z [command]/usr/bin/git sparse-checkout disable
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0586390Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0613404Z ##[group]Checking out the ref
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:00.0617107Z [command]/usr/bin/git checkout --progress --force -B feat/dobby-review-e01-e05-20261111 refs/remotes/origin/feat/dobby-review-e01-e05-20261111
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.0864965Z Updating files:  67% (1796/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.0936865Z Updating files:  68% (1820/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1038782Z Updating files:  69% (1847/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1213186Z Updating files:  70% (1874/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1399510Z Updating files:  71% (1900/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1547192Z Updating files:  72% (1927/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1701190Z Updating files:  73% (1954/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1861370Z Updating files:  74% (1981/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.1996192Z Updating files:  75% (2007/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2159069Z Updating files:  76% (2034/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2291066Z Updating files:  77% (2061/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2325523Z Updating files:  78% (2088/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2333636Z Updating files:  79% (2115/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2372739Z Updating files:  80% (2141/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2472431Z Updating files:  81% (2168/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2562629Z Updating files:  82% (2195/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2692920Z Updating files:  83% (2222/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2786263Z Updating files:  84% (2248/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2831236Z Updating files:  85% (2275/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.2998014Z Updating files:  86% (2302/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.3312199Z Updating files:  87% (2329/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.3921549Z Updating files:  88% (2355/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4049696Z Updating files:  89% (2382/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4070379Z Updating files:  90% (2409/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4085048Z Updating files:  91% (2436/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4104385Z Updating files:  92% (2462/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4123641Z Updating files:  93% (2489/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4139732Z Updating files:  94% (2516/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4151997Z Updating files:  95% (2543/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4166165Z Updating files:  96% (2569/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4186300Z Updating files:  97% (2596/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4208607Z Updating files:  98% (2623/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4230978Z Updating files:  99% (2650/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4231454Z Updating files: 100% (2676/2676)
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4232133Z Updating files: 100% (2676/2676), done.
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4398200Z Switched to a new branch 'feat/dobby-review-e01-e05-20261111'
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4403181Z branch 'feat/dobby-review-e01-e05-20261111' set up to track 'origin/feat/dobby-review-e01-e05-20261111'.
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4464273Z ##[endgroup]
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4507030Z [command]/usr/bin/git log -1 --format=%H
+review-regressions	Run actions/checkout@v4	2026-11-11T10:45:01.4535883Z a7d637f74f5d9430cbf3a7c9b43eeae831c1a77c
+review-regressions	Run actions/setup-node@v4	﻿2026-11-11T10:45:01.4839346Z ##[group]Run actions/setup-node@v4
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.4839602Z with:
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.4839773Z   node-version: 22
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.4839960Z   always-auth: false
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.4840315Z   check-latest: false
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.4842265Z   token: ***
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.4842519Z ##[endgroup]
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.6020055Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.6022880Z (node:2202) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.6023583Z (Use `node --trace-deprecation ...` to show where the warning was created)
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.6024924Z ##[group]Environment details
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.9398003Z node: v22.23.4
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.9398555Z npm: 10.9.9
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.9398863Z yarn: 1.22.22
+review-regressions	Run actions/setup-node@v4	2026-11-11T10:45:01.9399968Z ##[endgroup]
+review-regressions	Canonical offline, identity, missions and sync tests	﻿2026-11-11T10:45:01.9533519Z ##[group]Run node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:01.9534290Z [36;1mnode --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs[0m
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:01.9589774Z shell: /usr/bin/bash -e {0}
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:01.9590012Z ##[endgroup]
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.0407699Z TAP version 13
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1027937Z # Subtest: validates actual calendar dates and time instead of accepting malformed input
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1036374Z ok 1 - validates actual calendar dates and time instead of accepting malformed input
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1037016Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1037370Z   duration_ms: 1.993228
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1037720Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1038001Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1051255Z # Subtest: shared agenda rejects medical category and normalizes ordinary events
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1053130Z ok 2 - shared agenda rejects medical category and normalizes ordinary events
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1054603Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1055018Z   duration_ms: 0.692918
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1055423Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1055712Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1056453Z # Subtest: aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1059721Z ok 3 - aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1073770Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1074204Z   duration_ms: 24.981117
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1074638Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1074996Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1075622Z # Subtest: birthdays are re-evaluated annually and leap-day policy is defined
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1080342Z ok 4 - birthdays are re-evaluated annually and leap-day policy is defined
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1080914Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1081209Z   duration_ms: 0.194625
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1081523Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1081791Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1082387Z # Subtest: ics export contains correct floating local time and escapes injection
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1083284Z ok 5 - ics export contains correct floating local time and escapes injection
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1083822Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1084103Z   duration_ms: 1.703552
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1084420Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1084690Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1209005Z # Subtest: create and CAS transition
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1217594Z ok 6 - create and CAS transition
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1218135Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1218547Z   duration_ms: 0.758904
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1218977Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1219365Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1219979Z # Subtest: offline edit is pending until remote acknowledges
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1220888Z ok 7 - offline edit is pending until remote acknowledges
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1221430Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1221813Z   duration_ms: 0.196429
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1222239Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1222635Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1223173Z # Subtest: independent updates never silently overwrite
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1223900Z ok 8 - independent updates never silently overwrite
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1224409Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1224801Z   duration_ms: 0.155048
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1225237Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1225621Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1226209Z # Subtest: unknown quantity is not silently converted into 0 or 1
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1226965Z ok 9 - unknown quantity is not silently converted into 0 or 1
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1227509Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1227905Z   duration_ms: 0.214495
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1228316Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1228702Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1229155Z # Subtest: logical deletion preserved
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1229735Z ok 10 - logical deletion preserved
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1230390Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1230816Z   duration_ms: 0.851991
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1231255Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1231660Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1232569Z # Subtest: medical visit requires an explicit valid record, date and time
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1233704Z ok 11 - medical visit requires an explicit valid record, date and time
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1234123Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1234417Z   duration_ms: 1.328492
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1234763Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1235064Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1235566Z # Subtest: only appointments explicitly shared with the household appear in global due list
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1236256Z ok 12 - only appointments explicitly shared with the household appear in global due list
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1236718Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1237007Z   duration_ms: 0.583888
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1237320Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1237604Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1311206Z # Subtest: manual mission normalization validates due date and does not use medical categories
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1314969Z ok 13 - manual mission normalization validates due date and does not use medical categories
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1315662Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1316028Z   duration_ms: 1.702501
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1316713Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1317063Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1322618Z # Subtest: manual open tasks are ordered by date and completed remain distinct
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1329144Z ok 14 - manual open tasks are ordered by date and completed remain distinct
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1329832Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1330418Z   duration_ms: 10.05844
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1330865Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1331258Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1331947Z # Subtest: manual missions appear in due summary without polluting autoTasks
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1332850Z ok 15 - manual missions appear in due summary without polluting autoTasks
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1333472Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1333864Z   duration_ms: 0.803441
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1334310Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1334695Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1591586Z # Subtest: preview V5 source matches original except isolated storage and E05 native member writer extension
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1621656Z ok 16 - preview V5 source matches original except isolated storage and E05 native member writer extension
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1622748Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1623217Z   duration_ms: 23.742818
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1623701Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1624180Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1625019Z # Subtest: Stitch V5 integration adds shared panier without removing original preparation UI
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1626192Z ok 17 - Stitch V5 integration adds shared panier without removing original preparation UI
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1626973Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1627435Z   duration_ms: 2.205109
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1627930Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1628376Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1629109Z # Subtest: module adapter fails closed when Supabase modules table is missing
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1630090Z ok 18 - module adapter fails closed when Supabase modules table is missing
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1631042Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1631510Z   duration_ms: 1.51771
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1631989Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1632458Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1633250Z # Subtest: module schema enforces household isolation and excludes health and attachments
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1642080Z ok 19 - module schema enforces household isolation and excludes health and attachments
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1662590Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1663186Z   duration_ms: 0.203319
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1663651Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1664060Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1664805Z # Subtest: preview denies cross-household browser reuse and drops unauthorized session
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1665839Z ok 20 - preview denies cross-household browser reuse and drops unauthorized session
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1666503Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1666904Z   duration_ms: 0.174477
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1667344Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1667789Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1668733Z # Subtest: family events and selected medical visits share the household without uploading private famHealth
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1669990Z ok 21 - family events and selected medical visits share the household without uploading private famHealth
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1671643Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1672050Z   duration_ms: 0.160726
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1672542Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1672972Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1673640Z # Subtest: manual missions remain separate from automatic tasks
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1674460Z ok 22 - manual missions remain separate from automatic tasks
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1675064Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1675475Z   duration_ms: 0.093488
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1675965Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1676386Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1677018Z # Subtest: binary file uploads do not use the JSON modules API
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1677839Z ok 23 - binary file uploads do not use the JSON modules API
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1678471Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1678952Z   duration_ms: 0.257118
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1679451Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1679905Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1680832Z # Subtest: shared health visits do not automatically upload previous local health records
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1682148Z ok 24 - shared health visits do not automatically upload previous local health records
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1682828Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1683217Z   duration_ms: 0.349704
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1683668Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1684060Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1684761Z # Subtest: a health document remains local until the user chooses household sharing
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1685743Z ok 25 - a health document remains local until the user chooses household sharing
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1686386Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1686808Z   duration_ms: 1.227032
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1687240Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1687660Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1962121Z # Subtest: two accounts activate all six modules and receive a shared update without exposing health or attachments
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1963464Z ok 26 - two accounts activate all six modules and receive a shared update without exposing health or attachments
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1970724Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1971361Z   duration_ms: 23.223805
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1971833Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1972199Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1972894Z # Subtest: simultaneous module edits create a conflict, not a lost update
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1973772Z ok 27 - simultaneous module edits create a conflict, not a lost update
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1974380Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1974754Z   duration_ms: 3.711502
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1975196Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1975578Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1976193Z # Subtest: missing modules backend does not activate sharing
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1976954Z ok 28 - missing modules backend does not activate sharing
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1977508Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1977854Z   duration_ms: 1.557007
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1978353Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1978724Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1979478Z # Subtest: customized or actual meal plans are never offered for automated demo deletion
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1980760Z ok 29 - customized or actual meal plans are never offered for automated demo deletion
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1981656Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1982023Z   duration_ms: 1.436029
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1982492Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.1982888Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2002899Z # Subtest: a fresh household activates all six modules with one consent and excludes demo meals
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2011113Z ok 30 - a fresh household activates all six modules with one consent and excludes demo meals
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2030915Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2051499Z   duration_ms: 4.495994
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2060963Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2071093Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2072024Z # Subtest: refusing group activation does not publish data or remove example meals
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2073235Z ok 31 - refusing group activation does not publish data or remove example meals
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2074087Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2074555Z   duration_ms: 1.500944
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2075033Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2075989Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2172225Z # Subtest: E05 catalogues have stable French identities without inferring a house or a member
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2181226Z ok 32 - E05 catalogues have stable French identities without inferring a house or a member
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2184095Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2184558Z   duration_ms: 2.959347
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2185006Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2185405Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2186322Z # Subtest: partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2187524Z ok 33 - partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2188267Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2188656Z   duration_ms: 1.780415
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2189086Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2189473Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2190304Z # Subtest: E05 approves the exact E04 thresholds without changing reward values
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2191244Z ok 34 - E05 approves the exact E04 thresholds without changing reward values
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2192207Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2192591Z   duration_ms: 0.206343
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2193012Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2193402Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2359972Z # Subtest: family profile revision conflict retains the explicitly chosen version: server
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2373635Z ok 35 - family profile revision conflict retains the explicitly chosen version: server
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2380058Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2380745Z   duration_ms: 8.806297
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2381258Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2392063Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2393052Z # Subtest: family profile revision conflict retains the explicitly chosen version: local
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2394269Z ok 36 - family profile revision conflict retains the explicitly chosen version: local
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2395080Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2395525Z   duration_ms: 4.559899
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2396012Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2396434Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2407629Z # Subtest: native family sync preserves fields through reload and does not include medical records or rewards
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2415305Z ok 37 - native family sync preserves fields through reload and does not include medical records or rewards
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2416216Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2416674Z   duration_ms: 3.838188
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2417151Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2417582Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2418446Z # Subtest: LIMIT demonstrated: an old member writer can erase identity extensions server-side
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2419593Z ok 38 - LIMIT demonstrated: an old member writer can erase identity extensions server-side
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2420586Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2421035Z   duration_ms: 2.929964
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2421507Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2421925Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2563870Z # Subtest: cached household reinitializes family modules after membership check
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2573088Z ok 39 - cached household reinitializes family modules after membership check
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2573971Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2574446Z   duration_ms: 4.765981
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2574952Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2575404Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2576252Z # Subtest: module API unavailability does not masquerade as disconnected household and retries
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2577502Z ok 40 - module API unavailability does not masquerade as disconnected household and retries
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2578304Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2578761Z   duration_ms: 1.903406
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2579250Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.2579695Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3204784Z # Subtest: acknowledged recurrence survives incompatible legacy write: root-metadata
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3206185Z ok 41 - acknowledged recurrence survives incompatible legacy write: root-metadata
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3206924Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3207393Z   duration_ms: 10.432676
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3207896Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3208341Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3209684Z # Subtest: acknowledged recurrence survives incompatible legacy write: child-metadata
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3211045Z ok 42 - acknowledged recurrence survives incompatible legacy write: child-metadata
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3211771Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3212220Z   duration_ms: 3.651204
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3212705Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3213130Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3213954Z # Subtest: acknowledged recurrence survives incompatible legacy write: root-deleted
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3214996Z ok 43 - acknowledged recurrence survives incompatible legacy write: root-deleted
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3215689Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3216097Z   duration_ms: 4.414465
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3216694Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3217115Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3217837Z # Subtest: acknowledged recurrence survives incompatible legacy write: child-deleted
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3218836Z ok 44 - acknowledged recurrence survives incompatible legacy write: child-deleted
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3219513Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3219939Z   duration_ms: 3.568643
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3220829Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3221236Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3221977Z # Subtest: acknowledged recurrence survives incompatible legacy write: child-identity
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3222994Z ok 45 - acknowledged recurrence survives incompatible legacy write: child-identity
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3223651Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3224039Z   duration_ms: 4.1188
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3224458Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3224845Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3225527Z # Subtest: legacy local edit cannot publish missing acknowledged recurrence metadata
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3226422Z ok 46 - legacy local edit cannot publish missing acknowledged recurrence metadata
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3227041Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3227408Z   duration_ms: 3.892117
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3227802Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3228174Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3228930Z # Subtest: fresh client refuses an unsupported recurrence version without replacing its local data
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3230511Z ok 47 - fresh client refuses an unsupported recurrence version without replacing its local data
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3231185Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3231567Z   duration_ms: 6.665612
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3231854Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3232094Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3243196Z # Subtest: supported series edits and new offline occurrences use the unchanged native sync payload
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3244580Z ok 48 - supported series edits and new offline occurrences use the unchanged native sync payload
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3245227Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3247164Z   duration_ms: 6.631592
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3247443Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3247677Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3248481Z # Subtest: distinct occurrences earn independently; replay and lost-response reload remain idempotent
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3249178Z ok 49 - distinct occurrences earn independently; replay and lost-response reload remain idempotent
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3249561Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3249768Z   duration_ms: 14.995157
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3249983Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3250307Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3674920Z # Subtest: monthly clamp, leap year, year rollover and deterministic replay
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3700959Z ok 50 - monthly clamp, leap year, year rollover and deterministic replay
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3701748Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3730751Z   duration_ms: 4.985894
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3757658Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3760800Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3776675Z # Subtest: projection bounded to 30 previous days and today, not future, no infinite catchup
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3777880Z ok 51 - projection bounded to 30 previous days and today, not future, no infinite catchup
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3778594Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3779009Z   duration_ms: 1.83783
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3779447Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3779846Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3781064Z # Subtest: weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3782602Z ok 52 - weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3783278Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3783675Z   duration_ms: 1.585629
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3784083Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3784478Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3785152Z # Subtest: Europe Brussels civil days across DST and leap/calendar boundaries
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3786056Z ok 53 - Europe Brussels civil days across DST and leap/calendar boundaries
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3786615Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3786988Z   duration_ms: 53.2817
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3787376Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3787737Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3788445Z # Subtest: per occurrence reward dedup, independent completion and unknown data preservation
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3789455Z ok 54 - per occurrence reward dedup, independent completion and unknown data preservation
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3790104Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3790622Z   duration_ms: 1.123871
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3791040Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3791676Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3792421Z # Subtest: bad metadata or occurrence identity is rejected, never coerced into unique mission
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3793435Z ok 55 - bad metadata or occurrence identity is rejected, never coerced into unique mission
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3794077Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3794463Z   duration_ms: 0.241766
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3794868Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3795234Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3871056Z # Subtest: validated effort choices and approved V1 grades have one centralized definition
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3903474Z ok 56 - validated effort choices and approved V1 grades have one centralized definition
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3924133Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3925558Z   duration_ms: 1.123731
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3925982Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3951957Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3955375Z # Subtest: only new eligible assigned completions create a single durable request per mission
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3956597Z ok 57 - only new eligible assigned completions create a single durable request per mission
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3957312Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3957757Z   duration_ms: 0.745004
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3958201Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3958610Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3959224Z # Subtest: 10/25/50 credits are validated, durable without mission rows, and deterministic
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3959903Z ok 58 - 10/25/50 credits are validated, durable without mission rows, and deterministic
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3960619Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3960885Z   duration_ms: 7.459298
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3961162Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3961398Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3961854Z # Subtest: first confirmed CAS result wins over a divergent offline request without transfer
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3962427Z ok 59 - first confirmed CAS result wins over a divergent offline request without transfer
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3962752Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3962920Z   duration_ms: 0.328463
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3963118Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3963284Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3963678Z # Subtest: pending requests do not inflate totals, and all twelve grade boundaries are stable
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3964252Z ok 60 - pending requests do not inflate totals, and all twelve grade boundaries are stable
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3964580Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3964740Z   duration_ms: 0.428269
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3964921Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3965112Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3965446Z # Subtest: the reward history is not truncated to the 200 current mission limit
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3965928Z ok 61 - the reward history is not truncated to the 200 current mission limit
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3966210Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3966372Z   duration_ms: 4.943242
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3966555Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.3966715Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4414479Z # Subtest: concurrent distinct credits survive server conflict resolution and mission deletion
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4421492Z ok 62 - concurrent distinct credits survive server conflict resolution and mission deletion
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4422829Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4423119Z   duration_ms: 24.307457
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4423430Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4423692Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4434012Z # Subtest: concurrent distinct credits survive local conflict resolution and mission deletion
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4435045Z ok 63 - concurrent distinct credits survive local conflict resolution and mission deletion
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4435607Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4435874Z   duration_ms: 5.788513
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4436180Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4436436Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4437166Z # Subtest: same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4438284Z ok 64 - same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4438879Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4439142Z   duration_ms: 4.678873
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4439459Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4452199Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4452933Z # Subtest: accepted PATCH with lost response and reload confirms the same request without replay credit
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4453876Z ok 65 - accepted PATCH with lost response and reload confirms the same request without replay credit
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4454260Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4454444Z   duration_ms: 4.954969
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4454641Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4454811Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4455239Z # Subtest: CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4455834Z ok 66 - CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4456183Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4456357Z   duration_ms: 6.897252
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4456546Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4456715Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4457141Z # Subtest: activation/retrieval preserves local pending requests and never credits legacy done rows
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4457798Z ok 67 - activation/retrieval preserves local pending requests and never credits legacy done rows
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4458155Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4458323Z   duration_ms: 3.266549
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4458511Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4458675Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4459130Z # Subtest: a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4459820Z ok 68 - a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4460377Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4460653Z   duration_ms: 2.252249
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4460943Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4461189Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4461766Z # Subtest: JSON object key order from jsonb cannot trigger a repeated reward PATCH
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4462596Z ok 69 - JSON object key order from jsonb cannot trigger a repeated reward PATCH
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4463082Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4463352Z   duration_ms: 2.412354
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4463652Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4463908Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4464610Z # Subtest: a second native completion during PATCH keeps newer local data and its unconfirmed request
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4465628Z ok 70 - a second native completion during PATCH keeps newer local data and its unconfirmed request
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4466197Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4466453Z   duration_ms: 3.821514
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4466741Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4466992Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4467610Z # Subtest: a malformed confirmation or server refusal never fabricates a confirmed gain
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4468492Z ok 71 - a malformed confirmation or server refusal never fabricates a confirmed gain
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4469015Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4469272Z   duration_ms: 2.420215
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4469567Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4469821Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4471591Z # Subtest: disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4473021Z ok 72 - disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4473673Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4473939Z   duration_ms: 3.773423
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4474227Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:02.4474399Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9556048Z # Subtest: retrieval queues retained offline rewards and reports pending until actual confirmation
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9557246Z ok 73 - retrieval queues retained offline rewards and reports pending until actual confirmation
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9557870Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9563845Z   duration_ms: 1516.037541
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9564273Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9564544Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9565182Z # Subtest: malformed request storage is reported without throwing after an unrelated native save
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9566126Z ok 74 - malformed request storage is reported without throwing after an unrelated native save
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9567126Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9567384Z   duration_ms: 3.618465
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9567679Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9567920Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9638307Z # Subtest: new entry is pending and preserves a stable UUID
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9638922Z ok 75 - new entry is pending and preserves a stable UUID
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9639309Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9639553Z   duration_ms: 0.989814
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9639823Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9640057Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9640782Z # Subtest: equivalent server echo resolves an uncertain successful POST
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9641446Z ok 76 - equivalent server echo resolves an uncertain successful POST
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9641872Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9642102Z   duration_ms: 0.312239
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9642368Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9642599Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9643008Z # Subtest: editing an unchanged server revision remains pending
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9643496Z ok 77 - editing an unchanged server revision remains pending
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9643808Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9643976Z   duration_ms: 0.240663
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9644176Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9644438Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9644737Z # Subtest: simultaneous edits require a decision, never auto overwrite
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9645156Z ok 78 - simultaneous edits require a decision, never auto overwrite
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9645429Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9645596Z   duration_ms: 1.16417
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9645778Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9645944Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9646170Z # Subtest: resolve conflict with server version
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9646622Z ok 79 - resolve conflict with server version
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9646952Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9647182Z   duration_ms: 0.311868
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9647445Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9647668Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9648208Z # Subtest: resolve conflict with local version creates pending update against new revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9649030Z ok 80 - resolve conflict with local version creates pending update against new revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9649367Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9649535Z   duration_ms: 0.206393
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9649718Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9649955Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9650808Z # Subtest: new edit during an in-flight update remains pending with new server revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9651402Z ok 81 - new edit during an in-flight update remains pending with new server revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9651712Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9651876Z   duration_ms: 0.292389
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9652058Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9652223Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9652472Z # Subtest: soft deletion is part of the synchronized state
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9652824Z ok 82 - soft deletion is part of the synchronized state
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9653060Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9653218Z   duration_ms: 0.246342
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9653396Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9653556Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9654052Z # Subtest: new entry is pending and preserves a stable UUID
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9671048Z ok 83 - new entry is pending and preserves a stable UUID
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9671442Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9671678Z   duration_ms: 0.879672
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9671933Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9672098Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9672400Z # Subtest: equivalent server echo resolves an uncertain successful POST
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9672835Z ok 84 - equivalent server echo resolves an uncertain successful POST
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9673112Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9673277Z   duration_ms: 0.25181
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9673458Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9673615Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9673880Z # Subtest: editing an unchanged server revision remains pending
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9674256Z ok 85 - editing an unchanged server revision remains pending
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9674514Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9674678Z   duration_ms: 0.164111
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9674858Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9675092Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9675758Z # Subtest: simultaneous edits require a decision, never auto overwrite
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9676183Z ok 86 - simultaneous edits require a decision, never auto overwrite
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9676458Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9676625Z   duration_ms: 0.126666
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9676807Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9676968Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9677192Z # Subtest: resolve conflict with server version
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9677491Z ok 87 - resolve conflict with server version
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9677711Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9677870Z   duration_ms: 0.288284
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9678075Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9678240Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9678597Z # Subtest: resolve conflict with local version creates pending update against new revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9679104Z ok 88 - resolve conflict with local version creates pending update against new revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9679419Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9679585Z   duration_ms: 0.185853
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9679782Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9679938Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9680490Z # Subtest: new edit during an in-flight update remains pending with new server revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9680979Z ok 89 - new edit during an in-flight update remains pending with new server revision
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9681283Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9681470Z   duration_ms: 0.148999
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9681668Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9681835Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9682118Z # Subtest: soft deletion is part of the synchronized state
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9682501Z ok 90 - soft deletion is part of the synchronized state
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9682776Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9682939Z   duration_ms: 0.14296
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9683130Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9683310Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9683576Z # Subtest: V2 uses a distinct offline IndexedDB namespace
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9683955Z ok 91 - V2 uses a distinct offline IndexedDB namespace
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9684218Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9684403Z   duration_ms: 0.336404
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9684595Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9684777Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9685076Z # Subtest: V2 never accesses legacy V1 grocery or membership tables
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9685526Z ok 92 - V2 never accesses legacy V1 grocery or membership tables
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9685808Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9685969Z   duration_ms: 0.330796
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9686186Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9686352Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9686601Z # Subtest: V2 rejects ambiguous household membership
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9686992Z ok 93 - V2 rejects ambiguous household membership
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9687248Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9687430Z   duration_ms: 0.135429
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9687627Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9687803Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9688175Z # Subtest: V2 includes household binding on GET, INSERT and optimistic PATCH
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9688672Z ok 94 - V2 includes household binding on GET, INSERT and optimistic PATCH
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9689162Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9689346Z   duration_ms: 0.097473
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9689561Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9689744Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9690054Z # Subtest: V2 service worker has isolated cache and route scope
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9690664Z ok 95 - V2 service worker has isolated cache and route scope
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9690944Z   ---
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9691128Z   duration_ms: 0.131173
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9691337Z   type: 'test'
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9691521Z   ...
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9691690Z 1..95
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9691869Z # tests 95
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9692039Z # suites 0
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9692238Z # pass 95
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9692399Z # fail 0
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9692560Z # cancelled 0
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9692729Z # skipped 0
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9692894Z # todo 0
+review-regressions	Canonical offline, identity, missions and sync tests	2026-11-11T10:45:03.9693089Z # duration_ms 1969.180951
+review-regressions	Browser dependencies	﻿2026-11-11T10:45:03.9758128Z ##[group]Run npm ci --ignore-scripts
+review-regressions	Browser dependencies	2026-11-11T10:45:03.9758425Z [36;1mnpm ci --ignore-scripts[0m
+review-regressions	Browser dependencies	2026-11-11T10:45:03.9805966Z shell: /usr/bin/bash -e {0}
+review-regressions	Browser dependencies	2026-11-11T10:45:03.9806196Z ##[endgroup]
+review-regressions	Browser dependencies	2026-11-11T10:45:05.2206669Z 
+review-regressions	Browser dependencies	2026-11-11T10:45:05.2207455Z added 2 packages, and audited 3 packages in 1s
+review-regressions	Browser dependencies	2026-11-11T10:45:05.2212055Z 
+review-regressions	Browser dependencies	2026-11-11T10:45:05.2212344Z found 0 vulnerabilities
+review-regressions	Independent review campaign without deployment	﻿2026-11-11T10:45:05.2567906Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-review-http.log 2>&1 &
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2568442Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-review-http.log 2>&1 &[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2568814Z [36;1mif command -v google-chrome >/dev/null; then[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2569092Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2569323Z [36;1melse[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2569520Z [36;1m  BROWSER="$(command -v chromium)"[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2569741Z [36;1mfi[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2570027Z [36;1mCHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/review-e01-e05-campaign.cjs[0m
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2615911Z shell: /usr/bin/bash -e {0}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2616143Z ##[endgroup]
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2883227Z REVIEW_TEST_START review-home-20261111.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:25.0517268Z REVIEW_HOME_AFTER 320 native manual reopening/recompletion/runes/E03/basket PASS
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:35.0885033Z REVIEW_HOME_AFTER 390 native manual reopening/recompletion/runes/E03/basket PASS
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:45.1584533Z REVIEW_HOME_AFTER 1440 native manual reopening/recompletion/runes/E03/basket PASS
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:45.2544529Z REVIEW_TEST_START review-voice-20261111.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:46.6762479Z PASS final-only default 3s
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:46.7991906Z PASS multi-segment speech resets pause
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.0330139Z PASS continue and cancel
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.1894254Z PASS immediate final Send and stale callbacks
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.3341836Z PASS manual correction
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.5177445Z PASS interrupted provisional prefix
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.7441296Z PASS configurable 1.5–5s
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.8029609Z PASS interruption end
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.8506354Z PASS interruption error
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.9337143Z PASS interruption stop
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:47.9882789Z PASS interruption hidden
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:48.0555511Z PASS interruption pagehide
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:48.1838958Z PASS navigation
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:48.3105728Z PASS identity isolation
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:48.7047199Z PASS microphone errors and manual fallback
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:49.5108794Z PASS replay pauses dictation before speech
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:49.8500962Z PASS sound and sensitive confirmation
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:50.3138494Z PASS history persistence and runtime
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:50.7206403Z REVIEW_VOICE_20261111_PASS 18 checks
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:50.8188656Z REVIEW_TEST_START review-context-20261111.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:57.1759445Z REVIEW_CONTEXT_20261111_PASS {"status":"PASS","origin":"http://127.0.0.1:8765","appPath":"/essai-stitch-v7","cases":["positive replacement","stable ID","quantity unspecified and existing","remove after reload","native persistence","unknown fields","ambiguity","tomorrow topic correction","stale record","owner and household isolation","save failure rollback","legacy canonical transition","disabled model contract and rejected target","deleted source exchange","legacy draft ambiguity","legacy final source mismatch","sole extra consultation"],"externalRequests":"blocked","identity":"native identity output simulated; no real account","writers":"real CuisineList add/edit/remove and native storage","generalAI":false,"shared":{"status":"PASS","transport":"fully intercepted HTTP fixture, no real account","nativeWriters":true,"nativeIndexedDB":true,"cases":["pending-to-clean stable reference","remote content change blocks","connected fresh list canonical writer"]}}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:45:57.2783427Z REVIEW_TEST_START review-recurrence-20261111.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:24.8218843Z REVIEW_RECURRENCE_PASS 320 native create/edit/reload, independent completion/runes, pause/resume/stop, bounded offline replay, monthly clamp, multiweekdays, no overflow
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:34.4898751Z REVIEW_RECURRENCE_PASS 390 native create/edit/reload, independent completion/runes, pause/resume/stop, bounded offline replay, monthly clamp, multiweekdays, no overflow
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:44.4532154Z REVIEW_RECURRENCE_PASS 1440 native create/edit/reload, independent completion/runes, pause/resume/stop, bounded offline replay, monthly clamp, multiweekdays, no overflow
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:44.5362719Z REVIEW_TEST_START review-recurrence-20261111-date.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:46.2486032Z {"phase":"after","width":193.984375,"state":"empty","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":""}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:46.3802466Z {"phase":"after","width":193.984375,"state":"picked","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2028-02-29"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:46.5305311Z {"phase":"after","width":193.984375,"state":"today","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2026-11-11"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:46.6637205Z {"phase":"after","width":193.984375,"state":"tomorrow","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2026-11-12"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:46.7966732Z {"phase":"after","width":193.984375,"state":"weekend","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2026-11-14"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:46.9800882Z {"phase":"after","width":193.984375,"state":"precise","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2027-12-31"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:48.0972413Z {"phase":"after","width":263.984375,"state":"empty","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":""}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:48.1966761Z {"phase":"after","width":263.984375,"state":"picked","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2028-02-29"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:48.3298845Z {"phase":"after","width":263.984375,"state":"today","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2026-11-11"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:48.4630824Z {"phase":"after","width":263.984375,"state":"tomorrow","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2026-11-12"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:48.5963767Z {"phase":"after","width":263.984375,"state":"weekend","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2026-11-14"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:48.7631901Z {"phase":"after","width":263.984375,"state":"precise","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2027-12-31"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:49.8967915Z {"phase":"after","width":353.984375,"state":"empty","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":""}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:49.9964181Z {"phase":"after","width":353.984375,"state":"picked","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2028-02-29"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:50.1296639Z {"phase":"after","width":353.984375,"state":"today","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2026-11-11"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:50.2801507Z {"phase":"after","width":353.984375,"state":"tomorrow","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2026-11-12"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:50.4129586Z {"phase":"after","width":353.984375,"state":"weekend","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2026-11-14"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:50.5804623Z {"phase":"after","width":353.984375,"state":"precise","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2027-12-31"}
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:50.7639270Z REVIEW_TEST_START review-recurrence-20261111-writer.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:52.3540641Z REVIEW_RECURRENCE_WRITER_PASS first-date weekly/monthly rejection, legacy initial eligibility preserved/new rows rewarded, unknown template retained, atomic save rollback
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:52.4721594Z REVIEW_TEST_START review-avatars-20261111.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:55.3742188Z REVIEW_AVATARS_PASS 320 isolated25choices,16blocked,keyboard,preview,canonical8save/reload,emoji,refusal,stale/unknown protection
+review-regressions	Independent review campaign without deployment	2026-11-11T10:46:59.0063986Z REVIEW_AVATARS_PASS 390 isolated25choices,16blocked,keyboard,preview,canonical8save/reload,emoji,refusal,stale/unknown protection
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:01.4941923Z REVIEW_AVATARS_PASS 1440 isolated25choices,16blocked,keyboard,preview,canonical8save/reload,emoji,refusal,stale/unknown protection
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:01.7270124Z REVIEW_TEST_START e01-consolidation.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:10.2032023Z E01_E04_CONSOLIDATION_PASS 320 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:18.0910334Z E01_E04_CONSOLIDATION_PASS 390 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:26.1145195Z E01_E04_CONSOLIDATION_PASS 1440 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:26.2388422Z REVIEW_TEST_START e02-consolidation.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:31.7075014Z E02_CONSOLIDATION_PASS 390
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:32.6366189Z E02_CONSOLIDATION_PASS 320
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:33.6484708Z E02_CONSOLIDATION_PASS 1440
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:33.7447943Z REVIEW_TEST_START e02.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:35.9037012Z E02_UI_ACTIONS_PASS 320
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:37.5666967Z E02_UI_ACTIONS_PASS 390
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:39.4971632Z E02_UI_ACTIONS_PASS 1440
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:39.7617993Z REVIEW_TEST_START e02-edge.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:42.6036658Z E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:42.6803788Z REVIEW_TEST_START e02-voice-history.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:48.7447749Z E02_VOICE_HISTORY_PASS
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:48.8273304Z REVIEW_TEST_START e03-counts.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:50.0378102Z E03_COUNTS_PASS real 3/17 and native title never sanitized
+review-regressions	Independent review campaign without deployment	2026-11-11T10:47:50.1098716Z REVIEW_TEST_START e03.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:00.3241647Z E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:10.1570496Z E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:20.6330475Z E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:20.7231349Z REVIEW_TEST_START e04.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:27.2757221Z E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:33.0706985Z E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:39.0203352Z E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:39.1069586Z REVIEW_TEST_START runes-native.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:40.9624464Z RUNES_NATIVE_PASS actual forms/10-25-50/idempotence/reassignment/deletion/atomic storage failure/pending reload
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:41.0353870Z REVIEW_TEST_START e04-runes.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:48:52.9932679Z E04_RUNES_PASS 320 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:03.9132030Z E04_RUNES_PASS 390 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:15.1851894Z E04_RUNES_PASS 1440 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:15.2930036Z REVIEW_TEST_START e05-native.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:17.1023267Z E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:17.2448376Z REVIEW_TEST_START e05.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:21.0792017Z E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:24.5872908Z E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:28.5979652Z E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:28.6795894Z REVIEW_TEST_START e05-edge.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:35.9397206Z E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:36.0092375Z REVIEW_TEST_START e07-2-model.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:38.0161326Z E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:38.0994535Z REVIEW_TEST_START e07-2.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:41.3681570Z E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:43.9012069Z E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:46.7526750Z E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:46.8399568Z REVIEW_TEST_START cuisine-family.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:51.9355873Z CUISINE_FAMILY_PASS 320px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:56.3004973Z CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:56.3936028Z REVIEW_TEST_START e08.cjs
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:57.7483273Z E08_COUNT_PASS 320 0
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:57.9369467Z E08_COUNT_PASS 320 1
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:58.3155908Z E08_COUNT_PASS 320 10
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:59.0253918Z E08_COUNT_PASS 320 50
+review-regressions	Independent review campaign without deployment	2026-11-11T10:49:59.3566830Z E08_BROWSER_PASS 320
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:00.1813363Z E08_COUNT_PASS 360 0
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:00.3682859Z E08_COUNT_PASS 360 1
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:00.7318302Z E08_COUNT_PASS 360 10
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:01.4916207Z E08_COUNT_PASS 360 50
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:01.8196713Z E08_BROWSER_PASS 360
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:02.6303434Z E08_COUNT_PASS 390 0
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:02.8214566Z E08_COUNT_PASS 390 1
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:03.1972806Z E08_COUNT_PASS 390 10
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:03.9225125Z E08_COUNT_PASS 390 50
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:04.2347942Z E08_BROWSER_PASS 390
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:05.0885366Z E08_COUNT_PASS 1440 0
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:05.3014758Z E08_COUNT_PASS 1440 1
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:05.7635564Z E08_COUNT_PASS 1440 10
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:06.8073253Z E08_COUNT_PASS 1440 50
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:07.2184356Z E08_BROWSER_PASS 1440
+review-regressions	Independent review campaign without deployment	2026-11-11T10:50:07.3412104Z REVIEW_E01_E05_CAMPAIGN_PASS 24 scripts complete
+review-regressions	Review evidence	﻿2026-11-11T10:50:07.3560083Z ##[group]Run actions/upload-artifact@v4
+review-regressions	Review evidence	2026-11-11T10:50:07.3560540Z with:
+review-regressions	Review evidence	2026-11-11T10:50:07.3560727Z   name: dobby-review-e01-e05-evidence
+review-regressions	Review evidence	2026-11-11T10:50:07.3561240Z   path: docs/dobby-v7/evidence/review-e01-e05/
+review-regressions	Review evidence	docs/dobby-v7/evidence/review-e01-e05-20261111/
+review-regressions	Review evidence	
+review-regressions	Review evidence	2026-11-11T10:50:07.3561595Z   retention-days: 14
+review-regressions	Review evidence	2026-11-11T10:50:07.3561785Z   if-no-files-found: warn
+review-regressions	Review evidence	2026-11-11T10:50:07.3561977Z   compression-level: 6
+review-regressions	Review evidence	2026-11-11T10:50:07.3562157Z   overwrite: false
+review-regressions	Review evidence	2026-11-11T10:50:07.3562340Z   include-hidden-files: false
+review-regressions	Review evidence	2026-11-11T10:50:07.3562541Z ##[endgroup]
+review-regressions	Review evidence	2026-11-11T10:50:07.4952662Z (node:34456) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+review-regressions	Review evidence	2026-11-11T10:50:07.4953391Z (Use `node --trace-deprecation ...` to show where the warning was created)
+review-regressions	Review evidence	2026-11-11T10:50:07.5256941Z Multiple search paths detected. Calculating the least common ancestor of all paths
+review-regressions	Review evidence	2026-11-11T10:50:07.5259665Z The least common ancestor is /home/runner/work/dobby-demo/dobby-demo/docs/dobby-v7/evidence. This will be the root directory of the artifact
+review-regressions	Review evidence	2026-11-11T10:50:07.5260916Z With the provided path, there will be 123 files uploaded
+review-regressions	Review evidence	2026-11-11T10:50:07.5265374Z Artifact name is valid!
+review-regressions	Review evidence	2026-11-11T10:50:07.5265956Z Root directory input is valid!
+review-regressions	Review evidence	2026-11-11T10:50:07.8137175Z Beginning upload of artifact content to blob storage
+review-regressions	Review evidence	2026-11-11T10:50:08.0682517Z (node:34456) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+review-regressions	Review evidence	2026-11-11T10:50:08.5886308Z Uploaded bytes 6741952
+review-regressions	Review evidence	2026-11-11T10:50:08.6342855Z Finished uploading artifact content to blob storage!
+review-regressions	Review evidence	2026-11-11T10:50:08.6344275Z SHA256 digest of uploaded artifact zip is 0d986137cec3bb5f0b26167d5eda0bee501264b0d8e4d66382e60ede68384272
+review-regressions	Review evidence	2026-11-11T10:50:08.6345350Z Finalizing artifact upload
+review-regressions	Review evidence	2026-11-11T10:50:08.9906347Z Artifact dobby-review-e01-e05-evidence.zip successfully finalized. Artifact ID 13848517078
+review-regressions	Review evidence	2026-11-11T10:50:08.9907375Z Artifact dobby-review-e01-e05-evidence has been successfully uploaded! Final size is 6741952 bytes. Artifact ID is 13848517078
+review-regressions	Review evidence	2026-11-11T10:50:08.9912245Z Artifact download URL: https://github.com/PortenartCo/dobby-demo/actions/runs/43006158329/artifacts/13848517078
+review-regressions	Post Run actions/setup-node@v4	﻿2026-11-11T10:50:09.0109962Z Post job cleanup.
+review-regressions	Post Run actions/setup-node@v4	2026-11-11T10:50:09.1124161Z (node:34472) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+review-regressions	Post Run actions/setup-node@v4	2026-11-11T10:50:09.1124836Z (Use `node --trace-deprecation ...` to show where the warning was created)
+review-regressions	Post Run actions/checkout@v4	﻿2026-11-11T10:50:09.1272633Z Post job cleanup.
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2011740Z [command]/usr/bin/git version
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2054315Z git version 2.56.0
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2101622Z Temporarily overriding HOME='/home/runner/work/_temp/5a07e633-697c-4ed0-9fc4-c6263b0d43ec' before making global git config changes
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2102857Z Adding repository directory to the temporary git global config as a safe directory
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2104187Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2154061Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2214213Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2619265Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2624280Z http.https://github.com/.extraheader
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2625409Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.2683370Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.3023179Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+review-regressions	Post Run actions/checkout@v4	2026-11-11T10:50:09.3058089Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+review-regressions	Complete job	﻿2026-11-11T10:50:09.3440710Z Cleaning up orphan processes
+review-regressions	Complete job	2026-11-11T10:50:09.3708513Z Terminate orphan process: pid (2425) (python3)
+review-regressions	Complete job	2026-11-11T10:50:09.3781570Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

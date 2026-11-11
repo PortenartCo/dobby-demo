@@ -1,0 +1,30 @@
+Baseline 66a1395bb95ff7b9a7e2d1b981f5a8773070c03e
+Command: node scripts/check-review-consolidation.cjs --final
+Exit: 1
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Registry reference changed; reconcile every decision before delivery
++ actual - expected
+
++ 'd2b7e8de49bfc7e32b5ba6ac055dbd30bbcc2ef23db0f08b9fa88f4a40d61a03'
+- '92fe405fd9651be0e8038831655c4a3a873bdf807f789ffaff098cd6d7d87538'
+
+    at Object.<anonymous> (/tmp/dobby-review-registry-baseline-fni012e2/scripts/check-review-consolidation.cjs:3:8)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'd2b7e8de49bfc7e32b5ba6ac055dbd30bbcc2ef23db0f08b9fa88f4a40d61a03',
+  expected: '92fe405fd9651be0e8038831655c4a3a873bdf807f789ffaff098cd6d7d87538',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

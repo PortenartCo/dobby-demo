@@ -18,3 +18,9 @@ Génération reproductible :316 fichiers V7 suivis inchangés après build-sourc
 Campagne générale :7nouveauxscriptsPASS puis ancien e01-consolidation attendait phrase « séries/occurrences/synchronisation indisponibles ». Testadaptéàcontratlivré (optionsactivées+recurrenceVersion1+projectionannoncée), cf7596a. Reprise exacteàcetest,17scriptsPASS,exit0. Total24scriptsnavigateur+95tests natifs, sansrej ouerscriptsdéjàverts.
 Sorties historiques générées par nos tests restaurées dans ce seul worktree ; nouveaux artefacts E03 non suivis créés par les tests retirés. Preuves du lot uniquement conservées, aucune modification du worktree E03 ou des captures de l’autre session.
 Code figé après tests. Rapport indépendant et capturessuivis, prochaineactionpushbrancheetattenteCI. Aucune publication ni intégrationE06 effectuée.
+
+## Clôture CI
+
+Branche poussée au SHA `a7d637f74f5d9430cbf3a7c9b43eeae831c1a77c`. CI indépendante PASS (95 natifs + 24 scripts navigateur), Sync PASS. Stitch standard BLOQUÉE avant tests par le désaccord registre/matrice déjà reproduit sur la base66a1395 ; fichiers communs réservés laissés intacts. Deuxième avis de revue confirme le blocage hérité et la nécessité de réconcilier réellement les décisions/preuves E06, sans remplacer simplement l’empreinte.
+
+La clôture suivante ne contient que rapport/journaux ; `[skip ci]` évite une répétition sans changement de code. L’échec standard reste lié et visible. Aucun merge, déploiement, publication, PR ou opération sur des comptes réels. Arrêt pour revue humaine ; raccordement G différé après E06.
