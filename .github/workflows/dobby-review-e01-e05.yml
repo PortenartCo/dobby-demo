@@ -33,5 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dobby-review-e01-e05-evidence
-          path: docs/dobby-v7/evidence/review-e01-e05/
+          path: |
+            docs/dobby-v7/evidence/review-e01-e05/
+            docs/dobby-v7/evidence/review-e01-e05-20261111/
           retention-days: 14
