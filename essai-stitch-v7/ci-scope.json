@@ -3,5 +3,12 @@
   "shared": true,
   "final": true,
   "ritualOnly": false,
-  "e06VisualFunctional": true
+  "e06VisualFunctional": true,
+  "continuation": {
+    "previousRun": "https://github.com/PortenartCo/dobby-demo/actions/runs/43002042259",
+    "previousSha": "ac03b021d7d920472923d2a36945038118860792",
+    "from": "e03.cjs",
+    "stableTreeSha256": "2f60a622209de4bdcab2b2e295079fb32496bf5330e96ac788681471b05e2d43",
+    "reason": "Continue the final campaign after E03 implicit-OFF assertion; application code and previously passed tests unchanged. DOBBY_FINAL=1 always forces all historical tests."
+  }
 }

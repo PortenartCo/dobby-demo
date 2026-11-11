@@ -24,3 +24,5 @@
 - [ ] Append implementation proof registry/report, push independent commits, final CI and immutability checks, stop for human visual review. No public preview update.
 
 Append-only registry and implementation report are prepared. The two remaining boxes are delivery gates: the final push runs the single full common CI campaign; its exact SHA, run and conclusion are supplied in the final handoff without rewriting this committed evidence afterward.
+
+Final campaign phase1 ac03b02 passed new E06/native/shared/E08 suites, then stopped at E03 obsolete implicit-OFF assertion. Local RED confirms E03/E02-edge dependency; adapted checks pass, with unchanged application code. Continue from e03.cjs using stable Git-tree fingerprint guard; prior passing tests are unchanged, code changes force full coverage, DOBBY_FINAL=1 remains full. Final continuation result is delivered separately.

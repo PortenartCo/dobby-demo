@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+0 !== 22
+
+    at /workspace/dobby-e06-visual-consolidation/essai-stitch-v7/tests/e02-edge.cjs:15:61 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 22,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
