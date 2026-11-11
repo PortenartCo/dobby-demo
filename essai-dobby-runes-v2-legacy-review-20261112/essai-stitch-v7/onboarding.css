@@ -1,0 +1,44 @@
+/* E06 source compositions: native shell, media and narrow-screen adjustments. */
+body.e06-active{padding-bottom:0!important}body.e06-active>nav{display:none!important}body.e06-active>header{display:block!important;position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(480px,100%);z-index:50;background:#180b07f2}body.e06-active>header>div{display:flex;align-items:center;justify-content:space-between;gap:8px;height:80px;padding:8px 12px;box-sizing:border-box}.e06-header-center{display:flex;flex-direction:column;align-items:center;gap:5px;white-space:nowrap}.e06-active>header .e06-button{min-height:44px;padding:8px;font-size:13px;white-space:normal}
+.e06-main{--mp-primary:#f9bb5f;--mp-accent:#d49b42;--mp-surface:#271814;margin:0 auto!important;width:100%!important;max-width:480px;min-height:100vh;padding-top:96px!important;padding-bottom:32px!important;box-sizing:border-box;overflow-wrap:anywhere;color:#fadcd5;background:#1e100c}.e06-main>div{box-sizing:border-box;max-width:100%}.e06-main button{cursor:pointer;white-space:normal;min-height:44px;max-width:100%;box-sizing:border-box}.e06-main button:disabled{opacity:.6;cursor:not-allowed}.e06-main input{max-width:100%;box-sizing:border-box;min-height:48px}.e06-main input[type=radio]{min-height:0}.e06-main .e06-note{line-height:1.45;font-size:15px;color:#d4c4b1;margin-block:8px;white-space:normal}.e06-button{border-radius:10px;padding:12px 16px;border:1px solid #d49b4280;color:#f9bb5f;background:#2c1c18}.e06-main #e06-local-entry{margin-top:16px;width:100%;background:#f9bb5f;color:#291800;font-weight:600}.e06-main .e06-unavailable{cursor:default;opacity:.7}
+.e06-existing{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid #d49b4255;border-radius:12px;margin-block:16px}.e06-existing button{display:flex;align-items:center;gap:12px;text-align:left}.e06-main #existing-profiles-panel{position:static!important;inset:auto!important;transform:none!important;display:block!important;opacity:1!important;padding:0;box-shadow:none;background:none}.e06-main .e06-avatar-choice{position:relative;cursor:pointer;overflow:visible!important;aspect-ratio:1;min-width:0;border:2px solid transparent;border-radius:14px}.e06-avatar-choice input{position:absolute;inset:0;width:100%;height:100%;opacity:0;z-index:2;cursor:pointer}.e06-avatar-choice:has(input:checked){border-color:#f9bb5f;background:#43302c}.e06-avatar-choice:has(input:focus-visible),.e06-choice:has(input:focus-visible){outline:3px solid #f9bb5f;outline-offset:3px}.e06-avatar-preview{width:100%;height:100%;border-radius:12px;font-size:32px}.e06-main #avatar-grid{gap:10px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.e06-main .e06-choice{display:block;position:relative;border:1px solid transparent;border-radius:10px}.e06-main .e06-choice:has(input:checked){border-color:#f9bb5f;background:#43302c;box-shadow:0 0 0 1px #f9bb5f}.e06-main .e06-choice span{white-space:normal}.e06-choice:has(input:checked)>div{background:#372622}.e06-main .e06-choice input{position:absolute;width:1px;height:1px;opacity:0}.e06-main .e06-missing-art{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;box-sizing:border-box}.e06-main .e06-house-art{display:flex;justify-content:center;align-items:center;min-height:220px}.e06-main .e06-house-art .mp-emblem{width:150px;height:180px}.e06-main .e06-patronus-art{width:75%;height:100%;max-width:100%;border-radius:0;flex-shrink:0}.e06-main .grid.grid-cols-2 .mp-emblem{width:64px;height:78px}.e06-main .grid.grid-cols-2 .mp-patronus-sprite{width:64px;aspect-ratio:3/4;height:auto}.e06-main .mp-main-avatar{display:inline-flex}.e06-main [aria-disabled=true]{cursor:default}.e06-main #btn-chemindetraverse{height:auto;min-height:56px;padding:12px 10px}.e06-main #house-title{font-size:30px;color:var(--mp-primary)}.e06-main a:focus-visible,.e06-main button:focus-visible,.e06-main input:focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}.e06-main [hidden]{display:none!important}.e06-main .fa-button{white-space:normal}
+html.e01-effects-off .e06-main *{animation:none!important}html.e01-effects-off .e06-main .animate-pulse{animation:none!important}@media(prefers-reduced-motion:reduce){.e06-main *{animation:none!important;transition:none!important}}
+.e06-main .e06-choice input{inset:0;width:100%;height:100%;clip:auto;clip-path:none;overflow:visible;z-index:1;margin:0}.e06-main #spectral-choices .e06-choice{display:flex}
+/* The original 64/72 rem utility variants are absent from the shared compiled
+   sheet. Keep the original vitrine measurable even with absolute children. */
+body[data-family-view="onboarding-patronus-result"] .e06-main .relative.w-64{width:min(100%,280px);aspect-ratio:1;height:auto}
+.e06-main[data-e06-house]{background:radial-gradient(ellipse at 50% 25%,var(--mp-surface),#1e100c 75%)}
+/* Review corrections: one readable question, original substitute illustration,
+   and a normal-flow reveal without the source's clipped absolute masks. */
+.e06-main.e06-question-scene p,.e06-main.e06-question-scene .italic,.e06-main.e06-question-scene em{font-style:normal!important;line-height:1.65;color:#eaded1}
+.e06-main #e06-question-prompt{font-size:18px;line-height:1.65;position:relative}
+.e06-main #e06-question-progress{font-style:normal;font-size:15px;line-height:1.5;color:#f9bb5f;margin:0 0 16px;font-weight:600}
+.e06-main #e06-sorting-hat{display:block;width:100%;height:100%;object-fit:cover}
+.e06-main .e06-description{font-size:17px;line-height:1.7;font-style:normal!important;color:#eaded1;text-align:left;letter-spacing:normal}
+.e06-main .e06-kicker{font-size:12px;line-height:1.5;font-style:normal;letter-spacing:.12em;color:var(--mp-primary);margin:0 0 12px}
+.e06-main .e06-house-revelation{padding:24px 20px 32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.e06-main .e06-house-revelation .e06-house-art{width:100%;min-height:250px;border-radius:20px;background:radial-gradient(ellipse,var(--mp-surface),transparent 75%);margin:0 0 8px}
+.e06-main .e06-house-revelation .mp-emblem{width:min(230px,100%);height:260px;max-width:100%;box-sizing:border-box}
+.e06-main #house-title{display:block;width:100%;font-size:clamp(26px,7vw,36px);line-height:1.25;letter-spacing:.035em;overflow:visible;white-space:normal;overflow-wrap:normal;word-break:normal;text-transform:uppercase;margin:0 0 8px}
+.e06-main .e06-house-revelation .e06-button{width:100%;font-size:17px;min-height:56px;background:var(--mp-primary);color:#20150d;font-weight:600}
+.e06-main .e06-demo-foyer{padding:24px 20px 32px}
+.e06-demo-intro{padding:20px;border:1px solid #d49b4255;border-radius:18px;background:radial-gradient(ellipse at top,#483226,#241610)}
+.e06-demo-intro h1{font-size:30px;line-height:1.2;margin:0 0 14px;color:#f9bb5f}
+.e06-main .e06-demo-foyer>#e06-resume,.e06-main .e06-demo-foyer>#e06-demo-reset{width:100%;margin:8px 0;font-size:16px}
+.e06-main .e06-final-medallions{align-items:stretch}
+.e06-main .e06-final-medallions .mp-crest-unavailable{width:100%;height:auto;min-height:86px;padding:8px;font-size:12px;line-height:1.4;overflow-wrap:normal;word-break:normal;margin:8px 0}
+.e06-main .e06-final-medallions strong{font-size:17px;line-height:1.3;max-width:100%;text-align:center;overflow-wrap:normal;word-break:normal;margin-top:8px}
+@media(max-width:359px){.e06-main .e06-house-revelation,.e06-main .e06-demo-foyer{padding-inline:16px}.e06-demo-intro{padding:16px}.e06-main #house-title{letter-spacing:.02em}}
+
+/* The native radio is the sole selection state, shared by both questionnaires. */
+.e06-main .e06-answer-marker{position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:32px;height:32px;box-sizing:border-box;border:1px solid #d49b4280;border-radius:8px;pointer-events:none}
+.e06-main .e06-answer-check{display:block;color:#f9bb5f;font:700 24px/1 sans-serif;opacity:0;visibility:hidden;pointer-events:none}
+.e06-main .e06-choice:has(input:checked) .e06-answer-marker{border-color:#f9bb5f;background:#372622}
+.e06-main .e06-choice:has(input:checked) .e06-answer-check{opacity:1;visibility:visible}
+/* Equal presentation frames keep every 3:4 atlas cell whole and align titles. */
+.e06-main .e06-final-medallions>.e06-final-card{display:grid;grid-template-rows:auto auto 1fr;justify-items:center;align-content:start;gap:10px;padding:12px 8px;min-width:0}
+.e06-main .e06-final-medallions .mp-identity-art{width:min(100%,160px);aspect-ratio:3/4;height:auto;min-width:0;margin:0}
+.e06-main .e06-final-medallions .mp-identity-art .mp-patronus-sprite{width:100%;height:100%;aspect-ratio:3/4;max-width:100%;border-radius:10px}
+.e06-main .e06-final-medallions .mp-identity-art img.mp-house-illustration{width:100%;height:auto;max-width:100%;aspect-ratio:1;margin:0;object-fit:contain}
+.e06-main .e06-final-medallions .e06-final-card>strong{margin:0;align-self:start}

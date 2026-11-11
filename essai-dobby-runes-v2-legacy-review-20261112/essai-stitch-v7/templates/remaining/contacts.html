@@ -1,0 +1,362 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://lh3.googleusercontent.com; font-src 'self' data:; connect-src 'self' https://pqcdkrwljgvgagzwrcmg.supabase.co; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../pilot-runtime.js"></script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type">
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;color:#fadcd5;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body data-stitch-source="dobby_r_pertoire_des_contacts_familiaux" class="bg-background font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-low/85 backdrop-blur-xl shadow-[0_4px_24px_rgba(24,11,7,0.65)] pt-safe"><div class="h-16 px-4 flex items-center justify-between gap-3"><div class="w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center shrink-0 shadow-sm"><svg class="w-6 h-6 text-[#eec66a]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"></path></svg></div><div class="flex-1 flex flex-col items-center justify-center text-center min-w-0"><h1 class="font-['Playfair_Display'] text-[18px] font-bold text-[#fcf7ee] tracking-wide truncate">DOBBY</h1><span class="font-label-sm text-[10px] text-[#d49b42] uppercase tracking-[0.14em] font-medium truncate">CONTACTS &amp; RÉPERTOIRE • FAMILLE &amp; LOGIS</span></div><div class="flex items-center gap-2.5 shrink-0"><button class="relative w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#fcf7ee] active:scale-95 transition-all shadow-sm" type="button" aria-label="Audio"><span class="material-symbols-outlined text-[20px] text-[#fcf7ee]">volume_up</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span></button><button class="w-12 h-12 rounded-xl bg-[#f3c25b] flex items-center justify-center text-[#180b07] active:scale-95 transition-all shadow-[0_0_12px_rgba(243,194,91,0.35)]" type="button" aria-label="Profil"><span class="material-symbols-outlined text-[24px] text-[#180b07]">person</span></button></div></div></header><main class="flex-1 flex flex-col relative w-full pb-24 bg-background px-margin-mobile pt-16"><div class="flex flex-col w-full pb-12 space-y-5">
+<!-- 1. En-tête & Présentation -->
+<div class="flex flex-col space-y-4 pt-1"><div class="h-[220px] w-full rounded-2xl relative overflow-hidden shadow-[0_8px_28px_rgba(24,11,7,0.7)]"><img class="w-full h-full object-cover" src="../../assets/remaining/fallback-salon.png" alt="Dobby dans le salon chaleureux et cabinet de curiosités de la maisonnée"><div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-[#1e100c]/40 to-transparent"></div><div class="absolute top-3 inset-x-3 flex items-center justify-between gap-2"><div class="px-3 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-[#d49b42]/30 text-[#fcf7ee] font-label-sm text-[10px] tracking-wide flex items-center gap-1.5 shadow-sm"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span><span class="">✦ RÉPERTOIRE FAMILIAL ✦</span></div><div class="px-2.5 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-[#d49b42]/30 text-primary font-label-sm text-[10px] tracking-wide flex items-center gap-1 shadow-sm"><span class="">📜 6 ALLIÉS DU FOYER</span></div></div><div class="absolute bottom-3 left-3 right-3 flex items-center gap-2"><span class="px-2.5 py-0.5 rounded-md bg-surface-container-high/85 text-[#fcf7ee] font-label-sm text-[10px] border border-[#d49b42]/20 backdrop-blur-sm">Contacts &amp; Proches</span><span class="px-2.5 py-0.5 rounded-md bg-surface-container-high/85 text-[#d49b42] font-label-sm text-[10px] border border-[#d49b42]/20 backdrop-blur-sm">Carnet d'Adresses</span></div></div><div class="flex flex-col space-y-1"><span class="font-label-sm text-[11px] font-semibold text-[#d49b42] uppercase tracking-[0.15em]">✧ CERCLE FAMILIAL &amp; CONTACTS DE CONFIANCE ✧</span><h2 class="font-headline-md text-headline-md font-bold text-[#fcf7ee] tracking-tight">Répertoire des Contacts</h2><p class="font-body-sm text-body-sm text-on-surface-variant">Gardiens, proches, praticiens et cercles de confiance de la maisonnée.</p></div><div class="p-3 rounded-xl bg-surface-container-low border border-[#d49b42]/20 shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)] flex items-start gap-2.5 text-body-sm text-on-surface-variant"><span class="material-symbols-outlined text-[#d49b42] text-[18px] shrink-0 mt-0.5">format_quote</span><p class="leading-relaxed italic text-[14px]">« Dobby veille sur les coordonnées de chaque proche, artisan et praticien du logis ! Un hibou ou un appel, et le foyer est aussitôt secouru. » <span class="not-italic font-semibold text-[#d49b42] text-[11px] block mt-1 tracking-wider uppercase">— NOTE BIENVEILLANTE DE DOBBY</span></p></div><button class="w-full h-12 bg-[#d49b42] text-[#180b07] font-semibold text-sm rounded-xl flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(212,155,66,0.25)] active:scale-[0.98] transition-transform" type="button"><span class="material-symbols-outlined text-[20px]">add</span><span class="">+ Inscrire un nouveau contact</span></button><div class="flex items-center justify-center gap-2 py-0.5 text-on-surface-variant/80 font-label-sm text-[11px]"><span class="material-symbols-outlined text-secondary text-[15px]">lock</span><span class="">Protection 100% locale sur iPhone • Aucune transmission à des tiers</span></div></div>
+<!-- 2. Recherche & Filtres thématiques -->
+<section class="flex flex-col space-y-3">
+<!-- Champ de recherche sculpté dans le bois -->
+<div class="relative w-full flex items-center">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-primary/70">
+<span class="material-symbols-outlined text-[20px]">manage_search</span>
+</div>
+<input class="w-full h-11 pl-11 pr-10 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all" id="contactSearchInput" placeholder="Rechercher un allié, rôle ou officine..." type="text">
+<button class="absolute right-3 text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-1" id="clearSearchBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Pastilles de filtres horizontales -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 -mx-margin-mobile px-margin-mobile no-scrollbar"><button class="filter-chip shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-highest text-primary font-label-md text-label-md flex items-center gap-1 shadow-sm active:scale-95 transition-all"><span class="">Tous</span><span class="font-label-sm text-label-sm bg-primary/20 text-primary px-1.5 py-0.5 rounded-full">6</span></button><button class="filter-chip shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1 active:scale-95 transition-all"><span class="">Proches &amp; Famille</span><span class="font-label-sm text-label-sm bg-surface-container-highest text-on-surface-variant px-1.5 py-0.5 rounded-full">2</span></button><button class="filter-chip shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1 active:scale-95 transition-all"><span class="">Praticiens &amp; Soins</span><span class="font-label-sm text-label-sm bg-surface-container-highest text-on-surface-variant px-1.5 py-0.5 rounded-full">2</span></button><button class="filter-chip shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1 active:scale-95 transition-all"><span class="">Artisans &amp; Dépannage</span><span class="font-label-sm text-label-sm bg-surface-container-highest text-on-surface-variant px-1.5 py-0.5 rounded-full">2</span></button></div>
+</section>
+<!-- 3. Statut récapitulatif & synchronisation -->
+<div class="px-3.5 py-2 rounded-xl bg-surface-container-low text-on-surface-variant flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px]">sync_saved_locally</span>
+<span class="font-label-sm text-label-sm tracking-wide">6 alliés consignés dans le grand registre familial</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Local</span>
+</div>
+<!-- 4. Liste des Cartes de Contacts -->
+<section class="flex flex-col space-y-4" id="contactsContainer">
+<!-- Contact 1 : Urgences (Mis en avant) -->
+<article class="contact-card bg-surface-container rounded-xl p-4 flex flex-col space-y-3.5 shadow-[0_4px_16px_rgba(24,11,7,0.8)] relative overflow-hidden" data-category="urgence">
+<div class="flex items-start gap-3">
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-highest overflow-hidden shadow-inner flex items-center justify-center p-0.5">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Vintage mystical brass seal of emergency pharmacy and town guard, glowing alchemical amber torch on dark oak background, detailed macro photograph" src="../../assets/remaining/44f9b4929d4a432e.png">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-error-container text-on-error-container rounded-full p-0.5 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">emergency</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Urgences Apothicaire &amp; Guet</h3>
+<span class="shrink-0 px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm uppercase font-semibold">24/7</span>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-surface-container-high text-tertiary font-label-sm text-label-sm">Secours Magiques du Foyer</span>
+</div>
+</div>
+<!-- Coordonnées rapides -->
+<div class="grid grid-cols-2 gap-2 pt-0.5">
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="tel:0142680099">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="font-label-md text-label-md truncate">01 42 68 00 99</span>
+</a>
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="mailto:guet.apothicaire@officine.fr">
+<span class="material-symbols-outlined text-primary text-[18px]">forward_to_inbox</span>
+<span class="font-label-md text-label-md truncate">Hibou Direct</span>
+</a>
+</div>
+<!-- Note manuscrite du foyer -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest text-on-surface-variant flex items-start gap-2 text-body-sm font-body-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]">
+<span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">bookmark</span>
+<p class="leading-snug">Toujours indiquer le code du cadenas d'entrée (Nébuleuse 4) en cas d'intervention nocturne.</p>
+</div>
+<!-- Actions édition -->
+<div class="flex items-center justify-end gap-3 pt-1 text-on-surface-variant font-label-md text-label-md">
+<button class="flex items-center gap-1 hover:text-primary transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span class="">Modifier</span>
+</button>
+<button class="flex items-center gap-1 hover:text-error transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- Contact 2 : Dr. Éléonore Valombreux (Soins) -->
+<article class="contact-card bg-surface-container rounded-xl p-4 flex flex-col space-y-3.5 shadow-[0_4px_16px_rgba(24,11,7,0.8)]" data-category="soins">
+<div class="flex items-start gap-3">
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-highest overflow-hidden shadow-inner flex items-center justify-center p-0.5">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of an elegant Victorian sorceress doctor with silver spectacles, warm ambient candle lighting, rich dark mahogany apothecary background, Renaissance oil painting style" src="../../assets/remaining/6da70099dffa5659.png">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-secondary-container text-on-secondary-container rounded-full p-0.5 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">healing</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Dr. Éléonore Valombreux</h3>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-secondary-container text-secondary-fixed font-label-sm text-label-sm">Médecin de Famille Attitrée</span>
+</div>
+</div>
+<!-- Coordonnées rapides -->
+<div class="grid grid-cols-2 gap-2 pt-0.5">
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="tel:0142680014">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="font-label-md text-label-md truncate">01 42 68 00 14</span>
+</a>
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="mailto:eleonore.valombreux@officine.fr">
+<span class="material-symbols-outlined text-primary text-[18px]">mail</span>
+<span class="font-label-md text-label-md truncate">Courriel</span>
+</a>
+</div>
+<!-- Note manuscrite du foyer -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest text-on-surface-variant flex items-start gap-2 text-body-sm font-body-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]">
+<span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">bookmark</span>
+<p class="leading-snug">Disponible les mercredis après-midi. Connaît bien l'allergie aux pollens de mandragore d'Hugo.</p>
+</div>
+<!-- Actions édition -->
+<div class="flex items-center justify-end gap-3 pt-1 text-on-surface-variant font-label-md text-label-md">
+<button class="flex items-center gap-1 hover:text-primary transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span class="">Modifier</span>
+</button>
+<button class="flex items-center gap-1 hover:text-error transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- Contact 3 : Grand-Mère Mathilde (Famille) -->
+<article class="contact-card bg-surface-container rounded-xl p-4 flex flex-col space-y-3.5 shadow-[0_4px_16px_rgba(24,11,7,0.8)]" data-category="famille">
+<div class="flex items-start gap-3">
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-highest overflow-hidden shadow-inner flex items-center justify-center p-0.5">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of an affectionate grandmother with braided white hair holding an ancient brass locket, soft warm lamplight, nostalgic sepia and amber tones, cozy library backdrop" src="../../assets/remaining/22ba5f9432936daa.png">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-primary text-on-primary rounded-full p-0.5 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">favorite</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Grand-Mère Mathilde</h3>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-surface-container-high text-tertiary-fixed font-label-sm text-label-sm">Grand-Mère Maternelle</span>
+</div>
+</div>
+<!-- Coordonnées rapides -->
+<div class="grid grid-cols-2 gap-2 pt-0.5">
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="tel:0655431289">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="font-label-md text-label-md truncate">06 55 43 12 89</span>
+</a>
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="mailto:mathilde.aieule@manoir.fr">
+<span class="material-symbols-outlined text-primary text-[18px]">cottage</span>
+<span class="font-label-md text-label-md truncate">Le Manoir Vert</span>
+</a>
+</div>
+<!-- Note manuscrite du foyer -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest text-on-surface-variant flex items-start gap-2 text-body-sm font-body-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]">
+<span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">bookmark</span>
+<p class="leading-snug">Garde les enfants les mardis soirs. Adore le thé à la cardamome et les biscuits au miel de sauge.</p>
+</div>
+<!-- Actions édition -->
+<div class="flex items-center justify-end gap-3 pt-1 text-on-surface-variant font-label-md text-label-md">
+<button class="flex items-center gap-1 hover:text-primary transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span class="">Modifier</span>
+</button>
+<button class="flex items-center gap-1 hover:text-error transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- Contact 4 : Barnabé l'Herboriste (Soins) -->
+<article class="contact-card bg-surface-container rounded-xl p-4 flex flex-col space-y-3.5 shadow-[0_4px_16px_rgba(24,11,7,0.8)]" data-category="soins">
+<div class="flex items-start gap-3">
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-highest overflow-hidden shadow-inner flex items-center justify-center p-0.5">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of an artisanal apothecary herbalist surrounded by dried botanical bundles, copper distillation alembics, dim golden lantern glow, rich earthy tones" src="../../assets/remaining/83455346414e2153.png">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-secondary-container text-on-secondary-container rounded-full p-0.5 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">spa</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Barnabé l'Herboriste</h3>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-secondary-container text-secondary-fixed font-label-sm text-label-sm">Herboriste &amp; Teintures</span>
+</div>
+</div>
+<!-- Coordonnées rapides -->
+<div class="grid grid-cols-2 gap-2 pt-0.5">
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="tel:0142981122">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="font-label-md text-label-md truncate">01 42 98 11 22</span>
+</a>
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="mailto:barnabe.plantes@officine.fr">
+<span class="material-symbols-outlined text-primary text-[18px]">local_florist</span>
+<span class="font-label-md text-label-md truncate">Officine Rue Basse</span>
+</a>
+</div>
+<!-- Note manuscrite du foyer -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest text-on-surface-variant flex items-start gap-2 text-body-sm font-body-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]">
+<span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">bookmark</span>
+<p class="leading-snug">Fournisseur de lavande enchantée pour les draps et baume pectoral aux aiguilles de pin céleste.</p>
+</div>
+<!-- Actions édition -->
+<div class="flex items-center justify-end gap-3 pt-1 text-on-surface-variant font-label-md text-label-md">
+<button class="flex items-center gap-1 hover:text-primary transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span class="">Modifier</span>
+</button>
+<button class="flex items-center gap-1 hover:text-error transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- Contact 5 : Professeur Alistair Vance (École) -->
+<article class="contact-card bg-surface-container rounded-xl p-4 flex flex-col space-y-3.5 shadow-[0_4px_16px_rgba(24,11,7,0.8)]" data-category="ecole">
+<div class="flex items-start gap-3">
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-highest overflow-hidden shadow-inner flex items-center justify-center p-0.5">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of an eccentric scholarly professor in dark velvet coat examining brass astrolabe and arithmancy parchment scrolls, Victorian study ambience, warm candlelight" src="../../assets/remaining/4cff687f2b21ba30.png">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-surface-container-highest text-primary rounded-full p-0.5 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">school</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Professeur Alistair Vance</h3>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-surface-container-high text-primary-fixed-dim font-label-sm text-label-sm">Tuteur d'Arithmancie • Collège</span>
+</div>
+</div>
+<!-- Coordonnées rapides -->
+<div class="grid grid-cols-2 gap-2 pt-0.5">
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="tel:0145228900">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="font-label-md text-label-md truncate">01 45 22 89 00</span>
+</a>
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="mailto:a.vance@academie-flamel.edu">
+<span class="material-symbols-outlined text-primary text-[18px]">forward_to_inbox</span>
+<span class="font-label-md text-label-md truncate">Hibou Express</span>
+</a>
+</div>
+<!-- Note manuscrite du foyer -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest text-on-surface-variant flex items-start gap-2 text-body-sm font-body-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]">
+<span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">bookmark</span>
+<p class="leading-snug">Bureau ouvert de 8h à 17h. Préfère les messages par hibou avant midi pour les cours de rattrapage.</p>
+</div>
+<!-- Actions édition -->
+<div class="flex items-center justify-end gap-3 pt-1 text-on-surface-variant font-label-md text-label-md">
+<button class="flex items-center gap-1 hover:text-primary transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span class="">Modifier</span>
+</button>
+<button class="flex items-center gap-1 hover:text-error transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+<!-- Contact 6 : Arthur Granger (Oncle - Famille) -->
+<article class="contact-card bg-surface-container rounded-xl p-4 flex flex-col space-y-3.5 shadow-[0_4px_16px_rgba(24,11,7,0.8)]" data-category="famille">
+<div class="flex items-start gap-3">
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-highest overflow-hidden shadow-inner flex items-center justify-center p-0.5">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of a friendly smiling middle-aged craftsman uncle with leather apron, warm workshop background filled with clockwork instruments and carved wood, warm amber atmosphere" src="../../assets/remaining/c3ff285a8558e584.png">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-primary text-on-primary rounded-full p-0.5 shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[13px]">family_restroom</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Arthur Granger (Oncle)</h3>
+</div>
+<span class="inline-block mt-0.5 px-2 py-0.5 rounded bg-surface-container-high text-tertiary-fixed font-label-sm text-label-sm">Oncle • Cordonnier enchanté</span>
+</div>
+</div>
+<!-- Coordonnées rapides -->
+<div class="grid grid-cols-2 gap-2 pt-0.5">
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="tel:0677123490">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="font-label-md text-label-md truncate">06 77 12 34 90</span>
+</a>
+<a class="h-10 rounded-lg bg-surface-container-high text-on-surface px-2.5 flex items-center justify-center gap-2 active:bg-surface-container-highest transition-colors" href="mailto:arthur.granger@atelier.fr">
+<span class="material-symbols-outlined text-primary text-[18px]">mail</span>
+<span class="font-label-md text-label-md truncate">Atelier Artisanal</span>
+</a>
+</div>
+<!-- Note manuscrite du foyer -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest text-on-surface-variant flex items-start gap-2 text-body-sm font-body-sm shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)]">
+<span class="material-symbols-outlined text-primary text-[16px] shrink-0 mt-0.5">bookmark</span>
+<p class="leading-snug">Récupère toujours les doubles des clefs du logis lors des voyages d'été. Possède la clochette d'alerte.</p>
+</div>
+<!-- Actions édition -->
+<div class="flex items-center justify-end gap-3 pt-1 text-on-surface-variant font-label-md text-label-md">
+<button class="flex items-center gap-1 hover:text-primary transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span class="">Modifier</span>
+</button>
+<button class="flex items-center gap-1 hover:text-error transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span class="">Supprimer</span>
+</button>
+</div>
+</article>
+</section>
+<!-- 5. État vide prévu (affiché lors des recherches sans résultat) -->
+<section class="hidden flex-col items-center text-center p-6 rounded-xl bg-surface-container-low shadow-inner space-y-3" id="emptyStateBox">
+<div class="w-14 h-14 rounded-full bg-surface-container flex items-center justify-center text-primary shadow-md">
+<span class="material-symbols-outlined text-[28px]">search_off</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Aucun contact consigné</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">
+        Aucun allié ne correspond à ce filtre ou parchemin. Utilisez le bouton ci-dessus pour consigner un nouveau proche dans le registre.
+      </p>
+</div>
+<button class="px-4 py-2 rounded-lg bg-surface-container-highest text-primary font-label-md text-label-md active:scale-95 transition-all" type="button">
+      Réinitialiser les filtres
+    </button>
+</section>
+<!-- 6. Dialogue de confirmation de suppression (Modal feutré d'apothicaire) -->
+<div class="hidden fixed inset-0 z-50 bg-surface-container-lowest/80 backdrop-blur-sm flex items-center justify-center p-margin-mobile" id="deleteModal">
+<div class="w-full max-w-sm rounded-xl bg-surface-container-high p-5 shadow-[0_16px_48px_rgba(0,0,0,0.9)] flex flex-col space-y-4">
+<div class="flex items-center gap-3 text-error">
+<div class="w-10 h-10 rounded-full bg-error-container/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">gavel</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Sceller &amp; Retirer l'allié</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        Voulez-vous sceller et retirer <strong class="text-on-surface font-semibold" id="deleteTargetName">ce contact</strong> du grand registre du foyer ? Cette action reste réversible dans les archives profondes.
+      </p>
+<div class="flex items-center justify-end gap-2.5 pt-2">
+<button class="px-4 py-2.5 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md active:scale-95 transition-all" type="button">
+          Conserver
+        </button>
+<button class="px-4 py-2.5 rounded-lg bg-error-container text-on-error-container font-label-md text-label-md flex items-center gap-1 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span class="">Sceller le retrait</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 7. Sécurité du foyer & Pied de page -->
+<footer class="pt-4 flex flex-col items-center text-center space-y-3">
+<div class="px-3.5 py-2.5 rounded-xl bg-surface-container-lowest text-on-surface-variant/80 flex items-center gap-2 max-w-sm">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">verified_user</span>
+<p class="font-label-sm text-label-sm text-left leading-tight">
+<strong>Répertoire Familial DOBBY</strong> • Données cryptées et stockées localement au logis. Aucune transmission à des officines tierces.
+      </p>
+</div>
+<button class="flex items-center gap-1.5 text-primary hover:text-primary-fixed transition-colors font-label-md text-label-md py-2" type="button">
+<span class="material-symbols-outlined text-[18px]">keyboard_backspace</span>
+<span class="">Revenir au carnet d'entretien du logis</span>
+</button>
+</footer><nav class="fixed bottom-0 inset-x-0 z-50 bg-surface-container-low/95 backdrop-blur-xl border-t border-[#d49b42]/20 pb-safe pt-2 px-6 flex items-center justify-between shadow-[0_-4px_20px_rgba(24,11,7,0.7)]"><button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors py-1" type="button"><span class="material-symbols-outlined text-[22px]">cottage</span><span class="font-label-sm text-[10px]">Foyer</span></button><button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors py-1" type="button"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-label-sm text-[10px]">Objets</span></button><button class="flex flex-col items-center gap-1 text-primary py-1 font-semibold relative" type="button"><span class="material-symbols-outlined text-[22px]">group</span><span class="font-label-sm text-[10px]">Famille</span><span class="absolute -top-1 w-1.5 h-1.5 rounded-full bg-primary"></span></button><button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors py-1" type="button"><span class="material-symbols-outlined text-[22px]">checklist</span><span class="font-label-sm text-[10px]">Tâches</span></button><button class="flex flex-col items-center gap-1 text-on-surface-variant hover:text-primary transition-colors py-1" type="button"><span class="material-symbols-outlined text-[22px]">settings</span><span class="font-label-sm text-[10px]">Réglages</span></button></nav>
+</div>
+</main>
+
+</body></html>
