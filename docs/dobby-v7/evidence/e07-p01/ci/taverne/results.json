@@ -1,0 +1,41 @@
+[
+  {
+    "width": 320,
+    "status": "PASS",
+    "dailySlots": 2,
+    "calendarDays": 7,
+    "nativeDayAndPlanningUntouchedByCalendar": true,
+    "pickDate": "2026-11-12",
+    "pickSlot": "soir",
+    "recipeNavigation": "PASS",
+    "nativeDinnerSaveAndReload": "PASS",
+    "otherSlotAndHistoryPreserved": true,
+    "horizontalOverflow": false
+  },
+  {
+    "width": 390,
+    "status": "PASS",
+    "dailySlots": 2,
+    "calendarDays": 7,
+    "nativeDayAndPlanningUntouchedByCalendar": true,
+    "pickDate": "2026-11-12",
+    "pickSlot": "soir",
+    "recipeNavigation": "PASS",
+    "nativeDinnerSaveAndReload": "PASS",
+    "otherSlotAndHistoryPreserved": true,
+    "horizontalOverflow": false
+  },
+  {
+    "width": 1440,
+    "status": "PASS",
+    "dailySlots": 2,
+    "calendarDays": 7,
+    "nativeDayAndPlanningUntouchedByCalendar": true,
+    "pickDate": "2026-11-12",
+    "pickSlot": "soir",
+    "recipeNavigation": "PASS",
+    "nativeDinnerSaveAndReload": "PASS",
+    "otherSlotAndHistoryPreserved": true,
+    "horizontalOverflow": false
+  }
+]

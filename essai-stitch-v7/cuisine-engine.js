@@ -38,7 +38,21 @@ window.DobbyCuisineEngine = (() => {
     return data;
   }
   const amount = (quantity, people, base) => evaluate('return amount(p.quantity,p.people,p.base);', { quantity, people, base });
-  const portions = (adult, children) => evaluate('return portionCount({adult:p.adult,children:p.children,childFactor:st.childFactor??0.65});', { adult, children });
+  const portions = (adult, children, childFactor = 0.65) => evaluate('return portionCount({adult:p.adult,children:p.children,childFactor:p.childFactor});', { adult, children, childFactor });
+  function familyCounts() {
+    return evaluate(`const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Brussels',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()),part=name=>parts.find(x=>x.type===name).value,day=part('year')+'-'+part('month')+'-'+part('day'),at=new Date(day+'T12:00:00'),rows=Array.isArray(st.familyMembers)?st.familyMembers:[],members=[...new Map(rows.filter(m=>m&&typeof m==='object').map((m,i)=>[m.id||'position-'+i,m])).values()];
+      if(!members.length)return {adult:Math.max(0,Number(st.adult)||0),children:Math.max(0,Number(st.children)||0),babies:0,unknown:0,total:Math.max(0,Number(st.adult)||0)+Math.max(0,Number(st.children)||0),source:'preferences'};
+      const counts={adult:0,children:0,babies:0,unknown:0,total:0,source:'family'};
+      for(const member of members){const value=member.birthdate,born=typeof value==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(value)?new Date(value+'T12:00:00'):null;let age=null;
+        if(born&&Number.isFinite(born.getTime())&&[born.getFullYear(),String(born.getMonth()+1).padStart(2,'0'),String(born.getDate()).padStart(2,'0')].join('-')===value){age=at.getFullYear()-born.getFullYear();if(at.getMonth()<born.getMonth()||at.getMonth()===born.getMonth()&&at.getDate()<born.getDate())age--;if(age<0||age>130)age=null;}
+        if(age===null){counts.adult++;counts.unknown++;}else if(age<3)counts.babies++;else if(age<18)counts.children++;else counts.adult++;
+      }counts.total=counts.adult+counts.children;return counts;`);
+  }
+  // The native reserve is the existing, user-declared `have` map. A shopping
+  // omission is not stock, and no generator or second ingredient store is added.
+  function reserveIngredients() {
+    return evaluate(`return Object.entries(st.have||{}).flatMap(([id,raw])=>{const quantity=Number(raw),at=id.lastIndexOf('|'),name=(at<0?id:id.slice(0,at)).trim(),unit=at<0?'':id.slice(at+1).trim();return name&&Number.isFinite(quantity)&&quantity>0?[{id,name,quantity,unit}]:[];}).sort((a,b)=>a.name.localeCompare(b.name,'fr-BE'));`);
+  }
   function choose(values) {
     const recipe=read().recipes.find(r=>r.id===values.id);if(recipe?.removedAt)throw Error('Cette recette est retirée du catalogue.');if(!recipe||!Number.isFinite(Number(recipe.servings))||Number(recipe.servings)<=0)throw Error('Complétez les portions de référence de cette recette avant de planifier ce repas.');
     evaluate('st.day=p.date;st.slot=p.slot;st.choice="library";st.filter="";st.cat="Toutes";st.favorites=false;st.note=p.note||"";', values);
@@ -50,14 +64,33 @@ window.DobbyCuisineEngine = (() => {
     return transaction(`const r=getR(p.id);if(!r)throw Error('Recette introuvable.');if(!['classic','tm5'].includes(p.method))throw Error('Méthode de préparation invalide.');const steps=p.method==='tm5'?(st.tmAdaptations?.[p.id]?.steps||(r.thermomix?r.steps:null)):(r.thermomix?null:r.steps);if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible ; complétez ses étapes.');if(p.index!==null&&(!Number.isInteger(p.index)||p.index<0||p.index>=steps.length))throw Error('Étape de préparation invalide.');st.cookProgress||={};if(typeof st.cookProgress!=='object'||Array.isArray(st.cookProgress))throw Error('Progression de cuisson invalide.');const progress=st.cookProgress[p.id]||{},saved=progress[p.method],index=p.index===null?(Number.isInteger(saved)&&saved>=0?Math.min(saved,steps.length-1):0):p.index;st.cookProgress[p.id]={...progress,[p.method]:index};st.extraPage='';st.detail=p.id;st.page='recipes';st.cook=true;st.cookStep=index;st.cookMethod=p.method;st.tmEditor=false;st.tmView=false;result={id:p.id,index,method:p.method};`,{id,index,method});
   }
   function mealAction(action, values) {
-    evaluate('st.day=p.date;st.slot=p.slot;', values); page('plan');
-    if (action === 'status') {
-      const prompt = win().prompt;
-      try { win().prompt = () => values.status; click('status', { slot: values.slot }); }
-      finally { win().prompt = prompt; }
-    } else {
-      click('move', { slot: values.slot }); field('moveDate', values.destination); click('confirmmove', { slot: values.slot });
-    }
+    const validDate=value=>{if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;const d=new Date(value+'T12:00:00');return Number.isFinite(d.getTime())&&[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')===value;};
+    if(!['status','move'].includes(action)||!validDate(values.date)||!['midi','soir'].includes(values.slot))throw Error('Date, créneau ou action de repas invalide.');
+    if(action==='status'&&!['prévu','reporté','préparé','annulé'].includes(values.status))throw Error('Statut de repas invalide.');
+    if(action==='move'&&(!validDate(values.destination)||values.destinationSlot&&values.destinationSlot!==values.slot))throw Error('Choisissez une date valide dans le même créneau. Midi et Soir restent indépendants.');
+    if(values.confirmed===false)return false;
+    if(action==='status'&&values.status==='annulé'&&values.confirmed!==true&&!window.confirm('Annuler ce repas dans le planning ?'))return false;
+    if(action==='move'&&values.destination===values.date)return false;
+    try{return transaction(`const key=p.date+'-'+p.slot,source=st.planned[key]||null,destinationKey=p.destination+'-'+p.slot,destination=st.planned[destinationKey]||null;
+      if(!source)throw Error('Ce repas n’est plus disponible.');
+      if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(source)!==JSON.stringify(p.expectedMeal))throw Error('Le repas a changé. Ouvrez à nouveau la confirmation.');
+      if(p.action==='move'&&Object.prototype.hasOwnProperty.call(p,'expectedDestination')&&JSON.stringify(destination)!==JSON.stringify(p.expectedDestination))throw Error('La destination a changé. Ouvrez à nouveau la confirmation.');
+      if(p.action==='move'&&p.expectedPlanning&&JSON.stringify(st.planned)!==JSON.stringify(p.expectedPlanning))throw Error('Le calendrier a changé. Ouvrez à nouveau la confirmation.');
+      st.day=p.date;st.slot=p.slot;st.extraPage='';st.detail=null;st.page='plan';st.cook=false;st.tmEditor=false;st.tmView=false;render();
+      const nativeRender=render,nativePrompt=window.prompt,nativeConfirm=window.confirm,nativeAlert=window.alert;let failure=null,cancelled=false;
+      const nativeClick=action=>{const button=[...document.querySelectorAll('[data-action]')].find(b=>b.dataset.action===action&&b.dataset.slot===p.slot);if(!button)throw Error('Action du moteur indisponible : '+action);button.click();if(failure)throw failure;};
+      try{
+        // The historical event listener is async. Capture synchronous render /
+        // persistence failures at its boundary so rollback remains observable.
+        render=function(){try{return nativeRender();}catch(error){failure=error;}};
+        window.alert=message=>{failure=Error(String(message));};
+        if(p.action==='status'){window.prompt=()=>p.status;nativeClick('status');}
+        else{window.confirm=message=>{const accepted=p.confirmed===true?true:nativeConfirm(message);if(!accepted)cancelled=true;return accepted;};nativeClick('move');const input=document.getElementById('moveDate');if(!input)throw Error('Date de déplacement indisponible.');input.value=p.destination;nativeClick('confirmmove');}
+      }finally{render=nativeRender;window.prompt=nativePrompt;window.confirm=nativeConfirm;window.alert=nativeAlert;}
+      if(cancelled)throw Object.assign(Error('Déplacement annulé.'),{name:'DobbyMealCancelled'});
+      const meal=st.planned[p.action==='move'?destinationKey:key];if(!meal||p.action==='status'&&meal.status!==p.status||p.action==='move'&&JSON.stringify(meal)!==JSON.stringify(source))throw Error('La modification du repas n’a pas pu être confirmée.');
+      result={date:p.action==='move'?p.destination:p.date,slot:p.slot,meal:JSON.parse(JSON.stringify(meal))};`, {...values,action});
+    }catch(error){if(error.name==='DobbyMealCancelled')return false;throw error;}
   }
   function favorite(id) { page('recipes', id); click('fav', { id }); }
   function cook(id, action) {
@@ -85,7 +118,7 @@ window.DobbyCuisineEngine = (() => {
     if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!['midi','soir'].includes(slot))throw Error('Date ou créneau invalide.');
     const d=new Date(date+'T12:00:00');if(Number.isNaN(d.getTime())||[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')!==date)throw Error('Date invalide.');
     if(![adult,children].every(n=>Number.isInteger(n)&&n>=0)||adult+children<1||adult+children>20)throw Error('Choisissez entre 1 et 20 convives entiers.');
-    return transaction(`const r=getR(p.id),key=p.date+'-'+p.slot,prior=st.planned[key]||null;if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(prior)!==JSON.stringify(p.expectedMeal))throw Error('Ce créneau a changé. Ouvrez à nouveau la confirmation.');if(prior&&p.replaceConfirmed!==true)throw Error('Confirmez le remplacement du repas existant.');st.day=p.date;st.slot=p.slot;st.adult=p.adult;st.children=p.children;st.people=p.adult+p.children;if(p.note!==undefined)st.note=p.note;const config={people:p.adult+p.children,adult:p.adult,children:p.children,childFactor:prior?.childFactor??st.childFactor??0.65};planSelectedMeal(p.id,config);result={id:p.id,key,meal:JSON.parse(JSON.stringify(st.planned[key]))};`,values);
+    return transaction(`const r=getR(p.id),key=p.date+'-'+p.slot,prior=st.planned[key]||null;if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(prior)!==JSON.stringify(p.expectedMeal))throw Error('Ce créneau a changé. Ouvrez à nouveau la confirmation.');if(prior&&p.replaceConfirmed!==true)throw Error('Confirmez le remplacement du repas existant.');st.day=p.date;st.slot=p.slot;st.adult=p.adult;st.children=p.children;st.people=p.adult+p.children;if(p.note!==undefined)st.note=p.note;const config={...prior,people:p.adult+p.children,adult:p.adult,children:p.children,childFactor:prior?.childFactor??0.65};delete config.id;delete config.status;if(prior?.id!==p.id)delete config._e072ImportRef;if(p.note!==undefined)config.note=p.note;planSelectedMeal(p.id,config);result={id:p.id,key,meal:JSON.parse(JSON.stringify(st.planned[key]))};`,values);
   }
   const boundedText=(x,max=2000)=>{if(x===null||x===undefined)return '';if(!['string','number'].includes(typeof x)||String(x).length>max)throw Error('Texte TM5 invalide ou trop long.');return String(x).trim();};
   function normalizeTMEdit(raw,humanVerified=false) {
@@ -212,5 +245,5 @@ window.DobbyCuisineEngine = (() => {
       ingredients:r.ingredients.map(([name,quantity,unit],i)=>({id:d.ingredientIds?.[i]||'ingredient-'+i,name,quantity,unit})),steps:r.steps,stepDetails:[...(d.stepDetails||[]).filter(s=>s.method!=='tm5'),...(st.tmAdaptations?.[r.id]?.stepDetails||d.stepDetails?.filter(s=>s.method==='tm5')||[])].map(s=>({...s,images:[]})),source:r.source||'',reviewed:r.reviewed===true,durations:{preparation:null,cooking:null,rest:null,...d.durations,total:r.minutes??null},equipment:d.equipment||[],notes:d.notes||[],missing:d.missing||[],uncertain:d.uncertain||[],image:null,images:[],tm5:st.tmAdaptations?.[r.id]||null,mediaNotice:r.localMedia?'Photographies conservées sur cet appareil, non comprises dans cet export JSON.':''};});downloadJson(p.id?'dobby-recette.json':'dobby-recettes.json',{format:'dobby-recipes',version:2,recipes});`,{id});
   }
 
-  return Object.freeze({ win, evaluate, page, read, amount, portions, choose, mealAction, favorite, cook, cookAt, tm5, saveTM, saveRecipe, saveRecipeWithMedia, prepareRecipeMedia, recipeUsage, removeRecipe, restoreRecipe, planRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });
+  return Object.freeze({ win, evaluate, page, read, amount, portions, familyCounts, reserveIngredients, choose, mealAction, favorite, cook, cookAt, tm5, saveTM, saveRecipe, saveRecipeWithMedia, prepareRecipeMedia, recipeUsage, removeRecipe, restoreRecipe, planRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });
 })();

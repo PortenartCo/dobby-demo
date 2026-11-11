@@ -1,0 +1,72 @@
+{
+  "base": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+  "sourceState": "working-tree",
+  "functional": {
+    "passed": 12,
+    "failed": 0,
+    "realNativeWriter": true,
+    "realAccounts": false
+  },
+  "visual": {
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "status": "PASS"
+  },
+  "regressions": {
+    "passedSuites": 5,
+    "failed": 0,
+    "proof": "ci/boundaries-results.json"
+  },
+  "builder": {
+    "passed": 2,
+    "failed": 0
+  },
+  "baseFiles": 3310,
+  "allBaseFilesPresent": true,
+  "protectedUnchanged": {
+    "essai-stitch-v5-famille/family-modules.js": "df1e8294bb5db9359db31ee1fb14718a3624c2a41bfe9fca12243786818ee3a1",
+    "essai-stitch-v5-famille/family-missions.js": "7c346efd0aee5f088f2103e83ac6f818ff5bbae1a46988a826472ea11e62eb10",
+    "essai-stitch-v5-famille/family-runes-core.mjs": "8efea0fae8d2843f0b5e5b030554e1ae57f7a1a2ff3c3e059021b92a31744116",
+    "essai-stitch-v7/recipe-import.js": "2eb087d8ba64c479ba52936a9e2fbd845ca85fe0fe81a6577f6e79b32bf370ed",
+    "essai-stitch-v7/cuisine-e074.js": "29bd775e7820347e93aab8a6981f791e4c9045eb5145b1d59896fa1649642db8",
+    "essai-stitch-v7/cuisine-timers.js": "7492217e618c2a88d0bfb015c2dc1430f06df933769013e0057fc0dc768f05f0",
+    "essai-stitch-v7/home.js": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45"
+  },
+  "existingModifiedFiles": [
+    ".github/workflows/dobby-stitch-v7.yml",
+    "essai-stitch-v7/build-source.cjs",
+    "essai-stitch-v7/ci-scope.json",
+    "essai-stitch-v7/cuisine-e07.js",
+    "essai-stitch-v7/cuisine-engine.js",
+    "essai-stitch-v7/cuisine.js",
+    "essai-stitch-v7/index.html",
+    "essai-stitch-v7/tests/ci.cjs",
+    "essai-stitch-v7/tests/e07-3-taverne.cjs",
+    "scripts/build-dobby-review.cjs"
+  ],
+  "sourceSha256": {
+    "essai-stitch-v7/cuisine-p01.js": "ff769e9b3c0bb46723f67ead5ad774313d92aa249deb498ae4b910d48463a8ac",
+    "essai-stitch-v7/cuisine-p01.css": "7a995a944d01e005454b3f8379c00126930ae7a71ff4f022896e789870155687",
+    "essai-stitch-v7/cuisine.js": "b65ca97f778d2c1cf2bd38380704234deb64f2bf330dff3fd94d434050a9ef81",
+    "essai-stitch-v7/cuisine-e07.js": "179aec2ee8e8c202557b812accb15bcbc84b3968c10903cf6f06e2b8cc568ae8",
+    "essai-stitch-v7/cuisine-engine.js": "4eb0ec960701457c64fe26d4f802a195619af99bc6be827723a4fb639b2b5044",
+    "essai-stitch-v7/home.js": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45",
+    "essai-stitch-v7/index.html": "279afd76d04837d58b843f38ce59a1ca21d7ef22455aa720069e560aba2cfdca",
+    "essai-stitch-v7/traverse.html": "173f48a7e411fd3d5c0f894059e6f99d2de42ca4c0a6cfd33df9c388ba20f65b",
+    "essai-stitch-v7/tests/e07-p01.cjs": "8b3889c56fbd967700dbe5bf99439afa839f6e428189968090e4d997d001321e",
+    "essai-stitch-v7/tests/e07-p01-fixture.cjs": "0e14be14b79c8949ee06fde27d421b6c95e9051ff26db1f3c462486cdfb9689b",
+    "essai-stitch-v7/tests/e07-p01-visual.cjs": "513ea6a9998153b95bb860757695d324b5812cd4227c7cf831d93db1fdf16301"
+  },
+  "ci": "PENDING_PUSH",
+  "preview": {
+    "status": "NOT_YET_PUBLISHED",
+    "directory": "essai-dobby-e07-p01-review-20261112",
+    "namespace": "dobby-review-e07-p01-20261112|",
+    "realBackend": false
+  },
+  "catalogueGeneral200Diet200": "Separate mission, required before full Courses review; no artificial generation.",
+  "E07-P02": "Out of scope until review."
+}

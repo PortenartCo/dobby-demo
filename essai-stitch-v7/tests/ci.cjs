@@ -1,6 +1,7 @@
 /* Sequential checkpoints run their own lot; final delivery runs the complete suite. */
 const {spawnSync}=require('node:child_process'),path=require('node:path'),scope=require('../ci-scope.json');
 const run=(file,extra={})=>{const r=spawnSync(process.execPath,[path.join(__dirname,file)],{stdio:'inherit',env:{...process.env,DOBBY_TEST_ORIGIN:process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',...extra}});if(r.status!==0)process.exit(r.status||1);};
+if(scope.e07p01Only&&process.env.DOBBY_FINAL!=='1'){require('./e07-p01-ci.cjs');process.exit(0);}
 if(scope.e074Only&&process.env.DOBBY_FINAL!=='1'){require('./e07-4-ci.cjs');process.exit(0);}
 if(scope.e073Only&&process.env.DOBBY_FINAL!=='1'){require('./e07-3-ci.cjs');process.exit(0);}
 // E06-01 mission: keep the historical campaign available via DOBBY_FINAL=1.

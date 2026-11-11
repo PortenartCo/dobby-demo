@@ -108,7 +108,7 @@ jobs:
         run: node --test essai-stitch-v7/tests/e06-*.test.mjs
       - name: Recipe formats, ZIP, E07.4 timers and isolated preview contracts
         run: |
-          node --test essai-stitch-v7/tests/e07-3-*.test.* essai-stitch-v7/tests/e07-4-*.test.*
+          node --test essai-stitch-v7/tests/e07-3-*.test.* essai-stitch-v7/tests/e07-4-*.test.* essai-stitch-v7/tests/e07-p01*.test.*
           node scripts/check-e074-matrix.cjs
       - name: Source derivation remains reproducible
         run: |

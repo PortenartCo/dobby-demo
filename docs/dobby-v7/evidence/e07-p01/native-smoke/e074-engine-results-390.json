@@ -1,0 +1,23 @@
+[
+  {
+    "width": 390,
+    "status": "PASS",
+    "baseOverlayUnique": true,
+    "baseSourceIntact": true,
+    "favoriteReload": true,
+    "removeRestoreReferences": true,
+    "planningConfirmationAndProvenance": true,
+    "mappingReconciliation": true,
+    "realStepImageReload": true,
+    "realCoverPreservesStep": true,
+    "tm5SameIdentityUnverified": true,
+    "mediaQuotaRollback": true,
+    "mediaEpochRollback": true,
+    "nativeRollback": [
+      "recipe",
+      "tm5",
+      "remove",
+      "plan"
+    ]
+  }
+]

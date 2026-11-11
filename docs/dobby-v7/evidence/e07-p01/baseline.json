@@ -1,0 +1,18 @@
+{
+  "base": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+  "trackedFiles": 3310,
+  "remoteRefs": [
+    "eb4d51293e27d51119889cfa9d84d78c539fd7d8\trefs/heads/feat/dobby-e074-consolidation-20261111",
+    "0a8e1ed674bc4abdbfaca29435fa495b19b32df4\trefs/heads/feat/dobby-shared-runes-v2-20261111",
+    "392e05de5408324bd895789a4e0b6e67cb90d03b\trefs/heads/main"
+  ],
+  "protected": {
+    "essai-stitch-v5-famille/family-modules.js": "df1e8294bb5db9359db31ee1fb14718a3624c2a41bfe9fca12243786818ee3a1",
+    "essai-stitch-v5-famille/family-missions.js": "7c346efd0aee5f088f2103e83ac6f818ff5bbae1a46988a826472ea11e62eb10",
+    "essai-stitch-v5-famille/family-runes-core.mjs": "8efea0fae8d2843f0b5e5b030554e1ae57f7a1a2ff3c3e059021b92a31744116",
+    "essai-stitch-v7/recipe-import.js": "2eb087d8ba64c479ba52936a9e2fbd845ca85fe0fe81a6577f6e79b32bf370ed",
+    "essai-stitch-v7/cuisine-e074.js": "29bd775e7820347e93aab8a6981f791e4c9045eb5145b1d59896fa1649642db8",
+    "essai-stitch-v7/cuisine-timers.js": "7492217e618c2a88d0bfb015c2dc1430f06df933769013e0057fc0dc768f05f0",
+    "essai-stitch-v7/home.js": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45"
+  }
+}
