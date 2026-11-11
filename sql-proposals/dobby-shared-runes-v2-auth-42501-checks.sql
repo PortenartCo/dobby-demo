@@ -12,6 +12,8 @@ SELECT pg_catalog.pg_has_role('authenticated','dobby_missions_v2_writer','MEMBER
 -- writer_auth_usage may remain false: the correction must NOT require it.
 
 -- Expected: all true; owner is unchanged, public RPC owner remains writer.
+-- Only CRLF is normalized to LF; the expected bodies remain the exact FIXED
+-- definitions. An accepted original stamp variant is not a completed fix.
 WITH expected(signature,fixed_body_sha256) AS (VALUES
  ('public.dobby_missions_v2_capabilities(uuid)','be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d'),
  ('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)','9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45'),
@@ -19,7 +21,7 @@ WITH expected(signature,fixed_body_sha256) AS (VALUES
  ('public.dobby_v2_modules_stamp()','fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312')
 )
 SELECT e.signature,p.proowner::regrole AS owner,p.prosecdef,p.provolatile,p.proconfig,
- pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(p.prosrc,'UTF8')),'hex')=e.fixed_body_sha256 AS matches_reviewed_fix
+ pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(pg_catalog.replace(p.prosrc,E'\r\n',E'\n'),'UTF8')),'hex')=e.fixed_body_sha256 AS matches_reviewed_fix
 FROM expected e LEFT JOIN pg_catalog.pg_proc p ON p.oid=pg_catalog.to_regprocedure(e.signature);
 
 -- Expected: invoker=false for prosecdef, stable=s, empty search_path;

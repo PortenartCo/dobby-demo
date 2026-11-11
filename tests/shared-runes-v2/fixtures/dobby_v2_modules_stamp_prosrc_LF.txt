@@ -1,0 +1,24 @@
+
+BEGIN
+  IF TG_OP = 'UPDATE' THEN
+
+    IF NEW.household_id IS DISTINCT FROM OLD.household_id
+       OR NEW.module IS DISTINCT FROM OLD.module
+    THEN
+      RAISE EXCEPTION
+        'Household and module identity cannot be reassigned';
+    END IF;
+
+    NEW.revision := OLD.revision + 1;
+    NEW.created_at := OLD.created_at;
+
+  ELSE
+    NEW.revision := 1;
+    NEW.created_at := now();
+  END IF;
+
+  NEW.updated_at := clock_timestamp();
+  NEW.updated_by := auth.uid();
+
+  RETURN NEW;
+END;

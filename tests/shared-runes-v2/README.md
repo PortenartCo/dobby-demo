@@ -35,3 +35,18 @@ DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 DOBBY_RUNES_CLI
 ```
 
 Run these database suites sequentially. The dedicated correction test demonstrates the installed-baseline → hotfix-only path. The historical suites separately exercise the corrected reference on fresh fictional installations; they never reapply a migration to the hosted project.
+
+## Exact LF/CRLF regression proof
+
+The SQL hotfix body checks normalize only CRLF to LF. The supplied real stamp body is kept verbatim in `fixtures/dobby_v2_modules_stamp_prosrc_LF.txt`; its SHA-256 must equal `66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0` before any fixture installation. Other formatting changes remain forbidden unless explicitly pinned.
+
+Run sequentially on the correction's own labelled fixture:
+
+```sh
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 node tests/shared-runes-v2/auth-42501-eol.mjs
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 DOBBY_RUNES_AUTH_EVIDENCE=docs/dobby-v7/evidence/shared-runes-v2/auth-42501/eol/regression/auth-42501 node tests/shared-runes-v2/auth-42501.mjs
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 DOBBY_RUNES_PG_EVIDENCE=docs/dobby-v7/evidence/shared-runes-v2/auth-42501/eol/regression/postgres node tests/shared-runes-v2/run-postgres.mjs
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 DOBBY_RUNES_CLIENT_EVIDENCE=docs/dobby-v7/evidence/shared-runes-v2/auth-42501/eol/regression/client-postgres node --test tests/shared-runes-v2/client-postgres.mjs
+```
+
+The evidence directory override keeps the previous 80-test proof intact. The standalone hotfix, its after-install checks, and the real supplied variant are covered locally; no hosted Supabase call is made.

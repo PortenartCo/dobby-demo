@@ -1,0 +1,38 @@
+{
+  "allFourMatch": true,
+  "CRLFtoLFOnly": true,
+  "rows": [
+    {
+      "function": "dobby_missions_v2_capabilities",
+      "source": "0a8e1ed674bc4abdbfaca29435fa495b19b32df4:sql-proposals/dobby-shared-runes-v2.sql",
+      "LF_SHA256": "84a1f4924bf0babe881ba85a6afb6e0937e0f0d8b1cf1da33b3c2a40905c0b04",
+      "CRLF_SHA256": "5e7e15d52894bef90efef198af2437b79902adf29be32835dc4c8ac7e21ffcc6",
+      "reportedCRLF_SHA256": "5e7e15d52894bef90efef198af2437b79902adf29be32835dc4c8ac7e21ffcc6",
+      "matchesReported": true
+    },
+    {
+      "function": "dobby_missions_v2_write",
+      "source": "0a8e1ed674bc4abdbfaca29435fa495b19b32df4:sql-proposals/dobby-shared-runes-v2.sql",
+      "LF_SHA256": "729e7c32d25513c16ce45153b5c5182d8cf5a9be926ed94e3ae90b8cbd751506",
+      "CRLF_SHA256": "31dd030f584b93a749e7db948a717c75f3d819cb77eee375bf166c0c90cc822c",
+      "reportedCRLF_SHA256": "31dd030f584b93a749e7db948a717c75f3d819cb77eee375bf166c0c90cc822c",
+      "matchesReported": true
+    },
+    {
+      "function": "lock_active_membership",
+      "source": "0a8e1ed674bc4abdbfaca29435fa495b19b32df4:sql-proposals/dobby-shared-runes-v2.sql",
+      "LF_SHA256": "24ab842834f5eef542060483dcda4bcf832658680bfbb9035e3b56dbd38f617a",
+      "CRLF_SHA256": "efb45f18d4bb2ab03dfeae069a8783aa915d4fd352cc4ac671cdcee7b63a3232",
+      "reportedCRLF_SHA256": "efb45f18d4bb2ab03dfeae069a8783aa915d4fd352cc4ac671cdcee7b63a3232",
+      "matchesReported": true
+    },
+    {
+      "function": "dobby_v2_modules_stamp",
+      "source": "tests/shared-runes-v2/fixtures/dobby_v2_modules_stamp_prosrc_LF.txt",
+      "LF_SHA256": "66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0",
+      "CRLF_SHA256": "5581985c573e42feb3b02ede1a9eaec47e766529e97d0e3522883b33e30721af",
+      "reportedCRLF_SHA256": "5581985c573e42feb3b02ede1a9eaec47e766529e97d0e3522883b33e30721af",
+      "matchesReported": true
+    }
+  ]
+}

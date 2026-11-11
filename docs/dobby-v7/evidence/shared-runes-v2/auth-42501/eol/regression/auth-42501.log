@@ -1,0 +1,20 @@
+PASS immutable baseline installation and native V1 history generate a real prior receipt
+PASS restricted writer reproduces auth 42501 before the patch without changing data
+PASS pre-existing helper definer, writer owner, body or public ACL drift refuses with no replacement
+PASS an additional condition on a known writer policy is preserved by refusing the patch
+PASS unexpected installed function or effective auth policy refuses the patch atomically
+PASS standalone patch DDL and ACL roll back atomically when the transaction fails
+PASS exact standalone patch installs in place and preserves existing rows, receipts, roles and grants
+PASS a second exact application is idempotent for definitions, ACL, data and receipts
+PASS private helper and all security contexts retain their least-privilege boundary
+PASS missing, empty, malformed and non-string modern sub refuse despite a valid legacy sub
+PASS anonymous, nonmember, other-household and inactive actors remain refused
+PASS active member capability and first native write work without access to auth
+PASS modern verified sub determines the receipt actor and invoker stamp independently of legacy
+PASS a receipt created by the immutable original migration still replays after the patch
+PASS all five other modules keep INSERT, UPDATE, revision and legacy auth.uid stamp behavior
+PASS legacy direct Missions writes and arbitrary writer flags remain blocked
+PASS clients cannot call the private helper, read receipts or become the writer
+PASS the complete operator catalog-check file executes read only without changing state
+PASS a pre-existing SQL editor operator reapplies the patch without superuser, BYPASSRLS or role administration
+{"pass":19,"fail":0,"total":19}

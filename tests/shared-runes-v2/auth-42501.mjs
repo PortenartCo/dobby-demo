@@ -10,7 +10,7 @@ import {completionRequest,memberSummary} from '../../essai-stitch-v5-famille/fam
 const expectedContainer='dobby-runes-v2-test-20261111-auth-42501';
 assert.equal(container,expectedContainer,'This regression test may reset only the new auth-42501 fixture');
 const baseCommit='0a8e1ed',patchPath='sql-proposals/dobby-shared-runes-v2-auth-42501.sql',checksPath='sql-proposals/dobby-shared-runes-v2-auth-42501-checks.sql';
-const evidence=resolve(repo,'docs/dobby-v7/evidence/shared-runes-v2/auth-42501');
+const evidence=resolve(repo,process.env.DOBBY_RUNES_AUTH_EVIDENCE||'docs/dobby-v7/evidence/shared-runes-v2/auth-42501');
 const started=new Date().toISOString(),results=[];
 const otherModules=['menus','recipes','house','family','contracts'];
 const date='2026-11-11T12:00:00Z';

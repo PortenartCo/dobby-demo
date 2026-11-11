@@ -1,0 +1,545 @@
+{
+  "started": "2026-11-11T22:46:10.493Z",
+  "finished": "2026-11-11T22:47:31.429Z",
+  "environment": {
+    "container": "dobby-runes-v2-test-20261111-auth-42501",
+    "dockerSocket": "unix:///var/run/docker.sock",
+    "network": "none",
+    "imageId": "sha256:eb0fb2377534e65aad04f37838956b3dfb888e1a3dd3c1acf957bc6557eb6c7d",
+    "labels": {
+      "org.dobby.task": "shared-runes-v2-auth-42501-20261111"
+    }
+  },
+  "baselineCommit": "0a8e1ed",
+  "patch": "sql-proposals/dobby-shared-runes-v2-auth-42501.sql",
+  "patchSHA256": "fbcde774e1155045b494538c4f2ced340fd85b5464dfc9b367aca1abc48b308e",
+  "checks": "sql-proposals/dobby-shared-runes-v2-auth-42501-checks.sql",
+  "checksSHA256": "f5f3369518817e4feaef7db29372ef9b92fe41ecebceae82a2fae1c3bd318fc2",
+  "realStampFixture": "tests/shared-runes-v2/fixtures/dobby_v2_modules_stamp_prosrc_LF.txt",
+  "realStampFixtureNormalizedSHA256": "66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0",
+  "realStampFixtureCRLFSHA256": "5581985c573e42feb3b02ede1a9eaec47e766529e97d0e3522883b33e30721af",
+  "realStampSourceStatus": "EXACT_SOURCE_VERIFIED",
+  "fixtureOnly": true,
+  "realSupabaseTouched": false,
+  "originalContainerTouched": false,
+  "summary": {
+    "pass": 8,
+    "fail": 0,
+    "total": 8
+  },
+  "results": [
+    {
+      "name": "canonical LF originals: LF patch, idempotent LF/CRLF reapplication and fixed-only read-only flags",
+      "status": "PASS",
+      "milliseconds": 11035,
+      "detail": {
+        "originalFlags": [
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "matches_reviewed_fix": false
+          }
+        ],
+        "bodies": {
+          "public.dobby_missions_v2_capabilities(uuid)": {
+            "raw": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d",
+            "normalized": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d"
+          },
+          "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)": {
+            "raw": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45",
+            "normalized": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45"
+          },
+          "dobby_runes_private.lock_active_membership(uuid)": {
+            "raw": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff",
+            "normalized": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff"
+          },
+          "public.dobby_v2_modules_stamp()": {
+            "raw": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312",
+            "normalized": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312"
+          },
+          "dobby_runes_private.request_user_id()": {
+            "raw": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321",
+            "normalized": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321"
+          }
+        },
+        "operatorChecks": {
+          "readOnly": true,
+          "allFourFlags": [
+            {
+              "signature": "dobby_runes_private.lock_active_membership(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_capabilities(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_v2_modules_stamp()",
+              "matches_reviewed_fix": true
+            }
+          ]
+        },
+        "identicalArtifactIdempotent": true,
+        "LFAndCRLFReapplied": true,
+        "rowsReceiptsOwnersRLSACLsPreserved": true
+      }
+    },
+    {
+      "name": "canonical CRLF originals: complete CRLF patch retains CRLF and all four read-only flags are true",
+      "status": "PASS",
+      "milliseconds": 9492,
+      "detail": {
+        "originalFlags": [
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "matches_reviewed_fix": false
+          }
+        ],
+        "bodies": {
+          "public.dobby_missions_v2_capabilities(uuid)": {
+            "raw": "3299d00d80fb4170a22fa1025d278d6ab44378cb95ee1d7f54dd9068553367c1",
+            "normalized": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d"
+          },
+          "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)": {
+            "raw": "568f61e741ed96403e7940557d61d4d99a3f4468af3386baded39071085847ae",
+            "normalized": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45"
+          },
+          "dobby_runes_private.lock_active_membership(uuid)": {
+            "raw": "159ea06d95df61612e07bb04cfc2c3510554551844b45f4de3f74d298bb03e64",
+            "normalized": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff"
+          },
+          "public.dobby_v2_modules_stamp()": {
+            "raw": "30e730c5e093e9d416825587d946526b3185d12a305210a0af87e9c9ed6881ae",
+            "normalized": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312"
+          },
+          "dobby_runes_private.request_user_id()": {
+            "raw": "048e7335a988e1907a95784c0db2dea0a345cc553f8cc8f3fdad388412b4fce7",
+            "normalized": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321"
+          }
+        },
+        "operatorChecks": {
+          "readOnly": true,
+          "allFourFlags": [
+            {
+              "signature": "dobby_runes_private.lock_active_membership(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_capabilities(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_v2_modules_stamp()",
+              "matches_reviewed_fix": true
+            }
+          ]
+        },
+        "completePatchConvertedToCRLF": true,
+        "preexistingCRLFHelperAcceptedOnReapply": true
+      }
+    },
+    {
+      "name": "exact supplied real stamp LF: accepted without broadening whitespace or changing native runtime",
+      "status": "PASS",
+      "milliseconds": 9560,
+      "detail": {
+        "realSourceSHA256": "66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0",
+        "realSourceNormalizedSHA256": "66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0",
+        "originalFlags": [
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "matches_reviewed_fix": false
+          }
+        ],
+        "bodies": {
+          "public.dobby_missions_v2_capabilities(uuid)": {
+            "raw": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d",
+            "normalized": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d"
+          },
+          "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)": {
+            "raw": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45",
+            "normalized": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45"
+          },
+          "dobby_runes_private.lock_active_membership(uuid)": {
+            "raw": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff",
+            "normalized": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff"
+          },
+          "public.dobby_v2_modules_stamp()": {
+            "raw": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312",
+            "normalized": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312"
+          },
+          "dobby_runes_private.request_user_id()": {
+            "raw": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321",
+            "normalized": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321"
+          }
+        },
+        "operatorChecks": {
+          "readOnly": true,
+          "allFourFlags": [
+            {
+              "signature": "dobby_runes_private.lock_active_membership(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_capabilities(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_v2_modules_stamp()",
+              "matches_reviewed_fix": true
+            }
+          ]
+        },
+        "behavior": {
+          "capabilityProtocol": 2,
+          "writeRevision": 3,
+          "modernActorAndStamp": "22222222-2222-4222-8222-222222222222",
+          "otherModules": [
+            "menus",
+            "recipes",
+            "house",
+            "family",
+            "contracts"
+          ],
+          "otherModulesInsertRevision": 1,
+          "otherModulesUpdateRevision": 2,
+          "otherModulesLegacyStamp": "11111111-1111-4111-8111-111111111111",
+          "directMissionsWriteRefused": true,
+          "moduleIdentityGuardPreserved": true
+        },
+        "rowsReceiptsOwnersRLSACLsPreserved": true
+      }
+    },
+    {
+      "name": "exact supplied real stamp CRLF: accepted without broadening whitespace or changing native runtime",
+      "status": "PASS",
+      "milliseconds": 8983,
+      "detail": {
+        "realSourceSHA256": "5581985c573e42feb3b02ede1a9eaec47e766529e97d0e3522883b33e30721af",
+        "realSourceNormalizedSHA256": "66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0",
+        "originalFlags": [
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "matches_reviewed_fix": false
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "matches_reviewed_fix": false
+          }
+        ],
+        "bodies": {
+          "public.dobby_missions_v2_capabilities(uuid)": {
+            "raw": "3299d00d80fb4170a22fa1025d278d6ab44378cb95ee1d7f54dd9068553367c1",
+            "normalized": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d"
+          },
+          "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)": {
+            "raw": "568f61e741ed96403e7940557d61d4d99a3f4468af3386baded39071085847ae",
+            "normalized": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45"
+          },
+          "dobby_runes_private.lock_active_membership(uuid)": {
+            "raw": "159ea06d95df61612e07bb04cfc2c3510554551844b45f4de3f74d298bb03e64",
+            "normalized": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff"
+          },
+          "public.dobby_v2_modules_stamp()": {
+            "raw": "30e730c5e093e9d416825587d946526b3185d12a305210a0af87e9c9ed6881ae",
+            "normalized": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312"
+          },
+          "dobby_runes_private.request_user_id()": {
+            "raw": "048e7335a988e1907a95784c0db2dea0a345cc553f8cc8f3fdad388412b4fce7",
+            "normalized": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321"
+          }
+        },
+        "operatorChecks": {
+          "readOnly": true,
+          "allFourFlags": [
+            {
+              "signature": "dobby_runes_private.lock_active_membership(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_capabilities(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_v2_modules_stamp()",
+              "matches_reviewed_fix": true
+            }
+          ]
+        },
+        "behavior": {
+          "capabilityProtocol": 2,
+          "writeRevision": 3,
+          "modernActorAndStamp": "22222222-2222-4222-8222-222222222222",
+          "otherModules": [
+            "menus",
+            "recipes",
+            "house",
+            "family",
+            "contracts"
+          ],
+          "otherModulesInsertRevision": 1,
+          "otherModulesUpdateRevision": 2,
+          "otherModulesLegacyStamp": "11111111-1111-4111-8111-111111111111",
+          "directMissionsWriteRefused": true,
+          "moduleIdentityGuardPreserved": true
+        },
+        "rowsReceiptsOwnersRLSACLsPreserved": true
+      }
+    },
+    {
+      "name": "pre-existing canonical CRLF helper and original CRLF functions accept the LF patch",
+      "status": "PASS",
+      "milliseconds": 6456,
+      "detail": {
+        "bodies": {
+          "public.dobby_missions_v2_capabilities(uuid)": {
+            "raw": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d",
+            "normalized": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d"
+          },
+          "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)": {
+            "raw": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45",
+            "normalized": "9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45"
+          },
+          "dobby_runes_private.lock_active_membership(uuid)": {
+            "raw": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff",
+            "normalized": "7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff"
+          },
+          "public.dobby_v2_modules_stamp()": {
+            "raw": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312",
+            "normalized": "fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312"
+          },
+          "dobby_runes_private.request_user_id()": {
+            "raw": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321",
+            "normalized": "f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321"
+          }
+        },
+        "operatorChecks": {
+          "readOnly": true,
+          "allFourFlags": [
+            {
+              "signature": "dobby_runes_private.lock_active_membership(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_capabilities(uuid)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+              "matches_reviewed_fix": true
+            },
+            {
+              "signature": "public.dobby_v2_modules_stamp()",
+              "matches_reviewed_fix": true
+            }
+          ]
+        },
+        "preexistingHelperACLAndOwnerPreserved": true
+      }
+    },
+    {
+      "name": "functional edits, arbitrary extra whitespace and lone CR remain refused for each canonical and real body",
+      "status": "PASS",
+      "milliseconds": 22234,
+      "detail": {
+        "rejected": [
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "kind": "functional change in CRLF",
+            "normalizedSHA256": "e5d388cb501a07d188521ef73f74dff684a26e5d4833290a4b79234abeafa0a3",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_capabilities(uuid). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "kind": "unlisted extra space in CRLF",
+            "normalizedSHA256": "08adfd25d521aee4fbf2b55280602341ed92285739132ecb332898f70bcace55",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_capabilities(uuid). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_missions_v2_capabilities(uuid)",
+            "kind": "lone CR",
+            "normalizedSHA256": "c9e92596781e593708a1f5a87118a49e24261845d14191ce1a593a3a74b3be2a",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_capabilities(uuid). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "kind": "functional change in CRLF",
+            "normalizedSHA256": "4ea714c15435fd6d6eb7413c3306a9617254a4cbcf3eb8b6ddb0a04aab049e3e",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "kind": "unlisted extra space in CRLF",
+            "normalizedSHA256": "16f56dd4f2eb3c6fa6946b770ccae1595ab3c96550dfc04c8a810cfcea501409",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+            "kind": "lone CR",
+            "normalizedSHA256": "127a061db6627ad34ee49fa44ec6092482fb4461d231fd082012d546dbecc66f",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb). Stop for review; no change applied."
+          },
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "kind": "functional change in CRLF",
+            "normalizedSHA256": "8a5f1b05d4152859dbce7369a045647bb8315201bee0a945fd22645a6088501c",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: dobby_runes_private.lock_active_membership(uuid). Stop for review; no change applied."
+          },
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "kind": "unlisted extra space in CRLF",
+            "normalizedSHA256": "da359a651bff8969a98b2929ede576f3ee0a744a9afe7b3d3b675014aede1a34",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: dobby_runes_private.lock_active_membership(uuid). Stop for review; no change applied."
+          },
+          {
+            "signature": "dobby_runes_private.lock_active_membership(uuid)",
+            "kind": "lone CR",
+            "normalizedSHA256": "8ecf41489997c70c679de2afc9df18faffe7e5242bf3a5a562ec96b2df3240a9",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: dobby_runes_private.lock_active_membership(uuid). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "kind": "functional change in CRLF",
+            "normalizedSHA256": "4e66d21e946179df0d95c63a94871e0bed65dd451359485c2bf959eb4cd0009c",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_v2_modules_stamp(). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "kind": "unlisted extra space in CRLF",
+            "normalizedSHA256": "9c063318a51c5ec7aab3a72d6e1b561104c7a181007fbb6d1f8d7dc3a6d25788",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_v2_modules_stamp(). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "kind": "lone CR",
+            "normalizedSHA256": "01c157f50d287f431781a4a34c22474ebb4b2e0a0aafe5869fcf90af88540485",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_v2_modules_stamp(). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "kind": "real stamp functional change in CRLF",
+            "normalizedSHA256": "23648fb576f20a5625bfb911fa8fa918ad11511af85e529dc345b72b73877fee",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_v2_modules_stamp(). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "kind": "real stamp unlisted extra space in CRLF",
+            "normalizedSHA256": "ee1d9696729bb8bc71527e5e58893d3e99d15ca254f42d2869697a4a3bd0d1e6",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_v2_modules_stamp(). Stop for review; no change applied."
+          },
+          {
+            "signature": "public.dobby_v2_modules_stamp()",
+            "kind": "real stamp lone CR",
+            "normalizedSHA256": "dd997bb921304d3d24a7ef0a4b7c5afdc7e6a5f895924b57df8c1e35f38c2053",
+            "refusal": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_v2_modules_stamp(). Stop for review; no change applied."
+          }
+        ],
+        "fullAtomicStatePreserved": true,
+        "noWhitespaceStripping": true,
+        "loneCRNeverNormalized": true
+      }
+    },
+    {
+      "name": "a pre-existing helper with CRLF functional/whitespace drift or lone CR is refused unchanged",
+      "status": "PASS",
+      "milliseconds": 7422,
+      "detail": {
+        "rejected": [
+          {
+            "kind": "functional change in CRLF",
+            "refusal": "ERROR:  P0001: Existing private claims helper differs in body, owner, attributes or ACL; no change applied"
+          },
+          {
+            "kind": "unlisted extra space in CRLF",
+            "refusal": "ERROR:  P0001: Existing private claims helper differs in body, owner, attributes or ACL; no change applied"
+          },
+          {
+            "kind": "lone CR",
+            "refusal": "ERROR:  P0001: Existing private claims helper differs in body, owner, attributes or ACL; no change applied"
+          }
+        ],
+        "helperDefinitionOwnerAndACLUnchangedOnRefusal": true
+      }
+    },
+    {
+      "name": "LF and whole-file CRLF patch failures roll back all DDL, policies, ACLs and rows atomically",
+      "status": "PASS",
+      "milliseconds": 5716,
+      "detail": {
+        "failures": [
+          {
+            "encoding": "LF",
+            "sqlstate": "P0001",
+            "helperAbsent": true,
+            "fullAtomicStatePreserved": true
+          },
+          {
+            "encoding": "CRLF",
+            "sqlstate": "P0001",
+            "helperAbsent": true,
+            "fullAtomicStatePreserved": true
+          }
+        ]
+      }
+    }
+  ]
+}

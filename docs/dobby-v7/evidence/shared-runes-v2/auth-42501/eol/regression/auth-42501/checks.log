@@ -1,0 +1,40 @@
+dobby_missions_v2_writer|f|f|f|f|f|f|f
+f|f|f|f
+public.dobby_missions_v2_capabilities(uuid)|dobby_missions_v2_writer|t|s|{"search_path=\"\""}|t
+public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)|dobby_missions_v2_writer|t|v|{"search_path=\"\""}|t
+dobby_runes_private.lock_active_membership(uuid)|dobby_test_admin|t|v|{"search_path=\"\""}|t
+public.dobby_v2_modules_stamp()|dobby_test_admin|f|v|{"search_path=\"\""}|t
+dobby_runes_private.request_user_id()|dobby_test_admin|f|s|{"search_path=\"\""}|t|f|f|t
+dobby_missions_v2_capabilities(uuid)|dobby_missions_v2_writer|t|{"search_path=\"\""}|t|f|f
+dobby_missions_v2_write(uuid,bigint,uuid,jsonb)|dobby_missions_v2_writer|t|{"search_path=\"\""}|t|f|f
+dobby_v2_memberships|t|dobby_test_admin
+dobby_v2_modules|t|dobby_test_admin
+dobby_runes_private.operations|t|dobby_test_admin
+f|f|f
+dobby_runes_private.operations|dobby_missions_receipt_insert|a||((actor_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND (EXISTS ( SELECT 1
+   FROM dobby_v2_memberships m
+  WHERE ((m.household_id = operations.household_id) AND (m.user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND m.active))))
+dobby_runes_private.operations|dobby_missions_receipt_read|r|(EXISTS ( SELECT 1
+   FROM dobby_v2_memberships m
+  WHERE ((m.household_id = operations.household_id) AND (m.user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND m.active)))|
+dobby_v2_memberships|dobby_missions_writer_membership|r|((user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND active)|
+dobby_v2_modules|dobby_missions_writer_module_insert|a||((module = 'missions'::text) AND (EXISTS ( SELECT 1
+   FROM dobby_v2_memberships m
+  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND m.active))))
+dobby_v2_modules|dobby_missions_writer_module_read|r|((module = 'missions'::text) AND (EXISTS ( SELECT 1
+   FROM dobby_v2_memberships m
+  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND m.active))))|
+dobby_v2_modules|dobby_missions_writer_module_update|w|((module = 'missions'::text) AND (EXISTS ( SELECT 1
+   FROM dobby_v2_memberships m
+  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND m.active))))|((module = 'missions'::text) AND (EXISTS ( SELECT 1
+   FROM dobby_v2_memberships m
+  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT dobby_runes_private.request_user_id() AS request_user_id)) AND m.active))))
+dobby_v2_modules_stamp_trigger|O|CREATE TRIGGER dobby_v2_modules_stamp_trigger BEFORE INSERT OR UPDATE ON public.dobby_v2_modules FOR EACH ROW EXECUTE FUNCTION dobby_v2_modules_stamp()
+dobby_missions_v2_guard|O|CREATE TRIGGER dobby_missions_v2_guard BEFORE INSERT OR DELETE OR UPDATE ON public.dobby_v2_modules FOR EACH ROW EXECUTE FUNCTION dobby_runes_private.guard_missions()
+contracts|2|1|2
+family|2|1|2
+house|2|1|2
+menus|2|1|2
+missions|2|2|2
+recipes|2|1|2
+3

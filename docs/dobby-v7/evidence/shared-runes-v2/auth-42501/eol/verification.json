@@ -1,0 +1,43 @@
+{
+  "referenceCommit": "79a9a5ee37d4d0ac53c7e5a11ec87118c8e5fc82",
+  "branch": "fix/dobby-runes-v2-auth-42501-20261111",
+  "EOLTests": {
+    "pass": 8,
+    "fail": 0,
+    "total": 8
+  },
+  "targeted42501Regressions": {
+    "pass": 19,
+    "fail": 0,
+    "total": 19
+  },
+  "postgresRegressions": {
+    "pass": 51,
+    "fail": 0,
+    "total": 51
+  },
+  "nativeClientPostgres": {
+    "pass": 10,
+    "fail": 0
+  },
+  "prior80ChecksRerunPassed": true,
+  "totalScenariosPassed": 88,
+  "unapprovedBodyVariantsRefused": 18,
+  "patchSHA256": "fbcde774e1155045b494538c4f2ced340fd85b5464dfc9b367aca1abc48b308e",
+  "checksSHA256": "f5f3369518817e4feaef7db29372ef9b92fe41ecebceae82a2fae1c3bd318fc2",
+  "suppliedStampSHA256": "66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0",
+  "suppliedStampCRLFSHA256": "5581985c573e42feb3b02ede1a9eaec47e766529e97d0e3522883b33e30721af",
+  "realStampSourceStatus": "EXACT_SOURCE_VERIFIED",
+  "bodyNormalization": "CRLF to LF only",
+  "allowedBodyHashesPerFunction": [
+    2,
+    2,
+    2,
+    3
+  ],
+  "originalEvidenceUnchanged": true,
+  "applicationAndReferenceSQLUnchanged": true,
+  "realSupabaseTouched": false,
+  "hostedValidationPerformed": false,
+  "applicationPublished": false
+}

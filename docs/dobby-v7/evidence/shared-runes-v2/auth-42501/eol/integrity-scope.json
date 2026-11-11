@@ -1,0 +1,9 @@
+{
+  "referenceCommit": "79a9a5ee37d4d0ac53c7e5a11ec87118c8e5fc82",
+  "fiveFunctionBodiesByteIdentical": true,
+  "sixPolicyStatementsByteIdentical": true,
+  "ACLStatementsByteIdentical": true,
+  "definitionsACLAndPostflightSuffixByteIdentical": true,
+  "requestPayloadDigestUnchanged": true,
+  "applicationChanges": []
+}

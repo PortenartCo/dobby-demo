@@ -1,0 +1,28 @@
+{
+  "environment": {
+    "container": "dobby-runes-v2-test-20261111-auth-42501",
+    "dockerSocket": "unix:///var/run/docker.sock",
+    "network": "none",
+    "imageId": "sha256:eb0fb2377534e65aad04f37838956b3dfb888e1a3dd3c1acf957bc6557eb6c7d",
+    "labels": {
+      "org.dobby.task": "shared-runes-v2-auth-42501-20261111"
+    }
+  },
+  "previousCommit": "79a9a5ee",
+  "previousPatchSHA256": "fc72c5550fccc8d5568071fa4d40b8faa2b447ba51a566b0e129a610e6fab34d",
+  "currentPatchSHA256": "fbcde774e1155045b494538c4f2ced340fd85b5464dfc9b367aca1abc48b308e",
+  "originalCapabilityRawSHA256": "5e7e15d52894bef90efef198af2437b79902adf29be32835dc4c8ac7e21ffcc6",
+  "originalCapabilityNormalizedSHA256": "84a1f4924bf0babe881ba85a6afb6e0937e0f0d8b1cf1da33b3c2a40905c0b04",
+  "previousPatch": {
+    "status": "EXPECTED_REFUSAL",
+    "exitCode": 3,
+    "error": "ERROR:  P0001: Installed function differs from the reviewed original/fix: public.dobby_missions_v2_capabilities(uuid). Stop for review; no change applied."
+  },
+  "currentPatch": {
+    "status": "PASS",
+    "exitCode": 0,
+    "normalizedCapabilitySHA": "be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d",
+    "receipts": 1
+  },
+  "realSupabaseTouched": false
+}

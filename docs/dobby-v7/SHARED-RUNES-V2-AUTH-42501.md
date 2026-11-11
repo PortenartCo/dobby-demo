@@ -4,6 +4,8 @@ Branche indépendante : `fix/dobby-runes-v2-auth-42501-20261111`.
 Worktree : `/workspace/dobby-runes-v2-auth-42501`.
 Base exacte : `0a8e1ed674bc4abdbfaca29435fa495b19b32df4`, dont le code initial testé est `3ceb14bbf76c7534f6862a7cb1921c894ea3f325`. Aucun `AGENTS.md` applicable trouvé dans cette base ou ses répertoires parents.
 
+> Suivi LF/CRLF : le [correctif des empreintes](SHARED-RUNES-V2-AUTH-42501-EOL.md) accepte CRLF → LF et la seule variante exacte du trigger transmise après cette livraison. Les preuves ci-dessous décrivent le commit initial ; les nouvelles exécutions sont conservées séparément.
+
 ## Cause et méthode officielle
 
 L'utilisateur a confirmé que la migration V2 est installée et que le GET de capacité retourne HTTP 403 / PostgreSQL `42501`, « permission denied for schema auth ». Aucun accès au projet `pqcdkrwljgvgagzwrcmg` n'a été effectué pendant cette correction, même en lecture.

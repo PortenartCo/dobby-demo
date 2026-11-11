@@ -10,7 +10,8 @@ SET LOCAL statement_timeout='60s';
 SET LOCAL search_path='';
 
 -- Refuse an unexpected installation before replacing any definition. Function
--- body hashes accept only the original reviewed source or this exact fix.
+-- Body hashes normalize CRLF to LF only. Spaces, lone CR, blank lines and all
+-- other bytes remain significant. Only the listed reviewed bodies are accepted.
 DO $preflight$
 DECLARE item record; fn record; writer oid;
 BEGIN
@@ -38,24 +39,26 @@ BEGIN
  IF FOUND AND (fn.prosecdef OR fn.provolatile<>'s'
    OR fn.proconfig IS DISTINCT FROM ARRAY['search_path=""']::text[]
    OR fn.proowner IN(writer,'anon'::regrole,'authenticated'::regrole)
-   OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(fn.prosrc,'UTF8')),'hex')<>'f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321'
+   OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(pg_catalog.replace(fn.prosrc,E'\r\n',E'\n'),'UTF8')),'hex')<>'f78ddf35693e99f233fcd4edc4e60c2b6a4b586fc7ce2c6c4c81d85eec236321'
    OR EXISTS(SELECT 1 FROM pg_catalog.aclexplode(COALESCE(fn.proacl,pg_catalog.acldefault('f',fn.proowner))) a
       WHERE a.privilege_type='EXECUTE' AND a.grantee NOT IN(fn.proowner,writer))) THEN
   RAISE EXCEPTION 'Existing private claims helper differs in body, owner, attributes or ACL; no change applied';
  END IF;
  FOR item IN SELECT * FROM (VALUES
-    ('public.dobby_missions_v2_capabilities(uuid)','84a1f4924bf0babe881ba85a6afb6e0937e0f0d8b1cf1da33b3c2a40905c0b04','be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d',true,true,'s'),
-    ('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)','729e7c32d25513c16ce45153b5c5182d8cf5a9be926ed94e3ae90b8cbd751506','9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45',true,true,'v'),
-    ('dobby_runes_private.lock_active_membership(uuid)','24ab842834f5eef542060483dcda4bcf832658680bfbb9035e3b56dbd38f617a','7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff',false,true,'v'),
-    ('public.dobby_v2_modules_stamp()','95c9c80b4b8a1e85d5c13286b841b2a03143ada42c290a6e67ac3b936b7bac6c','fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312',false,false,'v')
- ) AS t(signature,original_sha,fixed_sha,writer_owned,definer,volatility) LOOP
+    ('public.dobby_missions_v2_capabilities(uuid)',ARRAY['84a1f4924bf0babe881ba85a6afb6e0937e0f0d8b1cf1da33b3c2a40905c0b04','be80e28dc03e10ab05615c1fe757c94e606f3128bcc7c14fb1154eeec1d8a02d'],true,true,'s'),
+    ('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)',ARRAY['729e7c32d25513c16ce45153b5c5182d8cf5a9be926ed94e3ae90b8cbd751506','9ab7c1c9bf752900c9433bf6759b57e296139e8b33508309bfec166d99802f45'],true,true,'v'),
+    ('dobby_runes_private.lock_active_membership(uuid)',ARRAY['24ab842834f5eef542060483dcda4bcf832658680bfbb9035e3b56dbd38f617a','7f66b4569a016e65db7c504b3441ebd2f7af1219d3ff3a7f003776e4b623a1ff'],false,true,'v'),
+    -- One exact installed original stamp variant, supplied and verified by the
+    -- user. Its different whitespace is pinned, never generally normalized.
+    ('public.dobby_v2_modules_stamp()',ARRAY['95c9c80b4b8a1e85d5c13286b841b2a03143ada42c290a6e67ac3b936b7bac6c','fd9faf1d37bf06f04cacae23a20a6010be9ed9fa1806abca3f4e2d84c8e5a312','66ebec0137d31429243d4ae6bafa21788cef3c2315e18059acb5e1f44744c4d0'],false,false,'v')
+ ) AS t(signature,accepted_body_sha256,writer_owned,definer,volatility) LOOP
   SELECT * INTO fn FROM pg_catalog.pg_proc WHERE oid=pg_catalog.to_regprocedure(item.signature);
   IF NOT FOUND THEN RAISE EXCEPTION 'Installed V2 function missing: %',item.signature; END IF;
   IF fn.prosecdef<>item.definer OR fn.provolatile::text<>item.volatility
    OR fn.proconfig IS DISTINCT FROM ARRAY['search_path=""']::text[]
    OR (item.writer_owned AND fn.proowner<>writer)
    OR (NOT item.writer_owned AND fn.proowner IN(writer,'anon'::regrole,'authenticated'::regrole))
-   OR pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(fn.prosrc,'UTF8')),'hex') NOT IN(item.original_sha,item.fixed_sha) THEN
+   OR NOT (pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(pg_catalog.replace(fn.prosrc,E'\r\n',E'\n'),'UTF8')),'hex')=ANY(item.accepted_body_sha256)) THEN
    RAISE EXCEPTION 'Installed function differs from the reviewed original/fix: %. Stop for review; no change applied.',item.signature;
   END IF;
  END LOOP;
