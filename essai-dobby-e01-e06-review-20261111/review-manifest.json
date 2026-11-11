@@ -1,0 +1,1705 @@
+{
+  "version": "E01-E08",
+  "sourceSha": "49640742d1206a0a5ded03c6063ef281329ec838",
+  "base": "e0e88a06485018f5e94eb4aeae886cacbf41c67b",
+  "entry": "essai-stitch-v7/traverse.html",
+  "storagePrefix": "dobby-review-e01-e06-20261111|",
+  "realBackend": false,
+  "demoMemberAssociation": "explicit-fictional-persona-only",
+  "configSha256": "b7f816db4881020fec9a6805cc48f9e2897053ad474ac26cf7490bc9daf59240",
+  "files": [
+    {
+      "path": "essai-stitch-v5-famille/family-agenda-core.mjs",
+      "sourceSha256": "635e3b2e976828da6a62223f25423b7c7215cbe48ae66f8c354e969861380d56",
+      "sha256": "635e3b2e976828da6a62223f25423b7c7215cbe48ae66f8c354e969861380d56",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-agenda.css",
+      "sourceSha256": "c79d5685d69865c14dfd2398dd188cfe9bc8aee3bdacac863f7d5e8f687fe426",
+      "sha256": "c79d5685d69865c14dfd2398dd188cfe9bc8aee3bdacac863f7d5e8f687fe426",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-agenda.js",
+      "sourceSha256": "e753f163252605e4d15be73abe89cc2028153b0f618db16e93a397e73b4157d4",
+      "sha256": "e753f163252605e4d15be73abe89cc2028153b0f618db16e93a397e73b4157d4",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-core.mjs",
+      "sourceSha256": "91a98f90ca3f2fc753474f0226dc685532b6919a5bd92718990b2aa4a9203efe",
+      "sha256": "91a98f90ca3f2fc753474f0226dc685532b6919a5bd92718990b2aa4a9203efe",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-files.css",
+      "sourceSha256": "bd187f9f5dce3f217ea4443db06ce7c9c1bf1c49e27c7ea6061694a7658d3c0c",
+      "sha256": "bd187f9f5dce3f217ea4443db06ce7c9c1bf1c49e27c7ea6061694a7658d3c0c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-files.js",
+      "sourceSha256": "99e6a77a7bdefa71cab209052311abe10ccc1f09496c74921fda06b914f860ad",
+      "sha256": "99e6a77a7bdefa71cab209052311abe10ccc1f09496c74921fda06b914f860ad",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health-core.mjs",
+      "sourceSha256": "7f866f2b88d3bedc68920964cf576945f24cb4a5f0a1f70cd8abaea060e927ff",
+      "sha256": "7f866f2b88d3bedc68920964cf576945f24cb4a5f0a1f70cd8abaea060e927ff",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health.css",
+      "sourceSha256": "e93af3d0508bbf570b19f0a03b80edbb53f0023e72f1dc73c32bbf44cbc1237d",
+      "sha256": "e93af3d0508bbf570b19f0a03b80edbb53f0023e72f1dc73c32bbf44cbc1237d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health.js",
+      "sourceSha256": "f33c75fd03cf5ef5c3c7332b27ed27204dacaef52aad5573f71dc8544ddbe46f",
+      "sha256": "f33c75fd03cf5ef5c3c7332b27ed27204dacaef52aad5573f71dc8544ddbe46f",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-missions-core.mjs",
+      "sourceSha256": "2cecabd30dae592acf6ca2e28beb30731ed40ee4bbce33d89400b3b74bc2cb5c",
+      "sha256": "2cecabd30dae592acf6ca2e28beb30731ed40ee4bbce33d89400b3b74bc2cb5c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-missions.css",
+      "sourceSha256": "065d0e2b541cc31d451872b47a97f7d2a52df04babc2ddcdddd99c2351837eaf",
+      "sha256": "065d0e2b541cc31d451872b47a97f7d2a52df04babc2ddcdddd99c2351837eaf",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-missions.js",
+      "sourceSha256": "af0da3d50bea8a0604f851c0c3eac990561deeb826809de6d9fdc543175e3241",
+      "sha256": "af0da3d50bea8a0604f851c0c3eac990561deeb826809de6d9fdc543175e3241",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "sourceSha256": "975598e4c283de77b40765c78f601ce459336293728bed3158718b51e906286c",
+      "sha256": "975598e4c283de77b40765c78f601ce459336293728bed3158718b51e906286c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-profile.js",
+      "sourceSha256": "bcd4085c6c3b75e94cdd5020728b08901ceece3022e2cec19f7073a2da907aee",
+      "sha256": "fdca30318df4e02d960553003aee486aef71c93cac9e97ed8b23ca7c004427dd",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-runes-core.mjs",
+      "sourceSha256": "8efea0fae8d2843f0b5e5b030554e1ae57f7a1a2ff3c3e059021b92a31744116",
+      "sha256": "8efea0fae8d2843f0b5e5b030554e1ae57f7a1a2ff3c3e059021b92a31744116",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.css",
+      "sourceSha256": "0f9b890734f9616c2a0b23e18b714d711b6f86e03e7ee79cc04edd702fd7c3ed",
+      "sha256": "0f9b890734f9616c2a0b23e18b714d711b6f86e03e7ee79cc04edd702fd7c3ed",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "sourceSha256": "63aeca2f67f89e885b52e8c8edef0e43ca36be7ee2baf4d6bcb5c66b7b839a9c",
+      "sha256": "0c9ce55e44e2e0061a86093679845ab7b9c32ebade461daa781a0ffa1140c2d4",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "sourceSha256": "c33479ba5a6ab8c7cf8812ccb5dea5dc78a3395bea78599fdc7a4b98c342322b",
+      "sha256": "62774c2be101f124a938accb46338bf2632c11b96aa618e297bafb8311e2f373",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/README.md",
+      "sourceSha256": "41d7133a64ba2eda6d5edc7a4e16afdb845082bd6a9a916709045a651834d8c0",
+      "sha256": "41d7133a64ba2eda6d5edc7a4e16afdb845082bd6a9a916709045a651834d8c0",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/stitch-v5.css",
+      "sourceSha256": "007d1f67e118640a47c975559dcb48ec1dc95aea14533749bf4021f07b17816c",
+      "sha256": "007d1f67e118640a47c975559dcb48ec1dc95aea14533749bf4021f07b17816c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v5-famille/stitch-v5.js",
+      "sourceSha256": "852b7e780cc09061735791b656a99af761e0e23dea13e5982ed27e2e97b3e211",
+      "sha256": "852b7e780cc09061735791b656a99af761e0e23dea13e5982ed27e2e97b3e211",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/.gitignore",
+      "sourceSha256": "77505d9b593eea548eeb0da5b557a3d33cfb953f562ea89fb3eb46832f48ac58",
+      "sha256": "77505d9b593eea548eeb0da5b557a3d33cfb953f562ea89fb3eb46832f48ac58",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-gryffindor.png",
+      "sourceSha256": "7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c",
+      "sha256": "7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-hufflepuff.png",
+      "sourceSha256": "221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4",
+      "sha256": "221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-ravenclaw.png",
+      "sourceSha256": "77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d",
+      "sha256": "77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-slytherin.png",
+      "sourceSha256": "a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9",
+      "sha256": "a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/ceremony-v2/provenance.json",
+      "sourceSha256": "76af9678feb63744dbc0df78c3d9ef8a828c1859476d8d4f15794eb3528b00c7",
+      "sha256": "76af9678feb63744dbc0df78c3d9ef8a828c1859476d8d4f15794eb3528b00c7",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/ceremony-v2/sorting-hat-cinematic.png",
+      "sourceSha256": "0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9",
+      "sha256": "0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/contracts/DESIGN.md",
+      "sourceSha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/contracts/provenance.json",
+      "sourceSha256": "097d47f0abf339b5b4ba8c9f335afd159865e95febe50f1f27d5fdd509181475",
+      "sha256": "097d47f0abf339b5b4ba8c9f335afd159865e95febe50f1f27d5fdd509181475",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/contracts/screen.png",
+      "sourceSha256": "118991cd5a26f5454813c679f533c0f61b32c9f2b46d3f2aa81e08794b7222e2",
+      "sha256": "118991cd5a26f5454813c679f533c0f61b32c9f2b46d3f2aa81e08794b7222e2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/1c3152d8c635061f.png",
+      "sourceSha256": "e8577aba54a5014bf98e00a6ac9ce34fd927e50ca5cb74d793e7c2b49548bc6e",
+      "sha256": "e8577aba54a5014bf98e00a6ac9ce34fd927e50ca5cb74d793e7c2b49548bc6e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/25a463fd2771be57.png",
+      "sourceSha256": "6458f2a30b166b89e3fee344dc0eced5781c0aeecc4450edd325333a454db862",
+      "sha256": "6458f2a30b166b89e3fee344dc0eced5781c0aeecc4450edd325333a454db862",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/33b29d4174680c84.png",
+      "sourceSha256": "1961581b1a81d5948b47816edee42b745d931ca8c30019272d784304a890592e",
+      "sha256": "1961581b1a81d5948b47816edee42b745d931ca8c30019272d784304a890592e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/411c4fd33a335f0b.png",
+      "sourceSha256": "8edef1286d0d990704c719452425a6af7d3933bf8b094c9a93df1adefbec9584",
+      "sha256": "8edef1286d0d990704c719452425a6af7d3933bf8b094c9a93df1adefbec9584",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/44f3839e115c1436.png",
+      "sourceSha256": "4d25fb9125512b74012ddac71de54f585524bc8b8f5cd1bbe6738de5bab1a819",
+      "sha256": "4d25fb9125512b74012ddac71de54f585524bc8b8f5cd1bbe6738de5bab1a819",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/7455f5f132ae110c.png",
+      "sourceSha256": "8c880db8adf0778b3e0d4e0edaee052ac79f18cf91f54dfc978cff566c59d1f6",
+      "sha256": "8c880db8adf0778b3e0d4e0edaee052ac79f18cf91f54dfc978cff566c59d1f6",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/79c03c9c7f248a66.png",
+      "sourceSha256": "3d782e5873330951754240898d560a93a659be449e2a19f63af9f0c9c72b3929",
+      "sha256": "3d782e5873330951754240898d560a93a659be449e2a19f63af9f0c9c72b3929",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/91f3e451526cd098.png",
+      "sourceSha256": "e516c39659ea49e8f94908d31db6fb55ef880a0674b09947aaa08817f35a5763",
+      "sha256": "e516c39659ea49e8f94908d31db6fb55ef880a0674b09947aaa08817f35a5763",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/96caff504cc8a518.png",
+      "sourceSha256": "9574150b6d671c8ab370ad0d92fdccb54495b59f45e62a865ad8ed49d345df10",
+      "sha256": "9574150b6d671c8ab370ad0d92fdccb54495b59f45e62a865ad8ed49d345df10",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/b6fc15f0728183f4.jpg",
+      "sourceSha256": "8b1da01ab272ab308f72e294867a4004303c337bb1cec7ae8d514cf6480193e9",
+      "sha256": "8b1da01ab272ab308f72e294867a4004303c337bb1cec7ae8d514cf6480193e9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/bd6f1839b15bf1d4.png",
+      "sourceSha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd",
+      "sha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/c0af9c778273ce32.png",
+      "sourceSha256": "c47613e46cfe8ed8a6d716968a7c8f73eb5bf6aefdd65c3f38bb5cb583dc8f0c",
+      "sha256": "c47613e46cfe8ed8a6d716968a7c8f73eb5bf6aefdd65c3f38bb5cb583dc8f0c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/cadb4649e000962f.png",
+      "sourceSha256": "99c34b160c4179acb3d8227d3270451a85a07963ffad40ffcd022fd0daa0dc14",
+      "sha256": "99c34b160c4179acb3d8227d3270451a85a07963ffad40ffcd022fd0daa0dc14",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/e07-courses.png",
+      "sourceSha256": "c9dc299237cd1d83eb28cd6bccccd64455faeefac6267fa5c9645b493727d368",
+      "sha256": "c9dc299237cd1d83eb28cd6bccccd64455faeefac6267fa5c9645b493727d368",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/e07-taverne.png",
+      "sourceSha256": "0c9e6100d63284219fe025e523b82624508a7a9bb48504367c10720045ed44dc",
+      "sha256": "0c9e6100d63284219fe025e523b82624508a7a9bb48504367c10720045ed44dc",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/eac13a603be86c38.png",
+      "sourceSha256": "22366dda6499acca0679ac83853f9e77c7e52c0bc0dc1677dde9b90ff19bda00",
+      "sha256": "22366dda6499acca0679ac83853f9e77c7e52c0bc0dc1677dde9b90ff19bda00",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/ecfc2985e0a97417.png",
+      "sourceSha256": "f8cd4ce4f6d6196071c4cc9a8c90e4c67bc9a1b666f9da72bf67a83ea67a13b3",
+      "sha256": "f8cd4ce4f6d6196071c4cc9a8c90e4c67bc9a1b666f9da72bf67a83ea67a13b3",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/f4175b552cdaba2d.png",
+      "sourceSha256": "15256a1189bc2cdddbf14657b94e323e21db9af07759a8013ef8b5ece4defce9",
+      "sha256": "15256a1189bc2cdddbf14657b94e323e21db9af07759a8013ef8b5ece4defce9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/provenance.json",
+      "sourceSha256": "a9ce8fc495d32d0b3ff4548d3b95b4dd40b2b86513c414ec9b48f214a248c5da",
+      "sha256": "a9ce8fc495d32d0b3ff4548d3b95b4dd40b2b86513c414ec9b48f214a248c5da",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/0e50f1fb5b71b880.png",
+      "sourceSha256": "729ea2122e79e61cf632657be326104277bc27ead206a8475a464ae64c8e0494",
+      "sha256": "729ea2122e79e61cf632657be326104277bc27ead206a8475a464ae64c8e0494",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/283e1b96f14bb01d.png",
+      "sourceSha256": "dc93bc73162acd467bda9e2afc229003253065dccc13d2edf8236306a6a66b01",
+      "sha256": "dc93bc73162acd467bda9e2afc229003253065dccc13d2edf8236306a6a66b01",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/370c6bcf7554812d.png",
+      "sourceSha256": "431e3e76ae1c10dd9a0ea03f79bb6584e1a95a532538a12fc3c4db4fdd43476a",
+      "sha256": "431e3e76ae1c10dd9a0ea03f79bb6584e1a95a532538a12fc3c4db4fdd43476a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/3c3243716c4164ba.png",
+      "sourceSha256": "968d25373071fee5e16d709aad06a2d5dc40328ef0292b914ccdfd282a0800bf",
+      "sha256": "968d25373071fee5e16d709aad06a2d5dc40328ef0292b914ccdfd282a0800bf",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/401a3e654a78d6e5.png",
+      "sourceSha256": "2624d4eea5bdeb9b02b562ecccc7095fb87f0d742cabf6f2946a6592816d7a20",
+      "sha256": "2624d4eea5bdeb9b02b562ecccc7095fb87f0d742cabf6f2946a6592816d7a20",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/4407e3661574febc.png",
+      "sourceSha256": "aa5de986c3c4d95f6e92f9b0eb08dd539524bbd8eab7484100d01cac4e1f23ec",
+      "sha256": "aa5de986c3c4d95f6e92f9b0eb08dd539524bbd8eab7484100d01cac4e1f23ec",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/5d99d9b06f2a8293.png",
+      "sourceSha256": "b77e2abf018c5761ae8c9bde22a095d609b85d7a89e98a2f54ce72cc68c613c2",
+      "sha256": "b77e2abf018c5761ae8c9bde22a095d609b85d7a89e98a2f54ce72cc68c613c2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/6d48c17ac7ffc7ae.png",
+      "sourceSha256": "5447ad59eda1ac36ad9e1ba83c4c5e9f4a6e7ed872fa05a4d4c0991d4999cfec",
+      "sha256": "5447ad59eda1ac36ad9e1ba83c4c5e9f4a6e7ed872fa05a4d4c0991d4999cfec",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/6fdc4ce37fb18361.png",
+      "sourceSha256": "cc82dd0cafc0300b4181c86944cf6dc28fcdc6ce58972eb636c8782a0416db27",
+      "sha256": "cc82dd0cafc0300b4181c86944cf6dc28fcdc6ce58972eb636c8782a0416db27",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/707d13f02491c7ce.png",
+      "sourceSha256": "ac99a622c583531f91694d5a0c234a5e8c50699605e323404076856b21408d5c",
+      "sha256": "ac99a622c583531f91694d5a0c234a5e8c50699605e323404076856b21408d5c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/76a255fd5a8c808b.png",
+      "sourceSha256": "4f3b246187f74aebc2498f4422b2705bf08eb6aed99abacf6bbb9a74bba07703",
+      "sha256": "4f3b246187f74aebc2498f4422b2705bf08eb6aed99abacf6bbb9a74bba07703",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/788c0da7f5e7a377.png",
+      "sourceSha256": "aea8e06a64e962180eb18572ab61245d57529f1c4c5193b4170ccbed4a5ca979",
+      "sha256": "aea8e06a64e962180eb18572ab61245d57529f1c4c5193b4170ccbed4a5ca979",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/898952d2a8a825ef.png",
+      "sourceSha256": "821de6ca2cf25deeed4055e86394b21de1ebb93e30701cb5601a8a1913ed2e1a",
+      "sha256": "821de6ca2cf25deeed4055e86394b21de1ebb93e30701cb5601a8a1913ed2e1a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/930edce92bde5607.png",
+      "sourceSha256": "51a4855cc925fded9f7409b27d2e28a129759b941dcc971a777732c3ca3ad0a1",
+      "sha256": "51a4855cc925fded9f7409b27d2e28a129759b941dcc971a777732c3ca3ad0a1",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/9e75f74eb70019d4.png",
+      "sourceSha256": "f2892e49217fcc67fac32062e9ce50746a917140198e6f90ab0af5c7bbd4bede",
+      "sha256": "f2892e49217fcc67fac32062e9ce50746a917140198e6f90ab0af5c7bbd4bede",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/a82277b23ffe0699.png",
+      "sourceSha256": "ae234c56e7e974d62cd0fdee84fb73b83dea27be8568171a778ad08138c7d308",
+      "sha256": "ae234c56e7e974d62cd0fdee84fb73b83dea27be8568171a778ad08138c7d308",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/aec877a25204aef6.png",
+      "sourceSha256": "1a731a01636945c70eaaad21595f5bd4edb61edb5ee18f0b8c08e4000c66b3ff",
+      "sha256": "1a731a01636945c70eaaad21595f5bd4edb61edb5ee18f0b8c08e4000c66b3ff",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/b999ce0bd789b6cf.png",
+      "sourceSha256": "17cd64931ae634c6a5598f8620b40f20d15b8554ca09388aa53ab80da67373e8",
+      "sha256": "17cd64931ae634c6a5598f8620b40f20d15b8554ca09388aa53ab80da67373e8",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/caa6414670f39e2d.png",
+      "sourceSha256": "077b8ee855014f1de8cca97620a30ed824af9930a74dab98fda6a1466391741b",
+      "sha256": "077b8ee855014f1de8cca97620a30ed824af9930a74dab98fda6a1466391741b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/d1a4e42fcbd659c0.png",
+      "sourceSha256": "19205cad028bf0aee15efc835374a90b4b12a950ee1b704d0b483d349962f49b",
+      "sha256": "19205cad028bf0aee15efc835374a90b4b12a950ee1b704d0b483d349962f49b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/eca64203105ce74f.png",
+      "sourceSha256": "3fde3c22baf0774a104d62bdf5d0316b33496a16c63117f6d3181a493010d9a2",
+      "sha256": "3fde3c22baf0774a104d62bdf5d0316b33496a16c63117f6d3181a493010d9a2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/f716686f37af135b.png",
+      "sourceSha256": "a808ccf3748df10cc6035aafb793629311586234d9d2ef2feb3940ccaecb0de2",
+      "sha256": "a808ccf3748df10cc6035aafb793629311586234d9d2ef2feb3940ccaecb0de2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/fab2d35f6d2d8f74.png",
+      "sourceSha256": "0310afee969f2702ed456389589116259f3c0bc5782bcd2d36691e709d54b8ae",
+      "sha256": "0310afee969f2702ed456389589116259f3c0bc5782bcd2d36691e709d54b8ae",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/fallback-salon.png",
+      "sourceSha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e",
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/fe22c2bef3104f64.png",
+      "sourceSha256": "6fe53bfdf7ba86eefcc15dc25ce645c9addabea00f13809f1aceecb13ebe4fa2",
+      "sha256": "6fe53bfdf7ba86eefcc15dc25ce645c9addabea00f13809f1aceecb13ebe4fa2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/provenance.json",
+      "sourceSha256": "a540af8477116d11078075702efcf8d7bdbdbd9a00f78bebb7dc3d6bf063f548",
+      "sha256": "a540af8477116d11078075702efcf8d7bdbdbd9a00f78bebb7dc3d6bf063f548",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/fra.traineddata.gz",
+      "sourceSha256": "1c0916fac2dbd6f121ca8a57a92f08e4a119227602c7c984da986222eab6cd3b",
+      "sha256": "1c0916fac2dbd6f121ca8a57a92f08e4a119227602c7c984da986222eab6cd3b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-language-data.txt",
+      "sourceSha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-pdfjs.txt",
+      "sourceSha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-tesseract-core.txt",
+      "sourceSha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-tesseract.txt",
+      "sourceSha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/pdf.min.js",
+      "sourceSha256": "5b5799e6f8c680663207ac5b42ee14eed2a406fa7af48f50c154f0c0b1566946",
+      "sha256": "5b5799e6f8c680663207ac5b42ee14eed2a406fa7af48f50c154f0c0b1566946",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/pdf.worker.min.js",
+      "sourceSha256": "feabdf309770ed24bba31a5467836cdc8cf639c705af27d52b585b041bb8527b",
+      "sha256": "feabdf309770ed24bba31a5467836cdc8cf639c705af27d52b585b041bb8527b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/provenance.json",
+      "sourceSha256": "e03d0ad611cfe3a7bd90ad40100a09a19f9270baa87a7ee8b8b061013334bee1",
+      "sha256": "e03d0ad611cfe3a7bd90ad40100a09a19f9270baa87a7ee8b8b061013334bee1",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/README.md",
+      "sourceSha256": "8b6f86c2e1b61f9cd38c645727eee5f6b220f724ce981be86bd299159635e492",
+      "sha256": "8b6f86c2e1b61f9cd38c645727eee5f6b220f724ce981be86bd299159635e492",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract-core-lstm.wasm",
+      "sourceSha256": "5db58ea4d1bd4256be81e8ae3b4fa226c4625dfba1850b1b3308dbf3700e9929",
+      "sha256": "5db58ea4d1bd4256be81e8ae3b4fa226c4625dfba1850b1b3308dbf3700e9929",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract-core-lstm.wasm.js",
+      "sourceSha256": "8f04aa0cc81e7bde33f80e92fa01a7a665f0b4884d098acf5de9c7104a11dfaa",
+      "sha256": "8f04aa0cc81e7bde33f80e92fa01a7a665f0b4884d098acf5de9c7104a11dfaa",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract.min.js",
+      "sourceSha256": "a8e29918d098b2b06e1012bdaeffb4aec0445c5d5654709023e0bd1f442a80e8",
+      "sha256": "a8e29918d098b2b06e1012bdaeffb4aec0445c5d5654709023e0bd1f442a80e8",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract.min.js.LICENSE.txt",
+      "sourceSha256": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2",
+      "sha256": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/worker.min.js",
+      "sourceSha256": "aca1229639fc9907d86f96e825955a2b7c5716d17f3bc3acd71f9c7ab66181fc",
+      "sha256": "aca1229639fc9907d86f96e825955a2b7c5716d17f3bc3acd71f9c7ab66181fc",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/magic/avatars.png",
+      "sourceSha256": "ee8454034a57ce8f7e57d3da20e91b1a0fc121e5f9e88cec0c13c6119838d2bf",
+      "sha256": "ee8454034a57ce8f7e57d3da20e91b1a0fc121e5f9e88cec0c13c6119838d2bf",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/magic/patronuses.png",
+      "sourceSha256": "d5cfbc8a1eb77c015bf826af4d3b833013434fc3008e40ab83e1bacb54fa6acf",
+      "sha256": "d5cfbc8a1eb77c015bf826af4d3b833013434fc3008e40ab83e1bacb54fa6acf",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/material-symbols-full.ttf",
+      "sourceSha256": "b499b3b2d26f67c13f8e017815a5200591711946c64677ff2f5259272e0646d3",
+      "sha256": "b499b3b2d26f67c13f8e017815a5200591711946c64677ff2f5259272e0646d3",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/material-symbols-LICENSE.txt",
+      "sourceSha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/cinzel-OFL.txt",
+      "sourceSha256": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83",
+      "sha256": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/cinzel.ttf",
+      "sourceSha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34",
+      "sha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/jakarta-OFL.txt",
+      "sourceSha256": "995c7199cab65954f545996326755daee7b63cc6b42b06c13da1f9502ab08a99",
+      "sha256": "995c7199cab65954f545996326755daee7b63cc6b42b06c13da1f9502ab08a99",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/jakarta.ttf",
+      "sourceSha256": "89b3fb38aa0d275d7a731d0d817a4f1622b316b4d7fbdedcf02ee9099ff68bc8",
+      "sha256": "89b3fb38aa0d275d7a731d0d817a4f1622b316b4d7fbdedcf02ee9099ff68bc8",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/provenance.json",
+      "sourceSha256": "26b20f05786439c54ce193c8ff77d07b1e1f8a2c25612f5789194367efcf16ce",
+      "sha256": "26b20f05786439c54ce193c8ff77d07b1e1f8a2c25612f5789194367efcf16ce",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/provenance.json",
+      "sourceSha256": "7f89aa1db742760931f04a02f8aba737d473c59bfb97807a8163ee3a3a44c01e",
+      "sha256": "7f89aa1db742760931f04a02f8aba737d473c59bfb97807a8163ee3a3a44c01e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/ritual-hearth-original.png",
+      "sourceSha256": "9f018aece060b32b88da7a969c67d4656be279d1176c93eb993bdee35420fc0f",
+      "sha256": "9f018aece060b32b88da7a969c67d4656be279d1176c93eb993bdee35420fc0f",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/ritual-hearth-original.provenance.json",
+      "sourceSha256": "d081daa98d8438b580100422d7b126a32c81f3bd8ef84fa1557a53ab234a8eab",
+      "sha256": "d081daa98d8438b580100422d7b126a32c81f3bd8ef84fa1557a53ab234a8eab",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.provenance.json",
+      "sourceSha256": "6ba16ddfc6a1bcabeac9a6d43a8645b66ff6ce17da5052d3769172219234953d",
+      "sha256": "6ba16ddfc6a1bcabeac9a6d43a8645b66ff6ce17da5052d3769172219234953d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.svg",
+      "sourceSha256": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f",
+      "sha256": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/soul-mirror.jpg",
+      "sourceSha256": "04aaf1d77ab1129639d7026a1411da910381388115546f86c91d1a76c7fc29fa",
+      "sha256": "04aaf1d77ab1129639d7026a1411da910381388115546f86c91d1a76c7fc29fa",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/1821694e91cb7863.png",
+      "sourceSha256": "020440ec8c3ce247814326700e327c27f94e45219a4bffd904b9d0667874a743",
+      "sha256": "020440ec8c3ce247814326700e327c27f94e45219a4bffd904b9d0667874a743",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/22ba5f9432936daa.png",
+      "sourceSha256": "9675a31e6f0b5685b2be46ccbd0c6e778d6a2c4ba26099cc13350c4f5dd67f95",
+      "sha256": "9675a31e6f0b5685b2be46ccbd0c6e778d6a2c4ba26099cc13350c4f5dd67f95",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/3ae0536972df1e8a.png",
+      "sourceSha256": "1eb7415282309335ac84a45fafe5dacdff45ea9fef78b743f32e151a0701f289",
+      "sha256": "1eb7415282309335ac84a45fafe5dacdff45ea9fef78b743f32e151a0701f289",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/41aa60c1babe2637.png",
+      "sourceSha256": "03d5138ed6621328620075949283366c9a411b4411b4235255336826880880c1",
+      "sha256": "03d5138ed6621328620075949283366c9a411b4411b4235255336826880880c1",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/41e997ebd3dbb0da.png",
+      "sourceSha256": "2d81b25fb96c0b076b4023505baad42afcac5bd5fd36ecf55e3356a821480451",
+      "sha256": "2d81b25fb96c0b076b4023505baad42afcac5bd5fd36ecf55e3356a821480451",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/44f9b4929d4a432e.png",
+      "sourceSha256": "4b53e1dc3917f52748fb2e8ff8edae248dcfb1e288da62be77d6fc0d51ec3dca",
+      "sha256": "4b53e1dc3917f52748fb2e8ff8edae248dcfb1e288da62be77d6fc0d51ec3dca",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/49a11791bddb2e97.png",
+      "sourceSha256": "ea178840b6c6b4f41d5317d9feb9e572a48478157154a5cdee331f47592a5f17",
+      "sha256": "ea178840b6c6b4f41d5317d9feb9e572a48478157154a5cdee331f47592a5f17",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/4cff687f2b21ba30.png",
+      "sourceSha256": "875ffbf7fdca67c17de8612ce44a209b998172f84f92783c15a1c7e224d3208b",
+      "sha256": "875ffbf7fdca67c17de8612ce44a209b998172f84f92783c15a1c7e224d3208b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/6da70099dffa5659.png",
+      "sourceSha256": "aaa86b67000088c153a43990af7a8db57d554602cc7d11b7a38c39dc64c63797",
+      "sha256": "aaa86b67000088c153a43990af7a8db57d554602cc7d11b7a38c39dc64c63797",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/817ba58754f5c34a.png",
+      "sourceSha256": "72ee9dc25361f3baf9269435c21222dbab6384afe19c0fd6979c79e4c89bb426",
+      "sha256": "72ee9dc25361f3baf9269435c21222dbab6384afe19c0fd6979c79e4c89bb426",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/83455346414e2153.png",
+      "sourceSha256": "85476d2c63ccc862b85d96fcee359c83c3174bc226516babd1b317682d1583b2",
+      "sha256": "85476d2c63ccc862b85d96fcee359c83c3174bc226516babd1b317682d1583b2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/83e722e4a976a383.png",
+      "sourceSha256": "6328ddc7a35728135b56f77761773b333cff161085105085838f72e58d8011a5",
+      "sha256": "6328ddc7a35728135b56f77761773b333cff161085105085838f72e58d8011a5",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/90a727402f43a4cb.png",
+      "sourceSha256": "ba2f61aeb23e18f341cb9cdc69ab4056d36fde82afbaef969af12fece1b4e1c4",
+      "sha256": "ba2f61aeb23e18f341cb9cdc69ab4056d36fde82afbaef969af12fece1b4e1c4",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/967afc27aee01ad2.png",
+      "sourceSha256": "7771d25cf4c1a0dce224534cabf07a561b9299f1c19059702ef0a73cc73d9283",
+      "sha256": "7771d25cf4c1a0dce224534cabf07a561b9299f1c19059702ef0a73cc73d9283",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/acf7452264b4b6b5.png",
+      "sourceSha256": "668c385a9e9088283817affd5311fe3c811042af8c56f06bea5361c577924313",
+      "sha256": "668c385a9e9088283817affd5311fe3c811042af8c56f06bea5361c577924313",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/bb2c699919893514.png",
+      "sourceSha256": "7d993df8cc6f4534c3625278aebfc0aab6211e2e255ac9c9e10f58eb0de82942",
+      "sha256": "7d993df8cc6f4534c3625278aebfc0aab6211e2e255ac9c9e10f58eb0de82942",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/c3ff285a8558e584.png",
+      "sourceSha256": "f11140717967096952dda61d003219be336c22e5f6d86c697d978aa4706e3f16",
+      "sha256": "f11140717967096952dda61d003219be336c22e5f6d86c697d978aa4706e3f16",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/e272634cf3c9749c.png",
+      "sourceSha256": "6aef0dcf714c4253a0df2d4d27b280da7888c722f658ccb25dfa462276d77675",
+      "sha256": "6aef0dcf714c4253a0df2d4d27b280da7888c722f658ccb25dfa462276d77675",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/f47be223d477b6a8.png",
+      "sourceSha256": "5887d2e13075b169fbc1f6f3d2a8e0ade497286501b1ba845aa39b3a5f4c0933",
+      "sha256": "5887d2e13075b169fbc1f6f3d2a8e0ade497286501b1ba845aa39b3a5f4c0933",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/fallback-salon.png",
+      "sourceSha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e",
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/provenance.json",
+      "sourceSha256": "9680feb584452f5b784894fc7826ebc7561b8e7cc7abae90969673b85aa5810d",
+      "sha256": "9680feb584452f5b784894fc7826ebc7561b8e7cc7abae90969673b85aa5810d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/assets/review-avatars-20261111/portraits-09-24.png",
+      "sourceSha256": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9",
+      "sha256": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/avatar-catalogue-review.js",
+      "sourceSha256": "ffdc1d3f61cd675134bc34824641200e789ec6d14292c266f0dce0bbd4c17088",
+      "sha256": "ffdc1d3f61cd675134bc34824641200e789ec6d14292c266f0dce0bbd4c17088",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/avatar-selector-review.css",
+      "sourceSha256": "18102acbfb8422304906b57a639bcbab004104527ec5f06b529091502fa34b3a",
+      "sha256": "18102acbfb8422304906b57a639bcbab004104527ec5f06b529091502fa34b3a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/avatar-selector-review.js",
+      "sourceSha256": "fc649b1fde68d46d7d4b360878f2836011afddc9158d09260cc64deea0d633d4",
+      "sha256": "fc649b1fde68d46d7d4b360878f2836011afddc9158d09260cc64deea0d633d4",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/bridge.js",
+      "sourceSha256": "bd38906782a9a08e857848fa26c27eb53d60df733d4998e6362bf7af3dab85a9",
+      "sha256": "bd38906782a9a08e857848fa26c27eb53d60df733d4998e6362bf7af3dab85a9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/build-cuisine.cjs",
+      "sourceSha256": "4f516c4275cc34aa6691243d076b8643dfe4fdd605f82e47fd28e1c8458140af",
+      "sha256": "4f516c4275cc34aa6691243d076b8643dfe4fdd605f82e47fd28e1c8458140af",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/build-family.cjs",
+      "sourceSha256": "34c7bd394774a075012031900d9ceb46409fc38d9df074872872f334d7fafae7",
+      "sha256": "34c7bd394774a075012031900d9ceb46409fc38d9df074872872f334d7fafae7",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/build-onboarding.cjs",
+      "sourceSha256": "30ea70edaefdb4e2717256f999563b8b5a03c7814d8ed1219ae4b158578ce4c6",
+      "sha256": "30ea70edaefdb4e2717256f999563b8b5a03c7814d8ed1219ae4b158578ce4c6",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/build-register.cjs",
+      "sourceSha256": "ced359c80785f21b80fd3ed235ff79687f4621e497eb55636854eb9ac4badf43",
+      "sha256": "ced359c80785f21b80fd3ed235ff79687f4621e497eb55636854eb9ac4badf43",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/build-source.cjs",
+      "sourceSha256": "db5b9e3c7a2aa8aad46fbcf25fa27d2cbf67c402eb1343ed38ca35f07a5086f3",
+      "sha256": "db5b9e3c7a2aa8aad46fbcf25fa27d2cbf67c402eb1343ed38ca35f07a5086f3",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/ceremony-art.css",
+      "sourceSha256": "467cc8cbedeea257bd83644b438d8a125486a6380ee514771f1f7902f272d406",
+      "sha256": "467cc8cbedeea257bd83644b438d8a125486a6380ee514771f1f7902f272d406",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/ceremony-art.js",
+      "sourceSha256": "0b843f41a7ea939215fd0e265efc915f2c8ad3b671fe4f02905f25fe105c4e11",
+      "sha256": "0b843f41a7ea939215fd0e265efc915f2c8ad3b671fe4f02905f25fe105c4e11",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "sourceSha256": "64ed2f347cf261d68522f86d626f142e0a5b46a883288bfb81fb7c416a07dbe7",
+      "sha256": "64ed2f347cf261d68522f86d626f142e0a5b46a883288bfb81fb7c416a07dbe7",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/chat.css",
+      "sourceSha256": "19a6bbb1d7b5dda6d98bc4a761029ff297bdc91f00a914f4a1b31bbc26c601c0",
+      "sha256": "19a6bbb1d7b5dda6d98bc4a761029ff297bdc91f00a914f4a1b31bbc26c601c0",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/chat.js",
+      "sourceSha256": "18309df50b6d9651fe0e87ccbf28987aa36e10e4b4e5b30d1d884a9eee10a977",
+      "sha256": "18309df50b6d9651fe0e87ccbf28987aa36e10e4b4e5b30d1d884a9eee10a977",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/chrome-source.html",
+      "sourceSha256": "2a61515a534d7c11eaf6bd708e8252b5b1d4c85d1b3481f90aed63f94cdd25ca",
+      "sha256": "2a61515a534d7c11eaf6bd708e8252b5b1d4c85d1b3481f90aed63f94cdd25ca",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/chrome.css",
+      "sourceSha256": "a0ccca0c24cd6512c42d26f68c77ac4bf61c894d5f5d8f22f0b915b74b170ebf",
+      "sha256": "a0ccca0c24cd6512c42d26f68c77ac4bf61c894d5f5d8f22f0b915b74b170ebf",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/chrome.js",
+      "sourceSha256": "77bea89bfe71f02ea570a0b6efcb5b221d8c5eeac7ed6732fecd817c5de2446a",
+      "sha256": "77bea89bfe71f02ea570a0b6efcb5b221d8c5eeac7ed6732fecd817c5de2446a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/ci-scope.json",
+      "sourceSha256": "4162fec6e8f0aaa9cb778880dcbf4344db026608eaaac78f296fd1b69d7ebdf3",
+      "sha256": "4162fec6e8f0aaa9cb778880dcbf4344db026608eaaac78f296fd1b69d7ebdf3",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/consolidation.css",
+      "sourceSha256": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "sha256": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.css",
+      "sourceSha256": "e7b5b2bbcb3e35bc1f0430a4550560f980b2989afa4f39199dd562226547ea16",
+      "sha256": "e7b5b2bbcb3e35bc1f0430a4550560f980b2989afa4f39199dd562226547ea16",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.js",
+      "sourceSha256": "77f404993a26d3a17b0d0aa8c09cbd162e69ad81e7b5a7904eec33f3f08f516b",
+      "sha256": "77f404993a26d3a17b0d0aa8c09cbd162e69ad81e7b5a7904eec33f3f08f516b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-engine.js",
+      "sourceSha256": "058b173e54f51a0e31ca946f8c92a02a9756987172eb5568afe2cbd6eaa1800e",
+      "sha256": "058b173e54f51a0e31ca946f8c92a02a9756987172eb5568afe2cbd6eaa1800e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-list.js",
+      "sourceSha256": "c80907d0508e34e70713e295409df39ba7621d7f3b2f84ce36bcaaa41ccb2412",
+      "sha256": "c80907d0508e34e70713e295409df39ba7621d7f3b2f84ce36bcaaa41ccb2412",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-routes.json",
+      "sourceSha256": "8dc7a94bb6d2e168515925d83a33d5ef13424a5ea66040075b5a60c4b34dd78d",
+      "sha256": "8dc7a94bb6d2e168515925d83a33d5ef13424a5ea66040075b5a60c4b34dd78d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine.css",
+      "sourceSha256": "ac69388a3d7dc6d00681a38addbd95d0c635fc5e3d76a78e183e5af4d1d837bb",
+      "sha256": "ac69388a3d7dc6d00681a38addbd95d0c635fc5e3d76a78e183e5af4d1d837bb",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/cuisine.js",
+      "sourceSha256": "590de804d912a5e02a1a7b6a432b93c6ef0a112afc1eae8b1f470c371c59ecdd",
+      "sha256": "590de804d912a5e02a1a7b6a432b93c6ef0a112afc1eae8b1f470c371c59ecdd",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/data/onboarding-scoring-v1.json",
+      "sourceSha256": "ef033928f193d0c526092deac25a9a72f1cfc3f7c07bdb01cf75546e21e7e515",
+      "sha256": "ef033928f193d0c526092deac25a9a72f1cfc3f7c07bdb01cf75546e21e7e515",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/documents-register.js",
+      "sourceSha256": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a",
+      "sha256": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/engine-policy.js",
+      "sourceSha256": "84628209c7709cbd239c35c101c1f1ffcfc6cf16d7bd04f82c0d28265eeed985",
+      "sha256": "84628209c7709cbd239c35c101c1f1ffcfc6cf16d7bd04f82c0d28265eeed985",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/famille.html",
+      "sourceSha256": "14fb87320b1ccc30387e355b12c17a7d1e4133ab09dc639a2718905b1648ff4d",
+      "sha256": "483eb2cabf6775385d1a51f58a55195caa680bb9cb9d77b3b6c85ae61ddb11f2",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "sourceSha256": "9fe463cc72b1938cfdc381f6f47fef9d96f43ba5a71364b27f15a0ea7eedb37a",
+      "sha256": "9fe463cc72b1938cfdc381f6f47fef9d96f43ba5a71364b27f15a0ea7eedb37a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/family-register.js",
+      "sourceSha256": "74e95e25a8688c6bfb225c9c5ce600abd4476678516c845a074b7577bb4ccce3",
+      "sha256": "74e95e25a8688c6bfb225c9c5ce600abd4476678516c845a074b7577bb4ccce3",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/family-routes.json",
+      "sourceSha256": "1856ef04d6622f4815618741b9bc0ace20fb20572d8b5727c863eb63c4e4d7ec",
+      "sha256": "1856ef04d6622f4815618741b9bc0ace20fb20572d8b5727c863eb63c4e4d7ec",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/family.css",
+      "sourceSha256": "8f26978e90a16941ae31285d87684edf6644ca0e1ef47cf25e96d6d794d47def",
+      "sha256": "8f26978e90a16941ae31285d87684edf6644ca0e1ef47cf25e96d6d794d47def",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/family.js",
+      "sourceSha256": "63af41c023cb843d2bd86181233e2e1ccb8f244e0e4d160cec782bf89374b5db",
+      "sha256": "63af41c023cb843d2bd86181233e2e1ccb8f244e0e4d160cec782bf89374b5db",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/fetch-register-assets.cjs",
+      "sourceSha256": "fff971a4e8c479b33b4470765581a52011462c03ecda0484de750faa51939697",
+      "sha256": "fff971a4e8c479b33b4470765581a52011462c03ecda0484de750faa51939697",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/home-consolidation.css",
+      "sourceSha256": "230caf9c7a39c8e797787a597cc07c8d5f6bd9d270ddf32be812dfdaf5a63b61",
+      "sha256": "230caf9c7a39c8e797787a597cc07c8d5f6bd9d270ddf32be812dfdaf5a63b61",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/home.js",
+      "sourceSha256": "7ad840bc5cd7ffcc8927496e664be426c24b5d2c34afe0b7aa965a7783bbc520",
+      "sha256": "7ad840bc5cd7ffcc8927496e664be426c24b5d2c34afe0b7aa965a7783bbc520",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/house-register.js",
+      "sourceSha256": "e830eddcaed5ed199597b28e0a93b8c545b7b7715aeee7764dfea01e5eed4e94",
+      "sha256": "e830eddcaed5ed199597b28e0a93b8c545b7b7715aeee7764dfea01e5eed4e94",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/import-runtime.js",
+      "sourceSha256": "0f63752ec1d5e5c50085013b15d3c5582d759bc8c4df0efcddd3db41ec6faa06",
+      "sha256": "0f63752ec1d5e5c50085013b15d3c5582d759bc8c4df0efcddd3db41ec6faa06",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/index.html",
+      "sourceSha256": "1209726cb77a659143f3659b0ef2a31dc0be30278005ceb8e25b6c6445da3c4c",
+      "sha256": "718fcc388eb8b9d7637f4bc9e7b498f3a293c2b9878fab1b866f630cbf0d7bce",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/magic-content.js",
+      "sourceSha256": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "sha256": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/magic-profile.css",
+      "sourceSha256": "41bc6a8365952f61a4de0494b97143bd1042d11d753a80bd015da59592e4fbcf",
+      "sha256": "41bc6a8365952f61a4de0494b97143bd1042d11d753a80bd015da59592e4fbcf",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/magic-profile.js",
+      "sourceSha256": "f64fbf7767c1f8351d8c4147085649a4b1b754bab0f60573d593db521f1eabe8",
+      "sha256": "f64fbf7767c1f8351d8c4147085649a4b1b754bab0f60573d593db521f1eabe8",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/member-avatar.css",
+      "sourceSha256": "993ec7dbca47727f3d1a18fff5c1a9ffc899e93c8906df4e67449d59166ee62e",
+      "sha256": "993ec7dbca47727f3d1a18fff5c1a9ffc899e93c8906df4e67449d59166ee62e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/member-avatar.js",
+      "sourceSha256": "bf573fc6a4b7379e2dd23091475022d9b3cfb18e5ba12cb1e961e480570aed1b",
+      "sha256": "bf573fc6a4b7379e2dd23091475022d9b3cfb18e5ba12cb1e961e480570aed1b",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/missions-layout.html",
+      "sourceSha256": "1ead425ba11217531b532ca4eae36fe5b8f9b48da97df1621998c30653ed8bdd",
+      "sha256": "1ead425ba11217531b532ca4eae36fe5b8f9b48da97df1621998c30653ed8bdd",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/missions.css",
+      "sourceSha256": "f7e4d1d0562252c66e4a73052ec1ef25f9df4da4110ecf49858ad508c6a7dd49",
+      "sha256": "f7e4d1d0562252c66e4a73052ec1ef25f9df4da4110ecf49858ad508c6a7dd49",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/missions.html",
+      "sourceSha256": "ac81672930fbf7a8ba99c89d16b18bf2167c75ad5bd93818165c952ead4def47",
+      "sha256": "6cd1c06d05d9b0d6006012164514b104cbe2dc86617c758f58910e3c417154ff",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/missions.js",
+      "sourceSha256": "f9ab9474832b15e0d62804d9afd879ba3a11ec66c50661f085d76c539745eb69",
+      "sha256": "f9ab9474832b15e0d62804d9afd879ba3a11ec66c50661f085d76c539745eb69",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-drafts.mjs",
+      "sourceSha256": "3415e7e98a61e0512062b5429e80e89059745e3b76afc236d30336b7e7ddb336",
+      "sha256": "3415e7e98a61e0512062b5429e80e89059745e3b76afc236d30336b7e7ddb336",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-engine.js",
+      "sourceSha256": "9c7ce4d7fb618f86e446cb633e30d03bbae1bbc9c9cb720ae3fd5da2f31123d9",
+      "sha256": "9c7ce4d7fb618f86e446cb633e30d03bbae1bbc9c9cb720ae3fd5da2f31123d9",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-route-data.js",
+      "sourceSha256": "42edeef64c7689daa52857e33d922dc0260867fb10892da0f05883facba9b0a5",
+      "sha256": "42edeef64c7689daa52857e33d922dc0260867fb10892da0f05883facba9b0a5",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-routes.json",
+      "sourceSha256": "659c0aa266342f8924f6bc21f3ecb29e99c2a056a0bc6eba6345e76c7ae3f15f",
+      "sha256": "659c0aa266342f8924f6bc21f3ecb29e99c2a056a0bc6eba6345e76c7ae3f15f",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-scoring.mjs",
+      "sourceSha256": "6a674f9e463993b52a046f8358b33302da7731eac72e684f4090e7e0076542de",
+      "sha256": "6a674f9e463993b52a046f8358b33302da7731eac72e684f4090e7e0076542de",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding.css",
+      "sourceSha256": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4",
+      "sha256": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/onboarding.js",
+      "sourceSha256": "e7c52614502f9d3253517db8832c484588be9c5dcc59a357517e7075d3c3fd76",
+      "sha256": "e7c52614502f9d3253517db8832c484588be9c5dcc59a357517e7075d3c3fd76",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/package-lock.json",
+      "sourceSha256": "ec65f1619282a3f89a956a0a973cfdb8067b6b2b9c9a901f9accbd5e6eee0a83",
+      "sha256": "ec65f1619282a3f89a956a0a973cfdb8067b6b2b9c9a901f9accbd5e6eee0a83",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/package.json",
+      "sourceSha256": "c34ce4ff530c8d57ebf0d4c9b8a87a5544b8a3eaa0a5eabf9e41f45dea941eb3",
+      "sha256": "c34ce4ff530c8d57ebf0d4c9b8a87a5544b8a3eaa0a5eabf9e41f45dea941eb3",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/register-route-data.js",
+      "sourceSha256": "7210810057c52e7cbc70fc5c81ce2221b3e402e6eb22224598038b863e11e22a",
+      "sha256": "7210810057c52e7cbc70fc5c81ce2221b3e402e6eb22224598038b863e11e22a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/register-routes.json",
+      "sourceSha256": "bd33fb548931cfb9526064802c5521d50d76be8f5efbe0fad2ee7fd4ff9f8a02",
+      "sha256": "bd33fb548931cfb9526064802c5521d50d76be8f5efbe0fad2ee7fd4ff9f8a02",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/register.css",
+      "sourceSha256": "7654c0b9db1249c049013242af937fdfaabfa9a1b46fe1830d4962953c757438",
+      "sha256": "7654c0b9db1249c049013242af937fdfaabfa9a1b46fe1830d4962953c757438",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/register.js",
+      "sourceSha256": "0885d8b015db6c2dc46b097d1d7ddf87880b1917e03c9083d89f1e911245ec4c",
+      "sha256": "0885d8b015db6c2dc46b097d1d7ddf87880b1917e03c9083d89f1e911245ec4c",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/ritual-effects.js",
+      "sourceSha256": "38d6c0b7840e5ecc3c3b15f8ca494ffce97224df62e112870950fcbee77a042e",
+      "sha256": "38d6c0b7840e5ecc3c3b15f8ca494ffce97224df62e112870950fcbee77a042e",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/ritual.css",
+      "sourceSha256": "dc8e6a9fb1c46d6dda49fa7a74f522037b12975704b5e6295189649d26575ca4",
+      "sha256": "dc8e6a9fb1c46d6dda49fa7a74f522037b12975704b5e6295189649d26575ca4",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/ritual.js",
+      "sourceSha256": "63690638b931c06f4983de777a347d28fa6ec36a784bdb3708e213a69202044d",
+      "sha256": "63690638b931c06f4983de777a347d28fa6ec36a784bdb3708e213a69202044d",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/root-adapters.js",
+      "sourceSha256": "d40a3039169ada135e5ad3f750eb8538f8730398710bea33d7e1176e86fdf946",
+      "sha256": "d40a3039169ada135e5ad3f750eb8538f8730398710bea33d7e1176e86fdf946",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/route-manifest.json",
+      "sourceSha256": "73fd83bde12631354930f9d29adfa42bceb1b27def2174cf82d1dd3cb2ec3dd5",
+      "sha256": "73fd83bde12631354930f9d29adfa42bceb1b27def2174cf82d1dd3cb2ec3dd5",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/stitch-tailwind.css",
+      "sourceSha256": "8c242b32b2c4e80b0c539cfa781e065ec0efe5bd0662f60425e6167e2c7ff237",
+      "sha256": "8c242b32b2c4e80b0c539cfa781e065ec0efe5bd0662f60425e6167e2c7ff237",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/tailwind-input.css",
+      "sourceSha256": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec",
+      "sha256": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/tailwind.config.cjs",
+      "sourceSha256": "6f9274f7795a50708929060f2247cd81672c6c811f2fa61a0aff974932fef082",
+      "sha256": "6f9274f7795a50708929060f2247cd81672c6c811f2fa61a0aff974932fef082",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/templates/batch.html",
+      "sourceSha256": "2a742e52c03d66ed140bdd848d68f783e956ee33461712ed70ef06b8fd64608c",
+      "sha256": "4888fc2f8fee2065185b3ed27d8a59fd28023dd526251a475b066dce1b8a53a9",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/cook.html",
+      "sourceSha256": "5880e1185361e17426983ce68d222369c4510835d2a3470b33d73e27235a10bf",
+      "sha256": "e222f4e6e60270121e6d11685aba90a4f38c308a66915e8a82d96d2cdab9e4a0",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/agenda.html",
+      "sourceSha256": "3f24c604530d09a33e0385c890aab4d28ba7c7da0209173b530521a1956cf559",
+      "sha256": "5807738494918fd0d61e9b3f661d9f5b6b29cda0ea794dac516451e71be15989",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/health-history.html",
+      "sourceSha256": "c7d76c84229cb16e313a52e6a7e19b31cb51f700eec53d4b6e0a420896dae0bd",
+      "sha256": "dc5219802d91b16465417048712bb423fd69a6990cdf20b0beff0b2173abd6e2",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/health-person.html",
+      "sourceSha256": "370fa73575a3a6be7651ee9ae59fe2be2e97a726b5875e929817627423425a40",
+      "sha256": "fbab58c4d2442cde632b298f841747873d26f60fe6702fc8b23d30445ff88296",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/health.html",
+      "sourceSha256": "b7efc8d376ee84f3ae1390bcf0cfe268b4b37907d0ef0b4b2a4ff32ce3d5fba1",
+      "sha256": "07288893a15d99becc7d5f18741fdb62649701da6728278d6279b5d71549c3d5",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/medical-edit.html",
+      "sourceSha256": "a69bef5e81938b707683f0d789d972f9e4e941c79f4c1a993255ec488e4cdfbb",
+      "sha256": "4103894c9e0031aeb6f6f18ac8ae6a410f215bc9baf7e21c090f2865a5281a20",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/member-edit.html",
+      "sourceSha256": "14630879c26ce36f8d53a45f223f2e50ac7b844bbb74cc362d6cdf4e07442f1b",
+      "sha256": "d1d64cd51abf9209b09a84a4cc6f0eda6e7296e7d0348cb90d8ae5052f5dbf40",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/members.html",
+      "sourceSha256": "bf5d235796c754def72bc2c792ec07c34d8eddeeb159339ad9232d87149e5bf6",
+      "sha256": "48663773388584d1556902d677e06728088ace1bcd05cc569e7e45a5601abbf0",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/provenance.json",
+      "sourceSha256": "42cf2cb08ae26ce89304bc57e225bd6805894bf566632a366d9dc66f7553ab57",
+      "sha256": "42cf2cb08ae26ce89304bc57e225bd6805894bf566632a366d9dc66f7553ab57",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-final.html",
+      "sourceSha256": "63ec425ce51b2bed673f06d9cf8920214a7254d5decd0c6b4744327606c6f2cb",
+      "sha256": "82f839dd1f94bd8a1855828992408a7ffc05d6a89bec8b13ebcce6094ad96414",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-foyer.html",
+      "sourceSha256": "b91dd395a6ce19fe51cc1b29c167c0c3f25c07003387070e37629c8f0e99471a",
+      "sha256": "607639729ea18440e3121e46b4df25215126f3026f713e0405c08e4abafbe4f3",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-house-result.html",
+      "sourceSha256": "9a7500b3c91eed2e913e4c01f857d661e89f3c5b9ce23c14409b8c9936aa41b6",
+      "sha256": "74f43cf9ba92c1e885ece159c8948781714df245525d51b75099213cfa06f072",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-house.html",
+      "sourceSha256": "f1b0ef41269a718935353a5ec3557c1ed6e6956e0abaf8acd086b8d6839e2f47",
+      "sha256": "4cf328a717eb9b91e1d246352ce399dabb91544943be21c7a3ed836ab96f6ec8",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-identity.html",
+      "sourceSha256": "bfd27b7c13159bab55801cc2dd4be3588a1acd0a7adae094fb2d2f61111267db",
+      "sha256": "22dc06d387e9700b83ce228f49dcb2ffa7e5cd38cdde50f27e90c21c70fb55b5",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-patronus-result.html",
+      "sourceSha256": "2790f33d7e6111602410be1452a02adf03b67717a11482bb14704b8a13980bf6",
+      "sha256": "debd024c3b1e511b48d80cd728c69eea68bc96989329aa1d853a04c6fcb7120e",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-patronus.html",
+      "sourceSha256": "9759c9aa6b38d916f0cd76f86b21f81e9c81637ac92b3d21e369aff8541be72e",
+      "sha256": "3acbcd29d3c3823b019e8f7a6142808f8ba02d7a8b505290b4e39ad3230f5e0b",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-ritual.html",
+      "sourceSha256": "0d81b8856b9b810402201bf1e120aef1e04c817f1b71e65eac94bc69680377a8",
+      "sha256": "d39fca93b2323d0452f368693617d65309ca060d67dc74bf1d8a4117d55a6672",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/provenance.json",
+      "sourceSha256": "8c9a8ca2f7cd704e223670a6fa85cd7857bc5d96ed345acb7d491660039c38c2",
+      "sha256": "8c9a8ca2f7cd704e223670a6fa85cd7857bc5d96ed345acb7d491660039c38c2",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/templates/pick.html",
+      "sourceSha256": "6d0cd7ccf4bf4d9f2acce8c1709928943089356c0b7b0f344fbe46d3438273e0",
+      "sha256": "ede86a049374e3d301168f8e6d0ef3eb5bc961dc7a0127170249437ea8f920c5",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/provenance.json",
+      "sourceSha256": "3be1e05f3c68255e1280294a9f372b727814ac35dce123d0720294aa9709c12a",
+      "sha256": "3be1e05f3c68255e1280294a9f372b727814ac35dce123d0720294aa9709c12a",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipe-add-1.html",
+      "sourceSha256": "0b995f783dba39cc79d751269df5fee6e2f5803849582615d50cacbc0f301b96",
+      "sha256": "a5b50a1c9164d17f0e4608830530a1b274df76e6c8d05a597ff91087dfa556c6",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipe-add.html",
+      "sourceSha256": "8e9f17337adc88ab37e28a5b1c6fe228a2e888336e0bbcf8e7d5c141101c4c0e",
+      "sha256": "82e0107f83fb355e4253a71275850074e914fa76287c5c236e95d0cfa4e3509d",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipe.html",
+      "sourceSha256": "a3c791dfee67cad70290e2dd5edcdd6c6c2f5ddd691c028cfa89e0a54fa47503",
+      "sha256": "b8ad5fef4965a3cb9c6970cc0575de28ad6df64cd064c67bc6cc38f3546937e1",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipes.html",
+      "sourceSha256": "b06ffaed187e9f68b42fcea327a1d693aed2ac140ee68b7efc866d57dcc8bda6",
+      "sha256": "f103c9bf43acdc1126ed7b535a76631b76517d7fde94da939a153e56c5abcf67",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/backup.html",
+      "sourceSha256": "c72df40b13c316756b9cf0ebdbae476dfcd6b6b6e89fe728033a34bd3c6c71c2",
+      "sha256": "5fec3f88c949d924386e6e19b5e95893a81cb1e1cecd2bb3e19e076eb985d94e",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/chat-2.html",
+      "sourceSha256": "a9eebc245d57c67e915260cdd629b0c982e1a8e862680dc9e57e9eea0ccf674c",
+      "sha256": "09a7e4b6ba8b756f3e2473d5db03d2bd01c2b1bcf8e175c67e860f75c74eda44",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/chat.html",
+      "sourceSha256": "4220af3dfd81a6f28e5c24d99c0d4193e1e71296cce7d0b362b25a3f53515fa7",
+      "sha256": "2942025eeafc15cd07476a4807e9ae6371ba173d66cf7829f120814e174af761",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contact-edit.html",
+      "sourceSha256": "3b3217d50333f5f3c150b0755511d2d53a2f862b8b873647fe40c61803a51326",
+      "sha256": "d1219ca97a2754b3c9d15f73667cdc7be3532fac2e88e14d42ea57a7e56c5ea5",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contacts.html",
+      "sourceSha256": "e32f19175ad042a4e4c683c401895c71c623513b462990b2228fffcc95ebf285",
+      "sha256": "d117369bb3a8de91fa83092f7a42bbda6bc46306f71d30edd451f801a9b20066",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contract-1.html",
+      "sourceSha256": "4b7e390e18d63cc3f925e4aa7af75f224aa9409cf3ad44bf619f2d9b88e29bcf",
+      "sha256": "d58721bd549358d50239f314543f180ba1930131e3d8fe31dd057f1a63a0aaf8",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contract-edit.html",
+      "sourceSha256": "7f7f00da9d244ca7cc8bb2dcf7ab397df4b09f03d286b9a74b6098645bc8542b",
+      "sha256": "76c18e6bee54dd7d017441cdcdb4478ac3b358213e8f45096371dd2d0c57c988",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contract.html",
+      "sourceSha256": "07b357461744251b8aad93e10b72e1ad8949efaf6a4bf82dcad7b7b78fc76ed1",
+      "sha256": "cc54f4fac488424cb91b6d88bd89d090ef9ca4ba7e686d8b9286b6ac04aa2d51",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contracts-1.html",
+      "sourceSha256": "58d44ce0d3c33e30eb5e58d32d572ef33aafaff64c1b8b8222b099d505f0644a",
+      "sha256": "56b820958cc217363ddb29e09009c6870273f150ca988d59b7ad265cf0c1ebf9",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contracts.html",
+      "sourceSha256": "0ba7bbe61bf5a1a0191006e6eacd3e0ffbd1c36215419acd501cf04bfcb99b9f",
+      "sha256": "2d48ba5fae74998d8a00d75c81085f3b188fd2db48de1595468bdcbb3b093b00",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/document-edit.html",
+      "sourceSha256": "c886cd6fccc4fa4d28e3f35ab2161963ff6a3c2e611e9735541544229bf33b99",
+      "sha256": "8578fbeb245c097b9eb67b3a52c206aceb24fefb389bf44b8d002e71e3cfc05e",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/document.html",
+      "sourceSha256": "b40e7e4c39259cdb035e43c5eb770e591ea65e88457ff302d5f355bbf31bf7c5",
+      "sha256": "4be31c850ca0c1335d97d314705f06819bc56ffd95364fe347d4f2dabe99625e",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/documents-1.html",
+      "sourceSha256": "1218db1ddc1096b1083c10f7fe24b2cb3e3146dafe0a9d5537c15d811083392f",
+      "sha256": "e261aad92b887a8df3a46f8b71e078a6b5f17ffb0477d3aac87135ec188489f2",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/documents.html",
+      "sourceSha256": "8d422fe51a817fb055e72202f153ce1bf6a45fecbbad6ac638e22e67cdf11926",
+      "sha256": "1d88366cd81cfbd18d3751e719e6ceb6973d2d998ffc2c897674ab0169893736",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/equipment-edit.html",
+      "sourceSha256": "2762ac3309e271fc2e47c9a5191733863c0c842f66c3a45f9b88d5f28a00d61f",
+      "sha256": "25e99338916b255c0b03beba8233f0db4b028c97f8ec6c13bc8ca6233a4e25a5",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/equipment.html",
+      "sourceSha256": "6289d1a185c0f9009053b2bf408ac576cb99b902d5854d485cc3dfe3be004628",
+      "sha256": "2da7a328cf7a1a6be3bfdb42e9d0d94d93034e24ee23e5f3529d80dcdf0bd36d",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/house-1.html",
+      "sourceSha256": "a50e55cc68a4951c1e1b6a1af8da61522fa987b44f6f03b02e8f8179e3d9945d",
+      "sha256": "fef97bc0db230149d97f6ced140cd8bb47becb79259998b5ba47d9ea52728e20",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/house-backup.html",
+      "sourceSha256": "47bc5c4caaa4c4ff7833e0669c01aaf89a287f1bcd81a2189bc6de032834658e",
+      "sha256": "ac7bcb506a580ca86969acfe38d7585c219269008469c877ee20e1b21589da19",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/house.html",
+      "sourceSha256": "7cc28f71fda329c21b943a2ce876249bb171f1b6e404f4bc3d5226415711165f",
+      "sha256": "f9dff874f4777772358ded281be0cd590aeb0099a013bb33d058fc2de7d2caba",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/import-file.html",
+      "sourceSha256": "f788b91fd5eaf79bf375c97d8a79af032f8274866de347f2bb9f1023e222551b",
+      "sha256": "30cf516b00acb92fcced0b8dc96648c7849df4a1e1b184005446bbce251ac7f7",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/import-review.html",
+      "sourceSha256": "daf719aea6b955bc59ae52713fbcdca84741855ba91a906adfe018dfc65fd5b7",
+      "sha256": "a752d525e7d3935e96c84f8345eba3a2ddff4cf4fe843b09419a0e2c0666b508",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/list-detail.html",
+      "sourceSha256": "3c3d4a181e733fcefb00b808e68ffa9c7bb2f3da4326b248d16cc141a51b8354",
+      "sha256": "998da94263ae2ce8248f0fb7b60fe83b1ce9ec3544ad6a22d53896a438f682fb",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/lists.html",
+      "sourceSha256": "7b2c2957d78a277d10fcadcbf3192a448383f8679064318ac1ffe938542b2d84",
+      "sha256": "3ec3c2a1c044310615e832abcda73d578aed47aef0373acfd4008eb1b2879e6a",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/maintenance.html",
+      "sourceSha256": "50d0e45fae16c78f6dfc412ae4c9c22d6f6d0f76bd19ace396ebff4ded34c393",
+      "sha256": "3855f80cb5765f85cf2c14b6a0c62a22c3d2dc61ca0a7c00cc7c6b3fb669fe1f",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/memo-edit.html",
+      "sourceSha256": "fde5cc8a3e741f4c1d620bd98e581b3c89df06b82ea8aa8bfbc385cd8581b0e7",
+      "sha256": "e5e4cd541572282e7d4635e474f0888625978807f13f59835febbf2abb73ca7c",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/memos.html",
+      "sourceSha256": "2be4946633fcedd3e95fb33eb4ff7c5dbd2e51f634dd81232a25d54a64a07d41",
+      "sha256": "9aa0040c580068c147681865a6fc0cb37c03b7c276edbdbee837800be45eb735",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/menu.html",
+      "sourceSha256": "3d5135c7958f167386df0866b52a9d910536691d8033807e7c498be111fa4fe6",
+      "sha256": "94885a3dbb67fe9b8f9b8651f50f7399e88a5aab94e241cafc025a97c90297ec",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/mission-edit.html",
+      "sourceSha256": "288b996869dbe752905035c737cd6caab4f7b76963240d5304d0b2d7f1ef64e9",
+      "sha256": "ca58f1f81ae335882d14c8769afba00f175a6177b871d4ae516b00307cab2997",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/personal.html",
+      "sourceSha256": "fc32054a4c1ad9e70c19b18b112fbdb3f12c322b822c76a640d410eb8296d56a",
+      "sha256": "f519ad01e6698d7e2c49ba6ee7eb6fd575e4a14fc71b89258473f7e3c652b020",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/provenance.json",
+      "sourceSha256": "c7fbd0268a2004773eacd626057a049ce7c42baa2af907701a25577aeb604bbd",
+      "sha256": "c7fbd0268a2004773eacd626057a049ce7c42baa2af907701a25577aeb604bbd",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/search.html",
+      "sourceSha256": "22abc1a110a4a3bb564940596efb99d4e81d9802a8fbed0e5b42aaac71fc13af",
+      "sha256": "e529778f86f5e0cd15f7daa03f387ad450bd9a3f3418edc1ba64c20cb0f0cc46",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop-1.html",
+      "sourceSha256": "56bf34b28a448f9136cc578368bfe71b1dfd26b0aebac9432bd42ce517bfaa41",
+      "sha256": "0fad99fe2ca8f9cf12efca4de5a28456c112d836cf8205c9c498e9b3726f691a",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop-final.html",
+      "sourceSha256": "56bf34b28a448f9136cc578368bfe71b1dfd26b0aebac9432bd42ce517bfaa41",
+      "sha256": "0fad99fe2ca8f9cf12efca4de5a28456c112d836cf8205c9c498e9b3726f691a",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop-history.html",
+      "sourceSha256": "5434dad041ed829e2368efa7cb47c496001cbeb178a65fcfbc24bf480d3158bc",
+      "sha256": "6e64524fcccfa01ebcc08a7fa2f39b204b9a90a73dd4bb3e07ecc3b47a2266d6",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop.html",
+      "sourceSha256": "56bf34b28a448f9136cc578368bfe71b1dfd26b0aebac9432bd42ce517bfaa41",
+      "sha256": "0fad99fe2ca8f9cf12efca4de5a28456c112d836cf8205c9c498e9b3726f691a",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/taverne.html",
+      "sourceSha256": "68c81a30c91f648a71f7c0edabed30b83d990413837d0d13ae20dc979cd6e6a9",
+      "sha256": "491891a517bc2f5068432e64bd82036dee280dd933ad9d73ea522305e1a038fd",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/tm5.html",
+      "sourceSha256": "c11be4eb455960a557678c7331174d71cf2f776fba18d9d5ffebf80fe23eec55",
+      "sha256": "40f7417ee7fff77e8655087154c6c81d63a7db603452c84f2e2e7619fade8bea",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/tools-register.js",
+      "sourceSha256": "d42033e4cc1b5f7353a61faa836a61d38cecb763d4cb13f694afcb3d4d5d3430",
+      "sha256": "d42033e4cc1b5f7353a61faa836a61d38cecb763d4cb13f694afcb3d4d5d3430",
+      "transformed": false
+    },
+    {
+      "path": "essai-stitch-v7/traverse.html",
+      "sourceSha256": "07253dfe0ea4f41b88ed64e47acbdac926feaaeee5b4a62fbb4acb909ec97e35",
+      "sha256": "9f8f98c7da889fdcdb09d7a9d76ed3bfa41aba5aec54781cf59ee570f469f9f5",
+      "transformed": true
+    },
+    {
+      "path": "essai-stitch-v7/write-register-evidence.cjs",
+      "sourceSha256": "953611af29790854f5c20428c480a7d38c98edfe3b13a15667c63fd588b2d76c",
+      "sha256": "953611af29790854f5c20428c480a7d38c98edfe3b13a15667c63fd588b2d76c",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/ebgaramond-OFL.txt",
+      "sourceSha256": "0985066662eb755ed3683ae5482a81a9195b49ce3f7e165cc2388b3dbece7dd7",
+      "sha256": "0985066662eb755ed3683ae5482a81a9195b49ce3f7e165cc2388b3dbece7dd7",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/famille.png",
+      "sourceSha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e",
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-0.woff",
+      "sourceSha256": "8582af5b17b2863f56d282d8b97edb70897e99b6201440d9005262832fc46513",
+      "sha256": "8582af5b17b2863f56d282d8b97edb70897e99b6201440d9005262832fc46513",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-1.woff",
+      "sourceSha256": "569946009491a800c891c8686d0d01d9e5482f5e5589506196761b59ea4bc4ce",
+      "sha256": "569946009491a800c891c8686d0d01d9e5482f5e5589506196761b59ea4bc4ce",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-2.woff",
+      "sourceSha256": "205c7db8be471b902ee8f8332d1992d37e71ec4ce993e32807d8c32eca285599",
+      "sha256": "205c7db8be471b902ee8f8332d1992d37e71ec4ce993e32807d8c32eca285599",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-3.woff",
+      "sourceSha256": "db7d12c9871db337d382c97506635636cad52b6324e6ed88f9a4ed61f5930bf4",
+      "sha256": "db7d12c9871db337d382c97506635636cad52b6324e6ed88f9a4ed61f5930bf4",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-4.woff",
+      "sourceSha256": "2c3da170df47e4431ce2883eb3d515bbb4c2b77341071ab147aec5381dc5dfc5",
+      "sha256": "2c3da170df47e4431ce2883eb3d515bbb4c2b77341071ab147aec5381dc5dfc5",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-5.woff",
+      "sourceSha256": "ec0d672906f7a860d6e1fbc2e5e29ebb8ea81ee59d451dfe0afc0eae2414499d",
+      "sha256": "ec0d672906f7a860d6e1fbc2e5e29ebb8ea81ee59d451dfe0afc0eae2414499d",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-6.woff",
+      "sourceSha256": "6f24c2c319d0e24692f058e92b4b805aa7112297c11a5010fddf896998f8517f",
+      "sha256": "6f24c2c319d0e24692f058e92b4b805aa7112297c11a5010fddf896998f8517f",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/fonts.css",
+      "sourceSha256": "30a06ac10a88f19997eeb89fd1c7ee50acc65b8053bec0f95edd1f296b5a63fb",
+      "sha256": "30a06ac10a88f19997eeb89fd1c7ee50acc65b8053bec0f95edd1f296b5a63fb",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/icons.woff2",
+      "sourceSha256": "d5e2b36266211c114bb61c0572453263f100d5da011856ac87d52cb2d36a2ca8",
+      "sha256": "d5e2b36266211c114bb61c0572453263f100d5da011856ac87d52cb2d36a2ca8",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/literata-OFL.txt",
+      "sourceSha256": "8742963604cd89dc81437811a850018fc03b2bfad686d7422c8235967c87614e",
+      "sha256": "8742963604cd89dc81437811a850018fc03b2bfad686d7422c8235967c87614e",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/material-symbols-LICENSE.txt",
+      "sourceSha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/missions.png",
+      "sourceSha256": "506a7cc84050be7c2778288241ed6ce744f1d7c9228e6561f4dfe5457146c83d",
+      "sha256": "506a7cc84050be7c2778288241ed6ce744f1d7c9228e6561f4dfe5457146c83d",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/playfairdisplay-OFL.txt",
+      "sourceSha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e",
+      "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/provenance.json",
+      "sourceSha256": "6bc1a7f2770699e02e0105cfdf0481291089a4eb7ea6d29cac71df7725ffa328",
+      "sha256": "6bc1a7f2770699e02e0105cfdf0481291089a4eb7ea6d29cac71df7725ffa328",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/taverne.png",
+      "sourceSha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd",
+      "sha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd",
+      "transformed": false
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/traverse.png",
+      "sourceSha256": "ee369ba1493c160e326ed9fe402851a959aa1078e0dbe19556b58ecd911c5c05",
+      "sha256": "ee369ba1493c160e326ed9fe402851a959aa1078e0dbe19556b58ecd911c5c05",
+      "transformed": false
+    }
+  ],
+  "runtimeSha256": "ecef2aa48f35a98bcc44ae4af6413e06bd701e7874e5f84c21b42a1b4aa13748",
+  "deploymentConfigOverride": {
+    "field": "storagePrefix",
+    "previous": "dobby-review-integrated-v1|",
+    "value": "dobby-review-e01-e06-20261111|",
+    "reason": "isoler les donnees fictives du nouvel apercu"
+  }
+}

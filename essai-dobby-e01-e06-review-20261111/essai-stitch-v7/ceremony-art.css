@@ -1,0 +1,9 @@
+/* Supplied original Stitch artwork, shared by E05 and E06. Historical assets
+   are untouched; every PNG is rendered whole, never stretched or cropped. */
+.mp-emblem.mp-house-illustration{display:block;box-sizing:border-box;width:min(100%,260px);height:auto;aspect-ratio:1;object-fit:contain;object-position:center;align-self:center;border-radius:18px;border:1px solid #d49b4240;background:#180f0d;box-shadow:0 10px 32px #0004}
+.mp-page .mp-house img.mp-house-illustration{width:min(100%,260px);height:auto;margin:4px auto 10px}
+.e06-main .e06-house-revelation .e06-house-art{min-height:0;padding:10px}
+.e06-main .e06-house-revelation .e06-house-art img.mp-house-illustration{width:min(100%,320px);height:auto;max-width:100%;aspect-ratio:1}
+.e06-main .e06-final-medallions.grid.grid-cols-2 img.mp-house-illustration{width:min(100%,160px);height:auto;max-width:100%;aspect-ratio:1;margin:8px 0 0}
+.e06-main #e06-sorting-hat{display:block;width:100%;height:auto;aspect-ratio:1376/768;object-fit:contain;object-position:center;transform:none}
+@media(max-width:360px){.mp-page .mp-house img.mp-house-illustration{width:min(100%,240px)}.e06-main .e06-house-revelation .e06-house-art{padding:0}}

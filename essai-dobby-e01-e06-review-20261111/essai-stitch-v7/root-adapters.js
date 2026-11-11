@@ -1,0 +1,19 @@
+/* Stitch DOM adapters: real V5 state; no sample person, task, event or record. */
+window.DobbyStitchRootAdapters=(()=>{'use strict';
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const date=v=>{try{return new Date((v||'').slice(0,10)+'T12:00:00').toLocaleDateString('fr-BE',{day:'numeric',month:'short'})}catch{return ''}};
+const card=(title,body,action=null,label='Ouvrir')=>`<div class="p-3 rounded-2xl bg-surface-container border border-primary/20 shadow-md flex flex-col gap-2"><strong class="font-headline-sm text-[18px] text-on-surface">${esc(title)}</strong><p class="text-on-surface-variant font-body-md text-body-md">${esc(body)}</p>${action?`<button data-dv7-route="${esc(action)}" class="dv7-action rounded-xl bg-primary text-on-primary font-label-md text-label-md p-3 min-h-11">${esc(label)}</button>`:''}</div>`;
+const empty=(s)=>`<div class="dv7-empty">${esc(s)}</div>`;
+const h2sec=text=>{const h=[...document.querySelectorAll('main h2')].find(x=>x.textContent.includes(text));return h?.closest('section')||h?.closest('.px-gutter-mobile')||null};
+function home(d){window.DobbyHome.render(d);}
+function missions(d){window.DobbyMissions.render(d);}
+function family(d){const member=h2sec('L’Horloge Enchantée'),agenda=h2sec('La Gazette & Agenda Rituel'),notes=h2sec('La Volière aux Messages'),links=h2sec('Archives & Accès Rapides');if(!member||!agenda||!notes||!links)throw Error('Missing Stitch Famille sections');
+const members=d.familyMembers||[],events=d.familyEvents||[],visits=d.sharedHealthVisits||[],memos=d.familyNotes||[];
+member.innerHTML=`<div class="flex items-center justify-between mb-3"><h2 class="font-headline-sm text-headline-sm text-on-surface">L’Horloge Enchantée</h2><button data-dv7-route="family" class="rounded-xl bg-primary text-on-primary p-2.5">Gérer les membres</button></div><div class="flex flex-col gap-3">${members.length?members.map(m=>card(m.name||m.firstName||'Membre du foyer','Fiche familiale','family','Consulter')).join(''):empty('Aucun membre du foyer enregistré.')}</div>`;
+agenda.innerHTML=`<div class="flex items-center justify-between mb-3"><h2 class="font-headline-sm text-headline-sm text-on-surface">La Gazette & Agenda Rituel</h2><button data-dv7-route="family" class="rounded-xl bg-primary text-on-primary p-2.5">Ajouter un événement</button></div><div class="space-y-3">${events.length?events.map(x=>card(x.title||x.name||'Événement',date(x.date),'family','Voir')).join(''):empty('Aucun événement partagé à venir.')}${visits.length?visits.map(x=>card(x.title||x.reason||'Rendez-vous',date(x.date),'family','Consulter')).join(''):''}</div>`;
+notes.innerHTML=`<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3">La Volière aux Messages</h2><div class="space-y-3">${memos.length?memos.slice(0,3).map(x=>card(x.title||'Mémo du foyer',x.note||x.text||'','family','Ouvrir les notes')).join(''):empty('Aucun mémo familial enregistré.')}</div>`;
+links.innerHTML=`<h2 class="font-headline-sm text-headline-sm text-on-surface mb-3">Archives & Accès Rapides</h2><div class="grid grid-cols-2 gap-3">${[['documents','Documents',d.familyDocs.length],['house','Maison',d.houseItems.length],['contacts','Contacts',d.famContacts.length],['lists','Listes',d.famLists.length]].map(([route,label,count])=>`<button type="button" data-dv7-route="${route}" class="dv7-action rounded-xl min-h-20 border border-primary/20 bg-surface-container text-primary p-3 font-label-md text-label-md">${esc(label)} <small class="text-on-surface-variant">(${count})</small></button>`).join('')}</div>`;
+}
+function render(screen,data){({traverse:home,missions,famille:family})[screen]?.(data)}
+return {render};
+})();
