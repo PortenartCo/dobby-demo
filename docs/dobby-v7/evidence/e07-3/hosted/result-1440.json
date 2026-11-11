@@ -1,0 +1,35 @@
+{
+  "width": 1440,
+  "status": "PASS",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-e07-review-20261111/",
+  "sourceSha": "c121027e53b335800d1559a39481c774a137a3fa",
+  "manifestSha256": "505693c7489e813872cf8bfe79533462830590cc552b9610bc3a0b271a996831",
+  "namespace": "dobby-review-e073-20261111|",
+  "actualUI": [
+    "calendar",
+    "catalogue",
+    "favorite confirmation/reload",
+    "manual create",
+    "copy prompt",
+    "V1 multi-import/cancel",
+    "V2 ZIP/original photo/TM5 unverified",
+    "duplicate skip",
+    "reload",
+    "courses writer",
+    "five destinations",
+    "two-tab isolated reset"
+  ],
+  "photoSha256": "606067b97aa92524f76aac9c4ba64f112e37865a577e8a336734ca8d95ec8665",
+  "photoDimensions": [
+    10,
+    8
+  ],
+  "nativePlanningPreserved": true,
+  "rawLocalAndSessionSentinels": "PASS",
+  "rawIndexedDBSentinels": "PASS",
+  "unrelatedOriginalPhotoBlobs": "PASS",
+  "backendRequests": 0,
+  "externalRequests": 0,
+  "missingResources": 0,
+  "realSynchronization": "NOT_VERIFIED"
+}

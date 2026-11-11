@@ -22,9 +22,11 @@
 - [x] A: capture baseline320/390/1440, implement daily2slots/calendar/readability/library composition; targeted meaningful tests.
 - [x] B: real search/filter/star-confirmation/navigation/image/effects/sound/reduced-motion and reload tests.
 - [x] C: native V1/enriched/ZIP multiple recipes, missing data/media, duplicates/replace/cancel/reimport, linked TM5 with human verification status, persistence/rollback. Deterministic fixtures only.
-- [ ] D: existing relevant Cuisine and native offline/sync tests, common module boundaries touched, causal assertion adaptations only, final CI. No repeated unrelated global campaign.
-- [ ] Commit/push verified source, build new isolated preview, compare bundle source hashes, test bundle320/390/1440.
-- [ ] Publish only new directory after conflict/tree checks; verify Pages workflow, HTTP resources/manifest and hosted fictional import/navigation/reload; preserve existing publication and branches.
-- [ ] Compact report distinguishes CODE_MODIFIÉ, TESTS_EXÉCUTÉS, INTÉGRATION_VÉRIFIÉE, DÉPLOIEMENT_APERÇU_CONFIRMÉ, FONCTIONNEMENT_HÉBERGÉ_VÉRIFIÉ, SYNCHRONISATION_RÉELLE_NON_VÉRIFIÉE. Stop for subpage review.
+- [x] D: existing relevant Cuisine and native offline/sync tests, common module boundaries touched, causal assertion adaptations only, final CI. No repeated unrelated global campaign.
+- [x] Commit/push verified source, build new isolated preview, compare bundle source hashes, test bundle320/390/1440.
+- [x] Publish only new directory after conflict/tree checks; verify Pages workflow, HTTP resources/manifest and hosted fictional import/navigation/reload; preserve existing publication and branches.
+- [x] Compact report distinguishes CODE_MODIFIÉ, TESTS_EXÉCUTÉS, INTÉGRATION_VÉRIFIÉE, DÉPLOIEMENT_APERÇU_CONFIRMÉ, FONCTIONNEMENT_HÉBERGÉ_VÉRIFIÉ, SYNCHRONISATION_RÉELLE_NON_VÉRIFIÉE. Stop for subpage review.
 
 Checkpoints A/B/C and local common/native regressions PASS. Final source CI, byte-checked isolated publication and actual hosted receipt remain delivery gates; no publication is inferred from local tests.
+
+Completed: CI V7 and native sync green atc121027; final clean bundle source hashes verified; static-only addition84e254f onmain afterc220d12; Pages43016384119 green;279 hosted bytes and four existing witnesses match; hosted UI320/390/1440 PASS. Final documentation-only receipt does not change the tested application. Stop for user subpage review. No real Supabase verification or photo transfer is claimed.

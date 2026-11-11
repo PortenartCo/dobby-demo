@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "width": 390,
+  "environment": "Local final release bundle; no deployment inferred",
+  "previewBase": "http://127.0.0.1:8896/essai-dobby-e07-review-20261111/",
+  "expectedSourceSha": "c121027e53b335800d1559a39481c774a137a3fa",
+  "actualSourceSha": "c121027e53b335800d1559a39481c774a137a3fa",
+  "manifestSha256": "505693c7489e813872cf8bfe79533462830590cc552b9610bc3a0b271a996831",
+  "fileCount": 274,
+  "namespace": "dobby-review-e073-20261111|",
+  "testScript": "essai-stitch-v7/tests/e07-3-preview.cjs",
+  "productModifiedByTest": false,
+  "previewDeployedByTest": false,
+  "realSynchronization": "NOT_VERIFIED"
+}

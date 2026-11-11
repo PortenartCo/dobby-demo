@@ -1,0 +1,835 @@
+sync-core	Set up job	﻿2026-11-11T11:48:47.9180790Z Current runner version: '2.338.2'
+sync-core	Set up job	2026-11-11T11:48:47.9217142Z ##[group]Runner Image Provisioner
+sync-core	Set up job	2026-11-11T11:48:47.9218377Z Hosted Compute Agent
+sync-core	Set up job	2026-11-11T11:48:47.9219412Z Version: 20261028.624
+sync-core	Set up job	2026-11-11T11:48:47.9220397Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+sync-core	Set up job	2026-11-11T11:48:47.9221809Z Build Date: 2026-10-28T21:51:42Z
+sync-core	Set up job	2026-11-11T11:48:47.9223154Z Worker ID: {39ad1c6a-f6c1-45c5-af41-9035739f40b3}
+sync-core	Set up job	2026-11-11T11:48:47.9224514Z Region: centralus
+sync-core	Set up job	2026-11-11T11:48:47.9225592Z Cloud: Azure
+sync-core	Set up job	2026-11-11T11:48:47.9226844Z ##[endgroup]
+sync-core	Set up job	2026-11-11T11:48:47.9229144Z ##[group]Operating System
+sync-core	Set up job	2026-11-11T11:48:47.9230267Z Ubuntu
+sync-core	Set up job	2026-11-11T11:48:47.9231176Z 26.04.1
+sync-core	Set up job	2026-11-11T11:48:47.9232188Z LTS
+sync-core	Set up job	2026-11-11T11:48:47.9233136Z ##[endgroup]
+sync-core	Set up job	2026-11-11T11:48:47.9234158Z ##[group]Runner Image
+sync-core	Set up job	2026-11-11T11:48:47.9235372Z Image: ubuntu-26.04
+sync-core	Set up job	2026-11-11T11:48:47.9236611Z Version: 20261101.186.1
+sync-core	Set up job	2026-11-11T11:48:47.9238668Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+sync-core	Set up job	2026-11-11T11:48:47.9242339Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+sync-core	Set up job	2026-11-11T11:48:47.9244260Z ##[endgroup]
+sync-core	Set up job	2026-11-11T11:48:47.9246104Z ##[group]GITHUB_TOKEN Permissions
+sync-core	Set up job	2026-11-11T11:48:47.9249275Z Contents: read
+sync-core	Set up job	2026-11-11T11:48:47.9250372Z Metadata: read
+sync-core	Set up job	2026-11-11T11:48:47.9251563Z ##[endgroup]
+sync-core	Set up job	2026-11-11T11:48:47.9254572Z Secret source: Actions
+sync-core	Set up job	2026-11-11T11:48:47.9256535Z Cache mode: write
+sync-core	Set up job	2026-11-11T11:48:47.9258263Z Prepare workflow directory
+sync-core	Set up job	2026-11-11T11:48:47.9653608Z Prepare all required actions
+sync-core	Set up job	2026-11-11T11:48:47.9728757Z Getting action download info
+sync-core	Set up job	2026-11-11T11:48:48.2549648Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+sync-core	Set up job	2026-11-11T11:48:48.4171287Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+sync-core	Set up job	2026-11-11T11:48:48.6214031Z Complete job name: sync-core
+sync-core	Run actions/checkout@v4	﻿2026-11-11T11:48:48.7128104Z ##[group]Run actions/checkout@v4
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7129573Z with:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7130303Z   repository: PortenartCo/dobby-demo
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7137882Z   token: ***
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7138609Z   ssh-strict: true
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7139329Z   ssh-user: git
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7140110Z   persist-credentials: true
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7140930Z   clean: true
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7141473Z   sparse-checkout-cone-mode: true
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7142007Z   fetch-depth: 1
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7142442Z   fetch-tags: false
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7142899Z   show-progress: true
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7143344Z   lfs: false
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7143752Z   submodules: false
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7144207Z   set-safe-directory: true
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7144720Z   allow-unsafe-pr-checkout: false
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.7145643Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9878390Z Syncing repository: PortenartCo/dobby-demo
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9881290Z ##[group]Getting Git version info
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9882601Z Working directory is '/home/runner/work/dobby-demo/dobby-demo'
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9884592Z [command]/usr/bin/git version
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9940915Z git version 2.56.0
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9971847Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9994326Z Temporarily overriding HOME='/home/runner/work/_temp/13e793d7-a66e-4e09-b57a-21326415bb89' before making global git config changes
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9997297Z Adding repository directory to the temporary git global config as a safe directory
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:48.9998889Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0068082Z Deleting the contents of '/home/runner/work/dobby-demo/dobby-demo'
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0071761Z ##[group]Initializing the repository
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0077703Z [command]/usr/bin/git init /home/runner/work/dobby-demo/dobby-demo
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0204561Z hint: Using 'master' as the name for the initial branch. This default branch name
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0206669Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0208327Z hint: to use in all of your new repositories, which will suppress this warning,
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0209085Z hint: call:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0209483Z hint:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0210254Z hint: 	git config --global init.defaultBranch <name>
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0210899Z hint:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0211473Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0212582Z hint: 'development'. The just-created branch can be renamed via this command:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0213364Z hint:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0213777Z hint: 	git branch -m <name>
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0214255Z hint:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0215038Z hint: Disable this message with "git config set advice.defaultBranchName false"
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0219923Z Initialized empty Git repository in /home/runner/work/dobby-demo/dobby-demo/.git/
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0233611Z [command]/usr/bin/git remote add origin https://github.com/PortenartCo/dobby-demo
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0287737Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0289130Z ##[group]Disabling automatic garbage collection
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0292118Z [command]/usr/bin/git config --local gc.auto 0
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0330280Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0331659Z ##[group]Setting up auth
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0338140Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0378781Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0871758Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.0909279Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.1213893Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.1260049Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.1545187Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.1587463Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.1588332Z ##[group]Fetching the repository
+sync-core	Run actions/checkout@v4	2026-11-11T11:48:49.1597662Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c121027e53b335800d1559a39481c774a137a3fa:refs/remotes/origin/feat/dobby-e073-taverne-grimoire-20261111
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6156591Z From https://github.com/PortenartCo/dobby-demo
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6158472Z  * [new ref]         c121027e53b335800d1559a39481c774a137a3fa -> origin/feat/dobby-e073-taverne-grimoire-20261111
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6162632Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6165165Z ##[group]Determining the checkout info
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6167041Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6175174Z [command]/usr/bin/git sparse-checkout disable
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6229000Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6261404Z ##[group]Checking out the ref
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:07.6266940Z [command]/usr/bin/git checkout --progress --force -B feat/dobby-e073-taverne-grimoire-20261111 refs/remotes/origin/feat/dobby-e073-taverne-grimoire-20261111
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.6376493Z Updating files:  52% (1541/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.6431382Z Updating files:  53% (1542/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.6798070Z Updating files:  54% (1571/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.6963965Z Updating files:  55% (1600/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.7165644Z Updating files:  56% (1630/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.7364424Z Updating files:  57% (1659/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.7602541Z Updating files:  58% (1688/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.7823203Z Updating files:  59% (1717/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.7924465Z Updating files:  60% (1746/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.8171464Z Updating files:  61% (1775/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.8373886Z Updating files:  62% (1804/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.8699001Z Updating files:  63% (1833/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.8940000Z Updating files:  64% (1862/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.9172711Z Updating files:  65% (1891/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.9396819Z Updating files:  66% (1920/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:08.9833188Z Updating files:  67% (1950/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.0110647Z Updating files:  68% (1979/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.0399067Z Updating files:  69% (2008/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.0560457Z Updating files:  70% (2037/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.0920722Z Updating files:  71% (2066/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.1215313Z Updating files:  72% (2095/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.1502435Z Updating files:  73% (2124/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.1741545Z Updating files:  74% (2153/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.1790242Z Updating files:  75% (2182/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.2039541Z Updating files:  76% (2211/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.2263940Z Updating files:  77% (2240/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.2490447Z Updating files:  78% (2270/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.2694447Z Updating files:  79% (2299/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.2922213Z Updating files:  80% (2328/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.3118691Z Updating files:  81% (2357/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.3328004Z Updating files:  82% (2386/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.3523219Z Updating files:  83% (2415/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.3714304Z Updating files:  84% (2444/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.3845127Z Updating files:  85% (2473/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.3916782Z Updating files:  86% (2502/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.4103490Z Updating files:  87% (2531/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5091975Z Updating files:  88% (2560/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5277414Z Updating files:  89% (2590/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5303671Z Updating files:  90% (2619/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5327491Z Updating files:  91% (2648/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5357001Z Updating files:  92% (2677/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5383227Z Updating files:  93% (2706/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5406794Z Updating files:  94% (2735/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5425772Z Updating files:  95% (2764/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5447960Z Updating files:  96% (2793/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5477560Z Updating files:  97% (2822/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5507622Z Updating files:  98% (2851/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5545067Z Updating files:  99% (2880/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5545588Z Updating files: 100% (2909/2909)
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5545955Z Updating files: 100% (2909/2909), done.
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5587486Z Switched to a new branch 'feat/dobby-e073-taverne-grimoire-20261111'
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5593322Z branch 'feat/dobby-e073-taverne-grimoire-20261111' set up to track 'origin/feat/dobby-e073-taverne-grimoire-20261111'.
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5673919Z ##[endgroup]
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5724638Z [command]/usr/bin/git log -1 --format=%H
+sync-core	Run actions/checkout@v4	2026-11-11T11:49:09.5754430Z c121027e53b335800d1559a39481c774a137a3fa
+sync-core	Run actions/setup-node@v4	﻿2026-11-11T11:49:09.6040193Z ##[group]Run actions/setup-node@v4
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.6040507Z with:
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.6040728Z   node-version: 22
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.6040948Z   always-auth: false
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.6041166Z   check-latest: false
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.6043662Z   token: ***
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.6043879Z ##[endgroup]
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.7769160Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.7778850Z (node:2428) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.7780586Z ##[group]Environment details
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:09.7781324Z (Use `node --trace-deprecation ...` to show where the warning was created)
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:12.3228290Z node: v22.23.4
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:12.3228846Z npm: 10.9.9
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:12.3229263Z yarn: 1.22.22
+sync-core	Run actions/setup-node@v4	2026-11-11T11:49:12.3231221Z ##[endgroup]
+sync-core	Check JavaScript syntax (both pilots)	﻿2026-11-11T11:49:12.3389993Z ##[group]Run node --check essai-sync-v1/app.js
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3390466Z [36;1mnode --check essai-sync-v1/app.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3390815Z [36;1mnode --check essai-sync-v1/core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3391318Z [36;1mnode --check essai-sync-v1/sw.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3391639Z [36;1mnode --check essai-sync-v2/app.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3391958Z [36;1mnode --check essai-sync-v2/core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3392258Z [36;1mnode --check essai-sync-v2/sw.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3392600Z [36;1mnode --check essai-stitch-v5-famille/stitch-v5.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3392999Z [36;1mnode --check essai-stitch-v5-famille/family-v2.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3393416Z [36;1mnode --check essai-stitch-v5-famille/family-modules.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3393853Z [36;1mnode --check essai-stitch-v5-famille/family-agenda.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3394294Z [36;1mnode --check essai-stitch-v5-famille/family-agenda-core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3394745Z [36;1mnode --check essai-stitch-v5-famille/family-missions.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3395256Z [36;1mnode --check essai-stitch-v5-famille/family-missions-core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3395733Z [36;1mnode --check essai-stitch-v5-famille/family-runes-core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3396456Z [36;1mnode --check essai-stitch-v5-famille/family-files.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3396890Z [36;1mnode --check essai-stitch-v5-famille/family-health.js[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3397324Z [36;1mnode --check essai-stitch-v5-famille/family-health-core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3397762Z [36;1mnode --check essai-stitch-v5-famille/family-core.mjs[0m
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3491497Z shell: /usr/bin/bash -e {0}
+sync-core	Check JavaScript syntax (both pilots)	2026-11-11T11:49:12.3491774Z ##[endgroup]
+sync-core	Deterministic offline/conflict regression	﻿2026-11-11T11:49:12.8053588Z ##[group]Run node --test essai-sync-v1/tests/*.test.mjs
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.8054058Z [36;1mnode --test essai-sync-v1/tests/*.test.mjs[0m
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.8054413Z [36;1mnode --test essai-sync-v2/tests/*.test.mjs[0m
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.8054788Z [36;1mnode --test essai-stitch-v5-famille/tests/*.test.mjs[0m
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.8106442Z shell: /usr/bin/bash -e {0}
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.8106719Z ##[endgroup]
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.8869573Z TAP version 13
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9279953Z # Subtest: new entry is pending and preserves a stable UUID
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9285172Z ok 1 - new entry is pending and preserves a stable UUID
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9286425Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9287477Z   duration_ms: 1.009429
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9288345Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9289036Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9292496Z # Subtest: equivalent server echo resolves an uncertain successful POST
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9295493Z ok 2 - equivalent server echo resolves an uncertain successful POST
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9296837Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9297444Z   duration_ms: 0.272861
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9298056Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9298572Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9299608Z # Subtest: editing an unchanged server revision remains pending
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9302487Z ok 3 - editing an unchanged server revision remains pending
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9303695Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9304248Z   duration_ms: 0.217356
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9304906Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9305466Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9306569Z # Subtest: simultaneous edits require a decision, never auto overwrite
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9307936Z ok 4 - simultaneous edits require a decision, never auto overwrite
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9308804Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9309366Z   duration_ms: 0.872924
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9309956Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9310540Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9311717Z # Subtest: resolve conflict with server version
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9313165Z ok 5 - resolve conflict with server version
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9313950Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9314510Z   duration_ms: 0.362037
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9315112Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9315645Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9316870Z # Subtest: resolve conflict with local version creates pending update against new revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9328446Z ok 6 - resolve conflict with local version creates pending update against new revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9329696Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9330352Z   duration_ms: 0.193863
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9330834Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9331664Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9336369Z # Subtest: new edit during an in-flight update remains pending with new server revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9338099Z ok 7 - new edit during an in-flight update remains pending with new server revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9339189Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9339810Z   duration_ms: 0.251792
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9340493Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9341102Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9341951Z # Subtest: soft deletion is part of the synchronized state
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9343116Z ok 8 - soft deletion is part of the synchronized state
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9343975Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9344564Z   duration_ms: 0.489246
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9345131Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9345663Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9408740Z 1..8
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9409134Z # tests 8
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9409591Z # suites 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9410193Z # pass 8
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9410651Z # fail 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9411289Z # cancelled 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9411811Z # skipped 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9412382Z # todo 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9413026Z # duration_ms 79.62424
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:12.9873055Z TAP version 13
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0315570Z # Subtest: new entry is pending and preserves a stable UUID
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0324411Z ok 1 - new entry is pending and preserves a stable UUID
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0325141Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0347468Z   duration_ms: 1.11691
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0348059Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0348448Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0349835Z # Subtest: equivalent server echo resolves an uncertain successful POST
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0379387Z ok 2 - equivalent server echo resolves an uncertain successful POST
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0380470Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0381167Z   duration_ms: 0.331561
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0382054Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0382695Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0383602Z # Subtest: editing an unchanged server revision remains pending
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0384834Z ok 3 - editing an unchanged server revision remains pending
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0385819Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0386712Z   duration_ms: 0.217006
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0387298Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0387796Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0388707Z # Subtest: simultaneous edits require a decision, never auto overwrite
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0389979Z ok 4 - simultaneous edits require a decision, never auto overwrite
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0390892Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0391474Z   duration_ms: 0.207288
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0392138Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0392720Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0393482Z # Subtest: resolve conflict with server version
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0394469Z ok 5 - resolve conflict with server version
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0395213Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0395861Z   duration_ms: 0.324548
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0396792Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0397411Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0398573Z # Subtest: resolve conflict with local version creates pending update against new revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0400196Z ok 6 - resolve conflict with local version creates pending update against new revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0401352Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0401969Z   duration_ms: 0.247614
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0402725Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0403327Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0404287Z # Subtest: new edit during an in-flight update remains pending with new server revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0406069Z ok 7 - new edit during an in-flight update remains pending with new server revision
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0407145Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0407536Z   duration_ms: 0.194354
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0407935Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0408276Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0408850Z # Subtest: soft deletion is part of the synchronized state
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0409658Z ok 8 - soft deletion is part of the synchronized state
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0410188Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0410524Z   duration_ms: 0.214281
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0410915Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0411141Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0411514Z # Subtest: V2 uses a distinct offline IndexedDB namespace
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0412228Z ok 9 - V2 uses a distinct offline IndexedDB namespace
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0412537Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0412738Z   duration_ms: 0.395831
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0412962Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0413165Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0413531Z # Subtest: V2 never accesses legacy V1 grocery or membership tables
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0414048Z ok 10 - V2 never accesses legacy V1 grocery or membership tables
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0414397Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0414616Z   duration_ms: 0.447387
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0414845Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0415046Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0415360Z # Subtest: V2 rejects ambiguous household membership
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0415788Z ok 11 - V2 rejects ambiguous household membership
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0416090Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0416626Z   duration_ms: 0.18722
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0417015Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0417371Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0417891Z # Subtest: V2 includes household binding on GET, INSERT and optimistic PATCH
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0418554Z ok 12 - V2 includes household binding on GET, INSERT and optimistic PATCH
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0418952Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0419176Z   duration_ms: 0.137518
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0419533Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0419780Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0420129Z # Subtest: V2 service worker has isolated cache and route scope
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0420609Z ok 13 - V2 service worker has isolated cache and route scope
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0421168Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0421369Z   duration_ms: 0.135694
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0421590Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0421786Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0478993Z 1..13
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0479539Z # tests 13
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0480202Z # suites 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0480905Z # pass 13
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0481295Z # fail 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0481663Z # cancelled 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0482256Z # skipped 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0482941Z # todo 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.0483682Z # duration_ms 72.829202
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.1103125Z TAP version 13
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2897971Z # Subtest: validates actual calendar dates and time instead of accepting malformed input
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2916064Z ok 1 - validates actual calendar dates and time instead of accepting malformed input
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2928376Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2947302Z   duration_ms: 2.541816
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2948083Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2948774Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2949875Z # Subtest: shared agenda rejects medical category and normalizes ordinary events
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2951454Z ok 2 - shared agenda rejects medical category and normalizes ordinary events
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2952428Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2953039Z   duration_ms: 1.591959
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2953751Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2954368Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2955616Z # Subtest: aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2957694Z ok 3 - aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2958902Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2959536Z   duration_ms: 119.339522
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2960220Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2960837Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2961861Z # Subtest: birthdays are re-evaluated annually and leap-day policy is defined
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2963270Z ok 4 - birthdays are re-evaluated annually and leap-day policy is defined
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2964265Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2964904Z   duration_ms: 0.232986
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2965597Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2966416Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2967495Z # Subtest: ics export contains correct floating local time and escapes injection
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2968933Z ok 5 - ics export contains correct floating local time and escapes injection
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2969922Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2970529Z   duration_ms: 1.35718
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2971145Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.2972302Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3062699Z # Subtest: create and CAS transition
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3064068Z ok 6 - create and CAS transition
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3064644Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3064979Z   duration_ms: 1.48553
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3065347Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3065808Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3066646Z # Subtest: offline edit is pending until remote acknowledges
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3068111Z ok 7 - offline edit is pending until remote acknowledges
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3068653Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3069152Z   duration_ms: 0.353652
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3069606Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3070003Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3070948Z # Subtest: independent updates never silently overwrite
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3071756Z ok 8 - independent updates never silently overwrite
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3072281Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3072611Z   duration_ms: 0.319659
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3073065Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3073417Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3074253Z # Subtest: unknown quantity is not silently converted into 0 or 1
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3075224Z ok 9 - unknown quantity is not silently converted into 0 or 1
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3075892Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3076522Z   duration_ms: 0.44856
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3077010Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3077356Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3077895Z # Subtest: logical deletion preserved
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3078767Z ok 10 - logical deletion preserved
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3079242Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3079685Z   duration_ms: 1.235332
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3080502Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3080939Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3082162Z # Subtest: medical visit requires an explicit valid record, date and time
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3083198Z ok 11 - medical visit requires an explicit valid record, date and time
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3092869Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3093318Z   duration_ms: 2.214475
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3093824Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3094243Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3095116Z # Subtest: only appointments explicitly shared with the household appear in global due list
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3096681Z ok 12 - only appointments explicitly shared with the household appear in global due list
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3097520Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3098073Z   duration_ms: 0.996125
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3098696Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3099220Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3124812Z # Subtest: manual mission normalization validates due date and does not use medical categories
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3126716Z ok 13 - manual mission normalization validates due date and does not use medical categories
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3127760Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3128315Z   duration_ms: 2.358133
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3128897Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3129397Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3130319Z # Subtest: manual open tasks are ordered by date and completed remain distinct
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3131530Z ok 14 - manual open tasks are ordered by date and completed remain distinct
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3132350Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3132872Z   duration_ms: 49.050286
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3133537Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3134049Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3134951Z # Subtest: manual missions appear in due summary without polluting autoTasks
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3136296Z ok 15 - manual missions appear in due summary without polluting autoTasks
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3137135Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3137645Z   duration_ms: 1.241172
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3138205Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3138705Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3173929Z # Subtest: preview V5 source matches original except isolated storage and explicitly approved E05/E07.3 native extensions
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3175985Z ok 16 - preview V5 source matches original except isolated storage and explicitly approved E05/E07.3 native extensions
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3177320Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3178027Z   duration_ms: 36.333196
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3178670Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3179237Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3180349Z # Subtest: Stitch V5 integration adds shared panier without removing original preparation UI
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3189195Z ok 17 - Stitch V5 integration adds shared panier without removing original preparation UI
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3190632Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3191400Z   duration_ms: 2.466415
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3192270Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3192886Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3193966Z # Subtest: module adapter fails closed when Supabase modules table is missing
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3195444Z ok 18 - module adapter fails closed when Supabase modules table is missing
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3196525Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3197250Z   duration_ms: 1.945992
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3198008Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3198652Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3199891Z # Subtest: module schema enforces household isolation and excludes health and attachments
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3201521Z ok 19 - module schema enforces household isolation and excludes health and attachments
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3202536Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3203149Z   duration_ms: 0.235992
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3203805Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3204565Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3205677Z # Subtest: preview denies cross-household browser reuse and drops unauthorized session
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3207391Z ok 20 - preview denies cross-household browser reuse and drops unauthorized session
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3208480Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3209259Z   duration_ms: 0.231513
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3210051Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3210690Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3212356Z # Subtest: family events and selected medical visits share the household without uploading private famHealth
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3214280Z ok 21 - family events and selected medical visits share the household without uploading private famHealth
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3215430Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3216057Z   duration_ms: 0.169167
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3216887Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3217607Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3218526Z # Subtest: manual missions remain separate from automatic tasks
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3219734Z ok 22 - manual missions remain separate from automatic tasks
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3250342Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3260797Z   duration_ms: 0.115376
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3261517Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3262116Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3262997Z # Subtest: binary file uploads do not use the JSON modules API
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3264091Z ok 23 - binary file uploads do not use the JSON modules API
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3264899Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3265454Z   duration_ms: 0.32078
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3266098Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3266884Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3267912Z # Subtest: shared health visits do not automatically upload previous local health records
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3269396Z ok 24 - shared health visits do not automatically upload previous local health records
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3270344Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3270889Z   duration_ms: 0.431758
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3271494Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3272031Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3273000Z # Subtest: a health document remains local until the user chooses household sharing
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3274365Z ok 25 - a health document remains local until the user chooses household sharing
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3275215Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3275717Z   duration_ms: 1.519874
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3276506Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.3277114Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4293498Z # Subtest: two accounts activate all six modules and receive a shared update without exposing health or attachments
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4305681Z ok 26 - two accounts activate all six modules and receive a shared update without exposing health or attachments
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4327965Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4328578Z   duration_ms: 35.965916
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4329156Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4329681Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4330589Z # Subtest: simultaneous module edits create a conflict, not a lost update
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4331828Z ok 27 - simultaneous module edits create a conflict, not a lost update
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4333068Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4333602Z   duration_ms: 5.38661
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4334189Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4334687Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4335435Z # Subtest: missing modules backend does not activate sharing
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4336592Z ok 28 - missing modules backend does not activate sharing
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4337302Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4337731Z   duration_ms: 2.56357
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4338211Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4342166Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4343108Z # Subtest: customized or actual meal plans are never offered for automated demo deletion
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4344656Z ok 29 - customized or actual meal plans are never offered for automated demo deletion
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4345518Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4346026Z   duration_ms: 1.546164
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4346940Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4347350Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4348251Z # Subtest: a fresh household activates all six modules with one consent and excludes demo meals
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4349642Z ok 30 - a fresh household activates all six modules with one consent and excludes demo meals
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4350437Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4350802Z   duration_ms: 6.56707
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4351222Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4351577Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4352360Z # Subtest: refusing group activation does not publish data or remove example meals
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4353540Z ok 31 - refusing group activation does not publish data or remove example meals
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4354626Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4354998Z   duration_ms: 2.173447
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4355436Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4355796Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4515007Z # Subtest: E05 catalogues have stable French identities without inferring a house or a member
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4537580Z ok 32 - E05 catalogues have stable French identities without inferring a house or a member
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4538630Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4539202Z   duration_ms: 4.084644
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4539826Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4540336Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4541446Z # Subtest: partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4543131Z ok 33 - partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4544201Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4544740Z   duration_ms: 2.450666
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4545305Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4545809Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4547198Z # Subtest: E05 approves the exact E04 thresholds without changing reward values
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4548486Z ok 34 - E05 approves the exact E04 thresholds without changing reward values
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4549370Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4549830Z   duration_ms: 0.285574
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4550198Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4550521Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4551117Z # Subtest: family profile revision conflict retains the explicitly chosen version: server
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4551948Z ok 35 - family profile revision conflict retains the explicitly chosen version: server
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4552492Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4552811Z   duration_ms: 12.185224
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4553177Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4553491Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4554059Z # Subtest: family profile revision conflict retains the explicitly chosen version: local
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4554860Z ok 36 - family profile revision conflict retains the explicitly chosen version: local
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4555395Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4555707Z   duration_ms: 6.649624
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4556045Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4556688Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4557802Z # Subtest: native family sync preserves fields through reload and does not include medical records or rewards
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4558781Z ok 37 - native family sync preserves fields through reload and does not include medical records or rewards
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4559267Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4559808Z   duration_ms: 6.790088
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4560046Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4560252Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4560796Z # Subtest: LIMIT demonstrated: an old member writer can erase identity extensions server-side
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4561533Z ok 38 - LIMIT demonstrated: an old member writer can erase identity extensions server-side
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4561965Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4562166Z   duration_ms: 3.7137
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4562397Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4562598Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4667486Z # Subtest: cached household reinitializes family modules after membership check
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4677355Z ok 39 - cached household reinitializes family modules after membership check
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4678269Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4678797Z   duration_ms: 10.545886
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4679380Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4679888Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4680921Z # Subtest: module API unavailability does not masquerade as disconnected household and retries
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4700950Z ok 40 - module API unavailability does not masquerade as disconnected household and retries
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4702092Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4702688Z   duration_ms: 3.225857
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4703348Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.4703903Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5114528Z # Subtest: validated effort choices and approved V1 grades have one centralized definition
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5116379Z ok 41 - validated effort choices and approved V1 grades have one centralized definition
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5117795Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5118344Z   duration_ms: 1.423304
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5118966Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5119549Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5121131Z # Subtest: only new eligible assigned completions create a single durable request per mission
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5123529Z ok 42 - only new eligible assigned completions create a single durable request per mission
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5124371Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5137352Z   duration_ms: 0.94013
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5138079Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5138667Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5139772Z # Subtest: 10/25/50 credits are validated, durable without mission rows, and deterministic
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5141320Z ok 43 - 10/25/50 credits are validated, durable without mission rows, and deterministic
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5142356Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5142978Z   duration_ms: 9.452159
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5143631Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5144226Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5145323Z # Subtest: first confirmed CAS result wins over a divergent offline request without transfer
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5147147Z ok 44 - first confirmed CAS result wins over a divergent offline request without transfer
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5148232Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5148789Z   duration_ms: 0.446746
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5149383Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5178474Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5179458Z # Subtest: pending requests do not inflate totals, and all twelve grade boundaries are stable
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5180910Z ok 45 - pending requests do not inflate totals, and all twelve grade boundaries are stable
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5181831Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5182248Z   duration_ms: 0.449461
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5182736Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5183156Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5184018Z # Subtest: the reward history is not truncated to the 200 current mission limit
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5185236Z ok 46 - the reward history is not truncated to the 200 current mission limit
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5186036Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5188158Z   duration_ms: 5.821976
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5188679Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5189122Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5680850Z # Subtest: concurrent distinct credits survive server conflict resolution and mission deletion
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5682529Z ok 47 - concurrent distinct credits survive server conflict resolution and mission deletion
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5686977Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5687380Z   duration_ms: 21.213798
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5687824Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5688658Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5689538Z # Subtest: concurrent distinct credits survive local conflict resolution and mission deletion
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5693983Z ok 48 - concurrent distinct credits survive local conflict resolution and mission deletion
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5695120Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5695760Z   duration_ms: 8.62437
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5696754Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5697287Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5698535Z # Subtest: same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5700430Z ok 49 - same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5701597Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5702153Z   duration_ms: 5.625979
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5702750Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5703294Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5704519Z # Subtest: accepted PATCH with lost response and reload confirms the same request without replay credit
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5706489Z ok 50 - accepted PATCH with lost response and reload confirms the same request without replay credit
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5707707Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5708310Z   duration_ms: 4.647528
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5708974Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5709551Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5710619Z # Subtest: CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5712181Z ok 51 - CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5713539Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5714059Z   duration_ms: 6.602385
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5714647Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5715185Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5777676Z # Subtest: activation/retrieval preserves local pending requests and never credits legacy done rows
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5779329Z ok 52 - activation/retrieval preserves local pending requests and never credits legacy done rows
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5780404Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5780930Z   duration_ms: 4.131793
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5781498Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5782036Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5783202Z # Subtest: a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5784933Z ok 53 - a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5785996Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5786785Z   duration_ms: 2.912671
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5787379Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5787896Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5788841Z # Subtest: JSON object key order from jsonb cannot trigger a repeated reward PATCH
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5790272Z ok 54 - JSON object key order from jsonb cannot trigger a repeated reward PATCH
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5791155Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5791655Z   duration_ms: 3.242078
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5792211Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5792725Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5793825Z # Subtest: a second native completion during PATCH keeps newer local data and its unconfirmed request
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5795494Z ok 55 - a second native completion during PATCH keeps newer local data and its unconfirmed request
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5796813Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5797331Z   duration_ms: 4.957668
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5797946Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5798556Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5799632Z # Subtest: a malformed confirmation or server refusal never fabricates a confirmed gain
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5801191Z ok 56 - a malformed confirmation or server refusal never fabricates a confirmed gain
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5802243Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5802820Z   duration_ms: 2.765916
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5803424Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5803971Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5805213Z # Subtest: disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5807357Z ok 57 - disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5808865Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5809451Z   duration_ms: 4.239554
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5810079Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:13.5810628Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0807992Z # Subtest: retrieval queues retained offline rewards and reports pending until actual confirmation
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0809648Z ok 58 - retrieval queues retained offline rewards and reports pending until actual confirmation
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0810615Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0811059Z   duration_ms: 1515.817446
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0811625Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0812068Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0813043Z # Subtest: malformed request storage is reported without throwing after an unrelated native save
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0814530Z ok 59 - malformed request storage is reported without throwing after an unrelated native save
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0815336Z   ---
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0815845Z   duration_ms: 4.000326
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0816554Z   type: 'test'
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0817035Z   ...
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0910471Z 1..59
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0910859Z # tests 59
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0911253Z # suites 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0911767Z # pass 59
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0912245Z # fail 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0912732Z # cancelled 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0913206Z # skipped 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0913665Z # todo 0
+sync-core	Deterministic offline/conflict regression	2026-11-11T11:49:15.0914188Z # duration_ms 2007.273781
+sync-core	Check isolated Stitch V5 source and storage	﻿2026-11-11T11:49:15.1011642Z ##[group]Run node --test essai-stitch-v5-famille/tests/integration.test.mjs
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.1012232Z [36;1mnode --test essai-stitch-v5-famille/tests/integration.test.mjs[0m
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.1064952Z shell: /usr/bin/bash -e {0}
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.1065215Z ##[endgroup]
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.1554937Z TAP version 13
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2346497Z # Subtest: preview V5 source matches original except isolated storage and explicitly approved E05/E07.3 native extensions
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2350581Z ok 1 - preview V5 source matches original except isolated storage and explicitly approved E05/E07.3 native extensions
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2351878Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2352440Z   duration_ms: 32.464747
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2353100Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2353638Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2357288Z # Subtest: Stitch V5 integration adds shared panier without removing original preparation UI
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2359689Z ok 2 - Stitch V5 integration adds shared panier without removing original preparation UI
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2360824Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2361352Z   duration_ms: 2.461276
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2361858Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2362255Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2363057Z # Subtest: module adapter fails closed when Supabase modules table is missing
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2364852Z ok 3 - module adapter fails closed when Supabase modules table is missing
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2366672Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2367092Z   duration_ms: 1.940402
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2367541Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2367927Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2368864Z # Subtest: module schema enforces household isolation and excludes health and attachments
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2377852Z ok 4 - module schema enforces household isolation and excludes health and attachments
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2378946Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2379586Z   duration_ms: 0.237144
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2380059Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2380456Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2381329Z # Subtest: preview denies cross-household browser reuse and drops unauthorized session
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2382636Z ok 5 - preview denies cross-household browser reuse and drops unauthorized session
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2383439Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2383835Z   duration_ms: 0.244257
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2384273Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2384649Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2385689Z # Subtest: family events and selected medical visits share the household without uploading private famHealth
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2387503Z ok 6 - family events and selected medical visits share the household without uploading private famHealth
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2388424Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2389469Z   duration_ms: 0.174337
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2389913Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2390285Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2390978Z # Subtest: manual missions remain separate from automatic tasks
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2396996Z ok 7 - manual missions remain separate from automatic tasks
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2402237Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2402652Z   duration_ms: 0.11714
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2403115Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2403513Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2404165Z # Subtest: binary file uploads do not use the JSON modules API
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2405095Z ok 8 - binary file uploads do not use the JSON modules API
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2405729Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2406126Z   duration_ms: 0.331631
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2406811Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2407199Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2408060Z # Subtest: shared health visits do not automatically upload previous local health records
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2409346Z ok 9 - shared health visits do not automatically upload previous local health records
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2410164Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2410550Z   duration_ms: 0.443981
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2410991Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2411370Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2412431Z # Subtest: a health document remains local until the user chooses household sharing
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2413846Z ok 10 - a health document remains local until the user chooses household sharing
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2415197Z   ---
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2415644Z   duration_ms: 1.49031
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2416105Z   type: 'test'
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2416734Z   ...
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2514484Z 1..10
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2514978Z # tests 10
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2515437Z # suites 0
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2516038Z # pass 10
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2516987Z # fail 0
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2517560Z # cancelled 0
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2518069Z # skipped 0
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2518609Z # todo 0
+sync-core	Check isolated Stitch V5 source and storage	2026-11-11T11:49:15.2519193Z # duration_ms 108.37168
+sync-core	Chromium browser smoke (Stitch V5 shell)	﻿2026-11-11T11:49:15.2606799Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-http.log 2>&1 &
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2607513Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-http.log 2>&1 &[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2607936Z [36;1msleep 1[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2608202Z [36;1mif command -v google-chrome >/dev/null; then[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2608550Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2608883Z [36;1melif command -v chromium >/dev/null; then[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2609202Z [36;1m  BROWSER="$(command -v chromium)"[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2609548Z [36;1melif command -v chromium-browser >/dev/null; then[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2609944Z [36;1m  BROWSER="$(command -v chromium-browser)"[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2610253Z [36;1melse[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2610510Z [36;1m  echo "No Chromium browser installed on runner"[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2610823Z [36;1m  exit 1[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2611017Z [36;1mfi[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2612095Z [36;1m"$BROWSER" --no-sandbox --headless=new --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=16000 --dump-dom http://127.0.0.1:8765/essai-stitch-v5-famille/tests/browser-smoke.html > /tmp/dobby-dom.html 2>/tmp/dobby-chrome.log[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2613380Z [36;1mif ! grep -q 'data-result="PASS"' /tmp/dobby-dom.html; then[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2613756Z [36;1m  echo 'BROWSER_SMOKE_FAILED'[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2614160Z [36;1m  grep -E 'data-result|RUNNING|FAIL' /tmp/dobby-dom.html | tail -n 8 || true[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2614610Z [36;1m  tail -n 40 /tmp/dobby-chrome.log || true[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2614904Z [36;1m  exit 1[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2615103Z [36;1mfi[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2615306Z [36;1mecho 'BROWSER_SMOKE_PASS'[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2616862Z [36;1m"$BROWSER" --no-sandbox --headless=new --disable-gpu --disable-dev-shm-usage --disable-background-networking --virtual-time-budget=16000 --dump-dom http://127.0.0.1:8765/essai-stitch-v5-famille/tests/bootstrap-smoke.html > /tmp/dobby-bootstrap-dom.html 2>/tmp/dobby-bootstrap-chrome.log[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2618451Z [36;1mif ! grep -q 'data-result="PASS"' /tmp/dobby-bootstrap-dom.html; then[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2618889Z [36;1m  echo 'BROWSER_BOOTSTRAP_FAILED'[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2619352Z [36;1m  grep -E 'data-result|RUNNING|FAIL' /tmp/dobby-bootstrap-dom.html | tail -n 8 || true[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2619878Z [36;1m  tail -n 40 /tmp/dobby-bootstrap-chrome.log || true[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2620200Z [36;1m  exit 1[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2620390Z [36;1mfi[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2620596Z [36;1mecho 'BROWSER_BOOTSTRAP_PASS'[0m
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2672413Z shell: /usr/bin/bash -e {0}
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:15.2672680Z ##[endgroup]
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:28.6538261Z BROWSER_SMOKE_PASS
+sync-core	Chromium browser smoke (Stitch V5 shell)	2026-11-11T11:49:29.8550913Z BROWSER_BOOTSTRAP_PASS
+sync-core	Post Run actions/setup-node@v4	﻿2026-11-11T11:49:29.8677700Z Post job cleanup.
+sync-core	Post Run actions/setup-node@v4	2026-11-11T11:49:29.9935024Z (node:3230) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+sync-core	Post Run actions/setup-node@v4	2026-11-11T11:49:29.9936471Z (Use `node --trace-deprecation ...` to show where the warning was created)
+sync-core	Post Run actions/checkout@v4	﻿2026-11-11T11:49:30.0178118Z Post job cleanup.
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1087128Z [command]/usr/bin/git version
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1135807Z git version 2.56.0
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1181588Z Temporarily overriding HOME='/home/runner/work/_temp/15849f52-a597-484a-bb4f-73cc8bd7ae5e' before making global git config changes
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1183382Z Adding repository directory to the temporary git global config as a safe directory
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1187561Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1228110Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1267102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1593572Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1622913Z http.https://github.com/.extraheader
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1635946Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1677300Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.1994721Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+sync-core	Post Run actions/checkout@v4	2026-11-11T11:49:30.2039194Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+sync-core	Complete job	﻿2026-11-11T11:49:30.2473957Z Cleaning up orphan processes
+sync-core	Complete job	2026-11-11T11:49:30.2839356Z Terminate orphan process: pid (2762) (python3)
+sync-core	Complete job	2026-11-11T11:49:30.2940496Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

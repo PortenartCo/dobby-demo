@@ -1,0 +1,24 @@
+{
+  "status": "FONCTIONNEMENT_HÉBERGÉ_VÉRIFIÉ",
+  "checkedAtUTC": "2026-11-11T12:02:10.995975+00:00",
+  "previewBase": "https://portenartco.github.io/dobby-demo/essai-dobby-e07-review-20261111/",
+  "expectedSourceSha": "c121027e53b335800d1559a39481c774a137a3fa",
+  "actualSourceSha": "c121027e53b335800d1559a39481c774a137a3fa",
+  "manifestSha256": "505693c7489e813872cf8bfe79533462830590cc552b9610bc3a0b271a996831",
+  "fileCount": 274,
+  "namespace": "dobby-review-e073-20261111|",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "script": "essai-stitch-v7/tests/e07-3-preview.cjs",
+  "scriptModifiedForHostedRun": false,
+  "requestInterception": false,
+  "businessStateInjection": false,
+  "photoImportOriginalSha256": "606067b97aa92524f76aac9c4ba64f112e37865a577e8a336734ca8d95ec8665",
+  "sourceMutationByTest": false,
+  "realSynchronization": "SYNCHRONISATION_RÉELLE_NON_VÉRIFIÉE",
+  "publicationCommitProvidedByParent": "84e254f485a22ac4f5b880217c02902c22b39c73",
+  "pagesWorkflowProvidedByParent": "https://github.com/PortenartCo/dobby-demo/actions/runs/43016384119"
+}
