@@ -1,0 +1,546 @@
+# Text diff of product, tests, loaders, build metadata and active-resource provenance.
+# Binary PNG/ZIP resources, immutable raw HTML references and documentation/evidence are listed in changed-files.txt and available in the Git branch diff.
+
+diff --git a/.github/workflows/dobby-stitch-v7.yml b/.github/workflows/dobby-stitch-v7.yml
+index 0085a13..7fa2f67 100644
+--- a/.github/workflows/dobby-stitch-v7.yml
++++ b/.github/workflows/dobby-stitch-v7.yml
+@@ -40,6 +40,7 @@ jobs:
+           node --check essai-stitch-v7/bridge.js
+           node --check essai-stitch-v7/chrome.js
+           node --check essai-stitch-v7/home.js
++          node --check essai-stitch-v7/ceremony-art.js
+           node --check essai-stitch-v7/ritual.js
+           node --check essai-stitch-v7/ritual-effects.js
+           node --check essai-stitch-v7/engine-policy.js
+diff --git a/essai-stitch-v7/assets/ceremony-v2/provenance.json b/essai-stitch-v7/assets/ceremony-v2/provenance.json
+new file mode 100644
+index 0000000..ca5ca06
+--- /dev/null
++++ b/essai-stitch-v7/assets/ceremony-v2/provenance.json
+@@ -0,0 +1,61 @@
++{
++  "manifest": "design/e06/references/visual-20261111/manifest.json",
++  "houses": {
++    "gryffindor": {
++      "src": "./assets/ceremony-v2/house-gryffindor.png",
++      "alt": "Blason original Stitch de Gryffondor — lion doré",
++      "sha256": "7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c",
++      "width": 1024,
++      "height": 1024,
++      "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_majestic_heraldic_emblem_of_a_golden_celestial_lion_crest_with_royal/screen.png",
++      "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
++      "kind": "original-stitch-illustration",
++      "official": false
++    },
++    "slytherin": {
++      "src": "./assets/ceremony-v2/house-slytherin.png",
++      "alt": "Blason original Stitch de Serpentard — serpent émeraude",
++      "sha256": "a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9",
++      "width": 1024,
++      "height": 1024,
++      "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_elegant_heraldic_emblem_of_an_emerald_celestial_coiled_serpent_viper/screen.png",
++      "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
++      "kind": "original-stitch-illustration",
++      "official": false
++    },
++    "ravenclaw": {
++      "src": "./assets/ceremony-v2/house-ravenclaw.png",
++      "alt": "Blason original Stitch de Serdaigle — aigle bronze",
++      "sha256": "77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d",
++      "width": 1024,
++      "height": 1024,
++      "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_wise_and_majestic_heraldic_emblem_of_a_bronze_celestial_soaring_eagle/screen.png",
++      "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
++      "kind": "original-stitch-illustration",
++      "official": false
++    },
++    "hufflepuff": {
++      "src": "./assets/ceremony-v2/house-hufflepuff.png",
++      "alt": "Blason original Stitch de Poufsouffle — blaireau ambré",
++      "sha256": "221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4",
++      "width": 1024,
++      "height": 1024,
++      "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_friendly_and_courageous_heraldic_emblem_of_a_warm_golden_amber_badger/screen.png",
++      "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
++      "kind": "original-stitch-illustration",
++      "official": false
++    }
++  },
++  "sortingHat": {
++    "src": "./assets/ceremony-v2/sorting-hat-cinematic.png",
++    "alt": "Choixpeau ancien et expressif sur son tabouret, dans une grande salle gothique éclairée de chandelles — illustration cinématographique Stitch",
++    "sha256": "0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9",
++    "width": 1376,
++    "height": 768,
++    "source": "design/e06/references/visual-20261111/zip-10/stitch_dobby_assistant_mobile_app/cinematic_photorealistic_dark_fantasy_still_of_the_ancient_magical_sorting_hat/screen.png",
++    "sourceArchiveSha256": "21f27e807d251eb93b79da0d6674c6f140115a83598eba0f54f5ed4dc09e0a3d",
++    "kind": "provided-stitch-panoramic-illustration"
++  },
++  "claims": "Provided original Stitch illustrations, not official House crests; no temporary external image links.",
++  "optimization": "None: active PNG copies are byte-identical to the archived originals."
++}
+diff --git a/essai-stitch-v7/build-source.cjs b/essai-stitch-v7/build-source.cjs
+index 01cdc2a..6ad1240 100644
+--- a/essai-stitch-v7/build-source.cjs
++++ b/essai-stitch-v7/build-source.cjs
+@@ -28,7 +28,7 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
+ @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+ </style></head>`);
+ html=html.replace(/(<main\b)/,'<div id="dv7-loading" role="status">Chargement des données du foyer…</div>$1');
+-html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body>`);
++html=html.replace('</body>',`<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./ceremony-art.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ceremony-art.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body>`);
+ if(screen==='taverne'){
+  html=html.replace(/(<img\b[^>]*\bsrc=")[^"]*"/gi,'$1./assets/cuisine/'+cuisineRoute.asset+'"');
+  html=html.replace('<script src="./cuisine.js">','<link rel="stylesheet" href="./cuisine-e07.css"><script src="./cuisine-e07.js"></script><script src="./cuisine.js">');
+@@ -64,6 +64,6 @@ require('./build-onboarding.cjs');
+ // The historical source census is distinct from the current review decisions.
+ {
+  const file=path.join(__dirname,'route-manifest.json'),m=JSON.parse(fs.readFileSync(file));
+- m.reviewConsolidation={reference:'a84f67acf8f5cbfd59475c2137ec70e1a20732f7',matrix:'docs/dobby-v7/CONSOLIDATION-MATRIX.json',report:'docs/dobby-v7/CONSOLIDATION.md',protected:['E03','E08 design'],blocked:['E04-02 native series/occurrence protocol','E05-01 official crest publication rights','E06-04 official crest dependency only'],deferred:['E06-08 server operations','E07-01','E07-02','E07-03','E07-09','Menu reconstruction','Family reconstruction'],sortingHat:{type:'original substitute; not original Stitch media',asset:'assets/onboarding/sorting-hat-original.svg',provenance:'assets/onboarding/sorting-hat-original.provenance.json'},speech:'explicit send; browser natural end pauses and keeps transcript; physical Safari not verified',preferences:'one native st.stitchPreferences record including ceremony'};
++ m.reviewConsolidation={reference:'a84f67acf8f5cbfd59475c2137ec70e1a20732f7',matrix:'docs/dobby-v7/CONSOLIDATION-MATRIX.json',report:'docs/dobby-v7/CONSOLIDATION.md',protected:['E03','E08 design'],blocked:['E04-02 native series/occurrence protocol','E05-01 official crest publication rights','E06-04 official crest dependency only'],deferred:['E06-08 server operations','E07-01','E07-02','E07-03','E07-09','Menu reconstruction','Family reconstruction'],sortingHat:{type:'supplied original Stitch cinematic panorama; existing canonical questions preserved',asset:'assets/ceremony-v2/sorting-hat-cinematic.png',provenance:'assets/ceremony-v2/provenance.json'},speech:'explicit send; browser natural end pauses and keeps transcript; physical Safari not verified',preferences:'one native st.stitchPreferences record including ceremony'};
+  fs.writeFileSync(file,JSON.stringify(m,null,2)+'\n');
+ }
+diff --git a/essai-stitch-v7/ceremony-art.css b/essai-stitch-v7/ceremony-art.css
+new file mode 100644
+index 0000000..9149059
+--- /dev/null
++++ b/essai-stitch-v7/ceremony-art.css
+@@ -0,0 +1,9 @@
++/* Supplied original Stitch artwork, shared by E05 and E06. Historical assets
++   are untouched; every PNG is rendered whole, never stretched or cropped. */
++.mp-emblem.mp-house-illustration{display:block;box-sizing:border-box;width:min(100%,260px);height:auto;aspect-ratio:1;object-fit:contain;object-position:center;align-self:center;border-radius:18px;border:1px solid #d49b4240;background:#180f0d;box-shadow:0 10px 32px #0004}
++.mp-page .mp-house img.mp-house-illustration{width:min(100%,260px);height:auto;margin:4px auto 10px}
++.e06-main .e06-house-revelation .e06-house-art{min-height:0;padding:10px}
++.e06-main .e06-house-revelation .e06-house-art img.mp-house-illustration{width:min(100%,320px);height:auto;max-width:100%;aspect-ratio:1}
++.e06-main .e06-final-medallions.grid.grid-cols-2 img.mp-house-illustration{width:min(100%,160px);height:auto;max-width:100%;aspect-ratio:1;margin:8px 0 0}
++.e06-main #e06-sorting-hat{display:block;width:100%;height:auto;aspect-ratio:1376/768;object-fit:contain;object-position:center;transform:none}
++@media(max-width:360px){.mp-page .mp-house img.mp-house-illustration{width:min(100%,240px)}.e06-main .e06-house-revelation .e06-house-art{padding:0}}
+diff --git a/essai-stitch-v7/ceremony-art.js b/essai-stitch-v7/ceremony-art.js
+new file mode 100644
+index 0000000..ba28343
+--- /dev/null
++++ b/essai-stitch-v7/ceremony-art.js
+@@ -0,0 +1,7 @@
++/* One canonical presentation map for the supplied original Stitch art.
++   No identity, questionnaire, score or persistence rules are defined here. */
++window.DobbyCeremonyArt=(()=>{'use strict';const root=new URL('./',document.currentScript.src);
++ const resolve=item=>Object.freeze({...item,src:new URL(item.src,root).href});
++ const houses={"gryffindor":{"src":"./assets/ceremony-v2/house-gryffindor.png","alt":"Blason original Stitch de Gryffondor — lion doré","sha256":"7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c","width":1024,"height":1024},"slytherin":{"src":"./assets/ceremony-v2/house-slytherin.png","alt":"Blason original Stitch de Serpentard — serpent émeraude","sha256":"a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9","width":1024,"height":1024},"ravenclaw":{"src":"./assets/ceremony-v2/house-ravenclaw.png","alt":"Blason original Stitch de Serdaigle — aigle bronze","sha256":"77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d","width":1024,"height":1024},"hufflepuff":{"src":"./assets/ceremony-v2/house-hufflepuff.png","alt":"Blason original Stitch de Poufsouffle — blaireau ambré","sha256":"221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4","width":1024,"height":1024}};
++ return Object.freeze({houses:Object.freeze(Object.fromEntries(Object.entries(houses).map(([id,item])=>[id,resolve(item)]))),sortingHat:resolve({"src":"./assets/ceremony-v2/sorting-hat-cinematic.png","alt":"Choixpeau ancien et expressif sur son tabouret, dans une grande salle gothique éclairée de chandelles — illustration cinématographique Stitch","sha256":"0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9","width":1376,"height":768})});
++})();
+diff --git a/essai-stitch-v7/chrome.js b/essai-stitch-v7/chrome.js
+index e2bde54..29ef732 100644
+--- a/essai-stitch-v7/chrome.js
++++ b/essai-stitch-v7/chrome.js
+@@ -35,7 +35,7 @@ reducedMotion.addEventListener('change',()=>{if(window.DobbyStitchV7?.ready)appl
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTransient();syncAmbience();});
+ window.addEventListener('pagehide',()=>{pageAway=true;clearTransient();syncAmbience();});
+ const destinations=[['Traverse','explore','./traverse.html'],['Missions','history_edu','./missions.html'],['Taverne','skillet','./index.html'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
+-const preferences=()=>E.evaluate('return {effects:false,sound:false,...st.stitchPreferences};');
++const preferences=()=>E.evaluate('return {effects:true,sound:false,...st.stitchPreferences};');
+ function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){for(const b of document.querySelectorAll(`[data-e01-toggle="${name}"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(name==='effects'){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}
+ function sectionTitle(){
+  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
+@@ -88,7 +88,7 @@ function feedback(event,{visual=true,sound=true}={}){
+ document.addEventListener('click',async event=>{
+  const toggle=event.target.closest('[data-e01-toggle]');const account=event.target.closest('[data-e01-account]');const nav=event.target.closest('[data-e01-destination]');
+  if(!toggle&&!account&&!nav){if(event.target.closest('button,a,[role=link],[role=button]'))feedback(event);return;}event.preventDefault();event.stopImmediatePropagation();
+- if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:false,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
++ if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
+  feedback(event);
+  if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
+  if(account){window.DobbyStitchV7.close(false);window.DobbyMagicProfile.openAccount()?.catch?.(console.error);return;}
+@@ -100,5 +100,5 @@ document.addEventListener('click',async event=>{
+ },true);
+ window.addEventListener('pageshow',()=>{pageAway=false;if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});
+ window.addEventListener('popstate',()=>setTimeout(mount,0));
+-return {ready,mount,apply};
++return {ready,mount,apply,preferences};
+ })();
+diff --git a/essai-stitch-v7/ci-scope.json b/essai-stitch-v7/ci-scope.json
+index 3aeda1f..78f0ea2 100644
+--- a/essai-stitch-v7/ci-scope.json
++++ b/essai-stitch-v7/ci-scope.json
+@@ -2,5 +2,6 @@
+   "lot": "5",
+   "shared": true,
+   "final": true,
+-  "ritualOnly": true
++  "ritualOnly": false,
++  "e06VisualFunctional": true
+ }
+diff --git a/essai-stitch-v7/famille.html b/essai-stitch-v7/famille.html
+index 1923b2f..9a8b56b 100644
+--- a/essai-stitch-v7/famille.html
++++ b/essai-stitch-v7/famille.html
+@@ -303,4 +303,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
+ 
+ 
+ 
+-<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
++<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./ceremony-art.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ceremony-art.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
+diff --git a/essai-stitch-v7/index.html b/essai-stitch-v7/index.html
+index 5077bb0..1826d52 100644
+--- a/essai-stitch-v7/index.html
++++ b/essai-stitch-v7/index.html
+@@ -260,4 +260,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
+ 
+ 
+ 
+-<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><link rel="stylesheet" href="./cuisine-e07.css"><script src="./cuisine-e07.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
++<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><link rel="stylesheet" href="./cuisine-e07.css"><script src="./cuisine-e07.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./ceremony-art.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ceremony-art.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
+diff --git a/essai-stitch-v7/magic-profile.js b/essai-stitch-v7/magic-profile.js
+index fe8e595..de14a8f 100644
+--- a/essai-stitch-v7/magic-profile.js
++++ b/essai-stitch-v7/magic-profile.js
+@@ -4,9 +4,11 @@ window.DobbyMagicProfile=(()=>{'use strict';
+  const make=(tag,text='',className='')=>{const el=Object.assign(document.createElement(tag),{textContent:text,className});if(tag==='button')el.dataset.magicControl='true';return el;};
+  function sprite(item,kind){const el=make('span','','mp-sprite mp-'+kind+'-sprite');el.setAttribute('role','img');el.setAttribute('aria-label',item.name);el.dataset.mediaId=item.id;el.style.backgroundImage='url("'+item.asset+'")';el.style.backgroundPosition=(item.index%4/3*100)+'% '+(Math.floor(item.index/4)/(kind==='patronus'?2:1)*100)+'%';return el;}
+  function houseEmblem(house){
+-  // E05-01 remains blocked: no official asset carries verified republication
+-  // rights. A neutral notice must never be mistaken for an official crest.
+-  const slot=make('p','Blason officiel indisponible dans cette démonstration.','mp-emblem mp-crest-unavailable');slot.dataset.houseCrest=house.id;slot.setAttribute('role','note');return slot;
++  // All three views consume the same supplied original Stitch resource map.
++  // These illustrations are deliberately not labelled as official House crests.
++  const art=window.DobbyCeremonyArt?.houses[house?.id];
++  if(!art){const notice=make('p','Illustration de Maison indisponible.','mp-emblem mp-art-unavailable');notice.setAttribute('role','note');return notice;}
++  const image=make('img','','mp-emblem mp-house-illustration');image.src=art.src;image.alt=art.alt;image.width=art.width;image.height=art.height;image.decoding='async';image.loading='eager';image.dataset.houseCrest=house.id;image.dataset.artOrigin='stitch-original';return image;
+  }
+  function runePresentation(member){
+   const reward=window.DobbyMemberAvatar.profile(member);reward.classList.add('mp-card','mp-runes');
+diff --git a/essai-stitch-v7/missions.html b/essai-stitch-v7/missions.html
+index a5ebb32..bad3aa1 100644
+--- a/essai-stitch-v7/missions.html
++++ b/essai-stitch-v7/missions.html
+@@ -35,4 +35,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
+ 
+ 
+ 
+-<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><link rel="stylesheet" href="./missions.css"><script src="./missions.js"></script><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
++<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><link rel="stylesheet" href="./missions.css"><script src="./missions.js"></script><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./ceremony-art.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ceremony-art.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
+diff --git a/essai-stitch-v7/onboarding-route-data.js b/essai-stitch-v7/onboarding-route-data.js
+index 1716699..e557414 100644
+--- a/essai-stitch-v7/onboarding-route-data.js
++++ b/essai-stitch-v7/onboarding-route-data.js
+@@ -1 +1 @@
+-window.DobbyOnboardingRoutes=[{"view":"onboarding-foyer","id":"dobby_mon_foyer_magique","status":"verified-partial","blocked":["Account/household creation, invitations and account/member association require verified server capabilities"]},{"view":"onboarding-identity","id":"dobby_mon_identit","status":"verified-functional","blocked":["Personal photos unavailable; parental authorization not represented"]},{"view":"onboarding-house","id":"dobby_le_myst_re_des_quatre_maisons","status":"verified-partial","blocked":["Original sorting-hat image URL returns HTML, illustration unavailable"]},{"view":"onboarding-house-result","id":"dobby_la_r_v_lation_de_la_maison","status":"verified-functional","blocked":[]},{"view":"onboarding-patronus","id":"dobby_le_miroir_des_mes","status":"verified-functional","blocked":[]},{"view":"onboarding-patronus-result","id":"dobby_l_apparition_du_patronus","status":"verified-functional","blocked":[]},{"view":"onboarding-final","id":"dobby_mon_identit_magique_consacr_e","status":"verified-functional","blocked":[]},{"view":"onboarding-ritual","id":"dobby_le_rituel_de_la_chemin_e","status":"source-backed-functional","blocked":[]}];
++window.DobbyOnboardingRoutes=[{"view":"onboarding-foyer","id":"dobby_mon_foyer_magique","status":"verified-partial","blocked":["Account/household creation, invitations and account/member association require verified server capabilities"]},{"view":"onboarding-identity","id":"dobby_mon_identit","status":"verified-functional","blocked":["Personal photos unavailable; parental authorization not represented"]},{"view":"onboarding-house","id":"dobby_le_myst_re_des_quatre_maisons","status":"verified-functional","blocked":[]},{"view":"onboarding-house-result","id":"dobby_la_r_v_lation_de_la_maison","status":"verified-functional","blocked":[]},{"view":"onboarding-patronus","id":"dobby_le_miroir_des_mes","status":"verified-functional","blocked":[]},{"view":"onboarding-patronus-result","id":"dobby_l_apparition_du_patronus","status":"verified-functional","blocked":[]},{"view":"onboarding-final","id":"dobby_mon_identit_magique_consacr_e","status":"verified-functional","blocked":[]},{"view":"onboarding-ritual","id":"dobby_le_rituel_de_la_chemin_e","status":"source-backed-functional","blocked":[]}];
+diff --git a/essai-stitch-v7/onboarding-routes.json b/essai-stitch-v7/onboarding-routes.json
+index 5b66894..179279d 100644
+--- a/essai-stitch-v7/onboarding-routes.json
++++ b/essai-stitch-v7/onboarding-routes.json
+@@ -18,10 +18,8 @@
+   {
+     "view": "onboarding-house",
+     "id": "dobby_le_myst_re_des_quatre_maisons",
+-    "status": "verified-partial",
+-    "blocked": [
+-      "Original sorting-hat image URL returns HTML, illustration unavailable"
+-    ]
++    "status": "verified-functional",
++    "blocked": []
+   },
+   {
+     "view": "onboarding-house-result",
+diff --git a/essai-stitch-v7/onboarding.js b/essai-stitch-v7/onboarding.js
+index cfafd51..246f163 100644
+--- a/essai-stitch-v7/onboarding.js
++++ b/essai-stitch-v7/onboarding.js
+@@ -63,7 +63,7 @@ window.DobbyOnboarding=(()=>{'use strict';
+   const d=G.drafts.read(),rules=G.scoring.config[kind],index=Math.min(d.index,rules.questions.length-1),item=rules.questions[index],set=q(kind==='house'?'#questionnaire-options':'#spectral-choices'),prototype=q('label',set).cloneNode(true),next=q(kind==='house'?'#validate-btn':'#btn-invoquer');
+   set.replaceChildren(el('legend','Choisissez une réponse pour continuer.','sr-only'));for(const a of item.answers){const label=prototype.cloneNode(true);label.classList.add('e06-choice');const input=q('input',label);input.name='e06-answer';input.value=a.id;input.checked=d[kind][index]===a.id;input.required=true;input.setAttribute('aria-label',a.text);for(const hint of all('.font-label-sm',label))hint.remove();const text=all('.font-body-md',label).find(n=>!n.querySelector('input'));if(text)text.textContent=a.text;for(const icon of all('.material-symbols-outlined',label))icon.textContent='';input.addEventListener('change',()=>{run(async()=>{await G.answer(kind,index,a.id);next.disabled=false;}).finally(()=>{try{const selected=G.drafts.read()[kind][index];for(const radio of all('input',set))radio.checked=radio.value===selected;next.disabled=!selected;}catch{next.disabled=true;}});});set.append(label);}
+   c.main.classList.add('e06-question-scene');
+-  let prompt;if(kind==='house'){const card=set.previousElementSibling;prompt=q('p',card);const title=q('.font-label-md',card);if(title)title.textContent=item.title;prompt.nextElementSibling?.remove();const hat=q('main img[data-e06-missing-media]');if(hat){hat.removeAttribute('data-e06-missing-media');hat.id='e06-sorting-hat';hat.src=new URL('./assets/onboarding/sorting-hat-original.svg',location.href).href;hat.alt='Un ancien chapeau de cérémonie dans la lumière du grand hall';}}
++  let prompt;if(kind==='house'){const card=set.previousElementSibling;prompt=q('p',card);const title=q('.font-label-md',card);if(title)title.textContent=item.title;prompt.nextElementSibling?.remove();const hat=q('main img[data-e06-missing-media]');if(hat){hat.removeAttribute('data-e06-missing-media');hat.id='e06-sorting-hat';hat.src=window.DobbyCeremonyArt.sortingHat.src;hat.alt=window.DobbyCeremonyArt.sortingHat.alt;hat.dataset.e06Art='cinematic-sorting-hat';}}
+   else{prompt=all('main p').find(p=>/Dans une serre ancienne/.test(p.textContent));if(prompt)prompt.parentElement.before(el('h2',item.title,'font-headline-sm text-headline-sm text-secondary'));}
+   prompt.textContent=item.prompt;prompt.id='e06-question-prompt';
+   for(const span of all('main span'))if(!span.children.length&&/Question \d|Épreuve [IVX]+ sur/.test(span.textContent))span.remove();
+diff --git a/essai-stitch-v7/ritual.css b/essai-stitch-v7/ritual.css
+index 5e9264e..43d7a54 100644
+--- a/essai-stitch-v7/ritual.css
++++ b/essai-stitch-v7/ritual.css
+@@ -19,7 +19,7 @@ body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
+ #ritual-badge{position:relative;z-index:20;margin:0 8px 8px;padding:5px 10px;border-radius:999px;background:#1e100cdb;border:1px solid #d49b4266;backdrop-filter:blur(6px);display:flex;gap:8px;align-items:center;font:10px 'Ritual Cinzel',serif;letter-spacing:.1em;color:#f9bb5f;text-align:center}
+ #badge-ping{width:5px;height:5px;border-radius:50%;background:#d49b42;flex-shrink:0}
+ #interaction-panel{position:relative;z-index:20;padding:14px 20px 12px;background:linear-gradient(to top,#120805,#1a0e0af2 85%,#180b07);border-top:1px solid #d49b4240;flex-shrink:0}
+-#panel-content-text{text-align:center;margin-bottom:16px;transition:opacity .7s}
++#panel-content-text{text-align:center;margin-bottom:16px;transition:opacity .7s,transform .7s}
+ #intro-title{font:700 28px/1.2 'Playfair Display',serif;color:#f9bb5f;margin:0;text-shadow:0 2px 12px #d49b4259}
+ #intro-subtitle{font:italic 12px/1.5 'Ritual Jakarta',sans-serif;color:#eec66a;margin:6px auto 0;max-width:320px}
+ #panel-actions-wrapper{display:flex;flex-direction:column;gap:12px}
+@@ -37,7 +37,17 @@ body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
+ .ritual-status{font:11px/1.4 'Ritual Jakarta',sans-serif;color:#eec66a;margin:6px 0 0;min-height:0}.ritual-status:empty{display:none}
+ #iphone-app-frame button:focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}#iphone-app-frame button:disabled{opacity:.7;cursor:wait}
+ #iphone-app-frame.ritual-crossing #scene-wrapper{transform:scale(1.22) translateY(-2%);filter:brightness(1.15) hue-rotate(45deg) saturate(1.3)}
+-#iphone-app-frame.ritual-crossing #floo-vortex-flash{opacity:.75}#iphone-app-frame.ritual-crossing #panel-content-text{opacity:.3}
++#iphone-app-frame.ritual-crossing #floo-vortex-flash{opacity:.75}
++#iphone-app-frame.ritual-crossing #panel-content-text{opacity:.25;transform:translateY(14px)}
++/* Emerald controls/badge follow the original Stitch transition. Keep them
++   visible so the colour change and the immediate Skip action remain legible. */
++#iphone-app-frame.ritual-crossing #btn-floo-trigger{animation:none!important;background:linear-gradient(to right,rgba(16,185,129,.94),#059669,#0f766e);color:#f0fdf4;border-color:#6ee7b799;box-shadow:0 0 28px #10b9818c;opacity:1}
++#iphone-app-frame.ritual-crossing #btn-label{letter-spacing:.03em;min-width:0}
++#iphone-app-frame.ritual-crossing #btn-beacon-dot{background:#6ee7b7;box-shadow:0 0 16px #34d399}
++#iphone-app-frame.ritual-crossing #ritual-badge{border-color:#34d39988;box-shadow:0 0 20px #10b98133;background:#052e26e6}
++#iphone-app-frame.ritual-crossing #badge-text{color:#6ee7b7}
++#iphone-app-frame.ritual-crossing #badge-ping{background:#34d399;box-shadow:0 0 10px #34d399}
++#iphone-app-frame.ritual-crossing #panel-security-seal{opacity:.45;transform:translateY(3px)}
+ .e06-ritual-settings{padding:16px;margin-top:16px;border:1px solid #d49b4255;border-radius:12px;display:flex;flex-direction:column;gap:12px;color:#eec66a}.e06-ritual-settings h3{font:600 18px 'Playfair Display',serif;margin:0}.e06-ritual-settings label{display:flex;gap:10px;align-items:center;font-size:14px;line-height:1.5}.e06-ritual-settings input{width:20px;height:20px;min-height:20px;flex-shrink:0;accent-color:#d49b42}.e06-ritual-settings .fa-button{font-size:14px}
+ @media(min-width:640px){#iphone-app-frame.e06-ritual-scene{height:min(844px,calc(100dvh - var(--ritual-banner,0px) - 24px));margin:12px auto!important;border-radius:44px;box-shadow:0 25px 80px #000e,0 0 0 1px #d49b4240}}
+ @media(max-width:350px){#interaction-panel{padding-left:14px;padding-right:14px}#intro-title{font-size:25px}#btn-floo-trigger{letter-spacing:.04em}#ritual-badge{font-size:8px}}
+diff --git a/essai-stitch-v7/ritual.js b/essai-stitch-v7/ritual.js
+index 612ffea..e96f899 100644
+--- a/essai-stitch-v7/ritual.js
++++ b/essai-stitch-v7/ritual.js
+@@ -2,7 +2,9 @@
+ window.DobbyRitual=(()=>{'use strict';
+  const E=window.DobbyFamilyStitchEngine,key='dobby.e06.ritual.v1',reduced=matchMedia('(prefers-reduced-motion: reduce)');let state={},entry={},current=null,queue=Promise.resolve();
+  const api=()=>E.win().DobbyFamilyUI;
+- const preferences=()=>({effects:false,sound:false,...E.read().state.stitchPreferences});
++ // Use the shared preference reader after bootstrap; the fallback has the same
++ // defaults while the common controller finishes loading. No default is saved.
++ const preferences=()=>window.DobbyChrome?.preferences?.()||({effects:true,sound:false,...E.read().state.stitchPreferences});
+  const movement=()=>preferences().effects&&!reduced.matches;
+  const write=patch=>(queue=queue.catch(()=>{}).then(async()=>state=await api().updateMeta(key,value=>({...value,...patch,version:1}))));
+  async function prepare(ui){dispose();await window.DobbyRegister.until(()=>api()?.connectionState?.().ready);state=await api().meta(key)||{};entry={...ui};}
+@@ -17,6 +19,9 @@ window.DobbyRitual=(()=>{'use strict';
+   const seal=main.querySelector('#panel-security-seal span');seal.textContent=window.DobbyReview?'Parcours fictif · Préférence sur cet appareil':'Introduction · Préférence sur cet appareil';
+   const cross=main.querySelector('#btn-floo-trigger'),skip=[...main.querySelectorAll('button')].find(b=>/Passer/.test(b.textContent)),never=main.querySelector('#chk-never-again');skip.id='e06-ritual-skip';never.checked=!!state.suppressed;
+   const status=document.createElement('p');status.className='ritual-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');main.querySelector('#interaction-panel').append(status);
++  // Project the same source sequence onto the real controls, without replacing
++  // its Canvas engine or hiding the accessible Skip action during traversal.
++  const crossing=enabled=>{main.classList.toggle('ritual-crossing',enabled);main.querySelector('#btn-label').textContent=enabled?'Poudre de cheminette active…':'Traverser la cheminée';main.querySelector('#badge-text').textContent=enabled?'Traversée de l’Âtre en cours…':'Chemin de Traverse · Âtre N° 7';cross.setAttribute('aria-busy',String(enabled));};
+   const session={main,timer:0,effects:null,stopAudio:null,transition:false,attempt:0,awaitingWrite:false};current=session;
+   const active=()=>current===session&&main.isConnected&&document.body.dataset.familyView==='onboarding-ritual';
+   const stopAudio=()=>{session.stopAudio?.();session.stopAudio=null;};
+@@ -28,22 +33,25 @@ window.DobbyRitual=(()=>{'use strict';
+     await c.open('onboarding-foyer',{person:entry.person||null,record:null});
+    }catch(error){if(!active()||attempt!==session.attempt)return;
+     stopAudio();session.effects?.dispose();session.effects=null;session.transition=false;session.finishing=false;session.awaitingWrite=false;
+-    main.classList.remove('ritual-crossing');cross.disabled=false;skip.disabled=false;never.disabled=false;
++    crossing(false);cross.disabled=false;skip.disabled=false;never.disabled=false;
+     status.textContent='Introduction non enregistrée : '+error.message;sync();
+    }
+   }
+   const sync=()=>{if(!active())return;session.effects?.dispose();session.effects=null;if(!preferences().sound)stopAudio();if(movement()&&!document.hidden){session.effects=window.DobbyRitualEffects.start(main);if(session.transition)session.effects.floo();}if(session.transition&&!movement())finish();};
+   never.onchange=async()=>{never.disabled=true;try{await write({suppressed:never.checked});status.textContent='Préférence enregistrée sur cet appareil.';}catch(error){never.checked=!!state.suppressed;status.textContent='Préférence non enregistrée : '+error.message;}finally{never.disabled=false;}};
+-  cross.onclick=()=>{if(!active()||session.transition)return;session.transition=true;cross.disabled=true;never.disabled=true;status.textContent='Traversée en cours…';if(!movement()){finish();return;}main.classList.add('ritual-crossing');session.effects?.floo();if(preferences().sound){try{session.stopAudio=window.DobbyRitualEffects.audio();}catch{}try{navigator.vibrate?.([16,30,12]);}catch{}}session.timer=setTimeout(finish,2500);};
++  cross.onclick=()=>{if(!active()||session.transition)return;session.transition=true;cross.disabled=true;never.disabled=true;status.textContent='Traversée en cours…';if(!movement()){finish();return;}crossing(true);session.effects?.floo();if(preferences().sound){try{session.stopAudio=window.DobbyRitualEffects.audio();}catch{}try{navigator.vibrate?.([16,30,12]);}catch{}}session.timer=setTimeout(finish,2500);};
+   skip.onclick=()=>{if(!active())return;skip.disabled=true;finish();};
+   session.dispose=dispose;session.sync=sync;session.hash=()=>{if(!location.hash.startsWith('#onboarding-ritual'))dispose();};
+-  session.visibility=()=>{if(!active())return;if(document.hidden){clearTimeout(session.timer);session.effects?.dispose();session.effects=null;stopAudio();if(session.transition||session.awaitingWrite){session.attempt++;session.finishing=false;session.awaitingWrite=false;session.transition=false;main.classList.remove('ritual-crossing');cross.disabled=false;never.disabled=false;status.textContent='Traversée interrompue. Vous pouvez réessayer ou passer.';}}else sync();};
++  session.visibility=()=>{if(!active())return;if(document.hidden){clearTimeout(session.timer);session.effects?.dispose();session.effects=null;stopAudio();if(session.transition||session.awaitingWrite){session.attempt++;session.finishing=false;session.awaitingWrite=false;session.transition=false;crossing(false);cross.disabled=false;never.disabled=false;status.textContent='Traversée interrompue. Vous pouvez réessayer ou passer.';}}else sync();};
+   session.observer=new MutationObserver(()=>{if(!active())dispose();});session.observer.observe(document.body,{childList:true,attributes:true,attributeFilter:['data-family-view']});
+   session.preferencesObserver=new MutationObserver(sync);session.preferencesObserver.observe(controls,{attributes:true,subtree:true,attributeFilter:['aria-pressed']});
+   addEventListener('pagehide',dispose);addEventListener('hashchange',session.hash);document.addEventListener('visibilitychange',session.visibility);reduced.addEventListener('change',sync);image.decode().then(()=>{if(active())sync();}).catch(()=>{});sync();
+  }
+- function settings(parent,c){const section=document.createElement('section');section.dataset.e06RitualSettings='true';section.className='e06-ritual-settings';const title=document.createElement('h3');title.textContent='Introduction de la Cheminée';const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.e06RitualPref='true';input.disabled=true;label.append(input,document.createTextNode(' Autoriser le Rituel de première connexion'));const replay=document.createElement('button');replay.type='button';replay.className='fa-button';replay.dataset.magicControl='true';replay.dataset.e06RitualReplay='true';replay.textContent='Revoir le Rituel de la Cheminée';replay.onclick=()=>c.open('onboarding-ritual',{person:c.ui.person||null,record:'replay'});const message=document.createElement('p');message.setAttribute('role','status');message.className='e06-note';section.append(title,label,replay,message);parent.append(section);
+-  api().meta(key).then(value=>{input.checked=!value?.suppressed;input.disabled=false;message.textContent=value?.suppressed?'Introduction masquée sur cet appareil.':value?.seen?'Introduction déjà présentée ; « Revoir » permet de la relancer.':'Le Rituel apparaît à la première entrée E06, pas à chaque ouverture.';}).catch(error=>message.textContent='Préférence indisponible : '+error.message);
++ function settings(parent,c){const section=document.createElement('section');section.dataset.e06RitualSettings='true';section.className='e06-ritual-settings';const title=document.createElement('h3');title.textContent='Introduction de la Cheminée';const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.dataset.e06RitualPref='true';input.disabled=true;label.append(input,document.createTextNode(' Autoriser le Rituel de première connexion'));const replay=document.createElement('button');replay.type='button';replay.className='fa-button';replay.dataset.magicControl='true';replay.dataset.e06RitualReplay='true';replay.textContent='Revoir le Rituel';replay.onclick=()=>c.open('onboarding-ritual',{person:c.ui.person||null,record:'replay'});const message=document.createElement('p');message.setAttribute('role','status');message.className='e06-note';section.append(title,label,replay,message);
++  // Put replay in the next screen's first reading path, before long member lists.
++  const intro=c.ui.view==='onboarding-foyer'?parent.querySelector('.e06-demo-intro'):null,options=c.ui.view==='onboarding-foyer'?parent.querySelector('#household-options'):null;
++  if(intro)intro.after(section);else if(options)options.before(section);else parent.append(section);
++  api().meta(key).then(value=>{input.checked=!value?.suppressed;input.disabled=false;message.textContent=value?.suppressed?'Introduction masquée sur cet appareil.':value?.seen?'Introduction déjà présentée ; « Revoir le Rituel » la rejoue sans modifier votre profil.':'Le Rituel apparaît à la première entrée E06, pas à chaque ouverture.';}).catch(error=>message.textContent='Préférence indisponible : '+error.message);
+   input.onchange=async()=>{input.disabled=true;try{await write(input.checked?{suppressed:false,seen:false}:{suppressed:true});message.textContent=input.checked?'Introduction réactivée pour la prochaine entrée E06.':'Introduction masquée sur cet appareil.';}catch(error){input.checked=!state.suppressed;message.textContent='Préférence non enregistrée : '+error.message;}finally{input.disabled=false;}};
+  }
+  return Object.freeze({prepare,render,settings,dispose,get active(){return !!current;}});
+diff --git a/essai-stitch-v7/route-manifest.json b/essai-stitch-v7/route-manifest.json
+index 8c376f5..3d25ecc 100644
+--- a/essai-stitch-v7/route-manifest.json
++++ b/essai-stitch-v7/route-manifest.json
+@@ -2147,10 +2147,8 @@
+       {
+         "view": "onboarding-house",
+         "id": "dobby_le_myst_re_des_quatre_maisons",
+-        "status": "verified-partial",
+-        "blocked": [
+-          "Original sorting-hat image URL returns HTML, illustration unavailable"
+-        ],
++        "status": "verified-functional",
++        "blocked": [],
+         "route": "famille.html#onboarding-house",
+         "template": "templates/onboarding/onboarding-house.html",
+         "source": "design/e06/references/stitch/dobby_le_myst_re_des_quatre_maisons/code.html",
+@@ -2284,9 +2282,9 @@
+       "Family reconstruction"
+     ],
+     "sortingHat": {
+-      "type": "original substitute; not original Stitch media",
+-      "asset": "assets/onboarding/sorting-hat-original.svg",
+-      "provenance": "assets/onboarding/sorting-hat-original.provenance.json"
++      "type": "supplied original Stitch cinematic panorama; existing canonical questions preserved",
++      "asset": "assets/ceremony-v2/sorting-hat-cinematic.png",
++      "provenance": "assets/ceremony-v2/provenance.json"
+     },
+     "speech": "explicit send; browser natural end pauses and keeps transcript; physical Safari not verified",
+     "preferences": "one native st.stitchPreferences record including ceremony"
+diff --git a/essai-stitch-v7/tests/ci.cjs b/essai-stitch-v7/tests/ci.cjs
+index ab063c8..ba21a67 100644
+--- a/essai-stitch-v7/tests/ci.cjs
++++ b/essai-stitch-v7/tests/ci.cjs
+@@ -3,6 +3,7 @@ const {spawnSync}=require('node:child_process'),path=require('node:path'),scope=
+ const run=(file,extra={})=>{const r=spawnSync(process.execPath,[path.join(__dirname,file)],{stdio:'inherit',env:{...process.env,DOBBY_TEST_ORIGIN:process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',...extra}});if(r.status!==0)process.exit(r.status||1);};
+ // E06-01 mission: keep the historical campaign available via DOBBY_FINAL=1.
+ if(scope.ritualOnly&&process.env.DOBBY_FINAL!=='1'){run('e06-ritual.cjs');run('e06-ritual-errors.cjs');run('e06-consolidation.cjs',{DOBBY_E06_JOURNEY_ONLY:'1',DOBBY_E06_RITUAL_ENTRY:'1',DOBBY_E06_EVIDENCE_DIR:path.resolve(__dirname,'../../docs/dobby-v7/evidence/e06-01/regression')});process.exit(0);}
++if(scope.e06VisualFunctional){run('e06-art.cjs');run('e06-effects-transition.cjs');}
+ for(const file of ['consolidation-shared.cjs','e01-consolidation.cjs','e02-consolidation.cjs','e05-consolidation.cjs','e06-consolidation.cjs','e07-consolidation.cjs'])run(file);
+ for(const file of ['e06-auth.cjs','e06.cjs','e06-edge.cjs','e06-recovery.cjs','e06-review.cjs','e06-shared.cjs','e06-visual.cjs'])run(file);
+ run('e08.cjs');run('e03-counts.cjs');run('e03.cjs');run('e07-2-boot.cjs');run('e07-2-model.cjs');run('e07-2.cjs');require('node:child_process').execFileSync(process.execPath,[path.resolve(__dirname,'../../scripts/build-dobby-review.cjs'),'--profile','integrated'],{stdio:'inherit'});run('integrated-preview.cjs',{DOBBY_PREVIEW_BASE:(process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765')+'/essai-dobby-integrated-review/'});run('e07-1-context.cjs');run('e07-1.cjs');run('e07-native-actions.cjs');run('e07.cjs');run('e05-native.cjs');run('e05.cjs');run('e05-edge.cjs');run('e04.cjs');run('runes-native.cjs');run('e04-runes.cjs');run('e02.cjs');run('e02-edge.cjs');run('e02-voice-history.cjs');run('e01.cjs');run('e01-3.cjs');run('e01-1-visual.cjs');run('e01-visual.cjs');
+diff --git a/essai-stitch-v7/tests/e01-3.cjs b/essai-stitch-v7/tests/e01-3.cjs
+index 77a5edd..696c417 100644
+--- a/essai-stitch-v7/tests/e01-3.cjs
++++ b/essai-stitch-v7/tests/e01-3.cjs
+@@ -17,7 +17,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+   await page.goto(origin+'/essai-stitch-v7/traverse.html');await ready();await page.locator('main img[alt*="Dobby"]').evaluate(img=>img.decode());
+   const original=await business(),image=await page.locator('main img[alt*="Dobby"]').getAttribute('src');
+   const cards=await page.locator('[data-e01-meal]').evaluate(el=>el.outerHTML);
+-  assert.equal(await star().getAttribute('aria-pressed'),'false');
++  assert.equal(await star().getAttribute('aria-pressed'),'true','effects are initially enabled without a preference');await toggle();assert.equal(await star().getAttribute('aria-pressed'),'false');
+   await page.screenshot({path:path.join(out,`${engine}-off-${width}.png`),scale:'css'});
+   const start=Date.now();await toggle();
+   await page.locator('#e013-ambience .e013-particle').first().waitFor({state:'visible',timeout:1900});
+diff --git a/essai-stitch-v7/tests/e01.cjs b/essai-stitch-v7/tests/e01.cjs
+index 129d177..02530bc 100644
+--- a/essai-stitch-v7/tests/e01.cjs
++++ b/essai-stitch-v7/tests/e01.cjs
+@@ -46,7 +46,7 @@ await p.locator('[data-e01-event]').first().click();await p.waitForURL(/famille.
+ await p.locator('[data-e01-add]').click();await p.waitForURL(/famille.html#mission-edit$/);await ready();assert.equal(await p.locator('#quest-title').inputValue(),'');await p.goBack();await ready();
+ await p.locator('#btn-vocal').click();await p.waitForURL(/famille.html#chat/);await ready();assert.equal(await p.locator('[data-fa-action=rg-chat-voice]').isEnabled(),true,'E02 provides a real microphone path or an explicit compatibility explanation');await p.goBack();await ready();
+ // Independent presentation preferences persist across pages and reloads.
+-assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false','effects start disabled for new profiles');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'false','star does not enable sounds');assert.equal(await p.locator('html').evaluate(el=>el.classList.contains('e01-effects-on')),true,'active effect indicator');assert.equal(await p.locator('.magic-sparkle-dot').count(),0,'reduced motion prevents sparkles');assert.equal(await p.locator('#e013-ambience,.e013-scene').count(),0,'reduced motion keeps only the static indicator');await p.locator('[data-e01-toggle=sound]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');
++assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true','effects start enabled when no preference exists');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');await p.reload();await ready();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false','an explicit opt-out survives reload');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'false','star does not enable sounds');assert.equal(await p.locator('html').evaluate(el=>el.classList.contains('e01-effects-on')),true,'active effect indicator');assert.equal(await p.locator('.magic-sparkle-dot').count(),0,'reduced motion prevents sparkles');assert.equal(await p.locator('#e013-ambience,.e013-scene').count(),0,'reduced motion keeps only the static indicator');await p.locator('[data-e01-toggle=sound]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');await p.locator('[data-e01-toggle=effects]').click();assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');
+ for(const [index,dest] of [[1,'missions.html'],[2,'index.html'],[3,'famille.html'],[4,'famille.html#menu']]){await p.locator(`[data-e01-destination="${index}"]`).click();await p.waitForURL(u=>u.href.endsWith(dest));await ready();assert.equal(await p.locator('body > nav a').count(),5);assert.deepEqual(await p.locator('body > nav a').evaluateAll(links=>links.map(a=>a.getAttribute('href'))),['./traverse.html','./missions.html','./index.html','./famille.html','./famille.html#menu'],'real hrefs survive source shell rendering and support opening in a new tab');assert.equal(await p.locator(`body > nav a[aria-current=page]`).getAttribute('data-e01-destination'),String(index));assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');const positions=await p.evaluate(()=>({top:document.querySelector('body > header').getBoundingClientRect().top,bottom:document.querySelector('body > nav').getBoundingClientRect().bottom,width:document.documentElement.scrollWidth}));assert.equal(positions.top,0);assert.equal(positions.bottom,900);assert.equal(positions.width,width);const subtitle=await p.locator('[data-e01-subtitle]').textContent();const names={1:'MISSIONS',2:'TAVERNE',3:'LE SALON DES CURIOSITÉS',4:'TOUS LES OUTILS DE DOBBY'};assert.equal(subtitle,'MAISON & QUOTIDIEN · '+names[index]);const fits=await p.locator('[data-e01-subtitle]').evaluate(el=>el.scrollWidth<=el.clientWidth&&el.scrollHeight<=el.clientHeight&&el.querySelector('.e011-band-section').scrollWidth<=el.querySelector('.e011-band-section').clientWidth);assert.equal(fits,true,'section label fits in the single permanent banner');await p.evaluate(()=>scrollTo(0,0));await p.screenshot({path:path.join(out,`destination-${index}-${width}.png`),fullPage:true});await p.reload();await ready();assert.equal(await p.locator('[data-e01-toggle=sound]').getAttribute('aria-pressed'),'true');assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · '+names[index]);if(index===3){await p.locator('[data-e01-destination="4"]').click();await p.waitForFunction(()=>document.body.dataset.familyView==='menu');assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · '+names[4]);await p.locator('[data-e01-destination="3"]').click();await p.waitForFunction(()=>document.body.dataset.familyView==='salon');assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · '+names[3]);}await p.locator('[data-e01-destination="0"]').click();await p.waitForURL(/traverse.html/);await ready();}
+ // Permanent navigation must wait for an actual in-flight native file write.
+ await p.goto(origin+'/essai-stitch-v7/famille.html#document?record=e01-document');await ready();
+@@ -56,5 +56,5 @@ await p.locator('[data-e01-destination="0"]').click();assert.match(p.url(),/fami
+ await p.locator('[data-e01-account]').click();await p.waitForURL(/famille.html#personal/);await p.waitForFunction(()=>DobbyFamilyStitch?.ready);await p.locator('#magic-account summary').click();await p.locator('#magic-account [data-fa-action=account]').click();assert.equal(await p.locator('#dv7-panel').isVisible(),true);assert.equal(await p.locator('[data-e01-subtitle]').textContent(),'MAISON & QUOTIDIEN · COMPTE ET FOYER');await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));const geo=await p.evaluate(()=>{const panel=document.getElementById('dv7-panel').getBoundingClientRect(),frame=document.getElementById('dv7-engine').getBoundingClientRect();return {panelLeft:panel.left,panelWidth:panel.width,frameLeft:frame.left,frameWidth:frame.width,viewport:innerWidth};});assert.ok(geo.panelWidth<=480.5,'account overlay limited to DOBBY width');assert.ok(geo.frameWidth<=480.5,'native iframe limited to DOBBY width');assert.ok(Math.abs(geo.panelLeft-(geo.viewport-geo.panelWidth)/2)<1,'account overlay centered');assert.ok(Math.abs(geo.frameLeft-geo.panelLeft)<1,'native iframe aligned with overlay: '+JSON.stringify(geo));assert.ok(Math.abs(geo.frameWidth-geo.panelWidth)<1,'account and shell same width');assert.equal(await p.locator('#dv7-engine').getAttribute('aria-hidden'),null);assert.equal(await p.locator('[data-e01-toggle=effects]').isVisible(),true);assert.equal(await p.locator('body > nav').isVisible(),true);assert.ok(await p.frameLocator('#dv7-engine').locator('#fv2LoginForm').count());assert.equal(await p.frameLocator('#dv7-engine').locator('nav.nav').isVisible(),false,'no duplicate native navigation inside the account portal');await p.evaluate(()=>scrollTo(0,0));await p.screenshot({path:path.join(out,`account-${width}.png`),fullPage:true});await p.locator('#dv7-close').click();assert.equal(await p.locator('#dv7-panel').isVisible(),false);
+ assert.deepEqual(errors,[]);await c.close();console.log('E01_PASS',width,'E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved');
+ }
+-const motion=await b.newContext({viewport:{width:390,height:900},reducedMotion:'no-preference'});await motion.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await motion.newPage();await p.goto(origin+'/essai-stitch-v7/famille.html#menu');await p.waitForFunction(()=>window.DobbyStitchV7?.ready);const animation=await p.evaluate(()=>{const star=document.querySelector('[data-e01-toggle=effects]');star.click();const ripple=document.querySelector('.magical-ripple');return {name:ripple&&getComputedStyle(ripple).animationName,sparks:document.querySelectorAll('.magic-sparkle-dot').length,sound:document.querySelector('[data-e01-toggle=sound]').getAttribute('aria-pressed'),pressed:star.getAttribute('aria-pressed'),glow:getComputedStyle(star).boxShadow};});assert.equal(animation.name,'magicPulse','source ripple is available on linked pages too');assert.equal(animation.sparks,7,'seven original-source sparkle particles rendered');assert.equal(await p.locator('#e013-ambience,.e013-scene').count(),0,'new ambient effects stay exclusive to Traverse');assert.equal(animation.pressed,'true','first click enables effects');assert.ok(animation.glow!=='none','active star is visually highlighted');assert.equal(animation.sound,'false','star does not enable sound');await motion.close();console.log('E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys');
++const motion=await b.newContext({viewport:{width:390,height:900},reducedMotion:'no-preference'});await motion.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await motion.newPage();await p.goto(origin+'/essai-stitch-v7/famille.html#menu');await p.waitForFunction(()=>window.DobbyStitchV7?.ready);const animation=await p.evaluate(()=>{const star=document.querySelector('[data-e01-toggle=effects]');const initial=star.getAttribute('aria-pressed');star.click();const disabled=star.getAttribute('aria-pressed');star.click();const ripple=document.querySelector('.magical-ripple');return {initial,disabled,name:ripple&&getComputedStyle(ripple).animationName,sparks:document.querySelectorAll('.magic-sparkle-dot').length,sound:document.querySelector('[data-e01-toggle=sound]').getAttribute('aria-pressed'),pressed:star.getAttribute('aria-pressed'),glow:getComputedStyle(star).boxShadow};});assert.equal(animation.initial,'true');assert.equal(animation.disabled,'false');assert.equal(animation.name,'magicPulse','source ripple is available on linked pages too');assert.equal(animation.sparks,7,'seven original-source sparkle particles rendered');assert.equal(await p.locator('#e013-ambience,.e013-scene').count(),0,'new ambient effects stay exclusive to Traverse');assert.equal(animation.pressed,'true','explicit re-enabling activates effects');assert.ok(animation.glow!=='none','active star is visually highlighted');assert.equal(animation.sound,'false','star does not enable sound');await motion.close();console.log('E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys');
+ }finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+diff --git a/essai-stitch-v7/tests/e05-consolidation.cjs b/essai-stitch-v7/tests/e05-consolidation.cjs
+index 6b4d9a5..0435880 100644
+--- a/essai-stitch-v7/tests/e05-consolidation.cjs
++++ b/essai-stitch-v7/tests/e05-consolidation.cjs
+@@ -13,7 +13,7 @@ const credits=[{missionId:'e05-major',memberId:member.id,effort:'major',amount:5
+  assert.match(await page.locator('.mp-house').innerText(),/Poudlard/,'The house explains its origin');
+  assert.match(await page.locator('.mp-patronus').innerText(),/adaptation/i,'Fox protective symbolism is visible');
+  assert.equal(await page.locator('.mp-house svg').count(),0,'No redrawn crest is passed off as an official crest');
+- assert.match(await page.locator('.mp-house').innerText(),/Blason officiel.*indisponible/s,'The public crest limitation is explicit');
++ const suppliedCrest=page.locator('.mp-house img[data-house-crest=slytherin]');assert.equal(await suppliedCrest.count(),1,'The supplied original Stitch crest replaces the old placeholder');await suppliedCrest.evaluate(i=>i.decode());assert.equal(await suppliedCrest.evaluate(i=>i.naturalWidth),1024);assert.doesNotMatch(await suppliedCrest.getAttribute('alt'),/officiel/i);assert.equal(await page.locator('.mp-crest-unavailable').count(),0);
+  assert.equal(await page.locator('.mp-grade-art svg').count(),1,'A large illustrated native grade is present');
+  assert.match(await page.locator('[data-rune-profile]').innerText(),/Pastille d’argent/);assert.equal(await page.locator('[data-rune-profile] progress').getAttribute('max'),'50');assert.equal(await page.locator('[data-rune-profile] progress').getAttribute('value'),'35');assert.match(await page.locator('[data-rune-profile]').innerText(),/15 runes avant Pastille d’or/);
+  await page.locator('[data-rune-profile] details').evaluate(e=>e.open=true);for(const credit of credits)assert.match(await page.locator('[data-rune-profile] details').innerText(),new RegExp(credit.title));
+@@ -30,5 +30,5 @@ const credits=[{missionId:'e05-major',memberId:member.id,effort:'major',amount:5
+   // usable; decorating it must not turn the handled read error into a crash.
+   await native('st.runeCredits=[{unsupported:"TEST incompatible ledger"}];');await page.evaluate(id=>DobbyFamilyStitch.open('personal',{person:id,record:null}),member.id);assert.match(await page.locator('[data-rune-profile]').innerText(),/Historique de runes indisponible/);assert.equal(await page.locator('#magic-house-edit').isVisible(),true);assert.deepEqual(await native('return st.runeCredits;'),[{unsupported:'TEST incompatible ledger'}],'Reading preserves the unsupported native data');
+  }
+- assert.deepEqual(errors,[]);await context.close();console.log('E05_CONSOLIDATION_PASS',width,'4 houses, 12 animals, explicit crest blocker, native illustrated grade/progress, unchanged ledger and persisted identity');}
++ assert.deepEqual(errors,[]);await context.close();console.log('E05_CONSOLIDATION_PASS',width,'4 houses, 12 animals, supplied original Stitch crest, native illustrated grade/progress, unchanged ledger and persisted identity');}
+ }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});
+diff --git a/essai-stitch-v7/tests/e06-art.cjs b/essai-stitch-v7/tests/e06-art.cjs
+new file mode 100644
+index 0000000..67f6f28
+--- /dev/null
++++ b/essai-stitch-v7/tests/e06-art.cjs
+@@ -0,0 +1,21 @@
++/* Supplied artwork + unchanged native result/confirmation path. Test records
++   live only in ephemeral browser contexts; no authenticated accounts. */
++const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
++const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8891',before=process.env.DOBBY_E06_ART_BEFORE==='1',out=process.env.DOBBY_E06_ART_EVIDENCE||path.resolve('docs/dobby-v7/evidence/e06-visual-functional/art',before?'before':'after'),qa=require('../../design/e06/references/scoring/qa-results.json'),houses=[['gryffindor','gryffondor'],['slytherin','serpentard'],['ravenclaw','serdaigle'],['hufflepuff','poufsouffle']];
++(async()=>{fs.mkdirSync(out,{recursive:true});const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});const results=[];try{for(const width of (process.env.DOBBY_E06_ART_WIDTHS||'320,390,1440').split(',').map(Number)){
++ const c=await b.newContext({viewport:{width,height:900},locale:'fr-BE',reducedMotion:'reduce'}),p=await c.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));await c.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());p.setDefaultTimeout(15000);
++ await p.goto(origin+'/essai-stitch-v7/famille.html#personal');await p.waitForFunction(()=>window.DobbyFamilyStitch?.ready);
++ const native=code=>p.evaluate(code=>DobbyFamilyStitchEngine.evaluate(code),code),id='visual-review-member';
++ await native(`st.familyMembers=[{id:'${id}',name:'TEST — Camille',avatar:'🧙',birthdate:'1990-01-02',magicProfile:{version:1,houseId:'gryffindor',patronusId:'fox',avatarId:'portrait-3'}}];st.runeCredits=[{missionId:'visual-credit',memberId:'${id}',effort:'regular',amount:25,date:'2026-11-11T09:00:00.000Z',title:'TEST — Mission',revision:0}];st.runeRequests=[];st.stitchPreferences={effects:false,sound:false};save();`);
++ const ledger=await native('return JSON.stringify(st.runeCredits);'),open=(view)=>p.evaluate(({view,id})=>DobbyFamilyStitch.open(view,{person:id,record:null}),{view,id});
++ const shot=async name=>{await p.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].filter(i=>i.getAttribute('src')).map(i=>i.decode()));const urls=new Set([...document.querySelectorAll('main *')].flatMap(n=>[...getComputedStyle(n).backgroundImage.matchAll(/url\(["']?(.*?)["']?\)/g)].map(m=>m[1])));for(const url of urls){const i=new Image();i.src=url;await i.decode();}await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth),width);await p.screenshot({path:path.join(out,name+'-'+width+'.png'),fullPage:true});};
++ const art=async(house,where,minWidth)=>{const img=p.locator('main img[data-house-crest="'+house+'"]');assert.equal(await img.count(),1,'The correct original Stitch crest is actually rendered in '+where);await img.evaluate(i=>i.decode());const info=await img.evaluate(i=>({src:i.currentSrc,w:i.getBoundingClientRect().width,h:i.getBoundingClientRect().height,nw:i.naturalWidth,nh:i.naturalHeight,fit:getComputedStyle(i).objectFit,visible:i.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}),alt:i.alt}));assert.equal(info.nw,1024);assert.equal(info.nh,1024);assert.equal(info.fit,'contain');assert.ok(info.visible&&info.w>=minWidth&&Math.abs(info.w-info.h)<2,where+' crest large, visible and undistorted: '+JSON.stringify(info));assert.doesNotMatch(info.alt,/officiel/i);assert.equal(await p.locator('.mp-crest-unavailable').count(),0,'No unjustified official-art placeholder');return info.src;};
++ for(const[house,label]of houses){
++  await p.evaluate(async({id,example})=>{const G=DobbyOnboardingEngine;await G.restart('house',id);const indices=example.q1_to_q6;for(let i=0;i<indices.length;i++)await G.answer('house',i,G.scoring.config.house.questions[i].answers[indices[i]].id);if(example.q7!==null)await G.answer('house',6,G.scoring.config.house.questions[6].answers[example.q7].id);await G.go('onboarding-house-result');},{id,example:qa.house.one_reachable_example_each[label]});
++  await open('onboarding-house-result');await p.locator('#house-title').waitFor();let src;if(!before)src=await art(house,'revelation',200);await shot('result-'+house);await p.locator('#e06-confirm-result').click();await p.waitForFunction(()=>document.body.dataset.familyView==='onboarding-patronus');assert.equal(await native('return st.familyMembers[0].magicProfile.houseId;'),house,'The real native score confirms the intended House');
++  await open('personal');await p.locator('[data-profile-member="'+id+'"]').waitFor();if(!before)assert.equal(await art(house,'profile',180),src,'E05 uses exactly the same canonical art');await shot('profile-'+house);
++  await open('onboarding-final');await p.locator('#btn-chemindetraverse').waitFor();if(!before)assert.equal(await art(house,'final identity',65),src,'Final identity uses the same mapping');await shot('final-'+house);
++ }
++ await p.evaluate(async id=>{await DobbyOnboardingEngine.restart('house',id);},id);await open('onboarding-house');await p.locator('#e06-sorting-hat').waitFor();await p.locator('#e06-sorting-hat').evaluate(i=>i.decode());if(!before){const hat=await p.locator('#e06-sorting-hat').evaluate(i=>({src:i.currentSrc,w:i.naturalWidth,h:i.naturalHeight,visible:i.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}),fit:getComputedStyle(i).objectFit}));assert.equal(hat.w,1376);assert.equal(hat.h,768);assert.ok(hat.visible);assert.equal(hat.fit,'contain');assert.match(hat.src,/ceremony-v2\/sorting-hat-cinematic\.png$/);}
++ await shot('sorting-hat');const protectedCounts=await p.evaluate(()=>({house:DobbyOnboardingEngine.scoring.config.house.baseQuestionCount,patronus:DobbyOnboardingEngine.scoring.config.patronus.baseQuestionCount}));assert.deepEqual(protectedCounts,{house:6,patronus:5});assert.equal(await native('return JSON.stringify(st.runeCredits);'),ledger);assert.equal(await native('return st.familyMembers[0].magicProfile.avatarId;'),'portrait-3');assert.deepEqual(errors,[]);results.push({width,status:'PASS',mode:before?'before-capture':'art-verified',houseCount:4,contexts:['result','profile','final'],canonicalQuestions:protectedCounts,ledger:'unchanged'});await c.close();console.log('E06_ART_PASS',width,before?'baseline 13 screens':'4 native results/confirmations, shared crests in3contexts, cinematic hat, unchanged questions/avatar/ledger');}
++ fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(results,null,2)+'\n');}finally{await b.close()}})().catch(e=>{console.error(e);process.exitCode=1});
+diff --git a/essai-stitch-v7/tests/e06-effects-transition.cjs b/essai-stitch-v7/tests/e06-effects-transition.cjs
+new file mode 100644
+index 0000000..c8cae91
+--- /dev/null
++++ b/essai-stitch-v7/tests/e06-effects-transition.cjs
+@@ -0,0 +1,54 @@
++/* Current E06 review: real preference writer, Canvas pixels and UI navigation.
++   Native members, saved answers and confirmed runes must survive explicit replay. */
++const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
++const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8891';
++const widths=(process.env.DOBBY_E06_EFFECTS_WIDTHS||'320,390,1440').split(',').map(Number);
++const before=process.env.DOBBY_E06_EFFECTS_BEFORE==='1';
++const out=process.env.DOBBY_E06_EFFECTS_EVIDENCE||path.resolve(__dirname,'../../docs/dobby-v7/evidence/e06-visual-functional/effects',before?'before':'after');
++fs.mkdirSync(out,{recursive:true});
++(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});const rows=[];try{for(const width of widths){
++ const context=await browser.newContext({viewport:{width,height:900},locale:'fr-BE',timezoneId:'Europe/Paris',reducedMotion:'no-preference'});
++ await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():route.abort());
++ const page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));page.setDefaultTimeout(15000);
++ const ready=()=>page.waitForFunction(()=>window.DobbyStitchV7?.ready);
++ const native=code=>page.evaluate(code=>DobbyFamilyStitchEngine.evaluate(code),code);
++ const open=async(view,values={})=>{await page.evaluate(({view,values})=>DobbyFamilyStitch.open(view,values),{view,values});await page.waitForFunction(view=>document.body.dataset.familyView===view,view);};
++ const ritual=async()=>{await open('onboarding-ritual',{person:null,record:'replay'});await page.locator('#btn-floo-trigger').waitFor({state:'visible'});};
++ const shot=async(name)=>{await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].filter(image=>image.getAttribute('src')).map(image=>image.decode()));await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);await page.screenshot({path:path.join(out,name+'-'+width+'.png'),fullPage:true});};
++ const canvas=()=>page.locator('#fireCanvas').evaluate(node=>{const rgba=node.getContext('2d').getImageData(0,0,node.width,node.height).data;let green=0,amber=0;for(let i=0;i<rgba.length;i+=4){const[r,g,b,a]=rgba.subarray(i,i+4);if(a<35)continue;if(g>r*1.2&&g>b*1.1&&g>60)green++;if(r>g*1.15&&g>b*1.15&&r>70)amber++;}return{green,amber,width:node.width,height:node.height};});
++ const paints=()=>page.evaluate(()=>{const rgb=value=>{const match=/rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(value);return match?match.slice(1,4).map(Number):null;};const button=document.getElementById('btn-floo-trigger'),badge=document.getElementById('badge-text'),ping=document.getElementById('badge-ping'),flash=document.getElementById('floo-vortex-flash');return{buttonGradient:getComputedStyle(button).backgroundImage,buttonFirstColor:rgb(getComputedStyle(button).backgroundImage),buttonText:document.getElementById('btn-label').textContent,badgeColor:rgb(getComputedStyle(badge).color),badgeText:badge.textContent,pingColor:rgb(getComputedStyle(ping).backgroundColor),flashOpacity:Number(getComputedStyle(flash).opacity)};});
++ const green=color=>color&&color[1]>color[0]*1.2&&color[1]>color[2]*1.1;
++ const signature=()=>native('return JSON.stringify({members:st.familyMembers,credits:st.runeCredits,requests:st.runeRequests,planned:st.planned,missions:st.manualMissions});');
++ await page.goto(origin+'/essai-stitch-v7/famille.html#onboarding-ritual');await ready();await page.locator('#btn-floo-trigger').waitFor({state:'visible'});
++ assert.equal(await native('return DobbyFamilyUI.getContext();'),null,'No real family account used by this isolated source test');
++ await shot('ritual-default');
++ if(before){await native('st.stitchPreferences={effects:true,sound:false};save();');await page.evaluate(()=>DobbyChrome.apply());await page.locator('#btn-floo-trigger').click();await page.waitForTimeout(1250);await shot('ritual-green');fs.writeFileSync(path.join(out,'paint-'+width+'.json'),JSON.stringify({canvas:await canvas(),paint:await paints()},null,2)+'\n');await context.close();continue;}
++ assert.equal(await page.locator('#iphone-app-frame [data-e01-toggle=effects]').getAttribute('aria-pressed'),'true','Effects must default to active when the user has not stored a preference');
++ assert.equal(await page.locator('#iphone-app-frame [data-e01-toggle=sound]').getAttribute('aria-pressed'),'false','Sound must default to off');
++ assert.equal(await native('return Object.prototype.hasOwnProperty.call(st.stitchPreferences||{},"effects");'),false,'Reading the default must not persist or overwrite an explicit decision');
++ // The first toggle must turn this implicit ON into a persisted explicit OFF.
++ await page.locator('#iphone-app-frame [data-e01-toggle=effects]').click();assert.equal(await native('return st.stitchPreferences.effects;'),false);await page.reload();await ready();await page.locator('#btn-floo-trigger').waitFor();assert.equal(await page.locator('#iphone-app-frame [data-e01-toggle=effects]').getAttribute('aria-pressed'),'false');
++ await native(`st.familyMembers=[{id:'effects-person',name:'TEST — Profil E06',avatar:'🧙',magicProfile:{version:1,houseId:'ravenclaw',patronusId:'fox',avatarId:'portrait-3',ceremonyStatus:'complete'}}];st.runeCredits=[{missionId:'effects-credit',memberId:'effects-person',effort:'light',amount:10,date:'2026-11-11T08:00:00.000Z',title:'TEST — Gain confirmé',revision:0}];st.runeRequests=[];save();`);
++ for(const route of ['traverse.html','missions.html','index.html','famille.html#personal?person=effects-person','famille.html#contracts','famille.html#onboarding-foyer']){
++  await page.goto(origin+'/essai-stitch-v7/'+route);await ready();if(route.includes('onboarding'))await page.locator('#e06-local-entry').waitFor();const button=page.locator('body>header [data-e01-toggle=effects]');await button.waitFor();assert.equal(await button.getAttribute('aria-pressed'),'false','Explicit OFF preserved on '+route);assert.equal(await page.locator('body>header [data-e01-toggle=sound]').getAttribute('aria-pressed'),'false','Navigation never re-enables sound');await page.reload();await ready();assert.equal(await native('return st.stitchPreferences.effects;'),false);}
++ await page.goto(origin+'/essai-stitch-v7/famille.html#onboarding-ritual?record=replay');await ready();await page.locator('#btn-floo-trigger').waitFor();
++ const offStarted=Date.now();await page.locator('#btn-floo-trigger').click();await page.waitForURL(/#onboarding-foyer(?:\?|$)/,{timeout:1600});await page.locator('#e06-local-entry').waitFor();assert.ok(Date.now()-offStarted<1600,'Explicit OFF takes the accessible immediate route');
++ await ritual();await page.locator('#iphone-app-frame [data-e01-toggle=effects]').click();assert.equal(await native('return st.stitchPreferences.effects;'),true);
++ await page.evaluate(async()=>{await DobbyOnboardingEngine.restart('house','effects-person');await DobbyOnboardingEngine.answer('house',0,'B');});const business=await signature();const answer=await page.evaluate(()=>DobbyOnboardingEngine.drafts.read().house);
++ await page.waitForTimeout(150);const warmCanvas=await canvas(),warmPaint=await paints();await shot('ritual-amber');
++ const started=Date.now();await page.locator('#btn-floo-trigger').click();await page.waitForTimeout(1250);
++ assert.equal(await page.evaluate(()=>document.body.dataset.familyView),'onboarding-ritual','Enabled effects remain visibly present before navigation');
++ const crossingCanvas=await canvas(),crossingPaint=await paints();
++ assert.ok(crossingCanvas.green>warmCanvas.green+100,'The actual Canvas flames/vortex paint new green pixels: '+JSON.stringify({warmCanvas,crossingCanvas}));
++ assert.ok(green(crossingPaint.buttonFirstColor),'The visible button gradient becomes emerald: '+JSON.stringify(crossingPaint));
++ assert.ok(green(crossingPaint.badgeColor)&&green(crossingPaint.pingColor),'The badge lettering and decorative spark become emerald');
++ assert.match(crossingPaint.buttonText,/Poudre|cheminette active/i);assert.match(crossingPaint.badgeText,/Traversée/);assert.ok(crossingPaint.flashOpacity>.4,'The green flash is actually visible');
++ await shot('ritual-green');await page.waitForURL(/#onboarding-foyer(?:\?|$)/);await page.locator('#e06-local-entry').waitFor();const elapsed=Date.now()-started;assert.ok(elapsed>=2200,'Navigation occurs after the visible sequence');
++ assert.equal(await signature(),business);await page.evaluate(()=>DobbyOnboardingEngine.load('effects-person'));assert.deepEqual(await page.evaluate(()=>DobbyOnboardingEngine.drafts.read().house),answer);
++ // Seen is a normal bypass; the clearly named action is an explicit, repeatable request.
++ for(let replay=0;replay<2;replay++){const button=page.getByRole('button',{name:'Revoir le Rituel',exact:true});await button.waitFor();const rect=await button.boundingBox();assert.ok(rect.y+rect.height<=900,'Foyer replay action is discoverable in the viewport');await button.click();await page.locator('#btn-floo-trigger').waitFor();await page.waitForTimeout(200);assert.equal(await page.evaluate(()=>document.body.dataset.familyView),'onboarding-ritual');await page.locator('#e06-ritual-skip').click();await page.waitForURL(/#onboarding-foyer(?:\?|$)/);await page.locator('#e06-local-entry').waitFor();}
++ await shot('foyer-replay');
++ await open('personal',{person:'effects-person',record:null});await page.locator('#magic-account').evaluate(node=>node.open=true);await page.locator('#magic-account').getByRole('button',{name:'Revoir le Rituel',exact:true}).click();await page.locator('#btn-floo-trigger').waitFor();assert.equal(await signature(),business);
++ await page.emulateMedia({reducedMotion:'reduce'});const fast=Date.now();await page.locator('#btn-floo-trigger').click();await page.waitForURL(/#onboarding-foyer(?:\?|$)/,{timeout:1600});await page.locator('#e06-local-entry').waitFor();assert.ok(Date.now()-fast<1600);assert.equal(await signature(),business);assert.equal(await native('return st.stitchPreferences.effects;'),true,'Reduced motion never rewrites the saved effect preference');assert.equal(await native('return st.stitchPreferences.sound;'),false);
++ assert.deepEqual(errors,[]);const row={width,status:'PASS',transitionMs:elapsed,warmCanvas,crossingCanvas,warmPaint,crossingPaint,sharedRoutes:6,savedAnswer:answer,businessPreserved:true};rows.push(row);fs.writeFileSync(path.join(out,'results-'+width+'.json'),JSON.stringify(row,null,2)+'\n');await context.close();console.log('E06_EFFECTS_TRANSITION_PASS',width,'default ON/sound OFF, explicit OFF/reload/shared routes, real emerald Canvas+button+badge+flash, replay twice and saved native data');
++ }}finally{await browser.close();}if(!before)fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',origin,widths,rows},null,2)+'\n');})().catch(error=>{console.error(error);process.exitCode=1;});
+diff --git a/essai-stitch-v7/traverse.html b/essai-stitch-v7/traverse.html
+index 207c806..f674ec5 100644
+--- a/essai-stitch-v7/traverse.html
++++ b/essai-stitch-v7/traverse.html
+@@ -67,4 +67,4 @@ body.dv7-panel-visible{overflow:hidden}body.dv7-panel-visible #dv7-engine{positi
+ 
+ 
+ 
+-<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file
++<iframe title="Moteur fonctionnel DOBBY" id="dv7-engine" src="../essai-stitch-v5-famille/index.html" aria-hidden="true" tabindex="-1"></iframe><div id="dv7-panel" hidden><div id="dv7-panel-top"><button id="dv7-close" type="button">← Retour à DOBBY</button><span id="dv7-panel-title">Dobby</span></div></div><link rel="stylesheet" href="./cuisine.css"><script src="./root-adapters.js"></script><script src="./cuisine-engine.js"></script><script src="./cuisine-list.js"></script><script src="./cuisine.js"></script><link rel="stylesheet" href="./family.css"><script src="./family-engine.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./member-avatar.css"><script src="../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1"></script><script src="./member-avatar.js"></script><link rel="stylesheet" href="./magic-profile.css"><script src="./magic-content.js"></script><script src="./ceremony-art.js"></script><script src="./magic-profile.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./register.css"><script src="./register-route-data.js"></script><script src="./register.js"></script><script src="./family-register.js"></script><script src="./house-register.js"></script><script src="./import-runtime.js"></script><script src="./documents-register.js"></script><script src="./tools-register.js"></script><link rel="stylesheet" href="./chat.css"><script src="./chat-engine.js"></script><script src="./chat.js"></script><script src="./onboarding-route-data.js"></script><script src="./onboarding-engine.js"></script><link rel="stylesheet" href="./onboarding.css"><link rel="stylesheet" href="./ceremony-art.css"><link rel="stylesheet" href="./ritual.css"><script src="./ritual-effects.js"></script><script src="./ritual.js"></script><script src="./onboarding.js"></script><script src="./family.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./chrome.css"><link rel="stylesheet" href="./consolidation.css"><script src="./chrome.js?v=20261110-e06-1"></script><link rel="stylesheet" href="./home-consolidation.css"><script src="./home.js"></script><script src="./bridge.js"></script></body></html>
+\ No newline at end of file

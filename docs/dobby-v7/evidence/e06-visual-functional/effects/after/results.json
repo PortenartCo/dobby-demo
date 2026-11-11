@@ -1,0 +1,208 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:8891",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "executionPhases": [
+    "320 after both RED fixes",
+    "390/1440 remaining widths, same code"
+  ],
+  "checkedUTC": "2026-11-11T09:53:56.022895+00:00",
+  "rows": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "transitionMs": 2664,
+      "warmCanvas": {
+        "green": 0,
+        "amber": 2085,
+        "width": 318,
+        "height": 556
+      },
+      "crossingCanvas": {
+        "green": 4462,
+        "amber": 0,
+        "width": 318,
+        "height": 556
+      },
+      "warmPaint": {
+        "buttonGradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(230, 168, 71), rgb(212, 155, 66))",
+        "buttonFirstColor": [
+          249,
+          187,
+          95
+        ],
+        "buttonText": "Traverser la chemin\u00e9e",
+        "badgeColor": [
+          249,
+          187,
+          95
+        ],
+        "badgeText": "Chemin de Traverse \u00b7 \u00c2tre N\u00b0 7",
+        "pingColor": [
+          212,
+          155,
+          66
+        ],
+        "flashOpacity": 0
+      },
+      "crossingPaint": {
+        "buttonGradient": "linear-gradient(to right, rgba(16, 185, 129, 0.94), rgb(5, 150, 105), rgb(15, 118, 110))",
+        "buttonFirstColor": [
+          16,
+          185,
+          129
+        ],
+        "buttonText": "Poudre de cheminette active\u2026",
+        "badgeColor": [
+          110,
+          231,
+          183
+        ],
+        "badgeText": "Travers\u00e9e de l\u2019\u00c2tre en cours\u2026",
+        "pingColor": [
+          52,
+          211,
+          153
+        ],
+        "flashOpacity": 0.75
+      },
+      "sharedRoutes": 6,
+      "savedAnswer": [
+        "B"
+      ],
+      "businessPreserved": true
+    },
+    {
+      "width": 390,
+      "status": "PASS",
+      "transitionMs": 2675,
+      "warmCanvas": {
+        "green": 0,
+        "amber": 2619,
+        "width": 388,
+        "height": 570
+      },
+      "crossingCanvas": {
+        "green": 4540,
+        "amber": 0,
+        "width": 388,
+        "height": 570
+      },
+      "warmPaint": {
+        "buttonGradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(230, 168, 71), rgb(212, 155, 66))",
+        "buttonFirstColor": [
+          249,
+          187,
+          95
+        ],
+        "buttonText": "Traverser la chemin\u00e9e",
+        "badgeColor": [
+          249,
+          187,
+          95
+        ],
+        "badgeText": "Chemin de Traverse \u00b7 \u00c2tre N\u00b0 7",
+        "pingColor": [
+          212,
+          155,
+          66
+        ],
+        "flashOpacity": 0
+      },
+      "crossingPaint": {
+        "buttonGradient": "linear-gradient(to right, rgba(16, 185, 129, 0.94), rgb(5, 150, 105), rgb(15, 118, 110))",
+        "buttonFirstColor": [
+          16,
+          185,
+          129
+        ],
+        "buttonText": "Poudre de cheminette active\u2026",
+        "badgeColor": [
+          110,
+          231,
+          183
+        ],
+        "badgeText": "Travers\u00e9e de l\u2019\u00c2tre en cours\u2026",
+        "pingColor": [
+          52,
+          211,
+          153
+        ],
+        "flashOpacity": 0.75
+      },
+      "sharedRoutes": 6,
+      "savedAnswer": [
+        "B"
+      ],
+      "businessPreserved": true
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "transitionMs": 2721,
+      "warmCanvas": {
+        "green": 0,
+        "amber": 2507,
+        "width": 410,
+        "height": 514
+      },
+      "crossingCanvas": {
+        "green": 4404,
+        "amber": 0,
+        "width": 410,
+        "height": 514
+      },
+      "warmPaint": {
+        "buttonGradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(230, 168, 71), rgb(212, 155, 66))",
+        "buttonFirstColor": [
+          249,
+          187,
+          95
+        ],
+        "buttonText": "Traverser la chemin\u00e9e",
+        "badgeColor": [
+          249,
+          187,
+          95
+        ],
+        "badgeText": "Chemin de Traverse \u00b7 \u00c2tre N\u00b0 7",
+        "pingColor": [
+          212,
+          155,
+          66
+        ],
+        "flashOpacity": 0
+      },
+      "crossingPaint": {
+        "buttonGradient": "linear-gradient(to right, rgba(16, 185, 129, 0.94), rgb(5, 150, 105), rgb(15, 118, 110))",
+        "buttonFirstColor": [
+          16,
+          185,
+          129
+        ],
+        "buttonText": "Poudre de cheminette active\u2026",
+        "badgeColor": [
+          110,
+          231,
+          183
+        ],
+        "badgeText": "Travers\u00e9e de l\u2019\u00c2tre en cours\u2026",
+        "pingColor": [
+          52,
+          211,
+          153
+        ],
+        "flashOpacity": 0.75
+      },
+      "sharedRoutes": 6,
+      "savedAnswer": [
+        "B"
+      ],
+      "businessPreserved": true
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "canvas": {
+    "green": 4485,
+    "amber": 0,
+    "width": 318,
+    "height": 556
+  },
+  "paint": {
+    "buttonGradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(230, 168, 71), rgb(212, 155, 66))",
+    "buttonFirstColor": [
+      249,
+      187,
+      95
+    ],
+    "buttonText": "Traverser la cheminée",
+    "badgeColor": [
+      249,
+      187,
+      95
+    ],
+    "badgeText": "Chemin de Traverse · Âtre N° 7",
+    "pingColor": [
+      212,
+      155,
+      66
+    ],
+    "flashOpacity": 0.75
+  }
+}

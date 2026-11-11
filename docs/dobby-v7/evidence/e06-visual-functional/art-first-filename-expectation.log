@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ceremony-v2\/sorting-hat\.png$/. Input:
+
+'http://127.0.0.1:8891/essai-stitch-v7/assets/ceremony-v2/sorting-hat-cinematic.png'
+
+    at /workspace/dobby-e06-visual-consolidation/essai-stitch-v7/tests/e06-art.cjs:19:564 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'http://127.0.0.1:8891/essai-stitch-v7/assets/ceremony-v2/sorting-hat-cinematic.png',
+  expected: /ceremony-v2\/sorting-hat\.png$/,
+  operator: 'match',
+  diff: 'simple'
+}

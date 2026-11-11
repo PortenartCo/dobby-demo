@@ -1,0 +1,64 @@
+{
+  "width": 390,
+  "status": "PASS",
+  "transitionMs": 2675,
+  "warmCanvas": {
+    "green": 0,
+    "amber": 2619,
+    "width": 388,
+    "height": 570
+  },
+  "crossingCanvas": {
+    "green": 4540,
+    "amber": 0,
+    "width": 388,
+    "height": 570
+  },
+  "warmPaint": {
+    "buttonGradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(230, 168, 71), rgb(212, 155, 66))",
+    "buttonFirstColor": [
+      249,
+      187,
+      95
+    ],
+    "buttonText": "Traverser la cheminée",
+    "badgeColor": [
+      249,
+      187,
+      95
+    ],
+    "badgeText": "Chemin de Traverse · Âtre N° 7",
+    "pingColor": [
+      212,
+      155,
+      66
+    ],
+    "flashOpacity": 0
+  },
+  "crossingPaint": {
+    "buttonGradient": "linear-gradient(to right, rgba(16, 185, 129, 0.94), rgb(5, 150, 105), rgb(15, 118, 110))",
+    "buttonFirstColor": [
+      16,
+      185,
+      129
+    ],
+    "buttonText": "Poudre de cheminette active…",
+    "badgeColor": [
+      110,
+      231,
+      183
+    ],
+    "badgeText": "Traversée de l’Âtre en cours…",
+    "pingColor": [
+      52,
+      211,
+      153
+    ],
+    "flashOpacity": 0.75
+  },
+  "sharedRoutes": 6,
+  "savedAnswer": [
+    "B"
+  ],
+  "businessPreserved": true
+}

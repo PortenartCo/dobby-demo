@@ -1,0 +1,21 @@
+# Captures E06 — avant/après
+
+Même fixture native TEST, préférence explicite OFF et mouvements réduits pour comparer les illustrations. Les états verts sont vérifiés séparément avec effets ON.
+
+| Vue | 320 px | 390 px | 1440 px |
+|---|---|---|---|
+| Choixpeau | [avant](art/before/sorting-hat-320.png) / [après](art/after/sorting-hat-320.png) | [avant](art/before/sorting-hat-390.png) / [après](art/after/sorting-hat-390.png) | [avant](art/before/sorting-hat-1440.png) / [après](art/after/sorting-hat-1440.png) |
+| gryffindor — result | [avant](art/before/result-gryffindor-320.png) / [après](art/after/result-gryffindor-320.png) | [avant](art/before/result-gryffindor-390.png) / [après](art/after/result-gryffindor-390.png) | [avant](art/before/result-gryffindor-1440.png) / [après](art/after/result-gryffindor-1440.png) |
+| gryffindor — profile | [avant](art/before/profile-gryffindor-320.png) / [après](art/after/profile-gryffindor-320.png) | [avant](art/before/profile-gryffindor-390.png) / [après](art/after/profile-gryffindor-390.png) | [avant](art/before/profile-gryffindor-1440.png) / [après](art/after/profile-gryffindor-1440.png) |
+| gryffindor — final | [avant](art/before/final-gryffindor-320.png) / [après](art/after/final-gryffindor-320.png) | [avant](art/before/final-gryffindor-390.png) / [après](art/after/final-gryffindor-390.png) | [avant](art/before/final-gryffindor-1440.png) / [après](art/after/final-gryffindor-1440.png) |
+| slytherin — result | [avant](art/before/result-slytherin-320.png) / [après](art/after/result-slytherin-320.png) | [avant](art/before/result-slytherin-390.png) / [après](art/after/result-slytherin-390.png) | [avant](art/before/result-slytherin-1440.png) / [après](art/after/result-slytherin-1440.png) |
+| slytherin — profile | [avant](art/before/profile-slytherin-320.png) / [après](art/after/profile-slytherin-320.png) | [avant](art/before/profile-slytherin-390.png) / [après](art/after/profile-slytherin-390.png) | [avant](art/before/profile-slytherin-1440.png) / [après](art/after/profile-slytherin-1440.png) |
+| slytherin — final | [avant](art/before/final-slytherin-320.png) / [après](art/after/final-slytherin-320.png) | [avant](art/before/final-slytherin-390.png) / [après](art/after/final-slytherin-390.png) | [avant](art/before/final-slytherin-1440.png) / [après](art/after/final-slytherin-1440.png) |
+| ravenclaw — result | [avant](art/before/result-ravenclaw-320.png) / [après](art/after/result-ravenclaw-320.png) | [avant](art/before/result-ravenclaw-390.png) / [après](art/after/result-ravenclaw-390.png) | [avant](art/before/result-ravenclaw-1440.png) / [après](art/after/result-ravenclaw-1440.png) |
+| ravenclaw — profile | [avant](art/before/profile-ravenclaw-320.png) / [après](art/after/profile-ravenclaw-320.png) | [avant](art/before/profile-ravenclaw-390.png) / [après](art/after/profile-ravenclaw-390.png) | [avant](art/before/profile-ravenclaw-1440.png) / [après](art/after/profile-ravenclaw-1440.png) |
+| ravenclaw — final | [avant](art/before/final-ravenclaw-320.png) / [après](art/after/final-ravenclaw-320.png) | [avant](art/before/final-ravenclaw-390.png) / [après](art/after/final-ravenclaw-390.png) | [avant](art/before/final-ravenclaw-1440.png) / [après](art/after/final-ravenclaw-1440.png) |
+| hufflepuff — result | [avant](art/before/result-hufflepuff-320.png) / [après](art/after/result-hufflepuff-320.png) | [avant](art/before/result-hufflepuff-390.png) / [après](art/after/result-hufflepuff-390.png) | [avant](art/before/result-hufflepuff-1440.png) / [après](art/after/result-hufflepuff-1440.png) |
+| hufflepuff — profile | [avant](art/before/profile-hufflepuff-320.png) / [après](art/after/profile-hufflepuff-320.png) | [avant](art/before/profile-hufflepuff-390.png) / [après](art/after/profile-hufflepuff-390.png) | [avant](art/before/profile-hufflepuff-1440.png) / [après](art/after/profile-hufflepuff-1440.png) |
+| hufflepuff — final | [avant](art/before/final-hufflepuff-320.png) / [après](art/after/final-hufflepuff-320.png) | [avant](art/before/final-hufflepuff-390.png) / [après](art/after/final-hufflepuff-390.png) | [avant](art/before/final-hufflepuff-1440.png) / [après](art/after/final-hufflepuff-1440.png) |
+
+[Transition et replay : captures et mesures](effects/README.md). Les captures et getImageData montrent les changements effectivement peints.

@@ -1,0 +1,14 @@
+{
+  "branch": "fix/dobby-e06-visual-functional",
+  "base": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+  "existingIntegrationWorktree": "/workspace/dobby-integrated-review",
+  "integrationLocalHead": "f60f9f8d78114e61b85d6362daa0fbecc327219d",
+  "integrationRemoteHead": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+  "main": "e24682d34f01c26c40da2399754749ced35f0bad",
+  "openPRs": [
+    2,
+    3
+  ],
+  "baselineRegistryCheck": "Expected failure:66a1395 appended17 lines without updating the prior matrix SHA; no code change versus verified f60f9f8",
+  "publicationAuthorized": false
+}
