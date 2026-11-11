@@ -1,0 +1,168 @@
+✖ V2 incomplete native records keep actual unknown values, V1 direct validation remains strict (25.353065ms)
+✖ V1/V2 missing fields are normalized without culinary defaults and preserve source version (0.923403ms)
+✖ stage metadata has stable ingredient references, exact method and source provenance without inventing mapping (0.437689ms)
+✖ invalid entry metadata does not block later entries; invalid amounts are never culinary missing values (0.479161ms)
+✖ TM5 incomplete data is saveable unverified with no invented instruction, portions or settings (0.303238ms)
+✖ V2 missing units are accepted but invalid structures, bounds and coercions are rejected (22.428438ms)
+✖ prompt prioritizes a real ZIP conditionally, exact cumulative question and exact method metadata (0.452266ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 0
+ℹ fail 7
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.252867
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:6:1
+✖ V2 incomplete native records keep actual unknown values, V1 direct validation remains strict (25.353065ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'Recette 1 (sans nom) : nom manquant ou trop long, portions invalides (1 à 30), ingrédient 1 invalide, étapes absentes ou trop nombreuses'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:6:282)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'Recette 1 (sans nom) : nom manquant ou trop long, portions invalides (1 à 30), ingrédient 1 invalide, étapes absentes ou trop nombreuses' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:7:1
+✖ V1/V2 missing fields are normalized without culinary defaults and preserve source version (0.923403ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  
+  undefined !== []
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:7:355)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:8:1
+✖ stage metadata has stable ingredient references, exact method and source provenance without inventing mapping (0.437689ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - [
+  -   'carotte'
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:8:530)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [ 'carotte' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:9:1
+✖ invalid entry metadata does not block later entries; invalid amounts are never culinary missing values (0.479161ms)
+  Error: Liste de notes, matériel ou informations incertaines invalide ou trop longue.
+      at list (file:///workspace/dobby-e074/essai-stitch-v7/recipe-import-format.mjs:6:183)
+      at file:///workspace/dobby-e074/essai-stitch-v7/recipe-import-format.mjs:36:114
+      at Array.map (<anonymous>)
+      at normalizePayload (file:///workspace/dobby-e074/essai-stitch-v7/recipe-import-format.mjs:26:32)
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:9:127)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:10:1
+✖ TM5 incomplete data is saveable unverified with no invented instruction, portions or settings (0.303238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:10:180)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:11:1
+✖ V2 missing units are accepted but invalid structures, bounds and coercions are rejected (22.428438ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:11:132)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:12:1
+✖ prompt prioritizes a real ZIP conditionally, exact cumulative question and exact method metadata (0.452266ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /priorit/i. Input:
+  
+  'Tu m’aides à transcrire mes recettes dans DOBBY. Je vais transmettre des photographies successives, parfois plusieurs pages d’une même recette et parfois plusieurs recettes différentes. Regroupe les pages correctement, conserve toutes les recettes dans un registre cumulatif de cette conversation, et distingue clairement chaque recette. Après chaque lot de photos, demande exactement : « Avez-vous encore une recette à me fournir ? » Ne produis le fichier final qu’après ma confirmation explicite qu’il n’y a plus de recette à fournir. La sortie finale doit contenir TOUTES les recettes collectées, jamais seulement le dernier lot.\n' +
+    'Transcris fidèlement les noms, ingrédients, quantités, unités, étapes, portions et durées. N’invente aucun ingrédient, quantité, durée, réglage ni texte illisible : utilise null pour une valeur numérique inconnue et indique les incertitudes dans missing et uncertain. Si les portions ou instructions indispensables sont absentes, demande-moi de les compléter. Distingue le temps de préparation, cuisson, repos et total ; ne calcule le total que si toutes ses composantes sont connues. Garde l’origine et les conseils de la source.\n' +
+    'Produis un fichier JSON UTF-8 réel et téléchargeable, au format {"format":"dobby-recipes","version":2,"recipes":[...]}. Chaque recette suit cet exemple de STRUCTURE, dont les valeurs sont à remplacer par la transcription, sans inventer de contenu :\n' +
+    '{"importKey":"identifiant-stable-de-la-recette","name":"Titre transcrit","device":"classic","category":"Autre","source":"Source réellement indiquée","servings":null,"minutes":null,"durations":{"preparation":null,"cooking":null,"rest":null,"total":null},"ingredients":[{"name":"Ingrédient transcrit","quantity":null,"unit":""}],"steps":["Étape classique transcrite"],"equipment":[],"notes":[],"missing":[],"uncertain":[],"image":null,"images":[],"reviewed":false,"tm5":null}\n' +
+    'Une seule recette peut comporter les deux préparations : steps pour la classique, et un objet tm5 associé, jamais une seconde recette en doublon. Propose une adaptation Thermomix TM5 lorsque c’est possible, en conservant strictement la recette originale. Le champ tm5 peut contenir {"steps":[{"text":"Instruction fournie","tool":"","time":"","temp":"","speed":"","reverse":null,"external":"","uncertain":[]}],"portions":null,"equipment":[],"notes":[],"warnings":[],"uncertain":[],"verified":false}. N’invente pas de vitesse, température, durée ni contrainte de capacité pour compléter artificiellement une adaptation. Signale les accessoires, le sens inverse lorsqu’il est connu et les opérations hors appareil (four, poêle…). Toute adaptation IA reste À vérifier avant utilisation ; seule une vérification humaine ultérieure pourra la confirmer.\n' +
+    'Fournis les photographies réellement disponibles, ou des illustrations culinaires nouvelles seulement si ton outil peut réellement les créer et les joindre. N’invente aucun fichier, URL ou lien de téléchargement. N’inclus aucune grosse photographie base64 dans le JSON. Si tu peux joindre les images, crée un ZIP contenant un seul recipes.json et un sous-dossier images/ avec des JPEG, PNG ou WebP réels ; image contient alors un chemin relatif tel que images/recette-1.jpg. Maximum 150 recettes, JSON 2 Mo, ZIP 40 Mo, chaque image 10 Mo. Si tu ne peux pas créer de ZIP ou joindre les images, fournis le JSON seul avec image:null, et indique-le clairement. Je récupérerai le fichier puis le sélectionnerai moi-même dans DOBBY ; aucun transfert automatique vers DOBBY n’existe.'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:12:193)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Tu m’aides à transcrire mes recettes dans DOBBY. Je vais transmettre des photographies successives, parfois plusieurs pages d’une même recette et parfois plusieurs recettes différentes. Regroupe les pages correctement, conserve toutes les recettes dans un registre cumulatif de cette conversation, et distingue clairement chaque recette. Après chaque lot de photos, demande exactement : « Avez-vous encore une recette à me fournir ? » Ne produis le fichier final qu’après ma confirmation explicite qu’il n’y a plus de recette à fournir. La sortie finale doit contenir TOUTES les recettes collectées, jamais seulement le dernier lot.\nTranscris fidèlement les noms, ingrédients, quantités, unités, étapes, portions et durées. N’invente aucun ingrédient, quantité, durée, réglage ni texte illisible : utilise null pour une valeur numérique inconnue et indique les incertitudes dans missing et uncertain. Si les portions ou instructions indispensables sont absentes, demande-moi de les compléter. Distingue le temps de préparation, cuisson, repos et total ; ne calcule le total que si toutes ses composantes sont connues. Garde l’origine et les conseils de la source.\nProduis un fichier JSON UTF-8 réel et téléchargeable, au format {"format":"dobby-recipes","version":2,"recipes":[...]}. Chaque recette suit cet exemple de STRUCTURE, dont les valeurs sont à remplacer par la transcription, sans inventer de contenu :\n{"importKey":"identifiant-stable-de-la-recette","name":"Titre transcrit","device":"classic","category":"Autre","source":"Source réellement indiquée","servings":null,"minutes":null,"durations":{"preparation":null,"cooking":null,"rest":null,"total":null},"ingredients":[{"name":"Ingrédient transcrit","quantity":null,"unit":""}],"steps":["Étape classique transcrite"],"equipment":[],"notes":[],"missing":[],"uncertain":[],"image":null,"images":[],"reviewed":false,"tm5":null}\nUne seule recette peut comporter les deux préparations : steps pour la classique, et un objet tm5 associé, jamais une seconde recette en doublon. Propose une adaptation Thermomix TM5 lorsque c’est possible, en conservant strictement la recette originale. Le champ tm5 peut contenir {"steps":[{"text":"Instruction fournie","tool":"","time":"","temp":"","speed":"","reverse":null,"external":"","uncertain":[]}],"portions":null,"equipment":[],"notes":[],"warnings":[],"uncertain":[],"verified":false}. N’invente pas de vitesse, température, durée ni contrainte de capacité pour compléter artificiellement une adaptation. Signale les accessoires, le sens inverse lorsqu’il est connu et les opérations hors appareil (four, poêle…). Toute adaptation IA reste À vérifier avant utilisation ; seule une vérification humaine ultérieure pourra la confirmer.\nFournis les photographies réellement disponibles, ou des illustrations culinaires nouvelles seulement si ton outil peut réellement les créer et les joindre. N’invente aucun fichier, URL ou lien de téléchargement. N’inclus aucune grosse photographie base64 dans le JSON. Si tu peux joindre les images, crée un ZIP contenant un seul recipes.json et un sous-dossier images/ avec des JPEG, PNG ou WebP réels ; image contient alors un chemin relatif tel que images/recette-1.jpg. Maximum 150 recettes, JSON 2 Mo, ZIP 40 Mo, chaque image 10 Mo. Si tu ne peux pas créer de ZIP ou joindre les images, fournis le JSON seul avec image:null, et indique-le clairement. Je récupérerai le fichier puis le sélectionnerai moi-même dans DOBBY ; aucun transfert automatique vers DOBBY n’existe.',
+    expected: /priorit/i,
+    operator: 'match',
+    diff: 'simple'
+  }

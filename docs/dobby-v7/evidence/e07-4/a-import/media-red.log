@@ -1,0 +1,54 @@
+✔ V2 incomplete native records keep actual unknown values, V1 direct validation remains strict (14.237788ms)
+✔ V1/V2 missing fields are normalized without culinary defaults and preserve source version (1.308717ms)
+✔ stage metadata has stable ingredient references, exact method and source provenance without inventing mapping (1.381787ms)
+✔ invalid entry metadata does not block later entries; invalid amounts are never culinary missing values (0.394906ms)
+✔ TM5 incomplete data is saveable unverified with no invented instruction, portions or settings (0.258677ms)
+✔ V2 missing units are accepted but invalid structures, bounds and coercions are rejected (9.618343ms)
+✔ prompt prioritizes a real ZIP conditionally, exact cumulative question and exact method metadata (0.678376ms)
+✔ raw invalid portions and typed text stay errors instead of becoming unknown values (0.664889ms)
+✖ step-only images never become an implicit cover; legacy provenance stays unknown (1.318817ms)
+✖ image provenance is retained for legacy additional image descriptors (0.623218ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 276.014687
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:15:1
+✖ step-only images never become an implicit cover; legacy provenance stays unknown (1.318817ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - null
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:15:224)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-import-format.test.mjs:16:1
+✖ image provenance is retained for legacy additional image descriptors (0.623218ms)
+  TypeError: Cannot read properties of undefined (reading 'images/extra.png')
+      at TestContext.<anonymous> (file:///workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import-format.test.mjs:16:275)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

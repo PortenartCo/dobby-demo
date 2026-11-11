@@ -1,0 +1,15 @@
+✔ V2 incomplete native records keep actual unknown values, V1 direct validation remains strict (28.704526ms)
+✔ V1/V2 missing fields are normalized without culinary defaults and preserve source version (1.829164ms)
+✔ stage metadata has stable ingredient references, exact method and source provenance without inventing mapping (1.612635ms)
+✔ invalid entry metadata does not block later entries; invalid amounts are never culinary missing values (0.510925ms)
+✔ TM5 incomplete data is saveable unverified with no invented instruction, portions or settings (0.261346ms)
+✔ V2 missing units are accepted but invalid structures, bounds and coercions are rejected (33.169099ms)
+✔ prompt prioritizes a real ZIP conditionally, exact cumulative question and exact method metadata (0.54902ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 197.179254

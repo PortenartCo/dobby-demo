@@ -29,3 +29,10 @@ body[data-cuisine-view="recipes"] #filters-container button[aria-pressed="true"]
 .e073-recipe-management .cu-button {font-size:15px;min-height:48px;margin-top:12px;width:100%}
 .e073-recipe-entry>.cu-button {min-height:50px;font-size:16px}
 @media(max-width:359px){.e073-recipe-card .grid>button {font-size:15px}.e073-gold-return {font-size:16px}[data-e073-create] {padding-inline:10px}}
+
+/* E07.4: direct external-AI creation; the existing editor remains available. */
+body.cu-active [data-e073-create]{font:700 17px/1.4 Literata,Georgia,serif;min-height:54px;width:100%;white-space:normal;text-align:center}
+.e074-grimoire-settings{margin:16px;align-self:stretch}
+.e074-grimoire-settings p{font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+
+.e074-missing{display:block;color:#f9bb5f;font-size:14px;line-height:1.5;margin:6px 0;white-space:normal;overflow-wrap:anywhere}

@@ -18,6 +18,7 @@ window.DobbyCuisineEngine = (() => {
   }
   function read() {
     const data = evaluate('return {state:JSON.parse(JSON.stringify(st)),recipes:JSON.parse(JSON.stringify([...BASE,...custom])),customIds:custom.map(r=>r.id),draft:shoppingDraft(),pending:pendingMeals().length,batch:batchCandidate,detailPortions:st.detail?(Object.values(st.planned).find(m=>m.id===st.detail)?portionCount(Object.values(st.planned).find(m=>m.id===st.detail)):st.people):st.people};');
+    for(const recipe of data.recipes){const details=data.state.tmAdaptations?.[recipe.id]?.stepDetails;if(details?.length)recipe.importDetails={...(recipe.importDetails||{}),stepDetails:[...(recipe.importDetails?.stepDetails||[]).filter(d=>d.method!=='tm5'),...details]};}
     if (data.state.page === 'shop') {
       const d = win().document;
       data.shared = {
@@ -38,6 +39,7 @@ window.DobbyCuisineEngine = (() => {
   const amount = (quantity, people, base) => evaluate('return amount(p.quantity,p.people,p.base);', { quantity, people, base });
   const portions = (adult, children) => evaluate('return portionCount({adult:p.adult,children:p.children,childFactor:st.childFactor??0.65});', { adult, children });
   function choose(values) {
+    const recipe=read().recipes.find(r=>r.id===values.id);if(!recipe||!Number.isFinite(Number(recipe.servings))||Number(recipe.servings)<=0)throw Error('Complétez les portions de référence de cette recette avant de planifier ce repas.');
     evaluate('st.day=p.date;st.slot=p.slot;st.choice="library";st.filter="";st.cat="Toutes";st.favorites=false;st.note=p.note||"";', values);
     page('pick'); field('adults', values.adult); field('children', values.children);
     click('select', { id: values.id });
@@ -71,7 +73,7 @@ window.DobbyCuisineEngine = (() => {
     if (editId) {
       return evaluate(`const at=custom.findIndex(r=>r.id===p.id);if(at<0)return {errors:['Cette recette intégrée peut être copiée, pas remplacée.']};
         const checked=validateBatch(JSON.stringify(p.payload));if(checked.errors.length)return checked;
-        const previous=custom[at],incoming=p.payload.recipes[0],next=checked.recipes[0];if(incoming.source===undefined)next.source=previous.source||'';if(incoming.reviewed===undefined)next.reviewed=previous.reviewed;custom[at]={...previous,...next,id:previous.id,fav:previous.fav};if(previous.importDetails)custom[at].importDetails={...previous.importDetails,durations:{...previous.importDetails.durations,...(incoming.durations||{}),total:next.minutes}};save();render();return {id:custom[at].id,errors:[]};`, { id: editId, payload: values });
+        const recipeMissingFields=r=>{const m=[];if(!r.name.trim())m.push('name');if(r.servings==null)m.push('servings');if(r.minutes==null)m.push('minutes');if(!r.ingredients.length)m.push('ingredients');r.ingredients.forEach(([n,q,u],i)=>{if(!n.trim())m.push('ingredients.'+i+'.name');if(q==null)m.push('ingredients.'+i+'.quantity');if(!u.trim())m.push('ingredients.'+i+'.unit');});if(!r.steps.length)m.push('steps');r.steps.forEach((t,i)=>{if(!t.trim())m.push('steps.'+i);});return m;};const previous=custom[at],incoming=p.payload.recipes[0],next=checked.recipes[0];if(incoming.source===undefined)next.source=previous.source||'';if(incoming.reviewed===undefined)next.reviewed=previous.reviewed;custom[at]={...previous,...next,id:previous.id,fav:previous.fav};if(previous.importDetails)custom[at].importDetails={...previous.importDetails,durations:{...previous.importDetails.durations,...(incoming.durations||{}),total:next.minutes},missingFields:recipeMissingFields(next)};save();render();return {id:custom[at].id,errors:[]};`, { id: editId, payload: values });
     }
     // Use the original manual form validation and save action for a new recipe.
     page('import');
@@ -166,7 +168,7 @@ window.DobbyCuisineEngine = (() => {
   }
   function exportRecipes(id) {
     evaluate(`const recipes=[...BASE,...custom].filter(r=>!p.id||r.id===p.id).map(r=>{const d=r.importDetails||{};return {id:r.id,importKey:d.key||r.id,name:r.name,minutes:r.minutes??null,servings:r.servings,device:r.thermomix?'tm5':'classic',category:r.category,favorite:!!r.fav,
-      ingredients:r.ingredients.map(([name,quantity,unit])=>({name,quantity,unit})),steps:r.steps,source:r.source||'',reviewed:r.reviewed===true,durations:{preparation:null,cooking:null,rest:null,...d.durations,total:r.minutes??null},equipment:d.equipment||[],notes:d.notes||[],missing:d.missing||[],uncertain:d.uncertain||[],image:null,images:[],tm5:st.tmAdaptations?.[r.id]||null,mediaNotice:r.localMedia?'Photographies conservées sur cet appareil, non comprises dans cet export JSON.':''};});downloadJson(p.id?'dobby-recette.json':'dobby-recettes.json',{format:'dobby-recipes',version:2,recipes});`,{id});
+      ingredients:r.ingredients.map(([name,quantity,unit],i)=>({id:d.ingredientIds?.[i]||'ingredient-'+i,name,quantity,unit})),steps:r.steps,stepDetails:[...(d.stepDetails||[]).filter(s=>s.method!=='tm5'),...(st.tmAdaptations?.[r.id]?.stepDetails||d.stepDetails?.filter(s=>s.method==='tm5')||[])].map(s=>({...s,images:[]})),source:r.source||'',reviewed:r.reviewed===true,durations:{preparation:null,cooking:null,rest:null,...d.durations,total:r.minutes??null},equipment:d.equipment||[],notes:d.notes||[],missing:d.missing||[],uncertain:d.uncertain||[],image:null,images:[],tm5:st.tmAdaptations?.[r.id]||null,mediaNotice:r.localMedia?'Photographies conservées sur cet appareil, non comprises dans cet export JSON.':''};});downloadJson(p.id?'dobby-recette.json':'dobby-recettes.json',{format:'dobby-recipes',version:2,recipes});`,{id});
   }
 
   return Object.freeze({ win, evaluate, page, read, amount, portions, choose, mealAction, favorite, cook, tm5, saveTM, saveRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });

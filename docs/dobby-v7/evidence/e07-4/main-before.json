@@ -1,0 +1,133 @@
+{
+  "sha": "84e254f485a22ac4f5b880217c02902c22b39c73",
+  "entries": [
+    {
+      "path": ".github",
+      "mode": "040000",
+      "type": "tree",
+      "object": "3244db043d545d773f91a1ec88c3195cc1777fb7"
+    },
+    {
+      "path": ".nojekyll",
+      "mode": "100644",
+      "type": "blob",
+      "object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "object": "ff9e5d39c6621eed152da967628e52287c412598"
+    },
+    {
+      "path": "essai-dobby-e01-e06-review-20261111",
+      "mode": "040000",
+      "type": "tree",
+      "object": "ba8fbb93adf4e46f2ae6bc87fb859691ce9923b8"
+    },
+    {
+      "path": "essai-dobby-e07-review-20261111",
+      "mode": "040000",
+      "type": "tree",
+      "object": "ef0d46b60f967d7c05b830adbeb0331b9064fc9c"
+    },
+    {
+      "path": "essai-dobby-integrated-review",
+      "mode": "040000",
+      "type": "tree",
+      "object": "79ea83b939ddaf29d0b4c3e8ec50f47d9d8f4ed4"
+    },
+    {
+      "path": "essai-dobby-review",
+      "mode": "040000",
+      "type": "tree",
+      "object": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1"
+    },
+    {
+      "path": "essai-e01-preview",
+      "mode": "040000",
+      "type": "tree",
+      "object": "d819e55f6924471364533e9ec2d36510afdcf89a"
+    },
+    {
+      "path": "essai-e02-preview",
+      "mode": "040000",
+      "type": "tree",
+      "object": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db"
+    },
+    {
+      "path": "essai-stitch-v2",
+      "mode": "040000",
+      "type": "tree",
+      "object": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f"
+    },
+    {
+      "path": "essai-stitch-v3",
+      "mode": "040000",
+      "type": "tree",
+      "object": "d24babe19d5f496596749c525a9e215030d3c8fe"
+    },
+    {
+      "path": "essai-stitch-v4",
+      "mode": "040000",
+      "type": "tree",
+      "object": "b38d97db05a7db4310aebaf8ddfd910c6007d991"
+    },
+    {
+      "path": "essai-stitch-v5-famille",
+      "mode": "040000",
+      "type": "tree",
+      "object": "89282a46b453970ea907265e8dab4293f0eb72b1"
+    },
+    {
+      "path": "essai-stitch-v5",
+      "mode": "040000",
+      "type": "tree",
+      "object": "9791d1c1d56a4d1d56f4361157652d40f3537107"
+    },
+    {
+      "path": "essai-stitch",
+      "mode": "040000",
+      "type": "tree",
+      "object": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0"
+    },
+    {
+      "path": "essai-sync-v1",
+      "mode": "040000",
+      "type": "tree",
+      "object": "07454efbf1d19cc7cbd55eb71eb98c820382baae"
+    },
+    {
+      "path": "essai-sync-v2",
+      "mode": "040000",
+      "type": "tree",
+      "object": "ba82dd8e68f52424542dd61b2dd1acea5b52887b"
+    },
+    {
+      "path": "essai-v6-preview",
+      "mode": "040000",
+      "type": "tree",
+      "object": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47"
+    },
+    {
+      "path": "essai-v7-preview",
+      "mode": "040000",
+      "type": "tree",
+      "object": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a"
+    },
+    {
+      "path": "index.html",
+      "mode": "100644",
+      "type": "blob",
+      "object": "78f15c3e970f17a884cd52c10623b821b5985cb8"
+    },
+    {
+      "path": "sql-proposals",
+      "mode": "040000",
+      "type": "tree",
+      "object": "a2214c48115e303b51d7c607f11ee79ad605f9f0"
+    }
+  ],
+  "newOutput": "essai-dobby-e07-consolidation-review-20261111",
+  "mustRemainUnchanged": true
+}

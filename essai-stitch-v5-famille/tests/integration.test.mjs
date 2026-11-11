@@ -22,6 +22,8 @@ test('preview V5 source matches original except isolated storage and explicitly 
   // reviewed E07.3 amendments must still match the original V5 source.
   const amendments=JSON.parse(source('./fixtures/e07-3-native-extensions.json'));
   let e073Normalized=preview;
+  const e074=JSON.parse(source('./fixtures/e07-4-native-extensions.json'));
+  for(const amendment of [...e074.patches].reverse()){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each E07.4 amendment occurs exactly once');e073Normalized=e073Normalized.replace(amendment.after,amendment.before);}
   for(const amendment of amendments.patches){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each approved amendment occurs exactly once');e073Normalized=e073Normalized.replace(amendment.after,amendment.before);}
   const normalized=e073Normalized.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e06-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')

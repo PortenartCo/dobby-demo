@@ -1,0 +1,35 @@
+[
+  {
+    "width": 320,
+    "label": "Ajouter des recettes avec l’IA",
+    "font": 16,
+    "height": 68.78125,
+    "buttonWidth": 296,
+    "overflow": 320,
+    "editing": "same-id",
+    "export": "JSON-v2",
+    "oldDraft": "retained"
+  },
+  {
+    "width": 390,
+    "label": "Ajouter des recettes avec l’IA",
+    "font": 16,
+    "height": 54,
+    "buttonWidth": 366,
+    "overflow": 390,
+    "editing": "same-id",
+    "export": "JSON-v2",
+    "oldDraft": "retained"
+  },
+  {
+    "width": 1440,
+    "label": "Ajouter des recettes avec l’IA",
+    "font": 16,
+    "height": 54,
+    "buttonWidth": 456,
+    "overflow": 1440,
+    "editing": "same-id",
+    "export": "JSON-v2",
+    "oldDraft": "retained"
+  }
+]
