@@ -34,3 +34,17 @@
 body[data-dv7-screen=missions] main :is(a,button,summary):focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}
 body[data-dv7-screen=missions] main :is(a,button,summary){touch-action:manipulation}
 .e03-card:hover{border-color:#d49b4288}
+/* Independent period filter; existing status/member controls keep their roles. */
+.e03-period-control{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:6px 10px;margin-bottom:12px}
+.e03-period-control label{font-size:12px;font-weight:600;color:#eec66a}
+.e03-period-control select{min-width:0;width:100%;min-height:44px;padding:8px 28px 8px 10px;border:1px solid #d49b4266;border-radius:12px;background:#271814;color:#fcf7ee;font-family:inherit;font-size:14px;font-weight:600;line-height:1.4;color-scheme:dark;cursor:pointer}
+.e03-period-control [data-e03-period-label]{grid-column:1/-1;margin:0;color:#eec66a;font-size:12px;line-height:1.5}
+.e03-period-help{grid-column:1/-1;margin:0;color:#d4c4b1;font-size:11px;line-height:1.5}
+[data-e03-main],.e03-bucket-content{display:flex;flex-direction:column;gap:10px}
+.e03-bucket-title{margin:2px 0;color:#eec66a;font-size:13px;font-weight:600;line-height:1.5}
+.e03-bucket{border:1px solid #d49b4244;border-radius:12px;background:#27181466;padding:0 10px}
+.e03-bucket>summary{min-height:44px;display:list-item;align-content:center;padding:10px 0;color:#eec66a;cursor:pointer;font-size:13px;font-weight:600;line-height:1.5}
+.e03-bucket-content{padding-bottom:10px}
+.e03-more{min-height:44px;width:100%;padding:9px 12px;border:1px solid #d49b4266;border-radius:12px;background:#372622;color:#eec66a;font-size:13px;font-weight:600;line-height:1.5;cursor:pointer}
+.e03-count-scope{margin:0 0 3px;color:#d4c4b1;font-size:11px;line-height:1.5}
+body[data-dv7-screen=missions] main select:focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}
