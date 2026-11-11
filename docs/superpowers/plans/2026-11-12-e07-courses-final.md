@@ -12,4 +12,4 @@ Aucun AGENTS.md applicable trouvé dans ce dépôt ou ses parents.
 
 Points de revue : quantités inconnues ; unités incompatibles ; ajout manuel ; réimport après achat/clôture ; aperçu périmé après modification des articles/menus ; portée de l’annotation maison.
 
-Revue indépendante : quatre défauts P2 reproduits et corrigés par tests RED→GREEN. Contrôles natifs 30/30 ; parcours HTTP familial et navigateur aux trois largeurs réussis. Publication en cours. Les tests historiques Courses sont adaptés aux regroupements et commandes secondaires désormais demandés.
+Revue indépendante : quatre défauts P2 reproduits et corrigés par tests RED→GREEN. Contrôles natifs 30/30 ; parcours HTTP familial et navigateur aux trois largeurs réussis. Publication Pages accessible et vérifiée par navigateur sur l’URL publique. Les tests historiques Courses sont adaptés aux regroupements et commandes secondaires désormais demandés.

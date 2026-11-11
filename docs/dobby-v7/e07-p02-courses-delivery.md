@@ -18,3 +18,12 @@ Vérification : tests de modèle, scénario navigateur Courses à 390/320/1440 p
 Publication : le wrapper `scripts/build-dobby-courses-review.cjs` réutilise le générateur E07.4 et crée un répertoire neuf, un préfixe de stockage distinct et un manifeste de provenance. Seul ce répertoire sera copié pour publication Pages. Les sources de la branche ne seront pas fusionnées.
 
 Intégration : `cuisine-e07.js` reste partagé avec E07-P01 ; reprendre uniquement les blocs Courses (`shop`, actions `e072-*`), l’état de présentation associé et les styles Courses. Aucun changement dans `taverne`, `pick` ou les actions de sélection des repas. Correctif commun dans `chrome.js` à reprendre une seule fois. Aucun fichier Runes ou Missions modifié.
+
+## Références de livraison
+
+- Aperçu : https://portenartco.github.io/dobby-demo/essai-dobby-e07-p02-courses-review-20261112/
+- Source construite : `0c081f64f8bd5cd537de8f406fed97d787671184`.
+- Publication initiale : `c6ef62aa552da635fe04ccfb5ecdf20e8db9daba`, 283 nouveaux fichiers exclusivement sous le nouveau répertoire. Une publication concurrente a été préservée par rebase du seul commit de publication ; aucune fusion des sources.
+- Vérifications locales : 30 tests modèle/natif ; reprise déterministe ; parcours Courses 390/320/1440 ; six vues avec particules en mouvement ; régressions E07.2 et consolidation Courses ; scénario HTTP familial 390 px ; aperçu généré vérifié avec pommes de terre 860 g, réimport vide, aucune requête externe ni donnée familiale réelle.
+
+Vérification publique réussie : le scénario `e07-p02-preview.cjs` a été exécuté sur l’URL Pages, manifeste source conforme, regroupement 860 g et réimport vide, particules réellement mobiles, zéro erreur JavaScript/404/requête externe. Preuve : `evidence/e07-p02/preview/verification.json` et capture hébergée 390 px. La campagne CI historique plus large reste en cours à la livraison ; elle ne constitue pas une validation déjà acquise.
