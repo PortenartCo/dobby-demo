@@ -41,7 +41,37 @@ Captures Taverne également conservées dans le même dossier.
 
 ## CI, publication et limites
 
-Publication prévue exclusivement sous `essai-dobby-runes-v2-pilot-20261111/`, par ajout d'un dossier statique sur `main`, sans fusion applicative et sans remplacement des aperçus existants. Les SHA, liens CI et preuves HTTP seront ajoutés après vérification.
+Aperçu publié : **https://portenartco.github.io/dobby-demo/essai-dobby-runes-v2-pilot-20261111/**.
+
+Code testé et contenu du manifeste publié : **`c6d4ba7ac5fc6422add1ab26526649c8f5462627`**. Sources propres (`sourceDirty:false`). Publication finale : **`392e05de5408324bd895789a4e0b6e67cb90d03b`** sur `main`, par copie statique uniquement. Aucun merge applicatif ni force-push. Les deux commits de publication n'ont touché que le nouveau dossier ; la dernière mise à jour ne change que les deux copies gardées et leur manifeste.
+
+Commits de la branche applicative isolée :
+
+- `d814a07e2eb036b05ee706749cda7314cb8efccb` : packaging, gardes, accès à la configuration native et preuves initiales.
+- `ed678a2b59797d298b5fff9206ace929b18921f5` : gardes obligatoires même sans runtime du bandeau, après reproduction d'un POST V1 dans ce cas.
+- `c6d4ba7ac5fc6422add1ab26526649c8f5462627` : test navigateur de la nouvelle demande sans bandeau, avec vérification distincte du refus natif des compensations V1. La CI intermédiaire avait correctement refusé cette compensation ; le scénario initial attendait à tort une réouverture. Cette correction de fixture ne change pas le code publié des gardes.
+
+| Vérification | SHA | Résultat / lien |
+|---|---|---|
+| Stitch pilote final | `c6d4ba7` | [PASS : 178 tests et navigateur 320/390/1440](https://github.com/PortenartCo/dobby-demo/actions/runs/43086803360) |
+| Sync existante | `d814a07` | [PASS](https://github.com/PortenartCo/dobby-demo/actions/runs/43085682565) |
+| PostgreSQL existante, fixture temporaire sans réseau | `d814a07` | [PASS : 51 tests SQL, 10 intégrations client](https://github.com/PortenartCo/dobby-demo/actions/runs/43085682563) |
+| GitHub Pages final | `392e05d` | [PASS](https://github.com/PortenartCo/dobby-demo/actions/runs/43087051705) |
+
+Les sources natives et SQL sont identiques entre `d814a07` et `c6d4ba7` ; les CI Sync/PostgreSQL sont conservées pour ces mêmes sources. Les modifications du packaging ont été retestées par la dernière CI Stitch, sans relancer les campagnes inchangées. [Détail des CI et SHA](evidence/runes-v2-pilot/publication/ci.json).
+
+Publication et fonctionnement hébergé vérifiés séparément :
+
+- [285/285 fichiers HTTP](evidence/runes-v2-pilot/publication/http.json) : statut 200 et SHA-256 identique au dossier construit sur `c6d4ba7`. Un premier contrôle avait rencontré une réponse HTTP 503 transitoire ; la nouvelle exécution a vérifié tous les fichiers, sans modification de l'application.
+- [281 blobs source et préservation Git](evidence/runes-v2-pilot/publication/preservation.json) : les 22 entrées antérieures de `main` sont inchangées, E07.4 compris.
+- [18 pages d'entrée antérieures vérifiées en HTTP](evidence/runes-v2-pilot/publication/previous-previews-http.json) : octets inchangés.
+- [Parcours réellement hébergés](evidence/runes-v2-pilot/hosted/browser-verification.json) : navigation, menu, formulaire natif et persistance à 320/390/1440. Tous les appels Supabase restent interceptés par des fixtures : cette preuve hébergée ne constitue pas une recette du backend réel.
+
+| Largeur | Missions hébergées | Connexion native hébergée |
+|---|---|---|
+| 320 | [capture](evidence/runes-v2-pilot/hosted/missions-320.png) | [capture](evidence/runes-v2-pilot/hosted/connexion-320.png) |
+| 390 | [capture](evidence/runes-v2-pilot/hosted/missions-390.png) | [capture](evidence/runes-v2-pilot/hosted/connexion-390.png) |
+| 1440 | [capture](evidence/runes-v2-pilot/hosted/missions-1440.png) | [capture](evidence/runes-v2-pilot/hosted/connexion-1440.png) |
 
 Le workflow Stitch existant comporte un mode pilote ciblé : une empreinte de l'arbre applicatif doit rester identique à `3ceb14b`, sinon l'exécution est refusée. Ce mode teste le packaging et le client généré ; la campagne historique reste disponible avec `DOBBY_FINAL=1`. Les workflows Sync et PostgreSQL existants restent inchangés.
 
