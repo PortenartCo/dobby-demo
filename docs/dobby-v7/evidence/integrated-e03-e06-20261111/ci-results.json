@@ -1,0 +1,25 @@
+{
+  "status": "PASS_WITH_VERIFIED_CONTINUATION",
+  "phase1": {
+    "sha": "87421ca68e53bdb892576495ba93afb906462dff",
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112",
+    "overall": "failure at historical period fixture",
+    "sourceChecks": "PASS",
+    "correctionBrowserScripts": 12,
+    "correctionCheckpoints": "PASS"
+  },
+  "phase2": {
+    "sha": "b381fc74bc1b529514a3bf9c35e5b29bb21ce045",
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43038570165",
+    "status": "PASS",
+    "from": "register-tools.cjs",
+    "previousGreenTestsRepeated": false
+  },
+  "sync": {
+    "sha": "87421ca68e53bdb892576495ba93afb906462dff",
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43034934253",
+    "status": "PASS"
+  },
+  "applicationCodeUnchangedBetweenPhases": true,
+  "publication": false
+}

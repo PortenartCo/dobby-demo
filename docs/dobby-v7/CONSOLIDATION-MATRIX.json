@@ -2294,6 +2294,13 @@
     },
     "report": "docs/dobby-v7/REVIEW-E03-E06-20261111.md",
     "humanAcceptance": false,
-    "published": false
+    "published": false,
+    "ci": {
+      "sourceChecksAnd12Checkpoints": "https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112",
+      "continuationPass": "https://github.com/PortenartCo/dobby-demo/actions/runs/43038570165",
+      "syncPass": "https://github.com/PortenartCo/dobby-demo/actions/runs/43034934253",
+      "repeatedOldGreenTests": false
+    },
+    "readyForIsolatedReviewPublication": true
   }
 }

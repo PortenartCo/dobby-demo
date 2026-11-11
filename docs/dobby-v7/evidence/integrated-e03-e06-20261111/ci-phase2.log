@@ -1,0 +1,650 @@
+integrated-corrections	Set up job	﻿2026-11-11T14:27:02.7288203Z Current runner version: '2.338.2'
+integrated-corrections	Set up job	2026-11-11T14:27:02.7314453Z ##[group]Runner Image Provisioner
+integrated-corrections	Set up job	2026-11-11T14:27:02.7315181Z Hosted Compute Agent
+integrated-corrections	Set up job	2026-11-11T14:27:02.7315753Z Version: 20261028.624
+integrated-corrections	Set up job	2026-11-11T14:27:02.7316358Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+integrated-corrections	Set up job	2026-11-11T14:27:02.7317011Z Build Date: 2026-10-28T21:51:42Z
+integrated-corrections	Set up job	2026-11-11T14:27:02.7317603Z Worker ID: {757a4bd6-2b0d-4579-9c48-302fc6b38412}
+integrated-corrections	Set up job	2026-11-11T14:27:02.7318219Z Region: northcentralus
+integrated-corrections	Set up job	2026-11-11T14:27:02.7318751Z Cloud: Azure
+integrated-corrections	Set up job	2026-11-11T14:27:02.7319230Z ##[endgroup]
+integrated-corrections	Set up job	2026-11-11T14:27:02.7320332Z ##[group]Operating System
+integrated-corrections	Set up job	2026-11-11T14:27:02.7320924Z Ubuntu
+integrated-corrections	Set up job	2026-11-11T14:27:02.7321665Z 26.04.1
+integrated-corrections	Set up job	2026-11-11T14:27:02.7322131Z LTS
+integrated-corrections	Set up job	2026-11-11T14:27:02.7322717Z ##[endgroup]
+integrated-corrections	Set up job	2026-11-11T14:27:02.7323161Z ##[group]Runner Image
+integrated-corrections	Set up job	2026-11-11T14:27:02.7323721Z Image: ubuntu-26.04
+integrated-corrections	Set up job	2026-11-11T14:27:02.7324207Z Version: 20261101.186.1
+integrated-corrections	Set up job	2026-11-11T14:27:02.7325159Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+integrated-corrections	Set up job	2026-11-11T14:27:02.7326724Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+integrated-corrections	Set up job	2026-11-11T14:27:02.7327941Z ##[endgroup]
+integrated-corrections	Set up job	2026-11-11T14:27:02.7328884Z ##[group]GITHUB_TOKEN Permissions
+integrated-corrections	Set up job	2026-11-11T14:27:02.7330720Z Contents: read
+integrated-corrections	Set up job	2026-11-11T14:27:02.7331427Z Metadata: read
+integrated-corrections	Set up job	2026-11-11T14:27:02.7331954Z ##[endgroup]
+integrated-corrections	Set up job	2026-11-11T14:27:02.7333658Z Secret source: Actions
+integrated-corrections	Set up job	2026-11-11T14:27:02.7334500Z Cache mode: write
+integrated-corrections	Set up job	2026-11-11T14:27:02.7335307Z Prepare workflow directory
+integrated-corrections	Set up job	2026-11-11T14:27:02.7649925Z Prepare all required actions
+integrated-corrections	Set up job	2026-11-11T14:27:02.7706565Z Getting action download info
+integrated-corrections	Set up job	2026-11-11T14:27:02.9685164Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+integrated-corrections	Set up job	2026-11-11T14:27:03.0414712Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+integrated-corrections	Set up job	2026-11-11T14:27:03.1394085Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+integrated-corrections	Set up job	2026-11-11T14:27:03.3649711Z Complete job name: integrated-corrections
+integrated-corrections	Run actions/checkout@v4	﻿2026-11-11T14:27:03.4325894Z ##[group]Run actions/checkout@v4
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4326576Z with:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4326943Z   repository: PortenartCo/dobby-demo
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4330655Z   token: ***
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4331015Z   ssh-strict: true
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4331512Z   ssh-user: git
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4331873Z   persist-credentials: true
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4332277Z   clean: true
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4332633Z   sparse-checkout-cone-mode: true
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4333057Z   fetch-depth: 1
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4333403Z   fetch-tags: false
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4333763Z   show-progress: true
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4334125Z   lfs: false
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4334466Z   submodules: false
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4334826Z   set-safe-directory: true
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4335240Z   allow-unsafe-pr-checkout: false
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.4335818Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6157679Z Syncing repository: PortenartCo/dobby-demo
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6159411Z ##[group]Getting Git version info
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6160030Z Working directory is '/home/runner/work/dobby-demo/dobby-demo'
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6160924Z [command]/usr/bin/git version
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6186375Z git version 2.56.0
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6203241Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6217120Z Temporarily overriding HOME='/home/runner/work/_temp/96d13c23-faeb-49fa-b659-1b8cbb45d61d' before making global git config changes
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6218988Z Adding repository directory to the temporary git global config as a safe directory
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6221062Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6270838Z Deleting the contents of '/home/runner/work/dobby-demo/dobby-demo'
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6274459Z ##[group]Initializing the repository
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6277971Z [command]/usr/bin/git init /home/runner/work/dobby-demo/dobby-demo
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6352768Z hint: Using 'master' as the name for the initial branch. This default branch name
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6354321Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6355146Z hint: to use in all of your new repositories, which will suppress this warning,
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6355765Z hint: call:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6356089Z hint:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6356506Z hint: 	git config --global init.defaultBranch <name>
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6357021Z hint:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6357494Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6358269Z hint: 'development'. The just-created branch can be renamed via this command:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6358887Z hint:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6359219Z hint: 	git branch -m <name>
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6359763Z hint:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6360558Z hint: Disable this message with "git config set advice.defaultBranchName false"
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6362456Z Initialized empty Git repository in /home/runner/work/dobby-demo/dobby-demo/.git/
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6378161Z [command]/usr/bin/git remote add origin https://github.com/PortenartCo/dobby-demo
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6411381Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6412370Z ##[group]Disabling automatic garbage collection
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6414951Z [command]/usr/bin/git config --local gc.auto 0
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6443079Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6444023Z ##[group]Setting up auth
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6448895Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6478112Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6836515Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.6873206Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.7115094Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.7144832Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.7374585Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.7411995Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.7412684Z ##[group]Fetching the repository
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:03.7422426Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b381fc74bc1b529514a3bf9c35e5b29bb21ce045:refs/remotes/origin/fix/dobby-e03-e06-review-20261111
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8649673Z From https://github.com/PortenartCo/dobby-demo
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8651566Z  * [new ref]         b381fc74bc1b529514a3bf9c35e5b29bb21ce045 -> origin/fix/dobby-e03-e06-review-20261111
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8655041Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8656175Z ##[group]Determining the checkout info
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8657245Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8660358Z [command]/usr/bin/git sparse-checkout disable
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8704721Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8730138Z ##[group]Checking out the ref
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:15.8733756Z [command]/usr/bin/git checkout --progress --force -B fix/dobby-e03-e06-review-20261111 refs/remotes/origin/fix/dobby-e03-e06-review-20261111
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:16.8835252Z Updating files:  50% (1773/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:16.9067802Z Updating files:  51% (1777/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:16.9389963Z Updating files:  52% (1812/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:16.9687483Z Updating files:  53% (1846/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:16.9858868Z Updating files:  54% (1881/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.0144164Z Updating files:  55% (1916/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.0412292Z Updating files:  56% (1951/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.0541032Z Updating files:  57% (1986/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.0701524Z Updating files:  58% (2021/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.0932459Z Updating files:  59% (2055/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.1094868Z Updating files:  60% (2090/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.1222670Z Updating files:  61% (2125/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.1406131Z Updating files:  62% (2160/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.1686768Z Updating files:  63% (2195/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.1953340Z Updating files:  64% (2230/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.2218338Z Updating files:  65% (2264/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.2359155Z Updating files:  66% (2299/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.2502037Z Updating files:  67% (2334/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.2732027Z Updating files:  68% (2369/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.2935838Z Updating files:  69% (2404/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3133538Z Updating files:  70% (2439/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3329336Z Updating files:  71% (2473/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3522755Z Updating files:  72% (2508/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3700492Z Updating files:  73% (2543/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3737522Z Updating files:  74% (2578/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3776590Z Updating files:  75% (2613/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3871627Z Updating files:  76% (2648/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.3989079Z Updating files:  77% (2682/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.4112242Z Updating files:  78% (2717/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.4325838Z Updating files:  79% (2752/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.4481695Z Updating files:  80% (2787/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5401432Z Updating files:  81% (2822/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5536331Z Updating files:  82% (2857/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5561022Z Updating files:  83% (2891/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5587877Z Updating files:  84% (2926/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5610123Z Updating files:  85% (2961/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5637838Z Updating files:  86% (2996/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5677405Z Updating files:  87% (3031/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5835915Z Updating files:  88% (3066/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.5990378Z Updating files:  89% (3100/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.6852007Z Updating files:  90% (3135/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.6983046Z Updating files:  91% (3170/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7005379Z Updating files:  92% (3205/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7029421Z Updating files:  93% (3240/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7050893Z Updating files:  94% (3275/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7070989Z Updating files:  95% (3309/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7088234Z Updating files:  96% (3344/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7106729Z Updating files:  97% (3379/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7135502Z Updating files:  98% (3414/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7165402Z Updating files:  99% (3449/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7166012Z Updating files: 100% (3483/3483)
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7166387Z Updating files: 100% (3483/3483), done.
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7210481Z Switched to a new branch 'fix/dobby-e03-e06-review-20261111'
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7215807Z branch 'fix/dobby-e03-e06-review-20261111' set up to track 'origin/fix/dobby-e03-e06-review-20261111'.
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7297861Z ##[endgroup]
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7340838Z [command]/usr/bin/git log -1 --format=%H
+integrated-corrections	Run actions/checkout@v4	2026-11-11T14:27:17.7364372Z b381fc74bc1b529514a3bf9c35e5b29bb21ce045
+integrated-corrections	Run actions/setup-node@v4	﻿2026-11-11T14:27:17.7658399Z ##[group]Run actions/setup-node@v4
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.7658648Z with:
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.7658816Z   node-version: 22
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.7659023Z   always-auth: false
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.7659239Z   check-latest: false
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.7661449Z   token: ***
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.7661646Z ##[endgroup]
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.8801653Z (node:2209) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.8802529Z (Use `node --trace-deprecation ...` to show where the warning was created)
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.8803478Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:17.8804779Z ##[group]Environment details
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:18.1831380Z node: v22.23.4
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:18.1831756Z npm: 10.9.9
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:18.1831993Z yarn: 1.22.22
+integrated-corrections	Run actions/setup-node@v4	2026-11-11T14:27:18.1832837Z ##[endgroup]
+integrated-corrections	Verify immutable continuation checkpoint	﻿2026-11-11T14:27:18.1959838Z ##[group]Run node essai-stitch-v7/tests/ci.cjs
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.1960226Z [36;1mnode essai-stitch-v7/tests/ci.cjs[0m
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.2013720Z shell: /usr/bin/bash -e {0}
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.2013952Z env:
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.2014120Z   DOBBY_CI_VERIFY_ONLY: 1
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.2014313Z ##[endgroup]
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.2425943Z CI_CONTINUATION_VERIFIED https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112 register-tools.cjs
+integrated-corrections	Verify immutable continuation checkpoint	2026-11-11T14:27:18.2426775Z CI_PREVIOUS_CHECKS_REUSABLE true https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+integrated-corrections	Retain the passed correction checkpoints	﻿2026-11-11T14:27:18.2506240Z ##[group]Run echo 'The protected source/test tree matches phase 1; the twelve correction scripts already passed at https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112.'
+integrated-corrections	Retain the passed correction checkpoints	2026-11-11T14:27:18.2507190Z [36;1mecho 'The protected source/test tree matches phase 1; the twelve correction scripts already passed at https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112.'[0m
+integrated-corrections	Retain the passed correction checkpoints	2026-11-11T14:27:18.2551581Z shell: /usr/bin/bash -e {0}
+integrated-corrections	Retain the passed correction checkpoints	2026-11-11T14:27:18.2551802Z ##[endgroup]
+integrated-corrections	Retain the passed correction checkpoints	2026-11-11T14:27:18.2610557Z The protected source/test tree matches phase 1; the twelve correction scripts already passed at https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112.
+integrated-corrections	Post Run actions/setup-node@v4	﻿2026-11-11T14:27:18.2700974Z Post job cleanup.
+integrated-corrections	Post Run actions/setup-node@v4	2026-11-11T14:27:18.3674223Z (node:2250) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+integrated-corrections	Post Run actions/setup-node@v4	2026-11-11T14:27:18.3675048Z (Use `node --trace-deprecation ...` to show where the warning was created)
+integrated-corrections	Post Run actions/checkout@v4	﻿2026-11-11T14:27:18.3870157Z Post job cleanup.
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4584659Z [command]/usr/bin/git version
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4622149Z git version 2.56.0
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4654788Z Temporarily overriding HOME='/home/runner/work/_temp/6e1fd890-44b0-4852-8228-305bb3bb58fa' before making global git config changes
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4655648Z Adding repository directory to the temporary git global config as a safe directory
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4659045Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4693571Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4724244Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.4997395Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.5029873Z http.https://github.com/.extraheader
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.5049986Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.5075087Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.5331223Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+integrated-corrections	Post Run actions/checkout@v4	2026-11-11T14:27:18.5362761Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+integrated-corrections	Complete job	﻿2026-11-11T14:27:18.5717065Z Cleaning up orphan processes
+integrated-corrections	Complete job	2026-11-11T14:27:18.6035158Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+source-backed-browser	Set up job	﻿2026-11-11T14:27:02.9287075Z Current runner version: '2.338.2'
+source-backed-browser	Set up job	2026-11-11T14:27:02.9308653Z ##[group]Runner Image Provisioner
+source-backed-browser	Set up job	2026-11-11T14:27:02.9309404Z Hosted Compute Agent
+source-backed-browser	Set up job	2026-11-11T14:27:02.9309923Z Version: 20261028.624
+source-backed-browser	Set up job	2026-11-11T14:27:02.9310497Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+source-backed-browser	Set up job	2026-11-11T14:27:02.9311117Z Build Date: 2026-10-28T21:51:42Z
+source-backed-browser	Set up job	2026-11-11T14:27:02.9311684Z Worker ID: {d170d3f8-3394-4199-b0ba-c5d5fc0db9a4}
+source-backed-browser	Set up job	2026-11-11T14:27:02.9312369Z Region: centralus
+source-backed-browser	Set up job	2026-11-11T14:27:02.9312863Z Cloud: Azure
+source-backed-browser	Set up job	2026-11-11T14:27:02.9313343Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-11T14:27:02.9314426Z ##[group]Operating System
+source-backed-browser	Set up job	2026-11-11T14:27:02.9314913Z Ubuntu
+source-backed-browser	Set up job	2026-11-11T14:27:02.9315724Z 26.04.1
+source-backed-browser	Set up job	2026-11-11T14:27:02.9316361Z LTS
+source-backed-browser	Set up job	2026-11-11T14:27:02.9316870Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-11T14:27:02.9317356Z ##[group]Runner Image
+source-backed-browser	Set up job	2026-11-11T14:27:02.9317871Z Image: ubuntu-26.04
+source-backed-browser	Set up job	2026-11-11T14:27:02.9318416Z Version: 20261101.186.1
+source-backed-browser	Set up job	2026-11-11T14:27:02.9319406Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+source-backed-browser	Set up job	2026-11-11T14:27:02.9320909Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+source-backed-browser	Set up job	2026-11-11T14:27:02.9321741Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-11T14:27:02.9322704Z ##[group]GITHUB_TOKEN Permissions
+source-backed-browser	Set up job	2026-11-11T14:27:02.9324453Z Contents: read
+source-backed-browser	Set up job	2026-11-11T14:27:02.9325033Z Metadata: read
+source-backed-browser	Set up job	2026-11-11T14:27:02.9325508Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-11T14:27:02.9327851Z Secret source: Actions
+source-backed-browser	Set up job	2026-11-11T14:27:02.9328712Z Cache mode: write
+source-backed-browser	Set up job	2026-11-11T14:27:02.9329349Z Prepare workflow directory
+source-backed-browser	Set up job	2026-11-11T14:27:02.9628098Z Prepare all required actions
+source-backed-browser	Set up job	2026-11-11T14:27:02.9666182Z Getting action download info
+source-backed-browser	Set up job	2026-11-11T14:27:03.1646398Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+source-backed-browser	Set up job	2026-11-11T14:27:03.2961311Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+source-backed-browser	Set up job	2026-11-11T14:27:03.4022466Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+source-backed-browser	Set up job	2026-11-11T14:27:03.5799693Z Complete job name: source-backed-browser
+source-backed-browser	Run actions/checkout@v4	﻿2026-11-11T14:27:03.6517402Z ##[group]Run actions/checkout@v4
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6518099Z with:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6518467Z   repository: PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6521902Z   token: ***
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6522264Z   ssh-strict: true
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6522632Z   ssh-user: git
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6522994Z   persist-credentials: true
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6523392Z   clean: true
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6523758Z   sparse-checkout-cone-mode: true
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6524188Z   fetch-depth: 1
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6524539Z   fetch-tags: false
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6524898Z   show-progress: true
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6525265Z   lfs: false
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6525598Z   submodules: false
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6526262Z   set-safe-directory: true
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6526690Z   allow-unsafe-pr-checkout: false
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.6527331Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8577261Z Syncing repository: PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8579594Z ##[group]Getting Git version info
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8580532Z Working directory is '/home/runner/work/dobby-demo/dobby-demo'
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8581827Z [command]/usr/bin/git version
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8582650Z git version 2.56.0
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8600856Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8616548Z Temporarily overriding HOME='/home/runner/work/_temp/289bb042-1e25-4f9a-93e2-c59ed7f5ee25' before making global git config changes
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8618553Z Adding repository directory to the temporary git global config as a safe directory
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8638645Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8729306Z Deleting the contents of '/home/runner/work/dobby-demo/dobby-demo'
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8731842Z ##[group]Initializing the repository
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8732978Z [command]/usr/bin/git init /home/runner/work/dobby-demo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8827710Z hint: Using 'master' as the name for the initial branch. This default branch name
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8829880Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8831122Z hint: to use in all of your new repositories, which will suppress this warning,
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8832113Z hint: call:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8832661Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8833327Z hint: 	git config --global init.defaultBranch <name>
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8834149Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8834928Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8836283Z hint: 'development'. The just-created branch can be renamed via this command:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8837253Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8837792Z hint: 	git branch -m <name>
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8838418Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8839210Z hint: Disable this message with "git config set advice.defaultBranchName false"
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8840676Z Initialized empty Git repository in /home/runner/work/dobby-demo/dobby-demo/.git/
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8858590Z [command]/usr/bin/git remote add origin https://github.com/PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8917974Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8919203Z ##[group]Disabling automatic garbage collection
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8924950Z [command]/usr/bin/git config --local gc.auto 0
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8957944Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8958577Z ##[group]Setting up auth
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.8965256Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.9009433Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.9415049Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.9446829Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.9698296Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.9730066Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:03.9989519Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:04.0032126Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:04.0032885Z ##[group]Fetching the repository
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:04.0041761Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b381fc74bc1b529514a3bf9c35e5b29bb21ce045:refs/remotes/origin/fix/dobby-e03-e06-review-20261111
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9925759Z From https://github.com/PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9928333Z  * [new ref]         b381fc74bc1b529514a3bf9c35e5b29bb21ce045 -> origin/fix/dobby-e03-e06-review-20261111
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9936337Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9937949Z ##[group]Determining the checkout info
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9939595Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9940207Z [command]/usr/bin/git sparse-checkout disable
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:16.9995149Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:17.0027870Z ##[group]Checking out the ref
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:17.0032827Z [command]/usr/bin/git checkout --progress --force -B fix/dobby-e03-e06-review-20261111 refs/remotes/origin/fix/dobby-e03-e06-review-20261111
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.0128846Z Updating files:  49% (1740/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.0374984Z Updating files:  50% (1742/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.0610659Z Updating files:  51% (1777/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.0937868Z Updating files:  52% (1812/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.1250907Z Updating files:  53% (1846/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.1425559Z Updating files:  54% (1881/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.1713761Z Updating files:  55% (1916/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.1988115Z Updating files:  56% (1951/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.2119525Z Updating files:  57% (1986/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.2282385Z Updating files:  58% (2021/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.2519438Z Updating files:  59% (2055/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.2685393Z Updating files:  60% (2090/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.2814357Z Updating files:  61% (2125/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.2998118Z Updating files:  62% (2160/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.3285660Z Updating files:  63% (2195/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.3551848Z Updating files:  64% (2230/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.3817499Z Updating files:  65% (2264/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.3960304Z Updating files:  66% (2299/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.4103780Z Updating files:  67% (2334/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.4311614Z Updating files:  68% (2369/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.4543132Z Updating files:  69% (2404/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.4742093Z Updating files:  70% (2439/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.4940751Z Updating files:  71% (2473/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5135636Z Updating files:  72% (2508/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5316645Z Updating files:  73% (2543/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5358449Z Updating files:  74% (2578/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5398234Z Updating files:  75% (2613/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5497337Z Updating files:  76% (2648/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5622206Z Updating files:  77% (2682/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5756455Z Updating files:  78% (2717/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.5986091Z Updating files:  79% (2752/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.6153213Z Updating files:  80% (2787/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7085616Z Updating files:  81% (2822/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7225143Z Updating files:  82% (2857/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7248345Z Updating files:  83% (2891/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7275657Z Updating files:  84% (2926/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7298357Z Updating files:  85% (2961/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7326201Z Updating files:  86% (2996/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7367659Z Updating files:  87% (3031/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7531317Z Updating files:  88% (3066/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.7689081Z Updating files:  89% (3100/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8606643Z Updating files:  90% (3135/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8746321Z Updating files:  91% (3170/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8775554Z Updating files:  92% (3205/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8806083Z Updating files:  93% (3240/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8834645Z Updating files:  94% (3275/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8863027Z Updating files:  95% (3309/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8887427Z Updating files:  96% (3344/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8913495Z Updating files:  97% (3379/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8953660Z Updating files:  98% (3414/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.8986219Z Updating files:  99% (3449/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9165562Z Updating files: 100% (3483/3483)
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9166174Z Updating files: 100% (3483/3483), done.
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9166487Z Switched to a new branch 'fix/dobby-e03-e06-review-20261111'
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9169877Z branch 'fix/dobby-e03-e06-review-20261111' set up to track 'origin/fix/dobby-e03-e06-review-20261111'.
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9258696Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9304640Z [command]/usr/bin/git log -1 --format=%H
+source-backed-browser	Run actions/checkout@v4	2026-11-11T14:27:18.9330453Z b381fc74bc1b529514a3bf9c35e5b29bb21ce045
+source-backed-browser	Run actions/setup-node@v4	﻿2026-11-11T14:27:18.9581064Z ##[group]Run actions/setup-node@v4
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:18.9581336Z with:
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:18.9581515Z   node-version: 22
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:18.9581715Z   always-auth: false
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:18.9581900Z   check-latest: false
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:18.9583793Z   token: ***
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:18.9583976Z ##[endgroup]
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.0865401Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.0866284Z (node:2211) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.0868235Z ##[group]Environment details
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.0873773Z (Use `node --trace-deprecation ...` to show where the warning was created)
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.3982323Z node: v22.23.4
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.3982689Z npm: 10.9.9
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.3982914Z yarn: 1.22.22
+source-backed-browser	Run actions/setup-node@v4	2026-11-11T14:27:19.3984321Z ##[endgroup]
+source-backed-browser	Verify immutable continuation checkpoint	﻿2026-11-11T14:27:19.4121051Z ##[group]Run node essai-stitch-v7/tests/ci.cjs
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4121489Z [36;1mnode essai-stitch-v7/tests/ci.cjs[0m
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4176993Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4177247Z env:
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4177427Z   DOBBY_CI_VERIFY_ONLY: 1
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4177624Z ##[endgroup]
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4616049Z CI_CONTINUATION_VERIFIED https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112 register-tools.cjs
+source-backed-browser	Verify immutable continuation checkpoint	2026-11-11T14:27:19.4617192Z CI_PREVIOUS_CHECKS_REUSABLE true https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Exhaustive review registry coverage	﻿2026-11-11T14:27:19.4700405Z ##[group]Run node scripts/check-review-consolidation.cjs --final
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T14:27:19.4700810Z [36;1mnode scripts/check-review-consolidation.cjs --final[0m
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T14:27:19.4747946Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T14:27:19.4748176Z ##[endgroup]
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T14:27:19.5089772Z REVIEW_MATRIX_COVERAGE_PASS 122 rows,41 IDs final evidence required
+source-backed-browser	Browser tooling (tests only)	﻿2026-11-11T14:27:19.5195467Z ##[group]Run npm ci --ignore-scripts
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:19.5195760Z [36;1mnpm ci --ignore-scripts[0m
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:19.5243245Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:19.5243501Z ##[endgroup]
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:20.7651319Z
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:20.7653098Z added 2 packages, and audited 3 packages in 1s
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:20.7657432Z
+source-backed-browser	Browser tooling (tests only)	2026-11-11T14:27:20.7657721Z found 0 vulnerabilities
+source-backed-browser	Functional Stitch roots and source fidelity	﻿2026-11-11T14:27:20.8015235Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8015760Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8016343Z [36;1msleep 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8016563Z [36;1mif command -v google-chrome >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8016838Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8017099Z [36;1melif command -v chromium >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8017351Z [36;1m  BROWSER="$(command -v chromium)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8017638Z [36;1melif command -v chromium-browser >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8017929Z [36;1m  BROWSER="$(command -v chromium-browser)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8018162Z [36;1melse[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8018388Z [36;1m  echo "No Chrome/Chromium available on runner"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8018631Z [36;1m  exit 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8018793Z [36;1mfi[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8019029Z [36;1mCHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8067295Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:20.8067524Z ##[endgroup]
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8520145Z CI_CONTINUATION_VERIFIED https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112 register-tools.cjs
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8521370Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-art.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8522603Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-effects-transition.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8525784Z CI_ALREADY_PASSED_PREVIOUS_PHASE consolidation-shared.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8527153Z CI_ALREADY_PASSED_PREVIOUS_PHASE e01-consolidation.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8528372Z CI_ALREADY_PASSED_PREVIOUS_PHASE e02-consolidation.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8529284Z CI_ALREADY_PASSED_PREVIOUS_PHASE e05-consolidation.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8530019Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-consolidation.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8530726Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-consolidation.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8531378Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-auth.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8536893Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8538105Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-edge.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8539216Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-recovery.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8540205Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-review.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8540876Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-shared.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8541517Z CI_ALREADY_PASSED_PREVIOUS_PHASE e06-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8542144Z CI_ALREADY_PASSED_PREVIOUS_PHASE e08.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8542788Z CI_ALREADY_PASSED_PREVIOUS_PHASE e03-counts.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8543409Z CI_ALREADY_PASSED_PREVIOUS_PHASE e03.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8544036Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-2-boot.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8545035Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-2-model.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:21.8563647Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-2.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7283017Z REVIEW_BUILD b381fc74bc1b529514a3bf9c35e5b29bb21ce045 281 files /home/runner/work/dobby-demo/dobby-demo/essai-dobby-integrated-review
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7361961Z CI_ALREADY_PASSED_PREVIOUS_PHASE integrated-preview.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7362853Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-1-context.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7363601Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-1.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7364720Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07-native-actions.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7366174Z CI_ALREADY_PASSED_PREVIOUS_PHASE e07.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7367193Z CI_ALREADY_PASSED_PREVIOUS_PHASE e05-native.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7368244Z CI_ALREADY_PASSED_PREVIOUS_PHASE e05.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7368889Z CI_ALREADY_PASSED_PREVIOUS_PHASE e05-edge.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7369549Z CI_ALREADY_PASSED_PREVIOUS_PHASE e04.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7370200Z CI_ALREADY_PASSED_PREVIOUS_PHASE runes-native.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7370861Z CI_ALREADY_PASSED_PREVIOUS_PHASE e04-runes.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7371482Z CI_ALREADY_PASSED_PREVIOUS_PHASE e02.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7372174Z CI_ALREADY_PASSED_PREVIOUS_PHASE e02-edge.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7372862Z CI_ALREADY_PASSED_PREVIOUS_PHASE e02-voice-history.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7373868Z CI_ALREADY_PASSED_PREVIOUS_PHASE e01.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7374684Z CI_ALREADY_PASSED_PREVIOUS_PHASE e01-3.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7376030Z CI_ALREADY_PASSED_PREVIOUS_PHASE e01-1-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7377007Z CI_ALREADY_PASSED_PREVIOUS_PHASE e01-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7377848Z CI_ALREADY_PASSED_PREVIOUS_PHASE smoke.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7378679Z CI_ALREADY_PASSED_PREVIOUS_PHASE cuisine.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7379665Z CI_ALREADY_PASSED_PREVIOUS_PHASE cuisine-family.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7381040Z CI_ALREADY_PASSED_PREVIOUS_PHASE cuisine-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7382338Z CI_ALREADY_PASSED_PREVIOUS_PHASE family.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7383492Z CI_ALREADY_PASSED_PREVIOUS_PHASE family-edge.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7384710Z CI_ALREADY_PASSED_PREVIOUS_PHASE family-review.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7385993Z CI_ALREADY_PASSED_PREVIOUS_PHASE family-shared.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7387531Z CI_ALREADY_PASSED_PREVIOUS_PHASE family-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7388614Z CI_ALREADY_PASSED_PREVIOUS_PHASE register-house.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7389853Z CI_ALREADY_PASSED_PREVIOUS_PHASE register-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7391005Z CI_ALREADY_PASSED_PREVIOUS_PHASE register-documents.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:22.7392183Z CI_ALREADY_PASSED_PREVIOUS_PHASE register-visual.cjs https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:41.0388863Z REGISTER_TOOLS_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:46.6848451Z REGISTER_TOOLS_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:52.9441029Z REGISTER_VISUAL 5 mission-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:53.3038247Z REGISTER_VISUAL 5 chat 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:53.6025019Z REGISTER_VISUAL 5 chat-2 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:54.8799340Z REGISTER_VISUAL 5 search 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:55.2537077Z REGISTER_VISUAL 5 menu 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:27:55.5607513Z REGISTER_VISUAL 5 personal 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:01.8369179Z REGISTER_VISUAL 5 mission-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:02.1771027Z REGISTER_VISUAL 5 chat 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:02.4682356Z REGISTER_VISUAL 5 chat-2 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:03.7140074Z REGISTER_VISUAL 5 search 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:04.1632996Z REGISTER_VISUAL 5 menu 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:04.4822077Z REGISTER_VISUAL 5 personal 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:05.1077454Z REGISTER_VISUAL_PASS 5 6 sources x 320/390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:08.6437371Z REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:11.6260351Z REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:14.8295308Z REGISTER_VISUAL 2b contacts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:15.2307718Z REGISTER_VISUAL 2b contact-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:15.5750770Z REGISTER_VISUAL 2b memos 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:17.8948462Z REGISTER_VISUAL 2b memo-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:18.1865662Z REGISTER_VISUAL 2b lists 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:18.5338016Z REGISTER_VISUAL 2b list-detail 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:22.7205715Z REGISTER_VISUAL 2b contacts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:23.1438622Z REGISTER_VISUAL 2b contact-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:23.5146150Z REGISTER_VISUAL 2b memos 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:25.8683381Z REGISTER_VISUAL 2b memo-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:26.1780966Z REGISTER_VISUAL 2b lists 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:26.5433975Z REGISTER_VISUAL 2b list-detail 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:27.2616955Z REGISTER_VISUAL_PASS 2b 6 sources x 320/390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:33.1180322Z REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:38.8333242Z REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:43.8447390Z REGISTER_DOCUMENTS_SYNC_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:47.8688948Z REGISTER_DOCUMENTS_SYNC_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:50.3973528Z REGISTER_IMPORT_READING_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:52.3156604Z REGISTER_IMPORT_READING_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:55.3005401Z REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:57.6196168Z REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:28:59.3298364Z REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:00.4777287Z REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:12.5270018Z REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:23.9517142Z REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:26.4612172Z REGISTER_ROOT_VISUAL traverse 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:28.0951636Z REGISTER_ROOT_VISUAL missions 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:29.8488765Z REGISTER_ROOT_VISUAL famille 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:32.4515637Z REGISTER_ROOT_VISUAL taverne 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:34.3663510Z REGISTER_ROOT_VISUAL traverse 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:35.9815614Z REGISTER_ROOT_VISUAL missions 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:38.7096929Z REGISTER_ROOT_VISUAL famille 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:41.3223126Z REGISTER_ROOT_VISUAL taverne 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:42.7182933Z REGISTER_REVIEW_PASS stale-memo-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:43.5809014Z REGISTER_REVIEW_PASS stale-equipment-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:44.4155558Z REGISTER_REVIEW_PASS stale-document-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:45.3545470Z REGISTER_REVIEW_PASS list-rg-item-toggle 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:46.2902247Z REGISTER_REVIEW_PASS list-rg-item-remove 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:47.2125707Z REGISTER_REVIEW_PASS menu-member-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:48.2006371Z REGISTER_REVIEW_PASS menu-contact-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:49.1045002Z REGISTER_REVIEW_PASS menu-medical-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:50.1129481Z REGISTER_REVIEW_PASS maintenance-file-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:51.0061520Z REGISTER_REVIEW_PASS document-native-write-missing 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:51.8919853Z REGISTER_REVIEW_PASS document-native-write-replaced 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:52.6989916Z REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:53.4906483Z REGISTER_REVIEW_PASS maintenance-source-facts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:54.3788569Z REGISTER_REVIEW_PASS source-facts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:55.2122582Z REGISTER_REVIEW_PASS stale-memo-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:56.0638809Z REGISTER_REVIEW_PASS stale-equipment-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:56.9118149Z REGISTER_REVIEW_PASS stale-document-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:57.9196469Z REGISTER_REVIEW_PASS list-rg-item-toggle 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:58.9334874Z REGISTER_REVIEW_PASS list-rg-item-remove 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:29:59.8312737Z REGISTER_REVIEW_PASS menu-member-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:00.8587055Z REGISTER_REVIEW_PASS menu-contact-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:01.7305452Z REGISTER_REVIEW_PASS menu-medical-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:02.7026877Z REGISTER_REVIEW_PASS maintenance-file-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:03.6077987Z REGISTER_REVIEW_PASS document-native-write-missing 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:04.5262682Z REGISTER_REVIEW_PASS document-native-write-replaced 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:05.3279613Z REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:06.1346113Z REGISTER_REVIEW_PASS maintenance-source-facts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:07.0842012Z REGISTER_REVIEW_PASS source-facts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-11T14:30:07.0900602Z REGISTER_REVIEW_ALL_PASS 14 cases × 320/390
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	﻿2026-11-11T14:30:07.2594702Z ##[group]Run actions/upload-artifact@v4
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2594954Z with:
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2595139Z   name: dobby-v7-stitch-visual-evidence
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2595367Z   path: docs/dobby-v7/evidence/
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2595575Z   retention-days: 14
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2595764Z   if-no-files-found: warn
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2596234Z   compression-level: 6
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2596425Z   overwrite: false
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2596609Z   include-hidden-files: false
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.2596812Z ##[endgroup]
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.3960471Z (node:15946) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.3961536Z (Use `node --trace-deprecation ...` to show where the warning was created)
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.6351529Z With the provided path, there will be 2553 files uploaded
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.6356205Z Artifact name is valid!
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.6357018Z Root directory input is valid!
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:07.9476897Z Beginning upload of artifact content to blob storage
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:08.2197080Z (node:15946) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:08.6581659Z Uploaded bytes 8388608
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:08.8938299Z Uploaded bytes 16777216
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:08.9934138Z Uploaded bytes 25165824
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:09.1398141Z Uploaded bytes 33554432
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:09.4038794Z Uploaded bytes 41943040
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:09.6239753Z Uploaded bytes 50331648
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:09.8263881Z Uploaded bytes 58720256
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:10.1538084Z Uploaded bytes 67108864
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:10.3727455Z Uploaded bytes 75497472
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:10.6139579Z Uploaded bytes 83886080
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:10.8862422Z Uploaded bytes 92274688
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:11.0969314Z Uploaded bytes 100663296
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:11.3405706Z Uploaded bytes 109051904
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:11.7189294Z Uploaded bytes 117440512
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:11.9401040Z Uploaded bytes 125829120
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:12.0054137Z Uploaded bytes 134217728
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:12.2446627Z Uploaded bytes 142606336
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:12.5061037Z Uploaded bytes 150994944
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:12.7614010Z Uploaded bytes 159383552
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:13.0349907Z Uploaded bytes 167772160
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:13.2580948Z Uploaded bytes 176160768
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:13.5082944Z Uploaded bytes 184549376
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:13.8200547Z Uploaded bytes 192937984
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:14.1645032Z Uploaded bytes 201326592
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:14.3306920Z Uploaded bytes 209715200
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:14.4642518Z Uploaded bytes 218103808
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:14.7356939Z Uploaded bytes 226492416
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:14.9325359Z Uploaded bytes 234881024
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:15.1929739Z Uploaded bytes 243269632
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:15.4563316Z Uploaded bytes 251658240
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:15.7549265Z Uploaded bytes 260046848
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:15.9399271Z Uploaded bytes 268435456
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:16.1902253Z Uploaded bytes 276824064
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:16.5391770Z Uploaded bytes 285212672
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:16.7925783Z Uploaded bytes 293601280
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:17.0788968Z Uploaded bytes 301989888
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:17.2947300Z Uploaded bytes 310378496
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:17.5312124Z Uploaded bytes 318767104
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:17.8166021Z Uploaded bytes 327155712
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:18.2067278Z Uploaded bytes 335544320
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:18.2184241Z Uploaded bytes 343932928
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:18.4323921Z Uploaded bytes 352321536
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:18.7300542Z Uploaded bytes 360710144
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:19.0788258Z Uploaded bytes 369098752
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:19.1858377Z Uploaded bytes 377487360
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:19.4623947Z Uploaded bytes 385875968
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:19.6291970Z Uploaded bytes 394264576
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:19.8360473Z Uploaded bytes 402653184
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:20.1391886Z Uploaded bytes 411041792
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:20.3008150Z Uploaded bytes 419430400
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:20.4972609Z Uploaded bytes 427819008
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:20.7771816Z Uploaded bytes 436207616
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:20.9748551Z Uploaded bytes 444596224
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:21.2827677Z Uploaded bytes 452984832
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:21.6027174Z Uploaded bytes 461373440
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:21.6894526Z Uploaded bytes 464612933
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:21.7365680Z Finished uploading artifact content to blob storage!
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:21.7368349Z SHA256 digest of uploaded artifact zip is 61d52256fb97f74a6baf4fecb129c6720a874aa0c503aef4b193ce13605f37b1
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:21.7370226Z Finalizing artifact upload
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:22.2813397Z Artifact dobby-v7-stitch-visual-evidence.zip successfully finalized. Artifact ID 13865185267
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:22.2814222Z Artifact dobby-v7-stitch-visual-evidence has been successfully uploaded! Final size is 464612933 bytes. Artifact ID is 13865185267
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-11T14:30:22.2820736Z Artifact download URL: https://github.com/PortenartCo/dobby-demo/actions/runs/43038570165/artifacts/13865185267
+source-backed-browser	Post Run actions/setup-node@v4	﻿2026-11-11T14:30:22.3154802Z Post job cleanup.
+source-backed-browser	Post Run actions/setup-node@v4	2026-11-11T14:30:22.4163803Z (node:15961) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+source-backed-browser	Post Run actions/setup-node@v4	2026-11-11T14:30:22.4164539Z (Use `node --trace-deprecation ...` to show where the warning was created)
+source-backed-browser	Post Run actions/checkout@v4	﻿2026-11-11T14:30:22.4339918Z Post job cleanup.
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5059057Z [command]/usr/bin/git version
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5100711Z git version 2.56.0
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5134005Z Temporarily overriding HOME='/home/runner/work/_temp/ea18a062-0ec9-49be-8737-c3db47cf1104' before making global git config changes
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5135669Z Adding repository directory to the temporary git global config as a safe directory
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5141273Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5197940Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5233403Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5549646Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5587437Z http.https://github.com/.extraheader
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5604804Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5632923Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5957719Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+source-backed-browser	Post Run actions/checkout@v4	2026-11-11T14:30:22.5987936Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+source-backed-browser	Complete job	﻿2026-11-11T14:30:22.6365497Z Cleaning up orphan processes
+source-backed-browser	Complete job	2026-11-11T14:30:22.6631622Z Terminate orphan process: pid (2273) (python3)
+source-backed-browser	Complete job	2026-11-11T14:30:22.6692574Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
