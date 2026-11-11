@@ -2,9 +2,9 @@
 
 Branche : `fix/dobby-runes-v2-legacy-missions-20261112`, issue de `b92f5f398ecf5a70aa6591215c8a100c53e39c71`.
 
-SHA du client testé : **À RENSEIGNER après le commit final**.
+SHA du client testé : [`853b1764b104b774b7dc145b2c4acb80c088194d`](https://github.com/PortenartCo/dobby-demo/commit/853b1764b104b774b7dc145b2c4acb80c088194d). Le commit suivant de clôture ne contient que le rapport et les preuves de publication.
 
-Aperçu distinct prévu : <https://portenartco.github.io/dobby-demo/essai-dobby-runes-v2-legacy-review-20261112/>. La publication et ses vérifications HTTP restent à consigner ci-dessous. Le précédent `essai-dobby-runes-v2-pilot-20261111/` doit rester inchangé.
+Aperçu distinct publié : <https://portenartco.github.io/dobby-demo/essai-dobby-runes-v2-legacy-review-20261112/>. Le précédent `essai-dobby-runes-v2-pilot-20261111/` reste inchangé.
 
 ## Correctif livré
 
@@ -38,7 +38,17 @@ Le projecteur natif pouvait marquer obsolète une tâche automatique dont la sou
 | Client natif avec PostgreSQL 17.11 réel et deux utilisateurs fictifs | **13/13 PASS** | [`postgres/results.json`](evidence/legacy-missions/postgres/results.json) |
 | Navigateur à 320, 390 et 1440 px, avec et sans tâches automatiques distantes ; collision et opération en attente | **8/8 PASS, 286 assertions** | [`browser/browser-verification.json`](evidence/legacy-missions/browser/browser-verification.json) et [24 captures](evidence/legacy-missions/browser/) |
 | Génération reproductible, application protégée inchangée et régressions existantes, incluant les 67 contrôles de reprise | **246/246 PASS**, dont 7 contrôles de construction/provenance | [`local-summary.json`](evidence/legacy-missions/local-summary.json), [`local-regressions.tap`](evidence/legacy-missions/local-regressions.tap) |
-| CI GitHub sur le SHA final | À compléter | Lien du run à renseigner |
+| CI GitHub sur le SHA final | **PASS** : 246 tests et 8 cas navigateur/286 assertions | [Run 43121567615](https://github.com/PortenartCo/dobby-demo/actions/runs/43121567615), [`ci-final.json`](evidence/legacy-missions/ci-final.json) |
+
+Comparatifs capturés dans le navigateur, avec une tâche automatique distante :
+
+| Largeur | Avant | Revue explicite | Après reprise |
+| --- | --- | --- | --- |
+| 320 px | [Avant](evidence/legacy-missions/browser/with-remote-auto-320-before.png) | [Sauvegarde et choix](evidence/legacy-missions/browser/with-remote-auto-320-review.png) | [Après](evidence/legacy-missions/browser/with-remote-auto-320-after.png) |
+| 390 px | [Avant](evidence/legacy-missions/browser/with-remote-auto-390-before.png) | [Sauvegarde et choix](evidence/legacy-missions/browser/with-remote-auto-390-review.png) | [Après](evidence/legacy-missions/browser/with-remote-auto-390-after.png) |
+| 1440 px | [Avant](evidence/legacy-missions/browser/with-remote-auto-1440-before.png) | [Sauvegarde et choix](evidence/legacy-missions/browser/with-remote-auto-1440-review.png) | [Après](evidence/legacy-missions/browser/with-remote-auto-1440-after.png) |
+
+[Différences sur une même identité](evidence/legacy-missions/browser/collision-390-review.png) ; [opération en attente conservée](evidence/legacy-missions/browser/pending-320-review.png).
 
 Les 67 contrôles couvrent notamment l’état distant exact, les collections absentes ou vides, les collisions et leur présentation, le contenu de sauvegarde, les erreurs de stockage, l’annulation, les changements de compte, les courses pendant les attentes, le rejeu après rechargement, les refus atomiques, les issues inconnues, la conversion par un autre acteur et la conservation des autres modules. Deux régressions dédiées vérifient qu’un cache restauré sans tâche distante ne publie aucune suppression, et qu’une mission locale supprimée entre-temps ailleurs reste conservée avec un conflit sans republication automatique.
 
@@ -61,9 +71,16 @@ La génération exige un répertoire de sortie neuf et refuse d’écraser un ap
 
 ## Publication et limites de validation
 
-Publication statique isolée, SHA publié, CI, contrôles de fichiers HTTP et parcours hébergés : **À COMPLÉTER après vérification**.
+La première CI avait passé les 246 tests avant un refus de connexion au port de test 8898. Le commit `853b176` corrige uniquement ce port par défaut pour utiliser le serveur existant du workflow (8765) ; le client généré est inchangé. La CI finale passe intégralement.
 
-Aucune requête vers le Supabase personnel, écriture distante, migration, modification SQL, de schéma ou de permissions n’est réalisée dans cette mission. Les tests PostgreSQL sont locaux ; les tests navigateur doivent intercepter le transport et utiliser des comptes fictifs. La synchronisation hébergée avec les deux comptes familiaux réels reste à effectuer par l’utilisateur. Aucun résultat local ne la valide.
+Publication statique : [`36044e9ad69ceb56812d950efb3cefbdbc351728`](https://github.com/PortenartCo/dobby-demo/commit/36044e9ad69ceb56812d950efb3cefbdbc351728), uniquement 285 nouveaux fichiers sous `essai-dobby-runes-v2-legacy-review-20261112/`. `main` ne reçoit que ce sous-arbre statique ; aucune branche applicative n’est fusionnée. Le commit parent est `392e05de5408324bd895789a4e0b6e67cb90d03b`.
+
+- [Pages 43121878947](https://github.com/PortenartCo/dobby-demo/actions/runs/43121878947) : **PASS** ([preuve](evidence/legacy-missions/pages-final.json)).
+- [285/285 fichiers HTTP](evidence/legacy-missions/http-final.json) : HTTP 200 et octets identiques au paquet propre du SHA `853b176`, `sourceDirty=false`. Le [manifeste publié](https://portenartco.github.io/dobby-demo/essai-dobby-runes-v2-legacy-review-20261112/pilot-manifest.json) atteste ce SHA et les empreintes.
+- [23 entrées racines antérieures](evidence/legacy-missions/publication-scope.json) : identifiants Git strictement identiques. [19 pages d’entrée HTTP existantes](evidence/legacy-missions/existing-http-after.json) : octets inchangés avant/après, dont le pilote initial et E07.4.
+- [Parcours hébergés](evidence/legacy-missions/hosted-browser/browser-verification.json) : **8/8 PASS, 286 assertions**, avec [24 captures](evidence/legacy-missions/hosted-browser/). Même SHA `853b176`, même empreinte du client que PostgreSQL, aucune erreur JavaScript ni ressource HTTP 404. Toutes les requêtes Supabase sont interceptées avec des données fictives ; aucun compte réel n’est connecté.
+
+Aucune requête vers le Supabase personnel, écriture distante, migration, modification SQL, de schéma ou de permissions n’est réalisée dans cette mission. Les tests PostgreSQL sont locaux ; les tests navigateur interceptent le transport et utilisent des comptes fictifs. La synchronisation hébergée avec les deux comptes familiaux réels reste à effectuer par l’utilisateur. Aucun résultat local ne la valide.
 
 Les modules Cuisine/Courses et les autres modules, le client canonique et les anciennes publications sont hors changement. Aucune fusion applicative n’est prévue.
 

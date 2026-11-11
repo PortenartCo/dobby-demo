@@ -1,0 +1,19 @@
+ RUNES_PILOT_PROTECTED_APPLICATION_UNCHANGED 368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114
+ RUNES_PILOT_PROTECTED_APPLICATION_UNCHANGED 368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114
+ RUNES_PILOT_PROTECTED_APPLICATION_UNCHANGED 368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114
+ RUNES_PILOT_PROTECTED_APPLICATION_UNCHANGED 368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114
+ # RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-runes-pilot-build-H1Udg7/first
+ # RUNES_PILOT_BUILD 3ceb14bbf76c7534f6862a7cb1921c894ea3f325 281 files /tmp/dobby-runes-pilot-build-H1Udg7/second
+ # RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-legacy-build-DImiv7/legacy
+ # RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-legacy-build-DImiv7/again
+ # RUNES_PILOT_BUILD 0a8e1ed674bc4abdbfaca29435fa495b19b32df4 281 files /tmp/dobby-legacy-build-DImiv7/original
+ # pass 246
+ RUNES_PILOT_BUILD 853b1764b104b774b7dc145b2c4acb80c088194d 281 files /home/runner/work/dobby-demo/dobby-demo/essai-dobby-runes-v2-legacy-review-20261112
+ LEGACY_BROWSER_PASS without-remote-auto-320 35 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS with-remote-auto-320 35 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS without-remote-auto-390 35 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS with-remote-auto-390 35 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS without-remote-auto-1440 35 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS with-remote-auto-1440 35 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS collision-390 37 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/
+ LEGACY_BROWSER_PASS pending-320 39 http://127.0.0.1:8765/essai-dobby-runes-v2-legacy-review-20261112/

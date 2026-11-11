@@ -1,0 +1,122 @@
+{
+  "publicationCommit": "36044e9ad69ceb56812d950efb3cefbdbc351728",
+  "phase": "after-new-publication",
+  "previousIndexesUnchanged": 19,
+  "supabaseContacted": false,
+  "files": [
+    {
+      "path": "essai-dobby-e01-e06-review-20261111/index.html",
+      "httpStatus": 200,
+      "sha256": "46ffc2c9d8b78c76fb964a7a1b9240ce616b015c198d7f947429e6c7bbc1b440",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-e07-consolidation-review-20261111/index.html",
+      "httpStatus": 200,
+      "sha256": "b186d79eb1ffb75993c728341700b66a1159392526a2492fdb896fddfe9273f0",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-e07-review-20261111/index.html",
+      "httpStatus": 200,
+      "sha256": "b186d79eb1ffb75993c728341700b66a1159392526a2492fdb896fddfe9273f0",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-integrated-review/index.html",
+      "httpStatus": 200,
+      "sha256": "46ffc2c9d8b78c76fb964a7a1b9240ce616b015c198d7f947429e6c7bbc1b440",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-review/index.html",
+      "httpStatus": 200,
+      "sha256": "b186d79eb1ffb75993c728341700b66a1159392526a2492fdb896fddfe9273f0",
+      "unchanged": true
+    },
+    {
+      "path": "essai-dobby-runes-v2-pilot-20261111/index.html",
+      "httpStatus": 200,
+      "sha256": "0b419e254377f4b12da9dbbea8ffab9afca696e2915d691e27bea6a91ed05535",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e01-preview/index.html",
+      "httpStatus": 200,
+      "sha256": "da4a129db3c09c3e74fbcfb35c6574c036cb63de32a2750a30d4c4fd0cb9dd7b",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e02-preview/index.html",
+      "httpStatus": 200,
+      "sha256": "d4aa78d5bc9d786c3a19dbb0167d4197fabdd103e266b77a48bb291c241068f2",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v2/index.html",
+      "httpStatus": 200,
+      "sha256": "d104624e2c731ac29361d08164c0f5b5b4314699cf00f6fc549fdc30d8605af7",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v3/index.html",
+      "httpStatus": 200,
+      "sha256": "08846f1053cbb0daecf9982dcdc1d7211574be6d5b51fc521dcb0b9cc990e96b",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v4/index.html",
+      "httpStatus": 200,
+      "sha256": "adaa25a4554df8e6c5dc0419dcb1403ee3a9ebfb19b7b53f9a3734a063276f88",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "httpStatus": 200,
+      "sha256": "928a238cbe6fa5315e4877a9e93977a0e2c48d0c709365424e3ec30f5945af9f",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5/index.html",
+      "httpStatus": 200,
+      "sha256": "0c5b74bf255cc8f0e5a37d303bae6421b4d5a89597b1521afeb3523c731035bc",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch/index.html",
+      "httpStatus": 200,
+      "sha256": "cda54b4ab3a7160487e5eebc869f6f1e75369a1dd34348979f50949c773f07ac",
+      "unchanged": true
+    },
+    {
+      "path": "essai-sync-v1/index.html",
+      "httpStatus": 200,
+      "sha256": "17322e4ac239d2a4f47a4b647defb0806999ad4033080a2d4129a91601d5860b",
+      "unchanged": true
+    },
+    {
+      "path": "essai-sync-v2/index.html",
+      "httpStatus": 200,
+      "sha256": "ef7afa0d23f4eace6f672f535d02ee22d2fecd799fa34252021405524c49979e",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v6-preview/index.html",
+      "httpStatus": 200,
+      "sha256": "928a238cbe6fa5315e4877a9e93977a0e2c48d0c709365424e3ec30f5945af9f",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v7-preview/index.html",
+      "httpStatus": 200,
+      "sha256": "60646894829ec3634774f33196696a5d7d029cd44d4d933d89b75de260dee98a",
+      "unchanged": true
+    },
+    {
+      "path": "index.html",
+      "httpStatus": 200,
+      "sha256": "72de30105ed567c19be7f2b99dd81414c63fc7aa5110fdfdd71572f26f3cf6a6",
+      "unchanged": true
+    }
+  ]
+}
