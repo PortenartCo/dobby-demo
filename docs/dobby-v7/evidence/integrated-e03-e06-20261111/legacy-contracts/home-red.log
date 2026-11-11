@@ -1,0 +1,54 @@
+AssertionError [ERR_ASSERTION]: reopening preserves earned runes
++ actual - expected
+... Skipped lines
+
+  {
+    credits: [
+      {
+        amount: 25,
+        date: '2026-11-11T13:32:22.097Z',
+...
+      },
++     {
++       amount: 25,
++       cycle: 0,
++       date: '2026-11-11T13:32:22.911Z',
++       effort: 'regular',
++       eventId: 'review-manual~0~reversal',
++       kind: 'reversal',
++       memberId: 'review-member',
++       missionId: 'review-manual',
++       reverses: 'review-manual',
++       revision: 0,
++       title: 'TEST — Préparer la maison'
++     }
+    ],
+    requests: [
+      {
+        amount: 25,
+        date: '2026-11-11T13:32:22.097Z',
+...
+      },
++     {
++       amount: 25,
++       cycle: 0,
++       date: '2026-11-11T13:32:22.911Z',
++       effort: 'regular',
++       eventId: 'review-manual~0~reversal',
++       kind: 'reversal',
++       memberId: 'review-member',
++       missionId: 'review-manual',
++       reverses: 'review-manual',
++       title: 'TEST — Préparer la maison'
++     }
+    ]
+  }
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-home-20261111.cjs:63:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Object],
+  expected: [Object],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+3 !== 1
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-recurrence-20261111.cjs:3:2576 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 3,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

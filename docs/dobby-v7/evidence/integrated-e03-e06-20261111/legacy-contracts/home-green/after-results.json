@@ -1,0 +1,318 @@
+{
+  "phase": "after",
+  "observations": [
+    {
+      "width": 320,
+      "manualReopen": "PASS including reload/E03",
+      "runes": "25 / 0 / 25, append-only gain/reversal/gain, replay idempotent",
+      "basket": "same native basket, persisted, duplicate avoided, visible in E07",
+      "automatic": [
+        {
+          "id": "review-orphan",
+          "role": null,
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nTEST — Source supprimée\n\nAncienne fiche · Fiche source indisponible. Réouverture indisponible depuis l’accueil.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "equipment:review-equipment:2026-11-25",
+          "href": "./famille.html#equipment?record=review-equipment",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nPlanifier l’entretien : TEST — Chaudière\n\nTEST — Chaudière · Terminée. Réouverture indisponible depuis l’accueil. Voir l’équipement source\n\ncheck",
+          "links": [
+            {
+              "href": "./famille.html#equipment?record=review-equipment",
+              "text": "Voir l’équipement source"
+            }
+          ]
+        },
+        {
+          "id": "document:review-document:2026-12-11",
+          "href": "./famille.html#document?record=review-document",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nVérifier l’échéance : TEST — Contrat\n\nTEST — Contrat · Terminée. Réouverture indisponible depuis l’accueil. Voir le document source\n\ncheck",
+          "links": [
+            {
+              "href": "./famille.html#document?record=review-document",
+              "text": "Voir le document source"
+            }
+          ]
+        }
+      ],
+      "bands": {
+        "meal": {
+          "band": true,
+          "icon": "skillet",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 70,
+          "cardWidth": 296
+        },
+        "quick": {
+          "band": true,
+          "icon": "shopping_basket",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 83,
+          "cardWidth": 296
+        },
+        "gazette": {
+          "band": true,
+          "icon": "auto_stories",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 83,
+          "cardWidth": 296
+        },
+        "width": 320
+      }
+    },
+    {
+      "width": 390,
+      "manualReopen": "PASS including reload/E03",
+      "runes": "25 / 0 / 25, append-only gain/reversal/gain, replay idempotent",
+      "basket": "same native basket, persisted, duplicate avoided, visible in E07",
+      "automatic": [
+        {
+          "id": "review-orphan",
+          "role": null,
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nTEST — Source supprimée\n\nAncienne fiche · Fiche source indisponible. Réouverture indisponible depuis l’accueil.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "equipment:review-equipment:2026-11-25",
+          "href": "./famille.html#equipment?record=review-equipment",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nPlanifier l’entretien : TEST — Chaudière\n\nTEST — Chaudière · Terminée. Réouverture indisponible depuis l’accueil. Voir l’équipement source\n\ncheck",
+          "links": [
+            {
+              "href": "./famille.html#equipment?record=review-equipment",
+              "text": "Voir l’équipement source"
+            }
+          ]
+        },
+        {
+          "id": "document:review-document:2026-12-11",
+          "href": "./famille.html#document?record=review-document",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nVérifier l’échéance : TEST — Contrat\n\nTEST — Contrat · Terminée. Réouverture indisponible depuis l’accueil. Voir le document source\n\ncheck",
+          "links": [
+            {
+              "href": "./famille.html#document?record=review-document",
+              "text": "Voir le document source"
+            }
+          ]
+        }
+      ],
+      "bands": {
+        "meal": {
+          "band": true,
+          "icon": "skillet",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 366
+        },
+        "quick": {
+          "band": true,
+          "icon": "shopping_basket",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 366
+        },
+        "gazette": {
+          "band": true,
+          "icon": "auto_stories",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 83,
+          "cardWidth": 366
+        },
+        "width": 390
+      }
+    },
+    {
+      "width": 1440,
+      "manualReopen": "PASS including reload/E03",
+      "runes": "25 / 0 / 25, append-only gain/reversal/gain, replay idempotent",
+      "basket": "same native basket, persisted, duplicate avoided, visible in E07",
+      "automatic": [
+        {
+          "id": "review-orphan",
+          "role": null,
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nTEST — Source supprimée\n\nAncienne fiche · Fiche source indisponible. Réouverture indisponible depuis l’accueil.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "equipment:review-equipment:2026-11-25",
+          "href": "./famille.html#equipment?record=review-equipment",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nPlanifier l’entretien : TEST — Chaudière\n\nTEST — Chaudière · Terminée. Réouverture indisponible depuis l’accueil. Voir l’équipement source\n\ncheck",
+          "links": [
+            {
+              "href": "./famille.html#equipment?record=review-equipment",
+              "text": "Voir l’équipement source"
+            }
+          ]
+        },
+        {
+          "id": "document:review-document:2026-12-11",
+          "href": "./famille.html#document?record=review-document",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nVérifier l’échéance : TEST — Contrat\n\nTEST — Contrat · Terminée. Réouverture indisponible depuis l’accueil. Voir le document source\n\ncheck",
+          "links": [
+            {
+              "href": "./famille.html#document?record=review-document",
+              "text": "Voir le document source"
+            }
+          ]
+        }
+      ],
+      "bands": {
+        "meal": {
+          "band": true,
+          "icon": "skillet",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 456
+        },
+        "quick": {
+          "band": true,
+          "icon": "shopping_basket",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 456
+        },
+        "gazette": {
+          "band": true,
+          "icon": "auto_stories",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 456
+        },
+        "width": 1440
+      }
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,35 @@
+{
+  "width": 320,
+  "buttons": [
+    {
+      "x": 16,
+      "y": 549,
+      "width": 140,
+      "height": 44
+    },
+    {
+      "x": 164,
+      "y": 549,
+      "width": 140,
+      "height": 44
+    },
+    {
+      "x": 16,
+      "y": 601,
+      "width": 140,
+      "height": 44
+    },
+    {
+      "x": 164,
+      "y": 601,
+      "width": 140,
+      "height": 44
+    }
+  ],
+  "ctaBottom": 373,
+  "cardTop": 729.890625,
+  "periodHeight": 123.5,
+  "navTop": 819,
+  "header": 68,
+  "nav": 81
+}

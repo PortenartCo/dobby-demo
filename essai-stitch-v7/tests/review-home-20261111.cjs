@@ -4,11 +4,12 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8891';
 const phase=process.env.DOBBY_REVIEW_BASELINE?'before':'after';
-const out=path.resolve(__dirname,'../../docs/dobby-v7/evidence/review-e01-e05/home');
+const out=process.env.DOBBY_REVIEW_HOME_EVIDENCE||path.resolve(__dirname,'../../docs/dobby-v7/evidence/review-e01-e05/home');
 const observations=[],failures=[];
 const verify=(condition,label)=>{if(!condition)failures.push(label);};
 const baselineSources=process.env.DOBBY_REVIEW_BASELINE_REF?Object.fromEntries(['home.js','home-consolidation.css'].map(file=>[file,require('node:child_process').execFileSync('git',['show',process.env.DOBBY_REVIEW_BASELINE_REF+':essai-stitch-v7/'+file],{cwd:path.resolve(__dirname,'../..'),encoding:'utf8'})])):null;
 (async()=>{
+ const {activeCredits}=await import('../../essai-stitch-v5-famille/family-runes-core.mjs');
  fs.mkdirSync(out,{recursive:true});
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
  try{for(const width of [320,390,1440]){
@@ -60,19 +61,21 @@ const baselineSources=process.env.DOBBY_REVIEW_BASELINE_REF?Object.fromEntries([
   assert.equal(await manual().locator('h3').evaluate(e=>e.classList.contains('line-through')),false);
   assert.match(await manual().innerText(),/À faire/i);
   assert.match(await page.locator('[data-e01-count]').innerText(),/1 actives · 3 terminées/);
-  assert.deepEqual(await native('return {credits:st.runeCredits,requests:st.runeRequests};'),ledger,'reopening preserves earned runes');
-  await page.reload();await ready();assert.equal(await check().getAttribute('aria-pressed'),'false');
+  // Spec §5 requires an auditable cancellation, preserving the V1 grant itself.
+  const reopened=await native('return {credits:st.runeCredits,requests:st.runeRequests};');assert.equal(reopened.credits.length,2);assert.equal(reopened.requests.length,2);assert.deepEqual(reopened.credits.find(row=>!row.eventId),ledger.credits[0]);assert.equal(activeCredits(reopened.credits).length,0);assert.equal(await native('return DobbyFamilyMissions.summary("review-member").total;'),0);
+  const reversal=reopened.credits.find(row=>row.kind==='reversal');assert.equal(reversal.eventId,'review-manual~0~reversal');assert.equal(reversal.reverses,'review-manual');assert.equal(reversal.amount,25);assert.equal(reversal.memberId,'review-member');
+  await page.reload();await ready();assert.equal(await check().getAttribute('aria-pressed'),'false');assert.deepEqual(await native('return {credits:st.runeCredits,requests:st.runeRequests};'),reopened,'reload does not duplicate the cancellation');
   assert.equal(await native('return JSON.parse(localStorage.getItem(key)).manualMissions[0].status;'),'open');
-  await page.goto(origin+'/essai-stitch-v7/missions.html');await ready();
+  await page.goto(origin+'/essai-stitch-v7/missions.html');await ready();await page.locator('[data-e03-period]').selectOption('all');
   assert.equal(await page.locator('[data-e03-card="review-manual"]').count(),1,'E03 sees reopened task');
   await page.locator('[data-e03-status=done]').click();assert.equal(await page.locator('[data-e03-card="review-manual"]').count(),0);
   assert.equal(await page.locator('[data-e03-card][data-e03-kind=auto]').count(),3);
   await home();await check().click();
   assert.equal(await check().getAttribute('aria-pressed'),'true');
-  assert.deepEqual(await native('return {credits:st.runeCredits,requests:st.runeRequests};'),ledger,'second completion cannot reward twice');
+  const recompleted=await native('return {credits:st.runeCredits,requests:st.runeRequests};');assert.equal(recompleted.credits.length,3);assert.equal(recompleted.requests.length,3);for(const row of reopened.credits)assert.deepEqual(recompleted.credits.find(candidate=>(candidate.eventId||candidate.missionId)===(row.eventId||row.missionId)),row);assert.equal(activeCredits(recompleted.credits).length,1);assert.equal(activeCredits(recompleted.credits)[0].eventId,'review-manual~1~grant');assert.equal(await native('return DobbyFamilyMissions.summary("review-member").total;'),25,'second completion restores one reward');
   await page.reload();await ready();assert.equal(await check().getAttribute('aria-pressed'),'true');
-  assert.deepEqual(await native('return {credits:st.runeCredits,requests:st.runeRequests};'),ledger);
-  await page.goto(origin+'/essai-stitch-v7/missions.html');await ready();await page.locator('[data-e03-status=done]').click();
+  assert.deepEqual(await native('return {credits:st.runeCredits,requests:st.runeRequests};'),recompleted,'reload/replay leaves the complete history unchanged');
+  await page.goto(origin+'/essai-stitch-v7/missions.html');await ready();await page.locator('[data-e03-period]').selectOption('all');await page.locator('[data-e03-status=done]').click();
   assert.equal(await page.locator('[data-e03-card="review-manual"]').count(),1,'E03 sees recompleted task');
   await home();
   if(phase==='after')for(const id of ['review-equipment','review-document']){
@@ -91,7 +94,7 @@ const baselineSources=process.env.DOBBY_REVIEW_BASELINE_REF?Object.fromEntries([
   assert.equal(await native('return st.shopFinal.id;'),'review-basket','quick add preserves the existing basket');
   await page.locator('[data-e01-quick-open]').click();await page.waitForURL(/index.html#shop/);await ready();
   assert.match(await page.locator('main').innerText(),/TEST — Pain gris/);
-  assert.deepEqual(errors,[]);observations.push({width,manualReopen:'PASS including reload/E03',runes:'25 once including recompletion/reload',basket:'same native basket, persisted, duplicate avoided, visible in E07',automatic,bands});
+  assert.deepEqual(errors,[]);observations.push({width,manualReopen:'PASS including reload/E03',runes:'25 / 0 / 25, append-only gain/reversal/gain, replay idempotent',basket:'same native basket, persisted, duplicate avoided, visible in E07',automatic,bands});
   await context.close();console.log('REVIEW_HOME_'+phase.toUpperCase(),width,'native manual reopening/recompletion/runes/E03/basket PASS');
  }}finally{await browser.close();fs.writeFileSync(path.join(out,`${phase}-results.json`),JSON.stringify({phase,observations,failures},null,2)+'\n');}
  assert.deepEqual(failures,[],`${phase}: source access and common Courses header`);

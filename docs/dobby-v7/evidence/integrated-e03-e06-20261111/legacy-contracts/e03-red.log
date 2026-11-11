@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+4 !== 7
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/e03.cjs:14:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 4,
+  expected: 7,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
