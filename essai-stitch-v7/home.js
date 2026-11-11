@@ -14,12 +14,15 @@ function quickCourses(){
  let block=document.querySelector('[data-e01-quick]');if(!block){block=document.createElement('section');block.dataset.e01Quick='true';block.className='px-gutter-mobile py-space-md';document.querySelector('[data-e01-meals]').after(block);}
  const model=window.DobbyCuisineList,engine=window.DobbyCuisineEngine;let state;
  try{state=model.snapshot(engine);}catch(error){block.replaceChildren(message(error.message));return;}
- const card=document.createElement('div');card.className='e01-quick-card';const heading=document.createElement('h2');heading.textContent='Les Courses du Foyer';
- const status=message(state.shared?'Foyer · '+state.status:state.status);status.dataset.e01QuickStatus='true';
+ const card=document.createElement('div');card.className='e01-quick-card bg-surface-container-high rounded-2xl overflow-hidden border border-amber-900/40 shadow-lg';
+ // The same icon/title/badge band as Repas and Gazette, with their native styles.
+ const header=originals.meal.firstElementChild.firstElementChild.cloneNode(true);header.className='bg-surface-container-highest/80 px-space-md py-3 flex flex-wrap items-center justify-between gap-2 border-b border-amber-900/30';header.dataset.e01QuickHeader='true';header.querySelector('h2').textContent='Les Courses du Foyer';header.querySelector('.material-symbols-outlined').textContent='shopping_basket';header.querySelector('.material-symbols-outlined').setAttribute('aria-hidden','true');
+ const status=header.lastElementChild;status.textContent=state.shared?'Foyer · '+state.status:state.status;status.dataset.e01QuickStatus='true';
+ const body=document.createElement('div');body.className='p-space-md';
  const form=document.createElement('form');form.dataset.e01QuickForm='true';const label=document.createElement('label');label.htmlFor='e01-quick-course';label.textContent='Ajouter un article';const input=document.createElement('input');input.id='e01-quick-course';input.dataset.e01QuickInput='true';input.type='text';input.maxLength=200;input.required=true;input.placeholder='Ex. : pain, savon…';input.value=quickDraft;input.disabled=quickBusy;input.oninput=()=>{quickDraft=input.value;};const button=document.createElement('button');button.type='submit';button.dataset.e01QuickAdd='true';button.textContent=quickBusy?'Ajout en cours…':'Ajouter';button.disabled=quickBusy;
  const fields=document.createElement('div');fields.className='e01-quick-fields';fields.append(input,button);form.append(label,fields);
  const notice=message(quickNotice||'Un seul panier : vos articles restent dans la liste complète des courses.');notice.dataset.e01QuickNotice='true';notice.setAttribute('role','status');notice.setAttribute('aria-live','polite');
- const open=document.createElement('a');open.href='./index.html#shop';open.dataset.e01QuickOpen='true';open.textContent='Voir la liste complète';card.append(heading,status,form,notice,open);block.replaceChildren(card);
+ const open=document.createElement('a');open.href='./index.html#shop';open.dataset.e01QuickOpen='true';open.textContent='Voir la liste complète';body.append(form,notice,open);card.append(header,body);block.replaceChildren(card);
 }
 async function addQuick(){
  if(quickBusy)return;const input=document.querySelector('[data-e01-quick-input]');if(!input?.reportValidity())return;quickDraft=input.value;const name=quickDraft.trim();if(!name){input.setCustomValidity('Indiquez un article.');input.reportValidity();input.setCustomValidity('');return;}
@@ -49,9 +52,23 @@ const h=card.querySelector('h3');h.textContent=task.title;h.classList.toggle('li
 const tag=card.querySelector('.font-label-sm');tag.textContent=task.done?'Terminée':'À faire';
 const by=tag.nextElementSibling;by.textContent=task.manual?'• '+(data.familyMembers.find(m=>m.id===task.assigneeId)?.name||'Non attribuée'):'• Automatique';
 card.querySelector('p').textContent=task.manual?(task.note||task.category||'Mission du foyer'):(task.sourceLabel||'Échéance automatique');
-const check=card.querySelector('button');check.dataset.e01Complete=task.manual?task.id:task.key;check.dataset.e01Kind=card.dataset.e01Kind;check.disabled=task.done&&!task.manual;check.setAttribute('aria-pressed',String(task.done));check.setAttribute('aria-label',task.done?(task.manual?'Rouvrir '+task.title:'Mission automatique terminée — consulter sa source'):'Terminer '+task.title);check.querySelector('span').textContent=task.done?'check':'radio_button_unchecked';if(task.done&&!task.manual){card.querySelector('p').textContent=(task.sourceLabel||'Échéance automatique')+' · Terminée. Le suivi et toute réouverture dépendent de la fiche source.';check.title='Consultez la fiche source pour son suivi.';}
+const check=card.querySelector('button');check.type='button';check.dataset.e01Complete=task.manual?task.id:task.key;check.dataset.e01Kind=card.dataset.e01Kind;check.disabled=task.done&&!task.manual;check.setAttribute('aria-pressed',String(task.done));check.setAttribute('aria-label',task.done?(task.manual?'Rouvrir '+task.title:'Mission automatique terminée — consulter sa source'):'Terminer '+task.title);check.title=check.getAttribute('aria-label');check.querySelector('span').textContent=task.done?'check':'radio_button_unchecked';
 if(task.manual)card.dataset.e01Href='./famille.html#mission-edit?record='+encodeURIComponent(task.id);
-else card.dataset.e01Href='./famille.html#'+(task.origin==='equipment'?'equipment':'document')+'?record='+encodeURIComponent(task.originId);
+else{
+ const source=task.origin==='equipment'?(data.houseItems||[]).find(x=>x.id===task.originId):task.origin==='document'?(data.familyDocs||[]).find(x=>x.id===task.originId):null;
+ const description=card.querySelector('p');
+ if(source){
+  card.dataset.e01Href='./famille.html#'+task.origin+'?record='+encodeURIComponent(task.originId);
+  if(task.done){
+   description.textContent=(task.sourceLabel||'Échéance automatique')+' · Terminée. Réouverture indisponible depuis l’accueil. ';
+   const link=document.createElement('a');link.href=card.dataset.e01Href;link.dataset.e01Source='true';link.textContent=task.origin==='equipment'?'Voir l’équipement source':'Voir le document source';description.append(link);
+   check.title='Réouverture indisponible depuis l’accueil. Consultez la fiche source pour son suivi.';
+  }
+ }else{
+  card.removeAttribute('data-e01-href');card.removeAttribute('role');card.removeAttribute('tabindex');
+  description.textContent=(task.sourceLabel||'Échéance automatique')+' · Fiche source indisponible.'+(task.done?' Réouverture indisponible depuis l’accueil.':'');
+ }
+}
 list.append(card);}
 if(!rows.length)list.append(empty('Aucune mission pour cette journée.','Les missions prévues pour cette date apparaîtront ici.'));
 // Keep the source header, controls and rows inside one Stitch card, like the Festin.

@@ -1,0 +1,54 @@
+{
+  "name": "DOBBY revue E01-E05 2026-11-11",
+  "files": [
+    {
+      "file": "E01-01_missions_terminees_reouverture.png",
+      "source": "image(20261111-093532).png",
+      "sha256": "dfe224a57c6302c7745bf2ab2c556ad6205c8f38607d64987501a90498ed33a1",
+      "bytes": 36329,
+      "observation": "E01 - Deux missions terminees; case de validation non reversible, en particulier une mission automatique."
+    },
+    {
+      "file": "E01-02_courses_bandeau_accueil.png",
+      "source": "image(20261111-093601).png",
+      "sha256": "a80df2eef956b983aaeb59c32c6d6e15841f8d2df371d37a055e4724938cae5e",
+      "bytes": 69242,
+      "observation": "E01 - Courses du Foyer n a pas le meme bandeau que Les Repas du Jour et Gazette des Curiosites."
+    },
+    {
+      "file": "E02-01_dictation_conversation_contextuelle.png",
+      "source": "image(20261111-093750).png",
+      "sha256": "13ac5914da37b7dbd52cce82615c062073ed2eac24d1a020f93262803eec5c31",
+      "bytes": 273830,
+      "observation": "E02 - Dobby ajoute pain puis ne comprend pas une correction en pain gris; la dictee requiert Envoyer."
+    },
+    {
+      "file": "E04-01_recurrence_desactivee.png",
+      "source": "image(20261111-094447).png",
+      "sha256": "3a47eddabbc92b9bb69d7e8de21834891131af62f5fa13b5b28a268cc09dc0b3",
+      "bytes": 18405,
+      "observation": "E04 - Quotidien, Hebdomadaire et Mensuel desactives; fonctionnalite non livree."
+    },
+    {
+      "file": "E04-02_date_affichage_ecrase.png",
+      "source": "image(20261111-094536).png",
+      "sha256": "864816ca48d93a426720ce54c859e11ca9dae76610dc24c9e9f39890684fbc3d",
+      "bytes": 12433,
+      "observation": "E04 - Champ Echeance de completion: date et libelle peu lisibles / ecrases."
+    },
+    {
+      "file": "E05-01_profil_maison_blason_manquant.png",
+      "source": "image(20261111-094914).png",
+      "sha256": "2ee97fd17db9e37ed6447cb70449b0cbcca8386fab88df1cb1bcbb775bbe7210",
+      "bytes": 112255,
+      "observation": "E05/E06 - Blason absent dans Ma Maison. Confier au correctif E06 deja prepare pour eviter les modifications concurrentes."
+    },
+    {
+      "file": "E05-02_avatar_selection_liste_deroulante.png",
+      "source": "image(20261111-095756).png",
+      "sha256": "cb3c94226109921f420b9ed6b271f7cbbb8d1b988a85b6fc7e25e35482ff2e95",
+      "bytes": 132538,
+      "observation": "E05 - Les 8 portraits sont visibles mais non cliquables; liste deroulante contraignante. Souhait: 24 portraits diversifies, selection directe."
+    }
+  ]
+}

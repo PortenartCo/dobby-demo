@@ -1,0 +1,304 @@
+{
+  "phase": "before",
+  "observations": [
+    {
+      "width": 320,
+      "manualReopen": "PASS including reload/E03",
+      "runes": "25 once including recompletion/reload",
+      "basket": "same native basket, persisted, duplicate avoided, visible in E07",
+      "automatic": [
+        {
+          "id": "review-orphan",
+          "href": "./famille.html#equipment?record=removed",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nTEST — Source supprimée\n\nAncienne fiche · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "equipment:review-equipment:2026-11-25",
+          "href": "./famille.html#equipment?record=review-equipment",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nPlanifier l’entretien : TEST — Chaudière\n\nTEST — Chaudière · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "document:review-document:2026-12-11",
+          "href": "./famille.html#document?record=review-document",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nVérifier l’échéance : TEST — Contrat\n\nTEST — Contrat · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        }
+      ],
+      "bands": {
+        "meal": {
+          "band": true,
+          "icon": "skillet",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 70,
+          "cardWidth": 296
+        },
+        "quick": {
+          "band": false,
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px solid rgb(229, 231, 235)",
+          "padding": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "font": null,
+          "headerHeight": 23.390625,
+          "cardWidth": 296
+        },
+        "gazette": {
+          "band": true,
+          "icon": "auto_stories",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 83,
+          "cardWidth": 296
+        },
+        "width": 320
+      }
+    },
+    {
+      "width": 390,
+      "manualReopen": "PASS including reload/E03",
+      "runes": "25 once including recompletion/reload",
+      "basket": "same native basket, persisted, duplicate avoided, visible in E07",
+      "automatic": [
+        {
+          "id": "review-orphan",
+          "href": "./famille.html#equipment?record=removed",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nTEST — Source supprimée\n\nAncienne fiche · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "equipment:review-equipment:2026-11-25",
+          "href": "./famille.html#equipment?record=review-equipment",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nPlanifier l’entretien : TEST — Chaudière\n\nTEST — Chaudière · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "document:review-document:2026-12-11",
+          "href": "./famille.html#document?record=review-document",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nVérifier l’échéance : TEST — Contrat\n\nTEST — Contrat · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        }
+      ],
+      "bands": {
+        "meal": {
+          "band": true,
+          "icon": "skillet",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 366
+        },
+        "quick": {
+          "band": false,
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px solid rgb(229, 231, 235)",
+          "padding": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "font": null,
+          "headerHeight": 23.390625,
+          "cardWidth": 366
+        },
+        "gazette": {
+          "band": true,
+          "icon": "auto_stories",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 83,
+          "cardWidth": 366
+        },
+        "width": 390
+      }
+    },
+    {
+      "width": 1440,
+      "manualReopen": "PASS including reload/E03",
+      "runes": "25 once including recompletion/reload",
+      "basket": "same native basket, persisted, duplicate avoided, visible in E07",
+      "automatic": [
+        {
+          "id": "review-orphan",
+          "href": "./famille.html#equipment?record=removed",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nTEST — Source supprimée\n\nAncienne fiche · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "equipment:review-equipment:2026-11-25",
+          "href": "./famille.html#equipment?record=review-equipment",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nPlanifier l’entretien : TEST — Chaudière\n\nTEST — Chaudière · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        },
+        {
+          "id": "document:review-document:2026-12-11",
+          "href": "./famille.html#document?record=review-document",
+          "role": "link",
+          "disabled": true,
+          "text": "restaurant\nTERMINÉE\n• Automatique\nVérifier l’échéance : TEST — Contrat\n\nTEST — Contrat · Terminée. Le suivi et toute réouverture dépendent de la fiche source.\n\ncheck",
+          "links": []
+        }
+      ],
+      "bands": {
+        "meal": {
+          "band": true,
+          "icon": "skillet",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 456
+        },
+        "quick": {
+          "band": false,
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px solid rgb(229, 231, 235)",
+          "padding": [
+            "0px",
+            "0px",
+            "0px",
+            "0px"
+          ],
+          "font": null,
+          "headerHeight": 23.390625,
+          "cardWidth": 456
+        },
+        "gazette": {
+          "band": true,
+          "icon": "auto_stories",
+          "background": "rgba(67, 48, 44, 0.8)",
+          "border": "1px solid rgba(120, 53, 15, 0.3)",
+          "padding": [
+            "12px",
+            "16px",
+            "12px",
+            "16px"
+          ],
+          "font": [
+            "\"Playfair Display\"",
+            "18px",
+            "600",
+            "22.5px"
+          ],
+          "headerHeight": 51,
+          "cardWidth": 456
+        },
+        "width": 1440
+      }
+    }
+  ],
+  "failures": [
+    "320: automatic review-equipment has explicit source access",
+    "320: automatic task explains why reopening is unavailable",
+    "320: automatic review-document has explicit source access",
+    "320: automatic task explains why reopening is unavailable",
+    "320: removed source is read-only without a broken route",
+    "320: Courses has a common header band and its icon",
+    "320: Courses background matches Repas/Gazette",
+    "320: Courses border matches Repas/Gazette",
+    "320: Courses padding matches Repas/Gazette",
+    "320: Courses font matches Repas/Gazette",
+    "390: automatic review-equipment has explicit source access",
+    "390: automatic task explains why reopening is unavailable",
+    "390: automatic review-document has explicit source access",
+    "390: automatic task explains why reopening is unavailable",
+    "390: removed source is read-only without a broken route",
+    "390: Courses has a common header band and its icon",
+    "390: Courses background matches Repas/Gazette",
+    "390: Courses border matches Repas/Gazette",
+    "390: Courses padding matches Repas/Gazette",
+    "390: Courses font matches Repas/Gazette",
+    "1440: automatic review-equipment has explicit source access",
+    "1440: automatic task explains why reopening is unavailable",
+    "1440: automatic review-document has explicit source access",
+    "1440: automatic task explains why reopening is unavailable",
+    "1440: removed source is read-only without a broken route",
+    "1440: Courses has a common header band and its icon",
+    "1440: Courses background matches Repas/Gazette",
+    "1440: Courses border matches Repas/Gazette",
+    "1440: Courses padding matches Repas/Gazette",
+    "1440: Courses font matches Repas/Gazette"
+  ]
+}
