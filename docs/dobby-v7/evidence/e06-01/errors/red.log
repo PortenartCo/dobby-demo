@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Rejected intro metadata must close Ritual audio before retry: ["running"]
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-ritual-errors.cjs:20:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

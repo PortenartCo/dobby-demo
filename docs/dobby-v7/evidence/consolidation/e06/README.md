@@ -1,3 +1,5 @@
+> Actualisation ciblée E06-01 : le Rituel est désormais intégré depuis les sources reçues. Voir [rapport E06-01](../../../E06-01-RITUEL.md). Le bilan ci-dessous décrit le checkpoint de consolidation antérieur ; les autres arbitrages restent inchangés.
+
 # E06 — Consolidation de revue
 
 Le parcours conserve le routeur Famille, le writer canonique des membres, les brouillons natifs et le barème E06. Aucun service de compte ou de foyer n'est créé. Le mode fictif est réservé à l'enveloppe isolée `DobbyReview` du générateur de revue.

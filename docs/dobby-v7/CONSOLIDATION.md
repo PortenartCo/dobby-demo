@@ -1,3 +1,5 @@
+> Actualisation ciblée E06-01 : le Rituel est désormais intégré depuis les sources reçues. Voir [rapport E06-01](E06-01-RITUEL.md). Le bilan ci-dessous décrit le checkpoint de consolidation antérieur ; les autres arbitrages restent inchangés.
+
 # Consolidation E01–E08 — livraison pour revue
 
 Départ : `a84f67acf8f5cbfd59475c2137ec70e1a20732f7`, branche `feat/dobby-e01-e08-review-integration`. La [demande complète](CONSOLIDATION-SPEC.md), le [registre utilisateur inchangé](REVIEW-CONSOLIDATION.md), la [matrice avant/après](CONSOLIDATION-MATRIX.md) et les [dépendances bloquées](CONSOLIDATION-BLOCKERS.md) restent distincts.

@@ -1,7 +1,7 @@
 {
   "sourceCommit": "a84f67acf8f5cbfd59475c2137ec70e1a20732f7",
   "sourcePath": "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
-  "sourceSha256": "459d4b0608bc5f0b98d4c8625f055b7653a1f616549849bd50ed877f03234de4",
+  "sourceSha256": "92fe405fd9651be0e8038831655c4a3a873bdf807f789ffaff098cd6d7d87538",
   "gate0": "PASS — audit indépendant 95/95,41IDs ; mappings E03/E08/limites précisés avantcode",
   "rows": [
     {
@@ -1091,19 +1091,21 @@
     {
       "id": "E06-01",
       "sourceLine": 110,
-      "sourceText": "| E06-01 | L'entrée « Rituel de la Cheminée » (Cheminette) manque avant « Mon foyer magique ». | Une archive Stitch supplémentaire a été fournie pendant la revue. Importer/identifier ses HTML et animations, vérifier les médias externes, restituer le rituel/transition, « Traverser la cheminée », possibilité de passer et préférence « Ne plus afficher ». | À DÉVELOPPER |",
+      "sourceText": "| E06-01 | L'entrée « Rituel de la Cheminée » (Cheminette) manque avant « Mon foyer magique ». | Une archive Stitch supplémentaire a été fournie pendant la revue. Importer/identifier ses HTML et animations, vérifier les médias externes, restituer le rituel/transition, « Traverser la cheminée », possibilité de passer et préférence « Ne plus afficher ». | CORRIGÉ — HTML Stitch reçu, traversée réelle, passage et préférence locale réversible ; tests ciblés PASS 320/390/1440. Revue visuelle utilisateur attendue. |",
       "demande": "| E06-01 | L'entrée « Rituel de la Cheminée » (Cheminette) manque avant « Mon foyer magique ». | Une archive Stitch supplémentaire a été fournie pendant la revue. Importer/identifier ses HTML et animations, vérifier les médias externes, restituer le rituel/transition, « Traverser la cheminée », possibilité de passer et préférence « Ne plus afficher ». | À DÉVELOPPER |",
       "initial": "À développer / source absente",
-      "code": "onboarding-routes.json; assets/onboarding/provenance.json; archives workspace",
-      "action": "Archive (9) absente et aucun HTML Rituel trouvé ; ne pas fabriquer une source prétendument originale ni séquence validée",
-      "verification": "Inventaire des ZIP et recherche de Traverser/Ne plus afficher ; fichier source requis",
-      "final": "BLOQUÉ",
+      "code": "build-onboarding.cjs; onboarding.js; ritual.js/css; ritual-effects.js; magic-profile.js (entrée/paramètres seulement); scripts/review/integrated-config.js",
+      "action": "Source Stitch reçue conservée avec empreintes. Huitième composition dérivée ; particules/audio originaux adaptés à la durée de vie et aux préférences. Traversée 2500 ms puis vraie route Foyer, passage immédiat ; préférence seen/suppressed dans metadata native locale, réactivation/relecture dans Foyer et paramètres du profil. Aucun reset du moteur ni des réponses. Illustration centrale originale adaptée avec provenance, distincte du média Stitch inexploitable.",
+      "verification": "Tests ciblés et parcours E06 natif conservé à 320/390/1440 ; décodage/visibilité de l’image, navigation après animation, passage, persistance/relecture/réactivation, membre configuré, conservation réponses, Son OFF/ON, réduction et nettoyage callbacks ; preuves exactes et recette publiée dans E06-01-RITUEL.md.",
+      "final": "VÉRIFIÉ",
       "preuves": [
-        "docs/dobby-v7/CONSOLIDATION.md",
-        "docs/dobby-v7/evidence/consolidation/INDEPENDENT-REVIEW.md",
-        "docs/dobby-v7/evidence/consolidation/e06/README.md",
-        "docs/dobby-v7/CONSOLIDATION-BLOCKERS.md",
-        "docs/dobby-v7/REVIEW-CONSOLIDATION.md"
+        "docs/dobby-v7/E06-01-RITUEL.md",
+        "docs/dobby-v7/evidence/e06-01/after/results-320.json",
+        "docs/dobby-v7/evidence/e06-01/after/results-390.json",
+        "docs/dobby-v7/evidence/e06-01/after/results-1440.json",
+        "docs/dobby-v7/evidence/e06-01/regression.log",
+        "design/e06/references/stitch/dobby_le_rituel_de_la_chemin_e/received-provenance.json",
+        "essai-stitch-v7/assets/onboarding/ritual-hearth-original.provenance.json"
       ]
     },
     {
@@ -1773,11 +1775,10 @@
     }
   ],
   "finalSummary": {
-    "verifiedIDs": 32,
+    "verifiedIDs": 33,
     "blockedIDs": [
       "E04-02",
       "E05-01",
-      "E06-01",
       "E06-04"
     ],
     "deferredIDs": [
@@ -1788,11 +1789,21 @@
       "E07-09"
     ],
     "allRowsByState": {
-      "VÉRIFIÉ": 81,
-      "BLOQUÉ": 5,
+      "VÉRIFIÉ": 82,
+      "BLOQUÉ": 4,
       "REPORTÉ — AUTORISÉ": 9
     },
     "globalDone": false,
-    "note": "Corrections réalisables vérifiées ; quatre IDs courants comportent une dépendance bloquée, dont grand blason E06-04 seulement. E07-10 = respect de revue ouverte, pas validation UX. Les RC de règles et références certifient leur respect/conservation, jamais une acceptation utilisateur."
-  }
+    "note": "E06-01 corrigé par mission distincte depuis a61a140 ; aucun autre arbitrage modifié. Trois IDs restent bloqués, dont grand blason E06-04 seulement ; cinq reports autorisés. Aucune validation UX humaine implicite."
+  },
+  "updates": [
+    {
+      "mission": "E06-01",
+      "base": "a61a140e94b81893ad5b3cc4624ff4d6796c3ff7",
+      "changedRegistryIDs": [
+        "E06-01"
+      ],
+      "source": "docs/dobby-v7/E06-01-SPEC.md"
+    }
+  ]
 }

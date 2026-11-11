@@ -40,6 +40,8 @@ jobs:
           node --check essai-stitch-v7/bridge.js
           node --check essai-stitch-v7/chrome.js
           node --check essai-stitch-v7/home.js
+          node --check essai-stitch-v7/ritual.js
+          node --check essai-stitch-v7/ritual-effects.js
           node --check essai-stitch-v7/engine-policy.js
           node --check essai-stitch-v7/chat.js
           node --check essai-stitch-v7/chat-engine.js
@@ -100,7 +102,7 @@ jobs:
           npm ci --ignore-scripts --prefix essai-stitch-v7
           node essai-stitch-v7/build-source.cjs
           npm run build:css --prefix essai-stitch-v7
-          git diff --exit-code -- essai-stitch-v7/stitch-tailwind.css essai-stitch-v7/assets/cuisine/e07-taverne.png essai-stitch-v7/assets/cuisine/e07-courses.png essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
+          git diff --exit-code -- essai-stitch-v7/ritual-effects.js essai-stitch-v7/stitch-tailwind.css essai-stitch-v7/assets/cuisine/e07-taverne.png essai-stitch-v7/assets/cuisine/e07-courses.png essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
       - name: Confirm the original Stitch source manifest
         run: |
           node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"

@@ -21,11 +21,11 @@ Aucun fichier identifié comme blason officiel avec autorisation couvrant la rep
 
 Les descriptions, le nom, le thème, les titres non tronqués et le retrait du masque sont réalisés indépendamment ; **l'exigence du grand blason officiel reste bloquée**. [Sources et audit E05](evidence/consolidation/e05/README.md).
 
-## E06-01 — archive du Rituel absente
+## E06-01 — blocage levé par la mission dédiée
 
-L'archive `stitch_dobby_assistant_mobile_app (9).zip` n'est pas accessible dans les dépôts, pièces jointes ou répertoires de travail inspectés. Aucun HTML du Rituel, « Traverser la cheminée » ou préférence « Ne plus afficher » correspondant n'a été identifié. Les sept sources E06 existantes et le décor d'arrivée du Foyer ne sont pas cette scène.
+La copie exploitable `DOBBY-E06-RITUEL-SOURCE-STITCH.zip` est désormais reçue et conservée avec les quatre fichiers originaux et leurs empreintes. Le Rituel, sa traversée réelle, le passage et la préférence locale réversible sont intégrés. L’URL centrale renvoie du HTML ; une illustration originale adaptée, distincte du média Stitch manquant, est incorporée avec provenance. Les trois autres identifiants bloqués ci-dessus restent inchangés.
 
-[Inventaire et recherche](evidence/consolidation/e06/source-inventory.txt). La séquence Rituel/Traverser/passer/ne plus afficher reste bloquée sur cette source et ses médias. Elle n'a pas été inventée ou remplacée par une scène prétendument fournie. Le parcours fictif depuis Mon foyer magique fonctionne indépendamment. L'illustration de remplacement du chapeau est une création distincte et tracée, explicitement autorisée pour E06-03 ; elle n'est pas présentée comme un média Stitch retrouvé.
+[Rapport et preuves E06-01](E06-01-RITUEL.md). L’ancien inventaire « source absente » reste une preuve historique du checkpoint a61a140, pas l’état courant.
 
 ## Reports autorisés et limites de preuve
 

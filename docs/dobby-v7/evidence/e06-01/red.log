@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: The supplied Stitch Ritual composition is the first E06 entry
+
+0 !== 1
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-ritual.cjs:18:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

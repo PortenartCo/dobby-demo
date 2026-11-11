@@ -1,0 +1,12 @@
+{
+  "archiveName": "DOBBY-E06-RITUEL-SOURCE-STITCH.zip",
+  "receivedArchiveSha256": "b12892685c1db0872d169022d098721af98007e3d54ab4993d4fd91d99d01e15",
+  "historicalArchiveSha256InProvidedManifest": "a029b45422da4dc66634da7daeb79d2c084af36cd23136a226c9b6b72e03d44a",
+  "note": "Provided manifest preserved byte for byte; its historical ZIP hash differs from the received repackaged archive. All three listed file hashes match.",
+  "files": {
+    "code.html": "4e49be83d86f00d0ea267f58332d73012373807b4e65964b549e7797249f4054",
+    "screen.png": "07ec242865e67959f4487b4a99dcb3bff7b1a87bd3acb158a728f5740a3bf65d",
+    "DESIGN.md": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+    "SOURCE-MANIFEST.md": "7e720d09a7d0ea88d3480a2108fd3d5f1ab4073c559645ae404b87b659aeeb38"
+  }
+}

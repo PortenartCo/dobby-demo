@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#120805]" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>DOBBY - Le Rituel de la Cheminée</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: {
+              DEFAULT: '#1e100c',
+              dim: '#180b07',
+              container: '#271814',
+              bright: '#483530'
+            },
+            amberGold: {
+              400: '#f9bb5f',
+              500: '#d49b42',
+              600: '#b87c28'
+            },
+            floo: {
+              emerald: '#10b981',
+              bright: '#34d399',
+              glow: '#059669'
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Respiration très douce et contemplative */
+    @keyframes cinematicBreathe {
+      0% { transform: scale(1.005) translate(0px, 0px); }
+      50% { transform: scale(1.02) translate(-0.8px, -1px); }
+      100% { transform: scale(1.005) translate(0px, 0px); }
+    }
+    .cinematic-subtle-motion {
+      animation: cinematicBreathe 14s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Pulsation magique tamisée du bouton d'action */
+    @keyframes buttonMagicHalo {
+      0%, 100% { box-shadow: 0 0 14px rgba(212, 155, 66, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+      50% { box-shadow: 0 0 24px rgba(249, 187, 95, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+    }
+    .btn-magic-glow {
+      animation: buttonMagicHalo 3.5s ease-in-out infinite;
+    }
+
+    /* Empêcher la sélection textuelle sur mobile */
+    .no-tap-highlight {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#120805] text-[#f7ecd5] font-sans antialiased overflow-x-hidden flex justify-center items-start sm:p-4">
+<!-- Mockup Container format iPhone 16 Pro (393px × 852px) -->
+<main class="relative w-full max-w-[412px] h-[100dvh] sm:h-[844px] bg-[#180b07] sm:rounded-[44px] shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_0_1px_rgba(212,155,66,0.25)] overflow-hidden flex flex-col justify-between select-none border-t border-[#d49b42]/30 sm:border" id="iphone-app-frame">
+<!-- Îlot dynamique / Barre d'état iOS -->
+<header class="relative z-30 pt-3 px-7 flex justify-between items-center text-xs text-[#eec66a]/80 font-medium transition-opacity duration-700" id="ios-status-bar">
+<span class="tracking-wide">09:41</span>
+<!-- Dynamic Island pilule discrète -->
+<div class="w-24 h-5 bg-[#0a0402] rounded-full mx-auto border border-[#2a1710] flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" id="dynamic-island-dot"></div>
+</div>
+<div class="flex items-center space-x-1.5">
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 18.25c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l.64-.64C8.01 20.24 9.93 21 12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path></svg>
+<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M2 17h20v2H2zm2-4h16v2H4zm4-4h8v2H8zm3-4h2v2h-2z"></path></svg>
+<div class="w-5 h-2.5 border border-[#eec66a]/70 rounded-sm p-0.5 flex items-center">
+<div class="h-full w-full bg-[#eec66a] rounded-2xs"></div>
+</div>
+</div>
+</header>
+<!-- Scène Visuelle : Grande Cheminée en Pierre & Dobby + Moteur Canvas Doux & Apaisé -->
+<section class="relative flex-1 w-full overflow-hidden flex items-end justify-center">
+<!-- Conteneur d'image cinématique conservant parfaitement Dobby et la cheminée -->
+<div class="absolute inset-0 w-full h-full transition-[transform,filter] duration-[2500ms] cubic-bezier(0.2,0.8,0.2,1) origin-[50%_60%]" id="scene-wrapper">
+<img alt="Dobby debout avec bienveillance devant la grande cheminée sculptée en pierre de Poudlard" class="w-full h-full object-cover object-center cinematic-subtle-motion transition-[filter] duration-[2500ms]" id="dobby-hearth-img" src="https://lh3.googleusercontent.com/aida/ALJJyrBuAD71LOH_aocipnklzFwV6d16q41gsHVKbW6qM5buyOIP_58NNrY80yZmHsv76xYLObcnGODF2O8-1hH48Z5LKBk5AhLbafqxOboGIlL2ZrkXnrMAEvB41P9Hor2D2YKrVMEExj5q6SIkNxCAPmh8vef7KJEzLXuCg_GlhE36pNOgqR0Brj9-nAZM_OKUx_xn28h3t7SGwdFI3e6P7GxQgD0yEIM5SejsL5i80cefSw"/>
+<!-- Couche d'illumination volumétrique subtile et délicate confinée à l'âtre -->
+<div class="absolute inset-0 pointer-events-none mix-blend-screen opacity-40 transition-opacity duration-500 bg-[radial-gradient(ellipse_at_50%_72%,rgba(245,158,11,0.28)_0%,rgba(180,83,9,0.12)_35%,transparent_62%)]" id="volumetric-hearth-light"></div>
+<!-- Dégradé ombré d'ancrage bas très subtil pour préserver la lisibilité du texte sans occulter l'image -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-[#180b07]/30 to-transparent pointer-events-none"></div>
+<!-- CANVAS DOUX 60FPS : Flammes tamisées, braises lentes superposées au-dessus de l'image -->
+<canvas class="absolute inset-0 w-full h-full pointer-events-none z-10 mix-blend-screen opacity-90" id="fireCanvas"></canvas>
+<!-- Flash d'immersion féerique émeraude délicat lors de la traversée -->
+<div class="absolute inset-0 pointer-events-none z-20 opacity-0 transition-opacity duration-1000 bg-gradient-to-t from-emerald-950/80 via-emerald-700/30 to-emerald-400/20 mix-blend-screen" id="floo-vortex-flash"></div>
+</div>
+<!-- Badge discret du Rituel Ancestral -->
+<div class="relative z-20 mb-2 px-3.5 py-1 rounded-full bg-[#1e100c]/85 border border-[#d49b42]/40 backdrop-blur-md flex items-center space-x-2 shadow-lg transition-all duration-700" id="ritual-badge">
+<span class="w-1.5 h-1.5 rounded-full bg-[#d49b42] animate-ping" id="badge-ping"></span>
+<span class="font-cinzel text-[10px] tracking-widest uppercase text-[#f9bb5f]" id="badge-text">Chemin de Traverse · Âtre N° 7</span>
+</div>
+</section>
+<!-- Panneau Inférieur : Titres Évoquant le Grimoire, Bouton CTA 52px et Actions -->
+<footer class="relative z-20 w-full px-5 pb-7 pt-3 bg-gradient-to-t from-[#120805] via-[#1a0e0a]/95 to-transparent backdrop-blur-md border-t border-[#d49b42]/25 transition-all duration-700" id="interaction-panel">
+<!-- Titres & Typographies nobles Playfair & Cinzel -->
+<div class="text-center mb-4 transition-all duration-700" id="panel-content-text">
+<h1 class="font-serif text-[28px] leading-tight font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#fbe3b5] via-[#f9bb5f] to-[#d49b42] drop-shadow-[0_2px_12px_rgba(212,155,66,0.35)]" id="intro-title">Bienvenue chez Dobby</h1>
+<p class="font-sans text-xs text-[#eec66a]/90 font-light mt-1.5 italic tracking-wide max-w-[320px] mx-auto" id="intro-subtitle">« Votre maison n’attend plus qu’un peu de magie… »</p>
+</div>
+<!-- Bouton Principal CTA Étalon 52px -->
+<div class="space-y-3 transition-all duration-700" id="panel-actions-wrapper">
+<button class="btn-magic-glow relative w-full h-[52px] rounded-2xl bg-gradient-to-r from-[#f9bb5f] via-[#e6a847] to-[#d49b42] text-[#180b07] font-cinzel font-bold text-sm tracking-wider uppercase flex items-center justify-center space-x-2.5 shadow-[0_4px_24px_rgba(212,155,66,0.4)] border border-[#fff2d1]/50 active:scale-[0.98] transition-all duration-500 no-tap-highlight" id="btn-floo-trigger" onclick="triggerCinematicFlooRitual()">
+<span class="text-base transition-transform duration-300" id="btn-sparkle-icon">✨</span>
+<span class="tracking-widest" id="btn-label">Traverser la cheminée</span>
+<span class="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-[#180b07] shadow-[0_0_8px_#10b981]" id="btn-beacon-dot"></span>
+</button>
+<!-- Actions Secondaires : Passer l'intro & Ne plus afficher -->
+<div class="flex items-center justify-between text-xs px-2 pt-0.5 font-sans text-[#cfb095]">
+<!-- Case à cocher styled Grimoire -->
+<label class="flex items-center space-x-2 cursor-pointer group no-tap-highlight">
+<input class="hidden peer" id="chk-never-again" type="checkbox"/>
+<div class="w-4 h-4 rounded border border-[#d49b42]/60 bg-[#271814] peer-checked:bg-[#d49b42] peer-checked:border-[#f9bb5f] flex items-center justify-center transition-all duration-200 shadow-inner">
+<svg class="w-3 h-3 text-[#180b07] stroke-[3] hidden peer-checked:block" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<span class="group-hover:text-[#f9bb5f] transition-colors text-[11px] font-normal tracking-tight">Ne plus afficher</span>
+</label>
+<!-- Lien discret passer l'introduction -->
+<button class="text-[11px] text-[#eec66a]/70 hover:text-[#fbe3b5] hover:underline underline-offset-4 transition-colors font-medium tracking-wide no-tap-highlight" onclick="skipCinematicRitual()">
+            Passer l’introduction →
+          </button>
+</div>
+</div>
+<!-- Sceau de Protection et Confidentialité Locale Dobby -->
+<div class="mt-3.5 pt-2.5 border-t border-[#d49b42]/15 flex items-center justify-center space-x-2 text-[10px] text-[#a88a6d] transition-opacity duration-700" id="panel-security-seal">
+<svg class="w-3 h-3 text-[#d49b42]" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path></svg>
+<span>Sanctuaire du Logis · Chiffrement hermétique local</span>
+</div>
+<!-- Barre d'accueil inférieure iOS (Home Indicator) -->
+<div class="w-32 h-1 bg-[#d49b42]/30 rounded-full mx-auto mt-3"></div>
+</footer>
+<!-- Écran de Bienvenue Féerique / Message discret d'Arrivée au Logis -->
+<div class="absolute inset-0 z-50 bg-[#120805]/95 opacity-0 pointer-events-none transition-all duration-1000 flex flex-col items-center justify-center p-6 text-center backdrop-blur-xl" id="home-arrival-modal">
+<div class="w-20 h-20 rounded-full bg-gradient-to-tr from-[#d49b42] via-[#10b981] to-[#6ee7b7] p-1 shadow-[0_0_50px_rgba(16,185,129,0.65)] mb-6 animate-pulse">
+<div class="w-full h-full rounded-full bg-[#180b07] flex items-center justify-center text-3xl">
+          🧙‍♂️
+        </div>
+</div>
+<span class="font-cinzel text-xs tracking-widest uppercase text-[#34d399] mb-2">Voyage accompli</span>
+<h2 class="font-serif text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#fbe3b5] via-[#f9bb5f] to-[#34d399] mb-3">Arrivée au Logis</h2>
+<p class="font-sans text-xs text-[#eec66a]/90 max-w-xs leading-relaxed mb-7">
+        « Dobby a réchauffé votre foyer et préparé vos enchantements. Bienvenue dans votre maison. »
+      </p>
+<button class="py-3 px-8 rounded-2xl bg-gradient-to-r from-[#f9bb5f] via-[#e6a847] to-[#d49b42] text-[#180b07] font-cinzel font-bold text-xs uppercase tracking-widest shadow-[0_4px_24px_rgba(212,155,66,0.5)] active:scale-95 transition-transform no-tap-highlight" onclick="resetCinematicRitual()">
+        Revenir à la cheminée
+      </button>
+</div>
+</main>
+<!-- MOTEUR CANVAS DOUX, FLUIDE ET CONTEMPLATIF -->
+<script>
+    // Initialisation Canvas 60 FPS
+    const canvas = document.getElementById('fireCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      width = canvas.width = rect.width;
+      height = canvas.height = rect.height;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Variable d'état cinématique continu (0 = ambre repos, 1 = plein vortex émeraude floo)
+    let flooProgress = 0;
+    let targetFlooProgress = 0;
+    let isTransitioning = false;
+    let ritualCompleted = false;
+
+    // Point focal centré strictement sur les braises/bûches au fond de l'âtre
+    function getHearthCenter() {
+      return {
+        x: width * 0.50,
+        y: height * 0.72
+      };
+    }
+
+    // Réduction du nombre de particules : animation aérée, poétique et calme
+    const flameParticles = [];
+    const maxFlames = 16;
+    const emberParticles = [];
+    const maxEmbers = 20;
+    const vortexParticles = [];
+    const maxVortex = 28;
+
+    class FlameParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        const center = getHearthCenter();
+        this.x = center.x + (Math.random() - 0.5) * (width * 0.22);
+        this.y = center.y + (Math.random() * 12 - 4);
+        this.vx = (Math.random() - 0.5) * 0.25;
+        this.vy = -(Math.random() * 0.55 + 0.35);
+        this.radius = Math.random() * 16 + 8;
+        this.maxLife = Math.random() * 45 + 35;
+        this.life = this.maxLife;
+        this.turbulence = Math.random() * 0.03 + 0.01;
+      }
+      update() {
+        this.x += this.vx + Math.sin(this.life * this.turbulence) * 0.35;
+        this.y += this.vy;
+        this.radius *= 0.965;
+        this.life--;
+        const center = getHearthCenter();
+        if (this.life <= 0 || this.radius < 1.5 || this.y < center.y - 50) {
+          this.reset();
+        }
+      }
+      draw(c) {
+        const alpha = (this.life / this.maxLife) * 0.22;
+        if (alpha <= 0) return;
+        const grad = c.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        
+        if (flooProgress < 0.1) {
+          grad.addColorStop(0, `rgba(255, 230, 160, ${alpha * 1.1})`);
+          grad.addColorStop(0.5, `rgba(245, 158, 11, ${alpha * 0.7})`);
+          grad.addColorStop(1, `rgba(180, 83, 9, 0)`);
+        } else {
+          const r = Math.round(245 * (1 - flooProgress) + 52 * flooProgress);
+          const g = Math.round(158 * (1 - flooProgress) + 211 * flooProgress);
+          const b = Math.round(11 * (1 - flooProgress) + 153 * flooProgress);
+          grad.addColorStop(0, `rgba(${Math.min(255, r + 30)}, ${Math.min(255, g + 30)}, ${Math.min(255, b + 30)}, ${alpha * 1.2})`);
+          grad.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${alpha * 0.8})`);
+          grad.addColorStop(1, `rgba(5, 150, 105, 0)`);
+        }
+
+        c.fillStyle = grad;
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        c.fill();
+      }
+    }
+
+    class EmberParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        const center = getHearthCenter();
+        this.x = center.x + (Math.random() - 0.5) * (width * 0.32);
+        this.y = center.y + (Math.random() * 20 - 10);
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.vy = -(Math.random() * 0.45 + 0.25);
+        this.size = Math.random() * 2.0 + 0.8;
+        this.maxLife = Math.random() * 70 + 40;
+        this.life = this.maxLife;
+        this.twinkle = Math.random() * Math.PI * 2;
+      }
+      update() {
+        this.twinkle += 0.04;
+        this.x += this.vx + Math.sin(this.twinkle) * 0.3;
+        this.y += this.vy * (1 + flooProgress * 0.6);
+        this.life--;
+        const center = getHearthCenter();
+        if (this.life <= 0 || this.y < center.y - 85) {
+          this.reset();
+        }
+      }
+      draw(c) {
+        const progress = this.life / this.maxLife;
+        const alpha = Math.sin(progress * Math.PI) * (0.4 + Math.sin(this.twinkle) * 0.15);
+        if (alpha <= 0) return;
+
+        let colInner;
+        if (flooProgress < 0.2) {
+          colInner = `rgba(255, 240, 200, ${alpha * 0.95})`;
+        } else {
+          colInner = `rgba(209, 250, 229, ${alpha * 0.95})`;
+        }
+
+        c.shadowColor = flooProgress > 0.3 ? '#10b981' : '#f59e0b';
+        c.shadowBlur = 4;
+        c.fillStyle = colInner;
+        c.beginPath();
+        c.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        c.fill();
+        c.shadowBlur = 0;
+      }
+    }
+
+    class VortexSpark {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        const center = getHearthCenter();
+        this.angle = Math.random() * Math.PI * 2;
+        this.dist = Math.random() * (width * 0.28) + 10;
+        this.speed = (Math.random() * 0.015 + 0.01) * (1 + flooProgress * 1.2);
+        this.radialSpeed = -(Math.random() * 0.5 + 0.2);
+        this.size = Math.random() * 2 + 1;
+        this.alpha = 0;
+      }
+      update() {
+        this.angle += this.speed;
+        this.dist += this.radialSpeed * (0.7 + flooProgress * 1.2);
+        if (this.dist < 6) {
+          this.reset();
+          this.dist = width * 0.25;
+        }
+        this.alpha = Math.min(0.65, flooProgress * 0.8) * (this.dist / (width * 0.25));
+      }
+      draw(c) {
+        if (flooProgress < 0.05 || this.alpha <= 0) return;
+        const center = getHearthCenter();
+        const px = center.x + Math.cos(this.angle) * this.dist;
+        const py = center.y + Math.sin(this.angle) * this.dist * 0.5;
+
+        c.shadowColor = '#34d399';
+        c.shadowBlur = 6;
+        c.fillStyle = `rgba(167, 243, 208, ${this.alpha})`;
+        c.beginPath();
+        c.arc(px, py, this.size, 0, Math.PI * 2);
+        c.fill();
+        c.shadowBlur = 0;
+      }
+    }
+
+    // Instanciation initiale des particules douces
+    for (let i = 0; i < maxFlames; i++) flameParticles.push(new FlameParticle());
+    for (let i = 0; i < maxEmbers; i++) emberParticles.push(new EmberParticle());
+    for (let i = 0; i < maxVortex; i++) vortexParticles.push(new VortexSpark());
+
+    // Éléments du DOM
+    const sceneWrapper = document.getElementById('scene-wrapper');
+    const hearthImg = document.getElementById('dobby-hearth-img');
+    const volumetricLight = document.getElementById('volumetric-hearth-light');
+    const flooFlash = document.getElementById('floo-vortex-flash');
+    const ritualBadge = document.getElementById('ritual-badge');
+    const panelContentText = document.getElementById('panel-content-text');
+    const panelActionsWrapper = document.getElementById('panel-actions-wrapper');
+    const panelSecuritySeal = document.getElementById('panel-security-seal');
+    const btnFloo = document.getElementById('btn-floo-trigger');
+    const btnLabel = document.getElementById('btn-label');
+    const btnSparkle = document.getElementById('btn-sparkle-icon');
+    const homeArrivalModal = document.getElementById('home-arrival-modal');
+
+    // BOUCLE REQUESTANIMATIONFRAME 60 FPS
+    let lastTime = performance.now();
+    let flickerClock = 0;
+
+    function renderLoop(now) {
+      const dt = Math.min(32, now - lastTime) / 1000;
+      lastTime = now;
+      flickerClock += dt * 2.2;
+
+      // Interpolation progressive de flooProgress
+      if (Math.abs(flooProgress - targetFlooProgress) > 0.001) {
+        flooProgress += (targetFlooProgress - flooProgress) * (dt * 1.3);
+      } else {
+        flooProgress = targetFlooProgress;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.globalCompositeOperation = 'screen';
+
+      // 1. Lueurs de cheminée volumétriques douces et intimes
+      const center = getHearthCenter();
+      const flickerVal = 0.5 + Math.sin(flickerClock * 1.1) * 0.04 + Math.cos(flickerClock * 1.8) * 0.03;
+      
+      const glowGrad = ctx.createRadialGradient(center.x, center.y, 5, center.x, center.y, width * 0.35);
+      if (flooProgress < 0.2) {
+        glowGrad.addColorStop(0, `rgba(245, 158, 11, ${0.28 * flickerVal})`);
+        glowGrad.addColorStop(0.5, `rgba(180, 83, 9, ${0.12 * flickerVal})`);
+        glowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      } else {
+        const mix = flooProgress;
+        glowGrad.addColorStop(0, `rgba(${Math.round(245*(1-mix)+16*mix)}, ${Math.round(158*(1-mix)+185*mix)}, ${Math.round(11*(1-mix)+129*mix)}, ${0.35 * flickerVal})`);
+        glowGrad.addColorStop(0.5, `rgba(5, 150, 105, ${0.15 * flickerVal})`);
+        glowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      }
+      ctx.fillStyle = glowGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // 2. Flammes tamisées
+      for (let i = 0; i < flameParticles.length; i++) {
+        flameParticles[i].update();
+        flameParticles[i].draw(ctx);
+      }
+
+      // 3. Braises et étincelles calmes
+      for (let i = 0; i < emberParticles.length; i++) {
+        emberParticles[i].update();
+        emberParticles[i].draw(ctx);
+      }
+
+      // 4. Vortex cinématique émeraude délicat
+      if (flooProgress > 0.05) {
+        for (let i = 0; i < vortexParticles.length; i++) {
+          vortexParticles[i].update();
+          vortexParticles[i].draw(ctx);
+        }
+      }
+
+      ctx.globalCompositeOperation = 'source-over';
+
+      if (volumetricLight) {
+        if (flooProgress < 0.2) {
+          volumetricLight.style.background = `radial-gradient(ellipse at 50% 72%, rgba(245,158,11,${0.24 * flickerVal}) 0%, rgba(180,83,9,0.1) 35%, transparent 62%)`;
+        } else {
+          volumetricLight.style.background = `radial-gradient(ellipse at 50% 72%, rgba(16,185,129,${0.35 * (1 + flooProgress)}) 0%, rgba(5,150,105,0.18) 40%, transparent 65%)`;
+        }
+      }
+
+      requestAnimationFrame(renderLoop);
+    }
+    requestAnimationFrame(renderLoop);
+
+    // MOTEUR AUDIO WEB CRÉPITANT DOUX
+    let audioCtx = null;
+    let crackleGain = null;
+
+    function initAudioEngine() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        startGentleHearthCrackle();
+      }
+    }
+
+    function startGentleHearthCrackle() {
+      try {
+        const bufferSize = audioCtx.sampleRate * 2;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * 0.04;
+        }
+
+        const whiteNoise = audioCtx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+        whiteNoise.loop = true;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 800;
+        filter.Q.value = 3.0;
+
+        crackleGain = audioCtx.createGain();
+        crackleGain.gain.setValueAtTime(0.025, audioCtx.currentTime);
+
+        whiteNoise.connect(filter);
+        filter.connect(crackleGain);
+        crackleGain.connect(audioCtx.destination);
+        whiteNoise.start();
+      } catch (e) {
+        console.warn('Audio non initialisé', e);
+      }
+    }
+
+    function playFlooWhooshSound() {
+      try {
+        initAudioEngine();
+        const now = audioCtx.currentTime;
+
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.2, now + idx * 0.14 + 1.2);
+
+          gain.gain.setValueAtTime(0.001, now + idx * 0.14);
+          gain.gain.linearRampToValueAtTime(0.08, now + idx * 0.14 + 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.14 + 1.6);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + idx * 0.14);
+          osc.stop(now + idx * 0.14 + 1.7);
+        });
+      } catch (e) {
+        console.warn('Audio floo non joué', e);
+      }
+    }
+
+    function triggerHapticPulse() {
+      if (navigator.vibrate) {
+        navigator.vibrate([20, 30, 40]);
+      }
+    }
+
+    // TRANSITION CINÉMATIQUE DOUCE ET APAISÉE
+    function triggerCinematicFlooRitual() {
+      if (isTransitioning || ritualCompleted) return;
+      isTransitioning = true;
+
+      initAudioEngine();
+      playFlooWhooshSound();
+      triggerHapticPulse();
+
+      targetFlooProgress = 1.0;
+
+      // Bouton : statut émeraude élégant
+      btnFloo.className = "relative w-full h-[52px] rounded-2xl bg-gradient-to-r from-emerald-500/90 via-emerald-600 to-teal-700 text-[#f0fdf4] font-cinzel font-bold text-sm tracking-wider uppercase flex items-center justify-center space-x-2.5 shadow-[0_0_28px_rgba(16,185,129,0.55)] border border-emerald-300/40 transition-all duration-500 no-tap-highlight";
+      btnLabel.innerText = "Poudre de cheminette active…";
+      btnSparkle.innerText = "✨";
+
+      // Badge : teinte émeraude
+      document.getElementById('badge-ping').className = "w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping";
+      document.getElementById('badge-text').className = "font-cinzel text-[10px] tracking-widest uppercase text-emerald-300";
+      document.getElementById('badge-text').innerText = "Traversée de l'Âtre en cours...";
+
+      // Estompage fluide des commandes vers le bas
+      setTimeout(() => {
+        panelContentText.style.opacity = '0';
+        panelContentText.style.transform = 'translateY(14px)';
+        panelActionsWrapper.style.opacity = '0';
+        panelActionsWrapper.style.transform = 'translateY(18px)';
+        panelSecuritySeal.style.opacity = '0';
+        ritualBadge.style.opacity = '0';
+      }, 400);
+
+      // Zoom doux et mesuré vers la cheminée
+      sceneWrapper.style.transform = "scale(1.22) translate(0%, -2%)";
+      hearthImg.style.filter = "brightness(1.15) contrast(1.08) hue-rotate(45deg) saturate(1.3) blur(0.8px)";
+
+      setTimeout(() => {
+        flooFlash.style.opacity = '0.75';
+      }, 1600);
+
+      setTimeout(() => {
+        ritualCompleted = true;
+        isTransitioning = false;
+        homeArrivalModal.style.opacity = '1';
+        homeArrivalModal.style.pointerEvents = 'auto';
+      }, 2500);
+    }
+
+    function resetCinematicRitual() {
+      ritualCompleted = false;
+      isTransitioning = false;
+      targetFlooProgress = 0;
+
+      homeArrivalModal.style.opacity = '0';
+      homeArrivalModal.style.pointerEvents = 'none';
+      flooFlash.style.opacity = '0';
+
+      sceneWrapper.style.transform = "scale(1) translate(0px, 0px)";
+      hearthImg.style.filter = "brightness(1) contrast(1) hue-rotate(0deg) saturate(1) blur(0px)";
+
+      panelContentText.style.opacity = '1';
+      panelContentText.style.transform = 'translateY(0)';
+      panelActionsWrapper.style.opacity = '1';
+      panelActionsWrapper.style.transform = 'translateY(0)';
+      panelSecuritySeal.style.opacity = '1';
+      ritualBadge.style.opacity = '1';
+
+      btnFloo.className = "btn-magic-glow relative w-full h-[52px] rounded-2xl bg-gradient-to-r from-[#f9bb5f] via-[#e6a847] to-[#d49b42] text-[#180b07] font-cinzel font-bold text-sm tracking-wider uppercase flex items-center justify-center space-x-2.5 shadow-[0_4px_24px_rgba(212,155,66,0.4)] border border-[#fff2d1]/50 active:scale-[0.98] transition-all duration-500 no-tap-highlight";
+      btnLabel.innerText = "Traverser la cheminée";
+      btnSparkle.innerText = "✨";
+
+      document.getElementById('badge-ping').className = "w-1.5 h-1.5 rounded-full bg-[#d49b42] animate-ping";
+      document.getElementById('badge-text').className = "font-cinzel text-[10px] tracking-widest uppercase text-[#f9bb5f]";
+      document.getElementById('badge-text').innerText = "Chemin de Traverse · Âtre N° 7";
+
+      if (crackleGain && audioCtx) {
+        crackleGain.gain.setValueAtTime(0.025, audioCtx.currentTime);
+      }
+    }
+
+    function skipCinematicRitual() {
+      initAudioEngine();
+      homeArrivalModal.style.opacity = '1';
+      homeArrivalModal.style.pointerEvents = 'auto';
+    }
+
+    document.addEventListener('touchstart', function onFirstTouch() {
+      initAudioEngine();
+      document.removeEventListener('touchstart', onFirstTouch);
+    }, { once: true });
+  </script>
+</body></html>
