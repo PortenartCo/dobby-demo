@@ -1,0 +1,30 @@
+✖ manifest reports dirty legacy assets that are copied into the preview (240.376477ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 345.606614
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/review-integrated-preview.test.cjs:23:1
+✖ manifest reports dirty legacy assets that are copied into the preview (240.376477ms)
+  AssertionError [ERR_ASSERTION]: Every copied source root must participate in provenance
+
+  false !== true
+
+      at TestContext.<anonymous> (/workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-preview.test.cjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:8893",
+  "base": "/essai-stitch-v7",
+  "results": [
+    {
+      "width": 390,
+      "status": "PASS",
+      "preview": false,
+      "firstUse": {
+        "pressed": "true",
+        "disabled": false,
+        "background": "rgb(67, 48, 44)",
+        "color": "rgb(249, 187, 95)",
+        "label": "Désactiver les effets visuels"
+      },
+      "historicalOff": {
+        "pressed": "false",
+        "disabled": false,
+        "background": "rgb(39, 24, 20)",
+        "color": "rgb(212, 188, 166)",
+        "label": "Activer les effets visuels"
+      },
+      "legacyFalseProvenance": "unknown; preserved",
+      "oldNamespaceUnchanged": true,
+      "explicitOffReload": true,
+      "sharedRoutes": 2,
+      "greenCanvas": {
+        "warm": 0,
+        "green": 6463
+      },
+      "reducedChoicePreserved": true,
+      "replayBusinessUnchanged": true,
+      "interruptedNavigationCancelled": true
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "preview": false,
+      "firstUse": {
+        "pressed": "true",
+        "disabled": false,
+        "background": "rgb(67, 48, 44)",
+        "color": "rgb(249, 187, 95)",
+        "label": "Désactiver les effets visuels"
+      },
+      "historicalOff": {
+        "pressed": "false",
+        "disabled": false,
+        "background": "rgb(39, 24, 20)",
+        "color": "rgb(212, 188, 166)",
+        "label": "Activer les effets visuels"
+      },
+      "legacyFalseProvenance": "unknown; preserved",
+      "oldNamespaceUnchanged": true,
+      "explicitOffReload": true,
+      "sharedRoutes": 2,
+      "greenCanvas": {
+        "warm": 0,
+        "green": 4416
+      },
+      "reducedChoicePreserved": true,
+      "replayBusinessUnchanged": true,
+      "interruptedNavigationCancelled": true
+    }
+  ],
+  "productCodeChanged": false
+}

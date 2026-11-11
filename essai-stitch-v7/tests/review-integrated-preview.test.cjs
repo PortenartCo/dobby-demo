@@ -20,3 +20,20 @@ test('E03–E06 corrected preview uses canonical sources and a fresh isolated na
   assert.match(fs.readFileSync(path.join(a,'review-runtime.js'),'utf8'),/connexion externe désactivée/);
  }finally{fs.rmSync(temp,{recursive:true,force:true});}
 });
+test('manifest reports dirty legacy assets that are copied into the preview',()=>{
+ const repo=path.resolve(__dirname,'../..'),temp=fs.mkdtempSync(path.join(os.tmpdir(),'dobby-preview-provenance-')),fixture=path.join(temp,'repo');
+ const put=(name,data)=>{const p=path.join(fixture,name);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,data);};
+ const git=(...args)=>execFileSync('git',args,{cwd:fixture,stdio:'ignore'});
+ try{
+  for(const name of ['scripts/build-dobby-review.cjs','scripts/review/review-runtime.js','scripts/review/integrated-config.js'])put(name,fs.readFileSync(path.join(repo,name)));
+  put('essai-stitch-v7/index.html','<html><head></head><body></body></html>');
+  put('essai-stitch-v5-famille/family-profile.js','const linkedMember=()=>null;');
+  put('essai-stitch-v5-famille/family-v2.js','function openModal() {}\nasync function login(form) {}\nasync function signIn(email,password){}');
+  put('essai-v6-preview/assets/sentinel.txt','committed asset');
+  git('init','-q');git('add','.');git('-c','user.name=Preview Test','-c','user.email=preview-test@example.invalid','commit','-qm','fixture');
+  const build=name=>{const out=path.join(temp,name);execFileSync(process.execPath,[path.join(fixture,'scripts/build-dobby-review.cjs'),'--profile','integrated-e03-e06','--output',out],{cwd:fixture,stdio:'ignore'});return JSON.parse(fs.readFileSync(path.join(out,'review-manifest.json')));};
+  assert.equal(build('clean').sourceDirty,false);
+  put('essai-v6-preview/assets/sentinel.txt','modified local asset');
+  assert.equal(build('dirty').sourceDirty,true,'Every copied source root must participate in provenance');
+ }finally{fs.rmSync(temp,{recursive:true,force:true});}
+});

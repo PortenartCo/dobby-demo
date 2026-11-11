@@ -1,0 +1,16 @@
+{
+  "publishedReference": "c220d125584f1c2f2a88bbe4baa6049e974490b6",
+  "publishedDirectory": "essai-dobby-e01-e06-review-20261111",
+  "publishedChromeSha256": "77bea89bfe71f02ea570a0b6efcb5b221d8c5eeac7ed6732fecd817c5de2446a",
+  "canonicalChromeSha256": "77bea89bfe71f02ea570a0b6efcb5b221d8c5eeac7ed6732fecd817c5de2446a",
+  "chromeBytesIdentical": true,
+  "publishedConfigSha256": "b7f816db4881020fec9a6805cc48f9e2897053ad474ac26cf7490bc9daf59240",
+  "publishedPrefix": "dobby-review-e01-e06-20261111|",
+  "newPrefix": "dobby-review-e03-e06-20261111|",
+  "temporaryPreviewSourceSha": "195ddf4a1da6e60dd237c9406de2cf1658493a45",
+  "temporaryPreviewFinal": false,
+  "causeFreshUse": "not reproduced; ON already implemented",
+  "causeStoredFalse": "reproduced, but historic auto-default versus voluntary choice cannot be inferred",
+  "migrationPerformed": false,
+  "chromeOrRitualChanged": false
+}

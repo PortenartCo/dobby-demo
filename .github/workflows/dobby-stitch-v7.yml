@@ -95,7 +95,7 @@ jobs:
       - name: Existing offline, family and conflict regressions
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
       - name: Integrated preview builder and byte provenance
-        run: node --test essai-stitch-v7/tests/integrated-build.test.cjs
+        run: node --test essai-stitch-v7/tests/integrated-build.test.cjs essai-stitch-v7/tests/review-integrated*.test.*
       - name: E06 exhaustive scoring, identity and draft isolation
         run: node --test essai-stitch-v7/tests/e06-*.test.mjs
       - name: Source derivation remains reproducible
@@ -131,4 +131,31 @@ jobs:
         with:
           name: dobby-v7-stitch-visual-evidence
           path: docs/dobby-v7/evidence/
+          retention-days: 14
+  integrated-corrections:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Browser tooling (tests only)
+        working-directory: essai-stitch-v7/tests
+        run: npm ci --ignore-scripts
+      - name: Integrated E03-E06 correction checkpoints (no publication)
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-corrections-http.log 2>&1 &
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node essai-stitch-v7/tests/review-integrated-e03-e06.cjs
+      - name: Keep integrated correction evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-e03-e06-correction-evidence
+          path: docs/dobby-v7/evidence/integrated-e03-e06-20261111/
           retention-days: 14
