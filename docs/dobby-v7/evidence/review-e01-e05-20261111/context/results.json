@@ -16,7 +16,10 @@
     "save failure rollback",
     "legacy canonical transition",
     "disabled model contract and rejected target",
-    "deleted source exchange"
+    "deleted source exchange",
+    "legacy draft ambiguity",
+    "legacy final source mismatch",
+    "sole extra consultation"
   ],
   "externalRequests": "blocked",
   "identity": "native identity output simulated; no real account",

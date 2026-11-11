@@ -77,6 +77,11 @@
       "detail": "Denial, no speech and network failure retain drafts; an unsupported browser still sends typed input."
     },
     {
+      "name": "replay pauses dictation before speech",
+      "status": "PASS",
+      "detail": "Playback cancels the pending send before synthesis starts, keeps the exact draft, rejects saved callbacks and never restarts recognition; explicit Resume remains available."
+    },
+    {
       "name": "sound and sensitive confirmation",
       "status": "PASS",
       "detail": "Automatic voice request respects Son OFF/ON, replay/interruption, and still requests confirmation before deletion."

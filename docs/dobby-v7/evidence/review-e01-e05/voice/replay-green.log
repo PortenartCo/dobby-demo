@@ -1,0 +1,19 @@
+PASS final-only default 3s
+PASS multi-segment speech resets pause
+PASS continue and cancel
+PASS immediate final Send and stale callbacks
+PASS manual correction
+PASS interrupted provisional prefix
+PASS configurable 1.5–5s
+PASS interruption end
+PASS interruption error
+PASS interruption stop
+PASS interruption hidden
+PASS interruption pagehide
+PASS navigation
+PASS identity isolation
+PASS microphone errors and manual fallback
+PASS replay pauses dictation before speech
+PASS sound and sensitive confirmation
+PASS history persistence and runtime
+REVIEW_VOICE_20261111_PASS 18 checks

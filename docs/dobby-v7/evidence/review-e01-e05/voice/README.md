@@ -22,13 +22,21 @@ Toutes les commandes ont utilisé `DOBBY_TEST_ORIGIN=http://127.0.0.1:8891`, un 
 | --- | --- |
 | `node --check essai-stitch-v7/chat.js` | PASS |
 | `node --check essai-stitch-v7/tests/review-voice-20261111.cjs` | PASS |
-| `node essai-stitch-v7/tests/review-voice-20261111.cjs` | PASS, 17 scénarios causaux ; [résultats détaillés](results.json) |
-| `node essai-stitch-v7/tests/e02-voice-history.cjs` | PASS ; [résultats](legacy-history/voice-history-results.json) |
-| `node essai-stitch-v7/tests/e02-consolidation.cjs` | PASS à 390, 320 et 1440 px ; [résultats](legacy-consolidation/results.json) |
+| `node essai-stitch-v7/tests/review-voice-20261111.cjs` | PASS, 18 scénarios causaux, y compris la correction finale de réécoute ; [résultats détaillés](results.json) |
+| `node essai-stitch-v7/tests/e02-voice-history.cjs` | PASS au premier contrôle ciblé, avant la correction finale de réécoute ; [résultats](legacy-history/voice-history-results.json) |
+| `node essai-stitch-v7/tests/e02-consolidation.cjs` | PASS à 390, 320 et 1440 px au premier contrôle ciblé, avant la correction finale de réécoute ; [résultats](legacy-consolidation/results.json) |
 
 Le test causal utilise une horloge Playwright arrêtée entre chaque avance explicite : aucun envoi à 2 999 ms, un envoi à 3 001 ms ; idem de part et d’autre de 1,5 et 5 secondes. Il vérifie plusieurs segments, pauses et reprises, Continuer, Annuler, Envoyer immédiat, correction manuelle, préfixe interrompu, anciens callbacks, erreurs microphone, arrêt naturel, masquage, cache de page, navigation, changement de compte, mode manuel sans API, Son OFF/ON, lecture/interruption/réécoute, confirmation sensible et persistance IndexedDB après rechargement. Aucun événement d’erreur JavaScript n’a été observé. La campagne générale unique reste à l’orchestrateur du lot.
 
 La non-régression ciblée a d’abord révélé la disparition de la commande Annuler après correction manuelle ; ce comportement a été corrigé avant les passages PASS ci-dessus. Une lecture indépendante du diff vocal par l’agent conversationnel n’a relevé aucun défaut supplémentaire de garde ou de minuterie.
+
+## Contrôle final — réécoute pendant une dictée
+
+Le contrôle final de l’orchestrateur a identifié un cas supplémentaire : lancer « Écouter la réponse » conservait le microphone et le décompte actifs pendant la synthèse. Le nouveau test a reproduit le défaut avant correction dans le véritable parcours UI : après réécoute puis avance de **3 001 ms**, le fil contenait **11 échanges au lieu des 10 attendus**. L’échec et sa capture sont conservés dans [replay-red.log](replay-red.log), [replay-red-results.json](replay-red-results.json) et [replay-red-failure.png](replay-red-failure.png).
+
+La correction minimale de `chat.js` met la dictée en pause avant `speechSynthesis.speak`. `pauseVoice` invalide maintenant les handlers et le délai avant d’interrompre le moteur de reconnaissance, en conservant la transcription. Le test vérifie l’état réel du DOM à l’entrée de l’API de synthèse : microphone inactif, décompte masqué, brouillon inchangé. Il rappelle ensuite les anciens callbacks, dépasse leurs anciens délais, vérifie l’absence d’envoi et de redémarrage automatique, puis reprend explicitement la dictée et envoie après une nouvelle pause complète.
+
+La commande ciblée `DOBBY_TEST_ORIGIN=http://127.0.0.1:8891 node essai-stitch-v7/tests/review-voice-20261111.cjs` termine avec **18 scénarios PASS**, code de sortie 0 : [replay-green.log](replay-green.log). Les vérifications de syntaxe des deux fichiers et `git diff --check` passent également. Aucune campagne générale supplémentaire n’a été lancée dans ce sous-lot ; la vérification générale unique du correctif final reste à l’orchestrateur.
 
 ## Captures et limites
 
