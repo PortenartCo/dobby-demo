@@ -6,6 +6,8 @@ on:
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-runes-pilot.cjs'
+      - 'scripts/runes-pilot/**'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
@@ -15,6 +17,8 @@ on:
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-runes-pilot.cjs'
+      - 'scripts/runes-pilot/**'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
@@ -29,6 +33,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -158,7 +164,7 @@ jobs:
         run: node essai-stitch-v7/tests/ci.cjs
       - name: Retain the passed correction checkpoints
         if: steps.continuation.outputs.verified == 'true'
-        run: echo 'The protected source/test tree matches phase 1; the twelve correction scripts already passed at https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112.'
+        run: echo 'The protected application tree is unchanged. The selected continuation or pilot campaign runs in the source-backed-browser job; the full correction campaign remains available with DOBBY_FINAL=1.'
       - name: Browser tooling (tests only)
         if: steps.continuation.outputs.verified != 'true'
         working-directory: essai-stitch-v7/tests

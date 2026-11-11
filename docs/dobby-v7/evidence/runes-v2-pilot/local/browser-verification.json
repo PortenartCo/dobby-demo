@@ -1,0 +1,199 @@
+{
+  "base": "http://127.0.0.1:8897/essai-dobby-runes-v2-pilot-20261111/",
+  "realSupabaseVerified": false,
+  "results": [
+    {
+      "width": 320,
+      "pass": true,
+      "roots": [
+        "accueil",
+        "missions",
+        "taverne",
+        "famille",
+        "menu"
+      ],
+      "missingConfigurationAndSecretRefusal": "PASS",
+      "nativeAuth": "HTTP fixture only",
+      "capability": "404 fixture; V1 disabled",
+      "newReward": "pending after reload",
+      "outbox": "unchanged",
+      "actualSupabaseRequests": 0,
+      "sameOriginMissing": [],
+      "pageErrors": [],
+      "journal": [
+        {
+          "method": "POST",
+          "path": "/auth/v1/token",
+          "query": "?grant_type=password"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000702&order=created_at.asc"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "pass": true,
+      "roots": [
+        "accueil",
+        "missions",
+        "taverne",
+        "famille",
+        "menu"
+      ],
+      "missingConfigurationAndSecretRefusal": "covered at 320",
+      "nativeAuth": "HTTP fixture only",
+      "capability": "404 fixture; V1 disabled",
+      "newReward": "pending after reload",
+      "outbox": "unchanged",
+      "actualSupabaseRequests": 0,
+      "sameOriginMissing": [],
+      "pageErrors": [],
+      "journal": [
+        {
+          "method": "POST",
+          "path": "/auth/v1/token",
+          "query": "?grant_type=password"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000702&order=created_at.asc"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "pass": true,
+      "roots": [
+        "accueil",
+        "missions",
+        "taverne",
+        "famille",
+        "menu"
+      ],
+      "missingConfigurationAndSecretRefusal": "covered at 320",
+      "nativeAuth": "HTTP fixture only",
+      "capability": "404 fixture; V1 disabled",
+      "newReward": "pending after reload",
+      "outbox": "unchanged",
+      "actualSupabaseRequests": 0,
+      "sameOriginMissing": [],
+      "pageErrors": [],
+      "journal": [
+        {
+          "method": "POST",
+          "path": "/auth/v1/token",
+          "query": "?grant_type=password"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_modules",
+          "query": "?select=module&household_id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/rpc/dobby_missions_v2_capabilities",
+          "query": "?p_household_id=00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_households",
+          "query": "?select=id&id=eq.00000000-0000-4000-8000-000000000702"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000702&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_grocery",
+          "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000702&order=created_at.asc"
+        },
+        {
+          "method": "GET",
+          "path": "/rest/v1/dobby_v2_memberships",
+          "query": "?select=household_id&active=eq.true&user_id=eq.00000000-0000-4000-8000-000000000701"
+        }
+      ]
+    }
+  ]
+}

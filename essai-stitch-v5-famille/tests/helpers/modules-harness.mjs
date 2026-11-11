@@ -73,13 +73,13 @@ export function makeClient(uid, backend, seeded = false, accept = true, options 
     registerModules:ref=>{provider=ref;},...options.api
   };
   const env = {
-    st, custom:st.customRecipes, window:{DobbyFamilyUI:api,DobbyRunesReady:Promise.resolve(runes)},
+    st, custom:st.customRecipes, window:{DobbyFamilyUI:api,DobbyRunesReady:Promise.resolve(runes),...options.window},
     document:{addEventListener:(type,fn)=>{if(type==='click') handler=fn;}},
     save:()=>{changes++;},render:()=>{},confirm:(msg)=>{prompts.push(msg);return accept;},
     localStorage:{setItem:()=>{localBackups++;}},
     setTimeout,clearTimeout,console,...(options.crypto?{crypto:options.crypto}:{})
   };
-  vm.runInNewContext(implementation,env,{filename:'family-modules.js',timeout:2500});
+  vm.runInNewContext(options.implementation??implementation,env,{filename:'family-modules.js',timeout:2500});
   assert.ok(provider);
   return {
     st,provider,metadata,prompts,window:env.window,

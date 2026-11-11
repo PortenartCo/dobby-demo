@@ -11,5 +11,9 @@
     "stableTreeSha256": "54fab7e400b78a82ab19db382d5f8ba86df4b6106313552cf12183069815015d",
     "reason": "Continue the same final campaign after the historical 2027 mission fixture required the new explicit all-period selection; application code and all earlier passed tests unchanged. Source checks and 12 correction checkpoints passed in phase1. Any other tracked change, or DOBBY_FINAL=1, restores full execution."
   },
-  "reviewProfile": "integrated-e03-e06"
+  "reviewProfile": "integrated-e03-e06",
+  "runesPilot": {
+    "reference": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+    "protectedTreeSha256": "368be4e77c0d44e7cf1e6e790d70dfb55c165735eda815ca6ae8302cb55c8114"
+  }
 }

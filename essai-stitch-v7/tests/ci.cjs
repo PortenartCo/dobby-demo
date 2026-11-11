@@ -1,5 +1,12 @@
 /* Sequential checkpoints run their own lot; final delivery runs the complete suite. */
 const {spawnSync}=require('node:child_process'),path=require('node:path'),scope=require('../ci-scope.json');
+if(scope.runesPilot&&process.env.DOBBY_FINAL!=='1'){
+ const pilot=require('../../scripts/runes-pilot/ci.cjs');pilot.verify();
+ if(process.env.DOBBY_CI_VERIFY_ONLY==='1'){
+  if(process.env.GITHUB_OUTPUT)require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT,'verified=true\npilot=true\n');
+ }else pilot.run();
+ return;
+}
 // Continue the one final campaign after its historical period assertion failed.
 // This checkpoint is reusable only for the exact same tracked code and passed
 // tests. Any other change automatically restores the complete campaign.
