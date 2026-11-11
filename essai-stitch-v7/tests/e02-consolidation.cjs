@@ -101,6 +101,13 @@ async function voiceCases(page){
  assert.equal(added.length,1,'explicit dictated request reaches the native shared grocery adapter');
  assert.equal(await page.evaluate(()=>__e02Speech.spoken.length),1,'explicitly sent dictation follows the shared Sound preference');
  assert.match(await native(page,'return localStorage.getItem(key);'),/lait TEST EXPLICITE/,'native storage confirms the result');
+ const storageEvidence=await page.evaluate(async()=>{
+  const frame=DobbyFamilyStitchEngine.win(),raw=frame.Storage.prototype.__reviewRaw,nativeKey=DobbyFamilyStitchEngine.evaluate('return key;'),prefix=window.DobbyReviewConfig?.storagePrefix||'';
+  const physicalKey=prefix+nativeKey,physicalValue=raw?raw.getItem.call(frame.localStorage,physicalKey):frame.localStorage.getItem(nativeKey);
+  return {prefix,nativeKey,physicalKey,containsWrittenGrocery:physicalValue?.includes('lait TEST EXPLICITE')===true,databaseNames:(await frame.indexedDB.databases()).map(row=>row.name)};
+ });
+ assert.equal(storageEvidence.containsWrittenGrocery,true,'the written item exists under the actual prefixed native key');
+ if(storageEvidence.prefix)assert.ok(storageEvidence.databaseNames.every(name=>name.startsWith(storageEvidence.prefix)),'bundle databases use the isolated preview prefix');
  await send(page,'acheter du lait TEST EXPLICITE');
  assert.equal((await native(page,'return st.shopFinal.items.filter(item=>item.name==="lait TEST EXPLICITE");')).length,1,'duplicate request does not add another item');
  assert.equal(await page.evaluate(()=>__e02Speech.spoken.length),1,'written requests stay written');
@@ -123,18 +130,31 @@ async function voiceCases(page){
  await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.DobbyCuisine?.ready);
  assert.match(await page.locator('[data-e072-list]').innerText(),/lait TEST EXPLICITE/,'the native grocery result survives reload');
  await page.goto(origin+appPath+'/famille.html#chat',{waitUntil:'domcontentloaded'});await ready(page);
- for(const [question,label,route]of [['missions','Voir les missions',/missions\.html$/],['agenda','Ouvrir l’Agenda',/famille\.html#agenda/],['documents','Documents',/famille\.html#documents/]]){
-  await send(page,question);await page.getByRole('link',{name:label,exact:true}).last().click();await page.waitForURL(route);
+ for(const [question,label,route]of [['missions','Voir les missions',/missions\.html$/],['agenda','Ouvrir l’Agenda',/famille\.html#agenda/],['documents','Documents',/famille\.html#documents?(?:\?|$)/]]){
+  await send(page,question);
+  let target=page.getByRole('link',{name:label,exact:true}).last(),documentRecord=null;
+  if(question==='documents'){
+   const records=await native(page,'return st.familyDocs||[];');
+   if(records.length){
+    target=page.locator('#chat-thread a[href*="famille.html#document?"]').last();
+    const href=new URL(await target.getAttribute('href'),page.url()),id=new URLSearchParams(href.hash.split('?')[1]).get('record');
+    documentRecord=records.find(row=>row.id===id);assert.ok(documentRecord,'the rendered document link identifies a canonical native record');
+    assert.equal(await target.innerText(),documentRecord.title||documentRecord.name);
+   }else assert.match(await target.getAttribute('href'),/#documents$/,'an empty document register keeps its native list fallback');
+  }
+  await target.click();await page.waitForURL(route);
+  if(documentRecord){assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('record'),documentRecord.id);assert.ok((await page.locator('main').innerText()).includes(documentRecord.title||documentRecord.name),'the destination displays the same canonical document');}
   await page.goto(origin+appPath+'/famille.html#chat',{waitUntil:'domcontentloaded'});await ready(page);
  }
  await send(page,'Réserve un billet de train');assert.match(await page.locator('#chat-thread').textContent(),/ne sait pas encore interpréter/);
  await page.evaluate(()=>{delete window.SpeechRecognition;delete window.webkitSpeechRecognition;});
  await button(page,'voice').click();assert.match(await status(page),/dictée.*clavier/i);
  assert.notEqual(await button(page,'voice').getAttribute('aria-pressed'),'true');
+ return storageEvidence;
 }
 (async()=>{
  fs.mkdirSync(out,{recursive:true});const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
- try{
+ let storageEvidence=null;try{
   for(const width of [390,320,1440]){
    const context=await browser.newContext({viewport:{width,height:900},locale:'fr-BE',reducedMotion:'reduce'});await install(context);
    const page=await context.newPage();page.setDefaultTimeout(15000);const errors=[];page.on('pageerror',error=>errors.push(error.message));
@@ -146,13 +166,13 @@ async function voiceCases(page){
    assert.ok(geometry.width/geometry.height<=geometry.sourceRatio+.01,'the frame cannot crop the top or bottom of the original character');assert.equal(geometry.fit,'cover');
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    await page.screenshot({path:path.join(out,`after-${width}.png`)});
-   if(width===390)await voiceCases(page);
+   if(width===390)storageEvidence=await voiceCases(page);
    await page.setViewportSize({width,height:540});await input(page).focus();
    const composer=await page.evaluate(()=>{const footer=document.querySelector('[data-e02-composer]').getBoundingClientRect(),nav=document.querySelector('body > nav[data-e01-chrome]').getBoundingClientRect();return {bottom:footer.bottom,navTop:nav.top,width:document.documentElement.scrollWidth};});
    assert.ok(composer.bottom<=composer.navTop+1,'the message field stays above the dock on a reduced viewport');assert.equal(composer.width,width);
    await page.screenshot({path:path.join(out,`keyboard-simulated-${width}.png`)});
    assert.deepEqual(errors,[]);await context.close();console.log('E02_CONSOLIDATION_PASS',width);
   }
-  if(!process.env.E02_BASELINE)fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',widths:[320,390,1440],speech:'simulated SpeechRecognition and speechSynthesis API boundaries',identity:'simulated native identity output',writers:'real native grocery writer and storage',cases:['multisegment','no autosend on final/end/error','stop','resume','cancel','interim preservation','late callbacks','navigation','identity isolation','sound preference','native grocery persistence and duplicate','module navigation','decoded hero','reduced viewport'],realIPhone:false},null,2)+'\n');
+  if(!process.env.E02_BASELINE)fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',origin,appPath,widths:[320,390,1440],speech:'simulated SpeechRecognition and speechSynthesis API boundaries',identity:'simulated native identity output',writers:'real native grocery writer and storage',storageEvidence,cases:['multisegment','no autosend on final/end/error','stop','resume','cancel','interim preservation','late callbacks','navigation','identity isolation','sound preference','native grocery persistence and duplicate','canonical document link and native empty fallback','module navigation','decoded hero','reduced viewport'],realIPhone:false},null,2)+'\n');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

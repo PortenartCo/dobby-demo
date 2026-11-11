@@ -1,0 +1,43 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /1 contrat et assurance enregistré/. Input:
+
+'✦ Registre des contrats ✦\n' +
+  'ACTES SCELLÉS & ÉCHÉANCES DU FOYER\n' +
+  'Contrats & Assurances du Logis\n' +
+  '\n' +
+  'Retrouvez vos contrats, assurances et échéances renseignées.\n' +
+  '\n' +
+  '1 contrats et assurances enregistrés\n' +
+  '\n' +
+  'Toutes\n' +
+  'Contrats\n' +
+  'Ajouter un contrat\n' +
+  'Importer un fichier\n' +
+  'Prochaines échéances\n' +
+  'TEST Contrat 0\n' +
+  '11 novembre 2027\n' +
+  'Consulter\n' +
+  'TEST Contrat 0\n' +
+  '\n' +
+  'Contrats · Échéance : 2027-11-11\n' +
+  '\n' +
+  'Consulter\n' +
+  'Tous les documents'
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/consolidation-shared.cjs:2:1398 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '✦ Registre des contrats ✦\n' +
+    'ACTES SCELLÉS & ÉCHÉANCES DU FOYER\n' +
+    'Contrats & Assurances du Logis\n' +
+    '\n' +
+    'Retrouvez vos contrats, assurances et échéances renseignées.\n' +
+    '\n' +
+    '1 contrats et assurances enregistrés\n' +
+    '\n' +
+    'Toutes\n' +
+    'Contrats\n' +
+    '...',
+  expected: /1 contrat et assurance enregistré/,
+  operator: 'match',
+  diff: 'simple'
+}

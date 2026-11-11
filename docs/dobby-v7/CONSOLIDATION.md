@@ -29,3 +29,9 @@ GATE0 :95lignes/41IDs et chaque texte source comparés indépendamment avantcode
 Les moteurs, writers, seuils et règles natifs ne sont pas remplacés. Aucun fichier natif V5 ni SQL n’est modifié par cette consolidation. Le catalogue de contenus E05/E06 est unique ; le helper photo E07 est partagé avec E01. Les archives techniques sont conservées, malgré le retrait de la navigation Historique. Le nouvel état de profil de démonstration est un choix explicite sous le préfixe isolé, pas une liaison de compte réelle.
 
 92tests unitaires natifs/sync/scoring/builder passent, dont25600comparaisons scoring Python/JS. Les captures historiques sont conservées ; toutes les nouvelles preuves figurent sous `evidence/consolidation/`. La campagne finale/CI, les résultats du bundle et les reçus HTTP seront ajoutés après contrôle réel, sans transformer les blocages ou limites Safari/iPhone physique en validations.
+
+## Reprise causale de la campagne
+
+La première CI du checkpoint ff76847 a validé les nouvelles suites et les modules avant de s’arrêter dans `register-tools.cjs` : le test supposait encore que « acheter du lait » écrivait toujours dans `extras`. L’accueil affiche maintenant la véritable liste E07, dont l’initialisation native migre ces compléments. L’article est donc conservé dans `shopFinal.items`. Le test contrôle désormais le registre natif actif, sans modification applicative. La campagne reprend au contrôle interrompu, puis aux cas non encore exécutés (y compris le lot2b dont l’ordre JavaScript passe après les lots numériques). Les attentes liées aux données démo existantes de Documents et au chargement du reset E06 ont également été précisées dans les seuls harnais.
+
+Un premier clic de dock dans la recette locale générale a expiré sans cause produit établie ; le contrôle ciblé n’a pas reproduit le défaut, puis la recette complète a réussi à320,390 et1440. La trace initiale est conservée, aucun retry automatique n’est caché dans le test.

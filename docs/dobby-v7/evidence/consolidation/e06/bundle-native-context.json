@@ -1,0 +1,15 @@
+{
+  "nativeContext": null,
+  "connection": {
+    "access": "local",
+    "connected": false,
+    "verified": false,
+    "userId": null,
+    "householdId": null,
+    "memberId": null
+  },
+  "nativeIndexedDBCount": 1,
+  "allDatabasesInReviewPrefix": true,
+  "externalRequests": [],
+  "result": "PASS"
+}

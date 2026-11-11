@@ -1,0 +1,10 @@
+page.waitForFunction: ReferenceError: DobbyFamilyStitch is not defined
+    at eval (eval at predicate (eval at evaluate (:311:30)), <anonymous>:1:29)
+    at predicate (eval at evaluate (:311:30), <anonymous>:7:27)
+    at next (eval at evaluate (:311:30), <anonymous>:29:33)
+    at eval (eval at evaluate (:311:30), <anonymous>:42:13)
+    at UtilityScript.evaluate (<anonymous>:313:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-consolidation.cjs:35:130 {
+  log: []
+}
