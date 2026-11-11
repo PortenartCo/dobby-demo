@@ -1,0 +1,87 @@
+✖ monthly clamp, leap year, year rollover and deterministic replay (1.099388ms)
+✖ projection bounded to 30 previous days and today, not future, no infinite catchup (0.20251ms)
+✖ weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop (0.948425ms)
+✖ Europe Brussels civil days across DST and leap/calendar boundaries (0.097978ms)
+✖ per occurrence reward dedup, independent completion and unknown data preservation (0.218218ms)
+✖ bad metadata or occurrence identity is rejected, never coerced into unique mission (1.051757ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 0
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.530826
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:7:1
+✖ monthly clamp, leap year, year rollover and deterministic replay (1.099388ms)
+  TypeError: core.projectRecurringMissions is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-review-e01-e05/essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:7:113)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:8:1
+✖ projection bounded to 30 previous days and today, not future, no infinite catchup (0.20251ms)
+  TypeError: core.projectRecurringMissions is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-review-e01-e05/essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:8:182)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:9:1
+✖ weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop (0.948425ms)
+  TypeError: core.projectRecurringMissions is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-review-e01-e05/essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:9:186)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:10:1
+✖ Europe Brussels civil days across DST and leap/calendar boundaries (0.097978ms)
+  TypeError: core.brusselsDate is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-review-e01-e05/essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:10:98)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:11:1
+✖ per occurrence reward dedup, independent completion and unknown data preservation (0.218218ms)
+  TypeError: core.projectRecurringMissions is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-review-e01-e05/essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:11:213)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:12:1
+✖ bad metadata or occurrence identity is rejected, never coerced into unique mission (1.051757ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///workspace/dobby-review-e01-e05/essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs:12:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

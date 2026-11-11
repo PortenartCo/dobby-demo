@@ -43,25 +43,45 @@ function moduleDigest(id,value){return id==='missions'?missionDigest(value):dige
 
 // Rewards are append-only; mutable mission conflicts still use the existing chooser.
 let runes;
+// A legacy mission editor can preserve the rune protocol while dropping fields
+// that identify a series. Remembered occurrence identities must never disappear.
+function recurrenceIdentity(row){
+ if(row?.recurrence!==undefined){
+  const value=row.recurrence;
+  if(!value||typeof value!=='object'||Array.isArray(value)||value.version!==1||value.seriesId!==row.id||!Array.isArray(value.rules)||!value.rules.length||value.rules.some(rule=>!rule||typeof rule!=='object'||Array.isArray(rule)))throw Error('Version de récurrence Missions incompatible');
+  return 'series:'+row.id;
+ }
+ if(row?.seriesId!==undefined||row?.occurrenceDate!==undefined){
+  if(typeof row.seriesId!=='string'||!row.seriesId||typeof row.occurrenceDate!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(row.occurrenceDate)||row.id!==row.seriesId+'-r'+row.occurrenceDate.replace(/-/g,''))throw Error('Identité de récurrence Missions incompatible');
+  return 'occurrence:'+row.seriesId+':'+row.occurrenceDate;
+ }
+ return '';
+}
+function retainRecurrences(state,payload){
+ const before=JSON.parse(state?.synced||'{}').manualMissions||[],incoming=new Map((payload.manualMissions||[]).map(row=>[row?.id,row]));
+ for(const row of before){const identity=recurrenceIdentity(row);if(identity&&recurrenceIdentity(incoming.get(row.id))!==identity)throw Error('Version Missions incompatible : série ou historique de récurrence absent. Synchronisation bloquée.');}
+}
 function missionPayload(payload){
  if(!payload||typeof payload!=='object'||Array.isArray(payload))throw Error('Payload Missions invalide');
  if(payload.runeLedgerVersion!==undefined&&payload.runeLedgerVersion!==1)throw Error('Version de runes incompatible');
  if(payload.runeLedgerVersion===1&&!Array.isArray(payload.runeCredits))throw Error('Historique familial de runes invalide');
  if(payload.runeCredits!==undefined&&payload.runeLedgerVersion!==1)throw Error('Version de runes absente');
  for(const key of ['autoTasks','manualMissions'])if(payload[key]!==undefined&&!Array.isArray(payload[key]))throw Error('Registre Missions invalide');
+ for(const row of payload.manualMissions||[])recurrenceIdentity(row);
  return payload;
 }
 function rememberedCredits(){const raw=states.missions?.synced;if(!raw)return [];return JSON.parse(raw).runeCredits||[];}
 function retainedCredits(payload){missionPayload(payload);return runes.mergeCredits(payload.runeCredits||[],runes.mergeCredits(st.runeCredits||[],rememberedCredits()));}
 function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manualMissions:payload.manualMissions||[]};}
 function pendingRunes(){if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const ids=new Set((st.runeCredits||[]).map(c=>c?.missionId));return(st.runeRequests||[]).some(c=>!c||!ids.has(c.missionId));}
-function initialPayload(id){const payload=pick(id);return id==='missions'?{...payload,runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
+function initialPayload(id){const payload=pick(id);return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
 function synchronized(id,revision,payload){return{active:true,revision,synced:moduleDigest(id,id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:payload.runeLedgerVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
 function applyCredits(credits){const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
 function verifyProtocol(state,remote){
  missionPayload(remote.payload);
  if((state.runeProtocol||JSON.parse(state.synced||'{}').runeLedgerVersion===1)&&remote.payload.runeLedgerVersion!==1)throw Error('Version Missions incompatible : historique de runes absent du partage. Synchronisation bloquée.');
+ retainRecurrences(state,remote.payload);
 }
 async function syncMissions(state,remote){
  let credits;
@@ -73,6 +93,7 @@ async function syncMissions(state,remote){
  const revision=Number(remote.revision);if(!Number.isSafeInteger(revision)||revision<1)throw Error('Révision familiale invalide');
  const fields=localEditable!==baseEditable?editableMissions(local):editableMissions(remote.payload);
  const desired={...fields,runeCredits:runes.acceptRequests(credits,st.runeRequests||[],revision+1),runeLedgerVersion:1};
+ try{verifyProtocol(state,{payload:desired});}catch(error){state.conflict={remote,recurrence:true};await persist();throw error;}
  if(missionDigest(desired)===missionDigest(remote.payload)){
   applyShared('missions',desired);Object.assign(state,synchronized('missions',revision,desired));await persist();return;
  }
@@ -116,7 +137,7 @@ function backupLocal(id) {
 function applyShared(id, payload) {
   const def = byId.get(id);
   if (!def || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw Error('Payload invalide');
-  if(id==='missions'&&states.missions&&(states.missions.runeProtocol||JSON.parse(states.missions.synced||'{}').runeLedgerVersion===1)&&payload.runeLedgerVersion!==1)throw Error('Version Missions incompatible : synchronisation des runes bloquée');
+  if(id==='missions')verifyProtocol(states.missions||{},{payload});
   const credits=id==='missions'?retainedCredits(payload):null;
   applying = true;
   try {
