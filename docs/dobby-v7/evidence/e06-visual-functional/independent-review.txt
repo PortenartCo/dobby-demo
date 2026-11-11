@@ -9,3 +9,5 @@ PASS: New tests use real native scoring/confirmation and Canvas pixels/computed 
 PASS: Historical registry Markdown preserved as exact prefix;95 historical matrix rows, gate0, updates and finalSummary unchanged;16 appended rows map to actual registry lines.
 Clarified before commit: baseRegistrySha256 explicitly names REVIEW-CONSOLIDATION.md via baseRegistryPath; separate baseMatrixSha256 identifies the original JSON matrix. Both hashes verified against base blobs.
 No remaining blocking finding. No full test campaign was repeated by the reviewer. Human visual and functional validation is pending.
+
+Continuation review: E03/E02-edge preserve all business checks and add explicit OFF/navigation/reload and OFF/ON animation coverage. Recorder timeline remains correct. Git stable tree hash recomputed against ac03b02 matches, only the five allowed CI/test files differ outside docs. Resume executes E03 and every subsequent suite; mismatch or DOBBY_FINAL=1 runs all. No blocking finding.
