@@ -184,3 +184,20 @@ Cette section consigne les retours utilisateur **postérieurs** à la consolidat
 | E06-04 et E05-01 — blasons | L'utilisateur constate **un cadre vide « Blason officiel indisponible dans cette démonstration »** au résultat Gryffondor et exige un **grand blason visible** conforme à la Maison sélectionnée, cohérent avec E05. L'exigence antérieure de blasons officiels demeure. Ne pas présenter un placeholder ni un pictogramme générique comme solution définitive ; les droits de redistribution des blasons officiels pour une URL publique restent à établir, distincts d'un usage familial privé. Rechercher une solution autorisée sans changer silencieusement le choix artistique de l'utilisateur. | TOUJOURS BLOQUÉ / REVUE VISUELLE NON VALIDÉE |
 
 **Ne pas confondre maquette et fonctionnalité :** le ZIP \`(10)\` est une **référence visuelle du Choixpeau**, pas l'autorisation de remplacer les questionnaires E06, ni de remodeler E05/E07. L'ordre de développement antérieurement approuvé reste : consolidation et corrections de revue → écrans complémentaires Taverne E07.3 → Menu → Famille → reste à définir. Le prochain lot de corrections devra tracer ces nouvelles exigences explicitement, sans les englober dans les 95 lignes historiques comme déjà vérifiées.
+
+
+---
+
+## Complément d’implémentation E06 — branche indépendante, 11 novembre 2026
+
+Ce complément décrit les corrections techniques de la mission `E06-VISUAL-FUNCTIONAL-SPEC.md`, depuis66a1395, sans modifier les décisions précédentes. Tests et intégration locale ne valent pas validation utilisateur ; aucune publication ni fusion n’est autorisée par cette livraison.
+
+- E06-VC-01 — Choixpeau : le panorama1376×768 de ZIP10 est intégré comme illustration ; le HTML à dix questions reste une référence archivée. Les six questions canoniques Maison, cinq Patronus et départages restent inchangés. État technique : vérifié320/390/1440 ; revue utilisateur attendue.
+- E06-VC-02 — Blasons : les quatre illustrations originales Stitch de ZIP11 sont utilisées via une correspondance canonique partagée E05/résultat E06/identité finale (lion/serpent/aigle/blaireau). Aucun placeholder n’est maintenu pour ces ressources disponibles. Elles ne sont pas présentées comme officielles ; le sujet historique des droits des blasons officiels demeure distinct. État technique : vérifié320/390/1440 ; revue utilisateur attendue.
+- E06-VC-03 — Préférences : Effets ON sans préférence enregistrée et Son OFF ; une désactivation explicite reste prioritaire, après navigation et rechargement. La réduction système est respectée sans modifier la préférence enregistrée. État technique : vérifié320/390/1440.
+- E06-VC-04 — Traversée : le Canvas existant, le bouton, le badge, les décors et la lumière passent visiblement au vert, puis naviguent au Foyer. OFF/réduction gardent le chemin rapide. Les couleurs réellement peintes, captures et délais sont conservés. État technique : vérifié320/390/1440.
+- E06-VC-05 — Replay : « Revoir le Rituel » est accessible tôt au Foyer et dans les paramètres du Profil ; seule cette demande explicite force la relecture. Membres, réponses, résultats et runes ne sont pas réinitialisés. État technique : vérifié320/390/1440.
+
+Les archives et empreintes originales sont conservées ; aucun modèle canonique, writer natif, scoring ou mécanisme de synchronisation n’est remplacé. La campagne finale commune est justifiée uniquement par la préférence partagée modifiée.
+
+Preuves et réserves : [rapport E06 visuel/fonctionnel](E06-VISUAL-FUNCTIONAL.md). Code intégré localement ; déploiement non effectué et validation humaine en attente. L’ordre des chantiers futurs reste inchangé.

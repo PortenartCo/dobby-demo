@@ -1,0 +1,50 @@
+[
+  {
+    "width": 320,
+    "status": "PASS",
+    "mode": "art-verified",
+    "houseCount": 4,
+    "contexts": [
+      "result",
+      "profile",
+      "final"
+    ],
+    "canonicalQuestions": {
+      "house": 6,
+      "patronus": 5
+    },
+    "ledger": "unchanged"
+  },
+  {
+    "width": 390,
+    "status": "PASS",
+    "mode": "art-verified",
+    "houseCount": 4,
+    "contexts": [
+      "result",
+      "profile",
+      "final"
+    ],
+    "canonicalQuestions": {
+      "house": 6,
+      "patronus": 5
+    },
+    "ledger": "unchanged"
+  },
+  {
+    "width": 1440,
+    "status": "PASS",
+    "mode": "art-verified",
+    "houseCount": 4,
+    "contexts": [
+      "result",
+      "profile",
+      "final"
+    ],
+    "canonicalQuestions": {
+      "house": 6,
+      "patronus": 5
+    },
+    "ledger": "unchanged"
+  }
+]

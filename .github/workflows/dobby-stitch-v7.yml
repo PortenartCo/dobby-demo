@@ -40,6 +40,7 @@ jobs:
           node --check essai-stitch-v7/bridge.js
           node --check essai-stitch-v7/chrome.js
           node --check essai-stitch-v7/home.js
+          node --check essai-stitch-v7/ceremony-art.js
           node --check essai-stitch-v7/ritual.js
           node --check essai-stitch-v7/ritual-effects.js
           node --check essai-stitch-v7/engine-policy.js

@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: The visible button gradient becomes emerald: {"buttonGradient":"linear-gradient(to right, rgb(249, 187, 95), rgb(230, 168, 71), rgb(212, 155, 66))","buttonFirstColor":[249,187,95],"buttonText":"Traverser la cheminée","badgeColor":[249,187,95],"badgeText":"Chemin de Traverse · Âtre N° 7","pingColor":[212,155,66],"flashOpacity":0.75}
+    at /workspace/dobby-e06-visual-consolidation/essai-stitch-v7/tests/e06-effects-transition.cjs:43:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

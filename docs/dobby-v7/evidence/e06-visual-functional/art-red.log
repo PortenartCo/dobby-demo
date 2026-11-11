@@ -1,0 +1,13 @@
+AssertionError [ERR_ASSERTION]: The correct original Stitch crest is actually rendered in revelation
+
+0 !== 1
+
+    at art (/workspace/dobby-e06-visual-consolidation/essai-stitch-v7/tests/e06-art.cjs:12:111)
+    at async /workspace/dobby-e06-visual-consolidation/essai-stitch-v7/tests/e06-art.cjs:15:106 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
