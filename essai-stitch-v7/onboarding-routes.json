@@ -18,10 +18,8 @@
   {
     "view": "onboarding-house",
     "id": "dobby_le_myst_re_des_quatre_maisons",
-    "status": "verified-partial",
-    "blocked": [
-      "Original sorting-hat image URL returns HTML, illustration unavailable"
-    ]
+    "status": "verified-functional",
+    "blocked": []
   },
   {
     "view": "onboarding-house-result",

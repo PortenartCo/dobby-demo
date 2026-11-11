@@ -1,0 +1,144 @@
+{
+  "received": "2026-11-11",
+  "mission": "E06 visual and functional consolidation",
+  "archives": [
+    {
+      "archive": "archive-10.zip",
+      "providedName": "stitch_dobby_assistant_mobile_app (10).zip",
+      "sha256": "21f27e807d251eb93b79da0d6674c6f140115a83598eba0f54f5ed4dc09e0a3d",
+      "bytes": 2039070,
+      "files": [
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/cinematic_photorealistic_dark_fantasy_still_of_the_ancient_magical_sorting_hat/screen.png",
+          "file": "design/e06/references/visual-20261111/zip-10/stitch_dobby_assistant_mobile_app/cinematic_photorealistic_dark_fantasy_still_of_the_ancient_magical_sorting_hat/screen.png",
+          "sha256": "0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9",
+          "bytes": 1553869,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/dobby_la_c_r_monie_du_choixpeau_visuel_cin_matographique/code.html",
+          "file": "design/e06/references/visual-20261111/zip-10/stitch_dobby_assistant_mobile_app/dobby_la_c_r_monie_du_choixpeau_visuel_cin_matographique/code.html",
+          "sha256": "858f24c8ffcb2d4026986d7c1cadad95bbb4b4ef624bfa729e9c3c086b97b814",
+          "bytes": 34196
+        },
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/dobby_la_c_r_monie_du_choixpeau_visuel_cin_matographique/screen.png",
+          "file": "design/e06/references/visual-20261111/zip-10/stitch_dobby_assistant_mobile_app/dobby_la_c_r_monie_du_choixpeau_visuel_cin_matographique/screen.png",
+          "sha256": "d05a5dac0d0f3e7b89c4c5ed7c0d6221cf24f27074364480d7aa10e85fc87e65",
+          "bytes": 476784,
+          "width": 582,
+          "height": 1600
+        },
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/apothecary_curiosities/DESIGN.md",
+          "file": "design/e06/references/visual-20261111/zip-10/stitch_dobby_assistant_mobile_app/apothecary_curiosities/DESIGN.md",
+          "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+          "bytes": 12042
+        }
+      ]
+    },
+    {
+      "archive": "archive-11.zip",
+      "providedName": "stitch_dobby_assistant_mobile_app (11).zip",
+      "sha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
+      "bytes": 5911139,
+      "files": [
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/original_friendly_and_courageous_heraldic_emblem_of_a_warm_golden_amber_badger/screen.png",
+          "file": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_friendly_and_courageous_heraldic_emblem_of_a_warm_golden_amber_badger/screen.png",
+          "sha256": "221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4",
+          "bytes": 1541475,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/original_majestic_heraldic_emblem_of_a_golden_celestial_lion_crest_with_royal/screen.png",
+          "file": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_majestic_heraldic_emblem_of_a_golden_celestial_lion_crest_with_royal/screen.png",
+          "sha256": "7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c",
+          "bytes": 1421843,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/original_wise_and_majestic_heraldic_emblem_of_a_bronze_celestial_soaring_eagle/screen.png",
+          "file": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_wise_and_majestic_heraldic_emblem_of_a_bronze_celestial_soaring_eagle/screen.png",
+          "sha256": "77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d",
+          "bytes": 1464723,
+          "width": 1024,
+          "height": 1024
+        },
+        {
+          "archivePath": "stitch_dobby_assistant_mobile_app/original_elegant_heraldic_emblem_of_an_emerald_celestial_coiled_serpent_viper/screen.png",
+          "file": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_elegant_heraldic_emblem_of_an_emerald_celestial_coiled_serpent_viper/screen.png",
+          "sha256": "a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9",
+          "bytes": 1513821,
+          "width": 1024,
+          "height": 1024
+        }
+      ]
+    }
+  ],
+  "activeResources": {
+    "houses": {
+      "gryffindor": {
+        "src": "./assets/ceremony-v2/house-gryffindor.png",
+        "alt": "Blason original Stitch de Gryffondor — lion doré",
+        "sha256": "7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c",
+        "width": 1024,
+        "height": 1024,
+        "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_majestic_heraldic_emblem_of_a_golden_celestial_lion_crest_with_royal/screen.png",
+        "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
+        "kind": "original-stitch-illustration",
+        "official": false
+      },
+      "slytherin": {
+        "src": "./assets/ceremony-v2/house-slytherin.png",
+        "alt": "Blason original Stitch de Serpentard — serpent émeraude",
+        "sha256": "a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9",
+        "width": 1024,
+        "height": 1024,
+        "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_elegant_heraldic_emblem_of_an_emerald_celestial_coiled_serpent_viper/screen.png",
+        "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
+        "kind": "original-stitch-illustration",
+        "official": false
+      },
+      "ravenclaw": {
+        "src": "./assets/ceremony-v2/house-ravenclaw.png",
+        "alt": "Blason original Stitch de Serdaigle — aigle bronze",
+        "sha256": "77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d",
+        "width": 1024,
+        "height": 1024,
+        "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_wise_and_majestic_heraldic_emblem_of_a_bronze_celestial_soaring_eagle/screen.png",
+        "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
+        "kind": "original-stitch-illustration",
+        "official": false
+      },
+      "hufflepuff": {
+        "src": "./assets/ceremony-v2/house-hufflepuff.png",
+        "alt": "Blason original Stitch de Poufsouffle — blaireau ambré",
+        "sha256": "221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4",
+        "width": 1024,
+        "height": 1024,
+        "source": "design/e06/references/visual-20261111/zip-11/stitch_dobby_assistant_mobile_app/original_friendly_and_courageous_heraldic_emblem_of_a_warm_golden_amber_badger/screen.png",
+        "sourceArchiveSha256": "d77a4203d51689d7bd1bd42d128cc2a1d2682937151a2ce5db7a8cdfe46f2bc2",
+        "kind": "original-stitch-illustration",
+        "official": false
+      }
+    },
+    "sortingHat": {
+      "src": "./assets/ceremony-v2/sorting-hat-cinematic.png",
+      "alt": "Choixpeau ancien et expressif sur son tabouret, dans une grande salle gothique éclairée de chandelles — illustration cinématographique Stitch",
+      "sha256": "0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9",
+      "width": 1376,
+      "height": 768,
+      "source": "design/e06/references/visual-20261111/zip-10/stitch_dobby_assistant_mobile_app/cinematic_photorealistic_dark_fantasy_still_of_the_ancient_magical_sorting_hat/screen.png",
+      "sourceArchiveSha256": "21f27e807d251eb93b79da0d6674c6f140115a83598eba0f54f5ed4dc09e0a3d",
+      "kind": "provided-stitch-panoramic-illustration"
+    }
+  },
+  "protected": "The source ceremony HTML and its ten questions are archival composition references only. No question, answer, scoring, model, writer or sync code is imported from it.",
+  "originalsUnaltered": true,
+  "webCopies": "Byte-for-byte copies; historical assets remain unchanged.",
+  "publication": "No publication or deployment authorized by this mission."
+}

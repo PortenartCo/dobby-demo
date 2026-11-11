@@ -2147,10 +2147,8 @@
       {
         "view": "onboarding-house",
         "id": "dobby_le_myst_re_des_quatre_maisons",
-        "status": "verified-partial",
-        "blocked": [
-          "Original sorting-hat image URL returns HTML, illustration unavailable"
-        ],
+        "status": "verified-functional",
+        "blocked": [],
         "route": "famille.html#onboarding-house",
         "template": "templates/onboarding/onboarding-house.html",
         "source": "design/e06/references/stitch/dobby_le_myst_re_des_quatre_maisons/code.html",
@@ -2284,9 +2282,9 @@
       "Family reconstruction"
     ],
     "sortingHat": {
-      "type": "original substitute; not original Stitch media",
-      "asset": "assets/onboarding/sorting-hat-original.svg",
-      "provenance": "assets/onboarding/sorting-hat-original.provenance.json"
+      "type": "supplied original Stitch cinematic panorama; existing canonical questions preserved",
+      "asset": "assets/ceremony-v2/sorting-hat-cinematic.png",
+      "provenance": "assets/ceremony-v2/provenance.json"
     },
     "speech": "explicit send; browser natural end pauses and keeps transcript; physical Safari not verified",
     "preferences": "one native st.stitchPreferences record including ceremony"

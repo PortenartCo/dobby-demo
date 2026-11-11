@@ -4,9 +4,11 @@ window.DobbyMagicProfile=(()=>{'use strict';
  const make=(tag,text='',className='')=>{const el=Object.assign(document.createElement(tag),{textContent:text,className});if(tag==='button')el.dataset.magicControl='true';return el;};
  function sprite(item,kind){const el=make('span','','mp-sprite mp-'+kind+'-sprite');el.setAttribute('role','img');el.setAttribute('aria-label',item.name);el.dataset.mediaId=item.id;el.style.backgroundImage='url("'+item.asset+'")';el.style.backgroundPosition=(item.index%4/3*100)+'% '+(Math.floor(item.index/4)/(kind==='patronus'?2:1)*100)+'%';return el;}
  function houseEmblem(house){
-  // E05-01 remains blocked: no official asset carries verified republication
-  // rights. A neutral notice must never be mistaken for an official crest.
-  const slot=make('p','Blason officiel indisponible dans cette démonstration.','mp-emblem mp-crest-unavailable');slot.dataset.houseCrest=house.id;slot.setAttribute('role','note');return slot;
+  // All three views consume the same supplied original Stitch resource map.
+  // These illustrations are deliberately not labelled as official House crests.
+  const art=window.DobbyCeremonyArt?.houses[house?.id];
+  if(!art){const notice=make('p','Illustration de Maison indisponible.','mp-emblem mp-art-unavailable');notice.setAttribute('role','note');return notice;}
+  const image=make('img','','mp-emblem mp-house-illustration');image.src=art.src;image.alt=art.alt;image.width=art.width;image.height=art.height;image.decoding='async';image.loading='eager';image.dataset.houseCrest=house.id;image.dataset.artOrigin='stitch-original';return image;
  }
  function runePresentation(member){
   const reward=window.DobbyMemberAvatar.profile(member);reward.classList.add('mp-card','mp-runes');

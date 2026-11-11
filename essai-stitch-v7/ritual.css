@@ -19,7 +19,7 @@ body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
 #ritual-badge{position:relative;z-index:20;margin:0 8px 8px;padding:5px 10px;border-radius:999px;background:#1e100cdb;border:1px solid #d49b4266;backdrop-filter:blur(6px);display:flex;gap:8px;align-items:center;font:10px 'Ritual Cinzel',serif;letter-spacing:.1em;color:#f9bb5f;text-align:center}
 #badge-ping{width:5px;height:5px;border-radius:50%;background:#d49b42;flex-shrink:0}
 #interaction-panel{position:relative;z-index:20;padding:14px 20px 12px;background:linear-gradient(to top,#120805,#1a0e0af2 85%,#180b07);border-top:1px solid #d49b4240;flex-shrink:0}
-#panel-content-text{text-align:center;margin-bottom:16px;transition:opacity .7s}
+#panel-content-text{text-align:center;margin-bottom:16px;transition:opacity .7s,transform .7s}
 #intro-title{font:700 28px/1.2 'Playfair Display',serif;color:#f9bb5f;margin:0;text-shadow:0 2px 12px #d49b4259}
 #intro-subtitle{font:italic 12px/1.5 'Ritual Jakarta',sans-serif;color:#eec66a;margin:6px auto 0;max-width:320px}
 #panel-actions-wrapper{display:flex;flex-direction:column;gap:12px}
@@ -37,7 +37,17 @@ body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
 .ritual-status{font:11px/1.4 'Ritual Jakarta',sans-serif;color:#eec66a;margin:6px 0 0;min-height:0}.ritual-status:empty{display:none}
 #iphone-app-frame button:focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}#iphone-app-frame button:disabled{opacity:.7;cursor:wait}
 #iphone-app-frame.ritual-crossing #scene-wrapper{transform:scale(1.22) translateY(-2%);filter:brightness(1.15) hue-rotate(45deg) saturate(1.3)}
-#iphone-app-frame.ritual-crossing #floo-vortex-flash{opacity:.75}#iphone-app-frame.ritual-crossing #panel-content-text{opacity:.3}
+#iphone-app-frame.ritual-crossing #floo-vortex-flash{opacity:.75}
+#iphone-app-frame.ritual-crossing #panel-content-text{opacity:.25;transform:translateY(14px)}
+/* Emerald controls/badge follow the original Stitch transition. Keep them
+   visible so the colour change and the immediate Skip action remain legible. */
+#iphone-app-frame.ritual-crossing #btn-floo-trigger{animation:none!important;background:linear-gradient(to right,rgba(16,185,129,.94),#059669,#0f766e);color:#f0fdf4;border-color:#6ee7b799;box-shadow:0 0 28px #10b9818c;opacity:1}
+#iphone-app-frame.ritual-crossing #btn-label{letter-spacing:.03em;min-width:0}
+#iphone-app-frame.ritual-crossing #btn-beacon-dot{background:#6ee7b7;box-shadow:0 0 16px #34d399}
+#iphone-app-frame.ritual-crossing #ritual-badge{border-color:#34d39988;box-shadow:0 0 20px #10b98133;background:#052e26e6}
+#iphone-app-frame.ritual-crossing #badge-text{color:#6ee7b7}
+#iphone-app-frame.ritual-crossing #badge-ping{background:#34d399;box-shadow:0 0 10px #34d399}
+#iphone-app-frame.ritual-crossing #panel-security-seal{opacity:.45;transform:translateY(3px)}
 .e06-ritual-settings{padding:16px;margin-top:16px;border:1px solid #d49b4255;border-radius:12px;display:flex;flex-direction:column;gap:12px;color:#eec66a}.e06-ritual-settings h3{font:600 18px 'Playfair Display',serif;margin:0}.e06-ritual-settings label{display:flex;gap:10px;align-items:center;font-size:14px;line-height:1.5}.e06-ritual-settings input{width:20px;height:20px;min-height:20px;flex-shrink:0;accent-color:#d49b42}.e06-ritual-settings .fa-button{font-size:14px}
 @media(min-width:640px){#iphone-app-frame.e06-ritual-scene{height:min(844px,calc(100dvh - var(--ritual-banner,0px) - 24px));margin:12px auto!important;border-radius:44px;box-shadow:0 25px 80px #000e,0 0 0 1px #d49b4240}}
 @media(max-width:350px){#interaction-panel{padding-left:14px;padding-right:14px}#intro-title{font-size:25px}#btn-floo-trigger{letter-spacing:.04em}#ritual-badge{font-size:8px}}
