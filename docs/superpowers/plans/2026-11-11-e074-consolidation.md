@@ -68,6 +68,6 @@
 - [x] Effets ON/SonOFF sans préférence, OFF explicite conservé ; pixels/classes sur Taverne/Grimoire/Fiche/Cuisine/Import/Courses, réduction système et absence de son automatique.
 - [x] Réutiliser tests E07.3 concernés, adapter uniquement attentes devenues caduques avec preuve ; frontières natives et un vrai parcours E07 complet aux3largeurs, sans répétition sans cause.
 - [x] Rapprocher les61IDs :42corrections,10préservations,4remplacements,5reports. Chaque résultat a code/test/preuve ou vrai blocage ; vérifier conservation des arbres historiques.
-- [ ] Source/build propres et reproductibles, nouveau profil `e074`, nouveau préfixe `dobby-review-e074-20261111|`, CI sur SHA réel et aperçu local sans backend.
-- [ ] Revue finale et corrections causales, pousser seule branche source ; si tous contrôles verts, checkout publication indépendant depuis main récent et ajout du seul sous-arbre statique autorisé.
-- [ ] Vérifier commit publication, Pages, octets HTTP et parcours hébergés/sentinelles ; rapport des cinq niveaux d’état et URL. E07 reste partiel pour les deux pages reportées. Arrêt après publication vérifiée ou blocage réel.
+- [x] Source/build propres et reproductibles, nouveau profil `e074`, nouveau préfixe `dobby-review-e074-20261111|`, CI sur SHA réel et aperçu local sans backend.
+- [x] Revue finale et corrections causales, pousser seule branche source ; si tous contrôles verts, checkout publication indépendant depuis main récent et ajout du seul sous-arbre statique autorisé.
+- [x] Vérifier commit publication, Pages, octets HTTP et parcours hébergés/sentinelles ; rapport des cinq niveaux d’état et URL. E07 reste partiel pour les deux pages reportées. Arrêt après publication vérifiée ou blocage réel.

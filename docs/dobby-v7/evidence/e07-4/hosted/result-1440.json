@@ -1,0 +1,41 @@
+{
+  "width": 1440,
+  "status": "PASS",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-e07-consolidation-review-20261111/",
+  "sourceSha": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+  "manifestSha256": "d593f89221ffac710d1f26bee1dda4eeb791dd10f5e59b60004e0fffba9b533f",
+  "namespace": "dobby-review-e074-20261111|",
+  "actualUI": [
+    "calendar",
+    "catalogue",
+    "favorite confirmation/reload",
+    "same-ID editing",
+    "copy prompt",
+    "V1 multi-import/cancel",
+    "V2 ZIP/original photo/TM5 unverified",
+    "duplicate skip",
+    "reload",
+    "courses writer",
+    "five destinations",
+    "step images/ingredients",
+    "two real deadline timers/reload/ack",
+    "Stitch end modal",
+    "native calendar planning",
+    "recoverable removal",
+    "JSON export",
+    "two-tab isolated reset"
+  ],
+  "photoSha256": "606067b97aa92524f76aac9c4ba64f112e37865a577e8a336734ca8d95ec8665",
+  "photoDimensions": [
+    10,
+    8
+  ],
+  "nativePlanningPreserved": true,
+  "rawLocalAndSessionSentinels": "PASS",
+  "rawIndexedDBSentinels": "PASS",
+  "unrelatedOriginalPhotoBlobs": "PASS",
+  "backendRequests": 0,
+  "externalRequests": 0,
+  "missingResources": 0,
+  "realSynchronization": "NOT_VERIFIED"
+}

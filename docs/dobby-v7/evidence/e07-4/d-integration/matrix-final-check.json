@@ -1,0 +1,18 @@
+{
+  "check": "E074_MATRIX_LINKS_AND_COVERAGE",
+  "date": "2026-11-11",
+  "rows": 61,
+  "initial": {
+    "A_CORRIGER": 42,
+    "A_PRESERVER": 10,
+    "REMPLACE": 4,
+    "REPORTE": 5
+  },
+  "verdicts": {
+    "PASS": 52,
+    "HORS_PÉRIMÈTRE": 9
+  },
+  "blocked": [],
+  "finalGate": true,
+  "scope": "Schema, IDs, classifications, dates and existence of local links. Functional verdicts remain evidence-backed review decisions."
+}

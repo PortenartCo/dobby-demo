@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "verifiedAtUTC": "2026-11-11T17:23:59.745906+00:00",
+  "sourceSha": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+  "publicationSha": "31f81cceb6602f83b602d11d6ef0c806a38e07df",
+  "previewURL": "https://portenartco.github.io/dobby-demo/essai-dobby-e07-consolidation-review-20261111/",
+  "ci": {
+    "stitch": {
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43062969284",
+      "headSha": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+      "conclusion": "success"
+    },
+    "sync": {
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43062969259",
+      "headSha": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+      "conclusion": "success"
+    },
+    "pages": {
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43066016251",
+      "headSha": "31f81cceb6602f83b602d11d6ef0c806a38e07df",
+      "conclusion": "success"
+    }
+  },
+  "http": {
+    "newHTTPFilesVerified": 283,
+    "sourceGitBlobsVerified": 278,
+    "unchangedOldGitEntries": 21,
+    "oldHTTPIndexesVerified": 16,
+    "manifestSha256": "d593f89221ffac710d1f26bee1dda4eeb791dd10f5e59b60004e0fffba9b533f"
+  },
+  "hostedWidths": [
+    320,
+    390,
+    1440
+  ],
+  "hostedRequests": {
+    "external": 0,
+    "mutations": 0,
+    "missingResources": 0
+  },
+  "remoteHeadsUnchangedExceptAuthorizedMainPublication": {
+    "refs/heads/feat/dobby-e073-taverne-grimoire-20261111": "0f410eeeec0eed2796b37a8569a20ea792a63746",
+    "refs/heads/fix/dobby-e03-e06-review-20261111": "9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a",
+    "refs/heads/main": "31f81cceb6602f83b602d11d6ef0c806a38e07df"
+  },
+  "applicationBranchMerged": false,
+  "supabaseChanged": false,
+  "paidAIAPIAdded": false,
+  "E07Overall": "PARTIAL: Choisir un repas / Préparer la liste de courses remain deferred",
+  "physicalSafariIOS": "NOT_VERIFIED",
+  "realPhotoSynchronization": "NOT_VERIFIED"
+}
