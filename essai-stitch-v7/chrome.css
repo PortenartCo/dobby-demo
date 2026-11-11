@@ -66,3 +66,6 @@ body.dv7-panel-visible #dv7-engine{left:50%!important;right:auto!important;width
 .e01-effects-off .anim-sparkle{display:none!important}
 body:is([data-family-view=chat],[data-family-view=chat-2]) > [aria-hidden=true]:has(.anim-sparkle){display:none}
 @media(prefers-reduced-motion:reduce){.anim-sparkle{display:none!important}}
+
+/* E07.3 reuses the common ambience on library routes; explicit OFF also stops entry transitions. */
+.e01-effects-off body[data-cuisine-view="recipes"] .cu-enter,.e01-effects-off body[data-cuisine-view="recipe-entry"] .cu-enter,.e01-effects-off body[data-cuisine-view="recipe-ai"] .cu-enter{animation:none!important}

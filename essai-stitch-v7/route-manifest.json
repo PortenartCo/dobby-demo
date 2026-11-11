@@ -2290,5 +2290,37 @@
     },
     "speech": "explicit send; browser natural end pauses and keeps transcript; physical Safari not verified",
     "preferences": "one native st.stitchPreferences record including ceremony"
+  },
+  "e073Review": {
+    "sourceBase": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+    "scope": [
+      "taverne",
+      "recipes",
+      "recipe-entry",
+      "recipe-ai"
+    ],
+    "sourceCountUnchanged": true,
+    "workflowRoutes": [
+      {
+        "view": "recipe-entry",
+        "templateAlias": "recipe-add",
+        "type": "choice-and-management"
+      },
+      {
+        "view": "recipe-ai",
+        "templateAlias": "batch",
+        "type": "guided-external-AI-import"
+      }
+    ],
+    "contract": "dobby-recipes V1 retained, V2 enriched; native validator/writer",
+    "recipePhotos": "existing native local blob store; family transfer not connected",
+    "subpagesNotReviewed": [
+      "recipe",
+      "pick",
+      "cook",
+      "tm5",
+      "shop"
+    ],
+    "report": "docs/dobby-v7/E07-3-TAVERNE-GRIMOIRE.md"
   }
 }

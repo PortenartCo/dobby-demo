@@ -14,7 +14,7 @@ function temporary(node,duration){
  document.body.append(node);transients.set(node,setTimeout(()=>{node.remove();transients.delete(node);},duration));
 }
 function syncAmbience(effects=lastEffects){
- lastEffects=!!effects;const home=document.body.dataset.dv7Screen==='traverse'||['chat','chat-2'].includes(document.body.dataset.familyView),reduced=reducedMotion.matches;
+ lastEffects=!!effects;const home=document.body.dataset.dv7Screen==='traverse'||['chat','chat-2'].includes(document.body.dataset.familyView)||['recipes','recipe-entry','recipe-ai'].includes(document.body.dataset.cuisineView),reduced=reducedMotion.matches;
  const paused=document.hidden||pageAway||!document.getElementById('dv7-panel')?.hidden||document.documentElement.classList.contains('dv7-loading');
  if(!effects||reduced){clearTransient();}
  if(!home||!effects||reduced){ambientLayer?.remove();ambientLayer=null;ambientScene?.classList.remove('e013-scene');ambientScene=null;document.body.classList.remove('e013-paused');if(home)document.body.dataset.e013State=!effects?'off':'reduced';return;}

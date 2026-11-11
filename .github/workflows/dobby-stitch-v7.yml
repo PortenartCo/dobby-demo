@@ -57,6 +57,11 @@ jobs:
           node --check essai-stitch-v7/tests/smoke.cjs
           node --check essai-stitch-v7/build-cuisine.cjs
           node --check essai-stitch-v7/cuisine-engine.js
+          node --check essai-stitch-v7/recipe-import.js
+          node --check essai-stitch-v7/recipe-import-format.mjs
+          node --check essai-stitch-v7/recipe-import-zip.mjs
+          node --check scripts/review/e073-config.js
+          node --check essai-stitch-v7/tests/e07-3-ci.cjs
           node --check essai-stitch-v7/cuisine.js
           node --check essai-stitch-v7/cuisine-e07.js
           node --check essai-stitch-v7/cuisine-list.js
@@ -97,6 +102,8 @@ jobs:
         run: node --test essai-stitch-v7/tests/integrated-build.test.cjs
       - name: E06 exhaustive scoring, identity and draft isolation
         run: node --test essai-stitch-v7/tests/e06-*.test.mjs
+      - name: E07.3 recipe format, ZIP and isolated preview contracts
+        run: node --test essai-stitch-v7/tests/e07-3-*.test.*
       - name: Source derivation remains reproducible
         run: |
           npm ci --ignore-scripts --prefix essai-stitch-v7

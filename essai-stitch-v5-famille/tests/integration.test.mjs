@@ -9,7 +9,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and E05 native member writer extension', () => {
+test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3 native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html');
   const preview=source('../index.html');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs
@@ -18,11 +18,16 @@ test('preview V5 source matches original except isolated storage and E05 native 
   assert.ok(originalMemberWriter,'Original native member writer boundary');
   const extendedMemberWriter=/  let member;\n  try\{member=window\.DobbyMagicIdentity\.patch[\s\S]*?  render\(\);return;/;
   assert.match(preview,extendedMemberWriter);
-  const normalized=preview.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e06-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
+  // Fixed literal amendments, not broad function skips: every byte outside the
+  // reviewed E07.3 amendments must still match the original V5 source.
+  const amendments=JSON.parse(source('./fixtures/e07-3-native-extensions.json'));
+  let e073Normalized=preview;
+  for(const amendment of amendments.patches){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each approved amendment occurs exactly once');e073Normalized=e073Normalized.replace(amendment.after,amendment.before);}
+  const normalized=e073Normalized.replace(extendedMemberWriter,originalMemberWriter).replace('<script src="./family-profile.js?v=20261110-e06-1"></script>\n','').replaceAll('\r\n','\n').replaceAll('dobby-v5-familial-preview-20261108','dobby-stitch-preview-20261105')
     .replaceAll('dobby-v5-familial-files-20261108','dobby-stitch-preview-files-20261105')
     .replaceAll('./stitch-v5.js?v=20261110-e06-1','./stitch-v5.js?v=20261107-1')
     .replace("/* DOBBY_BOOT_ROUTE_SAFE_V1 */\nwindow.__dobbyStartupRoute = { page: st.page, detail: st.detail };\nst.page = 'home';\nst.detail = null;\n", '');
-  assert.equal(normalized,original.replaceAll('\r\n','\n'));
+  assert.equal(normalized===original.replaceAll('\r\n','\n'),true,'Every native source byte outside the exact approved amendments is preserved');
   assert.match(preview,/dobby-v5-familial-preview-20261108/);
   assert.match(preview,/dobby-v5-familial-files-20261108/);
   assert.doesNotMatch(preview,/indexedDB\.open\('dobby-stitch-preview-files-20261105'/);
