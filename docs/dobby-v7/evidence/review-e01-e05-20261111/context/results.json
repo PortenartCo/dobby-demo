@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:8891",
+  "appPath": "/essai-stitch-v7",
+  "cases": [
+    "positive replacement",
+    "stable ID",
+    "quantity unspecified and existing",
+    "remove after reload",
+    "native persistence",
+    "unknown fields",
+    "ambiguity",
+    "tomorrow topic correction",
+    "stale record",
+    "owner and household isolation",
+    "save failure rollback",
+    "legacy canonical transition",
+    "disabled model contract and rejected target",
+    "deleted source exchange"
+  ],
+  "externalRequests": "blocked",
+  "identity": "native identity output simulated; no real account",
+  "writers": "real CuisineList add/edit/remove and native storage",
+  "generalAI": false,
+  "shared": {
+    "status": "PASS",
+    "transport": "fully intercepted HTTP fixture, no real account",
+    "nativeWriters": true,
+    "nativeIndexedDB": true,
+    "cases": [
+      "pending-to-clean stable reference",
+      "remote content change blocks",
+      "connected fresh list canonical writer"
+    ]
+  }
+}

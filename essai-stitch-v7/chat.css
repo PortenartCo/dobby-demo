@@ -14,6 +14,10 @@ body:is([data-family-view=chat],[data-family-view=chat-2]) .e02-composer.fixed,b
 .e02-composer .e02-composer-button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;flex:0 0 44px;background:#f9bb5f;color:#462a00;box-shadow:0 2px 8px #0006}
 .e02-status{font-size:11px;line-height:16px;color:#d4c4b1;text-align:center;min-height:16px;margin:0;padding-bottom:6px}
 .e02-voice-controls,.e02-message-actions{display:flex;gap:8px;flex-wrap:wrap}
+.e02-voice-countdown{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;padding:4px 10px;border:1px solid #d49b4266;border-radius:10px;background:#372622;color:#ffddb2;font-size:13px;line-height:20px}
+.e02-voice-countdown .e02-text-action{min-height:40px}
+.e02-voice-settings{display:flex;align-items:center;justify-content:center;gap:6px;color:#d4c4b1;font-size:11px;line-height:16px;padding-block:3px}
+.fa-active .e02-voice-settings select{min-height:36px;padding:4px 8px;font-size:13px;line-height:20px}
 .e02-text-action{display:inline-flex;align-items:center;min-height:32px;padding:4px 6px;color:#f9bb5f;font-size:12px;line-height:18px;text-decoration:underline;text-underline-offset:3px}
 [data-e02-thread]{flex:1;gap:16px;scroll-margin-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 20px)}
 [data-e02-thread] > *{scroll-margin-block:90px calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 20px)}

@@ -1,0 +1,99 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "final-only default 3s",
+      "status": "PASS",
+      "detail": "Interim held 5s; finalized draft held 2999ms, sent once at 3001ms through the native conversation path."
+    },
+    {
+      "name": "multi-segment speech resets pause",
+      "status": "PASS",
+      "detail": "A resumed utterance crosses the old deadline without sending; all cumulative final segments are sent once."
+    },
+    {
+      "name": "continue and cancel",
+      "status": "PASS",
+      "detail": "Continue keeps the finalized draft for immediate Send; Cancel restores the original input and rejects saved callbacks."
+    },
+    {
+      "name": "immediate final Send and stale callbacks",
+      "status": "PASS",
+      "detail": "Immediate Send rejects provisional data, accepts final data, and invalidates old handlers before native execution."
+    },
+    {
+      "name": "manual correction",
+      "status": "PASS",
+      "detail": "Typing invalidates speech and countdown; a late final cannot overwrite or execute the discarded words."
+    },
+    {
+      "name": "interrupted provisional prefix",
+      "status": "PASS",
+      "detail": "A resumed final suffix cannot automatically validate incomplete earlier text; an explicit manual review restores sending."
+    },
+    {
+      "name": "configurable 1.5–5s",
+      "status": "PASS",
+      "detail": "Both delay bounds are exercised before and just after their deadline; default is restored to 3s."
+    },
+    {
+      "name": "interruption end",
+      "status": "PASS",
+      "detail": "The pending final draft is retained, stale callbacks ignored, no exchange and no restart."
+    },
+    {
+      "name": "interruption error",
+      "status": "PASS",
+      "detail": "The pending final draft is retained, stale callbacks ignored, no exchange and no restart."
+    },
+    {
+      "name": "interruption stop",
+      "status": "PASS",
+      "detail": "The pending final draft is retained, stale callbacks ignored, no exchange and no restart."
+    },
+    {
+      "name": "interruption hidden",
+      "status": "PASS",
+      "detail": "The pending final draft is retained, stale callbacks ignored, no exchange and no restart."
+    },
+    {
+      "name": "interruption pagehide",
+      "status": "PASS",
+      "detail": "The pending final draft is retained, stale callbacks ignored, no exchange and no restart."
+    },
+    {
+      "name": "navigation",
+      "status": "PASS",
+      "detail": "Leaving chat cancels pending sending; returning under the same identity preserves only the draft."
+    },
+    {
+      "name": "identity isolation",
+      "status": "PASS",
+      "detail": "Changing native authenticated context clears the old draft and prevents any late pending write under either account."
+    },
+    {
+      "name": "microphone errors and manual fallback",
+      "status": "PASS",
+      "detail": "Denial, no speech and network failure retain drafts; an unsupported browser still sends typed input."
+    },
+    {
+      "name": "sound and sensitive confirmation",
+      "status": "PASS",
+      "detail": "Automatic voice request respects Son OFF/ON, replay/interruption, and still requests confirmation before deletion."
+    },
+    {
+      "name": "history persistence and runtime",
+      "status": "PASS",
+      "detail": "All sent exchanges survive IndexedDB reload; no uncaught browser error."
+    }
+  ],
+  "errors": [],
+  "speech": "API boundary simulations; application UI, native writers and IndexedDB real",
+  "timer": "Playwright clock, exact causal deadlines",
+  "network": "Only local origin allowed; no external service",
+  "realDevice": false,
+  "limits": [
+    "Safari/iOS actual recognition/permission and installed voices remain unverified",
+    "Delay preference is tab-local; no additional persistence store"
+  ]
+}
