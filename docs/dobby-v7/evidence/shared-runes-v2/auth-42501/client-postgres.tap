@@ -1,0 +1,18 @@
+✔ native grant/reversal/custom reward edits keep the confirmed historical beneficiary and zero is active (2074.124674ms)
+✔ explicit V1 adoption preserves a confirmed legacy ISO date without milliseconds through second-client retrieval and reversal (1297.465702ms)
+✔ two native clients completing distinct missions rebase per mission without restoring an already completed row (1348.777896ms)
+✔ actual concurrent SQL CAS loss is retained and explicit native resolution converges without a duplicate grant (1391.459104ms)
+✔ lost response after a real commit replays the original durable operation and applies the current reopened module after reload (1812.77252ms)
+✔ offline transport keeps unconfirmed intent and disable does not clear runeSyncRequired before recovery (1369.160778ms)
+✔ metadata refusal before RPC sends no business write and preserves the native pending request (1375.906802ms)
+✔ metadata refusal after SQL confirmation retains the durable operation for safe replay after reload (1683.752889ms)
+✔ native projected recurring occurrence synchronizes once and historical identity cannot silently disappear (1442.586011ms)
+✔ server refuses grant for an absent mission atomically while native request and durable rejected operation remain recoverable (1329.527716ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16040.676568

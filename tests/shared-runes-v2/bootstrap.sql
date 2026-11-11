@@ -18,7 +18,7 @@ GRANT USAGE ON SCHEMA public,auth TO anon,authenticated;
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 CREATE TABLE auth.users(id uuid PRIMARY KEY);
 CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE SET search_path=''
-AS $$ SELECT NULLIF(pg_catalog.current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+AS $$ SELECT COALESCE(NULLIF(pg_catalog.current_setting('request.jwt.claim.sub',true),''),(NULLIF(pg_catalog.current_setting('request.jwt.claims',true),'')::jsonb->>'sub'))::uuid $$;
 GRANT EXECUTE ON FUNCTION auth.uid() TO anon,authenticated;
 CREATE TABLE public.dobby_v2_households(id uuid PRIMARY KEY);
 CREATE TABLE public.dobby_v2_memberships(

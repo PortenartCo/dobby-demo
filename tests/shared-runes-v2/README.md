@@ -12,6 +12,26 @@ node --test tests/shared-runes-v2/client-postgres.mjs
 
 The fixture's three UUID users and all households/missions are invented. The bootstrap reproduces the `auth.uid()`/active-membership RLS boundary; it does not test Supabase JWT issuance or a deployed PostgREST server. Every untrusted SQL call connects as the non-superuser, non-BYPASSRLS `dobby_fixture_authenticator`, then assumes `authenticated` or `anon`. It never uses a superuser session for client-role bypass assertions.
 
+The auth `42501` regression proof requires its own container. The historical default stays unchanged; the sole additional allowed suffix is `-auth-42501`, with the separate task label `shared-runes-v2-auth-42501-20261111`. Both the server and native client PostgreSQL harnesses honor this exact fixture selection:
+
+```sh
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 bash tests/shared-runes-v2/start-isolated-postgres.sh
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 node tests/shared-runes-v2/auth-42501.mjs
+```
+
+This test refuses the historical container before any reset. It installs the original modules and Runes SQL immutably from Git commit `0a8e1ed`, creates fictional historical credits and receipts, then removes both `auth` schema usage and effective `auth.uid()` execution from the writer. It proves the original `42501`, applies only `sql-proposals/dobby-shared-runes-v2-auth-42501.sql`, and verifies atomic rollback, refusal of unexpected installations, idempotence, unchanged existing data and grants, modern claim validation, native writes and replay, the invoker stamp, all five other modules, RLS and the direct-write guard. Its evidence is written separately to `docs/dobby-v7/evidence/shared-runes-v2/auth-42501/results.json`.
+
+The fixture's `auth.uid()` uses the official legacy/JSON `COALESCE` shape. Normal test requests supply both settings; the dedicated test deliberately contradicts them to prove the writer uses only modern `request.jwt.claims.sub` while ordinary modules retain their existing `auth.uid()` behavior. These are trusted synthetic SQL session claims for the fixture; JWT signature verification by PostgREST remains outside this test.
+
 The server suite uses the native runes core to construct requests and calculate expected balances. Concurrent scenarios use separate `psql` connections, distinct PostgreSQL PIDs, a controller transaction holding a row lock, and `pg_stat_activity`/`pg_locks` barriers. They assert one CAS success/one `40001`, then rebase the losing intent. The injected rollback failure is an isolated fixture trigger on receipt insertion; no production RPC failure hook is added.
 
 Evidence is written to `docs/dobby-v7/evidence/shared-runes-v2/postgres/results.json` and `concurrency.json`. `DOBBY_RUNES_FAIL_FAST=1` is available for local debugging; omit it for the complete report. A red result is a failure, never an automatic skip. The suite does not stop or delete the container and does not publish, commit or push anything.
+
+To retain the original evidence and write this correction's historical regression results separately:
+
+```sh
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 DOBBY_RUNES_PG_EVIDENCE=docs/dobby-v7/evidence/shared-runes-v2/auth-42501/postgres node tests/shared-runes-v2/run-postgres.mjs
+DOBBY_RUNES_PG_CONTAINER=dobby-runes-v2-test-20261111-auth-42501 DOBBY_RUNES_CLIENT_EVIDENCE=docs/dobby-v7/evidence/shared-runes-v2/auth-42501/client-postgres node --test tests/shared-runes-v2/client-postgres.mjs
+```
+
+Run these database suites sequentially. The dedicated correction test demonstrates the installed-baseline → hotfix-only path. The historical suites separately exercise the corrected reference on fresh fictional installations; they never reapply a migration to the hosted project.

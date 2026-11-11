@@ -4,17 +4,17 @@ import {spawn,spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {randomUUID} from 'node:crypto';
-import {repo,quote,sqlJSON,users,authSQL,rpcSQL,dockerArgs} from './pg-harness.mjs';
+import {repo,quote,sqlJSON,users,authSQL,rpcSQL,dockerArgs,container,guard as guardPostgres} from './pg-harness.mjs';
 
 export {users};
 export const database='dobby_runes_client_tests';
-const container='dobby-runes-v2-test-20261111';
 const admin='dobby_test_admin';
 function guard(){
+  guardPostgres();
   const inspected=spawnSync('docker',[...dockerArgs,'inspect',container],{encoding:'utf8'});
   if(inspected.status!==0)throw Error('Task-local Docker PostgreSQL unavailable; real client PostgreSQL tests BLOCKED');
   const info=JSON.parse(inspected.stdout)[0];
-  assert.equal(info.Name,'/'+container);assert.equal(info.Config.Labels?.['org.dobby.task'],'shared-runes-v2-20261111');
+  assert.equal(info.Name,'/'+container);assert.equal(info.Config.Labels?.['org.dobby.task'],container==='dobby-runes-v2-test-20261111-auth-42501'?'shared-runes-v2-auth-42501-20261111':'shared-runes-v2-20261111');
   assert.equal(info.Config.Image,'postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f');
   assert.equal(info.HostConfig.NetworkMode,'none');assert.equal(Object.keys(info.NetworkSettings.Ports||{}).filter(k=>info.NetworkSettings.Ports[k]).length,0);assert.equal(info.State.Running,true);
   return {container,dockerHost:dockerArgs[1],network:info.HostConfig.NetworkMode,imageId:info.Image,image:info.Config.Image,labels:info.Config.Labels};

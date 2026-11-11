@@ -1,0 +1,52 @@
+PASS baseline V1: old direct PATCH can delete a confirmed credit
+PASS migration preserves existing V1 event, revision 0, balance and row
+PASS legacy V1 date without milliseconds survives migration, RPC, reopen and regrant exactly
+PASS explicit local V1 adoption retains a confirmed no-milliseconds date verbatim
+PASS legacy V1 fractional milliseconds and ISO offsets preserve raw dates through migration and reopen
+PASS explicit V2 local adoption preserves existing cycle identities and revision zero
+PASS capability and authenticator are real non-superuser boundaries
+PASS first grant + double completion + reopen + regrant use one canonical ledger
+PASS lost-response operation replay returns original receipt and latest reopened module
+PASS operation UUID is bound to payload, expected revision and actor
+PASS stale revision is explicit 40001 and has no partial effect
+PASS RPC expected revision bounds reject null, negative and unsafe numbers
+PASS beneficiary and reward edits preserve confirmed past gain; reopen targets that gain
+PASS normal mission deletion preserves its confirmed event and balance
+PASS offline grant → reversal → regrant batch is atomic and cycle-safe
+PASS offline grant then reward/beneficiary edit is explicitly refused without losing history
+PASS offline unconfirmed mission deletion is refused atomically
+PASS custom rewards zero and 37 are exact, genuine active grants
+PASS MAX_SAFE integer reward accepted; active per-beneficiary overflow rejected
+PASS MAX_SAFE limit applies to each beneficiary, not household aggregate
+PASS legacy noneligible mission cannot acquire rewardVersion retroactively
+PASS all confirmed event fields are immutable, including semantic-equivalent date text
+PASS new confirmed credits cannot be injected after activation
+PASS new pending grant must match current eligible mission and final status
+PASS reopen without reversal and reversal against wrong gain are refused
+PASS duplicate first cycle under V1/V2 identities and skipped cycles are refused
+PASS UTF16 length and JavaScript whitespace boundaries match the native runes core
+PASS malformed requests: types, negative/fractional/unsafe values, nulls and dates
+PASS malformed mission and payload versions are refused
+PASS eligible completion requires its gain; reward eligibility cannot be removed
+PASS receipt storage contains only operation identity and no second rune ledger
+PASS new occurrence requires its actual root; existing legacy orphan remains preserved
+PASS two recurrence occurrences grant/reopen independently
+PASS series/occurrence identities and previous rule prefix cannot be removed or rewritten
+PASS inactive membership, outsiders and anonymous callers cannot read/write/replay
+PASS legacy direct INSERT/PATCH/upsert/DELETE/module move cannot bypass protocol
+PASS normal family/menus/recipes/house/contracts module writes remain possible
+PASS SQL role, arbitrary GUC, trigger, RLS, private-receipt privilege bypasses fail
+PASS search_path/temp shadowing cannot redirect SECURITY DEFINER storage
+PASS 256 KiB exact stored boundary accepts; larger input refuses without truncating history
+PASS input <=256 KiB but server confirmation expansion overflow refuses atomically
+PASS post-write injected receipt failure rolls back module and receipt in one transaction
+PASS privileged normal direct write is also blocked without the dedicated writer role
+PASS REAL concurrent same-mission completions: independent connections, one grant
+PASS REAL concurrent reopenings: one reversal, balance zero
+PASS REAL concurrent different missions same household: loser rebases without lost gain
+PASS REAL different households are not serialized by a global module lock
+PASS reapplying prepared migration preserves all missions, receipts and protections
+PASS invalid legacy history aborts migration atomically without cleaning or losing it
+PASS safe protocol rollback disables RPC but keeps direct-write guard and all history
+PASS local logical backup/restoration preserves full payloads, receipts and guard
+{"pass":51,"fail":0,"total":51}

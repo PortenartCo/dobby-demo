@@ -1,0 +1,290 @@
+{
+  "started": "2026-11-11T22:14:08.637Z",
+  "finished": "2026-11-11T22:14:46.042Z",
+  "environment": {
+    "container": "dobby-runes-v2-test-20261111-auth-42501",
+    "dockerSocket": "unix:///var/run/docker.sock",
+    "network": "none",
+    "imageId": "sha256:eb0fb2377534e65aad04f37838956b3dfb888e1a3dd3c1acf957bc6557eb6c7d",
+    "labels": {
+      "org.dobby.task": "shared-runes-v2-auth-42501-20261111"
+    }
+  },
+  "baselineCommit": "0a8e1ed",
+  "baselineModulesSHA256": "7feb02f2b0053eaf89bc9ba5fbc092deebb75fed225f224b78a282175b70a9c5",
+  "baselineRunesSHA256": "824080da6869b2f0a70869f80d094a6dc47280328ef87b0d941ad8e177cc3366",
+  "patch": "sql-proposals/dobby-shared-runes-v2-auth-42501.sql",
+  "patchSHA256": "fc72c5550fccc8d5568071fa4d40b8faa2b447ba51a566b0e129a610e6fab34d",
+  "checks": "sql-proposals/dobby-shared-runes-v2-auth-42501-checks.sql",
+  "checksSHA256": "4f8df7f8555362442283d57243f48692859867d473a2519348773d96a3d9cdc8",
+  "fixtureOnly": true,
+  "realSupabaseTouched": false,
+  "originalContainerTouched": false,
+  "summary": {
+    "pass": 19,
+    "fail": 0,
+    "total": 19
+  },
+  "results": [
+    {
+      "name": "immutable baseline installation and native V1 history generate a real prior receipt",
+      "status": "PASS",
+      "milliseconds": 1615,
+      "detail": {
+        "baselineCommit": "0a8e1ed",
+        "modulesSHA256": "7feb02f2b0053eaf89bc9ba5fbc092deebb75fed225f224b78a282175b70a9c5",
+        "runesSHA256": "824080da6869b2f0a70869f80d094a6dc47280328ef87b0d941ad8e177cc3366",
+        "legacyRevision": 2,
+        "legacyEvents": 1,
+        "priorReceipts": 1
+      }
+    },
+    {
+      "name": "restricted writer reproduces auth 42501 before the patch without changing data",
+      "status": "PASS",
+      "milliseconds": 1152,
+      "detail": {
+        "boundary": {
+          "auth_usage": false,
+          "auth_uid_execute": false,
+          "authenticated_member": false,
+          "client_member": false,
+          "anon_member": false,
+          "authenticator_member": false,
+          "superuser": false,
+          "bypassrls": false,
+          "owns_storage": false,
+          "storage_rls": true,
+          "membership_update": false,
+          "receipt_update": false,
+          "receipt_delete": false,
+          "public_create": false
+        },
+        "capability": {
+          "sqlstate": "42501",
+          "message": "ERROR:  42501: permission denied for schema auth"
+        },
+        "write": {
+          "sqlstate": "42501",
+          "message": "ERROR:  42501: permission denied for schema auth"
+        }
+      }
+    },
+    {
+      "name": "pre-existing helper definer, writer owner, body or public ACL drift refuses with no replacement",
+      "status": "PASS",
+      "milliseconds": 3978,
+      "detail": {
+        "refusedVariants": [
+          "SECURITY DEFINER",
+          "writer owner",
+          "different body",
+          "PUBLIC execution"
+        ],
+        "divergentHelperUnchanged": true
+      }
+    },
+    {
+      "name": "an additional condition on a known writer policy is preserved by refusing the patch",
+      "status": "PASS",
+      "milliseconds": 1240,
+      "detail": {
+        "knownPolicy": "dobby_missions_writer_membership",
+        "additionalCondition": "user_id excludes member B",
+        "restrictionOverwritten": false
+      }
+    },
+    {
+      "name": "unexpected installed function or effective auth policy refuses the patch atomically",
+      "status": "PASS",
+      "milliseconds": 1600,
+      "detail": {
+        "unexpectedFunctionBody": "refused before changes",
+        "additionalPublicAuthPolicy": "refused with full rollback"
+      }
+    },
+    {
+      "name": "standalone patch DDL and ACL roll back atomically when the transaction fails",
+      "status": "PASS",
+      "milliseconds": 554,
+      "detail": {
+        "sqlstate": "P0001",
+        "allDDLAndACLRestored": true,
+        "newHelperAbsent": true
+      }
+    },
+    {
+      "name": "exact standalone patch installs in place and preserves existing rows, receipts, roles and grants",
+      "status": "PASS",
+      "milliseconds": 480,
+      "detail": {
+        "patch": "sql-proposals/dobby-shared-runes-v2-auth-42501.sql",
+        "patchSHA256": "fc72c5550fccc8d5568071fa4d40b8faa2b447ba51a566b0e129a610e6fab34d",
+        "allRowsAndReceiptsUnchanged": true,
+        "existingPrivilegesUnchanged": true,
+        "writerPolicies": 6
+      }
+    },
+    {
+      "name": "a second exact application is idempotent for definitions, ACL, data and receipts",
+      "status": "PASS",
+      "milliseconds": 761,
+      "detail": {
+        "applications": 2
+      }
+    },
+    {
+      "name": "private helper and all security contexts retain their least-privilege boundary",
+      "status": "PASS",
+      "milliseconds": 855,
+      "detail": {
+        "helperStable": true,
+        "helperInvoker": true,
+        "stampInvoker": true,
+        "writerStillCannotCallAuth": true
+      }
+    },
+    {
+      "name": "missing, empty, malformed and non-string modern sub refuse despite a valid legacy sub",
+      "status": "PASS",
+      "milliseconds": 9086,
+      "detail": {
+        "malformedModernCases": 15,
+        "missingModernSettingCases": 2,
+        "legacyFallback": false
+      }
+    },
+    {
+      "name": "anonymous, nonmember, other-household and inactive actors remain refused",
+      "status": "PASS",
+      "milliseconds": 2818,
+      "detail": {
+        "refusedVariants": 5
+      }
+    },
+    {
+      "name": "active member capability and first native write work without access to auth",
+      "status": "PASS",
+      "milliseconds": 453,
+      "detail": {
+        "capability": {
+          "protocol": 2,
+          "ledgerVersions": [
+            1,
+            2
+          ],
+          "maxPayloadBytes": 262144,
+          "directWritesBlocked": true
+        },
+        "firstRevision": 1,
+        "updatedBy": "11111111-1111-4111-8111-111111111111"
+      }
+    },
+    {
+      "name": "modern verified sub determines the receipt actor and invoker stamp independently of legacy",
+      "status": "PASS",
+      "milliseconds": 1559,
+      "detail": {
+        "modernSub": "22222222-2222-4222-8222-222222222222",
+        "contradictoryLegacySub": "11111111-1111-4111-8111-111111111111",
+        "actorAndStamp": "22222222-2222-4222-8222-222222222222",
+        "nativeBalance": 10,
+        "replayWithoutMutation": true,
+        "staleCAS": "40001",
+        "contradictoryOperation": "22023"
+      }
+    },
+    {
+      "name": "a receipt created by the immutable original migration still replays after the patch",
+      "status": "PASS",
+      "milliseconds": 284,
+      "detail": {
+        "originalReceiptRetained": true,
+        "originalDate": "2026-11-11T12:00:00Z",
+        "originalEventRevision": 0
+      }
+    },
+    {
+      "name": "all five other modules keep INSERT, UPDATE, revision and legacy auth.uid stamp behavior",
+      "status": "PASS",
+      "milliseconds": 4188,
+      "detail": {
+        "modules": [
+          "menus",
+          "recipes",
+          "house",
+          "family",
+          "contracts"
+        ],
+        "insertRevision": 1,
+        "updateRevision": 2,
+        "legacyStampUnchanged": "11111111-1111-4111-8111-111111111111",
+        "otherHouseholdRLS": true
+      }
+    },
+    {
+      "name": "legacy direct Missions writes and arbitrary writer flags remain blocked",
+      "status": "PASS",
+      "milliseconds": 2383,
+      "detail": {
+        "guardStillInvoker": true,
+        "blockedDirectVariants": 8
+      }
+    },
+    {
+      "name": "clients cannot call the private helper, read receipts or become the writer",
+      "status": "PASS",
+      "milliseconds": 2482,
+      "detail": {
+        "privateAccessVariants": 8,
+        "ordinaryAuthUIDUnchanged": true,
+        "boundary": {
+          "auth_usage": false,
+          "auth_uid_execute": false,
+          "authenticated_member": false,
+          "client_member": false,
+          "anon_member": false,
+          "authenticator_member": false,
+          "superuser": false,
+          "bypassrls": false,
+          "owns_storage": false,
+          "storage_rls": true,
+          "membership_update": false,
+          "receipt_update": false,
+          "receipt_delete": false,
+          "public_create": false
+        }
+      }
+    },
+    {
+      "name": "the complete operator catalog-check file executes read only without changing state",
+      "status": "PASS",
+      "milliseconds": 625,
+      "detail": {
+        "checks": "sql-proposals/dobby-shared-runes-v2-auth-42501-checks.sql",
+        "checksSHA256": "4f8df7f8555362442283d57243f48692859867d473a2519348773d96a3d9cdc8",
+        "readOnly": true,
+        "entireFileExecuted": true
+      }
+    },
+    {
+      "name": "a pre-existing SQL editor operator reapplies the patch without superuser, BYPASSRLS or role administration",
+      "status": "PASS",
+      "milliseconds": 1253,
+      "detail": {
+        "operator": {
+          "role": "dobby_fixture_sql_editor",
+          "superuser": false,
+          "bypassrls": false,
+          "createrole": false,
+          "writer_member": true,
+          "authenticated_member": false,
+          "auth_usage": false
+        },
+        "fixtureOwnershipPreparedBeforePatch": true,
+        "patchReappliedWithoutPrivilegeChanges": true,
+        "capabilityAndWriteAfterOperatorReapply": true
+      }
+    }
+  ]
+}

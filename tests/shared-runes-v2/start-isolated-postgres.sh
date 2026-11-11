@@ -5,20 +5,25 @@ set -euo pipefail
 docker() { command docker --host unix:///var/run/docker.sock "$@"; }
 
 # This script can only create/check this task's ephemeral local fixture.
-fixture_container=dobby-runes-v2-test-20261111
+fixture_container=${DOBBY_RUNES_PG_CONTAINER:-dobby-runes-v2-test-20261111}
+case "$fixture_container" in
+  dobby-runes-v2-test-20261111) fixture_task_label=shared-runes-v2-20261111 ;;
+  dobby-runes-v2-test-20261111-auth-42501) fixture_task_label=shared-runes-v2-auth-42501-20261111 ;;
+  *) echo 'Refusing a container outside the exact isolated fixture allowlist.' >&2; exit 1 ;;
+esac
 fixture_image=postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f
 if docker inspect "$fixture_container" >/dev/null 2>&1; then
   fixture_label=$(docker inspect "$fixture_container" --format '{{index .Config.Labels "org.dobby.task"}}')
   fixture_network=$(docker inspect "$fixture_container" --format '{{.HostConfig.NetworkMode}}')
   fixture_running=$(docker inspect "$fixture_container" --format '{{.State.Running}}')
   fixture_existing_image=$(docker inspect "$fixture_container" --format '{{.Config.Image}}')
-  if [[ "$fixture_label" != shared-runes-v2-20261111 || "$fixture_network" != none || "$fixture_running" != true || "$fixture_existing_image" != "$fixture_image" ]]; then
+  if [[ "$fixture_label" != "$fixture_task_label" || "$fixture_network" != none || "$fixture_running" != true || "$fixture_existing_image" != "$fixture_image" ]]; then
     echo 'Refusing to reuse a container outside the exact isolated test fixture.' >&2
     exit 1
   fi
 else
   docker run --detach --name "$fixture_container" \
-    --label org.dobby.task=shared-runes-v2-20261111 \
+    --label "org.dobby.task=$fixture_task_label" \
     --network none --tmpfs /var/lib/postgresql/data:rw,size=512m --shm-size=128m \
     -e POSTGRES_USER=dobby_test_admin -e POSTGRES_DB=dobby_runes_tests \
     -e POSTGRES_PASSWORD=dobby_isolated_test_only "$fixture_image"

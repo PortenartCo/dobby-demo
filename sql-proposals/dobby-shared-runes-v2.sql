@@ -27,8 +27,8 @@ $migration$;
 CREATE SCHEMA IF NOT EXISTS dobby_runes_private;
 REVOKE ALL ON SCHEMA dobby_runes_private FROM PUBLIC, anon, authenticated;
 GRANT USAGE ON SCHEMA dobby_runes_private TO dobby_missions_v2_writer;
-GRANT USAGE ON SCHEMA public,auth TO dobby_missions_v2_writer;
-GRANT EXECUTE ON FUNCTION auth.uid() TO dobby_missions_v2_writer;
+-- Supabase's protected auth schema is not available to every custom role.
+GRANT USAGE ON SCHEMA public TO dobby_missions_v2_writer;
 GRANT SELECT ON public.dobby_v2_memberships TO dobby_missions_v2_writer;
 GRANT SELECT,INSERT,UPDATE ON public.dobby_v2_modules TO dobby_missions_v2_writer;
 
@@ -48,37 +48,79 @@ ALTER TABLE dobby_runes_private.operations ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON dobby_runes_private.operations FROM PUBLIC,anon,authenticated;
 GRANT SELECT,INSERT ON dobby_runes_private.operations TO dobby_missions_v2_writer;
 
+-- PostgREST verifies the JWT before installing these request-local claims.
+-- This helper only reads its subject: it does not verify JWTs or authorize a
+-- household. Never use user_metadata, a client parameter or a legacy GUC here.
+CREATE OR REPLACE FUNCTION dobby_runes_private.request_user_id()
+RETURNS uuid LANGUAGE plpgsql STABLE SECURITY INVOKER SET search_path=''
+AS $$
+DECLARE claims jsonb;
+BEGIN
+ claims:=NULLIF(pg_catalog.current_setting('request.jwt.claims',true),'')::jsonb;
+ IF pg_catalog.jsonb_typeof(claims->'sub') IS DISTINCT FROM 'string' THEN RETURN NULL; END IF;
+ RETURN NULLIF(claims->>'sub','')::uuid;
+EXCEPTION WHEN invalid_text_representation THEN RETURN NULL;
+END;
+$$;
+
+-- Keep the native stamp invoker and the authenticated path of other modules.
+-- Only the dedicated Missions writer must avoid auth.uid().
+CREATE OR REPLACE FUNCTION public.dobby_v2_modules_stamp()
+RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER SET search_path=''
+AS $$
+BEGIN
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.household_id IS DISTINCT FROM OLD.household_id
+      OR NEW.module IS DISTINCT FROM OLD.module THEN
+      RAISE EXCEPTION 'Household and module identity cannot be reassigned';
+    END IF;
+    NEW.revision := OLD.revision + 1;
+    NEW.created_at := OLD.created_at;
+  ELSE
+    NEW.revision := 1;
+    NEW.created_at := now();
+  END IF;
+  NEW.updated_at := clock_timestamp();
+  IF current_user='dobby_missions_v2_writer' THEN
+    NEW.updated_by := dobby_runes_private.request_user_id();
+  ELSE
+    NEW.updated_by := auth.uid();
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
 DROP POLICY IF EXISTS dobby_missions_writer_membership ON public.dobby_v2_memberships;
 CREATE POLICY dobby_missions_writer_membership ON public.dobby_v2_memberships
 FOR SELECT TO dobby_missions_v2_writer
-USING(user_id=(SELECT auth.uid()) AND active);
+USING(user_id=(SELECT dobby_runes_private.request_user_id()) AND active);
 DROP POLICY IF EXISTS dobby_missions_writer_module_read ON public.dobby_v2_modules;
 CREATE POLICY dobby_missions_writer_module_read ON public.dobby_v2_modules
 FOR SELECT TO dobby_missions_v2_writer
 USING(module='missions' AND EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
- WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT auth.uid()) AND m.active));
+ WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT dobby_runes_private.request_user_id()) AND m.active));
 DROP POLICY IF EXISTS dobby_missions_writer_module_insert ON public.dobby_v2_modules;
 CREATE POLICY dobby_missions_writer_module_insert ON public.dobby_v2_modules
 FOR INSERT TO dobby_missions_v2_writer
 WITH CHECK(module='missions' AND EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
- WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT auth.uid()) AND m.active));
+ WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT dobby_runes_private.request_user_id()) AND m.active));
 DROP POLICY IF EXISTS dobby_missions_writer_module_update ON public.dobby_v2_modules;
 CREATE POLICY dobby_missions_writer_module_update ON public.dobby_v2_modules
 FOR UPDATE TO dobby_missions_v2_writer
 USING(module='missions' AND EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
- WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT auth.uid()) AND m.active))
+ WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT dobby_runes_private.request_user_id()) AND m.active))
 WITH CHECK(module='missions' AND EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
- WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT auth.uid()) AND m.active));
+ WHERE m.household_id=dobby_v2_modules.household_id AND m.user_id=(SELECT dobby_runes_private.request_user_id()) AND m.active));
 DROP POLICY IF EXISTS dobby_missions_receipt_read ON dobby_runes_private.operations;
 CREATE POLICY dobby_missions_receipt_read ON dobby_runes_private.operations
 FOR SELECT TO dobby_missions_v2_writer
 USING(EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
- WHERE m.household_id=operations.household_id AND m.user_id=(SELECT auth.uid()) AND m.active));
+ WHERE m.household_id=operations.household_id AND m.user_id=(SELECT dobby_runes_private.request_user_id()) AND m.active));
 DROP POLICY IF EXISTS dobby_missions_receipt_insert ON dobby_runes_private.operations;
 CREATE POLICY dobby_missions_receipt_insert ON dobby_runes_private.operations
 FOR INSERT TO dobby_missions_v2_writer
-WITH CHECK(actor_id=(SELECT auth.uid()) AND EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
- WHERE m.household_id=operations.household_id AND m.user_id=(SELECT auth.uid()) AND m.active));
+WITH CHECK(actor_id=(SELECT dobby_runes_private.request_user_id()) AND EXISTS(SELECT 1 FROM public.dobby_v2_memberships m
+ WHERE m.household_id=operations.household_id AND m.user_id=(SELECT dobby_runes_private.request_user_id()) AND m.active));
 
 -- A row lock needs UPDATE privilege in PostgreSQL. This narrow helper performs
 -- no UPDATE and grants the writer no membership mutation privilege. It is owned
@@ -87,9 +129,9 @@ CREATE OR REPLACE FUNCTION dobby_runes_private.lock_active_membership(p_househol
 RETURNS boolean LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path=''
 AS $$
 BEGIN
- IF auth.uid() IS NULL THEN RETURN false; END IF;
+ IF dobby_runes_private.request_user_id() IS NULL THEN RETURN false; END IF;
  PERFORM 1 FROM public.dobby_v2_memberships m
-  WHERE m.household_id=p_household_id AND m.user_id=auth.uid() AND m.active FOR SHARE;
+  WHERE m.household_id=p_household_id AND m.user_id=dobby_runes_private.request_user_id() AND m.active FOR SHARE;
  RETURN FOUND;
 END;
 $$;
@@ -348,7 +390,7 @@ CREATE OR REPLACE FUNCTION public.dobby_missions_v2_capabilities(p_household_id 
 RETURNS jsonb LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path=''
 AS $$
 BEGIN
- IF auth.uid() IS NULL OR NOT EXISTS(SELECT 1 FROM public.dobby_v2_memberships m WHERE m.household_id=p_household_id AND m.user_id=auth.uid() AND m.active) THEN
+ IF dobby_runes_private.request_user_id() IS NULL OR NOT EXISTS(SELECT 1 FROM public.dobby_v2_memberships m WHERE m.household_id=p_household_id AND m.user_id=dobby_runes_private.request_user_id() AND m.active) THEN
   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Appartenance active au foyer requise';
  END IF;
  RETURN pg_catalog.jsonb_build_object('protocol',2,'maxPayloadBytes',262144,'directWritesBlocked',true,'ledgerVersions',pg_catalog.jsonb_build_array(1,2));
@@ -358,7 +400,7 @@ $$;
 CREATE OR REPLACE FUNCTION public.dobby_missions_v2_write(p_household_id uuid,p_expected_revision bigint,p_operation_id uuid,p_payload jsonb)
 RETURNS jsonb LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path=''
 AS $$
-DECLARE actor uuid:=auth.uid(); old_row public.dobby_v2_modules%ROWTYPE; receipt dobby_runes_private.operations%ROWTYPE;
+DECLARE actor uuid:=dobby_runes_private.request_user_id(); old_row public.dobby_v2_modules%ROWTYPE; receipt dobby_runes_private.operations%ROWTYPE;
  request_digest text; next_revision bigint; history jsonb; incoming jsonb; known jsonb:='{}'; pending jsonb:='{}';
  old_missions jsonb:='{}'; missions jsonb:='{}'; active jsonb; r jsonb; prior jsonb; m jsonb; key text; id text;
  desired jsonb; old_rules jsonb; new_rules jsonb; n integer;

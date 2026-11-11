@@ -1,5 +1,7 @@
 # Synchronisation familiale des runes V2 — livraison préparée
 
+> Suivi du 11 novembre 2026 : l’utilisateur indique que la migration initiale a depuis été installée. Le refus `42501` du writer sans accès `auth` fait l’objet d’un [correctif ciblé distinct](SHARED-RUNES-V2-AUTH-42501.md), testé exclusivement en PostgreSQL local. Les résultats et procédures ci-dessous décrivent la livraison initiale ; le correctif installé ne doit pas réexécuter cette migration.
+
 Branche indépendante `feat/dobby-shared-runes-v2-20261111`, issue exactement de `9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a`. [Demande](SHARED-RUNES-V2-SPEC.md), [plan](../superpowers/plans/2026-11-11-shared-runes-v2.md), [contrat et privilèges détaillés](SHARED-RUNES-V2-CONTRACT.md).
 
 Cette livraison prépare le partage transactionnel des runes. Elle ne migre aucune base distante, ne modifie aucun compte familial et ne publie aucun nouvel aperçu. Les branches E03–E06 et E07.4 restent hors périmètre.
@@ -58,7 +60,7 @@ Ces étapes ne sont pas exécutées sur le Supabase familial par cette mission. 
 2. Effectuer une sauvegarde logique chiffrée du schéma et des données, incluant `dobby_v2_modules`, appartenances, fonctions, triggers, politiques et privilèges. Conserver également le catalogue des rôles/attributions nécessaires et les paramètres d’exposition de l’API. Ne pas mettre de DSN, clé ou dump réel dans Git.
 3. Restaurer cette sauvegarde dans un environnement personnel isolé. Vérifier les nombres de modules, révisions, événements et leurs empreintes, les permissions, puis les lectures de tous les modules. Le test livré démontre déjà un dump/restauration intégral sur les seules données fictives.
 4. Examiner tous les payloads Missions avec les validateurs de la proposition. Tout ancien format incompatible bloque la migration complète ; ne pas le réparer ou supprimer silencieusement.
-5. Faire relire le SQL et les privilèges par l’opérateur. Vérifier PostgreSQL compatible, `auth.uid()`, structure réelle des appartenances et trigger natif de révision. Le helper privé de verrouillage appartient à l’opérateur de migration ; il requiert ses droits de verrouillage et ne doit jamais être exposé à l’API.
+5. Faire relire le SQL et les privilèges par l’opérateur. Vérifier PostgreSQL compatible, les claims de requête PostgREST, la structure réelle des appartenances et le trigger natif de révision. La référence corrigée utilise le lecteur privé de claims sous writer ; `auth.uid()` reste réservé aux chemins natifs des autres rôles. Le helper privé de verrouillage appartient à l’opérateur de migration ; il requiert ses droits de verrouillage et ne doit jamais être exposé à l’API.
 
 ## Procédure future : activation progressive
 

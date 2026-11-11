@@ -1,0 +1,30 @@
+{
+  "baseCommit": "0a8e1ed674bc4abdbfaca29435fa495b19b32df4",
+  "initialTestedCode": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
+  "branch": "fix/dobby-runes-v2-auth-42501-20261111",
+  "targetedTests": {
+    "pass": 19,
+    "fail": 0,
+    "total": 19
+  },
+  "postgresRegressions": {
+    "pass": 51,
+    "fail": 0,
+    "total": 51
+  },
+  "clientPostgresTests": {
+    "passed": 10,
+    "failed": 0
+  },
+  "totalPassed": 80,
+  "patchSHA256": "fc72c5550fccc8d5568071fa4d40b8faa2b447ba51a566b0e129a610e6fab34d",
+  "checksSHA256": "4f8df7f8555362442283d57243f48692859867d473a2519348773d96a3d9cdc8",
+  "referenceSHA256": "e4e4b2463da88eefb2cca25c648ff71fcbd8d99b9ee061f751442ca252bd8796",
+  "applicationJavaScriptAndDesignUnchanged": true,
+  "supabaseAccessed": false,
+  "hostedValidationPerformed": false,
+  "initialMigrationReplayedOnHostedProject": false,
+  "merged": false,
+  "published": false,
+  "verificationScope": "Real local PostgreSQL only; synthetic trusted JWT claims and transport; no hosted Auth/PostgREST test"
+}

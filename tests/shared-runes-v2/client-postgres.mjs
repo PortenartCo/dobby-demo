@@ -59,7 +59,7 @@ function scenario(name,fn){test(name,{concurrency:false},async t=>{
 });}
 before(()=>{environment=setup();});
 after(()=>{
-  const output=resolve(repo,'docs/dobby-v7/evidence/shared-runes-v2/client-postgres');mkdirSync(output,{recursive:true});
+  const output=resolve(repo,process.env.DOBBY_RUNES_CLIENT_EVIDENCE||'docs/dobby-v7/evidence/shared-runes-v2/client-postgres');mkdirSync(output,{recursive:true});
   const sourceUnchanged=sourceFiles.every(file=>createHash('sha256').update(readFileSync(resolve(repo,file))).digest('hex')===sourceSha256[file]);
   writeFileSync(resolve(output,'results.json'),JSON.stringify({generatedAt:new Date().toISOString(),command:'node --test tests/shared-runes-v2/client-postgres.mjs',environment:environment||{database},sourceSha256,sourceUnchanged,scope:'Actual PostgreSQL SQL, locks, constraints and transactions; two independent native client VMs. REST transport and UUID auth claims are local fixtures, not PostgREST/JWT or real-account validation.',passed:records.filter(r=>r.status==='passed').length,failed:records.filter(r=>r.status==='failed').length,scenarios:records},null,2)+'\n');
   assert.equal(sourceUnchanged,true,'Source files changed during the evidence run; rerun on a stable patch');

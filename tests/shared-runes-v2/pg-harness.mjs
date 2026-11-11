@@ -7,6 +7,7 @@ import {randomUUID} from 'node:crypto';
 import assert from 'node:assert/strict';
 export const repo=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 export const container=process.env.DOBBY_RUNES_PG_CONTAINER||'dobby-runes-v2-test-20261111';
+const auth42501Container='dobby-runes-v2-test-20261111-auth-42501';
 export const dockerSocket='unix:///var/run/docker.sock';
 export const dockerArgs=['-H',dockerSocket];
 export const db='dobby_runes_tests',adminUser='dobby_test_admin';
@@ -15,9 +16,9 @@ export const quote=value=>"'"+String(value).replaceAll("'","''")+"'";
 export const sqlJSON=value=>quote(JSON.stringify(value))+'::jsonb';
 export function guard(){
  assert.ok(!process.env.DOCKER_HOST||process.env.DOCKER_HOST===dockerSocket,'Remote DOCKER_HOST is forbidden');
- assert.match(container,/^dobby-runes-v2-test-[0-9]{8}$/,'Only task-local Docker names are permitted');
+ assert.ok(/^dobby-runes-v2-test-[0-9]{8}$/.test(container)||container===auth42501Container,'Only task-local Docker names are permitted');
  const result=spawnSync('docker',[...dockerArgs,'inspect',container],{encoding:'utf8'});if(result.status!==0)throw Error('Local isolated PostgreSQL container unavailable; TESTS_POSTGRESQL_RÉELS=BLOCKED');
- const info=JSON.parse(result.stdout)[0];assert.equal(info.Config.Labels?.['org.dobby.task'],'shared-runes-v2-20261111');assert.equal(info.HostConfig.NetworkMode,'none');assert.equal(Object.keys(info.NetworkSettings.Ports||{}).filter(k=>info.NetworkSettings.Ports[k]).length,0);assert.equal(info.State.Running,true);
+ const info=JSON.parse(result.stdout)[0];assert.equal(info.Config.Labels?.['org.dobby.task'],container===auth42501Container?'shared-runes-v2-auth-42501-20261111':'shared-runes-v2-20261111');assert.equal(info.HostConfig.NetworkMode,'none');assert.equal(Object.keys(info.NetworkSettings.Ports||{}).filter(k=>info.NetworkSettings.Ports[k]).length,0);assert.equal(info.State.Running,true);
  return {container,dockerSocket,network:info.HostConfig.NetworkMode,imageId:info.Image,labels:info.Config.Labels};
 }
 const argsFor=({client=false,database=db}={})=>{assert.ok([db,'dobby_runes_restore_tests'].includes(database));return [...dockerArgs,'exec','-i',container,'psql','-X','-qAt','-U',client?'dobby_fixture_authenticator':adminUser,'-d',database,'-v','ON_ERROR_STOP=1','--pset','footer=off'];};
@@ -28,9 +29,9 @@ export function execute(sql,{allowFailure=false,client=false,database=db}={}){
  return outcome;
 }
 export function value(sql){const out=execute(sql).stdout;return out?JSON.parse(out.split('\n').at(-1)):null;}
-export function authSQL(sql,{user=users.a,role='authenticated',application='dobby-runes-fixture'}={}){
+export function authSQL(sql,{user=users.a,role='authenticated',application='dobby-runes-fixture',claims=JSON.stringify({sub:user||'',role}),legacyUser=user}={}){
  assert.ok(['authenticated','anon'].includes(role));
- return `BEGIN; SET LOCAL application_name=${quote(application)}; SET LOCAL ROLE ${role}; DO $auth$ BEGIN PERFORM pg_catalog.set_config('request.jwt.claim.sub',${quote(user||'')},true); END $auth$; ${sql}\nCOMMIT;`;
+ return `BEGIN; SET LOCAL application_name=${quote(application)}; SET LOCAL ROLE ${role}; DO $auth$ BEGIN PERFORM pg_catalog.set_config('request.jwt.claim.sub',${quote(legacyUser||'')},true); PERFORM pg_catalog.set_config('request.jwt.claims',${quote(claims??'')},true); END $auth$; ${sql}\nCOMMIT;`;
 }
 export function asUser(sql,options={}){return execute(authSQL(sql,options),{...options,client:true});}
 export function asValue(sql,options={}){const out=asUser(sql,options);return out.stdout?JSON.parse(out.stdout.split('\n').at(-1)):null;}
