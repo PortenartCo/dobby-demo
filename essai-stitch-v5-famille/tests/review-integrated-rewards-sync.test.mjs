@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import * as R from '../family-runes-core.mjs';
+import {makeBackend,makeClient} from './helpers/modules-harness.mjs';
+const date='2026-11-11T12:00:00Z',members=[{id:'member-a'}],m={id:'review-grant',title:'TEST — Récompense',status:'open',assigneeId:'member-a',effort:'light',rewardVersion:1,category:'Famille',due:'',note:''};
+const grant=R.acceptRequests([],[R.completionRequest(m,members,[],[],date)],0),reverse=R.reopeningRequest({...m,status:'done'},grant,[],date),local=R.acceptRequests(grant,[reverse],0);
+for(const kind of ['confirmed-v2','pending-v2','custom-mission'])test('sharing '+kind+' refuses before any POST and preserves every local record',async t=>{
+ const backend=makeBackend(),a=makeClient('a',backend);t.after(()=>a.provider.reset());a.st.manualMissions=[kind==='custom-mission'?{...m,customRunes:0}:m];a.st.runeCredits=kind==='confirmed-v2'?structuredClone(local):structuredClone(grant);a.st.runeRequests=kind==='pending-v2'?[reverse]:[];const before=JSON.stringify(a.st);await a.provider.start();await a.action('activate','missions');assert.equal(backend.journal.some(x=>x.method==='POST'||x.method==='PATCH'),false);assert.deepEqual(a.st.manualMissions,JSON.parse(before).manualMissions);assert.deepEqual(a.st.runeCredits,JSON.parse(before).runeCredits);assert.match(a.provider.html(),/bloqué|version|serveur/i);
+});
+test('two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver',async t=>{
+ const backend=makeBackend(),a=makeClient('a',backend),b=makeClient('b',backend);t.after(()=>{a.provider.reset();b.provider.reset();});a.st.manualMissions=[m];await a.provider.start();await a.action('activate','missions');await b.provider.start();await b.action('activate','missions');
+ a.st.manualMissions=[{...m,status:'done',completedAt:date}];a.st.runeRequests=[R.completionRequest(m,members,[],[],date)];await a.provider.sync();await b.provider.sync();assert.equal(R.memberSummary('member-a',b.st.runeCredits).total,10);const snapshot=structuredClone(backend.rows.get('missions')),patches=backend.journal.filter(x=>x.method==='PATCH').length;
+ b.st.runeRequests=[R.reopeningRequest({...m,status:'done'},b.st.runeCredits,[],date)];await b.provider.sync();assert.equal(backend.journal.filter(x=>x.method==='PATCH').length,patches);assert.deepEqual(backend.rows.get('missions'),snapshot);assert.equal(R.memberSummary('member-a',b.st.runeCredits).total,10);assert.match(b.provider.html(),/bloqué|serveur/i);
+});
+test('existing remote retrieval cannot overwrite a local V2 history or its mission snapshot',async t=>{
+ const backend=makeBackend(),server=makeClient('server',backend),localClient=makeClient('local',backend);t.after(()=>{server.provider.reset();localClient.provider.reset();});server.st.manualMissions=[m];await server.provider.start();await server.action('activate','missions');localClient.st.manualMissions=[{...m,status:'open',note:'TEST local history'}];localClient.st.runeCredits=structuredClone(local);localClient.st.runeRequests=[];const before=structuredClone(localClient.st);await localClient.provider.start();await localClient.action('activate','missions');assert.deepEqual(localClient.st.manualMissions,before.manualMissions);assert.deepEqual(localClient.st.runeCredits,before.runeCredits);assert.match(localClient.provider.html(),/bloqué|serveur/i);
+});
+test('identical unsupported remote snapshot cannot be marked configured during activation',async t=>{
+ const backend=makeBackend(),a=makeClient('a',backend);t.after(()=>a.provider.reset());a.st.manualMissions=[m];a.st.autoTasks=[];a.st.runeCredits=structuredClone(local);a.st.runeRequests=[];backend.rows.set('missions',{module:'missions',revision:3,payload:{manualMissions:[m],autoTasks:[],runeCredits:structuredClone(local),runeLedgerVersion:2}});await a.provider.start();await a.action('activate','missions');assert.equal(a.provider.isConfigured('missions'),false);assert.equal(a.st.runeSyncRequired,undefined);assert.equal(backend.journal.some(x=>x.method==='POST'||x.method==='PATCH'),false);assert.deepEqual(a.st.runeCredits,local);
+});

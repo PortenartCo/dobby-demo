@@ -47,7 +47,7 @@ export function normalizeMission(raw){
   if(!MISSION_CATEGORIES.includes(category))throw Error('Catégorie non autorisée');
   if(!['open','done'].includes(status))throw Error('État de mission invalide');
   const completedAt=raw.completedAt?short(raw.completedAt,40):'';
-  if(raw.effort!==undefined||raw.rewardVersion===1)runes.effortFor(raw.effort);
+  if(raw.effort!==undefined||raw.rewardVersion===1||raw.customRunes!==undefined)runes.rewardFor(raw);
   if(raw.rewardVersion!==undefined&&raw.rewardVersion!==1)throw Error('Version de récompense non prise en charge');
   if(raw.recurrence!==undefined&&(raw.seriesId!==undefined||raw.occurrenceDate!==undefined))throw Error('Identité de série invalide');
   const recurrence=raw.recurrence===undefined?undefined:normalizeRecurrence(raw.recurrence,id);

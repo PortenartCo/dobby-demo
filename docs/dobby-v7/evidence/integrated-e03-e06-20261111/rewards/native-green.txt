@@ -1,0 +1,40 @@
+✔ sharing confirmed-v2 refuses before any POST and preserves every local record (25.085421ms)
+✔ sharing pending-v2 refuses before any POST and preserves every local record (3.101771ms)
+✔ sharing custom-mission refuses before any POST and preserves every local record (10.536766ms)
+✔ two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver (30.311513ms)
+✔ existing remote retrieval cannot overwrite a local V2 history or its mission snapshot (10.996728ms)
+✔ custom reward accepts zero and safe integers, rejects coercion and overflow (6.100034ms)
+✔ required example is auditable +10 -> 0 -> 10 without replacing original grant (63.742796ms)
+✔ zero custom grants and compensations retain event identities and history (1.527101ms)
+✔ amount and responsible edits do not rewrite old gains or their reversal (1.395338ms)
+✔ concurrent duplicate transitions and replay produce one active event (2.575046ms)
+✔ contradictory compensation, event identities and unsafe aggregate fail closed (2.781818ms)
+✔ legacy credits and legacy ineligibility remain unchanged (4.124857ms)
+✔ recurrence templates carry custom reward to independent occurrence without altering old row (7.207755ms)
+✔ validated effort choices and approved V1 grades have one centralized definition (1.197559ms)
+✔ only new eligible assigned completions create a single durable request per mission (32.774206ms)
+✔ 10/25/50 credits are validated, durable without mission rows, and deterministic (44.128058ms)
+✔ first confirmed CAS result wins over a divergent offline request without transfer (0.830736ms)
+✔ pending requests do not inflate totals, and all twelve grade boundaries are stable (12.177593ms)
+✔ the reward history is not truncated to the 200 current mission limit (88.185626ms)
+✔ concurrent distinct credits survive server conflict resolution and mission deletion (59.465973ms)
+✔ concurrent distinct credits survive local conflict resolution and mission deletion (12.440226ms)
+✔ same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted (26.704006ms)
+✔ accepted PATCH with lost response and reload confirms the same request without replay credit (44.545137ms)
+✔ CAS loss between GET/PATCH retains pending intent, then existing resolver converges (13.104542ms)
+✔ activation/retrieval preserves local pending requests and never credits legacy done rows (9.614661ms)
+✔ a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized (6.877232ms)
+✔ JSON object key order from jsonb cannot trigger a repeated reward PATCH (8.274427ms)
+✔ a second native completion during PATCH keeps newer local data and its unconfirmed request (14.634878ms)
+✔ a malformed confirmation or server refusal never fabricates a confirmed gain (4.376725ms)
+✔ disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain (9.961955ms)
+✔ retrieval queues retained offline rewards and reports pending until actual confirmation (1543.480339ms)
+✔ malformed request storage is reported without throwing after an unrelated native save (13.581175ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2540.904261

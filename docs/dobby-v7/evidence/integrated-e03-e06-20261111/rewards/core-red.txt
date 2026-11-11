@@ -1,0 +1,117 @@
+✖ custom reward accepts zero and safe integers, rejects coercion and overflow (2.784776ms)
+✖ required example is auditable +10 -> 0 -> 10 without replacing original grant (1.130783ms)
+✖ zero custom grants and compensations retain event identities and history (0.254523ms)
+✖ amount and responsible edits do not rewrite old gains or their reversal (0.214393ms)
+✖ concurrent duplicate transitions and replay produce one active event (0.359564ms)
+✖ contradictory compensation, event identities and unsafe aggregate fail closed (0.207821ms)
+✖ legacy credits and legacy ineligibility remain unchanged (0.867792ms)
+✖ recurrence templates carry custom reward to independent occurrence without altering old row (8.541448ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 87.996222
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:9:1
+✖ custom reward accepts zero and safe integers, rejects coercion and overflow (2.784776ms)
+  TypeError: R.rewardFor is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:10:169)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:13:1
+✖ required example is auditable +10 -> 0 -> 10 without replacing original grant (1.130783ms)
+  TypeError: R.reopeningRequest is not a function
+      at reopen (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:8:55)
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:15:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:20:1
+✖ zero custom grants and compensations retain event identities and history (0.254523ms)
+  TypeError: R.reopeningRequest is not a function
+      at reopen (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:8:55)
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:21:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:24:1
+✖ amount and responsible edits do not rewrite old gains or their reversal (0.214393ms)
+  TypeError: R.reopeningRequest is not a function
+      at reopen (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:8:55)
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:25:136)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:29:1
+✖ concurrent duplicate transitions and replay produce one active event (0.359564ms)
+  TypeError: R.reopeningRequest is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:30:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:34:1
+✖ contradictory compensation, event identities and unsafe aggregate fail closed (0.207821ms)
+  TypeError: R.reopeningRequest is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:35:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:41:1
+✖ legacy credits and legacy ineligibility remain unchanged (0.867792ms)
+  TypeError: R.ledgerVersion is not a function
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:43:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:48:1
+✖ recurrence templates carry custom reward to independent occurrence without altering old row (8.541448ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  20 !== 34
+
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs:51:69)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 20,
+    expected: 34,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

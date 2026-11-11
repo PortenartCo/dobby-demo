@@ -1,0 +1,46 @@
+AssertionError [ERR_ASSERTION]: Reopen/recomplete cannot reward twice
++ actual - expected
+... Skipped lines
+
+  [
+    {
+      amount: 10,
+      date: '2026-11-11T13:31:26.343Z',
+      effort: 'light',
+...
+    },
++   {
++     amount: 10,
++     cycle: 0,
++     date: '2026-11-11T13:31:26.354Z',
++     effort: 'light',
++     eventId: 'fm-ee7e87bb-4e44-4cee-8ccd-f60dfff168bf~0~reversal',
++     kind: 'reversal',
++     memberId: 'r-a',
++     missionId: 'fm-ee7e87bb-4e44-4cee-8ccd-f60dfff168bf',
++     reverses: 'fm-ee7e87bb-4e44-4cee-8ccd-f60dfff168bf',
++     revision: 0,
++     title: 'TEST — Effort light'
++   },
++   {
++     amount: 10,
++     cycle: 1,
++     date: '2026-11-11T13:31:26.365Z',
++     effort: 'light',
++     eventId: 'fm-ee7e87bb-4e44-4cee-8ccd-f60dfff168bf~1~grant',
++     kind: 'grant',
++     memberId: 'r-a',
++     missionId: 'fm-ee7e87bb-4e44-4cee-8ccd-f60dfff168bf',
++     revision: 0,
++     title: 'TEST — Effort light'
++   }
+  ]
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/e04-runes.cjs:10:191 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

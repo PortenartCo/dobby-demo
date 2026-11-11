@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: An unselected invalid custom amount must not block the selected preset
+
+false !== true
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-rewards-preset.cjs:2:1080 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

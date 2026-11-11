@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Custom reward is disabled before correction
+
+true !== false
+
+    at /workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-rewards.cjs:9:241 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: true,
+  expected: false,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

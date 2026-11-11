@@ -1,7 +1,7 @@
 /* Shared manual missions for Dobby V5. Separate from V5 autoTasks/reconcile(). */
 (async function(){
 'use strict';
-const core=await import('./family-missions-core.mjs?v=20261111-recurrence-1');
+const core=await import('./family-missions-core.mjs?v=20261111-rewards-2');
 const esc=window.DobbyFamilyUI?.esc||(x=>String(x||''));
 if(!Array.isArray(st.manualMissions))st.manualMissions=[];
 if(st.runeCredits===undefined)st.runeCredits=[];
@@ -78,7 +78,8 @@ function showForm(id){
     '<label>Catégorie<select name="category">'+core.MISSION_CATEGORIES.map(x=>
       '<option'+(x===(current?.category||'Famille')?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></label></div>'+
     '<label>Responsable<select name="assigneeId"><option value="">Non attribuée</option>'+selectable+'</select></label>'+
-    '<label>Effort<select name="effort">'+core.runes.EFFORTS.map(e=>'<option value="'+e.id+'"'+(e.id===(current?.effort||'regular')?' selected':'')+'>'+esc(e.label)+' — '+e.amount+' runes</option>').join('')+'</select></label>'+
+    '<label>Effort<select name="effort">'+core.runes.EFFORTS.map(e=>'<option value="'+e.id+'"'+(current?.customRunes===undefined&&e.id===(current?.effort||'regular')?' selected':'')+'>'+esc(e.label)+' — '+e.amount+' runes</option>').join('')+'<option value="custom"'+(current?.customRunes!==undefined?' selected':'')+'>Personnalisée</option></select></label>'+
+    '<label>Récompense personnalisée (entier positif ou nul)<input name="customRunes" inputmode="numeric" pattern="[0-9]+" value="'+esc(current?.customRunes??'')+'"></label>'+
     '<label>Note non confidentielle<textarea name="note" maxlength="400">'+esc(current?.note||'')+'</textarea></label>'+
     '<fieldset><legend>Récurrence de mission</legend><label>Fréquence<select name="recurrenceFrequency">'+[['unique','Unique'],['daily','Quotidien'],['weekly','Hebdomadaire'],['monthly','Mensuel']].map(([value,label])=>'<option value="'+value+'"'+(value===(rule?.frequency||'unique')?' selected':'')+'>'+label+'</option>').join('')+'</select></label>'+
     '<label>Jours de la semaine (0 = dimanche, 1 = lundi… 6 = samedi)<input name="recurrenceWeekdays" value="'+esc((rule?.weekdays||[new Date((current?.due||core.brusselsDate())+'T12:00:00Z').getUTCDay()]).join(','))+'"></label>'+
@@ -91,6 +92,9 @@ function showForm(id){
   const form=layer.querySelector('form#fmsForm');
   if(!form)throw Error('Formulaire mission introuvable');
   form.addEventListener('submit',saveForm);
+  const customAmount=form.elements.customRunes,effortChoice=form.elements.effort;
+  const rewardValidity=()=>{const custom=effortChoice.value==='custom';customAmount.required=custom;customAmount.pattern=custom?'[0-9]+':'.*';};
+  effortChoice.addEventListener('change',rewardValidity);customAmount.addEventListener('input',()=>{effortChoice.value='custom';rewardValidity();});rewardValidity();
   if(current?.seriesId){for(const name of ['due','recurrenceFrequency','recurrenceWeekdays','recurrenceMonthDay','recurrenceState'])form.elements[name].disabled=true;}
   form.querySelector('[name=title]').focus();
 }
@@ -106,16 +110,20 @@ function saveForm(event){
       old=existing?find(existing):null;
     if(existing&&!old)throw Error('La mission a été modifiée ou supprimée sur cet appareil');
     if(!existing&&st.manualMissions.filter(x=>!x.seriesId).length>=200)throw Error('Limite de 200 missions ou séries atteinte');
-    const now=new Date().toISOString();
+    const now=new Date().toISOString(),chosenEffort=String(data.get('effort')||''),customText=String(data.get('customRunes')??'').trim();
+    const custom=chosenEffort==='custom';
+    if(custom&&(!/^\d+$/.test(customText)||!Number.isSafeInteger(Number(customText))))throw Error('Saisissez un entier de runes positif ou nul représentable sans perte');
+    if(custom&&requiresSync())throw Error('Les récompenses personnalisées sont disponibles sur cet appareil uniquement. Leur partage nécessite une validation serveur versionnée ; aucune modification enregistrée.');
     let row=core.normalizeMission({
       ...old,
       id:existing||('fm-'+crypto.randomUUID()),
-      title:data.get('title'),due:old?.seriesId?old.due:data.get('due'),effort:data.get('effort'),
+      title:data.get('title'),due:old?.seriesId?old.due:data.get('due'),effort:custom?(old?.effort||'regular'):chosenEffort,customRunes:custom?Number(customText):undefined,
       ...(!old||old.rewardVersion===1?{rewardVersion:1}:{}),
       category:data.get('category'),assigneeId:data.get('assigneeId'),
       note:data.get('note'),status:old?.status||'open',
       createdAt:old?.createdAt||now,completedAt:old?.completedAt||''
     });
+    if(!custom)delete row.customRunes;
     if(old?.seriesId){row=core.normalizeMission({...row,due:old.due});}
     else{
       const frequency=String(data.get('recurrenceFrequency')||'unique');
@@ -127,7 +135,8 @@ function saveForm(event){
         const rules=old?.recurrence?.rules||[],last=rules.at(-1),today=core.brusselsDate(),from=last?(today>last.from?today:last.from):row.due;
         // Future rows are new missions. A legacy first occurrence remains
         // ineligible; it does not remove eligibility from genuinely new rows.
-        const template={...last?.template,title:row.title,category:row.category,assigneeId:row.assigneeId,note:row.note,effort:row.effort,rewardVersion:1};
+        const template={...last?.template,title:row.title,category:row.category,assigneeId:row.assigneeId,note:row.note,effort:row.effort,rewardVersion:1,customRunes:row.customRunes};
+        if(row.customRunes===undefined)delete template.customRunes;
         const rule={from,start:rules[0]?.start||row.due,frequency,weekdays:String(data.get('recurrenceWeekdays')||'').split(',').filter(Boolean).map(Number).sort((a,b)=>a-b),monthDay:Number(data.get('recurrenceMonthDay')),shortMonth:'last-day',state:String(data.get('recurrenceState')||last?.state||'active'),template};
         if(!last&&!core.recurrenceMatches(row.due,rule))throw Error('La première échéance doit correspondre aux jours de récurrence choisis. Ajustez la date ou les jours de la série.');
         const equal=last&&JSON.stringify({...last,from:''})===JSON.stringify({...rule,from:''});
@@ -153,7 +162,10 @@ document.addEventListener('click',event=>{
     else if(a==='toggle'){
       const current=find(id);if(!current)return;
       const date=new Date().toISOString(),previous={manualMissions:st.manualMissions,runeCredits:st.runeCredits,runeRequests:st.runeRequests};
-      const request=core.runes.completionRequest(current,members(),st.runeCredits,st.runeRequests,date);
+      const request=current.status==='done'?core.runes.reopeningRequest(current,st.runeCredits,st.runeRequests,date):core.runes.completionRequest(current,members(),st.runeCredits,st.runeRequests,date);
+      if(requiresSync()&&(current.customRunes!==undefined||core.runes.ledgerVersion(st.runeCredits)===2||request&&core.runes.ledgerVersion([request])===2))throw Error('Cette opération de runes nécessite des compensations versionnées. Le partage actuel ne les garantit pas : opération bloquée, mission et solde conservés. Une validation serveur distincte est nécessaire.');
+      // Validate the entire candidate ledger (including safe aggregate totals) before changing status.
+      if(request)core.runes.acceptRequests(st.runeCredits,[...st.runeRequests,request],0);
       st.manualMissions=st.manualMissions.map(row=>row.id===id?{...row,status:row.status==='open'?'done':'open',completedAt:row.status==='open'?date:''}:row);
       if(request){st.runeRequests=core.runes.normalizeRequests([...st.runeRequests,request]);if(!requiresSync())st.runeCredits=core.runes.acceptRequests(st.runeCredits,[request],0);}
       try{persist();}catch(error){Object.assign(st,previous);throw error;}

@@ -1,0 +1,27 @@
+✔ sharing confirmed-v2 refuses before any POST and preserves every local record (6.63803ms)
+✔ sharing pending-v2 refuses before any POST and preserves every local record (1.423806ms)
+✔ sharing custom-mission refuses before any POST and preserves every local record (3.046712ms)
+✔ two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver (7.475181ms)
+✔ existing remote retrieval cannot overwrite a local V2 history or its mission snapshot (3.010945ms)
+✔ identical unsupported remote snapshot cannot be marked configured during activation (1.771132ms)
+✔ concurrent distinct credits survive server conflict resolution and mission deletion (23.320917ms)
+✔ concurrent distinct credits survive local conflict resolution and mission deletion (8.414705ms)
+✔ same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted (7.364683ms)
+✔ accepted PATCH with lost response and reload confirms the same request without replay credit (5.182668ms)
+✔ CAS loss between GET/PATCH retains pending intent, then existing resolver converges (6.696959ms)
+✔ activation/retrieval preserves local pending requests and never credits legacy done rows (4.44073ms)
+✔ a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized (3.610489ms)
+✔ JSON object key order from jsonb cannot trigger a repeated reward PATCH (3.5258ms)
+✔ a second native completion during PATCH keeps newer local data and its unconfirmed request (5.560946ms)
+✔ a malformed confirmation or server refusal never fabricates a confirmed gain (2.618273ms)
+✔ disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain (3.819013ms)
+✔ retrieval queues retained offline rewards and reports pending until actual confirmation (1511.760521ms)
+✔ malformed request storage is reported without throwing after an unrelated native save (4.034188ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1680.406734

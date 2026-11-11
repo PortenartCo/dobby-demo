@@ -1,0 +1,44 @@
+[
+  {
+    "width": 320,
+    "customDisabled": true,
+    "button": {
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "color": "rgb(24, 11, 7)",
+      "background": "rgba(0, 0, 0, 0)",
+      "height": 52,
+      "width": 288,
+      "scrollWidth": 288,
+      "clientWidth": 288
+    }
+  },
+  {
+    "width": 390,
+    "customDisabled": true,
+    "button": {
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "color": "rgb(24, 11, 7)",
+      "background": "rgba(0, 0, 0, 0)",
+      "height": 52,
+      "width": 358,
+      "scrollWidth": 358,
+      "clientWidth": 358
+    }
+  },
+  {
+    "width": 1440,
+    "customDisabled": true,
+    "button": {
+      "fontSize": "16px",
+      "fontWeight": "600",
+      "color": "rgb(24, 11, 7)",
+      "background": "rgba(0, 0, 0, 0)",
+      "height": 52,
+      "width": 448,
+      "scrollWidth": 448,
+      "clientWidth": 448
+    }
+  }
+]

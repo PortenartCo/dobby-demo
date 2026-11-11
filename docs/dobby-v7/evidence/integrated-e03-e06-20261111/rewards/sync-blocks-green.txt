@@ -1,0 +1,13 @@
+✔ sharing confirmed-v2 refuses before any POST and preserves every local record (8.40359ms)
+✔ sharing pending-v2 refuses before any POST and preserves every local record (2.733935ms)
+✔ sharing custom-mission refuses before any POST and preserves every local record (5.608374ms)
+✔ two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver (9.132848ms)
+✔ existing remote retrieval cannot overwrite a local V2 history or its mission snapshot (5.231822ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 199.030408

@@ -64,3 +64,10 @@ body[data-family-view="contracts"] .e08-documents-link{background:transparent;bo
  body[data-family-view="contracts"] .e011-band-prefix{display:none}
  body[data-family-view="contracts"] .e011-band-section{white-space:normal;text-overflow:clip}
 }
+
+/* Integrated E04 review: one selected reward and a legible, wrapping native action. */
+body[data-family-view="mission-edit"] [data-fa-action="rg-save"]{font-size:18px;line-height:1.4;font-weight:700;min-height:52px;height:auto;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;white-space:normal;text-align:center;color:#180b07}
+body[data-family-view="mission-edit"] [data-fa-action="rg-save"] .material-symbols-outlined{flex:none;font-size:22px}
+body[data-family-view="mission-edit"] .e04-custom-choice{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;font-weight:600;color:#f8e6bf;cursor:pointer}
+body[data-family-view="mission-edit"] .e04-custom-choice input{width:18px;height:18px;accent-color:#d49b42}
+body[data-family-view="mission-edit"] #custom-runes{font-size:16px;min-height:44px;min-width:0;flex:1 1 140px}

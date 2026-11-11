@@ -1,0 +1,50 @@
+[
+  {
+    "width": 320,
+    "customDisabled": false,
+    "button": {
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "color": "rgb(24, 11, 7)",
+      "background": "rgba(0, 0, 0, 0)",
+      "backgroundImage": "linear-gradient(to right, rgb(249, 187, 95), rgb(212, 155, 66))",
+      "labelFontSize": "18px",
+      "height": 52,
+      "width": 288,
+      "scrollWidth": 288,
+      "clientWidth": 288
+    }
+  },
+  {
+    "width": 390,
+    "customDisabled": false,
+    "button": {
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "color": "rgb(24, 11, 7)",
+      "background": "rgba(0, 0, 0, 0)",
+      "backgroundImage": "linear-gradient(to right, rgb(249, 187, 95), rgb(212, 155, 66))",
+      "labelFontSize": "18px",
+      "height": 52,
+      "width": 358,
+      "scrollWidth": 358,
+      "clientWidth": 358
+    }
+  },
+  {
+    "width": 1440,
+    "customDisabled": false,
+    "button": {
+      "fontSize": "18px",
+      "fontWeight": "700",
+      "color": "rgb(24, 11, 7)",
+      "background": "rgba(0, 0, 0, 0)",
+      "backgroundImage": "linear-gradient(to right, rgb(249, 187, 95), rgb(212, 155, 66))",
+      "labelFontSize": "18px",
+      "height": 52,
+      "width": 448,
+      "scrollWidth": 448,
+      "clientWidth": 448
+    }
+  }
+]

@@ -33,7 +33,7 @@ function pick(id) {
   for (const key of definition.keys) {
     if (st[key] !== undefined) data[key] = JSON.parse(JSON.stringify(st[key]));
   }
-  if(id==='missions'){data.runeCredits=st.runeCredits||[];data.runeLedgerVersion=1;}
+  if(id==='missions'){data.runeCredits=st.runeCredits||[];data.runeLedgerVersion=runes?.ledgerVersion?.(data.runeCredits)||1;}
   return data;
 }
 function digest(value) { return JSON.stringify(value); }
@@ -63,18 +63,20 @@ function retainRecurrences(state,payload){
 }
 function missionPayload(payload){
  if(!payload||typeof payload!=='object'||Array.isArray(payload))throw Error('Payload Missions invalide');
+ if(payload.runeLedgerVersion===2||runes?.ledgerVersion?.(payload.runeCredits)===2)throw Error('Partage des runes version 2 bloqué : les compensations et récompenses personnalisées nécessitent une validation serveur distincte. Historique local conservé.');
  if(payload.runeLedgerVersion!==undefined&&payload.runeLedgerVersion!==1)throw Error('Version de runes incompatible');
  if(payload.runeLedgerVersion===1&&!Array.isArray(payload.runeCredits))throw Error('Historique familial de runes invalide');
  if(payload.runeCredits!==undefined&&payload.runeLedgerVersion!==1)throw Error('Version de runes absente');
  for(const key of ['autoTasks','manualMissions'])if(payload[key]!==undefined&&!Array.isArray(payload[key]))throw Error('Registre Missions invalide');
- for(const row of payload.manualMissions||[])recurrenceIdentity(row);
+ for(const row of payload.manualMissions||[]){recurrenceIdentity(row);if(row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined))throw Error('Partage des récompenses personnalisées bloqué : validation serveur distincte nécessaire.');}
  return payload;
 }
 function rememberedCredits(){const raw=states.missions?.synced;if(!raw)return [];return JSON.parse(raw).runeCredits||[];}
 function retainedCredits(payload){missionPayload(payload);return runes.mergeCredits(payload.runeCredits||[],runes.mergeCredits(st.runeCredits||[],rememberedCredits()));}
 function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manualMissions:payload.manualMissions||[]};}
-function pendingRunes(){if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const ids=new Set((st.runeCredits||[]).map(c=>c?.missionId));return(st.runeRequests||[]).some(c=>!c||!ids.has(c.missionId));}
-function initialPayload(id){const payload=pick(id);return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
+function pendingRunes(){if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const key=c=>c?.eventId||c?.missionId,ids=new Set((st.runeCredits||[]).map(key));return(st.runeRequests||[]).some(c=>!c||!ids.has(key(c)));}
+function assertLocalRewardSharing(){if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
+function initialPayload(id){const payload=pick(id);if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
 function synchronized(id,revision,payload){return{active:true,revision,synced:moduleDigest(id,id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:payload.runeLedgerVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
 function applyCredits(credits){const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
@@ -84,8 +86,10 @@ function verifyProtocol(state,remote){
  retainRecurrences(state,remote.payload);
 }
 async function syncMissions(state,remote){
+ assertLocalRewardSharing();
  let credits;
  try{verifyProtocol(state,remote);credits=retainedCredits(remote.payload);}catch(error){state.conflict={remote,runes:true};await persist();throw error;}
+ if(runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');
  const local=pick('missions'),base=JSON.parse(state.synced||'{}'),localEditable=missionDigest(editableMissions(local)),remoteEditable=missionDigest(editableMissions(remote.payload)),baseEditable=missionDigest(editableMissions(base));
  if(localEditable!==baseEditable&&remoteEditable!==baseEditable&&localEditable!==remoteEditable){
   applyCredits(credits);state.conflict={remote};await persist();return;
@@ -135,6 +139,7 @@ function backupLocal(id) {
   localStorage.setItem(key, digest(pick(id)));
 }
 function applyShared(id, payload) {
+  if(id==='missions'&&(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined))))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');
   const def = byId.get(id);
   if (!def || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw Error('Payload invalide');
   if(id==='missions')verifyProtocol(states.missions||{},{payload});
@@ -209,10 +214,11 @@ function reset() {
 function stateLabel(def) {
   if (!ctx) return api.getContext() ? 'Initialisation du foyer' : 'Foyer non connecté';
   if (!backendReady) return checked ? 'Données locales (non synchronisées)' : 'Vérification en cours';
+  if(def.id==='missions'){try{runes.normalizeCredits(st.runeCredits||[]);runes.normalizeRequests(st.runeRequests||[]);}catch{return 'Historique de runes à vérifier';}if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))return 'Partage des nouvelles récompenses bloqué — validation serveur nécessaire';}
   const info = states[def.id];
   if (!info?.active) return 'Partage désactivé';
   if (info.conflict) return 'Conflit à résoudre';
-  if(def.id==='missions'){try{runes.normalizeCredits(st.runeCredits||[]);runes.normalizeRequests(st.runeRequests||[]);}catch{return 'Historique de runes à vérifier';}if(pendingRunes())return 'Runes en attente de synchronisation';}
+  if(def.id==='missions'&&pendingRunes())return 'Runes en attente de synchronisation';
   return moduleDigest(def.id,pick(def.id)) === info.synced ? 'Partagé · à jour' : 'Modifications locales à envoyer';
 }
 function html() {
@@ -230,7 +236,8 @@ function html() {
     '<button type="button" data-fm-action="activate-all">Activer les ' +
     inactive.length + ' modules du foyer</button></div>' : '';
   const rows = DEFINITIONS.map(def => {
-    const info = states[def.id];
+    if(def.id==='missions'){try{runes.normalizeCredits(st.runeCredits||[]);runes.normalizeRequests(st.runeRequests||[]);}catch{return 'Historique de runes à vérifier';}if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))return 'Partage des nouvelles récompenses bloqué — validation serveur nécessaire';}
+  const info = states[def.id];
     const flag = stateLabel(def);
     let actions = '';
     if (backendReady && ctx && !info?.active)
@@ -278,7 +285,9 @@ async function activate(id) {
   if (!def) throw Error('Module invalide');
   if (!confirm('Partager « ' + def.title + ' » avec les autres membres actifs du foyer ?\n' +
     'Les données actuelles de ce module pourront être consultées et modifiées par eux.')) return;
+  if(id==='missions')assertLocalRewardSharing();
   const remote = await readRow(id);
+  if(id==='missions'&&remote)missionPayload(remote.payload);
   let revision,acknowledged;
   if (remote) {
     if (digest(pick(id)) !== digest(remote.payload)) {
@@ -305,10 +314,12 @@ async function activateRemaining() {
   if (!ctx || !backendReady) throw Error('Foyer non connecté');
   const ids = DEFINITIONS.filter(def => !states[def.id]?.active).map(def => def.id);
   if (!ids.length) return;
+  if(ids.includes('missions'))assertLocalRewardSharing();
   // Read first: existing remote data wins, after user confirmation and local backup.
   const entries = await Promise.all(ids.map(async id => ({id, remote:await readRow(id)})));
   const existing = entries.filter(entry => Boolean(entry.remote)).length;
   for (const {id, remote} of entries) {
+    if(id==='missions'&&remote)missionPayload(remote.payload);
     if (remote && (!remote.payload || Array.isArray(remote.payload) ||
       typeof remote.payload !== 'object' ||
       !Number.isInteger(Number(remote.revision)) || Number(remote.revision) < 1)) {
@@ -368,6 +379,7 @@ async function joinFamily() {
   if (!backendReady || !ctx) throw Error('Foyer non connecté');
   const ids = sharedAvailable.filter(id => byId.has(id) && !states[id]?.active);
   if (!ids.length) return;
+  if(ids.includes('missions'))assertLocalRewardSharing();
   if (!confirm('Récupérer les ' + ids.length + ' modules déjà partagés dans ce foyer ?\n' +
     'Chaque version locale sera sauvegardée avant remplacement. Aucune donnée de cet appareil ne sera envoyée.')) return;
   // Preflight all reads before replacing anything.
@@ -456,6 +468,7 @@ function onSave() {
 async function resolve(id, preference) {
   const state = states[id];
   if(id==='missions'){
+    assertLocalRewardSharing();
     const remote=await readRow(id);if(!remote)throw Error('Version familiale inaccessible');verifyProtocol(state,remote);const credits=retainedCredits(remote.payload);
     if(preference==='local'&&!confirm('Conserver mes modifications locales ? Les gains de runes confirmés du foyer seront conservés.'))return;
     backupLocal(id);if(preference==='server')applyShared(id,remote.payload);else applyCredits(credits);

@@ -1,0 +1,22 @@
+✔ custom reward accepts zero and safe integers, rejects coercion and overflow (7.998837ms)
+✔ required example is auditable +10 -> 0 -> 10 without replacing original grant (17.833717ms)
+✔ zero custom grants and compensations retain event identities and history (0.714008ms)
+✔ amount and responsible edits do not rewrite old gains or their reversal (0.730679ms)
+✔ concurrent duplicate transitions and replay produce one active event (1.373375ms)
+✔ contradictory compensation, event identities and unsafe aggregate fail closed (1.454951ms)
+✔ legacy credits and legacy ineligibility remain unchanged (1.659001ms)
+✔ recurrence templates carry custom reward to independent occurrence without altering old row (2.406439ms)
+✔ validated effort choices and approved V1 grades have one centralized definition (2.40147ms)
+✔ only new eligible assigned completions create a single durable request per mission (8.15976ms)
+✔ 10/25/50 credits are validated, durable without mission rows, and deterministic (15.641905ms)
+✔ first confirmed CAS result wins over a divergent offline request without transfer (1.867096ms)
+✔ pending requests do not inflate totals, and all twelve grade boundaries are stable (1.398885ms)
+✔ the reward history is not truncated to the 200 current mission limit (26.62562ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 214.161637
