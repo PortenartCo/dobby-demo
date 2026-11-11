@@ -292,8 +292,16 @@ test('group retrieval cannot replace Missions when auth changes after the Missio
   assert.deepEqual(backend.rows.get('missions'), remote);
 });
 
-test('the optional pilot flag leaves native V1 compatibility available outside the pilot', async t => {
+test('the packaged client remains guarded even if its banner runtime did not load', async t => {
   const backend = backendFor('404'), c = client(t, backend, {window:{DobbyRunesPilot:undefined}});
+  await c.provider.start();
+  await c.action('activate', 'missions');
+  assert.deepEqual(mutations(backend), []);
+  assert.equal(backend.rows.has('missions'),false);
+});
+
+test('the original native source retains V1 compatibility outside the packaged pilot', async t => {
+  const backend = backendFor('404'), c = client(t, backend, {implementation:source,window:{DobbyRunesPilot:undefined}});
   await c.provider.start();
   await c.action('activate', 'missions');
   c.st.autoTasks.push({key:'fixture-native', title:'TEST native compatibility'});

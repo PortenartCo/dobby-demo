@@ -13,9 +13,12 @@ function transformMissions(source){
  source=replaceOnce(source,'function applyShared(id, payload) {',"function applyShared(id, payload) {\n  if(id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2)assertLocalRewardSharing();");
  source=replaceOnce(source,"const remote=await readRow(id);if(!remote)throw Error('Version familiale inaccessible');verifyProtocol(state,remote);","const remote=await readRow(id);if(window.DobbyRunesPilot?.requireMissionsV2)assertLocalRewardSharing();if(!remote)throw Error('Version familiale inaccessible');verifyProtocol(state,remote);");
  source=replaceOnce(source,'async function syncOne(id) {',"async function syncOne(id) {\n  if(id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2&&!runesV2Available())return;");
- return replaceOnce(source,"  const info = states[def.id];\n  if (!info?.active)","  if(def.id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2&&!runesV2Available())return 'RPC Runes V2 indisponibles — opérations locales en attente';\n  const info = states[def.id];\n  if (!info?.active)");
+ source=replaceOnce(source,"  const info = states[def.id];\n  if (!info?.active)","  if(def.id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2&&!runesV2Available())return 'RPC Runes V2 indisponibles — opérations locales en attente';\n  const info = states[def.id];\n  if (!info?.active)");
+ // Protection belongs to the copied client, even when the notice fails to load.
+ source=replaceOnce(source,"'use strict';","'use strict';\nconst dobbyPilotRequiresV2=true;");
+ return source.replaceAll('window.DobbyRunesPilot?.requireMissionsV2','dobbyPilotRequiresV2');
 }
-function transformMissionActions(source){return replaceOnce(source,'function requiresSync(){',"function requiresSync(){if(window.DobbyRunesPilot?.requireMissionsV2)return true;");}
+function transformMissionActions(source){return replaceOnce(source,'function requiresSync(){',"function requiresSync(){return true; // Pilot: native queue is mandatory, independently of the notice.\n");}
 function build({output,sourceSha}={}){
  const out=path.resolve(output||path.join(repo,'essai-dobby-runes-v2-pilot-20261111'));
  if(fs.existsSync(out))throw Error('Output must be a new directory: '+out);

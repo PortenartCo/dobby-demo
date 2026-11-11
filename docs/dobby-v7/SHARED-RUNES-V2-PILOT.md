@@ -24,7 +24,7 @@ E07.4 n'est ni repris ni modifié : ce pilote reste sur sa base Runes explicitem
 
 - 137 tests natifs/offline/conflits : PASS.
 - 11 tests E06 de scoring, identité, brouillons et synchronisation : PASS.
-- 23 tests du client gardé : capacités 404/401/403/malformées, frais/V1, activation individuelle/groupée, récupération, conflits, persistance de l'opération exacte, changement d'authentification pendant les lectures et l'activation, continuité des autres modules. Le chemin V2 reste le RPC natif, vérifié sur fixture (+10 / 0 / 10), sans fallback si le writer manque.
+- 24 tests du client gardé : capacités 404/401/403/malformées, frais/V1, activation individuelle/groupée, récupération, conflits, persistance de l'opération exacte, changement d'authentification pendant les lectures et l'activation, continuité des autres modules et garde maintenue en l'absence du runtime du bandeau. Le chemin V2 reste le RPC natif, vérifié sur fixture (+10 / 0 / 10), sans fallback si le writer manque.
 - 6 tests de packaging (sous-tests compris) : 281 hashes source/résultat, provenance, ancrages obligatoires, CSP, absence de credentials et runtime fictif, reproductibilité et refus d'écrasement.
 - Navigateur : quatre pages principales, menu et connexion native aux largeurs 320, 390 et 1440, sans débordement, erreur JavaScript ou ressource locale manquante. Action réelle du handler natif, nouvelle récompense en attente et rechargement, conservation du ledger, de la file, de l'opération durable et des sentinelles d'anciens aperçus. Absence de clé et refus d’une clé secrète vérifiés sur fixture. Authentification et RPC entièrement interceptés par des fixtures HTTP : **zéro requête à Supabase réel**.
 - Couverture de la matrice de revue antérieure : PASS, sans la modifier.

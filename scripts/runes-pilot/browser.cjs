@@ -92,8 +92,19 @@ const date='2026-11-11T12:00:00.000Z';
   assert.equal(await native('return st.pilotSentinel;'),'KEEP');assert.equal(await native('return DobbyFamilyUI.meta("pilotSentinel");'),'KEEP-IDB');
   assert.equal(journal.filter(x=>x.method!=='GET'&&x.method!=='HEAD'&&x.path!=='/auth/v1/token').length,0,'No remote module mutation or writer call attempted');
   assert.ok(journal.some(x=>x.path.endsWith('/rpc/dobby_missions_v2_capabilities')));
+  if(width===320){
+   // A partial network load must never reopen V1 or locally confirm a reward.
+   await context.route('**/pilot-runtime.js',route=>route.abort());await page.reload();await ready();
+   assert.equal(await page.evaluate(()=>window.DobbyRunesPilot),undefined);
+   const kept=await native('return JSON.parse(JSON.stringify({credits:st.runeCredits,requests:st.runeRequests}));');
+   await page.evaluate(()=>DobbyFamilyStitchEngine.action('fmsAction','toggle',{id:'pilot-new'}));
+   assert.deepEqual(await native('return st.runeCredits;'),kept.credits);
+   assert.equal((await native('return st.runeRequests;')).length,kept.requests.length+1);
+   assert.deepEqual(await native('return DobbyFamilyUI.meta('+JSON.stringify(metaKey)+').then(x=>x.missions.pendingOperation);'),operation);
+   assert.equal(journal.filter(x=>x.method!=='GET'&&x.method!=='HEAD'&&x.path!=='/auth/v1/token').length,0);
+  }
   assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);
-  results.push({width,pass:true,roots:['accueil','missions','taverne','famille','menu'],missingConfigurationAndSecretRefusal:width===320?'PASS':'covered at 320',nativeAuth:'HTTP fixture only',capability:'404 fixture; V1 disabled',newReward:'pending after reload',outbox:'unchanged',actualSupabaseRequests:0,sameOriginMissing:missing,pageErrors:errors,journal});
+  results.push({width,pass:true,roots:['accueil','missions','taverne','famille','menu'],missingConfigurationAndSecretRefusal:width===320?'PASS':'covered at 320',missingNoticeRuntime:width===320?'PASS: guard and pending queue remain mandatory':'covered at 320',nativeAuth:'HTTP fixture only',capability:'404 fixture; V1 disabled',newReward:'pending after reload',outbox:'unchanged',actualSupabaseRequests:0,sameOriginMissing:missing,pageErrors:errors,journal});
   await context.close();console.log('RUNES_PILOT_BROWSER_PASS',width,base.href);
  }}finally{await browser.close();}
  fs.writeFileSync(path.join(evidence,'browser-verification.json'),JSON.stringify({base:base.href,realSupabaseVerified:false,results},null,2)+'\n');
