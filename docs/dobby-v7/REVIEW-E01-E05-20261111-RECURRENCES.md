@@ -1,6 +1,6 @@
 # Revue du 11/11/2026 — E04, récurrences et échéance
 
-Lot indépendant E/F ; changements locaux non commités. Aucun déploiement, compte familial réel, SQL, backend ou registre concurrent E06 modifié.
+Lot indépendant E/F ; code intégré aux commits de cette branche de revue. Aucun déploiement, compte familial réel, SQL, backend ou registre concurrent E06 modifié.
 
 ## F — Échéance lisible : DONE, validation utilisateur restante
 

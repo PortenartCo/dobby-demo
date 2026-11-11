@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "nativeTests": 95,
+  "browserScripts": 24,
+  "initial": "campaign-initial.txt",
+  "resume": "campaign-resumed.txt",
+  "resumeFrom": "e01-consolidation.cjs",
+  "reason": "Old assertion expected recurrence unavailability; replaced with live options and canonical recurrenceVersion checks",
+  "oldGreenScriptsRepeated": false,
+  "sources": "123120f + test assertion cf7596a",
+  "publication": false
+}

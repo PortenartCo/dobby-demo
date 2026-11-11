@@ -1,0 +1,71 @@
+REVIEW_TEST_START e01-consolidation.cjs
+E01_E04_CONSOLIDATION_PASS 320 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+E01_E04_CONSOLIDATION_PASS 390 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+E01_E04_CONSOLIDATION_PASS 1440 empty states, confirmation, reopen, ledger, E03, automatic source, Midi/Soir, native basket, duplicate, reload, E04 identity/navigation
+REVIEW_TEST_START e02-consolidation.cjs
+E02_CONSOLIDATION_PASS 390
+E02_CONSOLIDATION_PASS 320
+E02_CONSOLIDATION_PASS 1440
+REVIEW_TEST_START e02.cjs
+E02_UI_ACTIONS_PASS 320
+E02_UI_ACTIONS_PASS 390
+E02_UI_ACTIONS_PASS 1440
+REVIEW_TEST_START e02-edge.cjs
+E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+REVIEW_TEST_START e02-voice-history.cjs
+E02_VOICE_HISTORY_PASS
+REVIEW_TEST_START e03-counts.cjs
+E03_COUNTS_PASS real 3/17 and native title never sanitized
+REVIEW_TEST_START e03.cjs
+E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+REVIEW_TEST_START e04.cjs
+E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+REVIEW_TEST_START runes-native.cjs
+RUNES_NATIVE_PASS actual forms/10-25-50/idempotence/reassignment/deletion/atomic storage failure/pending reload
+REVIEW_TEST_START e04-runes.cjs
+E04_RUNES_PASS 320 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+E04_RUNES_PASS 390 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+E04_RUNES_PASS 1440 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+REVIEW_TEST_START e05-native.cjs
+E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+REVIEW_TEST_START e05.cjs
+E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+REVIEW_TEST_START e05-edge.cjs
+E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity
+REVIEW_TEST_START e07-2-model.cjs
+E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+REVIEW_TEST_START e07-2.cjs
+E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+REVIEW_TEST_START cuisine-family.cjs
+CUISINE_FAMILY_PASS 320px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+REVIEW_TEST_START e08.cjs
+E08_COUNT_PASS 320 0
+E08_COUNT_PASS 320 1
+E08_COUNT_PASS 320 10
+E08_COUNT_PASS 320 50
+E08_BROWSER_PASS 320
+E08_COUNT_PASS 360 0
+E08_COUNT_PASS 360 1
+E08_COUNT_PASS 360 10
+E08_COUNT_PASS 360 50
+E08_BROWSER_PASS 360
+E08_COUNT_PASS 390 0
+E08_COUNT_PASS 390 1
+E08_COUNT_PASS 390 10
+E08_COUNT_PASS 390 50
+E08_BROWSER_PASS 390
+E08_COUNT_PASS 1440 0
+E08_COUNT_PASS 1440 1
+E08_COUNT_PASS 1440 10
+E08_COUNT_PASS 1440 50
+E08_BROWSER_PASS 1440
+REVIEW_E01_E05_CAMPAIGN_PASS 17 scripts resumed from e01-consolidation.cjs

@@ -1,0 +1,237 @@
+REVIEW_TEST_START review-home-20261111.cjs
+REVIEW_HOME_AFTER 320 native manual reopening/recompletion/runes/E03/basket PASS
+REVIEW_HOME_AFTER 390 native manual reopening/recompletion/runes/E03/basket PASS
+REVIEW_HOME_AFTER 1440 native manual reopening/recompletion/runes/E03/basket PASS
+REVIEW_TEST_START review-voice-20261111.cjs
+PASS final-only default 3s
+PASS multi-segment speech resets pause
+PASS continue and cancel
+PASS immediate final Send and stale callbacks
+PASS manual correction
+PASS interrupted provisional prefix
+PASS configurable 1.5–5s
+PASS interruption end
+PASS interruption error
+PASS interruption stop
+PASS interruption hidden
+PASS interruption pagehide
+PASS navigation
+PASS identity isolation
+PASS microphone errors and manual fallback
+PASS replay pauses dictation before speech
+PASS sound and sensitive confirmation
+PASS history persistence and runtime
+REVIEW_VOICE_20261111_PASS 18 checks
+REVIEW_TEST_START review-context-20261111.cjs
+REVIEW_CONTEXT_20261111_PASS {"status":"PASS","origin":"http://127.0.0.1:8765","appPath":"/essai-stitch-v7","cases":["positive replacement","stable ID","quantity unspecified and existing","remove after reload","native persistence","unknown fields","ambiguity","tomorrow topic correction","stale record","owner and household isolation","save failure rollback","legacy canonical transition","disabled model contract and rejected target","deleted source exchange","legacy draft ambiguity","legacy final source mismatch","sole extra consultation"],"externalRequests":"blocked","identity":"native identity output simulated; no real account","writers":"real CuisineList add/edit/remove and native storage","generalAI":false,"shared":{"status":"PASS","transport":"fully intercepted HTTP fixture, no real account","nativeWriters":true,"nativeIndexedDB":true,"cases":["pending-to-clean stable reference","remote content change blocks","connected fresh list canonical writer"]}}
+REVIEW_TEST_START review-recurrence-20261111.cjs
+REVIEW_RECURRENCE_PASS 320 native create/edit/reload, independent completion/runes, pause/resume/stop, bounded offline replay, monthly clamp, multiweekdays, no overflow
+REVIEW_RECURRENCE_PASS 390 native create/edit/reload, independent completion/runes, pause/resume/stop, bounded offline replay, monthly clamp, multiweekdays, no overflow
+REVIEW_RECURRENCE_PASS 1440 native create/edit/reload, independent completion/runes, pause/resume/stop, bounded offline replay, monthly clamp, multiweekdays, no overflow
+REVIEW_TEST_START review-recurrence-20261111-date.cjs
+{"phase":"after","width":193.984375,"state":"empty","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":""}
+{"phase":"after","width":193.984375,"state":"picked","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2028-02-29"}
+{"phase":"after","width":193.984375,"state":"today","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2026-11-11"}
+{"phase":"after","width":193.984375,"state":"tomorrow","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2026-11-12"}
+{"phase":"after","width":193.984375,"state":"weekend","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2026-11-14"}
+{"phase":"after","width":193.984375,"state":"precise","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":320,"right":274,"left":80.015625,"value":"2027-12-31"}
+{"phase":"after","width":263.984375,"state":"empty","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":""}
+{"phase":"after","width":263.984375,"state":"picked","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2028-02-29"}
+{"phase":"after","width":263.984375,"state":"today","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2026-11-11"}
+{"phase":"after","width":263.984375,"state":"tomorrow","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2026-11-12"}
+{"phase":"after","width":263.984375,"state":"weekend","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2026-11-14"}
+{"phase":"after","width":263.984375,"state":"precise","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":390,"right":344,"left":80.015625,"value":"2027-12-31"}
+{"phase":"after","width":353.984375,"state":"empty","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":""}
+{"phase":"after","width":353.984375,"state":"picked","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2028-02-29"}
+{"phase":"after","width":353.984375,"state":"today","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2026-11-11"}
+{"phase":"after","width":353.984375,"state":"tomorrow","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2026-11-12"}
+{"phase":"after","width":353.984375,"state":"weekend","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2026-11-14"}
+{"phase":"after","width":353.984375,"state":"precise","height":44,"lineHeight":"24px","fontSize":"16px","padding":"8px 4px","datetimeHeight":"44px","viewport":1440,"right":914,"left":560.015625,"value":"2027-12-31"}
+REVIEW_TEST_START review-recurrence-20261111-writer.cjs
+REVIEW_RECURRENCE_WRITER_PASS first-date weekly/monthly rejection, legacy initial eligibility preserved/new rows rewarded, unknown template retained, atomic save rollback
+REVIEW_TEST_START review-avatars-20261111.cjs
+REVIEW_AVATARS_PASS 320 isolated25choices,16blocked,keyboard,preview,canonical8save/reload,emoji,refusal,stale/unknown protection
+REVIEW_AVATARS_PASS 390 isolated25choices,16blocked,keyboard,preview,canonical8save/reload,emoji,refusal,stale/unknown protection
+REVIEW_AVATARS_PASS 1440 isolated25choices,16blocked,keyboard,preview,canonical8save/reload,emoji,refusal,stale/unknown protection
+REVIEW_TEST_START e01-consolidation.cjs
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /séries.*occurrences.*synchronisation/i. Input:
+
+'\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '    1\n' +
+  '    Intitulé & Rôle de la Quête\n' +
+  '  \n' +
+  '  Étape 1/3\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'edit_noteIntitulé de la mission *\n' +
+  'Requis\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'ink_pen\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  "history_eduConsignes & notes d'exécution\n" +
+  '\n' +
+  '\n' +
+  'Catégorie de la missionFamilleMaisonAdministratifAutre\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '    2\n' +
+  '    Assignation & Récurrence\n' +
+  '  \n' +
+  '  Étape 2/3\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'groupMembre de la maisonnée assigné\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '🦊\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'TEST — Camille\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'check\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'person_off\n' +
+  '\n' +
+  '\n' +
+  'Non attribuée\n' +
+  'Choisir un responsable plus tard\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'check\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'autorenewRécurrence de la quête\n' +
+  '\n' +
+  'Unique\n' +
+  'Quotidien\n' +
+  'Hebdomadaire\n' +
+  'Mensuel\n' +
+  'FréquenceÉtat de la sérieActiveSuspendueArrêtée définitivementJours de la semaineDimLunMarMerJeuVenSamJour du moisPour un mois plus court, la mission tombe le dernier jour du mois.La première échéance doit correspondre aux jours choisis. Les nouvelles occurrences sont créées jusqu’à aujourd’hui, avec reprise des 30 jours précédents. L’historique enregistré est conservé. Les modifications s’appliquent aux nouvelles occurrences.\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '    3\n' +
+  '    Récompense & Échéance\n' +
+  '  \n' +
+  '  Étape 3/3\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'award_starNiveau d’effort & récompenses\n' +
+  '\n' +
+  '\n' +
+  'Légère\n' +
+  '\n' +
+  'token\n' +
+  '10\n' +
+  '\n' +
+  'Runes\n' +
+  '\n' +
+  '\n' +
+  'Régulière\n' +
+  '\n' +
+  'token\n' +
+  '25\n' +
+  '\n' +
+  'Runes\n' +
+  '\n' +
+  '\n' +
+  'Majeure\n' +
+  '\n' +
+  'token\n' +
+  '50\n' +
+  '\n' +
+  'Runes\n' +
+  '\n' +
+  'Runes attribuées au responsable lors de la première complétion.\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '    pin\n' +
+  '    Personnalisée\n' +
+  '  \n' +
+  '  \n' +
+  '  Runes\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'hourglass_topÉchéance de complétion\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  "Aujourd'hui\n" +
+  'Demain\n' +
+  'Week-end\n' +
+  'Date précise\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'calendar_month\n' +
+  '\n' +
+  'Almanach\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n'
+
+    at /workspace/dobby-review-e01-e05/essai-stitch-v7/tests/e01-consolidation.cjs:25:375 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '\n\n\n\n\n  \n    1\n    Intitulé & Rôle de la Quête\n  \n  Étape 1/3\n...',
+  expected: /séries.*occurrences.*synchronisation/i,
+  operator: 'match',
+  diff: 'simple'
+}

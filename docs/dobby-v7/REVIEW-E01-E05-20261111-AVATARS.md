@@ -70,4 +70,5 @@ Une revue indépendante a détecté la perte de focus lorsqu’on masque le `sel
 | Sélection des seize nouveaux identifiants | Désactivée en attente du raccordement canonique |
 | Galerie directe dans l’application | Non raccordée, différée après E06 |
 | Comptes réels, backend, droits parentaux | Non utilisés, non vérifiés |
-| Commit, push, fusion, publication ou déploiement par ce sous-lot | Aucun |
+| Commit / push par le sous-agent | Aucun ; intégration par l’orchestrateur dans `73454d7` |
+| Fusion, publication ou déploiement | Aucun |
