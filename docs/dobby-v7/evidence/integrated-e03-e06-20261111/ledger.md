@@ -35,3 +35,13 @@ Génération a révélé un défaut causal : build-onboarding.cjs recopiait le J
 - Aucun merge/publication/données réelles. Prochaine action : commit final de livraison avec bundle/registre/rapport, push seule branche, attendre CI, corriger uniquement échec causal éventuel, puis clôture documentaire sans rejouer les suites vertes.
 
 Contrôle de patch : diff --check sur sources/tests/docs PASS ; les copies statiques gardent volontairement les espaces historiques des sources et licences. Les281hashes source du manifeste sont comparés aux octets du commitb127b7b ; aucune normalisation des copies ne détruit cette provenance.
+
+CI : job des12checkpoints PASS et Sync PASS. Téléchargement facultatif de l’archive de preuves Actions refusé HTTP403 par le stockage de destination ; aucune comparaison distante du manifeste n’est revendiquée. Les281empreintes de l’aperçu préparé ont déjà été vérifiées contre le commit source immutable et le job CI reconstruit/teste son propre aperçu. Les captures locales commitées restent accessibles par GitHub ; pas de blocage de livraison causé par cette vérification facultative.
+
+## Continuation après CI87421ca
+
+Phase1 : Sync PASS ; douze checkpoints PASS ; tous contrôles source et campagne historique jusqu’à register-tools PASS. Échec à la fixture2027 cachée par7jours : ancien test adapté, toutes27assertions conservées, GREEN320/390. Aucun défaut produit corrigé dans cette phase.
+
+Mécanisme de continuation existant réutilisé/narrowed : empreinte de87421ca horsdocs et quatre chemins stricts (workflow, scope, runnerCI, seultest register-tools en échec). Les autres sources ET tests passés sont protégés. Toute différence ou DOBBY_FINAL=1 lance tout. Vérification préalable permet de réutiliser les contrôles et12checkpoints verts ; registre contrôlé puisque docs modifiées. Tests de garde source/testpassé/failedtest/docs/force/erreurenfant/checkpointabsent PASS. Relecture ciblée demandée au relecteur final ; prochaine action commit/push de cette continuation seulement.
+
+Relecture ciblée finale de la continuation favorable : empreinte de phase1 recomputée et identique,27assertions conservées, propagation des échecs et checkpoint corrects ; aucun finding matériel. Aucun test répété par le relecteur.

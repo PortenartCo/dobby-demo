@@ -5,11 +5,11 @@
   "ritualOnly": false,
   "e06VisualFunctional": true,
   "continuation": {
-    "previousRun": "https://github.com/PortenartCo/dobby-demo/actions/runs/43002042259",
-    "previousSha": "ac03b021d7d920472923d2a36945038118860792",
-    "from": "e03.cjs",
-    "stableTreeSha256": "2f60a622209de4bdcab2b2e295079fb32496bf5330e96ac788681471b05e2d43",
-    "reason": "Continue the final campaign after E03 implicit-OFF assertion; application code and previously passed tests unchanged. DOBBY_FINAL=1 always forces all historical tests."
+    "previousRun": "https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112",
+    "previousSha": "87421ca68e53bdb892576495ba93afb906462dff",
+    "from": "register-tools.cjs",
+    "stableTreeSha256": "54fab7e400b78a82ab19db382d5f8ba86df4b6106313552cf12183069815015d",
+    "reason": "Continue the same final campaign after the historical 2027 mission fixture required the new explicit all-period selection; application code and all earlier passed tests unchanged. Source checks and 12 correction checkpoints passed in phase1. Any other tracked change, or DOBBY_FINAL=1, restores full execution."
   },
   "reviewProfile": "integrated-e03-e06"
 }

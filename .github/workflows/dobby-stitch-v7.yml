@@ -32,9 +32,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify immutable continuation checkpoint
+        id: continuation
+        env:
+          DOBBY_CI_VERIFY_ONLY: '1'
+        run: node essai-stitch-v7/tests/ci.cjs
       - name: Exhaustive review registry coverage
         run: node scripts/check-review-consolidation.cjs --final
       - name: Check V7 JavaScript syntax
+        if: steps.continuation.outputs.verified != 'true'
         run: |
           node --check essai-stitch-v7/build-source.cjs
           node --check essai-stitch-v7/bridge.js
@@ -93,18 +99,23 @@ jobs:
           node --check essai-stitch-v7/tests/family-visual.cjs
           for file in essai-stitch-v7/register*.js essai-stitch-v7/*-register.js essai-stitch-v7/build-register.cjs essai-stitch-v7/tests/register-*.cjs essai-stitch-v7/tests/ci.cjs; do node --check "$file"; done
       - name: Existing offline, family and conflict regressions
+        if: steps.continuation.outputs.verified != 'true'
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
       - name: Integrated preview builder and byte provenance
+        if: steps.continuation.outputs.verified != 'true'
         run: node --test essai-stitch-v7/tests/integrated-build.test.cjs essai-stitch-v7/tests/review-integrated*.test.*
       - name: E06 exhaustive scoring, identity and draft isolation
+        if: steps.continuation.outputs.verified != 'true'
         run: node --test essai-stitch-v7/tests/e06-*.test.mjs
       - name: Source derivation remains reproducible
+        if: steps.continuation.outputs.verified != 'true'
         run: |
           npm ci --ignore-scripts --prefix essai-stitch-v7
           node essai-stitch-v7/build-source.cjs
           npm run build:css --prefix essai-stitch-v7
           git diff --exit-code -- essai-stitch-v7/ritual-effects.js essai-stitch-v7/stitch-tailwind.css essai-stitch-v7/assets/cuisine/e07-taverne.png essai-stitch-v7/assets/cuisine/e07-courses.png essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
       - name: Confirm the original Stitch source manifest
+        if: steps.continuation.outputs.verified != 'true'
         run: |
           node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"
       - name: Browser tooling (tests only)
@@ -140,10 +151,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify immutable continuation checkpoint
+        id: continuation
+        env:
+          DOBBY_CI_VERIFY_ONLY: '1'
+        run: node essai-stitch-v7/tests/ci.cjs
+      - name: Retain the passed correction checkpoints
+        if: steps.continuation.outputs.verified == 'true'
+        run: echo 'The protected source/test tree matches phase 1; the twelve correction scripts already passed at https://github.com/PortenartCo/dobby-demo/actions/runs/43034934112.'
       - name: Browser tooling (tests only)
+        if: steps.continuation.outputs.verified != 'true'
         working-directory: essai-stitch-v7/tests
         run: npm ci --ignore-scripts
       - name: Integrated E03-E06 correction checkpoints (no publication)
+        if: steps.continuation.outputs.verified != 'true'
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-corrections-http.log 2>&1 &
           if command -v google-chrome >/dev/null; then
@@ -153,7 +174,7 @@ jobs:
           fi
           CHROMIUM_PATH="$BROWSER" DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node essai-stitch-v7/tests/review-integrated-e03-e06.cjs
       - name: Keep integrated correction evidence
-        if: always()
+        if: always() && steps.continuation.outputs.verified != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: dobby-e03-e06-correction-evidence

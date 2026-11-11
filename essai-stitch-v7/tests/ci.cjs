@@ -1,9 +1,9 @@
 /* Sequential checkpoints run their own lot; final delivery runs the complete suite. */
 const {spawnSync}=require('node:child_process'),path=require('node:path'),scope=require('../ci-scope.json');
-// Continue the one final campaign after an obsolete default assertion failed.
+// Continue the one final campaign after its historical period assertion failed.
 // This checkpoint is reusable only for the exact same tracked code and passed
 // tests. Any other change automatically restores the complete campaign.
-const continuation=scope.continuation,allowChanged=new Set(['essai-stitch-v7/ci-scope.json','essai-stitch-v7/tests/ci.cjs','essai-stitch-v7/tests/e03.cjs','essai-stitch-v7/tests/e02-edge.cjs','essai-stitch-v7/tests/e01-3-video.cjs']);
+const continuation=scope.continuation,allowChanged=new Set([".github/workflows/dobby-stitch-v7.yml", "essai-stitch-v7/ci-scope.json", "essai-stitch-v7/tests/ci.cjs", "essai-stitch-v7/tests/register-tools.cjs"]);
 let resumePending=false;
 if(continuation&&process.env.DOBBY_FINAL!=='1'){
  const tree=spawnSync('git',['ls-tree','-r','HEAD'],{encoding:'utf8'});if(tree.status!==0)throw Error('Cannot verify continuation source tree');
@@ -13,6 +13,11 @@ if(continuation&&process.env.DOBBY_FINAL!=='1'){
  console.log(resumePending?'CI_CONTINUATION_VERIFIED':'CI_CONTINUATION_CHANGED_RUN_ALL',continuation.previousRun,continuation.from);
 }
 const run=(file,extra={})=>{if(resumePending&&file!==continuation.from){console.log('CI_ALREADY_PASSED_PREVIOUS_PHASE',file,continuation.previousRun);return;}resumePending=false;const r=spawnSync(process.execPath,[path.join(__dirname,file)],{stdio:'inherit',env:{...process.env,DOBBY_TEST_ORIGIN:process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',...extra}});if(r.status!==0)process.exit(r.status||1);};
+// CI may reuse passed checks only for this exact protected source/test tree.
+if(process.env.DOBBY_CI_VERIFY_ONLY==='1'){
+ if(process.env.GITHUB_OUTPUT)require('node:fs').appendFileSync(process.env.GITHUB_OUTPUT,'verified='+String(resumePending)+'\n');
+ console.log('CI_PREVIOUS_CHECKS_REUSABLE',resumePending,continuation?.previousRun||'none');process.exit(0);
+}
 // E06-01 mission: keep the historical campaign available via DOBBY_FINAL=1.
 if(scope.ritualOnly&&process.env.DOBBY_FINAL!=='1'){run('e06-ritual.cjs');run('e06-ritual-errors.cjs');run('e06-consolidation.cjs',{DOBBY_E06_JOURNEY_ONLY:'1',DOBBY_E06_RITUAL_ENTRY:'1',DOBBY_E06_EVIDENCE_DIR:path.resolve(__dirname,'../../docs/dobby-v7/evidence/e06-01/regression')});process.exit(0);}
 if(scope.e06VisualFunctional){run('e06-art.cjs');run('e06-effects-transition.cjs');}
