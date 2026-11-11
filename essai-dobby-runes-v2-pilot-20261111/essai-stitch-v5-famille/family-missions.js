@@ -188,7 +188,8 @@ document.addEventListener('keydown',event=>{
 function sharedRunesV2(){return window.DobbySharedRunesV2?.available?.()===true;}
 function pendingGrant(id){return pendingEvent(id,true);}
 function pendingEvent(id,grantOnly=false){if(!requiresSync())return false;const confirmed=new Map((st.runeCredits||[]).map(row=>[core.runes.eventKey(row),row]));return(st.runeRequests||[]).some(row=>row.missionId===id&&(!grantOnly||(row.kind||'grant')==='grant')&&(!confirmed.has(core.runes.eventKey(row))||['memberId','effort','amount','customRunes','kind','cycle','reverses'].some(key=>confirmed.get(core.runes.eventKey(row))[key]!==row[key])));}
-function requiresSync(){if(window.DobbyRunesPilot?.requireMissionsV2)return true;const configured=window.DobbyFamilyUI?.isModuleConfigured?.('missions');return st.runeSyncRequired===true||configured===true||(configured==null&&Boolean(window.DobbyFamilyUI?.getContext()));}
+function requiresSync(){return true; // Pilot: native queue is mandatory, independently of the notice.
+const configured=window.DobbyFamilyUI?.isModuleConfigured?.('missions');return st.runeSyncRequired===true||configured===true||(configured==null&&Boolean(window.DobbyFamilyUI?.getContext()));}
 window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){return{...core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests),shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};}});
 // Resume a sleeping/offline tab without an unbounded timer or extra writer.
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){project();render();}});

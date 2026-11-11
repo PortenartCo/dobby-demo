@@ -1,6 +1,6 @@
 {
   "version": "Runes V2 pilot",
-  "sourceSha": "d814a07e2eb036b05ee706749cda7314cb8efccb",
+  "sourceSha": "c6d4ba7ac5fc6422add1ab26526649c8f5462627",
   "clientSourceSha": "0a8e1ed674bc4abdbfaca29435fa495b19b32df4",
   "previouslyTestedCode": "3ceb14bbf76c7534f6862a7cb1921c894ea3f325",
   "entry": "essai-stitch-v7/traverse.html",
@@ -81,13 +81,13 @@
     {
       "path": "essai-stitch-v5-famille/family-missions.js",
       "sourceSha256": "33a48e99ab18f99ee9648f3594bf4fbf79c855401f4710911a16d5e931744349",
-      "sha256": "0c266361ca2e8e29b6b09f529eef6d25ddf7bf2c0733525c18ed2fd2aed6818c",
+      "sha256": "331d0e6254d1d2e7193a3f747a123ba30821fca1aa39a04f807f80cec0859271",
       "transformed": true
     },
     {
       "path": "essai-stitch-v5-famille/family-modules.js",
       "sourceSha256": "a97ab87d5ed6ec3311b262db30b23f25e4d1b94aff0c1e7db2d8817274a32572",
-      "sha256": "20c033b49bf11a9f1db5562270e77da6cc771491cf4db3662b14defab16552ed",
+      "sha256": "162552732e47bf60de4976723dbeccdc298f91775ca9b07140b720ea482debd9",
       "transformed": true
     },
     {

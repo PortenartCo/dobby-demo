@@ -2,6 +2,7 @@
    records stay outside the shared document payload. */
 (function(){
 'use strict';
+const dobbyPilotRequiresV2=true;
 const api = window.DobbyFamilyUI;
 if (!api) throw Error('Dobby Family UI unavailable');
 const DEFINITIONS = [
@@ -77,7 +78,7 @@ function rememberedCredits(){const raw=states.missions?.synced;if(!raw)return []
 function retainedCredits(payload){missionPayload(payload);return runes.mergeCredits(payload.runeCredits||[],runes.mergeCredits(st.runeCredits||[],rememberedCredits()));}
 function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manualMissions:payload.manualMissions||[]};}
 function pendingRunes(){if(runesV2Available()){try{return outstandingRequests(st.runeCredits||[]).length>0||Boolean(states.missions?.pendingOperation);}catch{return true;}}if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const key=c=>c?.eventId||c?.missionId,ids=new Set((st.runeCredits||[]).map(key));return(st.runeRequests||[]).some(c=>!c||!ids.has(key(c)));}
-function assertLocalRewardSharing(){if(runesV2Available())return;if(window.DobbyRunesPilot?.requireMissionsV2)throw Error('RPC Runes V2 indisponibles. Missions, historique et demandes locales conservés en attente.');if(states.missions?.runeProtocol===2)throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
+function assertLocalRewardSharing(){if(runesV2Available())return;if(dobbyPilotRequiresV2)throw Error('RPC Runes V2 indisponibles. Missions, historique et demandes locales conservés en attente.');if(states.missions?.runeProtocol===2)throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
 function initialPayload(id){const payload=pick(id);if(id==='missions'&&runesV2Available())return {...missionPayloadV2(payload),runeRequests:runes.normalizeRequests(st.runeRequests||[])};if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
 function synchronized(id,revision,payload){return{active:true,revision,synced:moduleDigest(id,id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV2Available()?2:payload.runeLedgerVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
@@ -319,7 +320,7 @@ function backupLocal(id) {
   localStorage.setItem(key, digest(id==='missions'?{...pick(id),runeRequests:st.runeRequests||[],pendingOperation:states.missions?.pendingOperation||null}:pick(id)));
 }
 function applyShared(id, payload) {
-  if(id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2)assertLocalRewardSharing();
+  if(id==='missions'&&dobbyPilotRequiresV2)assertLocalRewardSharing();
   if(id==='missions'&&runesV2Available()){applyMissionsV2(payload);return;}
   if(id==='missions'&&states.missions?.runeProtocol===2)assertLocalRewardSharing();
   if(id==='missions'&&(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined))))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');
@@ -408,7 +409,7 @@ function stateLabel(def) {
   if (!ctx) return api.getContext() ? 'Initialisation du foyer' : 'Foyer non connecté';
   if (!backendReady) return checked ? 'Données locales (non synchronisées)' : 'Vérification en cours';
   if(def.id==='missions'){try{runes.normalizeCredits(st.runeCredits||[]);runes.normalizeRequests(st.runeRequests||[]);}catch{return 'Historique de runes à vérifier';}if(!runesV2Available()&&(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined))))return 'Partage des nouvelles récompenses bloqué — validation serveur nécessaire';}
-  if(def.id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2&&!runesV2Available())return 'RPC Runes V2 indisponibles — opérations locales en attente';
+  if(def.id==='missions'&&dobbyPilotRequiresV2&&!runesV2Available())return 'RPC Runes V2 indisponibles — opérations locales en attente';
   const info = states[def.id];
   if (!info?.active) return 'Partage désactivé';
   if (info.conflict) return 'Conflit à résoudre';
@@ -483,7 +484,7 @@ async function activate(id) {
   if(id==='missions')assertLocalRewardSharing();
   const remote = await readRow(id);
   if(id==='missions'&&runesV2Available()){await activateMissionsV2(remote);api.repaint();api.openModal();onSave();return;}
-if(id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2)throw Error('RPC Runes V2 indisponibles. Missions, historique et demandes locales conservés en attente.');
+if(id==='missions'&&dobbyPilotRequiresV2)throw Error('RPC Runes V2 indisponibles. Missions, historique et demandes locales conservés en attente.');
   if(id==='missions'&&remote)missionPayload(remote.payload);
   let revision,acknowledged;
   if (remote) {
@@ -542,7 +543,7 @@ async function activateRemaining() {
   try {
     for (const {id, remote} of entries) {
       if(id==='missions'&&runesV2Available()){await activateMissionsV2(remote);activated++;continue;}
-if(id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2)throw Error('RPC Runes V2 indisponibles. Missions, historique et demandes locales conservés en attente.');
+if(id==='missions'&&dobbyPilotRequiresV2)throw Error('RPC Runes V2 indisponibles. Missions, historique et demandes locales conservés en attente.');
       let revision,acknowledged;
       if (remote) {
         if (digest(pick(id)) !== digest(remote.payload)) {
@@ -614,7 +615,7 @@ async function joinFamily() {
   api.repaint(); api.openModal();onSave();
 }
 async function syncOne(id) {
-  if(id==='missions'&&window.DobbyRunesPilot?.requireMissionsV2&&!runesV2Available())return;
+  if(id==='missions'&&dobbyPilotRequiresV2&&!runesV2Available())return;
   const state = states[id];
   if (!ctx || !backendReady || !state?.active || state.conflict) return;
   const remote = await readRow(id);
@@ -674,7 +675,7 @@ async function resolve(id, preference) {
   if(id==='missions'){
     if(runesV2Available())return resolveMissionsV2(state,preference);
     assertLocalRewardSharing();
-    const remote=await readRow(id);if(window.DobbyRunesPilot?.requireMissionsV2)assertLocalRewardSharing();if(!remote)throw Error('Version familiale inaccessible');verifyProtocol(state,remote);const credits=retainedCredits(remote.payload);
+    const remote=await readRow(id);if(dobbyPilotRequiresV2)assertLocalRewardSharing();if(!remote)throw Error('Version familiale inaccessible');verifyProtocol(state,remote);const credits=retainedCredits(remote.payload);
     if(preference==='local'&&!confirm('Conserver mes modifications locales ? Les gains de runes confirmés du foyer seront conservés.'))return;
     backupLocal(id);if(preference==='server')applyShared(id,remote.payload);else applyCredits(credits);
     Object.assign(state,synchronized(id,Number(remote.revision),remote.payload));await persist();await sync();api.repaint();api.openModal();return;
