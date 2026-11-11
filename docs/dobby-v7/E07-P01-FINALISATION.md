@@ -2,6 +2,8 @@
 
 Source exacte : `69ef361ad139356c2d1473d825f9231e7610b0e4`. Branche indépendante `feat/dobby-e07-p01-20261112`, worktree `/workspace/dobby-e07-p01-20261112`. [Plan et périmètre](../superpowers/plans/2026-11-12-e07-p01.md). Les exclusions historiques de P01 dans les rapports E07.3/E07.4 sont remplacées uniquement pour cette page par la demande actuelle.
 
+Code final testé et publié : **`e8f2858d89e1dbec848728ee8e18cbdd9d4eeca2`**. Le commit de clôture ajoute uniquement les reçus de publication et la documentation ; aucun code n’est changé après cette campagne verte.
+
 ## Corrections réalisées
 
 - « Choisir un repas » reprend l’illustration et les traitements Stitch, avec « Choix du repas » en bas à droite, sans clignotement. Les encarts Note du Chef, techniques et préférences culinaires sont retirés de cette seule vue. En-tête commun et cinq destinations du dock restent permanents.
@@ -32,13 +34,34 @@ Le test historique Taverne conserve ses assertions métier. Seuls les gestes ver
 
 Les tests ont révélé puis corrigé la perte de métadonnées lors d’un remplacement, l’ancienne dépendance des repas quotidiens à `st.day` et un contexte de recherche incomplet. Les comparaisons Accueil attendent le rendu visible après défilement, sans remplacer leurs assertions par des données internes. Aucune campagne exhaustive E01–E08 n’est relancée ; la CI utilise le périmètre causal P01 et ses frontières immédiates.
 
+[CI finale PASS](https://github.com/PortenartCo/dobby-demo/actions/runs/43122542453) au SHA ci-dessus : les sept scripts navigateur ciblés passent, ainsi que les vérifications pures et de provenance du workflow existant. [Revue indépendante](evidence/e07-p01/review.md), [étapes CI et déploiement](evidence/e07-p01/ci-final.json), [bilan machine et empreintes](evidence/e07-p01/verification.json).
+
+Les fichiers applicatifs concernés sont `cuisine-p01.js/css` (présentation nouvelle), les hooks limités de `cuisine.js`, `cuisine-engine.js` (adaptateur vers le writer natif), `cuisine-e07.js` (actions et jour quotidien), puis l’inclusion générée dans `index.html`. Le générateur reçoit un profil dédié ; les tests et leur dispatch sont ciblés. Sources Stitch, moteur V5, Grimoire/import, `cuisine-e074.js`, minuteurs, Accueil, Missions, Runes et SQL restent inchangés. Les 3 310 fichiers de départ sont présents.
+
 ## Aperçu et état réel
 
 Profil : `e07-p01`, namespace distinct `dobby-review-e07-p01-20261112|`. Le générateur refuse une sortie existante, consigne les empreintes source/sortie et désactive les comptes réels. Les deux mêmes recettes explicitement DÉMO de E07.4 sont conservées.
 
-Publication préparée : `essai-dobby-e07-p01-review-20261112/`, chemin distant libre lors du contrôle initial. La publication sera limitée à ce nouveau dossier statique, sans fusion applicative ni remplacement d’aperçu. Les SHA, liens de CI et preuves HTTP seront ajoutés après vérification effective.
+**URL interactive directe : https://portenartco.github.io/dobby-demo/essai-dobby-e07-p01-review-20261112/essai-stitch-v7/index.html#pick**
 
-À ce stade : code et tests locaux PASS ; publication et recette hébergée encore en attente. Aucun backend réel, aucune modification Supabase, aucune recette familiale privée publiée.
+[Entrée Taverne](https://portenartco.github.io/dobby-demo/essai-dobby-e07-p01-review-20261112/) · [Manifeste servi](https://portenartco.github.io/dobby-demo/essai-dobby-e07-p01-review-20261112/review-manifest.json).
+
+Publication statique **`331dd99ec812b8d9b31cd0b4d2267121d7ed5743`**, parent `36044e9ad69ceb56812d950efb3cefbdbc351728`. Elle ajoute uniquement les **286 fichiers du nouveau dossier**, dont 280 fichiers source recensés ; aucun chemin préexistant n’est modifié. La publication Runes intervenue pendant cette mission et tous les aperçus précédents sont conservés. Il n’y a aucune fusion de branche applicative sur main. [Préservation avant publication](evidence/e07-p01/publication-preflight.json).
+
+[GitHub Pages PASS](https://github.com/PortenartCo/dobby-demo/actions/runs/43122868495) sur ce commit. Le manifeste HTTP correspond exactement au fichier généré et **284 fichiers servis** sont vérifiés par SHA256 : les 280 sources plus runtime, config, README et entrée. [Preuve HTTP](evidence/e07-p01/hosted/http-integrity.json).
+
+Le bundle généré passe les douze scénarios localement, puis **les douze mêmes scénarios sur l’URL publique**, avec les vrais handlers et le stockage natif isolé. Les réponses HTTP ne sont pas simulées ; seules les données de test et l’horloge sont fictives, les requêtes externes sont bloquées. [Recette hébergée](evidence/e07-p01/hosted/functional/results.json), [journal](evidence/e07-p01/hosted/functional/console.log), [visuel hébergé à 320/390/1440 px](evidence/e07-p01/hosted/visual/results.json) et captures dans le même dossier.
+
+| État | Résultat |
+|---|---|
+| CODE_MODIFIÉ | OUI |
+| TESTS_EXÉCUTÉS | PASS — P01, frontières E07.4 et CI ciblée |
+| INTÉGRATION_VÉRIFIÉE | OUI — vrais writers natifs, données fictives |
+| DÉPLOIEMENT_APERÇU_CONFIRMÉ | OUI — dossier isolé uniquement |
+| FONCTIONNEMENT_HÉBERGÉ_VÉRIFIÉ | OUI — douze scénarios et trois largeurs |
+| SYNCHRONISATION_RÉELLE_NON_VÉRIFIÉE | OUI — aucun compte réel ou backend utilisé |
+
+Aucune modification Supabase, aucune recette familiale privée publiée. Les serveurs HTTP temporaires locaux sont arrêtés ; l’aperçu public reste disponible. Le commit documentaire de clôture utilise `[skip ci]` : son code est identique au SHA testé et publié ci-dessus.
 
 ## Suivi conservé et limites
 

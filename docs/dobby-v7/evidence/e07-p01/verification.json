@@ -1,6 +1,6 @@
 {
   "base": "69ef361ad139356c2d1473d825f9231e7610b0e4",
-  "sourceState": "working-tree",
+  "sourceState": "committed",
   "functional": {
     "passed": 12,
     "failed": 0,
@@ -60,13 +60,230 @@
     "essai-stitch-v7/tests/e07-p01-fixture.cjs": "0e14be14b79c8949ee06fde27d421b6c95e9051ff26db1f3c462486cdfb9689b",
     "essai-stitch-v7/tests/e07-p01-visual.cjs": "513ea6a9998153b95bb860757695d324b5812cd4227c7cf831d93db1fdf16301"
   },
-  "ci": "PENDING_PUSH",
+  "ci": {
+    "id": 43122542453,
+    "name": "Dobby V7 - Stitch functional UI",
+    "head_sha": "e8f2858d89e1dbec848728ee8e18cbdd9d4eeca2",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43122542453",
+    "updated_at": "2026-11-11T23:49:27Z",
+    "jobs": [
+      {
+        "id": 130866345821,
+        "name": "source-backed-browser",
+        "status": "completed",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Exhaustive review registry coverage",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Check V7 JavaScript syntax",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Existing offline, family and conflict regressions",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Integrated preview builder and byte provenance",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "E06 exhaustive scoring, identity and draft isolation",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Recipe formats, ZIP, E07.4 timers and isolated preview contracts",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Source derivation remains reproducible",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Confirm the original Stitch source manifest",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Browser tooling (tests only)",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Functional Stitch roots and source fidelity",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Keep root, Cuisine and Family comparisons (320/390px)",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
   "preview": {
-    "status": "NOT_YET_PUBLISHED",
+    "status": "PUBLISHED_AND_VERIFIED",
+    "url": "https://portenartco.github.io/dobby-demo/essai-dobby-e07-p01-review-20261112/",
+    "pickUrl": "https://portenartco.github.io/dobby-demo/essai-dobby-e07-p01-review-20261112/essai-stitch-v7/index.html#pick",
+    "publicationSha": "331dd99ec812b8d9b31cd0b4d2267121d7ed5743",
+    "deployment": {
+      "id": 43122868495,
+      "name": "pages build and deployment",
+      "head_sha": "331dd99ec812b8d9b31cd0b4d2267121d7ed5743",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43122868495",
+      "updated_at": "2026-11-11T23:51:26Z",
+      "jobs": [
+        {
+          "id": 130867489111,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Checkout",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Upload artifact",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Checkout",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 130867647373,
+          "name": "report-build-status",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Report Build Status",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 130867647385,
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Deploy to GitHub Pages",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
     "directory": "essai-dobby-e07-p01-review-20261112",
     "namespace": "dobby-review-e07-p01-20261112|",
-    "realBackend": false
+    "realBackend": false,
+    "httpFilesVerified": 284,
+    "manifestBytesExact": true,
+    "hostedFunctionalPassed": 12,
+    "hostedVisualWidths": [
+      320,
+      390,
+      1440
+    ],
+    "onlyNewDirectoryAdded": true,
+    "addedFiles": 286
   },
   "catalogueGeneral200Diet200": "Separate mission, required before full Courses review; no artificial generation.",
-  "E07-P02": "Out of scope until review."
+  "E07-P02": "Out of scope until review.",
+  "codeSha": "e8f2858d89e1dbec848728ee8e18cbdd9d4eeca2",
+  "statuses": {
+    "CODE_MODIFIÉ": true,
+    "TESTS_EXÉCUTÉS": true,
+    "INTÉGRATION_VÉRIFIÉE": true,
+    "DÉPLOIEMENT_APERÇU_CONFIRMÉ": true,
+    "FONCTIONNEMENT_HÉBERGÉ_VÉRIFIÉ": true,
+    "SYNCHRONISATION_RÉELLE_NON_VÉRIFIÉE": true
+  },
+  "closingCommit": "Documentation only; application code identical to codeSha. [skip ci] avoids repeating successful checks.",
+  "verifiedAt": "2026-11-11T23:55:40.034748+00:00"
 }
