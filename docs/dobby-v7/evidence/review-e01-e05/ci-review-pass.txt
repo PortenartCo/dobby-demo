@@ -1,3 +1,4 @@
+Journal GitHub Actions ; espaces de fin de ligne retirés.
 review-regressions	Set up job	﻿2026-11-11T10:44:42.9940462Z Current runner version: '2.338.2'
 review-regressions	Set up job	2026-11-11T10:44:42.9962726Z ##[group]Runner Image Provisioner
 review-regressions	Set up job	2026-11-11T10:44:42.9963485Z Hosted Compute Agent
@@ -743,9 +744,9 @@ review-regressions	Browser dependencies	﻿2026-11-11T10:45:03.9758128Z ##[group
 review-regressions	Browser dependencies	2026-11-11T10:45:03.9758425Z [36;1mnpm ci --ignore-scripts[0m
 review-regressions	Browser dependencies	2026-11-11T10:45:03.9805966Z shell: /usr/bin/bash -e {0}
 review-regressions	Browser dependencies	2026-11-11T10:45:03.9806196Z ##[endgroup]
-review-regressions	Browser dependencies	2026-11-11T10:45:05.2206669Z 
+review-regressions	Browser dependencies	2026-11-11T10:45:05.2206669Z
 review-regressions	Browser dependencies	2026-11-11T10:45:05.2207455Z added 2 packages, and audited 3 packages in 1s
-review-regressions	Browser dependencies	2026-11-11T10:45:05.2212055Z 
+review-regressions	Browser dependencies	2026-11-11T10:45:05.2212055Z
 review-regressions	Browser dependencies	2026-11-11T10:45:05.2212344Z found 0 vulnerabilities
 review-regressions	Independent review campaign without deployment	﻿2026-11-11T10:45:05.2567906Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-review-http.log 2>&1 &
 review-regressions	Independent review campaign without deployment	2026-11-11T10:45:05.2568442Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-review-http.log 2>&1 &[0m
@@ -888,7 +889,7 @@ review-regressions	Review evidence	2026-11-11T10:50:07.3560540Z with:
 review-regressions	Review evidence	2026-11-11T10:50:07.3560727Z   name: dobby-review-e01-e05-evidence
 review-regressions	Review evidence	2026-11-11T10:50:07.3561240Z   path: docs/dobby-v7/evidence/review-e01-e05/
 review-regressions	Review evidence	docs/dobby-v7/evidence/review-e01-e05-20261111/
-review-regressions	Review evidence	
+review-regressions	Review evidence
 review-regressions	Review evidence	2026-11-11T10:50:07.3561595Z   retention-days: 14
 review-regressions	Review evidence	2026-11-11T10:50:07.3561785Z   if-no-files-found: warn
 review-regressions	Review evidence	2026-11-11T10:50:07.3561977Z   compression-level: 6

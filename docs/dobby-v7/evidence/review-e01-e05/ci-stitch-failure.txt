@@ -1,3 +1,4 @@
+Journal GitHub Actions ; espaces de fin de ligne retirés.
 source-backed-browser	Exhaustive review registry coverage	﻿2026-11-11T10:45:02.2844224Z ##[group]Run node scripts/check-review-consolidation.cjs --final
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.2844775Z [36;1mnode scripts/check-review-consolidation.cjs --final[0m
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.2907388Z shell: /usr/bin/bash -e {0}
@@ -5,13 +6,13 @@ source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.29
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3302941Z node:assert:150
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3303611Z   throw new AssertionError(obj);
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3304009Z   ^
-source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3304201Z 
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3304201Z
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3305776Z AssertionError [ERR_ASSERTION]: Registry reference changed; reconcile every decision before delivery
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3306677Z + actual - expected
-source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3307143Z 
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3307143Z
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3307749Z + 'd2b7e8de49bfc7e32b5ba6ac055dbd30bbcc2ef23db0f08b9fa88f4a40d61a03'
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3308814Z - '92fe405fd9651be0e8038831655c4a3a873bdf807f789ffaff098cd6d7d87538'
-source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3309170Z 
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3309170Z
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3309696Z     at Object.<anonymous> (/home/runner/work/dobby-demo/dobby-demo/scripts/check-review-consolidation.cjs:3:8)
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3310595Z     at Module._compile (node:internal/modules/cjs/loader:1781:14)
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3311406Z     at Object..js (node:internal/modules/cjs/loader:1913:10)
@@ -27,6 +28,6 @@ source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.33
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3319097Z   operator: 'strictEqual',
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3319494Z   diff: 'simple'
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3319837Z }
-source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3320000Z 
+source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3320000Z
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3320150Z Node.js v22.23.4
 source-backed-browser	Exhaustive review registry coverage	2026-11-11T10:45:02.3351819Z ##[error]Process completed with exit code 1.
