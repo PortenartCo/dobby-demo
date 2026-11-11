@@ -1,0 +1,2326 @@
+{
+  "screenSources": 53,
+  "templatesUsedInActiveUI": 53,
+  "activeFunctionalScreens": 24,
+  "roots": [
+    {
+      "screen": "taverne",
+      "file": "index.html",
+      "id": "dobby_la_taverne_gourmande_repas_menus"
+    },
+    {
+      "screen": "traverse",
+      "file": "traverse.html",
+      "id": "dobby_l_choppe_du_chemin_de_traverse"
+    },
+    {
+      "screen": "missions",
+      "file": "missions.html",
+      "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques"
+    },
+    {
+      "screen": "famille",
+      "file": "famille.html",
+      "id": "dobby_le_salon_des_curiosit_s_famille_organisation"
+    }
+  ],
+  "screens": [
+    {
+      "id": "dobby_adaptation_thermomix_tm5",
+      "source": "design/stitch-53/dobby_adaptation_thermomix_tm5/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#tm5",
+      "template": "templates/tm5.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/tm5-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/tm5-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/tm5-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/tm5-390.png"
+          }
+        ]
+      },
+      "canonical": "tm5"
+    },
+    {
+      "id": "dobby_agenda_almanach_du_foyer",
+      "source": "design/stitch-53/dobby_agenda_almanach_du_foyer/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#agenda",
+      "template": "templates/family/agenda.html",
+      "integration": "verified-functional",
+      "unsupported": [
+        "Apple Calendar bidirectionnel et rappels automatiques absents. Export manuel ICS disponible."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/agenda-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/agenda-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/agenda-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/agenda-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_ajouter_ou_modifier_un_document",
+      "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_document/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#document-edit",
+      "template": "templates/remaining/document-edit.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_ajouter_ou_modifier_un_membre",
+      "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_membre/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#member-edit",
+      "template": "templates/family/member-edit.html",
+      "integration": "verified-partial",
+      "unsupported": [
+        "Un seul champ prénom / nom natif : nom de famille séparé, rôle, photo et notes de membre non enregistrés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/member-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/member-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/member-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/member-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_ajouter_ou_modifier_un_quipement",
+      "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_quipement/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-3",
+      "integration": "verified-partial",
+      "route": "famille.html#equipment-edit",
+      "template": "templates/remaining/equipment-edit.html",
+      "unsupported": [
+        "Numéro de série et photo non stockés. Garantie native sous forme de date, pas de durée en mois."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/equipment-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/equipment-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/equipment-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/equipment-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_ajouter_une_recette_manuellement_1",
+      "source": "design/stitch-53/dobby_ajouter_une_recette_manuellement_1/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-variant",
+      "domain": "cuisine",
+      "route": "index.html#recipe-add-1",
+      "template": "templates/recipe-add-1.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipe-add-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipe-add-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipe-add-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipe-add-1-390.png"
+          }
+        ]
+      },
+      "canonical": "recipe-add"
+    },
+    {
+      "id": "dobby_ajouter_une_recette_manuellement_2",
+      "source": "design/stitch-53/dobby_ajouter_une_recette_manuellement_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#recipe-add",
+      "template": "templates/recipe-add.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipe-add-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipe-add-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipe-add-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipe-add-390.png"
+          }
+        ]
+      },
+      "canonical": "recipe-add"
+    },
+    {
+      "id": "dobby_archives_biblioth_que_documentaire_1",
+      "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_1/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-4",
+      "integration": "verified-functional",
+      "route": "famille.html#documents-1",
+      "template": "templates/remaining/documents-1.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-1-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_archives_biblioth_que_documentaire_2",
+      "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-4",
+      "integration": "verified-functional",
+      "route": "famille.html#documents",
+      "template": "templates/remaining/documents.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/documents-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/documents-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_biblioth_que_des_m_mos_notes_familiales",
+      "source": "design/stitch-53/dobby_biblioth_que_des_m_mos_notes_familiales/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#memos",
+      "template": "templates/remaining/memos.html",
+      "unsupported": [
+        "Mémos locaux : titre, contenu et mots-clés natifs seulement. Épinglage, auteur, partage familial et archivage non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memos-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memos-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memos-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memos-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_carnet_de_sant_familial",
+      "source": "design/stitch-53/dobby_carnet_de_sant_familial/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#health",
+      "template": "templates/family/health.html",
+      "integration": "verified-partial",
+      "unsupported": [
+        "Cycles de soins, vaccins, antécédents cliniques structurés et pièces jointes non implémentés. Les références / notes et rendez-vous existants sont consultables."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_carnet_de_sant_individuel",
+      "source": "design/stitch-53/dobby_carnet_de_sant_individuel/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#health-person",
+      "template": "templates/family/health-person.html",
+      "integration": "verified-partial",
+      "unsupported": [
+        "Groupe sanguin, constantes, vaccins, pièces jointes structurées et archivage du carnet absents."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-person-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-person-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-person-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-person-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_choisir_un_repas_nombre_de_convives",
+      "source": "design/stitch-53/dobby_choisir_un_repas_nombre_de_convives/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#pick",
+      "template": "templates/pick.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/pick-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/pick-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/pick-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/pick-390.png"
+          }
+        ]
+      },
+      "canonical": "pick"
+    },
+    {
+      "id": "dobby_contrats_assurances_ch_ances_du_foyer_1",
+      "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_1/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contracts-1",
+      "template": "templates/remaining/contracts-1.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contracts-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contracts-1-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_contrats_assurances_ch_ances_du_foyer_2",
+      "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contracts",
+      "template": "templates/remaining/contracts.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs",
+          "tests/e08.cjs",
+          "tests/register-documents-sync.cjs"
+        ],
+        "widths": [
+          320,
+          360,
+          390,
+          1440
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-320.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-360.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-360.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-390.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-390.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/e08/before/contracts-10-1440.png",
+            "integrated": "docs/dobby-v7/evidence/e08/after/contracts-10-1440.png"
+          }
+        ]
+      },
+      "presentation": {
+        "mission": "E08",
+        "document": "docs/dobby-v7/E08-CONTRATS.md",
+        "illustration": "assets/contracts/screen.png"
+      }
+    },
+    {
+      "id": "dobby_conversation_avec_dobby_1",
+      "source": "design/stitch-53/dobby_conversation_avec_dobby_1/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#chat",
+      "template": "templates/remaining/chat.html",
+      "unsupported": [
+        "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-390.png"
+          }
+        ],
+        "e02": {
+          "mission": "E02",
+          "document": "docs/dobby-v7/E02-PARLER-A-DOBBY.md",
+          "primarySource": "dobby_conversation_avec_dobby_1",
+          "route": "famille.html#chat",
+          "tests": [
+            "tests/e02.cjs",
+            "tests/e02-edge.cjs",
+            "tests/e02-voice-history.cjs"
+          ],
+          "widths": [
+            320,
+            390,
+            1440
+          ],
+          "history": "native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed",
+          "remoteSync": "blocked: no validated author-only backend",
+          "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
+          "captures": "docs/dobby-v7/evidence/e02/README.md"
+        }
+      }
+    },
+    {
+      "id": "dobby_conversation_avec_dobby_2",
+      "source": "design/stitch-53/dobby_conversation_avec_dobby_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#chat-2",
+      "template": "templates/remaining/chat-2.html",
+      "unsupported": [
+        "E02 : commandes déterministes et voix native selon compatibilité du navigateur, sans LLM ni pièce jointe. Fil local par identité connectée, temporaire sans identité ; synchronisation individuelle multi-appareils bloquée faute de persistance serveur privée validée. Safari iOS réel non vérifié."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-2-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-2-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/chat-2-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/chat-2-390.png"
+          }
+        ],
+        "e02": {
+          "mission": "E02",
+          "document": "docs/dobby-v7/E02-PARLER-A-DOBBY.md",
+          "primarySource": "dobby_conversation_avec_dobby_1",
+          "route": "famille.html#chat",
+          "tests": [
+            "tests/e02.cjs",
+            "tests/e02-edge.cjs",
+            "tests/e02-voice-history.cjs"
+          ],
+          "widths": [
+            320,
+            390,
+            1440
+          ],
+          "history": "native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed",
+          "remoteSync": "blocked: no validated author-only backend",
+          "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
+          "captures": "docs/dobby-v7/evidence/e02/README.md"
+        }
+      }
+    },
+    {
+      "id": "dobby_cr_er_et_attribuer_une_mission",
+      "source": "design/stitch-53/dobby_cr_er_et_attribuer_une_mission/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#mission-edit",
+      "template": "templates/remaining/mission-edit.html",
+      "unsupported": [
+        "Effort et runes 10/25/50 natifs ; grades à seuils provisoires. Pas de récurrence, heure, rappel ni récompense personnalisée. Synchronisation des gains entre clients compatibles ; intégrité serveur contre les anciennes versions non garantie."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/mission-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/mission-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/mission-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/mission-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_cr_er_ou_modifier_un_contact",
+      "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#contact-edit",
+      "template": "templates/remaining/contact-edit.html",
+      "unsupported": [
+        "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contact-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contact-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contact-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contact-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_cr_er_ou_modifier_un_m_mo",
+      "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_m_mo/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#memo-edit",
+      "template": "templates/remaining/memo-edit.html",
+      "unsupported": [
+        "Mémos locaux : titre, contenu et mots-clés natifs seulement. Épinglage, auteur, partage familial et archivage non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memo-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memo-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/memo-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/memo-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_cr_er_ou_modifier_un_rendez_vous_m_dical",
+      "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_rendez_vous_m_dical/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#medical-edit",
+      "template": "templates/family/medical-edit.html",
+      "integration": "verified-partial",
+      "unsupported": [
+        "Téléphone / tarif du praticien, durée, rappels et pièces jointes absents.",
+        "Heure et lieu disponibles seulement pour le rendez-vous partagé natif, pas pour famHealth individuel. Référence de document : texte local seulement."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/medical-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/medical-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/medical-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/medical-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_d_clarer_ou_renouveler_un_contrat",
+      "source": "design/stitch-53/dobby_d_clarer_ou_renouveler_un_contrat/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contract-edit",
+      "template": "templates/remaining/contract-edit.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-edit-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-edit-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-edit-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-edit-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_d_tail_d_une_liste_familiale",
+      "source": "design/stitch-53/dobby_d_tail_d_une_liste_familiale/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#list-detail",
+      "template": "templates/remaining/list-detail.html",
+      "unsupported": [
+        "Listes natives : nom, éléments et coches. Catégories, attribution, échéances et renommage de liste non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/list-detail-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/list-detail-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/list-detail-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/list-detail-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_fiche_document_aper_u",
+      "source": "design/stitch-53/dobby_fiche_document_aper_u/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#document",
+      "template": "templates/remaining/document.html",
+      "unsupported": [
+        "PDF/images natifs et métadonnées ; pas de Fichiers iOS, envoi par hibou, chiffrement ou signature.",
+        "Une écriture locale native déjà lancée n’est pas annulée par une suppression concurrente ; une copie peut subsister. L’interface signale ce résultat sans recréer de fiche ni nettoyer automatiquement le stockage."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/document-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/document-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_une_recette",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_une_recette/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#recipe",
+      "template": "templates/recipe.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipe-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipe-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipe-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipe-390.png"
+          }
+        ]
+      },
+      "canonical": "recipe"
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_un_contrat_1",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_1/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contract-1",
+      "template": "templates/remaining/contract-1.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique.",
+        "Une écriture locale native déjà lancée n’est pas annulée par une suppression concurrente ; une copie peut subsister. L’interface signale ce résultat sans recréer de fiche ni nettoyer automatiquement le stockage."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-1-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_un_contrat_2",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#contract",
+      "template": "templates/remaining/contract.html",
+      "unsupported": [
+        "Fiches documentaires natives Contrats/Assurances : pas de montant structuré, paiement, garanties calculées, résiliation ou reconduction automatique.",
+        "Une écriture locale native déjà lancée n’est pas annulée par une suppression concurrente ; une copie peut subsister. L’interface signale ce résultat sans recréer de fiche ni nettoyer automatiquement le stockage."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/contract-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/contract-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_fiche_d_taill_e_d_un_quipement",
+      "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_quipement/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-3",
+      "integration": "verified-partial",
+      "route": "famille.html#equipment",
+      "template": "templates/remaining/equipment.html",
+      "unsupported": [
+        "Historique natif : date, note et entretien réalisé. Pas de montant ni de prestataire par intervention, ni modification/suppression d’une intervention native. Fichiers locaux existants conservés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/equipment-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/equipment-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/equipment-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/equipment-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_grimoire_des_recettes_favoris_du_logis",
+      "source": "design/stitch-53/dobby_grimoire_des_recettes_favoris_du_logis/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#recipes",
+      "template": "templates/recipes.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipes-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipes-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/recipes-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/recipes-390.png"
+          }
+        ]
+      },
+      "canonical": "recipes"
+    },
+    {
+      "id": "dobby_grimoire_personnel_du_membre",
+      "source": "design/stitch-53/dobby_grimoire_personnel_du_membre/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#personal",
+      "template": "templates/remaining/personal.html",
+      "unsupported": [
+        "E05 : profil magique fonctionnel, seuils de runes V1 approuvés. Dernier export Profil magique absent : fidélité à ses quatre variantes non vérifiée. Photo, lien compte/membre, droits parentaux et intégrité face aux anciens writers non livrés. Pas d’agrégation automatique des documents par champ personne libre, contacts personnels ou antécédents structurés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/personal-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/personal-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/personal-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/personal-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_g_rer_les_donn_es_des_quipements_export_restauration",
+      "source": "design/stitch-53/dobby_g_rer_les_donn_es_des_quipements_export_restauration/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-3",
+      "integration": "verified-partial",
+      "route": "famille.html#house-backup",
+      "template": "templates/remaining/house-backup.html",
+      "unsupported": [
+        "Export natif JSON équipements/historiques sans fichiers. Import par fusion uniquement ; mode remplacement de cette maquette non pris en charge."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/house-backup-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/house-backup-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/house-backup-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/house-backup-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_historique_contacts_m_dicaux",
+      "source": "design/stitch-53/dobby_historique_contacts_m_dicaux/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#health-history",
+      "template": "templates/family/health-history.html",
+      "integration": "verified-partial",
+      "unsupported": [
+        "Historique des rendez-vous et notes natifs seulement ; pas de journal clinique structuré.",
+        "Répertoire médical global du foyer : aucune liaison native contact / patient. Pas de messagerie ni localisation des cabinets."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-history-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-history-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/health-history-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/health-history-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_historique_des_listes_de_courses",
+      "source": "design/stitch-53/dobby_historique_des_listes_de_courses/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#shop-history",
+      "template": "templates/shop-history.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-history-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-history-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-history-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-history-390.png"
+          }
+        ]
+      },
+      "canonical": "shop-history"
+    },
+    {
+      "id": "dobby_historique_d_entretien_pi_ces_jointes",
+      "source": "design/stitch-53/dobby_historique_d_entretien_pi_ces_jointes/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-3",
+      "integration": "verified-partial",
+      "route": "famille.html#maintenance",
+      "template": "templates/remaining/maintenance.html",
+      "unsupported": [
+        "Historique natif : date, note et entretien réalisé. Pas de montant ni de prestataire par intervention, ni modification/suppression d’une intervention native. Fichiers locaux existants conservés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/maintenance-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/maintenance-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/maintenance-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/maintenance-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_importer_un_lot_de_recettes_json",
+      "source": "design/stitch-53/dobby_importer_un_lot_de_recettes_json/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#batch",
+      "template": "templates/batch.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/batch-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/batch-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/batch-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/batch-390.png"
+          }
+        ]
+      },
+      "canonical": "batch"
+    },
+    {
+      "id": "dobby_import_intelligent_analyse_validation",
+      "source": "design/stitch-53/dobby_import_intelligent_analyse_validation/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#import-review",
+      "template": "templates/remaining/import-review.html",
+      "unsupported": [
+        "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-review-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-review-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-review-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-review-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_import_intelligent_s_lection_d_un_fichier",
+      "source": "design/stitch-53/dobby_import_intelligent_s_lection_d_un_fichier/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-4",
+      "integration": "verified-partial",
+      "route": "famille.html#import-file",
+      "template": "templates/remaining/import-file.html",
+      "unsupported": [
+        "Extraction PDF et OCR français natifs testés avec les bibliothèques clientes existantes servies localement. Champs à vérifier et corriger ; pas d’IA, de certitude calculée ni de notification. Le membre concerné n’est pas attribué par l’import natif."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-documents.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-file-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-file-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-4/before/import-file-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-4/after/import-file-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques",
+      "source": "design/stitch-53/dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "missions.html",
+      "verification": {
+        "tests": [
+          "tests/smoke.cjs",
+          "tests/register-root-visual.cjs",
+          "tests/register-navigation.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/missions-320.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/missions-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/missions-390.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/missions-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_la_taverne_gourmande_repas_menus",
+      "source": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "index.html#taverne",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/taverne-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/taverne-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/taverne-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/taverne-390.png"
+          }
+        ]
+      },
+      "domain": "cuisine",
+      "template": "templates/taverne.html",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+        "id": "dobby_la_taverne_gourmande_version_simplifi_e_rapide",
+        "sha256": "444575d86527a677eedc66a00b9f8455c4f6bb51ea201acdd3b90211ca79a26d",
+        "supersedes": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html"
+      },
+      "canonical": "taverne"
+    },
+    {
+      "id": "dobby_le_salon_des_curiosit_s_famille_organisation",
+      "source": "design/stitch-53/dobby_le_salon_des_curiosit_s_famille_organisation/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "famille.html",
+      "verification": {
+        "tests": [
+          "tests/smoke.cjs",
+          "tests/register-root-visual.cjs",
+          "tests/register-navigation.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/famille-320.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/famille-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/famille-390.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/famille-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_liste_de_courses_valid_e",
+      "source": "design/stitch-53/dobby_liste_de_courses_valid_e/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#shop-final",
+      "template": "templates/shop-final.html",
+      "integration": "verified-functional",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+        "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+        "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099",
+        "supersedes": "design/stitch-53/dobby_liste_de_courses_valid_e/code.html"
+      },
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-final-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-final-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-final-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-final-390.png"
+          }
+        ]
+      },
+      "canonical": "shop-final"
+    },
+    {
+      "id": "dobby_l_choppe_du_chemin_de_traverse",
+      "source": "design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter",
+      "integration": "verified-functional",
+      "route": "traverse.html",
+      "verification": {
+        "tests": [
+          "tests/smoke.cjs",
+          "tests/register-root-visual.cjs",
+          "tests/register-navigation.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/traverse-320.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/traverse-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/roots/before/traverse-390.png",
+            "integrated": "docs/dobby-v7/evidence/roots/after/traverse-390.png"
+          }
+        ],
+        "e01": {
+          "mission": "E01",
+          "document": "docs/dobby-v7/E01-ACCUEIL.md",
+          "tests": [
+            "tests/e01.cjs",
+            "tests/e01-visual.cjs"
+          ],
+          "widths": [
+            390,
+            1440
+          ],
+          "navigation": [
+            "traverse.html",
+            "missions.html",
+            "index.html",
+            "famille.html",
+            "famille.html#menu"
+          ],
+          "preferences": "native st.stitchPreferences / native save()",
+          "account": "E05 member profile or explicit member choice; native account settings in secondary disclosure",
+          "automaticMission": "source equipment/document fiche by originId; no independent mission fiche",
+          "captures": [
+            {
+              "width": 390,
+              "reference": "docs/dobby-v7/evidence/e01/source/traverse-390.png",
+              "baseline": "docs/dobby-v7/evidence/e01/before/traverse-390.png",
+              "empty": "docs/dobby-v7/evidence/e01/empty-390.png",
+              "populated": "docs/dobby-v7/evidence/e01/populated-390.png"
+            },
+            {
+              "width": 1440,
+              "reference": "docs/dobby-v7/evidence/e01/source/traverse-1440.png",
+              "baseline": "docs/dobby-v7/evidence/e01/before/traverse-1440.png",
+              "empty": "docs/dobby-v7/evidence/e01/empty-1440.png",
+              "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "dobby_maison_quipements_du_logis_1",
+      "source": "design/stitch-53/dobby_maison_quipements_du_logis_1/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-3",
+      "integration": "verified-functional",
+      "route": "famille.html#house-1",
+      "template": "templates/remaining/house-1.html",
+      "unsupported": [
+        "Photos d’appareil non stockées ; recherche et listes natives réelles."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/house-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/house-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/house-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/house-1-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_maison_quipements_du_logis_2",
+      "source": "design/stitch-53/dobby_maison_quipements_du_logis_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-3",
+      "integration": "verified-functional",
+      "route": "famille.html#house",
+      "template": "templates/remaining/house.html",
+      "unsupported": [
+        "Photos d’appareil non stockées ; recherche et listes natives réelles."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/house-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/house-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/house-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/house-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_membres_de_la_maisonn_e",
+      "source": "design/stitch-53/dobby_membres_de_la_maisonn_e/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "family-2a",
+      "route": "famille.html#members",
+      "template": "templates/family/members.html",
+      "integration": "verified-functional",
+      "unsupported": [
+        "Filtres par rôle : aucun rôle stocké dans le modèle natif. Portraits réels et vœux du personnage Dobby non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/family.cjs",
+          "tests/family-edge.cjs",
+          "tests/family-review.cjs",
+          "tests/family-shared.cjs",
+          "tests/family-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/members-320.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/members-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/family-2a/before/members-390.png",
+            "integrated": "docs/dobby-v7/evidence/family-2a/after/members-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_menu_g_n_ral_de_tous_les_modules",
+      "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-5",
+      "integration": "verified-functional",
+      "route": "famille.html#menu",
+      "template": "templates/remaining/menu.html",
+      "unsupported": [
+        "Navigation vers les outils existants et filtre du menu ; aucun nouveau module inventé."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/menu-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/menu-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/menu-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/menu-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_mode_cuisine_tape_par_tape",
+      "source": "design/stitch-53/dobby_mode_cuisine_tape_par_tape/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#cook",
+      "template": "templates/cook.html",
+      "integration": "verified-functional",
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/cook-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/cook-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/cook-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/cook-390.png"
+          }
+        ]
+      },
+      "canonical": "cook"
+    },
+    {
+      "id": "dobby_pr_parer_la_liste_de_courses_1",
+      "source": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_1/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-variant",
+      "domain": "cuisine",
+      "route": "index.html#shop-1",
+      "template": "templates/shop-1.html",
+      "integration": "verified-functional",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+        "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+        "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099",
+        "supersedes": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_1/code.html"
+      },
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-1-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-1-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-1-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-1-390.png"
+          }
+        ]
+      },
+      "canonical": "shop"
+    },
+    {
+      "id": "dobby_pr_parer_la_liste_de_courses_2",
+      "source": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_2/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "cuisine",
+      "route": "index.html#shop",
+      "template": "templates/shop.html",
+      "integration": "verified-functional",
+      "presentation": {
+        "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+        "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi",
+        "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099",
+        "supersedes": "design/stitch-53/dobby_pr_parer_la_liste_de_courses_2/code.html"
+      },
+      "verification": {
+        "tests": [
+          "tests/cuisine.cjs",
+          "tests/cuisine-family.cjs",
+          "tests/cuisine-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-320.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/cuisine/before/shop-390.png",
+            "integrated": "docs/dobby-v7/evidence/cuisine/after/shop-390.png"
+          }
+        ]
+      },
+      "canonical": "shop"
+    },
+    {
+      "id": "dobby_rechercher_dans_dobby_recherche_transversale",
+      "source": "design/stitch-53/dobby_rechercher_dans_dobby_recherche_transversale/code.html",
+      "hasScreenshot": true,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-5",
+      "integration": "verified-partial",
+      "route": "famille.html#search",
+      "template": "templates/remaining/search.html",
+      "unsupported": [
+        "Recherche locale native contacts, listes, fiches santé locales, documents, mémos, équipements, recettes ; 80 résultats maximum. Pas d’index des fichiers, Apple, membres, agenda, missions ou historique de recherches."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-tools.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/search-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/search-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-5/before/search-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-5/after/search-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_registre_des_listes_familiales",
+      "source": "design/stitch-53/dobby_registre_des_listes_familiales/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-partial",
+      "route": "famille.html#lists",
+      "template": "templates/remaining/lists.html",
+      "unsupported": [
+        "Listes natives : nom, éléments et coches. Catégories, attribution, échéances et renommage de liste non gérés."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/lists-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/lists-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/lists-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/lists-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_r_pertoire_des_contacts_familiaux",
+      "source": "design/stitch-53/dobby_r_pertoire_des_contacts_familiaux/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "functional-adapter",
+      "domain": "lot-2b",
+      "integration": "verified-functional",
+      "route": "famille.html#contacts",
+      "template": "templates/remaining/contacts.html",
+      "unsupported": [
+        "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-family.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contacts-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contacts-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-2b/before/contacts-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-2b/after/contacts-390.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "dobby_sauvegarde_et_restauration_compl_te",
+      "source": "design/stitch-53/dobby_sauvegarde_et_restauration_compl_te/code.html",
+      "hasScreenshot": false,
+      "linked": true,
+      "mode": "partial-adapter",
+      "domain": "lot-3",
+      "integration": "verified-partial",
+      "route": "famille.html#backup",
+      "template": "templates/remaining/backup.html",
+      "unsupported": [
+        "Format natif JSON dobby-complete-backup, pas .dobbyarchive. Archive non chiffrée, restauration locale avec confirmation native ; exécution destructive exclue des tests."
+      ],
+      "verification": {
+        "tests": [
+          "tests/register-house.cjs",
+          "tests/register-visual.cjs"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "captures": [
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/backup-320.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/backup-320.png"
+          },
+          {
+            "reference": "docs/dobby-v7/evidence/lot-3/before/backup-390.png",
+            "integrated": "docs/dobby-v7/evidence/lot-3/after/backup-390.png"
+          }
+        ]
+      }
+    }
+  ],
+  "cuisine": {
+    "sources": 13,
+    "integrated": 13,
+    "e07": {
+      "sourceManifest": "design/stitch-e07/manifest.json",
+      "overrides": [
+        {
+          "view": "taverne",
+          "source": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+          "id": "dobby_la_taverne_gourmande_version_simplifi_e_rapide"
+        },
+        {
+          "view": "shop-1",
+          "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+          "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi"
+        },
+        {
+          "view": "shop",
+          "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+          "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi"
+        },
+        {
+          "view": "shop-final",
+          "source": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+          "id": "dobby_ma_liste_de_courses_usage_magasin_simplifi"
+        }
+      ]
+    }
+  },
+  "family2a": {
+    "sources": 7,
+    "functional": 2,
+    "partial": 5
+  },
+  "partialSources": 29,
+  "sourceOnly": 0,
+  "sequentialLots": {
+    "3": {
+      "sources": 7,
+      "functional": 2,
+      "partial": 5
+    },
+    "4": {
+      "sources": 11,
+      "functional": 2,
+      "partial": 9
+    },
+    "5": {
+      "sources": 6,
+      "functional": 1,
+      "partial": 5
+    },
+    "2b": {
+      "sources": 6,
+      "functional": 1,
+      "partial": 5
+    }
+  },
+  "homeContract": {
+    "mission": "E01",
+    "document": "docs/dobby-v7/E01-ACCUEIL.md",
+    "tests": [
+      "tests/e01.cjs",
+      "tests/e01-visual.cjs"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "navigation": [
+      "traverse.html",
+      "missions.html",
+      "index.html",
+      "famille.html",
+      "famille.html#menu"
+    ],
+    "preferences": "native st.stitchPreferences / native save()",
+    "account": "E05 member profile or explicit member choice; native account settings in secondary disclosure",
+    "automaticMission": "source equipment/document fiche by originId; no independent mission fiche",
+    "captures": [
+      {
+        "width": 390,
+        "reference": "docs/dobby-v7/evidence/e01/source/traverse-390.png",
+        "baseline": "docs/dobby-v7/evidence/e01/before/traverse-390.png",
+        "empty": "docs/dobby-v7/evidence/e01/empty-390.png",
+        "populated": "docs/dobby-v7/evidence/e01/populated-390.png"
+      },
+      {
+        "width": 1440,
+        "reference": "docs/dobby-v7/evidence/e01/source/traverse-1440.png",
+        "baseline": "docs/dobby-v7/evidence/e01/before/traverse-1440.png",
+        "empty": "docs/dobby-v7/evidence/e01/empty-1440.png",
+        "populated": "docs/dobby-v7/evidence/e01/populated-1440.png"
+      }
+    ]
+  },
+  "magicProfileContract": {
+    "mission": "E05",
+    "document": "docs/dobby-v7/E05-PROFIL-MAGIQUE.md",
+    "route": "famille.html#personal?person=<member-id>",
+    "identity": "native familyMembers[].magicProfile via v23MemberForm",
+    "source": "latest four-profile Stitch export missing; visual fidelity NOT verified",
+    "photos": "NOT DELIVERED",
+    "accountMemberAssociation": "NOT DELIVERED",
+    "parentalPermissions": "NOT DELIVERED",
+    "interversionIntegrity": "NOT DELIVERED",
+    "tests": [
+      "tests/e05-native.cjs",
+      "tests/e05.cjs",
+      "tests/e05-edge.cjs"
+    ],
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "captures": "docs/dobby-v7/evidence/e05/"
+  },
+  "chatContract": {
+    "mission": "E02",
+    "document": "docs/dobby-v7/E02-PARLER-A-DOBBY.md",
+    "primarySource": "dobby_conversation_avec_dobby_1",
+    "route": "famille.html#chat",
+    "tests": [
+      "tests/e02.cjs",
+      "tests/e02-edge.cjs",
+      "tests/e02-voice-history.cjs"
+    ],
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "history": "native IndexedDB meta by authenticated userId; anonymous runtime only; legacy unowned history preserved and not attributed",
+    "remoteSync": "blocked: no validated author-only backend",
+    "speech": "native browser APIs; logic tested with simulated API boundaries; physical iPhone pending",
+    "captures": "docs/dobby-v7/evidence/e02/README.md"
+  },
+  "onboarding": {
+    "mission": "E06",
+    "document": "docs/dobby-v7/E06-PREMIERE-CONNEXION.md",
+    "sourceCount": 8,
+    "scoring": "design/e06/references/scoring/dobby-e06-scoring-v1.json",
+    "cheminette": {
+      "status": "source-backed-functional",
+      "view": "onboarding-ritual",
+      "document": "docs/dobby-v7/E06-01-RITUEL.md",
+      "illustration": "original local adaptation; not the unavailable Stitch media"
+    },
+    "accountMemberAssociation": "NOT DELIVERED",
+    "parentalPermissions": "NOT DELIVERED",
+    "serverProvisioning": "NOT DELIVERED",
+    "interversionIntegrity": "NOT DELIVERED",
+    "routes": [
+      {
+        "view": "onboarding-foyer",
+        "id": "dobby_mon_foyer_magique",
+        "status": "verified-partial",
+        "blocked": [
+          "Account/household creation, invitations and account/member association require verified server capabilities"
+        ],
+        "route": "famille.html#onboarding-foyer",
+        "template": "templates/onboarding/onboarding-foyer.html",
+        "source": "design/e06/references/stitch/dobby_mon_foyer_magique/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-identity",
+        "id": "dobby_mon_identit",
+        "status": "verified-functional",
+        "blocked": [
+          "Personal photos unavailable; parental authorization not represented"
+        ],
+        "route": "famille.html#onboarding-identity",
+        "template": "templates/onboarding/onboarding-identity.html",
+        "source": "design/e06/references/stitch/dobby_mon_identit/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-house",
+        "id": "dobby_le_myst_re_des_quatre_maisons",
+        "status": "verified-partial",
+        "blocked": [
+          "Original sorting-hat image URL returns HTML, illustration unavailable"
+        ],
+        "route": "famille.html#onboarding-house",
+        "template": "templates/onboarding/onboarding-house.html",
+        "source": "design/e06/references/stitch/dobby_le_myst_re_des_quatre_maisons/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-house-result",
+        "id": "dobby_la_r_v_lation_de_la_maison",
+        "status": "verified-functional",
+        "blocked": [],
+        "route": "famille.html#onboarding-house-result",
+        "template": "templates/onboarding/onboarding-house-result.html",
+        "source": "design/e06/references/stitch/dobby_la_r_v_lation_de_la_maison/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-patronus",
+        "id": "dobby_le_miroir_des_mes",
+        "status": "verified-functional",
+        "blocked": [],
+        "route": "famille.html#onboarding-patronus",
+        "template": "templates/onboarding/onboarding-patronus.html",
+        "source": "design/e06/references/stitch/dobby_le_miroir_des_mes/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-patronus-result",
+        "id": "dobby_l_apparition_du_patronus",
+        "status": "verified-functional",
+        "blocked": [],
+        "route": "famille.html#onboarding-patronus-result",
+        "template": "templates/onboarding/onboarding-patronus-result.html",
+        "source": "design/e06/references/stitch/dobby_l_apparition_du_patronus/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-final",
+        "id": "dobby_mon_identit_magique_consacr_e",
+        "status": "verified-functional",
+        "blocked": [],
+        "route": "famille.html#onboarding-final",
+        "template": "templates/onboarding/onboarding-final.html",
+        "source": "design/e06/references/stitch/dobby_mon_identit_magique_consacr_e/code.html",
+        "tests": [
+          "tests/e06.cjs",
+          "tests/e06-edge.cjs",
+          "tests/e06-auth.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      },
+      {
+        "view": "onboarding-ritual",
+        "id": "dobby_le_rituel_de_la_chemin_e",
+        "status": "source-backed-functional",
+        "blocked": [],
+        "route": "famille.html#onboarding-ritual",
+        "template": "templates/onboarding/onboarding-ritual.html",
+        "source": "design/e06/references/stitch/dobby_le_rituel_de_la_chemin_e/code.html",
+        "tests": [
+          "tests/e06-ritual.cjs",
+          "tests/e06-ritual-errors.cjs"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ]
+      }
+    ]
+  },
+  "reviewConsolidation": {
+    "reference": "a84f67acf8f5cbfd59475c2137ec70e1a20732f7",
+    "matrix": "docs/dobby-v7/CONSOLIDATION-MATRIX.json",
+    "report": "docs/dobby-v7/CONSOLIDATION.md",
+    "protected": [
+      "E03",
+      "E08 design"
+    ],
+    "blocked": [
+      "E04-02 native series/occurrence protocol",
+      "E05-01 official crest publication rights",
+      "E06-04 official crest dependency only"
+    ],
+    "deferred": [
+      "E06-08 server operations",
+      "E07-01",
+      "E07-02",
+      "E07-03",
+      "E07-09",
+      "Menu reconstruction",
+      "Family reconstruction"
+    ],
+    "sortingHat": {
+      "type": "original substitute; not original Stitch media",
+      "asset": "assets/onboarding/sorting-hat-original.svg",
+      "provenance": "assets/onboarding/sorting-hat-original.provenance.json"
+    },
+    "speech": "explicit send; browser natural end pauses and keeps transcript; physical Safari not verified",
+    "preferences": "one native st.stitchPreferences record including ceremony"
+  },
+  "e073Review": {
+    "sourceBase": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+    "scope": [
+      "taverne",
+      "recipes",
+      "recipe-entry",
+      "recipe-ai"
+    ],
+    "sourceCountUnchanged": true,
+    "workflowRoutes": [
+      {
+        "view": "recipe-entry",
+        "templateAlias": "recipe-add",
+        "type": "choice-and-management"
+      },
+      {
+        "view": "recipe-ai",
+        "templateAlias": "batch",
+        "type": "guided-external-AI-import"
+      }
+    ],
+    "contract": "dobby-recipes V1 retained, V2 enriched; native validator/writer",
+    "recipePhotos": "existing native local blob store; family transfer not connected",
+    "subpagesNotReviewed": [
+      "recipe",
+      "pick",
+      "cook",
+      "tm5",
+      "shop"
+    ],
+    "report": "docs/dobby-v7/E07-3-TAVERNE-GRIMOIRE.md"
+  }
+}
