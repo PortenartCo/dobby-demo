@@ -3,113 +3,113 @@
     "label": "same-complete",
     "blocked": [
       {
-        "pid": 25322,
+        "pid": 32166,
         "application": "same-complete-b",
         "wait": "transactionid",
         "waitType": "Lock",
-        "query": "SELECT public.dobby_missions_v2_write('7a21be9d-000d-4d2d-b353-f1c3d05cadcb'::uuid,1::bigi"
+        "query": "SELECT public.dobby_missions_v2_write('6fb55391-5d3c-49f0-baba-1c18d10a8294'::uuid,1::bigi"
       },
       {
-        "pid": 25323,
+        "pid": 32167,
         "application": "same-complete-a",
         "wait": "advisory",
         "waitType": "Lock",
-        "query": "SELECT public.dobby_missions_v2_write('7a21be9d-000d-4d2d-b353-f1c3d05cadcb'::uuid,1::bigi"
+        "query": "SELECT public.dobby_missions_v2_write('6fb55391-5d3c-49f0-baba-1c18d10a8294'::uuid,1::bigi"
       }
     ],
     "locks": [
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "advisory",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "relation",
         "mode": "AccessShareLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "relation",
         "mode": "AccessShareLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "transactionid",
         "mode": "ShareLock",
         "granted": false
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "transactionid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "tuple",
         "mode": "AccessExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25322,
+        "pid": 32166,
         "locktype": "virtualxid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25323,
+        "pid": 32167,
         "locktype": "advisory",
         "mode": "ExclusiveLock",
         "granted": false
       },
       {
-        "pid": 25323,
+        "pid": 32167,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25323,
+        "pid": 32167,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25323,
+        "pid": 32167,
         "locktype": "transactionid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25323,
+        "pid": 32167,
         "locktype": "virtualxid",
         "mode": "ExclusiveLock",
         "granted": true
@@ -130,113 +130,113 @@
     "label": "same-reopen",
     "blocked": [
       {
-        "pid": 25436,
+        "pid": 32285,
         "application": "same-reopen-b",
         "wait": "transactionid",
         "waitType": "Lock",
-        "query": "SELECT public.dobby_missions_v2_write('ca0f15ed-017d-4eb4-addd-98add6b42362'::uuid,2::bigi"
+        "query": "SELECT public.dobby_missions_v2_write('09a1d937-35e3-4dce-a32c-388acad7cdb8'::uuid,2::bigi"
       },
       {
-        "pid": 25437,
+        "pid": 32286,
         "application": "same-reopen-a",
         "wait": "advisory",
         "waitType": "Lock",
-        "query": "SELECT public.dobby_missions_v2_write('ca0f15ed-017d-4eb4-addd-98add6b42362'::uuid,2::bigi"
+        "query": "SELECT public.dobby_missions_v2_write('09a1d937-35e3-4dce-a32c-388acad7cdb8'::uuid,2::bigi"
       }
     ],
     "locks": [
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "advisory",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "relation",
         "mode": "AccessShareLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "relation",
         "mode": "AccessShareLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "transactionid",
         "mode": "ShareLock",
         "granted": false
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "transactionid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "tuple",
         "mode": "AccessExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25436,
+        "pid": 32285,
         "locktype": "virtualxid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25437,
+        "pid": 32286,
         "locktype": "advisory",
         "mode": "ExclusiveLock",
         "granted": false
       },
       {
-        "pid": 25437,
+        "pid": 32286,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25437,
+        "pid": 32286,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25437,
+        "pid": 32286,
         "locktype": "transactionid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25437,
+        "pid": 32286,
         "locktype": "virtualxid",
         "mode": "ExclusiveLock",
         "granted": true
@@ -257,113 +257,113 @@
     "label": "different-missions",
     "blocked": [
       {
-        "pid": 25512,
+        "pid": 32362,
         "application": "different-missions-a",
         "wait": "transactionid",
         "waitType": "Lock",
-        "query": "SELECT public.dobby_missions_v2_write('44adda43-7bf7-4701-a248-76b5ce2a10cf'::uuid,1::bigi"
+        "query": "SELECT public.dobby_missions_v2_write('ee224144-77cb-486d-a0f2-3fb92eab35da'::uuid,1::bigi"
       },
       {
-        "pid": 25513,
+        "pid": 32363,
         "application": "different-missions-b",
         "wait": "advisory",
         "waitType": "Lock",
-        "query": "SELECT public.dobby_missions_v2_write('44adda43-7bf7-4701-a248-76b5ce2a10cf'::uuid,1::bigi"
+        "query": "SELECT public.dobby_missions_v2_write('ee224144-77cb-486d-a0f2-3fb92eab35da'::uuid,1::bigi"
       }
     ],
     "locks": [
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "advisory",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "relation",
         "mode": "AccessShareLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "relation",
         "mode": "AccessShareLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "transactionid",
         "mode": "ShareLock",
         "granted": false
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "transactionid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "tuple",
         "mode": "AccessExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25512,
+        "pid": 32362,
         "locktype": "virtualxid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25513,
+        "pid": 32363,
         "locktype": "advisory",
         "mode": "ExclusiveLock",
         "granted": false
       },
       {
-        "pid": 25513,
+        "pid": 32363,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25513,
+        "pid": 32363,
         "locktype": "relation",
         "mode": "RowShareLock",
         "granted": true
       },
       {
-        "pid": 25513,
+        "pid": 32363,
         "locktype": "transactionid",
         "mode": "ExclusiveLock",
         "granted": true
       },
       {
-        "pid": 25513,
+        "pid": 32363,
         "locktype": "virtualxid",
         "mode": "ExclusiveLock",
         "granted": true
@@ -384,7 +384,7 @@
     "label": "different-households",
     "blocked": [
       {
-        "pid": 25624,
+        "pid": 32474,
         "application": "different-household-a",
         "wait": "transactionid"
       }

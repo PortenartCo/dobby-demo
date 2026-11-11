@@ -1,0 +1,35 @@
+Workflow https://github.com/PortenartCo/dobby-demo/actions/runs/43054927916
+Job integrated-corrections 130641707923, source fff0c8e0fee23b6bce3709659bd09513d935ee76
+Fetched using the GitHub connector because the shell cannot reach the Azure log storage host.
+
+2026-11-11T16:07:07.8525395Z INTEGRATED_REVIEW_START review-integrated-missions.cjs canonical
+2026-11-11T16:07:09.0843912Z AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+2026-11-11T16:07:09.0844302Z
+2026-11-11T16:07:09.0844402Z 0 !== 10
+2026-11-11T16:07:09.0844517Z
+2026-11-11T16:07:09.0844875Z     at /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/review-integrated-missions.cjs:17:111 {
+2026-11-11T16:07:09.0845371Z   generatedMessage: true,
+2026-11-11T16:07:09.0845613Z   code: 'ERR_ASSERTION',
+2026-11-11T16:07:09.0845824Z   actual: 0,
+2026-11-11T16:07:09.0846007Z   expected: 10,
+2026-11-11T16:07:09.0846296Z   operator: 'strictEqual',
+2026-11-11T16:07:09.0846519Z   diff: 'simple'
+2026-11-11T16:07:09.0846712Z }
+2026-11-11T16:07:09.0997347Z /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/review-integrated-e03-e06.cjs:4
+2026-11-11T16:07:09.0999383Z const run=(file,extra={})=>{console.log('INTEGRATED_REVIEW_START',file,extra.DOBBY_REVIEW_PATH||'canonical');const result=spawnSync(process.execPath,[path.join(__dirname,file)],{stdio:'inherit',env:{...process.env,DOBBY_TEST_ORIGIN:origin,...extra}});if(result.status!==0)throw Error(file+' failed with status '+result.status);};
+2026-11-11T16:07:09.1000689Z                                                                                                                                                                                                                                                                                 ^
+2026-11-11T16:07:09.1000950Z
+2026-11-11T16:07:09.1001101Z Error: review-integrated-missions.cjs failed with status 1
+2026-11-11T16:07:09.1001821Z     at run (/home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/review-integrated-e03-e06.cjs:4:279)
+2026-11-11T16:07:09.1002325Z     at Object.<anonymous> (/home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/review-integrated-e03-e06.cjs:8:31)
+2026-11-11T16:07:09.1002754Z     at Module._compile (node:internal/modules/cjs/loader:1781:14)
+2026-11-11T16:07:09.1003007Z     at Object..js (node:internal/modules/cjs/loader:1913:10)
+2026-11-11T16:07:09.1003458Z     at Module.load (node:internal/modules/cjs/loader:1505:32)
+2026-11-11T16:07:09.1003910Z     at Function._load (node:internal/modules/cjs/loader:1309:12)
+2026-11-11T16:07:09.1004168Z     at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+2026-11-11T16:07:09.1004477Z     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+2026-11-11T16:07:09.1004757Z     at node:internal/main/run_main_module:36:49
+2026-11-11T16:07:09.1004882Z
+2026-11-11T16:07:09.1004943Z Node.js v22.23.4
+2026-11-11T16:07:09.1044128Z ##[error]Process completed with exit code 1.
+2026-11-11T16:07:09.1104230Z

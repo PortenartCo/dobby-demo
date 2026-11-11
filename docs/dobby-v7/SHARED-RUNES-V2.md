@@ -38,6 +38,10 @@ Les résultats finaux, empreintes exactes des sources et liens de CI figurent da
 
 Défauts révélés pendant la campagne et corrigés avant clôture : ambiguïté PL/pgSQL lors du contrôle d’un ancien crédit V1 ; horodatages acceptés par PostgreSQL mais incompatibles avec le moteur navigateur ; retrait de `rewardVersion` contournant l’éligibilité ; interprétation HTTP du CAS ; différence entre le champ réseau `runeRequests: []` et le digest local ; suppression avec annulation en attente. Les tests de refus, d’outbox et de convergence sont maintenus stricts. Les suites historiques n’ont pas été affaiblies.
 
+La comparaison croisée des fixtures a ensuite révélé qu’un crédit V1 valide sans millisecondes était conservé par le client mais refusé par le premier validateur SQL. Le contrat accepte désormais les dates ISO avec zéro à trois décimales et décalage explicite, en conservant leur chaîne historique exacte. Les preuves couvrent à la fois une ligne antérieure à la migration et l’adoption initiale, puis la lecture par un autre client et l’annulation.
+
+La première CI navigateur a échoué dans le test historique E03 : dix cartes attachées, puis zéro visible à l’instantané suivant ([trace](evidence/shared-runes-v2/ci-initial-e03-failure.txt)). Le script original passe localement aux trois largeurs et le point initial passe seize fois instrumenté ; l’échec n’est pas reproduit. `ready` ne fige pas les rafraîchissements du MutationObserver natif. Le test attend maintenant la visibilité de la première carte avant ses instantanés, sans retirer aucune des assertions de comptes. Un masquage durable échoue toujours au délai de douze secondes. Le produit E03 reste inchangé ; les résultats de la reprise CI sont consignés séparément.
+
 ## Procédure future : sauvegarder avant toute activation
 
 Ces étapes ne sont pas exécutées sur le Supabase familial par cette mission. Une validation distincte doit identifier le projet personnel DOBBY, son schéma réel et son opérateur ; aucun projet professionnel Portenart ne sert de cible ou de test.

@@ -1,5 +1,8 @@
 PASS baseline V1: old direct PATCH can delete a confirmed credit
 PASS migration preserves existing V1 event, revision 0, balance and row
+PASS legacy V1 date without milliseconds survives migration, RPC, reopen and regrant exactly
+PASS explicit local V1 adoption retains a confirmed no-milliseconds date verbatim
+PASS legacy V1 fractional milliseconds and ISO offsets preserve raw dates through migration and reopen
 PASS explicit V2 local adoption preserves existing cycle identities and revision zero
 PASS capability and authenticator are real non-superuser boundaries
 PASS first grant + double completion + reopen + regrant use one canonical ledger
@@ -46,4 +49,4 @@ PASS reapplying prepared migration preserves all missions, receipts and protecti
 PASS invalid legacy history aborts migration atomically without cleaning or losing it
 PASS safe protocol rollback disables RPC but keeps direct-write guard and all history
 PASS local logical backup/restoration preserves full payloads, receipts and guard
-{"pass":48,"fail":0,"total":48}
+{"pass":51,"fail":0,"total":51}

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T16:02:56.929Z",
+  "generatedAt": "2026-11-11T16:14:59.880Z",
   "command": "node --test tests/shared-runes-v2/client-postgres.mjs",
   "environment": {
     "container": "dobby-runes-v2-test-20261111",
@@ -18,11 +18,11 @@
     "essai-stitch-v5-famille/family-modules.js": "a97ab87d5ed6ec3311b262db30b23f25e4d1b94aff0c1e7db2d8817274a32572",
     "essai-stitch-v5-famille/family-runes-core.mjs": "5f90167122a88042b35846ee6887de115724ac3c45938434f1aca06cf47cbf7c",
     "essai-stitch-v5-famille/family-missions-core.mjs": "9a170534936d1f0c8c2d5cbced305dd32498c49e80f2063e138e1c10d36227eb",
-    "sql-proposals/dobby-shared-runes-v2.sql": "fb353eca8f2a533cca97d10b9757aab4ae58e56aea8ea3d5788d136629790e15"
+    "sql-proposals/dobby-shared-runes-v2.sql": "824080da6869b2f0a70869f80d094a6dc47280328ef87b0d941ad8e177cc3366"
   },
   "sourceUnchanged": true,
   "scope": "Actual PostgreSQL SQL, locks, constraints and transactions; two independent native client VMs. REST transport and UUID auth claims are local fixtures, not PostgREST/JWT or real-account validation.",
-  "passed": 9,
+  "passed": 10,
   "failed": 0,
   "scenarios": [
     {
@@ -37,6 +37,18 @@
           "b": 11
         },
         "zeroActive": true
+      }
+    },
+    {
+      "name": "explicit V1 adoption preserves a confirmed legacy ISO date without milliseconds through second-client retrieval and reversal",
+      "status": "passed",
+      "evidence": {
+        "legacyDatePreserved": "2026-11-10T12:00:00Z",
+        "legacyRevisionPreserved": 0,
+        "credits": 2,
+        "receipts": 2,
+        "revision": 2,
+        "finalTotal": 0
       }
     },
     {
@@ -73,7 +85,7 @@
       "name": "lost response after a real commit replays the original durable operation and applies the current reopened module after reload",
       "status": "passed",
       "evidence": {
-        "operation": "ef3b5fdf-95ab-4de3-bc8b-79e0ed1cdc86",
+        "operation": "534b6f50-27db-4974-bfc5-8e00a36916d9",
         "attempts": 2,
         "replayed": true,
         "receiptCount": 3,
@@ -106,7 +118,7 @@
       "name": "metadata refusal after SQL confirmation retains the durable operation for safe replay after reload",
       "status": "passed",
       "evidence": {
-        "durableOperation": "6d771b78-34f6-4f1f-96cb-49076943d80c",
+        "durableOperation": "dd87e0f7-5e02-4efb-bb53-63db7406b226",
         "replayed": true,
         "credits": 1,
         "receipts": 2

@@ -136,7 +136,7 @@ AS $$SELECT (a-'date'-'title'-'revision')=(b-'date'-'title'-'revision')$$;
 CREATE OR REPLACE FUNCTION dobby_runes_private.assert_event(v jsonb,confirmed boolean)
 RETURNS void LANGUAGE plpgsql IMMUTABLE SET search_path=''
 AS $$
-DECLARE expected numeric; cycle numeric; instant timestamptz;
+DECLARE expected numeric; cycle numeric; civil timestamp without time zone;
 BEGIN
  IF pg_catalog.jsonb_typeof(v) IS DISTINCT FROM 'object' THEN
   RAISE EXCEPTION USING ERRCODE='23514',MESSAGE='Historique de runes non pris en charge';
@@ -152,13 +152,16 @@ BEGIN
  OR pg_catalog.jsonb_typeof(v->'title') IS DISTINCT FROM 'string' OR NOT dobby_runes_private.has_native_text(v->>'title')
  OR dobby_runes_private.utf16_length(v->>'title')>140
  OR pg_catalog.jsonb_typeof(v->'date') IS DISTINCT FROM 'string'
- OR (v->>'date') !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$' THEN
+ OR (v->>'date') !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$' THEN
   RAISE EXCEPTION USING ERRCODE='23514',MESSAGE='Bénéficiaire, mission, date ou intitulé de runes invalide';
  END IF;
  BEGIN
-  instant:=(v->>'date')::timestamptz;
-  IF NOT pg_catalog.isfinite(instant)
-   OR pg_catalog.to_char(instant AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') IS DISTINCT FROM v->>'date' THEN
+  -- Validate civil fields without rewriting a historical representation.
+  -- ISO fractions (0..3 digits) and explicit offsets are JS Date.parse valid;
+  -- parsing only the civil part avoids PostgreSQL's narrower offset limit.
+  civil:=pg_catalog.substr(v->>'date',1,19)::timestamp without time zone;
+  IF NOT pg_catalog.isfinite(civil)
+   OR pg_catalog.to_char(civil,'YYYY-MM-DD"T"HH24:MI:SS') IS DISTINCT FROM pg_catalog.substr(v->>'date',1,19) THEN
    RAISE EXCEPTION USING ERRCODE='23514',MESSAGE='Date de runes invalide ou non canonique';
   END IF;
  EXCEPTION WHEN invalid_datetime_format OR datetime_field_overflow THEN

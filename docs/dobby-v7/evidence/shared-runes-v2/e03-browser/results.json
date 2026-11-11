@@ -1,0 +1,35 @@
+[
+  {
+    "width": 320,
+    "status": "PASS",
+    "default": "week",
+    "brusselsDay": "2026-11-12",
+    "initialPeriodCards": 10,
+    "expandedPeriodCards": 16,
+    "canonicalUnchanged": true,
+    "noHorizontalOverflow": true,
+    "recurrenceDeduplicated": true
+  },
+  {
+    "width": 390,
+    "status": "PASS",
+    "default": "week",
+    "brusselsDay": "2026-11-12",
+    "initialPeriodCards": 10,
+    "expandedPeriodCards": 16,
+    "canonicalUnchanged": true,
+    "noHorizontalOverflow": true,
+    "recurrenceDeduplicated": true
+  },
+  {
+    "width": 1440,
+    "status": "PASS",
+    "default": "week",
+    "brusselsDay": "2026-11-12",
+    "initialPeriodCards": 10,
+    "expandedPeriodCards": 16,
+    "canonicalUnchanged": true,
+    "noHorizontalOverflow": true,
+    "recurrenceDeduplicated": true
+  }
+]

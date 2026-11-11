@@ -83,6 +83,25 @@ scenario('native grant/reversal/custom reward edits keep the confirmed historica
   record.evidence={revision:state.module.revision,credits:grants(state).length,receipts:state.receipts.length,totals:{a:total(a),b:total(a,'member-b')},zeroActive:true};
 });
 
+scenario('explicit V1 adoption preserves a confirmed legacy ISO date without milliseconds through second-client retrieval and reversal',async(t,record)=>{
+  const id=await freshHousehold(),backend=transport(id),legacyDate='2026-11-10T12:00:00Z';
+  const row=mission('legacy-no-ms',{status:'done',completedAt:legacyDate});
+  const legacy={missionId:row.id,memberId:'member-a',effort:'regular',amount:25,date:legacyDate,title:row.title,revision:0};
+  assert.doesNotThrow(()=>R.normalizeCredits([legacy]),'The native core already accepts this legacy ISO spelling');
+  const a=nativeClient(users.a,backend,id,{state:{manualMissions:[row],runeCredits:[legacy]}}),b=nativeClient(users.b,backend,id);
+  t.after(()=>{a.provider.reset();b.provider.reset();});
+  await a.provider.start();await a.action('activate','missions');
+  assert.equal(a.provider.isActive('missions'),true,a.messages.join('\n'));
+  await b.provider.start();await b.action('activate','missions');
+  assert.equal(b.provider.isActive('missions'),true,b.messages.join('\n'));assert.equal(total(b),25);
+  let state=await snapshot(id);assert.deepEqual(grants(state),[legacy]);assert.deepEqual(clone(b.st.runeCredits),[legacy]);
+  reopen(b,row.id);await b.provider.sync();await a.provider.sync();
+  state=await snapshot(id);assert.equal(grants(state).length,2);assert.deepEqual(grants(state).find(credit=>R.eventKey(credit)===row.id),legacy);
+  assert.equal(grants(state).find(credit=>credit.kind==='reversal').reverses,row.id);assert.equal(total(a),0);assert.equal(total(b),0);
+  assert.equal(a.provider.statusFor('missions'),'Partagé · à jour');assert.equal(b.provider.statusFor('missions'),'Partagé · à jour');
+  record.evidence={legacyDatePreserved:legacyDate,legacyRevisionPreserved:0,credits:2,receipts:state.receipts.length,revision:state.module.revision,finalTotal:0};
+});
+
 scenario('two native clients completing distinct missions rebase per mission without restoring an already completed row',async(t,record)=>{
   const {id,a,b}=await household(t,[mission('distinct-a',{effort:'light'}),mission('distinct-b',{assigneeId:'member-b',effort:'major'})]);
   complete(a,'distinct-a');complete(b,'distinct-b');await a.provider.sync();await b.provider.sync();await a.provider.sync();

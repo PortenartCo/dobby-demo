@@ -10,7 +10,7 @@ Base de comparaison : `9a3e5dbc1c856ce417e344f2b5aca6e0d9c0040a`.
 
 | Artefact | SHA-256 à la clôture de la lecture |
 |---|---|
-| `sql-proposals/dobby-shared-runes-v2.sql` | `fb353eca8f2a533cca97d10b9757aab4ae58e56aea8ea3d5788d136629790e15` |
+| `sql-proposals/dobby-shared-runes-v2.sql` | `824080da6869b2f0a70869f80d094a6dc47280328ef87b0d941ad8e177cc3366` |
 | `essai-stitch-v5-famille/family-modules.js` | `a97ab87d5ed6ec3311b262db30b23f25e4d1b94aff0c1e7db2d8817274a32572` |
 | `essai-stitch-v5-famille/family-missions.js` | `33a48e99ab18f99ee9648f3594bf4fbf79c855401f4710911a16d5e931744349` |
 
@@ -26,7 +26,7 @@ Autres sources relues : `SHARED-RUNES-V2-SPEC.md`, `SHARED-RUNES-V2-CONTRACT.md`
 - Un reçu lie foyer, UUID, acteur, révision attendue et condensat. Un rejeu identique renvoie le reçu originel avec le **module courant** ; il ne remet pas un ancien statut terminé après une réouverture plus récente. L’appartenance active est revérifiée avant un rejeu.
 - Le registre confirmé reste uniquement dans le JSON Missions. La table privée contient des métadonnées de reçus, sans événements ni solde. Les crédits confirmés sont immuables, y compris date, titre et révision ; une demande déjà connue peut être dédupliquée sans réécrire ces champs.
 - Les crédits V1 gardent leur clé `missionId` et le cycle zéro implicite. Les cycles V2 sont continus, avec annulation exacte du gain précédent, un seul gain actif et un traitement réel des récompenses de zéro. Les totaux contrôlés sont les totaux **actifs par bénéficiaire**, pas la somme brute de tout l’historique annulé.
-- Les bornes numériques natives s’appliquent aux montants, cycles, confirmations, révisions et totaux. Les longueurs UTF-16 et les blancs JavaScript sont désormais pris en compte dans les champs du registre ; les dates sont des ISO canoniques, jamais des mots relatifs PostgreSQL.
+- Les bornes numériques natives s’appliquent aux montants, cycles, confirmations, révisions et totaux. Les longueurs UTF-16 et les blancs JavaScript sont désormais pris en compte dans les champs du registre. Les dates ISO acceptent l’absence de millisecondes, une fraction de une à trois décimales et une zone explicite `Z` ou `±HH:mm` ; leur représentation historique reste intacte. Le contrôle des champs civils refuse les dates invalides et les normalisations PostgreSQL, sans traiter `now` comme une date d’événement.
 - Les anciennes règles de récurrence restent un préfixe identique ; racines, occurrences et identités persistées survivent aux snapshots. Une nouvelle occurrence exige une vraie racine de série présente. Le serveur ne reproduit pas le générateur de dates.
 - Une ancienne mission sans `rewardVersion` ne devient pas rétroactivement éligible ; une mission conservée ne perd pas ce marqueur. La suppression native d’une mission ordinaire n’efface pas ses gains confirmés.
 - Le client persiste UUID, CAS, payload et contexte avant le premier envoi. Un résultat réseau inconnu garde l’opération initiale. Les confirmations réconcilient les demandes par identité et attribution, et les modifications arrivées pendant le réseau sont rebasées sur le module confirmé ou présentées en conflit.
@@ -48,7 +48,8 @@ Autres sources relues : `SHARED-RUNES-V2-SPEC.md`, `SHARED-RUNES-V2-CONTRACT.md`
 | Suppression de règles historiques ou d’un arrêt de série | Préfixe historique des règles protégé côté serveur. |
 | Retrait de `rewardVersion` pour contourner une complétion récompensable | Éligibilité d’une mission existante conservée immuable. |
 | Réouverture puis suppression avant envoi de l’annulation | La suppression est bloquée tant qu’un gain **ou une annulation** est en attente. |
-| Nouveau `done` éligible sans gain, dates relatives ou normalisées par PostgreSQL, JSON null obligatoire, texte astral trop long | Gardes serveur de transition, comparaison ISO canonique, `IS DISTINCT FROM` et longueurs UTF-16. |
+| Nouveau `done` éligible sans gain, dates relatives ou normalisées par PostgreSQL, JSON null obligatoire, texte astral trop long | Gardes serveur de transition, comparaison des champs calendaires ISO, `IS DISTINCT FROM` et longueurs UTF-16. |
+| Format initial `.sssZ` trop strict pour une date V1 légitime telle que `2026-11-10T12:00:00Z` | Correction soulevée par la comparaison croisée de l’agent principal après la première revue : fraction optionnelle, décalages explicites admis, validation civile sans normalisation du texte confirmé. Cas ajoutés dans les sources de tests PostgreSQL et dans le pont client/PostgreSQL ; exécution à consulter dans leurs preuves distinctes. |
 | Nouvelle occurrence sans sa racine | Vérification limitée aux nouvelles occurrences, sans toucher les anciennes orphelines ni imposer une fenêtre serveur. |
 | Profil du responsable supprimé mais mission encore assignée | Refus client explicite avant mutation ; réassignation ou désassignation demandée. Le contrôle serveur ne prétend pas être un annuaire de profils. |
 
@@ -59,7 +60,7 @@ Autres sources relues : `SHARED-RUNES-V2-SPEC.md`, `SHARED-RUNES-V2-CONTRACT.md`
 3. **Demandes orphelines.** Une nouvelle demande exige une mission présente. Un ancien cache contenant déjà une demande orpheline reste un cas de refus explicite avec conservation, pas une résolution automatique. Les crédits historiques confirmés survivent à la disparition des missions et des membres.
 4. **Récurrence.** Le serveur vérifie structure, historique, identité et racine des nouvelles occurrences. Il ne recalcule pas si une date correspond au jour de semaine ou à la règle de projection ; la projection reste native. Il n’impose pas les trente jours de reprise aux retours après une longue déconnexion.
 5. **Capacité et croissance.** La limite JSONB de 262144 octets demeure. Un dépassement refuse l’opération entière ; aucun historique n’est tronqué. Les reçus restent conservés pour l’idempotence. Une croissance au-delà de ces capacités nécessitera une évolution distincte et sauvegardée.
-6. **Compatibilité de dates.** La proposition exige des années ISO sur quatre chiffres. Un historique antérieur hors de ce format bloque le précontrôle sans être réécrit. Cette borne est plus étroite que toute la plage théorique de `Date` JavaScript.
+6. **Compatibilité de dates.** La proposition conserve notamment les dates V1 ISO sans millisecondes et les écritures ISO avec fraction courte ou décalage explicite ; le round-trip porte sur les champs civils, jamais sur une nouvelle chaîne stockée. Les années restent sur quatre chiffres et les dates sans zone explicite ou hors syntaxe ISO admise restent refusées au précontrôle, sans réécriture. Le contrat est donc plus étroit que toute la plage et tous les formats théoriquement reconnus par `Date.parse`. Les sources de tests relues couvrent l’ancien crédit sans millisecondes à travers migration, RPC, récupération sur un deuxième client, réouverture et conservation de la révision zéro.
 7. **Périmètre de preuve.** L’inspection ne prouve ni la configuration réelle des rôles Supabase, ni la publication du schéma PostgREST, ni l’émission des JWT, ni les interactions sur les comptes réels. Ces opérations ne sont pas autorisées dans cette mission. Le mapping HTTP mentionné ici est celui de la documentation PostgREST publique.
 
 ## Documentation publique consultée

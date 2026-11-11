@@ -2,63 +2,69 @@ TAP version 13
 # Subtest: native grant/reversal/custom reward edits keep the confirmed historical beneficiary and zero is active
 ok 1 - native grant/reversal/custom reward edits keep the confirmed historical beneficiary and zero is active
   ---
-  duration_ms: 2638.016297
+  duration_ms: 3071.989173
+  type: 'test'
+  ...
+# Subtest: explicit V1 adoption preserves a confirmed legacy ISO date without milliseconds through second-client retrieval and reversal
+ok 2 - explicit V1 adoption preserves a confirmed legacy ISO date without milliseconds through second-client retrieval and reversal
+  ---
+  duration_ms: 2070.578362
   type: 'test'
   ...
 # Subtest: two native clients completing distinct missions rebase per mission without restoring an already completed row
-ok 2 - two native clients completing distinct missions rebase per mission without restoring an already completed row
+ok 3 - two native clients completing distinct missions rebase per mission without restoring an already completed row
   ---
-  duration_ms: 1733.097494
+  duration_ms: 2444.233266
   type: 'test'
   ...
 # Subtest: actual concurrent SQL CAS loss is retained and explicit native resolution converges without a duplicate grant
-ok 3 - actual concurrent SQL CAS loss is retained and explicit native resolution converges without a duplicate grant
+ok 4 - actual concurrent SQL CAS loss is retained and explicit native resolution converges without a duplicate grant
   ---
-  duration_ms: 1869.340818
+  duration_ms: 2349.387232
   type: 'test'
   ...
 # Subtest: lost response after a real commit replays the original durable operation and applies the current reopened module after reload
-ok 4 - lost response after a real commit replays the original durable operation and applies the current reopened module after reload
+ok 5 - lost response after a real commit replays the original durable operation and applies the current reopened module after reload
   ---
-  duration_ms: 2886.309108
+  duration_ms: 2939.807044
   type: 'test'
   ...
 # Subtest: offline transport keeps unconfirmed intent and disable does not clear runeSyncRequired before recovery
-ok 5 - offline transport keeps unconfirmed intent and disable does not clear runeSyncRequired before recovery
+ok 6 - offline transport keeps unconfirmed intent and disable does not clear runeSyncRequired before recovery
   ---
-  duration_ms: 1626.723288
+  duration_ms: 1894.519081
   type: 'test'
   ...
 # Subtest: metadata refusal before RPC sends no business write and preserves the native pending request
-ok 6 - metadata refusal before RPC sends no business write and preserves the native pending request
+ok 7 - metadata refusal before RPC sends no business write and preserves the native pending request
   ---
-  duration_ms: 1909.234242
+  duration_ms: 2184.09133
   type: 'test'
   ...
 # Subtest: metadata refusal after SQL confirmation retains the durable operation for safe replay after reload
-ok 7 - metadata refusal after SQL confirmation retains the durable operation for safe replay after reload
+ok 8 - metadata refusal after SQL confirmation retains the durable operation for safe replay after reload
   ---
-  duration_ms: 2915.829195
+  duration_ms: 2125.415522
   type: 'test'
   ...
 # Subtest: native projected recurring occurrence synchronizes once and historical identity cannot silently disappear
-ok 8 - native projected recurring occurrence synchronizes once and historical identity cannot silently disappear
+ok 9 - native projected recurring occurrence synchronizes once and historical identity cannot silently disappear
   ---
-  duration_ms: 2073.3351
+  duration_ms: 1889.429574
   type: 'test'
   ...
 # Subtest: server refuses grant for an absent mission atomically while native request and durable rejected operation remain recoverable
-ok 9 - server refuses grant for an absent mission atomically while native request and durable rejected operation remain recoverable
+ok 10 - server refuses grant for an absent mission atomically while native request and durable rejected operation remain recoverable
   ---
-  duration_ms: 2242.790293
+  duration_ms: 1833.192597
   type: 'test'
   ...
-1..9
-# tests 9
+1..10
+# tests 10
 # suites 0
-# pass 9
+# pass 10
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 20718.806466
+# duration_ms 23780.235121
