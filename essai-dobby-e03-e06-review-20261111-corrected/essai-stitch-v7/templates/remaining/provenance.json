@@ -1,0 +1,152 @@
+[
+  {
+    "view": "contacts",
+    "source": "design/stitch-53/dobby_r_pertoire_des_contacts_familiaux/code.html",
+    "sha256": "d056421d022e4b679991e32963a866b760497bfef9d6feb5cab0381a3fd1e169"
+  },
+  {
+    "view": "contact-edit",
+    "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
+    "sha256": "741479b6e8a2a920dcfd3194e32b0e429d138d74051636a7da08266e348ba643"
+  },
+  {
+    "view": "memos",
+    "source": "design/stitch-53/dobby_biblioth_que_des_m_mos_notes_familiales/code.html",
+    "sha256": "3e41967d84b31e109c7eb782e6d09c9802f5728877925303ea918ba41678d4d7"
+  },
+  {
+    "view": "memo-edit",
+    "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_m_mo/code.html",
+    "sha256": "e85ead878ca70e9eeea911389b6ae77023da25dbf7f470d2db98d7a0d3b98926"
+  },
+  {
+    "view": "lists",
+    "source": "design/stitch-53/dobby_registre_des_listes_familiales/code.html",
+    "sha256": "7b632571f9efecec680a721b6f9c91a85fe9f567eaff956a746d1cd93943108d"
+  },
+  {
+    "view": "list-detail",
+    "source": "design/stitch-53/dobby_d_tail_d_une_liste_familiale/code.html",
+    "sha256": "51f867b7aae1807f49c3fa16151fc7b4f5dc3ae0b3030f7cea8e843ab5561698"
+  },
+  {
+    "view": "house-1",
+    "source": "design/stitch-53/dobby_maison_quipements_du_logis_1/code.html",
+    "sha256": "a5a7c725e3bb178d2978dba18fe412baa5ccfd6bc466ee80e1b10bf8f51f4a38"
+  },
+  {
+    "view": "house",
+    "source": "design/stitch-53/dobby_maison_quipements_du_logis_2/code.html",
+    "sha256": "aa4e2ba8fa33cdf2552a59c4485889cea9b4796cb6474643821aa2829a96f2c2"
+  },
+  {
+    "view": "equipment-edit",
+    "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_quipement/code.html",
+    "sha256": "b42df07b8beb85e6549eca0b482126ace0731ff197e5f74601dec3f1e409a7f0"
+  },
+  {
+    "view": "equipment",
+    "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_quipement/code.html",
+    "sha256": "2fc2e7b42aed49c0fb2366b18f5d40eeca027f1e90bf1d95e3ff2bc56789bc81"
+  },
+  {
+    "view": "maintenance",
+    "source": "design/stitch-53/dobby_historique_d_entretien_pi_ces_jointes/code.html",
+    "sha256": "39a4d80f11d195362fff85f995c837f1e6f365beaf0ea1ed343fc87bb3ed09a5"
+  },
+  {
+    "view": "house-backup",
+    "source": "design/stitch-53/dobby_g_rer_les_donn_es_des_quipements_export_restauration/code.html",
+    "sha256": "2e55cd654e90d94f03c753fe12f0864f8ed39df0e8e68c1d977668dec965c1da"
+  },
+  {
+    "view": "backup",
+    "source": "design/stitch-53/dobby_sauvegarde_et_restauration_compl_te/code.html",
+    "sha256": "7c13f9ed03824c8ce2a596e529f3a34f842a05dd19fac68a29f7590f88f8525a"
+  },
+  {
+    "view": "document-edit",
+    "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_document/code.html",
+    "sha256": "be543031ecc9915a0453f7b2ad967c1de914a4fa8ffc3eae98e91c2d5aaf501b"
+  },
+  {
+    "view": "documents-1",
+    "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_1/code.html",
+    "sha256": "084ff3c43bb348e234808c7c09e0dfeb7b0370a6f423896a4b05e8c440154e5d"
+  },
+  {
+    "view": "documents",
+    "source": "design/stitch-53/dobby_archives_biblioth_que_documentaire_2/code.html",
+    "sha256": "b7748588250e0fc24cb0849056a1c08e3ce2cc74b68742b12ec1f240220b980b"
+  },
+  {
+    "view": "contracts-1",
+    "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_1/code.html",
+    "sha256": "8679c9e8eff44d35fc7d9bda0376ca067df3f8626a3695154a278b828c8b93a9"
+  },
+  {
+    "view": "contracts",
+    "source": "design/stitch-53/dobby_contrats_assurances_ch_ances_du_foyer_2/code.html",
+    "sha256": "dd7481087dde379b06678e7920ab5c030cdce5f279941a0cb6212ba4e39ddd6e"
+  },
+  {
+    "view": "contract-edit",
+    "source": "design/stitch-53/dobby_d_clarer_ou_renouveler_un_contrat/code.html",
+    "sha256": "5e73677ad201f588d547bb9e030a41baa79ade5589322d81919ef8ccf635523c"
+  },
+  {
+    "view": "document",
+    "source": "design/stitch-53/dobby_fiche_document_aper_u/code.html",
+    "sha256": "d43fb7aa016b0d7978fba7cffc890a57ebb282a15253e07ae9bd9451ade9498e"
+  },
+  {
+    "view": "contract-1",
+    "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_1/code.html",
+    "sha256": "a0b05960cbd41d681a2420020dece1a4c05649835bd73f3e83525644bc3e5303"
+  },
+  {
+    "view": "contract",
+    "source": "design/stitch-53/dobby_fiche_d_taill_e_d_un_contrat_2/code.html",
+    "sha256": "9b06ffbfba48da075e8f97e00f3c743d0008f46014089b3fd43b534158cb36ca"
+  },
+  {
+    "view": "import-review",
+    "source": "design/stitch-53/dobby_import_intelligent_analyse_validation/code.html",
+    "sha256": "0e47c72c213b1924a73e7bc70a81e3ec70d2479bad1fd1a15cb6ce6d6ba0fca6"
+  },
+  {
+    "view": "import-file",
+    "source": "design/stitch-53/dobby_import_intelligent_s_lection_d_un_fichier/code.html",
+    "sha256": "e72587741325371b0bc7c8676912b68d58f7c05f5548ffd736d3db42416372bd"
+  },
+  {
+    "view": "mission-edit",
+    "source": "design/stitch-53/dobby_cr_er_et_attribuer_une_mission/code.html",
+    "sha256": "f7af416d2c01e0b5afa0fdae5c40f79aff93efdb0274a7ade6b0aa2eabb6adf0"
+  },
+  {
+    "view": "chat",
+    "source": "design/stitch-53/dobby_conversation_avec_dobby_1/code.html",
+    "sha256": "a497e1dc3364242cba3aae692ef4ea1b9d38e01264db895642a79e603be6d75f"
+  },
+  {
+    "view": "chat-2",
+    "source": "design/stitch-53/dobby_conversation_avec_dobby_2/code.html",
+    "sha256": "97c7dbfd717eb5407e9da15aeb0e0207273fd249b4a7a996d55ee2d5e5b26f82"
+  },
+  {
+    "view": "search",
+    "source": "design/stitch-53/dobby_rechercher_dans_dobby_recherche_transversale/code.html",
+    "sha256": "1e84176a1a61ed5e52335e21a41fbd091777f135ccf9835a0411cd729df76f30"
+  },
+  {
+    "view": "menu",
+    "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
+    "sha256": "b07813aa052464a68f5219af35a8f15d674ed513599d3859cfdcf3b33a19b9f2"
+  },
+  {
+    "view": "personal",
+    "source": "design/stitch-53/dobby_grimoire_personnel_du_membre/code.html",
+    "sha256": "b14e00740c4a6c6babab28a302dccff1688f1853888f576987cbdff7434c14e5"
+  }
+]

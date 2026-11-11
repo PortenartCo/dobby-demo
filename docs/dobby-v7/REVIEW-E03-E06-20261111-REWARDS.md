@@ -75,3 +75,7 @@ Une relecture en lecture seule du ledger et des chemins de partage a identifié 
 | 1440 | [Avant](evidence/integrated-e03-e06-20261111/rewards/before-form-1440.png) | [Après](evidence/integrated-e03-e06-20261111/rewards/after-form-1440.png) | [Gains et annulations](evidence/integrated-e03-e06-20261111/rewards/after-history-1440.png) |
 
 Contextes Chromium TEST jetables, réseau externe bloqué. Les captures longues peuvent présenter les barres fixes au niveau du viewport : les contrôles de géométrie et clic sont vérifiés séparément. Aucun compte familial réel, aucun fonctionnement publié déduit de ces résultats.
+
+## Contrôle additionnel du montant maximal
+
+Le nouveau cas `Number.MAX_SAFE_INTEGER` est créé/complété par le writer réel puis consulté dans le Profil et l’identité finale à 320/390/1440. **PASS, aucune correction produit nécessaire** : tous les chiffres restent présents et visibles, retour à la ligne existant, aucun clipping réel ni débordement horizontal, données métier/résultats conservés. [Mesures et captures](evidence/integrated-e03-e06-20261111/rewards/large-amount/README.md), test `review-integrated-rewards-large-amount.cjs`. La différence scrollHeight/clientHeight de 2 px liée à l’encre de la fonte 36 px n’est pas un clipping ; elle est documentée sans modification CSS.

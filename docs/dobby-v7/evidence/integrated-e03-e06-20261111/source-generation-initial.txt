@@ -1,0 +1,19 @@
+STITCH_ROOT_BUILD=taverne SOURCE=dobby_la_taverne_gourmande_repas_menus
+STITCH_ROOT_BUILD=traverse SOURCE=dobby_l_choppe_du_chemin_de_traverse
+STITCH_ROOT_BUILD=missions SOURCE=dobby_la_biblioth_que_des_missions_t_ches_magiques
+STITCH_ROOT_BUILD=famille SOURCE=dobby_le_salon_des_curiosit_s_famille_organisation
+CUISINE_TEMPLATES=13
+FAMILY_TEMPLATES=7
+REGISTER_TEMPLATES 30
+E06_TEMPLATES 8
+
+> build:css
+> tailwindcss -i ./tailwind-input.css -o ./stitch-tailwind.css --minify
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+Rebuilding...
+
+Done in 2247ms.

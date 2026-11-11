@@ -8,3 +8,30 @@ Base reconstituée42599df, worktree indépendant. Sources originales e2a8e1d et7
 - Ruling : aucun OFF historique sans provenance n’est transformé en ON ; nouveau namespace pour la démo corrigée.
 - Ruling : nouvelle sémantique q2 implique version Maison explicite ; les résultats confirmés ne sont pas recalculés.
 - Aperçu : profil integrated-e03-e06 et namespace dobby-review-e03-e06-20261111|. RED sur ancien profil non reconnu, GREEN deux tests de génération, source originale/configuration ancienne inchangées.
+
+## Checkpoints et revues
+
+- Task B : code commit7bdda55, revue indépendante Missions conforme sans finding matériel ; trois largeurs PASS.
+- Task C : pas de défaut source ON neuf reproduit ; source publiée c220 identique, OFF ancien sans provenance conservé. Nouveau namespace testé sur bundle de contrôle ; sources chrome/ritual inchangées.
+- Task E builder : commit195ddf4 ; finding provenance P2 (actifs V6 non inclus dans sourceDirty) corrigé RED/GREEN sur dépôt fixture séparé, relecture ciblée close.
+- Task D : commit87d9459, 12 Patronus et questionnaires PASS ; fix round1/5 ouvert : D-01 navigation Retour q2→q1 bloquée pendant migration. Auteur original reprend avec seul test de compatibilité.
+- Task A : code/tests ciblés et trois largeurs PASS ; relecture native a trouvé contrainte Personnalisée invalide restant active au retour preset. Auteur corrige avant commitA ; garde partage V2 renforcée sans opération serveur.
+- Legacy : 5scripts adaptés aux contrats nouveaux, quatre scripts ciblés PASS3largeurs ; integrated-preview réservé à la campagne commune.
+- CI : workflow Stitch existant étendu par un job parallèle des checkpoints ; aucun nouveau workflow ni publication. Le parcours intégré historique utilise désormais le profil corrected pour éviter une répétition du même parcours sous deux namespaces.
+
+Prochaine séquence : gelerA etD corrigés, commits ciblés A/C/legacy/CI, revue indépendante globale, campagne finale et natifs/build, registre/matrice append-only, génération propre et manifeste d’un nouveau bundle, push uniquement branche, CI puis clôture documentaire. Tous anciens rapports/preuves à conserver.
+
+Génération a révélé un défaut causal : build-onboarding.cjs recopiait le JSON historiqueV1 sur le canoniqueV2. La première tentative de vérification native était concomitante à cette génération et ses3échecs portent sur ce retourV1 ; journal conservé generation-coupled-red.txt, non présenté comme résultat final. JSONV2 restauré depuis le commit approuvé, aucune donnée utilisateur touchée. Auteur D prend correction du générateur avec fixture isolée ; prochaines générations et tests seront séquentiels. stitch-tailwind.css est une dérivation mise à jour à conserver après contrôle.
+
+## Gel avant CI
+
+- Task A codeed1585f, revue native et défaut preset corrigé,33tests natifs distincts et trois largeurs PASS. Complément MaxSafeInteger : affichage exact trois largeurs PASS, aucune CSS produit modifiée.
+- Task D fixround1/5 clos dansa4a5240 : Retourq1, q2obligatoire et lienq6 intercepté, relecture ciblée favorable. Défaut de copie générateur également corrigé/testé en fixture, canonique V2 préservé.
+- Root CI/builder/effects commitb127b7b ; campagne standard utilise le profil corrected et un job parallèle couvre12scripts ciblés. Aucun nouveau workflow.
+- Revue globale indépendante Astra : aucun finding matériel nouveau, favorable au gel. Une formulation documentaire prospective corrigée.
+- Génération source/CSS séquentielle :335fichiers inchangés. Après suppression de la copie V1 destructive,8tests scoring concernés repassent ; aucune suite native non concernée répétée localement. La campagne complète E01–E08 sera exécutée une seule fois sur GitHub avec les workflows existants, plutôt que dupliquée localement avant la même CI.
+- Aperçu b127b7b propre :281fichiers applicatifs/286total, deux sorties identiques, namespace dobby-review-e03-e06-20261111|, backend réel désactivé. Source applicative inchangée par les ajouts documentaires/tests ultérieurs.
+- Intégrité :2893fichiers initiaux présents,2336docs/preuves historiques inchangés, assets/design/recettes/Cuisine/Contrats protégés. Registre append-only et111ancienneslignes de matrice préservées,122au total,41IDs.
+- Aucun merge/publication/données réelles. Prochaine action : commit final de livraison avec bundle/registre/rapport, push seule branche, attendre CI, corriger uniquement échec causal éventuel, puis clôture documentaire sans rejouer les suites vertes.
+
+Contrôle de patch : diff --check sur sources/tests/docs PASS ; les copies statiques gardent volontairement les espaces historiques des sources et licences. Les281hashes source du manifeste sont comparés aux octets du commitb127b7b ; aucune normalisation des copies ne détruit cette provenance.

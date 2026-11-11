@@ -1,0 +1,211 @@
+✔ validates actual calendar dates and time instead of accepting malformed input (2.202754ms)
+✔ shared agenda rejects medical category and normalizes ordinary events (1.205302ms)
+✔ aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records (11.197222ms)
+✔ birthdays are re-evaluated annually and leap-day policy is defined (0.347216ms)
+✔ ics export contains correct floating local time and escapes injection (2.9567ms)
+✔ create and CAS transition (1.422541ms)
+✔ offline edit is pending until remote acknowledges (0.286727ms)
+✔ independent updates never silently overwrite (0.23191ms)
+✔ unknown quantity is not silently converted into 0 or 1 (0.327044ms)
+✔ logical deletion preserved (0.267664ms)
+✔ medical visit requires an explicit valid record, date and time (2.848399ms)
+✔ only appointments explicitly shared with the household appear in global due list (1.531199ms)
+✔ manual mission normalization validates due date and does not use medical categories (2.923509ms)
+✔ manual open tasks are ordered by date and completed remain distinct (18.98252ms)
+✔ manual missions appear in due summary without polluting autoTasks (1.495072ms)
+✔ preview V5 source matches original except isolated storage and E05 native member writer extension (99.238275ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (2.873125ms)
+✔ module adapter fails closed when Supabase modules table is missing (3.310378ms)
+✔ module schema enforces household isolation and excludes health and attachments (0.197789ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (0.210697ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (0.203593ms)
+✔ manual missions remain separate from automatic tasks (0.325522ms)
+✔ binary file uploads do not use the JSON modules API (0.50631ms)
+✔ shared health visits do not automatically upload previous local health records (0.450462ms)
+✔ a health document remains local until the user chooses household sharing (1.987035ms)
+✔ two accounts activate all six modules and receive a shared update without exposing health or attachments (29.376346ms)
+✔ simultaneous module edits create a conflict, not a lost update (6.307893ms)
+✔ missing modules backend does not activate sharing (2.317374ms)
+✔ customized or actual meal plans are never offered for automated demo deletion (2.541748ms)
+✔ a fresh household activates all six modules with one consent and excludes demo meals (7.019063ms)
+✔ refusing group activation does not publish data or remove example meals (2.15057ms)
+✔ E05 catalogues have stable French identities without inferring a house or a member (5.849507ms)
+✔ partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards (3.485118ms)
+✔ E05 approves the exact E04 thresholds without changing reward values (0.681764ms)
+✔ family profile revision conflict retains the explicitly chosen version: server (8.650405ms)
+✔ family profile revision conflict retains the explicitly chosen version: local (7.592721ms)
+✔ native family sync preserves fields through reload and does not include medical records or rewards (6.54055ms)
+✔ LIMIT demonstrated: an old member writer can erase identity extensions server-side (4.156975ms)
+✔ cached household reinitializes family modules after membership check (7.320942ms)
+✔ module API unavailability does not masquerade as disconnected household and retries (4.854222ms)
+✔ sharing confirmed-v2 refuses before any POST and preserves every local record (11.76109ms)
+✔ sharing pending-v2 refuses before any POST and preserves every local record (2.186815ms)
+✔ sharing custom-mission refuses before any POST and preserves every local record (3.66422ms)
+✔ two clients retain V1 CAS; unsupported compensation never reaches PATCH or a stale resolver (10.069696ms)
+✔ existing remote retrieval cannot overwrite a local V2 history or its mission snapshot (4.008338ms)
+✔ identical unsupported remote snapshot cannot be marked configured during activation (2.638594ms)
+✔ custom reward accepts zero and safe integers, rejects coercion and overflow (3.02273ms)
+✔ required example is auditable +10 -> 0 -> 10 without replacing original grant (16.000188ms)
+✔ zero custom grants and compensations retain event identities and history (0.628438ms)
+✔ amount and responsible edits do not rewrite old gains or their reversal (0.684982ms)
+✔ concurrent duplicate transitions and replay produce one active event (1.422174ms)
+✔ contradictory compensation, event identities and unsafe aggregate fail closed (1.226261ms)
+✔ legacy credits and legacy ineligibility remain unchanged (1.405731ms)
+✔ recurrence templates carry custom reward to independent occurrence without altering old row (1.894886ms)
+✔ acknowledged recurrence survives incompatible legacy write: root-metadata (15.085153ms)
+✔ acknowledged recurrence survives incompatible legacy write: child-metadata (5.176036ms)
+✔ acknowledged recurrence survives incompatible legacy write: root-deleted (4.4491ms)
+✔ acknowledged recurrence survives incompatible legacy write: child-deleted (3.980339ms)
+✔ acknowledged recurrence survives incompatible legacy write: child-identity (4.418555ms)
+✔ legacy local edit cannot publish missing acknowledged recurrence metadata (4.046352ms)
+✔ fresh client refuses an unsupported recurrence version without replacing its local data (5.876059ms)
+✔ supported series edits and new offline occurrences use the unchanged native sync payload (11.050781ms)
+✔ distinct occurrences earn independently; replay and lost-response reload remain idempotent (23.535639ms)
+✔ monthly clamp, leap year, year rollover and deterministic replay (4.027791ms)
+✔ projection bounded to 30 previous days and today, not future, no infinite catchup (0.972168ms)
+✔ weekly multi weekdays and state revisions preserve old history, pause and irrevocable stop (3.51921ms)
+✔ Europe Brussels civil days across DST and leap/calendar boundaries (32.109768ms)
+✔ per occurrence reward dedup, independent completion and unknown data preservation (1.538167ms)
+✔ bad metadata or occurrence identity is rejected, never coerced into unique mission (0.515178ms)
+✔ validated effort choices and approved V1 grades have one centralized definition (2.751279ms)
+✔ only new eligible assigned completions create a single durable request per mission (3.067378ms)
+✔ 10/25/50 credits are validated, durable without mission rows, and deterministic (13.322789ms)
+✔ first confirmed CAS result wins over a divergent offline request without transfer (0.450776ms)
+✔ pending requests do not inflate totals, and all twelve grade boundaries are stable (0.532049ms)
+✔ the reward history is not truncated to the 200 current mission limit (18.505754ms)
+✔ concurrent distinct credits survive server conflict resolution and mission deletion (34.343085ms)
+✔ concurrent distinct credits survive local conflict resolution and mission deletion (12.94954ms)
+✔ same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted (10.511408ms)
+✔ accepted PATCH with lost response and reload confirms the same request without replay credit (9.268449ms)
+✔ CAS loss between GET/PATCH retains pending intent, then existing resolver converges (11.2723ms)
+✔ activation/retrieval preserves local pending requests and never credits legacy done rows (10.004778ms)
+✔ a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized (7.788025ms)
+✔ JSON object key order from jsonb cannot trigger a repeated reward PATCH (6.176101ms)
+✔ a second native completion during PATCH keeps newer local data and its unconfirmed request (10.420379ms)
+✔ a malformed confirmation or server refusal never fabricates a confirmed gain (5.789081ms)
+✔ disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain (8.348408ms)
+✔ retrieval queues retained offline rewards and reports pending until actual confirmation (1537.49198ms)
+✔ malformed request storage is reported without throwing after an unrelated native save (5.400524ms)
+✔ E06 draft resume keeps stable answer IDs and isolates members, users and households (3.548251ms)
+✔ E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten (0.620001ms)
+✔ a delayed draft write cannot replace the active draft after switching member (0.641787ms)
+✔ two loaded instances cannot erase drafts of distinct members (0.490187ms)
+✔ E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch (2.412272ms)
+✔ manual E05 house/patronus changes remove only the corresponding computed-version attribution (0.33171ms)
+✔ E06 JavaScript matches every Python base/optional combination and supplied QA result (819.390714ms)
+✔ E06 validates stable answer IDs and does not use optional answers that were never asked (1.583987ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: server (14.378036ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: local (9.050647ms)
+✔ E06 interversion LIMIT: an old native member writer can erase result provenance and structured names (3.918096ms)
+✔ integrated bundle uses the actual modules, isolated persona and guarded native client (766.75282ms)
+✖ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (2.478472ms)
+✔ revised scoring stays deterministic, reaches all four houses, and leaves Patronus rules unchanged (276.216574ms)
+✔ old unconfirmed q2 is archived, requires an explicit new answer, and no read rewrites native metadata (1.590967ms)
+✔ old confirmed answers/results and untouched drafts survive adoption of the new version (1.01981ms)
+✔ future draft versions remain blocked without an overwrite (0.629888ms)
+✖ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (2.913362ms)
+✔ native profile accepts house v2 confirmation, preserves historical attributions, and keeps unknown versions blocked (1.541572ms)
+✖ frozen V1 QA answer vectors still reach the named four Houses in V2; changed distribution is explicit (104.168628ms)
+✔ E03–E06 corrected preview uses canonical sources and a fresh isolated namespace (939.663227ms)
+✔ manifest reports dirty legacy assets that are copied into the preview (162.373827ms)
+✔ new entry is pending and preserves a stable UUID (0.84166ms)
+✔ equivalent server echo resolves an uncertain successful POST (0.222093ms)
+✔ editing an unchanged server revision remains pending (0.232576ms)
+✔ simultaneous edits require a decision, never auto overwrite (1.169682ms)
+✔ resolve conflict with server version (0.327192ms)
+✔ resolve conflict with local version creates pending update against new revision (0.272257ms)
+✔ new edit during an in-flight update remains pending with new server revision (0.210062ms)
+✔ soft deletion is part of the synchronized state (0.31693ms)
+✔ new entry is pending and preserves a stable UUID (0.953744ms)
+✔ equivalent server echo resolves an uncertain successful POST (0.276832ms)
+✔ editing an unchanged server revision remains pending (0.157892ms)
+✔ simultaneous edits require a decision, never auto overwrite (0.118026ms)
+✔ resolve conflict with server version (0.250824ms)
+✔ resolve conflict with local version creates pending update against new revision (0.299642ms)
+✔ new edit during an in-flight update remains pending with new server revision (0.280772ms)
+✔ soft deletion is part of the synchronized state (0.230199ms)
+✔ V2 uses a distinct offline IndexedDB namespace (0.570018ms)
+✔ V2 never accesses legacy V1 grocery or membership tables (0.399052ms)
+✔ V2 rejects ambiguous household membership (0.395884ms)
+✔ V2 includes household binding on GET, INSERT and optimistic PATCH (0.108876ms)
+✔ V2 service worker has isolated cache and route scope (0.145661ms)
+ℹ tests 131
+ℹ suites 0
+ℹ pass 128
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2978.063412
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:14:1
+✖ integrated q2 loads the exact approved copy and maps deliberate planning, adaptation, improvisation and consultation (2.478472ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'Une invitation inattendue'
+  - 'Une salle capricieuse'
+         ^
+
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:15:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Une invitation inattendue',
+    expected: 'Une salle capricieuse',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:43:1
+✖ native engine loading and finishing a previously confirmed v1 profile does not recalculate or replace its results (2.913362ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'e06-v1' !== 'e06-v2'
+
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:51:97)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'e06-v1',
+    expected: 'e06-v2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:63:1
+✖ frozen V1 QA answer vectors still reach the named four Houses in V2; changed distribution is explicit (104.168628ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    {
+  +   gryffondor: 4222,
+  +   poufsouffle: 3969,
+  +   serdaigle: 4252,
+  +   serpentard: 3941
+  -   gryffondor: 4646,
+  -   poufsouffle: 3403,
+  -   serdaigle: 3830,
+  -   serpentard: 4505
+    }
+
+      at TestContext.<anonymous> (file:///workspace/dobby-e03-e06-review/essai-stitch-v7/tests/review-integrated-ceremony-scoring.test.mjs:73:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { gryffondor: 4222, serpentard: 3941, serdaigle: 4252, poufsouffle: 3969 },
+    expected: { gryffondor: 4646, serpentard: 4505, serdaigle: 3830, poufsouffle: 3403 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "sourceSha": "b127b7bacc3da119c6eb4c988ec800661ade0f20",
+  "sourceDirty": false,
+  "profile": "integrated-e03-e06",
+  "output": "essai-dobby-e03-e06-review-20261111-corrected",
+  "storagePrefix": "dobby-review-e03-e06-20261111|",
+  "realBackend": false,
+  "applicationFiles": 281,
+  "allOutputFiles": 286,
+  "manifestSha256": "d96230576c6c4a9cc15ab961bdd984db897750349dcc7dc42c1123e30ecf8770",
+  "identicalGenerations": 2,
+  "allFilesVerified": true,
+  "publication": false,
+  "gitCommitSourceBytesVerified": 281
+}

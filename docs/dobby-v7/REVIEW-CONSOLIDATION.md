@@ -201,3 +201,28 @@ Ce complément décrit les corrections techniques de la mission `E06-VISUAL-FUNC
 Les archives et empreintes originales sont conservées ; aucun modèle canonique, writer natif, scoring ou mécanisme de synchronisation n’est remplacé. La campagne finale commune est justifiée uniquement par la préférence partagée modifiée.
 
 Preuves et réserves : [rapport E06 visuel/fonctionnel](E06-VISUAL-FUNCTIONAL.md). Code intégré localement ; déploiement non effectué et validation humaine en attente. L’ordre des chantiers futurs reste inchangé.
+
+
+## Revue intégrée E03–E06 — correctifs du 11 novembre 2026
+
+La source de correction E03–E06 est reconstruite depuis les références E01–E05 e2a8e1d et E06 7386187 sur une branche indépendante ; main et l’aperçu publié ne sont pas des sources canoniques à modifier.
+
+Les trois récompenses prédéfinies sont conservées ; Personnalisée accepte un entier sûr positif ou nul, transmis nativement aux nouvelles occurrences. Le bouton d’inscription doit être lisible sur mobile.
+
+La réouverture annule exactement le gain actif, sans supprimer le crédit confirmé ; une reclôture restaure un seul gain applicable. Exemple : +10, puis0, puis10.
+
+Les compensations et personnalisations partagées restent bloquées tant que le serveur ne garantit pas atomiquement l’intégrité et les versions ; aucune migration réelle n’est autorisée par ce lot.
+
+E03 reçoit un filtre temporel indépendant, défaut sept prochains jours ; retard et sans échéance restent accessibles, pagination et portée des compteurs explicites.
+
+Effets ON et Son OFF pour une nouvelle utilisation ; conserver OFF volontaire et valeurs anciennes sans preuve permettant de les distinguer ; nouvel aperçu dans un stockage distinct.
+
+Toutes les réponses sélectionnées des questionnaires et départages affichent une coche dorée dérivée du vrai radio, avec clavier, reprise et navigation arrière conservés.
+
+La question Maison q2 devient Une salle capricieuse avec la formulation approuvée ; axes et version sont explicites, sans recalcul silencieux d’une Maison confirmée.
+
+Les cartes Maison et Patronus finales doivent être équilibrées, avec proportions naturelles des douze Patronus et cohérence du Profil magique.
+
+Le nouvel aperçu est une sortie isolée reproductible avec manifeste, sans remplacement de celui du11novembre ; les rapports et preuves historiques doivent être conservés.
+
+La publication du nouvel aperçu et toute migration serveur attendent une revue et une validation distinctes ; ce lot ne fusionne ni ne publie automatiquement.

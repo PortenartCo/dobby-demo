@@ -1,7 +1,7 @@
 {
   "sourceCommit": "a84f67acf8f5cbfd59475c2137ec70e1a20732f7",
   "sourcePath": "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
-  "sourceSha256": "2adf2009403d3b651b0fd22a1dfbb669ffb616d8120e5418bfb1625035d95679",
+  "sourceSha256": "5ed9d4e57f8f62848dc45f91e86008cbd633fa05aee75720afbc22512c6247e2",
   "gate0": "PASS — audit indépendant 95/95,41IDs ; mappings E03/E08/limites précisés avantcode",
   "rows": [
     {
@@ -2044,6 +2044,172 @@
         "docs/dobby-v7/evidence/e06-visual-functional/effects/after/results.json",
         "docs/dobby-v7/evidence/e06-visual-functional/protected-source-hashes.json"
       ]
+    },
+    {
+      "id": "RC-L208",
+      "sourceLine": 208,
+      "sourceText": "La source de correction E03–E06 est reconstruite depuis les références E01–E05 e2a8e1d et E06 7386187 sur une branche indépendante ; main et l’aperçu publié ne sont pas des sources canoniques à modifier.",
+      "demande": "La source de correction E03–E06 est reconstruite depuis les références E01–E05 e2a8e1d et E06 7386187 sur une branche indépendante ; main et l’aperçu publié ne sont pas des sources canoniques à modifier.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "Git/worktree ; générateur statique",
+      "action": "Reconstitution sans conflit, aucun merge des branches originales ; inventaire de départ et séparation des sources/sortie.",
+      "verification": "Baseline106tests et111lignes ; sources, provenance et refus de sortie existante.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/baseline.json",
+        "docs/dobby-v7/REVIEW-E03-E06-20261111.md"
+      ]
+    },
+    {
+      "id": "RC-L210",
+      "sourceLine": 210,
+      "sourceText": "Les trois récompenses prédéfinies sont conservées ; Personnalisée accepte un entier sûr positif ou nul, transmis nativement aux nouvelles occurrences. Le bouton d’inscription doit être lisible sur mobile.",
+      "demande": "Les trois récompenses prédéfinies sont conservées ; Personnalisée accepte un entier sûr positif ou nul, transmis nativement aux nouvelles occurrences. Le bouton d’inscription doit être lisible sur mobile.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "family-missions-core.mjs ; family-missions.js ; tools-register.js ; register.css",
+      "action": "customRunes natif et modèles datés ; contrôle numérique et total ; bouton18px/700/52px. Usage local, partage refusé.",
+      "verification": "Writers, invalides, zéro, overflow, récurrence et mesures trois largeurs.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-REWARDS.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/rewards/after-results.json"
+      ]
+    },
+    {
+      "id": "RC-L212",
+      "sourceLine": 212,
+      "sourceText": "La réouverture annule exactement le gain actif, sans supprimer le crédit confirmé ; une reclôture restaure un seul gain applicable. Exemple : +10, puis0, puis10.",
+      "demande": "La réouverture annule exactement le gain actif, sans supprimer le crédit confirmé ; une reclôture restaure un seul gain applicable. Exemple : +10, puis0, puis10.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "family-runes-core.mjs ; family-missions.js ; member-avatar.js",
+      "action": "Événements déterministes grant/reversal dans le ledger natif ; attribution/montant historiques exacts et compensation par occurrence.",
+      "verification": "Rejeu, ancien crédit, changement montant/responsable, rollback, calcul de grade et historique signé.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-REWARDS.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/rewards/browser-green.txt",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/rewards/writer-green.txt"
+      ]
+    },
+    {
+      "id": "RC-L214",
+      "sourceLine": 214,
+      "sourceText": "Les compensations et personnalisations partagées restent bloquées tant que le serveur ne garantit pas atomiquement l’intégrité et les versions ; aucune migration réelle n’est autorisée par ce lot.",
+      "demande": "Les compensations et personnalisations partagées restent bloquées tant que le serveur ne garantit pas atomiquement l’intégrité et les versions ; aucune migration réelle n’est autorisée par ce lot.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "family-modules.js ; family-missions.js",
+      "action": "Refus explicites avant mutation et POST/PATCH V2 ; premières récompenses prédéfinies V1 conservées. Proposition serveur séparée, non exécutée.",
+      "verification": "Fixtures deux clients : activation V2, custom, réouverture avec gain et récupération destructrice refusées ; pas de recette comptes réels.",
+      "final": "BLOQUÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-REWARDS.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/rewards/sync-final-green.txt"
+      ]
+    },
+    {
+      "id": "RC-L216",
+      "sourceLine": 216,
+      "sourceText": "E03 reçoit un filtre temporel indépendant, défaut sept prochains jours ; retard et sans échéance restent accessibles, pagination et portée des compteurs explicites.",
+      "demande": "E03 reçoit un filtre temporel indépendant, défaut sept prochains jours ; retard et sans échéance restent accessibles, pagination et portée des compteurs explicites.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "missions.js ; missions.css",
+      "action": "Filtre Bruxelles aujourd’hui/7/30/toutes, dix cartes par section ; terminées par clôture, échéance en repli annoncé. Aucune écriture.",
+      "verification": "Combinaisons statut/membre, bornes, minuit, déduplication, invariance et focus à320/390/1440.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-MISSIONS.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/missions/review.md"
+      ]
+    },
+    {
+      "id": "RC-L218",
+      "sourceLine": 218,
+      "sourceText": "Effets ON et Son OFF pour une nouvelle utilisation ; conserver OFF volontaire et valeurs anciennes sans preuve permettant de les distinguer ; nouvel aperçu dans un stockage distinct.",
+      "demande": "Effets ON et Son OFF pour une nouvelle utilisation ; conserver OFF volontaire et valeurs anciennes sans preuve permettant de les distinguer ; nouvel aperçu dans un stockage distinct.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "scripts/build-dobby-review.cjs ; chrome.js/ritual.js conservés",
+      "action": "Défaut ON neuf non reproduit ; chrome/ritual inchangés. Nouveau namespace sans effacer ni importer l’ancien OFF.",
+      "verification": "Application et bundle de contrôle : trois largeurs, reload/replay/reduced et pixels verts ; ancien namespace intact.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/effects/README.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/effects/preview-control/results.json"
+      ]
+    },
+    {
+      "id": "RC-L220",
+      "sourceLine": 220,
+      "sourceText": "Toutes les réponses sélectionnées des questionnaires et départages affichent une coche dorée dérivée du vrai radio, avec clavier, reprise et navigation arrière conservés.",
+      "demande": "Toutes les réponses sélectionnées des questionnaires et départages affichent une coche dorée dérivée du vrai radio, avec clavier, reprise et navigation arrière conservés.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "onboarding.js ; onboarding.css",
+      "action": "Marqueur checked unique ; fix du Retour q2 vers q1 après migration.",
+      "verification": "Deux questionnaires/deux départages, reload, arrière et seulement une coche ; relecture ciblée D-01 close.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-CEREMONY.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/ceremony/review.md"
+      ]
+    },
+    {
+      "id": "RC-L222",
+      "sourceLine": 222,
+      "sourceText": "La question Maison q2 devient Une salle capricieuse avec la formulation approuvée ; axes et version sont explicites, sans recalcul silencieux d’une Maison confirmée.",
+      "demande": "La question Maison q2 devient Une salle capricieuse avec la formulation approuvée ; axes et version sont explicites, sans recalcul silencieux d’une Maison confirmée.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "data/onboarding-scoring-v1.json ; onboarding-scoring/drafts/engine ; family-profile.js ; build-onboarding.cjs",
+      "action": "Maison e06-v2, Patronus e06-v1 ; archive des brouillons et q2 à reconfirmer. Générateur préserve le canonique et référence l’archive V1 séparément.",
+      "verification": "Copie exacte, huit nouveaux tests purs, historique confirmé intact, fixture de génération et distribution v2 documentée.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-CEREMONY.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/ceremony/generation-review.md"
+      ]
+    },
+    {
+      "id": "RC-L224",
+      "sourceLine": 224,
+      "sourceText": "Les cartes Maison et Patronus finales doivent être équilibrées, avec proportions naturelles des douze Patronus et cohérence du Profil magique.",
+      "demande": "Les cartes Maison et Patronus finales doivent être équilibrées, avec proportions naturelles des douze Patronus et cohérence du Profil magique.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "onboarding.js/css ; magic-profile.js/css",
+      "action": "Cadres communs et titres alignés, atlas3:4 préservé ; aucune ressource originale modifiée.",
+      "verification": "Douze illustrations et géométrie aux trois largeurs ; comparatifs avant/après.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111-CEREMONY.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/ceremony/after/results.json"
+      ]
+    },
+    {
+      "id": "RC-L226",
+      "sourceLine": 226,
+      "sourceText": "Le nouvel aperçu est une sortie isolée reproductible avec manifeste, sans remplacement de celui du11novembre ; les rapports et preuves historiques doivent être conservés.",
+      "demande": "Le nouvel aperçu est une sortie isolée reproductible avec manifeste, sans remplacement de celui du11novembre ; les rapports et preuves historiques doivent être conservés.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "scripts/build-dobby-review.cjs ; workflow/tests existants",
+      "action": "Profil integrated-e03-e06, source/provenance/namespace distincts et absence de backend réel ; état de publication séparé dans le rapport.",
+      "verification": "Fixtures de provenance, générations déterministes et inventaire historique ; campagne/CI consignées séparément.",
+      "final": "VÉRIFIÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/preview-review.md",
+        "docs/dobby-v7/evidence/integrated-e03-e06-20261111/source-generation.json"
+      ]
+    },
+    {
+      "id": "RC-L228",
+      "sourceLine": 228,
+      "sourceText": "La publication du nouvel aperçu et toute migration serveur attendent une revue et une validation distinctes ; ce lot ne fusionne ni ne publie automatiquement.",
+      "demande": "La publication du nouvel aperçu et toute migration serveur attendent une revue et une validation distinctes ; ce lot ne fusionne ni ne publie automatiquement.",
+      "initial": "Nouvelle demande de revue intégrée ; historique antérieur conservé",
+      "code": "Limites de livraison",
+      "action": "Branche de correction seule à pousser ; aucune étape de déploiement ajoutée.",
+      "verification": "Code/tests/intégration/prêt à publier/fonctionnement publié distingués.",
+      "final": "REPORTÉ — AUTORISÉ",
+      "preuves": [
+        "docs/dobby-v7/REVIEW-E03-E06-20261111.md"
+      ]
     }
   ],
   "finalSummary": {
@@ -2076,6 +2242,15 @@
         "E06-01"
       ],
       "source": "docs/dobby-v7/E06-01-SPEC.md"
+    },
+    {
+      "date": "2026-11-11",
+      "scope": "Correctifs revue intégrée E03–E06",
+      "codeHead": "b127b7b",
+      "newRows": 11,
+      "historicalRowsPreserved": 111,
+      "sourcePrefixPreserved": true,
+      "report": "docs/dobby-v7/REVIEW-E03-E06-20261111.md"
     }
   ],
   "supplements": [
@@ -2108,5 +2283,17 @@
       "baseRegistryPath": "docs/dobby-v7/REVIEW-CONSOLIDATION.md",
       "baseMatrixSha256": "7856a5d5747f90c1880fbce6f638acde4a5780c80cc7605fc6521add1b5b98f3"
     }
-  ]
+  ],
+  "integratedE03E06Summary": {
+    "historicalRowsUntouched": 111,
+    "newRows": 11,
+    "states": {
+      "VÉRIFIÉ": 9,
+      "BLOQUÉ": 1,
+      "REPORTÉ — AUTORISÉ": 1
+    },
+    "report": "docs/dobby-v7/REVIEW-E03-E06-20261111.md",
+    "humanAcceptance": false,
+    "published": false
+  }
 }
