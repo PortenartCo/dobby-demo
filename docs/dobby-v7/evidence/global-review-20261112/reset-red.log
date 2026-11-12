@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Reset deletes extra databases for A and B: [{"name":"dobby-review-e074-20261111|reset-database","version":1},{"name":"dobby-review-v7-global-20261112|client-A|dobby-v5-familial-files-20261108","version":1},{"name":"dobby-review-v7-global-20261112|client-A|dobby-v5-household-preview-v2","version":1},{"name":"dobby-review-v7-global-20261112|client-A|global-reset-extra-database","version":1},{"name":"dobby-review-v7-global-20261112|client-B|dobby-v5-familial-files-20261108","version":1},{"name":"dobby-review-v7-global-20261112|client-B|dobby-v5-household-preview-v2","version":1},{"name":"dobby-review-v7-global-20261112|client-B|global-reset-extra-database","version":1},{"name":"global-reset-unrelated-database","version":1}]
+    at /workspace/dobby-demo/essai-stitch-v7/tests/global-reset.cjs:24:10 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

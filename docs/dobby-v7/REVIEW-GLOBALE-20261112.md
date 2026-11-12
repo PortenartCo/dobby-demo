@@ -47,15 +47,15 @@ Safari/iPhone, commandes vocales et appareils physiques ne sont pas validés par
 - Tests des générateurs integrated/E07-P01/E09 → 3/3 ([journal](evidence/global-review-20261112/build-boundaries.log)). `global-build.test.cjs` → 1/1, couverture exacte de tous les fichiers publiés et refus d’écrasement.
 - Catalogue E07 après correction de l’état intermédiaire → 320/390/1440 réussis ([journal](evidence/global-review-20261112/catalogue-stable.log)).
 - Récurrences, montants personnalisés et presets natifs : trois scripts Chromium réussis ([recurrence](evidence/global-review-20261112/browser-recurrence-writer.log), [writer](evidence/global-review-20261112/browser-rewards-writer.log), [presets](evidence/global-review-20261112/browser-rewards-preset.log)).
-- Revue indépendante de la réconciliation native : aucun défaut actionnable. Revue indépendante du harness : P1 reset incomplet reproduit sur pièce jointe native ; correction exigée avant publication.
+- Revue indépendante de la réconciliation native : aucun défaut actionnable. Revue indépendante du harness : P1 reset incomplet reproduit sur pièce jointe native ; correction complète et reprise d’interruption validées en `404c5cd`, puis relecture indépendante sans réserve bloquante.
 - CI initiale `43130740616` synchronisation réussie ; `43130740640` arrêt sur assertion historique des compensations Runes. Le résultat final sera donné séparément après correction et campagne finale.
-- Recette globale et hébergée : en cours ; les instantanés locaux portent chacun le SHA exact testé.
+- Recette globale locale après reset : 320/390/1440 réussis, SHA `a8ef0d30af55f26db3e748071841aedf91ee07f1` ; [preuves](evidence/global-review-20261112/after-reset/summary.json). La correction ultérieure `404c5cd` porte sur la reprise d’un reset interrompu et dispose de sa régression ciblée. Recette hébergée et CI finale à compléter.
 
 ## Anomalies
 
 | Priorité | Constat | Suite |
 |---|---|---|
-| P1, en correction avant publication | Reset initial conservait des pièces jointes/timers/backups fictifs secondaires. | Reproduction native `houseStore → reset → houseRead` ; correction et régression dédiées obligatoires. |
+| P1 résolu | Reset initial conservait des pièces jointes/timers/backups fictifs secondaires ; une fermeture interrompue pouvait laisser un verrou orphelin. | Corrections `2961715` puis `404c5cd`, deux reproductions RED→GREEN, reprise sous Web Lock. Revue indépendante : les deux constats sont levés. |
 | P2, revue visuelle | Éditeur d’un mémo partagé : mentions héritées « Plumier privé / Conservation locale » malgré le statut partagé natif affiché en bas. | Clarifier le libellé lors de la revue E09 ; aucun traitement de données réelles dans cet aperçu. |
 | P2, revue visuelle | À 320 px, les longs noms fictifs se replient fortement dans les cartes d’attribution de mission. | Utilisable sans débordement ; arbitrage de présentation différé. |
 | P3 | L’Agenda revient au jour courant après rechargement ; sélectionner à nouveau la date retrouve l’événement enregistré. | Conservation de la date sélectionnée à arbitrer. |
