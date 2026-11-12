@@ -71,3 +71,20 @@ body[data-family-view="mission-edit"] [data-fa-action="rg-save"] .material-symbo
 body[data-family-view="mission-edit"] .e04-custom-choice{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;font-weight:600;color:#f8e6bf;cursor:pointer}
 body[data-family-view="mission-edit"] .e04-custom-choice input{width:18px;height:18px;accent-color:#d49b42}
 body[data-family-view="mission-edit"] #custom-runes{font-size:16px;min-height:44px;min-width:0;flex:1 1 140px}
+/* MENU-01–08: compact navigation in the existing DOBBY palette and typefaces. */
+body:is([data-family-view="menu"],[data-family-view="settings"]){padding-bottom:0}
+body:is([data-family-view="menu"],[data-family-view="settings"]) main.rg-menu-page{display:flex;flex-direction:column;gap:16px;padding-inline:16px}
+.rg-menu-page>h1{margin:0}
+.rg-menu-search{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 8px 0 12px;background:#271814;border:1px solid #504537;border-radius:12px;color:#d4c4b1}
+.rg-menu-search>input{flex:1;width:0;min-width:0;min-height:48px;border:0;background:transparent;color:#fadcd5;font:16px/24px Literata,Georgia,serif;padding:10px 0;box-sizing:border-box}
+.rg-menu-search>input::placeholder{color:#d4c4b1;opacity:1}
+.rg-menu-search>input::-webkit-search-cancel-button{display:none}
+.rg-menu-search>button{display:flex;align-items:center;justify-content:center;flex:none;width:44px;min-height:44px;border:0;border-radius:8px;background:transparent;color:#f9bb5f}
+.rg-menu-cards{display:flex;flex-direction:column;gap:10px}
+.rg-menu-page .rg-menu-card{display:flex;align-items:center;gap:12px;min-height:68px;padding:12px;background:#2c1c18;border:1px solid #504537;border-radius:12px;color:#f9bb5f;text-decoration:none;box-sizing:border-box}
+.rg-menu-page .rg-menu-card:hover{background:#372622}
+.rg-menu-page .rg-menu-icon{display:flex;align-items:center;justify-content:center;flex:none;width:32px;height:36px;font-size:26px}
+.rg-menu-page .rg-menu-label{flex:1;min-width:0;font:600 18px/26px "Playfair Display",Georgia,serif}
+.rg-menu-page .rg-menu-chevron{flex:none;font-size:20px;color:#9d8e7e}
+.rg-menu-page .rg-menu-back{align-self:flex-start;display:flex;align-items:center;min-height:44px;color:#f9bb5f;font:14px/20px Literata,Georgia,serif;text-decoration:underline}
+.rg-menu-page #no-module-found{margin:0;padding:16px 0}

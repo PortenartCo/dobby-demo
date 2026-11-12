@@ -1,0 +1,38 @@
+locator.click: Timeout 12000ms exceeded.
+Call log:
+  - waiting for locator('[data-fa-action="member-new"]').first()
+    - locator resolved to <button disabled type="button" id="add-member-btn" class="fa-button fam-gold" data-fa-action="member-new" aria-describedby="fam-create-permission">Ajouter un enfant ou un animal</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not enabled
+    - retrying click action
+      - waiting 100ms
+    23 × waiting for element to be visible, enabled and stable
+       - element is not enabled
+     - retrying click action
+       - waiting 500ms
+
+    at /workspace/dobby-v7-menu-simplification/essai-stitch-v7/tests/family.cjs:14:62 {
+  log: [
+    `  - waiting for locator('[data-fa-action="member-new"]').first()`,
+    '    - locator resolved to <button disabled type="button" id="add-member-btn" class="fa-button fam-gold" data-fa-action="member-new" aria-describedby="fam-create-permission">Ajouter un enfant ou un animal</button>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not enabled',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not enabled',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    23 × waiting for element to be visible, enabled and stable',
+    '       - element is not enabled',
+    '     - retrying click action',
+    '       - waiting 500ms'
+  ],
+  name: 'TimeoutError'
+}

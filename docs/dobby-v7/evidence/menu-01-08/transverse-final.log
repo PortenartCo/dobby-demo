@@ -1,0 +1,16 @@
+✔ new stable memo identity persists on edit, delete never touches legacy records (4.447077ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (1.394262ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (3.179522ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (1.143341ms)
+✔ required and bounded fields and missing legacy import never create records (1.949243ms)
+✔ Family integration preserves the latest E02, Courses, native Runes and global isolation runtime bytes (2.487508ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (0.917006ms)
+✔ E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical (0.42586ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.909895

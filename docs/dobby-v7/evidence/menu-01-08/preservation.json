@@ -1,0 +1,78 @@
+{
+  "baseSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "protectedTreesUnchanged": [
+    "essai-stitch-v5-famille",
+    "essai-sync-v1",
+    "essai-sync-v2",
+    "supabase",
+    "schema.sql"
+  ],
+  "criticalBlobs": [
+    {
+      "path": "essai-stitch-v7/chrome-source.html",
+      "sha256": "2a61515a534d7c11eaf6bd708e8252b5b1d4c85d1b3481f90aed63f94cdd25ca",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "sha256": "ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-list.js",
+      "sha256": "369c031dd2a69a8d53aaaf9f1b181b43cddd80bf80116f8b071ee1e51505520d",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.js",
+      "sha256": "f99698719062154405d2bb03528c65b76cf73ddb4bb2b5ddeecc7c31684cab9b",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v7/family-register.js",
+      "sha256": "37b844f7ab58425554ba9df86ec23c2551c9248e3270d0e77d0aff96610abd6f",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "sha256": "28162cd08abb69901930d8f1cd48c25b8901d2d22d45b377afe15f1edc01da58",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v7/family-members-review.js",
+      "sha256": "be260274b9b38f55b97b7fac690cfd4636f8e7f5d034de43b7e76bc16cd742b7",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "sha256": "74b09b530f819337cf660543c95e729c76d92dba979415ef4f6972eb15d9fee6",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "sha256": "0cdcbd7dd486f05e0a71d229b4d039d0097475a4e6deb8287a21f7071db848bf",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-runes-core.mjs",
+      "sha256": "5f90167122a88042b35846ee6887de115724ac3c45938434f1aca06cf47cbf7c",
+      "identicalToBase": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health.js",
+      "sha256": "7df847364898e6855c1f38e3d5f729aec4806e90c433d2be3e6c12eb5262ca0b",
+      "identicalToBase": true
+    },
+    {
+      "path": "scripts/build-dobby-global-review.cjs",
+      "sha256": "576f55e850a58b755c2b6bc5f5c8bb4ee56699b74f396f3f0259d213a1fc53cb",
+      "identicalToBase": true
+    },
+    {
+      "path": "scripts/build-dobby-family-review.cjs",
+      "sha256": "ae1f630bad586cc3748ba40620b550fc94f15b6067975ef0572ddd7e4a15142d",
+      "identicalToBase": true
+    }
+  ],
+  "scope": "Source byte preservation; runtime route/fixture/blob preservation is in checks.json. No connected database operation."
+}

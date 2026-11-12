@@ -1681,23 +1681,27 @@
       ],
       "verification": {
         "tests": [
-          "tests/register-tools.cjs",
-          "tests/register-visual.cjs"
+          "tests/menu-build.test.cjs",
+          "tests/menu.cjs",
+          "tests/register-navigation.cjs"
         ],
         "widths": [
           320,
-          390
+          390,
+          1440
         ],
         "captures": [
-          {
-            "reference": "docs/dobby-v7/evidence/lot-5/before/menu-320.png",
-            "integrated": "docs/dobby-v7/evidence/lot-5/after/menu-320.png"
-          },
-          {
-            "reference": "docs/dobby-v7/evidence/lot-5/before/menu-390.png",
-            "integrated": "docs/dobby-v7/evidence/lot-5/after/menu-390.png"
-          }
+          "docs/dobby-v7/evidence/menu-01-08/menu-320.png",
+          "docs/dobby-v7/evidence/menu-01-08/menu-390.png",
+          "docs/dobby-v7/evidence/menu-01-08/menu-1440.png"
         ]
+      },
+      "presentation": {
+        "mission": "MENU-01–08",
+        "document": "docs/dobby-v7/MENU-01-08-IMPLEMENTATION.md",
+        "layout": "essai-stitch-v7/menu-layout.html",
+        "settings": "famille.html#settings",
+        "backup": "famille.html#backup"
       }
     },
     {

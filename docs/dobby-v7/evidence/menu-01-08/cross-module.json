@@ -1,0 +1,243 @@
+{
+  "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "sourceState": "working-tree",
+  "origin": "http://127.0.0.1:8765",
+  "baselineOrigin": "http://127.0.0.1:8766",
+  "scope": "Local canonical-source regression; mocked network where tests require it, no hosted deployment or real backend proof",
+  "counts": {
+    "scripts": 10,
+    "passed": 7,
+    "failed": 3
+  },
+  "results": [
+    {
+      "name": "register-house.cjs",
+      "exitCode": 0,
+      "durationSeconds": 13.1,
+      "log": "/tmp/dobby-menu/regression-register-house.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/register-house.cjs"
+      ],
+      "passMarkers": [
+        "REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed",
+        "REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed"
+      ]
+    },
+    {
+      "name": "register-documents.cjs",
+      "exitCode": 0,
+      "durationSeconds": 16.25,
+      "log": "/tmp/dobby-menu/regression-register-documents.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/register-documents.cjs"
+      ],
+      "passMarkers": [
+        "REGISTER_DOCUMENTS_PASS 320",
+        "REGISTER_DOCUMENTS_PASS 390"
+      ]
+    },
+    {
+      "name": "register-documents-sync.cjs",
+      "exitCode": 0,
+      "durationSeconds": 23.21,
+      "log": "/tmp/dobby-menu/regression-register-documents-sync.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/register-documents-sync.cjs"
+      ],
+      "passMarkers": [
+        "REGISTER_DOCUMENTS_SYNC_PASS 320",
+        "REGISTER_DOCUMENTS_SYNC_PASS 390"
+      ]
+    },
+    {
+      "name": "register-preservation.cjs",
+      "exitCode": 0,
+      "durationSeconds": 11.54,
+      "log": "/tmp/dobby-menu/regression-register-preservation.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/register-preservation.cjs"
+      ],
+      "passMarkers": [
+        "REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save",
+        "REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save"
+      ]
+    },
+    {
+      "name": "register-review.cjs",
+      "exitCode": 1,
+      "durationSeconds": 96.65,
+      "log": "/tmp/dobby-menu/regression-register-review.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/register-review.cjs"
+      ],
+      "passMarkers": [
+        "REGISTER_REVIEW_PASS stale-memo-edit 320",
+        "REGISTER_REVIEW_PASS stale-equipment-edit 320",
+        "REGISTER_REVIEW_PASS stale-document-edit 320",
+        "REGISTER_REVIEW_PASS list-rg-item-toggle 320",
+        "REGISTER_REVIEW_PASS list-rg-item-remove 320",
+        "REGISTER_REVIEW_PASS menu-contact-draft 320",
+        "REGISTER_REVIEW_PASS maintenance-file-draft 320",
+        "REGISTER_REVIEW_PASS document-native-write-missing 320",
+        "REGISTER_REVIEW_PASS document-native-write-replaced 320",
+        "REGISTER_REVIEW_PASS contact-sharing-disclosure 320",
+        "REGISTER_REVIEW_PASS maintenance-source-facts 320",
+        "REGISTER_REVIEW_PASS source-facts 320",
+        "REGISTER_REVIEW_PASS stale-memo-edit 390",
+        "REGISTER_REVIEW_PASS stale-equipment-edit 390",
+        "REGISTER_REVIEW_PASS stale-document-edit 390",
+        "REGISTER_REVIEW_PASS list-rg-item-toggle 390",
+        "REGISTER_REVIEW_PASS list-rg-item-remove 390",
+        "REGISTER_REVIEW_PASS menu-contact-draft 390",
+        "REGISTER_REVIEW_PASS maintenance-file-draft 390",
+        "REGISTER_REVIEW_PASS document-native-write-missing 390",
+        "REGISTER_REVIEW_PASS document-native-write-replaced 390",
+        "REGISTER_REVIEW_PASS contact-sharing-disclosure 390",
+        "REGISTER_REVIEW_PASS maintenance-source-facts 390",
+        "REGISTER_REVIEW_PASS source-facts 390"
+      ],
+      "cases": {
+        "passed": 24,
+        "failed": 4,
+        "failures": [
+          {
+            "name": "menu-member-draft",
+            "width": 320,
+            "error": "locator.fill: Timeout 8000ms exceeded."
+          },
+          {
+            "name": "menu-medical-draft",
+            "width": 320,
+            "error": "locator.fill: Timeout 8000ms exceeded."
+          },
+          {
+            "name": "menu-member-draft",
+            "width": 390,
+            "error": "locator.fill: Timeout 8000ms exceeded."
+          },
+          {
+            "name": "menu-medical-draft",
+            "width": 390,
+            "error": "locator.fill: Timeout 8000ms exceeded."
+          }
+        ]
+      },
+      "failure": {
+        "kind": "inherited permission fixture incompatibility",
+        "reason": "Old member/medical draft fixtures lack established parent persona; inputs disabled before Menu navigation",
+        "baselineReproducedAtWidth": 320,
+        "baselineLog": "/tmp/dobby-menu/baseline-regression-register-review.log"
+      }
+    },
+    {
+      "name": "register-tools.cjs",
+      "exitCode": 0,
+      "durationSeconds": 26.62,
+      "log": "/tmp/dobby-menu/regression-register-tools.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/register-tools.cjs"
+      ],
+      "passMarkers": [
+        "REGISTER_TOOLS_PASS 320",
+        "REGISTER_TOOLS_PASS 390"
+      ]
+    },
+    {
+      "name": "family.cjs",
+      "exitCode": 1,
+      "durationSeconds": 15.79,
+      "log": "/tmp/dobby-menu/regression-family.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/family.cjs"
+      ],
+      "passMarkers": [],
+      "failure": {
+        "kind": "inherited permission fixture incompatibility",
+        "at": "family.cjs:14",
+        "selector": "[data-fa-action=\"member-new\"]",
+        "reason": "Native FAM button disabled without established parent identity/category fixture",
+        "baselineReproduced": true,
+        "baselineLog": "/tmp/dobby-menu/baseline-regression-family.log"
+      }
+    },
+    {
+      "name": "cuisine.cjs",
+      "exitCode": 0,
+      "durationSeconds": 36.42,
+      "log": "/tmp/dobby-menu/regression-cuisine.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/cuisine.cjs"
+      ],
+      "passMarkers": [
+        "CUISINE_PATH_PASS 320px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload",
+        "CUISINE_PATH_PASS 390px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload"
+      ]
+    },
+    {
+      "name": "e09-salon.cjs",
+      "exitCode": 0,
+      "durationSeconds": 18.98,
+      "log": "/tmp/dobby-menu/regression-e09-salon.log",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu/redirect-evidence.cjs",
+        "essai-stitch-v7/tests/e09-salon.cjs"
+      ],
+      "passMarkers": [
+        "E09_SALON_PASS 320 {\"hero\":{\"x\":16,\"y\":80,\"width\":288,\"height\":220,\"top\":80,\"right\":304,\"bottom\":300,\"left\":16},\"badge\":{\"x\":91.890625,\"y\":253,\"width\":199.109375,\"height\":34,\"top\":253,\"right\":291,\"bottom\":287,\"left\":91.890625},\"overflow\":false,\"intro\":103.5}",
+        "E09_SALON_PASS 390 {\"hero\":{\"x\":16,\"y\":80,\"width\":358,\"height\":220,\"top\":80,\"right\":374,\"bottom\":300,\"left\":16},\"badge\":{\"x\":161.890625,\"y\":253,\"width\":199.109375,\"height\":34,\"top\":253,\"right\":361,\"bottom\":287,\"left\":161.890625},\"overflow\":false,\"intro\":103.5}",
+        "E09_SALON_PASS 1440 {\"hero\":{\"x\":496,\"y\":80,\"width\":448,\"height\":220,\"top\":80,\"right\":944,\"bottom\":300,\"left\":496},\"badge\":{\"x\":731.890625,\"y\":253,\"width\":199.109375,\"height\":34,\"top\":253,\"right\":931,\"bottom\":287,\"left\":731.890625},\"overflow\":false,\"intro\":82.5}"
+      ]
+    },
+    {
+      "name": "e05-edge.cjs",
+      "exitCode": 1,
+      "log": "/tmp/dobby-menu/regression-e05-edge.log",
+      "executor": "menu_tests agent; actual tool output retained; failure before changed line5",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/e05-edge.cjs"
+      ],
+      "passMarkers": [],
+      "failure": {
+        "kind": "inherited direct magical editor incompatibility",
+        "at": "e05-edge.cjs:3",
+        "selector": "#magic-patronus-edit",
+        "reason": "FAM replaced direct House/Patronus selection with existing E06 questionnaires; fails before changed Menu navigation",
+        "baselineReproduction": "Same original HEAD test fails at #magic-patronus-edit on baseline server :8766; e05-baseline.log."
+      }
+    }
+  ],
+  "evidenceRedirection": {
+    "preload": "/tmp/dobby-menu/redirect-evidence.cjs",
+    "destination": "/tmp/dobby-menu/cross-module-evidence",
+    "method": "Only path.resolve results under this worktree docs/dobby-v7/evidence remapped; scripts unchanged; supported E09 output env also set",
+    "screenshotCount": 43
+  },
+  "noSourceEditsByThisAgent": true
+}

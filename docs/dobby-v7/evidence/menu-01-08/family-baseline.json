@@ -1,0 +1,82 @@
+{
+  "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "origin": "http://127.0.0.1:8765",
+  "scope": "Fresh local baseline on canonical source, not a hosted or real-backend validation",
+  "native": {
+    "tests": 218,
+    "pass": 218,
+    "fail": 0,
+    "files": 21,
+    "log": "/tmp/dobby-menu/native-baseline.log"
+  },
+  "familyBrowser": {
+    "passed": true,
+    "suites": [
+      {
+        "name": "fam-detail.cjs",
+        "exitCode": 0,
+        "markers": [
+          "FAM_DETAIL_PASS 320 real member writer, Salon/Carnet return, read-only spouse/child, native Grimoire and health, empty and accented state, one header/dock",
+          "FAM_DETAIL_PASS 390 real member writer, Salon/Carnet return, read-only spouse/child, native Grimoire and health, empty and accented state, one header/dock",
+          "FAM_DETAIL_PASS 1440 real member writer, Salon/Carnet return, read-only spouse/child, native Grimoire and health, empty and accented state, one header/dock"
+        ]
+      },
+      {
+        "name": "fam-members.cjs",
+        "exitCode": 0,
+        "markers": [
+          "FAM_MEMBERS_PASS 320px controller, list, categories, identity, notes, E05 avatar/house, legacy, denied UI, invitation dependency, birthdays, mobile save",
+          "FAM_MEMBERS_PASS 390px controller, list, categories, identity, notes, E05 avatar/house, legacy, denied UI, invitation dependency, birthdays, mobile save",
+          "FAM_MEMBERS_PASS 1440px controller, list, categories, identity, notes, E05 avatar/house, legacy, denied UI, invitation dependency, birthdays, mobile save"
+        ]
+      },
+      {
+        "name": "fam-agenda-memos.cjs",
+        "exitCode": 0,
+        "markers": [
+          "FAM_AGENDA_MEMOS_PASS 320",
+          "FAM_AGENDA_MEMOS_PASS 390",
+          "FAM_AGENDA_MEMOS_PASS 1440"
+        ]
+      },
+      {
+        "name": "fam-agenda-memos-sync.cjs",
+        "exitCode": 0,
+        "markers": [
+          "FAM_AGENDA_MEMOS_SYNC_PASS native create/read/edit/delete, two profiles, offline reload/reconnect, explicit idempotent import, legacy and other fields preserved"
+        ]
+      },
+      {
+        "name": "fam-agenda-month.cjs",
+        "exitCode": 0,
+        "markers": [
+          "FAM_AGENDA_MONTH_PASS calendar months, end-of-month clamp, leap year, year boundary, previous month"
+        ]
+      },
+      {
+        "name": "family-review-effects.cjs",
+        "exitCode": 0,
+        "markers": [
+          "FAM01_EFFECTS_PASS 320",
+          "FAM01_EFFECTS_PASS 390",
+          "FAM01_EFFECTS_PASS 1440"
+        ]
+      }
+    ],
+    "screenshots": 74,
+    "evidence": "/tmp/dobby-menu/family"
+  },
+  "sourceWritesByThisAgent": false,
+  "artifactNote": "All six scripts inspected first: all output is redirected by DOBBY_FAM_EVIDENCE; FAM01_CAPTURE_BASELINE=0. Repository status changed concurrently; none restored.",
+  "statusDelta": [
+    " M essai-stitch-v7/tests/register-tools.cjs",
+    " M essai-stitch-v7/tests/family.cjs",
+    "?? docs/dobby-v7/evidence/e07-p01/ci/results.json",
+    "?? docs/dobby-v7/evidence/e07-p01/ci/e07-p01-visual.cjs.log",
+    " M essai-stitch-v7/tests/e09-salon.cjs",
+    " M essai-stitch-v7/tests/e05-edge.cjs",
+    "?? docs/dobby-v7/evidence/e07-p01/ci/e07-p01.cjs.log",
+    " M essai-stitch-v7/tests/cuisine.cjs",
+    " M docs/dobby-v7/evidence/e07-4/b-engine/results-390.json"
+  ]
+}
