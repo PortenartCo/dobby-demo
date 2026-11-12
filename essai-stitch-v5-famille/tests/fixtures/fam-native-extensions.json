@@ -1,0 +1,56 @@
+{
+  "baseCommit": "faf89d50555a3201385eae51f9ef5f93c5bf0499",
+  "scope": "FAM-10/11/12/13/15 exact reviewed native amendments; all other native bytes remain audited against V5",
+  "patches": [
+    {
+      "label": "Load pure canonical member model and operation policy before native writers",
+      "before": "<script src=\"./family-profile.js?v=20261110-e06-1\"></script>\n<script>",
+      "after": "<script src=\"./family-profile.js?v=20261110-e06-1\"></script>\n<script src=\"./family-member-policy.js?v=20261112-fam15\"></script>\n<script>"
+    },
+    {
+      "label": "Guard existing local medical deletion at its native operation",
+      "before": " if(a==='healthdelete'&&confirm('Supprimer cette fiche ?'))st.famHealth=st.famHealth.filter(r=>r.id!==id);",
+      "after": " if(a==='healthdelete'){const record=st.famHealth.find(row=>row.id===id);if(!record)return;try{v23AssertHealthWrite(record,null,false);}catch(error){alert(error.message);return}if(confirm('Supprimer cette fiche ?'))st.famHealth=st.famHealth.filter(r=>r.id!==id);}"
+    },
+    {
+      "label": "Guard legacy local medical submit operation",
+      "before": "if(!r.name)return;st.famHealth=st.famHealth.filter(v=>v.id!==r.id).concat(r);",
+      "after": "if(!r.name)return;if(!v23GuardLocalHealth(r.id,{personId:xval(d,'personId'),person:r.person}))return;if(xval(d,'personId')){r.personId=xval(d,'personId');r.person=v23MemberById(r.personId).name;}st.famHealth=st.famHealth.filter(v=>v.id!==r.id).concat(r);"
+    },
+    {
+      "label": "Guard V21 capture submit and keep the explicitly selected canonical medical attribution",
+      "before": "note:val('note',500)};st.famHealth=st.famHealth.filter(x=>x.id!==r.id).concat(r);",
+      "after": "note:val('note',500)};if(!v23GuardLocalHealth(r.id,{personId:val('personId'),person:r.person}))return;if(val('personId')){r.personId=val('personId');r.person=v23MemberById(r.personId).name;}st.famHealth=st.famHealth.filter(x=>x.id!==r.id).concat(r);"
+    },
+    {
+      "label": "Native permission adapters and E06 recomputation capability reuse the existing form writer",
+      "before": "const v23ActiveMember=()=>v23MemberById(st.v23HealthMemberId)||v23Members()[0]||null;\n",
+      "after": "const v23ActiveMember=()=>v23MemberById(st.v23HealthMemberId)||v23Members()[0]||null;\n// Real account membership does not establish a member identity or a parental\n// role. Only the isolated review runtime supplies a fictional actor explicitly.\nconst v23MemberContext=()=>({demo:!!window.DobbyReview,actorId:window.DobbyReview?.demoMemberId||null,members:v23Members()});\nconst v23MemberPermissions=id=>window.DobbyFamilyMemberPolicy.permissions(v23MemberById(id),v23MemberContext());\nfunction v23HealthPermissions(record,shared=false){\n const context=v23MemberContext(),policy=window.DobbyFamilyMemberPolicy;\n const denied={canEdit:false,canCreate:false,canMagic:false,reason:policy.permissions(null,context).reason};\n if(!context.demo)return denied;\n let member;\n if(record?.personId)member=v23MemberById(record.personId);\n else{const matches=v23Members().filter(row=>row.name===String(record?.person||'').trim());if(matches.length===1)member=matches[0];}\n if(member){const access=policy.permissions(member,context);return{...access,canCreate:access.canEdit,canMagic:false};}\n const unassigned=shared&&!record?.personId&&['','Foyer'].includes(String(record?.person||'').trim());\n if(unassigned&&policy.permissions(null,context).canCreate)return{canEdit:true,canCreate:true,canMagic:false,reason:'Droits limités à cette démonstration fictive.'};\n return{...denied,reason:'Cette fiche médicale doit être attribuée sans ambiguïté à un membre autorisé. Les enfants, bébés et animaux ne peuvent pas modifier les carnets de santé.'};\n}\nfunction v23AssertHealthWrite(previous,next,shared=false){\n for(const record of [previous,next].filter(Boolean)){const access=v23HealthPermissions(record,shared);if(!access.canEdit)throw Error(access.reason);}\n}\nfunction v23GuardLocalHealth(id,next){\n const previous=(st.famHealth||[]).find(row=>row.id===id);\n try{v23AssertHealthWrite(previous,next,false);return true;}catch(error){alert(error.message);return false;}\n}\nconst v23MagicForms=new WeakMap();\nlet v23MagicScoring;\nasync function v23SaveMagicResult(id,kind,answers){\n if(!['house','patronus'].includes(kind)||!Array.isArray(answers)||!answers.every(answer=>typeof answer==='string'))throw Error('Questionnaire magique invalide.');\n const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);\n const baseline=JSON.stringify(member),actor=v23MemberContext().actorId;\n // Reuse the E06 barème and scoring; user supplied result IDs/algorithm tags\n // never grant a child permission to write a manually selected result.\n v23MagicScoring ||= Promise.all([import('../essai-stitch-v7/onboarding-scoring.mjs'),fetch('../essai-stitch-v7/data/onboarding-scoring-v1.json').then(response=>{if(!response.ok)throw Error('Barème E06 indisponible.');return response.json();})]).then(([module,config])=>module.createScoring(config));\n const scoring=await v23MagicScoring,rules=scoring.config[kind],count=rules.baseQuestionCount;\n if(answers.length<count||answers.length>rules.questions.length||answers.some((answer,index)=>!rules.questions[index]?.answers.some(row=>row.id===answer)))throw Error('Questionnaire magique incomplet ou invalide.');\n const result=scoring[kind](answers.slice(0,count),answers[count]);if(!result.result)throw Error('Questionnaire magique incomplet.');\n if(JSON.stringify(v23MemberById(id))!==baseline||v23MemberContext().actorId!==actor||!v23MemberPermissions(id).canMagic)throw Error('Le membre ou la persona a changé. Recommencez depuis sa fiche.');\n const values=kind==='house'?{magicHouseId:scoring.catalogueId(kind,result.result),magicHouseAlgorithm:scoring.version}:{magicPatronusId:scoring.catalogueId(kind,result.result),magicPatronusAlgorithm:scoring.version};\n return v23SubmitConfirmedMagic(member,values);\n}\nconst v23SubmitConfirmedMagic=(member,values)=>{\n const id=member.id;st.page='family';st.extraPage='health';v23MemberEdit=id;render();\n const form=document.getElementById('v23MemberForm');\n if(member.avatar&&![...form.elements.avatar.options].some(option=>option.value===member.avatar))form.elements.avatar.add(new Option(member.avatar,member.avatar));\n form.elements.avatar.value=member.avatar||'👤';form.elements.birthdate.type='hidden';form.elements.birthdate.value=member.birthdate||'';\n for(const[name,value]of Object.entries(values)){const input=document.createElement('input');input.type='hidden';input.name=name;input.value=value;form.append(input);}\n const proof={id,values};v23MagicForms.set(form,proof);\n try{form.requestSubmit();}finally{v23MagicForms.delete(form);}\n if(v23MemberEdit!==null)throw Error('Résultat magique non enregistré.');return id;\n};\nconst v23FinishMagicCeremony=id=>{\n const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);\n const complete=member.magicProfile?.houseAlgorithmVersion==='e06-v1'&&member.magicProfile?.patronusAlgorithmVersion==='e06-v1';\n return v23SubmitConfirmedMagic(member,{magicCeremony:complete?'complete':'deferred'});\n};\nwindow.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite});\n"
+    },
+    {
+      "label": "Preserve an existing custom emoji avatar in the native form",
+      "before": "${['👤','👩','👨','👧','👦','🧒'].map(icon=>`<option ${member.avatar===icon?'selected':''}>${icon}</option>`).join('')}",
+      "after": "${[...new Set(['👤','👩','👨','👧','👦','🧒',member.avatar].filter(Boolean))].map(icon=>`<option ${member.avatar===icon?'selected':''}>${safe(icon)}</option>`).join('')}"
+    },
+    {
+      "label": "Guard native member deletion before confirmation and mutation",
+      "before": "  const member=v23MemberById(id);if(!member)return;\n  const linked=",
+      "after": "  const member=v23MemberById(id);if(!member)return;\n  const access=v23MemberPermissions(id);if(!access.canEdit){alert(access.reason);return}\n  const linked="
+    },
+    {
+      "label": "Restore the native registry if storage rejects a deletion",
+      "before": "  st.familyMembers=st.familyMembers.filter(x=>x.id!==id);st.v23HealthMemberId=st.familyMembers[0]?.id||'';save();render();",
+      "after": "  const previous=st.familyMembers,selected=st.v23HealthMemberId;\n  st.familyMembers=st.familyMembers.filter(x=>x.id!==id);st.v23HealthMemberId=st.familyMembers[0]?.id||'';\n  try{save();}catch(error){st.familyMembers=previous;st.v23HealthMemberId=selected;alert('Suppression impossible. Les informations précédentes sont conservées.');return}render();"
+    },
+    {
+      "label": "Canonical compatible identity fields and operation proof guard inside native member submission",
+      "before": "  e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target);\n  const name=String(d.get('name')||'').trim().slice(0,80);if(!name)return;\n  const existing=v23MemberEdit!=='new'?v23MemberById(v23MemberEdit):null;\n  if(v23Members().some(x=>x.id!==existing?.id&&x.name.toLocaleLowerCase('fr')===name.toLocaleLowerCase('fr'))){alert('Cette personne est déjà enregistrée.');return}\n  let member;\n  try{member=window.DobbyMagicIdentity.patch({...existing,id:existing?.id||xuid(),name,birthdate:String(d.get('birthdate')||''),avatar:String(d.get('avatar')||'👤')},Object.fromEntries(d));}\n  catch(error){alert(error.message);return;}\n",
+      "after": "  e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target);\n  const existing=v23MemberEdit!=='new'?v23MemberById(v23MemberEdit):null;\n  if(v23MemberEdit!=='new'&&!existing){alert('Ce membre n’existe plus. Revenez au registre.');return}\n  const values=Object.fromEntries(d),proof=v23MagicForms.get(e.target);v23MagicForms.delete(e.target);\n  let member;\n  try{\n   const confirmed=!!proof&&proof.id===existing?.id&&Object.entries(proof.values).every(([key,value])=>values[key]===value)&&['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony'].every(key=>!Object.hasOwn(values,key)||Object.hasOwn(proof.values,key));\n   window.DobbyFamilyMemberPolicy.assertWrite(existing,values,v23MemberContext(),{magicResult:confirmed});\n   member=window.DobbyFamilyMemberPolicy.prepare({...existing,id:existing?.id||xuid()},values,window.DobbyMagicIdentity.patch);\n   if(v23Members().some(x=>x.id!==existing?.id&&String(x.name||'').toLocaleLowerCase('fr')===member.name.toLocaleLowerCase('fr')))throw Error('Cette personne est déjà enregistrée.');\n  }\n  catch(error){alert(error.message);return;}\n"
+    },
+    {
+      "label": "Guard V23 local medical submission before mutation",
+      "before": "  if(!row.name)return;\n  st.famHealth=",
+      "after": "  if(!row.name)return;\n  if(!v23GuardLocalHealth(id,row))return;\n  st.famHealth="
+    }
+  ]
+}

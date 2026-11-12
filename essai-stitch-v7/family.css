@@ -20,3 +20,5 @@ body.fa-active[data-family-view="salon"] .e01-empty p{margin:5px 0 0;font:14px/1
 .e09-record p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
 body.fa-active [data-e09-hero] [data-e09-badge]{top:auto;left:auto;bottom:12px;right:12px;max-width:calc(100% - 24px)}
 @media(max-width:359px){.e09-section-heading{flex-wrap:wrap;align-items:flex-start}.e09-section-heading>div{flex-basis:100%}.e09-section-heading .fa-button{max-width:100%;margin-left:auto}}
+
+.fam-salon-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}

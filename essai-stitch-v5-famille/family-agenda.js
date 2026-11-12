@@ -200,7 +200,7 @@ function submitFamilyEvent(event){
     });
     if(existing && !item(existing))throw Error('L’événement a été supprimé entre-temps');
     st.familyEvents=existing
-      ? st.familyEvents.map(row=>row.id===existing?record:row)
+      ? st.familyEvents.map(row=>row.id===existing?{...row,...record}:row)
       : [...st.familyEvents,record];
     closeDialog();mutate();
   }catch(error){alert(error?.message||'Enregistrement impossible');}

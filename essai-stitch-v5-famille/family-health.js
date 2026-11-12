@@ -44,7 +44,7 @@ function form(id){
   root.innerHTML='<div class="fh-dialog" role="dialog" aria-modal="true" aria-label="Rendez-vous médical partagé">'+
     '<button type="button" data-fh="close" class="fh-close" aria-label="Fermer">×</button>'+
     '<h2>'+(old?'Modifier':'Nouveau')+' rendez-vous</h2>'+
-    '<p class="fh-description">Cette fiche sera partagée avec les membres du foyer. Aucun autre compte ou permission n’est nécessaire.</p>'+
+    '<p class="fh-description">Cette fiche sera partagée avec les membres du foyer. Les droits de modification dépendent du membre concerné.</p>'+
     '<form id="fhForm"><input type="hidden" name="visitKey" value="'+esc(old?.id||'')+'">'+
     '<label>Intitulé<input name="title" required maxlength="140" value="'+esc(old?.title||'')+'"></label>'+
     '<div class="fh-grid"><label>Date<input type="date" name="date" required value="'+esc(old?.date||today())+'"></label>'+
@@ -76,6 +76,8 @@ function saveForm(e){
       time:data.get('time'),personId,person:member?.name||'Foyer',
       provider:data.get('provider'),location:data.get('location'),note:data.get('note')
     });
+    if(!window.DobbyFamilyMembers?.assertHealthWrite)throw Error('Droits de modification des membres indisponibles.');
+    window.DobbyFamilyMembers.assertHealthWrite(key?getVisit(key):null,item,true);
     st.sharedHealthVisits=key?st.sharedHealthVisits.map(x=>x.id===key?item:x):
       [...st.sharedHealthVisits,item];
     close();commit();
@@ -91,6 +93,8 @@ document.addEventListener('click',e=>{
     else if(a==='close')close();
     else if(a==='delete'){
       const found=getVisit(id);if(!found)return;
+      if(!window.DobbyFamilyMembers?.assertHealthWrite)throw Error('Droits de modification des membres indisponibles.');
+      window.DobbyFamilyMembers.assertHealthWrite(found,null,true);
       if(!confirm('Supprimer ce rendez-vous de la liste commune du foyer ?'))return;
       st.sharedHealthVisits=st.sharedHealthVisits.filter(x=>x.id!==id);
       commit();

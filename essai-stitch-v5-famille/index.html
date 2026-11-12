@@ -1037,6 +1037,7 @@ body.stitch-trial:not(.stitch-trial-home) #screen .st4-page .st4-top .st4-title{
 <div id="menu" class="menu hidden" role="menu"><button data-go="home">⌂ Accueil</button><button data-go="plan">▦ Repas</button><button data-go="recipes">♧ Mes recettes</button><button data-go="shop">▣ Courses</button><button data-go="house">⌂ Maison et équipements</button><button data-go="documents">▤ Documents</button><button data-go="family">♡ Famille</button><button data-go="menu">☷ Tous les outils</button></div>
 <main class="panel" id="screen" aria-live="polite"></main>
 <nav class="nav" aria-label="Navigation principale"><button data-go="home"><span>⌂</span>Accueil</button><button data-go="missions"><span>✎</span>Missions</button><button data-go="plan"><span>♨</span>Repas</button><button data-go="family"><span>♡</span>Famille</button><button data-go="menu"><span>☷</span>Menu</button></nav></div><script src="./family-profile.js?v=20261110-e06-1"></script>
+<script src="./family-member-policy.js?v=20261112-fam15"></script>
 <script>
 // Dobby V1: organisation family UI, reminders/calendar remain in Apple systems.
 const BASE=[
@@ -1254,7 +1255,7 @@ document.addEventListener('click',e=>{let b=e.target.closest('[data-extra]');if(
  if(a==='listremove'){let r=xfind(st.famLists,id);if(r)r.items.splice(Number(b.dataset.i),1)}
  if(a==='healthnew')st.extraPage='health:edit';
  if(a==='healthedit')st.extraPage='health:edit:'+id;
- if(a==='healthdelete'&&confirm('Supprimer cette fiche ?'))st.famHealth=st.famHealth.filter(r=>r.id!==id);
+ if(a==='healthdelete'){const record=st.famHealth.find(row=>row.id===id);if(!record)return;try{v23AssertHealthWrite(record,null,false);}catch(error){alert(error.message);return}if(confirm('Supprimer cette fiche ?'))st.famHealth=st.famHealth.filter(r=>r.id!==id);}
  if(a==='contractnew'){st.extraPage='';st.page='documents';docDetail=null;docEdit='new';render();let category=document.querySelector('#familyDocForm select[name="category"]');if(category)category.value='Contrats';return}
  if(a==='contractopen'){st.extraPage='';st.page='documents';docEdit=null;docDetail=id;render();return}
  if(a==='docopen'){st.extraPage='';st.page='documents';docEdit=null;docDetail=id;render();return}
@@ -1266,7 +1267,7 @@ document.addEventListener('click',e=>{let b=e.target.closest('[data-extra]');if(
 document.addEventListener('submit',e=>{let form=e.target,id=form.getAttribute('id');if(!['xContactForm','xListForm','xHealthForm'].includes(id))return;e.preventDefault();let d=new FormData(form);
  if(id==='xContactForm'){let r={id:xval(d,'id')||xuid(),name:xval(d,'name',140),role:xval(d,'role'),phone:xval(d,'phone'),email:xval(d,'email'),note:xval(d,'note',500)};if(!r.name)return;st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);st.extraPage='contacts'}
  if(id==='xListForm'){let name=xval(d,'name',140);if(!name)return;st.famLists.push({id:xuid(),name,items:[]});st.extraPage='lists'}
- if(id==='xHealthForm'){let r={id:xval(d,'id')||xuid(),person:xval(d,'person')||st.v21HealthPerson||'Enfant 1',name:xval(d,'name',140),date:xval(d,'date'),provider:xval(d,'provider'),reference:xval(d,'reference'),note:xval(d,'note',500)};if(!r.name)return;st.famHealth=st.famHealth.filter(v=>v.id!==r.id).concat(r);st.extraPage='health'}
+ if(id==='xHealthForm'){let r={id:xval(d,'id')||xuid(),person:xval(d,'person')||st.v21HealthPerson||'Enfant 1',name:xval(d,'name',140),date:xval(d,'date'),provider:xval(d,'provider'),reference:xval(d,'reference'),note:xval(d,'note',500)};if(!r.name)return;if(!v23GuardLocalHealth(r.id,{personId:xval(d,'personId'),person:r.person}))return;if(xval(d,'personId')){r.personId=xval(d,'personId');r.person=v23MemberById(r.personId).name;}st.famHealth=st.famHealth.filter(v=>v.id!==r.id).concat(r);st.extraPage='health'}
  save();render();
 });
 document.addEventListener('change',e=>{let t=e.target;if(t.dataset.listCheck===undefined)return;let r=xfind(st.famLists,t.dataset.listCheck);if(r?.items[Number(t.dataset.i)]){r.items[Number(t.dataset.i)].done=t.checked;save();render()}});
@@ -1599,7 +1600,7 @@ document.addEventListener('click',e=>{let b=e.target.closest('[data-v21]');if(!b
  if(act==='recipe-tab'){document.querySelectorAll('[data-v21="recipe-tab"]').forEach(el=>el.classList.toggle('active',el===b));let box=document.getElementById('v21-recipe-content');if(box)box.innerHTML=b.dataset.tab==='steps'?v21RecipeSteps():v21RecipeIngredients()}
 });
 // Capture only the health form, since the legacy handler does not know the new person field.
-document.addEventListener('submit',e=>{if(e.target.id!=='xHealthForm')return;e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target),val=(k,max=240)=>String(d.get(k)||'').trim().slice(0,max),name=val('name',140);if(!name)return;const r={id:val('id')||xuid(),person:val('person')||v21HealthPerson(),name,date:val('date'),provider:val('provider',200),reference:val('reference',200),note:val('note',500)};st.famHealth=st.famHealth.filter(x=>x.id!==r.id).concat(r);st.v21HealthPerson=r.person;st.extraPage='health';save();render()},true);
+document.addEventListener('submit',e=>{if(e.target.id!=='xHealthForm')return;e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target),val=(k,max=240)=>String(d.get(k)||'').trim().slice(0,max),name=val('name',140);if(!name)return;const r={id:val('id')||xuid(),person:val('person')||v21HealthPerson(),name,date:val('date'),provider:val('provider',200),reference:val('reference',200),note:val('note',500)};if(!v23GuardLocalHealth(r.id,{personId:val('personId'),person:r.person}))return;if(val('personId')){r.personId=val('personId');r.person=v23MemberById(r.personId).name;}st.famHealth=st.famHealth.filter(x=>x.id!==r.id).concat(r);st.v21HealthPerson=r.person;st.extraPage='health';save();render()},true);
 // Route photo in the actual primary click switch, not just through event interception.
 // The replacement in index.html is applied by the build script.
 render();
@@ -1695,12 +1696,67 @@ let v23MemberEdit=null;
 const v23Members=()=>st.familyMembers||[];
 const v23MemberById=id=>v23Members().find(x=>x.id===id);
 const v23ActiveMember=()=>v23MemberById(st.v23HealthMemberId)||v23Members()[0]||null;
+// Real account membership does not establish a member identity or a parental
+// role. Only the isolated review runtime supplies a fictional actor explicitly.
+const v23MemberContext=()=>({demo:!!window.DobbyReview,actorId:window.DobbyReview?.demoMemberId||null,members:v23Members()});
+const v23MemberPermissions=id=>window.DobbyFamilyMemberPolicy.permissions(v23MemberById(id),v23MemberContext());
+function v23HealthPermissions(record,shared=false){
+ const context=v23MemberContext(),policy=window.DobbyFamilyMemberPolicy;
+ const denied={canEdit:false,canCreate:false,canMagic:false,reason:policy.permissions(null,context).reason};
+ if(!context.demo)return denied;
+ let member;
+ if(record?.personId)member=v23MemberById(record.personId);
+ else{const matches=v23Members().filter(row=>row.name===String(record?.person||'').trim());if(matches.length===1)member=matches[0];}
+ if(member){const access=policy.permissions(member,context);return{...access,canCreate:access.canEdit,canMagic:false};}
+ const unassigned=shared&&!record?.personId&&['','Foyer'].includes(String(record?.person||'').trim());
+ if(unassigned&&policy.permissions(null,context).canCreate)return{canEdit:true,canCreate:true,canMagic:false,reason:'Droits limités à cette démonstration fictive.'};
+ return{...denied,reason:'Cette fiche médicale doit être attribuée sans ambiguïté à un membre autorisé. Les enfants, bébés et animaux ne peuvent pas modifier les carnets de santé.'};
+}
+function v23AssertHealthWrite(previous,next,shared=false){
+ for(const record of [previous,next].filter(Boolean)){const access=v23HealthPermissions(record,shared);if(!access.canEdit)throw Error(access.reason);}
+}
+function v23GuardLocalHealth(id,next){
+ const previous=(st.famHealth||[]).find(row=>row.id===id);
+ try{v23AssertHealthWrite(previous,next,false);return true;}catch(error){alert(error.message);return false;}
+}
+const v23MagicForms=new WeakMap();
+let v23MagicScoring;
+async function v23SaveMagicResult(id,kind,answers){
+ if(!['house','patronus'].includes(kind)||!Array.isArray(answers)||!answers.every(answer=>typeof answer==='string'))throw Error('Questionnaire magique invalide.');
+ const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);
+ const baseline=JSON.stringify(member),actor=v23MemberContext().actorId;
+ // Reuse the E06 barème and scoring; user supplied result IDs/algorithm tags
+ // never grant a child permission to write a manually selected result.
+ v23MagicScoring ||= Promise.all([import('../essai-stitch-v7/onboarding-scoring.mjs'),fetch('../essai-stitch-v7/data/onboarding-scoring-v1.json').then(response=>{if(!response.ok)throw Error('Barème E06 indisponible.');return response.json();})]).then(([module,config])=>module.createScoring(config));
+ const scoring=await v23MagicScoring,rules=scoring.config[kind],count=rules.baseQuestionCount;
+ if(answers.length<count||answers.length>rules.questions.length||answers.some((answer,index)=>!rules.questions[index]?.answers.some(row=>row.id===answer)))throw Error('Questionnaire magique incomplet ou invalide.');
+ const result=scoring[kind](answers.slice(0,count),answers[count]);if(!result.result)throw Error('Questionnaire magique incomplet.');
+ if(JSON.stringify(v23MemberById(id))!==baseline||v23MemberContext().actorId!==actor||!v23MemberPermissions(id).canMagic)throw Error('Le membre ou la persona a changé. Recommencez depuis sa fiche.');
+ const values=kind==='house'?{magicHouseId:scoring.catalogueId(kind,result.result),magicHouseAlgorithm:scoring.version}:{magicPatronusId:scoring.catalogueId(kind,result.result),magicPatronusAlgorithm:scoring.version};
+ return v23SubmitConfirmedMagic(member,values);
+}
+const v23SubmitConfirmedMagic=(member,values)=>{
+ const id=member.id;st.page='family';st.extraPage='health';v23MemberEdit=id;render();
+ const form=document.getElementById('v23MemberForm');
+ if(member.avatar&&![...form.elements.avatar.options].some(option=>option.value===member.avatar))form.elements.avatar.add(new Option(member.avatar,member.avatar));
+ form.elements.avatar.value=member.avatar||'👤';form.elements.birthdate.type='hidden';form.elements.birthdate.value=member.birthdate||'';
+ for(const[name,value]of Object.entries(values)){const input=document.createElement('input');input.type='hidden';input.name=name;input.value=value;form.append(input);}
+ const proof={id,values};v23MagicForms.set(form,proof);
+ try{form.requestSubmit();}finally{v23MagicForms.delete(form);}
+ if(v23MemberEdit!==null)throw Error('Résultat magique non enregistré.');return id;
+};
+const v23FinishMagicCeremony=id=>{
+ const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);
+ const complete=member.magicProfile?.houseAlgorithmVersion==='e06-v1'&&member.magicProfile?.patronusAlgorithmVersion==='e06-v1';
+ return v23SubmitConfirmedMagic(member,{magicCeremony:complete?'complete':'deferred'});
+};
+window.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite});
 const v23OldHealth=xhealth;
 xhealth=function(){
  const selected=v23ActiveMember();const people=v23Members();
  if(v23MemberEdit!==null){
   const member=v23MemberEdit==='new'?{}:(v23MemberById(v23MemberEdit)||{});
-  return `<button class="btn secondary small" data-v23-member="cancel">‹ Carnet de santé</button><h1>${member.id?'Modifier le membre':'Ajouter un membre'}</h1><div class="v21-health-warning">Configuration fictive. Ne pas enregistrer de données médicales réelles dans cette version.</div><form id="v23MemberForm" class="card"><label>Prénom / nom *</label><input required name="name" maxlength="80" value="${safe(member.name||'')}" placeholder="Nom du membre"><label>Date de naissance (facultative)</label><input name="birthdate" type="date" value="${safe(member.birthdate||'')}"><label>Icône</label><select name="avatar">${['👤','👩','👨','👧','👦','🧒'].map(icon=>`<option ${member.avatar===icon?'selected':''}>${icon}</option>`).join('')}</select><button class="v21-main-button" type="submit">Enregistrer le membre</button></form>`;
+  return `<button class="btn secondary small" data-v23-member="cancel">‹ Carnet de santé</button><h1>${member.id?'Modifier le membre':'Ajouter un membre'}</h1><div class="v21-health-warning">Configuration fictive. Ne pas enregistrer de données médicales réelles dans cette version.</div><form id="v23MemberForm" class="card"><label>Prénom / nom *</label><input required name="name" maxlength="80" value="${safe(member.name||'')}" placeholder="Nom du membre"><label>Date de naissance (facultative)</label><input name="birthdate" type="date" value="${safe(member.birthdate||'')}"><label>Icône</label><select name="avatar">${[...new Set(['👤','👩','👨','👧','👦','🧒',member.avatar].filter(Boolean))].map(icon=>`<option ${member.avatar===icon?'selected':''}>${safe(icon)}</option>`).join('')}</select><button class="v21-main-button" type="submit">Enregistrer le membre</button></form>`;
  }
  const extra=st.extraPage.split(':');const action=extra[1],record=(st.famHealth||[]).find(r=>r.id===extra[2])||{};
  const chosen=record.personId?v23MemberById(record.personId):people.find(p=>p.name===record.person);
@@ -1726,21 +1782,29 @@ function v23MemberAction(button){
  if(action==='choose'){st.v23HealthMemberId=id;save();render();return}
  if(action==='delete'){
   const member=v23MemberById(id);if(!member)return;
+  const access=v23MemberPermissions(id);if(!access.canEdit){alert(access.reason);return}
   const linked=(st.famHealth||[]).some(r=>r.personId===id||(!r.personId&&r.person===member.name));
   if(linked){alert('Cette personne possède des rendez-vous. Supprimez ou réattribuez ces fiches avant de retirer le membre.');return}
   if(!confirm('Supprimer le profil de '+member.name+' ?'))return;
-  st.familyMembers=st.familyMembers.filter(x=>x.id!==id);st.v23HealthMemberId=st.familyMembers[0]?.id||'';save();render();
+  const previous=st.familyMembers,selected=st.v23HealthMemberId;
+  st.familyMembers=st.familyMembers.filter(x=>x.id!==id);st.v23HealthMemberId=st.familyMembers[0]?.id||'';
+  try{save();}catch(error){st.familyMembers=previous;st.v23HealthMemberId=selected;alert('Suppression impossible. Les informations précédentes sont conservées.');return}render();
  }
 }
 // Capture health events before the legacy submission listener, preserving member IDs.
 document.addEventListener('submit',e=>{
  if(e.target.id==='v23MemberForm'){
   e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target);
-  const name=String(d.get('name')||'').trim().slice(0,80);if(!name)return;
   const existing=v23MemberEdit!=='new'?v23MemberById(v23MemberEdit):null;
-  if(v23Members().some(x=>x.id!==existing?.id&&x.name.toLocaleLowerCase('fr')===name.toLocaleLowerCase('fr'))){alert('Cette personne est déjà enregistrée.');return}
+  if(v23MemberEdit!=='new'&&!existing){alert('Ce membre n’existe plus. Revenez au registre.');return}
+  const values=Object.fromEntries(d),proof=v23MagicForms.get(e.target);v23MagicForms.delete(e.target);
   let member;
-  try{member=window.DobbyMagicIdentity.patch({...existing,id:existing?.id||xuid(),name,birthdate:String(d.get('birthdate')||''),avatar:String(d.get('avatar')||'👤')},Object.fromEntries(d));}
+  try{
+   const confirmed=!!proof&&proof.id===existing?.id&&Object.entries(proof.values).every(([key,value])=>values[key]===value)&&['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony'].every(key=>!Object.hasOwn(values,key)||Object.hasOwn(proof.values,key));
+   window.DobbyFamilyMemberPolicy.assertWrite(existing,values,v23MemberContext(),{magicResult:confirmed});
+   member=window.DobbyFamilyMemberPolicy.prepare({...existing,id:existing?.id||xuid()},values,window.DobbyMagicIdentity.patch);
+   if(v23Members().some(x=>x.id!==existing?.id&&String(x.name||'').toLocaleLowerCase('fr')===member.name.toLocaleLowerCase('fr')))throw Error('Cette personne est déjà enregistrée.');
+  }
   catch(error){alert(error.message);return;}
   const previousMembers=[...st.familyMembers],previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;
   if(existing){const oldName=existing.name;st.familyMembers=st.familyMembers.map(x=>x.id===existing.id?member:x);(st.famHealth||[]).forEach(x=>{if(x.personId===existing.id||(!x.personId&&x.person===oldName)){x.personId=member.id;x.person=member.name}})}
@@ -1754,6 +1818,7 @@ document.addEventListener('submit',e=>{
   if(!member){alert('Sélectionnez une personne.');return}
   const row={id,personId:member.id,person:member.name,name:String(d.get('name')||'').trim().slice(0,140),date:String(d.get('date')||''),provider:String(d.get('provider')||'').trim().slice(0,200),reference:String(d.get('reference')||'').trim().slice(0,200),note:String(d.get('note')||'').trim().slice(0,500)};
   if(!row.name)return;
+  if(!v23GuardLocalHealth(id,row))return;
   st.famHealth=st.famHealth.filter(x=>x.id!==id).concat(row);st.v23HealthMemberId=member.id;st.extraPage='health';save();render();
  }
 },true);

@@ -28,7 +28,26 @@ window.DobbyFamilyStitchEngine=(()=>{
  function ensureEditable(row,form){if(unsupportedFields(row,form).length)throw Error('Cette fiche contient des informations supplémentaires ou dans un ancien format que ce formulaire ne peut pas conserver. La modification est bloquée ; les informations existantes restent intactes.');}
  const requireRecord=(rows,id)=>{if(id&&!rows.some(x=>x.id===id))throw Error('Cette fiche a été supprimée. Revenez au registre.');};
  function memberForm(id){requireRecord(read().members,id);page('health');action('v23Member',id?'edit':'new',id?{id}:{});}
- function saveMember(id,values){memberForm(id);const form=win().document.getElementById('v23MemberForm');if(values.avatar&&![...form.elements.avatar.options].some(o=>o.value===values.avatar))form.elements.avatar.add(new (win().Option)(values.avatar,values.avatar));for(const name of ['magicHouseId','magicPatronusId','magicAvatarId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony','profileFirstName','profileLastName'])if(Object.hasOwn(values,name)){const input=win().document.createElement('input');input.type='hidden';input.name=name;form.append(input);}if(values.birthdate){const check=win().document.createElement('input');check.type='date';check.value=values.birthdate;if(check.value!==values.birthdate)throw Error('Date de naissance enregistrée dans un format incompatible. Corrigez explicitement cette date avant d’enregistrer.');}submit('v23MemberForm',values);if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');return read().state.v23HealthMemberId;}
+ const memberPermissions=id=>win().DobbyFamilyMembers.permissions(id);
+ const memberCategory=member=>win().DobbyFamilyMembers.category(member);
+ const memberMealEligibility=member=>win().DobbyFamilyMembers.mealEligibility(member);
+ function visitPermissions(scope,id,personId){const row=id?read()[scope==='shared'?'shared':'local'].find(item=>item.id===id):{personId:personId||'',person:personId?'':'Foyer'};return win().DobbyFamilyMembers.healthPermissions(row,scope==='shared');}
+ function saveMember(id,values){
+  const current=read().members.find(member=>member.id===id);values={...values};
+  if(!Object.hasOwn(values,'avatar')&&current?.avatar)values.avatar=current.avatar;
+  if(Object.hasOwn(values,'birthdate')&&values.birthdate===''&&current?.birthdate&&!win().DobbyFamilyMemberPolicy.validDate(current.birthdate))values.clearBirthdate='true';
+  const structured=['firstName','lastName','profileFirstName','profileLastName'].some(key=>Object.hasOwn(values,key));
+  if(structured&&!Object.hasOwn(values,'name'))values.name=[values.firstName??values.profileFirstName??current?.firstName??'',values.lastName??values.profileLastName??current?.lastName??''].map(value=>String(value).trim()).filter(Boolean).join(' ');
+  memberForm(id);const form=win().document.getElementById('v23MemberForm');
+  if(values.avatar&&![...form.elements.avatar.options].some(o=>o.value===values.avatar))form.elements.avatar.add(new (win().Option)(values.avatar,values.avatar));
+  for(const name of ['firstName','lastName','nickname','memberCategory','notes','species','clearBirthdate','magicHouseId','magicPatronusId','magicAvatarId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony','profileFirstName','profileLastName'])if(Object.hasOwn(values,name)){const input=win().document.createElement('input');input.type='hidden';input.name=name;form.append(input);}
+  if(values.birthdate){const check=win().document.createElement('input');check.type='date';check.value=values.birthdate;if(check.value!==values.birthdate)throw Error('Date de naissance enregistrée dans un format incompatible. Corrigez explicitement cette date avant d’enregistrer.');}
+  submit('v23MemberForm',values);if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');return read().state.v23HealthMemberId;
+ }
+ // Answers, never a caller-selected result ID. The native adapter recomputes
+ // with E06 and grants a one-form confirmation capability to its own writer.
+ const saveMagicResult=(id,kind,answers)=>win().DobbyFamilyMembers.saveMagicResult(id,kind,answers);
+ const finishMagicCeremony=id=>win().DobbyFamilyMembers.finishMagicCeremony(id);
  function deleteMember(id){requireRecord(read().members,id);page('health');action('v23Member','delete',{id});return !read().members.some(x=>x.id===id);}
  function localForm(id,personId){requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}
  function sharedForm(id){requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}
@@ -40,12 +59,6 @@ window.DobbyFamilyStitchEngine=(()=>{
    localForm(id,member.id);submit('xHealthForm',{...values,person:member.name});if(read().state.extraPage!=='health')throw Error('Indiquez un intitulé pour enregistrer ce rendez-vous.');
   }
   const after=read()[scope==='shared'?'shared':'local'],saved=id||after.find(x=>!before[scope==='shared'?'shared':'local'].some(old=>old.id===x.id))?.id;
-  if(scope!=='shared'&&saved){
-   // Native legacy form listeners shadow the V23 id check (hidden input name=id).
-   // Keep the native save/validation and only restore its existing canonical
-   // personId field for the explicitly selected record; never create a person.
-   evaluate('const member=v23MemberById(p.personId),row=st.famHealth.find(x=>x.id===p.id);if(!member||!row)throw Error("Fiche ou personne indisponible");row.personId=member.id;row.person=member.name;save();render();',{id:saved,personId:values.personId});
-  }
   return saved;
  }
  function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}
@@ -86,5 +99,5 @@ window.DobbyFamilyStitchEngine=(()=>{
  const saveSharedMemo=(id,values,expected)=>memoWrite('save',id,values,expected);
  const deleteSharedMemo=(id,expected)=>memoWrite('delete',id,null,expected);
  const importLocalMemo=id=>memoWrite('import',id);
- return Object.freeze({saveSharedMemo,deleteSharedMemo,importLocalMemo,requireRecord,unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
+ return Object.freeze({saveSharedMemo,deleteSharedMemo,importLocalMemo,requireRecord,unsupportedFields,ensureEditable,memberPermissions,memberCategory,memberMealEligibility,visitPermissions,saveMagicResult,finishMagicCeremony,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
 })();

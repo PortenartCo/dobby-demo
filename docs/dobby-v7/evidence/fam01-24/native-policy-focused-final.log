@@ -1,0 +1,35 @@
+Command: node --test essai-stitch-v5-famille/tests/family-member-policy.test.cjs essai-stitch-v5-famille/tests/family-member-policy.test.mjs essai-stitch-v5-famille/tests/integration.test.mjs
+Browser origin: http://127.0.0.1:8893 (independent localhost server)
+Network: Chromium aborts every request outside localhost; no backend is used. Shared medical activation is test-fixtured only; native actor/operation authorization remains exercised.
+
+✔ FAM native form guards, model compatibility and child E06 confirmation use the existing writer (2515.700394ms)
+✔ FAM15 native local and shared medical operations enforce actor and old/new attribution (2304.033952ms)
+✔ FAM15 denies real writes even when a locally selected actor claims to be a parent (1.638768ms)
+✔ FAM15 explicit fictional parent can edit self and dependents, never the other parent or an unknown category (0.597036ms)
+✔ FAM15 children only have own confirmed magical results; babies and pets have no autonomous writes (0.360621ms)
+✔ FAM10/12 preserves opaque fields and old single names; canonical E05 fields remain the single structured identity (0.974341ms)
+✔ FAM11 keeps categories explicit and reports Cuisine eligibility without changing portion state (0.39954ms)
+✔ native date input cannot silently erase a preexisting unrepresentable birthdate (4.40561ms)
+✔ native direct submission and delete enforce FAM15 without the presentation facade (55.957884ms)
+✔ FAM13 native parent cannot manually assign own or dependent House/Patronus results (30.697876ms)
+✔ native direct allowed save preserves unknown fields and refuses direct adult creation (5.662175ms)
+✔ native save and delete failures restore the existing members and health references (6.016997ms)
+✔ medical write permission resolves canonical or unique legacy attribution, and checks both sides of reassignment (29.96082ms)
+✔ preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4/FAM native extensions (231.453418ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (10.63788ms)
+✔ module adapter fails closed when Supabase modules table is missing (2.985539ms)
+✔ module schema enforces household isolation and excludes health and attachments (0.202845ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (0.25336ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (0.203836ms)
+✔ manual missions remain separate from automatic tasks (0.123315ms)
+✔ binary file uploads do not use the JSON modules API (0.332469ms)
+✔ shared health visits do not automatically upload previous local health records (0.320972ms)
+✔ a health document remains local until the user chooses household sharing (1.183916ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5408.214394

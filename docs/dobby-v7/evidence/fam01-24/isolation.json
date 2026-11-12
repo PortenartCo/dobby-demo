@@ -1,0 +1,13 @@
+{
+  "base": "faf89d50555a3201385eae51f9ef5f93c5bf0499",
+  "branch": "feat/dobby-v7-family-review-fam01-24",
+  "worktree": "/workspace/dobby-v7-family-review-fam01-24",
+  "existingLocalHeadsUnchanged": {
+    "refs/heads/main": "c6ef62aa552da635fe04ccfb5ecdf20e8db9daba",
+    "refs/heads/feat/dobby-e09-famille-salon-20261112": "8918068f9d53a1f7007a09dcf100ffaee3e9ec15",
+    "refs/heads/publish/dobby-e09-famille-salon-20261112": "249be83ed13703af29657c87f36e44859863beb6"
+  },
+  "noRemoteWrites": true,
+  "noSupabase": true,
+  "noPublication": true
+}

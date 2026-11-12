@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: salon reuses 22 native E01 motes
+
+0 !== 22
+
+    at /workspace/dobby-v7-family-review-fam01-24/essai-stitch-v7/tests/family-review-effects.cjs:65:13 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 22,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
