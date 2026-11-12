@@ -30,3 +30,9 @@ Relecture indépendante des commits `a8ef0d3`, `dc83b42`, `9efbcf9`, `2415fdf`, 
 La CI sur `faf89d5` a confirmé tous les parcours globaux puis exposé un reset interrompu encore instable. Deux régressions déterministes ont prouvé la notification retardée et le chargement natif avant la fin du bootstrap. `a57b4f14da91da32af5d2c8711471e7f0b3dfebc` corrige ces ordres avec jeton/génération, événements de stockage et barrière de chargement de l’iframe générée. Cinq exécutions ciblées réussies ; revue indépendante : aucun constat substantiel, API/writers natifs inchangés.
 
 La garde de réutilisation historique a fait l’objet de dix tests positifs/négatifs Git/API, dont changement natif, renommage, ascendance et étape non réussie. Le workflow courant rejoue tous les contrôles concernés.
+
+## Document restauré et atténuation des attentes prématurées
+
+`771193e3d3b36dc470d7b8ae8b5190f9e1a4207f` : préservation du document natif restauré au bon URL, nettoyage de session borné au préfixe. Le test conserve un marqueur réel dans le window natif restauré pendant un Web Lock : échec sur l’ancien chargeur, succès après correction. Relecture sans constat substantiel, sources natives/API inchangées.
+
+`47a3866` : attentes du dock basées sur URL et DOM réellement rendu, Retour/Avance exacts ; preuve par attente du vrai fichier Menu. Aucun affaiblissement des assertions, des délais ou des contrôles d’erreurs.

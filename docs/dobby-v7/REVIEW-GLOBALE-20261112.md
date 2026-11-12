@@ -94,3 +94,9 @@ La livraison ajoute uniquement un répertoire autonome sur `main`. En cas de ret
 ## Dernières validations de navigation
 
 La reprise CI `43137896606` sur `c4405b5` a validé la garde de diff, les contrôles natifs/statiques et l’historique signé. Un timeout de retour arrière à320px a interrompu les parcours globaux ; ce résultat reste enregistré en échec. Il n’a pas été reproduit dans le même Chromium local. La navigation initiale différée de l’iframe utilise désormais `location.replace` en `f91e4c1`, avec conservation du nœud utilisé par les bridges. Un test force le démarrage après le chargement du document et vérifie l’historique, le retour/avance et la disponibilité native. Les trois largeurs locales et le reset complet passent ; les assertions d’erreurs restent strictes. Le verdict de publication dépend de la nouvelle CI puis de la recette hébergée.
+
+## Reproduction et correction confirmées sur Chrome CI
+
+Chrome for Testing `156.0.8078.79` a permis de reproduire le blocage : au retour arrière, le navigateur avait déjà restauré le document natif. Le chargeur de démonstration le naviguait une seconde fois, supprimant ses variables pendant l’initialisation extérieure. `771193e` préserve ce document déjà à la bonne URL ; un test de vraie restauration d’historique sous Web Lock prouve l’identité conservée (RED avant, GREEN après). Le nettoyage de session de chaque ancien client est aussi garanti avant son rechargement. Revue indépendante : aucun constat substantiel, writers/API natifs inchangés.
+
+Le test du dock attend désormais le rendu effectif de chaque destination (`47a3866`), puis les cibles exactes Retour/Avance : un test avec le vrai chargement Menu retardé a prouvé que l’ancienne attente pouvait continuer avant le rendu. Les assertions métier, délais et contrôles d’erreurs sont conservés.
