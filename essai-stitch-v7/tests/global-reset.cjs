@@ -16,6 +16,21 @@ async function ready(page){try{await page.waitForFunction(()=>window.DobbyFamily
    postMessage(data){if(this.__resetTraceName==='dobby-review-v7-global-20261112|reset'){const row={direction:'send',data,url:location.href,top:window===top};window.__globalResetTrace.push(row);void window.__recordGlobalResetMessage(row);}return super.postMessage(data);}
   };
  });
+ // Deferred native loading must not add child entries to joint session history.
+ const historyPage=await context.newPage(),historyTrace=[];historyPage.setDefaultTimeout(15000);historyPage.on('framenavigated',frame=>historyTrace.push({top:frame===historyPage.mainFrame(),url:frame.url()}));
+ const loaderReady=()=>historyPage.waitForFunction(()=>window.DobbyStitchV7?.ready&&window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI.grocery.read().ready);
+ await historyPage.goto(new URL('essai-stitch-v7/traverse.html?client=A',base).href);await loaderReady();
+ for(const destination of [1,2,3,4]){await historyPage.locator('[data-e01-destination="'+destination+'"]').click();await loaderReady();}
+ const previousTop=historyPage.url(),historyHolder=await context.newPage();await historyHolder.goto(new URL('review-manifest.json',base).href);
+ await historyHolder.evaluate(()=>{void navigator.locks.request('dobby-review-v7-global-20261112|backend-v1',()=>new Promise(resolve=>{window.__releaseHistoryProbe=resolve;}));});await historyHolder.waitForFunction(()=>typeof window.__releaseHistoryProbe==='function');
+ await historyPage.locator('[data-e01-destination="0"]').click();await historyPage.waitForURL(url=>url.pathname.endsWith('/traverse.html'));await historyPage.waitForFunction(()=>document.readyState==='complete');
+ const beforeNativeHistory=await historyPage.evaluate(()=>({length:history.length,top:location.href,native:document.getElementById('dv7-engine').contentWindow.location.href}));
+ await historyHolder.evaluate(()=>window.__releaseHistoryProbe());await loaderReady();await historyHolder.close();
+ const afterNativeHistory=await historyPage.evaluate(()=>({length:history.length,top:location.href,native:document.getElementById('dv7-engine').contentWindow.location.href}));console.log('GLOBAL_LOADER_HISTORY_TRACE',JSON.stringify({beforeNativeHistory,afterNativeHistory}));assert.equal(afterNativeHistory.length,beforeNativeHistory.length,'Deferred engine loading does not append joint session history');
+ const finalTop=historyPage.url();await historyPage.goBack();
+ const backTrace=await historyPage.evaluate(()=>({top:location.href,native:document.getElementById('dv7-engine')?.contentWindow.location.href}));
+ assert.equal(backTrace.top,previousTop,'Back must restore the previous top-level route: '+JSON.stringify({backTrace,historyTrace}));await loaderReady();
+ await historyPage.goForward();assert.equal(historyPage.url(),finalTop,'Forward restores the top-level route');await loaderReady();await historyPage.close();
  // Hold recovery at its real Web Lock boundary while the V7 document parses.
  // Native inline render/save must not run until the isolated fixture is ready.
  const holder=await context.newPage();await holder.goto(new URL('review-manifest.json',base).href);
