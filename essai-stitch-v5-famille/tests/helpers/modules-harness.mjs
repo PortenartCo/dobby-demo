@@ -79,7 +79,6 @@ export function makeClient(uid, backend, seeded = false, accept = true, options 
     localStorage:{setItem:()=>{localBackups++;}},
     setTimeout,clearTimeout,console,...(options.crypto?{crypto:options.crypto}:{})
   };
-  vm.runInNewContext(fs.readFileSync(new URL('../../preparations.js',import.meta.url),'utf8'),env);
   vm.runInNewContext(options.implementation??implementation,env,{filename:'family-modules.js',timeout:2500});
   assert.ok(provider);
   return {

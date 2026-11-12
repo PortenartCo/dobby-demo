@@ -199,7 +199,7 @@ jobs:
           DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ DOBBY_GLOBAL_EVIDENCE=docs/dobby-v7/evidence/global-review-20261112/ci-current CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
           DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
       - name: PREP-01 native writers and isolated browser journeys
-        if: github.ref_name == 'feat/dobby-v7-preparations-20261112' || github.head_ref == 'feat/dobby-v7-preparations-20261112'
+        if: github.ref_name == 'main' || startsWith(github.ref_name, 'feat/dobby-v7-prep') || github.event_name == 'pull_request'
         env:
           DOBBY_TEST_ORIGIN: http://127.0.0.1:8871
         run: |
