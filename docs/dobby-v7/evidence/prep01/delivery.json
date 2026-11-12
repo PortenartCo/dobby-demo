@@ -1,0 +1,31 @@
+{
+  "branch": "feat/dobby-v7-preparations-20261112",
+  "repository": "https://github.com/PortenartCo/dobby-demo",
+  "sourceCommit": "8f87a9574c616c980925aeafe231f870fdabfa19",
+  "sourceParent": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "implementationCommitHasExactRequestedParent": true,
+  "postCommitRebuild": {
+    "commands": [
+      "node essai-stitch-v7/build-source.cjs",
+      "npm run build:css --prefix essai-stitch-v7",
+      "git diff --exit-code -- essai-stitch-v7"
+    ],
+    "exitCode": 0,
+    "log": "logs/rebuild-committed.log",
+    "verifiedSourceFingerprints": 26,
+    "worktreeCleanBeforeDeliveryRecord": true
+  },
+  "immutableReferences": {
+    "files": 9,
+    "archiveSha256": "9f406b2d93b82624f564e7da0a459834cb5a1730890b66aa41b57f8749a87ed6",
+    "bytePreserved": true,
+    "diffWhitespaceException": "Original DESIGN.md line138 trailing whitespace is preserved rather than changing its hash"
+  },
+  "remoteDelivery": "Push of the dedicated branch only; no merge or hosting publication. Remote HEAD receipt is reported after push.",
+  "production": {
+    "deployed": false,
+    "published": false,
+    "migration": false,
+    "connectedDatabaseModified": false
+  }
+}

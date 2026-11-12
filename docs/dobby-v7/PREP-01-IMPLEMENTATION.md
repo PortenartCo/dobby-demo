@@ -6,6 +6,7 @@ Les quatre panneaux de préparation sont intégrés aux vues natives : modèles 
 
 - Dépôt : `PortenartCo/dobby-demo` ; copie isolée `/workspace/dobby-prep01`.
 - Branche : `feat/dobby-v7-preparations-20261112`.
+- Commit applicatif vérifié : `8f87a9574c616c980925aeafe231f870fdabfa19`.
 - Parent exact : `5b764ef367553e9945fb72a6b563b55adc41e040`, sans reprise de la branche Menu.
 - ZIP reçu sous le nom `DOBBY_Stitch_Listes_Preparation_Corrige.zip`. Son SHA256 correspond exactement à la référence demandée : `9f406b2d93b82624f564e7da0a459834cb5a1730890b66aa41b57f8749a87ed6`.
 - Quatre couples HTML/PNG et DESIGN.md conservés octet pour octet sous `design/stitch-preparation-20261112/stitch_dobby_assistant_mobile_app/`. [Provenance et neuf empreintes](../../design/stitch-preparation-20261112/provenance.json).
