@@ -118,7 +118,7 @@ test('preview denies cross-household browser reuse and drops unauthorized sessio
 
 
 test('family events and selected medical visits share the household without uploading private famHealth',()=>{
-  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'\]/);
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
 });
 
@@ -142,7 +142,7 @@ test('binary file uploads do not use the JSON modules API',()=>{
 });
 
 test('shared health visits do not automatically upload previous local health records',()=>{
-  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits'\]/);
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
   const health=source('../family-health.js');
   assert.match(health,/sharedHealthVisits/);
