@@ -108,3 +108,11 @@ Réconciliation future :
 Le SHA d’implémentation et les résultats finaux sont consignés après les contrôles dans la section de clôture et le journal de livraison. Aucune publication, migration, PR, modification de workflows ni CI distante. Arrêt local pour revue utilisateur.
 
 Contrôle whitespace : les fichiers modifiés passent `git diff --check`. Le DESIGN.md immuable du ZIP comporte un espace final d’origine à la ligne 138 ; ce fichier de référence est exclu du contrôle de whitespace pour conserver son SHA256 exact.
+
+## Clôture locale
+
+Commit d’implémentation : `54d86b1f1c2bc72a65f0b609728b8075fce3dc75`. Le commit documentaire de clôture est fourni dans le dernier message.
+
+Contrôles finaux : 204/204 Node, 2/2 parcours Chromium natifs membres/E06/santé ; fiches et membres PASS 320/390/1440 ; Agenda/Mémos PASS 320/390/1440, synchronisation à deux clients simulés PASS, cinq scénarios de mois PASS. Effets : 39 combinaisons vues/largeurs PASS plus contrôle E06. Empreintes des trois sources Stitch encore identiques après commit.
+
+Aucune PR, aucun push, aucune CI distante déclenchée, aucune publication ou modification de base. Les branches locales main, E09 et publication précédente sont inchangées ; la branche globale n’a pas été ouverte ni modifiée. Les sources canoniques partagées et les racines dérivées devront être réconciliées explicitement lors d’une future intégration autorisée.
