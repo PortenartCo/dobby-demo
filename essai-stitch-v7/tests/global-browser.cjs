@@ -48,7 +48,10 @@ async function sync(page) {
   await demo(page, 'sync');
   await page.waitForFunction(() => {
     const w = DobbyFamilyStitchEngine.win();
-    return !/Synchronisation/.test(w.DobbyFamilyUI.getModuleStatus('family')) &&
+    const grocery = w.DobbyFamilyUI.grocery.read();
+    return !/Synchronisation/.test(grocery.status) &&
+      grocery.items.every(row => row.syncState !== 'pending') &&
+      !/Synchronisation/.test(w.DobbyFamilyUI.getModuleStatus('family')) &&
       !/Synchronisation/.test(w.DobbyFamilyUI.getModuleStatus('missions'));
   });
   if (await page.evaluate(() => !!window.DobbyCuisine?.ready)) {
@@ -418,8 +421,16 @@ async function runJourney(browser, width) {
         await page.waitForFunction(id => DobbyCuisineList.snapshot(DobbyCuisineEngine).items
           .find(row => row.id === id)?.conflict, ingredient.id);
         await shot(page, '12-cas-conflict', width, report);
-        const conflict = page.locator('[data-e072-item="' + ingredient.id + '"]');
-        await conflict.locator('[data-cu-action=e072-conflict-server]').click();
+        const conflicts = (await grocery(page)).items.filter(row => row.syncState === 'conflict');
+        assert.ok(conflicts.length, 'CAS exposes the stale native rows');
+        report.cas = conflicts.map(row => ({ id: row.id, expectedRevision: row.baseRevision,
+          remoteRevision: row.remoteShadow?.revision }));
+        for (const row of report.cas) {
+          assert.ok(row.remoteRevision > row.expectedRevision, 'Conflicting revision is genuinely newer');
+          await page.locator('[data-e072-item="' + row.id + '"] [data-cu-action=e072-conflict-server]').click();
+          await page.waitForFunction(id => DobbyCuisineEngine.win().DobbyFamilyUI.grocery.read().items
+            .find(item => item.id === id)?.syncState === 'clean', row.id);
+        }
         await sync(page);
         await sync(B);
         assert.equal((await basket(page)).items.find(row => row.id === ingredient.id).atHomeQty, ingredient.requiredQty);
