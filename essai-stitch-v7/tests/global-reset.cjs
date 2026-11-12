@@ -27,9 +27,14 @@ async function ready(page){try{await page.waitForFunction(()=>window.DobbyFamily
  const beforeNativeHistory=await historyPage.evaluate(()=>({length:history.length,top:location.href,native:document.getElementById('dv7-engine').contentWindow.location.href}));
  await historyHolder.evaluate(()=>window.__releaseHistoryProbe());await loaderReady();await historyHolder.close();
  const afterNativeHistory=await historyPage.evaluate(()=>({length:history.length,top:location.href,native:document.getElementById('dv7-engine').contentWindow.location.href}));console.log('GLOBAL_LOADER_HISTORY_TRACE',JSON.stringify({beforeNativeHistory,afterNativeHistory}));assert.equal(afterNativeHistory.length,beforeNativeHistory.length,'Deferred engine loading does not append joint session history');
- const finalTop=historyPage.url();await historyPage.goBack();
+ const finalTop=historyPage.url(),backHolder=await context.newPage();await backHolder.goto(new URL('review-manifest.json',base).href);
+ await backHolder.evaluate(()=>{void navigator.locks.request('dobby-review-v7-global-20261112|backend-v1',()=>new Promise(resolve=>{window.__releaseBackProbe=resolve;}));});await backHolder.waitForFunction(()=>typeof window.__releaseBackProbe==='function');
+ await historyPage.goBack();
  const backTrace=await historyPage.evaluate(()=>({top:location.href,native:document.getElementById('dv7-engine')?.contentWindow.location.href}));
- assert.equal(backTrace.top,previousTop,'Back must restore the previous top-level route: '+JSON.stringify({backTrace,historyTrace}));await loaderReady();
+ assert.equal(backTrace.top,previousTop,'Back must restore the previous top-level route: '+JSON.stringify({backTrace,historyTrace}));
+ await historyPage.waitForFunction(()=>{const native=document.getElementById('dv7-engine').contentWindow;return native.location.pathname.endsWith('/essai-stitch-v5-famille/index.html')&&native.document.readyState==='complete';});
+ const restoredToken=await historyPage.evaluate(()=>{const native=document.getElementById('dv7-engine').contentWindow;return native.__restoredNativeProbe=crypto.randomUUID();});
+ await backHolder.evaluate(()=>window.__releaseBackProbe());await loaderReady();await backHolder.close();assert.equal(await historyPage.evaluate(()=>document.getElementById('dv7-engine').contentWindow.__restoredNativeProbe),restoredToken,'Fixture bootstrap preserves an already history-restored native document');
  await historyPage.goForward();assert.equal(historyPage.url(),finalTop,'Forward restores the top-level route');await loaderReady();await historyPage.close();
  // Hold recovery at its real Web Lock boundary while the V7 document parses.
  // Native inline render/save must not run until the isolated fixture is ready.
