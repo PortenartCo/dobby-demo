@@ -1,0 +1,601 @@
+HISTORICAL_SCRIPT_START consolidation-shared.cjs {}
+CONSOLIDATION_SHARED_PASS 320 E08 decoded/0-1-2; E01..E08 prefs, reload, dock, reduced motion, no auto sound
+CONSOLIDATION_SHARED_PASS 390 E08 decoded/0-1-2; E01..E08 prefs, reload, dock, reduced motion, no auto sound
+CONSOLIDATION_SHARED_PASS 1440 E08 decoded/0-1-2; E01..E08 prefs, reload, dock, reduced motion, no auto sound
+HISTORICAL_SCRIPT_PASS consolidation-shared.cjs {}
+HISTORICAL_SCRIPT_START e01-consolidation.cjs {}
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+2 !== 1
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/e01-consolidation.cjs:16:103 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 2,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+HISTORICAL_SCRIPT_FAIL e01-consolidation.cjs {} 1 null
+HISTORICAL_SCRIPT_START e02-consolidation.cjs {}
+E02_CONSOLIDATION_PASS 390
+E02_CONSOLIDATION_PASS 320
+E02_CONSOLIDATION_PASS 1440
+HISTORICAL_SCRIPT_PASS e02-consolidation.cjs {}
+HISTORICAL_SCRIPT_START e05-consolidation.cjs {}
+E05_CONSOLIDATION_PASS 320 4 houses, 12 animals, explicit crest blocker, native illustrated grade/progress, unchanged ledger and persisted identity
+E05_CONSOLIDATION_PASS 390 4 houses, 12 animals, explicit crest blocker, native illustrated grade/progress, unchanged ledger and persisted identity
+E05_CONSOLIDATION_PASS 1440 4 houses, 12 animals, explicit crest blocker, native illustrated grade/progress, unchanged ledger and persisted identity
+HISTORICAL_SCRIPT_PASS e05-consolidation.cjs {}
+HISTORICAL_SCRIPT_START e06-consolidation.cjs {}
+E06_CONSOLIDATION_PASS source 320 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes
+E06_CONSOLIDATION_PASS source 390 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes
+E06_CONSOLIDATION_PASS source 1440 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes
+HISTORICAL_SCRIPT_PASS e06-consolidation.cjs {}
+HISTORICAL_SCRIPT_START e07-consolidation.cjs {}
+E07_CONSOLIDATION_PASS 320 inclusive range/Midi+Soir/manual quantities/receipts/finish/history removal/CTA/singular
+E07_CONSOLIDATION_PASS 390 inclusive range/Midi+Soir/manual quantities/receipts/finish/history removal/CTA/singular
+E07_CONSOLIDATION_PASS 1440 inclusive range/Midi+Soir/manual quantities/receipts/finish/history removal/CTA/singular
+HISTORICAL_SCRIPT_PASS e07-consolidation.cjs {}
+HISTORICAL_SCRIPT_START e06-auth.cjs {}
+E06_AUTH_PASS accepted native login/requireHousehold, configured public key, no inferred member
+E06_AUTH_PASS ambiguous native login/requireHousehold, configured public key, no inferred member
+E06_AUTH_PASS denied native login/requireHousehold, configured public key, no inferred member
+E06_AUTH_PASS cross-household native login/requireHousehold, configured public key, no inferred member
+HISTORICAL_SCRIPT_PASS e06-auth.cjs {}
+HISTORICAL_SCRIPT_START e06.cjs {}
+E06_JOURNEY_PASS 320 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+E06_JOURNEY_PASS 390 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+E06_JOURNEY_PASS 1440 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+HISTORICAL_SCRIPT_PASS e06.cjs {}
+HISTORICAL_SCRIPT_START e06-edge.cjs {}
+E06_EDGE_PASS existing member/85 runes, repeat/skip/resume/back, 4 houses/12 Patronus, native storage refusal, metadata refusal, stale profile/context isolation
+HISTORICAL_SCRIPT_PASS e06-edge.cjs {}
+HISTORICAL_SCRIPT_START e06-recovery.cjs {}
+E06_RECOVERY_PASS failed temporary save remains escapable; no member created; identity draft resumes after reload
+HISTORICAL_SCRIPT_PASS e06-recovery.cjs {}
+HISTORICAL_SCRIPT_START e06-review.cjs {}
+E06_REVIEW_CREATION_PASS
+E06_REVIEW_MULTITAB_PASS native IndexedDB, distinct-member merge and same-member revision refusal
+E06_REVIEW_MEMBERSHIP_PASS
+HISTORICAL_SCRIPT_PASS e06-review.cjs {}
+HISTORICAL_SCRIPT_START e06-shared.cjs {}
+E06_SHARED_PASS 320 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+E06_SHARED_PASS 390 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+HISTORICAL_SCRIPT_PASS e06-shared.cjs {}
+HISTORICAL_SCRIPT_START e06-visual.cjs {}
+E06_SOURCE_VISUAL_PASS 320 seven immutable source compositions; source missing media explicitly unfilled
+E06_SOURCE_VISUAL_PASS 390 seven immutable source compositions; source missing media explicitly unfilled
+E06_SOURCE_VISUAL_PASS 1440 seven immutable source compositions; source missing media explicitly unfilled
+HISTORICAL_SCRIPT_PASS e06-visual.cjs {}
+HISTORICAL_SCRIPT_START e08.cjs {}
+E08_COUNT_PASS 320 0
+E08_COUNT_PASS 320 1
+E08_COUNT_PASS 320 10
+E08_COUNT_PASS 320 50
+E08_BROWSER_PASS 320
+E08_COUNT_PASS 360 0
+E08_COUNT_PASS 360 1
+E08_COUNT_PASS 360 10
+E08_COUNT_PASS 360 50
+E08_BROWSER_PASS 360
+E08_COUNT_PASS 390 0
+E08_COUNT_PASS 390 1
+E08_COUNT_PASS 390 10
+E08_COUNT_PASS 390 50
+E08_BROWSER_PASS 390
+E08_COUNT_PASS 1440 0
+E08_COUNT_PASS 1440 1
+E08_COUNT_PASS 1440 10
+E08_COUNT_PASS 1440 50
+E08_BROWSER_PASS 1440
+HISTORICAL_SCRIPT_PASS e08.cjs {}
+HISTORICAL_SCRIPT_START e03-counts.cjs {}
+E03_COUNTS_PASS real 3/17 and native title never sanitized
+HISTORICAL_SCRIPT_PASS e03-counts.cjs {}
+HISTORICAL_SCRIPT_START e03.cjs {}
+E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+HISTORICAL_SCRIPT_PASS e03.cjs {}
+HISTORICAL_SCRIPT_START e07-2-boot.cjs {}
+E072_BOOT_PASS already-loaded native engine starts once
+HISTORICAL_SCRIPT_PASS e07-2-boot.cjs {}
+HISTORICAL_SCRIPT_START e07-2-model.cjs {}
+E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+HISTORICAL_SCRIPT_PASS e07-2-model.cjs {}
+HISTORICAL_SCRIPT_START e07-2.cjs {}
+E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+HISTORICAL_SCRIPT_PASS e07-2.cjs {}
+REVIEW_BUILD a8ef0d30af55f26db3e748071841aedf91ee07f1 280 files /workspace/scratch/dobby-historical-integrated-discovery
+HISTORICAL_SCRIPT_START integrated-preview.cjs {"DOBBY_PREVIEW_BASE":"http://127.0.0.1:8766/dobby-historical-integrated-discovery/"}
+SENTINELS 320
+ENTRY 320
+LOADED http://127.0.0.1:8766/dobby-historical-integrated-discovery/essai-stitch-v7/traverse.html
+READY 320
+locator.click: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-fa-action=contracts]').first()[22m
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/integrated-preview.cjs:18:123 {
+  log: [ "  - waiting for locator('[data-fa-action=contracts]').first()" ],
+  name: 'TimeoutError'
+}
+HISTORICAL_SCRIPT_FAIL integrated-preview.cjs {"DOBBY_PREVIEW_BASE":"http://127.0.0.1:8766/dobby-historical-integrated-discovery/"} 1 null
+HISTORICAL_SCRIPT_START e07-1-context.cjs {}
+E071_CONTEXT_PASS date/slot reload/back/forward, planned records unchanged
+HISTORICAL_SCRIPT_PASS e07-1-context.cjs {}
+HISTORICAL_SCRIPT_START e07-1.cjs {}
+E071_PASS 320 header/CTA/photos/slots/prepared/native navigation/real scroll
+E071_PASS 390 header/CTA/photos/slots/prepared/native navigation/real scroll
+E071_PASS 1440 header/CTA/photos/slots/prepared/native navigation/real scroll
+HISTORICAL_SCRIPT_PASS e07-1.cjs {}
+HISTORICAL_SCRIPT_START e07-native-actions.cjs {}
+E07_PREPARED_PASS native status and reload
+E07_NATIVE_CATEGORY_UNKNOWN_PASS native categories and explicit unknown quantities
+E07_NATIVE_ACTIONS_PASS
+HISTORICAL_SCRIPT_PASS e07-native-actions.cjs {}
+HISTORICAL_SCRIPT_START e07.cjs {}
+E07_PASS 320 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+E07_PASS 390 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+E07_PASS 1440 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+HISTORICAL_SCRIPT_PASS e07.cjs {}
+HISTORICAL_SCRIPT_START e05-native.cjs {}
+E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+HISTORICAL_SCRIPT_PASS e05-native.cjs {}
+HISTORICAL_SCRIPT_START e05.cjs {}
+E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+HISTORICAL_SCRIPT_PASS e05.cjs {}
+HISTORICAL_SCRIPT_START e05-edge.cjs {}
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-fa-action=personal]').first()[22m
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/e05-edge.cjs:5:108 {
+  log: [ "  - waiting for locator('[data-fa-action=personal]').first()" ],
+  name: 'TimeoutError'
+}
+HISTORICAL_SCRIPT_FAIL e05-edge.cjs {} 1 null
+HISTORICAL_SCRIPT_START e04.cjs {}
+E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+HISTORICAL_SCRIPT_PASS e04.cjs {}
+HISTORICAL_SCRIPT_START runes-native.cjs {}
+AssertionError [ERR_ASSERTION]: Confirmed history remains append-only
++ actual - expected
+... Skipped lines
+
+  [
+    {
+      amount: 10,
+      date: '2026-11-12T01:10:57.181Z',
+      effort: 'light',
+...
+    {
++     amount: 50,
++     cycle: 0,
++     date: '2026-11-12T01:10:57.453Z',
++     effort: 'major',
++     eventId: 'fm-5146a89a-439b-4f25-babf-f5019ee6ebc9~0~reversal',
++     kind: 'reversal',
+-     amount: 25,
+-     date: '2026-11-12T01:10:57.317Z',
+-     effort: 'regular',
+      memberId: 'r-a',
++     missionId: 'fm-5146a89a-439b-4f25-babf-f5019ee6ebc9',
++     reverses: 'fm-5146a89a-439b-4f25-babf-f5019ee6ebc9',
+-     missionId: 'fm-e5d71666-ec35-4442-a11d-14ba9c0f33cb',
+      revision: 0,
++     title: 'TEST — major'
+-     title: 'TEST — regular'
+    },
+    {
++     amount: 50,
++     cycle: 1,
++     date: '2026-11-12T01:10:57.473Z',
++     effort: 'major',
++     eventId: 'fm-5146a89a-439b-4f25-babf-f5019ee6ebc9~1~grant',
++     kind: 'grant',
+-     amount: 25,
+-     cycle: 0,
+-     date: '2026-11-12T01:10:57.333Z',
+-     effort: 'regular',
+-     eventId: 'fm-e5d71666-ec35-4442-a11d-14ba9c0f33cb~0~reversal',
+-     kind: 'reversal',
+      memberId: 'r-a',
++     missionId: 'fm-5146a89a-439b-4f25-babf-f5019ee6ebc9',
+-     missionId: 'fm-e5d71666-ec35-4442-a11d-14ba9c0f33cb',
+-     reverses: 'fm-e5d71666-ec35-4442-a11d-14ba9c0f33cb',
+      revision: 0,
++     title: 'TEST — major'
+-     title: 'TEST — regular'
+    },
+    {
+      amount: 25,
++     date: '2026-11-12T01:10:57.317Z',
+-     cycle: 1,
+-     date: '2026-11-12T01:10:57.353Z',
+      effort: 'regular',
+-     eventId: 'fm-e5d71666-ec35-4442-a11d-14ba9c0f33cb~1~grant',
+-     kind: 'grant',
+      memberId: 'r-a',
+      missionId: 'fm-e5d71666-ec35-4442-a11d-14ba9c0f33cb',
+      revision: 0,
+      title: 'TEST — regular'
+    }
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/runes-native.cjs:4:991 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+HISTORICAL_SCRIPT_FAIL runes-native.cjs {} 1 null
+HISTORICAL_SCRIPT_START e04-runes.cjs {}
+AssertionError [ERR_ASSERTION]: Confirmed history remains append-only
++ actual - expected
+... Skipped lines
+
+  [
+    {
+      amount: 50,
+      date: '2026-11-12T01:11:12.593Z',
+      effort: 'major',
+...
+    {
++     amount: 50,
++     cycle: 0,
++     date: '2026-11-12T01:11:12.632Z',
++     effort: 'major',
++     eventId: 'fm-169c505e-c6c7-4e4b-b490-29c4237bed85~0~reversal',
++     kind: 'reversal',
++     memberId: 'r-a',
++     missionId: 'fm-169c505e-c6c7-4e4b-b490-29c4237bed85',
++     reverses: 'fm-169c505e-c6c7-4e4b-b490-29c4237bed85',
++     revision: 0,
++     title: 'TEST — Effort major'
++   },
++   {
++     amount: 50,
++     cycle: 1,
++     date: '2026-11-12T01:11:12.692Z',
++     effort: 'major',
++     eventId: 'fm-169c505e-c6c7-4e4b-b490-29c4237bed85~1~grant',
++     kind: 'grant',
++     memberId: 'r-a',
++     missionId: 'fm-169c505e-c6c7-4e4b-b490-29c4237bed85',
++     revision: 0,
++     title: 'TEST — Effort major'
++   },
++   {
+      amount: 10,
+      date: '2026-11-12T01:11:01.902Z',
+      effort: 'light',
+      memberId: 'r-a',
+      missionId: 'fm-556845f1-7411-4e07-8bd5-fecbd8105b06',
+...
+    },
+-   {
+-     amount: 25,
+-     cycle: 0,
+-     date: '2026-11-12T01:11:08.122Z',
+-     effort: 'regular',
+-     eventId: 'fm-557c7c63-5c62-4696-9c17-b326342b72d7~0~reversal',
+-     kind: 'reversal',
+-     memberId: 'r-a',
+-     missionId: 'fm-557c7c63-5c62-4696-9c17-b326342b72d7',
+-     reverses: 'fm-557c7c63-5c62-4696-9c17-b326342b72d7',
+-     revision: 0,
+-     title: 'TEST — Effort regular'
+-   },
+-   {
+-     amount: 25,
+-     cycle: 1,
+-     date: '2026-11-12T01:11:08.146Z',
+-     effort: 'regular',
+-     eventId: 'fm-557c7c63-5c62-4696-9c17-b326342b72d7~1~grant',
+-     kind: 'grant',
+-     memberId: 'r-a',
+-     missionId: 'fm-557c7c63-5c62-4696-9c17-b326342b72d7',
+-     revision: 0,
+-     title: 'TEST — Effort regular'
+-   }
+  ]
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/e04-runes.cjs:10:422 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+HISTORICAL_SCRIPT_FAIL e04-runes.cjs {} 1 null
+HISTORICAL_SCRIPT_START e02.cjs {}
+E02_UI_ACTIONS_PASS 320
+E02_UI_ACTIONS_PASS 390
+E02_UI_ACTIONS_PASS 1440
+HISTORICAL_SCRIPT_PASS e02.cjs {}
+HISTORICAL_SCRIPT_START e02-edge.cjs {}
+E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+HISTORICAL_SCRIPT_PASS e02-edge.cjs {}
+HISTORICAL_SCRIPT_START e02-voice-history.cjs {}
+E02_VOICE_HISTORY_PASS
+HISTORICAL_SCRIPT_PASS e02-voice-history.cjs {}
+HISTORICAL_SCRIPT_START e01.cjs {}
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+HISTORICAL_SCRIPT_PASS e01.cjs {}
+HISTORICAL_SCRIPT_START e01-3.cjs {}
+E013_PASS chromium 390
+E013_PASS chromium 1440
+HISTORICAL_SCRIPT_PASS e01-3.cjs {}
+HISTORICAL_SCRIPT_START e01-1-visual.cjs {}
+E011_BAND after 390 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+E011_BAND after 1440 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+E011_VISUAL_PASS after 390/1440
+HISTORICAL_SCRIPT_PASS e01-1-visual.cjs {}
+HISTORICAL_SCRIPT_START e01-visual.cjs {}
+E01_SOURCE_COMPARISONS_PASS 10
+HISTORICAL_SCRIPT_PASS e01-visual.cjs {}
+HISTORICAL_SCRIPT_START smoke.cjs {}
+browserType.launch: Failed to launch chromium because executable doesn't exist at C:/Program Files/Google/Chrome/Application/chrome.exe
+    at /workspace/dobby-demo/essai-stitch-v7/tests/smoke.cjs:8:81
+    at Object.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/smoke.cjs:13:103) {
+  log: [],
+  name: 'Error'
+}
+HISTORICAL_SCRIPT_FAIL smoke.cjs {} 1 null
+HISTORICAL_SCRIPT_START cuisine.cjs {}
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(await page.locator('.recipe-card').filter({hasText:'TEST — Import JSON'}).count())
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/cuisine.cjs:91:12
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:502:9) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+HISTORICAL_SCRIPT_FAIL cuisine.cjs {} 1 null
+HISTORICAL_SCRIPT_START cuisine-family.cjs {}
+CUISINE_FAMILY_PASS 320px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+HISTORICAL_SCRIPT_PASS cuisine-family.cjs {}
+HISTORICAL_SCRIPT_START cuisine-visual.cjs {}
+CUISINE_VISUAL taverne 320 []
+CUISINE_VISUAL pick 320 []
+CUISINE_VISUAL recipes 320 []
+CUISINE_VISUAL recipe 320 []
+CUISINE_VISUAL cook 320 []
+CUISINE_VISUAL tm5 320 []
+CUISINE_VISUAL recipe-add-1 320 []
+CUISINE_VISUAL recipe-add 320 []
+CUISINE_VISUAL batch 320 []
+CUISINE_VISUAL shop-1 320 []
+CUISINE_VISUAL shop 320 []
+CUISINE_VISUAL shop-final 320 []
+CUISINE_VISUAL shop-history 320 []
+CUISINE_VISUAL taverne 390 []
+CUISINE_VISUAL pick 390 []
+CUISINE_VISUAL recipes 390 []
+CUISINE_VISUAL recipe 390 []
+CUISINE_VISUAL cook 390 []
+CUISINE_VISUAL tm5 390 []
+CUISINE_VISUAL recipe-add-1 390 []
+CUISINE_VISUAL recipe-add 390 []
+CUISINE_VISUAL batch 390 []
+CUISINE_VISUAL shop-1 390 []
+CUISINE_VISUAL shop 390 []
+CUISINE_VISUAL shop-final 390 []
+CUISINE_VISUAL shop-history 390 []
+CUISINE_VISUAL taverne 1440 []
+CUISINE_VISUAL shop-1 1440 []
+CUISINE_VISUAL shop 1440 []
+CUISINE_VISUAL shop-final 1440 []
+CUISINE_VISUAL_PASS 13 native routes at 320/390 plus E07 overrides at 1440 original and E07 source hashes verified
+HISTORICAL_SCRIPT_PASS cuisine-visual.cjs {}
+HISTORICAL_SCRIPT_START family.cjs {}
+FAMILY_PATH_PASS 320px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 320px
+FAMILY_PATH_PASS 390px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 390px
+HISTORICAL_SCRIPT_PASS family.cjs {}
+HISTORICAL_SCRIPT_START family-edge.cjs {}
+FAMILY_EDGE_PASS stale bookmark, orphan reassignment, legacy identity, browser back/forward
+HISTORICAL_SCRIPT_PASS family-edge.cjs {}
+HISTORICAL_SCRIPT_START family-review.cjs {}
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320
+FAMILY_REVIEW_PASS selected states match the current operation 320
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390
+FAMILY_REVIEW_PASS selected states match the current operation 390
+HISTORICAL_SCRIPT_PASS family-review.cjs {}
+HISTORICAL_SCRIPT_START family-shared.cjs {}
+FAMILY_SHARED_PASS 320px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+FAMILY_SHARED_PASS 390px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+HISTORICAL_SCRIPT_PASS family-shared.cjs {}
+HISTORICAL_SCRIPT_START family-visual.cjs {}
+FAMILY_VISUAL members 320 []
+FAMILY_VISUAL member-edit 320 []
+FAMILY_VISUAL agenda 320 []
+FAMILY_VISUAL medical-edit 320 []
+FAMILY_VISUAL health 320 []
+FAMILY_VISUAL health-person 320 []
+FAMILY_VISUAL health-history 320 []
+FAMILY_VISUAL members 390 []
+FAMILY_VISUAL member-edit 390 []
+FAMILY_VISUAL agenda 390 []
+FAMILY_VISUAL medical-edit 390 []
+FAMILY_VISUAL health 390 []
+FAMILY_VISUAL health-person 390 []
+FAMILY_VISUAL health-history 390 []
+FAMILY_VISUAL_PASS 7 sources x 320/390, 28 comparisons + 14 empty states
+HISTORICAL_SCRIPT_PASS family-visual.cjs {}
+HISTORICAL_SCRIPT_START register-house.cjs {}
+REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+HISTORICAL_SCRIPT_PASS register-house.cjs {}
+HISTORICAL_SCRIPT_START register-visual.cjs {"DOBBY_LOT":"3"}
+REGISTER_VISUAL 3 house-1 320
+REGISTER_VISUAL 3 house 320
+REGISTER_VISUAL 3 equipment-edit 320
+REGISTER_VISUAL 3 equipment 320
+REGISTER_VISUAL 3 maintenance 320
+REGISTER_VISUAL 3 house-backup 320
+REGISTER_VISUAL 3 backup 320
+REGISTER_VISUAL 3 house-1 390
+REGISTER_VISUAL 3 house 390
+REGISTER_VISUAL 3 equipment-edit 390
+REGISTER_VISUAL 3 equipment 390
+REGISTER_VISUAL 3 maintenance 390
+REGISTER_VISUAL 3 house-backup 390
+REGISTER_VISUAL 3 backup 390
+REGISTER_VISUAL_PASS 3 7 sources x 320/390
+HISTORICAL_SCRIPT_PASS register-visual.cjs {"DOBBY_LOT":"3"}
+HISTORICAL_SCRIPT_START register-documents.cjs {}
+REGISTER_DOCUMENTS_PASS 320
+REGISTER_DOCUMENTS_PASS 390
+HISTORICAL_SCRIPT_PASS register-documents.cjs {}
+HISTORICAL_SCRIPT_START register-visual.cjs {"DOBBY_LOT":"4"}
+REGISTER_VISUAL 4 document-edit 320
+REGISTER_VISUAL 4 documents-1 320
+REGISTER_VISUAL 4 documents 320
+REGISTER_VISUAL 4 contracts-1 320
+REGISTER_VISUAL 4 contracts 320
+REGISTER_VISUAL 4 contract-edit 320
+REGISTER_VISUAL 4 document 320
+REGISTER_VISUAL 4 contract-1 320
+REGISTER_VISUAL 4 contract 320
+REGISTER_VISUAL 4 import-review 320
+REGISTER_VISUAL 4 import-file 320
+REGISTER_VISUAL 4 document-edit 390
+REGISTER_VISUAL 4 documents-1 390
+REGISTER_VISUAL 4 documents 390
+REGISTER_VISUAL 4 contracts-1 390
+REGISTER_VISUAL 4 contracts 390
+REGISTER_VISUAL 4 contract-edit 390
+REGISTER_VISUAL 4 document 390
+REGISTER_VISUAL 4 contract-1 390
+REGISTER_VISUAL 4 contract 390
+REGISTER_VISUAL 4 import-review 390
+REGISTER_VISUAL 4 import-file 390
+REGISTER_VISUAL_PASS 4 11 sources x 320/390
+HISTORICAL_SCRIPT_PASS register-visual.cjs {"DOBBY_LOT":"4"}
+HISTORICAL_SCRIPT_START register-tools.cjs {}
+REGISTER_TOOLS_PASS 320
+REGISTER_TOOLS_PASS 390
+HISTORICAL_SCRIPT_PASS register-tools.cjs {}
+HISTORICAL_SCRIPT_START register-visual.cjs {"DOBBY_LOT":"5"}
+REGISTER_VISUAL 5 mission-edit 320
+REGISTER_VISUAL 5 chat 320
+REGISTER_VISUAL 5 chat-2 320
+REGISTER_VISUAL 5 search 320
+REGISTER_VISUAL 5 menu 320
+REGISTER_VISUAL 5 personal 320
+REGISTER_VISUAL 5 mission-edit 390
+REGISTER_VISUAL 5 chat 390
+REGISTER_VISUAL 5 chat-2 390
+REGISTER_VISUAL 5 search 390
+REGISTER_VISUAL 5 menu 390
+REGISTER_VISUAL 5 personal 390
+REGISTER_VISUAL_PASS 5 6 sources x 320/390
+HISTORICAL_SCRIPT_PASS register-visual.cjs {"DOBBY_LOT":"5"}
+HISTORICAL_SCRIPT_START register-family.cjs {}
+REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+HISTORICAL_SCRIPT_PASS register-family.cjs {}
+HISTORICAL_SCRIPT_START register-visual.cjs {"DOBBY_LOT":"2b"}
+REGISTER_VISUAL 2b contacts 320
+REGISTER_VISUAL 2b contact-edit 320
+REGISTER_VISUAL 2b memos 320
+REGISTER_VISUAL 2b memo-edit 320
+REGISTER_VISUAL 2b lists 320
+REGISTER_VISUAL 2b list-detail 320
+REGISTER_VISUAL 2b contacts 390
+REGISTER_VISUAL 2b contact-edit 390
+REGISTER_VISUAL 2b memos 390
+REGISTER_VISUAL 2b memo-edit 390
+REGISTER_VISUAL 2b lists 390
+REGISTER_VISUAL 2b list-detail 390
+REGISTER_VISUAL_PASS 2b 6 sources x 320/390
+HISTORICAL_SCRIPT_PASS register-visual.cjs {"DOBBY_LOT":"2b"}
+HISTORICAL_SCRIPT_START register-sync.cjs {}
+REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+HISTORICAL_SCRIPT_PASS register-sync.cjs {}
+HISTORICAL_SCRIPT_START register-documents-sync.cjs {}
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+HISTORICAL_SCRIPT_PASS register-documents-sync.cjs {}
+HISTORICAL_SCRIPT_START register-import-reading.cjs {}
+REGISTER_IMPORT_READING_PASS 320
+REGISTER_IMPORT_READING_PASS 390
+HISTORICAL_SCRIPT_PASS register-import-reading.cjs {}
+HISTORICAL_SCRIPT_START register-missions-sync.cjs {}
+REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+HISTORICAL_SCRIPT_PASS register-missions-sync.cjs {}
+HISTORICAL_SCRIPT_START register-preservation.cjs {}
+REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+HISTORICAL_SCRIPT_PASS register-preservation.cjs {}
+HISTORICAL_SCRIPT_START register-navigation.cjs {}
+REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+HISTORICAL_SCRIPT_PASS register-navigation.cjs {}
+HISTORICAL_SCRIPT_START register-root-visual.cjs {}
+REGISTER_ROOT_VISUAL traverse 320
+REGISTER_ROOT_VISUAL missions 320
+REGISTER_ROOT_VISUAL famille 320
+REGISTER_ROOT_VISUAL taverne 320
+REGISTER_ROOT_VISUAL traverse 390
+REGISTER_ROOT_VISUAL missions 390
+REGISTER_ROOT_VISUAL famille 390
+REGISTER_ROOT_VISUAL taverne 390
+HISTORICAL_SCRIPT_PASS register-root-visual.cjs {}
+HISTORICAL_SCRIPT_START register-review.cjs {}
+REGISTER_REVIEW_PASS stale-memo-edit 320
+REGISTER_REVIEW_PASS stale-equipment-edit 320
+REGISTER_REVIEW_PASS stale-document-edit 320
+REGISTER_REVIEW_PASS list-rg-item-toggle 320
+REGISTER_REVIEW_PASS list-rg-item-remove 320
+REGISTER_REVIEW_PASS menu-member-draft 320
+REGISTER_REVIEW_PASS menu-contact-draft 320
+REGISTER_REVIEW_PASS menu-medical-draft 320
+REGISTER_REVIEW_PASS maintenance-file-draft 320
+REGISTER_REVIEW_PASS document-native-write-missing 320
+REGISTER_REVIEW_PASS document-native-write-replaced 320
+REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+REGISTER_REVIEW_PASS maintenance-source-facts 320
+REGISTER_REVIEW_PASS source-facts 320
+REGISTER_REVIEW_PASS stale-memo-edit 390
+REGISTER_REVIEW_PASS stale-equipment-edit 390
+REGISTER_REVIEW_PASS stale-document-edit 390
+REGISTER_REVIEW_PASS list-rg-item-toggle 390
+REGISTER_REVIEW_PASS list-rg-item-remove 390
+REGISTER_REVIEW_PASS menu-member-draft 390
+REGISTER_REVIEW_PASS menu-contact-draft 390
+REGISTER_REVIEW_PASS menu-medical-draft 390
+REGISTER_REVIEW_PASS maintenance-file-draft 390
+REGISTER_REVIEW_PASS document-native-write-missing 390
+REGISTER_REVIEW_PASS document-native-write-replaced 390
+REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+REGISTER_REVIEW_PASS maintenance-source-facts 390
+REGISTER_REVIEW_PASS source-facts 390
+REGISTER_REVIEW_ALL_PASS 14 cases × 320/390
+HISTORICAL_SCRIPT_PASS register-review.cjs {}
+HISTORICAL_CAMPAIGN_FAILURES [{"file":"e01-consolidation.cjs","extra":{},"status":1,"signal":null},{"file":"integrated-preview.cjs","extra":{"DOBBY_PREVIEW_BASE":"http://127.0.0.1:8766/dobby-historical-integrated-discovery/"},"status":1,"signal":null},{"file":"e05-edge.cjs","extra":{},"status":1,"signal":null},{"file":"runes-native.cjs","extra":{},"status":1,"signal":null},{"file":"e04-runes.cjs","extra":{},"status":1,"signal":null},{"file":"smoke.cjs","extra":{},"status":1,"signal":null},{"file":"cuisine.cjs","extra":{},"status":1,"signal":null}]

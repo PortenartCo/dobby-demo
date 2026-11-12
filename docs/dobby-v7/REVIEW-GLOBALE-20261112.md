@@ -30,6 +30,14 @@ Modules attendus dans la candidate : E01 Accueil, E02 conversation/commandes exi
 - `family-v2.js` : le client Courses natif E07 reste la source de vérité, y compris disponibilités et révisions. Le domaine et l’attente du démarrage sont transformés seulement dans la copie générée de démonstration.
 - La source canonique est régénérée ; le manifeste distingue empreintes source et empreintes des copies transformées.
 
+## Sélection des changements et fonctionnalités non reprises
+
+Le socle E01–E08 est celui de la base E07 validée `c510ded`. Les références Runes fournissent les deltas métier récurrences, récompenses personnalisées, compensations, writer V2 et reprise historique ; E09 fournit Salon/Agenda/Membres/Mémos.
+
+Les améliorations distinctes présentes dans des ancêtres de la branche Runes restent hors de ce lot : filtre temporel et pagination E03, extensions de dictée et de correction contextuelle des Courses, galerie de seize portraits, illustrations/transitions Stitch supplémentaires et révision ultérieure q2 du questionnaire E06. Les filtres statut/membre, la conversation, les avatars et les questionnaires existants de la base E07 restent disponibles. Les capacités requises créer/attribuer/modifier/terminer une mission, gain unique, grades et historique sont intégrées. [Provenance détaillée](evidence/global-review-20261112/excluded-ancestors.md).
+
+Le catalogue de recettes existant et ses deux recettes DÉMO déjà présentes sont réutilisés ; aucun catalogue supplémentaire n’est inventé. Connexion/invitations réelles, Supabase distant et appels IA payants restent désactivés. Les pièces jointes de démonstration restent locales.
+
 ## Isolation et limites
 
 Données explicitement fictives ; stockage et IndexedDB propres à cette version, séparés par client A/B. Le transport HTTP de démonstration est exécuté localement dans le navigateur et identifié comme tel. Les deux onglets doivent utiliser le même navigateur et la même origine HTTPS (ou localhost).
@@ -49,6 +57,7 @@ Safari/iPhone, commandes vocales et appareils physiques ne sont pas validés par
 - Récurrences, montants personnalisés et presets natifs : trois scripts Chromium réussis ([recurrence](evidence/global-review-20261112/browser-recurrence-writer.log), [writer](evidence/global-review-20261112/browser-rewards-writer.log), [presets](evidence/global-review-20261112/browser-rewards-preset.log)).
 - Revue indépendante de la réconciliation native : aucun défaut actionnable. Revue indépendante du harness : P1 reset incomplet reproduit sur pièce jointe native ; correction complète et reprise d’interruption validées en `404c5cd`, puis relecture indépendante sans réserve bloquante.
 - CI initiale `43130740616` synchronisation réussie ; `43130740640` arrêt sur assertion historique des compensations Runes. Le résultat final sera donné séparément après correction et campagne finale.
+- Diagnostic historique complet : 62 checkpoints exécutés, 55 réussis au premier passage, 7 anciennes assertions corrigées puis validées avec les tests ciblés. Aucun checkpoint supprimé ; `ci.cjs` inchangé ([résolutions](evidence/global-review-20261112/historical-resolution.json), [journal complet](evidence/global-review-20261112/historical-discovery.log)). La CI définitive exécute de nouveau la totalité de la candidate.
 - Recette globale locale après reset : 320/390/1440 réussis, SHA `a8ef0d30af55f26db3e748071841aedf91ee07f1` ; [preuves](evidence/global-review-20261112/after-reset/summary.json). La correction ultérieure `404c5cd` porte sur la reprise d’un reset interrompu et dispose de sa régression ciblée. Recette hébergée et CI finale à compléter.
 
 ## Anomalies
@@ -60,7 +69,7 @@ Safari/iPhone, commandes vocales et appareils physiques ne sont pas validés par
 | P2, revue visuelle | À 320 px, les longs noms fictifs se replient fortement dans les cartes d’attribution de mission. | Utilisable sans débordement ; arbitrage de présentation différé. |
 | P3 | L’Agenda revient au jour courant après rechargement ; sélectionner à nouveau la date retrouve l’événement enregistré. | Conservation de la date sélectionnée à arbitrer. |
 
-La qualification finale sera actualisée après recette stable. Les erreurs des états intermédiaires ne sont pas assimilées au résultat final.
+L’affichage des annulations Runes dans le profil a aussi été corrigé en `e5fb9e6` : +17 / −17 / +25, solde net25 et registre confirmé inchangé ([RED](evidence/global-review-20261112/history-red.log), [GREEN](evidence/global-review-20261112/history-green.log)). Les erreurs des états intermédiaires ne sont pas assimilées au résultat final.
 
 ## Revue dirigée avec ChatGPT
 

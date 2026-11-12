@@ -1,0 +1,181 @@
+{
+  "purpose": "Historical DOBBY_FINAL discovery and targeted corrections; definitive strict full campaign is run separately by root CI.",
+  "discovery_command": "DOBBY_FINAL=1 DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node /workspace/scratch/dobby-historical-discovery.cjs > /workspace/scratch/dobby-historical-full.log 2>&1",
+  "runner_changes": "Temporary outside-repository runner records failures and continues every original checkpoint. Only isolated integrated output/base redirected to scratch. Repository ci.cjs is unchanged and retains strict failure exit.",
+  "commits": [
+    "a8ef0d3",
+    "dc83b42",
+    "9efbcf9",
+    "2415fdf",
+    "981cce4"
+  ],
+  "production_changes": false,
+  "targets": [
+    {
+      "tests": [
+        "e01-consolidation.cjs"
+      ],
+      "result": "PASS 320/390/1440",
+      "log": "/workspace/scratch/historical-targeted-e01-consolidation.log",
+      "invariant": "Preserved original grant, exact reversal, zero active gain after reopen, one restored gain and exact net balance without cumulative rewards; reload duplicates excluded."
+    },
+    {
+      "tests": [
+        "e03.cjs",
+        "e04.cjs"
+      ],
+      "result": "PASS 320/390/1440",
+      "log": "/workspace/scratch/historical-native-form-targeted.log",
+      "invariant": "Current enabled recurrence/custom controls and initial effects preference; existing full writer/persistence/validation checks retained."
+    },
+    {
+      "tests": [
+        "runes-native.cjs",
+        "e04-runes.cjs"
+      ],
+      "result": "PASS native browser390 and E04 320/390/1440",
+      "log": "/workspace/scratch/historical-runes-exact.log",
+      "invariant": "Every prior event unchanged by immutable identity despite canonical sorting, exact reversal fields and restored 10/35/85 net totals; pending V1 sharing uses fresh compatible profile."
+    },
+    {
+      "tests": [
+        "e01.cjs",
+        "e01-3.cjs"
+      ],
+      "result": "PASS 390/1440 plus E01 motion",
+      "log": "/workspace/scratch/historical-second-targeted.log",
+      "invariant": "Actual P01 selected day/slot, initial effects ON, persistent explicit opt-out, bounded Taverne ambience, reduced motion and no sound coupling."
+    },
+    {
+      "tests": [
+        "e02-edge.cjs"
+      ],
+      "result": "PASS390",
+      "log": "/workspace/scratch/historical-effects-targeted.log",
+      "invariant": "Current initial effects preference; prior parser, writer failure, privacy and keyboard checks retained."
+    },
+    {
+      "tests": [
+        "e05-edge.cjs"
+      ],
+      "result": "PASS390",
+      "log": "/workspace/scratch/historical-e05-edge-targeted.log",
+      "invariant": "Actual Menu generic profile entry, chooser/back and no inferred member retained."
+    },
+    {
+      "tests": [
+        "e07-1-context.cjs",
+        "e07-1.cjs",
+        "e07-native-actions.cjs",
+        "e07.cjs"
+      ],
+      "result": "PASS context/native actions390 and full E07 320/390/1440",
+      "logs": [
+        "/workspace/scratch/e07-historical-fixed.log",
+        "/workspace/scratch/e07-historical-e071-second.log",
+        "/workspace/scratch/e07-historical-geometry.log"
+      ],
+      "invariant": "Actual calendar/library/select/save, prepared meal tools, exact preserved other meal slots; visible geometry and every explicitly opened meal menu checked."
+    },
+    {
+      "tests": [
+        "integrated-preview.cjs"
+      ],
+      "result": "PASS320/390/1440",
+      "log": "/workspace/scratch/historical-second-targeted.log",
+      "invariant": "All six existing isolated/native journeys retained via current P01 controls and Menu contracts entry."
+    },
+    {
+      "tests": [
+        "smoke.cjs"
+      ],
+      "result": "PASS8 screen/width records320/390",
+      "log": "/workspace/scratch/historical-family-smoke-targeted.log",
+      "invariant": "Actual recipe return and Salon event controls; original engine, detail/form/navigation checks retained. Local target exports CHROMIUM_PATH=/usr/bin/chromium as root CI does."
+    },
+    {
+      "tests": [
+        "cuisine.cjs"
+      ],
+      "result": "PASS320/390",
+      "log": "/workspace/scratch/cuisine-historical-third.log",
+      "invariant": "Native scaling, selected export roundtrip, TM5 explicit-verification guard, exact saved steps, modern+legacy imports, editing/reload and exact meal move/cancel preservation. Fictional calendar uses an advancing clock to avoid timestamp ID collisions."
+    },
+    {
+      "tests": [
+        "cuisine-visual.cjs"
+      ],
+      "result": "PASS30 route/width records",
+      "log": "/workspace/scratch/cuisine-historical-visual-final.log",
+      "invariant": "13 routes320/390 and4 E07 overrides1440, zero visible overflow, verified current route source aliases."
+    },
+    {
+      "tests": [
+        "family.cjs",
+        "family-edge.cjs",
+        "family-review.cjs",
+        "family-shared.cjs",
+        "family-visual.cjs"
+      ],
+      "result": "PASS unchanged",
+      "log": "/workspace/scratch/historical-family-baseline.log",
+      "invariant": "Existing native CRUD, privacy, offline/shared conflict resolution and visual checks unchanged."
+    }
+  ],
+  "discovery": {
+    "completed": true,
+    "exitCode": 1,
+    "started": 62,
+    "passedDuringDiscovery": 55,
+    "failedDuringDiscovery": 7,
+    "failures": [
+      {
+        "file": "e01-consolidation.cjs",
+        "extra": {},
+        "status": 1,
+        "signal": null
+      },
+      {
+        "file": "integrated-preview.cjs",
+        "extra": {
+          "DOBBY_PREVIEW_BASE": "http://127.0.0.1:8766/dobby-historical-integrated-discovery/"
+        },
+        "status": 1,
+        "signal": null
+      },
+      {
+        "file": "e05-edge.cjs",
+        "extra": {},
+        "status": 1,
+        "signal": null
+      },
+      {
+        "file": "runes-native.cjs",
+        "extra": {},
+        "status": 1,
+        "signal": null
+      },
+      {
+        "file": "e04-runes.cjs",
+        "extra": {},
+        "status": 1,
+        "signal": null
+      },
+      {
+        "file": "smoke.cjs",
+        "extra": {},
+        "status": 1,
+        "signal": null
+      },
+      {
+        "file": "cuisine.cjs",
+        "extra": {},
+        "status": 1,
+        "signal": null
+      }
+    ],
+    "noCheckpointsSkipped": true,
+    "allDiscoveryFailuresHaveFinalTargetedPasses": true,
+    "strictFinalCampaign": "Root definitive CI on committed candidate; no redundant local full rerun."
+  }
+}

@@ -151,6 +151,7 @@ jobs:
           else
             BROWSER="$(command -v chromium)"
           fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/runes-history.cjs
           DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
           DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
       - name: Keep root, Cuisine and Family comparisons (320/390px)

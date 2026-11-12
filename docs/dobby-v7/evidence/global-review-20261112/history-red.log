@@ -1,0 +1,15 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'Historique des gains'
+- 'Historique des gains et annulations'
+                       ^
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/runes-history.cjs:21:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Historique des gains',
+  expected: 'Historique des gains et annulations',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

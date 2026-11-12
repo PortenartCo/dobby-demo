@@ -18,3 +18,9 @@ Autres périmètres sans défaut substantiel trouvé : préfixes A/B indépendan
 - La relecture a reproduit un second P1 : un token de reset orphelin pouvait empêcher la reprise après fermeture de l’onglet initiateur, pendant l’attente du Web Lock.
 - `404c5cde2c10e05d9f895c98f594cc30f9146461` : reprise sous le même Web Lock avant le démarrage natif. Régression contrôlée [RED](reset-interrupted-red.log) → [GREEN](reset-interrupted-green.log).
 - Relecture indépendante du correctif final : P1 résolus, nettoyage toujours limité au préfixe global, aucun autre constat substantiel. Aucune campagne complète répétée par le reviewer.
+
+## Recette historique et correctif de présentation
+
+Relecture indépendante des commits `a8ef0d3`, `dc83b42`, `9efbcf9`, `2415fdf`, `981cce4` : aucun affaiblissement actionnable identifié. Les événements immuables, identités de compensations et soldes nets sont vérifiés ; la géométrie reste contrôlée avec les menus ouverts, les choix Midi/Soir et les autres repas sont préservés. Cuisine conserve les contrôles natifs exacts de quantités, import, déplacement/annulation et persistance.
+
+`e5fb9e6` : historique du profil signé +/−, trois événements +17/−17/+25, solde25 et ledger inchangé. Régression native par formulaires RED→GREEN ; relecture sans constat substantiel.
