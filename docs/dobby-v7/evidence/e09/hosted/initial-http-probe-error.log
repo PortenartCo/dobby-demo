@@ -1,0 +1,16 @@
+apiRequestContext.get: connect ENETUNREACH 2606:50c0:8001::153:443 - Local (:::0)
+Call log:
+[2m  - → GET https://portenartco.github.io/dobby-demo/essai-dobby-e09-famille-salon-review-20261112/review-manifest.json[22m
+[2m    - user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36[22m
+[2m    - accept: */*[22m
+[2m    - accept-encoding: gzip,deflate,br[22m
+
+    at /workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-hosted.cjs:13:38 {
+  log: [
+    '  - → GET https://portenartco.github.io/dobby-demo/essai-dobby-e09-famille-salon-review-20261112/review-manifest.json',
+    '    - user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36',
+    '    - accept: */*',
+    '    - accept-encoding: gzip,deflate,br'
+  ],
+  name: 'Error'
+}
