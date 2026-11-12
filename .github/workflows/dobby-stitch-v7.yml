@@ -6,6 +6,7 @@ on:
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-global-review.cjs'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
@@ -15,6 +16,7 @@ on:
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-global-review.cjs'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
@@ -123,6 +125,8 @@ jobs:
         working-directory: essai-stitch-v7/tests
         run: npm ci --ignore-scripts
       - name: Functional Stitch roots and source fidelity
+        env:
+          DOBBY_FINAL: ${{ github.ref_name == 'feat/dobby-v7-global-review-20261112' && '1' || '0' }}
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
           sleep 1
@@ -137,6 +141,17 @@ jobs:
             exit 1
           fi
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs
+      - name: Global E01–E09 isolated bundle and native A/B journeys
+        if: github.ref_name == 'feat/dobby-v7-global-review-20261112'
+        run: |
+          node --test essai-stitch-v7/tests/global-build.test.cjs
+          node scripts/build-dobby-global-review.cjs --output essai-dobby-v7-global-review-20261112
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
       - name: Keep root, Cuisine and Family comparisons (320/390px)
         if: always()
         uses: actions/upload-artifact@v4
