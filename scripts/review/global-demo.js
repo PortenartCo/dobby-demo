@@ -5,13 +5,13 @@ const prefix='dobby-review-v7-global-20261112|',backendKey=prefix+'backend-v1',p
 const client=new URLSearchParams(top.location.search).get('client')==='B'?'B':'A',household='00000000-0000-4000-8000-000000000010',user='00000000-0000-4000-8000-00000000000'+(client==='A'?'1':'2');
 const publishable='sb_publishable_global_simulation_only_123456789',appKey='dobby-v5-familial-preview-20261108',raw=Storage.prototype.__reviewRaw;
 if(!raw||!window.DobbyReview)throw Error('Global simulation requires the isolated review runtime.');
-const resetKey=prefix+'reset-in-progress';let resetting=false,initializedGeneration=null;
+const resetKey=prefix+'reset-in-progress';let initializedGeneration=null,reloadRequested=false;
 function clearReviewStorage(storage,keep=new Set()){
  const keys=Array.from({length:raw.length.call(storage)},(_,index)=>raw.key.call(storage,index));
  for(const key of keys)if(key?.startsWith(prefix)&&!keep.has(key))raw.removeItem.call(storage,key);
 }
 function resetPending(){
- if(resetting||raw.getItem.call(localStorage,resetKey))return true;
+ if(raw.getItem.call(localStorage,resetKey))return true;
  if(initializedGeneration===null)return false;
  const stored=raw.getItem.call(localStorage,backendKey);return!stored||JSON.parse(stored).generation!==initializedGeneration;
 }
@@ -37,10 +37,11 @@ const locked=task=>withBackendLock(()=>{if(resetPending())throw Error('Réinitia
 const ready=withBackendLock(async()=>{
  // An active owner finishes before this lock is acquired. A remaining marker
  // therefore belongs to an interrupted document; resume its isolated cleanup.
- if(raw.getItem.call(localStorage,resetKey)){prepareReset();channel?.postMessage('prepare');await clearResetStorage();resetting=false;channel?.postMessage('complete');}
+ const token=raw.getItem.call(localStorage,resetKey);
+ if(token){prepareReset(token);channel?.postMessage({type:'prepare',token});const generation=await clearResetStorage();channel?.postMessage({type:'complete',token,generation});}
  if(!raw.getItem.call(localStorage,backendKey))write(seed());
 }).then(()=>new Promise((resolve,reject)=>{
- resetting=false;initializedGeneration=read().generation;
+ initializedGeneration=read().generation;
  const req=indexedDB.open('dobby-v5-household-preview-v2',1);
  req.onupgradeneeded=()=>{for(const [name,keyPath]of [['items','storageKey'],['meta','id']])if(!req.result.objectStoreNames.contains(name))req.result.createObjectStore(name,{keyPath});};
  req.onerror=()=>reject(req.error);req.onblocked=()=>reject(Error('Fermez les anciens onglets de cette simulation.'));
@@ -114,9 +115,22 @@ window.fetch=async(input,options={})=>{
 };
 const native=()=>window.DobbyFamilyUI||window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI||window.DobbyCuisineEngine?.win()?.DobbyFamilyUI;
 async function sync(){await ready;const api=native();if(!api?.grocery?.read().ready)throw Error('Le client natif démarre encore. Réessayez dans un instant.');await api.grocery.sync();window.DobbyCuisine?.refresh();window.DobbyFamilyStitch?.refresh?.();updateStatus();const result=api.grocery.read();if(result.error)throw Error(result.error);return clone(read());}
-function prepareReset(){resetting=true;clearReviewStorage(sessionStorage);}
+function prepareReset(token){if(raw.getItem.call(localStorage,resetKey)===token)clearReviewStorage(sessionStorage);}
+function reconcileReset(){
+ if(window===top&&!reloadRequested&&initializedGeneration!==null&&!raw.getItem.call(localStorage,resetKey)&&read().generation>initializedGeneration){reloadRequested=true;location.reload();}
+}
 const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(prefix+'reset'):null;
-if(channel)channel.onmessage=event=>{if(event.data==='prepare')prepareReset();if(event.data==='failed')resetting=false;if(event.data==='complete'&&window===top)location.reload();};
+if(channel)channel.onmessage=event=>{
+ const message=event.data;if(!message||typeof message!=='object')return;
+ if(message.type==='prepare'&&typeof message.token==='string')prepareReset(message.token);
+ // A new document may receive notifications queued by the reset it just
+ // recovered. Durable marker/generation, rather than message arrival order,
+ // determine whether that document still needs to reload.
+ if(message.type==='complete'&&Number.isSafeInteger(message.generation))reconcileReset();
+};
+// Storage cache updates may reach another renderer after its channel message.
+// Reconcile again at the durable update instead of relying on message ordering.
+window.addEventListener('storage',event=>{if(event.storageArea===localStorage&&(event.key===backendKey||event.key===resetKey))reconcileReset();});
 async function clearResetStorage(){
  const previous=read(),databases=await indexedDB.databases();
  await Promise.all(databases.filter(database=>database.name?.startsWith(prefix)).map(database=>new Promise((resolve,reject)=>{
@@ -124,19 +138,20 @@ async function clearResetStorage(){
   request.onsuccess=resolve;request.onerror=()=>reject(request.error);request.onblocked=()=>reject(Error('Fermez les autres onglets de cet essai puis réessayez sa réinitialisation.'));
  })));
  clearReviewStorage(localStorage,new Set([resetKey]));clearReviewStorage(sessionStorage);
- const next=seed();next.generation=previous.generation+1;write(next);raw.removeItem.call(localStorage,resetKey);
+ const next=seed();next.generation=previous.generation+1;write(next);raw.removeItem.call(localStorage,resetKey);return next.generation;
 }
 async function reset(){
- await ready;const token=crypto.randomUUID();raw.setItem.call(localStorage,resetKey,token);prepareReset();channel?.postMessage('prepare');
+ await ready;const token=crypto.randomUUID();raw.setItem.call(localStorage,resetKey,token);prepareReset(token);channel?.postMessage({type:'prepare',token});let generation;
  try{
-  await withBackendLock(clearResetStorage);
- }catch(error){if(raw.getItem.call(localStorage,resetKey)===token)raw.removeItem.call(localStorage,resetKey);resetting=false;channel?.postMessage('failed');throw error;}
- channel?.postMessage('complete');location.reload();
+  generation=await withBackendLock(clearResetStorage);
+ }catch(error){if(raw.getItem.call(localStorage,resetKey)===token)raw.removeItem.call(localStorage,resetKey);throw error;}
+ channel?.postMessage({type:'complete',token,generation});location.reload();
 }
 function setOffline(value){sessionStorage.setItem('globalFixtureOffline',Boolean(value)?'true':'false');updateStatus();}
 function updateStatus(){const node=document.querySelector('[data-global-status]');if(!node)return;const state=read(),offline=sessionStorage.getItem('globalFixtureOffline')==='true';node.textContent=(offline?'Hors ligne simulé':'Simulation locale')+' · Famille r'+state.modules.family.revision+' · Missions r'+state.modules.missions.revision;const button=document.querySelector('[data-global-offline]');if(button){button.textContent=offline?'Reconnecter':'Hors ligne';button.setAttribute('aria-pressed',String(offline));}}
 window.DobbyGlobalDemo=Object.freeze({client,ready,realBackend:false,sync,reset,setOffline,state:async()=>{await ready;return clone(read());},rows:async()=>{await ready;return clone(read().grocery);},requests:async()=>{await ready;return clone(read().requests);}});
 if(window===top)document.addEventListener('DOMContentLoaded',()=>{
+ void ready.then(()=>{if(resetPending())return;const frame=document.querySelector('#dv7-engine[data-global-engine-src]');if(frame){frame.src=frame.dataset.globalEngineSrc;frame.removeAttribute('data-global-engine-src');}}).catch(error=>alert(error.message));
  const banner=document.querySelector('[data-review-banner]');if(!banner)return;banner.replaceChildren();const label=document.createElement('span');label.textContent='DOBBY V7 · foyer fictif · Client '+client;banner.append(label);
  const controls=document.createElement('div');controls.dataset.globalControls='';for(const other of ['A','B']){const link=document.createElement('a'),url=new URL('essai-stitch-v7/traverse.html',DobbyReview.root);url.searchParams.set('client',other);link.href=url.href;link.textContent='Client '+other;link.target='_blank';link.rel='noopener';if(client===other)link.setAttribute('aria-current','page');controls.append(link);}
  const button=document.createElement('button');button.type='button';button.dataset.globalSync='';button.textContent='Synchroniser';button.onclick=async()=>{button.disabled=true;try{await sync();}catch(error){alert(error.message);}finally{button.disabled=false;}};controls.append(button);banner.append(controls);

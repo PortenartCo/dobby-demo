@@ -11,7 +11,10 @@ const manifestFile=path.join(out,'review-manifest.json'),manifest=JSON.parse(fs.
 const config=fs.readFileSync(path.join(__dirname,'review/global-config.js')),demo=fs.readFileSync(path.join(__dirname,'review/global-demo.js'));
 fs.writeFileSync(path.join(out,'review-config.js'),config);fs.writeFileSync(path.join(out,'global-demo.js'),demo);
 for(const record of manifest.files){const file=path.join(out,record.path);let bytes=fs.readFileSync(file);
- if(record.path.endsWith('.html')){const relative=path.relative(path.dirname(file),path.join(out,'global-demo.js')).split(path.sep).join('/');const html=bytes.toString(),marker=/(<script src="[^"]*review-runtime\.js"><\/script>)/;if(/<head>/.test(html)&&!marker.test(html))throw Error('Missing isolation runtime: '+record.path);bytes=Buffer.from(html.replace(marker,'$1<script src="'+relative+'"></script>'));}
+ if(record.path.endsWith('.html')){const relative=path.relative(path.dirname(file),path.join(out,'global-demo.js')).split(path.sep).join('/');let html=bytes.toString();const marker=/(<script src="[^"]*review-runtime\.js"><\/script>)/;if(/<head>/.test(html)&&!marker.test(html))throw Error('Missing isolation runtime: '+record.path);html=html.replace(marker,'$1<script src="'+relative+'"></script>');
+  if(/^essai-stitch-v7\/(index|traverse|missions|famille)\.html$/.test(record.path)){const frame='id="dv7-engine" src="../essai-stitch-v5-famille/index.html"';if(html.split(frame).length!==2)throw Error('Native review iframe changed: '+record.path);html=html.replace(frame,'id="dv7-engine" data-global-engine-src="../essai-stitch-v5-famille/index.html"');}
+  bytes=Buffer.from(html);
+ }
  if(record.path==='essai-stitch-v5-famille/family-v2.js'){let source=bytes.toString();const project="const PROJECT = 'https://pqcdkrwljgvgagzwrcmg.supabase.co';",boot='void boot();';if(!source.includes(project)||source.split(boot).length!==2)throw Error('Native family adapter changed; review required.');source=source.replace(project,"const PROJECT = '"+origin+"';").replace(boot,'void window.DobbyGlobalDemo.ready.then(boot);');bytes=Buffer.from(source);}
  fs.writeFileSync(file,bytes);record.sha256=hash(bytes);record.transformed=record.sha256!==record.sourceSha256;
 }
