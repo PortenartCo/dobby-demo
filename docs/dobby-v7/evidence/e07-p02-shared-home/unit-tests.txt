@@ -1,0 +1,33 @@
+✔ create and CAS transition (1.312882ms)
+✔ offline edit is pending until remote acknowledges (0.339162ms)
+✔ independent updates never silently overwrite (0.248167ms)
+✔ unknown quantity is not silently converted into 0 or 1 (0.339693ms)
+✔ logical deletion preserved (1.097073ms)
+✔ availability is persisted, compared and acknowledged by the native core (1.292522ms)
+✔ competing availability declarations require conflict resolution (0.403396ms)
+✔ an edit in flight is not lost on acknowledgement (0.87891ms)
+✔ legacy rows omit availability from payloads and compare as zero (0.147699ms)
+✔ kg availability retains gram-level fractional precision (1.255407ms)
+✔ regroupe les apports compatibles et conserve leurs repas, réimport idempotent (25.338122ms)
+✔ article manuel couvre le besoin sans doubler la quantité (3.113947ms)
+✔ maison partiel/total/annulation reste distinct des achats et de la clôture (2.637201ms)
+✔ noms ambigus et unités incompatibles restent distincts (1.116712ms)
+✔ un aperçu devenu périmé ne modifie pas les articles (1.758311ms)
+✔ disponibilité conserve son unité quand un apport compatible est ajouté (4.891266ms)
+✔ plusieurs articles manuels compatibles sont tous conservés sans surajout (1.868143ms)
+✔ historique E07.2 en kg conserve son reçu et ne se réimporte pas (1.094489ms)
+✔ modifier une unité compatible convertit aussi la disponibilité (1.650392ms)
+✔ supprimer une préparation libère sa couverture manuelle (1.903686ms)
+✔ supprimer un article familial retire son annotation maison (1.65635ms)
+✔ réimport familial avec période restreinte ne réalloue pas la couverture (3.253543ms)
+✔ un formulaire partagé périmé ne remplace pas une modification reçue (0.886642ms)
+✔ une confirmation de suppression périmée ne retire pas la nouvelle version (0.968964ms)
+✔ une clôture périmée n’archive pas une disponibilité reçue après confirmation (0.925809ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 128.424766

@@ -1,0 +1,87 @@
+{
+  "A": {
+    "id": "00000000-0000-4000-8000-000000000101",
+    "name": "TEST — Disponibilité commune",
+    "qty": 300,
+    "unit": "g",
+    "done": false,
+    "conflict": false,
+    "pending": false,
+    "atHomeQty": 200,
+    "sources": [
+      {
+        "id": "00000000-0000-4000-8000-000000000101",
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "at_home_quantity": 200,
+        "deleted_at": null,
+        "created_at": "2026-11-12T10:00:00.000Z",
+        "updated_at": "2026-11-12T10:00:00.000Z",
+        "baseRevision": 2,
+        "syncState": "clean",
+        "remoteShadow": null,
+        "clientRev": 0,
+        "import_source_id": null,
+        "storageKey": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+      }
+    ],
+    "category": "Autres achats",
+    "ids": [
+      "00000000-0000-4000-8000-000000000101"
+    ],
+    "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+    "requiredQty": 500,
+    "origin": ""
+  },
+  "B": {
+    "id": "00000000-0000-4000-8000-000000000101",
+    "name": "TEST — Disponibilité commune",
+    "qty": 300,
+    "unit": "g",
+    "done": false,
+    "conflict": false,
+    "pending": false,
+    "atHomeQty": 200,
+    "sources": [
+      {
+        "id": "00000000-0000-4000-8000-000000000101",
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "at_home_quantity": 200,
+        "deleted_at": null,
+        "created_at": "2026-11-12T10:00:00.000Z",
+        "updated_at": "2026-11-12T10:00:00.000Z",
+        "baseRevision": 2,
+        "syncState": "clean",
+        "remoteShadow": null,
+        "clientRev": 0,
+        "import_source_id": null,
+        "storageKey": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+      }
+    ],
+    "category": "Autres achats",
+    "ids": [
+      "00000000-0000-4000-8000-000000000101"
+    ],
+    "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+    "requiredQty": 500,
+    "origin": ""
+  },
+  "remote": {
+    "id": "00000000-0000-4000-8000-000000000101",
+    "household_id": "00000000-0000-4000-8000-000000000010",
+    "title": "TEST — Disponibilité commune",
+    "quantity": 500,
+    "unit": "g",
+    "checked": false,
+    "deleted_at": null,
+    "created_at": "2026-11-12T10:00:00.000Z",
+    "updated_at": "2026-11-12T10:00:00.000Z",
+    "revision": 2,
+    "at_home_quantity": 200
+  }
+}

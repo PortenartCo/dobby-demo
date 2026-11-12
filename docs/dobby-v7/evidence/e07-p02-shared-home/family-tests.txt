@@ -1,0 +1,11 @@
+SHARED_HOME_OK A declares 200 g of 500 g; B reads 200 g available and 300 g to buy
+SHARED_HOME_OK B modifies and cancels the shared declaration
+SHARED_HOME_OK Offline availability can be changed again after reload, stays pending, and reaches B with its latest value
+SHARED_HOME_OK An incompatible name/unit edit after offline reload resets availability in the durable queue and on B
+SHARED_HOME_OK Concurrent revision CAS rejects the stale PATCH; explicit server and local resolutions converge
+SHARED_HOME_OK Legacy homeByScope stays intact, ignored by shared snapshots, and never auto-published
+SHARED_HOME_OK Grouped edits roll back atomically on a stale row; g/kg availability retains gram precision and survives compatible editing
+SHARED_HOME_OK Simple native edits share availability; delete/archive and re-add leave no residual declaration
+SHARED_HOME_OK Repeated import/reload remains idempotent and checking/unchecking preserves availability
+SHARED_HOME_OK Old schema supports ordinary CRUD and fails availability with migration guidance and no false local success
+CUISINE_SHARED_HOME_PASS two clients, shared availability, offline/reload, actual CAS conflicts, grouped units, legacy schema and import/check regression (HTTP fixture only)

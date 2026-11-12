@@ -1,0 +1,186 @@
+{
+  "fixture": "Two isolated browsers, distinct users, same household, HTTP only",
+  "checks": [],
+  "requests": [
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    }
+  ],
+  "production": "HEAD baseline",
+  "status": "FAIL",
+  "error": "AssertionError [ERR_ASSERTION]: TEST — Disponibilité commune available at home\n\n0 !== 200\n\n    at amount (/workspace/dobby-e07-courses-final/essai-stitch-v7/tests/e07-p02-shared-home.cjs:26:130)\n    at async /workspace/dobby-e07-courses-final/essai-stitch-v7/tests/e07-p02-shared-home.cjs:101:34",
+  "writes": [],
+  "A": {
+    "snapshot": {
+      "scope": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010",
+      "shared": true,
+      "status": "Liste partagée à jour",
+      "error": "",
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "name": "TEST — Disponibilité commune",
+          "qty": 300,
+          "unit": "g",
+          "done": false,
+          "conflict": false,
+          "pending": false,
+          "category": "Autres achats",
+          "ids": [
+            "00000000-0000-4000-8000-000000000101"
+          ],
+          "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+          "origin": "",
+          "requiredQty": 500,
+          "atHomeQty": 200
+        }
+      ],
+      "localCount": 0
+    },
+    "native": {
+      "context": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010",
+      "status": "Liste partagée à jour",
+      "error": "",
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "title": "TEST — Disponibilité commune",
+          "quantity": 500,
+          "unit": "g",
+          "checked": false,
+          "deleted_at": null,
+          "created_at": "2026-11-12T10:00:00.000Z",
+          "updated_at": "2026-11-12T10:00:00.000Z",
+          "baseRevision": 1,
+          "syncState": "clean",
+          "remoteShadow": null,
+          "clientRev": 0,
+          "import_source_id": null,
+          "storageKey": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+        }
+      ],
+      "ready": true
+    }
+  },
+  "B": {
+    "snapshot": {
+      "scope": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010",
+      "shared": true,
+      "status": "Liste partagée à jour",
+      "error": "",
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "name": "TEST — Disponibilité commune",
+          "qty": 500,
+          "unit": "g",
+          "done": false,
+          "conflict": false,
+          "pending": false,
+          "category": "Autres achats",
+          "ids": [
+            "00000000-0000-4000-8000-000000000101"
+          ],
+          "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+          "origin": "",
+          "requiredQty": 500,
+          "atHomeQty": 0
+        }
+      ],
+      "localCount": 0
+    },
+    "native": {
+      "context": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010",
+      "status": "Liste partagée à jour",
+      "error": "",
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "title": "TEST — Disponibilité commune",
+          "quantity": 500,
+          "unit": "g",
+          "checked": false,
+          "deleted_at": null,
+          "created_at": "2026-11-12T10:00:00.000Z",
+          "updated_at": "2026-11-12T10:00:00.000Z",
+          "baseRevision": 1,
+          "syncState": "clean",
+          "remoteShadow": null,
+          "clientRev": 0,
+          "import_source_id": null,
+          "storageKey": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+        }
+      ],
+      "ready": true
+    }
+  }
+}

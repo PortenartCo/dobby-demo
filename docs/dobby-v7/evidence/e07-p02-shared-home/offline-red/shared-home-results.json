@@ -1,0 +1,395 @@
+{
+  "fixture": "Two isolated browsers, distinct users, same household, HTTP only",
+  "checks": [
+    "A declares 200 g of 500 g; B reads 200 g available and 300 g to buy",
+    "B modifies and cancels the shared declaration"
+  ],
+  "requests": [
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    }
+  ],
+  "production": "working tree",
+  "status": "FAIL",
+  "error": "page.evaluate: Error: Disponibilité partagée indisponible : migration at_home_quantity requise ou vérification en attente.\n    at Object.home (http://127.0.0.1:8765/essai-stitch-v7/cuisine-list.js:70:39)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:42)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at model (/workspace/dobby-e07-courses-final/essai-stitch-v7/tests/e07-p02-shared-home.cjs:19:41)\n    at /workspace/dobby-e07-courses-final/essai-stitch-v7/tests/e07-p02-shared-home.cjs:119:11",
+  "writes": [
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 125
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 3,
+      "accepted": true
+    }
+  ],
+  "A": {
+    "snapshot": {
+      "scope": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010",
+      "shared": true,
+      "status": "1 changement(s) en attente",
+      "error": "Réseau indisponible. Les modifications locales sont conservées.",
+      "homeSupported": null,
+      "legacyHomeCount": 0,
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "name": "TEST — Disponibilité commune",
+          "qty": 320,
+          "unit": "g",
+          "done": false,
+          "conflict": false,
+          "pending": true,
+          "atHomeQty": 180,
+          "sources": [
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "title": "TEST — Disponibilité commune",
+              "quantity": 500,
+              "unit": "g",
+              "checked": false,
+              "at_home_quantity": 180,
+              "deleted_at": null,
+              "created_at": "2026-11-12T10:00:00.000Z",
+              "updated_at": "2026-11-12T00:14:28.541Z",
+              "baseRevision": 4,
+              "syncState": "pending",
+              "remoteShadow": null,
+              "clientRev": 1,
+              "import_source_id": null,
+              "storageKey": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+            }
+          ],
+          "category": "Autres achats",
+          "ids": [
+            "00000000-0000-4000-8000-000000000101"
+          ],
+          "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+          "requiredQty": 500,
+          "origin": ""
+        }
+      ],
+      "localCount": 0
+    },
+    "native": {
+      "context": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010",
+      "status": "1 changement(s) en attente",
+      "error": "Réseau indisponible. Les modifications locales sont conservées.",
+      "homeSupported": null,
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "title": "TEST — Disponibilité commune",
+          "quantity": 500,
+          "unit": "g",
+          "checked": false,
+          "at_home_quantity": 180,
+          "deleted_at": null,
+          "created_at": "2026-11-12T10:00:00.000Z",
+          "updated_at": "2026-11-12T00:14:28.541Z",
+          "baseRevision": 4,
+          "syncState": "pending",
+          "remoteShadow": null,
+          "clientRev": 1,
+          "import_source_id": null,
+          "storageKey": "00000000-0000-4000-8000-000000000001|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+        }
+      ],
+      "ready": true
+    }
+  },
+  "B": {
+    "snapshot": {
+      "scope": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010",
+      "shared": true,
+      "status": "Liste partagée à jour",
+      "error": "",
+      "homeSupported": true,
+      "legacyHomeCount": 0,
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "name": "TEST — Disponibilité commune",
+          "qty": 500,
+          "unit": "g",
+          "done": false,
+          "conflict": false,
+          "pending": false,
+          "atHomeQty": 0,
+          "sources": [
+            {
+              "id": "00000000-0000-4000-8000-000000000101",
+              "title": "TEST — Disponibilité commune",
+              "quantity": 500,
+              "unit": "g",
+              "checked": false,
+              "at_home_quantity": 0,
+              "deleted_at": null,
+              "created_at": "2026-11-12T10:00:00.000Z",
+              "updated_at": "2026-11-12T10:00:00.000Z",
+              "baseRevision": 4,
+              "syncState": "clean",
+              "remoteShadow": null,
+              "clientRev": 0,
+              "import_source_id": null,
+              "storageKey": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+            }
+          ],
+          "category": "Autres achats",
+          "ids": [
+            "00000000-0000-4000-8000-000000000101"
+          ],
+          "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+          "requiredQty": 500,
+          "origin": ""
+        }
+      ],
+      "localCount": 0
+    },
+    "native": {
+      "context": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010",
+      "status": "Liste partagée à jour",
+      "error": "",
+      "homeSupported": true,
+      "items": [
+        {
+          "id": "00000000-0000-4000-8000-000000000101",
+          "title": "TEST — Disponibilité commune",
+          "quantity": 500,
+          "unit": "g",
+          "checked": false,
+          "at_home_quantity": 0,
+          "deleted_at": null,
+          "created_at": "2026-11-12T10:00:00.000Z",
+          "updated_at": "2026-11-12T10:00:00.000Z",
+          "baseRevision": 4,
+          "syncState": "clean",
+          "remoteShadow": null,
+          "clientRev": 0,
+          "import_source_id": null,
+          "storageKey": "00000000-0000-4000-8000-000000000002|00000000-0000-4000-8000-000000000010|00000000-0000-4000-8000-000000000101"
+        }
+      ],
+      "ready": true
+    }
+  }
+}

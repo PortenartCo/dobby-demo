@@ -11,14 +11,14 @@ window.DobbyCuisineList=(()=>{
   const homeKey=x=>x.groupKey||JSON.stringify((x.ids||[x.id]).slice().sort());
   function decorate(items,annotations){return items.map(x=>{const note=annotations?.[homeKey(x)],current=!note?.ids||note.ids.some(id=>(x.ids||[x.id]).includes(id)),atHomeQty=current?Math.min(x.qty??0,Number(note?.qty??note??0)):0;return {...x,requiredQty:x.qty,atHomeQty,qty:x.qty==null?null:precise(Math.max(0,x.qty-atHomeQty))};});}
   const adjustHome=`for(const entries of Object.values(st.shopFinal.homeByScope||{})){const note=entries[p.homeKey];if(note){if(p.factor==null)delete entries[p.homeKey];else if(typeof note==='object')note.qty*=p.factor;else entries[p.homeKey]*=p.factor;}}`;
-  const clearSession=`for(const item of p.items){for(const entries of Object.values(st.shopFinal.homeByScope||{}))delete entries[item.homeKey];if(st.shopFinal.manualCoverage)delete st.shopFinal.manualCoverage[item.productKey];for(const origins of Object.values(st.shopFinal.sharedOrigins||{}))delete origins[item.productKey];}`;
+  const clearSession=`for(const item of p.items){if(!p.preserveLegacy)for(const entries of Object.values(st.shopFinal.homeByScope||{}))delete entries[item.homeKey];if(st.shopFinal.manualCoverage)delete st.shopFinal.manualCoverage[item.productKey];for(const origins of Object.values(st.shopFinal.sharedOrigins||{}))delete origins[item.productKey];}`;
   function sharedItems(E,items){
     const groups=new Map();
-    for(const raw of items){const x={id:raw.id,name:raw.title,qty:raw.quantity,unit:raw.unit,done:raw.checked,conflict:raw.syncState==='conflict',pending:raw.syncState==='pending',category:E.evaluate('return categoryOf(p.name);',{name:raw.title})};
+    for(const raw of items){const x={id:raw.id,name:raw.title,qty:raw.quantity,unit:raw.unit,done:raw.checked,conflict:raw.syncState==='conflict',pending:raw.syncState==='pending',atHomeQty:Number(raw.at_home_quantity??0),sources:[{...raw}],category:E.evaluate('return categoryOf(p.name);',{name:raw.title})};
       const m=measure(x),key=x.qty==null||x.conflict?x.id:keyOf(x)+'|'+x.done;
-      const before=groups.get(key);if(before){before.qty=precise(before.qty+m.qty);before.ids.push(x.id);before.pending ||= x.pending;}
-      else groups.set(key,{...x,qty:m.qty,unit:m.unit,ids:[x.id],groupKey:'shared|'+keyOf(x)});
-    }return [...groups.values()];
+      const before=groups.get(key);if(before){before.qty=precise(before.qty+m.qty);before.atHomeQty=precise(before.atHomeQty+measure({qty:x.atHomeQty,unit:x.unit}).qty);before.ids.push(x.id);before.sources.push(...x.sources);before.pending ||= x.pending;}
+      else groups.set(key,{...x,qty:m.qty,atHomeQty:measure({qty:x.atHomeQty,unit:x.unit}).qty,unit:m.unit,ids:[x.id],groupKey:'shared|'+keyOf(x)});
+    }return [...groups.values()].map(x=>({...x,requiredQty:x.qty,qty:x.qty==null?null:precise(Math.max(0,x.qty-x.atHomeQty))}));
   }
   const parse=item=>{
     const match=/^([\d\s.,]+)\s+(.*)$/.exec(item.detail||'');
@@ -42,8 +42,8 @@ window.DobbyCuisineList=(()=>{
     const local=E.read().state.shopFinal,shared=family(E)?.read();
     const scope=shared?.context||'local',annotations=local.homeByScope?.[scope]||{};
     return shared?.context?{
-      scope,shared:true,status:shared.status,error:shared.error,
-      items:decorate(sharedItems(E,shared.items).map(x=>({...x,origin:local.sharedOrigins?.[scope]?.[keyOf(x)]||''})),annotations),localCount:local.items.length
+      scope,shared:true,status:shared.status,error:shared.error,homeSupported:shared.homeSupported,legacyHomeCount:Object.keys(annotations).length,
+      items:sharedItems(E,shared.items).map(x=>({...x,origin:local.sharedOrigins?.[scope]?.[keyOf(x)]||''})),localCount:local.items.length
     }:{scope,shared:false,status:'Sur cet appareil',error:'',items:decorate(local.items.map(parse),annotations),localCount:local.items.length};
   }
 
@@ -57,21 +57,30 @@ window.DobbyCuisineList=(()=>{
   async function add(E,values){const x=valid(values),s=snapshot(E);if(s.shared)return family(E).add({title:x.name,quantity:x.qty,unit:x.unit});
     transaction(E,`st.shopFinal.items.push({...p,id:crypto.randomUUID(),category:categoryOf(p.name),done:false,origin:'Ajout manuel'});`,{...x,detail:detail(x)});
   }
-  async function edit(E,id,values){const x=valid(values),s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
+  function assertExpected(item,expected){if(expected&&JSON.stringify(expected.sources)!==JSON.stringify(item.sources))throw Error('L’article a changé. Ouvrez un nouveau récapitulatif.');}
+  async function edit(E,id,values,expected){const x=valid(values),s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
     const compatible=norm(item.name)===norm(x.name)&&measure(item).unit===measure(x).unit,factor=compatible?measure({qty:1,unit:item.unit}).qty/measure({qty:1,unit:x.unit}).qty:null;
-    if(s.shared){const total=measure(x);for(const [i,rawId]of (item.ids||[id]).entries())await family(E).edit(rawId,{title:x.name,quantity:i===0?total.qty:0,unit:total.unit});if(!compatible)transaction(E,adjustHome,{homeKey:homeKey(item),factor:null});return;}
+    if(s.shared){assertExpected(item,expected);const total=measure(x);await family(E).editGroup(item.sources.map((source,i)=>({id:source.id,expected:source,values:{title:x.name,quantity:i===0?total.qty:0,unit:total.unit,...(s.homeSupported===true?{at_home_quantity:i===0&&compatible?Math.min(total.qty??0,item.atHomeQty):0}:{})}})),s.scope);return;}
+
     transaction(E,adjustHome+`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');Object.assign(item,p.x,{detail:p.detail,category:categoryOf(p.x.name)});delete item.manualQty;`,{id,x,detail:detail(x),homeKey:homeKey(item),factor});
   }
-  async function home(E,id,quantity){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item||item.done||item.conflict)throw Error('Article indisponible.');
+  async function home(E,id,quantity,expected){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item||item.done||item.conflict)throw Error('Article indisponible.');
     const qty=Number(String(quantity).replace(',','.'));if(item.requiredQty==null||!Number.isFinite(qty)||qty<0||qty>item.requiredQty)throw Error('Indiquez une quantité disponible entre 0 et '+(item.requiredQty??'la quantité requise')+'.');
+    if(s.shared){
+      if(s.homeSupported!==true)throw Error('Disponibilité partagée indisponible : migration at_home_quantity requise ou vérification en attente.');
+      assertExpected(item,expected);
+      let remaining=qty;const changes=[...item.sources].sort((a,b)=>a.id.localeCompare(b.id)).map(source=>{const m=measure({qty:source.quantity,unit:source.unit}),part=Math.min(remaining,m.qty??0);remaining=precise(remaining-part);return {id:source.id,expected:source,values:{at_home_quantity:precise(part/measure({qty:1,unit:source.unit}).qty)}};});
+      return family(E).editGroup(changes,s.scope);
+    }
     transaction(E,`const scopes=st.shopFinal.homeByScope ||= {};const entries=scopes[p.scope] ||= {};if(p.qty)entries[p.key]={qty:p.qty,ids:p.ids};else delete entries[p.key];`,{scope:s.scope,key:homeKey(item),qty,ids:item.ids||[item.id]});
   }
-  async function remove(E,id){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
-    if(s.shared)for(const rawId of item.ids||[id])await family(E).edit(rawId,{deleted_at:new Date().toISOString()});
-    transaction(E,clearSession+(s.shared?'':'st.shopFinal.items=st.shopFinal.items.filter(x=>x.id!==p.id);'),{id,items:[{homeKey:homeKey(item),productKey:keyOf(item)}]});
+  async function remove(E,id,expected){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
+    if(s.shared)assertExpected(item,expected);
+    if(s.shared)await family(E).editGroup(item.sources.map(source=>({id:source.id,expected:source,values:{deleted_at:new Date().toISOString(),...(s.homeSupported===true?{at_home_quantity:0}:{})}})),s.scope);
+    transaction(E,clearSession+(s.shared?'':'st.shopFinal.items=st.shopFinal.items.filter(x=>x.id!==p.id);'),{id,preserveLegacy:s.shared,items:[{homeKey:homeKey(item),productKey:keyOf(item)}]});
   }
   async function check(E,id,done){const s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');if(done&&item.qty===0)throw Error('Cet article est déjà disponible à la maison.');
-    if(s.shared){for(const rawId of item.ids||[id])await family(E).edit(rawId,{checked:done});return;}
+    if(s.shared){await family(E).editGroup(item.sources.map(source=>({id:source.id,expected:source,values:{checked:done}})),s.scope);return;}
     transaction(E,`const item=st.shopFinal.items.find(x=>x.id===p.id);if(!item)throw Error('Article introuvable');item.done=p.done;`,{id,done});
   }
   function importRange(E,range){
@@ -155,14 +164,15 @@ window.DobbyCuisineList=(()=>{
     if(state.shared)return family(E).importRows(rows,state.scope);
     transaction(E,`for(const row of p.rows){if(st.shopFinal.imports.includes(row.token))continue;st.shopFinal.items.push({...row,id:crypto.randomUUID(),done:false});st.shopFinal.imports.push(row.token);}`,{rows});
   }
-  async function archive(E,ids){
+  async function archive(E,ids,expectedItems){
     const s=snapshot(E),done=s.items.filter(x=>x.done&&!x.conflict&&(!ids||ids.includes(x.id)));if(!done.length)return 0;
+    if(s.shared&&expectedItems)for(const item of done)assertExpected(item,expectedItems.find(x=>x.id===item.id));
     const id='e072-'+crypto.randomUUID(),stamp=new Date().toISOString();
     // Snapshot first. Pending deletes can be retried by the native family queue.
     transaction(E,`st.shopHistory[p.id]={items:p.items.map(x=>({...x,detail:x.qty==null?'À préciser':fmt(x.qty)+(x.unit?' '+x.unit:''),done:true})),validatedAt:p.stamp,meals:[],scope:p.scope,imports:[...(st.shopFinal.imports||[])]};
       if(p.scope==='local')st.shopFinal.items=st.shopFinal.items.filter(x=>!p.ids.includes(x.id));`,{id,stamp,items:done,ids:done.map(x=>x.id),scope:s.scope});
-    if(s.shared)for(const item of done)for(const rawId of item.ids||[item.id])await family(E).edit(rawId,{deleted_at:stamp});
-    transaction(E,clearSession,{items:done.map(x=>({homeKey:homeKey(x),productKey:keyOf(x)}))});
+    if(s.shared)await family(E).editGroup(done.flatMap(item=>item.sources.map(source=>({id:source.id,expected:source,values:{deleted_at:stamp,...(s.homeSupported===true?{at_home_quantity:0}:{})}}))),s.scope);
+    transaction(E,clearSession,{preserveLegacy:s.shared,items:done.map(x=>({homeKey:homeKey(x),productKey:keyOf(x)}))});
     return done.length;
   }
   return Object.freeze({snapshot,add,edit,remove,check,home,preview,confirmImport,transfer,archive,reuse,detail});

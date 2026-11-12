@@ -1,0 +1,49 @@
+{
+  "A": {
+    "id": "00000000-0000-4000-8000-000000000101",
+    "name": "TEST — Disponibilité commune",
+    "qty": 300,
+    "unit": "g",
+    "done": false,
+    "conflict": false,
+    "pending": false,
+    "category": "Autres achats",
+    "ids": [
+      "00000000-0000-4000-8000-000000000101"
+    ],
+    "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+    "origin": "",
+    "requiredQty": 500,
+    "atHomeQty": 200
+  },
+  "B": {
+    "id": "00000000-0000-4000-8000-000000000101",
+    "name": "TEST — Disponibilité commune",
+    "qty": 500,
+    "unit": "g",
+    "done": false,
+    "conflict": false,
+    "pending": false,
+    "category": "Autres achats",
+    "ids": [
+      "00000000-0000-4000-8000-000000000101"
+    ],
+    "groupKey": "shared|[\"test — disponibilité commune\",\"g\"]",
+    "origin": "",
+    "requiredQty": 500,
+    "atHomeQty": 0
+  },
+  "remote": {
+    "id": "00000000-0000-4000-8000-000000000101",
+    "household_id": "00000000-0000-4000-8000-000000000010",
+    "title": "TEST — Disponibilité commune",
+    "quantity": 500,
+    "unit": "g",
+    "checked": false,
+    "deleted_at": null,
+    "created_at": "2026-11-12T10:00:00.000Z",
+    "updated_at": "2026-11-12T10:00:00.000Z",
+    "revision": 1,
+    "at_home_quantity": 0
+  }
+}
