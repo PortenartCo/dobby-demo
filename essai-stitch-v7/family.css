@@ -3,3 +3,20 @@ body.fa-active[data-family-view="medical-edit"] #mode-create,body.fa-active[data
 
 /* Source mode controls must describe the operation that will actually be saved. */
 body.fa-active button[data-fa-selected="true"]{background-color:#f9bb5f!important;color:#180b07!important}body.fa-active button[data-fa-selected="false"]{background-color:#43302c!important;color:#fadcd5!important}body.fa-active button[data-fa-selected] .material-symbols-outlined{color:inherit!important}
+
+/* E09 Salon only. Section typography is the Taverne's Menus/Grimoire system. */
+body.fa-active[data-family-view="salon"] [data-e09-intro]{text-align:center;padding:4px 0;display:flex;flex-direction:column;gap:6px}
+body.fa-active[data-family-view="salon"] [data-e09-intro] h1{font:700 22px/1.25 'Playfair Display',Georgia,serif;color:#fcf7ee;margin:0}
+.e09-eyebrow{margin:0;font:600 10px/1.4 Literata,Georgia,serif;letter-spacing:.14em;color:#d49b42}
+.e09-description,.e09-subtitle{margin:0;color:#d4c4b1;font:14px/1.5 Literata,Georgia,serif}
+.e09-section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.e09-section-heading>div{min-width:0;flex:1}
+.e09-section-heading h2{margin:0;font:700 16px/24px 'Playfair Display',Georgia,serif;color:#fcf7ee}
+.e09-section-heading .fa-button{flex-shrink:0;max-width:48%;font-size:12px;padding:9px 10px;color:#180b07;background:#f9bb5f;border-color:#d49b4266}
+body.fa-active[data-family-view="salon"] .e01-empty{background:#2c1c18;border:1px solid #78350f66;border-radius:16px;padding:14px;box-shadow:0 10px 15px -3px #0003;color:#d4c4b1}
+body.fa-active[data-family-view="salon"] .e01-empty strong{display:block;color:#f9bb5f;font:600 18px/1.35 Georgia,serif}
+body.fa-active[data-family-view="salon"] .e01-empty p{margin:5px 0 0;font:14px/1.5 Literata,Georgia,serif}
+.e09-record{padding:12px;border:1px solid #d49b4233;border-radius:16px;background:#2c1c18;display:flex;flex-direction:column;gap:6px;min-width:0}
+.e09-record p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+body.fa-active [data-e09-hero] [data-e09-badge]{top:auto;left:auto;bottom:12px;right:12px;max-width:calc(100% - 24px)}
+@media(max-width:359px){.e09-section-heading{flex-wrap:wrap;align-items:flex-start}.e09-section-heading>div{flex-basis:100%}.e09-section-heading .fa-button{max-width:100%;margin-left:auto}}

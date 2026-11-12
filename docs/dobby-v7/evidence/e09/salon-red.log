@@ -1,0 +1,19 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    'L’Horloge Enchantée',
++   'La Gazette & Agenda Rituel',
+-   'L’Agenda Enchanté',
+    'La Volière aux Messages',
++   'Archives & Accès Rapides'
+  ]
+
+    at /workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-salon.cjs:9:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
