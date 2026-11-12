@@ -7,6 +7,7 @@ on:
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
       - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/check-dobby-review-reuse.cjs'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
@@ -17,13 +18,21 @@ on:
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
       - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/check-dobby-review-reuse.cjs'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
       - '.github/workflows/dobby-stitch-v7.yml'
   workflow_dispatch:
+    inputs:
+      historical_run:
+        description: 'Optional completed run with a successful full historical step; only reset-boundary changes may reuse it'
+        required: false
+        type: string
+        default: ''
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   source-backed-browser:
@@ -31,9 +40,17 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ github.event_name == 'workflow_dispatch' && inputs.historical_run != '' && '0' || '1' }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify optional historical campaign reuse
+        id: historical-reuse
+        env:
+          DOBBY_HISTORICAL_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.historical_run || '' }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/check-dobby-review-reuse.cjs
       - name: Exhaustive review registry coverage
         run: node scripts/check-review-consolidation.cjs --final
       - name: Check V7 JavaScript syntax
@@ -73,6 +90,7 @@ jobs:
           node --check essai-stitch-v7/cuisine-list.js
           node --check essai-stitch-v5-famille/family-v2.js
           node --check scripts/build-dobby-review.cjs
+          node --check scripts/check-dobby-review-reuse.cjs
           node --check scripts/review/review-runtime.js
           node --check scripts/review/integrated-config.js
           node --check essai-stitch-v7/tests/integrated-preview.cjs
@@ -125,6 +143,7 @@ jobs:
         working-directory: essai-stitch-v7/tests
         run: npm ci --ignore-scripts
       - name: Functional Stitch roots and source fidelity
+        if: steps.historical-reuse.outputs.reusable != 'true'
         env:
           DOBBY_FINAL: ${{ github.ref_name == 'feat/dobby-v7-global-review-20261112' && '1' || '0' }}
         run: |
@@ -143,7 +162,13 @@ jobs:
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs
       - name: Global E01–E09 isolated bundle and native A/B journeys
         if: github.ref_name == 'feat/dobby-v7-global-review-20261112'
+        env:
+          DOBBY_HISTORICAL_REUSED: ${{ steps.historical-reuse.outputs.reusable }}
         run: |
+          if [ "$DOBBY_HISTORICAL_REUSED" = "true" ]; then
+            python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+            sleep 1
+          fi
           node --test essai-stitch-v7/tests/global-build.test.cjs
           node scripts/build-dobby-global-review.cjs --output essai-dobby-v7-global-review-20261112
           if command -v google-chrome >/dev/null; then
