@@ -1,0 +1,7 @@
+/* Exact client libraries already used by the native import, served locally. */
+window.DobbyImportRuntime=(()=>{
+ const url=name=>new URL('./assets/import-runtime/'+name,location.href).href;let loading;
+ function load(w,name,global){if(w[global])return Promise.resolve();return new Promise((resolve,reject)=>{const s=w.document.createElement('script');s.src=url(name);s.onload=resolve;s.onerror=()=>reject(Error('Bibliothèque locale de lecture indisponible. Utilisez le texte du document.'));w.document.head.append(s);});}
+ async function ready(w){if(!loading)loading=(async()=>{await load(w,'pdf.min.js','pdfjsLib');const pdf=w.pdfjsLib,original=pdf.getDocument.bind(pdf);pdf.GlobalWorkerOptions.workerSrc=url('pdf.worker.min.js');w.pdfjsLib=new Proxy(pdf,{get(target,key){if(key==='getDocument')return options=>original({...options,isEvalSupported:false});if(key==='GlobalWorkerOptions')return new Proxy(pdf.GlobalWorkerOptions,{set(target,key,value){target[key]=key==='workerSrc'?url('pdf.worker.min.js'):value;return true;}});return target[key];}});await load(w,'tesseract.min.js','Tesseract');const t=w.Tesseract;w.Tesseract={...t,createWorker:(language)=>t.createWorker(language,1,{workerPath:url('worker.min.js'),corePath:url('tesseract-core-lstm.wasm.js'),langPath:new URL('./assets/import-runtime/',location.href).href,cacheMethod:'none'})};})();try{return await loading;}catch(e){loading=null;throw e;}}
+ return{ready};
+})();
