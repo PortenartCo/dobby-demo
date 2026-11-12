@@ -89,7 +89,8 @@ window.DobbyCuisine = (() => {
     }
     if(['recipe','cook'].includes(ui.view))return;
     const status = document.createElement('p'); status.className = 'cu-sync-note';
-    status.textContent = E.win().DobbyFamilyUI?.getModuleStatus?.(['shop','shop-1','shop-final','shop-history'].includes(ui.view) ? 'menus' : 'recipes') || 'Données du moteur DOBBY';
+    const shopView=['shop','shop-1','shop-final','shop-history'].includes(ui.view),grocery=shopView?E.win().DobbyFamilyUI?.grocery?.read():null;
+    status.textContent = shopView?(grocery?.context?grocery.status:'Sur cet appareil'):E.win().DobbyFamilyUI?.getModuleStatus?.('recipes') || 'Données du moteur DOBBY';
     $('main').append(status);
   }
   function recipeVisual(el, recipe, localOnly = false) {

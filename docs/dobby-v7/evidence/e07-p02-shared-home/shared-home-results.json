@@ -269,7 +269,7 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.4a2b84fe-9190-4342-badd-9390c0b1a106&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+      "query": "?id=eq.a589bffa-45fb-48a3-a03b-78a034f0100a&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
     },
     {
       "label": "A",
@@ -299,7 +299,7 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.4a2b84fe-9190-4342-badd-9390c0b1a106&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+      "query": "?id=eq.a589bffa-45fb-48a3-a03b-78a034f0100a&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
     },
     {
       "label": "A",
@@ -329,7 +329,7 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.4a2b84fe-9190-4342-badd-9390c0b1a106&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+      "query": "?id=eq.a589bffa-45fb-48a3-a03b-78a034f0100a&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
     },
     {
       "label": "A",
@@ -719,13 +719,13 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.1fd3764a-de7b-4a8e-bf5e-f5376f9b228e&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+      "query": "?id=eq.4e724520-843d-4d0a-bb6c-5ada10286508&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
     },
     {
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.56222016-8061-41aa-ab3f-440f53870dbd&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+      "query": "?id=eq.a8b321f1-43d0-45cb-91e9-7af47a9e88ea&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
     },
     {
       "label": "A",
@@ -767,13 +767,13 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.1fd3764a-de7b-4a8e-bf5e-f5376f9b228e&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+      "query": "?id=eq.4e724520-843d-4d0a-bb6c-5ada10286508&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
     },
     {
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.56222016-8061-41aa-ab3f-440f53870dbd&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+      "query": "?id=eq.a8b321f1-43d0-45cb-91e9-7af47a9e88ea&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
     },
     {
       "label": "A",
@@ -857,13 +857,13 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.1fd3764a-de7b-4a8e-bf5e-f5376f9b228e&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+      "query": "?id=eq.4e724520-843d-4d0a-bb6c-5ada10286508&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
     },
     {
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.56222016-8061-41aa-ab3f-440f53870dbd&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+      "query": "?id=eq.a8b321f1-43d0-45cb-91e9-7af47a9e88ea&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
     },
     {
       "label": "A",
@@ -935,7 +935,7 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.df8845d1-296d-418c-aa41-5399ea3d639f&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+      "query": "?id=eq.aaf550c7-2fde-4fb8-8f2b-98a394ff4230&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
     },
     {
       "label": "A",
@@ -965,7 +965,7 @@
       "label": "A",
       "method": "PATCH",
       "path": "/rest/v1/dobby_v2_grocery",
-      "query": "?id=eq.df8845d1-296d-418c-aa41-5399ea3d639f&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+      "query": "?id=eq.aaf550c7-2fde-4fb8-8f2b-98a394ff4230&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
     },
     {
       "label": "A",
@@ -1610,9 +1610,9 @@
     {
       "label": "A",
       "method": "POST",
-      "id": "4a2b84fe-9190-4342-badd-9390c0b1a106",
+      "id": "a589bffa-45fb-48a3-a03b-78a034f0100a",
       "body": {
-        "id": "4a2b84fe-9190-4342-badd-9390c0b1a106",
+        "id": "a589bffa-45fb-48a3-a03b-78a034f0100a",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Disponibilité avant changement",
         "quantity": 500,
@@ -1627,7 +1627,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "4a2b84fe-9190-4342-badd-9390c0b1a106",
+      "id": "a589bffa-45fb-48a3-a03b-78a034f0100a",
       "body": {
         "title": "TEST — Disponibilité avant changement",
         "quantity": 500,
@@ -1642,7 +1642,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "4a2b84fe-9190-4342-badd-9390c0b1a106",
+      "id": "a589bffa-45fb-48a3-a03b-78a034f0100a",
       "body": {
         "title": "TEST — Article à la pièce",
         "quantity": 2,
@@ -1657,13 +1657,13 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "4a2b84fe-9190-4342-badd-9390c0b1a106",
+      "id": "a589bffa-45fb-48a3-a03b-78a034f0100a",
       "body": {
         "title": "TEST — Article à la pièce",
         "quantity": 2,
         "unit": "pièce",
         "checked": false,
-        "deleted_at": "2026-11-12T00:19:08.397Z",
+        "deleted_at": "2026-11-12T00:23:27.624Z",
         "at_home_quantity": 0
       },
       "baseRevision": 3,
@@ -1762,9 +1762,9 @@
     {
       "label": "A",
       "method": "POST",
-      "id": "1fd3764a-de7b-4a8e-bf5e-f5376f9b228e",
+      "id": "4e724520-843d-4d0a-bb6c-5ada10286508",
       "body": {
-        "id": "1fd3764a-de7b-4a8e-bf5e-f5376f9b228e",
+        "id": "4e724520-843d-4d0a-bb6c-5ada10286508",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Groupe g et kg",
         "quantity": 200,
@@ -1779,9 +1779,9 @@
     {
       "label": "A",
       "method": "POST",
-      "id": "56222016-8061-41aa-ab3f-440f53870dbd",
+      "id": "a8b321f1-43d0-45cb-91e9-7af47a9e88ea",
       "body": {
-        "id": "56222016-8061-41aa-ab3f-440f53870dbd",
+        "id": "a8b321f1-43d0-45cb-91e9-7af47a9e88ea",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Groupe g et kg",
         "quantity": 0.3,
@@ -1796,7 +1796,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "1fd3764a-de7b-4a8e-bf5e-f5376f9b228e",
+      "id": "4e724520-843d-4d0a-bb6c-5ada10286508",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 200,
@@ -1811,7 +1811,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "56222016-8061-41aa-ab3f-440f53870dbd",
+      "id": "a8b321f1-43d0-45cb-91e9-7af47a9e88ea",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 0.3,
@@ -1826,7 +1826,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "1fd3764a-de7b-4a8e-bf5e-f5376f9b228e",
+      "id": "4e724520-843d-4d0a-bb6c-5ada10286508",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 800,
@@ -1841,7 +1841,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "56222016-8061-41aa-ab3f-440f53870dbd",
+      "id": "a8b321f1-43d0-45cb-91e9-7af47a9e88ea",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 0,
@@ -1871,13 +1871,13 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "1fd3764a-de7b-4a8e-bf5e-f5376f9b228e",
+      "id": "4e724520-843d-4d0a-bb6c-5ada10286508",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 800,
         "unit": "g",
         "checked": false,
-        "deleted_at": "2026-11-12T00:19:11.412Z",
+        "deleted_at": "2026-11-12T00:23:30.730Z",
         "at_home_quantity": 0
       },
       "baseRevision": 3,
@@ -1886,13 +1886,13 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "56222016-8061-41aa-ab3f-440f53870dbd",
+      "id": "a8b321f1-43d0-45cb-91e9-7af47a9e88ea",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 0,
         "unit": "g",
         "checked": false,
-        "deleted_at": "2026-11-12T00:19:11.412Z",
+        "deleted_at": "2026-11-12T00:23:30.730Z",
         "at_home_quantity": 0
       },
       "baseRevision": 3,
@@ -1901,9 +1901,9 @@
     {
       "label": "A",
       "method": "POST",
-      "id": "df8845d1-296d-418c-aa41-5399ea3d639f",
+      "id": "aaf550c7-2fde-4fb8-8f2b-98a394ff4230",
       "body": {
-        "id": "df8845d1-296d-418c-aa41-5399ea3d639f",
+        "id": "aaf550c7-2fde-4fb8-8f2b-98a394ff4230",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Groupe g et kg",
         "quantity": 500,
@@ -1918,7 +1918,7 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "df8845d1-296d-418c-aa41-5399ea3d639f",
+      "id": "aaf550c7-2fde-4fb8-8f2b-98a394ff4230",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 500,
@@ -1933,13 +1933,13 @@
     {
       "label": "A",
       "method": "PATCH",
-      "id": "df8845d1-296d-418c-aa41-5399ea3d639f",
+      "id": "aaf550c7-2fde-4fb8-8f2b-98a394ff4230",
       "body": {
         "title": "TEST — Groupe g et kg",
         "quantity": 500,
         "unit": "g",
         "checked": true,
-        "deleted_at": "2026-11-12T00:19:11.820Z",
+        "deleted_at": "2026-11-12T00:23:31.193Z",
         "at_home_quantity": 0
       },
       "baseRevision": 2,
@@ -1948,9 +1948,9 @@
     {
       "label": "A",
       "method": "POST",
-      "id": "58a1df83-36f4-467d-9d94-442ca5198c68",
+      "id": "ce503298-94d9-4c1a-b924-743000f6a99f",
       "body": {
-        "id": "58a1df83-36f4-467d-9d94-442ca5198c68",
+        "id": "ce503298-94d9-4c1a-b924-743000f6a99f",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Groupe g et kg",
         "quantity": 500,
@@ -1971,7 +1971,7 @@
         "quantity": 500,
         "unit": "g",
         "checked": false,
-        "deleted_at": "2026-11-12T00:19:12.119Z",
+        "deleted_at": "2026-11-12T00:23:31.505Z",
         "at_home_quantity": 0
       },
       "baseRevision": 10,
@@ -1980,9 +1980,9 @@
     {
       "label": "A",
       "method": "POST",
-      "id": "adc52db2-8cf6-4490-870d-e16b05ceec15",
+      "id": "90e61226-8898-4e82-b85c-95e9da6f14c6",
       "body": {
-        "id": "adc52db2-8cf6-4490-870d-e16b05ceec15",
+        "id": "90e61226-8898-4e82-b85c-95e9da6f14c6",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Disponibilité commune",
         "quantity": 500,
@@ -2138,9 +2138,9 @@
     {
       "label": "legacy",
       "method": "POST",
-      "id": "aafa0fdb-a5fe-4ebf-a8de-b34158943d44",
+      "id": "a6750ca8-12ff-4640-9fb4-f0dcdd0637d6",
       "body": {
-        "id": "aafa0fdb-a5fe-4ebf-a8de-b34158943d44",
+        "id": "a6750ca8-12ff-4640-9fb4-f0dcdd0637d6",
         "household_id": "00000000-0000-4000-8000-000000000010",
         "title": "TEST — Legacy CRUD",
         "quantity": 1,

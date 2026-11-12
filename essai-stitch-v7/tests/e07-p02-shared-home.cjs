@@ -102,6 +102,7 @@ async function login(browser,server,label){
     await amount(A.page,200,300);await amount(B.page,200,300);
     assert.equal(server.rows.get(carrot).at_home_quantity,200,'Availability is persisted by the native family HTTP writer');
     assert.equal((await native(A.page,'read')).homeSupported,true);
+    await A.page.evaluate(()=>DobbyCuisine.refresh());assert.equal(await A.page.locator('.cu-sync-note').innerText(),(await native(A.page,'read')).status,'Courses footer reports the grocery synchronization state');
     record('A declares 200 g of 500 g; B reads 200 g available and 300 g to buy');
 
     await model(B.page,'home',(await item(B.page)).id,125);await settle(B.page);await settle(A.page);await amount(A.page,125,375);
