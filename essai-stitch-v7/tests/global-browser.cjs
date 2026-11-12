@@ -44,6 +44,31 @@ async function open(page, file, hash = '', client = 'A') {
   await ready(page, file === 'index.html' ? 'cuisine' : file === 'famille.html' ? 'family' : null);
 }
 
+async function destinationReady(page, destination) {
+  const target = [
+    { file: 'traverse.html', screen: 'traverse', selector: '[data-e01-slot]' },
+    { file: 'missions.html', screen: 'missions', selector: '[data-e03-status]' },
+    { file: 'index.html', screen: 'taverne', kind: 'cuisine', view: 'taverne', selector: '[data-e07-dinner]' },
+    { file: 'famille.html', screen: 'famille', kind: 'family', view: 'salon', selector: '[data-e09-intro]' },
+    { file: 'famille.html', screen: 'famille', kind: 'family', view: 'menu', selector: '#global-module-search' }
+  ][destination];
+  await page.waitForURL(url => url.pathname.endsWith('/' + target.file));
+  await ready(page, target.kind);
+  await page.waitForFunction(target => {
+    const renderedView = target.kind === 'family' ? document.body.dataset.familyView :
+      target.kind === 'cuisine' ? document.body.dataset.cuisineView : null;
+    return document.body.dataset.dv7Screen === target.screen &&
+      (!target.view || renderedView === target.view) &&
+      !!document.querySelector(target.selector) && !window.DobbyRegister?.busy &&
+      !document.documentElement.classList.contains('dv7-loading');
+  }, target);
+}
+
+async function dock(page, destination) {
+  await page.locator('[data-e01-destination="' + destination + '"]').click();
+  await destinationReady(page, destination);
+}
+
 async function sync(page) {
   await demo(page, 'sync');
   await page.waitForFunction(() => {
@@ -462,14 +487,17 @@ async function runJourney(browser, width) {
       assert.match(await page.locator('main').innerText(), /Dobby|rituel|foyer/i);
       await shot(page, '15-ritual', width, report, false);
       await open(page, 'traverse.html');
+      const destinations = [];
       for (const destination of [1, 2, 3, 4, 0]) {
-        await page.locator('[data-e01-destination="' + destination + '"]').click();
-        await ready(page);
+        await dock(page, destination);
+        destinations.push(page.url());
       }
       await page.goBack();
-      await ready(page);
+      await page.waitForURL(destinations[3]);
+      await destinationReady(page, 4);
       await page.goForward();
-      await ready(page);
+      await page.waitForURL(destinations[4]);
+      await destinationReady(page, 0);
       assert.ok(page.url().startsWith(base.href));
       assert.equal(grantRows(await state(page), mission.id).length, 1);
     });
