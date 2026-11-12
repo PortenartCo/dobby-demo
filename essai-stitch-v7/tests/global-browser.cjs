@@ -278,7 +278,7 @@ async function runJourney(browser, width) {
       await page.locator('[data-e073-week-detail] [data-cu-action=pick][data-slot=midi]').click();
       await page.waitForFunction(() => DobbyCuisine.view === 'pick');
       await page.locator('[data-p01-mode=library]').click();
-      const first = page.locator('[data-p01-recipe]').first();
+      const first = page.locator('[data-p01-recipe="review-soup"]');
       const recipeId = await first.getAttribute('data-p01-recipe');
       recipe = await page.evaluate(id => DobbyCuisineEngine.read().recipes.find(row => row.id === id), recipeId);
       assert.ok(recipe?.ingredients?.length, 'Choose only an existing recipe');
@@ -302,8 +302,13 @@ async function runJourney(browser, width) {
       assert.equal(list.shared, true);
       for (const row of recipe.ingredients) {
         const name = Array.isArray(row) ? row[0] : row.name;
-        assert.equal(list.items.filter(item => item.name.toLocaleLowerCase('fr') === name.toLocaleLowerCase('fr')).length,
-          1, 'One imported ingredient row: ' + name);
+        const quantity = Array.isArray(row) ? row[1] : row.qty;
+        const unit = Array.isArray(row) ? row[2] : row.unit;
+        const matches = list.items.filter(item => item.name.toLocaleLowerCase('fr') === name.toLocaleLowerCase('fr') &&
+          item.unit === (unit || ''));
+        assert.ok(matches.length > 0, 'Imported ingredient is present: ' + name);
+        // Unknown quantities retain each meal's provenance for explicit review.
+        if (quantity != null) assert.equal(matches.length, 1, 'One compatible quantified row: ' + name);
       }
       ingredient = list.items.find(item => item.requiredQty > 0 && item.qty > 0);
       assert.ok(ingredient, 'A quantified ingredient supports availability');
@@ -345,6 +350,7 @@ async function runJourney(browser, width) {
       assert.equal((await state(page)).familyEvents.filter(row => row.title === 'DÉMO — Événement global ' + width).length, 1);
       await page.reload();
       await ready(page, 'family');
+      await page.locator('[data-fa-action=agenda-day][data-date="' + plannedKey.slice(0, 10) + '"]').click();
       assert.match(await page.locator('main').innerText(), new RegExp('Événement global ' + width));
     });
     await step('E09 create and retrieve a shared family memo', async () => {
@@ -479,6 +485,7 @@ async function runJourney(browser, width) {
     if (page) {
       report.failedURL = page.url();
       try { report.nativeAtFailure = await state(page); } catch {}
+      try { report.basketAtFailure = await basket(page); } catch {}
       try { report.fixtureAtFailure = await demo(page, 'state'); } catch {}
       try { report.fixtureRequests = await demo(page, 'requests'); } catch {}
       try { await page.screenshot({ path: path.join(evidence, 'FAIL-' + width + '.png'), fullPage: true }); } catch {}
