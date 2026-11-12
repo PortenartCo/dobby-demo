@@ -1,0 +1,32 @@
+E072_BOOT_PASS already-loaded native engine starts once
+E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+REVIEW_BUILD 4fda360cc5fabfae14840074496ea47fafade4c3 262 files /workspace/dobby-e07/essai-dobby-review
+E072_PREVIEW_PASS 390 http://127.0.0.1:8877/essai-dobby-review/ HTTP/assets/fonts/navigation/CRUD/persistence/reset/session isolation/backend guard
+E072_PREVIEW_PASS 1440 http://127.0.0.1:8877/essai-dobby-review/ HTTP/assets/fonts/navigation/CRUD/persistence/reset/session isolation/backend guard
+E071_CONTEXT_PASS date/slot reload/back/forward, planned records unchanged
+E071_PASS 320 header/CTA/photos/slots/prepared/native navigation/real scroll
+E071_PASS 390 header/CTA/photos/slots/prepared/native navigation/real scroll
+E071_PASS 1440 header/CTA/photos/slots/prepared/native navigation/real scroll
+E07_PREPARED_PASS native status and reload
+E07_NATIVE_CATEGORY_UNKNOWN_PASS native categories and explicit unknown quantities
+E07_NATIVE_ACTIONS_PASS
+E07_PASS 320 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+E07_PASS 390 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+E07_PASS 1440 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8765/essai-stitch-v7/famille.html#personal
+Call log:
+[2m  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/famille.html#personal", waiting until "load"[22m
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e05-edge.cjs:2:355 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/famille.html#personal", waiting until "load"'
+  ],
+  name: 'Error'
+}

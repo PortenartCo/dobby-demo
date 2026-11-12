@@ -1,0 +1,15 @@
+{
+  "side": "menu",
+  "script": "e05-edge.cjs",
+  "cwd": "/workspace/dobby-v7-menu-diff-menu",
+  "command": [
+    "node",
+    "--require",
+    "/tmp/dobby-menu-diff-01/preload.cjs",
+    "essai-stitch-v7/tests/e05-edge.cjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 31.833745740000268,
+  "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSha256": "2c1e65680cc9f7df5ce2722537c09c0ed885c8c11a01087873c4b3b960d5e4d2"
+}

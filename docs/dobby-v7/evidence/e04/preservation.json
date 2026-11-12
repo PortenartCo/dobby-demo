@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "base": "9c73e845c7744315bdc7d03f59a09ae67572aa8e",
+  "implementationCommit": "8292189309ee6db5cf77f4a54c15c3fad5999075",
+  "isolatedBranch": "feat/dobby-e04-mission-form",
+  "protected": [
+    {
+      "path": "design/stitch-53",
+      "gitObject": "90c61c98916f285128e612afed07898b758fa1cf",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille",
+      "gitObject": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "unchanged": true
+    },
+    {
+      "path": "essai-v6-preview",
+      "gitObject": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/mission-edit.html",
+      "gitObject": "d59ae0b0ebabfc5ff68f4fb06ab0c2b4ed23c3dc",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chrome.js",
+      "gitObject": "b8ae90577bdd6c2a96a7748190c282b7da489555",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chrome.css",
+      "gitObject": "639edf4673239bef48b11fbf4a39d1917416ab60",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/family.js",
+      "gitObject": "27fdc305ba87c13883a83d2b633d935e703fca65",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "gitObject": "542aa3e2fb284701dee23bcb6e4fbbc234e66aff",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/register.js",
+      "gitObject": "384a902bdb3a682af960df13004908a18ad864a5",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/home.js",
+      "gitObject": "c01247aa6a29d79545f2ece79ddceed92df56acf",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chat.js",
+      "gitObject": "84717acbd2ca6f0995257a79498f4830f7f407a5",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "gitObject": "d93c22e2ddc8ea8c31b255f3f07471db404e24e2",
+      "unchanged": true
+    }
+  ],
+  "e02WorktreeHeadUnchanged": true,
+  "e03CommitsIntegrated": false,
+  "remoteHeadsReadOnly": {
+    "refs/heads/feat/dobby-e03-missions": "9aaeaa1cfcc47e3b337492d5bdeb7390fdc7a1fb",
+    "refs/heads/feat/dobby-stitch-53-source-backed-v7": "9c73e845c7744315bdc7d03f59a09ae67572aa8e",
+    "refs/heads/main": "0708d643d099999713e1538eb5043097ac591e6b"
+  },
+  "e04PublishedToPages": false
+}

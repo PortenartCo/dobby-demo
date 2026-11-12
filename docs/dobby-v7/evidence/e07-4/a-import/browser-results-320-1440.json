@@ -1,0 +1,38 @@
+[
+  {
+    "status": "PASS",
+    "width": 320,
+    "incompleteV1ThroughV2": true,
+    "sameIdentityCorrection": true,
+    "unknownPortionGuards": true,
+    "stepImagesExact": true,
+    "rawZipBytesExact": true,
+    "reload": true,
+    "duplicateSkip": true,
+    "photoAdditionPreservesAttachments": true,
+    "exportMappingRoundtrip": true,
+    "nativeRollback": true,
+    "binaryStagingRollback": true,
+    "postAwaitEpochGuard": true,
+    "entryFailureIsolation": true,
+    "unsafeArchiveRefused": true
+  },
+  {
+    "status": "PASS",
+    "width": 1440,
+    "incompleteV1ThroughV2": true,
+    "sameIdentityCorrection": true,
+    "unknownPortionGuards": true,
+    "stepImagesExact": true,
+    "rawZipBytesExact": true,
+    "reload": true,
+    "duplicateSkip": true,
+    "photoAdditionPreservesAttachments": true,
+    "exportMappingRoundtrip": true,
+    "nativeRollback": true,
+    "binaryStagingRollback": true,
+    "postAwaitEpochGuard": true,
+    "entryFailureIsolation": true,
+    "unsafeArchiveRefused": true
+  }
+]

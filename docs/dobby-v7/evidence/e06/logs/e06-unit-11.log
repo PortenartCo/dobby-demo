@@ -1,0 +1,19 @@
+✔ E06 draft resume keeps stable answer IDs and isolates members, users and households (8.346752ms)
+✔ E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten (1.068284ms)
+✔ a delayed draft write cannot replace the active draft after switching member (5.074782ms)
+✔ two loaded instances cannot erase drafts of distinct members (0.607145ms)
+✔ E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch (4.015986ms)
+✔ manual E05 house/patronus changes remove only the corresponding computed-version attribution (0.252885ms)
+✔ E06 JavaScript matches every Python base/optional combination and supplied QA result (1150.702838ms)
+✔ E06 validates stable answer IDs and does not use optional answers that were never asked (3.925841ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: server (15.088489ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: local (5.641152ms)
+✔ E06 interversion LIMIT: an old native member writer can erase result provenance and structured names (2.909686ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1336.160889

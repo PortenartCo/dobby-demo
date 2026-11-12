@@ -1,0 +1,163 @@
+# DOBBY V7 — État réel de l’intégration Stitch
+
+> Revue commune actuelle : [E01–E08](INTEGRATED-REVIEW.md), [registre des décisions](REVIEW-CONSOLIDATION.md). Ce document conserve le recensement historique des 53 sources ; il ne constitue pas une validation graphique de ces anciens écrans dans la démonstration intégrée.
+
+## E07 — Nouvelles présentations Taverne et Courses
+
+[Rapport, sources, preuves et limites E07](E07-TAVERNE-COURSES.md). Les treize routes Cuisine restent raccordées au moteur natif. Quatre présentations utilisent deux nouveaux HTML fournis, conservés hors du recensement original dans `design/stitch-e07/`. Les 53 HTML initiaux sont intacts ; les correspondances historiques ci-dessous sont complétées par les champs `presentation` et `cuisine.e07` du manifeste. Les autres pages Cuisine, writers et E06 ne sont pas modifiés. Aucun déploiement ni fonctionnement réel revendiqué.
+
+
+Le lot Cuisine poursuit la PR #3, branche `feat/dobby-stitch-53-source-backed-v7`, depuis `08f66ce`. La mission 2A poursuit ce travail depuis `cb440793cc04079cd472a3cd1d8fcf3e14c1f84b`. Les 53 HTML originaux et leurs empreintes restent inchangés dans `design/stitch-53/`.
+
+## E01 — Accueil et liaisons permanentes
+
+Depuis la base `cc1519b`, l’accueil réutilise ses cartes HTML Stitch originales pour la synthèse datée : missions sans plafond, validation par gestionnaire natif, repas par identifiant et Gazette vers l’Agenda au jour choisi. Les deux barres issues du même HTML restent visibles sur les destinations existantes ; la cinquième destination est le Menu. Les préférences sont indépendantes et utilisent le stockage natif. Le premier démarrage V7 ne crée plus de repas de démonstration. Aucun repas déjà enregistré n’est supprimé.
+
+Le [contrat permanent E01](E01-ACCUEIL.md) décrit les règles, les routes et les écarts, dont le compte natif sans source de profil et l’ouverture de la source d’une mission automatique. [Comparaisons à 390 et 1440 px](evidence/e01/README.md). Le périmètre Agenda existant est conservé : aucune fiche médicale individuelle locale n’est copiée dans la Gazette ou l’Agenda familial. Le recensement des 53 sources reste inchangé. Aucun développement interne des pages secondaires, ni modification de `essai-v7-preview`, de la V5 ou du backend.
+
+## Couverture vérifiée
+
+**13 sources Cuisine sont intégrées fonctionnellement**, avec leurs variantes de formulaire et de préparation. La Taverne appartenait déjà aux quatre racines intégrées : le lot Cuisine portait le total à 16 sources actives. La mission 2A ajoute sept compositions Famille/Agenda/Santé, puis les lots 2B et 3 poursuivent Contacts/Mémos/Listes et Maison. État courant : **53 sources actives sur 53, dont 29 partielles**, et **aucune source simplement importée restante**. Les lots 2B à 5 ont raccordé les 30 sources restantes. Les opérations principales déclarées intégrées utilisent leur composition Stitch ; les comptes et réglages hors de ces 53 sources gardent leur panneau natif. Le détail des 29 sources partielles et leurs limites figure dans [SOURCE-STATUS.md](SOURCE-STATUS.md). Lors du lot Cuisine, les 40 autres sources n’ont pas été réauditées. La mission 2A traite uniquement ses sept sources explicitement demandées ; elle ne réaudite pas Cuisine.
+
+Le registre exact est [route-manifest.json](../../essai-stitch-v7/route-manifest.json) : 53 templates actifs, dont 24 fonctionnels et 29 partiels ; les adaptateurs partiels sont identifiés séparément. Les états `verified-functional` renvoient aux tests et aux captures ; une simple importation reste `source-only`. Chaque variante est une route utilisable, issue de son propre HTML, et partage les mêmes actions métier que sa variante de référence.
+
+| Route dans `essai-stitch-v7/index.html` | HTML Stitch (identifiant abrégé) | Opérations effectivement raccordées |
+|---|---|---|
+| `#taverne` | `dobby_la_taverne_gourmande_repas_menus` | dîner, semaine, données des repas et recettes, statut préparé, accès choix/grimoire/courses |
+| `#pick` | `dobby_choisir_un_repas_nombre_de_convives` | date, midi/soir, adultes/enfants, sélection réelle, préférences, enregistrement, déplacement et annulation |
+| `#recipes` | `dobby_grimoire_des_recettes_favoris_du_logis` | bibliothèque native, recherche, filtres réels, favoris, fiche, ajout, import/export |
+| `#recipe?id=…` | `dobby_fiche_d_taill_e_d_une_recette` | ingrédients et étapes, portions, vérification des ingrédients, favoris, planification, copie/édition, cuisine, TM5 |
+| `#cook?id=…` | `dobby_mode_cuisine_tape_par_tape` | étapes réelles, précédent/suivant/terminer, accès direct à une étape, minuteur manuel, ingrédients |
+| `#tm5?id=…` | `dobby_adaptation_thermomix_tm5` | adaptation manuelle native, instructions/accessoire/durée/température/vitesse/sens inverse, vérification obligatoire, consultation et modification |
+| `#recipe-add-1` | `dobby_ajouter_une_recette_manuellement_1` | formulaire fonctionnel, ingrédients, étapes modifiables, portions, catégorie, mode ; sauvegarde native |
+| `#recipe-add` | `dobby_ajouter_une_recette_manuellement_2` | même contrat, barre d’enregistrement de cette seconde source ; saisies conservées entre variantes |
+| `#batch` | `dobby_importer_un_lot_de_recettes_json` | fichier, schéma DOBBY réel, validation, erreurs/avertissements, arbitrage des doublons, confirmation et import/export d’exemple |
+| `#shop-1` | `dobby_pr_parer_la_liste_de_courses_1` | besoins natifs, acheter/pas nécessaire, autres achats, validation, panier commun, variante distincte |
+| `#shop` | `dobby_pr_parer_la_liste_de_courses_2` | mêmes actions, filtres par rayon, ajout/retrait, historique ; retour à la liste courante si déjà validée |
+| `#shop-final` | `dobby_liste_de_courses_valid_e` | liste arrêtée native, coches persistées, progression, copie/export, modification de la préparation |
+| `#shop-history` | `dobby_historique_des_listes_de_courses` | archives réelles, consultation, reprise des articles, nouvelle préparation, export des archives sans purge |
+
+## Mission 2A — Famille, Agenda et Santé
+
+Les sept HTML demandés sont désormais utilisés dans les parcours Famille. **Deux sources ont le statut `verified-functional`** (membres et agenda) ; **cinq ont le statut `verified-partial`** (formulaire membre, rendez-vous médical, les deux carnets et historique/contacts), car les rôles/photos/notes de membre, les constantes/vaccins/antécédents cliniques structurés, rappels, pièces jointes et archivage n’ont pas tous de gestionnaire natif. Les opérations natives de lecture/CRUD sont raccordées dans leurs cadres Stitch ; les fonctions absentes restent explicitement indisponibles.
+
+Les personnes utilisent le registre `familyMembers` existant. Les fiches `famHealth` restent locales, les `familyEvents` restent ordinaires et les `sharedHealthVisits` restent volontaires avec activation native du module Famille. Aucune fiche individuelle n’est copiée dans les deux registres partagés. Les tests inspectent aussi les écritures du client natif contre une API uniquement simulée en mémoire.
+
+Les contrats exacts, règles de compatibilité, limites et tests sont dans [FAMILY-2A.md](FAMILY-2A.md). Preuves : [index des comparaisons](evidence/family-2a/README.md), [galerie](evidence/family-2a/index.html), [contrôles](evidence/family-2a/checks.json). Il y a 28 captures source/interface, 14 états vides et 6 états de partage/hors ligne/conflit ; les illustrations originales inaccessibles et les substituts sont déclarés.
+
+Les changements du pont partagé justifient les 54 régressions communes, le smoke des quatre racines et la CI existante. Les nouveaux parcours disposent de `npm run test:family --prefix essai-stitch-v7/tests`. Aucun réaudit Cuisine, aucune manipulation des comptes réels, aucune modification des fichiers V5/SQL/Supabase, fusion ou publication.
+
+## Mission séquentielle — lots 2B à 5
+
+La mission poursuit depuis `152cb89`, sans reprendre Cuisine ni 2A. Le [cahier des charges exact](MISSION-2B-5.md), le [plan](../superpowers/plans/2026-11-09-dobby-remaining-stitch.md) et les [checkpoints](CHECKPOINTS.md) permettent la reprise au premier lot non terminé.
+
+Le lot 2B utilise les six sources demandées : répertoire, formulaire contact, bibliothèque/formulaire mémo, registre/détail de liste. Les opérations natives de contacts, mémos et listes sont raccordées. Les mémos restent locaux ; contacts et listes conservent le module Famille. Le répertoire est fonctionnel pour son contrat principal ; les cinq autres sources sont partielles pour leurs fonctions Stitch absentes (portraits/blasons, épinglage/auteur/archives, catégories/attributions/renommage). [Comparaisons et limites 2B](evidence/lot-2b/README.md).
+
+Le lot 3 ajoute sept sources Maison/équipements/entretiens/sauvegardes : deux registres fonctionnels et cinq sources partielles, avec les gestionnaires d’équipement et d’entretien, les fichiers locaux et les exports natifs. Les restaurations passent par aperçu, validation et confirmation natives ; aucune restauration destructive n’est exécutée par les tests. [Comparaisons et limites du lot 3](evidence/lot-3/README.md).
+
+`build-register.cjs` dérive les nouveaux templates des originaux et `register.js` étend le shell source Famille. `family-register.js` utilise `xContactForm`, `familyNoteForm`, `xListForm` et les gestionnaires natifs des éléments/coches. Il n’ajoute aucun stockage ni writer. Les six sources ne dépendent pas du panneau visuel V5 pour leur CRUD. Le petit dialogue médical 2A reste compatible avec son contrat déjà testé ; son action est distinguée de la nouvelle route du formulaire contact.
+
+La CI lit `essai-stitch-v7/ci-scope.json` : tests du lot courant et régressions ciblées si le shell commun change ; la livraison finale active tous les scripts existants et nouveaux. Les commandes sont `npm test --prefix essai-stitch-v7/tests` pour le checkpoint courant et `npm run test:all --prefix essai-stitch-v7/tests` pour la validation générale une fois les quatre lots présents. Les comparaisons se régénèrent avec `DOBBY_LOT=2b node essai-stitch-v7/tests/register-visual.cjs` (serveur local et Chromium requis).
+
+## Sources et moteur
+
+`build-source.cjs` appelle `build-cuisine.cjs`, qui dérive les templates des vrais HTML Stitch. La structure, les classes, les scènes et les cartes proviennent de ces sources. Les scripts de démonstration et les handlers inline sont remplacés par les adaptateurs V7. Les composants répétables sont clonés depuis chaque template puis alimentés par le moteur, plutôt que réinventés dans une nouvelle interface. Les empreintes originales sont conservées dans `templates/provenance.json`. La génération est contrôlée en CI.
+
+L’iframe V5 de même origine reste le **moteur masqué unique** : état `st`, bibliothèque `BASE + custom`, calculs de portions/quantités, `shoppingDraft`, validation de recettes/imports, actions et writer `save()`, modules familiaux et gestion des conflits. Aucun nouveau stockage, aucune nouvelle base, aucun framework ajouté. Les saisies transitoires et le minuteur restent en mémoire de l’interface. Les modifications de recettes personnalisées réutilisent la validation native puis le writer existant, en conservant l’identité et les favoris.
+
+Aucun écran Cuisine ne rend le panneau V5 visible pour ses opérations. Le compte/foyer et les domaines hors lot peuvent encore l’utiliser. Les liens directs et l’historique navigateur restent dans le parcours Cuisine. Une destination Cuisine choisie dans un menu V5 secondaire revient également à son écran Stitch. La navigation générale de la Taverne demeure accessible ; les sous-écrans conservent leurs retours et barres d’action Stitch.
+
+Le panier local des repas et le panier familial restent deux périmètres distincts. Le second utilise les vrais handlers familiaux : connexion, ajout, édition, suppression existante, coche, import volontaire des ingrédients, synchronisation, états d’attente et choix de conflit. La validation locale ne publie pas automatiquement les courses. Aucun writer familial ni règle de transfert n’a été remplacé.
+
+## Fidélité et écarts explicites
+
+Les comparaisons de chaque écran sont dans [l’index des preuves](evidence/cuisine/README.md), avec une [galerie avant/après](evidence/cuisine/index.html) et [les contrôles navigateur](evidence/cuisine/checks.json). « Avant » désigne le HTML Stitch de référence rendu sans ses scripts fictifs, avec CSS/polices et ressources locales ; « après » désigne le parcours intégré utilisant un profil de test éphémère. Les données affichées dans ces preuves sont des fixtures identifiées, **pas les données ni les comptes réels du foyer**.
+
+Écarts significatifs et assumés :
+
+- **Deux URL d’illustration Stitch sont inaccessibles** : elles redirigent vers une page de connexion Google, pas une image. Elles sont utilisées par choix repas, ajout variante 2, import JSON, préparation variante 2 et liste validée. Une illustration originale disponible de la Taverne les remplace, dans les références rendues comme dans l’interface. La provenance indique les URL manquantes et la substitution (`assets/cuisine/provenance.json`). Cela constitue une limite visuelle, pas un chargement réussi de l’illustration manquante. Les scènes originales disponibles sont conservées localement, y compris celle de TM5. L’image d’origine du mode Cuisine contient des instructions fictives déjà incrustées dans ses pixels : un cadrage CSS central masque ces inscriptions, sans modifier le fichier source.
+- Les photos fictives des plats ne sont pas présentées comme photos des recettes DOBBY : image réellement associée si disponible, sinon visuel emoji du moteur. Les grands cadres photo Stitch sont conservés. La bibliothèque native inclut les recettes déjà présentes dans DOBBY ; aucun nom ou ingrédient inventé par Stitch n’y est ajouté.
+- Coût, difficulté, stocks disponibles, délais et réglages TM5 ne sont pas inventés. Les badges et promesses de chiffrement, de stockage exclusivement local ou de certification sont neutralisés. Le moteur ne contient qu’une durée totale : le formulaire additionne préparation et cuisson dans ce champ existant ; il ne crée pas deux durées persistées.
+- Les étapes classiques préremplissent l’éditeur d’adaptation TM5, sans conversion automatique. Les paramètres sont saisis et vérifiés par l’utilisateur. Une recette déjà destinée au TM5 se modifie depuis sa fiche ; elle n’est pas soumise au writer natif d’adaptation des recettes classiques. Le minuteur Cuisine est manuel, sans durée de cuisson déduite arbitrairement.
+- La pièce jointe du formulaire manuel reste une référence temporaire explicitement non enregistrée : aucun OCR, stockage ou transfert supplémentaire n’est simulé. Le format JSON illustratif de Stitch a été remplacé par le véritable format validé par DOBBY.
+- Le moteur natif renvoie un résultat JSON invalide sans tableau `warnings`, alors que sa vue le suppose présent. L’adaptateur réutilise ce validateur et normalise le tableau manquant avant le rendu natif. Le fichier V5 n’est pas modifié.
+- Les puces décoratives sans contrat métier sont masquées ; les contrôles réellement raccordés demeurent utilisables. Le bouton de purge de la maquette devient un export explicite sans effacement. Les contrôles supplémentaires de modification et de partage reprennent les cartes et la palette Stitch. Les champs sont adaptés à 320 px ; les animations respectent `prefers-reduced-motion`.
+
+## Vérification et reproduction
+
+Depuis la racine, démarrer `python3 -m http.server 8765 --bind 127.0.0.1`, puis :
+
+```sh
+npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+node essai-stitch-v7/build-source.cjs
+node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+CHROMIUM_PATH=/usr/bin/chromium npm test --prefix essai-stitch-v7/tests
+```
+
+`CHROMIUM_PATH` peut pointer vers le Chrome/Chromium local. Playwright reste une dépendance de test uniquement.
+
+- **54 tests existants : 54 réussis, aucun échec.** Couverture des modules, menus/recettes, persistance, synchronisation, conflits, accès et protection des données précédentes.
+- `smoke.cjs` : les quatre racines à 320/390 px, données et rafraîchissement réels, navigation Cuisine, accès aux formulaires Missions/Famille, pas d’exception JS.
+- `cuisine.cjs` : à 320/390 px, repas → recette → courses ; coefficient enfant natif `0,65`, quantité inconnue, favoris et recharge, export de la seule recette sélectionnée au format natif réimportable, vraies étapes sans étapes fictives résiduelles, TM5 et confirmation, choix acheter/pas nécessaire, variantes de préparation et de saisie, ajout/édition persistés, import JSON invalide/valide, historique et modification, déplacement et annulation d’un repas.
+- `cuisine-family.cjs` : vrai client familial et vrai stockage natif dans un profil éphémère, API simulée uniquement en mémoire ; connexion, ajout, quantité décimale, édition, coche hors ligne, conflit concurrent et résolution, reprise de synchronisation, import volontaire des ingrédients, à 320/390 px. Modules optionnels absents de cette fixture signalés par la réponse simulée, sans service réel.
+- `cuisine-visual.cjs` : 13 sources × 2 largeurs, 52 captures comparatives ; origine du DOM et empreintes, H1 unique, chargement des illustrations disponibles/substituées, absence des données fictives identifiées, absence de contrôles débordants et d’exception JS. Six captures supplémentaires documentent le panier connecté, hors ligne et en conflit.
+- CI V7 : syntaxe, génération reproductible, les 54 régressions et les quatre scripts navigateur, puis archivage des preuves. Le workflow ne déploie rien.
+
+Les échecs intermédiaires de raccordement (soumission interceptée par l’ancien pont, sélecteur de structure TM5, étapes fictives imbriquées, collisions des barres fixes, assertions asynchrones et illustrations indisponibles) ont été corrigés et les suites relancées. Les deux illustrations originales indisponibles restent l’écart non résolu ; leur remplacement exact nécessite les fichiers sources accessibles. Aucun test sur les comptes réels, aucune modification Supabase/SQL, aucun effacement de données, aucune modification de la V5 publiée, aucune fusion ni aucun déploiement.
+
+## Lot 4 — Documents, contrats, assurances et imports
+
+Onze HTML originaux sont montés via `documents-register.js` : `#documents-1`, `#documents`, `#document-edit`, `#document`, `#contracts-1`, `#contracts`, `#contract-edit`, `#contract-1`, `#contract`, `#import-file`, `#import-review`. Deux bibliothèques fonctionnelles et neuf pages partielles sont distinguées dans le manifeste. [Comparaisons des onze sources](evidence/lot-4/index.html), [états et limites exacts](evidence/lot-4/README.md).
+
+Les fiches restent dans `familyDocs`, avec le même identifiant ; Contrats/Assurances sont des vues de ces fiches. Création/modification : `familyDocForm` natif, qui fusionne les champs connus dans la fiche existante et conserve les champs supplémentaires. Les dates historiques incompatibles avec un champ date bloquent la modification, sans écrasement. Renouveler consiste à modifier l’échéance existante ; aucune reconduction, résiliation, garantie, prime ou notification n’est inventée. La personne reste le texte natif, sans créer de membre ou de fiche médicale.
+
+La fiche montre séparément le fichier local et le fichier du foyer. Un seul sélecteur PDF/image est disponible, local par défaut ; sa destination foyer n’apparaît que lorsque le partage existant l’autorise et qu’aucun fichier commun n’existe. L’envoi d’une copie locale existante, le transfert direct sans copie locale, l’ouverture, le retrait du fichier commun, le partage explicite des autres fiches et la suppression sont les handlers `family-files.js` d’origine. Les règles de catégories, MIME et 10 Mio restent natives. Hors ligne, la copie locale reste accessible et les contrôles distants sont indisponibles. Les transferts tiennent la navigation jusqu’à leur résultat natif. Aucun dossier `famHealth` ni mémo local n’entre dans le payload documentaire.
+
+L’import utilise `smartExtract`, `smartParse` et `smartCommit` existants : fichier temporaire → extraction PDF/OCR ou texte saisi → champs corrigibles → confirmation → stockage du fichier avant la nouvelle fiche. Les doublons sont refusés par le moteur. PDF.js/Tesseract et les données françaises déjà référencés par DOBBY sont servis localement, avec provenance/licences ; PDF.js désactive l’évaluation dynamique. Aucune IA, certitude calculée ni notification n’est simulée. La précision sur des documents réels reste à apprécier par l’utilisateur. La fusion JSON des fiches/mémos conserve la validation et la confirmation natives, sans fichiers joints.
+
+Tests `register-documents.cjs`, `register-documents-sync.cjs`, `register-import-reading.cjs` à 320/390 : CRUD, identités/champs supplémentaires, refus d’un titre blanc, fichiers et octets persistés, téléchargement, annulation retrait/fusion, JSON invalide, suppression d’une fixture et fichier associé, import texte corrigé et doublon, extraction d’un vrai PDF et OCR d’une vraie image, partage connecté/hors ligne/refus 403 sur client natif avec HTTP simulé. Aucune restauration destructive, aucun compte réel. `register-visual.cjs` produit 44 comparaisons et 22 états vides ; absence d’exemples Stitch, origine du DOM et contrôles mobiles vérifiés.
+
+Écarts visuels : les cartes et blocs source sont réutilisés, les puces de personnes/catégories et faux montants deviennent les champs natifs ; les héros, résumés, blocs d’aperçu, registres de métadonnées et notes conservent leurs enveloppes Stitch ; l’aperçu PDF illustratif devient l’état réel des pièces jointes et leur téléchargement, sans faux contenu ni aperçu automatique. Les promesses de chiffrement, certificats, rappels et fonctions iOS sont retirées. Les contrôles de métadonnées, sauvegarde et partage ajoutent de la hauteur. Les illustrations manquantes restent substituées avec provenance. Les pages d’import présentent un progrès indéterminé réel et des champs vérifiables, sans les coches de certitude fictives.
+
+## Lot 5 — Missions, conversation, recherche, menu et grimoire
+
+Six véritables sources supplémentaires : `#mission-edit`, `#chat`, `#chat-2`, `#search`, `#menu`, `#personal`. Le menu est fonctionnel ; les cinq autres sources restent partielles selon leurs écarts explicites. [Comparaisons et états](evidence/lot-5/index.html), [registre exact des limites](SOURCE-STATUS.md). Les [quatre racines disposent également de comparaisons source/interface](evidence/roots/index.html) à 320/390. La [galerie générale](evidence/index.html) rassemble les preuves des 53 sources sans compter deux fois la Taverne.
+
+Le formulaire conserve les cartes et champs Stitch et transmet titre, catégorie, responsable canonique, échéance et note au `fmsForm` natif. Création, modification, attribution, terminaison/réouverture et suppression sont les gestionnaires `family-missions.js` d’origine. Le registre source Missions montre séparément les tâches manuelles (`manualMissions`) et automatiques (`autoTasks`), avec leurs actions propres ; il n’y a aucune fusion du modèle. Une fiche supprimée pendant l’édition ne peut pas devenir une nouvelle mission. Les informations supplémentaires impossibles à conserver bloquent l’édition. Un ancien responsable absent du registre conserve sa référence jusqu’à un choix explicite. Récurrence, récompense, difficulté, heure et rappel Apple n’ont aucun writer et ne sont pas simulés.
+
+Les deux conversations utilisent `v2SendChat`, `v2ChatReply` et le même historique natif. Commandes limitées : dîner prévu, tâches automatiques, documents et ajout explicitement demandé aux courses. Les réponses inconnues sont celles du moteur ; aucun LLM, transcription, synthèse vocale, pièce jointe ni carte d’action magique n’est inventé. La dictée n’est pas qualifiée dans ce parcours. Les bulles et composeurs proviennent de chaque source ; leur position mobile évite le recouvrement des messages. L’historique reste local selon le module natif.
+
+La recherche appelle `xsearch()` existant et raccorde ses résultats aux pages Stitch correspondantes, y compris recettes et santé locale. Son périmètre est indiqué : contacts, listes, fiches santé locales, documents, mémos, équipements et recettes, au maximum 80 résultats ; ni texte des fichiers, ni membres/agenda/missions, ni services Apple, ni recherches récentes inventées. Le menu reprend ses quinze entrées originales, toutes raccordées, et ajoute les accès natifs aux mémos, agenda, membres, grimoire et sauvegardes. Filtre, absence de résultat et effacement fonctionnent. Les quatre racines et les retours navigateur sont vérifiés.
+
+Le grimoire utilise l’identifiant du membre, son icône native, sa date de naissance, les missions attribuées et les rendez-vous reliés par identifiant. Les rendez-vous individuels et volontairement partagés sont distingués ; aucune copie n’est effectuée. Les anciens rattachements textuels restent consultables dans le carnet 2A existant. Documents, contacts et mémos n’ayant pas de lien personnel canonique approprié, leurs rubriques donnent accès aux registres existants avec une explication. Aucune photo fictive de membre, récompense, allergie négative ou dossier médical vierge n’est présenté comme réel.
+
+Tests `register-tools.cjs`, `register-missions-sync.cjs`, `register-navigation.cjs`, `register-root-visual.cjs` : CRUD/identité/attribution/persistance des missions, refus d’un éditeur obsolète, terminaison automatique indépendante, commandes/historique/échec explicite, résultats réels et recherche vide, choix du membre, quinze destinations du menu et quatre racines, retour/avance/recharge, identifiant non réutilisé entre domaines, lecture seule des fonctions absentes. Client familial réel sur HTTP simulé : mission attribuée et coche hors ligne/recharge/reprise, aucun mémo ou dossier médical privé dans le payload. Les contrats JSON et les deux sources de tâches restent natifs. Le mode Documents véritablement hors ligne est également vérifié avec `navigator.onLine=false`, en plus des erreurs HTTP simulées.
+
+Les régressions de menu Cuisine et Famille vérifient désormais leur navigation vers le nouveau menu Stitch, au lieu d’attendre l’ancien panneau. Les autres scénarios Cuisine sont conservés pour la validation générale finale. Les contrôles communs ont détecté une collision d’identifiant du champ de recherche, un lien Taverne inactif et un bouton d’effacement caché ; ils sont corrigés dans la présentation. Aucun fichier V5 publié, source Stitch originale ou SQL n’a changé.
+
+Écarts restants : les champs natifs remplacent les contrôles sans contrat métier ; les sections sans données structurées deviennent des états explicites. Les portraits d’exemple du grimoire deviennent l’icône native. Le composeur de conversation reste dans le flux mobile. Les illustrations disponibles sont conservées ; les URL manquantes et leurs substitutions sont enregistrées. Les comportements de service externe, restaurations exécutées et comptes réels ne sont pas qualifiés par ces tests.
+
+Deux contrôles supplémentaires vérifient la saisie réelle au clavier dans la recherche (chaque caractère doit rester présent) et l’annonce visible d’une opération native longue. Les opérations bloquant temporairement la navigation affichent un état indéterminé accessible ; aucun pourcentage fictif n’est utilisé. Le test Maison est repris uniquement parce que ce verrou commun a changé, sans nouvel audit des sources Maison.
+
+## Revue finale des lots 2B–5
+
+[La revue indépendante](FINAL-REVIEW.md) a produit six constats importants, corrigés avec quatorze reproductions à 320/390. Les éditeurs refusent de recréer une fiche supprimée, les listes ne dispatchent plus un index devenu ambigu, les brouillons restent disponibles après menu/retour et ajout d’une pièce jointe, et les revendications fictives restantes sont retirées. Les brouillons sont uniquement en mémoire de présentation ; seuls les champs modifiés sont restaurés sur les données natives actuelles, sans nouvelle écriture métier ou stockage persistant. Les valeurs de fichier et contrôles cachés/désactivés sont exclus. Les écritures locales déjà en cours sont observées jusqu’à leur fin réelle ; la limite d’annulation/nettoyage native reste explicitement partielle.
+
+Le bilan fonctionnel reste **53 sources actives, 24 fonctionnelles et 29 partielles**. [La CI de la PR #3](https://github.com/PortenartCo/dobby-demo/pull/3/checks) et son bilan de livraison donnent le SHA exact et le résultat général final. La branche et la PR restent ouvertes ; aucune fusion ou mise en production n’est autorisée par cette mission.
+
+Les mentions de confidentialité Contacts/Mémos/Listes sont liées aux règles du module : les coordonnées, notes et listes peuvent être synchronisées avec le foyer quand Famille est activé ; les mémos restent locaux. Aucune promesse source de stockage Contacts exclusivement local, de certification ou de chiffrement n’est conservée. La neutralisation intervient avant les valeurs du foyer, qui restent intactes.
+
+## E02 — Parler à Dobby
+
+[Contrat et point de contrôle de l'historique individuel](E02-PARLER-A-DOBBY.md). Le parcours principal `famille.html#chat` conserve les véritables compositions Stitch 1 avec hero compact, bulles et confirmation, header/navigation E01 et saisie fixe. Commandes déterministes raccordées aux lectures et writers natifs ; aucune IA payante ou réponse factuelle inventée. Reconnaissance/synthèse selon les API et voix effectivement disponibles.
+
+Historique local par identité connectée dans le magasin natif ; sans identité, fil temporaire. Ancien historique sans auteur conservé et non réattribué. Synchronisation individuelle distante **bloquée**, sans table ni migration ajoutée. Les deux sources chat restent déclarées partielles, notamment pour cette synchronisation et la validation Safari iOS réelle. Le manifeste expose le contrat E02 et ses preuves sans modifier les autres intégrations.
+
+
+## E04 — Runes et avatars, branche indépendante en revue
+
+Efforts 10/25/50, ledger natif distinct et grades SVG provisoires sont raccordés sur `feat/dobby-e04-runes`, base E04 `091fe0e`. [Règles, preuves et limites](E04-RUNES.md). Aucun nouveau recensement des sources ni intégration de branche E03 : les états fonctionnel/partiel restent inchangés. Synchronisation testée sur fixtures compatibles ; protection contre les anciens writers et ordre physique de complétions hors ligne non garantis par le serveur actuel. Aucune publication ni modification Supabase/SQL.
+
+## E05 — Profil magique
+
+[Rapport et limites E05](E05-PROFIL-MAGIQUE.md) : profil par identifiant natif, quatre thèmes, 12 Patronus et 8 portraits originaux locaux, avatar/insigne E04 partagé, seuils V1 approuvés et paramètres repliables. Writer membre natif étendu pour préserver les champs, aucun autre writer. Lien compte/membre, droits parentaux, import photo et intégrité face aux anciens writers NON LIVRÉS ; dernier export Profil magique absent, fidélité graphique à ses quatre variantes NON VÉRIFIÉE. Aucune source simplement importée ne change de statut d’intégration. Aucun merge ni publication.

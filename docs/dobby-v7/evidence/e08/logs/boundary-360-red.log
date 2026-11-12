@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Even one pixel of header clipping is a regression
+
+false !== true
+
+    at /workspace/dobby-e08-contrats/essai-stitch-v7/tests/e08.cjs:7:676 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

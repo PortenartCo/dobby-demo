@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: new supplied Taverne source
++ actual - expected
+
++ 'dobby_la_taverne_gourmande_repas_menus'
+- 'dobby_la_taverne_gourmande_version_simplifi_e_rapide'
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07.cjs:7:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'dobby_la_taverne_gourmande_repas_menus',
+  expected: 'dobby_la_taverne_gourmande_version_simplifi_e_rapide',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

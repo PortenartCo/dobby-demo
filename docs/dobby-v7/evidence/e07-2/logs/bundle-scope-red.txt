@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Preview exposes only required application resources
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-preview.cjs:2:1938 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Revised portions replace the contribution, never 200+300
+
+500 !== 300
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-model.cjs:14:416 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 500,
+  expected: 300,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

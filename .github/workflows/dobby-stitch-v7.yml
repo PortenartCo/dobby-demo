@@ -1,0 +1,229 @@
+name: Dobby V7 - Stitch functional UI
+on:
+  push:
+    paths:
+      - 'essai-stitch-v7/**'
+      - 'design/stitch-53/**'
+      - 'design/stitch-e07/**'
+      - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/build-dobby-family-review.cjs'
+      - 'scripts/check-dobby-review-reuse.cjs'
+      - 'scripts/review/**'
+      - 'docs/dobby-v7/**'
+      - '.github/workflows/dobby-stitch-v7.yml'
+  pull_request:
+    paths:
+      - 'essai-stitch-v7/**'
+      - 'design/stitch-53/**'
+      - 'design/stitch-e07/**'
+      - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/build-dobby-family-review.cjs'
+      - 'scripts/check-dobby-review-reuse.cjs'
+      - 'scripts/review/**'
+      - 'docs/dobby-v7/**'
+      - '.github/workflows/dobby-stitch-v7.yml'
+  workflow_dispatch:
+    inputs:
+      historical_run:
+        description: 'Optional completed run with a successful full historical step; only reset-boundary changes may reuse it'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  source-backed-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: ${{ github.event_name == 'workflow_dispatch' && inputs.historical_run != '' && '0' || '1' }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify optional historical campaign reuse
+        id: historical-reuse
+        env:
+          DOBBY_HISTORICAL_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.historical_run || '' }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/check-dobby-review-reuse.cjs
+      - name: Exhaustive review registry coverage
+        run: node scripts/check-review-consolidation.cjs --final
+      - name: Check V7 JavaScript syntax
+        run: |
+          node --check essai-stitch-v7/build-source.cjs
+          node --check essai-stitch-v7/bridge.js
+          node --check essai-stitch-v7/chrome.js
+          node --check essai-stitch-v7/home.js
+          node --check essai-stitch-v7/ritual.js
+          node --check essai-stitch-v7/ritual-effects.js
+          node --check essai-stitch-v7/engine-policy.js
+          node --check essai-stitch-v7/chat.js
+          node --check essai-stitch-v7/chat-engine.js
+          node --check essai-stitch-v7/tests/e02.cjs
+          node --check essai-stitch-v7/tests/e02-edge.cjs
+          node --check essai-stitch-v7/tests/e02-publish.cjs
+          node --check essai-stitch-v7/tests/e02-voice-history.cjs
+          node --check essai-stitch-v7/tests/e01.cjs
+          node --check essai-stitch-v7/tests/e01-3.cjs
+          node --check essai-stitch-v7/tests/e01-3-video.cjs
+          node --check essai-stitch-v7/tests/e01-visual.cjs
+          node --check essai-stitch-v7/root-adapters.js
+          node --check essai-stitch-v7/tests/smoke.cjs
+          node --check essai-stitch-v7/build-cuisine.cjs
+          node --check essai-stitch-v7/cuisine-engine.js
+          node --check essai-stitch-v7/recipe-import.js
+          node --check essai-stitch-v7/recipe-import-format.mjs
+          node --check essai-stitch-v7/recipe-import-zip.mjs
+          node --check scripts/review/e073-config.js
+          node --check essai-stitch-v7/tests/e07-3-ci.cjs
+          node --check essai-stitch-v7/cuisine-timers.js
+          node --check essai-stitch-v7/cuisine-e074.js
+          node --check essai-stitch-v7/tests/e07-4-ci.cjs
+          node --check scripts/review/e074-config.js
+          node --check essai-stitch-v7/cuisine.js
+          node --check essai-stitch-v7/cuisine-e07.js
+          node --check essai-stitch-v7/cuisine-list.js
+          node --check essai-stitch-v5-famille/family-v2.js
+          node --check scripts/build-dobby-review.cjs
+          node --check scripts/check-dobby-review-reuse.cjs
+          node --check scripts/review/review-runtime.js
+          node --check scripts/review/integrated-config.js
+          node --check essai-stitch-v7/tests/integrated-preview.cjs
+          node --check essai-stitch-v7/tests/e07-2-boot.cjs
+          node --check essai-stitch-v7/tests/e07-2.cjs
+          node --check essai-stitch-v7/tests/e07-2-model.cjs
+          node --check essai-stitch-v7/tests/e07-2-preview.cjs
+          node --check essai-stitch-v7/tests/e07.cjs
+          node --check essai-stitch-v7/tests/e07-native-actions.cjs
+          node --check essai-stitch-v7/tests/e07-1.cjs
+          node --check essai-stitch-v7/tests/e07-1-context.cjs
+          node --check essai-stitch-v7/tests/cuisine.cjs
+          node --check essai-stitch-v7/tests/cuisine-visual.cjs
+          node --check essai-stitch-v7/tests/cuisine-family.cjs
+          node --check essai-stitch-v7/build-family.cjs
+          node --check essai-stitch-v7/family-engine.js
+          node --check essai-stitch-v7/member-avatar.js
+          node --check essai-stitch-v7/tests/e04.cjs
+          node --check essai-stitch-v7/tests/e04-runes.cjs
+          node --check essai-stitch-v7/tests/runes-native.cjs
+          node --check essai-stitch-v7/tests/e04-runes-capture.cjs
+          node --check essai-stitch-v7/import-runtime.js
+          node --check essai-stitch-v7/family.js
+          node --check essai-stitch-v7/tests/family.cjs
+          node --check essai-stitch-v7/tests/family-edge.cjs
+          node --check essai-stitch-v7/tests/family-review.cjs
+          node --check essai-stitch-v7/tests/family-shared.cjs
+          node --check essai-stitch-v7/tests/family-visual.cjs
+          for file in essai-stitch-v7/register*.js essai-stitch-v7/*-register.js essai-stitch-v7/build-register.cjs essai-stitch-v7/tests/register-*.cjs essai-stitch-v7/tests/ci.cjs; do node --check "$file"; done
+      - name: Existing offline, family and conflict regressions
+        run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+      - name: Integrated preview builder and byte provenance
+        run: node --test essai-stitch-v7/tests/integrated-build.test.cjs
+      - name: E06 exhaustive scoring, identity and draft isolation
+        run: node --test essai-stitch-v7/tests/e06-*.test.mjs
+      - name: Recipe formats, ZIP, E07.4 timers and isolated preview contracts
+        run: |
+          node --test essai-stitch-v7/tests/e07-3-*.test.* essai-stitch-v7/tests/e07-4-*.test.* essai-stitch-v7/tests/e07-p01*.test.*
+          node scripts/check-e074-matrix.cjs
+      - name: Source derivation remains reproducible
+        run: |
+          npm ci --ignore-scripts --prefix essai-stitch-v7
+          node essai-stitch-v7/build-source.cjs
+          npm run build:css --prefix essai-stitch-v7
+          git diff --exit-code -- essai-stitch-v7/ritual-effects.js essai-stitch-v7/stitch-tailwind.css essai-stitch-v7/assets/cuisine/e07-taverne.png essai-stitch-v7/assets/cuisine/e07-courses.png essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html
+      - name: Confirm the original Stitch source manifest
+        run: |
+          node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"
+      - name: Browser tooling (tests only)
+        working-directory: essai-stitch-v7/tests
+        run: npm ci --ignore-scripts
+      - name: Functional Stitch roots and source fidelity
+        if: steps.historical-reuse.outputs.reusable != 'true'
+        env:
+          DOBBY_FINAL: ${{ github.ref_name == 'feat/dobby-v7-global-review-20261112' && '1' || '0' }}
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+          sleep 1
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          elif command -v chromium >/dev/null; then
+            BROWSER="$(command -v chromium)"
+          elif command -v chromium-browser >/dev/null; then
+            BROWSER="$(command -v chromium-browser)"
+          else
+            echo "No Chrome/Chromium available on runner"
+            exit 1
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs
+      - name: Famille integration native contracts, isolated preview and reset
+        if: github.ref_name == 'feat/dobby-v7-famille-integration-20261112' || github.head_ref == 'feat/dobby-v7-famille-integration-20261112'
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8765
+          DOBBY_FAM_CI_EVIDENCE: docs/dobby-v7/evidence/famille-integration-20261112/ci-current
+        run: |
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          elif command -v chromium >/dev/null; then
+            BROWSER="$(command -v chromium)"
+          elif command -v chromium-browser >/dev/null; then
+            BROWSER="$(command -v chromium-browser)"
+          else
+            echo "No Chrome/Chromium available on runner"
+            exit 1
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/fam-integration-ci.cjs
+      - name: Global E01–E09 isolated bundle and native A/B journeys
+        if: github.ref_name == 'feat/dobby-v7-global-review-20261112'
+        env:
+          DOBBY_HISTORICAL_REUSED: ${{ steps.historical-reuse.outputs.reusable }}
+        run: |
+          if [ "$DOBBY_HISTORICAL_REUSED" = "true" ]; then
+            python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+            sleep 1
+          fi
+          node --test essai-stitch-v7/tests/global-build.test.cjs
+          node scripts/build-dobby-global-review.cjs --output essai-dobby-v7-global-review-20261112
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/runes-history.cjs
+          DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ DOBBY_GLOBAL_EVIDENCE=docs/dobby-v7/evidence/global-review-20261112/ci-current CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
+          DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
+      - name: PREP-01 native writers and isolated browser journeys
+        if: github.ref_name == 'main' || startsWith(github.ref_name, 'feat/dobby-v7-prep') || github.event_name == 'pull_request'
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8871
+        run: |
+          python3 -m http.server 8871 --bind 127.0.0.1 > /tmp/dobby-prep-http.log 2>&1 &
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" npm run test:prep --prefix essai-stitch-v7/tests
+      - name: Keep current global review evidence
+        if: always() && steps.historical-reuse.outputs.reusable == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-stitch-visual-evidence
+          path: |
+            docs/dobby-v7/evidence/global-review-20261112/ci-current/
+            docs/dobby-v7/evidence/global-review-20261112/historical-reuse.json
+          retention-days: 14
+      - name: Keep root, Cuisine and Family comparisons (320/390px)
+        if: always() && steps.historical-reuse.outputs.reusable != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-stitch-visual-evidence
+          path: docs/dobby-v7/evidence/
+          retention-days: 14

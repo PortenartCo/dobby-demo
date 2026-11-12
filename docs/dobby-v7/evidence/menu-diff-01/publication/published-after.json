@@ -1,0 +1,97 @@
+{
+  "mainSha": "69ede6451023c30ccdf981cc0b403b56559cc931",
+  "checkedAt": "2026-11-12T10:12:08.876910+00:00",
+  "resources": [
+    {
+      "path": "essai-dobby-e01-e06-review-20261111/review-manifest.json",
+      "sha256": "2402d676dbc5b76fd8234e3b12ba4c5a7f885aa2f45cfc21762eae870b112457",
+      "bytes": 78339,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-e07-consolidation-review-20261111/review-manifest.json",
+      "sha256": "d593f89221ffac710d1f26bee1dda4eeb791dd10f5e59b60004e0fffba9b533f",
+      "bytes": 77284,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-e07-p01-review-20261112/review-manifest.json",
+      "sha256": "6ab9c2e657b45e0a62ee027f20c5bf25e79478bd1f39123093e9f11c59731b00",
+      "bytes": 77900,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-e07-p02-courses-review-20261112/review-manifest.json",
+      "sha256": "e8eb46e38cf5a4d6e5d3b4b996154afdb30fb183a367eb0bf755847ed8823b64",
+      "bytes": 77391,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-e07-p02-shared-home-review-20261112/review-manifest.json",
+      "sha256": "dc8fdfe07626bf189456f3ada894a3a0de4ac00b81ce22abc8d5502b17e922fd",
+      "bytes": 78314,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-e07-review-20261111/review-manifest.json",
+      "sha256": "505693c7489e813872cf8bfe79533462830590cc552b9610bc3a0b271a996831",
+      "bytes": 76158,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-e09-famille-salon-review-20261112/review-manifest.json",
+      "sha256": "a0e105e1edfd5daf581d9f0a48bcf661592fffcd6f020e081ba16b3474968288",
+      "bytes": 77275,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-integrated-review/review-manifest.json",
+      "sha256": "8c0aecc7469df2d8089829bdc587baaa5d4c3c96eb3e4883a44a99797060ecd0",
+      "bytes": 74748,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-review/review-manifest.json",
+      "sha256": "87795cbc4735dd3405a3ee38f355ac8383759033eae65d2011e84e2e01b0da41",
+      "bytes": 63186,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-v7-famille-review-20261112/review-manifest.json",
+      "sha256": "61b6b3fb2f1e155e0ad947207b18418100442200ed702c30f1096a3a2ece300c",
+      "bytes": 97438,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-v7-global-review-20261112/review-manifest.json",
+      "sha256": "1575b76e2f4d271224afb6b293e36920533445ab1d3dae10c5a7d2ec7a105a5e",
+      "bytes": 79949,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-v7-menu-review-20261112/review-manifest.json",
+      "sha256": "2072a59ec278e5532d76b6f24f42cc344a635a8dae6192eb45472f4eaf70548c",
+      "bytes": 99376,
+      "status": 200
+    },
+    {
+      "path": "index.html",
+      "sha256": "72de30105ed567c19be7f2b99dd81414c63fc7aa5110fdfdd71572f26f3cf6a6",
+      "bytes": 1173425,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-v7-famille-review-20261112/essai-stitch-v7/famille.html",
+      "sha256": "128f5ad13acc0396ed5c9384afcba57abc9c640924cc4d6934b6c0f5f7f7525c",
+      "bytes": 43949,
+      "status": 200
+    },
+    {
+      "path": "essai-dobby-v7-global-review-20261112/essai-stitch-v7/chat-engine.js",
+      "sha256": "ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd",
+      "bytes": 12449,
+      "status": 200
+    }
+  ],
+  "status": "PASS"
+}

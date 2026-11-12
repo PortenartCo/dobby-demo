@@ -1,0 +1,10 @@
+page.goto: net::ERR_FAILED at http://127.0.0.1:8765/essai-stitch-v7/traverse.html
+Call log:
+[2m  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/traverse.html", waiting until "load"[22m
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e05-edge.cjs:13:110 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/traverse.html", waiting until "load"'
+  ],
+  name: 'Error'
+}

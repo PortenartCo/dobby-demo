@@ -1,0 +1,84 @@
+{
+  "label": "local",
+  "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-final",
+  "controlledNetworkHold": true,
+  "productChanges": false,
+  "member": {
+    "id": "local-1794356784182-l2kw2jo",
+    "name": "Camille Revue E06 Diagnostic",
+    "birthdate": "",
+    "avatar": "👤",
+    "magicProfile": {
+      "version": 1,
+      "houseId": "ravenclaw",
+      "patronusId": "fox",
+      "avatarId": "portrait-3"
+    }
+  },
+  "before": {
+    "avatarId": "portrait-3",
+    "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+    "backgroundPosition": "66.6667% 16.6667%",
+    "backgroundSize": "400% 400%",
+    "display": "flex",
+    "visibility": "visible",
+    "opacity": "1",
+    "width": 104,
+    "height": 104,
+    "parent": {
+      "width": 108,
+      "height": 108
+    },
+    "resourceTimings": [],
+    "pixels": {
+      "width": 104,
+      "height": 105,
+      "distinctCentralColors": 1,
+      "centralLuminanceVariance": -7.071321306284517e-11
+    }
+  },
+  "after": {
+    "avatarId": "portrait-3",
+    "backgroundImage": "url(\"http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png\")",
+    "backgroundPosition": "66.6667% 16.6667%",
+    "backgroundSize": "400% 400%",
+    "display": "flex",
+    "visibility": "visible",
+    "opacity": "1",
+    "width": 104,
+    "height": 104,
+    "parent": {
+      "width": 108,
+      "height": 108
+    },
+    "resourceTimings": [
+      {
+        "name": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png",
+        "startTime": 3617.39999999851,
+        "responseEnd": 8793.79999999702,
+        "duration": 5176.39999999851,
+        "transferSize": 2204200
+      }
+    ],
+    "pixels": {
+      "width": 104,
+      "height": 105,
+      "distinctCentralColors": 2631,
+      "centralLuminanceVariance": 1291.5582542605844
+    }
+  },
+  "network": [
+    {
+      "event": "request-held",
+      "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png",
+      "at": "2026-11-11T00:26:24.104Z"
+    },
+    {
+      "event": "response",
+      "status": 200,
+      "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/magic/avatars.png",
+      "at": "2026-11-11T00:26:29.232Z"
+    }
+  ],
+  "result": "PASS"
+}

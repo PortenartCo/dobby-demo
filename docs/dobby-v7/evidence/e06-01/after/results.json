@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:8790",
+  "base": "/essai-stitch-v7",
+  "widths": [
+    320
+  ],
+  "results": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "skipMs": 48,
+      "traversalMs": 2708,
+      "image": {
+        "loaded": true,
+        "width": 318,
+        "height": 556,
+        "visible": true,
+        "src": "http://127.0.0.1:8790/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png"
+      },
+      "preference": {
+        "seen": false,
+        "suppressed": true,
+        "version": 1
+      },
+      "browserAudio": {
+        "audioContexts": 2,
+        "vibrations": 2
+      },
+      "audioSupported": true,
+      "blockedLegacyDecorationRequests": 27
+    }
+  ],
+  "realAccounts": false,
+  "businessMocks": false
+}

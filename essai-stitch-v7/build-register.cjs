@@ -1,0 +1,29 @@
+/* Reproducible original-source derivation for sequential remaining domains. */
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),routes=require('./register-routes.json');
+const target=path.join(__dirname,'templates/remaining');fs.mkdirSync(target,{recursive:true});
+const assets=JSON.parse(fs.readFileSync(path.join(__dirname,'assets/remaining/provenance.json'))),provenance=[];
+for(const route of routes){
+ const source=`design/stitch-53/${route.id}/code.html`,original=fs.readFileSync(path.resolve(__dirname,'..',source),'utf8');
+ let html=original.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<link\b[^>]*href="https:\/\/fonts\.(?:googleapis|gstatic)\.com[^"]*"[^>]*>/gi,'').replace(/\s+on\w+\s*=\s*(?:"[^"]*"|'[^']*')/gi,'');
+ for(const a of assets)for(const url of [a.url,a.url.replaceAll('&','&amp;')])html=html.replaceAll(url,'../../assets/remaining/'+(a.file||a.fallback));
+ const entry={view:route.view,source,sha256:crypto.createHash('sha256').update(original).digest('hex')};
+ // MENU-01–08 overrides the presentation, retaining the immutable Stitch source census.
+ if(route.view==='menu'){
+  html=fs.readFileSync(path.join(__dirname,'menu-layout.html'),'utf8');
+  entry.layout={source:'essai-stitch-v7/menu-layout.html',sha256:crypto.createHash('sha256').update(html).digest('hex'),decisions:'MENU-01–08'};
+ }else html=html.replace(/<body\b/,`<body data-stitch-source="${route.id}"`);
+ fs.writeFileSync(path.join(target,route.view+'.html'),html);provenance.push(entry);
+}
+fs.writeFileSync(path.join(target,'provenance.json'),JSON.stringify(provenance,null,2)+'\n');fs.writeFileSync(path.join(__dirname,'register-route-data.js'),'window.DobbyRegisterRoutes='+JSON.stringify(routes)+';\n');
+const p=path.join(__dirname,'route-manifest.json'),m=JSON.parse(fs.readFileSync(p));for(const r of routes){Object.assign(m.screens.find(s=>s.id===r.id),{domain:'lot-'+r.lot,linked:true,mode:r.status==='verified-functional'?'functional-adapter':'partial-adapter',integration:r.status,route:'famille.html#'+r.view,template:'templates/remaining/'+r.view+'.html',unsupported:r.unsupported,verification:{tests:[`tests/register-${({'2b':'family','3':'house','4':'documents','5':'tools'})[r.lot]}.cjs`,'tests/register-visual.cjs'],widths:[320,390],captures:[320,390].map(width=>({reference:`docs/dobby-v7/evidence/lot-${r.lot}/before/${r.view}-${width}.png`,integrated:`docs/dobby-v7/evidence/lot-${r.lot}/after/${r.view}-${width}.png`}))}});}
+m.sequentialLots=Object.fromEntries([...new Set(routes.map(r=>r.lot))].map(lot=>{const rows=routes.filter(r=>r.lot===lot);return [lot,{sources:rows.length,functional:rows.filter(r=>r.status==='verified-functional').length,partial:rows.filter(r=>r.status==='verified-partial').length}];}));
+m.templatesUsedInActiveUI=m.screens.filter(s=>s.linked).length;m.partialSources=m.screens.filter(s=>s.integration==='verified-partial').length;m.activeFunctionalScreens=m.templatesUsedInActiveUI-m.partialSources;m.sourceOnly=m.screens.filter(s=>!s.linked).length;fs.writeFileSync(p,JSON.stringify(m,null,2)+'\n');console.log('REGISTER_TEMPLATES',routes.length);
+
+// E08 evidence supplements the existing source census; no source or route replacement.
+const e08=m.screens.find(s=>s.route==='famille.html#contracts');e08.verification={...e08.verification,tests:[...e08.verification.tests,'tests/e08.cjs','tests/register-documents-sync.cjs'],widths:[320,360,390,1440],captures:[320,360,390,1440].map(width=>({reference:`docs/dobby-v7/evidence/e08/before/contracts-10-${width}.png`,integrated:`docs/dobby-v7/evidence/e08/after/contracts-10-${width}.png`}))};e08.presentation={mission:'E08',document:'docs/dobby-v7/E08-CONTRATS.md',illustration:'assets/contracts/screen.png'};fs.writeFileSync(p,JSON.stringify(m,null,2)+'\n');
+
+// Current Menu contract; Settings is a workflow alias, not a 54th source screen.
+const menu=m.screens.find(s=>s.route==='famille.html#menu');
+menu.presentation={mission:'MENU-01–08',document:'docs/dobby-v7/MENU-01-08-IMPLEMENTATION.md',layout:'essai-stitch-v7/menu-layout.html',settings:'famille.html#settings',backup:'famille.html#backup'};
+menu.verification={tests:['tests/menu-build.test.cjs','tests/menu.cjs','tests/register-navigation.cjs'],widths:[320,390,1440],captures:[320,390,1440].map(width=>`docs/dobby-v7/evidence/menu-01-08/menu-${width}.png`)};
+fs.writeFileSync(p,JSON.stringify(m,null,2)+'\n');

@@ -1,0 +1,22 @@
+✔ shared memo create/read/update/delete propagates without publishing legacy notes or private health (21.875938ms)
+✔ concurrent edits use module conflict, retaining both copies until explicit resolution and backup (8.112185ms)
+✔ offline memo remains pending across a client reload, then synchronizes (6.434615ms)
+✔ old payload and unknown family extensions survive a write; absent fields do not clear existing data (7.195808ms)
+✔ activation and joining preserve new offline memos alongside remote memos, with local notes excluded (23.749902ms)
+✔ an old client dropping the memo extension is detected and local acknowledged copy is retained (5.140191ms)
+✔ edits during PATCH are not falsely acknowledged or replaced (4.60743ms)
+✔ invalid memo payload blocks before replacing any other family fields (3.953348ms)
+✔ a rival write between GET and PATCH loses CAS and keeps the local memo pending in conflict (4.142573ms)
+✔ server conflict choice acknowledges updated unknown family fields before the next memo edit (5.395474ms)
+✔ a second device can refresh and resolve after another device restores the memo protocol (5.149785ms)
+✔ edits during protocol recovery preserve latest remote member fields on the following sync (3.867029ms)
+✔ reactivation takes remote edits of unchanged memos and retains a distinct pending import (3.86167ms)
+✔ genuinely divergent memo edits on reactivation become an active resolvable conflict (4.471827ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1700.474298

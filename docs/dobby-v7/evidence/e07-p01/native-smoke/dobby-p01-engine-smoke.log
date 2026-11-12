@@ -1,0 +1,7 @@
+PASS current Brussels civil day; birthday boundary, baby exclusion, future birthdate unknown, planning date ignored, read-only
+PASS real native stock positives only and default child factor .65
+PASS native move preserves full meal, portions, provenance/extensions and independent evening
+PASS refused move and cancellation leave native memory and storage unchanged
+PASS native prepared status and stale snapshot atomic refusal
+PASS native persistence failure after first successful write rolls back exact state and raw storage
+P01_ENGINE_SMOKE_PASS real native handlers, no account/network

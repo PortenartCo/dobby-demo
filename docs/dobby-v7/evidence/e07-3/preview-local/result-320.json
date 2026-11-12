@@ -1,0 +1,34 @@
+{
+  "width": 320,
+  "status": "PASS",
+  "base": "http://127.0.0.1:8894/e073-preview-test-current/",
+  "sourceSha": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+  "namespace": "dobby-review-e073-20261111|",
+  "actualUI": [
+    "calendar",
+    "catalogue",
+    "favorite confirmation/reload",
+    "manual create",
+    "copy prompt",
+    "V1 multi-import/cancel",
+    "V2 ZIP/original photo/TM5 unverified",
+    "duplicate skip",
+    "reload",
+    "courses writer",
+    "five destinations",
+    "two-tab isolated reset"
+  ],
+  "photoSha256": "606067b97aa92524f76aac9c4ba64f112e37865a577e8a336734ca8d95ec8665",
+  "photoDimensions": [
+    10,
+    8
+  ],
+  "nativePlanningPreserved": true,
+  "rawLocalAndSessionSentinels": "PASS",
+  "rawIndexedDBSentinels": "PASS",
+  "unrelatedOriginalPhotoBlobs": "PASS",
+  "backendRequests": 0,
+  "externalRequests": 0,
+  "missingResources": 0,
+  "realSynchronization": "NOT_VERIFIED"
+}

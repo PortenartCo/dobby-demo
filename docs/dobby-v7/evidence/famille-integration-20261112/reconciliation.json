@@ -1,0 +1,59 @@
+{
+  "globalBase": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "familySource": "a28a1e74e6fd6fcb0db8b154002ce032ae10f130",
+  "commonAncestor": "faf89d50555a3201385eae51f9ef5f93c5bf0499",
+  "originalPatchIntersection": [],
+  "strategy": "cherry-pick the two Family commits onto the specified latest global source; no application merge into main",
+  "protectedSources": [
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "11c14a453724b5210832df1601b88588dca20b17"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-list.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "603aa55c9ac892eb502dda621cf377ccddb76ca5"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "6a8ddf1b94f0ac7afbfdada7ad0696188792ebd3"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "5009615fb18527907bc9ac874aa7358591600a69"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "38269f3de1c0c677c8f22c2cbf4cf1986f353e74"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-runes-core.mjs",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "106d0aeba2d531cc50da3c38b18f6e6a3273a6be"
+    },
+    {
+      "path": "scripts/build-dobby-global-review.cjs",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "10e8f76ae772088d3dc12f5d840c0060722f0a0f"
+    },
+    {
+      "path": "scripts/review/global-demo.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "116ccc680d3ab047d5f5f78abc84b950f7b466da"
+    },
+    {
+      "path": "scripts/review/global-config.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "73b9b908e15ae03dffd7bd6b1d177a27c2e2a4cd"
+    },
+    {
+      "path": "scripts/review/review-runtime.js",
+      "unchangedFrom": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "gitBlob": "8aa91afdb6e7fe638c848fe60a71cb4cf3305a83"
+    }
+  ]
+}

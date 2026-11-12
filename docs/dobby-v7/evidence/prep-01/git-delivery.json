@@ -1,0 +1,9 @@
+{
+  "base": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "branch": "feat/dobby-v7-preparations-20261112",
+  "status": " M .gitignore\n M essai-stitch-v5-famille/family-agenda.js\n M essai-stitch-v5-famille/family-modules.js\n M essai-stitch-v5-famille/family-v2.js\n M essai-stitch-v5-famille/index.html\n M essai-stitch-v5-famille/tests/helpers/modules-harness.mjs\n M essai-stitch-v7/build-source.cjs\n M essai-stitch-v7/cuisine-list.js\n M essai-stitch-v7/famille.html\n M essai-stitch-v7/family-agenda-review.js\n M essai-stitch-v7/family-engine.js\n M essai-stitch-v7/family.js\n?? design/stitch-preparation-20261112/\n?? docs/dobby-v7/PREP-01-IMPLEMENTATION.md\n?? docs/dobby-v7/evidence/prep-01/\n?? essai-stitch-v5-famille/preparations.js\n?? essai-stitch-v7/preparations.css\n?? essai-stitch-v7/preparations.js\n?? essai-stitch-v7/tests/prep-01-boundaries.test.cjs\n?? essai-stitch-v7/tests/prep-01-browser.js\n?? essai-stitch-v7/tests/prep-01-sync.test.mjs\n?? essai-stitch-v7/tests/prep-01.test.cjs\n",
+  "commit": false,
+  "pushAttempted": false,
+  "reason": "index.lock: Permission denied in C:/Users/dubru/Dobby-E04-Runes-20261110/.git/worktrees/Dobby-V7-PREP-01-20261112",
+  "sourcePatchBytes": 210077
+}

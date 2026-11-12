@@ -1,0 +1,64 @@
+REGISTER_TOOLS_PASS 320
+REGISTER_TOOLS_PASS 390
+REGISTER_VISUAL 5 mission-edit 320
+REGISTER_VISUAL 5 chat 320
+REGISTER_VISUAL 5 chat-2 320
+REGISTER_VISUAL 5 search 320
+REGISTER_VISUAL 5 menu 320
+REGISTER_VISUAL 5 personal 320
+REGISTER_VISUAL 5 mission-edit 390
+REGISTER_VISUAL 5 chat 390
+REGISTER_VISUAL 5 chat-2 390
+REGISTER_VISUAL 5 search 390
+REGISTER_VISUAL 5 menu 390
+REGISTER_VISUAL 5 personal 390
+REGISTER_VISUAL_PASS 5 6 sources x 320/390
+REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+REGISTER_IMPORT_READING_PASS 320
+REGISTER_IMPORT_READING_PASS 390
+REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+REGISTER_ROOT_VISUAL traverse 320
+REGISTER_ROOT_VISUAL missions 320
+REGISTER_ROOT_VISUAL famille 320
+REGISTER_ROOT_VISUAL taverne 320
+REGISTER_ROOT_VISUAL traverse 390
+REGISTER_ROOT_VISUAL missions 390
+REGISTER_ROOT_VISUAL famille 390
+REGISTER_ROOT_VISUAL taverne 390
+REGISTER_REVIEW_PASS stale-memo-edit 320
+REGISTER_REVIEW_PASS stale-equipment-edit 320
+REGISTER_REVIEW_PASS stale-document-edit 320
+REGISTER_REVIEW_PASS list-rg-item-toggle 320
+REGISTER_REVIEW_PASS list-rg-item-remove 320
+REGISTER_REVIEW_PASS menu-member-draft 320
+REGISTER_REVIEW_PASS menu-contact-draft 320
+REGISTER_REVIEW_PASS menu-medical-draft 320
+REGISTER_REVIEW_PASS maintenance-file-draft 320
+REGISTER_REVIEW_PASS document-native-write-missing 320
+REGISTER_REVIEW_PASS document-native-write-replaced 320
+REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+REGISTER_REVIEW_PASS maintenance-source-facts 320
+REGISTER_REVIEW_PASS source-facts 320
+REGISTER_REVIEW_PASS stale-memo-edit 390
+REGISTER_REVIEW_PASS stale-equipment-edit 390
+REGISTER_REVIEW_PASS stale-document-edit 390
+REGISTER_REVIEW_PASS list-rg-item-toggle 390
+REGISTER_REVIEW_PASS list-rg-item-remove 390
+REGISTER_REVIEW_PASS menu-member-draft 390
+REGISTER_REVIEW_PASS menu-contact-draft 390
+REGISTER_REVIEW_PASS menu-medical-draft 390
+REGISTER_REVIEW_PASS maintenance-file-draft 390
+REGISTER_REVIEW_PASS document-native-write-missing 390
+REGISTER_REVIEW_PASS document-native-write-replaced 390
+REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+REGISTER_REVIEW_PASS maintenance-source-facts 390
+REGISTER_REVIEW_PASS source-facts 390
+REGISTER_REVIEW_ALL_PASS 14 cases × 320/390

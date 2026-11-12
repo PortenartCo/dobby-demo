@@ -1,0 +1,71 @@
+{
+  "url": "https://portenartco.github.io/dobby-demo/essai-e02-preview/famille.html#chat",
+  "publicHosted": true,
+  "sourceCommit": "6c667cebc5f786e5c99c64b8d20008638891c849",
+  "status": "PASS",
+  "viewport": 390,
+  "hero": {
+    "loaded": true,
+    "height": 140
+  },
+  "assets": [
+    {
+      "file": "chat.js",
+      "status": 200,
+      "sha256": "0374429340668a1870a65c74b21205791b196ab4caea3287d4a67926443ebbcb"
+    },
+    {
+      "file": "chat-engine.js",
+      "status": 200,
+      "sha256": "b61d249d6a48b6b452567e50b32b0637fb90eac911efc0ba0e2ec28e007865a9"
+    },
+    {
+      "file": "chrome.js",
+      "status": 200,
+      "sha256": "97726c40f47f3a978e984fced6a726f479e6316de23cc4d93b0fb043906fa646"
+    },
+    {
+      "file": "chrome.css",
+      "status": 200,
+      "sha256": "a0ccca0c24cd6512c42d26f68c77ac4bf61c894d5f5d8f22f0b915b74b170ebf"
+    }
+  ],
+  "destinations": [
+    {
+      "index": 0,
+      "url": "https://portenartco.github.io/dobby-demo/essai-e02-preview/traverse.html",
+      "subtitle": "MAISON & QUOTIDIEN · CHEMIN DE TRAVERSE"
+    },
+    {
+      "index": 1,
+      "url": "https://portenartco.github.io/dobby-demo/essai-e02-preview/missions.html",
+      "subtitle": "MAISON & QUOTIDIEN · LA BIBLIOTHÈQUE DES MISSIONS"
+    },
+    {
+      "index": 2,
+      "url": "https://portenartco.github.io/dobby-demo/essai-e02-preview/index.html",
+      "subtitle": "MAISON & QUOTIDIEN · LA TAVERNE GOURMANDE"
+    },
+    {
+      "index": 3,
+      "url": "https://portenartco.github.io/dobby-demo/essai-e02-preview/famille.html#salon",
+      "subtitle": "MAISON & QUOTIDIEN · LE SALON DES CURIOSITÉS"
+    },
+    {
+      "index": 4,
+      "url": "https://portenartco.github.io/dobby-demo/essai-e02-preview/famille.html#menu",
+      "subtitle": "MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY"
+    }
+  ],
+  "checks": [
+    "page and local resources",
+    "E01 header and Stitch1 hero",
+    "text and native stored TEST addition",
+    "ambiguous commands without native mutation",
+    "courses/missions/agenda internal links",
+    "five destinations and real return through Traverse"
+  ],
+  "realAccount": false,
+  "externalRequestsBlocked": 136,
+  "physicalIPhone": false
+}

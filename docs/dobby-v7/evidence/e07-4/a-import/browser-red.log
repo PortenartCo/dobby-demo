@@ -1,0 +1,22 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
++   [
++     'Recette 1 (sans nom) : nom manquant ou trop long, portions invalides (1 à 30), durée invalide, étapes absentes ou trop nombreuses'
++   ],
++   [
++     'Recette 1 (TEST — Instructions absentes) : portions invalides (1 à 30), durée invalide, ingrédients absents ou trop nombreux, étapes absentes ou trop nombreuses'
++   ]
+-   [],
+-   []
+  ]
+
+    at /workspace/dobby-e074/essai-stitch-v7/tests/e07-4-import.cjs:9:239 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [Array],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

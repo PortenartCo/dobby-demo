@@ -1,0 +1,24 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
+const base=process.env.DOBBY_E09_BASE||'http://127.0.0.1:8765/',out=process.env.DOBBY_E09_OUT||path.resolve(__dirname,'../../docs/dobby-v7/evidence/e09/source');
+(async()=>{fs.mkdirSync(out,{recursive:true});const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});try{for(const width of [320,390,1440]){
+ const context=await browser.newContext({viewport:{width,height:950},locale:'fr-BE',reducedMotion:'reduce'}),page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await context.route('**/*',route=>{const url=new URL(route.request().url());return url.origin===new URL(base).origin?route.continue():route.abort();});
+ await page.goto(base+'essai-stitch-v7/famille.html');await page.waitForFunction(()=>window.DobbyFamilyStitch?.ready);
+ await page.evaluate(()=>DobbyFamilyStitchEngine.evaluate('st.familyMembers=[];st.familyEvents=[];st.sharedHealthVisits=[];st.sharedFamilyNotes=[];st.familyNotes=[];save();'));
+ await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.evaluate(()=>document.fonts.ready);
+ assert.deepEqual(await page.locator('main h2').allTextContents(),['L’Horloge Enchantée','L’Agenda Enchanté','La Volière aux Messages']);
+ for(const label of ['Gérer les membres','Ajouter un événement','Ajouter un mémo'])assert.equal(await page.getByRole('button',{name:label,exact:true}).count(),1,label);
+ assert.equal(await page.locator('main').getByText('Cheminée allumée',{exact:true}).count(),0);assert.equal(await page.getByText('Note manuscrite de Dobby',{exact:false}).count(),0);
+ assert.equal(await page.locator('main').getByText('Archives & Accès Rapides',{exact:true}).count(),0);
+ assert.equal(await page.locator('main .e01-empty').count(),3);assert.equal(await page.locator('main').getByText('Organisation familiale, rituels et événements du foyer.',{exact:true}).count(),1);
+ const geometry=await page.evaluate(()=>{const hero=document.querySelector('[data-e09-hero]'),badge=hero.querySelector('[data-e09-badge]');return{hero:hero.getBoundingClientRect().toJSON(),badge:badge.getBoundingClientRect().toJSON(),overflow:document.documentElement.scrollWidth>innerWidth,intro:document.querySelector('[data-e09-intro]').getBoundingClientRect().height};});
+ assert.equal(geometry.overflow,false);assert.equal(geometry.hero.height,220);assert.ok(geometry.badge.bottom<=geometry.hero.bottom&&geometry.badge.right<=geometry.hero.right);assert.ok(geometry.badge.top>geometry.hero.top+150);assert.ok(geometry.intro<150);
+ await page.screenshot({path:path.join(out,`salon-empty-${width}.png`),fullPage:true});
+ await page.getByRole('button',{name:'Gérer les membres',exact:true}).click();await page.waitForFunction(()=>document.body.dataset.familyView==='members');await page.screenshot({path:path.join(out,`members-${width}.png`),fullPage:true});
+ await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.getByRole('button',{name:'Ajouter un événement',exact:true}).click();await page.locator('#fa-native-form').waitFor();assert.equal(await page.locator('#fa-native-form input[name="title"]').count(),1);await page.screenshot({path:path.join(out,`event-${width}.png`),fullPage:true});
+ await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.getByRole('button',{name:'Ajouter un mémo',exact:true}).click();await page.waitForFunction(()=>document.body.dataset.familyView==='memo-edit');await page.locator('#memo-title').waitFor();await page.screenshot({path:path.join(out,`memo-${width}.png`),fullPage:true});
+ await page.evaluate(()=>DobbyFamilyStitch.open('menu'));await page.locator('main [data-fa-action="settings"]').click();await page.waitForFunction(()=>document.body.dataset.familyView==='settings');assert.ok(await page.locator('main a[data-fa-action="backup"]').count(),'Native backup remains reachable through Paramètres');
+ await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.evaluate(()=>DobbyFamilyStitchEngine.evaluate('st.familyMembers=[{id:"test-member",name:"TEST — Camille",avatar:"👤"}];st.sharedFamilyNotes=[{id:"test-memo",title:"TEST — Penser au rendez-vous",body:"Apporter le dossier.",tags:"rappel"}];save();'));await page.evaluate(()=>DobbyFamilyStitch.open('salon'));
+ assert.equal(await page.locator('main').getByText('TEST — Camille',{exact:true}).count(),1);await page.screenshot({path:path.join(out,`salon-data-${width}.png`),fullPage:true});
+ assert.deepEqual(errors,[]);console.log('E09_SALON_PASS',width,JSON.stringify(geometry));await context.close();
+}}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

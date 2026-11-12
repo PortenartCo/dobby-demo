@@ -1,0 +1,41 @@
+[
+  {
+    "width": 320,
+    "status": "PASS",
+    "stepMediaExact": true,
+    "truthfulFallback": true,
+    "ingredientsMapped": true,
+    "multipleTimersPersistent": true,
+    "timerCommands": true,
+    "deadlineCatchup": true,
+    "tm5SameView": true,
+    "festinModalSingleCTA": true,
+    "noImplicitBusinessWrite": true
+  },
+  {
+    "width": 390,
+    "status": "PASS",
+    "stepMediaExact": true,
+    "truthfulFallback": true,
+    "ingredientsMapped": true,
+    "multipleTimersPersistent": true,
+    "timerCommands": true,
+    "deadlineCatchup": true,
+    "tm5SameView": true,
+    "festinModalSingleCTA": true,
+    "noImplicitBusinessWrite": true
+  },
+  {
+    "width": 1440,
+    "status": "PASS",
+    "stepMediaExact": true,
+    "truthfulFallback": true,
+    "ingredientsMapped": true,
+    "multipleTimersPersistent": true,
+    "timerCommands": true,
+    "deadlineCatchup": true,
+    "tm5SameView": true,
+    "festinModalSingleCTA": true,
+    "noImplicitBusinessWrite": true
+  }
+]

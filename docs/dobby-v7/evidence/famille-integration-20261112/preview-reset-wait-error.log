@@ -1,0 +1,6 @@
+page.evaluate: Execution context was destroyed, most likely because of a navigation
+    at read (/workspace/dobby-v7-famille-integration-20261112/essai-stitch-v7/tests/fam-integration-preview.cjs:8:23)
+    at /workspace/dobby-v7-famille-integration-20261112/essai-stitch-v7/tests/fam-integration-preview.cjs:36:426 {
+  log: [],
+  name: 'Error'
+}

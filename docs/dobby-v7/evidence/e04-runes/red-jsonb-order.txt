@@ -1,0 +1,35 @@
+✔ concurrent distinct credits survive server conflict resolution and mission deletion (22.628179ms)
+✔ concurrent distinct credits survive local conflict resolution and mission deletion (7.041406ms)
+✔ same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted (5.741911ms)
+✔ accepted PATCH with lost response and reload confirms the same request without replay credit (8.097656ms)
+✔ CAS loss between GET/PATCH retains pending intent, then existing resolver converges (5.630994ms)
+✔ activation/retrieval preserves local pending requests and never credits legacy done rows (5.809295ms)
+✔ a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized (3.995746ms)
+✖ JSON object key order from jsonb cannot trigger a repeated reward PATCH (5.622235ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.156191
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/runes-sync.test.mjs:32:1
+✖ JSON object key order from jsonb cannot trigger a repeated reward PATCH (5.622235ms)
+  AssertionError [ERR_ASSERTION]: stable payload must not write twice when jsonb reorders nested keys
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e04-runes/essai-stitch-v5-famille/tests/runes-sync.test.mjs:34:314)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

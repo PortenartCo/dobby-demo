@@ -1,0 +1,23 @@
+{
+  "width": 320,
+  "status": "PASS",
+  "initialPreferences": {},
+  "audio": [
+    {
+      "state": "running",
+      "oscillators": [
+        {
+          "started": true,
+          "stopAfter": 0.13
+        },
+        {
+          "started": true,
+          "stopAfter": 0.13
+        }
+      ]
+    }
+  ],
+  "offReload": true,
+  "reducedMotion": true,
+  "externalBackend": false
+}

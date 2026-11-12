@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'dobby_pr_parer_la_liste_de_courses_2'
+- 'dobby_ma_liste_de_courses_usage_magasin_simplifi'
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07.cjs:12:27 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'dobby_pr_parer_la_liste_de_courses_2',
+  expected: 'dobby_ma_liste_de_courses_usage_magasin_simplifi',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

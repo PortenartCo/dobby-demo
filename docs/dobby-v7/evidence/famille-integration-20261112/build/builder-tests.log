@@ -1,0 +1,12 @@
+✔ family bundle preserves global semantics and records exact source and namespace provenance (702.723112ms)
+✔ composed fictional A/B parents can edit dependents through the native policy (17.753671ms)
+✔ uncommitted family builder or configuration is rejected before creating a bundle (90.513892ms)
+✔ global preview runs native modules from an independently verifiable, offline-only bundle (625.95056ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 887.288679

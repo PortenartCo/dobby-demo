@@ -1,0 +1,32 @@
+[
+  {
+    "path": "index.html",
+    "status": 200,
+    "size": 1173425,
+    "sha256": "72de30105ed567c19be7f2b99dd81414c63fc7aa5110fdfdd71572f26f3cf6a6"
+  },
+  {
+    "path": "essai-e01-preview/home.js",
+    "status": 200,
+    "size": 10692,
+    "sha256": "7faf99649a29e6a3473b48c361eb00f03529cbc228337b75ec1d69d7bf1eaf09"
+  },
+  {
+    "path": "essai-e02-preview/home.js",
+    "status": 200,
+    "size": 10692,
+    "sha256": "7faf99649a29e6a3473b48c361eb00f03529cbc228337b75ec1d69d7bf1eaf09"
+  },
+  {
+    "path": "essai-stitch-v5-famille/index.html",
+    "status": 200,
+    "size": 1218129,
+    "sha256": "928a238cbe6fa5315e4877a9e93977a0e2c48d0c709365424e3ec30f5945af9f"
+  },
+  {
+    "path": "essai-v6-preview/assets/v6/fonts.css",
+    "status": 200,
+    "size": 1530,
+    "sha256": "30a06ac10a88f19997eeb89fd1c7ee50acc65b8053bec0f95edd1f296b5a63fb"
+  }
+]

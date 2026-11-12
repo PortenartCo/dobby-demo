@@ -1,0 +1,14 @@
+GLOBAL_CHECK 390 entry, explicit simulation and native clients
+GLOBAL_CHECK 390 E09 create a fictive member through its visible form
+GLOBAL_CHECK 390 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 390 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 390 E05 chosen member profile survives reload and browser history
+GLOBAL_CHECK 390 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 390 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 390 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 390 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 390 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 390 Two tabs A/B: native grocery, Runes V2 and memo synchronization
+GLOBAL_CHECK 390 E02, E06 and E08 remain reachable, dock and browser navigation work
+GLOBAL_CHECK 390 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 390 http://127.0.0.1:8766/dobby-global-browser-verified/

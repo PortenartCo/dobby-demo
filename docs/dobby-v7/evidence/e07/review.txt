@@ -1,0 +1,7 @@
+Independent read-only review: base E05 8418682 -> 6d15259 and test adaptations.
+Critical: none.
+Important: lost native prepared-meal action on new dinner card. Corrected with existing cooked(date,slot), no new writer; e07-native-actions.cjs RED -> GREEN verifies native status and reload.
+Quantity-origin display: native extra detail 'Achat complémentaire' incorrectly occupied quantity slot. Corrected as explicit E07 unknown-quantity requirement: À préciser, origin separately visible; same RED -> GREEN test.
+No additional Important issue substantiated by reviewer (source derivation, local assets, read/action linkage, empty/unknown-duration/midi-soir states, explicit grocery import/status and mobile evidence inspected).
+No second review requested; fixes verified by targeted regressions and existing Cuisine suite.
+Not judged: actual backend synchronization, physical-device behavior, E06 composition, pre-existing covered-meal/portion-selection semantics. These remain explicit limitations, not claims of production validation.

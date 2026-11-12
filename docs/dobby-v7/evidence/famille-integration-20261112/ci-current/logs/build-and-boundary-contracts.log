@@ -1,0 +1,19 @@
+✔ new stable memo identity persists on edit, delete never touches legacy records (6.456866ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (2.641861ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (5.937234ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (2.127448ms)
+✔ required and bounded fields and missing legacy import never create records (3.258618ms)
+✔ family bundle preserves global semantics and records exact source and namespace provenance (984.436095ms)
+✔ composed fictional A/B parents can edit dependents through the native policy (16.930699ms)
+✔ uncommitted family builder or configuration is rejected before creating a bundle (83.762566ms)
+✔ Family integration preserves the latest E02, Courses, native Runes and global isolation runtime bytes (3.218588ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (1.608928ms)
+✔ E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical (0.317868ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1170.05618

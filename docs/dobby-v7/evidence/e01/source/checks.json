@@ -1,0 +1,82 @@
+[
+  {
+    "screen": "traverse",
+    "width": 390,
+    "source": "design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html",
+    "sha256": "43e53ef9339df1ea4059850e28b06505a6151f390b83a7c0c50244d059872ebd",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "missions",
+    "width": 390,
+    "source": "design/stitch-53/dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
+    "sha256": "a6d8a44f3bcb5e7ab57375facdeb032804631cb054725b834cb049281ce6aeab",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "taverne",
+    "width": 390,
+    "source": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html",
+    "sha256": "50f2190bf38f98e6d3618b3a9f5d18c8a9a4c7e02f195bc9981f4a2f8560b6f5",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "famille",
+    "width": 390,
+    "source": "design/stitch-53/dobby_le_salon_des_curiosit_s_famille_organisation/code.html",
+    "sha256": "cfd5569c0aafb54b5ac2a2987c6168e33add69f00162f765155d60efd29b5f2d",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "menu",
+    "width": 390,
+    "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
+    "sha256": "b07813aa052464a68f5219af35a8f15d674ed513599d3859cfdcf3b33a19b9f2",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "traverse",
+    "width": 1440,
+    "source": "design/stitch-53/dobby_l_choppe_du_chemin_de_traverse/code.html",
+    "sha256": "43e53ef9339df1ea4059850e28b06505a6151f390b83a7c0c50244d059872ebd",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "missions",
+    "width": 1440,
+    "source": "design/stitch-53/dobby_la_biblioth_que_des_missions_t_ches_magiques/code.html",
+    "sha256": "a6d8a44f3bcb5e7ab57375facdeb032804631cb054725b834cb049281ce6aeab",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "taverne",
+    "width": 1440,
+    "source": "design/stitch-53/dobby_la_taverne_gourmande_repas_menus/code.html",
+    "sha256": "50f2190bf38f98e6d3618b3a9f5d18c8a9a4c7e02f195bc9981f4a2f8560b6f5",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "famille",
+    "width": 1440,
+    "source": "design/stitch-53/dobby_le_salon_des_curiosit_s_famille_organisation/code.html",
+    "sha256": "cfd5569c0aafb54b5ac2a2987c6168e33add69f00162f765155d60efd29b5f2d",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  },
+  {
+    "screen": "menu",
+    "width": 1440,
+    "source": "design/stitch-53/dobby_menu_g_n_ral_de_tous_les_modules/code.html",
+    "sha256": "b07813aa052464a68f5219af35a8f15d674ed513599d3859cfdcf3b33a19b9f2",
+    "status": "PASS",
+    "note": "HTML original sans scripts de démonstration, CSS/polices locales ; illustration locale déjà déclarée pour les quatre racines."
+  }
+]

@@ -1,0 +1,28 @@
+✔ availability is persisted, compared and acknowledged by the native core (2.307435ms)
+✔ competing availability declarations require conflict resolution (0.344631ms)
+✔ an edit in flight is not lost on acknowledgement (0.216117ms)
+✔ legacy rows omit availability from payloads and compare as zero (0.228515ms)
+✔ kg availability retains gram-level fractional precision (4.33621ms)
+✔ regroupe les apports compatibles et conserve leurs repas, réimport idempotent (43.675216ms)
+✔ article manuel couvre le besoin sans doubler la quantité (2.536281ms)
+✔ maison partiel/total/annulation reste distinct des achats et de la clôture (2.606347ms)
+✔ noms ambigus et unités incompatibles restent distincts (1.116016ms)
+✔ un aperçu devenu périmé ne modifie pas les articles (1.699397ms)
+✔ disponibilité conserve son unité quand un apport compatible est ajouté (2.242568ms)
+✔ plusieurs articles manuels compatibles sont tous conservés sans surajout (2.007542ms)
+✔ historique E07.2 en kg conserve son reçu et ne se réimporte pas (0.878677ms)
+✔ modifier une unité compatible convertit aussi la disponibilité (1.45613ms)
+✔ supprimer une préparation libère sa couverture manuelle (1.994142ms)
+✔ supprimer un article familial retire son annotation maison (3.688311ms)
+✔ réimport familial avec période restreinte ne réalloue pas la couverture (22.706037ms)
+✔ un formulaire partagé périmé ne remplace pas une modification reçue (2.021394ms)
+✔ une confirmation de suppression périmée ne retire pas la nouvelle version (0.826799ms)
+✔ une clôture périmée n’archive pas une disponibilité reçue après confirmation (0.948052ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 222.189494

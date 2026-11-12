@@ -9,7 +9,7 @@ const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
   db: null, core: null, key: null, session: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
-  lastSync: null, error: '', notice: '', ready: false, modalOpen: false, provider: null
+  homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null
 };
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
@@ -50,10 +50,21 @@ function dbCall(db, store, operation, arg) {
 const meta = async id => (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;
 const putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });
 const delMeta = id => dbCall(f.db, 'meta', 'delete', id);
+// Atomic metadata mutation on the existing IndexedDB store. E06 draft updates
+// from different tabs must read the latest value inside the same transaction.
+function updateMeta(id,change){return new Promise((resolve,reject)=>{
+ const tx=f.db.transaction('meta','readwrite'),store=tx.objectStore('meta'),request=store.get(id);let result,error;
+ request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');store.put({id,value:result});}catch(e){error=e;tx.abort();}};
+ tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Métadonnées non enregistrées.'));tx.onerror=()=>reject(error||tx.error);
+});}
+
 async function loadItems() {
   const list = await dbCall(f.db, 'items', 'getAll');
   f.cache = new Map(list.filter(x => f.context && x.storageKey.startsWith(f.context + '|'))
     .map(x => [x.id, x]));
+  // A previously acknowledged schema field remains usable after an offline
+  // reload. This is capability from the native cache, never a local home note.
+  if([...f.cache.values()].some(x=>Object.prototype.hasOwnProperty.call(x,'at_home_quantity')))f.homeSupported=true;
 }
 function getItem(id) { return f.cache.get(id) || null; }
 async function putItem(entry) {
@@ -62,6 +73,19 @@ async function putItem(entry) {
   await dbCall(f.db, 'items', 'put', row);
   f.cache.set(row.id, row);
 }
+// Merge into the latest stored row in the same transaction as the write.
+// A pull/ack queued behind an edit must never replace it using a stale cache.
+function updateItem(id,mutate,epoch=f.epoch,context=f.context){return new Promise((resolve,reject)=>{
+  if(!context){reject(Error('Foyer non identifié'));return;}
+  const tx=f.db.transaction('items','readwrite'),store=tx.objectStore('items'),req=store.get(context+'|'+id);let saved,error;
+  req.onsuccess=()=>{try{
+    if(f.epoch!==epoch||f.context!==context)throw Error('Le foyer a changé.');
+    const next=mutate(req.result||null);
+    if(next){saved={...next,storageKey:context+'|'+id};store.put(saved);}
+  }catch(e){error=e;tx.abort();}};
+  tx.oncomplete=()=>{if(saved&&f.epoch===epoch&&f.context===context)f.cache.set(id,saved);resolve(saved);};
+  tx.onabort=()=>reject(error||tx.error||Error('Modification non enregistrée.'));tx.onerror=()=>reject(error||tx.error);
+});}
 async function raw(path, method, body, headers = {}, bearer = null) {
   if (!f.key) throw Error('Clé publiable absente');
   const h = { apikey: f.key, ...headers };
@@ -148,21 +172,24 @@ async function storageFetch(method,path,file){
 async function requireHousehold() {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
   const epoch = f.epoch;
+  f.checkingEpoch=epoch;f.verifiedContext = null;
   const rows = await authorized('GET', 'dobby_v2_memberships?select=household_id&active=eq.true&user_id=eq.' +
     encodeURIComponent(f.session.user_id));
   if (epoch !== f.epoch) throw Error('Session remplacée');
   if (!Array.isArray(rows) || rows.length !== 1 || !rows[0]?.household_id) {
+    f.membershipRejected=true;
     throw Error('Ce compte doit appartenir à un seul foyer actif pour cette version.');
   }
   const hh = rows[0].household_id;
   const context = f.session.user_id + '|' + hh;
   const household = await authorized('GET', 'dobby_v2_households?select=id&id=eq.' + encodeURIComponent(hh));
-  if (!Array.isArray(household) || household.length !== 1) throw Error('Accès au foyer non autorisé');
+  if (!Array.isArray(household) || household.length !== 1){f.membershipRejected=true;throw Error('Accès au foyer non autorisé');}
   if (epoch !== f.epoch) throw Error('Session remplacée');
   // V5's local state is one namespace per browser profile; prevent sharing a
   // single profile between households until full partitioning is implemented.
   const deviceHousehold = await meta('deviceHouseholdId');
   if (deviceHousehold && deviceHousehold !== hh) {
+    f.membershipRejected=true;
     throw Error('Ce navigateur conserve les données locales d’un autre foyer. Utilisez un profil de navigateur distinct.');
   }
   if (!deviceHousehold) await putMeta('deviceHouseholdId', hh);
@@ -173,6 +200,7 @@ async function requireHousehold() {
     await loadItems();
   }
   f.householdId = hh;
+  f.verifiedContext = context;f.membershipRejected=false;if(f.checkingEpoch===epoch)f.checkingEpoch=null;
   // Also initialize modules when an existing, previously verified household was
   // restored from IndexedDB. The context-equality shortcut must not skip this.
   // start() is idempotent once its backend probe has succeeded.
@@ -187,14 +215,19 @@ async function restoreCachedHousehold() {
   await loadItems();
 }
 async function pull(epoch) {
-  const rows = await authorized('GET', 'dobby_v2_grocery?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.' +
+  // Probe column support without depending on the presence of grocery rows.
+  // Missing schema only disables availability; never discard a queued value.
+  if(f.homeSupported!==true){
+    try{await authorized('GET','dobby_v2_grocery?select=at_home_quantity&household_id=eq.'+encodeURIComponent(f.householdId)+'&limit=0');if(epoch!==f.epoch)return;f.homeSupported=true;}
+    catch(error){if(epoch!==f.epoch)return;if(['42703','PGRST204'].includes(error.code)&&/at_home_quantity/i.test(error.message))f.homeSupported=false;else throw error;}
+  }
+  const rows = await authorized('GET', 'dobby_v2_grocery?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id'+(f.homeSupported?',at_home_quantity':'')+'&household_id=eq.' +
     encodeURIComponent(f.householdId) + '&order=created_at.asc');
   if (epoch !== f.epoch) return;
   if (!Array.isArray(rows)) throw Error('Réponse serveur incohérente');
   for (const row of rows) {
     if (epoch !== f.epoch) return;
-    const merged = f.core.mergeRemote(getItem(row.id), row);
-    await putItem(merged);
+    await updateItem(row.id,local=>{const merged=f.core.mergeRemote(local,row);return {...merged,import_source_id:row.import_source_id||merged.import_source_id||null};},epoch);
   }
 }
 async function readOne(id) {
@@ -204,10 +237,11 @@ async function readOne(id) {
 }
 async function conflict(snapshot, server, epoch) {
   if (epoch !== f.epoch) return;
-  const local = getItem(snapshot.id);
-  if (!local || local.syncState === 'clean') return;
-  if (server && f.core.sameFields(local, server)) return putItem(f.core.cleanFromRemote(server));
-  await putItem({ ...local, syncState: 'conflict', remoteShadow: server });
+  await updateItem(snapshot.id,local=>{
+    if(!local||local.syncState==='clean')return null;
+    if(server&&f.core.sameFields(local,server))return {...f.core.cleanFromRemote(server),import_source_id:server.import_source_id||local.import_source_id||null};
+    return {...local,syncState:'conflict',remoteShadow:server};
+  },epoch);
 }
 async function push(snapshot, epoch) {
   if (epoch !== f.epoch || snapshot.syncState !== 'pending') return;
@@ -241,8 +275,7 @@ async function push(snapshot, epoch) {
   const server = returned?.[0];
   if (!server) throw Error('Modification reçue sans confirmation serveur');
   if (epoch !== f.epoch) return;
-  const current = getItem(snapshot.id);
-  if (current) await putItem(f.core.afterPush(current, snapshot, server));
+  await updateItem(snapshot.id,current=>current?{...f.core.afterPush(current,snapshot,server),import_source_id:server.import_source_id||current.import_source_id||null}:null,epoch);
 }
 async function sync() {
   if (!f.ready || !f.session || !f.key) return;
@@ -265,8 +298,9 @@ async function sync() {
     f.lastSync = new Date();
     f.error = '';
   } catch (e) {
-    if (epoch === f.epoch) f.error = fail(e);
+    if (epoch === f.epoch){if([401,403].includes(e.status))f.membershipRejected=true;f.error = fail(e);}
   } finally {
+    if(f.checkingEpoch===epoch)f.checkingEpoch=null;
     f.syncing = false;
     repaint();
     if (f.again) {
@@ -483,14 +517,14 @@ async function login(form) {
   });
   f.epoch += 1;
   await keepSession(result);
-  f.context = null; f.householdId = null;
+  f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   try {
     await requireHousehold();
     await loadItems();
     await sync();
   } catch (e) {
     // Never retain a new session after a refused household switch.
-    f.epoch += 1; f.session = null; f.context = null; f.householdId = null;
+    f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
     f.cache.clear();
     await delMeta('session');
     throw e;
@@ -500,8 +534,8 @@ async function login(form) {
 async function logout() {
   const old = f.session;
   f.epoch += 1;
-  f.session = null; f.context = null; f.householdId = null;
-  f.cache.clear(); f.lastSync = null; f.error = '';
+  f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
+  f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
   await delMeta('session');
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
@@ -520,20 +554,45 @@ async function add(title, quantity, unit, id = crypto.randomUUID(), checked = fa
   if (!label || label.length > 200) throw Error('Nom de l’article invalide');
   const candidate = f.core.newLocal(id, label, quantity, String(unit || '').trim().slice(0,40), now());
   candidate.checked = checked;
+  if(f.homeSupported===true)candidate.at_home_quantity=0;
   if (importId) candidate.import_source_id = importId;
   await putItem(candidate);
   repaint();
 }
 async function change(id, values) {
-  const current = getItem(id);
-  if (!current) throw Error('Article introuvable sur cet appareil');
-  await putItem(f.core.editLocal(current, values, now()));
+  await updateItem(id,current=>{if(!current)throw Error('Article introuvable sur cet appareil');return f.core.editLocal(current,values,now());});
   repaint(); void sync();
+}
+function groceryPatch(values){
+  const patch={...values};
+  if('title' in patch){patch.title=String(patch.title||'').trim();if(!patch.title||patch.title.length>200)throw Error('Nom de l’article invalide');}
+  if('quantity' in patch)patch.quantity=validQuantity(patch.quantity);
+  if('unit' in patch)patch.unit=String(patch.unit||'').trim().slice(0,40);
+  if('at_home_quantity' in patch){if(f.homeSupported!==true)throw Error('Disponibilité partagée indisponible : migration at_home_quantity requise ou vérification en attente.');const qty=Number(patch.at_home_quantity);if(!Number.isFinite(qty)||qty<0||qty>999999)throw Error('Quantité disponible invalide.');patch.at_home_quantity=qty;}
+  return patch;
+}
+async function editGroceryGroup(changes,context){
+  if(!f.context||f.context!==context)throw Error('Le foyer a changé.');
+  const epoch=f.epoch,prepared=changes.map(x=>({...x,values:groceryPatch(x.values)}));
+  const saved=await new Promise((resolve,reject)=>{
+    const tx=f.db.transaction('items','readwrite'),store=tx.objectStore('items'),result=[];let error;
+    const abort=e=>{error=e;tx.abort();};
+    for(const change of prepared){const req=store.get(context+'|'+change.id);req.onsuccess=()=>{try{
+      const current=req.result;if(f.epoch!==epoch||f.context!==context)throw Error('Le foyer a changé.');
+      if(!current||current.deleted_at)throw Error('Article indisponible.');
+      if(current.syncState==='conflict')throw Error('Résolvez le conflit avant de modifier cet article.');
+      const expected=change.expected;
+      if(!expected||!f.core.sameFields(current,expected)||current.clientRev!==expected.clientRev||current.baseRevision!==expected.baseRevision)throw Error('L’article a changé. Ouvrez un nouveau récapitulatif.');
+      const entry=f.core.editLocal(current,change.values,now());store.put(entry);result.push(entry);
+    }catch(e){abort(e);}};}
+    tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Modification non enregistrée.'));tx.onerror=()=>reject(error||tx.error);
+  });
+  if(f.epoch===epoch&&f.context===context){for(const item of saved)f.cache.set(item.id,item);repaint();void sync();}
 }
 async function choose(id, mode) {
   const current = getItem(id);
   if (!current) throw Error('Article introuvable');
-  await putItem(f.core.resolveConflict(current, mode));
+  await updateItem(id,latest=>{if(!latest||latest.clientRev!==current.clientRev||latest.baseRevision!==current.baseRevision||!f.core.sameFields(latest,current)||JSON.stringify(latest.remoteShadow)!==JSON.stringify(current.remoteShadow))throw Error('Le conflit a changé. Vérifiez de nouveau les versions.');return {...f.core.resolveConflict(latest,mode),import_source_id:latest.import_source_id||null};});
   repaint(); void sync();
 }
 async function deterministicUuid(input) {
@@ -637,12 +696,80 @@ save = function() {
   if (f.provider?.onSave) f.provider.onSave();
   return result;
 };
-window.DobbyFamilyUI = Object.freeze({
+// E06 facade: same native login and membership verification, no alternate auth.
+function connectionState(){return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),memberId:null};}
+async function signIn(email,password){
+ if(!f.ready)throw Error('Connexion en cours d’initialisation.');
+ if(!f.key)throw Error('Configuration publique absente : connexion indisponible sur cet appareil.');
+ const form=document.createElement('form');for(const[name,value]of Object.entries({key:f.key,email,password})){const input=document.createElement('input');input.name=name;input.value=String(value||'');form.append(input);}await login(form);return connectionState();
+}
+window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
+  // V7 consumes the existing cache and writers directly, without a second basket.
+  grocery: Object.freeze({
+    read: () => ({context:f.context, status:status(), error:f.error, homeSupported:f.homeSupported, items:visible().map(x=>({...x})), ready:f.ready}),
+    async add(values) { await add(values.title,validQuantity(values.quantity),values.unit); void sync(); },
+    async edit(id,values) {
+      if(!f.context)throw Error('Foyer indisponible');
+      if(getItem(id)?.syncState==='conflict')throw Error('Résolvez le conflit avant de modifier cet article.');
+      await change(id,groceryPatch(values));
+    },
+    editGroup: editGroceryGroup,
+
+    async proposeRows(rows,context) {
+      if(!f.context||f.context!==context)throw Error('Le foyer a changé.');
+      const result=[];
+      for(const row of rows){
+        let candidate={...row};const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token),current=getItem(id);
+        if(current&&norm(current.unit)!==norm(candidate.unit)){const units={g:['mass',1],kg:['mass',1000],mg:['mass',.001],ml:['volume',1],cl:['volume',10],dl:['volume',100],l:['volume',1000]},from=units[norm(candidate.unit)],to=units[norm(current.unit)];if(from&&to&&from[0]===to[0])candidate={...candidate,qty:candidate.qty==null?null:candidate.qty*from[1]/to[1],unit:current.unit};}
+        const qty=validQuantity(candidate.qty);
+        if(!current){result.push({...candidate,qty});continue;}
+        if(current.deleted_at||current.checked)continue;
+        if(current.syncState==='conflict')throw Error('Résolvez le conflit de cet apport avant de le réimporter.');
+        if(norm(current.unit)!==norm(candidate.unit))throw Error('L’unité d’un apport a été modifiée. Ajustez cet article manuellement.');
+        if(current.quantity!==qty)result.push({...candidate,qty,mode:'update',previousLabel:current.title,previousQty:current.quantity,expected:f.core.toServerPayload(current)});
+      }
+      return result;
+    },
+    async importRows(rows,context,options={}) {
+      if(!f.context||f.context!==context)throw Error('Le foyer a changé. Vérifiez le récapitulatif.');
+      const epoch=f.epoch,householdId=f.householdId,receipts=[];
+      const guard=()=>{if(f.epoch!==epoch||f.context!==context||f.householdId!==householdId)throw Error('Le foyer a changé.');};
+      let added=0;
+      for(const row of rows){
+        guard();
+        const id=await deterministicUuid('dobby-e072|'+householdId+'|'+row.token);
+        guard();
+        // Include tombstones: repeating an already archived import is not a new purchase.
+        const current=getItem(id);
+        if(row.mode==='update'){
+          if(!current||current.syncState==='conflict'||!f.core.sameFields(current,row.expected))throw Error('L’article a changé. Vérifiez un nouveau récapitulatif.');
+          await change(id,{quantity:validQuantity(row.qty)});guard();added++;
+          receipts.push({...getItem(id),token:row.token});continue;
+        }
+        let receipt,inserted=false;
+        // Read the latest durable row inside the existing native transaction.
+        // Another tab's pending item or tombstone must not be overwritten.
+        await updateItem(id,latest=>{
+          if(latest){receipt=latest;return null;}
+          const title=String(row.name||'').trim();if(!title||title.length>200)throw Error('Nom de l’article invalide');
+          receipt=f.core.newLocal(id,title,validQuantity(row.qty),String(row.unit||'').trim().slice(0,40),now());
+          receipt.checked=Boolean(row.done);receipt.import_source_id=id;
+          if(f.homeSupported===true)receipt.at_home_quantity=0;
+          inserted=true;return receipt;
+        },epoch,context);
+        guard();f.cache.set(id,receipt);receipts.push({...receipt,token:row.token});if(inserted)added++;
+      }
+      if(added){repaint();void sync();}
+      return options.receipt?{scope:context,added,receipts}:added;
+    },
+    resolve: choose, sync
+  }),
   getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
-  authorized, meta, putMeta, esc, showMessage, repaint, openModal,
+  authorized, meta, putMeta, updateMeta, esc, showMessage, repaint, openModal,
   storageFetch,
   getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
   isModuleActive(module) {return Boolean(f.context && f.provider?.isActive?.(module));},
+  isModuleConfigured(module) {return f.provider?.isConfigured?.(module)??null;},
   registerModules(provider) {
     f.provider = provider;
     // A provider may register before or after boot(), including while sync()

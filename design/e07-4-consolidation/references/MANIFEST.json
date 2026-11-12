@@ -1,0 +1,189 @@
+{
+  "bundleName": "DOBBY E07.4 Codex review consolidation",
+  "createdFor": "User review 2026-11-11",
+  "sourceCodeSha": "c121027e53b335800d1559a39481c774a137a3fa",
+  "sourceBranch": "feat/dobby-e073-taverne-grimoire-20261111",
+  "sourcePublicationSha": "84e254f485a22ac4f5b880217c02902c22b39c73",
+  "notDeployment": true,
+  "ids": 61,
+  "statuses": {
+    "A_CORRIGER": 42,
+    "A_PRESERVER": 10,
+    "REMPLACE": 4,
+    "REPORTE": 5
+  },
+  "screenshots": 22,
+  "stitchSupplied": "stitch_dobby_assistant_mobile_app (12).zip",
+  "files": [
+    {
+      "path": "INDEX_CAPTURES.md",
+      "size": 2948,
+      "sha256": "f43a94a389b3be3be52116cc565405458471c55876ebc1f57fc5697c376997f9"
+    },
+    {
+      "path": "LIRE_D_ABORD.md",
+      "size": 1397,
+      "sha256": "527094de4d17a14e864f0c78f84e8d94cd9d037fe0794fa36bbb5cd1117e16ac"
+    },
+    {
+      "path": "MATRICE_DECISIONS_E07.csv",
+      "size": 11934,
+      "sha256": "a991b17d3ce7e45c2a9f5bd25cf096ebb75bf97c4b3e08e0f8b6565e08ba986a"
+    },
+    {
+      "path": "NOTES_TECHNIQUES_ET_ARBITRAGES.md",
+      "size": 6834,
+      "sha256": "2f33557752d34977baf977a47d9510230be68b187c52e11326c96c78bba8a482"
+    },
+    {
+      "path": "PROMPT_CODEX.md",
+      "size": 12874,
+      "sha256": "402a04cd3d96bb346ad68774a6f879360c9e20b9a682d026e9d8c4a62d24ae3b"
+    },
+    {
+      "path": "SCENARIOS_ACCEPTATION.md",
+      "size": 8156,
+      "sha256": "673e8104981ed807e0379385dad4bcdeae776f350857699359405e883c6d755c"
+    },
+    {
+      "path": "SPEC_E07_CONSOLIDATION.md",
+      "size": 17486,
+      "sha256": "78cdc9b5dfc1beaa147e12aab81c95b49eb7e48aaa756e6976f59123caa1c83c"
+    },
+    {
+      "path": "assets/PREMIERE_TRANCHE_E07_REFERENCE.zip",
+      "size": 555258,
+      "sha256": "fa7be6e23995eb2829cb49a5bccdf7849b4358a18f570f2520133a452ffae4a5"
+    },
+    {
+      "path": "assets/STITCH_FESTIN_ORIGINAL.zip",
+      "size": 1951752,
+      "sha256": "09706d535cbf33e4aca9a0826b11bcad447665a9e799a2930b7ed4a554689480"
+    },
+    {
+      "path": "assets/STITCH_FESTIN_art_original.png",
+      "size": 1621464,
+      "sha256": "0c387aa251bb70a9ef90edb1fd298a4a0219fc199fd51102ebdecbff627becc6"
+    },
+    {
+      "path": "assets/STITCH_FESTIN_code_reference.html",
+      "size": 16872,
+      "sha256": "da4bd486e77dc0e1b477be70b2192f5a82d9728887b524a665845a3c52933a84"
+    },
+    {
+      "path": "assets/STITCH_FESTIN_preview.png",
+      "size": 331729,
+      "sha256": "482ecb8aa02f1596563a913930db913385653c5e31ac7d8c2f9297c106dc0380"
+    },
+    {
+      "path": "captures/E07-I01_bouton_inscrire_recette.png",
+      "size": 6605,
+      "sha256": "3103e38c8043ba3b104e2f76cddae564c8d45a4888f2f7419287bd26b65a7901"
+    },
+    {
+      "path": "captures/E07-I02_creation_choix_manuel_ia.png",
+      "size": 85466,
+      "sha256": "d3ef36da55fbd1e66973e3f0760d3b1ea668fe1af1aa3c9ee8e9dbfd85962cfc"
+    },
+    {
+      "path": "captures/E07-I03_export_grimoire.png",
+      "size": 5972,
+      "sha256": "51a9f35bce755553c8059fac8e7090c7446541813455930ed8bf93ac356be320"
+    },
+    {
+      "path": "captures/E07-M01_hero_cuisine_surcharge.png",
+      "size": 121159,
+      "sha256": "cdde542880601f6845d100d827252528363918bc9f12644255cd34ff0e9634f8"
+    },
+    {
+      "path": "captures/E07-M03_ingredients_par_etape.png",
+      "size": 68836,
+      "sha256": "623a1be54c8b03973308dd5e665a64023bff28cf4a10fe8b7d0265732e4015d6"
+    },
+    {
+      "path": "captures/E07-M05_encarts_superflus.png",
+      "size": 18484,
+      "sha256": "6918d8b0aff134e45ee4dd49965ea51d688de2634918a7c308b75ee6cc4bfaa4"
+    },
+    {
+      "path": "captures/E07-M06_navigation_etapes.png",
+      "size": 9854,
+      "sha256": "42cc2c6e3fa454ae083ed1fd1fe9306ad3ec979e3c7d89b2f5076e163115f389"
+    },
+    {
+      "path": "captures/E07-M07_minuteur_unique.png",
+      "size": 16604,
+      "sha256": "7fbc6fbb001b5efc8ed7dfad592f2b57c4beaa8c05347cfd1f6e3b1ac2561d2d"
+    },
+    {
+      "path": "captures/E07-R01_fiche_globale.png",
+      "size": 186871,
+      "sha256": "9ecdbe96c281c9d8ba49c46b5e0286c8c70688bb233bd27e22c52c56484397b6"
+    },
+    {
+      "path": "captures/E07-R02_bandeau_donnees_et_favori.png",
+      "size": 12157,
+      "sha256": "177fd5aed02fa730bc9e49655614a07e49f213f243f498a0d95a4d73da14ce24"
+    },
+    {
+      "path": "captures/E07-R03_photo_badges_favoris.png",
+      "size": 83117,
+      "sha256": "157675281d4f9ea055cdc8f693371eb700e4c22c0e1b2360b20a85ac5e9d0896"
+    },
+    {
+      "path": "captures/E07-R04_titre_double.png",
+      "size": 15459,
+      "sha256": "95ad05e590169eff668a5ebcad21e71a96f541ce146063e3654c868fa97ca3ec"
+    },
+    {
+      "path": "captures/E07-R05_metriques_4_cartes.png",
+      "size": 18869,
+      "sha256": "fdc26aa285c1bd368e7e9cc0cf51c5fe26b9bd3dcbc80bfc542076287a8b9ac3"
+    },
+    {
+      "path": "captures/E07-R06_choix_methode.png",
+      "size": 20410,
+      "sha256": "9df4fcdf9d21ce92c9d2cdbd0beeae8b3873ccba2dcf211501f6c681a0423cf7"
+    },
+    {
+      "path": "captures/E07-R08_onglets_incoherents.png",
+      "size": 103652,
+      "sha256": "7f084665aa3b42a6d83fe219d4ad073b9656a79fd7efb09c8ce96a836adca0ad"
+    },
+    {
+      "path": "captures/E07-R09_garde_manger_cases.png",
+      "size": 43776,
+      "sha256": "15e8ee1d9cb2a211310446911732f4c47f7eb64f4424555ccdfdfb52da88863c"
+    },
+    {
+      "path": "captures/E07-R11_boutons_planifier_grimoire.png",
+      "size": 7165,
+      "sha256": "73df31040b9dab65ac8ee73d5b31a5f9dbd9ac8055913eab7e0218316499c90d"
+    },
+    {
+      "path": "captures/E07-R13_authenticite.png",
+      "size": 10871,
+      "sha256": "2049231178c7d42b3744b6ee3db1ca1fc90e3a53799c17a4076702a3c9bf1e19"
+    },
+    {
+      "path": "captures/E07-R14_copie_modifiable.png",
+      "size": 5593,
+      "sha256": "3b4bf4c175170c406d4d41cb4ba6017fc547e6afbc41debd7d2730a1998a22d7"
+    },
+    {
+      "path": "captures/E07-S01_creation_manuelle_bandeau.png",
+      "size": 246435,
+      "sha256": "fd4480b03f0c92b4e4de64a704d604f562130e9194ade46eeb268ba5d8ec2ae7"
+    },
+    {
+      "path": "captures/E07-S02_piece_reference.png",
+      "size": 28481,
+      "sha256": "cee5a90a70c69e8f65fbd5998b13f025023245485613d66572c0b6a75eeaa96c"
+    },
+    {
+      "path": "captures/E07-S03_rangement_direct.png",
+      "size": 18941,
+      "sha256": "d37c4755985087ef8f2ebb25ead9f58550a6d204316203f18d5171ab5b40c569"
+    }
+  ]
+}

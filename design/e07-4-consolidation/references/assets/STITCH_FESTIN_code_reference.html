@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>DOBBY - Le Festin est prêt</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: {
+              DEFAULT: '#1e100c',
+              dim: '#180b07',
+              container: '#271814',
+              high: '#34211a',
+              bright: '#483530'
+            },
+            dobby: {
+              gold: '#d49b42',
+              goldLight: '#f5d580',
+              goldDark: '#9e6d23',
+              amber: '#eec66a'
+            }
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Animations d'apparition magique */
+    @keyframes magicBackdrop {
+      0% { opacity: 0; backdrop-filter: blur(0px); }
+      100% { opacity: 1; backdrop-filter: blur(12px); }
+    }
+    @keyframes magicCardPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.88) translateY(24px);
+        box-shadow: 0 0 0 rgba(212, 155, 66, 0);
+      }
+      60% {
+        opacity: 1;
+        transform: scale(1.02) translateY(-4px);
+        box-shadow: 0 0 45px rgba(212, 155, 66, 0.35);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 155, 66, 0.25);
+      }
+    }
+    @keyframes goldGlowPulse {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 155, 66, 0.4)); }
+      50% { filter: drop-shadow(0 0 22px rgba(245, 213, 128, 0.7)); }
+    }
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0px) rotate(0deg) scale(0.8); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translateY(-38px) rotate(70deg) scale(1.1); opacity: 0; }
+    }
+    @keyframes steamFloat {
+      0% { transform: translateY(0) scaleX(1); opacity: 0.2; }
+      50% { transform: translateY(-12px) scaleX(1.15); opacity: 0.55; }
+      100% { transform: translateY(-24px) scaleX(1.3); opacity: 0; }
+    }
+    @keyframes runeRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .animate-backdrop-in {
+      animation: magicBackdrop 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-card-magic {
+      animation: magicCardPop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) forwards;
+    }
+    .animate-gold-pulse {
+      animation: goldGlowPulse 3s ease-in-out infinite;
+    }
+
+    /* Particules étincelles */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      background: radial-gradient(circle, #fff7d6 10%, #d49b42 70%, transparent 100%);
+      border-radius: 50%;
+      animation: sparkleFloat linear infinite;
+    }
+
+    /* Style parchemin & bordures */
+    .gold-border-glow {
+      box-shadow: inset 0 0 0 1px rgba(212, 155, 66, 0.45), 0 0 25px rgba(212, 155, 66, 0.15);
+    }
+    .gold-button-gradient {
+      background: linear-gradient(135deg, #f5d580 0%, #d49b42 45%, #b27a25 100%);
+      box-shadow: 0 4px 18px rgba(212, 155, 66, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+    .gold-button-gradient:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 10px rgba(212, 155, 66, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Réduction de mouvement */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-backdrop-in, .animate-card-magic, .sparkle, .animate-gold-pulse {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#120805] text-[#eed8b8] font-sans antialiased h-full overflow-hidden select-none">
+
+  <!-- ======================================================== -->
+  <!-- ARRIÈRE-PLAN : FICHE RECETTE DOBBY TERMINÉE (ÉTAPES COCHÉES) -->
+  <!-- ======================================================== -->
+  <div id="recipeBackground" class="relative w-full h-full max-w-[430px] mx-auto bg-[#180b07] flex flex-col justify-between overflow-hidden transition-all duration-500">
+    
+    <!-- Top Header DOBBY Étalon -->
+    <header class="px-4 pt-3 pb-2 flex items-center justify-between border-b border-[#34211a]/80 bg-[#1e100c]/90">
+      <div class="w-10 h-10 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#d49b42]">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </div>
+      <div class="px-5 py-1.5 rounded-2xl bg-[#271814] border border-[#d49b42]/40 text-center shadow-inner">
+        <span class="block font-cinzel text-xs tracking-[0.25em] text-[#d49b42] font-bold">DOBBY</span>
+        <span class="block text-[10px] text-[#eed8b8]/70 tracking-wider">Mode Cuisine · Étape 4/4</span>
+      </div>
+      <div class="w-10 h-10 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#d49b42]">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
+      </div>
+    </header>
+
+    <!-- Fiche Recette Intérieure (Contenu flouté en arrière-plan) -->
+    <main class="flex-1 px-4 py-4 space-y-4 overflow-y-auto opacity-70">
+      <div class="p-4 rounded-2xl bg-[#271814] border border-[#d49b42]/30">
+        <div class="flex items-center justify-between text-xs text-[#d49b42] mb-1">
+          <span class="font-cinzel tracking-wider">CHAUDRON & FOURNIL</span>
+          <span class="px-2 py-0.5 rounded-full bg-[#d49b42]/20 text-[10px] font-semibold">Terminée ✨</span>
+        </div>
+        <h2 class="font-serif text-xl font-bold text-[#f5e6cc]">Lasagnes Dorées au Potiron & Épinards</h2>
+        <p class="text-xs text-[#eed8b8]/70 mt-1">45 min · 4 convives · Recette du Foyer</p>
+      </div>
+
+      <!-- Étapes complétées -->
+      <div class="space-y-2">
+        <div class="p-3 rounded-xl bg-[#271814]/70 border border-[#483530] flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-[#d49b42]/30 text-[#d49b42] flex items-center justify-center text-xs">✓</span>
+          <span class="text-xs text-[#eed8b8]/80 line-through">Étape 1 : Rôtir la courge et faire suer les aromates</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#271814]/70 border border-[#483530] flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-[#d49b42]/30 text-[#d49b42] flex items-center justify-center text-xs">✓</span>
+          <span class="text-xs text-[#eed8b8]/80 line-through">Étape 2 : Préparer la béchamel veloutée à la muscade</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#271814]/70 border border-[#483530] flex items-center gap-3">
+          <span class="w-6 h-6 rounded-full bg-[#d49b42]/30 text-[#d49b42] flex items-center justify-center text-xs">✓</span>
+          <span class="text-xs text-[#eed8b8]/80 line-through">Étape 3 : Monter les étages de pâtes et parmesan doré</span>
+        </div>
+        <div class="p-3 rounded-xl bg-[#271814] border border-[#d49b42]/60 flex items-center gap-3 shadow-md">
+          <span class="w-6 h-6 rounded-full bg-[#d49b42] text-[#180b07] font-bold flex items-center justify-center text-xs">✓</span>
+          <span class="text-xs text-[#f5e6cc] font-semibold">Étape 4 : Gratiner 25 min au four à bois chaud</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer Fiche Recette -->
+    <footer class="p-4 border-t border-[#34211a] bg-[#1e100c]/80 flex items-center justify-between text-xs text-[#eed8b8]/60">
+      <span>Recette enregistrée dans le Grimoire</span>
+      <span class="text-[#d49b42]">Le Festin est prêt 🍽️</span>
+    </footer>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- SUPERPOSITION : FENÊTRE DE CÉLÉBRATION « LE FESTIN EST PRÊT » -->
+  <!-- ======================================================== -->
+  <div id="celebrationOverlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0a0402]/80 animate-backdrop-in">
+    
+    <!-- Conteneur Carte Modale iPhone Centrée -->
+    <div id="celebrationModal" class="relative w-full max-w-[370px] max-h-[92vh] flex flex-col rounded-3xl bg-gradient-to-b from-[#2b1812] via-[#20120d] to-[#160a06] border-2 border-[#d49b42]/70 gold-border-glow shadow-2xl overflow-hidden animate-card-magic">
+      
+      <!-- Lueur d'ambiance dorée supérieure -->
+      <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#d49b42]/25 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Particules scintillantes magiques animées autour de la carte -->
+      <div class="sparkle w-1.5 h-1.5 top-6 left-8" style="animation-delay: 0.1s; animation-duration: 2.8s;"></div>
+      <div class="sparkle w-2 h-2 top-12 right-10" style="animation-delay: 0.5s; animation-duration: 2.3s;"></div>
+      <div class="sparkle w-1 h-1 top-28 left-6" style="animation-delay: 0.9s; animation-duration: 3.1s;"></div>
+      <div class="sparkle w-2 h-2 top-48 right-6" style="animation-delay: 0.3s; animation-duration: 2.6s;"></div>
+      <div class="sparkle w-1.5 h-1.5 bottom-28 left-10" style="animation-delay: 1.2s; animation-duration: 2.9s;"></div>
+      <div class="sparkle w-2 h-2 bottom-36 right-8" style="animation-delay: 0.7s; animation-duration: 2.4s;"></div>
+
+      <!-- En-tête décoratif de la superposition -->
+      <div class="pt-4 px-4 pb-2 text-center relative z-10 flex flex-col items-center">
+        <!-- Ruban de célébration féerique -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#180b07]/80 border border-[#d49b42]/50 shadow-inner">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#d49b42] animate-ping"></span>
+          <span class="font-cinzel text-[10px] tracking-[0.22em] text-[#d49b42] uppercase font-bold">✨ Rituel Culinaire Accompli</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#d49b42]"></span>
+        </div>
+      </div>
+
+      <!-- Grande Illustration Cinématographique de Dobby présentant le festin fumant -->
+      <div class="relative px-3.5 pt-1 pb-1 z-10">
+        <div class="relative rounded-2xl overflow-hidden border border-[#d49b42]/50 shadow-lg bg-[#140804] group">
+          <!-- Image Cinématographique Haute Résolution -->
+          <img 
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYz85w3H2vKiHzH-gf-nXUr0yGsWCYjaAS0z702kd5wUby_PklrvEOPJ_JrR6dNyOa2DWfNpwTPxHGlgto4-LZ98xgdnBdu2Hdo2JUiSvjftcnzzh8Ue-bvCVYzCfU4SheIl-YvEh7VfnsL4vf8A0R_XAdPKDkMeUvxBNB_tLGXtx91p4bUT7RQZq-OJbDOFazU17zCfx2v1Y-NM1176Vbj6K3iVfeAM-YHTdWu3jo" 
+            alt="Dobby souriant avec fierté présentant un magnifique festin doré et fumant sur une table rustique dressée" 
+            class="w-full h-auto max-h-[220px] object-cover object-top block transition-transform duration-700 hover:scale-105"
+            loading="eager"
+          />
+
+          <!-- Halo ambré doux sur les bords de l'image -->
+          <div class="absolute inset-0 pointer-events-none ring-1 ring-inset ring-[#d49b42]/40 rounded-2xl"></div>
+          <div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#20120d] via-[#20120d]/50 to-transparent pointer-events-none"></div>
+
+          <!-- Vapeur et étincelles au-dessus du plat -->
+          <div class="absolute bottom-4 right-12 w-6 h-6 rounded-full bg-[#f5d580]/30 blur-sm pointer-events-none animate-pulse"></div>
+          <div class="absolute bottom-6 right-16 w-3 h-3 rounded-full bg-[#ffffff]/60 blur-[1px] pointer-events-none animate-ping" style="animation-duration: 2.2s;"></div>
+        </div>
+      </div>
+
+      <!-- Textes de célébration principaux -->
+      <div class="px-5 pt-3 pb-2 text-center z-10 space-y-1.5">
+        <!-- Titre principal prestigieux -->
+        <h1 class="font-serif text-[21px] leading-tight font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#f5d580] via-[#eed8b8] to-[#d49b42] drop-shadow-sm tracking-wide">
+          « Dobby vous souhaite un bon appétit ! »
+        </h1>
+
+        <!-- Filet ornemental de séparation avec gemme dorée -->
+        <div class="flex items-center justify-center gap-2 py-0.5 opacity-80">
+          <div class="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d49b42]"></div>
+          <span class="text-[#d49b42] text-[10px]">✦</span>
+          <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#d49b42]"></div>
+        </div>
+
+        <!-- Sous-titre chaleureux & bienveillant -->
+        <p class="font-serif italic text-[13px] leading-snug text-[#eed8b8]/90 font-medium">
+          « Dobby espère que ce festin régalera toute la maisonnée ! »
+        </p>
+
+        <!-- Petit badge rassurant de partage familial -->
+        <div class="pt-1 flex items-center justify-center gap-1.5 text-[11px] text-[#d49b42]/90">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span class="tracking-wide">Recette validée & enregistrée au Grimoire</span>
+        </div>
+      </div>
+
+      <!-- Action Unique : Grand Bouton Doré « Retour à la recette » -->
+      <div class="p-4 pt-2 pb-5 z-10 flex flex-col items-center">
+        <button 
+          id="closeCelebrationBtn" 
+          type="button"
+          class="w-full h-[52px] rounded-2xl gold-button-gradient text-[#180b07] font-cinzel font-bold text-sm tracking-[0.14em] uppercase flex items-center justify-center gap-2 cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-[0.98] shadow-lg"
+          aria-label="Fermer la fenêtre et retourner à la recette"
+        >
+          <span>Retour à la recette</span>
+          <svg class="w-4 h-4 text-[#180b07] stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <span class="mt-2 text-[10px] text-[#eed8b8]/40 tracking-wider">Toucher pour révéler la fiche recette complète</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ======================================================== -->
+  <!-- SCRIPT INTERACTIF : FERMETURE IMMÉDIATE & RETOUR RECETTE -->
+  <!-- ======================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const closeBtn = document.getElementById('closeCelebrationBtn');
+      const overlay = document.getElementById('celebrationOverlay');
+      const recipeBg = document.getElementById('recipeBackground');
+
+      // Fonction de fermeture instantanée
+      function closeCelebration() {
+        // Feedback haptique discret si supporté
+        if (navigator.vibrate) {
+          navigator.vibrate(15);
+        }
+
+        // Animation de sortie douce
+        overlay.style.transition = 'opacity 0.25s ease-out, transform 0.25s ease-out';
+        overlay.style.opacity = '0';
+        overlay.style.transform = 'scale(0.96)';
+
+        // Rétablissement de la netteté de la fiche recette sous-jacente
+        if (recipeBg) {
+          recipeBg.classList.remove('opacity-70');
+          recipeBg.style.filter = 'none';
+        }
+
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 260);
+      }
+
+      // Écouteur sur le grand bouton doré unique
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeCelebration);
+      }
+
+      // Écouteur optionnel sur l'arrière-plan pour un confort tactile maximal
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeCelebration();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+✔ V1 remains compatible; no default duration or servings fabricated (1.585073ms)
+✔ V2 keeps explicit total as single authority and preserves detailed durations (1.079323ms)
+✔ V2 permits unknown total, and sums only complete known components (0.710756ms)
+✔ One classic recipe carries an unverified TM5 adaptation without invented parameters (0.67542ms)
+✔ Version and media references reject unsafe input; ordinary missing image stays explicit (1.800031ms)
+✔ Prompt collects all successive photos, final explicit consent and exact question (0.542426ms)
+✔ Actual native validator keeps V1 strict and accepts only V2 unknown duration (12.09068ms)
+✔ Oversized ZIP is refused before allocating arrayBuffer (1.405751ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 127.392463

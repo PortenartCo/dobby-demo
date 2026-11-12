@@ -1,0 +1,62 @@
+✔ explicit French durations and ranges are seconds; no quantities, temperatures or invented timer (5.884031ms)
+✔ independent timers use persistent deadlines and reload catches suspension without duplicate ends (10.603802ms)
+✔ pause, resume, adjustment, custom duration, reset and removal do not affect other timers (3.566925ms)
+✔ two deadlines in the same millisecond notify individually once; reset permits one new run (2.234342ms)
+✔ lists and running ticks never write each second; only actual transitions persist (2.75889ms)
+✔ quota failure preserves persisted timers and pending completion remains retryable (4.261693ms)
+✔ post-write storage rejection restores original bytes and cannot erase an older timer (1.994026ms)
+✔ scope, limits, corrupt data and strict inputs are isolated and never silently reset (2.12733ms)
+✖ adjusting an already finished timer to zero does not duplicate the same alert (4.43997ms)
+✖ malformed compound and negative durations never yield a misleading partial number (4.751775ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 8
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.993451
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:16:1
+✖ adjusting an already finished timer to zero does not duplicate the same alert (4.43997ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:16:255)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/e07-4-timers.test.cjs:17:1
+✖ malformed compound and negative durations never yield a misleading partial number (4.751775ms)
+  AssertionError [ERR_ASSERTION]: −5 min
+  
+  '[300]' !== '[]'
+  
+      at TestContext.<anonymous> (/workspace/dobby-e074/essai-stitch-v7/tests/e07-4-timers.test.cjs:17:194)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '[300]',
+    expected: '[]',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

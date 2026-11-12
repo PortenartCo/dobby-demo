@@ -1,0 +1,114 @@
+DOBBY_V7_STITCH_BINDING_PASS [{"screen":"taverne","width":320,"status":"PASS"},{"screen":"traverse","width":320,"status":"PASS"},{"screen":"missions","width":320,"status":"PASS"},{"screen":"famille","width":320,"status":"PASS"},{"screen":"taverne","width":390,"status":"PASS"},{"screen":"traverse","width":390,"status":"PASS"},{"screen":"missions","width":390,"status":"PASS"},{"screen":"famille","width":390,"status":"PASS"}]
+CUISINE_PATH_PASS 320px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+CUISINE_PATH_PASS 390px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+CUISINE_FAMILY_PASS 320px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+CUISINE_VISUAL taverne 320 []
+CUISINE_VISUAL pick 320 []
+CUISINE_VISUAL recipes 320 []
+CUISINE_VISUAL recipe 320 []
+CUISINE_VISUAL cook 320 []
+CUISINE_VISUAL tm5 320 []
+CUISINE_VISUAL recipe-add-1 320 []
+CUISINE_VISUAL recipe-add 320 []
+CUISINE_VISUAL batch 320 []
+CUISINE_VISUAL shop-1 320 []
+CUISINE_VISUAL shop 320 []
+CUISINE_VISUAL shop-final 320 []
+CUISINE_VISUAL shop-history 320 []
+CUISINE_VISUAL taverne 390 []
+CUISINE_VISUAL pick 390 []
+CUISINE_VISUAL recipes 390 []
+CUISINE_VISUAL recipe 390 []
+CUISINE_VISUAL cook 390 []
+CUISINE_VISUAL tm5 390 []
+CUISINE_VISUAL recipe-add-1 390 []
+CUISINE_VISUAL recipe-add 390 []
+CUISINE_VISUAL batch 390 []
+CUISINE_VISUAL shop-1 390 []
+CUISINE_VISUAL shop 390 []
+CUISINE_VISUAL shop-final 390 []
+CUISINE_VISUAL shop-history 390 []
+CUISINE_VISUAL taverne 1440 []
+CUISINE_VISUAL shop-1 1440 []
+CUISINE_VISUAL shop 1440 []
+CUISINE_VISUAL shop-final 1440 []
+CUISINE_VISUAL_PASS 13 native routes at 320/390 plus E07 overrides at 1440 original and E07 source hashes verified
+FAMILY_PATH_PASS 320px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 320px
+FAMILY_PATH_PASS 390px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+FAMILY_MEMBER_PASS 390px
+FAMILY_EDGE_PASS stale bookmark, orphan reassignment, legacy identity, browser back/forward
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320
+FAMILY_REVIEW_PASS selected states match the current operation 320
+FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390
+FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390
+FAMILY_REVIEW_PASS selected states match the current operation 390
+FAMILY_SHARED_PASS 320px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+FAMILY_SHARED_PASS 390px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+FAMILY_VISUAL members 320 []
+FAMILY_VISUAL member-edit 320 []
+FAMILY_VISUAL agenda 320 []
+FAMILY_VISUAL medical-edit 320 []
+FAMILY_VISUAL health 320 []
+FAMILY_VISUAL health-person 320 []
+FAMILY_VISUAL health-history 320 []
+FAMILY_VISUAL members 390 []
+FAMILY_VISUAL member-edit 390 []
+FAMILY_VISUAL agenda 390 []
+FAMILY_VISUAL medical-edit 390 []
+FAMILY_VISUAL health 390 []
+FAMILY_VISUAL health-person 390 []
+FAMILY_VISUAL health-history 390 []
+FAMILY_VISUAL_PASS 7 sources x 320/390, 28 comparisons + 14 empty states
+REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_VISUAL 3 house-1 320
+REGISTER_VISUAL 3 house 320
+REGISTER_VISUAL 3 equipment-edit 320
+REGISTER_VISUAL 3 equipment 320
+REGISTER_VISUAL 3 maintenance 320
+REGISTER_VISUAL 3 house-backup 320
+REGISTER_VISUAL 3 backup 320
+REGISTER_VISUAL 3 house-1 390
+REGISTER_VISUAL 3 house 390
+REGISTER_VISUAL 3 equipment-edit 390
+REGISTER_VISUAL 3 equipment 390
+REGISTER_VISUAL 3 maintenance 390
+REGISTER_VISUAL 3 house-backup 390
+REGISTER_VISUAL 3 backup 390
+REGISTER_VISUAL_PASS 3 7 sources x 320/390
+REGISTER_DOCUMENTS_PASS 320
+REGISTER_DOCUMENTS_PASS 390
+REGISTER_VISUAL 4 document-edit 320
+REGISTER_VISUAL 4 documents-1 320
+REGISTER_VISUAL 4 documents 320
+REGISTER_VISUAL 4 contracts-1 320
+REGISTER_VISUAL 4 contracts 320
+REGISTER_VISUAL 4 contract-edit 320
+REGISTER_VISUAL 4 document 320
+REGISTER_VISUAL 4 contract-1 320
+REGISTER_VISUAL 4 contract 320
+REGISTER_VISUAL 4 import-review 320
+REGISTER_VISUAL 4 import-file 320
+REGISTER_VISUAL 4 document-edit 390
+REGISTER_VISUAL 4 documents-1 390
+REGISTER_VISUAL 4 documents 390
+REGISTER_VISUAL 4 contracts-1 390
+REGISTER_VISUAL 4 contracts 390
+REGISTER_VISUAL 4 contract-edit 390
+REGISTER_VISUAL 4 document 390
+REGISTER_VISUAL 4 contract-1 390
+REGISTER_VISUAL 4 contract 390
+REGISTER_VISUAL 4 import-review 390
+REGISTER_VISUAL 4 import-file 390
+REGISTER_VISUAL_PASS 4 11 sources x 320/390
+locator.click: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-dv7-manual=delete]').first()[22m
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/register-tools.cjs:4:1817 {
+  log: [ "  - waiting for locator('[data-dv7-manual=delete]').first()" ],
+  name: 'TimeoutError'
+}

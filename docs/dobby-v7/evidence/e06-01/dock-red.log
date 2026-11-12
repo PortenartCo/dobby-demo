@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: The permanent dock must not cover the original Ritual controls
+
+'block' !== 'none'
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-ritual.cjs:23:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'block',
+  expected: 'none',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

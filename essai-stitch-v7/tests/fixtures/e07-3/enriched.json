@@ -1,0 +1,62 @@
+{
+  "format": "dobby-recipes",
+  "version": 2,
+  "recipes": [
+    {
+      "importKey": "e073-zip-original",
+      "name": "TEST — Soupe ZIP",
+      "device": "classic",
+      "category": "Végétarien",
+      "source": "Fixture déterministe E07.3",
+      "reviewed": false,
+      "servings": 4,
+      "minutes": 45,
+      "durations": {
+        "preparation": 15,
+        "cooking": 30,
+        "rest": null,
+        "total": 45
+      },
+      "ingredients": [
+        {
+          "name": "Carotte",
+          "quantity": 2,
+          "unit": "pièce"
+        }
+      ],
+      "steps": [
+        "Couper puis cuire les carottes."
+      ],
+      "equipment": [
+        "Casserole"
+      ],
+      "notes": [
+        "Annotation conservée"
+      ],
+      "uncertain": [
+        "Assaisonnement illisible"
+      ],
+      "image": "images/original.png",
+      "tm5": {
+        "steps": [
+          {
+            "text": "Cuire dans le bol puis terminer au four.",
+            "tool": "Bol et four",
+            "time": "30 min",
+            "temp": "",
+            "speed": "",
+            "reverse": null,
+            "external": "Four : température à vérifier"
+          }
+        ],
+        "warnings": [
+          "Paramètres à vérifier"
+        ],
+        "notes": [
+          "Ne pas perdre cette note"
+        ],
+        "verified": false
+      }
+    }
+  ]
+}

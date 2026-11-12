@@ -1,0 +1,21 @@
+PHASE 1 — full 320/390/1440; exitCode 1; original failure retained below
+E06_CONSOLIDATION_PASS bundle 320 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes, selected profile and reset
+E06_CONSOLIDATION_PASS bundle 390 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes, selected profile and reset
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at questions (/workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-consolidation.cjs:30:40)
+    at async /workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-consolidation.cjs:35:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+PHASE 2 — targeted 1440 after image-readiness correction; exitCode 0
+E06_CONSOLIDATION_PASS bundle 1440 real local creation, UI questionnaires, explicit resume, confirmation/reload/final, decoded and visible CSS portrait, final medallion bounds, 4 houses, 12 Patronus, shared descriptions, no reward changes, selected profile and reset
+
+AGGREGATE PASS widths=320,390,1440; original exitCode 1 retained in phase 1 metadata

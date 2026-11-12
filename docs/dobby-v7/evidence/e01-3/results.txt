@@ -1,0 +1,34 @@
+E01.3 — base 06f930cff4e72164c247fa1843f15c77f1a6b781
+Profils isolés uniquement ; aucune donnée de foyer injectée pour les tests d’ambiance.
+
+Chromium, taps 390 px / ordinateur 1440 px
+E013_PASS chromium 390
+E013_PASS chromium 1440
+
+WebKit 26.5 WPE Linux, taps 390 px / ordinateur 1440 px
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+E013_PASS webkit 390
+E013_PASS webkit 1440
+
+Vidéo réelle, enregistrement tactile 390x844 puis encodage H.264
+E013_VIDEO_PASS 9 seconds, real OFF/ON/OFF/ON/OFF recording
+
+Régressions E01 partagées, captures dans /tmp uniquement
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+
+Syntaxe node --check (chrome.js, e01.cjs, e01-3.cjs, e01-3-video.cjs, ci.cjs) : PASS.
+git diff --check : PASS.
+Vidéo ffprobe : 9.000 secondes, 390x844, 25 images/seconde.
+Source : Playwright recordVideo ; aucune génération de diaporama, vitesse normale.
+Revue statique indépendante ciblée : aucun P1/P2/P3 identifié ; aucune modification par le réviseur.
+Données/cartes/image : invariants vérifiés ; seule la préférence native effets/sons est actionnée.
+Périmètre protégé : design/stitch-53, V5, home.js, build-source.cjs, bridge.js, engine-policy.js et essais publiés inchangés.
+Outillage WebKit : runtime officiel WPE sous Linux et bibliothèques de test dans le cache utilisateur, aucune dépendance de l’application ajoutée.
+Limite : mobile WebKit ne permet pas mouse.wheel ; taps réels émulés, défilement programmatique pour ce profil.
+Visibilité : signal document.hidden simulé, état paused et chronologies CSS figées mesurés.
+Cadence : échantillon court dans une machine de test, pas une mesure d’énergie ni une garantie de FPS matériel.
+L’arrêt du serveur local a nécessité une reprise de l’enregistrement ; vidéo finale et régressions terminées avec code 0.
+iPhone physique, Safari iOS, gestes physiques et consommation : validation utilisateur encore nécessaire.
+Aucun défaut restant identifié dans le périmètre exécuté. Aucune fusion ni publication.

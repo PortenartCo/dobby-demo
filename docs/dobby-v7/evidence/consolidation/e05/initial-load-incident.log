@@ -1,0 +1,10 @@
+page.goto: Timeout 10000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:8789/essai-stitch-v7/famille.html", waiting until "load"[22m
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e05.cjs:4:509 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8789/essai-stitch-v7/famille.html", waiting until "load"'
+  ],
+  name: 'TimeoutError'
+}

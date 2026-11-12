@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-11-12T08:54:41.460389+00:00",
+  "suites": [
+    {
+      "name": "native-family-mjs",
+      "command": [
+        "node",
+        "--test",
+        "essai-stitch-v5-famille/tests/family-agenda.test.mjs",
+        "essai-stitch-v5-famille/tests/family-core.test.mjs",
+        "essai-stitch-v5-famille/tests/family-health.test.mjs",
+        "essai-stitch-v5-famille/tests/family-member-policy.test.mjs",
+        "essai-stitch-v5-famille/tests/family-missions.test.mjs",
+        "essai-stitch-v5-famille/tests/family-notes-sync.test.mjs",
+        "essai-stitch-v5-famille/tests/integration.test.mjs",
+        "essai-stitch-v5-famille/tests/legacy-missions-recovery.test.mjs",
+        "essai-stitch-v5-famille/tests/modules-flow.test.mjs",
+        "essai-stitch-v5-famille/tests/profile-core.test.mjs",
+        "essai-stitch-v5-famille/tests/profile-sync.test.mjs",
+        "essai-stitch-v5-famille/tests/resumed-household.test.mjs",
+        "essai-stitch-v5-famille/tests/review-integrated-rewards.test.mjs",
+        "essai-stitch-v5-famille/tests/review-recurrence-20261111.test.mjs",
+        "essai-stitch-v5-famille/tests/runes-core.test.mjs",
+        "essai-stitch-v5-famille/tests/runes-sync.test.mjs",
+        "essai-stitch-v5-famille/tests/shared-auto-retention.test.mjs",
+        "essai-stitch-v5-famille/tests/shared-runes-client.test.mjs",
+        "essai-stitch-v5-famille/tests/shared-runes-native.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/dobby-v7/evidence/famille-integration-20261112/family/logs/native-family-mjs.log"
+    },
+    {
+      "name": "e06-identity-e09-memo",
+      "command": [
+        "node",
+        "--test",
+        "essai-stitch-v7/tests/e06-identity.test.mjs",
+        "essai-stitch-v7/tests/e09-memo-writer.test.cjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/dobby-v7/evidence/famille-integration-20261112/family/logs/e06-identity-e09-memo.log"
+    },
+    {
+      "name": "native-member-policy-cjs",
+      "command": [
+        "node",
+        "--test",
+        "essai-stitch-v5-famille/tests/family-member-policy.test.cjs"
+      ],
+      "origin": "http://127.0.0.1:8873",
+      "exitCode": 0,
+      "log": "docs/dobby-v7/evidence/famille-integration-20261112/family/logs/native-member-policy-cjs.log"
+    }
+  ],
+  "initialMemberPolicyAttempt": {
+    "origin": "http://127.0.0.1:8893",
+    "result": "ERR_CONNECTION_REFUSED",
+    "log": "docs/dobby-v7/evidence/famille-integration-20261112/family/logs/native-member-policy-cjs-initial-origin-error.log"
+  }
+}

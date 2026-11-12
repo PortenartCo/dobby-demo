@@ -1,0 +1,98 @@
+[
+  {
+    "view": "contacts",
+    "source": "dobby_r_pertoire_des_contacts_familiaux",
+    "width": 320,
+    "sha256": "d056421d022e4b679991e32963a866b760497bfef9d6feb5cab0381a3fd1e169",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "contact-edit",
+    "source": "dobby_cr_er_ou_modifier_un_contact",
+    "width": 320,
+    "sha256": "741479b6e8a2a920dcfd3194e32b0e429d138d74051636a7da08266e348ba643",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "memos",
+    "source": "dobby_biblioth_que_des_m_mos_notes_familiales",
+    "width": 320,
+    "sha256": "3e41967d84b31e109c7eb782e6d09c9802f5728877925303ea918ba41678d4d7",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "memo-edit",
+    "source": "dobby_cr_er_ou_modifier_un_m_mo",
+    "width": 320,
+    "sha256": "e85ead878ca70e9eeea911389b6ae77023da25dbf7f470d2db98d7a0d3b98926",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "lists",
+    "source": "dobby_registre_des_listes_familiales",
+    "width": 320,
+    "sha256": "7b632571f9efecec680a721b6f9c91a85fe9f567eaff956a746d1cd93943108d",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "list-detail",
+    "source": "dobby_d_tail_d_une_liste_familiale",
+    "width": 320,
+    "sha256": "51f867b7aae1807f49c3fa16151fc7b4f5dc3ae0b3030f7cea8e843ab5561698",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "contacts",
+    "source": "dobby_r_pertoire_des_contacts_familiaux",
+    "width": 390,
+    "sha256": "d056421d022e4b679991e32963a866b760497bfef9d6feb5cab0381a3fd1e169",
+    "overflow": [],
+    "status": "verified-functional"
+  },
+  {
+    "view": "contact-edit",
+    "source": "dobby_cr_er_ou_modifier_un_contact",
+    "width": 390,
+    "sha256": "741479b6e8a2a920dcfd3194e32b0e429d138d74051636a7da08266e348ba643",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "memos",
+    "source": "dobby_biblioth_que_des_m_mos_notes_familiales",
+    "width": 390,
+    "sha256": "3e41967d84b31e109c7eb782e6d09c9802f5728877925303ea918ba41678d4d7",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "memo-edit",
+    "source": "dobby_cr_er_ou_modifier_un_m_mo",
+    "width": 390,
+    "sha256": "e85ead878ca70e9eeea911389b6ae77023da25dbf7f470d2db98d7a0d3b98926",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "lists",
+    "source": "dobby_registre_des_listes_familiales",
+    "width": 390,
+    "sha256": "7b632571f9efecec680a721b6f9c91a85fe9f567eaff956a746d1cd93943108d",
+    "overflow": [],
+    "status": "verified-partial"
+  },
+  {
+    "view": "list-detail",
+    "source": "dobby_d_tail_d_une_liste_familiale",
+    "width": 390,
+    "sha256": "51f867b7aae1807f49c3fa16151fc7b4f5dc3ae0b3030f7cea8e843ab5561698",
+    "overflow": [],
+    "status": "verified-partial"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "playwrightVersion": "1.62.1",
+  "frozenWorktreeChecks": [
+    {
+      "side": "famille",
+      "sha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+      "trackedStatus": "",
+      "testHashesUnchanged": true
+    },
+    {
+      "side": "menu",
+      "sha": "3f7fe0e36e1e142cefaada5d575196c436b444e4",
+      "trackedStatus": "",
+      "testHashesUnchanged": true
+    }
+  ],
+  "fixtureIdentityReference": "../fixture-identity.json",
+  "readOnlyDOMComparison": "dom-comparison.json",
+  "networkComparison": "network-comparison.json",
+  "verification": "PASS: six exact-SHA executions, matching full root-normalized failure messages and error stacks, identical register case pattern, unchanged frozen test hashes/HEAD/tracked status."
+}

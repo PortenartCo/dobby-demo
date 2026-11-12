@@ -1,0 +1,160 @@
+{
+  "base": "c121027e53b335800d1559a39481c774a137a3fa",
+  "main": "84e254f485a22ac4f5b880217c02902c22b39c73",
+  "mainEntries": [
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3244db043d545d773f91a1ec88c3195cc1777fb7",
+      "name": ".github"
+    },
+    {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "name": ".nojekyll"
+    },
+    {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff9e5d39c6621eed152da967628e52287c412598",
+      "name": "README.md"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba8fbb93adf4e46f2ae6bc87fb859691ce9923b8",
+      "name": "essai-dobby-e01-e06-review-20261111"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ef0d46b60f967d7c05b830adbeb0331b9064fc9c",
+      "name": "essai-dobby-e07-review-20261111"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "79ea83b939ddaf29d0b4c3e8ec50f47d9d8f4ed4",
+      "name": "essai-dobby-integrated-review"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a458170cb0ff68bd0465a2274eaf56ee27eb17d1",
+      "name": "essai-dobby-review"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d819e55f6924471364533e9ec2d36510afdcf89a",
+      "name": "essai-e01-preview"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db",
+      "name": "essai-e02-preview"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "475568bbb4887b7fcea2d5235ef6fb3b1f14e68f",
+      "name": "essai-stitch-v2"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d24babe19d5f496596749c525a9e215030d3c8fe",
+      "name": "essai-stitch-v3"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b38d97db05a7db4310aebaf8ddfd910c6007d991",
+      "name": "essai-stitch-v4"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "89282a46b453970ea907265e8dab4293f0eb72b1",
+      "name": "essai-stitch-v5-famille"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9791d1c1d56a4d1d56f4361157652d40f3537107",
+      "name": "essai-stitch-v5"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e8b37a7290cb78fcb562d7d59fa668a247a02ca0",
+      "name": "essai-stitch"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "name": "essai-sync-v1"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "name": "essai-sync-v2"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47",
+      "name": "essai-v6-preview"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8c7d4a832d3ae548f25a63ba24b77e80aa87927a",
+      "name": "essai-v7-preview"
+    },
+    {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "78f15c3e970f17a884cd52c10623b821b5985cb8",
+      "name": "index.html"
+    },
+    {
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a2214c48115e303b51d7c607f11ee79ad605f9f0",
+      "name": "sql-proposals"
+    }
+  ],
+  "generatedRootBoundary": [
+    {
+      "path": "essai-stitch-v7/index.html",
+      "onlyE074IncludesAdded": true,
+      "beforeSha256": "3f88b8b19bb8a14765aa7d3d4f86427b42027e2d84bf4bf0f0db7a08868b1520",
+      "afterSha256": "48cc6695e7f29aac0e845c3a0508d5013cdbfc18cee9279429bd35ba47cc1647"
+    },
+    {
+      "path": "essai-stitch-v7/traverse.html",
+      "onlyE074IncludesAdded": true,
+      "beforeSha256": "027243795b279dac56d29118d21bdfd90d644ea89e8289f59a74d1be1147d83b",
+      "afterSha256": "173f48a7e411fd3d5c0f894059e6f99d2de42ca4c0a6cfd33df9c388ba20f65b"
+    },
+    {
+      "path": "essai-stitch-v7/missions.html",
+      "onlyE074IncludesAdded": true,
+      "beforeSha256": "2208726d7e9602b442843a92e4be023c374a39d30871885a5d72300d18d03acb",
+      "afterSha256": "e0bf30917e8af5c9b5167b8ec95c7b338c977a0b9f749329486777c9a72ef840"
+    },
+    {
+      "path": "essai-stitch-v7/famille.html",
+      "onlyE074IncludesAdded": true,
+      "beforeSha256": "110c2c81faf39c2b74e092ec1573d9105c40ff36d8179a16d2f6655402e4faf5",
+      "afterSha256": "f59f4f2e55732b9cf9bf3bbf4f5c10c8af1e3f3a8bd8155335b5069de144cf28"
+    }
+  ],
+  "sourceOriginalsUnchanged": true,
+  "publication": "NOT_YET_PERFORMED"
+}

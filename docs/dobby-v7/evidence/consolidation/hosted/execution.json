@@ -1,0 +1,27 @@
+{
+  "suite": "integrated-preview.cjs",
+  "exitCode": 0,
+  "finishedUTC": "2026-11-11T00:17:34.784112+00:00",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/",
+  "sourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "journeys": 6,
+  "screenshots": 39,
+  "businessMocks": false,
+  "checks": [
+    "native mission edits/reload/reward",
+    "profile and confirmed retakes",
+    "recipe/menu",
+    "grocery CRUD/import/archive",
+    "contract edit/reload",
+    "native conversational grocery writer",
+    "all permanent navigation destinations",
+    "browser history and direct links",
+    "zero POST mutations",
+    "Storage/IDB sentinels and two-tab isolated reset"
+  ]
+}

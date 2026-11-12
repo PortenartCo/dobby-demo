@@ -1,0 +1,361 @@
+{
+  "suite": "MENU-01–08",
+  "origin": "http://127.0.0.1:8765",
+  "offlineExternalRequests": true,
+  "freshContexts": true,
+  "widths": [
+    {
+      "width": 320,
+      "height": 844,
+      "cards": [
+        "Maison & Équipements",
+        "Archives documentaires",
+        "Contrats & Assurances",
+        "Contacts",
+        "Paramètres"
+      ],
+      "searchCases": 12,
+      "fiveDestinations": "pass",
+      "backForwardReload": "pass",
+      "nativeDataPreserved": [
+        "familyMembers",
+        "famLists",
+        "famHealth",
+        "famContacts",
+        "houseItems",
+        "houseLogs",
+        "familyDocs"
+      ],
+      "removedRoutes": [
+        "traverse.html",
+        "missions.html",
+        "index.html",
+        "famille.html#salon",
+        "index.html#recipes",
+        "index.html#shop",
+        "famille.html#lists",
+        "famille.html#health",
+        "famille.html#search",
+        "famille.html#import-file",
+        "famille.html#chat",
+        "famille.html#memos",
+        "famille.html#agenda",
+        "famille.html#members",
+        "famille.html#personal"
+      ],
+      "nativeQueryUnchanged": true,
+      "attachmentBytesPreserved": true,
+      "backup": {
+        "filename": "dobby_sauvegarde_complete_2026-11-12.json",
+        "format": "dobby-complete-backup",
+        "version": 1,
+        "bytes": 3045,
+        "sha256": "672028bf29def8fe756533a2f11e8af10aa1e1645f3a077a98ff29b8d5e99f70",
+        "attachments": 1,
+        "nativeValidation": "pass"
+      },
+      "headerAndDock": "unique, fixed and visible",
+      "horizontalOverflow": false,
+      "lastCardDockOverlap": false,
+      "shortViewportHeight": 480,
+      "settingsMenuDockActive": true,
+      "backupContextualBack": "settings",
+      "screenshot": "docs/dobby-v7/evidence/menu-01-08/menu-320.png",
+      "layout": {
+        "first": {
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 68,
+            "top": 0,
+            "right": 320,
+            "bottom": 68,
+            "left": 0
+          },
+          "dock": {
+            "x": 0,
+            "y": 763,
+            "width": 320,
+            "height": 81,
+            "top": 763,
+            "right": 320,
+            "bottom": 844,
+            "left": 0
+          },
+          "headerPosition": "fixed",
+          "dockPosition": "fixed",
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "scrolled": {
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 320,
+            "height": 68,
+            "top": 0,
+            "right": 320,
+            "bottom": 68,
+            "left": 0
+          },
+          "dock": {
+            "x": 0,
+            "y": 399,
+            "width": 320,
+            "height": 81,
+            "top": 399,
+            "right": 320,
+            "bottom": 480,
+            "left": 0
+          },
+          "headerPosition": "fixed",
+          "dockPosition": "fixed",
+          "scrollWidth": 320,
+          "viewport": 320
+        }
+      },
+      "blockedExternalOrigins": [
+        "https://lh3.googleusercontent.com",
+        "https://fonts.googleapis.com"
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "cards": [
+        "Maison & Équipements",
+        "Archives documentaires",
+        "Contrats & Assurances",
+        "Contacts",
+        "Paramètres"
+      ],
+      "searchCases": 12,
+      "fiveDestinations": "pass",
+      "backForwardReload": "pass",
+      "nativeDataPreserved": [
+        "familyMembers",
+        "famLists",
+        "famHealth",
+        "famContacts",
+        "houseItems",
+        "houseLogs",
+        "familyDocs"
+      ],
+      "removedRoutes": [
+        "traverse.html",
+        "missions.html",
+        "index.html",
+        "famille.html#salon",
+        "index.html#recipes",
+        "index.html#shop",
+        "famille.html#lists",
+        "famille.html#health",
+        "famille.html#search",
+        "famille.html#import-file",
+        "famille.html#chat",
+        "famille.html#memos",
+        "famille.html#agenda",
+        "famille.html#members",
+        "famille.html#personal"
+      ],
+      "nativeQueryUnchanged": true,
+      "attachmentBytesPreserved": true,
+      "backup": {
+        "filename": "dobby_sauvegarde_complete_2026-11-12.json",
+        "format": "dobby-complete-backup",
+        "version": 1,
+        "bytes": 3045,
+        "sha256": "e9c3ddb7b3133b18ad836d4f28e91d466a24ab5af60f058492a8b16e6509a607",
+        "attachments": 1,
+        "nativeValidation": "pass"
+      },
+      "headerAndDock": "unique, fixed and visible",
+      "horizontalOverflow": false,
+      "lastCardDockOverlap": false,
+      "shortViewportHeight": 480,
+      "settingsMenuDockActive": true,
+      "backupContextualBack": "settings",
+      "screenshot": "docs/dobby-v7/evidence/menu-01-08/menu-390.png",
+      "layout": {
+        "first": {
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 68,
+            "top": 0,
+            "right": 390,
+            "bottom": 68,
+            "left": 0
+          },
+          "dock": {
+            "x": 0,
+            "y": 763,
+            "width": 390,
+            "height": 81,
+            "top": 763,
+            "right": 390,
+            "bottom": 844,
+            "left": 0
+          },
+          "headerPosition": "fixed",
+          "dockPosition": "fixed",
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "scrolled": {
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 68,
+            "top": 0,
+            "right": 390,
+            "bottom": 68,
+            "left": 0
+          },
+          "dock": {
+            "x": 0,
+            "y": 399,
+            "width": 390,
+            "height": 81,
+            "top": 399,
+            "right": 390,
+            "bottom": 480,
+            "left": 0
+          },
+          "headerPosition": "fixed",
+          "dockPosition": "fixed",
+          "scrollWidth": 390,
+          "viewport": 390
+        }
+      },
+      "blockedExternalOrigins": [
+        "https://lh3.googleusercontent.com",
+        "https://fonts.googleapis.com"
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "height": 844,
+      "cards": [
+        "Maison & Équipements",
+        "Archives documentaires",
+        "Contrats & Assurances",
+        "Contacts",
+        "Paramètres"
+      ],
+      "searchCases": 12,
+      "fiveDestinations": "pass",
+      "backForwardReload": "pass",
+      "nativeDataPreserved": [
+        "familyMembers",
+        "famLists",
+        "famHealth",
+        "famContacts",
+        "houseItems",
+        "houseLogs",
+        "familyDocs"
+      ],
+      "removedRoutes": [
+        "traverse.html",
+        "missions.html",
+        "index.html",
+        "famille.html#salon",
+        "index.html#recipes",
+        "index.html#shop",
+        "famille.html#lists",
+        "famille.html#health",
+        "famille.html#search",
+        "famille.html#import-file",
+        "famille.html#chat",
+        "famille.html#memos",
+        "famille.html#agenda",
+        "famille.html#members",
+        "famille.html#personal"
+      ],
+      "nativeQueryUnchanged": true,
+      "attachmentBytesPreserved": true,
+      "backup": {
+        "filename": "dobby_sauvegarde_complete_2026-11-12.json",
+        "format": "dobby-complete-backup",
+        "version": 1,
+        "bytes": 3045,
+        "sha256": "982294fb8f19c27fc6a7f898e2eea7c1db121fc9c60ba5e856b8cda0342258d9",
+        "attachments": 1,
+        "nativeValidation": "pass"
+      },
+      "headerAndDock": "unique, fixed and visible",
+      "horizontalOverflow": false,
+      "lastCardDockOverlap": false,
+      "shortViewportHeight": 480,
+      "settingsMenuDockActive": true,
+      "backupContextualBack": "settings",
+      "screenshot": "docs/dobby-v7/evidence/menu-01-08/menu-1440.png",
+      "layout": {
+        "first": {
+          "header": {
+            "x": 480,
+            "y": 0,
+            "width": 480,
+            "height": 68,
+            "top": 0,
+            "right": 960,
+            "bottom": 68,
+            "left": 480
+          },
+          "dock": {
+            "x": 480,
+            "y": 763,
+            "width": 480,
+            "height": 81,
+            "top": 763,
+            "right": 960,
+            "bottom": 844,
+            "left": 480
+          },
+          "headerPosition": "fixed",
+          "dockPosition": "fixed",
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "scrolled": {
+          "header": {
+            "x": 480,
+            "y": 0,
+            "width": 480,
+            "height": 68,
+            "top": 0,
+            "right": 960,
+            "bottom": 68,
+            "left": 480
+          },
+          "dock": {
+            "x": 480,
+            "y": 399,
+            "width": 480,
+            "height": 81,
+            "top": 399,
+            "right": 960,
+            "bottom": 480,
+            "left": 480
+          },
+          "headerPosition": "fixed",
+          "dockPosition": "fixed",
+          "scrollWidth": 1440,
+          "viewport": 1440
+        }
+      },
+      "blockedExternalOrigins": [
+        "https://lh3.googleusercontent.com",
+        "https://fonts.googleapis.com"
+      ],
+      "errors": []
+    }
+  ],
+  "status": "pass",
+  "testedApplicationSha": "bb5f6b03bd9fe77b270760ef598a62cd2ac7e2fc"
+}

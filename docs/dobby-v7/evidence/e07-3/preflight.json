@@ -1,0 +1,43 @@
+{
+  "timeUTC": "2026-11-11T11:11:16.888686+00:00",
+  "source": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+  "branch": "feat/dobby-e073-taverne-grimoire-20261111",
+  "worktree": "/workspace/dobby-e073-taverne-grimoire",
+  "protectedRemoteRefs": [
+    "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e\trefs/heads/feat/dobby-e01-e08-review-integration",
+    "e2a8e1d830d76b5e2bcccf40bbe46c6eb88a8a7d\trefs/heads/feat/dobby-review-e01-e05-20261111",
+    "73861879625615c358cf4de181189a9f5acbdff6\trefs/heads/fix/dobby-e06-visual-functional",
+    "e24682d34f01c26c40da2399754749ced35f0bad\trefs/heads/main"
+  ],
+  "applicableAGENTS": [],
+  "archiveSha256": "fa7be6e23995eb2829cb49a5bccdf7849b4358a18f570f2520133a452ffae4a5",
+  "nineReviewScreensVerified": true,
+  "previewDirectory": "essai-dobby-e07-review-20261111",
+  "previewAbsentOnMain": true,
+  "previewHTTPBefore": 404,
+  "integratedManifestSha256": "8c0aecc7469df2d8089829bdc587baaa5d4c3c96eb3e4883a44a99797060ecd0",
+  "integratedPublishedSource": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "mainTopLevelTree": [
+    "040000 tree 3244db043d545d773f91a1ec88c3195cc1777fb7\t.github",
+    "100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391\t.nojekyll",
+    "100644 blob ff9e5d39c6621eed152da967628e52287c412598\tREADME.md",
+    "040000 tree 79ea83b939ddaf29d0b4c3e8ec50f47d9d8f4ed4\tessai-dobby-integrated-review",
+    "040000 tree a458170cb0ff68bd0465a2274eaf56ee27eb17d1\tessai-dobby-review",
+    "040000 tree d819e55f6924471364533e9ec2d36510afdcf89a\tessai-e01-preview",
+    "040000 tree bb4802d5ac1cfb4adde60a79533ebaf1cf9d24db\tessai-e02-preview",
+    "040000 tree 475568bbb4887b7fcea2d5235ef6fb3b1f14e68f\tessai-stitch-v2",
+    "040000 tree d24babe19d5f496596749c525a9e215030d3c8fe\tessai-stitch-v3",
+    "040000 tree b38d97db05a7db4310aebaf8ddfd910c6007d991\tessai-stitch-v4",
+    "040000 tree 89282a46b453970ea907265e8dab4293f0eb72b1\tessai-stitch-v5-famille",
+    "040000 tree 9791d1c1d56a4d1d56f4361157652d40f3537107\tessai-stitch-v5",
+    "040000 tree e8b37a7290cb78fcb562d7d59fa668a247a02ca0\tessai-stitch",
+    "040000 tree 07454efbf1d19cc7cbd55eb71eb98c820382baae\tessai-sync-v1",
+    "040000 tree ba82dd8e68f52424542dd61b2dd1acea5b52887b\tessai-sync-v2",
+    "040000 tree ba30e3b3d5b255a34fec507d5573cab2fbb22e47\tessai-v6-preview",
+    "040000 tree 8c7d4a832d3ae548f25a63ba24b77e80aa87927a\tessai-v7-preview",
+    "100644 blob 78f15c3e970f17a884cd52c10623b821b5985cb8\tindex.html",
+    "040000 tree a2214c48115e303b51d7c607f11ee79ad605f9f0\tsql-proposals"
+  ],
+  "registryBaseSha256": "d2b7e8de49bfc7e32b5ba6ac055dbd30bbcc2ef23db0f08b9fa88f4a40d61a03",
+  "note": "Pasted text is the user instruction. ZIP notes/screens are reference data. No existing worktree/branch/publication changed."
+}

@@ -1,0 +1,29 @@
+{
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-review/",
+  "status": "PASS",
+  "bytes": 357,
+  "sourceSha": "e15b7d265ba3801c8627cbc2c791eeff2414c7ed",
+  "manifestMatchesTestedBytes": true,
+  "manifestSha256": "87795cbc4735dd3405a3ee38f355ac8383759033eae65d2011e84e2e01b0da41",
+  "publicationCommit": "d7c53e504b3a2f54d88b2a3e59c6954344430b9f",
+  "widths": [
+    390,
+    1440
+  ],
+  "checks": [
+    "HTTP 200",
+    "local images and fonts",
+    "Taverne/recipe/Courses navigation",
+    "five dock destinations",
+    "manual addition and native checkboxes",
+    "reload persistence",
+    "demo-only reset preserves other-origin storage",
+    "existing family session sentinel unused",
+    "no backend mutation",
+    "no blocking JavaScript error",
+    "no missing preview resource"
+  ],
+  "log": "logs/hosted.txt",
+  "browser": "Chromium",
+  "physicalDevice": false
+}

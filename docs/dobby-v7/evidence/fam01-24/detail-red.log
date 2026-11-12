@@ -1,0 +1,10 @@
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-fa-action="member-detail"][data-person="local-1794448731672-fhq83t1"]')[22m
+
+    at /workspace/dobby-v7-family-review-fam01-24/essai-stitch-v7/tests/fam-detail.cjs:7:139 {
+  log: [
+    `  - waiting for locator('[data-fa-action="member-detail"][data-person="local-1794448731672-fhq83t1"]')`
+  ],
+  name: 'TimeoutError'
+}

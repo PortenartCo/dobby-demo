@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "width": 320,
+  "origin": "http://127.0.0.1:8790",
+  "base": "/essai-dobby-integrated-review/essai-stitch-v7",
+  "metadataFaults": [
+    "explicit rejection",
+    "pending completion interrupted by visibility"
+  ],
+  "realWebAudio": true,
+  "businessWriters": "unchanged native",
+  "businessMocks": false,
+  "faultInjection": "only the local intro metadata facade and document visibility browser boundary",
+  "rejectedAudio": [
+    "closed"
+  ],
+  "retryAudio": [
+    "closed",
+    "running"
+  ],
+  "afterHidden": {
+    "view": "onboarding-ritual",
+    "url": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-ritual",
+    "status": "Traversée interrompue. Vous pouvez réessayer ou passer."
+  }
+}

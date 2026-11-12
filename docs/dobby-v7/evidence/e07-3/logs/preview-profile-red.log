@@ -1,0 +1,30 @@
+✖ E07.3 preview is a new isolated profile and retains source byte provenance (201.047186ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 288.652047
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/e07-3-build.test.cjs:2:1
+✖ E07.3 preview is a new isolated profile and retains source byte provenance (201.047186ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'E07.2' !== 'E07.3'
+  
+      at TestContext.<anonymous> (/workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-build.test.cjs:2:437)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'E07.2',
+    expected: 'E07.3',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

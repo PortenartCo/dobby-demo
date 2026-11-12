@@ -1,0 +1,5 @@
+page.evaluate: Error: Réinitialisation de cet essai en cours.
+    at http://127.0.0.1:8768/dobby-global-dev4/global-demo.js:35:109
+    at /workspace/dobby-demo/essai-stitch-v7/tests/global-reset.cjs:37:76 {
+  log: []
+}

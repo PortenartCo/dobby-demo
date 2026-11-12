@@ -1,0 +1,62 @@
+﻿ID,Module,Statut initial,Decision utilisateur / traitement,Reference,Critere de validation
+E07-X01,Global,A_CORRIGER,Effets ON par defaut et son OFF; respecter le choix utilisateur explicite et anciennes preferences,captures/E07-R01_fiche_globale.png,Nouvelle session ON/OFF; choix OFF persiste apres reload; pas de reset force
+E07-X02,Global,A_CORRIGER,Bouton Effets applique un changement visuel perceptible sur toutes les pages E07,captures/E07-R01_fiche_globale.png,DOM et pixels avant/apres sur Taverne Grimoire Fiche Cuisine Courses; reduced-motion
+E07-X03,Global,A_PRESERVER,Header dock fixes; preferences partagees avec E01 E06; pas de double registre,,"Navigation mobile, bouton effet, bouton son, donnees stables"
+E07-I01,Grimoire,A_CORRIGER,"CTA principal renomme Ajouter des recettes avec l IA; largeur complete, police 16-18px",captures/E07-I01_bouton_inscrire_recette.png,"Texte lisible a 320 et 390 px, clic et focus"
+E07-I02,Grimoire,A_CORRIGER,Supprimer choix Saisie manuelle/Importer IA et ouvrir l import IA directement,captures/E07-I02_creation_choix_manuel_ia.png,Aucun chemin de creation manuelle expose; import direct; edition preservee
+E07-I03,Grimoire,A_CORRIGER,"Deplacer export JSON hors creation vers parametres, sans perte du writer",captures/E07-I03_export_grimoire.png,Export reste accessible et valide; avertissement photos exclues
+E07-I04,Import IA,A_CORRIGER,Prompt cumulatif sur lots de photos; une seule livraison finale apres confirmation,,Chaque lot demande nouvelles recettes; ZIP/JSON inclut toutes les recettes
+E07-I05,Import IA,A_CORRIGER,Livraison prioritaire ZIP unique avec recipes.json et dossier images si IA compatible,,ZIP reel sans faux lien; JSON seul honnetement si aucune capacite fichier
+E07-I06,Import IA,A_CORRIGER,Images principales et etapes reliees aux etapes exactes; source vs IA distinct,,ZIP avec 3 images dans 2 etapes; correspondance et affichage; aucun asset fantome
+E07-I07,Import IA,A_CORRIGER,Une recette Classique et TM5 sous un seul ID; TM5 jamais verifie automatiquement,,Un import double formule ne cree pas deux recettes; badge A verifier
+E07-I08,Import IA,A_CORRIGER,Associer ingredients aux etapes sans inventer de repartition,,Recette avec mapping et recette sans mapping; pas de fausse precision
+E07-I09,Import IA,A_CORRIGER,Une recette avec champs manquants s enregistre; chaque lacune editable A completer,,"Import sans portions/quantites/duree/etapes, persistance, reedit et reload"
+E07-I10,Import IA,A_CORRIGER,Validation TM5 sans inventer reglage temps temperature vitesse accessoires,,Champs incertains non executables et badge A verifier
+E07-I11,Import IA,A_PRESERVER,"Compatibilite JSON V1/V2 et ZIP, doublons, photo locale, garde-fous archives",,Regressions corpus ZIP existant; refus ZIP dangereux sans perdre autres donnees
+E07-I12,Saisie manuelle,REMPLACE,"Ancien formulaire de creation, illustration Dobby, citation, securite, piece reference supprimes",captures/E07-S01_creation_manuelle_bandeau.png,"Formulaire nouveau inaccessible, fonctions edition et anciens brouillons intacts"
+E07-I13,Stockage,REPORTE,Cible familiale future photos et PDFs iPhone vers Supabase Storage prive,captures/E07-S02_piece_reference.png,Aucune mutation Supabase ou promesse sync dans E07.4
+E07-I14,Stockage,A_PRESERVER,"Reference photos en import et edition, fichiers locaux et auteurs de photos preserves",captures/E07-S02_piece_reference.png,"Photo importee reste apres reload, aucune suppression ancienne photo"
+E07-R01,Fiche,A_CORRIGER,Titre complet de recette dans bandeau superieur sans ellipse,captures/E07-R01_fiche_globale.png,Titre long visible a 320px et pas de doublon sous photo
+E07-R02,Fiche,A_CORRIGER,"Retirer cadenas, bandeau Donnees DOBBY partage, favori de ce bandeau",captures/E07-R02_bandeau_donnees_et_favori.png,Bandeau epure; partage seulement s il fonctionne reellement
+E07-R03,Fiche,A_CORRIGER,"Unique etoile pres de Fiche Recette, pleine or/contour, synced catalogue",captures/E07-R03_photo_badges_favoris.png,"Ajout immediat, retrait confirme, reload et navigation catalogue"
+E07-R04,Fiche,A_CORRIGER,Supprimer deux badges Favori du foyer sur photo et titre/sous-titre sous photo,captures/E07-R04_titre_double.png,"Aucun badge favori photo, aucun titre repete, espace remonte"
+E07-R05,Fiche,A_CORRIGER,"Trois cartes Duree Portions Categorie egales, sans Cout par part",captures/E07-R05_metriques_4_cartes.png,"Pas de texte coupe ou debordement 320/390, valeur manquante A completer"
+E07-R06,Fiche,A_CORRIGER,Traditionnelle et Thermomix commutent sur meme fiche seulement les etapes/reglages,captures/E07-R06_choix_methode.png,"Pas de nouvelle route, ingredients et portions identiques"
+E07-R07,Fiche,A_CORRIGER,Bouton methode absente grise; badge TM5 A verifier; enlever Double formule et slogan,captures/E07-R06_choix_methode.png,"Recette sans TM5 bloque clic, avec TM5 change etapes, slogans absents"
+E07-R08,Fiche,A_CORRIGER,Onglets Preparation et Ingredients colore dore strictement selon celui affiche,captures/E07-R08_onglets_incoherents.png,Switch bidirectionnel; methode changee conserve onglet actif
+E07-R09,Fiche,A_CORRIGER,Renommer Garde-manger en Ingredients; quantites adaptees aux portions,captures/E07-R09_garde_manger_cases.png,"Ingredients et quantites lisibles, zero faute de ratio"
+E07-R10,Fiche,A_CORRIGER,"Retirer cases, compteur 0/10 et bouton ajout panier trompeur",captures/E07-R09_garde_manger_cases.png,Consultation/clics n affectent jamais les courses; aucun widget obsolete
+E07-R11,Fiche,A_CORRIGER,"Supprimer Au Grimoire; bouton Planifier ce repas seul, pleine largeur",captures/E07-R11_boutons_planifier_grimoire.png,Fleche retour fonctionne; CTA large accessible
+E07-R12,Fiche,A_CORRIGER,"Planifier ce repas ouvre modal semaine 7j, midi/soir, fleches, remplacement confirme",captures/E07-R11_boutons_planifier_grimoire.png,"Native planned date-midi/soir persiste, sans navigation ni ajout courses"
+E07-R13,Fiche,A_CORRIGER,Retirer encart Authenticite culinaire DOBBY et donnees techniques,captures/E07-R13_authenticite.png,"Aucun encart, pas d espace vide"
+E07-R14,Fiche,A_CORRIGER,Remplacer Creer une copie modifiable par Modifier la recette sans double ID visible,captures/E07-R14_copie_modifiable.png,Ed ition meme fiche; recette de base surchargee sans mutation source
+E07-R15,Fiche,A_CORRIGER,"Supprimer recette avec confirmation, alerte si planifiee et recuperation",captures/E07-R14_copie_modifiable.png,Annuler sans mutation; confirme avec historique/planning conserve
+E07-R16,Fiche,A_PRESERVER,Favorite et catalogue restent meme source; action partager uniquement si fonctionnelle,,"Favoris apres reload, pas de bouton inerte"
+E07-M01,Mode Cuisine,A_CORRIGER,Sur hero conserver seulement badge Etape n/N en haut gauche,captures/E07-M01_hero_cuisine_surcharge.png,"Autres 4 badges supprimes, progression exacte"
+E07-M02,Mode Cuisine,A_CORRIGER,Image hero suit etape courante via media par etape; fallback neutre,captures/E07-M01_hero_cuisine_surcharge.png,"Etapes 1 2 3 ont images correctes, absente fallback non trompeur"
+E07-M03,Mode Cuisine,A_CORRIGER,Montrer seulement ingredients de l etape avec quantites exactes,captures/E07-M03_ingredients_par_etape.png,Etape 1 legumes seulement; etape viande differente; portions ajustees
+E07-M04,Mode Cuisine,A_CORRIGER,"Si repartition inconnue, message discret, jamais liste entiere trompeuse",captures/E07-M03_ingredients_par_etape.png,Recette legacy sans mapping ne montre pas les 10 ingredients
+E07-M05,Mode Cuisine,A_CORRIGER,Supprimer encarts Astuce apothicaire et X ingredients de la recette,captures/E07-M05_encarts_superflus.png,"Aucun encart ni espace mort, instructions proches"
+E07-M06,Mode Cuisine,A_CORRIGER,Parcours complet de la confection conserve mais tout en bas,captures/E07-M06_navigation_etapes.png,"Boutons de saut en bas, etape courante coloree or"
+E07-M07,Mode Cuisine,A_CORRIGER,Bouton + Minuteur associe a etape avec duree explicite pre remplie,captures/E07-M07_minuteur_unique.png,Creation minuteur 5min et 10-12min sans valeur arbitraire
+E07-M08,Mode Cuisine,A_CORRIGER,"Liste de plusieurs minuteurs avec nom et numero d etape, commandes completes",captures/E07-M07_minuteur_unique.png,"Deux minuteurs independants, +/- 1min, reset, pause, suppression, saisie"
+E07-M09,Mode Cuisine,A_CORRIGER,"Minuteurs visibles et persistent quand changer etape, methode ou page",captures/E07-M07_minuteur_unique.png,Au moins deux minuteurs poursuivent apres navigation et reload
+E07-M10,Mode Cuisine,A_CORRIGER,Calcul de deadline a la reprise sans fausse notification iOS,captures/E07-M07_minuteur_unique.png,"Horloge simulee, hide/show/reload, fin acquittee, une seule alerte"
+E07-M11,Mode Cuisine,A_CORRIGER,"Son minuteur uniquement si preference Son ON, visuel toujours disponible",,Tests sound ON/OFF et reduced-motion
+E07-M12,Mode Cuisine,A_CORRIGER,"TM5 utilise le meme mode cuisine, instructions propres a la methode selectionnee",,"TM5 non verifie affiche avertissement, pas de page supplementaire"
+E07-M13,Fin de cuisson,A_CORRIGER,Validation derniere etape affiche modal Stitch Le Festin est pret,assets/STITCH_FESTIN_preview.png,"Modal superposee non route, Dobby art local et message exact"
+E07-M14,Fin de cuisson,A_CORRIGER,"Un seul bouton Retour a la recette ferme modal, sans auto fermeture ni faux enregistrement",assets/STITCH_FESTIN_preview.png,"Ferme en un clic et restaure fiche, pas de phrase validee Grimoire"
+E07-M15,Fin de cuisson,A_CORRIGER,"Design premium approved Stitch, animation conforme effets et plat coherent si disponible",assets/STITCH_FESTIN_ORIGINAL.zip,"Visuel local, pas de CDN impose, focus accessible, pas de son auto"
+E07-B01,E07.3,A_PRESERVER,"Taverne deux repas Midi et Soir independants, calendrier compact 7 jours",assets/PREMIERE_TRANCHE_E07_REFERENCE.zip,"Tests E07.3 de planning, reload et separation des creneaux"
+E07-B02,E07.3,A_PRESERVER,"Catalogue recherche, filtres sans scroll horizontal et favoris",assets/PREMIERE_TRANCHE_E07_REFERENCE.zip,"Filtre recherche, favori confirm suppression, 320/390"
+E07-B03,E07.3,A_PRESERVER,"Import V1 V2 ZIP, TM5 associe, images originales locales, limites securite",assets/PREMIERE_TRANCHE_E07_REFERENCE.zip,"Tests anciens ZIP et images, reset scope local, pas de binaire perdu"
+E07-B04,E07.3,A_PRESERVER,"Header dock fixes, aucun autre apercu ou stockage modifie",,"Differences des 20 entrees main anciennes nulles, tests sentinelles"
+E07-B05,E07.3,A_PRESERVER,Pas de synchronisation photo ou Supabase declaree comme testee,,"RealBackend false, aucune mutation Supabase, UI dit local"
+E07-B06,E07.3,A_PRESERVER,Pages ancienn es E01 E06 et E08 non impactees,,Checks des frontieres sans nouvelle refonte
+E07-S01,Decision remplacee,REMPLACE,Simplifier le formulaire manuel devient inutile car creation manuelle entierement supprimee,captures/E07-S01_creation_manuelle_bandeau.png,"Aucun formulaire de creation, toutefois edition fonctionnelle"
+E07-S02,Decision remplacee,REMPLACE,Renommer boutons photo camera PDF dans formulaire manuel retire,captures/E07-S02_piece_reference.png,Pas de bloc Piece de reference dans nouvelle creation IA
+E07-S03,Decision remplacee,REMPLACE,"Changer texte Rangement direct, OCR et sync dans formulaire manuel retire",captures/E07-S03_rangement_direct.png,"Texte retire avec formulaire, pas de fausse promesse sync"
+E07-P01,Revue suivante,REPORTE,Refonte de la page Choisir un repas en dehors de modal recette,,Page et writers existants intacts sauf modal de fiche
+E07-P02,Revue suivante,REPORTE,Refonte de la page Preparer la liste de courses,,"Page inch angee, import menus existant protege"
+E07-P03,Revue suivante,REPORTE,Sync familiale photo iPhone/PDF Supabase Storage et tests deux comptes,,"Zero migration, zero effet backend, pas de fausse confirmation"
+E07-P04,Revue suivante,REPORTE,Verification physique Safari iPhone des minuteurs en arriere plan,,Etat NON VERIFIE documente sauf essai vrai appareil

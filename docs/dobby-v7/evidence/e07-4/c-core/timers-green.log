@@ -1,0 +1,18 @@
+✔ explicit French durations and ranges are seconds; no quantities, temperatures or invented timer (7.747784ms)
+✔ independent timers use persistent deadlines and reload catches suspension without duplicate ends (6.64381ms)
+✔ pause, resume, adjustment, custom duration, reset and removal do not affect other timers (4.10828ms)
+✔ two deadlines in the same millisecond notify individually once; reset permits one new run (2.463429ms)
+✔ lists and running ticks never write each second; only actual transitions persist (2.861187ms)
+✔ quota failure preserves persisted timers and pending completion remains retryable (3.881126ms)
+✔ post-write storage rejection restores original bytes and cannot erase an older timer (1.975994ms)
+✔ scope, limits, corrupt data and strict inputs are isolated and never silently reset (5.5603ms)
+✔ adjusting an already finished timer to zero does not duplicate the same alert (1.795183ms)
+✔ malformed compound and negative durations never yield a misleading partial number (3.300188ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 137.064849

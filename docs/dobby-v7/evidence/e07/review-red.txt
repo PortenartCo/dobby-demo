@@ -1,0 +1,14 @@
+Error: prepared meal action remains available
+
+0 !== 1
+
+both unknown ingredient and extra quantities are explicit
++ actual - expected
+
+  [
+    'À préciser',
++   'Achat complémentaire'
+-   'À préciser'
+  ]
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-native-actions.cjs:5:569

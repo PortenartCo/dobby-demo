@@ -1,0 +1,123 @@
+/* Cuisine acceptance: real source templates, real V5 writers, ephemeral browser profile. */
+const assert = require('node:assert/strict');
+const { chromium } = require('playwright');
+const fs = require('node:fs'), path = require('node:path');
+const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
+(async () => {
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox'] });
+  try {
+    for (const width of [320,390]) {
+    const context = await browser.newContext({ viewport: { width, height: 844 }, locale: 'fr-BE', reducedMotion: 'reduce' });
+    // Daily meal cards follow today; freeze the fictional fixture's calendar day.
+    await context.addInitScript(realStart=>{const NativeDate=Date,offset=NativeDate.parse('2026-11-09T12:00:00Z')-realStart;window.Date=class extends NativeDate{constructor(...args){super(...(args.length?args:[NativeDate.now()+offset]));}static now(){return NativeDate.now()+offset;}};},Date.now());
+    await context.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
+    const page = await context.newPage();page.setDefaultTimeout(12000);
+    page.on('dialog', dialog => dialog.accept());
+    const errors=[];page.on('pageerror',error=>errors.push(error.message));
+    await page.goto(origin + '/essai-stitch-v7/index.html');
+    await page.waitForFunction(() => window.DobbyCuisine?.ready === true, {}, { timeout: 15000 });
+    await page.evaluate(()=>window.DobbyCuisineEngine.evaluate(`custom=[{id:'cu-test',name:'TEST — Soupe du foyer',minutes:25,servings:4,category:'Végétarien',fav:false,ingredients:[['Courgettes',200,'g'],['Sel',null,'']],steps:['Laver les légumes.','Cuire les légumes.']}];st.customRecipes=custom;st.planned={};st.day='2026-11-09';st.adult=2;st.children=0;st.extras=[];st.shopHistory={};st.shopFinal=null;save();`));
+    await page.evaluate(()=>window.DobbyCuisine.refresh());
+    await page.locator('[data-e07-dinner] [data-cu-action="pick"][data-slot="soir"]').click();
+    await page.waitForFunction(() => document.body.dataset.cuisineView === 'pick');
+    assert.equal(await page.locator('#dv7-panel').isVisible(), false, 'Cuisine never opens the V5 panel');
+    await page.locator('[data-p01-mode=library]').click();
+    await page.locator('[data-p01-select=cu-test]').click();
+    await page.locator('[data-cu-action=p01-count][data-key=children][data-delta="1"]').click();
+    await page.locator('[data-p01-save]').click();
+    await page.waitForFunction(() => document.body.dataset.cuisineView === 'taverne');
+    assert.ok(await page.locator('[data-cu-recipe="cu-test"]').count());
+    assert.equal(await page.evaluate(()=>window.DobbyCuisineEngine.read().state.planned['2026-11-09-soir'].children),1);
+    await page.locator('[data-cu-action="recipe"][data-id="cu-test"]').first().click();
+    await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipe');
+    assert.ok((await page.locator('#ingredients-list').innerText()).includes('132,5'),'Portion scaling uses the native 0.65 child factor');
+    assert.ok((await page.locator('#ingredients-list').textContent()).includes('Quantité à compléter'));
+    const downloadEvent=page.waitForEvent('download');await page.evaluate(()=>DobbyCuisineEngine.exportRecipes('cu-test'));
+    const exported=JSON.parse(fs.readFileSync(await (await downloadEvent).path(),'utf8'));
+    assert.equal(exported.recipes.length,1,'The recipe export contains only the selected recipe');
+    assert.equal(exported.recipes[0].name,'TEST — Soupe du foyer');
+    assert.equal(await page.evaluate(data=>DobbyCuisineEngine.evaluate('return validateBatch(JSON.stringify(p)).errors.length;',data),exported),0,'Native-format export remains importable');
+    await page.locator('#tab-btn-steps').click();assert.equal(await page.locator('#tab-content-steps .e074-instructions > li').count(),2);assert.ok((await page.locator('#tab-content-steps').textContent()).includes('Cuire les légumes.'));await page.locator('#tab-btn-ingredients').click();
+    await page.locator('[data-cu-action=favorite][data-id=cu-test]').click();
+    await page.reload();await page.waitForFunction(()=>window.DobbyCuisine?.ready);
+    assert.equal(await page.evaluate(()=>window.DobbyCuisineEngine.read().recipes.find(r=>r.id==='cu-test').fav),true,'Custom recipe favorite persists');
+    await page.locator('#cook-mode-btn').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='cook');
+    assert.ok((await page.locator('.e074-current-step').innerText()).includes('Laver les légumes.'));assert.equal(await page.locator('[data-e074-step-badge]').innerText(),'Étape 1/2','The current step badge reflects the exact recipe length');assert.equal(await page.locator('.cu-cook-scene').count(),0,'Current cooking instructions contain no baked-in demo scene');
+    await page.locator('[data-cu-action=e074-cook-next]').click();
+    await page.waitForFunction(()=>document.querySelector('[data-e074-instruction]')?.textContent==='Cuire les légumes.');
+    await page.locator('[data-cu-action=e074-cook-next]').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipe');
+    await page.locator('[data-cu-action=e074-festin-close]').click();
+    // The retired TM5 page now aliases the recipe's method tab. Keep the native
+    // explicit-confirmation guard and then inspect the saved method in the UI.
+    const tmSteps=['Laver les légumes.','Cuire les légumes.'].map(text=>({text,tool:'Hors appareil, méthode vérifiée',time:'',temp:'',speed:'',reverse:null}));
+    const beforeTM=await page.evaluate(()=>JSON.stringify(DobbyCuisineEngine.read().state.tmAdaptations||{}));
+    assert.equal(await page.evaluate(steps=>DobbyCuisineEngine.saveTM('cu-test',steps,false),tmSteps),false);
+    assert.equal(await page.evaluate(()=>JSON.stringify(DobbyCuisineEngine.read().state.tmAdaptations||{})),beforeTM,'No TM5 save without explicit verification');
+    assert.equal(await page.evaluate(steps=>DobbyCuisineEngine.saveTM('cu-test',steps,true),tmSteps),true);
+    assert.deepEqual(await page.evaluate(()=>DobbyCuisineEngine.read().state.tmAdaptations['cu-test'].steps),tmSteps);
+    await page.evaluate(()=>DobbyCuisine.refresh());await page.locator('#mode-tm5-btn').click();
+    assert.equal(await page.locator('#mode-tm5-btn').getAttribute('aria-pressed'),'true');await page.locator('#tab-btn-steps').click();assert.equal(await page.locator('#tab-content-steps .e074-instructions > li').count(),2);
+    await page.evaluate(()=>window.DobbyCuisine.open('shop'));
+    await page.evaluate(()=>DobbyCuisine.open('shop-1'));
+    await page.locator('[data-cu-action=e072-preview]').click();await page.locator('#e072-start').fill('2026-11-09');await page.locator('#e072-end').fill('2026-11-09');await page.locator('[data-cu-action=e072-range-refresh]').click();await page.locator('[data-e072-token]').last().uncheck();await page.locator('[data-cu-action=e072-confirm]').click();
+    await page.locator('[data-cu-action=e072-add]').click();await page.locator('#e072-name').fill('TEST — Pain');await page.locator('[data-cu-action=e072-save]').click();
+    const final=await page.evaluate(()=>DobbyCuisineEngine.read().state.shopFinal);assert.ok(final.items.some(x=>x.name==='Courgettes'&&x.detail.includes('132,5')));assert.ok(!final.items.some(x=>x.name==='Sel'));assert.ok(final.items.some(x=>x.name==='TEST — Pain'));
+    await page.locator('[data-cu-action=e072-check]').first().click();await page.locator('[data-cu-action=e072-finish]').click();await page.locator('[data-cu-action=e072-confirm-finish]').click();assert.equal(await page.locator('[data-cu-action=shop-history]').count(),0);const archives=await page.evaluate(()=>DobbyCuisineEngine.read().state.shopHistory);assert.ok(Object.keys(archives).length,'Purchased articles are still archived technically');await page.evaluate(()=>DobbyCuisine.open('shop-history'));assert.equal(await page.evaluate(()=>DobbyCuisine.view),'shop');assert.deepEqual(await page.evaluate(()=>DobbyCuisineEngine.read().state.shopHistory),archives);
+    await page.evaluate(()=>window.DobbyCuisine.open('recipes'));
+    await page.locator('#recipe-search').fill('introuvable');await page.waitForFunction(()=>document.querySelectorAll('#recipes-list .recipe-card').length===0);assert.equal(await page.locator('#recipes-list .recipe-card').count(),0);
+    await page.locator('#recipe-search').fill('');await page.waitForFunction(()=>document.querySelectorAll('#recipes-list .recipe-card').length>0);assert.ok(await page.locator('#recipes-list .recipe-card').count());
+    await page.locator('[data-cu-action="new-recipe"]').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipe-ai');
+    const createPayload={format:'dobby-recipes',version:2,recipes:[{name:'TEST — Recette ajoutée',minutes:20,servings:2,device:'classic',category:'Autre',ingredients:[{name:'Riz',quantity:100,unit:'g'},{name:'Sel',quantity:null,unit:''}],steps:['Cuire le riz.']}]};
+    const beforeImport=await page.evaluate(()=>JSON.stringify(DobbyCuisineEngine.read().recipes));
+    await page.locator('#e073-import-file').setInputFiles({name:'nouvelle-recette.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(createPayload))});
+    await page.locator('[data-e073-import-preview]').waitFor();await page.locator('[data-cu-action=e073-import-confirm]').click();
+    assert.equal(await page.evaluate(()=>JSON.stringify(DobbyCuisineEngine.read().recipes)),beforeImport,'An unchecked import confirmation never creates a recipe');
+    assert.ok(await page.locator('#cu-notice:not([hidden])').isVisible());await page.locator('#cu-notice [data-cu-action=dismiss]').click();
+    await page.locator('#e073-import-agree').check();await page.locator('[data-cu-action=e073-import-confirm]').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipes');
+    const created=await page.evaluate(()=>window.DobbyCuisineEngine.read().recipes.find(r=>r.name==='TEST — Recette ajoutée').id);
+    await page.evaluate(id=>DobbyCuisine.open('recipe',{id}),created);await page.locator('[data-cu-action=edit-recipe]').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipe-add');
+    await page.locator('#recipe-title').fill('TEST — Recette modifiée');await page.evaluate(()=>DobbyCuisine.open('recipe-add-1'));
+    assert.equal(await page.locator('#recipe-title').inputValue(),'TEST — Recette modifiée','Editor variant navigation retains unsaved values');
+    await page.locator('[data-cu-action=save-recipe]').first().click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipe');
+    assert.equal(await page.evaluate(id=>window.DobbyCuisineEngine.read().recipes.find(r=>r.id===id).name,created),'TEST — Recette modifiée');
+    await page.evaluate(()=>window.DobbyCuisine.open('batch'));
+    await page.locator('#cu-batch-file').setInputFiles({name:'incorrect.json',mimeType:'application/json',buffer:Buffer.from('{bad')});
+    await page.waitForFunction(()=>window.DobbyCuisineEngine.read().batch);
+    await page.waitForFunction(()=>document.querySelector('main')?.textContent.includes('JSON valide'));
+    const payload={format:'dobby-recipes',version:1,recipes:[{name:'TEST — Import JSON',minutes:15,servings:2,device:'classic',category:'Autre',ingredients:[{name:'Riz',quantity:50,unit:'g'}],steps:['Cuire le riz.'],reviewed:true,source:'Fixture'}]};
+    await page.locator('#cu-batch-file').setInputFiles({name:'recette.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(payload))});
+    await page.waitForFunction(()=>document.querySelector('main')?.textContent.includes('TEST — Import JSON'));
+    await page.locator('#cu-batch-agree').check();await page.locator('[data-cu-action="batch-commit"]').first().click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipes');
+    assert.equal(await page.evaluate(()=>DobbyCuisineEngine.read().recipes.filter(r=>r.name==='TEST — Import JSON').length),1,'Confirmed batch import creates exactly one native recipe');
+    await page.locator('.recipe-card').filter({hasText:'TEST — Import JSON'}).waitFor({state:'visible'});
+    await page.reload();await page.waitForFunction(()=>window.DobbyCuisine?.ready);
+    assert.equal(await page.evaluate(id=>window.DobbyCuisineEngine.read().recipes.find(r=>r.id===id).name,created),'TEST — Recette modifiée','Edited recipe persists across reload');
+    // Editing a validated list follows the native edit action; archives remain.
+    await page.evaluate(()=>window.DobbyCuisine.open('shop'));
+    assert.equal(await page.locator('body').getAttribute('data-cuisine-view'),'shop');assert.equal(await page.locator('[data-cu-action=e072-add]').count(),1);
+    assert.ok(Object.keys(await page.evaluate(()=>DobbyCuisineEngine.read().state.shopHistory)).length);
+    // Plan, move and cancel a second meal through current Stitch controls.
+    const originalMeal=await page.evaluate(()=>DobbyCuisineEngine.read().state.planned['2026-11-09-soir']);
+    await page.evaluate(()=>DobbyCuisine.open('pick',{date:'2026-11-10',slot:'soir'}));
+    await page.locator('[data-p01-mode=library]').click();await page.locator('[data-p01-select=cu-test]').click();await page.locator('[data-p01-save]').click();await page.waitForFunction(()=>document.body.dataset.cuisineView==='taverne');
+    await page.locator('[data-e07-week-day="2026-11-10"]').click();
+    const mealTools=()=>page.locator('[data-e073-week-detail] [data-e073-meal-slot=soir] [data-e07p01-meal-tools]');
+    await mealTools().locator('summary').click();await mealTools().locator('[data-e07p01-meal-operation=move]').click();
+    await page.locator('#e07p01-move-date').fill('2026-11-11');await page.locator('#e07p01-move-date').dispatchEvent('change');
+    const beforeMove=await page.evaluate(()=>DobbyCuisineEngine.read().state.planned['2026-11-10-soir']);
+    await page.locator('#e07p01-confirm-move').click();await page.locator('[data-e07p01-meal-dialog]').waitFor({state:'detached'});
+    assert.deepEqual(await page.evaluate(()=>DobbyCuisineEngine.read().state.planned['2026-11-11-soir']),beforeMove,'Moving preserves the exact native meal record');
+    assert.equal(await page.evaluate(()=>DobbyCuisineEngine.read().state.planned['2026-11-10-soir']),undefined);
+    await mealTools().locator('summary').click();await mealTools().locator('[data-e07p01-meal-operation=cancel]').click();
+    assert.equal(await page.evaluate(()=>DobbyCuisineEngine.read().state.planned['2026-11-11-soir'].status),'annulé');
+    assert.deepEqual(await page.evaluate(()=>DobbyCuisineEngine.read().state.planned['2026-11-09-soir']),originalMeal,'Other dates and their quantities remain unchanged');
+    await page.locator('body > nav [data-e01-destination="4"]').first().click();
+    await page.waitForURL(/famille.html#menu/);await page.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal(await page.locator('#dv7-panel').isVisible(),false);await page.locator('body > nav [data-e01-destination="2"]').first().click();await page.waitForURL(/index.html/);await page.waitForFunction(()=>DobbyCuisine?.ready);await page.locator('main [data-cu-action=recipes]').first().click();await page.waitForURL(/index.html#recipes/);
+    await page.waitForFunction(()=>document.body.dataset.cuisineView==='recipes');
+    assert.equal(await page.locator('#dv7-panel').isVisible(),false,'Cuisine selected from the dock and recipe tab returns to Stitch');
+    assert.deepEqual(errors,[]);
+    console.log('CUISINE_PATH_PASS '+width+'px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload');
+    await context.close();
+    }
+  } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

@@ -1,0 +1,31 @@
+REGISTER_TOOLS_PASS 320
+REGISTER_TOOLS_PASS 390
+REGISTER_VISUAL 5 mission-edit 320
+REGISTER_VISUAL 5 chat 320
+REGISTER_VISUAL 5 chat-2 320
+REGISTER_VISUAL 5 search 320
+REGISTER_VISUAL 5 menu 320
+REGISTER_VISUAL 5 personal 320
+REGISTER_VISUAL 5 mission-edit 390
+REGISTER_VISUAL 5 chat 390
+REGISTER_VISUAL 5 chat-2 390
+REGISTER_VISUAL 5 search 390
+REGISTER_VISUAL 5 menu 390
+REGISTER_VISUAL 5 personal 390
+REGISTER_VISUAL_PASS 5 6 sources x 320/390
+REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+REGISTER_IMPORT_READING_PASS 320
+REGISTER_IMPORT_READING_PASS 390
+AssertionError [ERR_ASSERTION]: Native module synchronization reaches the HTTP fixture
+    at until (/workspace/dobby-integrated-review/essai-stitch-v7/tests/register-missions-sync.cjs:6:192)
+    at async /workspace/dobby-integrated-review/essai-stitch-v7/tests/register-missions-sync.cjs:26:1792 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

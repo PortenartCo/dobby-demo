@@ -1,0 +1,10 @@
+locator.waitFor: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-p01-calendar]') to be visible[22m
+
+    at /workspace/dobby-e07-p01-20261112/essai-stitch-v7/tests/e07-p01.cjs:14:95
+    at check (/workspace/dobby-e07-p01-20261112/essai-stitch-v7/tests/e07-p01.cjs:8:36)
+    at /workspace/dobby-e07-p01-20261112/essai-stitch-v7/tests/e07-p01.cjs:14:7 {
+  log: [ "  - waiting for locator('[data-p01-calendar]') to be visible" ],
+  name: 'TimeoutError'
+}

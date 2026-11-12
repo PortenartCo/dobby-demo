@@ -1,0 +1,329 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary-container": "#533500", "surface-container-low": "#271814", "tertiary-fixed": "#ffdead", "tertiary-container": "#d59b2f", "on-secondary-fixed-variant": "#314c42", "surface-variant": "#43302c", "on-primary": "#442b00", "inverse-primary": "#815500", "primary-fixed": "#ffddb2", "secondary-fixed-dim": "#afcdc0", "primary-container": "#d49b42", "surface-container": "#2c1c18", "error": "#ffb4ab", "error-container": "#93000a", "inverse-surface": "#fadcd5", "outline-variant": "#504537", "surface-container-lowest": "#180b07", "on-surface": "#fadcd5", "on-primary-fixed": "#291800", "outline": "#9d8e7e", "on-secondary": "#1a352c", "on-tertiary-fixed-variant": "#604100", "tertiary-fixed-dim": "#fabc4d", "on-primary-fixed-variant": "#624000", "tertiary": "#fabc4d", "on-tertiary-container": "#513600", "background": "#1e100c", "surface": "#1e100c", "inverse-on-surface": "#3e2c28", "secondary-container": "#334e44", "surface-dim": "#1e100c", "surface-container-highest": "#43302c", "on-secondary-container": "#a1bfb2", "on-error-container": "#ffdad6", "secondary": "#afcdc0", "primary-fixed-dim": "#f9bb5f", "primary": "#f9bb5f", "on-tertiary-fixed": "#281900", "on-surface-variant": "#d4c4b1", "surface-container-high": "#372622", "on-tertiary": "#432c00", "on-error": "#690005", "surface-bright": "#483530", "on-secondary-fixed": "#042018", "secondary-fixed": "#cbe9dc", "on-background": "#fadcd5", "surface-tint": "#f9bb5f" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "space-xs": "0.25rem", "space-md": "1rem", "gutter-mobile": "0.75rem", "space-xl": "2.5rem", "margin": "2.5rem", "gutter": "1.25rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "space-sm": "0.5rem" }, fontFamily: { "body-lg": ["EB Garamond"], "headline-lg-mobile": ["Playfair Display"], "headline-sm": ["Playfair Display"], "display-lg": ["Playfair Display"], "label-sm": ["Literata"], "headline-lg": ["Playfair Display"], "headline-md": ["Playfair Display"], "label-md": ["Literata"], "body-md": ["EB Garamond"], "label-lg": ["Literata"], "body-sm": ["EB Garamond"], "display-lg-mobile": ["Playfair Display"] }, fontSize: { "body-lg": ["19px", { lineHeight: "28px", fontWeight: "400" }], "headline-lg-mobile": ["26px", { lineHeight: "34px", fontWeight: "600" }], "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }], "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.01em", fontWeight: "700" }], "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.08em", fontWeight: "500" }], "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }], "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }], "body-md": ["17px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.04em", fontWeight: "600" }], "body-sm": ["15px", { lineHeight: "22px", fontWeight: "400" }], "display-lg-mobile": ["34px", { lineHeight: "42px", letterSpacing: "-0.01em", fontWeight: "700" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_12px_32px_rgba(212,155,66,0.12)]"><div class="h-20 px-gutter-mobile flex items-center justify-between relative"><div class="flex items-center gap-space-xs"><button aria-label="Menu Alchimique" class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-high/80 text-primary shadow-[0_2px_8px_rgba(0,0,0,0.4)] active:scale-95 transition-all hover:bg-surface-container border border-primary/20"><svg class="w-6 h-6 text-[#eec66a]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path></svg></button></div><div class="flex-1 flex items-center justify-center text-center px-space-xs"><div class="h-12 px-space-md rounded-xl bg-surface-container-highest/90 shadow-[inset_0_1px_2px_rgba(249,187,95,0.2),0_4px_16px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center border border-primary/20"><h1 class="font-headline-sm text-headline-sm tracking-widest text-primary drop-shadow-[0_2px_6px_rgba(249,187,95,0.4)] uppercase leading-none">DOBBY</h1><span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider leading-tight mt-0.5">Maison &amp; Quotidien • Chemin de Traverse</span></div></div><div class="flex items-center gap-space-xs"><button id="btn-sound-toggle" aria-label="Activer ou couper le son magique" class="relative w-12 h-12 rounded-xl bg-surface-container-high/90 text-primary border border-primary/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.4)] active:scale-95 transition-all hover:bg-surface-container"><span id="sound-icon" class="material-symbols-outlined text-[22px]">volume_up</span><span id="sound-indicator" class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.9)]"></span></button><div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-[0_0_12px_rgba(249,187,95,0.4)] cursor-pointer active:scale-95 transition-all"><span class="material-symbols-outlined text-on-primary text-[22px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-20 bg-surface min-h-screen" style="padding-top: calc(5rem + env(safe-area-inset-top, 0px));"><div class="flex flex-col w-full pb-36">
+<!-- 1. EN-TÊTE DU DIALOGUE & PRÉSENCE DE DOBBY -->
+<section class="px-gutter-mobile pt-3 flex flex-col items-center"><div class="w-full h-[220px] rounded-2xl overflow-hidden border border-amber-900/40 relative shadow-lg"><img alt="Dobby l'elfe de maison au coin du feu dans le sanctuaire du logis" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRPBTgFlcZRvuwaeAK9H_1W2WV1OEF7xy_KsTXJPJmR360u8ZElCSXz9ydOqvzFakeefjarmyXjbjWbsF_QV-klz4_8EPBpEQhOslpLOmMZ9tAwzuom5VrfVdpqlIraRpDvdhwV3ETg4ppQqPwwDcqlEv3Z7FvQOdmzY-U5tvzbtmCMX1RYu3pfvUBsOy1Q5dsUj1rmkEwISOPYoMjLEl8FEVcr70ZUGns3pt9B1v_"><div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent"></div><div class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-amber-900/30 shadow-md"><span class="relative flex h-2 w-2 items-center justify-center"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span class="text-[10px] text-primary tracking-wider uppercase font-semibold font-label-sm">✦ Foyer &amp; Écoute du Logis ✦</span></div><div class="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-amber-900/30 shadow-md"><span class="material-symbols-outlined text-[13px] text-secondary">lock</span><span class="text-[10px] text-secondary tracking-wider uppercase font-semibold font-label-sm">Conversation Privée</span></div></div><div class="w-full pt-4 flex flex-col items-center text-center"><div class="text-[11px] font-semibold tracking-[0.18em] text-[#d49b42] uppercase text-center mb-1 flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[14px]">auto_awesome</span><span class="">✧ SANCTUAIRE DU LOGIS &amp; DIALOGUE ✧</span><span class="material-symbols-outlined text-[14px]">auto_awesome</span></div><h1 class="font-['Playfair_Display'] text-[24px] font-bold text-[#fcf7ee] text-center mb-2 tracking-wide">Discuter avec Dobby</h1><div class="px-2 mb-3 max-w-sm"><p class="text-sm text-[#e6d7c3] text-center italic leading-relaxed">« Dobby est tout ouïe pour sa noble famille ! Qu'il s'agisse d'une course, d'un repas ou d'un mémo, confiez tout à Dobby. »</p><span class="block text-[11px] text-[#d49b42] font-label-sm tracking-wide mt-1 text-center font-medium">— Note manuscrite de Dobby</span></div><div class="w-full max-w-xs flex justify-center"><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-high/80 border border-primary/20 text-on-surface-variant text-[11px] font-label-sm shadow-sm"><span class="material-symbols-outlined text-[14px] text-primary">lock</span><span class="">Moteur de règles locales · Exécution sur iPhone hors cloud</span></div></div></div></section>
+<!-- 2. SUGGESTIONS DE REQUÊTES RAPIDES -->
+<section class="pb-space-md">
+<div class="px-margin-mobile mb-1.5 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">tips_and_updates</span>
+        Requêtes fréquentes du logis
+      </span>
+<span class="font-label-sm text-label-sm text-outline">Glisser</span>
+</div>
+<!-- Scroll horizontal des suggestions -->
+<div class="flex overflow-x-auto gap-space-sm px-margin-mobile no-scrollbar py-1">
+<button class="flex-shrink-0 min-h-[42px] px-3.5 py-2 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all shadow-md flex items-center gap-2 text-left group" onclick="handleQuickPrompt('Que manque-t-il dans la liste de courses ?')">
+<span class="text-[16px]">🧺</span>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Liste des courses ?</span>
+</button>
+<button class="flex-shrink-0 min-h-[42px] px-3.5 py-2 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all shadow-md flex items-center gap-2 text-left group" onclick="handleQuickPrompt('Quel est le dîner prévu ce soir ?')">
+<span class="text-[16px]">🍲</span>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Dîner de ce soir ?</span>
+</button>
+<button class="flex-shrink-0 min-h-[42px] px-3.5 py-2 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all shadow-md flex items-center gap-2 text-left group" onclick="handleQuickPrompt('Qui doit vider le lave-vaisselle aujourd\'hui ?')">
+<span class="text-[16px]">🧹</span>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Lave-vaisselle ?</span>
+</button>
+<button class="flex-shrink-0 min-h-[42px] px-3.5 py-2 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all shadow-md flex items-center gap-2 text-left group" onclick="handleQuickPrompt('Quel est le prochain rendez-vous de la famille ?')">
+<span class="text-[16px]">📅</span>
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">Prochain rendez-vous ?</span>
+</button>
+</div>
+</section>
+<!-- 3. HISTORIQUE DES MESSAGES & CONVERSATION -->
+<section class="flex flex-col gap-space-lg px-margin-mobile" id="chat-thread">
+<!-- ÉCHANGE 1 : COMMANDE DE RAVITAILLEMENT -->
+<div class="flex flex-col gap-space-sm">
+<!-- Message Utilisateur -->
+<div class="flex justify-end items-end gap-2 pl-8">
+<div class="flex flex-col items-end max-w-[85%]">
+<div class="bg-surface-container-highest text-on-surface rounded-2xl rounded-br-none px-4 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+<p class="font-body-md text-body-md text-[#fdfbf7] leading-relaxed">
+              Peux-tu ajouter 500g de courge butternut à la liste de courses pour le dîner de jeudi ?
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70 mt-1 mr-1">14:22 · Lu</span>
+</div>
+</div>
+<!-- Réponse Dobby -->
+<div class="flex justify-start items-start gap-2 pr-8 mt-1">
+<div class="w-8 h-8 rounded-full flex-shrink-0 bg-surface-container-high border border-primary/30 flex items-center justify-center shadow-md mt-1 text-primary"><span class="material-symbols-outlined text-[18px]">auto_awesome</span></div>
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container text-on-surface rounded-2xl rounded-tl-none px-4 py-3 shadow-[0_4px_16px_rgba(12,7,5,0.7)] flex flex-col gap-2">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">task_alt</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">Ordre de ravitaillement</span>
+</div>
+<p class="font-body-md text-body-md leading-relaxed">
+              Tout de suite ! Dobby a préparé l'ajout de <strong class="text-primary font-semibold">500 g de courge butternut</strong> dans votre liste de ravitaillement du logis.
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70 mt-1 ml-1">14:22 · Correspondance locale réussie</span>
+</div>
+</div>
+<!-- 4. CARTE D'ACTION INTERACTIVE (CONFIRMATION) -->
+<div class="ml-10 max-w-[90%]">
+<div class="bg-surface-container-low rounded-xl p-4 shadow-xl flex flex-col gap-3 relative overflow-hidden" id="action-card-butternut">
+<!-- Ambient gold wash -->
+<div class="absolute -bottom-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="text-[18px]">📜</span>
+<span class="font-headline-sm text-headline-sm text-primary tracking-wide text-[17px]">Demande de Confirmation</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary">En attente</span>
+</div>
+<!-- Détails structurés -->
+<div class="bg-surface-container-lowest/90 rounded-lg p-3 flex flex-col gap-1.5 shadow-inner">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Article :</span>
+<span class="text-on-surface font-semibold">Courge butternut (500 g)</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Rayon :</span>
+<span class="text-on-surface">Légumes du Potager</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Repas rattaché :</span>
+<span class="text-secondary font-medium">Velouté du jeudi soir</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-outline italic">
+            🛡️ En attente de votre accord explicite (aucune modification sans validation préalable).
+          </p>
+<!-- Boutons d'action tactiles iOS -->
+<div class="grid grid-cols-1 gap-2 pt-1">
+<button class="min-h-[46px] w-full rounded-lg bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-lg hover:brightness-110 active:scale-[0.98] transition-all" onclick="confirmAction('action-card-butternut', 'Courge butternut ajoutée au garde-manger !')">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="">Valider l'ajout à la liste</span>
+</button>
+<button class="min-h-[44px] w-full rounded-lg bg-surface-container-high text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-1 hover:text-on-surface active:scale-[0.98] transition-all" onclick="cancelAction('action-card-butternut')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span class="">Annuler la commande</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ÉCHANGE 2 : CAS D'ERREUR / COMMANDE EXTERNE REFUSÉE -->
+<div class="flex flex-col gap-space-sm pt-2">
+<!-- Message Utilisateur -->
+<div class="flex justify-end items-end gap-2 pl-8">
+<div class="flex flex-col items-end max-w-[85%]">
+<div class="bg-surface-container-highest text-on-surface rounded-2xl rounded-br-none px-4 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+<p class="font-body-md text-body-md text-[#fdfbf7] leading-relaxed">
+              Réserve un billet de train pour Paris demain matin.
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70 mt-1 mr-1">14:26 · Lu</span>
+</div>
+</div>
+<!-- Réponse Dobby (Avertissement ambré / Limite de domaine) -->
+<div class="flex justify-start items-start gap-2 pr-8 mt-1">
+<div class="w-8 h-8 rounded-full flex-shrink-0 bg-surface-container-high border border-primary/30 flex items-center justify-center shadow-md mt-1 text-primary"><span class="material-symbols-outlined text-[18px]">auto_awesome</span></div>
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container text-on-surface rounded-2xl rounded-tl-none p-4 shadow-[0_4px_16px_rgba(12,7,5,0.7)] flex flex-col gap-2">
+<div class="flex items-center gap-2 text-tertiary">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">Périmètre du Logis</span>
+</div>
+<p class="font-body-md text-body-md leading-relaxed text-on-surface">
+<span class="text-tertiary font-semibold">Commande non reconnue dans le sanctuaire du logis.</span> Dobby veille fidèlement sur la maison, les repas, les missions et les contacts de la famille, mais ne peut effectuer de réservations ou d'achats sur des services extérieurs.
+            </p>
+<div class="mt-1 p-2.5 rounded bg-surface-container-lowest text-label-sm font-label-sm text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">shield_person</span>
+<span class="">Dobby protège la tranquillité de vos finances et de vos données.</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/70 mt-1 ml-1">14:26 · Règle de protection active</span>
+</div>
+</div>
+</div>
+<!-- NOUVELLES ACTIONS DYNAMIQUES ICI -->
+<div class="flex flex-col gap-space-md" id="dynamic-messages"></div>
+</section>
+<!-- 6. ZONE DE SAISIE FIXÉE EN BAS (INPUT BAR TACTILE iOS) -->
+<footer class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-8px_24px_rgba(12,7,5,0.85)] pb-safe pt-2">
+<!-- Barre de transport des suggestions contextuelles discrètes -->
+<div class="max-w-md mx-auto px-margin-mobile flex flex-col gap-2">
+<!-- Input tactile groupé -->
+<div class="flex items-center gap-2 bg-surface-container-high rounded-full px-2 py-1.5 shadow-inner">
+<!-- Bouton Dictée vocale clavier iPhone -->
+<button aria-label="Dictée clavier iPhone" class="min-w-[40px] min-h-[40px] rounded-full bg-surface-container text-on-surface-variant hover:text-primary active:scale-90 transition-all flex items-center justify-center flex-shrink-0" id="dictation-btn" onclick="toggleDictation()" title="Dictée clavier iPhone">
+<span class="material-symbols-outlined text-[20px]" id="mic-icon">mic</span>
+</button>
+<!-- Champ de texte réactif -->
+<input class="flex-1 bg-transparent border-0 outline-none font-body-md text-body-md text-on-surface placeholder:text-outline caret-primary min-w-0 px-1" id="user-input" onkeydown="if(event.key==='Enter') sendMessage()" placeholder="Écrivez votre message à Dobby..." type="text">
+<!-- Bouton d'envoi magique -->
+<button aria-label="Envoyer à Dobby" class="min-w-[42px] min-h-[42px] rounded-full bg-primary text-on-primary hover:bg-primary-fixed active:scale-95 transition-transform flex items-center justify-center flex-shrink-0 shadow-md" onclick="sendMessage()">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+<!-- Sous-texte de rassurance confidentialité locale -->
+<div class="flex items-center justify-center gap-1.5 pb-2 text-center">
+<span class="material-symbols-outlined text-[13px] text-outline">verified_user</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant/75 text-[11px]">
+          Clavier &amp; dictée vocale gérés directement par votre iPhone. Échanges strictement privés.
+        </span>
+</div>
+</div>
+</footer>
+</div>
+<!-- LOGIQUE INTERACTIVE LOCALE DU DIALOGUE -->
+<script>
+  function handleQuickPrompt(text) {
+    const input = document.getElementById('user-input');
+    if (input) {
+      input.value = text;
+      sendMessage();
+    }
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('user-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const thread = document.getElementById('dynamic-messages');
+    const now = new Date();
+    const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+    // Ajout message utilisateur
+    const userDiv = document.createElement('div');
+    userDiv.className = 'flex justify-end items-end gap-2 pl-8 animate-fadeIn';
+    userDiv.innerHTML = `
+      <div class="flex flex-col items-end max-w-[85%]">
+        <div class="bg-surface-container-highest text-on-surface rounded-2xl rounded-br-none px-4 py-3 shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+          <p class="font-body-md text-body-md text-[#fdfbf7] leading-relaxed">${escapeHtml(msg)}</p>
+        </div>
+        <span class="font-label-sm text-label-sm text-on-surface-variant/70 mt-1 mr-1">${timeStr} · Envoyé</span>
+      </div>
+    `;
+    thread.appendChild(userDiv);
+    input.value = '';
+
+    // Défilement vers le bas
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+    // Réponse de Dobby simulée selon règles locales
+    setTimeout(() => {
+      respondLocally(msg, timeStr);
+    }, 450);
+  }
+
+  function respondLocally(query, timeStr) {
+    const thread = document.getElementById('dynamic-messages');
+    const q = query.toLowerCase();
+    let answerHtml = '';
+
+    if (q.includes('course') || q.includes('manque')) {
+      answerHtml = `
+        <p class="font-body-md text-body-md leading-relaxed">
+          Dobby a vérifié les réserves de la cuisine ! Il manque <strong class="text-primary">du lait d'avoine</strong> et <strong class="text-primary">des noisettes concassées</strong> pour le petit-déjeuner de vendredi. Souhaitez-vous que Dobby les inscrive sur l'ardoise ?
+        </p>
+      `;
+    } else if (q.includes('dîner') || q.includes('repas') || q.includes('soir')) {
+      answerHtml = `
+        <p class="font-body-md text-body-md leading-relaxed">
+          Pour ce soir, le carnet de recettes indique : <strong class="text-secondary font-semibold">Gratin de poireaux aux noisettes et polenta dorée</strong>. Tout est déjà présent dans le garde-manger !
+        </p>
+      `;
+    } else if (q.includes('lave-vaisselle') || q.includes('vaisselle')) {
+      answerHtml = `
+        <p class="font-body-md text-body-md leading-relaxed">
+          D'après le tableau de corvées du sanctuaire, c'est au tour de <strong class="text-primary font-semibold">Lucas</strong> de vider le lave-vaisselle aujourd'hui. Dobby peut lui murmurer un petit rappel !
+        </p>
+      `;
+    } else if (q.includes('train') || q.includes('achat') || q.includes('billet') || q.includes('commander')) {
+      answerHtml = `
+        <div class="flex items-center gap-1.5 text-tertiary">
+          <span class="material-symbols-outlined text-[16px]">error</span>
+          <span class="font-label-sm text-label-sm font-semibold tracking-wide uppercase">Règle de sanctuaire</span>
+        </div>
+        <p class="font-body-md text-body-md leading-relaxed">
+          Dobby ne s'aventure pas sur les réseaux marchands du monde extérieur ! Vos données et pièces d'or restent en sécurité ici. Dobby peut toutefois consigner un pense-bête pour vous.
+        </p>
+      `;
+    } else {
+      answerHtml = `
+        <p class="font-body-md text-body-md leading-relaxed">
+          Bien reçu ! Dobby consigne cette requête dans le grand livre du logis. Dobby veille toujours au grain pour la maison.
+        </p>
+      `;
+    }
+
+    const dobbyDiv = document.createElement('div');
+    dobbyDiv.className = 'flex justify-start items-start gap-2 pr-8 mt-1';
+    dobbyDiv.innerHTML = `
+      <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-surface-container-lowest shadow-md mt-1">
+        <img src="https://lh3.googleusercontent.com/aida/ALJJyrAxG8PB766PkpDRV9765tk10_SojeKsTx0T3y6yIvslVwi79gDoRAIqtjFbswB9R22nf4P_OqEGQlhMSI1_CwxOZdcxxlKxn_FBunQsnngsFciTSUCg4hnABUo69k_a4JAozLBvxqoIsjJCLTx8jpukRSAn7gbp6ekMqkwBYko2QFZxveMQjdOtfouSJZEgNV3jxNXUcr9yiJbIvJTuHahBLODR_SQnDFfojoFkct0D" alt="Dobby avatar" class="w-full h-full object-cover" />
+      </div>
+      <div class="flex flex-col items-start max-w-[85%]">
+        <div class="bg-surface-container text-on-surface rounded-2xl rounded-tl-none px-4 py-3 shadow-[0_4px_16px_rgba(12,7,5,0.7)] flex flex-col gap-2">
+          ${answerHtml}
+        </div>
+        <span class="font-label-sm text-label-sm text-on-surface-variant/70 mt-1 ml-1">${timeStr} · Moteur local</span>
+      </div>
+    `;
+    thread.appendChild(dobbyDiv);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
+  function confirmAction(cardId, successMsg) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    card.innerHTML = `
+      <div class="flex items-center gap-3 py-2 text-secondary">
+        <span class="material-symbols-outlined text-[24px]">task_alt</span>
+        <div class="flex flex-col">
+          <span class="font-label-lg text-label-lg font-semibold text-secondary">Action Confirmée &amp; Enregistrée</span>
+          <span class="font-body-sm text-body-sm text-on-surface-variant">${successMsg}</span>
+        </div>
+      </div>
+    `;
+    card.classList.remove('bg-surface-container-low');
+    card.classList.add('bg-secondary-container/30');
+  }
+
+  function cancelAction(cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    card.innerHTML = `
+      <div class="flex items-center gap-3 py-2 text-outline">
+        <span class="material-symbols-outlined text-[22px]">cancel</span>
+        <div class="flex flex-col">
+          <span class="font-label-md text-label-md font-medium text-on-surface-variant">Action Annulée</span>
+          <span class="font-label-sm text-label-sm text-outline">Aucune modification apportée à votre liste.</span>
+        </div>
+      </div>
+    `;
+    card.classList.add('opacity-75');
+  }
+
+  function toggleDictation() {
+    const micIcon = document.getElementById('mic-icon');
+    const input = document.getElementById('user-input');
+    if (!micIcon || !input) return;
+
+    if (micIcon.classList.contains('text-primary')) {
+      micIcon.classList.remove('text-primary', 'animate-pulse');
+      micIcon.innerText = 'mic';
+    } else {
+      micIcon.classList.add('text-primary', 'animate-pulse');
+      micIcon.innerText = 'mic_double';
+      input.placeholder = 'Dobby écoute via le micro de votre iPhone...';
+      setTimeout(() => {
+        micIcon.classList.remove('text-primary', 'animate-pulse');
+        micIcon.innerText = 'mic';
+        input.placeholder = 'Écrivez votre message à Dobby...';
+      }, 3500);
+    }
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+</script></main>
+
+</body></html>

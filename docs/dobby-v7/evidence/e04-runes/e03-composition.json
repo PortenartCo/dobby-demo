@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "e03Reference": "6a86ead6341eb2f17e7552852621c21f496ad97c",
+  "runesReference": "273250e",
+  "worktree": "detached QA only; no branch integration or push",
+  "sourceOverlay": [
+    "essai-stitch-v5-famille/family-missions-core.mjs",
+    "essai-stitch-v5-famille/family-missions.js",
+    "essai-stitch-v5-famille/family-modules.js",
+    "essai-stitch-v5-famille/family-runes-core.mjs",
+    "essai-stitch-v5-famille/family-v2.js",
+    "essai-stitch-v5-famille/stitch-v5.js",
+    "essai-stitch-v5-famille/tests/helpers/modules-harness.mjs",
+    "essai-stitch-v5-famille/tests/integration.test.mjs",
+    "essai-stitch-v5-famille/tests/modules-flow.test.mjs",
+    "essai-stitch-v5-famille/tests/resumed-household.test.mjs",
+    "essai-stitch-v5-famille/tests/runes-core.test.mjs",
+    "essai-stitch-v5-famille/tests/runes-sync.test.mjs",
+    "essai-stitch-v7/family-engine.js",
+    "essai-stitch-v7/family.js",
+    "essai-stitch-v7/member-avatar.css",
+    "essai-stitch-v7/member-avatar.js",
+    "essai-stitch-v7/register-route-data.js",
+    "essai-stitch-v7/register-routes.json",
+    "essai-stitch-v7/register.css",
+    "essai-stitch-v7/route-manifest.json",
+    "essai-stitch-v7/tests/e04-runes-capture.cjs",
+    "essai-stitch-v7/tests/e04-runes.cjs",
+    "essai-stitch-v7/tests/e04.cjs",
+    "essai-stitch-v7/tests/runes-native.cjs",
+    "essai-stitch-v7/tools-register.js"
+  ],
+  "generatorAdaptation": "E03 build-source.cjs retained; add member-avatar.css/js after family-engine.js; regenerate E03 roots",
+  "testAdaptation": "e03.cjs only: assignee select now native radio checked value; selectOption(bob) becomes check() on the same bob value; no assertion removed",
+  "tests": [
+    "e03.cjs 320/390/1440",
+    "e03-counts.cjs"
+  ],
+  "futureIntegrationConflicts": [
+    "build-source.cjs",
+    "missions.html (generated)",
+    "tests/ci.cjs",
+    "tests/register-tools.cjs",
+    "tests/register-missions-sync.cjs"
+  ],
+  "productionOrE03BranchModified": false
+}

@@ -1,0 +1,92 @@
+{
+  "description": "Exact E07.4 incomplete-culinary/calculation amendments, reversed before historical E07.3 guard.",
+  "patches": [
+    {
+      "before": "if(!name||name.length>160)bad.push('nom manquant ou trop long');",
+      "after": "if((payload.version===1&&!name)||name.length>160||(x?.name!==null&&x?.name!==undefined&&typeof x.name!=='string'))bad.push('nom manquant ou trop long');"
+    },
+    {
+      "before": "const unknownMinutes=payload.version===2&&(x?.minutes===null||x?.minutes===undefined||x?.minutes==='');let servings=Number(x?.servings),minutes=unknownMinutes?null:Number(x?.minutes);",
+      "after": "const unknownMinutes=payload.version===2&&(x?.minutes===null||x?.minutes===undefined||x?.minutes===''),unknownServings=payload.version===2&&(x?.servings===null||x?.servings===undefined||x?.servings==='');let servings=unknownServings?null:Number(x?.servings),minutes=unknownMinutes?null:Number(x?.minutes);"
+    },
+    {
+      "before": "if(!Number.isInteger(servings)||servings<1||servings>30)bad.push('portions invalides (1 à 30)');",
+      "after": "if(!unknownServings&&(!['string','number'].includes(typeof x?.servings)||!Number.isInteger(servings)||servings<1||servings>30))bad.push('portions invalides (1 à 30)');"
+    },
+    {
+      "before": "if(!unknownMinutes&&(!Number.isFinite(minutes)||minutes<=0||minutes>1440))bad.push('durée invalide');",
+      "after": "if(!unknownMinutes&&(!['string','number'].includes(typeof x?.minutes)||!Number.isFinite(minutes)||minutes<0||minutes>1440||(payload.version===1&&minutes===0)))bad.push('durée invalide');"
+    },
+    {
+      "before": "if(!Array.isArray(x?.ingredients)||!x.ingredients.length||x.ingredients.length>100)bad.push('ingrédients absents ou trop nombreux');",
+      "after": "if(payload.version===2&&(x?.ingredients===null||x?.ingredients===undefined)){}else if(!Array.isArray(x?.ingredients)||(payload.version===1&&!x.ingredients.length)||x.ingredients.length>100)bad.push('ingrédients absents ou trop nombreux');"
+    },
+    {
+      "before": "if(!n||n.length>160||(!unknown&&(!Number.isFinite(q)||q<=0||q>100000||!u))||u.length>30)bad.push('ingrédient '+(j+1)+' invalide');",
+      "after": "if(!a||typeof a!=='object'||Array.isArray(a)||(a.name!==null&&a.name!==undefined&&typeof a.name!=='string')||(a.unit!==null&&a.unit!==undefined&&typeof a.unit!=='string')||(payload.version===1&&!n)||n.length>160||(!unknown&&(!['number','string'].includes(typeof a.quantity)||!Number.isFinite(q)||q<=0||q>100000||(payload.version===1&&!u)))||u.length>30)bad.push('ingrédient '+(j+1)+' invalide');"
+    },
+    {
+      "before": "if(!Array.isArray(x?.steps)||!x.steps.length||x.steps.length>80)bad.push('étapes absentes ou trop nombreuses');",
+      "after": "if(payload.version===2&&(x?.steps===null||x?.steps===undefined)){}else if(!Array.isArray(x?.steps)||(payload.version===1&&!x.steps.length)||x.steps.length>80)bad.push('étapes absentes ou trop nombreuses');"
+    },
+    {
+      "before": "if(!t||t.length>2000)bad.push('étape '+(j+1)+' invalide');",
+      "after": "if(typeof v!=='string'||(payload.version===1&&!t)||t.length>2000)bad.push('étape '+(j+1)+' invalide');"
+    },
+    {
+      "before": "if(names.has(nkey))bad.push('doublon dans le fichier');names.add(nkey);",
+      "after": "if(name&&names.has(nkey))bad.push('doublon dans le fichier');if(name)names.add(nkey);"
+    },
+    {
+      "before": "if(device==='tm5'&&!steps.some(t=>/vitesse|varoma|thermomix|bol|°c|sens inverse/i.test(t)))bad.push",
+      "after": "if(payload.version===1&&device==='tm5'&&!steps.some(t=>/vitesse|varoma|thermomix|bol|°c|sens inverse/i.test(t)))bad.push"
+    },
+    {
+      "before": "function amount(n,people,base){return n===null||n===undefined?'':fmt(n*people/base)}",
+      "after": "function amount(n,people,base){return n===null||n===undefined||!Number.isFinite(Number(base))||Number(base)<=0||!Number.isFinite(Number(people))?'':fmt(n*people/base)}"
+    },
+    {
+      "before": "unknown=q===null||q===undefined;",
+      "after": "unknown=q===null||q===undefined||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0;"
+    },
+    {
+      "before": "||[...custom,...BASE].find(x=>normalizedName(x.name)===normalizedName(r.name)&&Boolean(x.thermomix)===Boolean(r.thermomix));if(existing)",
+      "after": "||(normalizedName(r.name)?[...custom,...BASE].find(x=>normalizedName(x.name)===normalizedName(r.name)&&Boolean(x.thermomix)===Boolean(r.thermomix)):null);if(existing)"
+    },
+    {
+      "before": "function getR(id){return [...BASE,...custom].find(x=>x.id===id)}",
+      "after": "function allRecipes(){const overrides=new Map();for(const r of custom)if(!overrides.has(r.id))overrides.set(r.id,r);const recipes=new Map(BASE.map(r=>[r.id,overrides.get(r.id)||r]));for(const [id,r]of overrides)if(!recipes.has(id))recipes.set(id,r);return [...recipes.values()]}function getR(id){return allRecipes().find(x=>x.id===id)}",
+      "occurrences": 1
+    },
+    {
+      "before": "${[...BASE,...custom].filter(r=>",
+      "after": "${allRecipes().filter(r=>!r.removedAt).filter(r=>",
+      "occurrences": 1
+    },
+    {
+      "before": "${[...custom,...BASE].map(r=>",
+      "after": "${allRecipes().filter(r=>!r.removedAt).map(r=>",
+      "occurrences": 2
+    },
+    {
+      "before": "[...custom,...BASE].forEach(r=>add('Recette'",
+      "after": "allRecipes().filter(r=>!r.removedAt).forEach(r=>add('Recette'",
+      "occurrences": 1
+    },
+    {
+      "before": "if(BASE.includes(recipe)){st.baseRecipeFavorites",
+      "after": "if(BASE.some(x=>x.id===recipe.id)){st.baseRecipeFavorites",
+      "occurrences": 1
+    },
+    {
+      "before": "function portionFields(){",
+      "after": "function planSelectedMeal(id,config){const r=getR(id);if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');const prior=meal(st.day,st.slot);st.planned[mealKey(st.day,st.slot)]={id,...config,status:'prévu',...(prior?.id===id&&prior._e072ImportRef?{_e072ImportRef:prior._e072ImportRef}:{})};go('plan')}function portionFields(){",
+      "occurrences": 1
+    },
+    {
+      "before": "case 'select':{let config=pickPortions();if(!config)break;st.planned[mealKey(st.day,st.slot)]={id:t.dataset.id,...config,status:'prévu'};go('plan');break}",
+      "after": "case 'select':{let config=pickPortions();if(!config)break;planSelectedMeal(t.dataset.id,config);break}",
+      "occurrences": 1
+    }
+  ]
+}

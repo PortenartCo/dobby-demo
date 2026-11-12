@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Restore the original second numbered Stitch panel, rather than generic attribution fields
+
+0 !== 1
+
+    at /workspace/dobby-e04-mission-form/essai-stitch-v7/tests/e04.cjs:6:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

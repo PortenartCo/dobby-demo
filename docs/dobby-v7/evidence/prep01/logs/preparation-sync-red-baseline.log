@@ -1,0 +1,271 @@
+Immutable E09 source baseline: 5b764ef367553e9945fb72a6b563b55adc41e040
+Command in temporary isolated source copy: node --test essai-stitch-v5-famille/tests/preparation-sync.test.cjs
+✖ preparation templates and event snapshots propagate with existing family fields and unknown metadata intact (20.989501ms)
+✖ offline preparation changes survive reload and reconnect through the native module metadata (7.750956ms)
+✖ a newly initialized client restores preparation arrays omitted by an older fixture from its acknowledged native metadata (5.476701ms)
+✖ native metadata hydration preserves an explicit local preparation deletion (8.594832ms)
+✖ activate, join and activate-all retain distinct offline preparations alongside the remote registry (4.991109ms)
+✖ reactivation merges unchanged remote preparations and local additions by stable ID (2.52875ms)
+✖ divergent preparation reactivation retains local data behind the explicit native conflict chooser (2.519185ms)
+✖ preparation writes preserve unknown family extensions and tolerate an initially unversioned older payload (5.460958ms)
+✖ choosing an older family copy does not falsely acknowledge a preparation protocol absent on the server (3.51559ms)
+✖ invalid local preparation data cannot be published by initial module activation (1.616241ms)
+✖ unknown preparation protocol blocks the complete family update without altering local records (5.002515ms)
+✖ malformed preparation registries are rejected before any family data is replaced (3.536842ms)
+✖ acknowledged preparations removed by an older peer remain local until explicit recovery (4.213204ms)
+✖ an edit while preparation PATCH is in flight stays local and pending (3.055745ms)
+✖ a concurrent rival preparation update loses CAS without acknowledging or overwriting local changes (2.878508ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 0
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 188.033699
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:9:1
+✖ preparation templates and event snapshots propagate with existing family fields and unknown metadata intact (20.989501ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  undefined !== 1
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:12:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:17:1
+✖ offline preparation changes survive reload and reconnect through the native module metadata (7.750956ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /locales/. Input:
+
+  'Partagé · à jour'
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:18:238)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Partagé · à jour',
+    expected: /locales/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:22:1
+✖ a newly initialized client restores preparation arrays omitted by an older fixture from its acknowledged native metadata (5.476701ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + undefined
+  - 'Already shared'
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:24:135)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'Already shared',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:27:1
+✖ native metadata hydration preserves an explicit local preparation deletion (8.594832ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+
+  undefined !== []
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:29:197)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:32:1
+✖ activate, join and activate-all retain distinct offline preparations alongside the remote registry (4.991109ms)
+  AssertionError [ERR_ASSERTION]: activate
+  + actual - expected
+
+  + Set(0) {}
+  - Set(2) {
+  -   'template-1',
+  -   'template-local'
+  - }
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:36:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: Set(0) {},
+    expected: Set(2) { 'template-1', 'template-local' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:40:1
+✖ reactivation merges unchanged remote preparations and local additions by stable ID (2.52875ms)
+  TypeError: Cannot read properties of undefined (reading 'push')
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:42:163)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:46:1
+✖ divergent preparation reactivation retains local data behind the explicit native conflict chooser (2.519185ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:48:115)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:51:1
+✖ preparation writes preserve unknown family extensions and tolerate an initially unversioned older payload (5.460958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  undefined !== 1
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:53:193)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:56:1
+✖ choosing an older family copy does not falsely acknowledge a preparation protocol absent on the server (3.51559ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Conflit/. Input:
+
+  'Partagé · à jour'
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:58:225)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Partagé · à jour',
+    expected: /Conflit/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:61:1
+✖ invalid local preparation data cannot be published by initial module activation (1.616241ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  true !== false
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:62:246)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:65:1
+✖ unknown preparation protocol blocks the complete family update without altering local records (5.002515ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     id: 'do-not-apply'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:66:258)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { id: 'do-not-apply' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:69:1
+✖ malformed preparation registries are rejected before any family data is replaced (3.536842ms)
+  AssertionError [ERR_ASSERTION]: {"familyPreparationTemplates":"broken"}
+  + actual - expected
+
+  + [
+  +   {
+  +     id: 'do-not-apply'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:83:300)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { id: 'do-not-apply' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:86:1
+✖ acknowledged preparations removed by an older peer remain local until explicit recovery (4.213204ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Conflit/. Input:
+
+  'Partagé · à jour'
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:88:57)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Partagé · à jour',
+    expected: /Conflit/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:92:1
+✖ an edit while preparation PATCH is in flight stays local and pending (3.055745ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  undefined !== 1
+
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:93:40)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:97:1
+✖ a concurrent rival preparation update loses CAS without acknowledging or overwriting local changes (2.878508ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (/tmp/dobby-prep-sync-red-z8kdxyum/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:98:453)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

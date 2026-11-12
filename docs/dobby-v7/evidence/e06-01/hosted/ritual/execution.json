@@ -1,0 +1,19 @@
+{
+  "suite": "e06-ritual.cjs",
+  "entryURL": "https://portenartco.github.io/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7/famille.html#onboarding-ritual",
+  "origin": "https://portenartco.github.io",
+  "reviewPath": "/dobby-demo/essai-dobby-integrated-review/essai-stitch-v7",
+  "expectedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "observedSourceSha": "b1bfd43871be81fea67eb70b9ea3960c3ce13337",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "startedUTC": "2026-11-11T08:30:59.765554+00:00",
+  "command": "node essai-stitch-v7/tests/e06-ritual.cjs",
+  "finishedUTC": "2026-11-11T08:31:52.491683+00:00",
+  "exitCode": 0,
+  "realBackend": false,
+  "evidenceDirectory": "docs/dobby-v7/evidence/e06-01/hosted/ritual"
+}

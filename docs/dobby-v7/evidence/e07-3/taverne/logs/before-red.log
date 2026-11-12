@@ -1,0 +1,32 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Les Repas du Jour/. Input:
+
+'dinner_dining\n' +
+  'Repas prévu ce soir\n' +
+  'MER. 11 NOV.\n' +
+  'RECETTE DU FOYER\n' +
+  'TEST — Dîner au nom très long à lire sans perdre les actions du repas\n' +
+  'timer\n' +
+  '20 min\n' +
+  'group\n' +
+  '1 convive · 1 portions\n' +
+  'menu_book\n' +
+  'Voir la recette'
+
+    at /workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-taverne.cjs:10:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'dinner_dining\n' +
+    'Repas prévu ce soir\n' +
+    'MER. 11 NOV.\n' +
+    'RECETTE DU FOYER\n' +
+    'TEST — Dîner au nom très long à lire sans perdre les actions du repas\n' +
+    'timer\n' +
+    '20 min\n' +
+    'group\n' +
+    '1 convive · 1 portions\n' +
+    'menu_book\n' +
+    '...',
+  expected: /Les Repas du Jour/,
+  operator: 'match',
+  diff: 'simple'
+}

@@ -1,0 +1,47 @@
+✔ two accounts activate all six modules and receive a shared update without exposing health or attachments (15.4125ms)
+✔ simultaneous module edits create a conflict, not a lost update (4.0888ms)
+✔ missing modules backend does not activate sharing (1.1176ms)
+✔ customized or actual meal plans are never offered for automated demo deletion (0.983ms)
+✔ a fresh household activates all six modules with one consent and excludes demo meals (3.0827ms)
+✔ refusing group activation does not publish data or remove example meals (1.3112ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: server (3.5268ms)
+✔ E06 native family conflict preserves the chosen identity and algorithm versions: local (4.0258ms)
+✔ E06 interversion LIMIT: an old native member writer can erase result provenance and structured names (1.4235ms)
+✔ regroupe les apports compatibles et conserve leurs repas, réimport idempotent (15.3999ms)
+✔ article manuel couvre le besoin sans doubler la quantité (1.9621ms)
+✔ maison partiel/total/annulation reste distinct des achats et de la clôture (2.3358ms)
+✔ noms ambigus et unités incompatibles restent distincts (0.9867ms)
+✔ un aperçu devenu périmé ne modifie pas les articles (1.3861ms)
+✔ disponibilité conserve son unité quand un apport compatible est ajouté (1.2634ms)
+✔ plusieurs articles manuels compatibles sont tous conservés sans surajout (1.5431ms)
+✔ historique E07.2 en kg conserve son reçu et ne se réimporte pas (1.7448ms)
+✔ modifier une unité compatible convertit aussi la disponibilité (1.1992ms)
+✔ supprimer une préparation libère sa couverture manuelle (1.6575ms)
+✔ supprimer un article familial retire son annotation maison (1.3006ms)
+✔ réimport familial avec période restreinte ne réalloue pas la couverture (2.1748ms)
+✔ un formulaire partagé périmé ne remplace pas une modification reçue (0.9474ms)
+✔ une confirmation de suppression périmée ne retire pas la nouvelle version (0.7922ms)
+✔ une clôture périmée n’archive pas une disponibilité reçue après confirmation (0.8921ms)
+✔ new stable memo identity persists on edit, delete never touches legacy records (1.8941ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (1.2773ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (1.6662ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (1.18ms)
+✔ required and bounded fields and missing legacy import never create records (1.8063ms)
+✔ A/B fixture transports templates and independent checks, keeps unknown fields and CAS conflicts (3.931ms)
+✔ older client dropping preparation protocol or event copy cannot reset the local registry (1.6578ms)
+✔ new fields survive local pending save, module restart and server roundtrip with unknown extensions (2.8343ms)
+✔ model create/edit/copy/delete preserves IDs, unknown fields and historical lists (0.9098ms)
+✔ association snapshots are independent, keep unknown item fields, same selection keeps checks (0.8634ms)
+✔ stale item and model edits refuse overwrites, storage errors roll back (0.7595ms)
+✔ protocol validates unknown versions and malformed quantities before accepting data (0.7193ms)
+✔ native local Courses replay after edit and archive has at most one effect; no check side effect (1.3821ms)
+✔ shared Courses uses deterministic native import without rewriting existing peer values (1.7529ms)
+✔ failed native Courses acknowledgement rejects without a success receipt (0.7435ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 121.9055

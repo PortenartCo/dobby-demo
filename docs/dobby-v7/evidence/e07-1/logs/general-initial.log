@@ -1,0 +1,43 @@
+E071_CONTEXT_PASS date/slot reload/back/forward, planned records unchanged
+E071_PASS 320 header/CTA/photos/slots/prepared/native navigation/real scroll
+E071_PASS 390 header/CTA/photos/slots/prepared/native navigation/real scroll
+E071_PASS 1440 header/CTA/photos/slots/prepared/native navigation/real scroll
+E07_PREPARED_PASS native status and reload
+E07_NATIVE_CATEGORY_PASS native classification/filter reused
+E07_UNKNOWN_QUANTITY_PASS origin is not a quantity
+E07_NATIVE_ACTIONS_PASS
+E07_PASS 320 supplied sources/local illustrations/planning/native prep+final/reload/long names/common bars
+E07_PASS 390 supplied sources/local illustrations/planning/native prep+final/reload/long names/common bars
+E07_PASS 1440 supplied sources/local illustrations/planning/native prep+final/reload/long names/common bars
+E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity
+E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+RUNES_NATIVE_PASS actual forms/10-25-50/idempotence/reassignment/deletion/atomic storage failure/pending reload
+E04_RUNES_PASS 320 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+E04_RUNES_PASS 390 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+E04_RUNES_PASS 1440 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+E02_UI_ACTIONS_PASS 320
+E02_UI_ACTIONS_PASS 390
+E02_UI_ACTIONS_PASS 1440
+E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+E02_VOICE_HISTORY_PASS
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'MAISON & QUOTIDIEN · TAVERNE'
+- 'MAISON & QUOTIDIEN · LA TAVERNE GOURMANDE'
+                        ^
+
+    at /workspace/dobby-e07-cuisine-courses/essai-stitch-v7/tests/e01.cjs:50:1404 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'MAISON & QUOTIDIEN · TAVERNE',
+  expected: 'MAISON & QUOTIDIEN · LA TAVERNE GOURMANDE',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

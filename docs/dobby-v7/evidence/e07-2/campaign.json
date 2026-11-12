@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "sourceCampaignSha": "4fda360cc5fabfae14840074496ea47fafade4c3",
+  "command": "CHROMIUM_PATH=/usr/bin/chromium DOBBY_TEST_ORIGIN=http://127.0.0.1:8877 node essai-stitch-v7/tests/ci.cjs",
+  "initialLog": "logs/final-campaign.txt",
+  "infrastructureFailure": "e05-edge.cjs hardcodes 8765; server added, no product failure",
+  "resumedAt": "e05-edge.cjs",
+  "resumeExitCode": 0,
+  "resumeLog": "logs/final-campaign-resumed.txt",
+  "causalFollowups": [
+    "logs/review-model-green.txt",
+    "logs/review-selection-green.txt",
+    "logs/review-family-green.txt",
+    "logs/boot-green.txt",
+    "logs/preview-header-green.txt",
+    "logs/bundle-scope-green.txt",
+    "logs/remove-model-green.txt",
+    "logs/remove-ui-green.txt",
+    "logs/remove-family-green.txt",
+    "logs/preview-final-local.txt"
+  ],
+  "publishedSourceSha": "e15b7d265ba3801c8627cbc2c791eeff2414c7ed"
+}

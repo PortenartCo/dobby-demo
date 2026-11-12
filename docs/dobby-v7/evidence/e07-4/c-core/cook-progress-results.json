@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "width": 390,
+  "classicTM5Separate": true,
+  "otherRecipeSeparate": true,
+  "reload": true,
+  "missingMethodRejected": true,
+  "invalidStepRejected": true,
+  "quotaRollback": true,
+  "recipesPlanningHistoryUntouched": true
+}

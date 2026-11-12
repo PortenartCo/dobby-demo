@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Title and controls must leave the illustration
+
+1 !== 0
+
+    at /workspace/dobby-e07-cuisine-courses/essai-stitch-v7/tests/e07-1.cjs:8:48 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

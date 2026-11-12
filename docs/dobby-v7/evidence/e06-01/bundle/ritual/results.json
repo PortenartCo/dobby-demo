@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "origin": "http://127.0.0.1:8790",
+  "base": "/essai-dobby-integrated-review/essai-stitch-v7",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "results": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "skipMs": 58,
+      "traversalMs": 2696,
+      "image": {
+        "loaded": true,
+        "width": 318,
+        "height": 512,
+        "visible": true,
+        "src": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png"
+      },
+      "preference": {
+        "seen": false,
+        "suppressed": true,
+        "version": 1
+      },
+      "browserAudio": {
+        "audioContexts": 2,
+        "vibrations": 2
+      },
+      "audioSupported": true,
+      "blockedLegacyDecorationRequests": 0
+    },
+    {
+      "width": 390,
+      "status": "PASS",
+      "skipMs": 68,
+      "traversalMs": 2681,
+      "image": {
+        "loaded": true,
+        "width": 388,
+        "height": 526.40625,
+        "visible": true,
+        "src": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png"
+      },
+      "preference": {
+        "seen": false,
+        "suppressed": true,
+        "version": 1
+      },
+      "browserAudio": {
+        "audioContexts": 2,
+        "vibrations": 2
+      },
+      "audioSupported": true,
+      "blockedLegacyDecorationRequests": 0
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "skipMs": 65,
+      "traversalMs": 2604,
+      "image": {
+        "loaded": true,
+        "width": 410,
+        "height": 502.40625,
+        "visible": true,
+        "src": "http://127.0.0.1:8790/essai-dobby-integrated-review/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png"
+      },
+      "preference": {
+        "seen": false,
+        "suppressed": true,
+        "version": 1
+      },
+      "browserAudio": {
+        "audioContexts": 2,
+        "vibrations": 2
+      },
+      "audioSupported": true,
+      "blockedLegacyDecorationRequests": 0
+    }
+  ],
+  "realAccounts": false,
+  "businessMocks": false
+}

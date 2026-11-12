@@ -1,0 +1,38 @@
+{
+  "scope": "UI contracts; permission allow fixture never writes; native authorization covered separately",
+  "results": [
+    {
+      "width": 320,
+      "integration": true,
+      "list": true,
+      "forms": true,
+      "legacy": true,
+      "permissionUi": true,
+      "invitationBlocked": true,
+      "noOverflow": true,
+      "screenshots": 4
+    },
+    {
+      "width": 390,
+      "integration": true,
+      "list": true,
+      "forms": true,
+      "legacy": true,
+      "permissionUi": true,
+      "invitationBlocked": true,
+      "noOverflow": true,
+      "screenshots": 4
+    },
+    {
+      "width": 1440,
+      "integration": true,
+      "list": true,
+      "forms": true,
+      "legacy": true,
+      "permissionUi": true,
+      "invitationBlocked": true,
+      "noOverflow": true,
+      "screenshots": 4
+    }
+  ]
+}

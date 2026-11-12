@@ -1,0 +1,3 @@
+Error: Import did not navigate: E.win is not a constructorFermer; view=recipe-ai
+    at confirm (/workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-import.cjs:10:235)
+    at async /workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-import.cjs:18:172

@@ -1,0 +1,37 @@
+{
+  "zip": "DOBBY-E07-STITCH-TAVERNE-COURSES.zip",
+  "zip_sha256": "213215ea1b74ea4798c6cd8e5abc55f0b221e895959ffd548c4c60aeacf99037",
+  "files": [
+    {
+      "path": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+      "archive_path": "stitch_dobby_assistant_mobile_app/dobby_la_taverne_gourmande_version_simplifi_e_rapide/code.html",
+      "sha256": "444575d86527a677eedc66a00b9f8455c4f6bb51ea201acdd3b90211ca79a26d"
+    },
+    {
+      "path": "design/stitch-e07/dobby_la_taverne_gourmande_version_simplifi_e_rapide/screen.png",
+      "archive_path": "stitch_dobby_assistant_mobile_app/dobby_la_taverne_gourmande_version_simplifi_e_rapide/screen.png",
+      "sha256": "1d1414276ca3b2120f76f26338f4eda421e043007322d68ab2a9ec7ac2dac9bf"
+    },
+    {
+      "path": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+      "archive_path": "stitch_dobby_assistant_mobile_app/dobby_ma_liste_de_courses_usage_magasin_simplifi/code.html",
+      "sha256": "9280643b81ea9873c775dc70b2b887588eb94af230c4f844b0b70e513e5f2099"
+    },
+    {
+      "path": "design/stitch-e07/dobby_ma_liste_de_courses_usage_magasin_simplifi/screen.png",
+      "archive_path": "stitch_dobby_assistant_mobile_app/dobby_ma_liste_de_courses_usage_magasin_simplifi/screen.png",
+      "sha256": "53d4cb7633d900d2899a9cd10435483397c563d5e562ccfa3b48b0b035402463"
+    },
+    {
+      "path": "design/stitch-e07/illustrations/taverne.png",
+      "archive_path": "stitch_dobby_assistant_mobile_app/charming_fairytale_3d_digital_illustration_of_the_lovable_house_elf_dobby_in_a/screen.png",
+      "sha256": "0c9e6100d63284219fe025e523b82624508a7a9bb48504367c10720045ed44dc"
+    },
+    {
+      "path": "design/stitch-e07/illustrations/courses.png",
+      "archive_path": "stitch_dobby_assistant_mobile_app/charming_fairytale_3d_digital_illustration_of_the_friendly_little_house_elf/screen.png",
+      "sha256": "c9dc299237cd1d83eb28cd6bccccd64455faeefac6267fa5c9645b493727d368"
+    }
+  ],
+  "original_stitch_53_unchanged": true
+}

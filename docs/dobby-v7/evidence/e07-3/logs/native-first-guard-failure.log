@@ -1,0 +1,9 @@
+✖ preview V5 source matches original except isolated storage and E05 native member writer extension (38.202326ms)
+ℹ tests 80
+ℹ pass 79
+ℹ fail 1
+✖ failing tests:
+test at essai-stitch-v5-famille/tests/integration.test.mjs:12:1
+✖ preview V5 source matches original except isolated storage and E05 native member writer extension (38.202326ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+Original long-source diagnostic retained outside tracked evidence at /tmp/e073-native-units.log; source comparison remains complete.

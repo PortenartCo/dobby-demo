@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Stale hydration must exit before using another screen’s template
++ actual - expected
+
++ "Cannot read properties of undefined (reading 'cloneNode')"
+- undefined
+
+    at /workspace/dobby-e074/essai-stitch-v7/tests/e07-4-render-race.cjs:3:985 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: "Cannot read properties of undefined (reading 'cloneNode')",
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

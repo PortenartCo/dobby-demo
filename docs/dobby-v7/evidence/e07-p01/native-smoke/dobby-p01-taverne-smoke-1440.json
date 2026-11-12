@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "scope": "Actual Taverne DOM clicks + real native writer, fictitious local data; no remote backend",
+  "width": 1440,
+  "geometry": {
+    "left": 510,
+    "right": 930,
+    "scroll": 418,
+    "client": 418
+  },
+  "checks": [
+    "two independent meal toolboxes",
+    "native date dialog",
+    "occupied destination cascade",
+    "exact records incl childFactor and unknown fields",
+    "other slot preserved on move",
+    "shopping fields preserved",
+    "mark prepared",
+    "cancel rejected without write",
+    "cancel confirmed",
+    "daily civil date independent of native calendar cursor without writes"
+  ],
+  "errors": []
+}

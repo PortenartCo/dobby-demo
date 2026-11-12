@@ -1,0 +1,172 @@
+{
+  "exitCode": 1,
+  "cases": [],
+  "passCount": 0,
+  "failCount": 0,
+  "failures": [
+    {
+      "case": "e05-edge",
+      "width": 390,
+      "event": "api_error",
+      "method": "click",
+      "selector": "locator('#magic-patronus-edit')",
+      "name": "TimeoutError",
+      "messageNormalizedRootOnly": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#magic-patronus-edit')\u001b[22m\n",
+      "stackNormalizedRootOnly": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#magic-patronus-edit')\u001b[22m\n\n    at _Locator.replacement (/tmp/dobby-menu-diff-01/preload.cjs:38:31)\n    at <WORKTREE>/essai-stitch-v7/tests/e05-edge.cjs:3:385",
+      "callsiteNormalizedRootOnly": "Error: API call\n    at _Locator.replacement (/tmp/dobby-menu-diff-01/preload.cjs:34:153)\n    at <WORKTREE>/essai-stitch-v7/tests/e05-edge.cjs:3:385",
+      "errorHeader": "locator.click: Timeout 30000ms exceeded.",
+      "stackFrames": [
+        "    at _Locator.replacement (/tmp/dobby-menu-diff-01/preload.cjs:38:31)",
+        "    at <WORKTREE>/essai-stitch-v7/tests/e05-edge.cjs:3:385"
+      ],
+      "dom": [],
+      "elapsedMs": 30003.433060000003,
+      "eventSequence": 21
+    }
+  ],
+  "browserVersions": [
+    "154.0.8037.57"
+  ],
+  "contexts": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "reducedMotion": "reduce"
+    }
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    {
+      "sequence": 7,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuCwdrfKP8fXErVeDtitVL0iD7B82UvQM8NssjBHUEWq--Er5EC9-AMbtMDgcFQu6j9bagb8Cf0tyUGCZGfF0pVyzgb1dco57gI-b2Xj8IvDgduTav6EAswyXgzVpdz_6X_5myagKwFNkk5uxUJTIY3EK64Ss-GCzVxst7WQL9HA66PfPqZiX3-efTiFim5oB8M18vMyp4ZNnJcvropdkBVvbVG5QBEG5ENkegQ-Vmru",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 8,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=EB+Garamond:ital,wght@0,400;1,400&family=Literata:wght@500;600;700&display=swap",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 9,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 10,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 11,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 12,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 13,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 14,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 15,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    },
+    {
+      "sequence": 17,
+      "event": "request_failed",
+      "page": 1,
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAyNV2AVHtb_Sm8ruFYRBZY0YJPL1fqdmRxKDU2cztLKJCo9VH_Arc_zyyYm4015-siKS_o3kT5w9O3aCxtnTKZC_4JfL7B_xQ1cMLIWmX81jFKt3V-E0sx4T_wtPjnwyhmwUJAeZvNPJxpQ8asgODp48Cl-S90qw7qckkjBBzPbz12DUzhQHQdKRmv35JzRmSizLTXWtmX0Rhg5nTqntLqO14-e9f1hsH_Cc3MZGvd",
+      "failure": {
+        "errorText": "net::ERR_FAILED"
+      }
+    }
+  ]
+}

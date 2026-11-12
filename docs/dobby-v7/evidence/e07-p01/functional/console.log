@@ -1,0 +1,13 @@
+E07_P01_PASS presentation and mode required
+E07_P01_PASS one Belgian Monday-Sunday calendar, native planning unchanged by browsing
+E07_P01_PASS independent slots and existing portions preserved
+E07_P01_PASS search, structured protein, multiple vegetables, starch and diet filters
+E07_P01_PASS Dobby random choice stays within current filters without redundant random button
+E07_P01_PASS reserve uses actual stored ingredients and never generates a saved recipe
+E07_P01_PASS new future meal uses child coefficient .65 and leaves Home and Tavern on the same current meals
+E07_P01_PASS replacement requires confirmation, preserves prior portions and never imports shopping
+E07_P01_PASS home shows exactly the same native Midi and Soir as the Tavern
+E07_P01_PASS Tavern visible move, prepared and cancel actions use independent meal records
+E07_P01_PASS native prepared/cancel/move confirmations, stale snapshot refusal and record preservation
+E07_P01_PASS native storage failure rolls status and planning back together
+E07_P01_FUNCTIONAL_PASS 12

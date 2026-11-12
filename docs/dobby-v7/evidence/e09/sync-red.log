@@ -1,0 +1,95 @@
+✖ shared memo create/read/update/delete propagates without publishing legacy notes or private health (6.3702ms)
+✖ concurrent edits use module conflict, retaining both copies until explicit resolution and backup (2.543541ms)
+✖ offline memo remains pending across a client reload, then synchronizes (2.788539ms)
+✔ old payload and unknown family extensions survive a write; absent fields do not clear existing data (4.894673ms)
+✖ activation and joining preserve new offline memos alongside remote memos, with local notes excluded (3.290424ms)
+✖ an old client dropping the memo extension is detected and local acknowledged copy is retained (2.368288ms)
+
+Interrupted while running:
+
+⚠ essai-stitch-v5-famille/tests/family-notes-sync.test.mjs (essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:1:1)
+✖ essai-stitch-v5-famille/tests/family-notes-sync.test.mjs (19982.549623ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 1
+ℹ fail 5
+ℹ cancelled 1
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19988.294754
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:7:1
+✖ shared memo create/read/update/delete propagates without publishing legacy notes or private health (6.3702ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:9:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:14:1
+✖ concurrent edits use module conflict, retaining both copies until explicit resolution and backup (2.543541ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:15:172)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:18:1
+✖ offline memo remains pending across a client reload, then synchronizes (2.788539ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /locales/. Input:
+  
+  'Partagé · à jour'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:19:176)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Partagé · à jour',
+    expected: /locales/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:28:1
+✖ activation and joining preserve new offline memos alongside remote memos, with local notes excluded (3.290424ms)
+  AssertionError [ERR_ASSERTION]: activate
+  + actual - expected
+  
+  + Set(1) {
+  - Set(2) {
+      'memo-test',
+  -   'offline'
+    }
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:29:402)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: Set(1) { 'memo-test' },
+    expected: Set(2) { 'memo-test', 'offline' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:31:1
+✖ an old client dropping the memo extension is detected and local acknowledged copy is retained (2.368288ms)
+  TypeError: Cannot read properties of undefined (reading '0')
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:33:61)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:1:1
+✖ essai-stitch-v5-famille/tests/family-notes-sync.test.mjs (19982.549623ms)
+  'Promise resolution is still pending but the event loop has already resolved'

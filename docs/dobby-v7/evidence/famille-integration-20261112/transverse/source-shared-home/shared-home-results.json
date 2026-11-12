@@ -1,0 +1,2134 @@
+{
+  "fixture": "Two isolated browsers, distinct users, same household, HTTP only",
+  "checks": [
+    "A declares 200 g of 500 g; B reads 200 g available and 300 g to buy",
+    "B modifies and cancels the shared declaration",
+    "Offline availability can be changed again after reload, stays pending, and reaches B with its latest value",
+    "An incompatible name/unit edit after offline reload resets availability in the durable queue and on B",
+    "Concurrent revision CAS rejects the stale PATCH; explicit server and local resolutions converge",
+    "Legacy homeByScope stays intact, ignored by shared snapshots, and never auto-published",
+    "Grouped edits roll back atomically on a stale row; g/kg availability retains gram precision and survives compatible editing",
+    "Simple native edits share availability; delete/archive and re-add leave no residual declaration",
+    "Repeated import/reload remains idempotent and checking/unchecking preserves availability",
+    "Old schema supports ordinary CRUD and fails availability with migration guidance and no false local success"
+  ],
+  "requests": [
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.4"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.768beb05-7a2a-4f1f-a474-99f07804cb57&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.768beb05-7a2a-4f1f-a474-99f07804cb57&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.768beb05-7a2a-4f1f-a474-99f07804cb57&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.5"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.5"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=*&id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.6"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.6"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=*&id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.7"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.8"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.97994bdd-1828-4614-a6a5-87a1111568da&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.9"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.97994bdd-1828-4614-a6a5-87a1111568da&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.149b9658-618a-45df-a7a0-95f0f34b2ba2&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.149b9658-618a-45df-a7a0-95f0f34b2ba2&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.10"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.49590153-08cd-40e4-af56-cd966041dd0a&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.49590153-08cd-40e4-af56-cd966041dd0a&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.4c52911a-aa24-4b38-96d1-623d71c448cf&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.49590153-08cd-40e4-af56-cd966041dd0a&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.3"
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.4c52911a-aa24-4b38-96d1-623d71c448cf&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "B",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "A",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id,at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.1"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "PATCH",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?id=eq.00000000-0000-4000-8000-000000000101&household_id=eq.00000000-0000-4000-8000-000000000010&revision=eq.2"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "POST",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": ""
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=at_home_quantity&household_id=eq.00000000-0000-4000-8000-000000000010&limit=0"
+    },
+    {
+      "label": "legacy",
+      "method": "GET",
+      "path": "/rest/v1/dobby_v2_grocery",
+      "query": "?select=id,title,quantity,unit,checked,created_at,updated_at,deleted_at,revision,import_source_id&household_id=eq.00000000-0000-4000-8000-000000000010&order=created_at.asc"
+    }
+  ],
+  "production": "working tree",
+  "status": "PASS",
+  "writes": [
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 125
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 3,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 210
+      },
+      "baseRevision": 4,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "768beb05-7a2a-4f1f-a474-99f07804cb57",
+      "body": {
+        "id": "768beb05-7a2a-4f1f-a474-99f07804cb57",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Disponibilité avant changement",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "768beb05-7a2a-4f1f-a474-99f07804cb57",
+      "body": {
+        "title": "TEST — Disponibilité avant changement",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "768beb05-7a2a-4f1f-a474-99f07804cb57",
+      "body": {
+        "title": "TEST — Article à la pièce",
+        "quantity": 2,
+        "unit": "pièce",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "768beb05-7a2a-4f1f-a474-99f07804cb57",
+      "body": {
+        "title": "TEST — Article à la pièce",
+        "quantity": 2,
+        "unit": "pièce",
+        "checked": false,
+        "deleted_at": "2026-11-12T08:55:36.363Z",
+        "at_home_quantity": 0
+      },
+      "baseRevision": 3,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 220
+      },
+      "baseRevision": 5,
+      "accepted": false
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 260
+      },
+      "baseRevision": 5,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 300
+      },
+      "baseRevision": 6,
+      "accepted": false
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 340
+      },
+      "baseRevision": 6,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 300
+      },
+      "baseRevision": 7,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 8,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "97994bdd-1828-4614-a6a5-87a1111568da",
+      "body": {
+        "id": "97994bdd-1828-4614-a6a5-87a1111568da",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Groupe g et kg",
+        "quantity": 200,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4",
+      "body": {
+        "id": "85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Groupe g et kg",
+        "quantity": 0.3,
+        "unit": "kg",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 0.3,
+        "unit": "kg",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0.251
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 800,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 251
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "97994bdd-1828-4614-a6a5-87a1111568da",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 0,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 100
+      },
+      "baseRevision": 9,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "85d8d37e-eacf-42b3-a9f0-ddb0ee05e7d4",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 800,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": "2026-11-12T08:55:42.703Z",
+        "at_home_quantity": 0
+      },
+      "baseRevision": 3,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "97994bdd-1828-4614-a6a5-87a1111568da",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 0,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": "2026-11-12T08:55:42.703Z",
+        "at_home_quantity": 0
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "149b9658-618a-45df-a7a0-95f0f34b2ba2",
+      "body": {
+        "id": "149b9658-618a-45df-a7a0-95f0f34b2ba2",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Groupe g et kg",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "149b9658-618a-45df-a7a0-95f0f34b2ba2",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 500,
+        "unit": "g",
+        "checked": true,
+        "deleted_at": null,
+        "at_home_quantity": 100
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "149b9658-618a-45df-a7a0-95f0f34b2ba2",
+      "body": {
+        "title": "TEST — Groupe g et kg",
+        "quantity": 500,
+        "unit": "g",
+        "checked": true,
+        "deleted_at": "2026-11-12T08:55:44.099Z",
+        "at_home_quantity": 0
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "74e05e7c-cdab-4c69-91a3-5bd7bc6c59a4",
+      "body": {
+        "id": "74e05e7c-cdab-4c69-91a3-5bd7bc6c59a4",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Groupe g et kg",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": "2026-11-12T08:55:45.412Z",
+        "at_home_quantity": 0
+      },
+      "baseRevision": 10,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "456a8ea0-1198-43e4-91a9-6ac635ad1c13",
+      "body": {
+        "id": "456a8ea0-1198-43e4-91a9-6ac635ad1c13",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Disponibilité commune",
+        "quantity": 500,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "49590153-08cd-40e4-af56-cd966041dd0a",
+      "body": {
+        "id": "49590153-08cd-40e4-af56-cd966041dd0a",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "import_source_id": "49590153-08cd-40e4-af56-cd966041dd0a",
+        "title": "TEST — Import maison",
+        "quantity": 200,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "POST",
+      "id": "4c52911a-aa24-4b38-96d1-623d71c448cf",
+      "body": {
+        "id": "4c52911a-aa24-4b38-96d1-623d71c448cf",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "import_source_id": "4c52911a-aa24-4b38-96d1-623d71c448cf",
+        "title": "TEST — Import maison",
+        "quantity": 300,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 0,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "49590153-08cd-40e4-af56-cd966041dd0a",
+      "body": {
+        "title": "TEST — Import maison",
+        "quantity": 200,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "49590153-08cd-40e4-af56-cd966041dd0a",
+      "body": {
+        "title": "TEST — Import maison",
+        "quantity": 200,
+        "unit": "g",
+        "checked": true,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "A",
+      "method": "PATCH",
+      "id": "4c52911a-aa24-4b38-96d1-623d71c448cf",
+      "body": {
+        "title": "TEST — Import maison",
+        "quantity": 300,
+        "unit": "g",
+        "checked": true,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "49590153-08cd-40e4-af56-cd966041dd0a",
+      "body": {
+        "title": "TEST — Import maison",
+        "quantity": 200,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 200
+      },
+      "baseRevision": 3,
+      "accepted": true
+    },
+    {
+      "label": "B",
+      "method": "PATCH",
+      "id": "4c52911a-aa24-4b38-96d1-623d71c448cf",
+      "body": {
+        "title": "TEST — Import maison",
+        "quantity": 300,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null,
+        "at_home_quantity": 0
+      },
+      "baseRevision": 2,
+      "accepted": true
+    }
+  ],
+  "legacyWrites": [
+    {
+      "label": "legacy",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 600,
+        "unit": "g",
+        "checked": false,
+        "deleted_at": null
+      },
+      "baseRevision": 1,
+      "accepted": true
+    },
+    {
+      "label": "legacy",
+      "method": "PATCH",
+      "id": "00000000-0000-4000-8000-000000000101",
+      "body": {
+        "title": "TEST — Disponibilité commune",
+        "quantity": 600,
+        "unit": "g",
+        "checked": true,
+        "deleted_at": null
+      },
+      "baseRevision": 2,
+      "accepted": true
+    },
+    {
+      "label": "legacy",
+      "method": "POST",
+      "id": "46487a55-7f53-493d-9ed3-df3cd969bc43",
+      "body": {
+        "id": "46487a55-7f53-493d-9ed3-df3cd969bc43",
+        "household_id": "00000000-0000-4000-8000-000000000010",
+        "title": "TEST — Legacy CRUD",
+        "quantity": 1,
+        "unit": "pièce",
+        "checked": false,
+        "deleted_at": null
+      },
+      "baseRevision": 0,
+      "accepted": true
+    }
+  ]
+}

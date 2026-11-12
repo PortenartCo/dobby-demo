@@ -1,0 +1,10 @@
+AssertionError [ERR_ASSERTION]: Native module synchronization reaches the HTTP fixture
+    at until (/workspace/dobby-integrated-review/essai-stitch-v7/tests/register-missions-sync.cjs:6:192)
+    at async /workspace/dobby-integrated-review/essai-stitch-v7/tests/register-missions-sync.cjs:26:1795 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

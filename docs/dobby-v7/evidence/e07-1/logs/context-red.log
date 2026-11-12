@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: Reload must retain lunch, not silently switch to dinner
+
+'false' !== 'true'
+
+    at /workspace/dobby-e07-cuisine-courses/essai-stitch-v7/tests/e07-1-context.cjs:3:737 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'false',
+  expected: 'true',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

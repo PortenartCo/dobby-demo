@@ -1,0 +1,97 @@
+✖ reactivating a locally created event and preparation retains their association behind explicit conflict (27.011951ms)
+✖ remote event deletion cannot detach an offline preparation edit during reactivation (9.43557ms)
+✖ a locally changed associated event is retained when remote metadata diverges during reactivation (7.135996ms)
+✔ fresh remote metadata for the same unchanged local event remains compatible with an offline preparation edit (9.826892ms)
+✖ malformed preparation registries are rejected before any family data is replaced (47.300857ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1642.359474
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:51:1
+✖ reactivating a locally created event and preparation retains their association behind explicit conflict (27.011951ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Conflit/. Input:
+
+  'Modifications locales à envoyer'
+
+      at TestContext.<anonymous> (/workspace/dobby-prep01/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:53:45)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Modifications locales à envoyer',
+    expected: /Conflit/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:56:1
+✖ remote event deletion cannot detach an offline preparation edit during reactivation (9.43557ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   {
+  -     date: '2026-12-12',
+  -     id: 'event-1',
+  -     title: 'Sortie'
+  -   }
+  - ]
+
+      at TestContext.<anonymous> (/workspace/dobby-prep01/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:58:100)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ { id: 'event-1', title: 'Sortie', date: '2026-12-12' } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:61:1
+✖ a locally changed associated event is retained when remote metadata diverges during reactivation (7.135996ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Conflit/. Input:
+
+  'Modifications locales à envoyer'
+
+      at TestContext.<anonymous> (/workspace/dobby-prep01/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:63:45)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Modifications locales à envoyer',
+    expected: /Conflit/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/preparation-sync.test.cjs:96:1
+✖ malformed preparation registries are rejected before any family data is replaced (47.300857ms)
+  AssertionError [ERR_ASSERTION]: {"familyPreparationTemplates":[{"id":"template-1","name":"Sortie","version":1,"items":[{"id":"item-1","label":"Gourde","qty":1,"unit":"pièce","done":true}]}]}
+  + actual - expected
+
+  + [
+  +   {
+  +     id: 'do-not-apply'
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (/workspace/dobby-prep01/essai-stitch-v5-famille/tests/preparation-sync.test.cjs:111:300)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { id: 'do-not-apply' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

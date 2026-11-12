@@ -1,0 +1,1185 @@
+source-backed-browser	Set up job	﻿2026-11-10T21:21:30.5675673Z Current runner version: '2.338.2'
+source-backed-browser	Set up job	2026-11-10T21:21:30.5718739Z ##[group]Runner Image Provisioner
+source-backed-browser	Set up job	2026-11-10T21:21:30.5720143Z Hosted Compute Agent
+source-backed-browser	Set up job	2026-11-10T21:21:30.5721617Z Version: 20261028.624
+source-backed-browser	Set up job	2026-11-10T21:21:30.5722715Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+source-backed-browser	Set up job	2026-11-10T21:21:30.5723900Z Build Date: 2026-10-28T21:51:42Z
+source-backed-browser	Set up job	2026-11-10T21:21:30.5725051Z Worker ID: {2ec6fbca-0594-4573-8af3-041a070199bf}
+source-backed-browser	Set up job	2026-11-10T21:21:30.5726497Z Region: eastus2
+source-backed-browser	Set up job	2026-11-10T21:21:30.5727456Z Cloud: Azure
+source-backed-browser	Set up job	2026-11-10T21:21:30.5728279Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-10T21:21:30.5730793Z ##[group]Operating System
+source-backed-browser	Set up job	2026-11-10T21:21:30.5731853Z Ubuntu
+source-backed-browser	Set up job	2026-11-10T21:21:30.5732732Z 26.04.1
+source-backed-browser	Set up job	2026-11-10T21:21:30.5733592Z LTS
+source-backed-browser	Set up job	2026-11-10T21:21:30.5734426Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-10T21:21:30.5735317Z ##[group]Runner Image
+source-backed-browser	Set up job	2026-11-10T21:21:30.5736538Z Image: ubuntu-26.04
+source-backed-browser	Set up job	2026-11-10T21:21:30.5737456Z Version: 20261101.186.1
+source-backed-browser	Set up job	2026-11-10T21:21:30.5739383Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261101.186/images/ubuntu/Ubuntu2604-Readme.md
+source-backed-browser	Set up job	2026-11-10T21:21:30.5742424Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261101.186
+source-backed-browser	Set up job	2026-11-10T21:21:30.5744129Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-10T21:21:30.5745796Z ##[group]GITHUB_TOKEN Permissions
+source-backed-browser	Set up job	2026-11-10T21:21:30.5749269Z Contents: read
+source-backed-browser	Set up job	2026-11-10T21:21:30.5750463Z Metadata: read
+source-backed-browser	Set up job	2026-11-10T21:21:30.5751393Z ##[endgroup]
+source-backed-browser	Set up job	2026-11-10T21:21:30.5754562Z Secret source: Actions
+source-backed-browser	Set up job	2026-11-10T21:21:30.5756463Z Cache mode: write
+source-backed-browser	Set up job	2026-11-10T21:21:30.5757567Z Prepare workflow directory
+source-backed-browser	Set up job	2026-11-10T21:21:30.6278024Z Prepare all required actions
+source-backed-browser	Set up job	2026-11-10T21:21:30.6351003Z Getting action download info
+source-backed-browser	Set up job	2026-11-10T21:21:30.8094062Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+source-backed-browser	Set up job	2026-11-10T21:21:30.9363402Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+source-backed-browser	Set up job	2026-11-10T21:21:30.9908393Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+source-backed-browser	Set up job	2026-11-10T21:21:31.1650686Z Complete job name: source-backed-browser
+source-backed-browser	Run actions/checkout@v4	﻿2026-11-10T21:21:31.2680073Z ##[group]Run actions/checkout@v4
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2680930Z with:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2681362Z   repository: PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2685002Z   token: ***
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2685384Z   ssh-strict: true
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2685765Z   ssh-user: git
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2686331Z   persist-credentials: true
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2686778Z   clean: true
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2687187Z   sparse-checkout-cone-mode: true
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2687659Z   fetch-depth: 1
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2688051Z   fetch-tags: false
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2688459Z   show-progress: true
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2688864Z   lfs: false
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2689243Z   submodules: false
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2689672Z   set-safe-directory: true
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2690119Z   allow-unsafe-pr-checkout: false
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.2690902Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5137451Z Syncing repository: PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5141063Z ##[group]Getting Git version info
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5142013Z Working directory is '/home/runner/work/dobby-demo/dobby-demo'
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5143400Z [command]/usr/bin/git version
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5152582Z git version 2.56.0
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5200842Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5218395Z Temporarily overriding HOME='/home/runner/work/_temp/25922e56-af8d-4c5e-91c5-cab6b6eab50a' before making global git config changes
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5230536Z Adding repository directory to the temporary git global config as a safe directory
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5233390Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5297954Z Deleting the contents of '/home/runner/work/dobby-demo/dobby-demo'
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5301793Z ##[group]Initializing the repository
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5306836Z [command]/usr/bin/git init /home/runner/work/dobby-demo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5395319Z hint: Using 'master' as the name for the initial branch. This default branch name
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5398879Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5400983Z hint: to use in all of your new repositories, which will suppress this warning,
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5402794Z hint: call:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5403817Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5405059Z hint: 	git config --global init.defaultBranch <name>
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5406873Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5408341Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5410592Z hint: 'development'. The just-created branch can be renamed via this command:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5412457Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5413626Z hint: 	git branch -m <name>
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5414827Z hint:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5416487Z hint: Disable this message with "git config set advice.defaultBranchName false"
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5418822Z Initialized empty Git repository in /home/runner/work/dobby-demo/dobby-demo/.git/
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5422902Z [command]/usr/bin/git remote add origin https://github.com/PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5473308Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5475395Z ##[group]Disabling automatic garbage collection
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5478915Z [command]/usr/bin/git config --local gc.auto 0
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5518182Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5520272Z ##[group]Setting up auth
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5527431Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5565623Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.5999597Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6055651Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6432135Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6481785Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6725509Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6768010Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6770079Z ##[group]Fetching the repository
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:31.6779549Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1f0fa32deb3fd64b178148f09cc8e449ac5ca165:refs/remotes/origin/feat/dobby-e01-e08-review-integration
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4601588Z From https://github.com/PortenartCo/dobby-demo
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4602653Z  * [new ref]         1f0fa32deb3fd64b178148f09cc8e449ac5ca165 -> origin/feat/dobby-e01-e08-review-integration
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4606409Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4607071Z ##[group]Determining the checkout info
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4609833Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4617399Z [command]/usr/bin/git sparse-checkout disable
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4671753Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4703090Z ##[group]Checking out the ref
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:43.4708349Z [command]/usr/bin/git checkout --progress --force -B feat/dobby-e01-e08-review-integration refs/remotes/origin/feat/dobby-e01-e08-review-integration
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:44.4256565Z Switched to a new branch 'feat/dobby-e01-e08-review-integration'
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:44.4258516Z branch 'feat/dobby-e01-e08-review-integration' set up to track 'origin/feat/dobby-e01-e08-review-integration'.
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:44.4292995Z ##[endgroup]
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:44.4348482Z [command]/usr/bin/git log -1 --format=%H
+source-backed-browser	Run actions/checkout@v4	2026-11-10T21:21:44.4373540Z 1f0fa32deb3fd64b178148f09cc8e449ac5ca165
+source-backed-browser	Run actions/setup-node@v4	﻿2026-11-10T21:21:44.4654547Z ##[group]Run actions/setup-node@v4
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.4655168Z with:
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.4655393Z   node-version: 22
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.4655611Z   always-auth: false
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.4655835Z   check-latest: false
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.4658695Z   token: ***
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.4658909Z ##[endgroup]
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.6171571Z Found in cache @ /opt/hostedtoolcache/node/22.23.4/x64
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.6174889Z (node:2403) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.6176258Z (Use `node --trace-deprecation ...` to show where the warning was created)
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:44.6178074Z ##[group]Environment details
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:45.0150952Z node: v22.23.4
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:45.0151574Z npm: 10.9.9
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:45.0152212Z yarn: 1.22.22
+source-backed-browser	Run actions/setup-node@v4	2026-11-10T21:21:45.0153087Z ##[endgroup]
+source-backed-browser	Check V7 JavaScript syntax	﻿2026-11-10T21:21:45.0300540Z ##[group]Run node --check essai-stitch-v7/build-source.cjs
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0301219Z [36;1mnode --check essai-stitch-v7/build-source.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0301609Z [36;1mnode --check essai-stitch-v7/bridge.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0301937Z [36;1mnode --check essai-stitch-v7/chrome.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0302254Z [36;1mnode --check essai-stitch-v7/home.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0302591Z [36;1mnode --check essai-stitch-v7/engine-policy.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0302921Z [36;1mnode --check essai-stitch-v7/chat.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0303246Z [36;1mnode --check essai-stitch-v7/chat-engine.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0303578Z [36;1mnode --check essai-stitch-v7/tests/e02.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0303925Z [36;1mnode --check essai-stitch-v7/tests/e02-edge.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0304296Z [36;1mnode --check essai-stitch-v7/tests/e02-publish.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0304724Z [36;1mnode --check essai-stitch-v7/tests/e02-voice-history.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0305105Z [36;1mnode --check essai-stitch-v7/tests/e01.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0305481Z [36;1mnode --check essai-stitch-v7/tests/e01-3.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0305838Z [36;1mnode --check essai-stitch-v7/tests/e01-3-video.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0306473Z [36;1mnode --check essai-stitch-v7/tests/e01-visual.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0306854Z [36;1mnode --check essai-stitch-v7/root-adapters.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0307202Z [36;1mnode --check essai-stitch-v7/tests/smoke.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0307549Z [36;1mnode --check essai-stitch-v7/build-cuisine.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0307905Z [36;1mnode --check essai-stitch-v7/cuisine-engine.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0308243Z [36;1mnode --check essai-stitch-v7/cuisine.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0308590Z [36;1mnode --check essai-stitch-v7/cuisine-e07.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0308942Z [36;1mnode --check essai-stitch-v7/cuisine-list.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0309305Z [36;1mnode --check essai-stitch-v5-famille/family-v2.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0309663Z [36;1mnode --check scripts/build-dobby-review.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0310022Z [36;1mnode --check scripts/review/review-runtime.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0310390Z [36;1mnode --check scripts/review/integrated-config.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0310789Z [36;1mnode --check essai-stitch-v7/tests/integrated-preview.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0311181Z [36;1mnode --check essai-stitch-v7/tests/e07-2-boot.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0311531Z [36;1mnode --check essai-stitch-v7/tests/e07-2.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0311875Z [36;1mnode --check essai-stitch-v7/tests/e07-2-model.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0312247Z [36;1mnode --check essai-stitch-v7/tests/e07-2-preview.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0312602Z [36;1mnode --check essai-stitch-v7/tests/e07.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0312973Z [36;1mnode --check essai-stitch-v7/tests/e07-native-actions.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0313348Z [36;1mnode --check essai-stitch-v7/tests/e07-1.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0313703Z [36;1mnode --check essai-stitch-v7/tests/e07-1-context.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0314076Z [36;1mnode --check essai-stitch-v7/tests/cuisine.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0314460Z [36;1mnode --check essai-stitch-v7/tests/cuisine-visual.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0315056Z [36;1mnode --check essai-stitch-v7/tests/cuisine-family.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0315525Z [36;1mnode --check essai-stitch-v7/build-family.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0315876Z [36;1mnode --check essai-stitch-v7/family-engine.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0316450Z [36;1mnode --check essai-stitch-v7/member-avatar.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0316823Z [36;1mnode --check essai-stitch-v7/tests/e04.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0317181Z [36;1mnode --check essai-stitch-v7/tests/e04-runes.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0317568Z [36;1mnode --check essai-stitch-v7/tests/runes-native.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0317980Z [36;1mnode --check essai-stitch-v7/tests/e04-runes-capture.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0318370Z [36;1mnode --check essai-stitch-v7/import-runtime.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0318994Z [36;1mnode --check essai-stitch-v7/family.js[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0319394Z [36;1mnode --check essai-stitch-v7/tests/family.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0319763Z [36;1mnode --check essai-stitch-v7/tests/family-edge.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0320147Z [36;1mnode --check essai-stitch-v7/tests/family-review.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0320529Z [36;1mnode --check essai-stitch-v7/tests/family-shared.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0320920Z [36;1mnode --check essai-stitch-v7/tests/family-visual.cjs[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0321795Z [36;1mfor file in essai-stitch-v7/register*.js essai-stitch-v7/*-register.js essai-stitch-v7/build-register.cjs essai-stitch-v7/tests/register-*.cjs essai-stitch-v7/tests/ci.cjs; do node --check "$file"; done[0m
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0370360Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Check V7 JavaScript syntax	2026-11-10T21:21:45.0370719Z ##[endgroup]
+source-backed-browser	Existing offline, family and conflict regressions	﻿2026-11-10T21:21:46.9188319Z ##[group]Run node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:46.9189185Z [36;1mnode --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs[0m
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:46.9226724Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:46.9227034Z ##[endgroup]
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:46.9857065Z TAP version 13
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0588957Z # Subtest: validates actual calendar dates and time instead of accepting malformed input
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0614470Z ok 1 - validates actual calendar dates and time instead of accepting malformed input
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0615246Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0615655Z   duration_ms: 2.595118
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0616314Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0616698Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0617360Z # Subtest: shared agenda rejects medical category and normalizes ordinary events
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0618139Z ok 2 - shared agenda rejects medical category and normalizes ordinary events
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0618746Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0619142Z   duration_ms: 0.925581
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0619845Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0620370Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0621155Z # Subtest: aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0622200Z ok 3 - aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0622777Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0623167Z   duration_ms: 21.621833
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0623568Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0623946Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0624586Z # Subtest: birthdays are re-evaluated annually and leap-day policy is defined
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0625342Z ok 4 - birthdays are re-evaluated annually and leap-day policy is defined
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0625806Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0626353Z   duration_ms: 0.211128
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0647348Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0647869Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0648685Z # Subtest: ics export contains correct floating local time and escapes injection
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0649819Z ok 5 - ics export contains correct floating local time and escapes injection
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0650486Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0650832Z   duration_ms: 2.345454
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0651771Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0652131Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0747022Z # Subtest: create and CAS transition
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0772864Z ok 6 - create and CAS transition
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0778627Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0779288Z   duration_ms: 0.917045
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0780043Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0780514Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0781270Z # Subtest: offline edit is pending until remote acknowledges
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0782224Z ok 7 - offline edit is pending until remote acknowledges
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0782916Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0783414Z   duration_ms: 0.240913
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0783910Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0784348Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0785022Z # Subtest: independent updates never silently overwrite
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0785950Z ok 8 - independent updates never silently overwrite
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0786973Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0787465Z   duration_ms: 0.190647
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0788014Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0788497Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0789274Z # Subtest: unknown quantity is not silently converted into 0 or 1
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0790262Z ok 9 - unknown quantity is not silently converted into 0 or 1
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0790954Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0791394Z   duration_ms: 0.226846
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0791905Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0792393Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0793044Z # Subtest: logical deletion preserved
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0793703Z ok 10 - logical deletion preserved
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0794451Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0794924Z   duration_ms: 1.12206
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0795414Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0795848Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0796913Z # Subtest: medical visit requires an explicit valid record, date and time
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0798781Z ok 11 - medical visit requires an explicit valid record, date and time
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0799529Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0800002Z   duration_ms: 1.952626
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0800522Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0801075Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0802165Z # Subtest: only appointments explicitly shared with the household appear in global due list
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0803446Z ok 12 - only appointments explicitly shared with the household appear in global due list
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0804303Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0804783Z   duration_ms: 0.963265
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0805319Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.0805767Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1002642Z # Subtest: manual mission normalization validates due date and does not use medical categories
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1019232Z ok 13 - manual mission normalization validates due date and does not use medical categories
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1020459Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1020992Z   duration_ms: 1.509135
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1021609Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1022069Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1022947Z # Subtest: manual open tasks are ordered by date and completed remain distinct
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1024113Z ok 14 - manual open tasks are ordered by date and completed remain distinct
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1025045Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1025616Z   duration_ms: 8.675512
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1026357Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1026857Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1027728Z # Subtest: manual missions appear in due summary without polluting autoTasks
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1028886Z ok 15 - manual missions appear in due summary without polluting autoTasks
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1029745Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1030259Z   duration_ms: 0.849892
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1030811Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1031321Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1618165Z # Subtest: preview V5 source matches original except isolated storage and E05 native member writer extension
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1648002Z ok 16 - preview V5 source matches original except isolated storage and E05 native member writer extension
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1658292Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1659003Z   duration_ms: 34.933818
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1659701Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1660200Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1661756Z # Subtest: Stitch V5 integration adds shared panier without removing original preparation UI
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1663236Z ok 17 - Stitch V5 integration adds shared panier without removing original preparation UI
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1664199Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1664700Z   duration_ms: 3.595726
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1665232Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1665716Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1666709Z # Subtest: module adapter fails closed when Supabase modules table is missing
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1667952Z ok 18 - module adapter fails closed when Supabase modules table is missing
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1668696Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1669185Z   duration_ms: 2.641391
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1669682Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1670177Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1671157Z # Subtest: module schema enforces household isolation and excludes health and attachments
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1672455Z ok 19 - module schema enforces household isolation and excludes health and attachments
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1673372Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1674278Z   duration_ms: 0.297492
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1675033Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1675529Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1676691Z # Subtest: preview denies cross-household browser reuse and drops unauthorized session
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1678133Z ok 20 - preview denies cross-household browser reuse and drops unauthorized session
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1679007Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1679479Z   duration_ms: 0.353548
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1680059Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1680634Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1681611Z # Subtest: family events and selected medical visits share the household without uploading private famHealth
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1683133Z ok 21 - family events and selected medical visits share the household without uploading private famHealth
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1684502Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1685043Z   duration_ms: 0.271796
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1685588Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1686238Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1687171Z # Subtest: manual missions remain separate from automatic tasks
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1688218Z ok 22 - manual missions remain separate from automatic tasks
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1688933Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1689434Z   duration_ms: 0.162539
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1689981Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1690461Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1691214Z # Subtest: binary file uploads do not use the JSON modules API
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1692166Z ok 23 - binary file uploads do not use the JSON modules API
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1692882Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1693339Z   duration_ms: 0.506717
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1693882Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1694371Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1695362Z # Subtest: shared health visits do not automatically upload previous local health records
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1696900Z ok 24 - shared health visits do not automatically upload previous local health records
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1697774Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1698269Z   duration_ms: 0.688289
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1698796Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1699307Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1700234Z # Subtest: a health document remains local until the user chooses household sharing
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1701470Z ok 25 - a health document remains local until the user chooses household sharing
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1702303Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1702807Z   duration_ms: 2.21884
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1703300Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1703773Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1877928Z # Subtest: two accounts activate all six modules and receive a shared update without exposing health or attachments
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1881455Z ok 26 - two accounts activate all six modules and receive a shared update without exposing health or attachments
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1882064Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1882510Z   duration_ms: 36.271346
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1883093Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1883571Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1892446Z # Subtest: simultaneous module edits create a conflict, not a lost update
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1910675Z ok 27 - simultaneous module edits create a conflict, not a lost update
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1912039Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1912525Z   duration_ms: 4.954852
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1913050Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1913520Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1914286Z # Subtest: missing modules backend does not activate sharing
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1915243Z ok 28 - missing modules backend does not activate sharing
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1915955Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1916613Z   duration_ms: 1.73754
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1917112Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1917561Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1918494Z # Subtest: customized or actual meal plans are never offered for automated demo deletion
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1919815Z ok 29 - customized or actual meal plans are never offered for automated demo deletion
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1920691Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1921143Z   duration_ms: 1.262293
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1921635Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1922084Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1923062Z # Subtest: a fresh household activates all six modules with one consent and excludes demo meals
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1924499Z ok 30 - a fresh household activates all six modules with one consent and excludes demo meals
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1925356Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1925798Z   duration_ms: 4.147428
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1926506Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1926963Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1968911Z # Subtest: refusing group activation does not publish data or remove example meals
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1987337Z ok 31 - refusing group activation does not publish data or remove example meals
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1988325Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1988972Z   duration_ms: 1.919085
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1989487Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.1989980Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2223172Z # Subtest: E05 catalogues have stable French identities without inferring a house or a member
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2224999Z ok 32 - E05 catalogues have stable French identities without inferring a house or a member
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2225929Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2226677Z   duration_ms: 4.001356
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2227256Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2227703Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2228798Z # Subtest: partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2230413Z ok 33 - partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2231388Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2231869Z   duration_ms: 2.472879
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2232364Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2232819Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2233662Z # Subtest: E05 approves the exact E04 thresholds without changing reward values
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2234896Z ok 34 - E05 approves the exact E04 thresholds without changing reward values
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2235724Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2236380Z   duration_ms: 0.27559
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2237021Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2237570Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2628416Z # Subtest: family profile revision conflict retains the explicitly chosen version: server
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2658381Z ok 35 - family profile revision conflict retains the explicitly chosen version: server
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2665467Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2666468Z   duration_ms: 11.333058
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2667048Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2667496Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2668403Z # Subtest: family profile revision conflict retains the explicitly chosen version: local
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2669642Z ok 36 - family profile revision conflict retains the explicitly chosen version: local
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2671922Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2672565Z   duration_ms: 4.660365
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2673293Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2673672Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2674534Z # Subtest: native family sync preserves fields through reload and does not include medical records or rewards
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2675473Z ok 37 - native family sync preserves fields through reload and does not include medical records or rewards
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2677494Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2677715Z   duration_ms: 4.091801
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2677946Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2678153Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2678866Z # Subtest: LIMIT demonstrated: an old member writer can erase identity extensions server-side
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2679625Z ok 38 - LIMIT demonstrated: an old member writer can erase identity extensions server-side
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2680042Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2680266Z   duration_ms: 2.93548
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2680510Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2680711Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2788069Z # Subtest: cached household reinitializes family modules after membership check
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2789813Z ok 39 - cached household reinitializes family modules after membership check
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2817408Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2820676Z   duration_ms: 7.582271
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2821327Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2823726Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2849050Z # Subtest: module API unavailability does not masquerade as disconnected household and retries
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2867658Z ok 40 - module API unavailability does not masquerade as disconnected household and retries
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2869397Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2870056Z   duration_ms: 4.08718
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2870538Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2870982Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2949456Z # Subtest: validated effort choices and approved V1 grades have one centralized definition
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2977797Z ok 41 - validated effort choices and approved V1 grades have one centralized definition
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2995861Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2996842Z   duration_ms: 1.529316
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2997435Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2997927Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.2999666Z # Subtest: only new eligible assigned completions create a single durable request per mission
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3001040Z ok 42 - only new eligible assigned completions create a single durable request per mission
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3001939Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3002453Z   duration_ms: 1.08957
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3002971Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3003442Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3004388Z # Subtest: 10/25/50 credits are validated, durable without mission rows, and deterministic
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3005625Z ok 43 - 10/25/50 credits are validated, durable without mission rows, and deterministic
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3006569Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3007036Z   duration_ms: 10.233185
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3007554Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3008030Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3008947Z # Subtest: first confirmed CAS result wins over a divergent offline request without transfer
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3010096Z ok 44 - first confirmed CAS result wins over a divergent offline request without transfer
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3010868Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3011267Z   duration_ms: 0.45034
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3011815Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3012295Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3013275Z # Subtest: pending requests do not inflate totals, and all twelve grade boundaries are stable
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3014580Z ok 45 - pending requests do not inflate totals, and all twelve grade boundaries are stable
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3015375Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3015912Z   duration_ms: 0.469964
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3016554Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3016999Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3017792Z # Subtest: the reward history is not truncated to the 200 current mission limit
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3018858Z ok 46 - the reward history is not truncated to the 200 current mission limit
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3019625Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3020045Z   duration_ms: 6.816165
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3020555Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.3021020Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4080864Z # Subtest: concurrent distinct credits survive server conflict resolution and mission deletion
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4158179Z ok 47 - concurrent distinct credits survive server conflict resolution and mission deletion
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4179700Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4180496Z   duration_ms: 20.579445
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4181725Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4182242Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4183272Z # Subtest: concurrent distinct credits survive local conflict resolution and mission deletion
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4184687Z ok 48 - concurrent distinct credits survive local conflict resolution and mission deletion
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4185592Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4186229Z   duration_ms: 6.072084
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4186781Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4187271Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4188407Z # Subtest: same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4190165Z ok 49 - same mission, divergent offline assignment/effort: first confirmed CAS wins, loser never counted
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4191116Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4191578Z   duration_ms: 6.538107
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4192099Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4192574Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4193684Z # Subtest: accepted PATCH with lost response and reload confirms the same request without replay credit
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4195224Z ok 50 - accepted PATCH with lost response and reload confirms the same request without replay credit
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4196355Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4196876Z   duration_ms: 7.060162
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4197397Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4197859Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4198874Z # Subtest: CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4200294Z ok 51 - CAS loss between GET/PATCH retains pending intent, then existing resolver converges
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4201151Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4201640Z   duration_ms: 7.102674
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4202155Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4202647Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4204138Z # Subtest: activation/retrieval preserves local pending requests and never credits legacy done rows
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4205694Z ok 52 - activation/retrieval preserves local pending requests and never credits legacy done rows
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4206765Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4207262Z   duration_ms: 4.169279
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4295144Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4295478Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4296398Z # Subtest: a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4297346Z ok 53 - a legacy writer dropping the known ledger protocol is detected and blocked, not called synchronized
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4297836Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4298057Z   duration_ms: 2.923139
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4298291Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4298518Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4298988Z # Subtest: JSON object key order from jsonb cannot trigger a repeated reward PATCH
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4299670Z ok 54 - JSON object key order from jsonb cannot trigger a repeated reward PATCH
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4300075Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4300281Z   duration_ms: 5.458036
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4300518Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4300723Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4301264Z # Subtest: a second native completion during PATCH keeps newer local data and its unconfirmed request
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4302033Z ok 55 - a second native completion during PATCH keeps newer local data and its unconfirmed request
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4302463Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4302677Z   duration_ms: 7.174547
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4302902Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4303107Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4303596Z # Subtest: a malformed confirmation or server refusal never fabricates a confirmed gain
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4304253Z ok 56 - a malformed confirmation or server refusal never fabricates a confirmed gain
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4304644Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4304848Z   duration_ms: 2.698067
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4305076Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4305284Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4305873Z # Subtest: disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4306938Z ok 57 - disabling a previously shared module cannot turn a divergent offline request into a local confirmed gain
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4307767Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4307977Z   duration_ms: 3.34894
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4308208Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:47.4308429Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9297091Z # Subtest: retrieval queues retained offline rewards and reports pending until actual confirmation
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9298542Z ok 58 - retrieval queues retained offline rewards and reports pending until actual confirmation
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9299358Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9299733Z   duration_ms: 1524.169546
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9300130Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9300472Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9301295Z # Subtest: malformed request storage is reported without throwing after an unrelated native save
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9302707Z ok 59 - malformed request storage is reported without throwing after an unrelated native save
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9303390Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9303761Z   duration_ms: 5.918116
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9304135Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9304494Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9386776Z # Subtest: new entry is pending and preserves a stable UUID
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9387770Z ok 60 - new entry is pending and preserves a stable UUID
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9388339Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9388662Z   duration_ms: 1.401652
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9388994Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9389328Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9390002Z # Subtest: equivalent server echo resolves an uncertain successful POST
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9390969Z ok 61 - equivalent server echo resolves an uncertain successful POST
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9391601Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9391969Z   duration_ms: 0.385165
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9392375Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9392734Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9393979Z # Subtest: editing an unchanged server revision remains pending
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9394841Z ok 62 - editing an unchanged server revision remains pending
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9395381Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9395731Z   duration_ms: 0.316025
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9396297Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9396972Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9397629Z # Subtest: simultaneous edits require a decision, never auto overwrite
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9398635Z ok 63 - simultaneous edits require a decision, never auto overwrite
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9407602Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9408100Z   duration_ms: 1.996447
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9408556Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9408919Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9409429Z # Subtest: resolve conflict with server version
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9410130Z ok 64 - resolve conflict with server version
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9410614Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9410957Z   duration_ms: 0.394236
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9411352Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9411699Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9412547Z # Subtest: resolve conflict with local version creates pending update against new revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9413795Z ok 65 - resolve conflict with local version creates pending update against new revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9414483Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9414860Z   duration_ms: 0.256576
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9415261Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9415604Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9416555Z # Subtest: new edit during an in-flight update remains pending with new server revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9417730Z ok 66 - new edit during an in-flight update remains pending with new server revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9418417Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9418761Z   duration_ms: 0.332397
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9419167Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9419518Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9420074Z # Subtest: soft deletion is part of the synchronized state
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9420878Z ok 67 - soft deletion is part of the synchronized state
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9421402Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9421779Z   duration_ms: 0.277686
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9422151Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9422454Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9422976Z # Subtest: new entry is pending and preserves a stable UUID
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9423646Z ok 68 - new entry is pending and preserves a stable UUID
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9424577Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9424896Z   duration_ms: 1.524151
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9425258Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9425577Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9426347Z # Subtest: equivalent server echo resolves an uncertain successful POST
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9427222Z ok 69 - equivalent server echo resolves an uncertain successful POST
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9427778Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9428091Z   duration_ms: 0.455108
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9428426Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9428737Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9429313Z # Subtest: editing an unchanged server revision remains pending
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9430117Z ok 70 - editing an unchanged server revision remains pending
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9430694Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9431027Z   duration_ms: 0.265348
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9431412Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9431723Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9432341Z # Subtest: simultaneous edits require a decision, never auto overwrite
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9433260Z ok 71 - simultaneous edits require a decision, never auto overwrite
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9433855Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9434198Z   duration_ms: 0.21376
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9434583Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9434912Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9435381Z # Subtest: resolve conflict with server version
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9436606Z ok 72 - resolve conflict with server version
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9437135Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9437487Z   duration_ms: 0.432302
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9437871Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9438215Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9438950Z # Subtest: resolve conflict with local version creates pending update against new revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9439962Z ok 73 - resolve conflict with local version creates pending update against new revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9441034Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9441355Z   duration_ms: 0.338962
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9441735Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9442058Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9442757Z # Subtest: new edit during an in-flight update remains pending with new server revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9443761Z ok 74 - new edit during an in-flight update remains pending with new server revision
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9444455Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9444796Z   duration_ms: 0.265597
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9445175Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9445482Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9446892Z # Subtest: soft deletion is part of the synchronized state
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9447740Z ok 75 - soft deletion is part of the synchronized state
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9448249Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9448588Z   duration_ms: 0.288434
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9448980Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9449281Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9449778Z # Subtest: V2 uses a distinct offline IndexedDB namespace
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9450490Z ok 76 - V2 uses a distinct offline IndexedDB namespace
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9450997Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9451335Z   duration_ms: 0.732155
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9451690Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9452115Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9452798Z # Subtest: V2 never accesses legacy V1 grocery or membership tables
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9453704Z ok 77 - V2 never accesses legacy V1 grocery or membership tables
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9454308Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9454668Z   duration_ms: 0.648835
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9455081Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9455447Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9456166Z # Subtest: V2 rejects ambiguous household membership
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9456885Z ok 78 - V2 rejects ambiguous household membership
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9457456Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9457841Z   duration_ms: 0.275294
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9458254Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9458625Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9459457Z # Subtest: V2 includes household binding on GET, INSERT and optimistic PATCH
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9460532Z ok 79 - V2 includes household binding on GET, INSERT and optimistic PATCH
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9461197Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9461572Z   duration_ms: 0.198311
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9462020Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9462800Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9463487Z # Subtest: V2 service worker has isolated cache and route scope
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9464340Z ok 80 - V2 service worker has isolated cache and route scope
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9464928Z   ---
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9465319Z   duration_ms: 0.202872
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9465712Z   type: 'test'
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9466509Z   ...
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9466813Z 1..80
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9467119Z # tests 80
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9467396Z # suites 0
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9467679Z # pass 80
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9467961Z # fail 0
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9468269Z # cancelled 0
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9468588Z # skipped 0
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9468868Z # todo 0
+source-backed-browser	Existing offline, family and conflict regressions	2026-11-10T21:21:48.9469185Z # duration_ms 1978.848836
+source-backed-browser	Integrated preview builder and byte provenance	﻿2026-11-10T21:21:48.9535794Z ##[group]Run node --test essai-stitch-v7/tests/integrated-build.test.cjs
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:48.9536538Z [36;1mnode --test essai-stitch-v7/tests/integrated-build.test.cjs[0m
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:48.9571215Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:48.9571509Z ##[endgroup]
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.0028970Z TAP version 13
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3117747Z # Subtest: integrated bundle uses the actual modules, isolated persona and guarded native client
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3156135Z ok 1 - integrated bundle uses the actual modules, isolated persona and guarded native client
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3157455Z   ---
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3157810Z   duration_ms: 270.956596
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3158177Z   type: 'test'
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3158493Z   ...
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3220646Z 1..1
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3222121Z # tests 1
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3222636Z # suites 0
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3223331Z # pass 1
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3224936Z # fail 0
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3225773Z # cancelled 0
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3226544Z # skipped 0
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3227813Z # todo 0
+source-backed-browser	Integrated preview builder and byte provenance	2026-11-10T21:21:49.3228489Z # duration_ms 330.474996
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	﻿2026-11-10T21:21:49.3314252Z ##[group]Run node --test essai-stitch-v7/tests/e06-*.test.mjs
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.3314854Z [36;1mnode --test essai-stitch-v7/tests/e06-*.test.mjs[0m
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.3352051Z shell: /usr/bin/bash -e {0}
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.3352348Z ##[endgroup]
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4065926Z TAP version 13
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4490346Z # Subtest: E06 draft resume keeps stable answer IDs and isolates members, users and households
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4517501Z ok 1 - E06 draft resume keeps stable answer IDs and isolates members, users and households
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4518395Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4518759Z   duration_ms: 3.826141
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4519263Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4519751Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4520920Z # Subtest: E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4522251Z ok 2 - E06 failed metadata saves preserve the last draft and foreign/incompatible records are not overwritten
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4523050Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4523534Z   duration_ms: 0.675052
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4524014Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4524399Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4525230Z # Subtest: a delayed draft write cannot replace the active draft after switching member
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4526335Z ok 3 - a delayed draft write cannot replace the active draft after switching member
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4527004Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4527312Z   duration_ms: 0.552139
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4527690Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4528072Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4528841Z # Subtest: two loaded instances cannot erase drafts of distinct members
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4529898Z ok 4 - two loaded instances cannot erase drafts of distinct members
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4530544Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4530906Z   duration_ms: 0.62226
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4531245Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4531535Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4664129Z # Subtest: E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4666460Z ok 5 - E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4668357Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4668904Z   duration_ms: 2.221712
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4669427Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4669879Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4671018Z # Subtest: manual E05 house/patronus changes remove only the corresponding computed-version attribution
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4672552Z ok 6 - manual E05 house/patronus changes remove only the corresponding computed-version attribution
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4673543Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4674028Z   duration_ms: 0.37427
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4674530Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:49.4675013Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2301836Z # Subtest: E06 JavaScript matches every Python base/optional combination and supplied QA result
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2303305Z ok 7 - E06 JavaScript matches every Python base/optional combination and supplied QA result
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2304966Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2305577Z   duration_ms: 768.619413
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2306235Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2306707Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2307705Z # Subtest: E06 validates stable answer IDs and does not use optional answers that were never asked
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2309129Z ok 8 - E06 validates stable answer IDs and does not use optional answers that were never asked
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2309857Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2310155Z   duration_ms: 0.91373
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2310481Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2310768Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2405619Z # Subtest: E06 native family conflict preserves the chosen identity and algorithm versions: server
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2407085Z ok 9 - E06 native family conflict preserves the chosen identity and algorithm versions: server
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2407813Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2408155Z   duration_ms: 7.722838
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2408607Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2408924Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2409712Z # Subtest: E06 native family conflict preserves the chosen identity and algorithm versions: local
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2411482Z ok 10 - E06 native family conflict preserves the chosen identity and algorithm versions: local
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2412210Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2412570Z   duration_ms: 4.21126
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2412798Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2412998Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2413509Z # Subtest: E06 interversion LIMIT: an old native member writer can erase result provenance and structured names
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2414278Z ok 11 - E06 interversion LIMIT: an old native member writer can erase result provenance and structured names
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2414735Z   ---
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2414942Z   duration_ms: 1.618788
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2415174Z   type: 'test'
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2415375Z   ...
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2415564Z 1..11
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2415752Z # tests 11
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2415946Z # suites 0
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2416380Z # pass 11
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2416660Z # fail 0
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2416914Z # cancelled 0
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2417206Z # skipped 0
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2417451Z # todo 0
+source-backed-browser	E06 exhaustive scoring, identity and draft isolation	2026-11-10T21:21:50.2417725Z # duration_ms 857.888877
+source-backed-browser	Source derivation remains reproducible	﻿2026-11-10T21:21:50.2506991Z ##[group]Run npm ci --ignore-scripts --prefix essai-stitch-v7
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:50.2507497Z [36;1mnpm ci --ignore-scripts --prefix essai-stitch-v7[0m
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:50.2507864Z [36;1mnode essai-stitch-v7/build-source.cjs[0m
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:50.2508210Z [36;1mnpm run build:css --prefix essai-stitch-v7[0m
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:50.2509768Z [36;1mgit diff --exit-code -- essai-stitch-v7/stitch-tailwind.css essai-stitch-v7/assets/cuisine/e07-taverne.png essai-stitch-v7/assets/cuisine/e07-courses.png essai-stitch-v7/templates essai-stitch-v7/chrome-source.html essai-stitch-v7/register-route-data.js essai-stitch-v7/route-manifest.json essai-stitch-v7/index.html essai-stitch-v7/traverse.html essai-stitch-v7/missions.html essai-stitch-v7/famille.html[0m
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:50.2544393Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:50.2544690Z ##[endgroup]
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6347739Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6348603Z added 72 packages, and audited 73 packages in 1s
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6348910Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6349375Z 19 packages are looking for funding
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6349779Z   run `npm fund` for details
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6356804Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6357078Z found 0 vulnerabilities
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6879005Z STITCH_ROOT_BUILD=taverne SOURCE=dobby_la_taverne_gourmande_repas_menus
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6885665Z STITCH_ROOT_BUILD=traverse SOURCE=dobby_l_choppe_du_chemin_de_traverse
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6897170Z STITCH_ROOT_BUILD=missions SOURCE=dobby_la_biblioth_que_des_missions_t_ches_magiques
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.6904811Z STITCH_ROOT_BUILD=famille SOURCE=dobby_le_salon_des_curiosit_s_famille_organisation
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.7077041Z CUISINE_TEMPLATES=13
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.7154800Z FAMILY_TEMPLATES=7
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.7366694Z REGISTER_TEMPLATES 30
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.7446302Z E06_TEMPLATES 7
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.8495610Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.8496663Z > build:css
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.8497536Z > tailwindcss -i ./tailwind-input.css -o ./stitch-tailwind.css --minify
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:51.8498074Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:52.1892200Z Browserslist: caniuse-lite is outdated. Please run:
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:52.1892994Z   npx update-browserslist-db@latest
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:52.1893665Z   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:52.2893057Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:52.2894129Z Rebuilding...
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:54.1174219Z 
+source-backed-browser	Source derivation remains reproducible	2026-11-10T21:21:54.1175921Z Done in 1864ms.
+source-backed-browser	Confirm the original Stitch source manifest	﻿2026-11-10T21:21:54.5566325Z ##[group]Run node -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"
+source-backed-browser	Confirm the original Stitch source manifest	2026-11-10T21:21:54.5567821Z [36;1mnode -e "const m=require('./design/stitch-53/manifest.json');if(m.html_pages!==53 || m.designs.length!==53)process.exit(1);"[0m
+source-backed-browser	Confirm the original Stitch source manifest	2026-11-10T21:21:54.5615911Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Confirm the original Stitch source manifest	2026-11-10T21:21:54.5616415Z ##[endgroup]
+source-backed-browser	Browser tooling (tests only)	﻿2026-11-10T21:21:54.5982617Z ##[group]Run npm ci --ignore-scripts
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:54.5983180Z [36;1mnpm ci --ignore-scripts[0m
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:54.6032172Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:54.6032498Z ##[endgroup]
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:55.1725821Z 
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:55.1726893Z added 2 packages, and audited 3 packages in 511ms
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:55.1732607Z 
+source-backed-browser	Browser tooling (tests only)	2026-11-10T21:21:55.1732838Z found 0 vulnerabilities
+source-backed-browser	Functional Stitch roots and source fidelity	﻿2026-11-10T21:21:55.1843055Z ##[group]Run python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1843690Z [36;1mpython3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1844092Z [36;1msleep 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1844349Z [36;1mif command -v google-chrome >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1844694Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1845021Z [36;1melif command -v chromium >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1845333Z [36;1m  BROWSER="$(command -v chromium)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1845672Z [36;1melif command -v chromium-browser >/dev/null; then[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1846213Z [36;1m  BROWSER="$(command -v chromium-browser)"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1846609Z [36;1melse[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1846865Z [36;1m  echo "No Chrome/Chromium available on runner"[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1847170Z [36;1m  exit 1[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1847373Z [36;1mfi[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1847676Z [36;1mCHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs[0m
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1883136Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:21:55.1883625Z ##[endgroup]
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:06.9405412Z E06_AUTH_PASS accepted native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:08.5958202Z E06_AUTH_PASS ambiguous native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:10.1598313Z E06_AUTH_PASS denied native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:11.7531737Z E06_AUTH_PASS cross-household native login/requireHousehold, configured public key, no inferred member
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:17.9670607Z E06_JOURNEY_PASS 320 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:23.4098073Z E06_JOURNEY_PASS 390 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:29.1143272Z E06_JOURNEY_PASS 1440 seven source routes, real native identity, exact questions, conditional extra, reload, explicit confirmations, actual grade, no duplicate
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:33.8524420Z E06_EDGE_PASS existing member/85 runes, repeat/skip/resume/back, 4 houses/12 Patronus, native storage refusal, metadata refusal, stale profile/context isolation
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:36.4573531Z E06_RECOVERY_PASS failed temporary save remains escapable; no member created; identity draft resumes after reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:38.6356923Z E06_REVIEW_CREATION_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:39.3819022Z E06_REVIEW_MULTITAB_PASS native IndexedDB, distinct-member merge and same-member revision refusal
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:41.9886406Z E06_REVIEW_MEMBERSHIP_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:46.4278620Z E06_SHARED_PASS 320 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:50.0593400Z E06_SHARED_PASS 390 native identity/result writer, native module PATCH and reload, same member ID/version, private records excluded (HTTP fixture only)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:52.7354345Z E06_SOURCE_VISUAL_PASS 320 seven immutable source compositions; source missing media explicitly unfilled
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:54.7018163Z E06_SOURCE_VISUAL_PASS 390 seven immutable source compositions; source missing media explicitly unfilled
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:57.0934518Z E06_SOURCE_VISUAL_PASS 1440 seven immutable source compositions; source missing media explicitly unfilled
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:58.8890287Z E08_COUNT_PASS 320 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:59.1454060Z E08_COUNT_PASS 320 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:22:59.5985450Z E08_COUNT_PASS 320 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:00.4852338Z E08_COUNT_PASS 320 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:00.8988067Z E08_BROWSER_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:01.9771382Z E08_COUNT_PASS 360 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:02.2250590Z E08_COUNT_PASS 360 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:02.6756187Z E08_COUNT_PASS 360 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:03.5843448Z E08_COUNT_PASS 360 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:03.9810620Z E08_BROWSER_PASS 360
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:04.9983713Z E08_COUNT_PASS 390 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:05.2423120Z E08_COUNT_PASS 390 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:05.6927677Z E08_COUNT_PASS 390 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:06.6014133Z E08_COUNT_PASS 390 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:06.9648146Z E08_BROWSER_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:08.0942195Z E08_COUNT_PASS 1440 0
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:08.4098929Z E08_COUNT_PASS 1440 1
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:08.9937644Z E08_COUNT_PASS 1440 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:10.2842876Z E08_COUNT_PASS 1440 50
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:10.7657125Z E08_BROWSER_PASS 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:12.4748003Z E03_COUNTS_PASS real 3/17 and native title never sanitized
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:25.0438298Z E03_PASS 320 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:36.8221418Z E03_PASS 390 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:49.4548083Z E03_PASS 1440 filters, real counts, form, native writers, E01/E02, reload, chrome, layout
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:52.5340099Z E072_BOOT_PASS already-loaded native engine starts once
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:55.2886195Z E072_MODEL_PASS migration/local CRUD/units/unknown/provenance/reload/partial archive/storage rollback
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:23:59.1912629Z E072_UI_PASS 320 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:02.6259399Z E072_UI_PASS 390 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:06.2421478Z E072_UI_PASS 1440 unique list/manual edit/import cancel/confirm/check/reactivate/archive/history/legacy routes/scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:06.5199416Z REVIEW_BUILD 1f0fa32deb3fd64b178148f09cc8e449ac5ca165 253 files /home/runner/work/dobby-demo/dobby-demo/essai-dobby-integrated-review
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:07.1890948Z SENTINELS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:07.3127281Z ENTRY 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:07.9156887Z LOADED http://127.0.0.1:8765/essai-dobby-integrated-review/essai-stitch-v7/traverse.html
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:07.9716954Z READY 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:22.6199215Z INTEGRATED_PREVIEW_PASS 320 http://127.0.0.1:8765/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:22.7729774Z SENTINELS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:22.8673028Z ENTRY 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:23.3841707Z LOADED http://127.0.0.1:8765/essai-dobby-integrated-review/essai-stitch-v7/traverse.html
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:23.4130535Z READY 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:37.9317959Z INTEGRATED_PREVIEW_PASS 390 http://127.0.0.1:8765/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:38.0937698Z SENTINELS 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:38.1869658Z ENTRY 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:38.7543803Z LOADED http://127.0.0.1:8765/essai-dobby-integrated-review/essai-stitch-v7/traverse.html
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:38.7849068Z READY 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:54.1752441Z INTEGRATED_PREVIEW_PASS 1440 http://127.0.0.1:8765/essai-dobby-integrated-review/ six journeys/native persistence/history/retakes/runes/no duplicates/assets/reset/isolation
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:24:58.6748416Z E071_CONTEXT_PASS date/slot reload/back/forward, planned records unchanged
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:06.5790800Z E071_PASS 320 header/CTA/photos/slots/prepared/native navigation/real scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:13.9604782Z E071_PASS 390 header/CTA/photos/slots/prepared/native navigation/real scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:21.8154529Z E071_PASS 1440 header/CTA/photos/slots/prepared/native navigation/real scroll
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:24.4164378Z E07_PREPARED_PASS native status and reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:24.5805682Z E07_NATIVE_CATEGORY_UNKNOWN_PASS native categories and explicit unknown quantities
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:24.5922648Z E07_NATIVE_ACTIONS_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:27.6079580Z E07_PASS 320 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:29.8929334Z E07_PASS 390 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:32.3738910Z E07_PASS 1440 supplied sources/local illustrations/planning/common bars; unified shopping covered by E07.2
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:34.7563738Z E05_NATIVE_PASS actual form, extension preservation, reload, validation, storage rollback, rewards unchanged
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:39.3942139Z E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:43.4469277Z E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:48.1128491Z E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:25:56.9153925Z E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:26:04.9068249Z E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:26:12.0658490Z E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:26:19.2947737Z E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:26:21.9376229Z RUNES_NATIVE_PASS actual forms/10-25-50/idempotence/reassignment/deletion/atomic storage failure/pending reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:26:36.9739621Z E04_RUNES_PASS 320 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:26:50.9007167Z E04_RUNES_PASS 390 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:05.4009982Z E04_RUNES_PASS 1440 three native efforts, exact immutable credits, real avatars/profile, legacy/unassigned, reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:08.3366454Z E02_UI_ACTIONS_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:10.5119282Z E02_UI_ACTIONS_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:12.9590095Z E02_UI_ACTIONS_PASS 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:16.4844361Z E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:23.4748756Z E02_VOICE_HISTORY_PASS
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:27:48.2248329Z E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:13.5147793Z E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:14.4557471Z E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:26.3337628Z E013_PASS chromium 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:37.1418726Z E013_PASS chromium 1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:40.8526825Z E011_BAND after 390 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:44.1333486Z E011_BAND after 1440 MAISON & QUOTIDIEN · TOUS LES OUTILS DE DOBBY
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:44.1427628Z E011_VISUAL_PASS after 390/1440
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:28:50.4761450Z E01_SOURCE_COMPARISONS_PASS 10
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:08.0171372Z DOBBY_V7_STITCH_BINDING_PASS [{"screen":"taverne","width":320,"status":"PASS"},{"screen":"traverse","width":320,"status":"PASS"},{"screen":"missions","width":320,"status":"PASS"},{"screen":"famille","width":320,"status":"PASS"},{"screen":"taverne","width":390,"status":"PASS"},{"screen":"traverse","width":390,"status":"PASS"},{"screen":"missions","width":390,"status":"PASS"},{"screen":"famille","width":390,"status":"PASS"}]
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:15.0498315Z CUISINE_PATH_PASS 320px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:21.3460036Z CUISINE_PATH_PASS 390px meals, quantities, recipes, cook, TM5, shopping, history, import, edits and reload
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:27.6726888Z CUISINE_FAMILY_PASS 320px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:33.1057763Z CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:35.3845443Z CUISINE_VISUAL taverne 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:35.9509355Z CUISINE_VISUAL pick 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:36.6737065Z CUISINE_VISUAL recipes 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:39.1229221Z CUISINE_VISUAL recipe 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:40.5735714Z CUISINE_VISUAL cook 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:41.0865124Z CUISINE_VISUAL tm5 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:43.5198447Z CUISINE_VISUAL recipe-add-1 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:45.1310519Z CUISINE_VISUAL recipe-add 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:45.6391467Z CUISINE_VISUAL batch 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:48.1158461Z CUISINE_VISUAL shop-1 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:49.5836490Z CUISINE_VISUAL shop 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:51.0555227Z CUISINE_VISUAL shop-final 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:52.3804013Z CUISINE_VISUAL shop-history 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:54.9907288Z CUISINE_VISUAL taverne 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:56.5876786Z CUISINE_VISUAL pick 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:57.3774403Z CUISINE_VISUAL recipes 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:29:59.8301275Z CUISINE_VISUAL recipe 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:00.3164834Z CUISINE_VISUAL cook 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:00.8576805Z CUISINE_VISUAL tm5 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:02.2917129Z CUISINE_VISUAL recipe-add-1 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:02.9136576Z CUISINE_VISUAL recipe-add 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:04.4453110Z CUISINE_VISUAL batch 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:06.9540072Z CUISINE_VISUAL shop-1 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:08.4358459Z CUISINE_VISUAL shop 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:09.9102055Z CUISINE_VISUAL shop-final 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:12.2494610Z CUISINE_VISUAL shop-history 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:14.0118137Z CUISINE_VISUAL taverne 1440 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:15.6927028Z CUISINE_VISUAL shop-1 1440 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:16.2924176Z CUISINE_VISUAL shop 1440 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:16.9063578Z CUISINE_VISUAL shop-final 1440 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:16.9228095Z CUISINE_VISUAL_PASS 13 native routes at 320/390 plus E07 overrides at 1440 original and E07 source hashes verified
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:23.3026283Z FAMILY_PATH_PASS 320px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:23.3037606Z FAMILY_MEMBER_PASS 320px
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:28.8563285Z FAMILY_PATH_PASS 390px local medical isolation, native CRUD, duplicate/deletion safeguards, persistence and empty states
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:28.8571290Z FAMILY_MEMBER_PASS 390px
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:31.3721790Z FAMILY_EDGE_PASS stale bookmark, orphan reassignment, legacy identity, browser back/forward
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:33.1918200Z FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:33.2977987Z FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:33.4979993Z FAMILY_REVIEW_PASS selected states match the current operation 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:34.5665168Z FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:34.6800860Z FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:34.8807890Z FAMILY_REVIEW_PASS selected states match the current operation 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:41.9096248Z FAMILY_SHARED_PASS 320px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:48.1951375Z FAMILY_SHARED_PASS 390px voluntary scope, canonical member IDs, no private upload, offline persistence, module conflict and native resolution
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:51.6145171Z FAMILY_VISUAL members 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:52.0729160Z FAMILY_VISUAL member-edit 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:53.6697561Z FAMILY_VISUAL agenda 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:57.1599952Z FAMILY_VISUAL medical-edit 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:57.8120218Z FAMILY_VISUAL health 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:58.3467111Z FAMILY_VISUAL health-person 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:30:58.9329337Z FAMILY_VISUAL health-history 320 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:03.4262266Z FAMILY_VISUAL members 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:03.8897506Z FAMILY_VISUAL member-edit 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:04.4788529Z FAMILY_VISUAL agenda 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:07.9944485Z FAMILY_VISUAL medical-edit 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:09.6810423Z FAMILY_VISUAL health 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:10.2038343Z FAMILY_VISUAL health-person 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:10.7927640Z FAMILY_VISUAL health-history 390 []
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:11.8927490Z FAMILY_VISUAL_PASS 7 sources x 320/390, 28 comparisons + 14 empty states
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:17.8740494Z REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:23.2736211Z REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:27.7677392Z REGISTER_VISUAL 3 house-1 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:28.2971529Z REGISTER_VISUAL 3 house 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:31.7895226Z REGISTER_VISUAL 3 equipment-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:33.1923089Z REGISTER_VISUAL 3 equipment 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:34.6266386Z REGISTER_VISUAL 3 maintenance 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:34.9995362Z REGISTER_VISUAL 3 house-backup 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:37.4163393Z REGISTER_VISUAL 3 backup 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:45.2610933Z REGISTER_VISUAL 3 house-1 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:45.7900299Z REGISTER_VISUAL 3 house 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:48.2948459Z REGISTER_VISUAL 3 equipment-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:48.7300479Z REGISTER_VISUAL 3 equipment 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:50.1885435Z REGISTER_VISUAL 3 maintenance 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:50.6227654Z REGISTER_VISUAL 3 house-backup 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:53.0738070Z REGISTER_VISUAL 3 backup 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:31:57.3493170Z REGISTER_VISUAL_PASS 3 7 sources x 320/390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:01.6933520Z REGISTER_DOCUMENTS_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:05.3400913Z REGISTER_DOCUMENTS_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:10.7657577Z REGISTER_VISUAL 4 document-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:11.2847400Z REGISTER_VISUAL 4 documents-1 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:11.7627186Z REGISTER_VISUAL 4 documents 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:14.1470365Z REGISTER_VISUAL 4 contracts-1 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:15.6325273Z REGISTER_VISUAL 4 contracts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:16.1102638Z REGISTER_VISUAL 4 contract-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:16.6419332Z REGISTER_VISUAL 4 document 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:17.0028030Z REGISTER_VISUAL 4 contract-1 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:17.4909974Z REGISTER_VISUAL 4 contract 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:17.8429534Z REGISTER_VISUAL 4 import-review 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:18.2037576Z REGISTER_VISUAL 4 import-file 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:23.0359472Z REGISTER_VISUAL 4 document-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:24.5225046Z REGISTER_VISUAL 4 documents-1 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:25.0556906Z REGISTER_VISUAL 4 documents 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:27.4165133Z REGISTER_VISUAL 4 contracts-1 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:28.8597937Z REGISTER_VISUAL 4 contracts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:29.3488340Z REGISTER_VISUAL 4 contract-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:30.8766666Z REGISTER_VISUAL 4 document 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:31.2724384Z REGISTER_VISUAL 4 contract-1 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:31.7308166Z REGISTER_VISUAL 4 contract 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:32.0784060Z REGISTER_VISUAL 4 import-review 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:32.4352028Z REGISTER_VISUAL 4 import-file 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:33.5966654Z REGISTER_VISUAL_PASS 4 11 sources x 320/390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:40.7718330Z REGISTER_TOOLS_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:47.1468736Z REGISTER_TOOLS_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:53.6059148Z REGISTER_VISUAL 5 mission-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:54.0377689Z REGISTER_VISUAL 5 chat 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:54.4170776Z REGISTER_VISUAL 5 chat-2 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:57.7939866Z REGISTER_VISUAL 5 search 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:58.3439300Z REGISTER_VISUAL 5 menu 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:32:59.7620745Z REGISTER_VISUAL 5 personal 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:06.3037362Z REGISTER_VISUAL 5 mission-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:06.7484958Z REGISTER_VISUAL 5 chat 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:07.1184834Z REGISTER_VISUAL 5 chat-2 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:10.4816220Z REGISTER_VISUAL 5 search 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:11.0576184Z REGISTER_VISUAL 5 menu 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:11.4670531Z REGISTER_VISUAL 5 personal 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:12.1959048Z REGISTER_VISUAL_PASS 5 6 sources x 320/390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:16.5680675Z REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:20.2105417Z REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:24.6314108Z REGISTER_VISUAL 2b contacts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:26.1851773Z REGISTER_VISUAL 2b contact-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:26.6640323Z REGISTER_VISUAL 2b memos 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:29.1157506Z REGISTER_VISUAL 2b memo-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:29.5227848Z REGISTER_VISUAL 2b lists 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:30.0413678Z REGISTER_VISUAL 2b list-detail 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:34.5763684Z REGISTER_VISUAL 2b contacts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:36.1601237Z REGISTER_VISUAL 2b contact-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:36.6479689Z REGISTER_VISUAL 2b memos 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:39.1412107Z REGISTER_VISUAL 2b memo-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:39.5621604Z REGISTER_VISUAL 2b lists 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:40.0581189Z REGISTER_VISUAL 2b list-detail 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:40.8496431Z REGISTER_VISUAL_PASS 2b 6 sources x 320/390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:47.2439394Z REGISTER_SYNC_PASS 320 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:52.9947996Z REGISTER_SYNC_PASS 390 native contact/list payloads, offline checkbox persistence/resync, local memos excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:33:58.2162692Z REGISTER_DOCUMENTS_SYNC_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:02.7238812Z REGISTER_DOCUMENTS_SYNC_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:05.9367724Z REGISTER_IMPORT_READING_PASS 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:08.3676600Z REGISTER_IMPORT_READING_PASS 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:11.9465847Z REGISTER_MISSIONS_SYNC_PASS 320 native manual assignment/payload and offline completion/resync, private data excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:14.8158289Z REGISTER_MISSIONS_SYNC_PASS 390 native manual assignment/payload and offline completion/resync, private data excluded
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:17.0603649Z REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:18.6120201Z REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:33.3717932Z REGISTER_NAVIGATION_PASS 320 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:47.3852674Z REGISTER_NAVIGATION_PASS 390 four roots, 15 menu destinations, source back/forward/reload and no record contamination
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:50.2995042Z REGISTER_ROOT_VISUAL traverse 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:53.0542360Z REGISTER_ROOT_VISUAL missions 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:55.9921930Z REGISTER_ROOT_VISUAL famille 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:34:59.7360553Z REGISTER_ROOT_VISUAL taverne 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:02.8558982Z REGISTER_ROOT_VISUAL traverse 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:04.9088391Z REGISTER_ROOT_VISUAL missions 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:07.8527294Z REGISTER_ROOT_VISUAL famille 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:09.9317428Z REGISTER_ROOT_VISUAL taverne 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:11.7373318Z REGISTER_REVIEW_PASS stale-memo-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:12.8333774Z REGISTER_REVIEW_PASS stale-equipment-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:13.8803415Z REGISTER_REVIEW_PASS stale-document-edit 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:15.0527952Z REGISTER_REVIEW_PASS list-rg-item-toggle 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:16.1825862Z REGISTER_REVIEW_PASS list-rg-item-remove 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:17.2901716Z REGISTER_REVIEW_PASS menu-member-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:18.5359281Z REGISTER_REVIEW_PASS menu-contact-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:19.6382221Z REGISTER_REVIEW_PASS menu-medical-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:20.9126597Z REGISTER_REVIEW_PASS maintenance-file-draft 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:22.0261742Z REGISTER_REVIEW_PASS document-native-write-missing 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:23.1597116Z REGISTER_REVIEW_PASS document-native-write-replaced 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:24.1835842Z REGISTER_REVIEW_PASS contact-sharing-disclosure 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:25.2038632Z REGISTER_REVIEW_PASS maintenance-source-facts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:26.3875131Z REGISTER_REVIEW_PASS source-facts 320
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:27.4417492Z REGISTER_REVIEW_PASS stale-memo-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:28.5124268Z REGISTER_REVIEW_PASS stale-equipment-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:29.5566616Z REGISTER_REVIEW_PASS stale-document-edit 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:30.8310384Z REGISTER_REVIEW_PASS list-rg-item-toggle 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:32.0815196Z REGISTER_REVIEW_PASS list-rg-item-remove 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:33.2137581Z REGISTER_REVIEW_PASS menu-member-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:34.4761082Z REGISTER_REVIEW_PASS menu-contact-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:35.5795614Z REGISTER_REVIEW_PASS menu-medical-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:36.8171011Z REGISTER_REVIEW_PASS maintenance-file-draft 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:37.9076252Z REGISTER_REVIEW_PASS document-native-write-missing 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:39.0401771Z REGISTER_REVIEW_PASS document-native-write-replaced 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:40.0455105Z REGISTER_REVIEW_PASS contact-sharing-disclosure 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:41.0677980Z REGISTER_REVIEW_PASS maintenance-source-facts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:42.2334936Z REGISTER_REVIEW_PASS source-facts 390
+source-backed-browser	Functional Stitch roots and source fidelity	2026-11-10T21:35:42.2421314Z REGISTER_REVIEW_ALL_PASS 14 cases × 320/390
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	﻿2026-11-10T21:35:42.3631530Z ##[group]Run actions/upload-artifact@v4
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3631859Z with:
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3632096Z   name: dobby-v7-stitch-visual-evidence
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3632392Z   path: docs/dobby-v7/evidence/
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3632653Z   retention-days: 14
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3632883Z   if-no-files-found: warn
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3633115Z   compression-level: 6
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3633333Z   overwrite: false
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3633550Z   include-hidden-files: false
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.3633795Z ##[endgroup]
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.5360739Z (node:59316) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.5362057Z (Use `node --trace-deprecation ...` to show where the warning was created)
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.6916991Z With the provided path, there will be 1135 files uploaded
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.6922687Z Artifact name is valid!
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.6923448Z Root directory input is valid!
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:42.9333527Z Beginning upload of artifact content to blob storage
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:43.2771121Z (node:59316) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:43.4111042Z Uploaded bytes 8388608
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:43.6661106Z Uploaded bytes 16777216
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:43.9911736Z Uploaded bytes 25165824
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:44.3299828Z Uploaded bytes 33554432
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:44.5487786Z Uploaded bytes 41943040
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:44.8367632Z Uploaded bytes 50331648
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:45.2448836Z Uploaded bytes 58720256
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:45.4765571Z Uploaded bytes 67108864
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:45.7723201Z Uploaded bytes 75497472
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:46.0293058Z Uploaded bytes 83886080
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:46.3788637Z Uploaded bytes 92274688
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:46.6542767Z Uploaded bytes 100663296
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:46.9801755Z Uploaded bytes 109051904
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:47.2259507Z Uploaded bytes 117440512
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:47.5471033Z Uploaded bytes 125829120
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:47.8225863Z Uploaded bytes 134217728
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:48.0843992Z Uploaded bytes 142606336
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:48.3792713Z Uploaded bytes 150994944
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:48.7027176Z Uploaded bytes 159383552
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:49.0245849Z Uploaded bytes 167772160
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:49.3205758Z Uploaded bytes 176160768
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:49.5513167Z Uploaded bytes 184549376
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:49.9597882Z Uploaded bytes 192937984
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.1522537Z Uploaded bytes 201326592
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.4718310Z Uploaded bytes 209715200
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.5099543Z Uploaded bytes 211379311
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.5240536Z Finished uploading artifact content to blob storage!
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.5244102Z SHA256 digest of uploaded artifact zip is b2461a8fd798eac5ee76fd7631c29275548e005433cf04d26e312c93ccd42028
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.5246239Z Finalizing artifact upload
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.9468825Z Artifact dobby-v7-stitch-visual-evidence.zip successfully finalized. Artifact ID 13804513087
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.9470278Z Artifact dobby-v7-stitch-visual-evidence has been successfully uploaded! Final size is 211379311 bytes. Artifact ID is 13804513087
+source-backed-browser	Keep root, Cuisine and Family comparisons (320/390px)	2026-11-10T21:35:50.9481012Z Artifact download URL: https://github.com/PortenartCo/dobby-demo/actions/runs/42904244391/artifacts/13804513087
+source-backed-browser	Post Run actions/setup-node@v4	﻿2026-11-10T21:35:50.9867099Z Post job cleanup.
+source-backed-browser	Post Run actions/setup-node@v4	2026-11-10T21:35:51.1244803Z (node:59334) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+source-backed-browser	Post Run actions/setup-node@v4	2026-11-10T21:35:51.1246460Z (Use `node --trace-deprecation ...` to show where the warning was created)
+source-backed-browser	Post Run actions/checkout@v4	﻿2026-11-10T21:35:51.1402772Z Post job cleanup.
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2637322Z [command]/usr/bin/git version
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2727561Z git version 2.56.0
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2764722Z Temporarily overriding HOME='/home/runner/work/_temp/4de36812-f695-4b0b-b3b0-b1948c0d91cb' before making global git config changes
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2767805Z Adding repository directory to the temporary git global config as a safe directory
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2769469Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/dobby-demo/dobby-demo
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2858953Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.2943601Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.3240202Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.3272278Z http.https://github.com/.extraheader
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.3288149Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.3325845Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.3671853Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+source-backed-browser	Post Run actions/checkout@v4	2026-11-10T21:35:51.3728391Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+source-backed-browser	Complete job	﻿2026-11-10T21:35:51.4211918Z Cleaning up orphan processes
+source-backed-browser	Complete job	2026-11-10T21:35:51.4470699Z Terminate orphan process: pid (3235) (python3)
+source-backed-browser	Complete job	2026-11-10T21:35:51.4599067Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

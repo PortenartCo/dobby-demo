@@ -1,0 +1,58 @@
+[
+  {
+    "view": "traverse",
+    "id": "dobby_l_choppe_du_chemin_de_traverse",
+    "width": 320,
+    "sha256": "43e53ef9339df1ea4059850e28b06505a6151f390b83a7c0c50244d059872ebd",
+    "status": "PASS"
+  },
+  {
+    "view": "missions",
+    "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques",
+    "width": 320,
+    "sha256": "a6d8a44f3bcb5e7ab57375facdeb032804631cb054725b834cb049281ce6aeab",
+    "status": "PASS"
+  },
+  {
+    "view": "famille",
+    "id": "dobby_le_salon_des_curiosit_s_famille_organisation",
+    "width": 320,
+    "sha256": "cfd5569c0aafb54b5ac2a2987c6168e33add69f00162f765155d60efd29b5f2d",
+    "status": "PASS"
+  },
+  {
+    "view": "taverne",
+    "id": "dobby_la_taverne_gourmande_repas_menus",
+    "width": 320,
+    "sha256": "50f2190bf38f98e6d3618b3a9f5d18c8a9a4c7e02f195bc9981f4a2f8560b6f5",
+    "status": "PASS"
+  },
+  {
+    "view": "traverse",
+    "id": "dobby_l_choppe_du_chemin_de_traverse",
+    "width": 390,
+    "sha256": "43e53ef9339df1ea4059850e28b06505a6151f390b83a7c0c50244d059872ebd",
+    "status": "PASS"
+  },
+  {
+    "view": "missions",
+    "id": "dobby_la_biblioth_que_des_missions_t_ches_magiques",
+    "width": 390,
+    "sha256": "a6d8a44f3bcb5e7ab57375facdeb032804631cb054725b834cb049281ce6aeab",
+    "status": "PASS"
+  },
+  {
+    "view": "famille",
+    "id": "dobby_le_salon_des_curiosit_s_famille_organisation",
+    "width": 390,
+    "sha256": "cfd5569c0aafb54b5ac2a2987c6168e33add69f00162f765155d60efd29b5f2d",
+    "status": "PASS"
+  },
+  {
+    "view": "taverne",
+    "id": "dobby_la_taverne_gourmande_repas_menus",
+    "width": 390,
+    "sha256": "50f2190bf38f98e6d3618b3a9f5d18c8a9a4c7e02f195bc9981f4a2f8560b6f5",
+    "status": "PASS"
+  }
+]

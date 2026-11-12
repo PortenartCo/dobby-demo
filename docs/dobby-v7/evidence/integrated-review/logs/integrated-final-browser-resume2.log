@@ -1,0 +1,13 @@
+E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity
+E04_PASS 320 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 390 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+E04_PASS 1440 three original panels, real cards, local dates, native create/edit/reload, draft, old member/format, chrome/back/no overflow
+RUNES_NATIVE_PASS actual forms/10-25-50/idempotence/reassignment/deletion/atomic storage failure/pending reload
+locator.click: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-dv7-mission-edit=""]')[22m
+
+    at /workspace/dobby-integrated-review/essai-stitch-v7/tests/e04-runes.cjs:7:104 {
+  log: [ `  - waiting for locator('[data-dv7-mission-edit=""]')` ],
+  name: 'TimeoutError'
+}

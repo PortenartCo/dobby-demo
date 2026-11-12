@@ -1,0 +1,2 @@
+Revue technique indépendante READ-ONLY du diff091fe0e..00b4ecd : un P1 trouvé, remise à false du marqueur après désactivation. Correctif273250e + test rouge/vert, puis P1 clos. Aucun autre défaut concret de perte/double crédit identifié.
+Dernier delta299bc4f (reprise automatique après récupération, statut attente/historique invalide, mentions provisoires et palettes SVG) relu séparément : aucun autre constat, P1 toujours clos. Relecteur sans modification de fichiers, serveur, compte réel ni nouvelle exécution.

@@ -1,0 +1,225 @@
+{
+  "sourceSha": "e15b7d265ba3801c8627cbc2c791eeff2414c7ed",
+  "files": [
+    {
+      "path": "after/empty-1440.png",
+      "sha256": "379d8a038a4bf7ee9f89d7c97ae6c6ab229c99030cef93bdae7be0bf810619fd",
+      "bytes": 225248
+    },
+    {
+      "path": "after/empty-320.png",
+      "sha256": "e05fdeaf226226997e063eec35ae7febb9cd941184432d198034bdcdf4e43309",
+      "bytes": 149274
+    },
+    {
+      "path": "after/empty-390.png",
+      "sha256": "65537695657bb35f6a867f68ce40974707e0ad077738bd4f4caff905a2e35220",
+      "bytes": 179585
+    },
+    {
+      "path": "after/empty-viewport-1440.png",
+      "sha256": "6bf54fb435d39d4a318a48ff358b854cb774e3f7ec80e504f656be5481eaf8a1",
+      "bytes": 220704
+    },
+    {
+      "path": "after/empty-viewport-320.png",
+      "sha256": "83e8091d4c2656af2609d4c9016877b3d4bc570339786c861a66e6c02666ad63",
+      "bytes": 143281
+    },
+    {
+      "path": "after/empty-viewport-390.png",
+      "sha256": "e7fc500fa5613e8fed13ad7437071ae08808ea91bccb776b2d268e1f8d918b8a",
+      "bytes": 175960
+    },
+    {
+      "path": "after/list-1440.png",
+      "sha256": "dfa942b3b7b923389f446de004ae0bbf68c43184277b10b6200e8d49dec2bc88",
+      "bytes": 254327
+    },
+    {
+      "path": "after/list-320.png",
+      "sha256": "0b61e551d3544b16c50d196d51edeebb46772c33832a01632ee362a94d60d766",
+      "bytes": 177449
+    },
+    {
+      "path": "after/list-390.png",
+      "sha256": "788b4fd7125f96728fda31d75a39559ae037a5c13b415663cd3f0f0a35b1216f",
+      "bytes": 203342
+    },
+    {
+      "path": "after/list-viewport-1440.png",
+      "sha256": "1469c45dd7a1bd81cad98ddb93f6292938d22565f9ec94af999ae01f8d55811e",
+      "bytes": 225480
+    },
+    {
+      "path": "after/list-viewport-320.png",
+      "sha256": "31fd4acabe25327f3eb503cc04662ee59ce9b1b1b5c561af70391b4107a07641",
+      "bytes": 147465
+    },
+    {
+      "path": "after/list-viewport-390.png",
+      "sha256": "93d9c31270c9a72947393d296760dccbd57a703eb92a4c00bd57c0cd9abaa706",
+      "bytes": 177467
+    },
+    {
+      "path": "after/long-list-1440.png",
+      "sha256": "705f088fa3b528076b35c2b524c0d13e4480e0bd92868f2b144fa5beaf6e8406",
+      "bytes": 514831
+    },
+    {
+      "path": "after/long-list-320.png",
+      "sha256": "8f44bf650a0285463ea4f4d39d3459aba5663372643d0fc7703b4295c001dc7c",
+      "bytes": 407090
+    },
+    {
+      "path": "after/long-list-390.png",
+      "sha256": "08a50f4b478a871c18ff1b51b04e1343b0a6ae29f6c2d180b9495bc0d622989d",
+      "bytes": 438704
+    },
+    {
+      "path": "after/long-list-viewport-1440.png",
+      "sha256": "98eadd1ae2c15dbf5604a594558d2286958abf04b7d781aae03efd7ebc50ecf2",
+      "bytes": 223039
+    },
+    {
+      "path": "after/long-list-viewport-320.png",
+      "sha256": "f8a2f2eb18f2a81ff84475ef766b721fdc3ddac1cf0fd9439172d88d8e6b6fe5",
+      "bytes": 145692
+    },
+    {
+      "path": "after/long-list-viewport-390.png",
+      "sha256": "b416230f6c1ba44d6470662174d074f6a1a3f1f301d95f8f56ade5fdc9c06bbf",
+      "bytes": 178871
+    },
+    {
+      "path": "after/scroll-1440.png",
+      "sha256": "2efcac20ff88e1bf01bbd07d87074e463b1e46aef1f10253222d01e9375e37d5",
+      "bytes": 69994
+    },
+    {
+      "path": "after/scroll-320.png",
+      "sha256": "56f4d7eb3a86feab3881144d7e6394488868b296e5b2dc12c1e22e2c302cc903",
+      "bytes": 52152
+    },
+    {
+      "path": "after/scroll-390.png",
+      "sha256": "ec147c05cdb670827f6dc3e3bb9f314e007ce3cdb99d5af8e231a4940e9f34c8",
+      "bytes": 55394
+    },
+    {
+      "path": "family/shop-conflict-320.png",
+      "sha256": "a98b12801327abd73f5c4f90f433e585177400497cd6b65d4be0eb94c4cccd1e",
+      "bytes": 159040
+    },
+    {
+      "path": "family/shop-conflict-390.png",
+      "sha256": "070a2438c7be12c38f6447657ae5ec7c85e844b8ee161fbad7550aab87857c5c",
+      "bytes": 191751
+    },
+    {
+      "path": "family/shop-connected-320.png",
+      "sha256": "09f40bb395f359cb1bbc1ec5bfb77090b6a7a752a1e3e8633083dc6aa43e86ba",
+      "bytes": 154361
+    },
+    {
+      "path": "family/shop-connected-390.png",
+      "sha256": "166490987d30535f4ec89ba45bba88664c58516bc03dc6a477805bbf73ca9f1d",
+      "bytes": 186207
+    },
+    {
+      "path": "family/shop-offline-320.png",
+      "sha256": "18a857a86a5304551cdc29ee5dcbbd9eda01e00671fdac1c7a05c906835ce194",
+      "bytes": 160260
+    },
+    {
+      "path": "family/shop-offline-390.png",
+      "sha256": "2bafb570d20a5762cc3e4249e0c996e5c3f40eb3f72ae26b981431cd4ead107d",
+      "bytes": 192434
+    },
+    {
+      "path": "hosted/shop-1440.png",
+      "sha256": "157d5e7ae32c58f3c3a321f951a07892e9bcf34a39cddb16ee403595be4c86f2",
+      "bytes": 271711
+    },
+    {
+      "path": "hosted/shop-390.png",
+      "sha256": "6bddadab65359db6fb136696a84049bdd990037a94709c74d029a68e6f69aec3",
+      "bytes": 222397
+    },
+    {
+      "path": "hosted/taverne-1440.png",
+      "sha256": "268fc054d442d45671044bf2a3873f62fcc7868c497891218d816a39f57e2bdf",
+      "bytes": 357516
+    },
+    {
+      "path": "hosted/taverne-390.png",
+      "sha256": "3450f21eddb6b158d16c74eed89f9240a25ada0f2af40eb36e2d58d81fe6fc2a",
+      "bytes": 288752
+    },
+    {
+      "path": "preview-local/shop-1440.png",
+      "sha256": "44785ff77481b13e12e34338e606e0446e99388861c83511592332e61289c28a",
+      "bytes": 271720
+    },
+    {
+      "path": "preview-local/shop-390.png",
+      "sha256": "6bddadab65359db6fb136696a84049bdd990037a94709c74d029a68e6f69aec3",
+      "bytes": 222397
+    },
+    {
+      "path": "preview-local/taverne-1440.png",
+      "sha256": "268fc054d442d45671044bf2a3873f62fcc7868c497891218d816a39f57e2bdf",
+      "bytes": 357516
+    },
+    {
+      "path": "preview-local/taverne-390.png",
+      "sha256": "3450f21eddb6b158d16c74eed89f9240a25ada0f2af40eb36e2d58d81fe6fc2a",
+      "bytes": 288752
+    },
+    {
+      "path": "taverne-taverne-1440.png",
+      "sha256": "6168634360671693d034c6109052a6f8e3a5c239151c1b0b20de2e9c2966978d",
+      "bytes": 439510
+    },
+    {
+      "path": "taverne-taverne-320.png",
+      "sha256": "4047c3750853887bb10af1ef36292c48bac49bfb6c509c65f10bf16fc2ddedbb",
+      "bytes": 340900
+    },
+    {
+      "path": "taverne-taverne-390.png",
+      "sha256": "6acc68cd03586e740de0b655d41b14acacacfba43d0d23044cadc7911b68b976",
+      "bytes": 374356
+    },
+    {
+      "path": "taverne-viewport-scroll-1440.png",
+      "sha256": "21d0ba4e36a1556fbf0249834853c799f80e93a8c855801d10a7c249d514be2d",
+      "bytes": 119330
+    },
+    {
+      "path": "taverne-viewport-scroll-320.png",
+      "sha256": "f00f19298f5132c18cc542e51c56b691a9ad0fc1f05bde310141f995a7b9bdab",
+      "bytes": 79697
+    },
+    {
+      "path": "taverne-viewport-scroll-390.png",
+      "sha256": "c32a2fd150d8a3b95d78cda558199c97dcc02ceb4e1290fa2a173b4ead7a0179",
+      "bytes": 95978
+    },
+    {
+      "path": "taverne-viewport-top-1440.png",
+      "sha256": "8b998c58eff5a75fe862d066063ec6aea109129c53e1949e5c26427a09315356",
+      "bytes": 296447
+    },
+    {
+      "path": "taverne-viewport-top-320.png",
+      "sha256": "6a898f6ce2ce8596a7e3d993c2878743ae84b8719218342933bb61de61f88640",
+      "bytes": 185077
+    },
+    {
+      "path": "taverne-viewport-top-390.png",
+      "sha256": "23eef3d6f246583a52fadc9e38471d496f93d90f02d632a0cbf8cd3e96407820",
+      "bytes": 237771
+    }
+  ]
+}

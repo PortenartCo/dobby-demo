@@ -1,0 +1,412 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-dim": "#1e100c", "on-secondary-fixed-variant": "#314c42", "on-surface-variant": "#d4c4b1", "outline": "#9d8e7e", "on-tertiary-fixed-variant": "#604100", "error-container": "#93000a", "on-secondary-fixed": "#042018", "on-primary": "#442b00", "outline-variant": "#504537", "inverse-surface": "#fadcd5", "on-tertiary-container": "#513600", "on-secondary-container": "#a1bfb2", "on-secondary": "#1a352c", "inverse-primary": "#815500", "on-tertiary": "#432c00", "surface-bright": "#483530", "on-surface": "#fadcd5", "surface-container-high": "#372622", "secondary": "#afcdc0", "on-primary-fixed": "#291800", "inverse-on-surface": "#3e2c28", "primary-container": "#d49b42", "on-background": "#fadcd5", "surface-variant": "#43302c", "secondary-fixed-dim": "#afcdc0", "on-error-container": "#ffdad6", "error": "#ffb4ab", "surface-container": "#2c1c18", "primary-fixed-dim": "#f9bb5f", "on-tertiary-fixed": "#281900", "secondary-fixed": "#cbe9dc", "tertiary-fixed": "#ffdead", "background": "#1e100c", "tertiary-fixed-dim": "#fabc4d", "primary": "#f9bb5f", "primary-fixed": "#ffddb2", "tertiary": "#fabc4d", "surface-container-low": "#271814", "on-primary-fixed-variant": "#624000", "surface-tint": "#f9bb5f", "secondary-container": "#334e44", "on-primary-container": "#533500", "surface-container-lowest": "#180b07", "on-error": "#690005", "tertiary-container": "#d59b2f", "surface-container-highest": "#43302c", "surface": "#1e100c" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "margin-mobile": "1rem", "space-lg": "1.5rem", "gutter": "1.25rem", "margin": "2.5rem", "space-xl": "2.5rem", "gutter-mobile": "0.75rem", "space-md": "1rem", "space-xs": "0.25rem" }, "fontFamily": { "headline-sm": ["Playfair Display"], "headline-lg": ["Playfair Display"], "label-md": ["Literata"], "label-lg": ["Literata"], "body-lg": ["EB Garamond"], "body-sm": ["EB Garamond"], "headline-lg-mobile": ["Playfair Display"], "display-lg-mobile": ["Playfair Display"], "body-md": ["EB Garamond"], "display-lg": ["Playfair Display"], "label-sm": ["Literata"], "headline-md": ["Playfair Display"] }, "fontSize": { "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}], "headline-lg": ["22px", {"lineHeight": "40px", "fontWeight": "600"}], "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}], "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600"}], "body-lg": ["19px", {"lineHeight": "28px", "fontWeight": "400"}], "body-sm": ["15px", {"lineHeight": "22px", "fontWeight": "400"}], "headline-lg-mobile": ["26px", {"lineHeight": "34px", "fontWeight": "600"}], "display-lg-mobile": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "700"}], "body-md": ["17px", {"lineHeight": "24px", "fontWeight": "400"}], "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}], "label-sm": ["10px", {"lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500"}], "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}] } } } }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen selection:bg-primary selection:text-on-primary"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_4px_20px_rgba(24,11,7,0.6)]"><div class="h-[64px] px-gutter-mobile flex items-center justify-between gap-space-xs"><button aria-label="Retour" class="w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#eec66a] hover:text-[#fcf7ee] transition-colors shrink-0 shadow-sm active:scale-[0.98]" onclick="history.back()"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"></path></svg></button><div class="flex-1 h-12 mx-2 px-3 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex flex-col justify-center items-center text-center overflow-hidden shadow-sm"><div class="flex items-center gap-1.5"><span class="font-['Playfair_Display'] text-[17px] font-semibold text-[#f9bb5f] tracking-wide">DOBBY</span><span class="w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_6px_#10b981]"></span></div><span class="font-label-sm text-[10px] tracking-wider text-[#d4c4b1] uppercase truncate font-medium">SANTÉ DU LOGIS • CARNET INDIVIDUEL</span></div><div class="flex items-center gap-2 shrink-0"><button aria-label="Son et ambiance sonore" class="w-12 h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 flex items-center justify-center text-[#eec66a] hover:text-[#fcf7ee] transition-colors relative shadow-sm active:scale-[0.98]"><span class="material-symbols-outlined text-[20px]">volume_up</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_6px_#10b981]"></span></button><button aria-label="Profil utilisateur" class="w-12 h-12 rounded-xl bg-[#f3c25b] text-[#180b07] flex items-center justify-center shadow-[0_0_12px_rgba(249,187,95,0.35)] shrink-0 active:scale-[0.98]"><span class="material-symbols-outlined text-[22px] font-medium">person</span></button></div></div></header><main class="flex flex-col relative w-full px-margin-mobile pt-16 pb-safe bg-surface min-h-screen pt-2"><div class="flex flex-col w-full pb-10">
+<!-- Avertissement légal et bienveillant -->
+<div class="w-full mb-space-lg"><div class="relative w-full h-[220px] rounded-2xl overflow-hidden shadow-[0_8px_24px_rgba(24,11,7,0.7)] border border-[#d49b42]/30 mb-space-md"><img alt="Dobby dans son officine d'apothicaire bienveillante" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ALJJyrB67ufuTn6no78iQuf9k---WZ3eAH-w1Z8QZuXvcT5mgp6_3xtWLtrJDaQv-TFZf1cGBm-j84MZRw2uxImo3FY9Nc9bgMnQcuuwe67P7Tldpx686RBiztIk4f_zAKslMug-KRBGYbyhjjS4LBOXyICNbdMg3WbQGAY5zm5MfDJOrRplRi1CYmbrFvJwzcLX3CnaB-yaIm-DfXYeYzorhChEwvepFeWC27sbaXXe_K1s"><div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#180b07]/50 to-[#180b07]"></div><div class="absolute top-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180b07]/80 backdrop-blur-md border border-[#d49b42]/40 shadow-sm"><span class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_6px_rgba(249,187,95,0.8)]"></span><span class="font-label-sm text-[10px] tracking-wider text-primary font-semibold uppercase">✦ CARNET DE SANTÉ ✦</span></div><div class="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#180b07]/80 backdrop-blur-md border border-[#d49b42]/40 shadow-sm"><span class="font-label-sm text-[11px] text-[#fadcd5] font-medium">📜 1 MEMBRE DU FOYER</span></div><div class="absolute bottom-3 left-3 right-3 flex items-center gap-2"><span class="px-2.5 py-1 rounded-lg bg-[#271814]/90 backdrop-blur-md border border-[#d49b42]/30 text-primary font-label-sm text-[11px] font-semibold">Constantes &amp; Soins</span><span class="px-2.5 py-1 rounded-lg bg-[#271814]/90 backdrop-blur-md border border-[#d49b42]/30 text-[#fadcd5] font-label-sm text-[11px] font-semibold">Dossier Médical</span></div></div><div class="space-y-space-xs text-left mb-space-sm"><div class="flex items-center gap-1.5"><span class="font-label-sm text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">✧ DOSSIER MÉDICAL INDIVIDUEL • SUIVI DU MEMBRE ✧</span></div><h1 class="font-['Playfair_Display'] text-[24px] font-semibold text-[#fcf7ee] tracking-tight leading-snug">Carnet de Santé Individuel</h1><p class="font-body-sm text-[14px] italic text-[#d4c4b1] leading-relaxed pt-1">« Dobby veille avec tendresse et rigueur sur la santé de chaque membre du foyer ! Antécédents, rappels et ordonnances sont soigneusement gardés. » <span class="not-italic font-semibold text-[#d49b42] text-[11px] uppercase tracking-wide">— Note bienveillante de Dobby</span></p></div><div class="flex flex-col gap-space-xs pt-1 mb-space-xs"><button class="w-full h-12 rounded-xl bg-[#f3c25b] hover:bg-primary-fixed text-[#180b07] font-semibold text-sm flex items-center justify-center gap-2 transition-colors shadow-md active:scale-[0.99]"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="">+ Ajouter une constante ou un rappel</span></button><div class="flex items-center justify-center gap-1.5 py-1 text-center text-[#d4c4b1] font-label-sm text-[11px]"><span class="material-symbols-outlined text-[#d49b42] text-[14px]">lock</span><span class="">Protection locale sur iPhone • Aucune transmission à des tiers</span></div></div></div><aside aria-label="Avertissement légal" class="w-full mb-space-md bg-surface-container-low rounded-xl p-space-md shadow-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">privacy_tip</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="font-label-md text-label-md text-primary tracking-wide uppercase">Notice Préventive</span>
+<span class="text-outline text-label-sm font-label-sm">• Données Fictives</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Démonstration avec données fictives uniquement. Cet espace d’apothicaire n’est pas adapté à la conservation de véritables données de santé médicales ou sensibles officielles.
+        </p>
+</div>
+</div>
+</aside>
+<!-- Sélecteur horizontal de membres de la maisonnée -->
+<section aria-label="Membres de la maisonnée" class="w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-xs px-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Maisonnée &amp; Familiers</span>
+<span class="font-label-sm text-label-sm text-primary">5 résidents</span>
+</div>
+<div class="flex items-center gap-space-sm overflow-x-auto pb-2 pt-1 -mx-margin-mobile px-margin-mobile no-scrollbar" role="tablist">
+<!-- Hugo (Sélectionné) -->
+<button aria-selected="true" class="flex flex-col items-center gap-1.5 shrink-0 group focus:outline-none min-w-[64px]" role="tab">
+<div class="relative w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-primary to-primary-container shadow-[0_0_12px_rgba(249,187,95,0.35)]">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait peint à l'huile d'Hugo, jeune garçon apprenti de douze ans aux cheveux bruns ébouriffés, portant une cape d'apothicaire en velours chaud, lumière dorée d'âtre et regard vif et malicieux dans un cadre ancien." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcfCwpd4PdYWYyWA_cBsCBM0Mt8IrRzgDveAYXWwbK1hOqptvk0uUnIrHy9trAZheptwe2xmNkmeGz1kxEHqTwBKtNkl8jwZkxlL75iehQttS__9oHZdy3pFqWBnZF6RctYxJYXkke_dwQtpmCo04RaRJ_1Jc2EZCTnzEfuQdGqKrKPxAEc9QKRjRLnGii1ZxKlKl6z1cFR6wHa_84XPxdS3DSHKmZfWLuT3ZdU06W">
+</div>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+</span>
+</div>
+<div class="text-center">
+<span class="font-label-md text-label-md text-primary font-semibold block leading-tight">Hugo</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">12 ans</span>
+</div>
+</button>
+<!-- Chloé -->
+<button aria-selected="false" class="flex flex-col items-center gap-1.5 shrink-0 opacity-70 hover:opacity-100 transition-opacity focus:outline-none min-w-[64px]" role="tab">
+<div class="relative w-14 h-14 rounded-full p-0.5 bg-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait pictural victorien de Chloé, jeune fille de huit ans aux cheveux nattés, tenant un carnet botanique enluminé, teinte ambrée et ambiance de manoir chaleureux." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkcMhoh7fUb6SJtRUw4JUaRxZZT5LRYRPpsJeLs1tThaMr06Q_Xshh-Zu78NRU_PDzSoUSjRdKkjznnGLjlfDepNslZf0mkQbWpvsuTg2rDvQ3-0u4OBb-bo5fMu0rc2apexON5b_I5wPxVHmnR-22_VlhWfDoHL3hPraAd-hDI4UjCa1jHx_dlxxRS5Q1KmB5xMYBvyGWSGCWBbpnKuTfkcngzNNltzAS3yXr9_br">
+</div>
+</div>
+<div class="text-center">
+<span class="font-label-md text-label-md text-on-surface block leading-tight">Chloé</span>
+<span class="font-label-sm text-label-sm text-outline">8 ans</span>
+</div>
+</button>
+<!-- Thomas -->
+<button aria-selected="false" class="flex flex-col items-center gap-1.5 shrink-0 opacity-70 hover:opacity-100 transition-opacity focus:outline-none min-w-[64px]" role="tab">
+<div class="relative w-14 h-14 rounded-full p-0.5 bg-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait à l'aquarelle de Thomas le père de famille, portant une veste de tweed acajou et lunettes rondes d'érudit alchimiste, fond d'armoire en chêne et parchemins." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD63Co6pjpgPh37yRgKFOG4J0poyvf6FwUggQgLY5dxxh4vmQt_UONDA3C4R0VKr-eLNlcz0_OflG1HlfsNNpwUx-B6QQWcM-SJKT_AV8x3UQdgeDbtyQrqtOf7Z_0WtN0HWWjlDy-3E5zt__92-TEYJnDdVDvw3Z3fcBneZw1Gl8zL9d5PhAHHPamZX2HDoiAjlFVNixfDa4o7UCCqOFHLu7gS0CzA8CHekFwb-85L">
+</div>
+</div>
+<div class="text-center">
+<span class="font-label-md text-label-md text-on-surface block leading-tight">Thomas</span>
+<span class="font-label-sm text-label-sm text-outline">Père</span>
+</div>
+</button>
+<!-- Léa -->
+<button aria-selected="false" class="flex flex-col items-center gap-1.5 shrink-0 opacity-70 hover:opacity-100 transition-opacity focus:outline-none min-w-[64px]" role="tab">
+<div class="relative w-14 h-14 rounded-full p-0.5 bg-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait à la cire et tempera de Léa, mère de famille bienveillante, robe sombre aux reflets cuivrés, flacon d'élixir suspendu au cou, éclairage doux à la bougie." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCetqdqUHo_GmMDajBuiwvu4dzuTYm9a6Z2-W5hM_WAJznj_FLCdm3ARunGg_k9lIhyzbJzOSvscReJudFX9gkL7BMc8X0eQT1VXMJ4s8MZuBO1AZII1hBmgSSMW5PC6xRXEcm7XWnP9jm9kH0K_btXoNOHkLGXBPpQCJkaGCKvQcHkw4kKnufa15TJfIRbSO_FjwiWCPrOfCijEi3VxBtcUj0wk_llcT7oWnV2DuoF">
+</div>
+</div>
+<div class="text-center">
+<span class="font-label-md text-label-md text-on-surface block leading-tight">Léa</span>
+<span class="font-label-sm text-label-sm text-outline">Mère</span>
+</div>
+</button>
+<!-- Dobby -->
+<button aria-selected="false" class="flex flex-col items-center gap-1.5 shrink-0 opacity-70 hover:opacity-100 transition-opacity focus:outline-none min-w-[64px]" role="tab">
+<div class="relative w-14 h-14 rounded-full p-0.5 bg-surface-container-highest">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container flex items-center justify-center bg-secondary-container/40">
+<span class="material-symbols-outlined text-secondary text-[26px]" style="font-variation-settings: 'FILL' 1;">cottage</span>
+</div>
+</div>
+<div class="text-center">
+<span class="font-label-md text-label-md text-on-surface block leading-tight">Dobby</span>
+<span class="font-label-sm text-label-sm text-outline">Gardien</span>
+</div>
+</button>
+</div>
+</section>
+<!-- En-tête du Profil Sélectionné -->
+<section class="w-full bg-surface-container rounded-xl p-space-md mb-space-lg shadow-lg relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-36 h-36 rounded-full bg-primary/5 blur-2xl pointer-events-none"></div>
+<div class="flex items-start gap-space-md mb-space-md relative">
+<div class="relative w-20 h-20 rounded-full p-1 bg-gradient-to-b from-primary via-primary-container to-surface-container-highest shrink-0 shadow-md">
+<div class="w-full h-full rounded-full overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Gros plan sur le médaillon peint d'Hugo Granger-Valombre, jeune sorcier apothicaire en manteau acajou boutonné de cuivre, fond d'herbier relié en cuir, style gravure colorée vintage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMVvdYFbrRMpQfMbb-8huZTUcIleuBZih01tmsT-x_bmzcRyDV_lres4JlearriJKraB7QwILBX5MJfc3zzxLOHU8_Z68ypsGH4vn1zZfoXFog2mEM4stojsgZrJ1X6jJskhDy_AzhT9qTfAafX_A31HjmdLSE3qFvpUKvMzKH3r37-s0QFG-pPtnbR0Ul-l2K7HONZCsgHYvLQbrEAio2ByjEXDcEp4rbaGjPtxbA">
+</div>
+<span class="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shadow">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="bg-primary/15 text-primary text-label-sm font-label-sm px-2 py-0.5 rounded-full uppercase tracking-wider">Apprenti • 12 ans</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">Hugo Granger-Valombre</h2>
+<div class="mt-1 flex items-center gap-1.5 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="truncate">Groupe O+ • Vif &amp; Sensible</span>
+</div>
+</div>
+</div>
+<!-- Actions rapides -->
+<div class="flex flex-col gap-space-sm pt-2">
+<button class="w-full min-h-[48px] px-space-md py-space-sm rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-space-xs transition-colors shadow-md active:scale-[0.99]">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span class="">Prendre un rendez-vous</span>
+</button>
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="min-h-[48px] px-space-sm py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span class="">Modifier</span>
+</button>
+<button class="min-h-[48px] px-space-sm py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-error font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors active:scale-[0.98]" onclick="document.getElementById('archive-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span class="">Archiver</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 1 : Rendez-vous & Consultations à venir -->
+<section class="w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">calendar_clock</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Consultations à venir</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 prévues</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Consultation 1 -->
+<article class="bg-surface-container rounded-xl p-space-md shadow-md relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-xs mb-space-xs">
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block mb-0.5">Échoppe des Chaudrons</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface truncate">Apothicaire E. Flamel</h4>
+</div>
+<span class="shrink-0 bg-primary/20 text-primary font-label-sm text-label-sm px-2.5 py-1 rounded-full font-semibold">
+            Dans 2 jours
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+          Suivi semestriel de croissance alchimique, ajustement des potions toniques et contrôle des filtres énergétiques.
+        </p>
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-lowest/60 rounded-lg p-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">schedule</span>
+<span class="font-label-md text-label-md">Mer. 20 Nov. à 16h30</span>
+</div>
+<button aria-label="Détails du rendez-vous Flamel" class="min-h-[44px] min-w-[44px] text-primary hover:text-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Consultation 2 -->
+<article class="bg-surface-container rounded-xl p-space-md shadow-md">
+<div class="flex items-start justify-between gap-space-xs mb-space-xs">
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider block mb-0.5">Cabinet Dr. Valombreux</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface truncate">Bilan de Médecine Générale</h4>
+</div>
+<span class="shrink-0 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-2.5 py-1 rounded-full font-semibold">
+            Confirmé
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+          Examen stéthoscopique et contrôle de la vision pour la reconduction de la licence de plein air.
+        </p>
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-lowest/60 rounded-lg p-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">event</span>
+<span class="font-label-md text-label-md">Ven. 12 Déc. à 10h15</span>
+</div>
+<button aria-label="Détails du bilan annuel" class="min-h-[44px] min-w-[44px] text-primary hover:text-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Bouton d'ajout élégant -->
+<button class="w-full min-h-[48px] py-space-sm px-space-md rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="">Ajouter une consultation</span>
+</button>
+</div>
+</section>
+<!-- Section 2 : Références Documentaires & Ordonnances -->
+<section class="w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">description</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Parchemins &amp; Ordonnances</h3>
+</div>
+<button class="font-label-sm text-label-sm text-primary hover:underline">Voir tout</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Ordonnance 1 -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex items-center justify-between gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">local_pharmacy</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base truncate">Éléments Végétaux &amp; Tisanes</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Délivrée le 14 Oct. • 3 flacons actifs</p>
+</div>
+<span class="shrink-0 bg-surface-container-highest px-2 py-1 rounded text-label-sm font-label-sm text-on-surface-variant">
+          En cours
+        </span>
+</div>
+<!-- Certificat 2 -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex items-center justify-between gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">sports_martial_arts</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base truncate">Certificat d'Aptitude au Vol</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Saison 2024-2025 • Épreuve d'altitude validée</p>
+</div>
+<span class="shrink-0 bg-secondary-container px-2 py-1 rounded text-label-sm font-label-sm text-on-secondary-container">
+          Valide
+        </span>
+</div>
+<!-- Vaccins 3 -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-md flex items-center justify-between gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">vaccines</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base truncate">Schéma Vaccinal &amp; Rappels</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">À jour • Prochain rappel DTP en 2026</p>
+</div>
+<span class="shrink-0 bg-surface-container-highest px-2 py-1 rounded text-label-sm font-label-sm text-primary">
+          Conforme
+        </span>
+</div>
+</div>
+</section>
+<!-- Section 3 : Contacts Médicaux & Praticiens -->
+<section class="w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">medical_services</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Praticiens Référents</h3>
+</div>
+<button class="font-label-sm text-label-sm text-primary hover:underline">Annuaire</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Praticien 1 : Dr. Valombreux -->
+<article class="bg-surface-container rounded-xl p-space-md shadow-md">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-lowest shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait en médaillon sombre de la doctoresse Éléonore Valombreux avec stéthoscope ancien en laiton poli et col montant d'époque victorienne, éclairage d'atelier chaleureux." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMxWmbUeddTjqkczzlXN9O8QiO2N1ZO3zB8sh9nCkqTZC23LqQawCDz164rIIvYMslRioFbTxDfaiaTW60CUyViI1bqr0QtVyYTebpg16KjdhYABYo9IyMxUmGiGZd2kWFFJN3z1XR79OArUuRvk6_aYyRExukuYl3DzPLLv9era_or6KEYJ-PSCydek7jPVpUh9bMieTr9xyGfBK-Ua60c0wyhz89rbFeLsCpeagq">
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Dr. Éléonore Valombreux</h4>
+<p class="font-label-sm text-label-sm text-primary">Médecin de Famille • Soignant Référent</p>
+</div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+          Cabinet du Faubourg Saint-Honoré • 01 42 68 00 XX
+        </p>
+<div class="grid grid-cols-2 gap-space-sm">
+<a class="min-h-[48px] px-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface flex items-center justify-center gap-1.5 transition-colors font-label-md text-label-md" href="tel:0142680000">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span class="">Appeler</span>
+</a>
+<button class="min-h-[48px] px-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface flex items-center justify-center gap-1.5 transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary text-[18px]">mark_email_unread</span>
+<span class="">Hibou / Message</span>
+</button>
+</div>
+</article>
+<!-- Praticien 2 : Apothicaire Barnabé -->
+<article class="bg-surface-container rounded-xl p-space-md shadow-md flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-lowest shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait de l'apothicaire Barnabé, vieil herboriste bienveillant portant des tabliers de lin usés et lunettes sur le front dans son officine remplie de flacons ambrés." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB670ShOzMrm-F-CQGoMLlOU8SrEbmoMG1f9D1ZxmyAzvdSNHDGTo2rCX5YTV872aZvXXtPgY6pQkzciwnjShTXg79LpC4gQGBPKvjxbcqSy3aeUcM59qqNIEvqiViC10LACXld-nAl2IbeEl6FVm4VhUFseGY0IWJdqFEIdyBIj7qtkpNX9iq445sYDWjW3rDXwCYUTrg8Xij0ARiWhFN0pugHmUqif2xnxQXhore8">
+</div>
+<div class="min-w-0">
+<h4 class="font-headline-sm text-headline-sm text-on-surface truncate">Barnabé l'Herboriste</h4>
+<p class="font-label-sm text-label-sm text-secondary">Herboristerie &amp; Teintures mères</p>
+<span class="font-body-sm text-body-sm text-outline block text-xs mt-0.5">Disponible les mercredis</span>
+</div>
+</div>
+<button aria-label="Contacter Barnabé" class="min-h-[48px] min-w-[48px] rounded-lg bg-surface-container-high text-primary flex items-center justify-center hover:bg-surface-container-highest shrink-0">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</article>
+</div>
+</section>
+<!-- Section 4 : Historique des Soins & Rituels Passés -->
+<section class="w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">history</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Chronologie des Soins</h3>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Année 2024</span>
+</div>
+<!-- Timeline avec nœuds dorés -->
+<div class="relative pl-6 space-y-space-md before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-surface-container-highest">
+<!-- Nœud 1 -->
+<div class="relative">
+<div class="absolute -left-6 top-1.5 w-3.5 h-3.5 rounded-full bg-primary ring-4 ring-surface shadow"></div>
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Octobre 2024</span>
+<span class="font-label-sm text-label-sm text-outline">Soins à domicile</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base mb-1">Rhume Automnal Aigu</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Tisane chaude de bouillon-blanc, miel de sapin des Vosges et infusion d’eucalyptus pendant 3 jours. Guérison complète sans fièvre.
+          </p>
+</div>
+</div>
+<!-- Nœud 2 -->
+<div class="relative">
+<div class="absolute -left-6 top-1.5 w-3.5 h-3.5 rounded-full bg-secondary ring-4 ring-surface shadow"></div>
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Juin 2024</span>
+<span class="font-label-sm text-label-sm text-outline">Examen officiel</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base mb-1">Bilan Audition &amp; Vision</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Aptitude certifiée pour les manœuvres aériennes et vol en rase-mottes. Acuité 10/10 aux deux yeux, tympans sains.
+          </p>
+</div>
+</div>
+<!-- Nœud 3 -->
+<div class="relative">
+<div class="absolute -left-6 top-1.5 w-3.5 h-3.5 rounded-full bg-primary-container ring-4 ring-surface shadow"></div>
+<div class="bg-surface-container rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Février 2024</span>
+<span class="font-label-sm text-label-sm text-outline">Traumatologie mineure</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface text-base mb-1">Entorse Poignet Droit</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Chute d'un balai d'entraînement à faible hauteur. Application d'emplâtre d'arnica macéré et contention élastique pendant 10 jours.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Pied de page & Sécurité -->
+<footer class="w-full flex flex-col items-center text-center pt-space-md gap-space-md">
+<button class="w-full min-h-[48px] py-space-sm px-space-md rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors" onclick="history.back()">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="">Retour au registre des membres</span>
+</button>
+<div class="max-w-xs space-y-1">
+<div class="flex items-center justify-center gap-1.5 text-primary text-label-sm font-label-sm uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="">Registre Familial DOBBY</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+        Données strictement restreintes à votre cercle domestique. Aucun parchemin n’est transmis aux corporations tierces.
+      </p>
+</div>
+</footer>
+<!-- Modale d'Archivage / Suppression (Cachée par défaut) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-margin-mobile bg-surface-container-lowest/80 backdrop-blur-sm" id="archive-modal">
+<div class="w-full max-w-sm bg-surface-container-high rounded-xl p-space-lg shadow-2xl space-y-space-md text-left">
+<div class="w-12 h-12 rounded-full bg-error/15 text-error flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Archiver ce carnet ?</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Êtes-vous certain de vouloir archiver le dossier de <strong class="text-on-surface">Hugo Granger-Valombre</strong> ? Toutes les ordonnances et rituels associés seront remisés au cellier des archives.
+        </p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<button class="w-full min-h-[48px] rounded-lg bg-error hover:bg-error/90 text-on-error font-label-md text-label-md font-semibold flex items-center justify-center" onclick="document.getElementById('archive-modal').classList.add('hidden')">
+          Confirmer l'archivage
+        </button>
+<button class="w-full min-h-[48px] rounded-lg bg-surface-container hover:bg-surface-container-highest text-on-surface font-label-md text-label-md flex items-center justify-center" onclick="document.getElementById('archive-modal').classList.add('hidden')">
+          Conserver le membre
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interaction simple pour le sélecteur d'onglets
+  document.querySelectorAll('[role="tablist"] button').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('[role="tablist"] button').forEach((btn) => {
+        btn.setAttribute('aria-selected', 'false');
+        btn.classList.add('opacity-70');
+      });
+      tab.setAttribute('aria-selected', 'true');
+      tab.classList.remove('opacity-70');
+    });
+  });
+</script></main>
+
+</body></html>

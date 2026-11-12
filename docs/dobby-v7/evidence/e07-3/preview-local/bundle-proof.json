@@ -1,0 +1,13 @@
+{
+  "base": "http://127.0.0.1:8894/e073-preview-test-current/",
+  "manifestSha256": "e9a65e4d22b269f9d20144410d357e66d35d950c073805e8e3b8e6451ec6af8a",
+  "sourceSha": "66a1395bb95ff7b9a7e2d1b981f5a8773070c03e",
+  "sourceStatus": "Temporary bundle built from current uncommitted E07.3 files on base66a1395; final committed and hosted bundle still to be verified separately.",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "result": "PASS",
+  "externalStitchMedia": "generic-inert-fallback-in-generated-copy-only"
+}

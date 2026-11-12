@@ -1,0 +1,18 @@
+ARCHIVE /workspace/attachments/a7f82994-cf74-446e-959e-96fcaaa479dd/DOBBY-E08-ILLUSTRATION-CONTRATS.zip
+bytes=1468684 sha256=2b4cc8296f739838d9c1ad6f32426105885f52af3a1f59ebdcf3feb7434dd278
+ARCHIVE /workspace/attachments/3d9a8196-bba8-49b0-aaef-22e654e3d195/DOBBY-E06-ENTREES-CODEX.zip
+bytes=2215203 sha256=9cfcbfbdd3643ae610ed0d71ae214059a6ef9e99dacc1ceaf132b6730d2bded6
+references/stitch/dobby_mon_foyer_magique/code.html
+references/stitch/dobby_le_myst_re_des_quatre_maisons/code.html
+references/stitch/dobby_mon_identit/code.html
+references/stitch/dobby_la_r_v_lation_de_la_maison/code.html
+references/stitch/dobby_le_miroir_des_mes/code.html
+references/stitch/dobby_l_apparition_du_patronus/code.html
+references/stitch/dobby_mon_identit_magique_consacr_e/code.html
+
+Requested additional source: stitch_dobby_assistant_mobile_app (9).zip
+Result: not found in /workspace including attachments and repository copies, nor /tmp, /mnt or /root.
+Search performed using rg --files --hidden with ZIP/name/rituel/fireplace/chemin patterns.
+No source HTML containing Rituel de la Cheminée / Traverser la cheminée / Ne plus afficher found in accessible repository sources.
+The seven E06 references include only a Cheminette Arrival Atmosphere scrim in dobby_mon_foyer_magique/code.html, not the missing introduction.
+No archive (9) was imported or claimed as exploited. The original missing Cheminette sequence remains blocked.

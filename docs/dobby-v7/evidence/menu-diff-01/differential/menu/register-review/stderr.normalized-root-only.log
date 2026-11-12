@@ -1,0 +1,78 @@
+REGISTER_REVIEW_FAIL menu-member-draft 320 locator.fill: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('#member-firstname')[22m
+[2m    - locator resolved to <input class="" type="text" required="" maxlength="80" name="firstName" id="member-firstname"/>[22m
+[2m    - fill("TEST — Brouillon membre")[22m
+[2m  - attempting fill action[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m      - waiting 100ms[22m
+[2m    16 × waiting for element to be visible, enabled and editable[22m
+[2m       - element is not enabled[22m
+[2m     - retrying fill action[22m
+[2m       - waiting 500ms[22m
+
+REGISTER_REVIEW_FAIL menu-medical-draft 320 locator.fill: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('#consultation-title')[22m
+[2m    - locator resolved to <input value="" disabled required="" type="text" maxlength="140" data-stitch-text="" id="consultation-title" placeholder="Ex: Bilan de croissance semestriel..." class="w-full bg-transparent text-on-surface font-body-lg text-body-lg placeholder:text-on-surface-variant/40 focus:outline-none min-w-0"/>[22m
+[2m    - fill("TEST — Brouillon privé")[22m
+[2m  - attempting fill action[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m      - waiting 100ms[22m
+[2m    16 × waiting for element to be visible, enabled and editable[22m
+[2m       - element is not enabled[22m
+[2m     - retrying fill action[22m
+[2m       - waiting 500ms[22m
+
+REGISTER_REVIEW_FAIL menu-member-draft 390 locator.fill: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('#member-firstname')[22m
+[2m    - locator resolved to <input class="" type="text" required="" maxlength="80" name="firstName" id="member-firstname"/>[22m
+[2m    - fill("TEST — Brouillon membre")[22m
+[2m  - attempting fill action[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m      - waiting 100ms[22m
+[2m    16 × waiting for element to be visible, enabled and editable[22m
+[2m       - element is not enabled[22m
+[2m     - retrying fill action[22m
+[2m       - waiting 500ms[22m
+
+REGISTER_REVIEW_FAIL menu-medical-draft 390 locator.fill: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('#consultation-title')[22m
+[2m    - locator resolved to <input value="" disabled required="" type="text" maxlength="140" data-stitch-text="" id="consultation-title" placeholder="Ex: Bilan de croissance semestriel..." class="w-full bg-transparent text-on-surface font-body-lg text-body-lg placeholder:text-on-surface-variant/40 focus:outline-none min-w-0"/>[22m
+[2m    - fill("TEST — Brouillon privé")[22m
+[2m  - attempting fill action[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and editable[22m
+[2m      - element is not enabled[22m
+[2m    - retrying fill action[22m
+[2m      - waiting 100ms[22m
+[2m    16 × waiting for element to be visible, enabled and editable[22m
+[2m       - element is not enabled[22m
+[2m     - retrying fill action[22m
+[2m       - waiting 500ms[22m
+
+Error: [{"name":"menu-member-draft","width":320,"message":"locator.fill: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#member-firstname')\u001b[22m\n\u001b[2m    - locator resolved to <input class=\"\" type=\"text\" required=\"\" maxlength=\"80\" name=\"firstName\" id=\"member-firstname\"/>\u001b[22m\n\u001b[2m    - fill(\"TEST — Brouillon membre\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    16 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"},{"name":"menu-medical-draft","width":320,"message":"locator.fill: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#consultation-title')\u001b[22m\n\u001b[2m    - locator resolved to <input value=\"\" disabled required=\"\" type=\"text\" maxlength=\"140\" data-stitch-text=\"\" id=\"consultation-title\" placeholder=\"Ex: Bilan de croissance semestriel...\" class=\"w-full bg-transparent text-on-surface font-body-lg text-body-lg placeholder:text-on-surface-variant/40 focus:outline-none min-w-0\"/>\u001b[22m\n\u001b[2m    - fill(\"TEST — Brouillon privé\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    16 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"},{"name":"menu-member-draft","width":390,"message":"locator.fill: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#member-firstname')\u001b[22m\n\u001b[2m    - locator resolved to <input class=\"\" type=\"text\" required=\"\" maxlength=\"80\" name=\"firstName\" id=\"member-firstname\"/>\u001b[22m\n\u001b[2m    - fill(\"TEST — Brouillon membre\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    16 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"},{"name":"menu-medical-draft","width":390,"message":"locator.fill: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#consultation-title')\u001b[22m\n\u001b[2m    - locator resolved to <input value=\"\" disabled required=\"\" type=\"text\" maxlength=\"140\" data-stitch-text=\"\" id=\"consultation-title\" placeholder=\"Ex: Bilan de croissance semestriel...\" class=\"w-full bg-transparent text-on-surface font-body-lg text-body-lg placeholder:text-on-surface-variant/40 focus:outline-none min-w-0\"/>\u001b[22m\n\u001b[2m    - fill(\"TEST — Brouillon privé\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    16 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not enabled\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"}]
+    at <WORKTREE>/essai-stitch-v7/tests/register-review.cjs:15:1703

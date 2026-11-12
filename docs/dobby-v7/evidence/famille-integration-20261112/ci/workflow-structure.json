@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "existingWorkflowStepsPreserved": 16,
+  "addedStep": "Famille integration native contracts, isolated preview and reset",
+  "newBranch": "feat/dobby-v7-famille-integration-20261112",
+  "pullRequestHeadAlsoMatched": true,
+  "newBuilderTrigger": true,
+  "historicalReuseGuardUnchanged": true,
+  "commonPureStaticSourceChecksUnchanged": true,
+  "existingCiScope": "e07p01p02Only=true"
+}

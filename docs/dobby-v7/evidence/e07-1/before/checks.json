@@ -1,0 +1,23 @@
+[
+  {
+    "width": 320,
+    "check": "dock-scroll",
+    "pass": true,
+    "beforeTop": 819,
+    "afterScroll": 819
+  },
+  {
+    "width": 390,
+    "check": "dock-scroll",
+    "pass": true,
+    "beforeTop": 819,
+    "afterScroll": 819
+  },
+  {
+    "width": 1440,
+    "check": "dock-scroll",
+    "pass": true,
+    "beforeTop": 819,
+    "afterScroll": 819
+  }
+]

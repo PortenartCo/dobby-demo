@@ -1,0 +1,758 @@
+[
+  {
+    "width": 320,
+    "phase": "after",
+    "status": "PASS",
+    "origin": "http://127.0.0.1:8894",
+    "app": "/essai-stitch-v7",
+    "captured": [
+      "taverne-empty-320.png",
+      "taverne-planned-320.png",
+      "taverne-meals-320.png",
+      "taverne-week-320.png",
+      "taverne-links-320.png",
+      "recipes-full-320.png",
+      "recipes-hero-320.png",
+      "recipes-intro-320.png",
+      "recipes-catalogue-320.png",
+      "recipes-card-320.png",
+      "recipes-footer-320.png",
+      "recipes-favorites-320.png",
+      "recipes-empty-320.png"
+    ],
+    "taverne": {
+      "viewport": 320,
+      "documentWidth": 320,
+      "filters": [],
+      "images": [
+        {
+          "alt": "Dobby dans sa taverne enchantée",
+          "loaded": true,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "actions": [
+      {
+        "label": "menu_book Mes Recettes 7 recettes chevron_right",
+        "height": 72.390625,
+        "font": 16,
+        "background": "rgb(44, 28, 24)",
+        "gradient": "none",
+        "leaves": [
+          {
+            "text": "Mes Recettes",
+            "font": 16,
+            "color": "rgb(250, 220, 213)",
+            "contrast": 12.642318906643046
+          },
+          {
+            "text": "7 recettes",
+            "font": 14,
+            "color": "rgb(249, 187, 95)",
+            "contrast": 9.56270113203184
+          }
+        ]
+      },
+      {
+        "label": "bookmark_star Favoris 3 favoris chevron_right",
+        "height": 72.390625,
+        "font": 16,
+        "background": "rgb(44, 28, 24)",
+        "gradient": "none",
+        "leaves": [
+          {
+            "text": "Favoris",
+            "font": 16,
+            "color": "rgb(250, 220, 213)",
+            "contrast": 12.642318906643046
+          },
+          {
+            "text": "3 favoris",
+            "font": 14,
+            "color": "rgb(249, 187, 95)",
+            "contrast": 9.56270113203184
+          }
+        ]
+      },
+      {
+        "label": "addInscrire une nouvelle recette",
+        "height": 52,
+        "font": 16,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Inscrire une nouvelle recette",
+            "font": 16,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      },
+      {
+        "label": "Préparer ma liste de courses arrow_forward",
+        "height": 52,
+        "font": 16,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(243, 194, 91), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Préparer ma liste de courses",
+            "font": 16,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      }
+    ],
+    "catalogue": {
+      "viewport": 320,
+      "documentWidth": 320,
+      "filters": [
+        {
+          "label": "Toutes (7)",
+          "left": 16,
+          "right": 121.734375,
+          "top": -2675.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Favoris",
+          "left": 129.734375,
+          "right": 213.390625,
+          "top": -2675.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Thermomix TM5",
+          "left": 16,
+          "right": 172.984375,
+          "top": -2623.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Traditionnelles",
+          "left": 16,
+          "right": 164.640625,
+          "top": -2571.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Rapides (< 30 min)",
+          "left": 16,
+          "right": 185.796875,
+          "top": -2519.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Végétarien",
+          "left": 16,
+          "right": 126.375,
+          "top": -2467.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Viande",
+          "left": 134.375,
+          "right": 215.171875,
+          "top": -2467.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Rapide",
+          "left": 223.171875,
+          "right": 303.265625,
+          "top": -2467.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Poisson",
+          "left": 16,
+          "right": 102.34375,
+          "top": -2415.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Traditionnel",
+          "left": 110.34375,
+          "right": 237.09375,
+          "top": -2415.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Dessert",
+          "left": 16,
+          "right": 101.0625,
+          "top": -2363.15625,
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "images": [
+        {
+          "alt": "Dobby consultant son grimoire de recettes culinaires",
+          "loaded": true,
+          "width": 512,
+          "height": 286
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "favoritePaints": {
+      "on": {
+        "inkPixels": 194,
+        "totalPixels": 676,
+        "inkFraction": 0.2869822485207101,
+        "width": 26,
+        "height": 26,
+        "foreground": "rgb(249, 187, 95)"
+      },
+      "off": {
+        "inkPixels": 64,
+        "totalPixels": 676,
+        "inkFraction": 0.09467455621301775,
+        "width": 26,
+        "height": 26,
+        "foreground": "rgb(230, 215, 195)"
+      }
+    },
+    "protectedData": "unchanged",
+    "imagesDecoded": true,
+    "fixture": "explicit TEST recipes, isolated native state; no real family account"
+  },
+  {
+    "width": 390,
+    "phase": "after",
+    "status": "PASS",
+    "origin": "http://127.0.0.1:8894",
+    "app": "/essai-stitch-v7",
+    "captured": [
+      "taverne-empty-390.png",
+      "taverne-planned-390.png",
+      "taverne-meals-390.png",
+      "taverne-week-390.png",
+      "taverne-links-390.png",
+      "recipes-full-390.png",
+      "recipes-hero-390.png",
+      "recipes-intro-390.png",
+      "recipes-catalogue-390.png",
+      "recipes-card-390.png",
+      "recipes-footer-390.png",
+      "recipes-favorites-390.png",
+      "recipes-empty-390.png"
+    ],
+    "taverne": {
+      "viewport": 390,
+      "documentWidth": 390,
+      "filters": [],
+      "images": [
+        {
+          "alt": "Dobby dans sa taverne enchantée",
+          "loaded": true,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "actions": [
+      {
+        "label": "menu_book Mes Recettes 7 recettes chevron_right",
+        "height": 72.390625,
+        "font": 16,
+        "background": "rgb(44, 28, 24)",
+        "gradient": "none",
+        "leaves": [
+          {
+            "text": "Mes Recettes",
+            "font": 16,
+            "color": "rgb(250, 220, 213)",
+            "contrast": 12.642318906643046
+          },
+          {
+            "text": "7 recettes",
+            "font": 14,
+            "color": "rgb(249, 187, 95)",
+            "contrast": 9.56270113203184
+          }
+        ]
+      },
+      {
+        "label": "bookmark_star Favoris 3 favoris chevron_right",
+        "height": 72.390625,
+        "font": 16,
+        "background": "rgb(44, 28, 24)",
+        "gradient": "none",
+        "leaves": [
+          {
+            "text": "Favoris",
+            "font": 16,
+            "color": "rgb(250, 220, 213)",
+            "contrast": 12.642318906643046
+          },
+          {
+            "text": "3 favoris",
+            "font": 14,
+            "color": "rgb(249, 187, 95)",
+            "contrast": 9.56270113203184
+          }
+        ]
+      },
+      {
+        "label": "addInscrire une nouvelle recette",
+        "height": 52,
+        "font": 16,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Inscrire une nouvelle recette",
+            "font": 16,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      },
+      {
+        "label": "Préparer ma liste de courses arrow_forward",
+        "height": 52,
+        "font": 16,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(243, 194, 91), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Préparer ma liste de courses",
+            "font": 16,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      }
+    ],
+    "catalogue": {
+      "viewport": 390,
+      "documentWidth": 390,
+      "filters": [
+        {
+          "label": "Toutes (7)",
+          "left": 16,
+          "right": 121.734375,
+          "top": -2429.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Favoris",
+          "left": 129.734375,
+          "right": 213.390625,
+          "top": -2429.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Thermomix TM5",
+          "left": 16,
+          "right": 172.984375,
+          "top": -2377.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Traditionnelles",
+          "left": 180.984375,
+          "right": 329.625,
+          "top": -2377.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Rapides (< 30 min)",
+          "left": 16,
+          "right": 185.796875,
+          "top": -2325.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Végétarien",
+          "left": 193.796875,
+          "right": 304.171875,
+          "top": -2325.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Viande",
+          "left": 16,
+          "right": 96.796875,
+          "top": -2273.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Rapide",
+          "left": 104.796875,
+          "right": 184.890625,
+          "top": -2273.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Poisson",
+          "left": 192.890625,
+          "right": 279.234375,
+          "top": -2273.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Traditionnel",
+          "left": 16,
+          "right": 142.75,
+          "top": -2221.15625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Dessert",
+          "left": 150.75,
+          "right": 235.8125,
+          "top": -2221.15625,
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "images": [
+        {
+          "alt": "Dobby consultant son grimoire de recettes culinaires",
+          "loaded": true,
+          "width": 512,
+          "height": 286
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "favoritePaints": {
+      "on": {
+        "inkPixels": 194,
+        "totalPixels": 676,
+        "inkFraction": 0.2869822485207101,
+        "width": 26,
+        "height": 26,
+        "foreground": "rgb(249, 187, 95)"
+      },
+      "off": {
+        "inkPixels": 63,
+        "totalPixels": 676,
+        "inkFraction": 0.09319526627218935,
+        "width": 26,
+        "height": 26,
+        "foreground": "rgb(230, 215, 195)"
+      }
+    },
+    "protectedData": "unchanged",
+    "imagesDecoded": true,
+    "fixture": "explicit TEST recipes, isolated native state; no real family account"
+  },
+  {
+    "width": 1440,
+    "phase": "after",
+    "status": "PASS",
+    "origin": "http://127.0.0.1:8894",
+    "app": "/essai-stitch-v7",
+    "captured": [
+      "taverne-empty-1440.png",
+      "taverne-planned-1440.png",
+      "taverne-meals-1440.png",
+      "taverne-week-1440.png",
+      "taverne-links-1440.png",
+      "recipes-full-1440.png",
+      "recipes-hero-1440.png",
+      "recipes-intro-1440.png",
+      "recipes-catalogue-1440.png",
+      "recipes-card-1440.png",
+      "recipes-footer-1440.png",
+      "recipes-favorites-1440.png",
+      "recipes-empty-1440.png"
+    ],
+    "taverne": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "filters": [],
+      "images": [
+        {
+          "alt": "Dobby dans sa taverne enchantée",
+          "loaded": true,
+          "width": 1376,
+          "height": 768
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "actions": [
+      {
+        "label": "menu_book Mes Recettes 7 recettes chevron_right",
+        "height": 72.390625,
+        "font": 16,
+        "background": "rgb(44, 28, 24)",
+        "gradient": "none",
+        "leaves": [
+          {
+            "text": "Mes Recettes",
+            "font": 16,
+            "color": "rgb(250, 220, 213)",
+            "contrast": 12.642318906643046
+          },
+          {
+            "text": "7 recettes",
+            "font": 14,
+            "color": "rgb(249, 187, 95)",
+            "contrast": 9.56270113203184
+          }
+        ]
+      },
+      {
+        "label": "bookmark_star Favoris 3 favoris chevron_right",
+        "height": 72.390625,
+        "font": 16,
+        "background": "rgb(44, 28, 24)",
+        "gradient": "none",
+        "leaves": [
+          {
+            "text": "Favoris",
+            "font": 16,
+            "color": "rgb(250, 220, 213)",
+            "contrast": 12.642318906643046
+          },
+          {
+            "text": "3 favoris",
+            "font": 14,
+            "color": "rgb(249, 187, 95)",
+            "contrast": 9.56270113203184
+          }
+        ]
+      },
+      {
+        "label": "addInscrire une nouvelle recette",
+        "height": 52,
+        "font": 16,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Inscrire une nouvelle recette",
+            "font": 16,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      },
+      {
+        "label": "Préparer ma liste de courses arrow_forward",
+        "height": 52,
+        "font": 16,
+        "background": "rgba(0, 0, 0, 0)",
+        "gradient": "linear-gradient(to right, rgb(249, 187, 95), rgb(243, 194, 91), rgb(229, 168, 64))",
+        "leaves": [
+          {
+            "text": "Préparer ma liste de courses",
+            "font": 16,
+            "color": "rgb(24, 11, 7)",
+            "contrast": 9.182344319937629
+          }
+        ]
+      }
+    ],
+    "catalogue": {
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "filters": [
+        {
+          "label": "Toutes (7)",
+          "left": 496,
+          "right": 601.734375,
+          "top": -2348.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Favoris",
+          "left": 609.734375,
+          "right": 693.390625,
+          "top": -2348.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Thermomix TM5",
+          "left": 701.390625,
+          "right": 858.375,
+          "top": -2348.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Traditionnelles",
+          "left": 496,
+          "right": 644.640625,
+          "top": -2296.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Rapides (< 30 min)",
+          "left": 652.640625,
+          "right": 822.4375,
+          "top": -2296.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Végétarien",
+          "left": 830.4375,
+          "right": 940.8125,
+          "top": -2296.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Viande",
+          "left": 496,
+          "right": 576.796875,
+          "top": -2244.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Rapide",
+          "left": 584.796875,
+          "right": 664.890625,
+          "top": -2244.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Poisson",
+          "left": 672.890625,
+          "right": 759.234375,
+          "top": -2244.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Traditionnel",
+          "left": 767.234375,
+          "right": 893.984375,
+          "top": -2244.90625,
+          "height": 44,
+          "font": 14
+        },
+        {
+          "label": "Dessert",
+          "left": 496,
+          "right": 581.0625,
+          "top": -2192.90625,
+          "height": 44,
+          "font": 14
+        }
+      ],
+      "images": [
+        {
+          "alt": "Dobby consultant son grimoire de recettes culinaires",
+          "loaded": true,
+          "width": 512,
+          "height": 286
+        },
+        {
+          "alt": "TEST — Recette avec photographie de fixture",
+          "loaded": true,
+          "width": 900,
+          "height": 600
+        }
+      ],
+      "scrollAreas": []
+    },
+    "favoritePaints": {
+      "on": {
+        "inkPixels": 194,
+        "totalPixels": 676,
+        "inkFraction": 0.2869822485207101,
+        "width": 26,
+        "height": 26,
+        "foreground": "rgb(249, 187, 95)"
+      },
+      "off": {
+        "inkPixels": 63,
+        "totalPixels": 676,
+        "inkFraction": 0.09319526627218935,
+        "width": 26,
+        "height": 26,
+        "foreground": "rgb(230, 215, 195)"
+      }
+    },
+    "protectedData": "unchanged",
+    "imagesDecoded": true,
+    "fixture": "explicit TEST recipes, isolated native state; no real family account"
+  }
+]

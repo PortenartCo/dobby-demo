@@ -1,0 +1,35 @@
+{
+  "sourceSha": "ff7684704f282b239633284e993348ae8094393f",
+  "realBackend": false,
+  "storagePrefix": "dobby-review-integrated-v1|",
+  "files": [
+    {
+      "path": "essai-stitch-v7/onboarding.js",
+      "source": "3aa8c0dc010062c594d34bf20925fed873b4466f61bef34fd91bd7e765e14d4e",
+      "bundle": "3aa8c0dc010062c594d34bf20925fed873b4466f61bef34fd91bd7e765e14d4e",
+      "sourceMatchesManifest": true,
+      "bundleMatchesManifest": true
+    },
+    {
+      "path": "essai-stitch-v7/onboarding.css",
+      "source": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4",
+      "bundle": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4",
+      "sourceMatchesManifest": true,
+      "bundleMatchesManifest": true
+    },
+    {
+      "path": "essai-stitch-v7/magic-content.js",
+      "source": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "bundle": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "sourceMatchesManifest": true,
+      "bundleMatchesManifest": true
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.svg",
+      "source": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f",
+      "bundle": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f",
+      "sourceMatchesManifest": true,
+      "bundleMatchesManifest": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "source": "Uploaded Stitch export (13)",
+  "purpose": "FAM-17 design handoff, independent Codex family worktree",
+  "source_date": "2026-11-12",
+  "source_files": [
+    {
+      "file": "stitch-source/code.html",
+      "size": 24558,
+      "sha256": "5c12e31b58c7271f13dc2e79a35ddb5d9abcdd092afc9197f4fe66282b85a5cf"
+    },
+    {
+      "file": "stitch-source/screen.png",
+      "size": 209700,
+      "sha256": "701c19ecd404030cbc47dca689f9d1ece2d33f6f7cdbe37d369830823cc48cc6"
+    },
+    {
+      "file": "stitch-source/DESIGN.md",
+      "size": 12042,
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db"
+    }
+  ],
+  "note": "HTML is a visual reference only. No source images for portrait, house crest or Patronus are bundled."
+}

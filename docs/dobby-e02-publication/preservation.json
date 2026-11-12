@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "publicationCommit": "0708d643d099999713e1538eb5043097ac591e6b",
+  "allExistingRootEntriesUnchanged": true,
+  "onlyAddedDirectory": "essai-e02-preview",
+  "httpAfter": [
+    {
+      "path": "essai-e01-preview/traverse.html",
+      "status": 200,
+      "bytes": 24075,
+      "sha256": "ed2108411d29ffc35cacbc5b8c545a8c9012de41c352b25f754a303cbb62d4ed",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e01-preview/home.js",
+      "status": 200,
+      "bytes": 10692,
+      "sha256": "7faf99649a29e6a3473b48c361eb00f03529cbc228337b75ec1d69d7bf1eaf09",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e01-preview/chrome.js",
+      "status": 200,
+      "bytes": 12936,
+      "sha256": "bd4bb68cb71060a65d3d0531c74c85eaae05091d5faa47abac47edf84c3fd755",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e01-preview/chrome.css",
+      "status": 200,
+      "bytes": 7310,
+      "sha256": "f4818b2bed14eb3023d2465cbf44385262a151d73f7de34338a8ce5d9381ce11",
+      "unchanged": true
+    },
+    {
+      "path": "essai-e01-preview/famille.html",
+      "status": 200,
+      "bytes": 41677,
+      "sha256": "71c1384f467da9b4ec7948acdfae8bde32bda5d6219430dbe2de1d925b26c9e4",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "status": 200,
+      "bytes": 1218129,
+      "sha256": "928a238cbe6fa5315e4877a9e93977a0e2c48d0c709365424e3ec30f5945af9f",
+      "unchanged": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "status": 200,
+      "bytes": 33287,
+      "sha256": "df042ecba63d1bcddc4751bea7dc1e908bad58364a88152593a549c6017b4e12",
+      "unchanged": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 1173425,
+      "sha256": "72de30105ed567c19be7f2b99dd81414c63fc7aa5110fdfdd71572f26f3cf6a6",
+      "unchanged": true
+    }
+  ],
+  "protectedTrees": {
+    "essai-e01-preview": "d819e55f6924471364533e9ec2d36510afdcf89a",
+    "essai-stitch-v5-famille": "89282a46b453970ea907265e8dab4293f0eb72b1",
+    "essai-v6-preview": "ba30e3b3d5b255a34fec507d5573cab2fbb22e47"
+  }
+}

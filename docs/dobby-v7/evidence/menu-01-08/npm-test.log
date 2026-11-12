@@ -1,0 +1,85 @@
+
+> test
+> node ci.cjs
+
+✔ a fresh register generation keeps the five-card canonical Menu and all other sources (137.45829ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143.596968
+MENU_PASS 320 five links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_PASS 390 five links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_PASS 1440 five links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+E07_P01_CI_START e07-p01.cjs
+E07_P01_CI_PASS e07-p01.cjs
+E07_P01_CI_START e07-p01-visual.cjs
+E07_P01_CI_PASS e07-p01-visual.cjs
+E07_P01_CI_START e07-3-taverne.cjs
+E07_P01_CI_PASS e07-3-taverne.cjs
+E07_P01_CI_START e07-3-catalogue.cjs
+E07_P01_CI_PASS e07-3-catalogue.cjs
+E07_P01_CI_START e07-4-b-ui.cjs
+E07_P01_CI_PASS e07-4-b-ui.cjs
+E07_P01_CI_START e07-4-engine.cjs
+E07_P01_CI_PASS e07-4-engine.cjs
+E07_P01_CI_START e07-4-render-race.cjs
+E07_P01_CI_PASS e07-4-render-race.cjs
+E07_P01_TARGETED_CI_PASS 7 browser scripts; source fingerprints unchanged
+✔ regroupe les apports compatibles et conserve leurs repas, réimport idempotent (23.413477ms)
+✔ article manuel couvre le besoin sans doubler la quantité (3.041509ms)
+✔ maison partiel/total/annulation reste distinct des achats et de la clôture (2.990563ms)
+✔ noms ambigus et unités incompatibles restent distincts (0.938418ms)
+✔ un aperçu devenu périmé ne modifie pas les articles (1.684251ms)
+✔ disponibilité conserve son unité quand un apport compatible est ajouté (1.608689ms)
+✔ plusieurs articles manuels compatibles sont tous conservés sans surajout (1.890256ms)
+✔ historique E07.2 en kg conserve son reçu et ne se réimporte pas (1.137923ms)
+✔ modifier une unité compatible convertit aussi la disponibilité (1.536603ms)
+✔ supprimer une préparation libère sa couverture manuelle (2.152143ms)
+✔ supprimer un article familial retire son annotation maison (1.723439ms)
+✔ réimport familial avec période restreinte ne réalloue pas la couverture (3.247483ms)
+✔ un formulaire partagé périmé ne remplace pas une modification reçue (0.842927ms)
+✔ une confirmation de suppression périmée ne retire pas la nouvelle version (0.791761ms)
+✔ une clôture périmée n’archive pas une disponibilité reçue après confirmation (0.839982ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54.473163
+✔ availability is persisted, compared and acknowledged by the native core (0.9201ms)
+✔ competing availability declarations require conflict resolution (0.197051ms)
+✔ an edit in flight is not lost on acknowledgement (0.178074ms)
+✔ legacy rows omit availability from payloads and compare as zero (0.296689ms)
+✔ kg availability retains gram-level fractional precision (0.343478ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8.030086
+E07_P02_BROWSER_PASS 390
+E07_P02_BROWSER_PASS 320
+E07_P02_BROWSER_PASS 1440
+E07_P02_LOADING_RESUME_PASS
+CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+CUISINE_SHARED_HOME_RACE_PASS queued group edit survives concurrent pull, CAS and reload
+SHARED_HOME_OK A declares 200 g of 500 g; B reads 200 g available and 300 g to buy
+SHARED_HOME_OK B modifies and cancels the shared declaration
+SHARED_HOME_OK Offline availability can be changed again after reload, stays pending, and reaches B with its latest value
+SHARED_HOME_OK An incompatible name/unit edit after offline reload resets availability in the durable queue and on B
+SHARED_HOME_OK Concurrent revision CAS rejects the stale PATCH; explicit server and local resolutions converge
+SHARED_HOME_OK Legacy homeByScope stays intact, ignored by shared snapshots, and never auto-published
+SHARED_HOME_OK Grouped edits roll back atomically on a stale row; g/kg availability retains gram precision and survives compatible editing
+SHARED_HOME_OK Simple native edits share availability; delete/archive and re-add leave no residual declaration
+SHARED_HOME_OK Repeated import/reload remains idempotent and checking/unchecking preserves availability
+SHARED_HOME_OK Old schema supports ordinary CRUD and fails availability with migration guidance and no false local success
+CUISINE_SHARED_HOME_PASS two clients, shared availability, offline/reload, actual CAS conflicts, grouped units, legacy schema and import/check regression (HTTP fixture only)
+E07_P01_P02_TARGETED_CI_PASS

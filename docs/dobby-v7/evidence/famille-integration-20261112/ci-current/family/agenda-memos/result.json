@@ -1,0 +1,47 @@
+[
+  {
+    "width": 320,
+    "eventCrud": true,
+    "eventStableId": true,
+    "eventProvenance": true,
+    "eventStaleDraft": true,
+    "memoCrud": true,
+    "memoStableId": true,
+    "memoConflictDraft": true,
+    "legacyRetained": true,
+    "explicitIdempotentImport": true,
+    "salonAndListOrigins": true,
+    "oneHeaderDock": true,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "eventCrud": true,
+    "eventStableId": true,
+    "eventProvenance": true,
+    "eventStaleDraft": true,
+    "memoCrud": true,
+    "memoStableId": true,
+    "memoConflictDraft": true,
+    "legacyRetained": true,
+    "explicitIdempotentImport": true,
+    "salonAndListOrigins": true,
+    "oneHeaderDock": true,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "eventCrud": true,
+    "eventStableId": true,
+    "eventProvenance": true,
+    "eventStaleDraft": true,
+    "memoCrud": true,
+    "memoStableId": true,
+    "memoConflictDraft": true,
+    "legacyRetained": true,
+    "explicitIdempotentImport": true,
+    "salonAndListOrigins": true,
+    "oneHeaderDock": true,
+    "errors": []
+  }
+]

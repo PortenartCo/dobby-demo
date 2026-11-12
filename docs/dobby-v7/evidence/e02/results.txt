@@ -1,0 +1,53 @@
+DOBBY E02 — Recette finale locale
+
+PASS — node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
+       54 tests, 0 échec. Sortie : native-tests.txt.
+
+PASS — CHROMIUM_PATH=/usr/bin/chromium DOBBY_E01_EVIDENCE_DIR=/tmp/e02-e01 node essai-stitch-v7/tests/ci.cjs
+       Chaîne complète de 32 scripts navigateur : E02, E01, ambiance, sources et les régressions existantes.
+       Sortie complète : browser-tests.txt. Régressions Missions/Outils, navigation, offline/conflits,
+       préservation des champs et pièces jointes natives incluses. Profils/serveurs de test uniquement.
+
+PASS — Compléments ciblés sur le code final :
+       tests/e02-edge.cjs : préparation ET liste validée, ajout après validation sans effacer l'historique,
+       parsing d'articles, refus de destination ambiguë, lectures/liens réels, exclusion santé privée de l'Agenda,
+       confirmation périmée, writer sans effet, quota sans faux reçu ni mutation résiduelle, clavier superposé
+       avec le dernier message au-dessus de la saisie.
+       Sortie : edge-final-results.txt.
+       tests/e02-voice-history.cjs : API standard/préfixée, final unique/callback tardif, refus/silence/démarrage
+       en erreur, arrêt/annulation, voix française et Son OFF/ON, réécoute/interruption, lecture de la question
+       de confirmation puis du seul résultat réellement exécuté. Historique >24, reload, suppression,
+       A/B même foyer, brouillon hors chat, reprise de cache et compte changé. Sortie : voice-final-results.txt.
+
+PASS — Nouvelle exécution ciblée finale : e02.cjs + e02-edge.cjs + e02-voice-history.cjs.
+       Sorties : ui-final-results.txt, edge-final-results.txt, voice-final-results.txt.
+PASS — Interface/saisie et captures à 320×900, 390×900 et 1440×900, clavier réduit à 540 px ;
+       état vide, rempli, inconnu, confirmation/annulation et ajout/suppression natifs.
+PASS — Génération reproductible : node essai-stitch-v7/build-source.cjs puis git diff --exit-code
+       sur templates, chrome-source, données de routes, manifeste et quatre racines générées.
+PASS — node --check sur modules/scripts modifiés et git diff --check.
+PASS — Sources originales design/stitch-53, V5 et SQL inchangés.
+
+Incident d'environnement résolu, sans modification applicative :
+Le premier lancement de la chaîne locale sans CHROMIUM_PATH s'est arrêté dans l'ancien smoke.cjs :
+  browserType.launch: Failed to launch chromium because executable doesn't exist at
+  C:/Program Files/Google/Chrome/Application/chrome.exe
+  at essai-stitch-v7/tests/smoke.cjs:8:81
+Relance avec CHROMIUM_PATH=/usr/bin/chromium : chaîne complète PASS. La CI existante fournit déjà ce paramètre.
+Incident CI E02 corrigé (exécution 42721274029, trace ci-initial-failure.txt) :
+le nouveau test de suppression d'un échange comparait le compteur (32 au lieu de 31)
+avant la fin de la transaction IndexedDB. Le test attend maintenant la fin de DobbyChat.busy ;
+la véritable écriture native est aussi retardée de 250 ms dans ce seul scénario pour exercer l'attente,
+puis la conservation après rechargement reste vérifiée. Aucune assertion de persistance retirée,
+aucune modification applicative pour cette correction. Nouvelle exécution ciblée : PASS.
+Les échecs attendus des scénarios ajoutés avant correction ont servi à vérifier les garde-fous ; aucun échec local restant.
+
+Revue ciblée indépendante : brouillons/changement de compte, reprise BFCache, erreurs de save natif,
+callbacks vocaux tardifs et liste validée. Corrections couvertes ; dernier contrôle BFCache sans écart restant.
+
+Limites : API vocales simulées et identités natives simulées aux frontières, vrais writers et IndexedDB local.
+Aucune validation micro/voix/clavier/Safari sur iPhone physique. Pas de RLS distante du chat validée :
+synchronisation individuelle multi-appareils BLOQUÉE. Fil anonyme temporaire ; ancien historique sans auteur
+inchangé et non réattribué. Stockage natif local non chiffré ; pas de promesse de protection du profil navigateur.
+
+Les résultats CI du SHA final sont liés depuis la PR #3. Aucune fusion, publication, migration ou opération de production.

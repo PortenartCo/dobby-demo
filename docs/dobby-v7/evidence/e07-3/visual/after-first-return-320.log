@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Readable gold return action
+    at /workspace/dobby-e073-taverne-grimoire/essai-stitch-v7/tests/e07-3-visual.cjs:140:16 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

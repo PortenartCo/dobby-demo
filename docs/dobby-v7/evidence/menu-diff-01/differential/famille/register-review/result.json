@@ -1,0 +1,15 @@
+{
+  "side": "famille",
+  "script": "register-review.cjs",
+  "cwd": "/workspace/dobby-v7-menu-diff-famille",
+  "command": [
+    "node",
+    "--require",
+    "/tmp/dobby-menu-diff-01/preload.cjs",
+    "essai-stitch-v7/tests/register-review.cjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 64.92879791999985,
+  "stdoutSha256": "329c47f0f8e080886bdb8cc649dfb03c4e1da215e2d59745cd24b78bc3a53aa5",
+  "stderrSha256": "499e38f8d8da5ede0b1fc3140cdff696d006e0287aeede4159cc009993edecfb"
+}

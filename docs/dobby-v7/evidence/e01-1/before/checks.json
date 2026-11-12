@@ -1,0 +1,28 @@
+[
+  {
+    "phase": "before",
+    "width": 390,
+    "status": "PASS",
+    "states": [
+      "accueil-aujourdhui",
+      "accueil-j6",
+      "retour-aujourdhui",
+      "repas-non-planifie",
+      "autre-section-menu"
+    ],
+    "nativeStateAndStorageUnchangedDuringDateConsultation": true
+  },
+  {
+    "phase": "before",
+    "width": 1440,
+    "status": "PASS",
+    "states": [
+      "accueil-aujourdhui",
+      "accueil-j6",
+      "retour-aujourdhui",
+      "repas-non-planifie",
+      "autre-section-menu"
+    ],
+    "nativeStateAndStorageUnchangedDuringDateConsultation": true
+  }
+]

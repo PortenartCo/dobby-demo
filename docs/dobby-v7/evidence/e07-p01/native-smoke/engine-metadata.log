@@ -1,0 +1,4 @@
+PASS same recipe replacement keeps unknown metadata, note, factor and existing import reference
+PASS different recipe keeps meal metadata/note but drops stale shopping import reference
+PASS explicitly supplied note wins; basket and shopping history remain unchanged
+PASS native plan replacement storage failure rolls back metadata and raw state exactly

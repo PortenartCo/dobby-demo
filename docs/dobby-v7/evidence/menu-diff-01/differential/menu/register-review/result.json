@@ -1,0 +1,15 @@
+{
+  "side": "menu",
+  "script": "register-review.cjs",
+  "cwd": "/workspace/dobby-v7-menu-diff-menu",
+  "command": [
+    "node",
+    "--require",
+    "/tmp/dobby-menu-diff-01/preload.cjs",
+    "essai-stitch-v7/tests/register-review.cjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 67.10365817000002,
+  "stdoutSha256": "329c47f0f8e080886bdb8cc649dfb03c4e1da215e2d59745cd24b78bc3a53aa5",
+  "stderrSha256": "7528e172ea94752e73134a04d6265ff5f31f01f0d815bf5263f318f24afad159"
+}

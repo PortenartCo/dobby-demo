@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: Demo banner never masks the common header
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07-2-preview.cjs:2:2185 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

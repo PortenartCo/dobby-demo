@@ -1,0 +1,17 @@
+{
+  "name": "dobby-stitch-v7-smoke",
+  "private": true,
+  "scripts": {
+    "test": "node ci.cjs",
+    "test:family": "node family.cjs && node family-edge.cjs && node family-review.cjs && node family-shared.cjs && node family-visual.cjs",
+    "test:checkpoint": "node ci.cjs",
+    "test:register-family": "node register-family.cjs",
+    "test:all": "DOBBY_FINAL=1 node ci.cjs",
+    "test:e07-p02": "node --test e07-p02-model.test.cjs && node e07-p02-effects.cjs && node e07-p02-browser.cjs && node e07-p02-family.cjs",
+    "test:e07-p02-shared-home": "cd ../.. && node --test essai-stitch-v5-famille/tests/family-core.test.mjs essai-stitch-v7/tests/e07-p02-model.test.cjs essai-stitch-v7/tests/e07-p02-home-core.test.mjs && node essai-stitch-v7/tests/e07-p02-home-race.cjs && node essai-stitch-v7/tests/e07-p02-shared-home.cjs",
+    "test:prep": "node --test ../../essai-stitch-v5-famille/tests/prep-writer.test.cjs ../../essai-stitch-v5-famille/tests/preparation-sync.test.cjs prep-courses.test.cjs fam-integration-transverse.test.cjs e09-memo-writer.test.cjs && node prep-ui.cjs && node prep-invalid.cjs && node prep-sync.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

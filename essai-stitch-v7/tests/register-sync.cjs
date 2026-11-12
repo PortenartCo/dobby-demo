@@ -1,0 +1,30 @@
+/* Lot 2B native synchronization, in-memory HTTP fixture. No real accounts/network. */
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
+const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',HH='00000000-0000-4000-8000-000000000010',UID='00000000-0000-4000-8000-000000000001';
+const out=path.resolve(__dirname,'../../docs/dobby-v7/evidence/lot-2b/states');fs.mkdirSync(out,{recursive:true});
+(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{for(const width of [320,390]){
+ const modules=new Map(),writes=[];let offline=false;const until=async test=>{const deadline=Date.now()+10000;while(!test()&&Date.now()<deadline)await new Promise(r=>setTimeout(r,40));assert.ok(test(),'Native module synchronization reaches the HTTP fixture');};
+ const context=await browser.newContext({viewport:{width,height:844},locale:'fr-BE',timezoneId:'Europe/Paris',reducedMotion:'reduce'});
+ await context.route('**/*',async route=>{const req=route.request(),url=new URL(req.url());if(req.url().startsWith(origin+'/'))return route.continue();
+  if(!url.pathname.startsWith('/auth/v1/')&&!url.pathname.startsWith('/rest/v1/'))return route.abort();if(offline)return route.abort();
+  const reply=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
+  if(url.pathname.includes('/auth/v1/token'))return reply({access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:UID,email:'fixture@example.test'}});
+  if(url.pathname.includes('dobby_v2_memberships'))return reply([{household_id:HH,active:true,user_id:UID}]);if(url.pathname.includes('dobby_v2_households'))return reply([{id:HH}]);if(url.pathname.includes('dobby_v2_grocery'))return reply([]);
+  if(!url.pathname.includes('dobby_v2_modules'))return reply({message:'Unexpected fixture endpoint'},404);
+  const module=(url.searchParams.get('module')||'').replace(/^eq\./,''),method=req.method();
+  if(method==='GET')return reply(module?(modules.has(module)?[modules.get(module)]:[]):[...modules.values()].map(x=>({module:x.module})));
+  const body=req.postDataJSON();writes.push({method,body});
+  if(method==='POST'){const row={...body,revision:1,updated_at:new Date().toISOString()};modules.set(body.module,row);return reply([row],201);}
+  if(method==='PATCH'){const old=modules.get(module);if(!old||String(old.revision)!==(url.searchParams.get('revision')||'').replace(/^eq\./,''))return reply([]);const row={...old,...body,revision:old.revision+1,updated_at:new Date().toISOString()};modules.set(module,row);return reply([row]);}
+  throw Error('Unexpected module fixture write');
+ });
+ const page=await context.newPage();page.setDefaultTimeout(12000);page.on('dialog',d=>d.accept());const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(origin+'/essai-stitch-v7/famille.html');await page.waitForFunction(()=>window.DobbyFamilyStitch?.ready);
+ await page.evaluate(()=>DobbyFamilyStitchEngine.evaluate(`st.famContacts=[];st.famLists=[];st.familyNotes=[{id:'private-note',title:'PRIVATE_2B_TITLE',body:'PRIVATE_2B_BODY',tags:'private'}];st.famHealth=[];save();`));
+ await page.evaluate(()=>DobbyStitchV7.open('account')); // Native settings portal; gold button now opens E05 profile.
+const engine=page.frameLocator('#dv7-engine');await engine.locator('#fv2LoginForm [name="key"]').fill('sb_publishable_fixture_only_123456789');await engine.locator('#fv2LoginForm [name="email"]').fill('fixture@example.test');await engine.locator('#fv2LoginForm [name="password"]').fill('fixture-only');await engine.locator('#fv2LoginForm button[type="submit"]').click();await engine.locator('[data-fm-action="activate"][data-module="family"]').click();await page.waitForFunction(()=>DobbyFamilyStitchEngine.read().active);await page.locator('#dv7-close').click();
+ await page.evaluate(()=>DobbyFamilyStitch.open('contact-edit',{record:null}));await page.locator('#contact-name').fill('TEST — Contact partagé 2B');await page.locator('#contact-role').fill('Artisan');await page.locator('[data-fa-action="rg-save"]').first().click();await until(()=>modules.get('family')?.payload.famContacts.some(c=>c.name==='TEST — Contact partagé 2B'));
+ await page.evaluate(()=>DobbyFamilyStitch.open('lists',{record:null}));await page.locator('[data-fa-action="rg-list-new"]').first().click();await page.locator('#list-name').fill('TEST — Liste partagée 2B');await page.locator('[data-fa-action="rg-list-create"]').first().click();await page.waitForFunction(()=>DobbyFamilyStitch.view==='list-detail');await page.locator('#itemInput').fill('TEST — Élément partagé');await page.locator('[data-fa-action="rg-item-add"]').first().click();await until(()=>modules.get('family')?.payload.famLists.some(l=>l.items.length===1));await page.screenshot({path:path.join(out,'list-connected-'+width+'.png'),fullPage:true});
+ offline=true;await page.locator('[data-fa-action="rg-item-toggle"]').first().click();await page.waitForFunction(()=>DobbyFamilyStitchEngine.read().state.famLists[0].items[0].done);await page.reload();await page.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.read().state.famLists[0].items[0].done),true);await page.screenshot({path:path.join(out,'list-offline-'+width+'.png'),fullPage:true});
+ offline=false;await page.locator('[data-fa-action="family-sync"]').click();await until(()=>modules.get('family')?.payload.famLists[0].items[0].done);assert.ok(!JSON.stringify(writes).includes('PRIVATE_2B'));assert.ok(!writes.some(w=>Object.hasOwn(w.body.payload||{},'familyNotes')));assert.deepEqual(errors,[]);console.log('REGISTER_SYNC_PASS',width,'native contact/list payloads, offline checkbox persistence/resync, local memos excluded');await context.close();
+}}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

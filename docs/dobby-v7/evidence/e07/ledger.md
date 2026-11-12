@@ -1,0 +1,23 @@
+# E07 execution ledger
+- Base E05 8418682 verified/fetched; independent worktree and branch created. E03 and E06 not modified.
+- ZIP read/extracted safely; both HTML, source captures and two illustrations inspected (1376×768). Illustrations have noticeable character/attire differences; preserve originals and document.
+- No AGENTS.md in target repository.
+- Native Cuisine read/actions/form/sync controller inspected. Plan saved; explicit execution scope controls choices.
+- Task A: in progress. Existing Cuisine baseline running at port 8877.
+- Task A complete: source assertion RED on original Taverne, E07_A_PASS 320/390/1440 after source derivation/native-data presentation. Native Cuisine baseline PASS 320/390 before change.
+- Source illustration framing retained 190px with local original; fixed source invalid sparkles glyph and overlapping meal/header controls. Midi/soir entries use explicit stored slot; existing recipe/pick actions only.
+- Task B starts: new shopping source assertion expected RED, original shared renderer/actions retained.
+- Task B complete: source Courses assertion RED; E07_PASS 320/390/1440 with native validation/check/uncheck/reload/long labels. Existing full Cuisine paths PASS 320/390; family fixture PASS 320/390, including no grocery POST on validation, offline reload, conflict and no duplicate of the edited item.
+- Test adaptation: validation archives meal coverage natively; the explicit import test now schedules a new pending fixture meal before import. No business change made to reopen covered meals.
+- Removed raw shopping back-header control before common mount to avoid a duplicated contextual DOBBY header. Common chrome untouched.
+- Menus module can share planned/shopFinal history if explicitly active. Do not claim exclusive local storage; meal list remains distinct from grocery basket. Native module status retained.
+- Independent review: Important missing native cooked action; restored source-styled control bound to cooked(date,slot), disabled once prepared and persisted. Review quantity-origin finding upgraded to requirement compliance (unknown extra quantity must read À préciser); origin retained separately. Both reproduced RED together and GREEN via e07-native-actions.cjs.
+- No new grocery grouping/classifier introduced; preserve native existing flat V7 presentation and native category fields/exports rather than invent source demo groups.
+- CSS build initially removed 3 old unused-scan utilities. Safelist preserves them; semantic comparison confirms all 1448 old rule sets unchanged, 33 additions only.
+- After review: E07 PASS 320/390/1440, full native Cuisine path PASS 320/390, 4-root smoke PASS. Full 13-route visual pass before local fixes, then only 4 affected E07 presentations rerun at 320/390/1440, all zero overflow; original/new source hashes verified.
+- Review exclusions remain bounded: no real backend/device behavior, no E06 composition; native covered-meal/portion contracts preserved, not reimplemented.
+- Final scope check: restore existing rayon filtering using existing native categoryOf for preparation and stored categories for validated items; supersedes the earlier flat-list presentation choice, without new classification or writer. e07-native-actions RED 0 groups -> GREEN categories/filter.
+- Empty final-list direct route initially implied a validated list; explicit no-list label/action restored RED -> GREEN. Added requested empty shopping and 20-item long-list/last-content visibility evidence to E07 checks.
+- Final local state: E07 320/390/1440 GREEN including empty/long; native category/prepared/unknown tests GREEN; 13-route Cuisine GREEN; affected-source visual comparisons GREEN. Family offline/conflict/no-auto-publish GREEN before presentation-only final corrections; final CI reruns existing complete suite.
+- Generation idempotent across 232 tracked V7 files including CSS and assets. All raw E07 hashes/PNG copies correct; original53, V5, SQL, cuisine-engine/common chrome and protected components unchanged.
+- Task C local complete: empty/long-list, rayons and source comparison assertions GREEN. Report/source/evidence hashes finalized; next step push and wait existing CI of delivered SHA. No branch merge/publication/backend action.

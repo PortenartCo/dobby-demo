@@ -1,0 +1,150 @@
+{
+  "commonEnvironment": {
+    "NODE_PATH": "/workspace/dobby-v7-menu-simplification/essai-stitch-v7/tests/node_modules",
+    "CHROMIUM_PATH": "/usr/bin/chromium",
+    "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8771",
+    "TZ": "Europe/Paris",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8"
+  },
+  "commands": [
+    {
+      "side": "famille",
+      "script": "family.cjs",
+      "cwd": "/workspace/dobby-v7-menu-diff-famille",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu-diff-01/preload.cjs",
+        "essai-stitch-v7/tests/family.cjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 14.117886014000305,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "3d04ef9d1d25a7656539cd8c5d4d7eee1aa6fe5dc02a889f56aebdd9ba7d4b09"
+    },
+    {
+      "side": "famille",
+      "script": "e05-edge.cjs",
+      "cwd": "/workspace/dobby-v7-menu-diff-famille",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu-diff-01/preload.cjs",
+        "essai-stitch-v7/tests/e05-edge.cjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 31.780424116000177,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "69e2dc6d6cad91c6418f316b0a27389eb9aa4cc284b4051cb44651d01557a9a8"
+    },
+    {
+      "side": "famille",
+      "script": "register-review.cjs",
+      "cwd": "/workspace/dobby-v7-menu-diff-famille",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu-diff-01/preload.cjs",
+        "essai-stitch-v7/tests/register-review.cjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 64.92879791999985,
+      "stdoutSha256": "329c47f0f8e080886bdb8cc649dfb03c4e1da215e2d59745cd24b78bc3a53aa5",
+      "stderrSha256": "499e38f8d8da5ede0b1fc3140cdff696d006e0287aeede4159cc009993edecfb"
+    },
+    {
+      "side": "menu",
+      "script": "family.cjs",
+      "cwd": "/workspace/dobby-v7-menu-diff-menu",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu-diff-01/preload.cjs",
+        "essai-stitch-v7/tests/family.cjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 13.841384154000025,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "ba187eedcecfed58e4413335139232d13c3fa59757fe027c66bdfadf7a7431e6"
+    },
+    {
+      "side": "menu",
+      "script": "e05-edge.cjs",
+      "cwd": "/workspace/dobby-v7-menu-diff-menu",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu-diff-01/preload.cjs",
+        "essai-stitch-v7/tests/e05-edge.cjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 31.833745740000268,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "2c1e65680cc9f7df5ce2722537c09c0ed885c8c11a01087873c4b3b960d5e4d2"
+    },
+    {
+      "side": "menu",
+      "script": "register-review.cjs",
+      "cwd": "/workspace/dobby-v7-menu-diff-menu",
+      "command": [
+        "node",
+        "--require",
+        "/tmp/dobby-menu-diff-01/preload.cjs",
+        "essai-stitch-v7/tests/register-review.cjs"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 67.10365817000002,
+      "stdoutSha256": "329c47f0f8e080886bdb8cc649dfb03c4e1da215e2d59745cd24b78bc3a53aa5",
+      "stderrSha256": "7528e172ea94752e73134a04d6265ff5f31f01f0d815bf5263f318f24afad159"
+    }
+  ],
+  "worktrees": {
+    "famille": {
+      "root": "/workspace/dobby-v7-menu-diff-famille",
+      "sha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+      "trackedStatusBefore": "",
+      "tests": {
+        "family.cjs": {
+          "sha256": "9ae3461ef18eeaf5a23881a56b6a192a786a4d03b6aeebd041c03607beec3712",
+          "gitBlob": "575db4e486aa5b779ecb4e6140bd998b21a81a81"
+        },
+        "e05-edge.cjs": {
+          "sha256": "9aad83ae16ba11b21469ac61f56bae144e1b7f19c8589fd03d92f92030038002",
+          "gitBlob": "853ad5699626bc68cdbee5831fac47514ecfa1dd"
+        },
+        "register-review.cjs": {
+          "sha256": "afe0209a4b4f5c665e40ed23fd52bb4d61552a6ee3fadbca50bb7f2f453f6011",
+          "gitBlob": "821f6b17a8d033a544042cfa3f3ad77c1f236a27"
+        }
+      },
+      "trackedStatusAfter": ""
+    },
+    "menu": {
+      "root": "/workspace/dobby-v7-menu-diff-menu",
+      "sha": "3f7fe0e36e1e142cefaada5d575196c436b444e4",
+      "trackedStatusBefore": "",
+      "tests": {
+        "family.cjs": {
+          "sha256": "0dacbbae0ba5afa61444d0329a8ea53348a6f2b61547d41ef2c4dac046f5bb19",
+          "gitBlob": "dbe7d3532679ee2e32e390aa548fb92c6672eedd"
+        },
+        "e05-edge.cjs": {
+          "sha256": "cf0bf2dd7a6677086b96c6e59f9b01af091691281ff210767a51a1a15d48e7d5",
+          "gitBlob": "d984b522f784443459fe0256ad840ee378992129"
+        },
+        "register-review.cjs": {
+          "sha256": "afe0209a4b4f5c665e40ed23fd52bb4d61552a6ee3fadbca50bb7f2f453f6011",
+          "gitBlob": "821f6b17a8d033a544042cfa3f3ad77c1f236a27"
+        }
+      },
+      "trackedStatusAfter": ""
+    }
+  },
+  "nodeVersion": "v24.19.0",
+  "chromiumVersion": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "preloadSha256": "9ab1a325688cfec5f11efc777ece39ae0dc428bcaa382ac7867d52ae504fbe79",
+  "serverSha256": "8f7759af25ab10886b1e6361c3a37dcfa2b37e829334e2d6149623fd2fa5e566",
+  "startedUTC": "2026-11-12T10:00:29Z",
+  "finishedUTC": "2026-11-12T10:04:13Z"
+}

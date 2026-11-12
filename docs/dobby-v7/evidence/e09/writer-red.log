@@ -1,0 +1,77 @@
+✖ new stable memo identity persists on edit, delete never touches legacy records (5.124259ms)
+✖ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (3.528425ms)
+✖ stale edit and stale deletion are rejected with both data and typed draft untouched (2.35669ms)
+✖ storage failure rolls back shared registry and does not erase historical local notes (3.864831ms)
+✔ required and bounded fields and missing legacy import never create records (4.128209ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 109.47232
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/e09-memo-writer.test.cjs:4:1
+✖ new stable memo identity persists on edit, delete never touches legacy records (5.124259ms)
+  TypeError: E.saveSharedMemo is not a function
+      at TestContext.<anonymous> (/workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-memo-writer.test.cjs:4:124)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at essai-stitch-v7/tests/e09-memo-writer.test.cjs:5:1
+✖ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (3.528425ms)
+  TypeError: E.importLocalMemo is not a function
+      at TestContext.<anonymous> (/workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-memo-writer.test.cjs:5:192)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at essai-stitch-v7/tests/e09-memo-writer.test.cjs:6:1
+✖ stale edit and stale deletion are rejected with both data and typed draft untouched (2.35669ms)
+  TypeError: E.saveSharedMemo is not a function
+      at TestContext.<anonymous> (/workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-memo-writer.test.cjs:6:129)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v7/tests/e09-memo-writer.test.cjs:7:1
+✖ storage failure rolls back shared registry and does not erase historical local notes (3.864831ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /quota/. Input:
+  
+  'TypeError: E.importLocalMemo is not a function'
+  
+      at TestContext.<anonymous> (/workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-memo-writer.test.cjs:7:171)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: E.importLocalMemo is not a function
+        at /workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-memo-writer.test.cjs:7:184
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (/workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-memo-writer.test.cjs:7:171)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /quota/,
+    operator: 'throws',
+    diff: 'simple'
+  }

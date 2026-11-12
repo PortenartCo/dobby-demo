@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'edit_noteAjouter des recettes avec l’IA'
+- 'Ajouter des recettes avec l’IA'
+
+    at /workspace/dobby-e074/essai-stitch-v7/tests/e07-4-a-ui.cjs:16:332 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'edit_noteAjouter des recettes avec l’IA',
+  expected: 'Ajouter des recettes avec l’IA',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

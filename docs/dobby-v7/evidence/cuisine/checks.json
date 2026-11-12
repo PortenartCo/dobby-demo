@@ -1,0 +1,228 @@
+[
+  {
+    "view": "taverne",
+    "width": 320,
+    "source": "dobby_la_taverne_gourmande_repas_menus",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1568
+  },
+  {
+    "view": "pick",
+    "width": 320,
+    "source": "dobby_choisir_un_repas_nombre_de_convives",
+    "overflow": [],
+    "disabled": [
+      "🌿 Végétarien",
+      "⚡ Moins de 30 min",
+      "🧀 Fromage au choix",
+      "🥖 Pain frais à prévoir"
+    ],
+    "bytes": 3002
+  },
+  {
+    "view": "recipes",
+    "width": 320,
+    "source": "dobby_grimoire_des_recettes_favoris_du_logis",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 3394
+  },
+  {
+    "view": "recipe",
+    "width": 320,
+    "source": "dobby_fiche_d_taill_e_d_une_recette",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1325
+  },
+  {
+    "view": "cook",
+    "width": 320,
+    "source": "dobby_mode_cuisine_tape_par_tape",
+    "overflow": [],
+    "disabled": [
+      "arrow_back\n\nPrécédente\nDébut"
+    ],
+    "bytes": 1162
+  },
+  {
+    "view": "tm5",
+    "width": 320,
+    "source": "dobby_adaptation_thermomix_tm5",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1634
+  },
+  {
+    "view": "recipe-add-1",
+    "width": 320,
+    "source": "dobby_ajouter_une_recette_manuellement_1",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 2339
+  },
+  {
+    "view": "recipe-add",
+    "width": 320,
+    "source": "dobby_ajouter_une_recette_manuellement_2",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 2534
+  },
+  {
+    "view": "batch",
+    "width": 320,
+    "source": "dobby_importer_un_lot_de_recettes_json",
+    "overflow": [],
+    "disabled": [
+      "Importer 0 recette(s) contrôlée(s)"
+    ],
+    "bytes": 1360
+  },
+  {
+    "view": "shop-1",
+    "width": 320,
+    "source": "dobby_pr_parer_la_liste_de_courses_1",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1336
+  },
+  {
+    "view": "shop",
+    "width": 320,
+    "source": "dobby_pr_parer_la_liste_de_courses_2",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1421
+  },
+  {
+    "view": "shop-final",
+    "width": 320,
+    "source": "dobby_liste_de_courses_valid_e",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1271
+  },
+  {
+    "view": "shop-history",
+    "width": 320,
+    "source": "dobby_historique_des_listes_de_courses",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 859
+  },
+  {
+    "view": "taverne",
+    "width": 390,
+    "source": "dobby_la_taverne_gourmande_repas_menus",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1568
+  },
+  {
+    "view": "pick",
+    "width": 390,
+    "source": "dobby_choisir_un_repas_nombre_de_convives",
+    "overflow": [],
+    "disabled": [
+      "🌿 Végétarien",
+      "⚡ Moins de 30 min",
+      "🧀 Fromage au choix",
+      "🥖 Pain frais à prévoir"
+    ],
+    "bytes": 3002
+  },
+  {
+    "view": "recipes",
+    "width": 390,
+    "source": "dobby_grimoire_des_recettes_favoris_du_logis",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 3394
+  },
+  {
+    "view": "recipe",
+    "width": 390,
+    "source": "dobby_fiche_d_taill_e_d_une_recette",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1325
+  },
+  {
+    "view": "cook",
+    "width": 390,
+    "source": "dobby_mode_cuisine_tape_par_tape",
+    "overflow": [],
+    "disabled": [
+      "arrow_back\n\nPrécédente\nDébut"
+    ],
+    "bytes": 1162
+  },
+  {
+    "view": "tm5",
+    "width": 390,
+    "source": "dobby_adaptation_thermomix_tm5",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1634
+  },
+  {
+    "view": "recipe-add-1",
+    "width": 390,
+    "source": "dobby_ajouter_une_recette_manuellement_1",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 2339
+  },
+  {
+    "view": "recipe-add",
+    "width": 390,
+    "source": "dobby_ajouter_une_recette_manuellement_2",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 2534
+  },
+  {
+    "view": "batch",
+    "width": 390,
+    "source": "dobby_importer_un_lot_de_recettes_json",
+    "overflow": [],
+    "disabled": [
+      "Importer 0 recette(s) contrôlée(s)"
+    ],
+    "bytes": 1360
+  },
+  {
+    "view": "shop-1",
+    "width": 390,
+    "source": "dobby_pr_parer_la_liste_de_courses_1",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1336
+  },
+  {
+    "view": "shop",
+    "width": 390,
+    "source": "dobby_pr_parer_la_liste_de_courses_2",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1421
+  },
+  {
+    "view": "shop-final",
+    "width": 390,
+    "source": "dobby_liste_de_courses_valid_e",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 1271
+  },
+  {
+    "view": "shop-history",
+    "width": 390,
+    "source": "dobby_historique_des_listes_de_courses",
+    "overflow": [],
+    "disabled": [],
+    "bytes": 859
+  }
+]

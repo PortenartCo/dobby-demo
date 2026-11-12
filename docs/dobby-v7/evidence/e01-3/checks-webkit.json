@@ -1,0 +1,36 @@
+[
+  {
+    "engine": "webkit",
+    "browserVersion": "26.5",
+    "width": 390,
+    "profile": "iPhone 13 emulated",
+    "activationMs": 430,
+    "particles": 22,
+    "cadence": {
+      "frames": 42,
+      "medianMs": 17,
+      "over50ms": 2
+    },
+    "visibilityTest": "simulated visibilitychange; paused timelines measured",
+    "scrollTest": "programmatic; native wheel unavailable in mobile WebKit",
+    "touchInput": true,
+    "result": "PASS"
+  },
+  {
+    "engine": "webkit",
+    "browserVersion": "26.5",
+    "width": 1440,
+    "profile": "desktop",
+    "activationMs": 144,
+    "particles": 22,
+    "cadence": {
+      "frames": 65,
+      "medianMs": 16,
+      "over50ms": 1
+    },
+    "visibilityTest": "simulated visibilitychange; paused timelines measured",
+    "scrollTest": "native wheel",
+    "touchInput": false,
+    "result": "PASS"
+  }
+]

@@ -1,0 +1,12 @@
+E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+E02_EDGE_PASS real queries/links, parser boundaries, stale action, writer failure, shared privacy, E01 effects, visualViewport overlay keyboard
+E02_UI_ACTIONS_PASS 320
+E02_UI_ACTIONS_PASS 390
+E02_UI_ACTIONS_PASS 1440
+E02_VOICE_HISTORY_PASS
+E02_PUBLICATION_RECEIPT_PASS http://127.0.0.1:8770/essai-e02-preview/famille.html#chat
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/five tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+REGISTER_TOOLS_PASS 320
+REGISTER_TOOLS_PASS 390

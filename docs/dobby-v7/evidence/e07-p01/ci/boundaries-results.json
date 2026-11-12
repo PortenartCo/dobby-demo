@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "sourceSha": "69ef361ad139356c2d1473d825f9231e7610b0e4",
+  "sourceSha256": {
+    "essai-stitch-v7/cuisine-p01.js": "ff769e9b3c0bb46723f67ead5ad774313d92aa249deb498ae4b910d48463a8ac",
+    "essai-stitch-v7/cuisine-p01.css": "7a995a944d01e005454b3f8379c00126930ae7a71ff4f022896e789870155687",
+    "essai-stitch-v7/cuisine.js": "b65ca97f778d2c1cf2bd38380704234deb64f2bf330dff3fd94d434050a9ef81",
+    "essai-stitch-v7/cuisine-e07.js": "179aec2ee8e8c202557b812accb15bcbc84b3968c10903cf6f06e2b8cc568ae8",
+    "essai-stitch-v7/cuisine-engine.js": "4eb0ec960701457c64fe26d4f802a195619af99bc6be827723a4fb639b2b5044",
+    "scripts/build-dobby-review.cjs": "63718074656209618bccc15fe1becb40c85eb972d0ae8a5da9cef039c9c1fef3",
+    "scripts/review/e07-p01-config.js": "8555e6d1364b50bdff47bb4fa48e2c1e194847b67525b16338a5ee19e86a064a"
+  },
+  "results": [
+    {
+      "test": "e07-3-taverne.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-3-catalogue.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-b-ui.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-engine.cjs",
+      "status": "PASS"
+    },
+    {
+      "test": "e07-4-render-race.cjs",
+      "status": "PASS"
+    }
+  ],
+  "scope": "E07.4 boundaries only; new P01 tests executed separately."
+}

@@ -1,0 +1,55 @@
+{
+  "scope": "Local pre-reset-hardening browser evidence. Final release and hosted validation are separate.",
+  "applicationFilesIdenticalAcrossSourceCommits": true,
+  "reports": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "sourceSha": "fcae93515393e885cd20565ec2a32dfe96bd947a",
+      "checks": 12,
+      "screenshots": 12,
+      "runesProtocol": 2,
+      "cas": [],
+      "externalRequests": 0,
+      "networkMutations": 0,
+      "errors": 0,
+      "missing": 0
+    },
+    {
+      "width": 390,
+      "status": "PASS",
+      "sourceSha": "fcae93515393e885cd20565ec2a32dfe96bd947a",
+      "checks": 16,
+      "screenshots": 15,
+      "runesProtocol": 2,
+      "cas": [
+        {
+          "id": "00000000-0000-4000-8000-000000000100",
+          "expectedRevision": 2,
+          "remoteRevision": 3
+        },
+        {
+          "id": "f0de7f16-37c2-46ab-a9df-4850011de494",
+          "expectedRevision": 1,
+          "remoteRevision": 2
+        }
+      ],
+      "externalRequests": 0,
+      "networkMutations": 0,
+      "errors": 0,
+      "missing": 0
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "sourceSha": "1650d15a9570ae47bed16e11fba78283b9901ee7",
+      "checks": 12,
+      "screenshots": 12,
+      "cas": [],
+      "externalRequests": 0,
+      "networkMutations": 0,
+      "errors": 0,
+      "missing": 0
+    }
+  ]
+}

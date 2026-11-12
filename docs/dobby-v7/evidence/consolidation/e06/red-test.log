@@ -1,0 +1,15 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ "Question 1 sur 6 · L'horloge oubliée"
+- 'Question 1 / 6'
+
+    at questions (/workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-consolidation.cjs:17:11)
+    at async /workspace/dobby-integrated-review/essai-stitch-v7/tests/e06-consolidation.cjs:23:3 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: "Question 1 sur 6 · L'horloge oubliée",
+  expected: 'Question 1 / 6',
+  operator: 'strictEqual',
+  diff: 'simple'
+}

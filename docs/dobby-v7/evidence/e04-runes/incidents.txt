@@ -1,0 +1,9 @@
+Tests causaux et incidents de recette
+
+1. La première campagne globale a validé les 10 premiers scripts puis smoke.cjs a tenté son ancien chemin Chrome Windows : C:/Program Files/Google/Chrome/Application/chrome.exe. Les 25 scripts restants ont été exécutés avec CHROMIUM_PATH=/usr/bin/chromium, sans rejouer les 10 déjà verts.
+2. Les fixtures VM anciennes ont été raccordées à la vraie promesse de chargement du nouveau module pur. Les attentes de versions d’assets et de troisième collection Missions ont été adaptées sans retirer les contrôles initiaux ; index.html V5 reste identique.
+3. Le premier scénario UI essayait de rappeler open() depuis la racine Missions non initialisée pour les formulaires. Le test emprunte désormais le vrai lien Créer une mission, puis attend la destination Famille. Aucun correctif applicatif de navigation nécessaire.
+4. Le classement des clés JSONB a révélé une deuxième écriture inutile et un risque de boucle du planificateur : digests canoniques pour Missions uniquement, test rouge/vert conservé.
+5. Un décor shield de Stitch masquait le nouveau grade : décor supprimé au seul emplacement de l’avatar ; test de recouvrement et nouvelles captures.
+6. Revue indépendante : désactiver le partage ne devait pas effacer runeSyncRequired. Marqueur conservé, scénario rouge/vert et revue de clôture.
+7. Les demandes conservées à la récupération du foyer étaient encore affichées « à jour » et pouvaient attendre un nouveau save : statut explicite et reprise par le planificateur existant, tests rouge/vert. Aucun faux succès réseau ou crédit optimiste ajouté.

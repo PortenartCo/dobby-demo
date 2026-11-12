@@ -1,0 +1,86 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Aucune liste validée/. Input:
+
+'\n' +
+  '\n' +
+  '\n' +
+  'check_circle\n' +
+  'Action effectuée\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '    \n' +
+  '    \n' +
+  '    \n' +
+  '      auto_awesome\n' +
+  '      Panier enchanté du foyer\n' +
+  '    \n' +
+  '  \n' +
+  '  \n' +
+  '    Votre liste validée : cochez les articles à mesure de vos achats.\n' +
+  '    \n' +
+  '      local_convenience_store Mode marché & supermarché prêt pour les emplettes\n' +
+  '    \n' +
+  '  \n' +
+  '\n' +
+  '  \n' +
+  '    \n' +
+  '      auto_fix_normal\n' +
+  '      Registre du Garde-Manger\n' +
+  '    \n' +
+  '    Ma liste de courses\n' +
+  '  \n' +
+  '  Liste validée\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '    magic_button\n' +
+  '    0 / 0 articles trouvés\n' +
+  '  \n' +
+  '  0 restants\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'add_circle\n' +
+  'Modifier la préparation\n' +
+  '\n' +
+  '\n' +
+  'share\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'history\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'info\n' +
+  'États de la liste & Conseils en rayon\n' +
+  '\n' +
+  'expand_more\n' +
+  '\n' +
+  'La liste des repas et le panier commun sont distincts. Le module Menus peut partager les repas et leurs listes lorsqu’il est activé. L’ajout des ingrédients au panier commun nécessite l’action dédiée ci-dessous.\n' +
+  '\n' +
+  '\n' +
+  'Aucun article dans la liste validée. Modifiez la préparation pour choisir vos courses.\n' +
+  '\n' +
+  '\n' +
+  '\n' +
+  'Panier commun du foyerNon connectéConnecter mon foyerLes courses locales restent disponibles ci-dessus. La validation locale ne partage pas automatiquement les ingrédients.Foyer non connecté'
+
+    at /workspace/dobby-e07/essai-stitch-v7/tests/e07.cjs:8:269 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '\n\n\ncheck_circle\nAction effectuée\n\n\n\n  \n    \n...',
+  expected: /Aucune liste validée/,
+  operator: 'match',
+  diff: 'simple'
+}
