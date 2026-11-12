@@ -6,7 +6,7 @@ const arg=process.argv.indexOf('--output');
 const out=arg>=0?path.resolve(process.argv[arg+1]):path.join(repo,'essai-dobby-v7-cours-14h-correctif-20261112');
 if(fs.existsSync(out))throw Error('Course preview must use a NEW output folder: '+out);
 const hash=data=>crypto.createHash('sha256').update(data).digest('hex');
-const from='dobby-review-v7-menu-20261112|',to='dobby-review-v7-cours-14h-correctif-20261112|';
+const from='dobby-review-v7-menu-20261112|',to='dobby-review-v7-cours-e06-visuels-20261112|';
 execFileSync(process.execPath,[path.join(__dirname,'build-dobby-menu-review.cjs'),'--output',out],{cwd:repo,stdio:'inherit'});
 const manifestPath=path.join(out,'review-manifest.json'),m=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
 function replace(file,value,transform){
@@ -31,12 +31,12 @@ for(const file of ['review-config.js','global-demo.js','family-config.js']){
 }
 const entry='essai-stitch-v7/famille.html?client=A#onboarding-ritual?record=replay';
 replace('index.html','<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=./'+entry+'"><title>DOBBY — Démo du cours, 14 h</title></head><body><p>Démo fictive, sans compte ni donnée réelle.</p><a href="./'+entry+'">Commencer le Rituel</a> · <a href="./essai-stitch-v7/traverse.html?client=A">Passer à l’application</a> · <a href="./essai-stitch-v7/famille.html?client=A#models">Mes modèles</a></body></html>\n',{type:'course-entry',entry});
-replace('README.md','# DOBBY V7 — Démonstration du cours de 14 h (12 novembre 2026)\n\nVersion isolée basée sur Famille, Menu (cinq rubriques), Agenda natif et Listes de préparation (quatre parcours du ZIP Stitch corrigé). Départ : feu de Cheminette → foyer → identité → Choixpeau → Patronus → identité magique → Chemin de Traverse (rituel rejouable, effets visuels activés dans la démo). Les listes sont accessibles depuis le Salon des Curiosités ; un modèle peut être associé au formulaire Agenda existant puis consulté depuis Préparatifs. La refonte distincte de la fiche Événement n’est PAS encore intégrée.\n\nDonnées fictives de démonstration, clients A/B simulés dans le même navigateur, backend factice et espace de stockage autonome. Aucun compte réel, aucun backend Supabase, aucune IA payante, aucun envoi réel. Préserver les autres aperçus et vérifier l\'URL hébergée avant présentation.\n',{type:'course-readme'});
+replace('README.md','# DOBBY V7 — Démonstration du cours de 14 h (12 novembre 2026)\n\nVersion isolée basée sur Famille, Menu (cinq rubriques), Agenda natif et Listes de préparation (quatre parcours du ZIP Stitch corrigé). Départ : feu de Cheminette → foyer → identité → Choixpeau → Patronus → identité magique → Chemin de Traverse (rituel rejouable, effets visuels activés dans la démo). Les listes sont accessibles depuis le Salon des Curiosités ; un modèle peut être associé au formulaire Agenda existant puis consulté depuis Préparatifs. Les visuels cinématographiques du Choixpeau et les blasons originaux Stitch E05/E06 sont intégrés. Le questionnaire DOBBY conserve ses six questions et son scoring. La refonte distincte de la fiche Événement n’est PAS encore intégrée.\n\nDonnées fictives de démonstration, clients A/B simulés dans le même navigateur, backend factice et espace de stockage autonome. Aucun compte réel, aucun backend Supabase, aucune IA payante, aucun envoi réel. Préserver les autres aperçus et vérifier l\'URL hébergée avant présentation.\n',{type:'course-readme'});
 const previousBuilder=m.builderSource;
 Object.assign(m,{
- version:'V7-COURS-14H-CORRECTIF',entry,sourceSha:execFileSync('git',['rev-parse','HEAD'],{cwd:repo,encoding:'utf8'}).trim(),
+ version:'V7-COURS-E06-VISUELS',entry,sourceSha:execFileSync('git',['rev-parse','HEAD'],{cwd:repo,encoding:'utf8'}).trim(),
  storagePrefix:to+'client-{A|B}|',sharedFixtureKey:to+'backend-v1',selectedClientKey:to+'selected-client',resetKey:to+'reset-in-progress',resetChannel:to+'reset',backendLock:to+'backend-v1',
- sourceComponents:{familyBase:'5b764ef367553e9945fb72a6b563b55adc41e040',menu:'01d1dbce4b6aa9097f88e6b5bb164f2de82648b6',preparations:'ad7d6b7645345cb5eaab4db9ec32994445b6dbca',eventsRedesign:'not-included'},
+ sourceComponents:{familyBase:'5b764ef367553e9945fb72a6b563b55adc41e040',menu:'01d1dbce4b6aa9097f88e6b5bb164f2de82648b6',preparations:'ad7d6b7645345cb5eaab4db9ec32994445b6dbca',eventsRedesign:'not-included',ceremonyArt:'ee656d3ea1a81861eb310f3b99ef40d65c3d0d72'},
  realBackend:false,realAuth:false,publication:'new-directory-only',configSha256:hash(fs.readFileSync(path.join(out,'review-config.js'))),
  familyConfigSha256:hash(fs.readFileSync(path.join(out,'family-config.js'))),fixtureSha256:hash(fs.readFileSync(path.join(out,'global-demo.js'))),
  readmeSha256:hash(fs.readFileSync(path.join(out,'README.md'))),
