@@ -1,0 +1,16 @@
+$ node --test essai-stitch-v7/tests/e06-identity.test.mjs essai-stitch-v7/tests/e09-memo-writer.test.cjs
+✔ E06 stores confirmed algorithm metadata and explicit ceremony state via the existing profile patch (1.393313ms)
+✔ manual E05 house/patronus changes remove only the corresponding computed-version attribution (0.18608ms)
+✔ new stable memo identity persists on edit, delete never touches legacy records (3.631326ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (1.386032ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (2.742942ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (1.502227ms)
+✔ required and bounded fields and missing legacy import never create records (1.821016ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71.664162

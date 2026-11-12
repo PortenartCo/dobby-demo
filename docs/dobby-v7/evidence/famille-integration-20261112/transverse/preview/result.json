@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "base": "http://127.0.0.1:8873/essai-dobby-v7-famille-review-20261112/",
+  "realBackend": false,
+  "checks": [
+    "new Family bundle preserves latest chat/Courses bytes and global transport after namespace substitution",
+    "one shared native grocery row keeps its quantity and availability across A/B",
+    "E02 reads and contributes to Courses without changing quantified rows or local archives",
+    "stale native grocery CAS is visible and explicit server resolution converges A/B",
+    "native mission completion confirms one immutable shared Runes V2 grant",
+    "shared E09 memo uses FAM read-first route, survives reload and reaches B without local-note import"
+  ],
+  "externalRequests": [],
+  "networkMutations": [],
+  "errors": [],
+  "screenshots": [
+    "01-e02-shared-courses.png",
+    "02-native-cas-conflict.png",
+    "03-confirmed-runes.png",
+    "04-shared-memo-client-b.png"
+  ],
+  "bundle": {
+    "version": "V7-FAMILLE",
+    "base": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+    "sourceSha": "bc3c1e5a12bb76350cd8981b79cf67f85949ecce",
+    "sourceState": "working-tree",
+    "storagePrefix": "dobby-review-v7-famille-20261112|client-{A|B}|",
+    "fixtureSha256": "c2e73be3c1d67035e579353d6d70b23b060bbf6e0dcbe29738a46c5661b98f1c"
+  },
+  "clients": {
+    "A": "00000000-0000-4000-8000-000000000001",
+    "B": "00000000-0000-4000-8000-000000000002",
+    "household": "00000000-0000-4000-8000-000000000010"
+  },
+  "e02GroceryId": "0f3bb326-ebea-4c4d-befb-589dac629a3c",
+  "cas": {
+    "id": "00000000-0000-4000-8000-000000000100",
+    "expectedRevision": 2,
+    "remoteRevision": 3
+  },
+  "confirmedGain": {
+    "missionId": "review-mission",
+    "memberId": "review-person",
+    "effort": "light",
+    "amount": 10,
+    "date": "2026-11-12T09:04:58.861Z",
+    "title": "DÉMO — Préparer la maisonnée",
+    "revision": 3
+  },
+  "memo": {
+    "id": "memo-7c89ec1e-61f5-4f06-a21c-ce13f10e15da",
+    "legacyRetained": true,
+    "eventsRetained": true,
+    "readFirst": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-11-12T08:56:04.940917+00:00",
+  "command": [
+    "node",
+    "--test",
+    "essai-sync-v1/tests/core.test.mjs",
+    "essai-sync-v2/tests/core.test.mjs"
+  ],
+  "exitCode": 0,
+  "log": "docs/dobby-v7/evidence/famille-integration-20261112/family/logs/sync-v1-v2-native.log"
+}

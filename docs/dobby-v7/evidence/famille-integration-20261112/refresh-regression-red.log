@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: A family sync must preserve the open legacy-memo section
+
+false !== true
+
+    at /workspace/dobby-v7-famille-integration-20261112/essai-stitch-v7/tests/fam-integration-preview.cjs:19:165 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

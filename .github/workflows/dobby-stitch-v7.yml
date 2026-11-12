@@ -7,6 +7,7 @@ on:
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
       - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/build-dobby-family-review.cjs'
       - 'scripts/check-dobby-review-reuse.cjs'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
@@ -18,6 +19,7 @@ on:
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
       - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/build-dobby-family-review.cjs'
       - 'scripts/check-dobby-review-reuse.cjs'
       - 'scripts/review/**'
       - 'docs/dobby-v7/**'
@@ -160,6 +162,23 @@ jobs:
             exit 1
           fi
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/ci.cjs
+      - name: Famille integration native contracts, isolated preview and reset
+        if: github.ref_name == 'feat/dobby-v7-famille-integration-20261112' || github.head_ref == 'feat/dobby-v7-famille-integration-20261112'
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8765
+          DOBBY_FAM_CI_EVIDENCE: docs/dobby-v7/evidence/famille-integration-20261112/ci-current
+        run: |
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          elif command -v chromium >/dev/null; then
+            BROWSER="$(command -v chromium)"
+          elif command -v chromium-browser >/dev/null; then
+            BROWSER="$(command -v chromium-browser)"
+          else
+            echo "No Chrome/Chromium available on runner"
+            exit 1
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/fam-integration-ci.cjs
       - name: Global E01–E09 isolated bundle and native A/B journeys
         if: github.ref_name == 'feat/dobby-v7-global-review-20261112'
         env:

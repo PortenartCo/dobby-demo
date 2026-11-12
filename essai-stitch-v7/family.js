@@ -202,7 +202,8 @@ window.DobbyFamilyStitch=(()=>{
   const form=['member-edit','medical-edit'].includes(ui.view);let focus;
   if(form){if(availability(data)===formContext)return;const field=document.activeElement;if(field?.matches('input,textarea,select'))focus={id:field.id,start:field.selectionStart,end:field.selectionEnd};if(ui.view==='member-edit')ui.memberDraft=memberDraft();else ui.visitDraft=visitDraft();}
   else if(document.activeElement?.matches('input,textarea,select'))return;
-  busy=true;try{await render();if(focus&&$('#dv7-panel')?.hidden){const field=document.getElementById(focus.id);field?.focus();if(field&&focus.start!==null&&field.setSelectionRange&&/^(text|search)$/.test(field.type||'text'))field.setSelectionRange(focus.start,focus.end);}}finally{busy=false;}
+  const legacyOpen=ui.view==='memos'&&$('[data-e09-legacy]')?.open;
+  busy=true;try{await render();if(legacyOpen&&ui.view==='memos'&&$('[data-e09-legacy]'))$('[data-e09-legacy]').open=true;if(focus&&$('#dv7-panel')?.hidden){const field=document.getElementById(focus.id);field?.focus();if(field&&focus.start!==null&&field.setSelectionRange&&/^(text|search)$/.test(field.type||'text'))field.setSelectionRange(focus.start,focus.end);}}finally{busy=false;}
  }
  async function init(openLegacy){
   if(ready)return;legacy=openLegacy;rootMain=$('main').cloneNode(true);rootHeader=$('body > header').cloneNode(true);document.body.classList.add('fa-active');E.notices(notice);

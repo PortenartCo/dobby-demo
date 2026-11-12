@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "campaign": "famille-integration-20261112",
+  "startedAt": "2026-11-12T09:00:33.846Z",
+  "sourceSha": "bc3c1e5a12bb76350cd8981b79cf67f85949ecce",
+  "origin": "http://127.0.0.1:8873",
+  "output": "essai-dobby-v7-famille-review-20261112",
+  "historicalReuse": false,
+  "existingCoursesCampaign": "Required separately by the unchanged Functional Stitch roots and source fidelity workflow step.",
+  "results": [
+    {
+      "name": "build-and-boundary-contracts",
+      "command": [
+        "node",
+        "--test",
+        "essai-stitch-v7/tests/fam-integration-build.test.cjs",
+        "essai-stitch-v7/tests/fam-integration-transverse.test.cjs",
+        "essai-stitch-v7/tests/e09-memo-writer.test.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1216,
+      "log": "logs/build-and-boundary-contracts.log"
+    },
+    {
+      "name": "native-member-policy",
+      "command": [
+        "node",
+        "--test",
+        "essai-stitch-v5-famille/tests/family-member-policy.test.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 4811,
+      "log": "logs/native-member-policy.log"
+    },
+    {
+      "name": "member-detail",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-detail.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 10000,
+      "log": "logs/member-detail.log"
+    },
+    {
+      "name": "members",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-members.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 6547,
+      "log": "logs/members.log"
+    },
+    {
+      "name": "agenda-memos",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-agenda-memos.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 14820,
+      "log": "logs/agenda-memos.log"
+    },
+    {
+      "name": "agenda-memos-sync",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-agenda-memos-sync.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 11493,
+      "log": "logs/agenda-memos-sync.log"
+    },
+    {
+      "name": "agenda-month",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-agenda-month.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 2467,
+      "log": "logs/agenda-month.log"
+    },
+    {
+      "name": "effects",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/family-review-effects.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 52311,
+      "log": "logs/effects.log"
+    },
+    {
+      "name": "build-isolated-preview",
+      "command": [
+        "node",
+        "scripts/build-dobby-family-review.cjs",
+        "--output",
+        "essai-dobby-v7-famille-review-20261112",
+        "--allow-dirty"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 492,
+      "log": "logs/build-isolated-preview.log"
+    },
+    {
+      "name": "transverse-preview",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-integration-transverse.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 61607,
+      "log": "logs/transverse-preview.log"
+    },
+    {
+      "name": "preview-browser-and-reset",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-integration-preview.cjs"
+      ],
+      "exitCode": 1,
+      "signal": null,
+      "durationMs": 67394,
+      "log": "logs/preview-browser-and-reset.log"
+    }
+  ],
+  "servedFamilySha256": "b880354412ff674a0a1df4bfc9cf5df835f4ca4703c227d0f5ed4c8c4b3c14d6",
+  "passed": false,
+  "error": "Famille integration check failed: preview-browser-and-reset",
+  "completedAt": "2026-11-12T09:04:27.073Z"
+}

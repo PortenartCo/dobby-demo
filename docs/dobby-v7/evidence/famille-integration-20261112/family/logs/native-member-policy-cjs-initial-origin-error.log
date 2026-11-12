@@ -1,0 +1,35 @@
+$ node --test essai-stitch-v5-famille/tests/family-member-policy.test.cjs
+✖ FAM native form guards, model compatibility and child E06 confirmation use the existing writer (507.883254ms)
+✖ FAM15 native local and shared medical operations enforce actor and old/new attribution (434.231832ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1270.38891
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/family-member-policy.test.cjs:7:1
+✖ FAM native form guards, model compatibility and child E06 confirmation use the existing writer (507.883254ms)
+  page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8893/essai-stitch-v7/famille.html
+  Call log:
+  [2m  - navigating to "http://127.0.0.1:8893/essai-stitch-v7/famille.html", waiting until "load"[22m
+
+      at TestContext.<anonymous> (/workspace/dobby-v7-famille-integration-20261112/essai-stitch-v5-famille/tests/family-member-policy.test.cjs:13:14) {
+    name: 'Error',
+    log: [ '  - navigating to "http://127.0.0.1:8893/essai-stitch-v7/famille.html", waiting until "load"' ]
+  }
+
+test at essai-stitch-v5-famille/tests/family-member-policy.test.cjs:48:1
+✖ FAM15 native local and shared medical operations enforce actor and old/new attribution (434.231832ms)
+  page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8893/essai-stitch-v7/famille.html
+  Call log:
+  [2m  - navigating to "http://127.0.0.1:8893/essai-stitch-v7/famille.html", waiting until "load"[22m
+
+      at TestContext.<anonymous> (/workspace/dobby-v7-famille-integration-20261112/essai-stitch-v5-famille/tests/family-member-policy.test.cjs:56:14) {
+    name: 'Error',
+    log: [ '  - navigating to "http://127.0.0.1:8893/essai-stitch-v7/famille.html", waiting until "load"' ]
+  }

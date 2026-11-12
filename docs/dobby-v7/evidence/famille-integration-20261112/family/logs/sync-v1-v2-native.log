@@ -1,0 +1,30 @@
+$ node --test essai-sync-v1/tests/core.test.mjs essai-sync-v2/tests/core.test.mjs
+✔ new entry is pending and preserves a stable UUID (1.735977ms)
+✔ equivalent server echo resolves an uncertain successful POST (0.700823ms)
+✔ editing an unchanged server revision remains pending (0.429785ms)
+✔ simultaneous edits require a decision, never auto overwrite (3.368358ms)
+✔ resolve conflict with server version (0.423967ms)
+✔ resolve conflict with local version creates pending update against new revision (0.334943ms)
+✔ new edit during an in-flight update remains pending with new server revision (0.373591ms)
+✔ soft deletion is part of the synchronized state (0.356916ms)
+✔ new entry is pending and preserves a stable UUID (1.356958ms)
+✔ equivalent server echo resolves an uncertain successful POST (0.343365ms)
+✔ editing an unchanged server revision remains pending (0.232279ms)
+✔ simultaneous edits require a decision, never auto overwrite (0.262684ms)
+✔ resolve conflict with server version (0.260852ms)
+✔ resolve conflict with local version creates pending update against new revision (0.256545ms)
+✔ new edit during an in-flight update remains pending with new server revision (0.280661ms)
+✔ soft deletion is part of the synchronized state (0.26644ms)
+✔ V2 uses a distinct offline IndexedDB namespace (0.27934ms)
+✔ V2 never accesses legacy V1 grocery or membership tables (0.30634ms)
+✔ V2 rejects ambiguous household membership (0.137296ms)
+✔ V2 includes household binding on GET, INSERT and optimistic PATCH (0.115344ms)
+✔ V2 service worker has isolated cache and route scope (0.133681ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 128.973691

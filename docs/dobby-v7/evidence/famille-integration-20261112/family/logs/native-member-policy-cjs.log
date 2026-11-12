@@ -1,0 +1,11 @@
+$ DOBBY_TEST_ORIGIN=http://127.0.0.1:8873 node --test essai-stitch-v5-famille/tests/family-member-policy.test.cjs
+✔ FAM native form guards, model compatibility and child E06 confirmation use the existing writer (2898.924631ms)
+✔ FAM15 native local and shared medical operations enforce actor and old/new attribution (1939.246055ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5371.019073

@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
 const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8863';
-const out = path.resolve(__dirname, '../../docs/dobby-v7/evidence/fam01-24/effects');
+const out = path.resolve(process.env.DOBBY_FAM_EVIDENCE || path.join(__dirname, '../../docs/dobby-v7/evidence/fam01-24'), 'effects');
 const baseline = process.env.FAM01_CAPTURE_BASELINE === '1';
 const coreViews = ['salon', 'members', 'member-edit', 'agenda', 'memos', 'memo-edit'];
 const extraViews = ['health', 'health-person', 'health-history', 'medical-edit', 'contacts', 'personal', 'menu'];

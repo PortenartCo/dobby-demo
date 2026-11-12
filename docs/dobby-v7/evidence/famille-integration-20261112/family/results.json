@@ -1,0 +1,137 @@
+{
+  "generatedAt": "2026-11-12T08:58:00.823277+00:00",
+  "checkout": "/workspace/dobby-v7-famille-integration-20261112",
+  "head": "bc3c1e5a12bb76350cd8981b79cf67f85949ecce",
+  "origin": "http://127.0.0.1:8873",
+  "sourceNodeTestCount": 225,
+  "nativeMemberPolicyBrowserNodeTestCount": 2,
+  "totalNodeTestCount": 227,
+  "targetedBrowserSuiteCount": 6,
+  "targetedBrowserViewportRuns": 14,
+  "effectsViewsPerWidth": 13,
+  "effectsTotalViewRuns": 39,
+  "screenshots": 74,
+  "screenshotCounts": {
+    "detail": 9,
+    "members": 12,
+    "agenda-memos": 12,
+    "agenda-memos/sync-browser": 2,
+    "effects": 39
+  },
+  "realBackend": false,
+  "regressions": [],
+  "browserSuites": [
+    {
+      "name": "fam-detail",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-detail.cjs"
+      ],
+      "environment": {
+        "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8873",
+        "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/family"
+      },
+      "exitCode": 0,
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "log": "logs/fam-detail.log"
+    },
+    {
+      "name": "fam-members",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-members.cjs"
+      ],
+      "environment": {
+        "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8873",
+        "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/family"
+      },
+      "exitCode": 0,
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "log": "logs/fam-members.log"
+    },
+    {
+      "name": "fam-agenda-memos",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-agenda-memos.cjs"
+      ],
+      "environment": {
+        "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8873",
+        "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/family"
+      },
+      "exitCode": 0,
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "log": "logs/fam-agenda-memos.log"
+    },
+    {
+      "name": "fam-agenda-memos-sync",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-agenda-memos-sync.cjs"
+      ],
+      "environment": {
+        "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8873",
+        "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/family"
+      },
+      "exitCode": 0,
+      "widths": [
+        390
+      ],
+      "log": "logs/fam-agenda-memos-sync.log"
+    },
+    {
+      "name": "fam-agenda-month",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/fam-agenda-month.cjs"
+      ],
+      "environment": {
+        "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8873",
+        "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/family"
+      },
+      "exitCode": 0,
+      "widths": [
+        390
+      ],
+      "log": "logs/fam-agenda-month.log"
+    },
+    {
+      "name": "family-review-effects",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/family-review-effects.cjs"
+      ],
+      "environment": {
+        "DOBBY_TEST_ORIGIN": "http://127.0.0.1:8873",
+        "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/family"
+      },
+      "exitCode": 0,
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "log": "logs/family-review-effects.log"
+    }
+  ],
+  "sourceCommands": "logs/native-suite-results.json",
+  "additionalSyncCommands": "logs/sync-v1-v2-native-results.json",
+  "setupNotes": [
+    "Native member policy first invoked its default 8893 and failed before asset loading; explicit 8873 rerun passed. The setup failure is retained separately, not counted as a product regression."
+  ],
+  "limitations": [
+    "Offline/local routes abort every nonlocal request. Memo synchronization uses intercepted HTTP fixtures and two isolated profiles; this does not establish real Supabase authorization or deployment readiness."
+  ]
+}

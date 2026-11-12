@@ -1,0 +1,38 @@
+locator.click: Timeout 18000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-fa-action=rg-memo-import]').first()[22m
+[2m    - locator resolved to <button type="button" class="fa-button" data-record="review-private-A" data-fa-action="rg-memo-import">Importer dans les mémos familiaux</button>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying click action[22m
+[2m      - waiting 100ms[22m
+[2m    35 × waiting for element to be visible, enabled and stable[22m
+[2m       - element is not visible[22m
+[2m     - retrying click action[22m
+[2m       - waiting 500ms[22m
+
+    at /workspace/dobby-v7-famille-integration-20261112/essai-stitch-v7/tests/fam-integration-preview.cjs:32:185 {
+  log: [
+    "  - waiting for locator('[data-fa-action=rg-memo-import]').first()",
+    '    - locator resolved to <button type="button" class="fa-button" data-record="review-private-A" data-fa-action="rg-memo-import">Importer dans les mémos familiaux</button>',
+    '  - attempting click action',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '    - waiting 20ms',
+    '    2 × waiting for element to be visible, enabled and stable',
+    '      - element is not visible',
+    '    - retrying click action',
+    '      - waiting 100ms',
+    '    35 × waiting for element to be visible, enabled and stable',
+    '       - element is not visible',
+    '     - retrying click action',
+    '       - waiting 500ms'
+  ],
+  name: 'TimeoutError'
+}

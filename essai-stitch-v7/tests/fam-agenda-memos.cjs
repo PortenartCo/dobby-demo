@@ -1,6 +1,6 @@
 /* FAM-18..24: native handlers, fictitious data, isolated browser storage. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
-const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8863',out=path.resolve(__dirname,'../../docs/dobby-v7/evidence/fam01-24/agenda-memos');
+const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8863',out=path.resolve(process.env.DOBBY_FAM_EVIDENCE||path.join(__dirname,'../../docs/dobby-v7/evidence/fam01-24'),'agenda-memos');
 (async()=>{fs.mkdirSync(out,{recursive:true});const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});const results=[];
  try{for(const width of [320,390,1440]){
   const context=await browser.newContext({viewport:{width,height:900},locale:'fr-BE',timezoneId:'Europe/Brussels',reducedMotion:'reduce'});await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():route.abort());

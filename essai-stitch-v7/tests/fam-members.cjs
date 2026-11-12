@@ -1,7 +1,7 @@
 /* FAM-02–14 presentation contract. Fictional records, no network backend. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8863';
-const output=path.resolve(__dirname,'../../docs/dobby-v7/evidence/fam01-24/members');
+const output=path.resolve(process.env.DOBBY_FAM_EVIDENCE||path.join(__dirname,'../../docs/dobby-v7/evidence/fam01-24'),'members');
 const records=[
  {id:'fam-ui-child',name:'TEST — Louise Lune',firstName:'Louise',lastName:'Lune',nickname:'Loulou',memberCategory:'child',birthdate:'2018-12-03',notes:'Observer les étoiles',avatar:'👤',magicProfile:{version:1,houseId:'ravenclaw',avatarId:'portrait-3'}},
  {id:'fam-ui-baby',name:'TEST — Bébé',firstName:'Émile',memberCategory:'baby',birthdate:'2026-11-14',avatar:'👤',magicProfile:{version:1,houseId:'hufflepuff'}},
