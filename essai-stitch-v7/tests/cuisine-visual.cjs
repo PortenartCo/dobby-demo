@@ -11,7 +11,7 @@ const originals = require('../../design/stitch-53/manifest.json');
 const e07Sources = require('../../design/stitch-e07/manifest.json');
 const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const root = path.resolve(__dirname, '../..');
-const out = path.join(root, 'docs/dobby-v7/evidence/cuisine');
+const out = process.env.DOBBY_CUISINE_VISUAL_EVIDENCE || path.join(root, 'docs/dobby-v7/evidence/cuisine');
 async function capture(page, file) {
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: file, fullPage: true, animations: 'disabled' });
@@ -38,23 +38,30 @@ async function capture(page, file) {
         await source.addStyleTag({url:origin+'/essai-v6-preview/assets/v6/fonts.css'});
         if(width===1440)await source.addStyleTag({content:'body{max-width:480px;margin-inline:auto}body>header,body>nav{width:480px;left:50%;transform:translateX(-50%)}'});
         await capture(source,path.join(out,'before',`${route.view}-${width}.png`));
+        // Creation moved to personal-AI import; these two frozen route variants
+        // remain the current editor for an existing recipe.
+        if(route.view==='recipe-add'||route.view==='recipe-add-1'){
+          await page.evaluate(()=>DobbyCuisine.open('recipe',{id:'cu-visual'}));
+          await page.locator('[data-cu-action=edit-recipe]').click();
+          await page.waitForFunction(()=>DobbyCuisine.view==='recipe-add');
+        }
         await page.evaluate(async view=>{
           if(view==='shop'||view==='shop-1'){DobbyCuisineEngine.page('shop');if(DobbyCuisineEngine.read().state.shopFinal)DobbyCuisineEngine.shop('editshop');DobbyCuisineEngine.evaluate('st.planned["2026-11-10-soir"]={id:"cu-visual",adult:2,children:1,childFactor:.65,status:"prévu"};save();');}
           if(view==='shop-final'){const id=Object.keys(DobbyCuisineEngine.read().state.shopHistory)[0];DobbyCuisineEngine.history(id);}
           await DobbyCuisine.open(view,{id:'cu-visual'});
         },route.view);
         assert.equal(await page.locator('#dv7-panel').isVisible(),false);
-        assert.equal(await page.locator('body').getAttribute('data-stitch-source'),route.view==='shop-history'?routes.find(x=>x.view==='shop').presentationId||routes.find(x=>x.view==='shop').id:route.presentationId||route.id);
+        assert.equal(await page.locator('body').getAttribute('data-stitch-source'),route.view==='tm5'?routes.find(x=>x.view==='recipe').id:route.view==='shop-history'?routes.find(x=>x.view==='shop').presentationId||routes.find(x=>x.view==='shop').id:route.presentationId||route.id);
         assert.equal(await page.locator('main h1').count(),1,'One main heading '+route.view);
         const content=await page.locator('main').textContent();
         await page.locator('main img').evaluateAll(es=>Promise.all(es.map(e=>e.decode().catch(()=>{}))));
         assert.ok(await page.locator('main img').evaluateAll(es=>es.every(e=>e.complete&&e.naturalWidth>0)),'Local illustrations load '+route.view);
         assert.ok(!/potimarron|Isigny|châtaignes|risotto|morilles|AES.?256|Fondant au chocolat/i.test(content),'No invented data '+route.view);
         const overflow=await page.evaluate(()=>[...document.querySelectorAll('main input,main textarea,main button,main h1,main p,main article')].filter(el=>{
-          const r=el.getBoundingClientRect();return r.width>0 && (r.left < -1 || r.right > innerWidth+1) && !el.closest('.overflow-x-auto');
+          const r=el.getBoundingClientRect();return el.checkVisibility() && r.width>0 && (r.left < -1 || r.right > innerWidth+1) && !el.closest('.overflow-x-auto');
         }).map(el=>({tag:el.tagName,text:el.textContent.trim().slice(0,60),right:Math.round(el.getBoundingClientRect().right)})));
         await capture(page,path.join(out,'after',`${route.view}-${width}.png`));
-        report.push({view:route.view,width,source:route.presentationId||route.id,overflow,disabled:await page.locator('main button:disabled').evaluateAll(es=>es.map(e=>e.textContent.trim())),bytes:content.length});
+        report.push({view:route.view,width,source:await page.locator('body').getAttribute('data-stitch-source'),overflow,disabled:await page.locator('main button:disabled').evaluateAll(es=>es.map(e=>e.textContent.trim())),bytes:content.length});
         console.log('CUISINE_VISUAL',route.view,width,JSON.stringify(overflow));
       }
       assert.deepEqual(errors,[]);
