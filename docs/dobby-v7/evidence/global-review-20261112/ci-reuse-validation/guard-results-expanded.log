@@ -1,0 +1,19 @@
+HISTORICAL_FULL_CAMPAIGN_REQUIRED
+✔ successful full historical step is reusable despite later reset job failure (28.277014ms)
+✔ native production changes reject reuse and retain the complete rejected diff (38.671931ms)
+✔ renaming native production into allowed docs cannot hide its deleted source path (36.805808ms)
+✔ uncommitted tracked production changes reject reuse before API reads (9.569435ms)
+✔ missing, failed, incomplete and wrong-SHA historical steps reject reuse (50.79498ms)
+✔ wrong workflow, branch, event, incomplete run and fork source reject reuse (50.115469ms)
+✔ invalid run IDs and current branch cannot authorize reuse (4.561953ms)
+✔ a non-ancestor baseline cannot authorize reuse even with an identical native tree (31.660352ms)
+✔ API authorization failure never authorizes reuse (10.341883ms)
+✔ empty dispatch input preserves the full campaign and writes auditable evidence (1.789819ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 398.775503

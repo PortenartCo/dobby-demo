@@ -1,0 +1,79 @@
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	﻿2026-11-12T01:36:12.7631868Z ##[group]Run node --test essai-stitch-v7/tests/global-build.test.cjs
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7632317Z [36;1mnode --test essai-stitch-v7/tests/global-build.test.cjs[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7632777Z [36;1mnode scripts/build-dobby-global-review.cjs --output essai-dobby-v7-global-review-20261112[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7633208Z [36;1mif command -v google-chrome >/dev/null; then[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7633491Z [36;1m  BROWSER="$(command -v google-chrome)"[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7633724Z [36;1melse[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7633910Z [36;1m  BROWSER="$(command -v chromium)"[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7634131Z [36;1mfi[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7634408Z [36;1mCHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/runes-history.cjs[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7635049Z [36;1mDOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7635873Z [36;1mDOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs[0m
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7680842Z shell: /usr/bin/bash -e {0}
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.7681080Z ##[endgroup]
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:12.8069817Z TAP version 13
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4263987Z # Subtest: global preview runs native modules from an independently verifiable, offline-only bundle
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4272428Z ok 1 - global preview runs native modules from an independently verifiable, offline-only bundle
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4273164Z   ---
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4273694Z   duration_ms: 591.72737
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4274027Z   type: 'test'
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4274315Z   ...
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4387778Z 1..1
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4388397Z # tests 1
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4389063Z # suites 0
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4389871Z # pass 1
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4390943Z # fail 0
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4391517Z # cancelled 0
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4391955Z # skipped 0
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4393056Z # todo 0
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.4393392Z # duration_ms 640.722572
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.6317111Z REVIEW_BUILD faf89d50555a3201385eae51f9ef5f93c5bf0499 280 files /home/runner/work/dobby-demo/dobby-demo/essai-dobby-v7-global-review-20261112
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:13.8080194Z GLOBAL_REVIEW_BUILD faf89d50555a3201385eae51f9ef5f93c5bf0499 committed /home/runner/work/dobby-demo/dobby-demo/essai-dobby-v7-global-review-20261112
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:15.1997788Z RUNES_HISTORY_PASS visible native profile labels grants/reversals with correct signs; net total 25 and all three events preserved
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:15.8683506Z GLOBAL_CHECK 320 entry, explicit simulation and native clients
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:16.6270838Z GLOBAL_CHECK 320 E09 create a fictive member through its visible form
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:17.5064473Z GLOBAL_CHECK 320 E03/E04 create, assign and persist a native mission
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:19.1299731Z GLOBAL_CHECK 320 E01 completion confirms exactly one Runes V2 gain
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:20.2106697Z GLOBAL_CHECK 320 E05 chosen member profile survives reload and browser history
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:21.2736074Z GLOBAL_CHECK 320 E07 plan an existing recipe in the real Midi slot
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:22.1153301Z GLOBAL_CHECK 320 E07 one shared Courses list imports ingredients without duplicates
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:22.6278118Z GLOBAL_CHECK 320 E07 availability persists in the native shared grocery row
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:23.3231679Z GLOBAL_CHECK 320 E09 create and retrieve an ordinary family event
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:24.5319932Z GLOBAL_CHECK 320 E09 create and retrieve a shared family memo
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:25.3281099Z GLOBAL_CHECK 320 E02, E06 and E08 remain reachable, dock and browser navigation work
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:28.4333048Z GLOBAL_CHECK 320 Visible reset clears only this demo and refreshes other open tabs
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:29.6009288Z DOBBY_GLOBAL_BROWSER_PASS 320 http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:29.8027062Z GLOBAL_CHECK 390 entry, explicit simulation and native clients
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:30.4638684Z GLOBAL_CHECK 390 E09 create a fictive member through its visible form
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:31.2737269Z GLOBAL_CHECK 390 E03/E04 create, assign and persist a native mission
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:33.0765220Z GLOBAL_CHECK 390 E01 completion confirms exactly one Runes V2 gain
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:34.1482641Z GLOBAL_CHECK 390 E05 chosen member profile survives reload and browser history
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:35.2741540Z GLOBAL_CHECK 390 E07 plan an existing recipe in the real Midi slot
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:36.0744996Z GLOBAL_CHECK 390 E07 one shared Courses list imports ingredients without duplicates
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:36.5723769Z GLOBAL_CHECK 390 E07 availability persists in the native shared grocery row
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:37.2766228Z GLOBAL_CHECK 390 E09 create and retrieve an ordinary family event
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:38.4810107Z GLOBAL_CHECK 390 E09 create and retrieve a shared family memo
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:39.3270106Z GLOBAL_CHECK 390 Two tabs A/B: native grocery, Runes V2 and memo synchronization
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:55.4333754Z GLOBAL_CHECK 390 E02, E06 and E08 remain reachable, dock and browser navigation work
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:36:59.0787988Z GLOBAL_CHECK 390 Visible reset clears only this demo and refreshes other open tabs
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:00.1602226Z DOBBY_GLOBAL_BROWSER_PASS 390 http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:00.3588065Z GLOBAL_CHECK 1440 entry, explicit simulation and native clients
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:01.0870448Z GLOBAL_CHECK 1440 E09 create a fictive member through its visible form
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:02.0086837Z GLOBAL_CHECK 1440 E03/E04 create, assign and persist a native mission
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:04.2969070Z GLOBAL_CHECK 1440 E01 completion confirms exactly one Runes V2 gain
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:05.3579016Z GLOBAL_CHECK 1440 E05 chosen member profile survives reload and browser history
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:06.7380730Z GLOBAL_CHECK 1440 E07 plan an existing recipe in the real Midi slot
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:07.6210203Z GLOBAL_CHECK 1440 E07 one shared Courses list imports ingredients without duplicates
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:08.1931875Z GLOBAL_CHECK 1440 E07 availability persists in the native shared grocery row
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:09.0435423Z GLOBAL_CHECK 1440 E09 create and retrieve an ordinary family event
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:10.3820644Z GLOBAL_CHECK 1440 E09 create and retrieve a shared family memo
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:11.3267134Z GLOBAL_CHECK 1440 E02, E06 and E08 remain reachable, dock and browser navigation work
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:14.9053414Z GLOBAL_CHECK 1440 Visible reset clears only this demo and refreshes other open tabs
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:17.8717141Z DOBBY_GLOBAL_BROWSER_PASS 1440 http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3192713Z page.waitForFunction: Timeout 15000ms exceeded.
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3193860Z     at ready (/home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/global-reset.cjs:6:39)
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3194745Z     at /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/global-reset.cjs:37:118 {
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3195343Z   log: [],
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3195615Z   name: 'TimeoutError'
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3195904Z }
+source-backed-browser	Global E01–E09 isolated bundle and native A/B journeys	2026-11-12T01:37:35.3322011Z ##[error]Process completed with exit code 1.

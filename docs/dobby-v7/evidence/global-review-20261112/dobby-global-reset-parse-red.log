@@ -1,0 +1,16 @@
+AssertionError [ERR_ASSERTION]: Native HTML is not parsed while top fixture recovery is waiting for its browser lock
++ actual - expected
+
++ [
++   'http://127.0.0.1:8766/dobby-reset-queue-red-faf89d5/essai-stitch-v5-famille/index.html'
++ ]
+- []
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/global-reset.cjs:26:9 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

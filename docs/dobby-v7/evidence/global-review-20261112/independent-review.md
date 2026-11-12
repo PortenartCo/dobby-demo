@@ -24,3 +24,9 @@ Autres périmètres sans défaut substantiel trouvé : préfixes A/B indépendan
 Relecture indépendante des commits `a8ef0d3`, `dc83b42`, `9efbcf9`, `2415fdf`, `981cce4` : aucun affaiblissement actionnable identifié. Les événements immuables, identités de compensations et soldes nets sont vérifiés ; la géométrie reste contrôlée avec les menus ouverts, les choix Midi/Soir et les autres repas sont préservés. Cuisine conserve les contrôles natifs exacts de quantités, import, déplacement/annulation et persistance.
 
 `e5fb9e6` : historique du profil signé +/−, trois événements +17/−17/+25, solde25 et ledger inchangé. Régression native par formulaires RED→GREEN ; relecture sans constat substantiel.
+
+## Ordre de démarrage et notifications
+
+La CI sur `faf89d5` a confirmé tous les parcours globaux puis exposé un reset interrompu encore instable. Deux régressions déterministes ont prouvé la notification retardée et le chargement natif avant la fin du bootstrap. `a57b4f14da91da32af5d2c8711471e7f0b3dfebc` corrige ces ordres avec jeton/génération, événements de stockage et barrière de chargement de l’iframe générée. Cinq exécutions ciblées réussies ; revue indépendante : aucun constat substantiel, API/writers natifs inchangés.
+
+La garde de réutilisation historique a fait l’objet de dix tests positifs/négatifs Git/API, dont changement natif, renommage, ascendance et étape non réussie. Le workflow courant rejoue tous les contrôles concernés.
