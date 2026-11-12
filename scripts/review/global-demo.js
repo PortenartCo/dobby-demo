@@ -32,9 +32,15 @@ function seed(){
  return{version:1,generation:1,modules,grocery:[{id:'00000000-0000-4000-8000-000000000100',household_id:household,title:'Carottes',quantity:500,unit:'g',at_home_quantity:0,checked:false,deleted_at:null,import_source_id:null,created_at:'2026-11-12T00:00:00.000Z',updated_at:'2026-11-12T00:00:00.000Z',revision:1}],operations:{},requests:[]};
 }
 const read=()=>{const stored=raw.getItem.call(localStorage,backendKey);return stored?JSON.parse(stored):seed();},write=state=>raw.setItem.call(localStorage,backendKey,JSON.stringify(state));
-const locked=task=>navigator.locks?.request?navigator.locks.request(backendKey,()=>{if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return task();}):Promise.reject(Error('Simulation A/B indisponible : utilisez localhost ou HTTPS avec Web Locks.'));
-const ready=locked(()=>{if(!raw.getItem.call(localStorage,backendKey))write(seed());}).then(()=>new Promise((resolve,reject)=>{
- initializedGeneration=read().generation;
+const withBackendLock=task=>navigator.locks?.request?navigator.locks.request(backendKey,task):Promise.reject(Error('Simulation A/B indisponible : utilisez localhost ou HTTPS avec Web Locks.'));
+const locked=task=>withBackendLock(()=>{if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return task();});
+const ready=withBackendLock(async()=>{
+ // An active owner finishes before this lock is acquired. A remaining marker
+ // therefore belongs to an interrupted document; resume its isolated cleanup.
+ if(raw.getItem.call(localStorage,resetKey)){prepareReset();channel?.postMessage('prepare');await clearResetStorage();resetting=false;channel?.postMessage('complete');}
+ if(!raw.getItem.call(localStorage,backendKey))write(seed());
+}).then(()=>new Promise((resolve,reject)=>{
+ resetting=false;initializedGeneration=read().generation;
  const req=indexedDB.open('dobby-v5-household-preview-v2',1);
  req.onupgradeneeded=()=>{for(const [name,keyPath]of [['items','storageKey'],['meta','id']])if(!req.result.objectStoreNames.contains(name))req.result.createObjectStore(name,{keyPath});};
  req.onerror=()=>reject(req.error);req.onblocked=()=>reject(Error('Fermez les anciens onglets de cette simulation.'));
@@ -111,18 +117,19 @@ async function sync(){await ready;const api=native();if(!api?.grocery?.read().re
 function prepareReset(){resetting=true;clearReviewStorage(sessionStorage);}
 const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(prefix+'reset'):null;
 if(channel)channel.onmessage=event=>{if(event.data==='prepare')prepareReset();if(event.data==='failed')resetting=false;if(event.data==='complete'&&window===top)location.reload();};
+async function clearResetStorage(){
+ const previous=read(),databases=await indexedDB.databases();
+ await Promise.all(databases.filter(database=>database.name?.startsWith(prefix)).map(database=>new Promise((resolve,reject)=>{
+  const request=IDBFactory.prototype.deleteDatabase.call(indexedDB,database.name);
+  request.onsuccess=resolve;request.onerror=()=>reject(request.error);request.onblocked=()=>reject(Error('Fermez les autres onglets de cet essai puis réessayez sa réinitialisation.'));
+ })));
+ clearReviewStorage(localStorage,new Set([resetKey]));clearReviewStorage(sessionStorage);
+ const next=seed();next.generation=previous.generation+1;write(next);raw.removeItem.call(localStorage,resetKey);
+}
 async function reset(){
  await ready;const token=crypto.randomUUID();raw.setItem.call(localStorage,resetKey,token);prepareReset();channel?.postMessage('prepare');
  try{
-  await navigator.locks.request(backendKey,async()=>{
-   const previous=read(),databases=await indexedDB.databases();
-   await Promise.all(databases.filter(database=>database.name?.startsWith(prefix)).map(database=>new Promise((resolve,reject)=>{
-    const request=IDBFactory.prototype.deleteDatabase.call(indexedDB,database.name);
-    request.onsuccess=resolve;request.onerror=()=>reject(request.error);request.onblocked=()=>reject(Error('Fermez les autres onglets de cet essai puis réessayez sa réinitialisation.'));
-   })));
-   clearReviewStorage(localStorage,new Set([resetKey]));clearReviewStorage(sessionStorage);
-   const next=seed();next.generation=previous.generation+1;write(next);raw.removeItem.call(localStorage,resetKey);
-  });
+  await withBackendLock(clearResetStorage);
  }catch(error){if(raw.getItem.call(localStorage,resetKey)===token)raw.removeItem.call(localStorage,resetKey);resetting=false;channel?.postMessage('failed');throw error;}
  channel?.postMessage('complete');location.reload();
 }
