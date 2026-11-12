@@ -46,3 +46,10 @@ Interface: node scripts/build-dobby-global-review.cjs --output <nouveau dossier>
 ## Journal
 - 2026-11-12: mission explicite fournit choix d’architecture, base, périmètre et autorisation de publication; aucune clarification nécessaire.
 - HEAD Courses final a avancé dbb61df→f31659e: uniquement documentation et preuves hébergées, aucun delta applicatif.
+
+- Sources intégrées : E09 a4adc45, Runes990c486 (deltas821acbf/ed1585f/fff0c8e/f1aff5a; aucun SQL). Génération canonique/CSS sans écart.
+- Revue native indépendante990c486 : aucun défaut actionnable; 186 tests + trois writers/presets Chromium réussis.
+- Builder global8982c83 : complet286 fichiers, préfixe A/B et domaine .invalid; config agenda696b5df.
+- Recette locale globale1650d15 : 320/390/1440 réussis; reprise, CAS, A/B, gain unique et réseau isolé.
+- Revue harness : P1 reset incomplet (pièces jointes/timers/backups). Correction déléguée avec reproduction native houseStore/houseRead et régression dédiée; publication bloquée jusqu’à vert.
+- CI43130740616 sync réussie. CI43130740640 échec historique e01-consolidation (compteur de crédits antérieur aux compensations); adaptation des assertions sous contrôle exact de l’historique/net, campagne finale après corrections.
