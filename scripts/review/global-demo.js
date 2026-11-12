@@ -5,6 +5,23 @@ const prefix='dobby-review-v7-global-20261112|',backendKey=prefix+'backend-v1',p
 const client=new URLSearchParams(top.location.search).get('client')==='B'?'B':'A',household='00000000-0000-4000-8000-000000000010',user='00000000-0000-4000-8000-00000000000'+(client==='A'?'1':'2');
 const publishable='sb_publishable_global_simulation_only_123456789',appKey='dobby-v5-familial-preview-20261108',raw=Storage.prototype.__reviewRaw;
 if(!raw||!window.DobbyReview)throw Error('Global simulation requires the isolated review runtime.');
+const resetKey=prefix+'reset-in-progress';let resetting=false,initializedGeneration=null;
+function clearReviewStorage(storage,keep=new Set()){
+ const keys=Array.from({length:raw.length.call(storage)},(_,index)=>raw.key.call(storage,index));
+ for(const key of keys)if(key?.startsWith(prefix)&&!keep.has(key))raw.removeItem.call(storage,key);
+}
+function resetPending(){
+ if(resetting||raw.getItem.call(localStorage,resetKey))return true;
+ if(initializedGeneration===null)return false;
+ const stored=raw.getItem.call(localStorage,backendKey);return!stored||JSON.parse(stored).generation!==initializedGeneration;
+}
+// Stop old documents from recreating deleted databases or saving stale timers
+// while the reset transaction closes native connections and reloads every tab.
+const scopedSet=Storage.prototype.setItem,scopedRemove=Storage.prototype.removeItem,scopedClear=Storage.prototype.clear,scopedOpen=indexedDB.open.bind(indexedDB);
+Storage.prototype.setItem=function(...args){if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return scopedSet.apply(this,args);};
+Storage.prototype.removeItem=function(...args){if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return scopedRemove.apply(this,args);};
+Storage.prototype.clear=function(...args){if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return scopedClear.apply(this,args);};
+indexedDB.open=(...args)=>{if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return scopedOpen(...args);};
 const clone=value=>JSON.parse(JSON.stringify(value)),canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;
 const digest=value=>JSON.stringify(canonical(value)),today=()=>new Date().toLocaleDateString('en-CA');
 const definitions={menus:['planned','shopHistory','shopFinal','shopChoice'],recipes:['customRecipes','tmAdaptations'],missions:['autoTasks','manualMissions','runeCredits'],house:['houseItems','houseLogs'],family:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes']};
@@ -15,8 +32,9 @@ function seed(){
  return{version:1,generation:1,modules,grocery:[{id:'00000000-0000-4000-8000-000000000100',household_id:household,title:'Carottes',quantity:500,unit:'g',at_home_quantity:0,checked:false,deleted_at:null,import_source_id:null,created_at:'2026-11-12T00:00:00.000Z',updated_at:'2026-11-12T00:00:00.000Z',revision:1}],operations:{},requests:[]};
 }
 const read=()=>{const stored=raw.getItem.call(localStorage,backendKey);return stored?JSON.parse(stored):seed();},write=state=>raw.setItem.call(localStorage,backendKey,JSON.stringify(state));
-const locked=task=>navigator.locks?.request?navigator.locks.request(backendKey,task):Promise.reject(Error('Simulation A/B indisponible : utilisez localhost ou HTTPS avec Web Locks.'));
+const locked=task=>navigator.locks?.request?navigator.locks.request(backendKey,()=>{if(resetPending())throw Error('Réinitialisation de cet essai en cours.');return task();}):Promise.reject(Error('Simulation A/B indisponible : utilisez localhost ou HTTPS avec Web Locks.'));
 const ready=locked(()=>{if(!raw.getItem.call(localStorage,backendKey))write(seed());}).then(()=>new Promise((resolve,reject)=>{
+ initializedGeneration=read().generation;
  const req=indexedDB.open('dobby-v5-household-preview-v2',1);
  req.onupgradeneeded=()=>{for(const [name,keyPath]of [['items','storageKey'],['meta','id']])if(!req.result.objectStoreNames.contains(name))req.result.createObjectStore(name,{keyPath});};
  req.onerror=()=>reject(req.error);req.onblocked=()=>reject(Error('Fermez les anciens onglets de cette simulation.'));
@@ -45,7 +63,7 @@ window.fetch=async(input,options={})=>{
  const url=new URL(typeof input==='string'||input instanceof URL?input:input.url,location.href);
  const paths=new Set(['/auth/v1/token','/auth/v1/logout','/rest/v1/dobby_v2_memberships','/rest/v1/dobby_v2_households','/rest/v1/dobby_v2_grocery','/rest/v1/dobby_v2_modules','/rest/v1/rpc/dobby_missions_v2_capabilities','/rest/v1/rpc/dobby_missions_v2_write']);
  if(url.origin!==project||!paths.has(url.pathname))return nativeFetch(input,options);
- await ready;if(sessionStorage.getItem('globalFixtureOffline')==='true')throw Error('Simulation hors ligne : modification conservée sur ce client.');
+ await ready;if(resetPending())throw Error('Réinitialisation de cet essai en cours.');if(sessionStorage.getItem('globalFixtureOffline')==='true')throw Error('Simulation hors ligne : modification conservée sur ce client.');
  const method=String(options.method||input?.method||'GET').toUpperCase(),headers=new Headers(options.headers||input?.headers);
  if(headers.get('apikey')!==publishable)return denied();
  if(url.pathname==='/auth/v1/token'&&method==='POST'&&url.searchParams.get('grant_type')==='refresh_token')return respond({access_token:'fictional-global-'+client,refresh_token:'fictional-global-refresh-'+client,expires_in:86400,user:{id:user,email:'client-'+client.toLowerCase()+'@fictional.example.test'}});
@@ -90,8 +108,24 @@ window.fetch=async(input,options={})=>{
 };
 const native=()=>window.DobbyFamilyUI||window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI||window.DobbyCuisineEngine?.win()?.DobbyFamilyUI;
 async function sync(){await ready;const api=native();if(!api?.grocery?.read().ready)throw Error('Le client natif démarre encore. Réessayez dans un instant.');await api.grocery.sync();window.DobbyCuisine?.refresh();window.DobbyFamilyStitch?.refresh?.();updateStatus();const result=api.grocery.read();if(result.error)throw Error(result.error);return clone(read());}
-const channel=window===top&&typeof BroadcastChannel==='function'?new BroadcastChannel(prefix+'reset'):null;if(channel)channel.onmessage=event=>{if(event.data==='complete')location.reload();};
-async function reset(){await ready;await locked(()=>{const previous=read(),next=seed();next.generation=previous.generation+1;write(next);});channel?.postMessage('complete');location.reload();}
+function prepareReset(){resetting=true;clearReviewStorage(sessionStorage);}
+const channel=typeof BroadcastChannel==='function'?new BroadcastChannel(prefix+'reset'):null;
+if(channel)channel.onmessage=event=>{if(event.data==='prepare')prepareReset();if(event.data==='failed')resetting=false;if(event.data==='complete'&&window===top)location.reload();};
+async function reset(){
+ await ready;const token=crypto.randomUUID();raw.setItem.call(localStorage,resetKey,token);prepareReset();channel?.postMessage('prepare');
+ try{
+  await navigator.locks.request(backendKey,async()=>{
+   const previous=read(),databases=await indexedDB.databases();
+   await Promise.all(databases.filter(database=>database.name?.startsWith(prefix)).map(database=>new Promise((resolve,reject)=>{
+    const request=IDBFactory.prototype.deleteDatabase.call(indexedDB,database.name);
+    request.onsuccess=resolve;request.onerror=()=>reject(request.error);request.onblocked=()=>reject(Error('Fermez les autres onglets de cet essai puis réessayez sa réinitialisation.'));
+   })));
+   clearReviewStorage(localStorage,new Set([resetKey]));clearReviewStorage(sessionStorage);
+   const next=seed();next.generation=previous.generation+1;write(next);raw.removeItem.call(localStorage,resetKey);
+  });
+ }catch(error){if(raw.getItem.call(localStorage,resetKey)===token)raw.removeItem.call(localStorage,resetKey);resetting=false;channel?.postMessage('failed');throw error;}
+ channel?.postMessage('complete');location.reload();
+}
 function setOffline(value){sessionStorage.setItem('globalFixtureOffline',Boolean(value)?'true':'false');updateStatus();}
 function updateStatus(){const node=document.querySelector('[data-global-status]');if(!node)return;const state=read(),offline=sessionStorage.getItem('globalFixtureOffline')==='true';node.textContent=(offline?'Hors ligne simulé':'Simulation locale')+' · Famille r'+state.modules.family.revision+' · Missions r'+state.modules.missions.revision;const button=document.querySelector('[data-global-offline]');if(button){button.textContent=offline?'Reconnecter':'Hors ligne';button.setAttribute('aria-pressed',String(offline));}}
 window.DobbyGlobalDemo=Object.freeze({client,ready,realBackend:false,sync,reset,setOffline,state:async()=>{await ready;return clone(read());},rows:async()=>{await ready;return clone(read().grocery);},requests:async()=>{await ready;return clone(read().requests);}});
