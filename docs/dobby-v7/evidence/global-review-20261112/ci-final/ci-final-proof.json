@@ -1,0 +1,42 @@
+{
+  "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "app": {
+    "runId": 43145552456,
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43145552456",
+    "conclusion": "success",
+    "historical": {
+      "executed": true,
+      "success": true,
+      "step": {
+        "name": "Functional Stitch roots and source fidelity",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-12T03:03:49Z",
+        "completed_at": "2026-11-12T03:19:18Z"
+      }
+    }
+  },
+  "sync": {
+    "runId": 43145553693,
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43145553693",
+    "conclusion": "success"
+  },
+  "fullHistoricalCampaign": true,
+  "historicalReused": false,
+  "globalBrowserWidths": [
+    320,
+    390,
+    1440
+  ],
+  "logMarkers": {
+    "HISTORICAL_FULL_CAMPAIGN_REQUIRED": "source-backed-browser\tVerify optional historical campaign reuse\t2026-11-12T03:03:36.9860901Z HISTORICAL_FULL_CAMPAIGN_REQUIRED",
+    "E02_SHARED_GROCERY_PASS": "source-backed-browser\tFunctional Stitch roots and source fidelity\t2026-11-12T03:11:11.4927972Z E02_SHARED_GROCERY_PASS direct chat add before E07 initialization, authoritative shared reads, deduplication, reload, local archive preservation (HTTP fixture only)",
+    "REGISTER_REVIEW_ALL_PASS": "source-backed-browser\tFunctional Stitch roots and source fidelity\t2026-11-12T03:19:18.7275254Z REGISTER_REVIEW_ALL_PASS 14 cases \u00d7 320/390",
+    "RUNES_HISTORY_PASS": "source-backed-browser\tGlobal E01\u2013E09 isolated bundle and native A/B journeys\t2026-11-12T03:19:21.6837932Z RUNES_HISTORY_PASS visible native profile labels grants/reversals with correct signs; net total 25 and all three events preserved",
+    "GLOBAL_RESET_PASS": "source-backed-browser\tGlobal E01\u2013E09 isolated bundle and native A/B journeys\t2026-11-12T03:21:03.3392084Z GLOBAL_RESET_PASS native attachments/A+B timers/import backups/session keys/extra open DBs cleared; unrelated data preserved; interrupted reset recovers; delayed prepare/complete messages are harmless"
+  },
+  "rawLogs": [
+    "ci-source-job-130942400748.log",
+    "ci-sync-job-130942408298.log"
+  ]
+}

@@ -1,0 +1,1732 @@
+{
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/",
+  "checkedAt": "2026-11-12T03:24:13.398061+00:00",
+  "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "realBackend": false,
+  "manifestSha256": "1575b76e2f4d271224afb6b293e36920533445ab1d3dae10c5a7d2ec7a105a5e",
+  "resources": [
+    {
+      "path": ".nojekyll",
+      "status": 200,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "README.md",
+      "status": 200,
+      "bytes": 929,
+      "sha256": "9b75ec9463677aa52ef6bd63dd5902359324538ddbf8475d3259b3f2a20b07b6"
+    },
+    {
+      "path": "essai-stitch-v5-famille/README.md",
+      "status": 200,
+      "bytes": 10733,
+      "sha256": "41d7133a64ba2eda6d5edc7a4e16afdb845082bd6a9a916709045a651834d8c0"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-agenda-core.mjs",
+      "status": 200,
+      "bytes": 6624,
+      "sha256": "635e3b2e976828da6a62223f25423b7c7215cbe48ae66f8c354e969861380d56"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-agenda.css",
+      "status": 200,
+      "bytes": 4803,
+      "sha256": "c79d5685d69865c14dfd2398dd188cfe9bc8aee3bdacac863f7d5e8f687fe426"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-agenda.js",
+      "status": 200,
+      "bytes": 11878,
+      "sha256": "e753f163252605e4d15be73abe89cc2028153b0f618db16e93a397e73b4157d4"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-core.mjs",
+      "status": 200,
+      "bytes": 3754,
+      "sha256": "97d441e7ab9d661f609988915a6a31ef116cef916005f156b7698ce5a0b49a24"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-files.css",
+      "status": 200,
+      "bytes": 2164,
+      "sha256": "bd187f9f5dce3f217ea4443db06ce7c9c1bf1c49e27c7ea6061694a7658d3c0c"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-files.js",
+      "status": 200,
+      "bytes": 11786,
+      "sha256": "99e6a77a7bdefa71cab209052311abe10ccc1f09496c74921fda06b914f860ad"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health-core.mjs",
+      "status": 200,
+      "bytes": 999,
+      "sha256": "7f866f2b88d3bedc68920964cf576945f24cb4a5f0a1f70cd8abaea060e927ff"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health.css",
+      "status": 200,
+      "bytes": 2401,
+      "sha256": "e93af3d0508bbf570b19f0a03b80edbb53f0023e72f1dc73c32bbf44cbc1237d"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-health.js",
+      "status": 200,
+      "bytes": 6230,
+      "sha256": "f33c75fd03cf5ef5c3c7332b27ed27204dacaef52aad5573f71dc8544ddbe46f"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-missions-core.mjs",
+      "status": 200,
+      "bytes": 6492,
+      "sha256": "9a170534936d1f0c8c2d5cbced305dd32498c49e80f2063e138e1c10d36227eb"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-missions.css",
+      "status": 200,
+      "bytes": 3088,
+      "sha256": "065d0e2b541cc31d451872b47a97f7d2a52df04babc2ddcdddd99c2351837eaf"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-missions.js",
+      "status": 200,
+      "bytes": 17214,
+      "sha256": "33a48e99ab18f99ee9648f3594bf4fbf79c855401f4710911a16d5e931744349"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "status": 200,
+      "bytes": 78151,
+      "sha256": "74b09b530f819337cf660543c95e729c76d92dba979415ef4f6972eb15d9fee6"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-profile.js",
+      "status": 200,
+      "bytes": 3332,
+      "sha256": "fdca30318df4e02d960553003aee486aef71c93cac9e97ed8b23ca7c004427dd"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-runes-core.mjs",
+      "status": 200,
+      "bytes": 9662,
+      "sha256": "5f90167122a88042b35846ee6887de115724ac3c45938434f1aca06cf47cbf7c"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.css",
+      "status": 200,
+      "bytes": 5435,
+      "sha256": "0f9b890734f9616c2a0b23e18b714d711b6f86e03e7ee79cc04edd702fd7c3ed"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "status": 200,
+      "bytes": 43633,
+      "sha256": "053a9b5293d9e8757563573aaa7b31157938c31c8bc61b133abe59c963fc48b3"
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "status": 200,
+      "bytes": 1221664,
+      "sha256": "cdf71807c1a5ed448406445e24c98533b0a81213388cb218bf9a64c2e1f76a10"
+    },
+    {
+      "path": "essai-stitch-v5-famille/stitch-v5.css",
+      "status": 200,
+      "bytes": 8818,
+      "sha256": "007d1f67e118640a47c975559dcb48ec1dc95aea14533749bf4021f07b17816c"
+    },
+    {
+      "path": "essai-stitch-v5-famille/stitch-v5.js",
+      "status": 200,
+      "bytes": 15266,
+      "sha256": "eee94812f814869ccf744c826b36d8de7a4609a23b32a5f1ca7b6e4fc6000631"
+    },
+    {
+      "path": "essai-stitch-v7/.gitignore",
+      "status": 200,
+      "bytes": 23,
+      "sha256": "77505d9b593eea548eeb0da5b557a3d33cfb953f562ea89fb3eb46832f48ac58"
+    },
+    {
+      "path": "essai-stitch-v7/assets/contracts/DESIGN.md",
+      "status": 200,
+      "bytes": 12042,
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db"
+    },
+    {
+      "path": "essai-stitch-v7/assets/contracts/provenance.json",
+      "status": 200,
+      "bytes": 543,
+      "sha256": "097d47f0abf339b5b4ba8c9f335afd159865e95febe50f1f27d5fdd509181475"
+    },
+    {
+      "path": "essai-stitch-v7/assets/contracts/screen.png",
+      "status": 200,
+      "bytes": 1471855,
+      "sha256": "118991cd5a26f5454813c679f533c0f61b32c9f2b46d3f2aa81e08794b7222e2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/1c3152d8c635061f.png",
+      "status": 200,
+      "bytes": 52862,
+      "sha256": "e8577aba54a5014bf98e00a6ac9ce34fd927e50ca5cb74d793e7c2b49548bc6e"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/25a463fd2771be57.png",
+      "status": 200,
+      "bytes": 49137,
+      "sha256": "6458f2a30b166b89e3fee344dc0eced5781c0aeecc4450edd325333a454db862"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/33b29d4174680c84.png",
+      "status": 200,
+      "bytes": 47747,
+      "sha256": "1961581b1a81d5948b47816edee42b745d931ca8c30019272d784304a890592e"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/411c4fd33a335f0b.png",
+      "status": 200,
+      "bytes": 59802,
+      "sha256": "8edef1286d0d990704c719452425a6af7d3933bf8b094c9a93df1adefbec9584"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/44f3839e115c1436.png",
+      "status": 200,
+      "bytes": 41877,
+      "sha256": "4d25fb9125512b74012ddac71de54f585524bc8b8f5cd1bbe6738de5bab1a819"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/7455f5f132ae110c.png",
+      "status": 200,
+      "bytes": 42711,
+      "sha256": "8c880db8adf0778b3e0d4e0edaee052ac79f18cf91f54dfc978cff566c59d1f6"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/79c03c9c7f248a66.png",
+      "status": 200,
+      "bytes": 46625,
+      "sha256": "3d782e5873330951754240898d560a93a659be449e2a19f63af9f0c9c72b3929"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/91f3e451526cd098.png",
+      "status": 200,
+      "bytes": 47330,
+      "sha256": "e516c39659ea49e8f94908d31db6fb55ef880a0674b09947aaa08817f35a5763"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/96caff504cc8a518.png",
+      "status": 200,
+      "bytes": 44815,
+      "sha256": "9574150b6d671c8ab370ad0d92fdccb54495b59f45e62a865ad8ed49d345df10"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/b6fc15f0728183f4.jpg",
+      "status": 200,
+      "bytes": 140728,
+      "sha256": "8b1da01ab272ab308f72e294867a4004303c337bb1cec7ae8d514cf6480193e9"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/bd6f1839b15bf1d4.png",
+      "status": 200,
+      "bytes": 59015,
+      "sha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/c0af9c778273ce32.png",
+      "status": 200,
+      "bytes": 49872,
+      "sha256": "c47613e46cfe8ed8a6d716968a7c8f73eb5bf6aefdd65c3f38bb5cb583dc8f0c"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/cadb4649e000962f.png",
+      "status": 200,
+      "bytes": 53874,
+      "sha256": "99c34b160c4179acb3d8227d3270451a85a07963ffad40ffcd022fd0daa0dc14"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/e07-courses.png",
+      "status": 200,
+      "bytes": 1744032,
+      "sha256": "c9dc299237cd1d83eb28cd6bccccd64455faeefac6267fa5c9645b493727d368"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/e07-taverne.png",
+      "status": 200,
+      "bytes": 1762216,
+      "sha256": "0c9e6100d63284219fe025e523b82624508a7a9bb48504367c10720045ed44dc"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/e074-festin.png",
+      "status": 200,
+      "bytes": 1621464,
+      "sha256": "0c387aa251bb70a9ef90edb1fd298a4a0219fc199fd51102ebdecbff627becc6"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/eac13a603be86c38.png",
+      "status": 200,
+      "bytes": 58016,
+      "sha256": "22366dda6499acca0679ac83853f9e77c7e52c0bc0dc1677dde9b90ff19bda00"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/ecfc2985e0a97417.png",
+      "status": 200,
+      "bytes": 56581,
+      "sha256": "f8cd4ce4f6d6196071c4cc9a8c90e4c67bc9a1b666f9da72bf67a83ea67a13b3"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/f4175b552cdaba2d.png",
+      "status": 200,
+      "bytes": 38858,
+      "sha256": "15256a1189bc2cdddbf14657b94e323e21db9af07759a8013ef8b5ece4defce9"
+    },
+    {
+      "path": "essai-stitch-v7/assets/cuisine/provenance.json",
+      "status": 200,
+      "bytes": 8170,
+      "sha256": "a9ce8fc495d32d0b3ff4548d3b95b4dd40b2b86513c414ec9b48f214a248c5da"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/0e50f1fb5b71b880.png",
+      "status": 200,
+      "bytes": 60413,
+      "sha256": "729ea2122e79e61cf632657be326104277bc27ead206a8475a464ae64c8e0494"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/283e1b96f14bb01d.png",
+      "status": 200,
+      "bytes": 62012,
+      "sha256": "dc93bc73162acd467bda9e2afc229003253065dccc13d2edf8236306a6a66b01"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/370c6bcf7554812d.png",
+      "status": 200,
+      "bytes": 32825,
+      "sha256": "431e3e76ae1c10dd9a0ea03f79bb6584e1a95a532538a12fc3c4db4fdd43476a"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/3c3243716c4164ba.png",
+      "status": 200,
+      "bytes": 55886,
+      "sha256": "968d25373071fee5e16d709aad06a2d5dc40328ef0292b914ccdfd282a0800bf"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/401a3e654a78d6e5.png",
+      "status": 200,
+      "bytes": 45846,
+      "sha256": "2624d4eea5bdeb9b02b562ecccc7095fb87f0d742cabf6f2946a6592816d7a20"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/4407e3661574febc.png",
+      "status": 200,
+      "bytes": 23044,
+      "sha256": "aa5de986c3c4d95f6e92f9b0eb08dd539524bbd8eab7484100d01cac4e1f23ec"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/5d99d9b06f2a8293.png",
+      "status": 200,
+      "bytes": 40748,
+      "sha256": "b77e2abf018c5761ae8c9bde22a095d609b85d7a89e98a2f54ce72cc68c613c2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/6d48c17ac7ffc7ae.png",
+      "status": 200,
+      "bytes": 57003,
+      "sha256": "5447ad59eda1ac36ad9e1ba83c4c5e9f4a6e7ed872fa05a4d4c0991d4999cfec"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/6fdc4ce37fb18361.png",
+      "status": 200,
+      "bytes": 52149,
+      "sha256": "cc82dd0cafc0300b4181c86944cf6dc28fcdc6ce58972eb636c8782a0416db27"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/707d13f02491c7ce.png",
+      "status": 200,
+      "bytes": 50883,
+      "sha256": "ac99a622c583531f91694d5a0c234a5e8c50699605e323404076856b21408d5c"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/76a255fd5a8c808b.png",
+      "status": 200,
+      "bytes": 55813,
+      "sha256": "4f3b246187f74aebc2498f4422b2705bf08eb6aed99abacf6bbb9a74bba07703"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/788c0da7f5e7a377.png",
+      "status": 200,
+      "bytes": 43400,
+      "sha256": "aea8e06a64e962180eb18572ab61245d57529f1c4c5193b4170ccbed4a5ca979"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/898952d2a8a825ef.png",
+      "status": 200,
+      "bytes": 28025,
+      "sha256": "821de6ca2cf25deeed4055e86394b21de1ebb93e30701cb5601a8a1913ed2e1a"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/930edce92bde5607.png",
+      "status": 200,
+      "bytes": 44125,
+      "sha256": "51a4855cc925fded9f7409b27d2e28a129759b941dcc971a777732c3ca3ad0a1"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/9e75f74eb70019d4.png",
+      "status": 200,
+      "bytes": 50046,
+      "sha256": "f2892e49217fcc67fac32062e9ce50746a917140198e6f90ab0af5c7bbd4bede"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/a82277b23ffe0699.png",
+      "status": 200,
+      "bytes": 45003,
+      "sha256": "ae234c56e7e974d62cd0fdee84fb73b83dea27be8568171a778ad08138c7d308"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/aec877a25204aef6.png",
+      "status": 200,
+      "bytes": 46286,
+      "sha256": "1a731a01636945c70eaaad21595f5bd4edb61edb5ee18f0b8c08e4000c66b3ff"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/b999ce0bd789b6cf.png",
+      "status": 200,
+      "bytes": 51890,
+      "sha256": "17cd64931ae634c6a5598f8620b40f20d15b8554ca09388aa53ab80da67373e8"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/caa6414670f39e2d.png",
+      "status": 200,
+      "bytes": 103398,
+      "sha256": "077b8ee855014f1de8cca97620a30ed824af9930a74dab98fda6a1466391741b"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/d1a4e42fcbd659c0.png",
+      "status": 200,
+      "bytes": 46764,
+      "sha256": "19205cad028bf0aee15efc835374a90b4b12a950ee1b704d0b483d349962f49b"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/eca64203105ce74f.png",
+      "status": 200,
+      "bytes": 49002,
+      "sha256": "3fde3c22baf0774a104d62bdf5d0316b33496a16c63117f6d3181a493010d9a2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/f716686f37af135b.png",
+      "status": 200,
+      "bytes": 50707,
+      "sha256": "a808ccf3748df10cc6035aafb793629311586234d9d2ef2feb3940ccaecb0de2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/fab2d35f6d2d8f74.png",
+      "status": 200,
+      "bytes": 61798,
+      "sha256": "0310afee969f2702ed456389589116259f3c0bc5782bcd2d36691e709d54b8ae"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/fallback-salon.png",
+      "status": 200,
+      "bytes": 69234,
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/fe22c2bef3104f64.png",
+      "status": 200,
+      "bytes": 31468,
+      "sha256": "6fe53bfdf7ba86eefcc15dc25ce645c9addabea00f13809f1aceecb13ebe4fa2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/family/provenance.json",
+      "status": 200,
+      "bytes": 11301,
+      "sha256": "a540af8477116d11078075702efcf8d7bdbdbd9a00f78bebb7dc3d6bf063f548"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-language-data.txt",
+      "status": 200,
+      "bytes": 10173,
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-pdfjs.txt",
+      "status": 200,
+      "bytes": 10174,
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-tesseract-core.txt",
+      "status": 200,
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/LICENSE-tesseract.txt",
+      "status": 200,
+      "bytes": 11357,
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/README.md",
+      "status": 200,
+      "bytes": 949,
+      "sha256": "8b6f86c2e1b61f9cd38c645727eee5f6b220f724ce981be86bd299159635e492"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/fra.traineddata.gz",
+      "status": 200,
+      "bytes": 6279601,
+      "sha256": "1c0916fac2dbd6f121ca8a57a92f08e4a119227602c7c984da986222eab6cd3b"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/pdf.min.js",
+      "status": 200,
+      "bytes": 320004,
+      "sha256": "5b5799e6f8c680663207ac5b42ee14eed2a406fa7af48f50c154f0c0b1566946"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/pdf.worker.min.js",
+      "status": 200,
+      "bytes": 1087212,
+      "sha256": "feabdf309770ed24bba31a5467836cdc8cf639c705af27d52b585b041bb8527b"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/provenance.json",
+      "status": 200,
+      "bytes": 2785,
+      "sha256": "e03d0ad611cfe3a7bd90ad40100a09a19f9270baa87a7ee8b8b061013334bee1"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract-core-lstm.wasm",
+      "status": 200,
+      "bytes": 2859424,
+      "sha256": "5db58ea4d1bd4256be81e8ae3b4fa226c4625dfba1850b1b3308dbf3700e9929"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract-core-lstm.wasm.js",
+      "status": 200,
+      "bytes": 3938277,
+      "sha256": "8f04aa0cc81e7bde33f80e92fa01a7a665f0b4884d098acf5de9c7104a11dfaa"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract.min.js",
+      "status": 200,
+      "bytes": 66695,
+      "sha256": "a8e29918d098b2b06e1012bdaeffb4aec0445c5d5654709023e0bd1f442a80e8"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/tesseract.min.js.LICENSE.txt",
+      "status": 200,
+      "bytes": 149,
+      "sha256": "cdf963ced7d25a0f98901a547647b4d6e2dbe0197fd78c87a059a87b0e542fe2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/import-runtime/worker.min.js",
+      "status": 200,
+      "bytes": 123724,
+      "sha256": "aca1229639fc9907d86f96e825955a2b7c5716d17f3bc3acd71f9c7ab66181fc"
+    },
+    {
+      "path": "essai-stitch-v7/assets/magic/avatars.png",
+      "status": 200,
+      "bytes": 2203900,
+      "sha256": "ee8454034a57ce8f7e57d3da20e91b1a0fc121e5f9e88cec0c13c6119838d2bf"
+    },
+    {
+      "path": "essai-stitch-v7/assets/magic/patronuses.png",
+      "status": 200,
+      "bytes": 2056119,
+      "sha256": "d5cfbc8a1eb77c015bf826af4d3b833013434fc3008e40ab83e1bacb54fa6acf"
+    },
+    {
+      "path": "essai-stitch-v7/assets/material-symbols-LICENSE.txt",
+      "status": 200,
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "essai-stitch-v7/assets/material-symbols-full.ttf",
+      "status": 200,
+      "bytes": 973420,
+      "sha256": "b499b3b2d26f67c13f8e017815a5200591711946c64677ff2f5259272e0646d3"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/cinzel-OFL.txt",
+      "status": 200,
+      "bytes": 4383,
+      "sha256": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/cinzel.ttf",
+      "status": 200,
+      "bytes": 125468,
+      "sha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/jakarta-OFL.txt",
+      "status": 200,
+      "bytes": 4402,
+      "sha256": "995c7199cab65954f545996326755daee7b63cc6b42b06c13da1f9502ab08a99"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/jakarta.ttf",
+      "status": 200,
+      "bytes": 176288,
+      "sha256": "89b3fb38aa0d275d7a731d0d817a4f1622b316b4d7fbdedcf02ee9099ff68bc8"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/fonts/provenance.json",
+      "status": 200,
+      "bytes": 1165,
+      "sha256": "26b20f05786439c54ce193c8ff77d07b1e1f8a2c25612f5789194367efcf16ce"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/provenance.json",
+      "status": 200,
+      "bytes": 1055,
+      "sha256": "7f89aa1db742760931f04a02f8aba737d473c59bfb97807a8163ee3a3a44c01e"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/ritual-hearth-original.png",
+      "status": 200,
+      "bytes": 2810785,
+      "sha256": "9f018aece060b32b88da7a969c67d4656be279d1176c93eb993bdee35420fc0f"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/ritual-hearth-original.provenance.json",
+      "status": 200,
+      "bytes": 2518,
+      "sha256": "d081daa98d8438b580100422d7b126a32c81f3bd8ef84fa1557a53ab234a8eab"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.provenance.json",
+      "status": 200,
+      "bytes": 646,
+      "sha256": "6ba16ddfc6a1bcabeac9a6d43a8645b66ff6ce17da5052d3769172219234953d"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/sorting-hat-original.svg",
+      "status": 200,
+      "bytes": 7019,
+      "sha256": "6d5e43ed22fb7563a247cd87f7faf451dcd2f81a2e4201ead2dbbfb0e0def22f"
+    },
+    {
+      "path": "essai-stitch-v7/assets/onboarding/soul-mirror.jpg",
+      "status": 200,
+      "bytes": 49860,
+      "sha256": "04aaf1d77ab1129639d7026a1411da910381388115546f86c91d1a76c7fc29fa"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/1821694e91cb7863.png",
+      "status": 200,
+      "bytes": 60752,
+      "sha256": "020440ec8c3ce247814326700e327c27f94e45219a4bffd904b9d0667874a743"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/22ba5f9432936daa.png",
+      "status": 200,
+      "bytes": 39881,
+      "sha256": "9675a31e6f0b5685b2be46ccbd0c6e778d6a2c4ba26099cc13350c4f5dd67f95"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/3ae0536972df1e8a.png",
+      "status": 200,
+      "bytes": 43596,
+      "sha256": "1eb7415282309335ac84a45fafe5dacdff45ea9fef78b743f32e151a0701f289"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/41aa60c1babe2637.png",
+      "status": 200,
+      "bytes": 63955,
+      "sha256": "03d5138ed6621328620075949283366c9a411b4411b4235255336826880880c1"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/41e997ebd3dbb0da.png",
+      "status": 200,
+      "bytes": 46685,
+      "sha256": "2d81b25fb96c0b076b4023505baad42afcac5bd5fd36ecf55e3356a821480451"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/44f9b4929d4a432e.png",
+      "status": 200,
+      "bytes": 47956,
+      "sha256": "4b53e1dc3917f52748fb2e8ff8edae248dcfb1e288da62be77d6fc0d51ec3dca"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/49a11791bddb2e97.png",
+      "status": 200,
+      "bytes": 50854,
+      "sha256": "ea178840b6c6b4f41d5317d9feb9e572a48478157154a5cdee331f47592a5f17"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/4cff687f2b21ba30.png",
+      "status": 200,
+      "bytes": 51403,
+      "sha256": "875ffbf7fdca67c17de8612ce44a209b998172f84f92783c15a1c7e224d3208b"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/6da70099dffa5659.png",
+      "status": 200,
+      "bytes": 34959,
+      "sha256": "aaa86b67000088c153a43990af7a8db57d554602cc7d11b7a38c39dc64c63797"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/817ba58754f5c34a.png",
+      "status": 200,
+      "bytes": 48800,
+      "sha256": "72ee9dc25361f3baf9269435c21222dbab6384afe19c0fd6979c79e4c89bb426"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/83455346414e2153.png",
+      "status": 200,
+      "bytes": 89587,
+      "sha256": "85476d2c63ccc862b85d96fcee359c83c3174bc226516babd1b317682d1583b2"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/83e722e4a976a383.png",
+      "status": 200,
+      "bytes": 63389,
+      "sha256": "6328ddc7a35728135b56f77761773b333cff161085105085838f72e58d8011a5"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/90a727402f43a4cb.png",
+      "status": 200,
+      "bytes": 72345,
+      "sha256": "ba2f61aeb23e18f341cb9cdc69ab4056d36fde82afbaef969af12fece1b4e1c4"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/967afc27aee01ad2.png",
+      "status": 200,
+      "bytes": 45867,
+      "sha256": "7771d25cf4c1a0dce224534cabf07a561b9299f1c19059702ef0a73cc73d9283"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/acf7452264b4b6b5.png",
+      "status": 200,
+      "bytes": 47611,
+      "sha256": "668c385a9e9088283817affd5311fe3c811042af8c56f06bea5361c577924313"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/bb2c699919893514.png",
+      "status": 200,
+      "bytes": 46929,
+      "sha256": "7d993df8cc6f4534c3625278aebfc0aab6211e2e255ac9c9e10f58eb0de82942"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/c3ff285a8558e584.png",
+      "status": 200,
+      "bytes": 51369,
+      "sha256": "f11140717967096952dda61d003219be336c22e5f6d86c697d978aa4706e3f16"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/e272634cf3c9749c.png",
+      "status": 200,
+      "bytes": 33076,
+      "sha256": "6aef0dcf714c4253a0df2d4d27b280da7888c722f658ccb25dfa462276d77675"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/f47be223d477b6a8.png",
+      "status": 200,
+      "bytes": 46151,
+      "sha256": "5887d2e13075b169fbc1f6f3d2a8e0ade497286501b1ba845aa39b3a5f4c0933"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/fallback-salon.png",
+      "status": 200,
+      "bytes": 69234,
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e"
+    },
+    {
+      "path": "essai-stitch-v7/assets/remaining/provenance.json",
+      "status": 200,
+      "bytes": 11390,
+      "sha256": "9680feb584452f5b784894fc7826ebc7561b8e7cc7abae90969673b85aa5810d"
+    },
+    {
+      "path": "essai-stitch-v7/bridge.js",
+      "status": 200,
+      "bytes": 19713,
+      "sha256": "bd38906782a9a08e857848fa26c27eb53d60df733d4998e6362bf7af3dab85a9"
+    },
+    {
+      "path": "essai-stitch-v7/build-cuisine.cjs",
+      "status": 200,
+      "bytes": 3661,
+      "sha256": "4f516c4275cc34aa6691243d076b8643dfe4fdd605f82e47fd28e1c8458140af"
+    },
+    {
+      "path": "essai-stitch-v7/build-family.cjs",
+      "status": 200,
+      "bytes": 2882,
+      "sha256": "34c7bd394774a075012031900d9ceb46409fc38d9df074872872f334d7fafae7"
+    },
+    {
+      "path": "essai-stitch-v7/build-onboarding.cjs",
+      "status": 200,
+      "bytes": 5035,
+      "sha256": "30ea70edaefdb4e2717256f999563b8b5a03c7814d8ed1219ae4b158578ce4c6"
+    },
+    {
+      "path": "essai-stitch-v7/build-register.cjs",
+      "status": 200,
+      "bytes": 3430,
+      "sha256": "ced359c80785f21b80fd3ed235ff79687f4621e497eb55636854eb9ac4badf43"
+    },
+    {
+      "path": "essai-stitch-v7/build-source.cjs",
+      "status": 200,
+      "bytes": 12627,
+      "sha256": "47c9799bf7f1f0eae6a7aea610cf70c001d5696ac1ba27eb0aa7976954a241ee"
+    },
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "status": 200,
+      "bytes": 12449,
+      "sha256": "ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd"
+    },
+    {
+      "path": "essai-stitch-v7/chat.css",
+      "status": 200,
+      "bytes": 2839,
+      "sha256": "986bfe9db58c5352e801ffde602512442cad8d6147a923db9f5a906f48c78153"
+    },
+    {
+      "path": "essai-stitch-v7/chat.js",
+      "status": 200,
+      "bytes": 19617,
+      "sha256": "ada18c51fbf9c03327269aafd767c79463545562fc7514b608f3eb7814360485"
+    },
+    {
+      "path": "essai-stitch-v7/chrome-source.html",
+      "status": 200,
+      "bytes": 4722,
+      "sha256": "2a61515a534d7c11eaf6bd708e8252b5b1d4c85d1b3481f90aed63f94cdd25ca"
+    },
+    {
+      "path": "essai-stitch-v7/chrome.css",
+      "status": 200,
+      "bytes": 7930,
+      "sha256": "f30b875cc3869d9cff772656204902977dd9173b92633dd40650e0739f1fb7d4"
+    },
+    {
+      "path": "essai-stitch-v7/chrome.js",
+      "status": 200,
+      "bytes": 15125,
+      "sha256": "6b443734caf6073dd27acc5d7717600450f90fe29b5a10f4bcdcdd58e238f1c6"
+    },
+    {
+      "path": "essai-stitch-v7/ci-scope.json",
+      "status": 200,
+      "bytes": 166,
+      "sha256": "3a43ed2ebc83c50b899256f4aef3c7fe4957ef4b7acf7097f4fa712a590c4252"
+    },
+    {
+      "path": "essai-stitch-v7/consolidation.css",
+      "status": 200,
+      "bytes": 805,
+      "sha256": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.css",
+      "status": 200,
+      "bytes": 13396,
+      "sha256": "22143da5dd9fc40a81500c919ec21d0b499c2ddd40736a257c3c66be69591e08"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.js",
+      "status": 200,
+      "bytes": 36491,
+      "sha256": "f99698719062154405d2bb03528c65b76cf73ddb4bb2b5ddeecc7c31684cab9b"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e073.css",
+      "status": 200,
+      "bytes": 3867,
+      "sha256": "cf6f8ee76a78ca485d414f896bbd852aa2f36e8e19e706f755324d6c3c6adf72"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e074.css",
+      "status": 200,
+      "bytes": 8776,
+      "sha256": "34493e48ce6212a025640c6a2ad50c178216ec862eb8c1ea04745347d1ab9b15"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e074.js",
+      "status": 200,
+      "bytes": 29755,
+      "sha256": "29bd775e7820347e93aab8a6981f791e4c9045eb5145b1d59896fa1649642db8"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-engine.js",
+      "status": 200,
+      "bytes": 33320,
+      "sha256": "4eb0ec960701457c64fe26d4f802a195619af99bc6be827723a4fb639b2b5044"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-list.js",
+      "status": 200,
+      "bytes": 19794,
+      "sha256": "369c031dd2a69a8d53aaaf9f1b181b43cddd80bf80116f8b071ee1e51505520d"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-p01.css",
+      "status": 200,
+      "bytes": 6562,
+      "sha256": "7a995a944d01e005454b3f8379c00126930ae7a71ff4f022896e789870155687"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-p01.js",
+      "status": 200,
+      "bytes": 18943,
+      "sha256": "ff769e9b3c0bb46723f67ead5ad774313d92aa249deb498ae4b910d48463a8ac"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-routes.json",
+      "status": 200,
+      "bytes": 2505,
+      "sha256": "8dc7a94bb6d2e168515925d83a33d5ef13424a5ea66040075b5a60c4b34dd78d"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-timers.js",
+      "status": 200,
+      "bytes": 8812,
+      "sha256": "7492217e618c2a88d0bfb015c2dc1430f06df933769013e0057fc0dc768f05f0"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine.css",
+      "status": 200,
+      "bytes": 4603,
+      "sha256": "ac69388a3d7dc6d00681a38addbd95d0c635fc5e3d76a78e183e5af4d1d837bb"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine.js",
+      "status": 200,
+      "bytes": 86641,
+      "sha256": "7e02139e97d72d54bcb2dd10428a2c663cd5d292fd6603bf20a5a56bcffc9eaa"
+    },
+    {
+      "path": "essai-stitch-v7/data/onboarding-scoring-v1.json",
+      "status": 200,
+      "bytes": 17971,
+      "sha256": "ef033928f193d0c526092deac25a9a72f1cfc3f7c07bdb01cf75546e21e7e515"
+    },
+    {
+      "path": "essai-stitch-v7/documents-register.js",
+      "status": 200,
+      "bytes": 32520,
+      "sha256": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a"
+    },
+    {
+      "path": "essai-stitch-v7/engine-policy.js",
+      "status": 200,
+      "bytes": 542,
+      "sha256": "84628209c7709cbd239c35c101c1f1ffcfc6cf16d7bd04f82c0d28265eeed985"
+    },
+    {
+      "path": "essai-stitch-v7/famille.html",
+      "status": 200,
+      "bytes": 43478,
+      "sha256": "8a5440ac483ef6ede5b77fcee9b0328710abcee261c4615e9427aa975219d27e"
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "status": 200,
+      "bytes": 9340,
+      "sha256": "db437749c04584ee96ca7605f741a3f32a2a14f93ef5a952d80f64dcc0b76a77"
+    },
+    {
+      "path": "essai-stitch-v7/family-register.js",
+      "status": 200,
+      "bytes": 19427,
+      "sha256": "2f7ae1e83150b565651272dafae3e7aa4be2f5b8600779659662c139244cc706"
+    },
+    {
+      "path": "essai-stitch-v7/family-routes.json",
+      "status": 200,
+      "bytes": 2128,
+      "sha256": "1856ef04d6622f4815618741b9bc0ace20fb20572d8b5727c863eb63c4e4d7ec"
+    },
+    {
+      "path": "essai-stitch-v7/family.css",
+      "status": 200,
+      "bytes": 5349,
+      "sha256": "8dd0fa208272ccc5b21d7258fa955baad23c9e8361a4ea7a0643cbb1a4c3f65b"
+    },
+    {
+      "path": "essai-stitch-v7/family.js",
+      "status": 200,
+      "bytes": 59344,
+      "sha256": "dc293c182fdf8ca6a0e6d4b16196113ad706442f58320b097102ce3aa037ca91"
+    },
+    {
+      "path": "essai-stitch-v7/fetch-register-assets.cjs",
+      "status": 200,
+      "bytes": 2298,
+      "sha256": "fff971a4e8c479b33b4470765581a52011462c03ecda0484de750faa51939697"
+    },
+    {
+      "path": "essai-stitch-v7/home-consolidation.css",
+      "status": 200,
+      "bytes": 3232,
+      "sha256": "ee2f7dc9226d53060b41f7eaf8aa7aa0eed02c4cf8b8b86faf4aed7e4356b11a"
+    },
+    {
+      "path": "essai-stitch-v7/home.js",
+      "status": 200,
+      "bytes": 16446,
+      "sha256": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45"
+    },
+    {
+      "path": "essai-stitch-v7/house-register.js",
+      "status": 200,
+      "bytes": 22965,
+      "sha256": "e830eddcaed5ed199597b28e0a93b8c545b7b7715aeee7764dfea01e5eed4e94"
+    },
+    {
+      "path": "essai-stitch-v7/import-runtime.js",
+      "status": 200,
+      "bytes": 1437,
+      "sha256": "0f63752ec1d5e5c50085013b15d3c5582d759bc8c4df0efcddd3db41ec6faa06"
+    },
+    {
+      "path": "essai-stitch-v7/index.html",
+      "status": 200,
+      "bytes": 27397,
+      "sha256": "c8cb2ec5da80e6bc938cd424229a51c467a7d3e56ef01a2e6a538c280c1b8e8e"
+    },
+    {
+      "path": "essai-stitch-v7/magic-content.js",
+      "status": 200,
+      "bytes": 6975,
+      "sha256": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c"
+    },
+    {
+      "path": "essai-stitch-v7/magic-profile.css",
+      "status": 200,
+      "bytes": 6835,
+      "sha256": "41bc6a8365952f61a4de0494b97143bd1042d11d753a80bd015da59592e4fbcf"
+    },
+    {
+      "path": "essai-stitch-v7/magic-profile.js",
+      "status": 200,
+      "bytes": 11758,
+      "sha256": "d2bfda24aefc98d304ceea776677af74f8a6d9a39a3c56bba65c6dfa7fcdd807"
+    },
+    {
+      "path": "essai-stitch-v7/member-avatar.css",
+      "status": 200,
+      "bytes": 2161,
+      "sha256": "993ec7dbca47727f3d1a18fff5c1a9ffc899e93c8906df4e67449d59166ee62e"
+    },
+    {
+      "path": "essai-stitch-v7/member-avatar.js",
+      "status": 200,
+      "bytes": 5985,
+      "sha256": "26ad033cba0fb48b20938297dc3d9e008ed0859249c757a068cb1a546be51fa9"
+    },
+    {
+      "path": "essai-stitch-v7/missions-layout.html",
+      "status": 200,
+      "bytes": 1990,
+      "sha256": "1ead425ba11217531b532ca4eae36fe5b8f9b48da97df1621998c30653ed8bdd"
+    },
+    {
+      "path": "essai-stitch-v7/missions.css",
+      "status": 200,
+      "bytes": 4262,
+      "sha256": "f7e4d1d0562252c66e4a73052ec1ef25f9df4da4110ecf49858ad508c6a7dd49"
+    },
+    {
+      "path": "essai-stitch-v7/missions.html",
+      "status": 200,
+      "bytes": 11381,
+      "sha256": "e891ec40001fdffa2bd66852f18b17f68a61c3acb733a3c85ee0a573e1a9ce93"
+    },
+    {
+      "path": "essai-stitch-v7/missions.js",
+      "status": 200,
+      "bytes": 5575,
+      "sha256": "f9ab9474832b15e0d62804d9afd879ba3a11ec66c50661f085d76c539745eb69"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-drafts.mjs",
+      "status": 200,
+      "bytes": 4177,
+      "sha256": "3415e7e98a61e0512062b5429e80e89059745e3b76afc236d30336b7e7ddb336"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-engine.js",
+      "status": 200,
+      "bytes": 5873,
+      "sha256": "9c7ce4d7fb618f86e446cb633e30d03bbae1bbc9c9cb720ae3fd5da2f31123d9"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-route-data.js",
+      "status": 200,
+      "bytes": 1169,
+      "sha256": "696dcbced5594163f03fed324be5fc95d54ce31181ac0f8120ca0fa31c847d20"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-routes.json",
+      "status": 200,
+      "bytes": 1416,
+      "sha256": "bf5e0c5d4c89bc503c23d9b5ffadf9fcca6a613bc682a3de4cab99264b32b0de"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding-scoring.mjs",
+      "status": 200,
+      "bytes": 3720,
+      "sha256": "6a674f9e463993b52a046f8358b33302da7731eac72e684f4090e7e0076542de"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding.css",
+      "status": 200,
+      "bytes": 7525,
+      "sha256": "2ca646aeae3d2339c161257e2e6dc7b747d956a08829c3f691a04551b9c4a2f4"
+    },
+    {
+      "path": "essai-stitch-v7/onboarding.js",
+      "status": 200,
+      "bytes": 25635,
+      "sha256": "c052dc5688c7468caec8162a762080d5d9f9547f7f03f1b8d976581549d59e23"
+    },
+    {
+      "path": "essai-stitch-v7/package-lock.json",
+      "status": 200,
+      "bytes": 34111,
+      "sha256": "ec65f1619282a3f89a956a0a973cfdb8067b6b2b9c9a901f9accbd5e6eee0a83"
+    },
+    {
+      "path": "essai-stitch-v7/package.json",
+      "status": 200,
+      "bytes": 228,
+      "sha256": "c34ce4ff530c8d57ebf0d4c9b8a87a5544b8a3eaa0a5eabf9e41f45dea941eb3"
+    },
+    {
+      "path": "essai-stitch-v7/recipe-import-format.mjs",
+      "status": 200,
+      "bytes": 17224,
+      "sha256": "af7c4d266167ccdaad76e6ebf8bbac41e2ef2e747ad3a1db604e83a0a4b4ea04"
+    },
+    {
+      "path": "essai-stitch-v7/recipe-import-zip.mjs",
+      "status": 200,
+      "bytes": 16656,
+      "sha256": "1344e6d0a7a391c0dceab2c93f50ac6a42bc32ccc4cf46af976a93e8f7d988b0"
+    },
+    {
+      "path": "essai-stitch-v7/recipe-import.css",
+      "status": 200,
+      "bytes": 1689,
+      "sha256": "f2d85d6abf7d59186690c50b8d8f8373f341a97fa62ba0cac3ee26bf49094f69"
+    },
+    {
+      "path": "essai-stitch-v7/recipe-import.js",
+      "status": 200,
+      "bytes": 23270,
+      "sha256": "2eb087d8ba64c479ba52936a9e2fbd845ca85fe0fe81a6577f6e79b32bf370ed"
+    },
+    {
+      "path": "essai-stitch-v7/register-route-data.js",
+      "status": 200,
+      "bytes": 9316,
+      "sha256": "7210810057c52e7cbc70fc5c81ce2221b3e402e6eb22224598038b863e11e22a"
+    },
+    {
+      "path": "essai-stitch-v7/register-routes.json",
+      "status": 200,
+      "bytes": 10750,
+      "sha256": "bd33fb548931cfb9526064802c5521d50d76be8f5efbe0fad2ee7fd4ff9f8a02"
+    },
+    {
+      "path": "essai-stitch-v7/register.css",
+      "status": 200,
+      "bytes": 9543,
+      "sha256": "084b30b6a827e1be660ffaafa2bc899832df435dc092dca642d61f43e1115e27"
+    },
+    {
+      "path": "essai-stitch-v7/register.js",
+      "status": 200,
+      "bytes": 9304,
+      "sha256": "0885d8b015db6c2dc46b097d1d7ddf87880b1917e03c9083d89f1e911245ec4c"
+    },
+    {
+      "path": "essai-stitch-v7/ritual-effects.js",
+      "status": 200,
+      "bytes": 12887,
+      "sha256": "38d6c0b7840e5ecc3c3b15f8ca494ffce97224df62e112870950fcbee77a042e"
+    },
+    {
+      "path": "essai-stitch-v7/ritual.css",
+      "status": 200,
+      "bytes": 7404,
+      "sha256": "f913fda6ec4eafafcc533e22aa727609ec7f81c03845c52762fb95e8e9859b1f"
+    },
+    {
+      "path": "essai-stitch-v7/ritual.js",
+      "status": 200,
+      "bytes": 9005,
+      "sha256": "e14f2602252afd3b4df65fae34f6c3bd9553979c8418410341a1ef36c4cfe5e3"
+    },
+    {
+      "path": "essai-stitch-v7/root-adapters.js",
+      "status": 200,
+      "bytes": 3752,
+      "sha256": "d40a3039169ada135e5ad3f750eb8538f8730398710bea33d7e1176e86fdf946"
+    },
+    {
+      "path": "essai-stitch-v7/route-manifest.json",
+      "status": 200,
+      "bytes": 80497,
+      "sha256": "e70fa62d0e8b24a93fcea94778b3cdb4fa24ba5a4c7c2f9fe6ad8173df5344f1"
+    },
+    {
+      "path": "essai-stitch-v7/stitch-tailwind.css",
+      "status": 200,
+      "bytes": 130301,
+      "sha256": "5ef84140838420a77e620acdee094213c960b8d0c7e523f54d7413ca253f0849"
+    },
+    {
+      "path": "essai-stitch-v7/tailwind-input.css",
+      "status": 200,
+      "bytes": 59,
+      "sha256": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec"
+    },
+    {
+      "path": "essai-stitch-v7/tailwind.config.cjs",
+      "status": 200,
+      "bytes": 3443,
+      "sha256": "6f9274f7795a50708929060f2247cd81672c6c811f2fa61a0aff974932fef082"
+    },
+    {
+      "path": "essai-stitch-v7/templates/batch.html",
+      "status": 200,
+      "bytes": 25952,
+      "sha256": "12620435fa864020f1aa99d4e411e13fffcc03733a7eacba864b0378eff94e63"
+    },
+    {
+      "path": "essai-stitch-v7/templates/cook.html",
+      "status": 200,
+      "bytes": 20895,
+      "sha256": "09a6aab321dd3e236ac8a1e801a818e2d9bd6c250061ff65564d6ec9e328fef6"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/agenda.html",
+      "status": 200,
+      "bytes": 29235,
+      "sha256": "004cf0bc0f4e6da63ec12ee1ee29378eac4cbadd04d0d10eae8e337f6e9deae7"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/health-history.html",
+      "status": 200,
+      "bytes": 36680,
+      "sha256": "9856eb1406119755ced05653208bc59b055ce9c724089fd01c8395e9635af4db"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/health-person.html",
+      "status": 200,
+      "bytes": 31061,
+      "sha256": "373f1d8615275a50e87601a887fe3913509e9da4075247a1682277de887ba8cd"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/health.html",
+      "status": 200,
+      "bytes": 39752,
+      "sha256": "5282ab640431d77a189e7e6d054973f23b24e486e35f6fd427093fb479b8323f"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/medical-edit.html",
+      "status": 200,
+      "bytes": 26159,
+      "sha256": "1d9cd4ffdfd166609f85684a170aeb0bf02f3b27101f9207306893301f87f54f"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/member-edit.html",
+      "status": 200,
+      "bytes": 20406,
+      "sha256": "91d3993676185b7de45baed694909a61b5ef115534072fc8608acb47c28e338e"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/members.html",
+      "status": 200,
+      "bytes": 29391,
+      "sha256": "79eea25da04e2352215912c622799148a0b3114c444c6c0f92b4f636b6dbcecc"
+    },
+    {
+      "path": "essai-stitch-v7/templates/family/provenance.json",
+      "status": 200,
+      "bytes": 1363,
+      "sha256": "42cf2cb08ae26ce89304bc57e225bd6805894bf566632a366d9dc66f7553ab57"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-final.html",
+      "status": 200,
+      "bytes": 9861,
+      "sha256": "3f39db6e5632d81710916f107db7203e69afe51ba5f51f4278bf18ef4a3eabe5"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-foyer.html",
+      "status": 200,
+      "bytes": 15206,
+      "sha256": "aecea846025353e71ba9fd32cd8618aec818f393c33be0b24d16e6b3eb97e3f3"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-house-result.html",
+      "status": 200,
+      "bytes": 10793,
+      "sha256": "ce53d678437d0ed3dca55bd750d20fffb0c889939aa7decbc388786504059eb3"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-house.html",
+      "status": 200,
+      "bytes": 13139,
+      "sha256": "610b5282b1f059c5c28569a9a512d85e8329031ca61ab384f33056e3ee06ef73"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-identity.html",
+      "status": 200,
+      "bytes": 20123,
+      "sha256": "82d6813528bbb257dc8f8a18bc2f72f2636cc220b2cd2ed45c158f1b66666dd7"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-patronus-result.html",
+      "status": 200,
+      "bytes": 13005,
+      "sha256": "ac411cbf18ca9a62ce64c7b192d3766332c1490e28cea3b13b88c3f92985c0e6"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-patronus.html",
+      "status": 200,
+      "bytes": 13254,
+      "sha256": "fe08e672213f8bf3129ad051cadec63ba9bb8d7c461b5747a5ce4efe4531accf"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/onboarding-ritual.html",
+      "status": 200,
+      "bytes": 10901,
+      "sha256": "a7ce80b622fa7add1abed3d7a9162ec826c2eeb9b38d9ba78f3c4906120817ce"
+    },
+    {
+      "path": "essai-stitch-v7/templates/onboarding/provenance.json",
+      "status": 200,
+      "bytes": 1684,
+      "sha256": "8c9a8ca2f7cd704e223670a6fa85cd7857bc5d96ed345acb7d491660039c38c2"
+    },
+    {
+      "path": "essai-stitch-v7/templates/pick.html",
+      "status": 200,
+      "bytes": 25179,
+      "sha256": "ca51b087af80916bbdb374966df4186cac33ed751df8d7c19a31432ed7902d23"
+    },
+    {
+      "path": "essai-stitch-v7/templates/provenance.json",
+      "status": 200,
+      "bytes": 2594,
+      "sha256": "3be1e05f3c68255e1280294a9f372b727814ac35dce123d0720294aa9709c12a"
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipe-add-1.html",
+      "status": 200,
+      "bytes": 22695,
+      "sha256": "b2b32d0bf77c2da085bbb0e9efcf5a7700c7eb29ea7b1fd20133092482e1f27d"
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipe-add.html",
+      "status": 200,
+      "bytes": 27352,
+      "sha256": "ad43da36feff10437e9f608b3ecdd015a9f0df190db6dc333dd46bca95ff86b0"
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipe.html",
+      "status": 200,
+      "bytes": 30288,
+      "sha256": "e2fc75c2cf6841470105b047f96a80e061690b7e16dfe9d0de43bab02ba75e35"
+    },
+    {
+      "path": "essai-stitch-v7/templates/recipes.html",
+      "status": 200,
+      "bytes": 36255,
+      "sha256": "b40a9d36b99cd9f02242e5ace15df098de36c4ba4d425b458ab6cf62a8baad88"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/backup.html",
+      "status": 200,
+      "bytes": 17867,
+      "sha256": "602f8c8eb6be7f6e0c40a9edf4165b6cde00b12b52d504ed0cf71600152b3fc7"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/chat-2.html",
+      "status": 200,
+      "bytes": 17208,
+      "sha256": "e5bbd2abecc8ae0062415156361f0a3cffc4af26f8bc8e3c3bf53a88e81bf0b4"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/chat.html",
+      "status": 200,
+      "bytes": 17298,
+      "sha256": "4a704f11be60138b98e915ed8cab3b81de045c4da36561eb36a46777f7eb59ce"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contact-edit.html",
+      "status": 200,
+      "bytes": 22631,
+      "sha256": "23b044ba64fa86aab1034bb84c19306d4785b230dbc328e49b881a9eb1a6dcb7"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contacts.html",
+      "status": 200,
+      "bytes": 33239,
+      "sha256": "1bc37df1f0b59cf121c0c8e1cf5ea0a1beca3e37d62217933235e89befc37c02"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contract-1.html",
+      "status": 200,
+      "bytes": 19450,
+      "sha256": "48fdeea6e9abd00804dc2a0a05801eba762b04d5d0da5af61d105de64279662c"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contract-edit.html",
+      "status": 200,
+      "bytes": 26227,
+      "sha256": "d443260cfc943f8b80da95fc1a456cd1e036092ff6778814ced51eaf26337659"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contract.html",
+      "status": 200,
+      "bytes": 21915,
+      "sha256": "f548de3b45706fb9b1700e17e99bf1361ed925ae313ec63186ecf57a79dece7e"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contracts-1.html",
+      "status": 200,
+      "bytes": 25290,
+      "sha256": "3b05b399e5ebc4507cf5175a050b4a889411e63b7df7306808382e4a061862fc"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/contracts.html",
+      "status": 200,
+      "bytes": 24202,
+      "sha256": "11e3ef1460150b1423295debf1a5f5cc83caa187ce3f2356b92cfb33255af4fb"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/document-edit.html",
+      "status": 200,
+      "bytes": 23909,
+      "sha256": "9eb1b38966cf7d1ad40fa5be4b05af9e472e7e8c1032fd7a77564313d0448f88"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/document.html",
+      "status": 200,
+      "bytes": 23523,
+      "sha256": "cf96eb4698858258019d4e5dbd033f886ecaa97ee9ef0684eebee20e3d1b3459"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/documents-1.html",
+      "status": 200,
+      "bytes": 30040,
+      "sha256": "064ea206400c0e4f097e40365fe42fc12c90bc282db111dbfee12c9df445d9c8"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/documents.html",
+      "status": 200,
+      "bytes": 29533,
+      "sha256": "35a2b3f09f69d1aebd503e0000c8c6cec20a2a600e0509d80728dd0793aa418f"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/equipment-edit.html",
+      "status": 200,
+      "bytes": 23937,
+      "sha256": "6928f694f0edf850627b7dd6848e86eb953b3e9f83645f6bbbe4e8496930141a"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/equipment.html",
+      "status": 200,
+      "bytes": 25134,
+      "sha256": "67a1a6017d7d1b9b644b00ce4d5c7e3497e0ec048e74fa1648d87b78a104bc94"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/house-1.html",
+      "status": 200,
+      "bytes": 32249,
+      "sha256": "062e8877f4022a206050ea3ffc443ea81e29d278ab26cd7880f970d8c4adee35"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/house-backup.html",
+      "status": 200,
+      "bytes": 18613,
+      "sha256": "90e3498368f86b968e79fa5a848faeed5cf4e7360a7588b6ec971ab296471756"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/house.html",
+      "status": 200,
+      "bytes": 33661,
+      "sha256": "99de22d815d0e59605a9e38654ab9f39678c15d2c8b0ba1e79a88bc8579f19b9"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/import-file.html",
+      "status": 200,
+      "bytes": 21662,
+      "sha256": "fa1edb258085e90ee7980a4dd88bb45628d0eec756d7f84b9331c4a25e138e68"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/import-review.html",
+      "status": 200,
+      "bytes": 17588,
+      "sha256": "265d98a5621f81a8f2a3cca7dbdcac830f2b6eadd2cefc1451bf35727aa60a4b"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/list-detail.html",
+      "status": 200,
+      "bytes": 30541,
+      "sha256": "cd0ca5bc2a76766d82c2c7a846fe9c1e76381eb1e2e3c069bdcecc04080b7ded"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/lists.html",
+      "status": 200,
+      "bytes": 27348,
+      "sha256": "f9b8cb644885e13d9199a113695275c7245c21379341c987243102f3e750486a"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/maintenance.html",
+      "status": 200,
+      "bytes": 36548,
+      "sha256": "1ceb574a249ab432ecf73d3eabf56ec6823f8d21cd5c8a168fb2b9cee769e2f1"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/memo-edit.html",
+      "status": 200,
+      "bytes": 24771,
+      "sha256": "d74f0a19f8f548f29dd91cceb2efd8d2766261c4cd491c56f428aea9380abd7f"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/memos.html",
+      "status": 200,
+      "bytes": 28837,
+      "sha256": "8172c9ea974cd84e5de8e50ae4ab9a09e4a6bd327cc20a2a0447cef54e3db1cc"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/menu.html",
+      "status": 200,
+      "bytes": 31645,
+      "sha256": "ea058b56c58c00f7e4e7f4edda22ee10b7a951cc6dd865918218f767296c3900"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/mission-edit.html",
+      "status": 200,
+      "bytes": 26793,
+      "sha256": "1696a443382ce01cc10d8d06616397056cd1ef98975fd936beb3c458363290dc"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/personal.html",
+      "status": 200,
+      "bytes": 28576,
+      "sha256": "31c31c56e2dde4f26d1a97696baa39681ca5479715fdddf15e8afe76ec2f378b"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/provenance.json",
+      "status": 200,
+      "bytes": 5965,
+      "sha256": "c7fbd0268a2004773eacd626057a049ce7c42baa2af907701a25577aeb604bbd"
+    },
+    {
+      "path": "essai-stitch-v7/templates/remaining/search.html",
+      "status": 200,
+      "bytes": 25029,
+      "sha256": "8f33a3a50cb1ed98bf646619180bafa19737159f8305f57910d5b3c3999d2038"
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop-1.html",
+      "status": 200,
+      "bytes": 34192,
+      "sha256": "ef577826d0543c3f62b5916e837938c3cb032c25e6e989c293699b81e45815ff"
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop-final.html",
+      "status": 200,
+      "bytes": 34192,
+      "sha256": "ef577826d0543c3f62b5916e837938c3cb032c25e6e989c293699b81e45815ff"
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop-history.html",
+      "status": 200,
+      "bytes": 13423,
+      "sha256": "689142212f998028f1a44327bde7cb1190f76fb315c497c614d524a690b73610"
+    },
+    {
+      "path": "essai-stitch-v7/templates/shop.html",
+      "status": 200,
+      "bytes": 34192,
+      "sha256": "ef577826d0543c3f62b5916e837938c3cb032c25e6e989c293699b81e45815ff"
+    },
+    {
+      "path": "essai-stitch-v7/templates/taverne.html",
+      "status": 200,
+      "bytes": 22671,
+      "sha256": "82393ebfe322ced94997d4e2b62f2223f033bf27f843b16ade0b17fb3c88f0aa"
+    },
+    {
+      "path": "essai-stitch-v7/templates/tm5.html",
+      "status": 200,
+      "bytes": 27359,
+      "sha256": "5a09e689e696a4f7d4cee7221ed54de70f04e29484ced4e93b2002bab42ed473"
+    },
+    {
+      "path": "essai-stitch-v7/tools-register.js",
+      "status": 200,
+      "bytes": 26171,
+      "sha256": "5835345e43f07589115aafbb727b3bb446de1ec3621d8aef268e232bc2acec39"
+    },
+    {
+      "path": "essai-stitch-v7/traverse.html",
+      "status": 200,
+      "bytes": 25876,
+      "sha256": "671261d2d6722135b2f7f02a00ea18832c879207ba1172743693255892518c85"
+    },
+    {
+      "path": "essai-stitch-v7/write-register-evidence.cjs",
+      "status": 200,
+      "bytes": 8275,
+      "sha256": "953611af29790854f5c20428c480a7d38c98edfe3b13a15667c63fd588b2d76c"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/ebgaramond-OFL.txt",
+      "status": 200,
+      "bytes": 4398,
+      "sha256": "0985066662eb755ed3683ae5482a81a9195b49ce3f7e165cc2388b3dbece7dd7"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/famille.png",
+      "status": 200,
+      "bytes": 69234,
+      "sha256": "f01ac89f1828ed3af6e7c399f7643fabad48d3ad25ebcc60200b46122237831e"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-0.woff",
+      "status": 200,
+      "bytes": 32744,
+      "sha256": "8582af5b17b2863f56d282d8b97edb70897e99b6201440d9005262832fc46513"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-1.woff",
+      "status": 200,
+      "bytes": 31272,
+      "sha256": "569946009491a800c891c8686d0d01d9e5482f5e5589506196761b59ea4bc4ce"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-2.woff",
+      "status": 200,
+      "bytes": 32152,
+      "sha256": "205c7db8be471b902ee8f8332d1992d37e71ec4ce993e32807d8c32eca285599"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-3.woff",
+      "status": 200,
+      "bytes": 32112,
+      "sha256": "db7d12c9871db337d382c97506635636cad52b6324e6ed88f9a4ed61f5930bf4"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-4.woff",
+      "status": 200,
+      "bytes": 32332,
+      "sha256": "2c3da170df47e4431ce2883eb3d515bbb4c2b77341071ab147aec5381dc5dfc5"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-5.woff",
+      "status": 200,
+      "bytes": 31920,
+      "sha256": "ec0d672906f7a860d6e1fbc2e5e29ebb8ea81ee59d451dfe0afc0eae2414499d"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/font-6.woff",
+      "status": 200,
+      "bytes": 31856,
+      "sha256": "6f24c2c319d0e24692f058e92b4b805aa7112297c11a5010fddf896998f8517f"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/fonts.css",
+      "status": 200,
+      "bytes": 1530,
+      "sha256": "30a06ac10a88f19997eeb89fd1c7ee50acc65b8053bec0f95edd1f296b5a63fb"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/icons.woff2",
+      "status": 200,
+      "bytes": 7508,
+      "sha256": "d5e2b36266211c114bb61c0572453263f100d5da011856ac87d52cb2d36a2ca8"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/literata-OFL.txt",
+      "status": 200,
+      "bytes": 4389,
+      "sha256": "8742963604cd89dc81437811a850018fc03b2bfad686d7422c8235967c87614e"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/material-symbols-LICENSE.txt",
+      "status": 200,
+      "bytes": 11357,
+      "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/missions.png",
+      "status": 200,
+      "bytes": 62822,
+      "sha256": "506a7cc84050be7c2778288241ed6ce744f1d7c9228e6561f4dfe5457146c83d"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/playfairdisplay-OFL.txt",
+      "status": 200,
+      "bytes": 4449,
+      "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/provenance.json",
+      "status": 200,
+      "bytes": 2240,
+      "sha256": "6bc1a7f2770699e02e0105cfdf0481291089a4eb7ea6d29cac71df7725ffa328"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/taverne.png",
+      "status": 200,
+      "bytes": 59015,
+      "sha256": "42bd2ccf28452bb5cef744d454fbb7e03e86b54158737578d2b1d003a161dabd"
+    },
+    {
+      "path": "essai-v6-preview/assets/v6/traverse.png",
+      "status": 200,
+      "bytes": 80007,
+      "sha256": "ee369ba1493c160e326ed9fe402851a959aa1078e0dbe19556b58ecd911c5c05"
+    },
+    {
+      "path": "global-demo.js",
+      "status": 200,
+      "bytes": 20137,
+      "sha256": "914fe8109f1505a27dc449b99dbc59c80d6e800b08f400c01aa38dbe7d783303"
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 465,
+      "sha256": "4c7e1ec6ad03873aea42e948af3ca26a7ee77d60335c2513fe3ba58866325888"
+    },
+    {
+      "path": "review-config.js",
+      "status": 200,
+      "bytes": 5018,
+      "sha256": "082f0feff1f36159d00e85aaede40aab76aef62afa28b2703d3205950ebd38c3"
+    },
+    {
+      "path": "review-manifest.json",
+      "status": 200,
+      "bytes": 79949,
+      "sha256": "1575b76e2f4d271224afb6b293e36920533445ab1d3dae10c5a7d2ec7a105a5e"
+    },
+    {
+      "path": "review-runtime.js",
+      "status": 200,
+      "bytes": 6010,
+      "sha256": "ecef2aa48f35a98bcc44ae4af6413e06bd701e7874e5f84c21b42a1b4aa13748"
+    }
+  ],
+  "result": "PASS"
+}

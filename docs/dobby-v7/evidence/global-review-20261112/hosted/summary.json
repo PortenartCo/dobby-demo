@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/",
+  "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "publicationSha": "bce17c82ef42fefb2790203a19732665f8c8203d",
+  "browser": "156.0.8078.79",
+  "scope": "Real hosted Chromium full journeys; browser-only fictional backend. No real Supabase validation.",
+  "results": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "checks": 12,
+      "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "browserErrors": 0,
+      "consoleErrors": 0,
+      "externalRequests": 0,
+      "networkMutations": 0,
+      "missing": 0,
+      "proof": "verification-320.json"
+    },
+    {
+      "width": 390,
+      "status": "PASS",
+      "checks": 16,
+      "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "browserErrors": 0,
+      "consoleErrors": 0,
+      "externalRequests": 0,
+      "networkMutations": 0,
+      "missing": 0,
+      "proof": "verification-390.json"
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "checks": 12,
+      "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "browserErrors": 0,
+      "consoleErrors": 0,
+      "externalRequests": 0,
+      "networkMutations": 0,
+      "missing": 0,
+      "proof": "verification-1440.json"
+    }
+  ]
+}

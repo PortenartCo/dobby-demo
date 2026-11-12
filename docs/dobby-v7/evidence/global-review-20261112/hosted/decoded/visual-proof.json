@@ -1,0 +1,74 @@
+{
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/",
+  "browser": "156.0.8078.79",
+  "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "note": "Fresh fictional fixtures; screenshots taken after fonts and image decode; functional journeys are in parent folder.",
+  "records": [
+    {
+      "screen": "accueil",
+      "width": 320,
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-stitch-v7/traverse.html?client=A",
+      "images": [
+        {
+          "src": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-v6-preview/assets/v6/traverse.png",
+          "naturalWidth": 512
+        }
+      ]
+    },
+    {
+      "screen": "salon",
+      "width": 320,
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-stitch-v7/famille.html?client=A#salon",
+      "images": [
+        {
+          "src": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-v6-preview/assets/v6/famille.png",
+          "naturalWidth": 512
+        }
+      ]
+    },
+    {
+      "screen": "accueil",
+      "width": 390,
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-stitch-v7/traverse.html?client=A",
+      "images": [
+        {
+          "src": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-v6-preview/assets/v6/traverse.png",
+          "naturalWidth": 512
+        }
+      ]
+    },
+    {
+      "screen": "salon",
+      "width": 390,
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-stitch-v7/famille.html?client=A#salon",
+      "images": [
+        {
+          "src": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-v6-preview/assets/v6/famille.png",
+          "naturalWidth": 512
+        }
+      ]
+    },
+    {
+      "screen": "accueil",
+      "width": 1440,
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-stitch-v7/traverse.html?client=A",
+      "images": [
+        {
+          "src": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-v6-preview/assets/v6/traverse.png",
+          "naturalWidth": 512
+        }
+      ]
+    },
+    {
+      "screen": "salon",
+      "width": 1440,
+      "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-stitch-v7/famille.html?client=A#salon",
+      "images": [
+        {
+          "src": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/essai-v6-preview/assets/v6/famille.png",
+          "naturalWidth": 512
+        }
+      ]
+    }
+  ]
+}

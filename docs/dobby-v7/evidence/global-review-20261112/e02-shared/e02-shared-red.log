@@ -1,0 +1,27 @@
+E02_SHARED_GROCERY_DIAGNOSTIC {"failures":["A direct E02 add before opening Courses must reach the native shared cache","The direct E02 add must reach the shared HTTP fixture","A shared E02 addition must not create a local fallback item","Repeating the E02 command must leave one shared item","Repeating the E02 command must not duplicate the persisted shared item","The Courses answer must use shared cache contents and exclude local preparation","Reloaded E02 must still read the authoritative shared Courses cache","An unavailable shared adapter must not create a success exchange","An unavailable shared adapter must report its failure","An unavailable shared adapter must preserve local preparation and archives"],"shared":["TEST — Courses déjà partagées"],"local":{"extras":["LOCAL SENTINEL","lait TEST E02 PARTAGÉ"],"final":null,"history":{"localArchive":{"items":[{"id":"local-archive-item","name":"TEST — Archive locale","detail":"1","done":true}],"validatedAt":"2026-11-11T10:00:00.000Z","meals":[]}}},"answer":"\nauto_awesome\n\nLa préparation des courses contient 2 article(s) : LOCAL SENTINEL, lait TEST E02 PARTAGÉ.\n\nVoir les coursesÉcouter la réponse\n","reloaded":"\nauto_awesome\n\nLa préparation des courses contient 2 article(s) : LOCAL SENTINEL, lait TEST E02 PARTAGÉ.\n\nVoir les coursesÉcouter la réponse\n"}
+AssertionError [ERR_ASSERTION]: E02 reads and writes the one native shared Courses list
++ actual - expected
+
++ [
++   'A direct E02 add before opening Courses must reach the native shared cache',
++   'The direct E02 add must reach the shared HTTP fixture',
++   'A shared E02 addition must not create a local fallback item',
++   'Repeating the E02 command must leave one shared item',
++   'Repeating the E02 command must not duplicate the persisted shared item',
++   'The Courses answer must use shared cache contents and exclude local preparation',
++   'Reloaded E02 must still read the authoritative shared Courses cache',
++   'An unavailable shared adapter must not create a success exchange',
++   'An unavailable shared adapter must report its failure',
++   'An unavailable shared adapter must preserve local preparation and archives'
++ ]
+- []
+
+    at sharedGroceries (/workspace/dobby-demo/essai-stitch-v7/tests/helpers/e02-shared-groceries.cjs:98:12)
+    at async [stdin]:2:139 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

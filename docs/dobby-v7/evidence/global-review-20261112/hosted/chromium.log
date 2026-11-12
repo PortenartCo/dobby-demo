@@ -1,0 +1,41 @@
+GLOBAL_BROWSER_VERSION 156.0.8078.79
+GLOBAL_CHECK 320 entry, explicit simulation and native clients
+GLOBAL_CHECK 320 E09 create a fictive member through its visible form
+GLOBAL_CHECK 320 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 320 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 320 E05 chosen member profile survives reload and browser history
+GLOBAL_CHECK 320 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 320 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 320 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 320 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 320 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 320 E02 reads and updates the same shared Courses, E06/E08 and navigation remain reachable
+GLOBAL_CHECK 320 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 320 https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/
+GLOBAL_CHECK 390 entry, explicit simulation and native clients
+GLOBAL_CHECK 390 E09 create a fictive member through its visible form
+GLOBAL_CHECK 390 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 390 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 390 E05 chosen member profile survives reload and browser history
+GLOBAL_CHECK 390 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 390 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 390 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 390 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 390 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 390 Two tabs A/B: native grocery, Runes V2 and memo synchronization
+GLOBAL_CHECK 390 E02 reads and updates the same shared Courses, E06/E08 and navigation remain reachable
+GLOBAL_CHECK 390 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 390 https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/
+GLOBAL_CHECK 1440 entry, explicit simulation and native clients
+GLOBAL_CHECK 1440 E09 create a fictive member through its visible form
+GLOBAL_CHECK 1440 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 1440 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 1440 E05 chosen member profile survives reload and browser history
+GLOBAL_CHECK 1440 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 1440 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 1440 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 1440 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 1440 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 1440 E02 reads and updates the same shared Courses, E06/E08 and navigation remain reachable
+GLOBAL_CHECK 1440 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 1440 https://portenartco.github.io/dobby-demo/essai-dobby-v7-global-review-20261112/

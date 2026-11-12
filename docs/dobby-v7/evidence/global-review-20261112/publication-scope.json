@@ -1,0 +1,26 @@
+{
+  "sourceSha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "parent": "9625705ee6650a3e28ab88460839ee425a368edc",
+  "firstPublication": "9625705ee6650a3e28ab88460839ee425a368edc",
+  "onlyPrefix": "essai-dobby-v7-global-review-20261112/",
+  "added": 0,
+  "modified": 2,
+  "deleted": 0,
+  "changedPaths": [
+    "essai-dobby-v7-global-review-20261112/essai-stitch-v7/chat-engine.js",
+    "essai-dobby-v7-global-review-20261112/review-manifest.json"
+  ],
+  "manifestSha256": "1575b76e2f4d271224afb6b293e36920533445ab1d3dae10c5a7d2ec7a105a5e",
+  "stagedScopeVerified": true,
+  "publicationSha": "bce17c82ef42fefb2790203a19732665f8c8203d",
+  "remoteMain": "bce17c82ef42fefb2790203a19732665f8c8203d",
+  "pushed": true,
+  "scopeVerified": true,
+  "initialMain": "9494b897a3895519f87d0bbc4b069dc36701b00e",
+  "totalSinceInitialMain": {
+    "added": 287,
+    "modified": 0,
+    "deleted": 0,
+    "onlyPrefix": "essai-dobby-v7-global-review-20261112/"
+  }
+}

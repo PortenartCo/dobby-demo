@@ -1,0 +1,193 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 130942400748,
+      "run_id": 43145552456,
+      "workflow_name": "Dobby V7 - Stitch functional UI",
+      "head_branch": "feat/dobby-v7-global-review-20261112",
+      "run_url": "https://api.github.com/repos/PortenartCo/dobby-demo/actions/runs/43145552456",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVOx8aM8AAAAefMZ47A",
+      "head_sha": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+      "url": "https://api.github.com/repos/PortenartCo/dobby-demo/actions/jobs/130942400748",
+      "html_url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43145552456/job/130942400748",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-12T03:03:12Z",
+      "started_at": "2026-11-12T03:03:14Z",
+      "completed_at": "2026-11-12T03:21:27Z",
+      "name": "source-backed-browser",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-12T03:03:15Z",
+          "completed_at": "2026-11-12T03:03:16Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-12T03:03:16Z",
+          "completed_at": "2026-11-12T03:03:36Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-12T03:03:36Z",
+          "completed_at": "2026-11-12T03:03:36Z"
+        },
+        {
+          "name": "Verify optional historical campaign reuse",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-12T03:03:36Z",
+          "completed_at": "2026-11-12T03:03:36Z"
+        },
+        {
+          "name": "Exhaustive review registry coverage",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-12T03:03:36Z",
+          "completed_at": "2026-11-12T03:03:37Z"
+        },
+        {
+          "name": "Check V7 JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-12T03:03:37Z",
+          "completed_at": "2026-11-12T03:03:39Z"
+        },
+        {
+          "name": "Existing offline, family and conflict regressions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-12T03:03:39Z",
+          "completed_at": "2026-11-12T03:03:41Z"
+        },
+        {
+          "name": "Integrated preview builder and byte provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-12T03:03:41Z",
+          "completed_at": "2026-11-12T03:03:42Z"
+        },
+        {
+          "name": "E06 exhaustive scoring, identity and draft isolation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-12T03:03:42Z",
+          "completed_at": "2026-11-12T03:03:43Z"
+        },
+        {
+          "name": "Recipe formats, ZIP, E07.4 timers and isolated preview contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-12T03:03:43Z",
+          "completed_at": "2026-11-12T03:03:44Z"
+        },
+        {
+          "name": "Source derivation remains reproducible",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-12T03:03:44Z",
+          "completed_at": "2026-11-12T03:03:48Z"
+        },
+        {
+          "name": "Confirm the original Stitch source manifest",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-12T03:03:48Z",
+          "completed_at": "2026-11-12T03:03:48Z"
+        },
+        {
+          "name": "Browser tooling (tests only)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-12T03:03:48Z",
+          "completed_at": "2026-11-12T03:03:49Z"
+        },
+        {
+          "name": "Functional Stitch roots and source fidelity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-12T03:03:49Z",
+          "completed_at": "2026-11-12T03:19:18Z"
+        },
+        {
+          "name": "Global E01\u2013E09 isolated bundle and native A/B journeys",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-11-12T03:19:18Z",
+          "completed_at": "2026-11-12T03:21:03Z"
+        },
+        {
+          "name": "Keep current global review evidence",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16,
+          "started_at": "2026-11-12T03:21:03Z",
+          "completed_at": "2026-11-12T03:21:03Z"
+        },
+        {
+          "name": "Keep root, Cuisine and Family comparisons (320/390px)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-12T03:21:03Z",
+          "completed_at": "2026-11-12T03:21:23Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-11-12T03:21:23Z",
+          "completed_at": "2026-11-12T03:21:23Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-11-12T03:21:23Z",
+          "completed_at": "2026-11-12T03:21:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-11-12T03:21:24Z",
+          "completed_at": "2026-11-12T03:21:24Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/PortenartCo/dobby-demo/check-runs/130942400748",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000003715,
+      "runner_name": "GitHub Actions 1000003715",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}
