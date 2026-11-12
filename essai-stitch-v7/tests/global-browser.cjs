@@ -57,6 +57,7 @@ async function sync(page) {
 }
 
 async function shot(page, name, width, report, checkChrome = true) {
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.evaluate(() => document.fonts.ready);
   const geometry = await page.evaluate(() => {
     const rect = element => {
@@ -241,6 +242,11 @@ async function runJourney(browser, width) {
       assert.equal(confirmed.length, 1);
       assert.equal(confirmed[0].memberId, member.id);
       assert.equal(confirmed[0].amount, 10);
+      const fixture = await demo(page, 'state');
+      const rpc = fixture.requests.filter(request => request.path.endsWith('/dobby_missions_v2_write'));
+      assert.equal(fixture.modules.missions.payload.runeLedgerVersion, 2);
+      assert.ok(rpc.length, 'The native Runes V2 RPC accepted the confirmed gain');
+      report.runesProtocol = { version: 2, revision: fixture.modules.missions.revision, requests: rpc };
       await page.reload();
       await ready(page);
       await sync(page);
