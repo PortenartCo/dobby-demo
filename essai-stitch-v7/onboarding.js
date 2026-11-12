@@ -10,7 +10,21 @@ window.DobbyOnboarding=(()=>{'use strict';
  function run(task){if(operation)return operation;operation=(async()=>{try{await identityQueue.catch(()=>{});const result=await window.DobbyRegister.lock(task);if(result?.route){for(const node of all('body > main,body > header'))node.inert=true;await c.open(result.route,{person:result.person===undefined?G.drafts.memberId:result.person,record:result.record??null});}else if(result?.traverse)location.href='./traverse.html';}catch(e){c?.notice(e.message);}})().finally(()=>{operation=null;for(const node of all('body > main,body > header'))node.inert=false;});return operation;}
  function nav(d){return{route:d.step,record:['onboarding-house','onboarding-patronus'].includes(d.step)?'q'+d.index:null};}
  async function prepare(view,ui){loadError='';window.DobbyRitual?.dispose();if(view==='onboarding-ritual'){await window.DobbyRitual.prepare(ui);return;}try{await identityQueue.catch(()=>{});await G.load(ui.person||null);if(/^q[0-6]$/.test(ui.record||'')&&['onboarding-house','onboarding-patronus'].includes(view))await G.go(view,Number(ui.record.slice(1)));resumePoint=view==='onboarding-foyer'?await G.drafts.resume():null;}catch(e){loadError=e.message;}}
- function chooser(parent){const group=el('section','','e06-existing');group.append(el('h2',window.DobbyReview?'Les membres de ce foyer fictif':'Membres du registre','font-headline-sm text-headline-sm text-primary'));for(const m of E.read().members){const b=button(m.name,()=>({route:'onboarding-identity',person:m.id}));b.dataset.e06Member=m.id;b.prepend(window.DobbyMemberAvatar.create(m,{className:'mp-small-avatar'}));group.append(b);}group.append(button('Créer un nouveau membre local',()=>({route:'onboarding-identity',person:null})),note(window.DobbyReview?'Ces profils de démonstration restent dans cet aperçu. Ils ne correspondent à aucun compte connecté.':'Un profil de membre ne constitue pas un compte connecté. Les droits parentaux spécifiques ne sont pas représentés par ce registre.'));parent.append(group);}
+ function chooser(parent){const group=el('section','','e06-existing');group.append(el('h2',window.DobbyReview?'Les membres de ce foyer fictif':'Membres du registre','font-headline-sm text-headline-sm text-primary'));for(const m of E.read().members){
+   // Real URLs for the isolated review: profile selection must not depend on stale
+   // asynchronous handlers; the other fictive parent opens the matching A/B persona.
+   if(window.DobbyReview){
+    const u=new URL(location.href),client=m.id==='review-person-b'?'B':m.id==='review-person'?'A':(u.searchParams.get('client')||'A');
+    u.searchParams.set('client',client);
+    u.hash='onboarding-identity?person='+encodeURIComponent(m.id);
+    const link=el('a','','fa-button e06-button');link.href=u.href;link.dataset.e06Member=m.id;
+    link.append(window.DobbyMemberAvatar.create(m,{className:'mp-small-avatar'}),document.createTextNode(m.name));
+    group.append(link);
+   }else{
+    const b=button(m.name,()=>({route:'onboarding-identity',person:m.id}));
+    b.dataset.e06Member=m.id;b.prepend(window.DobbyMemberAvatar.create(m,{className:'mp-small-avatar'}));group.append(b);
+   }
+  }group.append(button('Créer un nouveau membre local',()=>({route:'onboarding-identity',person:null})),note(window.DobbyReview?'Ces profils de démonstration restent dans cet aperçu. Ils ne correspondent à aucun compte connecté.':'Un profil de membre ne constitue pas un compte connecté. Les droits parentaux spécifiques ne sont pas représentés par ce registre.'));parent.append(group);}
  function render(ctx){c=ctx;const main=c.main;if(c.ui.view==='onboarding-ritual'){window.DobbyRitual.render(ctx);return;}main.inert=!!operation;main.dataset.e06Main='true';main.classList.add('e06-main');for(const b of all('button',main)){b.disabled=true;b.dataset.e06Control='true';}for(const a of all('a',main)){a.removeAttribute('href');a.setAttribute('aria-disabled','true');}
   if(loadError){main.replaceChildren(el('h1','Cérémonie momentanément indisponible','font-headline-lg-mobile'),note(loadError),button('Réessayer',()=>({route:c.ui.view,person:c.ui.person})),button('Revenir au registre',()=>({route:'members',person:null})));return;}
   const view=c.ui.view;if(view==='onboarding-foyer')foyer();else if(view==='onboarding-identity')identity();else if(!G.member()){main.replaceChildren(el('h1','Choisissez un membre du foyer','font-headline-lg-mobile'),note('Aucun résultat ne peut être rattaché sans un identifiant du registre.'));chooser(main);}else if(view==='onboarding-house'||view==='onboarding-patronus')question(view.endsWith('house')?'house':'patronus');else if(view==='onboarding-house-result'||view==='onboarding-patronus-result')reveal(view.includes('house')?'house':'patronus');else final();
@@ -31,7 +45,7 @@ window.DobbyOnboarding=(()=>{'use strict';
  function demoFoyer(){
   const scene=el('div','','e06-demo-foyer'),intro=el('section','','e06-demo-intro');
   intro.append(el('p','PREMIERS PAS DANS DOBBY','e06-kicker'),el('h1','Mon foyer magique','font-headline-lg-mobile'),note('Bienvenue dans le foyer de démonstration. Crée ton membre fictif, choisis son portrait et découvre sa Maison et son Patronus.'));
-  const local=button('Créer mon membre de démonstration',()=>({route:'onboarding-identity',person:null}));local.id='e06-local-entry';
+  const local=button('Créer un nouveau profil fictif',()=>({route:'onboarding-identity',person:null}));local.id='e06-local-entry';
   intro.append(local,note('Ce parcours est entièrement fictif et local à cet aperçu : aucune inscription, connexion ou invitation réelle.'));
   scene.append(intro);chooser(scene);
   if(resumePoint&&(resumePoint.memberId===null||E.read().members.some(m=>m.id===resumePoint.memberId))){const resume=button('Reprendre ma cérémonie interrompue',()=>({route:resumePoint.step,person:resumePoint.memberId}));resume.id='e06-resume';scene.append(resume);}
@@ -55,7 +69,14 @@ window.DobbyOnboarding=(()=>{'use strict';
   const linkPanel=q('#existing-profiles-panel');if(linkPanel){linkPanel.hidden=false;linkPanel.classList.remove('hidden');linkPanel.replaceChildren();chooser(linkPanel);}else chooser(c.main.firstElementChild);
   function identityValues(){return{firstName:first.value,lastName:last.value,birthdate:date.value,avatarId:q('[name=e06-avatar]:checked')?.value||''};}
   for(const b of all('main button')){if(/Lier à un membre/.test(b.textContent))bind(b,()=>{linkPanel?.scrollIntoView({block:'center'});});if(/Poursuivre vers le Choixpeau/.test(b.textContent)){b.id='e06-identity-next';bind(b,async()=>{if(!q('#identity-form').reportValidity())return;return nav(await G.identity({...identityValues(),...(legacy?{legacyName:first.value}:{})},c.rememberMember));});}else if(/Passer pour plus tard/.test(b.textContent))bind(b,()=>m?({route:'onboarding-final',person:m.id}):({traverse:true}));else if(/Retour/.test(b.textContent))bind(b,()=>({route:'onboarding-foyer',person:null}));}
-  const rights=E.memberPermissions(m?.id);if(!m||!rights.canEdit){for(const input of all('#identity-form input'))input.disabled=true;const next=q('#e06-identity-next');if(next){next.disabled=true;next.title=rights.reason;}if(!m)c.main.firstElementChild.append(note('Ajoutez d’abord un enfant ou un animal dans le registre familial. Les adultes rejoignent le foyer par invitation.'),c.button('members','Ouvrir les membres'));}
+  const rights=E.memberPermissions(m?.id),demoNew=!m&&!!window.DobbyReview&&rights.canCreate;
+  if(demoNew){c.main.firstElementChild.append(note('Création fictive : ce nouveau membre sera inscrit comme enfant du foyer de démonstration. Pour découvrir le parcours en tant qu’adulte, choisissez Camille ou Alex dans la liste des profils existants.'));}
+  if(!demoNew&&(!m||!rights.canEdit)){
+   for(const input of all('#identity-form input'))input.disabled=true;
+   const next=q('#e06-identity-next');if(next){next.disabled=true;next.title=rights.reason;}
+   c.main.firstElementChild.append(note(m?rights.reason:'La création réelle de compte adulte nécessite le parcours d’invitation du foyer. Les profils fictifs peuvent être créés dans cet aperçu.'));
+   if(!m)c.main.firstElementChild.append(c.button('members','Ouvrir les membres'));
+  }
   const relative=all('main p').find(p=>/Idéal pour les parents/.test(p.textContent));if(relative)relative.textContent='Un compte personnel n’est pas requis pour ce profil du registre. Aucune autorisation parentale spécifique n’est représentée ici.';
   const capture=()=>{const id=G.drafts.memberId,context=JSON.stringify(G.context()),v=identityValues();identityQueue=identityQueue.catch(()=>{}).then(()=>{if(G.drafts.memberId!==id||JSON.stringify(G.context())!==context)throw Error('Le membre ou le contexte du brouillon a changé.');return G.rememberIdentity(v);}).catch(e=>{c.notice('Brouillon non enregistré : '+e.message);throw e;});identityQueue.catch(()=>{});};for(const input of [first,last,date,...all('[name=e06-avatar]')])input.addEventListener(input.type==='radio'?'change':'input',capture);
   q('#identity-form').onsubmit=e=>{e.preventDefault();q('#e06-identity-next')?.click();};if(m)c.main.firstElementChild.append(button('Continuer sans modifier l’identité',async()=>nav(await G.go('onboarding-house',0))));
