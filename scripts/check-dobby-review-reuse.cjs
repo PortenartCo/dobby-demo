@@ -2,7 +2,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),{execFileSync}=require('node:child_process');
 const WORKFLOW='.github/workflows/dobby-stitch-v7.yml',BRANCH='feat/dobby-v7-global-review-20261112',STEP='Functional Stitch roots and source fidelity';
-const ALLOWED=new Set([WORKFLOW,'scripts/check-dobby-review-reuse.cjs','scripts/review/global-demo.js','essai-stitch-v7/tests/global-reset.cjs']);
+const ALLOWED=new Set([WORKFLOW,'scripts/check-dobby-review-reuse.cjs','scripts/review/global-demo.js','essai-stitch-v7/tests/global-reset.cjs','scripts/build-dobby-global-review.cjs','essai-stitch-v7/tests/global-build.test.cjs']);
 const allowed=file=>ALLOWED.has(file)||file.startsWith('docs/dobby-v7/');
 function assertAllowedChanges(changes){
  const rejected=changes.filter(change=>!allowed(change.path));
