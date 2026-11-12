@@ -1,0 +1,29 @@
+✔ preparation templates and event snapshots propagate with existing family fields and unknown metadata intact (26.290627ms)
+✔ offline preparation changes survive reload and reconnect through the native module metadata (8.06435ms)
+✔ a newly initialized client restores preparation arrays omitted by an older fixture from its acknowledged native metadata (8.055766ms)
+✔ native metadata hydration preserves an explicit local preparation deletion (7.675392ms)
+✔ activate, join and activate-all retain distinct offline preparations alongside the remote registry (33.897755ms)
+✔ reactivation merges unchanged remote preparations and local additions by stable ID (7.545085ms)
+✔ divergent preparation reactivation retains local data behind the explicit native conflict chooser (7.444503ms)
+✔ reactivating a locally created event and preparation retains their association behind explicit conflict (4.28383ms)
+✔ remote event deletion cannot detach an offline preparation edit during reactivation (4.999501ms)
+✔ a locally changed associated event is retained when remote metadata diverges during reactivation (7.032261ms)
+✔ fresh remote metadata for the same unchanged local event remains compatible with an offline preparation edit (5.138601ms)
+✔ preparation writes preserve unknown family extensions and tolerate an initially unversioned older payload (5.388878ms)
+✔ choosing an older family copy does not falsely acknowledge a preparation protocol absent on the server (7.913822ms)
+✔ invalid local preparation data cannot be published by initial module activation (4.238421ms)
+✔ unsupported local preparation protocol cannot be downgraded and published during activation (2.262407ms)
+✔ unsupported local preparation protocol retains both copies without writes or an automatic-save exception (7.661241ms)
+✔ unknown preparation protocol blocks the complete family update without altering local records (5.106232ms)
+✔ malformed preparation registries are rejected before any family data is replaced (55.168946ms)
+✔ acknowledged preparations removed by an older peer remain local until explicit recovery (4.645826ms)
+✔ an edit while preparation PATCH is in flight stays local and pending (3.627379ms)
+✔ a concurrent rival preparation update loses CAS without acknowledging or overwriting local changes (2.655862ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1807.855764

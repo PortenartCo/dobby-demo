@@ -1,0 +1,12 @@
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert.ok(await p.locator('#prep-dialog').getAttribute('aria-labelledby'))
+
+    at /workspace/dobby-prep01/essai-stitch-v7/tests/prep-ui.cjs:24:91 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: null,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

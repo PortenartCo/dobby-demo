@@ -57,6 +57,38 @@ window.DobbyCuisineList=(()=>{
   async function add(E,values){const x=valid(values),s=snapshot(E);if(s.shared)return family(E).add({title:x.name,quantity:x.qty,unit:x.unit});
     transaction(E,`st.shopFinal.items.push({...p,id:crypto.randomUUID(),category:categoryOf(p.name),done:false,origin:'Ajout manuel'});`,{...x,detail:detail(x)});
   }
+  // A preparation's stable source token is a receipt, never a product-name match.
+  // Local receipts travel with E07 archives; shared receipts use the native queue.
+  async function addOnce(E,values,token){
+    if(typeof token!=='string'||!token||token.length>500||/[\x00-\x1f]/.test(token))throw Error('Référence de préparation invalide.');
+    if(String(values.unit||'').trim().length>40)throw Error('Unité trop longue (40 caractères maximum).');
+    const x=valid(values),api=E.win().DobbyFamilyUI,grocery=api?.grocery,read=grocery?.read();
+    if(read?.ready===false)throw Error('Les courses sont en cours d’initialisation.');
+    if(api?.getContext?.()&&!read?.context)throw Error('La liste de courses du foyer est indisponible.');
+    const scope=read?.context||'local',identity=()=>{const a=E.win().DobbyFamilyUI,c=a?.connectionState?.();return JSON.stringify({scope:a?.grocery?.read().context||'local',epoch:c?.epoch??null,userId:c?.userId??null,householdId:c?.householdId??null});},guard=identity();
+    if(scope!=='local'){
+      if(x.qty!=null&&Math.abs(x.qty-Math.round(x.qty*100)/100)>1e-9)throw Error('La précision des courses partagées est limitée à deux décimales.');
+      const result=await grocery.importRows([{...x,token,done:false}],scope,{receipt:true});
+      if(identity()!==guard)throw Error('Le compte ou le foyer a changé. Vérifiez les courses avant de réessayer.');
+      const row=result?.receipts?.[0];
+      if(result?.scope!==scope||result.receipts.length!==1||row?.token!==token||typeof row.id!=='string'||!row.id)throw Error('L’enregistrement natif des courses n’a pas été confirmé.');
+      return {scope,id:row.id,token,shared:true,pending:row.syncState==='pending',conflict:row.syncState==='conflict',archived:Boolean(row.deleted_at),checked:Boolean(row.checked)};
+    }
+    return E.evaluate(`const before={state:JSON.parse(JSON.stringify(st)),raw:localStorage.getItem(key)};
+      try{
+        let changed=!st.shopFinal?.e072||Boolean((st.extras||[]).length);
+        const list=st.shopFinal||={items:[],meals:[],validatedAt:new Date().toISOString()};list.id||=crypto.randomUUID();list.meals||=[];list.imports||=[];list.e072=true;
+        for(const item of list.items)item.id||=crypto.randomUUID();
+        for(const name of st.extras||[])list.items.push({id:crypto.randomUUID(),name,detail:'À préciser',qty:null,unit:'',category:categoryOf(name),done:false,origin:'Ajout manuel'});st.extras=[];
+        const receipts=[...list.imports,...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[])],prior=receipts.find(x=>x?.token===p.token),id=prior?.id||('prep-'+encodeURIComponent(p.token));
+        if(!prior){list.items.push({...p.x,id,detail:p.detail,category:categoryOf(p.x.name),done:false,origin:'Préparation',provenance:[p.token]});list.imports.push({token:p.token,id,qty:p.x.qty,unit:p.x.unit,kind:'preparation'});changed=true;}
+        if(changed){save();render();}
+        const stored=JSON.parse(localStorage.getItem(key)||'{}'),durable=[...(stored.shopFinal?.imports||[]),...Object.values(stored.shopHistory||{}).flatMap(x=>x.imports||[])].some(x=>x?.token===p.token&&x.id===id);
+        if(!durable)throw Error('L’enregistrement natif des courses n’a pas été confirmé.');
+        const item=list.items.find(x=>x.id===id),archived=Object.values(st.shopHistory||{}).flatMap(x=>x.items||[]).find(x=>x.id===id);
+        return {scope:'local',id,token:p.token,shared:false,pending:false,conflict:false,archived:Boolean(prior&&!item),checked:Boolean(item?.done||archived?.done)};
+      }catch(error){st=before.state;let restored=false;try{if(before.raw===null)localStorage.removeItem(key);else localStorage.setItem(key,before.raw);restored=localStorage.getItem(key)===before.raw;}catch{}if(!restored)throw Error('La restauration des courses n’a pas pu être confirmée. Rechargez avant de réessayer.');throw error;}`,{x,token,detail:detail(x)});
+  }
   function assertExpected(item,expected){if(expected&&JSON.stringify(expected.sources)!==JSON.stringify(item.sources))throw Error('L’article a changé. Ouvrez un nouveau récapitulatif.');}
   async function edit(E,id,values,expected){const x=valid(values),s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
     const compatible=norm(item.name)===norm(x.name)&&measure(item).unit===measure(x).unit,factor=compatible?measure({qty:1,unit:item.unit}).qty/measure({qty:1,unit:x.unit}).qty:null;
@@ -175,5 +207,5 @@ window.DobbyCuisineList=(()=>{
     transaction(E,clearSession,{preserveLegacy:s.shared,items:done.map(x=>({homeKey:homeKey(x),productKey:keyOf(x)}))});
     return done.length;
   }
-  return Object.freeze({snapshot,add,edit,remove,check,home,preview,confirmImport,transfer,archive,reuse,detail});
+  return Object.freeze({snapshot,add,addOnce,edit,remove,check,home,preview,confirmImport,transfer,archive,reuse,detail});
 })();

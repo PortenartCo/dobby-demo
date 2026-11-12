@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-12",
+  "sourceState": "verified-working-tree; hashes identify exact files",
+  "base": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "realBackend": false,
+  "publication": false,
+  "migrations": false,
+  "checks": [
+    {
+      "name": "baseline-node",
+      "command": "node --test essai-stitch-v5-famille/tests/family-core.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs essai-stitch-v7/tests/e09-memo-writer.test.cjs",
+      "source": "5b764ef367553e9945fb72a6b563b55adc41e040",
+      "passed": 13,
+      "failed": 0,
+      "log": "logs/baseline-node.log"
+    },
+    {
+      "name": "prep-final",
+      "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 npm run test:prep --prefix essai-stitch-v7/tests",
+      "nodePassed": 50,
+      "failed": 0,
+      "browserWidths": [
+        320,
+        390,
+        1440
+      ],
+      "unknownProtocol": true,
+      "httpFixtureAB": true,
+      "log": "logs/prep-final.log"
+    },
+    {
+      "name": "native-final",
+      "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node --test essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs",
+      "passed": 232,
+      "failed": 0,
+      "log": "logs/native-final.log"
+    },
+    {
+      "name": "e07-node",
+      "command": "node --test essai-stitch-v7/tests/e07-p02-model.test.cjs essai-stitch-v7/tests/e07-p02-home-core.test.mjs",
+      "passed": 20,
+      "failed": 0,
+      "log": "logs/e07-node-final.log"
+    },
+    {
+      "name": "e07-browser",
+      "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 DOBBY_E072_EVIDENCE=/workspace/scratch/prep01-evidence/e07-browser node essai-stitch-v7/tests/e07-p02-family.cjs",
+      "status": "PASS",
+      "note": "The script uses DOBBY_E07_EVIDENCE, not the supplied unused variable; its three new 390px captures were moved from the legacy evidence directory to e07-browser and legacy tracked files restored. No legacy evidence is changed.",
+      "log": "logs/e07-browser-final.log"
+    },
+    {
+      "name": "e01-browser",
+      "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 DOBBY_E01_EVIDENCE_DIR=/workspace/scratch/prep01-evidence/e01 node essai-stitch-v7/tests/e01.cjs",
+      "status": "PASS",
+      "widths": [
+        390,
+        1440
+      ],
+      "log": "logs/e01.log"
+    },
+    {
+      "name": "agenda-memos-browser",
+      "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 DOBBY_FAM_EVIDENCE=/workspace/scratch/prep01-evidence/regression-family node essai-stitch-v7/tests/fam-agenda-memos.cjs",
+      "status": "PASS",
+      "widths": [
+        320,
+        390,
+        1440
+      ],
+      "log": "logs/regression-agenda-memos.log"
+    },
+    {
+      "name": "source-build",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund && node build-source.cjs && npm run build:css",
+      "cwd": "essai-stitch-v7",
+      "status": "PASS",
+      "logs": [
+        "logs/source-build.log",
+        "logs/css-build.log"
+      ]
+    }
+  ]
+}

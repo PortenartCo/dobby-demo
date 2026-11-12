@@ -9,9 +9,11 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4/FAM native extensions', () => {
+test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4/FAM/PREP native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html');
   const preview=source('../index.html');
+  const preparationScript='<script src="./family-preparations.js"></script>';
+  assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs
   // verifies its preservation, validation and atomic failure behavior.
   const originalMemberWriter=original.match(/  const member=\{id:existing\?\.id\|\|xuid\(\),name,[\s\S]*?st\.v23HealthMemberId=member\.id;v23MemberEdit=null;save\(\);render\(\);return;/)?.[0];
@@ -21,7 +23,7 @@ test('preview V5 source matches original except isolated storage and explicitly 
   // pinned to the immutable starting commit; no function or module is skipped.
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
-  let familyNormalized=preview;
+  let familyNormalized=preview.replace(preparationScript,'');
   for(const amendment of [...fam.patches].reverse()){
     assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact FAM amendment occurs once: '+amendment.label);
     familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
@@ -129,7 +131,7 @@ test('preview denies cross-household browser reuse and drops unauthorized sessio
 
 
 test('family events and selected medical visits share the household without uploading private famHealth',()=>{
-  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes'\]/);
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes','familyPreparationTemplates','familyEventPreparations'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
 });
 
@@ -153,7 +155,7 @@ test('binary file uploads do not use the JSON modules API',()=>{
 });
 
 test('shared health visits do not automatically upload previous local health records',()=>{
-  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes'\]/);
+  assert.match(modules,/keys:\['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes','familyPreparationTemplates','familyEventPreparations'\]/);
   assert.doesNotMatch(modules,/keys:\[[^\]]*'famHealth'/);
   const health=source('../family-health.js');
   assert.match(health,/sharedHealthVisits/);

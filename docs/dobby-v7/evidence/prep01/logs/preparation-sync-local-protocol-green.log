@@ -1,0 +1,25 @@
+✔ preparation templates and event snapshots propagate with existing family fields and unknown metadata intact (15.389774ms)
+✔ offline preparation changes survive reload and reconnect through the native module metadata (4.787881ms)
+✔ a newly initialized client restores preparation arrays omitted by an older fixture from its acknowledged native metadata (5.514419ms)
+✔ native metadata hydration preserves an explicit local preparation deletion (4.393125ms)
+✔ activate, join and activate-all retain distinct offline preparations alongside the remote registry (20.409345ms)
+✔ reactivation merges unchanged remote preparations and local additions by stable ID (5.028394ms)
+✔ divergent preparation reactivation retains local data behind the explicit native conflict chooser (5.617835ms)
+✔ preparation writes preserve unknown family extensions and tolerate an initially unversioned older payload (4.109897ms)
+✔ choosing an older family copy does not falsely acknowledge a preparation protocol absent on the server (4.381727ms)
+✔ invalid local preparation data cannot be published by initial module activation (1.566857ms)
+✔ unsupported local preparation protocol cannot be downgraded and published during activation (1.241395ms)
+✔ unsupported local preparation protocol retains both copies without writes or an automatic-save exception (3.891778ms)
+✔ unknown preparation protocol blocks the complete family update without altering local records (2.394126ms)
+✔ malformed preparation registries are rejected before any family data is replaced (28.065809ms)
+✔ acknowledged preparations removed by an older peer remain local until explicit recovery (4.510382ms)
+✔ an edit while preparation PATCH is in flight stays local and pending (4.515851ms)
+✔ a concurrent rival preparation update loses CAS without acknowledging or overwriting local changes (2.755792ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1674.229241

@@ -24,6 +24,7 @@ window.DobbyFamilyAgendaReview=(()=>{
   const panel=dialog(c,event.title);panel.dataset.famEventRead='';const details=node('dl',undefined,'fam-review-details');
   for(const [label,value]of [['Date',labelDate(event.date)],['Heure',event.time],['Catégorie',event.category],['Personne / groupe',event.person],['Lieu',event.location]])if(value)details.append(node('dt',label),node('dd',value));
   panel.append(details);if(event.note)panel.append(node('p',event.note,'fam-review-body'));
+  try{if(window.DobbyPreparations?.read().eventPreparations.some(row=>row.eventId===id))panel.append(primary(c.button('prep-event-open','Préparatifs de cet événement',{record:id})));}catch(error){panel.append(node('p','Préparatifs indisponibles : '+error.message));}
   panel.append(row(c,primary(c.button('event-edit','Modifier',{record:id})),c.button('event-delete','Supprimer',{record:id}),c.button('event-export','Exporter (.ics)',{record:id})),c.button('dialog-close','Retour'));
   panel.querySelector('button')?.focus();
  }
@@ -44,6 +45,7 @@ window.DobbyFamilyAgendaReview=(()=>{
   }
   if(!id&&!values&&c.ui.day)form.elements.namedItem('date').value=c.ui.day;
   const people=node('datalist');people.id='fa-event-people';for(const member of E.read().members)people.append(new Option(member.name,member.name));form.append(people);form.elements.namedItem('person').setAttribute('list',people.id);
+  window.DobbyPreparations?.association(form,event);
   const save=node('button',id?'Enregistrer les modifications':'Enregistrer l’événement','fa-button fam-review-primary');save.type='submit';
   form.append(row(c,save,c.button('dialog-close','Annuler')));panel.append(form);form.querySelector('input:not([type="hidden"])')?.focus();
  }

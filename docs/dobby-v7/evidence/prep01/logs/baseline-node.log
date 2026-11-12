@@ -1,0 +1,21 @@
+✔ create and CAS transition (1.484582ms)
+✔ offline edit is pending until remote acknowledges (0.760268ms)
+✔ independent updates never silently overwrite (0.265311ms)
+✔ unknown quantity is not silently converted into 0 or 1 (0.394145ms)
+✔ logical deletion preserved (0.485383ms)
+✔ new stable memo identity persists on edit, delete never touches legacy records (6.488169ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (2.897476ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (5.000152ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (2.569851ms)
+✔ required and bounded fields and missing legacy import never create records (3.989256ms)
+✔ Family integration preserves the latest E02, Courses, native Runes and global isolation runtime bytes (3.135435ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (1.78058ms)
+✔ E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical (3.477212ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.288208

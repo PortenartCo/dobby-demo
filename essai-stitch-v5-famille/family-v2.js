@@ -730,23 +730,37 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
       }
       return result;
     },
-    async importRows(rows,context) {
+    async importRows(rows,context,options={}) {
       if(!f.context||f.context!==context)throw Error('Le foyer a changé. Vérifiez le récapitulatif.');
+      const epoch=f.epoch,householdId=f.householdId,receipts=[];
+      const guard=()=>{if(f.epoch!==epoch||f.context!==context||f.householdId!==householdId)throw Error('Le foyer a changé.');};
       let added=0;
       for(const row of rows){
-        if(f.context!==context)throw Error('Le foyer a changé.');
-        const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token);
+        guard();
+        const id=await deterministicUuid('dobby-e072|'+householdId+'|'+row.token);
+        guard();
         // Include tombstones: repeating an already archived import is not a new purchase.
         const current=getItem(id);
         if(row.mode==='update'){
           if(!current||current.syncState==='conflict'||!f.core.sameFields(current,row.expected))throw Error('L’article a changé. Vérifiez un nouveau récapitulatif.');
-          await change(id,{quantity:validQuantity(row.qty)});added++;continue;
+          await change(id,{quantity:validQuantity(row.qty)});guard();added++;
+          receipts.push({...getItem(id),token:row.token});continue;
         }
-        if(current)continue;
-        await add(row.name,validQuantity(row.qty),row.unit,id,Boolean(row.done),id);added++;
+        let receipt,inserted=false;
+        // Read the latest durable row inside the existing native transaction.
+        // Another tab's pending item or tombstone must not be overwritten.
+        await updateItem(id,latest=>{
+          if(latest){receipt=latest;return null;}
+          const title=String(row.name||'').trim();if(!title||title.length>200)throw Error('Nom de l’article invalide');
+          receipt=f.core.newLocal(id,title,validQuantity(row.qty),String(row.unit||'').trim().slice(0,40),now());
+          receipt.checked=Boolean(row.done);receipt.import_source_id=id;
+          if(f.homeSupported===true)receipt.at_home_quantity=0;
+          inserted=true;return receipt;
+        },epoch,context);
+        guard();f.cache.set(id,receipt);receipts.push({...receipt,token:row.token});if(inserted)added++;
       }
-      if(added)void sync();
-      return added;
+      if(added){repaint();void sync();}
+      return options.receipt?{scope:context,added,receipts}:added;
     },
     resolve: choose, sync
   }),

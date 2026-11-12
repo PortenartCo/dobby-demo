@@ -2,7 +2,7 @@
 window.DobbyFamilyStitch=(()=>{
  'use strict';
  const E=window.DobbyFamilyStitchEngine,routes=['member-detail','members','member-edit','agenda','medical-edit','health','health-person','health-history'];
- const handles=view=>routes.includes(view)||window.DobbyRegister?.handles(view)||window.DobbyOnboarding?.handles(view);
+ const handles=view=>routes.includes(view)||window.DobbyRegister?.handles(view)||window.DobbyOnboarding?.handles(view)||window.DobbyPreparations?.handles(view);
  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
  const ui={view:'salon',person:null,record:null,scope:'local',query:'',memberDraft:null,visitDraft:null,day:null,origin:'salon',memberOrigin:'salon',memoMode:'edit'},cache=new Map();
  let ready=false,busy=false,revision=0,pristine,rootMain,rootHeader,legacy,dialogDraft=null,formContext=null;
@@ -48,7 +48,7 @@ window.DobbyFamilyStitch=(()=>{
   if(!$('main h1')){const h=$('main h2');if(h){const h1=document.createElement('h1');h1.className=h.className;h1.append(...h.childNodes);h.replaceWith(h1);}else{$('main').prepend(Object.assign(document.createElement('h1'),{textContent:({'member-edit':'Fiche du membre','medical-edit':'Consultation & soins'})[ui.view]||'Famille',className:'fa-title'}));}}
   const visibleMain=$('body > main'),headerHeight=$('body > header')?.getBoundingClientRect().height||0;if(visibleMain&&parseFloat(getComputedStyle(visibleMain).paddingTop)<headerHeight)visibleMain.style.paddingTop=headerHeight+'px';
   if(!['salon','contracts','agenda','memos','memo-edit'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}
-  for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl)unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');
+  for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl&&!b.closest('.prep-main'))unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');
  }
  function gateMedicalUI(){
   if(!E.visitPermissions)return;
@@ -83,6 +83,7 @@ window.DobbyFamilyStitch=(()=>{
    notes.append(paragraph('Mémos du module Famille · '+data.status,'e09-subtitle'));if((data.state.familyNotes||[]).length||rows.length>3)notes.append(button('memos','Tous les mémos et anciens mémos locaux'));
   }
   heading('Archives & Accès Rapides')?.closest('section')?.remove();
+  const preparations=context('Listes de préparation');preparations.append(paragraph('Vos modèles réutilisables et les préparatifs de vos événements.'),button('preparation-models','Mes modèles',{record:''}));$('main').append(preparations);
  }
  function renderMembers(data){return window.DobbyFamilyMembersReview.renderMembers(familyContext(data));}
  function renderMemberEdit(data){const saved=formDrafts.get(draftKey('member-edit')),baseline=saved?.memberBaseline||ui.memberBaseline||JSON.stringify(data.members.find(row=>row.id===ui.person)||null);ui.memberBaseline=baseline;window.DobbyFamilyMembersReview.renderMemberEdit(familyContext(data));const form=$('#member-form');if(form)form.dataset.memberBaseline=baseline;}
@@ -155,12 +156,12 @@ window.DobbyFamilyStitch=(()=>{
  async function render(view=ui.view,restoreDraft=true,capture=true){
   const previous=mountedDraft;if(capture)captureDraft();
   const rev=++revision,data=E.read();ui.view=view;delete document.body.dataset.registerLot;
-  let doc;if(['salon','member-detail'].includes(view)){doc=null;}else doc=await template(view);if(window.DobbyRegister?.handles(view))await window.DobbyRegister.prepare(view);if(window.DobbyOnboarding?.handles(view))await window.DobbyOnboarding.prepare(view,{...ui});if(rev!==revision)return;
+  let doc;if(['salon','member-detail'].includes(view)||window.DobbyPreparations?.handles(view)){doc=null;}else doc=await template(view);if(window.DobbyRegister?.handles(view))await window.DobbyRegister.prepare(view);if(window.DobbyOnboarding?.handles(view))await window.DobbyOnboarding.prepare(view,{...ui});if(rev!==revision)return;
   $('#fa-source-style')?.remove();$('#fa-supplement')?.remove();$('#fa-dialog')?.remove();
   let main,header;if(!doc){main=rootMain.cloneNode(true);header=rootHeader.cloneNode(true);}else{pristine=doc;main=document.importNode(doc.querySelector('main'),true);header=doc.querySelector('body > header')?.cloneNode(true);const style=document.createElement('style');style.id='fa-source-style';style.textContent=[...doc.querySelectorAll('head style')].map(x=>x.textContent).join('\n');document.head.append(style);const supplement=document.createElement('div');supplement.id='fa-supplement';for(const node of doc.body.children)if(!node.matches('main,header,nav,script'))supplement.append(document.importNode(node,true));document.body.append(supplement);}
   if(['members','member-edit','member-detail','agenda','memos','memo-edit'].includes(view))header=rootHeader.cloneNode(true);
   $('main').replaceWith(main);if(header)$('body > header')?.replaceWith(header);document.body.dataset.familyView=view;document.body.dataset.stitchSource=doc?.body.dataset.stitchSource||'dobby_le_salon_des_curiosit_s_famille_organisation';main.classList.add('fa-enter');
-  if(view==='salon'){window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail')window.DobbyFamilyMemberDetail.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);
+  if(view==='salon'){window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail')window.DobbyFamilyMemberDetail.render(familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);
   if(['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!window.DobbyOnboarding?.handles(view))shell(data);window.DobbyChrome?.mount();window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=['member-edit','medical-edit'].includes(view)?availability(data):null;main.style.visibility='visible';document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);
  }
  async function open(view,values={},history=true){if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();const requested=view;
@@ -172,7 +173,7 @@ window.DobbyFamilyStitch=(()=>{
    if(['member-edit','health-person'].includes(view)&&ui.person&&!data.members.some(x=>x.id===ui.person)){ui.person=null;view='members';notice('Cette personne n’est plus dans le registre.');}
    if(view==='personal'&&!values.person&&values.person!==undefined)ui.person=null;
    if(view==='medical-edit'&&ui.record&&!data[ui.scope==='shared'?'shared':'local'].some(r=>r.id===ui.record)){ui.record=null;ui.visitDraft=null;view=data.members.some(m=>m.id===ui.person)?'health-person':'members';notice('Ce rendez-vous n’existe plus. Le registre est conservé.');}
-   dialogDraft=null;const routeParams=new URLSearchParams();if(ui.person){routeParams.set('person',ui.person);routeParams.set('memberOrigin',ui.memberOrigin);}if(view==='member-edit'&&ui.memberNew)routeParams.set('mode','new');if(ui.record&&(view==='medical-edit'||window.DobbyRegister?.handles(view))){routeParams.set('record',ui.record);routeParams.set('scope',ui.scope);}routeParams.set('origin',view==='member-detail'?ui.memberOrigin:ui.origin);if(view==='memo-edit')routeParams.set('mode',ui.memoMode);if(ui.day&&view==='agenda')routeParams.set('day',ui.day);const hash='#'+view+(routeParams.size?'?'+routeParams:'');if(history)window.history.pushState({},'',hash);else if(view!==requested)window.history.replaceState({},'',hash);if(!history){if(view==='member-edit')ui.memberDraft=null;if(view==='medical-edit')ui.visitDraft=null;}await render(view,!history,false);if(values.eventNew)showDialog('event',values.eventId);window.scrollTo(0,0);return true;
+   dialogDraft=null;const routeParams=new URLSearchParams();if(ui.person){routeParams.set('person',ui.person);routeParams.set('memberOrigin',ui.memberOrigin);}if(view==='member-edit'&&ui.memberNew)routeParams.set('mode','new');if(ui.record&&(view==='medical-edit'||window.DobbyRegister?.handles(view)||window.DobbyPreparations?.handles(view))){routeParams.set('record',ui.record);routeParams.set('scope',ui.scope);}routeParams.set('origin',view==='member-detail'?ui.memberOrigin:ui.origin);if(view==='memo-edit')routeParams.set('mode',ui.memoMode);if(ui.day&&view==='agenda')routeParams.set('day',ui.day);const hash='#'+view+(routeParams.size?'?'+routeParams:'');if(history)window.history.pushState({},'',hash);else if(view!==requested)window.history.replaceState({},'',hash);if(!history){if(view==='member-edit')ui.memberDraft=null;if(view==='medical-edit')ui.visitDraft=null;}await render(view,!history,false);if(values.eventNew)showDialog('event',values.eventId);window.scrollTo(0,0);return true;
   }finally{busy=false;}
  }
  function memberDraft(){return window.DobbyFamilyMembersReview.memberDraft(familyContext());}
@@ -188,9 +189,11 @@ window.DobbyFamilyStitch=(()=>{
   if(action==='contacts')return open('contacts',{record:null});
   if(ui.view==='salon'&&action==='rg-memo-new')return open('memo-edit',{record:null,scope:'shared',origin:'salon',mode:'new'});
   if(ui.view==='salon'&&action==='rg-memo-edit')return open('memo-edit',{record:el.dataset.record,scope:'shared',origin:'salon',mode:'read'});
+  if(action.startsWith('prep-'))return window.DobbyPreparations.action(familyContext(),action,el);
   if(action.startsWith('rg-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});
   if(action==='back'&&$('#fa-dialog')?.dataset.famEvent!==undefined)return window.DobbyFamilyAgendaReview.closeEvent(agendaContext());
   if(action==='back'&&ui.view==='health-person'&&ui.origin==='member-detail')return open('member-detail',{person:ui.person,origin:ui.memberOrigin});
+  if(action==='back'&&window.DobbyPreparations?.handles(ui.view))return window.DobbyPreparations.action(familyContext(),ui.view==='preparation-event'?'prep-event-back':ui.view==='preparation-model'?'prep-cancel':'prep-family-back',el);
   if(action==='back'){if(window.DobbyRegister?.handles(ui.view))return window.DobbyRegister.back();if(ui.view==='salon')return legacy('home');return open(ui.view==='member-edit'?'members':ui.view==='medical-edit'?'health-person':'salon');}
   if(action==='legacy'){if(handles(el.dataset.route))return open(el.dataset.route,{record:null});return legacy(el.dataset.route);}
   if(['account','menu','documents','home'].includes(action)){if(ui.view==='member-edit')ui.memberDraft=memberDraft();if(ui.view==='medical-edit')ui.visitDraft=visitDraft();return legacy(action);}
@@ -198,7 +201,7 @@ window.DobbyFamilyStitch=(()=>{
  }
  async function refresh(){
   if(window.DobbyOnboarding?.handles(ui.view)){window.DobbyOnboarding.refresh();return;}
-  if(!ready||busy||dialogDraft||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
+  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
   const form=['member-edit','medical-edit'].includes(ui.view);let focus;
   if(form){if(availability(data)===formContext)return;const field=document.activeElement;if(field?.matches('input,textarea,select'))focus={id:field.id,start:field.selectionStart,end:field.selectionEnd};if(ui.view==='member-edit')ui.memberDraft=memberDraft();else ui.visitDraft=visitDraft();}
   else if(document.activeElement?.matches('input,textarea,select'))return;

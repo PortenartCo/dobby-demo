@@ -1,0 +1,63 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /incompatible/. Input:
+
+'\n' +
+  '\n' +
+  '\n' +
+  '  \n' +
+  '  \n' +
+  '    \n' +
+  '    \n' +
+  '    \n' +
+  '    \n' +
+  '    \n' +
+  '      auto_awesome\n' +
+  '      Cabinet des Curiosités\n' +
+  '    \n' +
+  '    \n' +
+  '    \n' +
+  '      \n' +
+  '      Cheminée allumée\n' +
+  '    \n' +
+  '  \n' +
+  '\n' +
+  '  \n' +
+  '  \n' +
+  '    \n' +
+  '    \n' +
+  '      auto_awesome\n' +
+  '      Famille & Synchronisation\n' +
+  '      auto_awesome\n' +
+  '    \n' +
+  '    \n' +
+  '    Le Salon des Curiosités\n' +
+  '    \n' +
+  '    \n' +
+  '      \n' +
+  '        « L’horloge enchantée veille sur chacun des vôtres ! Que ce soit à l’école, au travail ou en chemin, Dobby garde un œil bienveillant sur la maisonnée. »\n' +
+  '      \n' +
+  '      \n' +
+  '        — Note manuscrite de Dobby 📜\n' +
+  '      \n' +
+  '    \n' +
+  '    \n' +
+  '    calendar_add_onProgrammer un rituel ou événement\n' +
+  '  \n' +
+  '\n' +
+  '\n' +
+  'L’Horloge EnchantéeGérer les membresAucun membre du foyer enregistré.\n' +
+  '\n' +
+  'La Gazette & Agenda RituelAjouter un événementAucun événement partagé à venir.\n' +
+  '\n' +
+  'La Volière aux MessagesAucun mémo familial enregistré.\n' +
+  '\n' +
+  'Archives & Accès RapidesDocuments (0)Maison (0)Contacts (0)Listes (0)\n' +
+  '\n'
+
+    at /workspace/dobby-prep01/essai-stitch-v7/tests/prep-invalid.cjs:5:777 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '\n\n\n  \n  \n    \n    \n    \n    \n    \n...',
+  expected: /incompatible/,
+  operator: 'match',
+  diff: 'simple'
+}
