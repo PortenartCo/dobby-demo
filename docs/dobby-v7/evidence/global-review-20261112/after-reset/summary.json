@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "scope": "Local full normal-flow campaign after complete reset; before the targeted interruption recovery fix404c5cd. Final hosted campaign required.",
+  "results": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "sourceSha": "a8ef0d30af55f26db3e748071841aedf91ee07f1",
+      "checks": [
+        "entry, explicit simulation and native clients",
+        "E09 create a fictive member through its visible form",
+        "E03/E04 create, assign and persist a native mission",
+        "E01 completion confirms exactly one Runes V2 gain",
+        "E05 chosen member profile survives reload and browser history",
+        "E07 plan an existing recipe in the real Midi slot",
+        "E07 one shared Courses list imports ingredients without duplicates",
+        "E07 availability persists in the native shared grocery row",
+        "E09 create and retrieve an ordinary family event",
+        "E09 create and retrieve a shared family memo",
+        "E02, E06 and E08 remain reachable, dock and browser navigation work",
+        "Visible reset clears only this demo and refreshes other open tabs"
+      ],
+      "externalRequests": [],
+      "networkMutations": [],
+      "errors": [],
+      "proof": "verification-320.json"
+    },
+    {
+      "width": 390,
+      "status": "PASS",
+      "sourceSha": "a8ef0d30af55f26db3e748071841aedf91ee07f1",
+      "checks": [
+        "entry, explicit simulation and native clients",
+        "E09 create a fictive member through its visible form",
+        "E03/E04 create, assign and persist a native mission",
+        "E01 completion confirms exactly one Runes V2 gain",
+        "E05 chosen member profile survives reload and browser history",
+        "E07 plan an existing recipe in the real Midi slot",
+        "E07 one shared Courses list imports ingredients without duplicates",
+        "E07 availability persists in the native shared grocery row",
+        "E09 create and retrieve an ordinary family event",
+        "E09 create and retrieve a shared family memo",
+        "Offline memo remains pending through reload and reaches B only after reconnect",
+        "Stale grocery CAS is explicit and visible native server resolution converges A/B",
+        "B identity is retained across reload and queryless navigation",
+        "Two tabs A/B: native grocery, Runes V2 and memo synchronization",
+        "E02, E06 and E08 remain reachable, dock and browser navigation work",
+        "Visible reset clears only this demo and refreshes other open tabs"
+      ],
+      "externalRequests": [],
+      "networkMutations": [],
+      "errors": [],
+      "proof": "verification-390.json"
+    },
+    {
+      "width": 1440,
+      "status": "PASS",
+      "sourceSha": "a8ef0d30af55f26db3e748071841aedf91ee07f1",
+      "checks": [
+        "entry, explicit simulation and native clients",
+        "E09 create a fictive member through its visible form",
+        "E03/E04 create, assign and persist a native mission",
+        "E01 completion confirms exactly one Runes V2 gain",
+        "E05 chosen member profile survives reload and browser history",
+        "E07 plan an existing recipe in the real Midi slot",
+        "E07 one shared Courses list imports ingredients without duplicates",
+        "E07 availability persists in the native shared grocery row",
+        "E09 create and retrieve an ordinary family event",
+        "E09 create and retrieve a shared family memo",
+        "E02, E06 and E08 remain reachable, dock and browser navigation work",
+        "Visible reset clears only this demo and refreshes other open tabs"
+      ],
+      "externalRequests": [],
+      "networkMutations": [],
+      "errors": [],
+      "proof": "verification-1440.json"
+    }
+  ]
+}
