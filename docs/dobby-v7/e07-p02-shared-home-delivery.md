@@ -34,3 +34,9 @@ SQL et procédure : `sql-proposals/dobby-v2-grocery-shared-home.sql` et `e07-p02
 Le nouveau générateur `scripts/build-dobby-shared-home-review.cjs` réutilise E07.4 et produit un aperçu avec espaces A/B distincts, backend HTTP simulé dans le navigateur, révisions CAS et stockage fictif partagé. Les actions passent par le client/cœur/writer natifs. Aucune requête vers le backend réel. Le manifeste identifie les transformations propres à la simulation et le statut `proposed-not-applied` de la migration.
 
 GitHub Pages est actuellement configuré sur `main` (mode legacy). Publier un nouveau répertoire Pages nécessiterait donc une exception explicite à l’interdiction de modifier les autres branches. Le bundle local autonome reste préparé et testé ; aucune fusion dans `main` ni modification d’un ancien aperçu n’est faite sans cette exception.
+
+## Résultat livré
+
+Commit source : `a60632d20f8951d37352de4c37d063c1667e0fe1`, poussé sur la branche Courses. Paquet autonome : `/workspace/scratch/dobby-e07-p02-shared-home-a60632d.zip`. Aperçu local vérifié : `http://127.0.0.1:8766/essai-dobby-e07-p02-shared-home-a60632d/` (ouvrir A et B dans le même navigateur). Le manifeste est `committed`, toutes les empreintes des 279 entrées sont valides, et le répertoire contient 284 fichiers. Le test d’aperçu inclut le maintien du client B en navigation, la réinitialisation des deux caches et l’absence de trafic externe. Preuve : `evidence/e07-p02-shared-home/preview/verification.json`.
+
+Tests finaux : 25 modèle/cœur + 13 contrats natifs V2 ; scénario dédié de course IndexedDB ; 10 points du scénario HTTP à deux utilisateurs ; aperçu A/B vérifié depuis le commit poussé ; reprise des effets conservée. Aucun autre module UI ni ancien aperçu modifié. La synchronisation sur deux comptes Supabase réels demeure non vérifiée (schéma inaccessible et migration non appliquée).

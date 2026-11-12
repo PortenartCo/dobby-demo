@@ -1,0 +1,116 @@
+{
+  "base": "http://127.0.0.1:8766/essai-dobby-e07-p02-shared-home-a60632d/",
+  "realBackend": false,
+  "simulation": "browser-only HTTP fixture",
+  "checks": [
+    "Independent native A/B clients see one simulated household grocery list",
+    "A declares 300 g available; B reads 200 g remaining through native sync",
+    "Client B retains its isolated identity and shared availability after reload",
+    "Navigation without a client query retains B and restores its explicit URL identity",
+    "B clears availability; A returns to 500 g to buy with a newer native revision",
+    "Visible reset reloads A/B, removes added shared rows and clears both native caches",
+    "Raw unrelated data stays intact; external traffic and browser network writes stay absent"
+  ],
+  "status": "PASS",
+  "version": "E07-P02-SHARED-HOME",
+  "sourceSha": "a60632d20f8951d37352de4c37d063c1667e0fe1",
+  "contexts": [
+    {
+      "householdId": "00000000-0000-4000-8000-000000000010",
+      "userId": "00000000-0000-4000-8000-000000000001"
+    },
+    {
+      "householdId": "00000000-0000-4000-8000-000000000010",
+      "userId": "00000000-0000-4000-8000-000000000002"
+    }
+  ],
+  "nativeInitial": {
+    "id": "00000000-0000-4000-8000-000000000100",
+    "household_id": "00000000-0000-4000-8000-000000000010",
+    "title": "Carottes",
+    "quantity": 500,
+    "unit": "g",
+    "at_home_quantity": 0,
+    "checked": false,
+    "deleted_at": null,
+    "import_source_id": null,
+    "created_at": "2026-11-12T00:00:00.000Z",
+    "updated_at": "2026-11-12T00:00:00.000Z",
+    "revision": 1
+  },
+  "nativeAfterA": {
+    "id": "00000000-0000-4000-8000-000000000100",
+    "household_id": "00000000-0000-4000-8000-000000000010",
+    "title": "Carottes",
+    "quantity": 500,
+    "unit": "g",
+    "at_home_quantity": 300,
+    "checked": false,
+    "deleted_at": null,
+    "import_source_id": null,
+    "created_at": "2026-11-12T00:00:00.000Z",
+    "updated_at": "2026-11-12T00:21:12.628Z",
+    "revision": 2
+  },
+  "nativeAfterB": {
+    "id": "00000000-0000-4000-8000-000000000100",
+    "household_id": "00000000-0000-4000-8000-000000000010",
+    "title": "Carottes",
+    "quantity": 500,
+    "unit": "g",
+    "at_home_quantity": 0,
+    "checked": false,
+    "deleted_at": null,
+    "import_source_id": null,
+    "created_at": "2026-11-12T00:00:00.000Z",
+    "updated_at": "2026-11-12T00:21:17.101Z",
+    "revision": 3
+  },
+  "nativeBeforeReset": [
+    {
+      "id": "00000000-0000-4000-8000-000000000100",
+      "household_id": "00000000-0000-4000-8000-000000000010",
+      "title": "Carottes",
+      "quantity": 500,
+      "unit": "g",
+      "at_home_quantity": 0,
+      "checked": false,
+      "deleted_at": null,
+      "import_source_id": null,
+      "created_at": "2026-11-12T00:00:00.000Z",
+      "updated_at": "2026-11-12T00:21:17.101Z",
+      "revision": 3
+    },
+    {
+      "id": "4949b58b-3520-4132-bb89-8c1960a4f87d",
+      "household_id": "00000000-0000-4000-8000-000000000010",
+      "title": "DÉMO — Produit ajouté avant réinitialisation",
+      "quantity": 1,
+      "unit": "pièce",
+      "checked": false,
+      "deleted_at": null,
+      "at_home_quantity": 0,
+      "revision": 1
+    }
+  ],
+  "nativeAfterReset": [
+    {
+      "id": "00000000-0000-4000-8000-000000000100",
+      "household_id": "00000000-0000-4000-8000-000000000010",
+      "title": "Carottes",
+      "quantity": 500,
+      "unit": "g",
+      "at_home_quantity": 0,
+      "checked": false,
+      "deleted_at": null,
+      "import_source_id": null,
+      "created_at": "2026-11-12T00:00:00.000Z",
+      "updated_at": "2026-11-12T00:00:00.000Z",
+      "revision": 4
+    }
+  ],
+  "externalRequests": [],
+  "networkWrites": [],
+  "errors": [],
+  "missing": []
+}
