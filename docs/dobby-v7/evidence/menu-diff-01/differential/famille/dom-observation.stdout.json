@@ -1,0 +1,225 @@
+{
+  "family": {
+    "view": "members",
+    "controls": [
+      {
+        "selector": "#add-member-btn",
+        "matches": [
+          {
+            "id": "add-member-btn",
+            "tag": "BUTTON",
+            "disabledOwn": true,
+            "disabledEffective": true,
+            "disabledFieldset": null,
+            "ariaDescribedby": "fam-create-permission",
+            "describedBy": [
+              {
+                "id": "fam-create-permission",
+                "text": "Gestion suspendue : l’association vérifiée de votre compte au foyer reste à établir."
+              }
+            ],
+            "title": null,
+            "ariaDescription": null
+          }
+        ]
+      }
+    ],
+    "permissionMessages": [
+      {
+        "id": "fam-create-permission",
+        "text": "Gestion suspendue : l’association vérifiée de votre compte au foyer reste à établir."
+      }
+    ],
+    "permissionParagraphs": [
+      "Gestion suspendue : l’association vérifiée de votre compte au foyer reste à établir."
+    ],
+    "profileButtons": []
+  },
+  "registerMember": {
+    "view": "member-edit",
+    "controls": [
+      {
+        "selector": "#member-firstname",
+        "matches": [
+          {
+            "id": "member-firstname",
+            "tag": "INPUT",
+            "disabledOwn": false,
+            "disabledEffective": true,
+            "disabledFieldset": "fam-member-identity",
+            "ariaDescribedby": null,
+            "describedBy": [],
+            "title": null,
+            "ariaDescription": null
+          }
+        ]
+      }
+    ],
+    "permissionMessages": [
+      {
+        "id": "fam-member-permission",
+        "text": "Gestion suspendue : l’association vérifiée de votre compte au foyer reste à établir."
+      }
+    ],
+    "permissionParagraphs": [
+      "Gestion suspendue : l’association vérifiée de votre compte au foyer reste à établir."
+    ],
+    "profileButtons": []
+  },
+  "registerMedical": {
+    "view": "medical-edit",
+    "controls": [
+      {
+        "selector": "#consultation-title",
+        "matches": [
+          {
+            "id": "consultation-title",
+            "tag": "INPUT",
+            "disabledOwn": true,
+            "disabledEffective": true,
+            "disabledFieldset": null,
+            "ariaDescribedby": null,
+            "describedBy": [],
+            "title": null,
+            "ariaDescription": null
+          }
+        ]
+      }
+    ],
+    "permissionMessages": [],
+    "permissionParagraphs": [
+      "Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures."
+    ],
+    "profileButtons": []
+  },
+  "e05": {
+    "view": "personal",
+    "controls": [
+      {
+        "selector": "#magic-patronus-edit",
+        "matches": []
+      }
+    ],
+    "permissionMessages": [],
+    "permissionParagraphs": [
+      "L’import photo attend la validation du stockage privé et des droits de partage. Aucune photo personnelle n’est transférée.",
+      "Les profils appartiennent au registre du foyer. L’association compte/membre et les droits parentaux ne sont pas encore disponibles."
+    ],
+    "profileButtons": [
+      {
+        "id": "",
+        "text": "← Membres du foyer",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Refaire le test",
+        "disabled": true,
+        "title": "Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures."
+      },
+      {
+        "id": "",
+        "text": "Refaire le test",
+        "disabled": true,
+        "title": "Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures."
+      },
+      {
+        "id": "magic-avatar-edit",
+        "text": "Modifier",
+        "disabled": true,
+        "title": "Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures."
+      },
+      {
+        "id": "",
+        "text": "Enregistrer",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Annuler",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "magic-photo-import",
+        "text": "Importer une photo — indisponible",
+        "disabled": true,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Modifier les informations personnelles",
+        "disabled": true,
+        "title": "Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures."
+      },
+      {
+        "id": "",
+        "text": "🌿TEST — Identité",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Ouvrir le registre familial",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Première connexion et cérémonie magique",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Modifier la fiche du registre",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Carnet individuel",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Agenda familial",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Documents du foyer",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Répertoire du foyer",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Mémos locaux",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Ouvrir les paramètres de connexion et du foyer",
+        "disabled": false,
+        "title": ""
+      },
+      {
+        "id": "",
+        "text": "Revoir le Rituel de la Cheminée",
+        "disabled": false,
+        "title": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+▶ Menu bundle isolates Family storage and preserves native bytes with complete provenance
+  ✔ new Menu entry, source state, namespaces and builder chain are explicit (6.112069ms)
+  ✔ every shipped resource and source has its actual hash; no source is changed (140.788079ms)
+  ✔ transport changes only its namespace and inherited loading stays local (29.71869ms)
+  ✔ Menu retains both fictional Family personas and rejects a mismatched namespace (20.501999ms)
+  ✔ an existing output is never replaced (52.712865ms)
+✔ Menu bundle isolates Family storage and preserves native bytes with complete provenance (1219.939446ms)
+✔ Menu guard rejects its own uncommitted builder and inherited fixture before output creation (136.600917ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1449.176807

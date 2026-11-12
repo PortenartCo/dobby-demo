@@ -1,0 +1,270 @@
+{
+  "normalization": "Only the two absolute frozen worktree roots are replaced with <WORKTREE>. No timing, retry counts, content, ANSI escapes, fixture IDs, paths outside those roots, or stack frames are masked. Stable cause fields are secondary comparisons and full raw/normalized messages and stacks remain available.",
+  "scripts": {
+    "family": {
+      "exitCodes": {
+        "famille": 1,
+        "menu": 1
+      },
+      "cases": {
+        "famille": {
+          "pass": 0,
+          "fail": 0
+        },
+        "menu": {
+          "pass": 0,
+          "fail": 0
+        }
+      },
+      "sameCasePattern": true,
+      "failureCounts": {
+        "famille": 1,
+        "menu": 1
+      },
+      "sameNumberFailures": true,
+      "failureComparisons": [
+        {
+          "case": "family",
+          "width": 320,
+          "sameStableCauseAndFrames": true,
+          "stableFieldDifferences": {},
+          "sameFullMessageRootNormalized": true,
+          "sameFullStackRootNormalized": true,
+          "sameCallsiteRootNormalized": true,
+          "elapsedMs": {
+            "famille": 12002.976127,
+            "menu": 12003.618569
+          },
+          "messageDiffRootNormalized": [],
+          "stackDiffRootNormalized": [],
+          "callsiteDiffRootNormalized": []
+        }
+      ],
+      "streamComparisons": {
+        "stdout.log": {
+          "sameRaw": true,
+          "sameRootNormalized": true,
+          "rootNormalizedDiffFile": "family.stdout.log.normalized-root-only.diff"
+        },
+        "stderr.log": {
+          "sameRaw": false,
+          "sameRootNormalized": true,
+          "rootNormalizedDiffFile": "family.stderr.log.normalized-root-only.diff"
+        }
+      },
+      "browserVersions": {
+        "famille": [
+          "154.0.8037.57"
+        ],
+        "menu": [
+          "154.0.8037.57"
+        ]
+      },
+      "sameContexts": true,
+      "pageErrorCounts": {
+        "famille": 0,
+        "menu": 0
+      },
+      "failedRequestCounts": {
+        "famille": 10,
+        "menu": 10
+      }
+    },
+    "e05-edge": {
+      "exitCodes": {
+        "famille": 1,
+        "menu": 1
+      },
+      "cases": {
+        "famille": {
+          "pass": 0,
+          "fail": 0
+        },
+        "menu": {
+          "pass": 0,
+          "fail": 0
+        }
+      },
+      "sameCasePattern": true,
+      "failureCounts": {
+        "famille": 1,
+        "menu": 1
+      },
+      "sameNumberFailures": true,
+      "failureComparisons": [
+        {
+          "case": "e05-edge",
+          "width": 390,
+          "sameStableCauseAndFrames": true,
+          "stableFieldDifferences": {},
+          "sameFullMessageRootNormalized": true,
+          "sameFullStackRootNormalized": true,
+          "sameCallsiteRootNormalized": true,
+          "elapsedMs": {
+            "famille": 30001.664989,
+            "menu": 30003.433060000003
+          },
+          "messageDiffRootNormalized": [],
+          "stackDiffRootNormalized": [],
+          "callsiteDiffRootNormalized": []
+        }
+      ],
+      "streamComparisons": {
+        "stdout.log": {
+          "sameRaw": true,
+          "sameRootNormalized": true,
+          "rootNormalizedDiffFile": "e05-edge.stdout.log.normalized-root-only.diff"
+        },
+        "stderr.log": {
+          "sameRaw": false,
+          "sameRootNormalized": true,
+          "rootNormalizedDiffFile": "e05-edge.stderr.log.normalized-root-only.diff"
+        }
+      },
+      "browserVersions": {
+        "famille": [
+          "154.0.8037.57"
+        ],
+        "menu": [
+          "154.0.8037.57"
+        ]
+      },
+      "sameContexts": true,
+      "pageErrorCounts": {
+        "famille": 0,
+        "menu": 0
+      },
+      "failedRequestCounts": {
+        "famille": 10,
+        "menu": 10
+      }
+    },
+    "register-review": {
+      "exitCodes": {
+        "famille": 1,
+        "menu": 1
+      },
+      "cases": {
+        "famille": {
+          "pass": 24,
+          "fail": 4
+        },
+        "menu": {
+          "pass": 24,
+          "fail": 4
+        }
+      },
+      "sameCasePattern": true,
+      "failureCounts": {
+        "famille": 4,
+        "menu": 4
+      },
+      "sameNumberFailures": true,
+      "failureComparisons": [
+        {
+          "case": "menu-member-draft",
+          "width": 320,
+          "sameStableCauseAndFrames": true,
+          "stableFieldDifferences": {},
+          "sameFullMessageRootNormalized": true,
+          "sameFullStackRootNormalized": true,
+          "sameCallsiteRootNormalized": true,
+          "elapsedMs": {
+            "famille": 8004.071263000001,
+            "menu": 8010.067086000001
+          },
+          "messageDiffRootNormalized": [],
+          "stackDiffRootNormalized": [],
+          "callsiteDiffRootNormalized": []
+        },
+        {
+          "case": "menu-medical-draft",
+          "width": 320,
+          "sameStableCauseAndFrames": true,
+          "stableFieldDifferences": {},
+          "sameFullMessageRootNormalized": true,
+          "sameFullStackRootNormalized": true,
+          "sameCallsiteRootNormalized": false,
+          "elapsedMs": {
+            "famille": 8003.379560999998,
+            "menu": 8006.138244000002
+          },
+          "messageDiffRootNormalized": [],
+          "stackDiffRootNormalized": [],
+          "callsiteDiffRootNormalized": [
+            "--- famille",
+            "+++ menu",
+            "@@ -1,6 +1,4 @@",
+            " Error: API call",
+            "     at _Locator.replacement (/tmp/dobby-menu-diff-01/preload.cjs:34:153)",
+            "     at cases.menu-medical-draft (<WORKTREE>/essai-stitch-v7/tests/register-review.cjs:9:210)",
+            "-    at runNextTicks (node:internal/process/task_queues:65:5)",
+            "-    at process.processImmediate (node:internal/timers:502:9)",
+            "     at async <WORKTREE>/essai-stitch-v7/tests/register-review.cjs:15:1244"
+          ]
+        },
+        {
+          "case": "menu-member-draft",
+          "width": 390,
+          "sameStableCauseAndFrames": true,
+          "stableFieldDifferences": {},
+          "sameFullMessageRootNormalized": true,
+          "sameFullStackRootNormalized": true,
+          "sameCallsiteRootNormalized": true,
+          "elapsedMs": {
+            "famille": 8007.574679999998,
+            "menu": 8007.7126320000025
+          },
+          "messageDiffRootNormalized": [],
+          "stackDiffRootNormalized": [],
+          "callsiteDiffRootNormalized": []
+        },
+        {
+          "case": "menu-medical-draft",
+          "width": 390,
+          "sameStableCauseAndFrames": true,
+          "stableFieldDifferences": {},
+          "sameFullMessageRootNormalized": true,
+          "sameFullStackRootNormalized": true,
+          "sameCallsiteRootNormalized": true,
+          "elapsedMs": {
+            "famille": 8003.964616999998,
+            "menu": 8023.462114000002
+          },
+          "messageDiffRootNormalized": [],
+          "stackDiffRootNormalized": [],
+          "callsiteDiffRootNormalized": []
+        }
+      ],
+      "streamComparisons": {
+        "stdout.log": {
+          "sameRaw": true,
+          "sameRootNormalized": true,
+          "rootNormalizedDiffFile": "register-review.stdout.log.normalized-root-only.diff"
+        },
+        "stderr.log": {
+          "sameRaw": false,
+          "sameRootNormalized": true,
+          "rootNormalizedDiffFile": "register-review.stderr.log.normalized-root-only.diff"
+        }
+      },
+      "browserVersions": {
+        "famille": [
+          "154.0.8037.57"
+        ],
+        "menu": [
+          "154.0.8037.57"
+        ]
+      },
+      "sameContexts": true,
+      "pageErrorCounts": {
+        "famille": 0,
+        "menu": 0
+      },
+      "failedRequestCounts": {
+        "famille": 314,
+        "menu": 317
+      }
+    }
+  }
+}

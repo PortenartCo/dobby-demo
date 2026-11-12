@@ -1,0 +1,52 @@
+{
+  "baseSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "candidateSha": "3f7fe0e36e1e142cefaada5d575196c436b444e4",
+  "testPrefixes": [
+    {
+      "test": "family.cjs",
+      "comparison": "lines1\u201314 including fixture setup and first failing operation",
+      "identical": true,
+      "sha256": "86e795b82c292eb2d12d2dbe1a3c6ccb0787a594d16e1c83a01fb0490bfb95e7"
+    },
+    {
+      "test": "e05-edge.cjs",
+      "comparison": "lines1\u20133 including fixture setup and first failing operation",
+      "identical": true,
+      "sha256": "f14cf2387d0660f040811ddd039237c595b72fdb065c3f3a8c47faf791da7364"
+    },
+    {
+      "test": "register-review.cjs",
+      "comparison": "whole file",
+      "identical": true,
+      "sha256": "afe0209a4b4f5c665e40ed23fd52bb4d61552a6ee3fadbca50bb7f2f453f6011"
+    }
+  ],
+  "nativeTreesAndFixtures": [
+    {
+      "path": "essai-stitch-v5-famille",
+      "gitObject": "1d4bfdf847b0c4f531b1bf70f18726bd786e6091",
+      "identical": true
+    },
+    {
+      "path": "essai-sync-v1",
+      "gitObject": "07454efbf1d19cc7cbd55eb71eb98c820382baae",
+      "identical": true
+    },
+    {
+      "path": "essai-sync-v2",
+      "gitObject": "ba82dd8e68f52424542dd61b2dd1acea5b52887b",
+      "identical": true
+    },
+    {
+      "path": "scripts/review/global-demo.js",
+      "gitObject": "116ccc680d3ab047d5f5f78abc84b950f7b466da",
+      "identical": true
+    },
+    {
+      "path": "scripts/review/family-config.js",
+      "gitObject": "92e5f7cfdd17b3579081fad48a67d9ea9384ab7e",
+      "identical": true
+    }
+  ],
+  "scope": "Later family/e05 test edits change Menu navigation only; both failures occur earlier. register-review and its complete fixture are byte-identical."
+}

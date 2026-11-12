@@ -1,0 +1,164 @@
+{
+  "family": {
+    "exitCodes": {
+      "famille": 1,
+      "menu": 1
+    },
+    "cases": {
+      "famille": {
+        "pass": 0,
+        "fail": 0
+      },
+      "menu": {
+        "pass": 0,
+        "fail": 0
+      }
+    },
+    "sameCasePattern": true,
+    "sameNumberFailures": true,
+    "failureComparisons": [
+      {
+        "case": "family",
+        "width": 320,
+        "sameStableCauseAndFrames": true,
+        "sameFullMessageRootNormalized": true,
+        "sameFullStackRootNormalized": true,
+        "elapsedMs": {
+          "famille": 12002.976127,
+          "menu": 12003.618569
+        }
+      }
+    ],
+    "streamComparisons": {
+      "stdout.log": {
+        "sameRaw": true,
+        "sameRootNormalized": true,
+        "rootNormalizedDiffFile": "family.stdout.log.normalized-root-only.diff"
+      },
+      "stderr.log": {
+        "sameRaw": false,
+        "sameRootNormalized": true,
+        "rootNormalizedDiffFile": "family.stderr.log.normalized-root-only.diff"
+      }
+    }
+  },
+  "e05-edge": {
+    "exitCodes": {
+      "famille": 1,
+      "menu": 1
+    },
+    "cases": {
+      "famille": {
+        "pass": 0,
+        "fail": 0
+      },
+      "menu": {
+        "pass": 0,
+        "fail": 0
+      }
+    },
+    "sameCasePattern": true,
+    "sameNumberFailures": true,
+    "failureComparisons": [
+      {
+        "case": "e05-edge",
+        "width": 390,
+        "sameStableCauseAndFrames": true,
+        "sameFullMessageRootNormalized": true,
+        "sameFullStackRootNormalized": true,
+        "elapsedMs": {
+          "famille": 30001.664989,
+          "menu": 30003.433060000003
+        }
+      }
+    ],
+    "streamComparisons": {
+      "stdout.log": {
+        "sameRaw": true,
+        "sameRootNormalized": true,
+        "rootNormalizedDiffFile": "e05-edge.stdout.log.normalized-root-only.diff"
+      },
+      "stderr.log": {
+        "sameRaw": false,
+        "sameRootNormalized": true,
+        "rootNormalizedDiffFile": "e05-edge.stderr.log.normalized-root-only.diff"
+      }
+    }
+  },
+  "register-review": {
+    "exitCodes": {
+      "famille": 1,
+      "menu": 1
+    },
+    "cases": {
+      "famille": {
+        "pass": 24,
+        "fail": 4
+      },
+      "menu": {
+        "pass": 24,
+        "fail": 4
+      }
+    },
+    "sameCasePattern": true,
+    "sameNumberFailures": true,
+    "failureComparisons": [
+      {
+        "case": "menu-member-draft",
+        "width": 320,
+        "sameStableCauseAndFrames": true,
+        "sameFullMessageRootNormalized": true,
+        "sameFullStackRootNormalized": true,
+        "elapsedMs": {
+          "famille": 8004.071263000001,
+          "menu": 8010.067086000001
+        }
+      },
+      {
+        "case": "menu-medical-draft",
+        "width": 320,
+        "sameStableCauseAndFrames": true,
+        "sameFullMessageRootNormalized": true,
+        "sameFullStackRootNormalized": true,
+        "elapsedMs": {
+          "famille": 8003.379560999998,
+          "menu": 8006.138244000002
+        }
+      },
+      {
+        "case": "menu-member-draft",
+        "width": 390,
+        "sameStableCauseAndFrames": true,
+        "sameFullMessageRootNormalized": true,
+        "sameFullStackRootNormalized": true,
+        "elapsedMs": {
+          "famille": 8007.574679999998,
+          "menu": 8007.7126320000025
+        }
+      },
+      {
+        "case": "menu-medical-draft",
+        "width": 390,
+        "sameStableCauseAndFrames": true,
+        "sameFullMessageRootNormalized": true,
+        "sameFullStackRootNormalized": true,
+        "elapsedMs": {
+          "famille": 8003.964616999998,
+          "menu": 8023.462114000002
+        }
+      }
+    ],
+    "streamComparisons": {
+      "stdout.log": {
+        "sameRaw": true,
+        "sameRootNormalized": true,
+        "rootNormalizedDiffFile": "register-review.stdout.log.normalized-root-only.diff"
+      },
+      "stderr.log": {
+        "sameRaw": false,
+        "sameRootNormalized": true,
+        "rootNormalizedDiffFile": "register-review.stderr.log.normalized-root-only.diff"
+      }
+    }
+  }
+}
