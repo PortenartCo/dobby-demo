@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../review-config.js"></script><script src="../../../review-runtime.js"></script><script src="../../../global-demo.js"></script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/>
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body data-stitch-source="dobby_g_rer_les_donn_es_des_quipements_export_restauration" class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_rgba(12,7,5,0.7)]"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="Retour aux équipements" class="w-11 h-11 flex items-center justify-center rounded-lg text-primary hover:text-primary-fixed transition-colors active:scale-95"><span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span></button><div class="flex flex-col min-w-0"><span class="font-label-sm text-label-sm text-outline uppercase tracking-wider truncate">Maison &amp; Équipements</span><h1 class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">Sauvegarde &amp; Données</h1></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="État de synchronisation" class="w-11 h-11 flex items-center justify-center text-tertiary hover:text-tertiary-fixed transition-colors"><span class="material-symbols-outlined text-[22px]">cloud_done</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-1 ring-primary/30 shadow-[0_0_8px_rgba(249,187,95,0.3)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 px-gutter-mobile pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- BANNIÈRE DE RETOUR RAPIDE -->
+<div class="mb-4">
+<button class="inline-flex items-center gap-space-xs text-primary hover:text-primary-fixed transition-colors active:scale-95 py-1 px-2 -ml-2 rounded">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+<span class="font-label-md text-label-md tracking-wider uppercase">Retour aux Équipements du Logis</span>
+</button>
+</div>
+<!-- SOUVERAINETÉ DES DONNÉES & RASSURANCE LOCALE -->
+<section class="bg-surface-container-low rounded-xl p-space-md mb-6 shadow-md relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 bg-primary/5 rounded-full pointer-events-none blur-xl"></div>
+<div class="flex items-start gap-space-sm relative z-10">
+<div class="w-10 h-10 rounded-full bg-secondary-container/60 text-secondary flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 mb-0.5">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Sanctuaire du Logis</span>
+<span class="w-1 h-1 rounded-full bg-secondary/60"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary">Souveraineté Locale</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Les fiches techniques, garanties et dates d'entretien sont stockées en mémoire locale sécurisée sur cet iPhone. <span class="text-on-surface font-semibold">Aucun transfert cloud distant.</span> L'exportation vous confère la maîtrise absolue et tangible de vos archives.
+        </p>
+</div>
+</div>
+</section>
+<!-- EN-TÊTE DU REGISTRE -->
+<header class="bg-surface-container rounded-xl p-space-md mb-6 shadow-lg relative overflow-hidden">
+<div class="flex items-start gap-space-md">
+<div class="relative w-14 h-14 rounded-xl bg-surface-container-highest flex items-center justify-center shrink-0 shadow-md">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<div class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-outline tracking-widest uppercase">Grimoire &amp; Archives</span>
+<h2 class="font-headline-md text-headline-md text-on-surface leading-tight tracking-tight">Sauvegarde &amp; Restauration</h2>
+<p class="font-body-md text-body-md text-on-surface-variant italic mt-0.5">Gérer les données des fiches d'équipements du Logis</p>
+</div>
+</div>
+<!-- ÉTAT ACTUEL DU REGISTRE -->
+<div class="mt-4 pt-3 bg-surface-container-lowest/70 rounded-lg px-3 py-2.5 flex items-center gap-2.5">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse shrink-0"></span>
+<p class="font-label-md text-label-md text-primary-fixed-dim truncate">
+        6 équipements répertoriés · 14 actes consignés · 8 pièces scellées
+      </p>
+</div>
+</header>
+<!-- SECTION 1 : EXPORTER LES FICHES (JSON) -->
+<section class="bg-surface-container rounded-xl p-space-md mb-6 shadow-lg relative">
+<div class="flex items-center gap-space-sm mb-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Exportation Structurée</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Archive textuelle (Format JSON)</h3>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3 leading-relaxed">
+      Génère un fichier structuré et ouvert (<code class="text-primary font-mono text-[13px] bg-surface-container-lowest px-1.5 py-0.5 rounded">.json</code>) contenant l'intégralité des attributs textuels de vos 6 appareils : numéros de série, dates, garanties, historique chronologique des interventions et consignes manuscrites.
+    </p>
+<!-- INVENTAIRE DES ÉLÉMENTS EMBARQUÉS -->
+<div class="bg-surface-container-low rounded-lg p-3 mb-4">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block mb-2">Contenu du parchemin d'export :</span>
+<ul class="space-y-1.5 font-body-sm text-body-sm text-on-surface">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>
+<span>Identité, marques &amp; spécifications des appareils (6)</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>
+<span>Chronologie complète des entretiens &amp; coûts (14)</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>
+<span>Contacts des artisans affiliés consignés</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>
+<span>Notes manuscrites &amp; consignes de réglage</span>
+</li>
+</ul>
+<div class="mt-2.5 pt-2 flex items-center justify-between text-outline">
+<span class="font-label-sm text-label-sm">Poids estimé du parchemin</span>
+<span class="font-label-md text-label-md text-on-surface font-mono">~ 48 Ko (instantané)</span>
+</div>
+</div>
+<!-- BOUTON D'ACTION EXPORT -->
+<button class="w-full h-12 rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" id="btn-export-json">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">file_download</span>
+<span>Exporter le registre JSON des équipements</span>
+</button>
+<div class="mt-2.5 text-center">
+<span class="font-label-sm text-label-sm text-outline">
+        Dernier export scellé : 28 Avril 2025 à 18:42
+      </span>
+</div>
+</section>
+<!-- SECTION 2 : AVERTISSEMENT MAJEUR SUR LES PIÈCES JOINTES -->
+<section class="bg-surface-container-high rounded-xl p-space-md mb-6 shadow-md relative overflow-hidden">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0 shadow">
+<span class="material-symbols-outlined text-[22px]">warning</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error">Avertissement d'intégrité</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-1">Limites de l'export partiel</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-2">
+          L'export JSON n'embarque <strong class="text-on-surface">PAS</strong> les fichiers physiques scellés (factures PDF volumineuses, certificats de conformité de ramonage, manuels d'utilisation ni photos d'intervention). Il référence uniquement leurs métadonnées et intitulés.
+        </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Pour préserver l'ensemble des documents justificatifs, une sauvegarde globale de l'appareil (Sauvegarde chiffrée iOS / iTunes) demeure indispensable. Conservez précieusement vos originaux du logis.
+        </p>
+</div>
+</div>
+</section>
+<!-- SECTION 3 : RESTAURER UN EXPORT -->
+<section class="bg-surface-container rounded-xl p-space-md mb-6 shadow-lg">
+<div class="flex items-center gap-space-sm mb-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Réintégration du Grimoire</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Réimporter un feuillet d'archive</h3>
+</div>
+</div>
+<!-- ZONE DE DÉPÔT / SÉLECTION TACTILE -->
+<label class="cursor-pointer block bg-surface-container-lowest rounded-xl p-space-md text-center hover:bg-surface-container-low transition-colors mb-4" for="file-upload">
+<input accept=".json" class="hidden" id="file-upload" type="file"/>
+<div class="w-12 h-12 mx-auto mb-2 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[26px]">upload_file</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface mb-0.5" id="file-label-main">Touchez pour sélectionner un fichier JSON</p>
+<p class="font-body-sm text-body-sm text-outline">Parcourir les fichiers de l'appareil (Schéma certifié Dobby Logis)</p>
+</label>
+<!-- RISQUES D'ÉCRASEMENT ET OPTIONS DE FUSION -->
+<div class="bg-surface-container-high/80 rounded-lg p-3 mb-4">
+<div class="flex items-start gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">crisis_alert</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<strong class="text-on-surface">Attention aux risques d'écrasement :</strong> La restauration écrasera ou combinera les fiches existantes selon le protocole retenu :
+        </p>
+</div>
+<!-- SÉLECTEUR DE MODE DE FUSION -->
+<div class="space-y-2 mt-3">
+<!-- Option A : Fusion prudente (défaut) -->
+<label class="flex items-start gap-3 p-2.5 rounded-lg bg-surface-container cursor-pointer transition-colors has-[:checked]:bg-surface-variant">
+<input checked="" class="mt-1 accent-[#f9bb5f] w-4 h-4 shrink-0" name="restore_mode" type="radio" value="merge"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-primary font-semibold">Fusion prudente (Recommandé)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ajoute uniquement les nouveaux appareils sans altérer les fiches existantes.</span>
+</div>
+</label>
+<!-- Option B : Remplacement total -->
+<label class="flex items-start gap-3 p-2.5 rounded-lg bg-surface-container cursor-pointer transition-colors has-[:checked]:bg-surface-variant">
+<input class="mt-1 accent-[#f9bb5f] w-4 h-4 shrink-0" name="restore_mode" type="radio" value="replace"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-error font-semibold">Remplacement total</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Écrase et substitue l'inventaire actuel par le registre importé.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- BOUTON DE RESTAURATION -->
+<button class="w-full h-12 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow active:scale-[0.98] transition-all" id="btn-restore-action">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+<span>Analyser et Restaurer le registre</span>
+</button>
+</section>
+<!-- SECTION 4 : JOURNAL DES MOUVEMENTS RÉCENTS -->
+<section class="bg-surface-container rounded-xl p-space-md mb-6 shadow-md">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">receipt_long</span>
+<h3 class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider">Actes Récents du Grimoire</h3>
+</div>
+<button class="font-label-sm text-label-sm text-outline hover:text-error transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">delete</span>
+<span>Purger l'historique</span>
+</button>
+</div>
+<div class="space-y-2" id="logs-container">
+<!-- Item 1 -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">28 Avril 2025</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-primary">Export complet</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">6 fiches d'équipements · 48 Ko</span>
+</div>
+<span class="font-label-sm text-label-sm bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded shrink-0">Scellé</span>
+</div>
+<!-- Item 2 -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">12 Mars 2025</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-primary font-label-sm">Export préventif</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">5 fiches d'équipements · 41 Ko</span>
+</div>
+<span class="font-label-sm text-label-sm bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded shrink-0">Scellé</span>
+</div>
+<!-- Item 3 -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">04 Janv. 2025</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-secondary">Restauration</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">+1 appareil (PAC Daikin Altherma)</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded shrink-0">Conforme</span>
+</div>
+</div>
+</section>
+<!-- BAS DE PAGE & RETOUR INVENTAIRE -->
+<div class="space-y-4 pt-2">
+<button class="w-full h-12 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Retourner à l'inventaire des équipements</span>
+</button>
+<div class="text-center px-4">
+<div class="inline-flex items-center gap-1.5 text-outline mb-1">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-sm text-label-sm tracking-widest uppercase">DOBBY · Gardien Souverain du Foyer</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 italic">
+        Données stockées localement, chiffrées au repos sur cet appareil.
+      </p>
+</div>
+</div>
+<!-- TOAST DE NOTIFICATION ALCHIMIQUE -->
+<div class="fixed bottom-6 left-4 right-4 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="alchemical-toast">
+<div class="bg-surface-container-highest text-on-surface rounded-xl p-3.5 shadow-2xl flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center shrink-0 shadow" id="toast-icon-box">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-primary font-bold" id="toast-title">Registre scellé</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate" id="toast-message">Le fichier JSON a été généré avec succès.</span>
+</div>
+</div>
+</div>
+</div>
+</main></body></html>
