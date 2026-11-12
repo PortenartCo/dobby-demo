@@ -49,11 +49,31 @@ window.DobbyFamilyStitch=(()=>{
   for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl)unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');
  }
  function renderSalon(data){
-  const members=heading('L’Horloge Enchantée')?.closest('section');if(members){bind(members.querySelector('button'),'members');const cards=[...members.querySelectorAll('div.p-3.rounded-2xl')];cards.forEach((card,i)=>bind(card.querySelector('button'),'health-person',{person:data.members[i]?.id||''}));}
-  const agenda=heading('La Gazette & Agenda Rituel')?.closest('section');if(agenda){const controls=agenda.querySelectorAll('button');controls.forEach((b,i)=>bind(b,i?'agenda':'event-new'));}
-  const notes=heading('La Volière aux Messages')?.closest('section');if(notes)for(const b of notes.querySelectorAll('button'))bind(b,'memos');
-  for(const b of $$('main button')){if(/Programmer un rituel|Ajouter un événement/.test(b.textContent)&&!b.dataset.faAction)bind(b,'event-new');if(b.dataset.dv7Route&&!b.dataset.faAction)bind(b,'legacy',{route:b.dataset.dv7Route});}
-  const links=heading('Archives & Accès Rapides')?.closest('section');if(links)links.append(button('health','Carnets de santé'),button('agenda','Agenda du foyer'),button('contacts','Contacts'),button('memos','Mémos'),button('lists','Listes familiales'),button('house','Maison et équipements'),button('backup','Sauvegarde complète'),button('documents','Documents'),button('contracts','Contrats & Assurances'),button('import-file','Importer un fichier'),button('menu','Tous les outils'),button('chat','Discuter avec Dobby'),button('search','Rechercher'),button('personal','Grimoire personnel'));
+  const intro=$('main section'),hero=intro?.querySelector('img')?.parentElement;
+  if(hero){
+   hero.dataset.e09Hero='';const badge=[...hero.querySelectorAll('div')].find(el=>el.textContent.trim().includes('Cabinet des Curiosités'));
+   if(badge){badge.dataset.e09Badge='';badge.classList.remove('top-3','left-3');badge.classList.add('bottom-3','right-3');}
+   [...hero.querySelectorAll('div')].find(el=>el.textContent.includes('Cheminée allumée'))?.remove();
+   const welcome=document.createElement('div');welcome.dataset.e09Intro='';
+   const eyebrow=paragraph('FAMILLE & SYNCHRONISATION','e09-eyebrow'),title=document.createElement('h1');title.textContent='Le Salon des Curiosités';
+   welcome.append(eyebrow,title,paragraph('Organisation familiale, rituels et événements du foyer.','e09-description'));intro.replaceChildren(hero,welcome);
+  }
+  function empty(title,description){const card=document.createElement('div');card.className='e01-empty';const strong=document.createElement('strong');strong.textContent=title;card.append(strong,paragraph(description));return card;}
+  function section(old,title,subtitle,action,label){
+   const section=heading(old)?.closest('section');if(!section)return null;
+   section.dataset.e09Section=action;const header=document.createElement('div');header.className='e09-section-heading';
+   const copy=document.createElement('div'),h=document.createElement('h2');h.className="font-['Playfair_Display'] text-[16px] font-bold text-[#fcf7ee]";h.textContent=title;
+   copy.append(h,paragraph(subtitle,'e09-subtitle'));header.append(copy,button(action,label));section.replaceChildren(header);return section;
+  }
+  const members=section('L’Horloge Enchantée','L’Horloge Enchantée','Les membres de notre foyer','members','Gérer les membres');
+  if(members){if(data.members.length)for(const member of data.members){const card=context();card.className='e09-record';card.append(window.DobbyMemberAvatar.create(member,{className:'fa-avatar'}),paragraph(member.name),button('health-person','Consulter',{person:member.id}));members.append(card);}else members.append(empty('Aucun membre du foyer enregistré','Ajoutez les membres de votre foyer pour retrouver leurs fiches ici.'));}
+  const agenda=section('La Gazette & Agenda Rituel','L’Agenda Enchanté','Rendez-vous et événements familiaux','event-new','Ajouter un événement');
+  if(agenda){const rows=data.upcoming;if(rows.length)for(const row of rows.slice(0,5)){const card=context();card.className='e09-record';card.append(paragraph(row.title||row.name||'Rendez-vous'),paragraph([date(row.date),row.time].filter(Boolean).join(' · ')),button('agenda','Consulter l’agenda'));agenda.append(card);}else agenda.append(empty('Aucun événement partagé à venir','Les rendez-vous et événements à venir apparaîtront ici.'));}
+  const notes=section('La Volière aux Messages','La Volière aux Messages','Notes et pense-bêtes du foyer','rg-memo-new','Ajouter un mémo');
+  if(notes){const rows=data.state.sharedFamilyNotes||[];if(rows.length)for(const row of rows.slice(0,3)){const card=context();card.className='e09-record';const title=document.createElement('strong');title.textContent=row.title;card.append(title,paragraph(row.body),button('rg-memo-edit','Ouvrir / modifier',{record:row.id}));notes.append(card);}else notes.append(empty('Aucun mémo familial enregistré','Ajoutez une note ou un pense-bête destiné au foyer.'));
+   notes.append(paragraph('Mémos du module Famille · '+data.status,'e09-subtitle'));if((data.state.familyNotes||[]).length||rows.length>3)notes.append(button('memos','Tous les mémos et anciens mémos locaux'));
+  }
+  heading('Archives & Accès Rapides')?.closest('section')?.remove();
  }
  function renderMembers(data){
   const list=$('#members-list'),sample=pristine.querySelector('#members-list .member-card').cloneNode(true),query=ui.query.toLocaleLowerCase('fr');
@@ -181,6 +201,8 @@ window.DobbyFamilyStitch=(()=>{
   if(action==='member-delete'){if(E.read().shared.some(r=>r.personId===(el.dataset.person||ui.person)))throw Error('Réattribuez ou supprimez d’abord les rendez-vous partagés de ce membre.');if(E.deleteMember(el.dataset.person||ui.person)){ui.person=null;ui.memberDraft=null;return open('members');}return;}
   if(action==='search-clear'){ui.query='';return render();}
   if(action==='contacts')return open('contacts',{record:null});
+  if(ui.view==='salon'&&action==='rg-memo-new')return open('memo-edit',{record:null,scope:'shared'});
+  if(ui.view==='salon'&&action==='rg-memo-edit')return open('memo-edit',{record:el.dataset.record,scope:'shared'});
   if(action.startsWith('rg-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});
   if(action==='back'){if(window.DobbyRegister?.handles(ui.view))return window.DobbyRegister.back();if(ui.view==='salon')return legacy('home');return open(ui.view==='member-edit'?'members':ui.view==='medical-edit'?'health-person':'salon');}
   if(action==='legacy'){if(handles(el.dataset.route))return open(el.dataset.route,{record:null});return legacy(el.dataset.route);}
