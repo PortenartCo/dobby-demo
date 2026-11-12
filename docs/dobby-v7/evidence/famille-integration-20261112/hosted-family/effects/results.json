@@ -1,0 +1,230 @@
+[
+  {
+    "width": 320,
+    "views": [
+      {
+        "view": "salon",
+        "particles": 22,
+        "changedPixels": 3267
+      },
+      {
+        "view": "members",
+        "particles": 22,
+        "changedPixels": 3105
+      },
+      {
+        "view": "member-edit",
+        "particles": 22,
+        "changedPixels": 3091
+      },
+      {
+        "view": "agenda",
+        "particles": 22,
+        "changedPixels": 3149
+      },
+      {
+        "view": "memos",
+        "particles": 22,
+        "changedPixels": 3237
+      },
+      {
+        "view": "memo-edit",
+        "particles": 22,
+        "changedPixels": 2944
+      },
+      {
+        "view": "health",
+        "particles": 22,
+        "changedPixels": 3074
+      },
+      {
+        "view": "health-person",
+        "particles": 22,
+        "changedPixels": 3293
+      },
+      {
+        "view": "health-history",
+        "particles": 22,
+        "changedPixels": 3277
+      },
+      {
+        "view": "medical-edit",
+        "particles": 22,
+        "changedPixels": 3129
+      },
+      {
+        "view": "contacts",
+        "particles": 22,
+        "changedPixels": 3327
+      },
+      {
+        "view": "personal",
+        "particles": 22,
+        "changedPixels": 3313
+      },
+      {
+        "view": "menu",
+        "particles": 22,
+        "changedPixels": 3144
+      }
+    ],
+    "defaultOn": true,
+    "offPersists": true,
+    "reducedMotion": true,
+    "sharedPreferenceOnly": true,
+    "chatUsesNativeLayer": true,
+    "householdDataUntouched": true
+  },
+  {
+    "width": 390,
+    "views": [
+      {
+        "view": "salon",
+        "particles": 22,
+        "changedPixels": 3484
+      },
+      {
+        "view": "members",
+        "particles": 22,
+        "changedPixels": 2980
+      },
+      {
+        "view": "member-edit",
+        "particles": 22,
+        "changedPixels": 3194
+      },
+      {
+        "view": "agenda",
+        "particles": 22,
+        "changedPixels": 3009
+      },
+      {
+        "view": "memos",
+        "particles": 22,
+        "changedPixels": 3061
+      },
+      {
+        "view": "memo-edit",
+        "particles": 22,
+        "changedPixels": 3128
+      },
+      {
+        "view": "health",
+        "particles": 22,
+        "changedPixels": 3027
+      },
+      {
+        "view": "health-person",
+        "particles": 22,
+        "changedPixels": 3322
+      },
+      {
+        "view": "health-history",
+        "particles": 22,
+        "changedPixels": 3203
+      },
+      {
+        "view": "medical-edit",
+        "particles": 22,
+        "changedPixels": 3265
+      },
+      {
+        "view": "contacts",
+        "particles": 22,
+        "changedPixels": 3117
+      },
+      {
+        "view": "personal",
+        "particles": 22,
+        "changedPixels": 3129
+      },
+      {
+        "view": "menu",
+        "particles": 22,
+        "changedPixels": 3284
+      }
+    ],
+    "defaultOn": true,
+    "offPersists": true,
+    "reducedMotion": true,
+    "sharedPreferenceOnly": true,
+    "chatUsesNativeLayer": true,
+    "householdDataUntouched": true
+  },
+  {
+    "width": 1440,
+    "views": [
+      {
+        "view": "salon",
+        "particles": 22,
+        "changedPixels": 3022
+      },
+      {
+        "view": "members",
+        "particles": 22,
+        "changedPixels": 3047
+      },
+      {
+        "view": "member-edit",
+        "particles": 22,
+        "changedPixels": 3200
+      },
+      {
+        "view": "agenda",
+        "particles": 22,
+        "changedPixels": 2927
+      },
+      {
+        "view": "memos",
+        "particles": 22,
+        "changedPixels": 3024
+      },
+      {
+        "view": "memo-edit",
+        "particles": 22,
+        "changedPixels": 2914
+      },
+      {
+        "view": "health",
+        "particles": 22,
+        "changedPixels": 2875
+      },
+      {
+        "view": "health-person",
+        "particles": 22,
+        "changedPixels": 3111
+      },
+      {
+        "view": "health-history",
+        "particles": 22,
+        "changedPixels": 3108
+      },
+      {
+        "view": "medical-edit",
+        "particles": 22,
+        "changedPixels": 2981
+      },
+      {
+        "view": "contacts",
+        "particles": 22,
+        "changedPixels": 3209
+      },
+      {
+        "view": "personal",
+        "particles": 22,
+        "changedPixels": 3071
+      },
+      {
+        "view": "menu",
+        "particles": 22,
+        "changedPixels": 3007
+      }
+    ],
+    "defaultOn": true,
+    "offPersists": true,
+    "reducedMotion": true,
+    "sharedPreferenceOnly": true,
+    "chatUsesNativeLayer": true,
+    "householdDataUntouched": true
+  }
+]

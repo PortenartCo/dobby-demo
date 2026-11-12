@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "observedAt": "2026-11-12T09:27:01.590437+00:00",
+  "stitchRun": 43189963112,
+  "syncRun": 43189963009,
+  "requiredStepConclusions": {
+    "Existing offline, family and conflict regressions": "success",
+    "Integrated preview builder and byte provenance": "success",
+    "E06 exhaustive scoring, identity and draft isolation": "success",
+    "Recipe formats, ZIP, E07.4 timers and isolated preview contracts": "success",
+    "Source derivation remains reproducible": "success",
+    "Functional Stitch roots and source fidelity": "success",
+    "Famille integration native contracts, isolated preview and reset": "success",
+    "Keep root, Cuisine and Family comparisons (320/390px)": "success"
+  },
+  "coursesTargetedMarker": true,
+  "familyRunnerAll11Marker": true,
+  "previewWidths": [
+    320,
+    390,
+    1440
+  ],
+  "previewBuiltFromCommittedSource": true,
+  "historicalReuse": false,
+  "globalBranchOnlyStep": "skipped"
+}

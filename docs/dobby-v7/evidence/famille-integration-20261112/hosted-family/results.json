@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-11-12T09:29:58.395631+00:00",
+  "origin": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-famille-review-20261112",
+  "entry": "essai-stitch-v7/famille.html",
+  "version": "V7-FAMILLE",
+  "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "base": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "command": [
+    "node",
+    "essai-stitch-v7/tests/family-review-effects.cjs"
+  ],
+  "environment": {
+    "DOBBY_TEST_ORIGIN": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-famille-review-20261112",
+    "DOBBY_FAM_EVIDENCE": "/workspace/dobby-v7-famille-integration-20261112/docs/dobby-v7/evidence/famille-integration-20261112/hosted-family"
+  },
+  "exitCode": 0,
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "viewsPerWidth": 13,
+  "viewRuns": 39,
+  "screenshots": 39,
+  "changedPixelsRange": [
+    2875,
+    3484
+  ],
+  "particlesPerView": 22,
+  "realBackend": false,
+  "failures": [],
+  "productOrHarnessChanges": false,
+  "rawResults": "effects/results.json",
+  "log": "logs/family-review-effects.log",
+  "manifest": "review-manifest.json",
+  "networkScope": "Public product assets loaded from the canonical origin; browser routing aborted nonlocal requests. No real backend authorization was exercised."
+}

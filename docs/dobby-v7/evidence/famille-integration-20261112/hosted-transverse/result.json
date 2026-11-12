@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-famille-review-20261112/",
+  "realBackend": false,
+  "checks": [
+    "new Family bundle preserves latest chat/Courses bytes and global transport after namespace substitution",
+    "one shared native grocery row keeps its quantity and availability across A/B",
+    "E02 reads and contributes to Courses without changing quantified rows or local archives",
+    "stale native grocery CAS is visible and explicit server resolution converges A/B",
+    "native mission completion confirms one immutable shared Runes V2 grant",
+    "shared E09 memo uses FAM read-first route, survives reload and reaches B without local-note import"
+  ],
+  "externalRequests": [],
+  "networkMutations": [],
+  "errors": [],
+  "screenshots": [
+    "01-e02-shared-courses.png",
+    "02-native-cas-conflict.png",
+    "03-confirmed-runes.png",
+    "04-shared-memo-client-b.png"
+  ],
+  "bundle": {
+    "version": "V7-FAMILLE",
+    "base": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+    "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+    "sourceState": "committed",
+    "storagePrefix": "dobby-review-v7-famille-20261112|client-{A|B}|",
+    "fixtureSha256": "c2e73be3c1d67035e579353d6d70b23b060bbf6e0dcbe29738a46c5661b98f1c"
+  },
+  "clients": {
+    "A": "00000000-0000-4000-8000-000000000001",
+    "B": "00000000-0000-4000-8000-000000000002",
+    "household": "00000000-0000-4000-8000-000000000010"
+  },
+  "e02GroceryId": "bde0bd4c-f0df-45c8-a606-a9b1adc1a3c7",
+  "cas": {
+    "id": "00000000-0000-4000-8000-000000000100",
+    "expectedRevision": 2,
+    "remoteRevision": 3
+  },
+  "confirmedGain": {
+    "missionId": "review-mission",
+    "memberId": "review-person",
+    "effort": "light",
+    "amount": 10,
+    "date": "2026-11-12T09:28:54.277Z",
+    "title": "DÉMO — Préparer la maisonnée",
+    "revision": 3
+  },
+  "memo": {
+    "id": "memo-c7006f47-30b5-4136-90a8-457b0969d0d5",
+    "legacyRetained": true,
+    "eventsRetained": true,
+    "readFirst": true
+  }
+}

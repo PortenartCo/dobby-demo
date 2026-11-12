@@ -1,0 +1,57 @@
+{
+  "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "base": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "protected": [
+    {
+      "path": "essai-stitch-v7/chat-engine.js",
+      "sha256": "ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-list.js",
+      "sha256": "369c031dd2a69a8d53aaaf9f1b181b43cddd80bf80116f8b071ee1e51505520d",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-e07.js",
+      "sha256": "f99698719062154405d2bb03528c65b76cf73ddb4bb2b5ddeecc7c31684cab9b",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "sha256": "74b09b530f819337cf660543c95e729c76d92dba979415ef4f6972eb15d9fee6",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "sha256": "0cdcbd7dd486f05e0a71d229b4d039d0097475a4e6deb8287a21f7071db848bf",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-runes-core.mjs",
+      "sha256": "5f90167122a88042b35846ee6887de115724ac3c45938434f1aca06cf47cbf7c",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "scripts/build-dobby-global-review.cjs",
+      "sha256": "576f55e850a58b755c2b6bc5f5c8bb4ee56699b74f396f3f0259d213a1fc53cb",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "scripts/review/global-demo.js",
+      "sha256": "914fe8109f1505a27dc449b99dbc59c80d6e800b08f400c01aa38dbe7d783303",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "scripts/review/global-config.js",
+      "sha256": "082f0feff1f36159d00e85aaede40aab76aef62afa28b2703d3205950ebd38c3",
+      "identicalToGlobal": true
+    },
+    {
+      "path": "scripts/review/review-runtime.js",
+      "sha256": "ecef2aa48f35a98bcc44ae4af6413e06bd701e7874e5f84c21b42a1b4aa13748",
+      "identicalToGlobal": true
+    }
+  ],
+  "productionPathsClean": true
+}

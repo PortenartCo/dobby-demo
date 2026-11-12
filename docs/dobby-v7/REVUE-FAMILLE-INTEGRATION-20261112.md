@@ -40,6 +40,7 @@ La configuration Famille est insérée avant le runtime et le backend. Les asset
 - Transversaux source : contrats de préservation et writer E09 8/8, helper E02, Courses à deux profils avec quantités/disponibilité/CAS/hors ligne, historique Runes natif.
 - Transversaux du nouveau bundle : six contrôles réussis, dont octets E02/Courses et transport global, une récompense partagée unique confirmée, lecture préalable du mémo puis relecture chez B. Aucune requête externe ni mutation HTTP réelle.
 - Dérivation source/CSS : génération canonique et Tailwind sans différence sur les fichiers dérivés ; les 16 étapes du workflow existant sont conservées. Le workflow ajoute les contrôles Famille et du nouveau bundle pour cette branche.
+- Reconstruction commise : `5b764ef367553e9945fb72a6b563b55adc41e040`, manifeste `committed`, aucun chemin source non enregistré ; recette complète aux trois largeurs et 296 empreintes HTTP réussies.
 - Recette du candidat : création/modification de membre, permissions parent/enfant, Grimoire/santé, Agenda sans duplication, mémo partagé hors ligne/reprise, import idempotent et reset A/B isolé à 320/390/1440 ; 296 empreintes HTTP réussies.
 - Revue indépendante : aucun finding important ou critique dans les frontières d’intégration ; 296 empreintes de ressources et 293 empreintes source vérifiées sur le candidat. [Revue](evidence/famille-integration-20261112/independent-review.md).
 
@@ -58,4 +59,25 @@ Preuves et journaux : [dossier dédié](evidence/famille-integration-20261112/),
 
 ## Livraison vérifiée
 
-Les SHA source/publication, les CI et les reçus HTTP seront consignés ici après exécution. La publication n’est considérée terminée qu’après comparaison du manifeste et des ressources réellement servis aux trois largeurs, et confirmation que les aperçus antérieurs sont conservés.
+- Aperçu public : https://portenartco.github.io/dobby-demo/essai-dobby-v7-famille-review-20261112/
+- Source applicative intégrée : `5b764ef367553e9945fb72a6b563b55adc41e040` ([commit](https://github.com/PortenartCo/dobby-demo/commit/5b764ef367553e9945fb72a6b563b55adc41e040)).
+- Publication seule : `92c1eb44d28dd8ed1cdac07ddd46e76de829d3b5` ([commit](https://github.com/PortenartCo/dobby-demo/commit/92c1eb44d28dd8ed1cdac07ddd46e76de829d3b5)), parent `bce17c82ef42fefb2790203a19732665f8c8203d`.
+- [Branche d’audit et reprise](https://github.com/PortenartCo/dobby-demo/tree/feat/dobby-v7-famille-integration-20261112), poussée séparément de main. Les preuves sont ajoutées ensuite par un commit documentaire ; les octets applicatifs testés restent ceux de `5b764ef`.
+
+| CI exacte | Résultat |
+|---|---|
+| [Dobby Sync — 43189963009](https://github.com/PortenartCo/dobby-demo/actions/runs/43189963009) | SUCCESS, source 5b764ef |
+| [Stitch V7 — 43189963112](https://github.com/PortenartCo/dobby-demo/actions/runs/43189963112) | SUCCESS, source 5b764ef ; Courses existante et 11 contrôles Famille actuels ; aucune réutilisation historique |
+| [Pages — 43191449029](https://github.com/PortenartCo/dobby-demo/actions/runs/43191449029) | SUCCESS, publication 92c1eb44, déploiement 7733346408 SUCCESS |
+
+Le diff de publication ajoute exactement 297 fichiers sous le seul nouveau dossier. Les 29 entrées racine antérieures, y compris toutes les démonstrations et les sources applicatives de main, conservent leurs objets Git. Les 21 ressources HTTP capturées avant publication restent identiques ; le manifeste de l’ancien V7 reste celui de la source 6a6fcd9.
+
+Le nouveau manifeste public est identique au fichier publié : SHA256 `61b6b3fb2f1e155e0ad947207b18418100442200ed702c30f1096a3a2ece300c`, version V7-FAMILLE, état committed, sourceDirtyPaths vide, realBackend/realAuth/migrationsApplied false. [Reçu de publication](evidence/famille-integration-20261112/publication-after/receipt.json).
+
+La recette publique des effets a passé 39 combinaisons (13 vues × 320/390/1440), ON/OFF, persistance et mouvement réduit. Les six contrôles transversaux publics ont passé : mêmes octets globaux, E02/Courses, conflit CAS A/B, gain confirmé unique de 10 Runes et mémo partagé sans import privé implicite. Zéro requête externe, mutation HTTP réelle ou erreur navigateur sur ce parcours.
+
+La recette publique complète Famille a passé à **320, 390 et 1440 px** : création et modification de membre avec ID canonique, consultation FAM-17, permissions conjoint/enfant, accès Grimoire et santé, Agenda sans doublon et retours contextuels, mémo partagé A/B avec modification hors ligne puis reprise, import explicite idempotent et reset A/B. Le refresh conserve les anciens mémos ouverts. Un header et un dock, cinq liens, aucun débordement horizontal. Les sentinelles de l’ancien aperçu global, du stockage tiers et d’IndexedDB sont conservées après reset.
+
+Les **296 ressources réellement servies** ont toutes répondu HTTP200 avec le SHA256 attendu. Aucune erreur navigateur, requête externe ou mutation HTTP réelle sur les trois passages. Le manifeste téléchargé est identique au manifeste du commit de publication. [Preuve publique complète](evidence/famille-integration-20261112/hosted-preview/proof.json), [captures](evidence/famille-integration-20261112/hosted-preview/), [transversaux](evidence/famille-integration-20261112/hosted-transverse/result.json) et [effets](evidence/famille-integration-20261112/hosted-family/results.json).
+
+La publication est vérifiée. Aucun compte réel, aucune migration Supabase et aucune fusion des sources applicatives dans main. Les réserves ci-dessus restent ouvertes ; elles n’ont pas été masquées par la simulation. Le dernier commit de la branche d’intégration ajoute exclusivement ce rapport et les preuves, avec `[skip ci]` pour ne pas relancer les mêmes tests sur des octets applicatifs inchangés.

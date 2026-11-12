@@ -1,0 +1,37 @@
+{
+  "verifiedAt": "2026-11-12T09:33:47.892720+00:00",
+  "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-famille-review-20261112/",
+  "globalSource": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
+  "familySource": "a28a1e74e6fd6fcb0db8b154002ce032ae10f130",
+  "sourceSha": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "publicationSha": "92c1eb44d28dd8ed1cdac07ddd46e76de829d3b5",
+  "integrationBranch": "feat/dobby-v7-famille-integration-20261112",
+  "sourceState": "committed",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "hostedResourceHashes": 296,
+  "hostedTransverseChecks": 6,
+  "hostedEffectsViewWidthRuns": 39,
+  "nativeFamilyNodeCases": 227,
+  "existingRootEntriesPreserved": 29,
+  "oldPublicResourcesPreserved": 21,
+  "publicationOnlyAdds": 297,
+  "sourceCI": [
+    43189963009,
+    43189963112
+  ],
+  "pagesCI": 43191449029,
+  "allCISuccess": true,
+  "realAuth": false,
+  "realBackend": false,
+  "migrationsApplied": false,
+  "reservations": [
+    "Real invitations unavailable",
+    "No server guarantee of parental roles/rights",
+    "No automatic dependent-to-E07 portions linkage",
+    "See full report for physical-device/offline-init/legacy-client limits"
+  ]
+}
