@@ -104,18 +104,43 @@ function verifyFamilyProtocol(state,payload){
  if(state?.familyProtocol&&payload.familyNotesVersion!==1)throw Error('Un ancien client a retiré le registre des mémos. Copie locale conservée ; rétablissement explicite nécessaire.');
 }
 function joiningFamily(payload){
- const next=familySnapshot(payload),pending=st.sharedFamilyNotes||[],rows=new Map(next.sharedFamilyNotes.map(row=>[row.id,row]));
- for(const row of pending){if(rows.has(row.id)&&missionDigest(rows.get(row.id))!==missionDigest(row))throw Error('Un mémo local et un mémo du foyer ont la même identité avec des contenus différents. Copie locale conservée.');rows.set(row.id,row);}
- return{...next,sharedFamilyNotes:[...rows.values()]};
+ const next=familySnapshot(payload),base=JSON.parse(states.family?.synced||'{}').sharedFamilyNotes||[];
+ const local=new Map((st.sharedFamilyNotes||[]).map(row=>[row.id,row])),remote=new Map(next.sharedFamilyNotes.map(row=>[row.id,row])),prior=new Map(base.map(row=>[row.id,row]));
+ const rows=[];let conflict=null;
+ if(states.family?.familyProtocol&&payload.familyNotesVersion!==1)return{payload:{...next,sharedFamilyNotes:st.sharedFamilyNotes||[]},conflict:'protocol'};
+ for(const id of new Set([...local.keys(),...remote.keys(),...prior.keys()])){
+  const here=local.get(id),there=remote.get(id),before=prior.get(id),changed=moduleDigest('family',here)!==moduleDigest('family',before),remoteChanged=moduleDigest('family',there)!==moduleDigest('family',before);
+  if(changed&&remoteChanged&&moduleDigest('family',here)!==moduleDigest('family',there))conflict='edit';
+  const row=changed?here:there;if(row)rows.push(row);
+ }
+ return{payload:{...next,sharedFamilyNotes:rows},conflict};
+}
+function joiningState(id,revision,payload,issue,remote){
+ const state=synchronized(id,revision,payload);
+ if(id==='family'&&issue){state.conflict={remote,...(issue==='protocol'?{familyProtocol:true}:{})};if(issue==='protocol')state.familyProtocol=true;}
+ return state;
+}
+async function restoredFamily(state,remote){
+ familyPayload(remote.payload);if(remote.payload.familyNotesVersion!==1)return;
+ // A peer restored the registry. Keep differing local content behind the same
+ // explicit chooser as ordinary concurrent edits; never strand this device.
+ const incoming=familySnapshot({...JSON.parse(state.synced||'{}'),...remote.payload});
+ if(moduleDigest('family',pick('family'))===moduleDigest('family',incoming))Object.assign(state,synchronized('family',Number(remote.revision),incoming));
+ else{state.familyProtocol=true;state.conflict={remote};}
+ await persist();
 }
 async function familyConflict(state,remote,error){state.conflict={remote,...(error?{familyProtocol:true}:{})};await persist();if(error)throw error;}
 async function writeFamily(state,remote,desired,localSnapshot){
+ desired=JSON.parse(JSON.stringify(desired));familyPayload(desired);
  const revision=Number(remote.revision);if(!Number.isSafeInteger(revision)||revision<1)throw Error('Révision familiale invalide');
  const result=await api.authorized('PATCH',rowQuery('family')+'&revision=eq.'+encodeURIComponent(revision),{payload:desired},{Prefer:'return=representation'});
  if(!result?.length)return familyConflict(state,await readRow('family'));
  const confirmed=result[0];familyPayload(confirmed.payload);if(Number(confirmed.revision)!==revision+1||moduleDigest('family',confirmed.payload)!==moduleDigest('family',desired))throw Error('Confirmation des mémos incohérente');
- // A newer local edit remains dirty after the sent snapshot is acknowledged.
- if(moduleDigest('family',pick('family'))===localSnapshot)applyShared('family',confirmed.payload);
+ // Reconcile each field: an edit during PATCH stays local and pending, while
+ // unchanged fields still receive the server-confirmed recovery data.
+ const atSend=JSON.parse(localSnapshot),current=pick('family'),reconciled={...confirmed.payload};
+ for(const key of byId.get('family').keys)if(moduleDigest('family',current[key])!==moduleDigest('family',atSend[key]))reconciled[key]=current[key];
+ applyShared('family',reconciled);
  Object.assign(state,synchronized('family',Number(confirmed.revision),confirmed.payload));await persist();
 }
 async function syncFamily(state,remote){
@@ -134,7 +159,7 @@ async function syncFamily(state,remote){
 async function recoverFamily(){
  const state=states.family;if(!state?.conflict?.familyProtocol)throw Error('Aucun registre à rétablir');
  const remote=await readRow('family');if(!remote)throw Error('Module Famille inaccessible');familyPayload(remote.payload);
- if(remote.payload.familyNotesVersion===1)throw Error('Le registre a déjà changé. Actualisez le foyer avant de choisir une version.');
+ if(remote.payload.familyNotesVersion===1)return restoredFamily(state,remote);
  if(!confirm('Rétablir les mémos conservés sur cet appareil ? Les autres données actuelles du foyer seront conservées. Mettez à jour tous les appareils avant de continuer.'))return;
  backupLocal('family');const localSnapshot=moduleDigest('family',pick('family'));
  await writeFamily(state,remote,{...remote.payload,sharedFamilyNotes:st.sharedFamilyNotes||[],familyNotesVersion:1},localSnapshot);
@@ -315,13 +340,14 @@ async function activate(id) {
   if (!confirm('Partager « ' + def.title + ' » avec les autres membres actifs du foyer ?\n' +
     'Les données actuelles de ce module pourront être consultées et modifiées par eux.')) return;
   const remote = await readRow(id);
-  let revision,acknowledged;
+  let revision,acknowledged,joinConflict=null;
   if (remote) {
     if (digest(pick(id)) !== digest(remote.payload)) {
       if (!confirm('Il existe déjà une version familiale de « ' + def.title +
         ' ». La récupérer sur cet appareil ?\nUne sauvegarde locale sera créée avant remplacement.')) return;
       backupLocal(id);
-      applyShared(id, id==='family'?joiningFamily(remote.payload):remote.payload);
+      const joined=id==='family'?joiningFamily(remote.payload):null;joinConflict=joined?.conflict||null;
+      applyShared(id, joined?joined.payload:remote.payload);
     }
     revision = Number(remote.revision);acknowledged=remote.payload;
   } else {
@@ -332,7 +358,7 @@ async function activate(id) {
     if (!result?.[0] || Number(result[0].revision) < 1) throw Error('Partage créé sans confirmation serveur');
     revision = Number(result[0].revision);acknowledged=result[0].payload||original;if(id==='missions'){if(!result[0].payload||missionDigest(acknowledged)!==missionDigest(original))throw Error('Confirmation des runes incohérente');applyCredits(acknowledged.runeCredits);}
   }
-  states[id] = synchronized(id,revision,acknowledged);markMissionsShared(id);
+  states[id] = joiningState(id,revision,acknowledged,joinConflict,remote);markMissionsShared(id);
   if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
   await persist();
   api.repaint(); api.openModal();onSave();
@@ -369,11 +395,12 @@ async function activateRemaining() {
   let activated = 0;
   try {
     for (const {id, remote} of entries) {
-      let revision,acknowledged;
+      let revision,acknowledged,joinConflict=null;
       if (remote) {
         if (digest(pick(id)) !== digest(remote.payload)) {
           backupLocal(id);
-          applyShared(id, id==='family'?joiningFamily(remote.payload):remote.payload);
+          const joined=id==='family'?joiningFamily(remote.payload):null;joinConflict=joined?.conflict||null;
+      applyShared(id, joined?joined.payload:remote.payload);
         }
         revision = Number(remote.revision);acknowledged=remote.payload;
       } else {
@@ -386,7 +413,7 @@ async function activateRemaining() {
         }
         revision = Number(result[0].revision);acknowledged=result[0].payload||original;if(id==='missions'){if(!result[0].payload||missionDigest(acknowledged)!==missionDigest(original))throw Error('Confirmation des runes incohérente');applyCredits(acknowledged.runeCredits);}
       }
-      states[id] = synchronized(id,revision,acknowledged);markMissionsShared(id);
+      states[id] = joiningState(id,revision,acknowledged,joinConflict,remote);markMissionsShared(id);
       if (!sharedAvailable.includes(id)) sharedAvailable.push(id);
       await persist();
       activated++;
@@ -420,8 +447,9 @@ async function joinFamily() {
   for (const entry of remote) backupLocal(entry.id);
   try {
     for (const entry of remote) {
-      applyShared(entry.id,entry.id==='family'?joiningFamily(entry.row.payload):entry.row.payload);
-      states[entry.id] = synchronized(entry.id,Number(entry.row.revision),entry.row.payload);
+      const joined=entry.id==='family'?joiningFamily(entry.row.payload):null;
+      applyShared(entry.id,joined?joined.payload:entry.row.payload);
+      states[entry.id] = joiningState(entry.id,Number(entry.row.revision),entry.row.payload,joined?.conflict,entry.row);
     }
     await persist();
   } catch (e) {
@@ -437,7 +465,7 @@ async function joinFamily() {
 }
 async function syncOne(id) {
   const state = states[id];
-  if (!ctx || !backendReady || !state?.active || state.conflict) return;
+  if (!ctx || !backendReady || !state?.active || state.conflict&&!(id==='family'&&state.conflict.familyProtocol)) return;
   const remote = await readRow(id);
   if (!remote) {
     state.conflict = true;
@@ -446,7 +474,7 @@ async function syncOne(id) {
     return;
   }
   if(id==='missions')return syncMissions(state,remote);
-  if(id==='family')return syncFamily(state,remote);
+  if(id==='family')return state.conflict?.familyProtocol?restoredFamily(state,remote):syncFamily(state,remote);
   const local = pick(id), localJson = digest(local), remoteRevision = Number(remote.revision);
   if (remoteRevision !== state.revision) {
     if (localJson !== state.synced) {
@@ -502,6 +530,10 @@ async function resolve(id, preference) {
   const remote = id==='family'?await readRow(id):state?.conflict?.remote || await readRow(id);
   if(id==='family'){verifyFamilyProtocol(state,remote?.payload);backupLocal(id);}
   if (!remote) throw Error('Version familiale inaccessible');
+  if(id==='family'&&preference==='server'){
+    const incoming=familySnapshot({...JSON.parse(state.synced||'{}'),...remote.payload});
+    applyShared(id,incoming);Object.assign(state,synchronized(id,Number(remote.revision),incoming));await persist();await sync();api.repaint();api.openModal();return;
+  }
   if (preference === 'server') {
     backupLocal(id);
     applyShared(id, remote.payload);

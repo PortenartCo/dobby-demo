@@ -1,0 +1,8 @@
+locator.inputValue: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('#memo-body')[22m
+
+    at /workspace/dobby-e09-famille-salon-20261112/essai-stitch-v7/tests/e09-family.cjs:16:125 {
+  log: [ "  - waiting for locator('#memo-body')" ],
+  name: 'TimeoutError'
+}

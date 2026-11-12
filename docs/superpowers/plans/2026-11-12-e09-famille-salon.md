@@ -22,21 +22,21 @@
 
 ### Task 1: Interface (checkpoint A)
 **Files:** family.js, family.css (essai-stitch-v7).
-- [ ] Retirer l'encart long, garder illustration 220px et déplacer son badge.
-- [ ] Recomposer exactement trois sections, titres Taverne, sous-titres/boutons, états vides Accueil ; retirer les accès redondants après rendu dynamique.
-- [ ] Vérifier Chromium 320/390/1440 et menu archives/sauvegardes ; commit isolé.
+- [x] Retirer l'encart long, garder illustration 220px et déplacer son badge.
+- [x] Recomposer exactement trois sections, titres Taverne, sous-titres/boutons, états vides Accueil ; retirer les accès redondants après rendu dynamique.
+- [x] Vérifier Chromium 320/390/1440 et menu archives/sauvegardes ; commit isolé.
 
 ### Task 2: Mémos (checkpoint B)
 **Files:** essai-stitch-v5-famille/family-modules.js, tests/family-notes-sync.test.mjs ; essai-stitch-v7/family-engine.js, family-register.js, tests/e09-family.cjs.
 **Interfaces:** facade saveSharedMemo(id,values,expected), deleteSharedMemo(id,expected), importLocalMemo(id) ; registre sharedFamilyNotes, version 1.
-- [ ] Tests RED : CRUD interclients, conflit, hors ligne/reprise, activation avec mémos en attente, payload ancien/inconnu, ancien client, CAS en compétition et édition pendant PATCH.
-- [ ] Ajouter préservation et validation du protocole uniquement dans les chemins family ; garder la logique des autres modules.
-- [ ] Raccorder création/modification/suppression au registre partagé ; anciens mémos en section locale avec import explicite et idempotent, snapshots pour formulaires périmés.
-- [ ] Tests GREEN ciblés et régressions du mécanisme modules ; commit isolé.
+- [x] Tests RED : CRUD interclients, conflit, hors ligne/reprise, activation avec mémos en attente, payload ancien/inconnu, ancien client, CAS en compétition et édition pendant PATCH.
+- [x] Ajouter préservation et validation du protocole uniquement dans les chemins family ; garder la logique des autres modules.
+- [x] Raccorder création/modification/suppression au registre partagé ; anciens mémos en section locale avec import explicite et idempotent, snapshots pour formulaires périmés.
+- [x] Tests GREEN ciblés et régressions du mécanisme modules ; commit isolé.
 
 ### Task 3: Aperçu (checkpoint C)
 **Files:** scripts/build-dobby-review.cjs, scripts/review/e09-config.js, tests/e09-preview.test.cjs et preuves E09.
-- [ ] Étendre le générateur existant avec profil e09, entrée Salon, préfixe unique, données fictives explicites.
-- [ ] Contrôle visuel et trois parcours sur source et bundle ; revue de branche séparée.
-- [ ] Commits/push branche ; génération depuis source committée ; publication du seul nouveau dossier via la procédure Pages existante, en préservant le main actuel.
-- [ ] Vérifier HTTP/manifeste, aperçu hébergé et isolation ; consigner URL, SHAs, fichiers, résultats, limites et chevauchement family-modules.js.
+- [x] Étendre le générateur existant avec profil e09, entrée Salon, préfixe unique, données fictives explicites.
+- [x] Contrôle visuel et trois parcours sur source et bundle ; revue de branche séparée.
+- [x] Commits/push branche ; génération depuis source committée ; publication du seul nouveau dossier via la procédure Pages existante, en préservant le main actuel.
+- [x] Vérifier HTTP/manifeste, aperçu hébergé et isolation ; consigner URL, SHAs, fichiers, résultats, limites et chevauchement family-modules.js.
