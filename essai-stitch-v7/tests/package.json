@@ -6,7 +6,8 @@
     "test:family": "node family.cjs && node family-edge.cjs && node family-review.cjs && node family-shared.cjs && node family-visual.cjs",
     "test:checkpoint": "node ci.cjs",
     "test:register-family": "node register-family.cjs",
-    "test:all": "DOBBY_FINAL=1 node ci.cjs"
+    "test:all": "DOBBY_FINAL=1 node ci.cjs",
+    "test:e07-p02": "node --test e07-p02-model.test.cjs && node e07-p02-effects.cjs && node e07-p02-browser.cjs && node e07-p02-family.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
