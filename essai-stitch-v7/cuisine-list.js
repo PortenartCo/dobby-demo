@@ -57,6 +57,13 @@ window.DobbyCuisineList=(()=>{
   async function add(E,values){const x=valid(values),s=snapshot(E);if(s.shared)return family(E).add({title:x.name,quantity:x.qty,unit:x.unit});
     transaction(E,`st.shopFinal.items.push({...p,id:crypto.randomUUID(),category:categoryOf(p.name),done:false,origin:'Ajout manuel'});`,{...x,detail:detail(x)});
   }
+  async function addPreparation(E,values){
+    const x=valid(values);if(!values.eventId||!values.id)throw Error('Identité de préparatif absente.');
+    const s=snapshot(E),token='prep-01|'+values.eventId+'|'+values.id;
+    // Native deterministic import never updates a replayed row, even if another member edited it.
+    if(s.shared){await family(E).importRows([{...x,token}],s.scope);return;}
+    transaction(E,`st.shopFinal.imports ||= [];if(!st.shopFinal.imports.some(x=>(x.token||x)===p.token)){st.shopFinal.items.push({...p.x,id:crypto.randomUUID(),category:categoryOf(p.x.name),done:false,origin:'Préparatifs',detail:p.detail});st.shopFinal.imports.push({token:p.token});}`,{x,token,detail:detail(x)});
+  }
   function assertExpected(item,expected){if(expected&&JSON.stringify(expected.sources)!==JSON.stringify(item.sources))throw Error('L’article a changé. Ouvrez un nouveau récapitulatif.');}
   async function edit(E,id,values,expected){const x=valid(values),s=snapshot(E),item=s.items.find(x=>x.id===id);if(!item)throw Error('Article introuvable');
     const compatible=norm(item.name)===norm(x.name)&&measure(item).unit===measure(x).unit,factor=compatible?measure({qty:1,unit:item.unit}).qty/measure({qty:1,unit:x.unit}).qty:null;
@@ -175,5 +182,5 @@ window.DobbyCuisineList=(()=>{
     transaction(E,clearSession,{preserveLegacy:s.shared,items:done.map(x=>({homeKey:homeKey(x),productKey:keyOf(x)}))});
     return done.length;
   }
-  return Object.freeze({snapshot,add,edit,remove,check,home,preview,confirmImport,transfer,archive,reuse,detail});
+  return Object.freeze({snapshot,add,addPreparation,edit,remove,check,home,preview,confirmImport,transfer,archive,reuse,detail});
 })();

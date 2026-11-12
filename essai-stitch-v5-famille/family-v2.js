@@ -556,7 +556,7 @@ async function add(title, quantity, unit, id = crypto.randomUUID(), checked = fa
   candidate.checked = checked;
   if(f.homeSupported===true)candidate.at_home_quantity=0;
   if (importId) candidate.import_source_id = importId;
-  await putItem(candidate);
+  if(importId)await updateItem(id,current=>current?null:candidate);else await putItem(candidate);
   repaint();
 }
 async function change(id, values) {
@@ -736,6 +736,7 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
       for(const row of rows){
         if(f.context!==context)throw Error('Le foyer a changé.');
         const id=await deterministicUuid('dobby-e072|'+f.householdId+'|'+row.token);
+        if(f.context!==context)throw Error('Le foyer a changé.');
         // Include tombstones: repeating an already archived import is not a new purchase.
         const current=getItem(id);
         if(row.mode==='update'){

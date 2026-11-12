@@ -1,0 +1,120 @@
+[
+  {
+    "view": "models",
+    "width": 320,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 980
+  },
+  {
+    "view": "model-edit",
+    "width": 320,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1305
+  },
+  {
+    "view": "agenda",
+    "width": 320,
+    "overflow": false,
+    "clippedControls": [
+      "mer. 25",
+      "jeu. 26",
+      "ven. 27"
+    ],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1441
+  },
+  {
+    "view": "preparations",
+    "width": 320,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1389
+  },
+  {
+    "view": "models",
+    "width": 390,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 980
+  },
+  {
+    "view": "model-edit",
+    "width": 390,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1286
+  },
+  {
+    "view": "agenda",
+    "width": 390,
+    "overflow": false,
+    "clippedControls": [
+      "mer. 25",
+      "jeu. 26",
+      "ven. 27"
+    ],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1377
+  },
+  {
+    "view": "preparations",
+    "width": 390,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1336
+  },
+  {
+    "view": "models",
+    "width": 1440,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 980
+  },
+  {
+    "view": "model-edit",
+    "width": 1440,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1350
+  },
+  {
+    "view": "agenda",
+    "width": 1440,
+    "overflow": false,
+    "clippedControls": [
+      "ven. 27"
+    ],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1377
+  },
+  {
+    "view": "preparations",
+    "width": 1440,
+    "overflow": false,
+    "clippedControls": [],
+    "header": 1,
+    "dock": 5,
+    "frameHeight": 1385
+  }
+]

@@ -63,7 +63,7 @@ window.DobbyFamilyStitchEngine=(()=>{
  }
  function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}
  function eventForm(id){requireRecord(read().events,id);page();action('fpAction',id?'edit':'new',id?{id}:{});return win().document.getElementById('fpEventForm');}
- function saveEvent(id,values){eventForm(id);submit('fpEventForm',values);}
+ function saveEvent(id,values){const before=read().events;eventForm(id);if(Object.hasOwn(values,'preparationTemplate')){const field=win().document.createElement('input');field.type='hidden';field.name='preparationTemplate';win().document.getElementById('fpEventForm').append(field);}submit('fpEventForm',values);const saved=id||read().events.find(e=>!before.some(old=>old.id===e.id))?.id;if(!saved)throw Error('Événement non enregistré.');return saved;}
  function deleteEvent(id){requireRecord(read().events,id);page();action('fpAction','delete',{id});}
  function exportEvent(id){page();action('fpAction','ics',{id});}
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}

@@ -1,0 +1,54 @@
+✔ validates actual calendar dates and time instead of accepting malformed input (1.7458ms)
+✔ shared agenda rejects medical category and normalizes ordinary events (0.4445ms)
+✔ aggregates events, task deadlines, maintenance, insurance and birthdays but not medical records (7.281ms)
+✔ birthdays are re-evaluated annually and leap-day policy is defined (0.1211ms)
+✔ ics export contains correct floating local time and escapes injection (0.9653ms)
+✔ create and CAS transition (0.272ms)
+✔ offline edit is pending until remote acknowledges (0.1928ms)
+✔ independent updates never silently overwrite (0.1441ms)
+✔ unknown quantity is not silently converted into 0 or 1 (0.2253ms)
+✔ logical deletion preserved (0.1863ms)
+✖ essai-stitch-v5-famille\tests\family-member-policy.test.cjs (0.072ms)
+✔ shared memo create/read/update/delete propagates without publishing legacy notes or private health (7.4074ms)
+✔ concurrent edits use module conflict, retaining both copies until explicit resolution and backup (3.3247ms)
+✔ offline memo remains pending across a client reload, then synchronizes (4.0878ms)
+✔ old payload and unknown family extensions survive a write; absent fields do not clear existing data (3.3491ms)
+✔ activation and joining preserve new offline memos alongside remote memos, with local notes excluded (12.4144ms)
+✔ an old client dropping the memo extension is detected and local acknowledged copy is retained (2.6461ms)
+✔ edits during PATCH are not falsely acknowledged or replaced (2.2859ms)
+✔ invalid memo payload blocks before replacing any other family fields (1.9399ms)
+✔ a rival write between GET and PATCH loses CAS and keeps the local memo pending in conflict (2.5159ms)
+✔ server conflict choice acknowledges updated unknown family fields before the next memo edit (3.8612ms)
+✔ a second device can refresh and resolve after another device restores the memo protocol (3.1099ms)
+✔ edits during protocol recovery preserve latest remote member fields on the following sync (2.5263ms)
+✔ reactivation takes remote edits of unchanged memos and retains a distinct pending import (2.7129ms)
+✔ genuinely divergent memo edits on reactivation become an active resolvable conflict (3.0471ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 24
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1593.9819
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille\tests\family-member-policy.test.cjs:1:1
+✖ essai-stitch-v5-famille\tests\family-member-policy.test.cjs (0.072ms)
+  Error: Cannot find module 'playwright'
+  Require stack:
+  - C:\Users\dubru\Dobby-V7-PREP-01-20261112\essai-stitch-v5-famille\tests\family-member-policy.test.cjs
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)
+      at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)
+      at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)
+      at Module._load (node:internal/modules/cjs/loader:1341:5)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+      at Module.require (node:internal/modules/cjs/loader:1674:12)
+      at require (node:internal/modules/helpers:157:16)
+      at Object.<anonymous> (C:\Users\dubru\Dobby-V7-PREP-01-20261112\essai-stitch-v5-famille\tests\family-member-policy.test.cjs:3:81)
+      at Module._compile (node:internal/modules/cjs/loader:1929:14) {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [ 'C:\\Users\\dubru\\Dobby-V7-PREP-01-20261112\\essai-stitch-v5-famille\\tests\\family-member-policy.test.cjs' ]
+  }

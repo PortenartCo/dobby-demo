@@ -199,10 +199,12 @@ function submitFamilyEvent(event){
       location:data.get('location'),note:data.get('note')
     });
     if(existing && !item(existing))throw Error('L’événement a été supprimé entre-temps');
+    if(data.has('preparationTemplate'))record.preparation=window.DobbyPreparations.association(String(data.get('preparationTemplate')||''),item(existing)?.preparation);
+    const before=st.familyEvents;
     st.familyEvents=existing
       ? st.familyEvents.map(row=>row.id===existing?{...row,...record}:row)
       : [...st.familyEvents,record];
-    closeDialog();mutate();
+    try{mutate();}catch(error){st.familyEvents=before;throw error;}closeDialog();
   }catch(error){alert(error?.message||'Enregistrement impossible');}
 }
 document.addEventListener('keydown',event=>{

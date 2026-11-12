@@ -1,0 +1,57 @@
+✖ Family integration preserves the latest E02, Courses, native Runes and global isolation runtime bytes (2.2225ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (2.2393ms)
+✖ E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical (0.8212ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24.9085
+
+✖ failing tests:
+
+test at essai-stitch-v7\tests\fam-integration-transverse.test.cjs:26:1
+✖ Family integration preserves the latest E02, Courses, native Runes and global isolation runtime bytes (2.2225ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v7/chat-engine.js differs from latest global review 6a6fcd9
+  + actual - expected
+  
+  + '6bc9c7e381d37ece7e284206f329ff801fb974d32822564742a8e19a4bc97cf1'
+  - 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd'
+  
+      at TestContext.<anonymous> (C:\Users\dubru\Dobby-V7-PREP-01-20261112\.tmp\prep-base\essai-stitch-v7\tests\fam-integration-transverse.test.cjs:28:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '6bc9c7e381d37ece7e284206f329ff801fb974d32822564742a8e19a4bc97cf1',
+    expected: 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7\tests\fam-integration-transverse.test.cjs:44:1
+✖ E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical (0.8212ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '4b1e43625dba1129c28e7fa9fcbd03dec13d5841b5c71455f1e17c8964e11bfa'
+  - '56f0b224b0fcc0a764b398a7bf205ee5fd7da395b1f938d3316ec087ee7f08c8'
+  
+      at TestContext.<anonymous> (C:\Users\dubru\Dobby-V7-PREP-01-20261112\.tmp\prep-base\essai-stitch-v7\tests\fam-integration-transverse.test.cjs:49:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '4b1e43625dba1129c28e7fa9fcbd03dec13d5841b5c71455f1e17c8964e11bfa',
+    expected: '56f0b224b0fcc0a764b398a7bf205ee5fd7da395b1f938d3316ec087ee7f08c8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
