@@ -1,0 +1,384 @@
+{
+  "status": "PASS",
+  "widths": [
+    320,
+    390,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "authOutcomes": "local fixtures",
+  "backendVerified": false,
+  "physicalKeyboard": false,
+  "shortViewportHeight": 420,
+  "exactReturn": "http://127.0.0.1:8819/",
+  "results": [
+    {
+      "width": 320,
+      "welcomeMotion": {
+        "range": 211,
+        "wheel": 211,
+        "touch": 211
+      },
+      "loginMotion": {
+        "range": 481,
+        "wheel": 450,
+        "touch": 481
+      },
+      "signupShortMotion": {
+        "range": 876,
+        "wheel": 450,
+        "touch": 224
+      },
+      "signupShortAction": {
+        "top": 184.8125,
+        "bottom": 234.40625,
+        "height": 420,
+        "hit": true
+      },
+      "profileMotion": {
+        "range": 942,
+        "wheel": 450,
+        "touch": 719
+      },
+      "profileShortMotion": {
+        "range": 1302,
+        "wheel": 302,
+        "touch": 694
+      },
+      "profileShortAction": {
+        "top": 143.984375,
+        "bottom": 193.578125,
+        "height": 420,
+        "hit": true
+      },
+      "createMotion": {
+        "range": 185,
+        "wheel": 185,
+        "touch": 185
+      },
+      "joinMotion": {
+        "range": 452,
+        "wheel": 450,
+        "touch": 452
+      },
+      "joinShortMotion": {
+        "range": 812,
+        "wheel": 450,
+        "touch": 352
+      },
+      "joinShortAction": {
+        "top": 185.390625,
+        "bottom": 234.984375,
+        "height": 420,
+        "hit": true
+      }
+    },
+    {
+      "width": 390,
+      "welcomeMotion": {
+        "range": 150,
+        "wheel": 150,
+        "touch": 150
+      },
+      "loginMotion": {
+        "range": 481,
+        "wheel": 450,
+        "touch": 481
+      },
+      "signupShortMotion": {
+        "range": 876,
+        "wheel": 450,
+        "touch": 321
+      },
+      "signupShortAction": {
+        "top": 184.8125,
+        "bottom": 234.40625,
+        "height": 420,
+        "hit": true
+      },
+      "profileMotion": {
+        "range": 957,
+        "wheel": 450,
+        "touch": 780
+      },
+      "profileShortMotion": {
+        "range": 1317,
+        "wheel": 300,
+        "touch": 730
+      },
+      "profileShortAction": {
+        "top": 144.203125,
+        "bottom": 193.796875,
+        "height": 420,
+        "hit": true
+      },
+      "createMotion": {
+        "range": 157,
+        "wheel": 157,
+        "touch": 157
+      },
+      "joinMotion": {
+        "range": 452,
+        "wheel": 450,
+        "touch": 452
+      },
+      "joinShortMotion": {
+        "range": 812,
+        "wheel": 450,
+        "touch": 224
+      },
+      "joinShortAction": {
+        "top": 185.390625,
+        "bottom": 234.984375,
+        "height": 420,
+        "hit": true
+      }
+    },
+    {
+      "width": 768,
+      "welcomeMotion": {
+        "range": 88,
+        "wheel": 88,
+        "touch": 88
+      },
+      "loginMotion": {
+        "range": 173,
+        "wheel": 173,
+        "touch": 173
+      },
+      "signupShortMotion": {
+        "range": 688,
+        "wheel": 450,
+        "touch": 325
+      },
+      "signupShortAction": {
+        "top": 370.8125,
+        "bottom": 420.40625,
+        "height": 420,
+        "hit": true
+      },
+      "profileMotion": {
+        "range": 663,
+        "wheel": 450,
+        "touch": 663
+      },
+      "profileShortMotion": {
+        "range": 1143,
+        "wheel": 450,
+        "touch": 224
+      },
+      "profileShortAction": {
+        "top": 185.453125,
+        "bottom": 235.046875,
+        "height": 420,
+        "hit": true
+      },
+      "createMotion": {
+        "range": 88,
+        "wheel": 88,
+        "touch": 88
+      },
+      "joinMotion": {
+        "range": 144,
+        "wheel": 144,
+        "touch": 144
+      },
+      "joinShortMotion": {
+        "range": 624,
+        "wheel": 450,
+        "touch": 224
+      },
+      "joinShortAction": {
+        "top": 185.390625,
+        "bottom": 234.984375,
+        "height": 420,
+        "hit": true
+      }
+    },
+    {
+      "width": 1024,
+      "welcomeMotion": {
+        "range": 88,
+        "wheel": 88,
+        "touch": 88
+      },
+      "loginMotion": {
+        "range": 147,
+        "wheel": 147,
+        "touch": 147
+      },
+      "signupShortMotion": {
+        "range": 663,
+        "wheel": 450,
+        "touch": 328
+      },
+      "signupShortAction": {
+        "top": 370.59375,
+        "bottom": 420.1875,
+        "height": 420,
+        "hit": true
+      },
+      "profileMotion": {
+        "range": 849,
+        "wheel": 450,
+        "touch": 770
+      },
+      "profileShortMotion": {
+        "range": 1329,
+        "wheel": 284,
+        "touch": 410
+      },
+      "profileShortAction": {
+        "top": 185.171875,
+        "bottom": 234.765625,
+        "height": 420,
+        "hit": true
+      },
+      "createMotion": {
+        "range": 88,
+        "wheel": 88,
+        "touch": 88
+      },
+      "joinMotion": {
+        "range": 88,
+        "wheel": 88,
+        "touch": 88
+      },
+      "joinShortMotion": {
+        "range": 566,
+        "wheel": 450,
+        "touch": 224
+      },
+      "joinShortAction": {
+        "top": 370.671875,
+        "bottom": 420.265625,
+        "height": 420,
+        "hit": true
+      }
+    },
+    {
+      "width": 1440,
+      "welcomeMotion": {
+        "range": 100,
+        "wheel": 100,
+        "touch": 100
+      },
+      "loginMotion": {
+        "range": 162,
+        "wheel": 162,
+        "touch": 162
+      },
+      "signupShortMotion": {
+        "range": 677,
+        "wheel": 450,
+        "touch": 303
+      },
+      "signupShortAction": {
+        "top": 184.953125,
+        "bottom": 234.546875,
+        "height": 420,
+        "hit": true
+      },
+      "profileMotion": {
+        "range": 499,
+        "wheel": 450,
+        "touch": 499
+      },
+      "profileShortMotion": {
+        "range": 979,
+        "wheel": 450,
+        "touch": 224
+      },
+      "profileShortAction": {
+        "top": 185.375,
+        "bottom": 234.96875,
+        "height": 420,
+        "hit": true
+      },
+      "createMotion": {
+        "range": 140,
+        "wheel": 140,
+        "touch": 140
+      },
+      "joinMotion": {
+        "range": 140,
+        "wheel": 140,
+        "touch": 140
+      },
+      "joinShortMotion": {
+        "range": 580,
+        "wheel": 450,
+        "touch": 313
+      },
+      "joinShortAction": {
+        "top": 301.03125,
+        "bottom": 350.625,
+        "height": 420,
+        "hit": true
+      }
+    },
+    {
+      "width": 1920,
+      "welcomeMotion": {
+        "range": 100,
+        "wheel": 100,
+        "touch": 100
+      },
+      "loginMotion": {
+        "range": 163,
+        "wheel": 163,
+        "touch": 163
+      },
+      "signupShortMotion": {
+        "range": 678,
+        "wheel": 450,
+        "touch": 224
+      },
+      "signupShortAction": {
+        "top": 184.875,
+        "bottom": 234.46875,
+        "height": 420,
+        "hit": true
+      },
+      "profileMotion": {
+        "range": 499,
+        "wheel": 450,
+        "touch": 499
+      },
+      "profileShortMotion": {
+        "range": 979,
+        "wheel": 450,
+        "touch": 224
+      },
+      "profileShortAction": {
+        "top": 185.171875,
+        "bottom": 234.765625,
+        "height": 420,
+        "hit": true
+      },
+      "createMotion": {
+        "range": 140,
+        "wheel": 140,
+        "touch": 140
+      },
+      "joinMotion": {
+        "range": 140,
+        "wheel": 140,
+        "touch": 140
+      },
+      "joinShortMotion": {
+        "range": 581,
+        "wheel": 450,
+        "touch": 224
+      },
+      "joinShortAction": {
+        "top": 184.953125,
+        "bottom": 234.546875,
+        "height": 420,
+        "hit": true
+      }
+    }
+  ]
+}

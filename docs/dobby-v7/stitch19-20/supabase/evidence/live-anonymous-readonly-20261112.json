@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-11-12T22:48:38.311033+00:00",
+  "projectRef": "pqcdkrwljgvgagzwrcmg",
+  "readOnly": true,
+  "realAuthenticatedAccountsVerified": false,
+  "results": [
+    {
+      "check": "anonymous-context",
+      "method": "GET",
+      "httpStatus": 401,
+      "result": {
+        "code": "42501"
+      }
+    },
+    {
+      "check": "invalid-invitation-preview",
+      "method": "GET",
+      "httpStatus": 200,
+      "result": {
+        "status": "invalid"
+      }
+    },
+    {
+      "check": "anonymous-module-catalog-empty-select",
+      "method": "GET",
+      "httpStatus": 401,
+      "result": {
+        "code": "42501"
+      }
+    },
+    {
+      "check": "private-schema-inaccessible",
+      "method": "GET",
+      "httpStatus": 406,
+      "result": {
+        "code": "PGRST106"
+      }
+    }
+  ]
+}

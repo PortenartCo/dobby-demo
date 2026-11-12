@@ -23,7 +23,17 @@ test('preview V5 source matches original except isolated storage and explicitly 
   // pinned to the immutable starting commit; no function or module is skipped.
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
-  let familyNormalized=preview.replace(preparationScript,'');
+  let familyNormalized=preview;
+  // Stitch19/20 extends the canonical member context/writer with server-bound
+  // identity and explicit manual choices. Reverse only these exact reviewed
+  // literals before applying the earlier FAM source-preservation proof.
+  const stitch=JSON.parse(source('./fixtures/stitch19-20-native-extensions.json'));
+  assert.equal(stitch.baseCommit,'0f3131f3deb1ff63f3accca9c591521b04f4f212');
+  for(const amendment of [...stitch.patches].reverse()){
+    assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact Stitch19/20 native amendment occurs once: '+amendment.label);
+    familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
+  }
+  familyNormalized=familyNormalized.replace(preparationScript,'');
   for(const amendment of [...fam.patches].reverse()){
     assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact FAM amendment occurs once: '+amendment.label);
     familyNormalized=familyNormalized.replace(amendment.after,amendment.before);

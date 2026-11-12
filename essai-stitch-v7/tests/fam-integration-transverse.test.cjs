@@ -23,11 +23,19 @@ const preserved = {
   'essai-stitch-v7/tests/helpers/e02-shared-groceries.cjs': '4c599d0a9f09ac72c4cb04777091dd3559ede85498a858226a03774317bda4ef'
 };
 
-test('Family integration preserves E02, existing Courses APIs, native Runes and runtime outside explicit PREP additions', () => {
+test('Family integration preserves E02, existing Courses APIs, native Runes and runtime outside explicit PREP and verified access additions', () => {
   for (const [file, expected] of Object.entries(preserved)) {
     let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
     if(file.endsWith('/cuisine-list.js'))source=source.replace(/  \/\/ A preparation's stable source token[\s\S]*?(?=  function assertExpected)/,'').replace('snapshot,add,addOnce,edit','snapshot,add,edit');
-    if(file.endsWith('/family-v2.js'))source=source.replace(/    async importRows\([\s\S]*?(?=    resolve: choose, sync)/,'');
+    if(file.endsWith('/family-v2.js')){
+      const amendment=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/stitch19-20-access-extensions.json'),'utf8'));
+      assert.equal(amendment.file,file);
+      for(const patch of amendment.patches){
+        assert.equal(source.split(patch.after).length-1,1,patch.label+' has exactly one bounded native extension');
+        source=source.replace(patch.after,patch.before);
+      }
+      source=source.replace(/    async importRows\([\s\S]*?(?=    resolve: choose, sync)/,'');
+    }
     assert.equal(digest(source), expected, file + ' differs from latest global review 6a6fcd9');
   }
 });

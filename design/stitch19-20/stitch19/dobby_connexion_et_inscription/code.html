@@ -1,0 +1,265 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@100..900&amp;family=Literata:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;min-height:100vh;margin:0;padding:0;}body{overscroll-behavior:none;background-color:#1e100c;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface": "#1e100c", "background": "#1e100c", "surface-container-highest": "#43302c", "surface-container-lowest": "#180b07", "tertiary-container": "#d59b2f", "surface-bright": "#483530", "surface-tint": "#f9bb5f", "on-tertiary": "#432c00", "tertiary-fixed-dim": "#fabc4d", "tertiary": "#fabc4d", "on-primary-container": "#533500", "inverse-primary": "#815500", "surface-container-high": "#372622", "surface-container-low": "#271814", "surface-dim": "#1e100c", "on-secondary-fixed-variant": "#314c42", "error-container": "#93000a", "inverse-surface": "#fadcd5", "on-tertiary-container": "#513600", "inverse-on-surface": "#3e2c28", "primary-container": "#d49b42", "primary-fixed": "#ffddb2", "on-background": "#fadcd5", "on-tertiary-fixed-variant": "#604100", "primary-fixed-dim": "#f9bb5f", "surface-container": "#2c1c18", "on-error": "#690005", "on-secondary": "#1a352c", "on-primary-fixed": "#291800", "outline-variant": "#504537", "secondary": "#afcdc0", "on-primary-fixed-variant": "#624000", "secondary-fixed": "#cbe9dc", "secondary-container": "#334e44", "on-secondary-fixed": "#042018", "on-surface": "#fadcd5", "primary": "#f9bb5f", "on-error-container": "#ffdad6", "surface-variant": "#43302c", "outline": "#9d8e7e", "secondary-fixed-dim": "#afcdc0", "tertiary-fixed": "#ffdead", "on-secondary-container": "#a1bfb2", "on-primary": "#442b00", "on-surface-variant": "#d4c4b1", "on-tertiary-fixed": "#281900", "error": "#ffb4ab" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "gutter-mobile": "0.75rem", "gutter": "1.25rem", "space-xl": "2.5rem", "space-md": "1rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "margin": "2.5rem", "space-xs": "0.25rem" }, fontFamily: { "headline-md": ["Playfair Display"], "display-lg-mobile": ["Playfair Display"], "body-lg": ["EB Garamond"], "label-md": ["Literata"], "headline-sm": ["Playfair Display"], "headline-lg-mobile": ["Playfair Display"], "display-lg": ["Playfair Display"], "body-md": ["EB Garamond"], "label-lg": ["Literata"], "label-sm": ["Literata"], "body-sm": ["EB Garamond"], "headline-lg": ["Playfair Display"] }, fontSize: { "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}], "display-lg-mobile": ["34px", {"lineHeight": "42px", "letterSpacing": "-0.01em", "fontWeight": "700"}], "body-lg": ["19px", {"lineHeight": "28px", "fontWeight": "400"}], "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}], "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}], "headline-lg-mobile": ["26px", {"lineHeight": "34px", "fontWeight": "600"}], "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.01em", "fontWeight": "700"}], "body-md": ["17px", {"lineHeight": "24px", "fontWeight": "400"}], "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600"}], "label-sm": ["10px", {"lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500"}], "body-sm": ["15px", {"lineHeight": "22px", "fontWeight": "400"}], "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col justify-between items-center selection:bg-primary selection:text-on-primary"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_4px_24px_rgba(24,11,7,0.7)]"><div class="h-16 w-full max-w-[390px] mx-auto px-margin-mobile flex items-center justify-between"><button aria-label="Retour" class="w-11 h-11 flex items-center justify-center text-primary hover:text-primary-fixed transition-colors active:scale-95" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span></button><div class="flex flex-col items-center justify-center"><h1 class="font-headline-sm text-headline-sm text-primary tracking-wide text-center">Portail du Logis</h1><span class="font-label-sm text-label-sm text-on-surface-variant tracking-[0.2em] uppercase opacity-60">Registre de la Maisonnée</span></div><div class="w-11 h-11 flex items-center justify-end"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_0_10px_rgba(249,187,95,0.3)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col items-center w-full max-w-5xl mx-auto px-4 md:px-8 pt-20 pb-12 pb-safe bg-surface min-h-[calc(100vh-4rem)]">
+  <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+    <!-- Colonne Gauche: Illustration Dobby & Message d'Accueil -->
+    <div class="lg:col-span-5 flex flex-col gap-4">
+      <div class="relative w-full rounded-2xl overflow-hidden bg-surface-container-high shadow-2xl border border-outline-variant/30">
+        <div class="h-56 sm:h-72 lg:h-[460px] w-full bg-cover bg-center relative transition-transform duration-700 hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida/ALJJyrB4nM_gh1U_gkcphs5lRdTHZzbsPVp0eNKDzTyrOLDSNFwHb3MLv7uRIPSDnGZlRr8AKvwP6v5p8ISwzvWxtpAwFlQq8DJtJF_ptynB6_meTTeP2h03rcEtuhzkhJCRT9ERtR5H8ineuYkmbHyn4z0PpaflqwWNtEY75GXn3HKztUc7QWaqA-MpY-1ZyG3lyk3EOdvgfnLlvxfDLSWXN01LZqo6D7_p2kJd8V-DQE47UA'); background-position: center 25%;">
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high via-surface-container-high/40 to-transparent"></div>
+          <!-- Badge Foyer Protégé -->
+          <div class="absolute top-3.5 right-3.5 px-3 py-1.5 rounded-full bg-surface-container-lowest/85 backdrop-blur-md flex items-center gap-2 shadow-lg border border-primary/20">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(249,187,95,0.8)]"></span>
+            <span class="font-label-sm text-label-sm text-primary tracking-widest uppercase font-semibold">Foyer Protégé</span>
+          </div>
+          <div class="absolute bottom-4 left-4 right-4 flex flex-col">
+            <span class="font-label-sm text-label-sm text-primary tracking-wider uppercase font-semibold">Dobby veille sur le seuil</span>
+            <h2 class="font-headline-lg text-headline-lg-mobile sm:text-headline-lg text-on-surface drop-shadow-md">Portail du Logis</h2>
+            <p class="font-body-md text-body-sm sm:text-body-md text-on-surface-variant line-clamp-2 mt-0.5">
+              Franchissez le seuil enchanté de votre maisonnée et retrouvez vos parchemins partagés.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Avis de l'Elfe Régisseur -->
+      <div class="w-full p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 flex items-center gap-3.5 shadow-sm">
+        <div class="w-11 h-11 rounded-full overflow-hidden shrink-0 bg-surface-container-highest border border-primary/30 shadow">
+          <img class="w-full h-full object-cover" alt="Dobby l'elfe de maison" src="https://lh3.googleusercontent.com/aida/ALJJyrB4nM_gh1U_gkcphs5lRdTHZzbsPVp0eNKDzTyrOLDSNFwHb3MLv7uRIPSDnGZlRr8AKvwP6v5p8ISwzvWxtpAwFlQq8DJtJF_ptynB6_meTTeP2h03rcEtuhzkhJCRT9ERtR5H8ineuYkmbHyn4z0PpaflqwWNtEY75GXn3HKztUc7QWaqA-MpY-1ZyG3lyk3EOdvgfnLlvxfDLSWXN01LZqo6D7_p2kJd8V-DQE47UA">
+        </div>
+        <div class="flex flex-col min-w-0">
+          <span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Avis de l'Elfe Régisseur</span>
+          <p class="font-body-sm text-body-sm text-on-surface-variant italic">
+            « Pas d'intrus au foyer : chaque sorcier franchit la porte avec son propre sceau ! »
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne Droite: Panneau d'Authentification avec 3 Onglets -->
+    <div class="lg:col-span-7 flex flex-col gap-4">
+      <!-- 3 Onglets Nobles -->
+      <div class="w-full p-1.5 bg-surface-container-lowest rounded-2xl flex items-center gap-1 shadow-inner border border-outline-variant/30">
+        <button id="tab-btn-login" onclick="switchTab('login')" type="button" class="flex-1 py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-center transition-all duration-200 bg-surface-container-high text-primary shadow-md font-label-md text-label-md cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">vpn_key</span>
+          <span class="truncate font-semibold">Se connecter</span>
+        </button>
+        <button id="tab-btn-register" onclick="switchTab('register')" type="button" class="flex-1 py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-center transition-all duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-container/50 font-label-md text-label-md cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">auto_fix_high</span>
+          <span class="truncate font-semibold">Créer un compte</span>
+        </button>
+        <button id="tab-btn-invite" onclick="switchTab('invite')" type="button" class="flex-1 py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-center transition-all duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-container/50 font-label-md text-label-md cursor-pointer">
+          <span class="material-symbols-outlined text-[18px]">mark_email_read</span>
+          <span class="truncate font-semibold">Rejoindre</span>
+        </button>
+      </div>
+
+      <!-- Formulaire 1 : Se Connecter -->
+      <div id="panel-login" class="flex flex-col bg-surface-container rounded-2xl p-5 sm:p-6 shadow-xl border border-outline-variant/30 gap-4 transition-all duration-300">
+        <div class="flex items-center gap-2 pb-1 border-b border-outline-variant/20">
+          <span class="material-symbols-outlined text-primary text-[22px]">menu_book</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Identifiants du Grimoire</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Accédez à votre espace enchanté avec vos codes magiques.</p>
+          </div>
+        </div>
+
+        <!-- Courrier Électronique -->
+        <div class="flex flex-col gap-1.5">
+          <label for="login-email" class="font-label-sm text-label-sm text-on-surface-variant tracking-wider flex items-center justify-between">
+            <span>Courrier Électronique ou Hibou</span>
+            <span class="text-secondary font-label-sm">Requis</span>
+          </label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">forward_to_inbox</span>
+            <input id="login-email" type="email" placeholder="sorcier@alchimie.fr" class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline/50 pl-11 pr-4 py-3 rounded-xl font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all shadow-inner border border-outline-variant/20">
+          </div>
+        </div>
+
+        <!-- Incantation Secrète -->
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-center justify-between">
+            <label for="login-pwd" class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">Incantation Secrète</label>
+            <a href="#" onclick="playChime(); alert('Un hibou voyageur a été dépêché pour réinitialiser votre mot de passe.'); return false;" class="font-label-sm text-label-sm text-primary underline underline-offset-2 hover:text-primary-fixed transition-colors">
+              Mot de passe oublié ?
+            </a>
+          </div>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">lock</span>
+            <input id="login-pwd" type="password" placeholder="••••••••••••" class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline/50 pl-11 pr-12 py-3 rounded-xl font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all shadow-inner border border-outline-variant/20">
+            <button type="button" onclick="togglePwdVisibility('login-pwd', this)" aria-label="Afficher ou masquer l'incantation" class="absolute right-3 p-1.5 text-outline hover:text-primary transition-colors flex items-center justify-center cursor-pointer">
+              <span class="material-symbols-outlined text-[20px]">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bouton Se connecter -->
+        <button type="button" onclick="playChime();" class="mt-2 w-full h-[52px] bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2.5 shadow-[0_6px_20px_rgba(249,187,95,0.28)] active:scale-[0.98] transition-transform duration-150 cursor-pointer">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">vpn_key</span>
+          <span class="font-semibold">Se connecter au Foyer</span>
+        </button>
+      </div>
+
+      <!-- Formulaire 2 : Créer un Compte -->
+      <div id="panel-register" class="hidden flex-col bg-surface-container rounded-2xl p-5 sm:p-6 shadow-xl border border-outline-variant/30 gap-4 transition-all duration-300">
+        <div class="flex items-center gap-2 pb-1 border-b border-outline-variant/20">
+          <span class="material-symbols-outlined text-primary text-[22px]">edit_note</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Registre d'Âme Nouvelle</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Scellez votre entrée dans le registre officiel de votre maisonnée.</p>
+          </div>
+        </div>
+
+        <!-- Email de création -->
+        <div class="flex flex-col gap-1.5">
+          <label for="reg-email" class="font-label-sm text-label-sm text-on-surface-variant tracking-wider flex items-center justify-between">
+            <span>Courrier Électronique ou Hibou</span>
+            <span class="text-secondary font-label-sm">Requis</span>
+          </label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">mail</span>
+            <input id="reg-email" type="email" placeholder="sorcier@alchimie.fr" class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline/50 pl-11 pr-4 py-3 rounded-xl font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all shadow-inner border border-outline-variant/20">
+          </div>
+        </div>
+
+        <!-- Mot de passe -->
+        <div class="flex flex-col gap-1.5">
+          <label for="reg-pwd" class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">Nouveau mot de passe</label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">lock_clock</span>
+            <input id="reg-pwd" type="password" placeholder="Au moins 8 caractères mystiques" class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline/50 pl-11 pr-12 py-3 rounded-xl font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all shadow-inner border border-outline-variant/20">
+            <button type="button" onclick="togglePwdVisibility('reg-pwd', this)" aria-label="Afficher ou masquer" class="absolute right-3 p-1.5 text-outline hover:text-primary transition-colors flex items-center justify-center cursor-pointer">
+              <span class="material-symbols-outlined text-[20px]">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirmation Mot de passe -->
+        <div class="flex flex-col gap-1.5">
+          <label for="reg-pwd-confirm" class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">Confirmer l'incantation</label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">verified_user</span>
+            <input id="reg-pwd-confirm" type="password" placeholder="Répétez le mot de passe" class="w-full bg-surface-container-lowest text-on-surface placeholder:text-outline/50 pl-11 pr-12 py-3 rounded-xl font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all shadow-inner border border-outline-variant/20">
+            <button type="button" onclick="togglePwdVisibility('reg-pwd-confirm', this)" aria-label="Afficher ou masquer" class="absolute right-3 p-1.5 text-outline hover:text-primary transition-colors flex items-center justify-center cursor-pointer">
+              <span class="material-symbols-outlined text-[20px]">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bouton Créer mon compte -->
+        <button type="button" onclick="playChime();" class="mt-2 w-full h-[52px] bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2.5 shadow-[0_6px_20px_rgba(249,187,95,0.28)] active:scale-[0.98] transition-transform duration-150 cursor-pointer">
+          <span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+          <span class="font-semibold">Créer mon compte</span>
+        </button>
+      </div>
+
+      <!-- Formulaire 3 : Rejoindre avec Invitation -->
+      <div id="panel-invite" class="hidden flex-col bg-surface-container rounded-2xl p-5 sm:p-6 shadow-xl border border-outline-variant/30 gap-4 transition-all duration-300">
+        <div class="flex items-center gap-2 pb-1 border-b border-outline-variant/20">
+          <span class="material-symbols-outlined text-primary text-[22px]">mark_email_read</span>
+          <div>
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Lettre Scellée Reçue</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Rejoignez le cercle de votre famille grâce au code secret à 6 caractères.</p>
+          </div>
+        </div>
+
+        <!-- Saisie du code -->
+        <div class="flex flex-col gap-2 pt-1">
+          <label for="invite-code" class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">Code secret de la Maisonnée</label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute left-3.5 text-outline text-[22px] pointer-events-none">pin</span>
+            <input id="invite-code" maxlength="7" type="text" placeholder="DOB-784" class="w-full uppercase tracking-widest bg-surface-container-lowest text-primary placeholder:text-outline/40 pl-12 pr-4 py-3 rounded-xl font-headline-sm text-headline-sm focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-low transition-all shadow-inner border border-outline-variant/20 font-bold">
+          </div>
+        </div>
+
+        <!-- Bouton Valider -->
+        <button type="button" onclick="playChime();" class="mt-2 w-full h-[52px] bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2.5 shadow-[0_6px_20px_rgba(249,187,95,0.28)] active:scale-[0.98] transition-transform duration-150 cursor-pointer">
+          <span class="font-semibold">Vérifier l'invitation</span>
+          <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+        </button>
+
+        <div class="flex items-center gap-2 pt-1 text-on-surface-variant/80">
+          <span class="material-symbols-outlined text-[16px] text-outline shrink-0">verified_user</span>
+          <span class="font-label-sm text-label-sm">
+            Un voyageur sans compte pourra finaliser son profil avant d'entrer.
+          </span>
+        </div>
+      </div>
+
+      <!-- Pied de Sceau de Sécurité -->
+      <div class="w-full mt-4 flex flex-col items-center justify-center text-center gap-1.5">
+        <div class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center text-outline shadow-inner">
+          <span class="material-symbols-outlined text-[16px]">shield</span>
+        </div>
+        <span class="font-label-sm text-label-sm text-on-surface-variant/70 tracking-widest uppercase">
+          Protection Enchantée &amp; Chiffrement de Gringotts
+        </span>
+        <p class="font-body-sm text-body-sm text-outline/60 max-w-sm">
+          Conforme aux lois du Ministère des Mystères. Vos correspondances domestiques restent scellées.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function playChime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15); // A5
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    function switchTab(tab) {
+      playChime();
+      const panels = {
+        login: document.getElementById('panel-login'),
+        register: document.getElementById('panel-register'),
+        invite: document.getElementById('panel-invite')
+      };
+      const buttons = {
+        login: document.getElementById('tab-btn-login'),
+        register: document.getElementById('tab-btn-register'),
+        invite: document.getElementById('tab-btn-invite')
+      };
+
+      Object.keys(panels).forEach(key => {
+        if (key === tab) {
+          panels[key].classList.remove('hidden');
+          buttons[key].className = 'flex-1 py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-center transition-all duration-200 bg-surface-container-high text-primary shadow-md font-label-md text-label-md cursor-pointer';
+        } else {
+          panels[key].classList.add('hidden');
+          buttons[key].className = 'flex-1 py-2.5 px-2 rounded-xl flex items-center justify-center gap-1.5 text-center transition-all duration-200 text-on-surface-variant hover:text-on-surface hover:bg-surface-container/50 font-label-md text-label-md cursor-pointer';
+        }
+      });
+    }
+
+    function togglePwdVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (!input || !icon) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+  </script>
+</main>
+
+</body></html>

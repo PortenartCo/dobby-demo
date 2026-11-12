@@ -4,11 +4,11 @@
 @font-face{font-family:'Ritual Jakarta';src:url('./assets/onboarding/fonts/jakarta.ttf') format('truetype');font-weight:200 800;font-display:swap}
 body[data-family-view=onboarding-ritual]{background:#120805;padding-bottom:0!important;min-height:100dvh}
 body[data-family-view=onboarding-ritual].e06-active>header,body[data-family-view=onboarding-ritual].e06-active>nav{display:none!important}
-#iphone-app-frame.e06-ritual-scene{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%!important;max-width:412px;height:calc(100dvh - var(--ritual-banner,0px));min-height:580px;margin:0 auto!important;padding:0!important;box-sizing:border-box;overflow:hidden;color:#f7ecd5;background:#180b07;border:1px solid #d49b424d;font-family:'Ritual Jakarta',sans-serif;animation:none!important;opacity:1!important;transform:none!important}
+#iphone-app-frame.e06-ritual-scene{position:relative;display:flex;flex-direction:column;justify-content:space-between;width:100%!important;max-width:620px;height:auto;min-height:calc(100dvh - var(--ritual-banner,0px));margin:0 auto!important;padding:0!important;box-sizing:border-box;overflow:clip;color:#f7ecd5;background:#180b07;border:1px solid #d49b424d;font-family:'Ritual Jakarta',sans-serif;animation:none!important;opacity:1!important;transform:none!important}
 body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
 #iphone-app-frame *{box-sizing:border-box}#iphone-app-frame .font-cinzel{font-family:'Ritual Cinzel',serif}
-#iphone-app-frame #ios-status-bar{position:relative;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;color:#eec66a;font:600 13px 'Ritual Cinzel',serif;min-height:54px;background:#180b07}
-.ritual-preferences{display:flex;gap:8px}.ritual-preferences button{border:1px solid #d49b4266;border-radius:9px;padding:7px;min-height:36px;font:12px 'Ritual Jakarta',sans-serif;background:#271814;color:#d4bca6}.ritual-preferences [aria-pressed=true]{color:#f9bb5f;border-color:#f9bb5f;background:#43302c}
+#iphone-app-frame #ios-status-bar{position:relative;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;color:#eec66a;font:600 13px 'Ritual Cinzel',serif;min-height:54px;background:#180b07}
+.ritual-preferences{display:flex;gap:8px}.ritual-preferences button{border:1px solid #d49b4266;border-radius:9px;padding:7px;min-height:44px;font:12px 'Ritual Jakarta',sans-serif;background:#271814;color:#d4bca6}.ritual-preferences [aria-pressed=true]{color:#f9bb5f;border-color:#f9bb5f;background:#43302c}
 #iphone-app-frame>section{position:relative;flex:1;min-height:240px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;background:#180b07}
 #scene-wrapper{position:absolute;inset:0;transform-origin:50% 60%;transition:transform 2500ms cubic-bezier(.2,.8,.2,1),filter 2500ms}
 #dobby-hearth-img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:radial-gradient(ellipse at 25% 63%,#8f4d2044,#180b07 70%)}
@@ -18,7 +18,7 @@ body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
 #floo-vortex-flash{position:absolute;inset:0;pointer-events:none;z-index:20;opacity:0;transition:opacity 1s;background:linear-gradient(to top,#022c22ce,#0478574d,#34d39933);mix-blend-mode:screen}
 #ritual-badge{position:relative;z-index:20;margin:0 8px 8px;padding:5px 10px;border-radius:999px;background:#1e100cdb;border:1px solid #d49b4266;backdrop-filter:blur(6px);display:flex;gap:8px;align-items:center;font:10px 'Ritual Cinzel',serif;letter-spacing:.1em;color:#f9bb5f;text-align:center}
 #badge-ping{width:5px;height:5px;border-radius:50%;background:#d49b42;flex-shrink:0}
-#interaction-panel{position:relative;z-index:20;padding:14px 20px 12px;background:linear-gradient(to top,#120805,#1a0e0af2 85%,#180b07);border-top:1px solid #d49b4240;flex-shrink:0}
+#interaction-panel{position:relative;z-index:20;padding:14px 20px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(to top,#120805,#1a0e0af2 85%,#180b07);border-top:1px solid #d49b4240;flex-shrink:0}
 #panel-content-text{text-align:center;margin-bottom:16px;transition:opacity .7s}
 #intro-title{font:700 28px/1.2 'Playfair Display',serif;color:#f9bb5f;margin:0;text-shadow:0 2px 12px #d49b4259}
 #intro-subtitle{font:italic 12px/1.5 'Ritual Jakarta',sans-serif;color:#eec66a;margin:6px auto 0;max-width:320px}
@@ -39,7 +39,8 @@ body:has([data-review-banner]) #iphone-app-frame{--ritual-banner:44px}
 #iphone-app-frame.ritual-crossing #scene-wrapper{transform:scale(1.22) translateY(-2%);filter:brightness(1.15) hue-rotate(45deg) saturate(1.3)}
 #iphone-app-frame.ritual-crossing #floo-vortex-flash{opacity:.75}#iphone-app-frame.ritual-crossing #panel-content-text{opacity:.3}
 .e06-ritual-settings{padding:16px;margin-top:16px;border:1px solid #d49b4255;border-radius:12px;display:flex;flex-direction:column;gap:12px;color:#eec66a}.e06-ritual-settings h3{font:600 18px 'Playfair Display',serif;margin:0}.e06-ritual-settings label{display:flex;gap:10px;align-items:center;font-size:14px;line-height:1.5}.e06-ritual-settings input{width:20px;height:20px;min-height:20px;flex-shrink:0;accent-color:#d49b42}.e06-ritual-settings .fa-button{font-size:14px}
-@media(min-width:640px){#iphone-app-frame.e06-ritual-scene{height:min(844px,calc(100dvh - var(--ritual-banner,0px) - 24px));margin:12px auto!important;border-radius:44px;box-shadow:0 25px 80px #000e,0 0 0 1px #d49b4240}}
+@media(min-width:640px){#iphone-app-frame.e06-ritual-scene{min-height:calc(100dvh - var(--ritual-banner,0px) - 24px);margin:12px auto!important;border-radius:24px;box-shadow:0 25px 80px #000e,0 0 0 1px #d49b4240}}
+@media(min-width:1024px){#iphone-app-frame.e06-ritual-scene{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);grid-template-rows:auto 1fr;max-width:1100px}#iphone-app-frame #ios-status-bar{grid-column:1/-1}#iphone-app-frame>section{min-height:500px;align-self:stretch}#interaction-panel{display:flex;flex-direction:column;justify-content:center;border-top:0;border-left:1px solid #d49b4240;padding:28px}#intro-subtitle{font-size:15px}#ritual-badge{font-size:11px}}
 @media(max-width:350px){#interaction-panel{padding-left:14px;padding-right:14px}#intro-title{font-size:25px}#btn-floo-trigger{letter-spacing:.04em}#ritual-badge{font-size:8px}}
 html.e01-effects-off #iphone-app-frame *{animation:none!important;transition:none!important}body[data-family-view=onboarding-ritual] .ritual-preferences button{transition:none}
 @media(prefers-reduced-motion:reduce){#iphone-app-frame *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

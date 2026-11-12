@@ -1,0 +1,32 @@
+{
+  "file": "portraits-09-24.png",
+  "kind": "recovered-local-original-portrait-atlas",
+  "width": 1254,
+  "height": 1254,
+  "bytes": 2678231,
+  "sha256": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9",
+  "sourceCommit": "73454d70627d4666afd1d8f87b8e567ab93ed0e3",
+  "originalRepositoryPath": "essai-stitch-v7/assets/review-avatars-20261111/portraits-09-24.png",
+  "recoveredFrom": "essai-dobby-e01-e06-review-20261111/essai-stitch-v7/assets/review-avatars-20261111/portraits-09-24.png",
+  "originalProvenanceDocument": "docs/dobby-v7/evidence/review-e01-e05-20261111/avatars/MEDIA.md",
+  "preservedProvenanceDocument": "design/stitch19-20/portraits-09-24-original-provenance.md",
+  "preservedProvenanceSha256": "73f21976d39356a2db491030d82343887ab8068888eb7c776419d53fdc58a441",
+  "originalGeneration": {
+    "date": "2026-11-11",
+    "tool": "image_gen",
+    "artifact": "exec-9349a169-28f4-4203-b08a-5a2f4ea31cab.png",
+    "authorizationSource": "Historical MEDIA.md records authorized original generation."
+  },
+  "currentOperation": "Byte-identical recovery of existing local art for the authorized Stitch 19/20 integration; no new generation or external download.",
+  "previousStatus": "Produced and visually inspected in an isolated review; native catalogue integration was deferred after E06.",
+  "sprite": {
+    "columns": 4,
+    "rows": 4,
+    "idFirst": "portrait-9",
+    "idLast": "portrait-24",
+    "cellOrder": "row-major"
+  },
+  "compatibility": "The original eight portrait IDs, asset and native crop are unchanged.",
+  "externalResources": false,
+  "realMemberImages": false
+}

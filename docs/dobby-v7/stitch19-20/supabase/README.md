@@ -1,8 +1,34 @@
 # Installation familiale manuelle — Stitch 19/20
 
-Ces propositions reposent sur le diagnostic catalogue transmis par l'utilisateur : PostgreSQL **17.11**, six tables publiques existantes, appartenances V2 `owner/member`, modules JSON natifs et protection Missions déjà installée. Elles ne sont **pas appliquées au projet distant**. Codex n'a effectué aucun appel SQL/API/MCP Supabase distant.
+Ces évolutions reposent sur le diagnostic catalogue transmis par l'utilisateur : PostgreSQL **17.11**, six tables publiques existantes, appartenances V2 `owner/member`, modules JSON natifs et protection Missions déjà installée. **L'utilisateur a exécuté `01-apply.sql` puis transmis la vérification structurelle réussie de `02-verify.sql` le 12 novembre 2026. Ne pas réexécuter `01-apply.sql`.** Codex n'a effectué aucune modification distante SQL/API/MCP. Les seuls contrôles directs de Codex sont des lectures des paramètres Auth publics.
 
-## Ordre d'exécution dans le Dashboard
+## État reçu et réglages Auth
+
+La preuve utilisateur est conservée dans
+[evidence/live-user-verification-20261112.json](evidence/live-user-verification-20261112.json).
+Les dix RPC, cinq tables privées avec RLS forcée et protections historiques sont
+présents. Les liaisons/invitations/profils en attente étaient encore à zéro :
+cette vérification ne prouve pas une création de compte ou une invitation réelle.
+
+La capture Dashboard fournie ensuite confirme **Site URL** et **une seule Redirect
+URL** à `https://portenartco.github.io/dobby-demo/`, sans caractère générique.
+L'inscription est active et la confirmation e-mail reste obligatoire, vérifiées
+par GET en lecture seule. Voir [DASHBOARD.md](DASHBOARD.md) pour les valeurs exactes.
+Les parcours Auth réels restent à tester après publication des sources validées.
+
+## Nouveau départ des deux comptes de test — décision utilisateur
+
+Les deux comptes Auth existants ont servi uniquement aux tests de synchronisation.
+**Ne pas utiliser `04-link-existing-owner.sql` pour ces comptes.** Conserver les
+comptes Auth et privilégier un foyer propre créé par le nouveau parcours. Si les
+anciennes appartenances V2 actives bloquent ce parcours, la remise à zéro sera
+limitée au foyer de test explicitement identifié, après diagnostic des dépendances.
+L’utilisateur a exécuté le SQL ciblé 06 puis transmis 07 : deux appartenances
+inactives, deux comptes Auth conservés, six modules inchangés. Ne pas réexécuter
+06 ; voir [le guide de nouveau départ](REPARTIR-FOYER-TEST.md).
+Aucune récupération de profil historique n’est nécessaire pour ces deux comptes.
+
+## Ordre d’exécution initial, conservé pour traçabilité
 
 1. Ouvrir **uniquement** le projet personnel `dobby-family-sync`, référence `pqcdkrwljgvgagzwrcmg`. Dans SQL Editor, conserver le diagnostic initial et une sauvegarde habituelle du projet.
 2. Copier intégralement [01-apply.sql](01-apply.sql) dans une nouvelle requête et exécuter une fois. Le script forme une transaction; toute erreur annule l'ensemble. Il refuse un schéma V7 déjà présent. Ne pas supprimer une table pour forcer un second passage.

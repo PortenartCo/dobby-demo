@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>DOBBY V7 — Cérémonie de la Maison Magique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: {
+              DEFAULT: '#1e100c',
+              dim: '#180b07',
+              container: '#271814',
+              high: '#34211a',
+              bright: '#483530'
+            },
+            gold: {
+              300: '#ffd87a',
+              400: '#eec66a',
+              500: '#d49b42',
+              600: '#b87c28'
+            },
+            gryffindor: '#8f2222',
+            slytherin: '#1d5c3f',
+            ravenclaw: '#1b4b73',
+            hufflepuff: '#c88728'
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'Playfair Display', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(24, 11, 7, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(212, 155, 66, 0.4); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(212, 155, 66, 0.7); }
+    
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.65; transform: scale(1.04); }
+    }
+    .animate-pulse-glow { animation: pulseGlow 4s ease-in-out infinite; }
+    
+    @keyframes floatSparkle {
+      0% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-40px) rotate(45deg); opacity: 0; }
+    }
+    .sparkle-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #ffd87a;
+      border-radius: 50%;
+      pointer-events: none;
+      box-shadow: 0 0 8px #ffd87a;
+    }
+  </style>
+</head>
+<body class="h-full bg-[#120704] text-[#f5ebd8] font-sans antialiased overflow-hidden select-none">
+  <!-- Audio Synthesizer Hook -->
+  <script>
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      playChime(type = 'soft') {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          
+          if (type === 'reveal') {
+            // Magical triad chord
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+              const o = this.ctx.createOscillator();
+              const g = this.ctx.createGain();
+              o.type = 'sine';
+              o.frequency.setValueAtTime(freq, now + i * 0.08);
+              g.gain.setValueAtTime(0.001, now + i * 0.08);
+              g.gain.exponentialRampToValueAtTime(0.12, now + i * 0.08 + 0.05);
+              g.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 1.2);
+              o.connect(g);
+              g.connect(this.ctx.destination);
+              o.start(now + i * 0.08);
+              o.stop(now + i * 0.08 + 1.3);
+            });
+          } else {
+            // Soft parchment tap
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(type === 'select' ? 680 : 440, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.26);
+          }
+          if (navigator.vibrate) navigator.vibrate(type === 'reveal' ? [20, 40, 60] : 15);
+        } catch(e) {}
+      }
+    };
+  </script>
+
+  <!-- BACKGROUND: Le Chemin de Traverse (assombri et flouté au second plan) -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <img src="https://lh3.googleusercontent.com/aida/ALJJyrDd6KW50qkK6NgRWuMBmQkDDi-8Vlwu8_h91GcV4lMonWiZGrB8JEJ1UatWNWo34q4O-3SVFfKcSKVVV6Zey-iNZ9QQYkOXp2uN0qrlStDRadMAYmCFOLDKwEMSBBO1NrY4qOd9AolhTG-0nLrby9H_fyc2ONGuwiGwdQoYG1FPrmeiQkcj92fkaqLAf60McPArZnVyR4cFN3DBwwszR9RlK-AlW3yTRDQYqIyNz7sK7Q" alt="Chemin de Traverse" class="w-full h-full object-cover scale-105 filter blur-[6px] brightness-[0.28] contrast-125">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#120704] via-[#120704]/75 to-[#120704]/60"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(212,155,66,0.15),transparent_70%)]"></div>
+  </div>
+
+  <!-- CONTAINER PRINCIPAL MODAL / SCENE IMMERSIVE -->
+  <main class="relative z-10 w-full h-full flex flex-col justify-center items-center p-3 sm:p-5 md:p-8">
+    <div class="w-full max-w-[440px] md:max-w-[760px] h-[92vh] max-h-[820px] bg-[#1c0f0b]/95 backdrop-blur-xl border border-gold-500/40 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.85),0_0_35px_rgba(212,155,66,0.22)] flex flex-col overflow-hidden relative">
+      
+      <!-- Lueur d'ambiance de l'en-tête modal -->
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-48 bg-gold-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Barre supérieure de navigation modale -->
+      <header class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-gold-500/20 z-10 bg-[#1c0f0b]/90">
+        <div class="flex items-center gap-2">
+          <button id="btn-back" onclick="goToStep('intro')" class="hidden p-2 rounded-xl bg-surface-container/70 border border-gold-500/30 text-gold-400 hover:text-gold-300 hover:bg-surface-high transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <div>
+            <span class="text-[10px] tracking-[0.25em] uppercase text-gold-400/90 font-serif block">Rituel d'Initiation · Étape 1/2</span>
+            <h1 id="modal-header-title" class="text-sm font-serif font-semibold text-[#f8ecd7] tracking-wide">La Cérémonie du Choixpeau</h1>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-[11px] text-gold-400 font-serif">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Foyer Scellé</span>
+        </div>
+      </header>
+
+      <!-- ZONE DE CONTENU DYNAMIQUE MULTI-ÉTAPES -->
+      <div class="flex-1 overflow-y-auto px-5 py-4 flex flex-col relative z-10" id="step-container">
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 1 : FENÊTRE D'INTRODUCTION DU CHOIXPEAU (Par défaut) -->
+        <!-- ========================================================================= -->
+        <section id="step-intro" class="flex-1 flex flex-col items-center justify-between text-center space-y-4 py-2">
+          <div class="w-full flex flex-col items-center">
+            <!-- Visuel cinématographique authentique du Choixpeau -->
+            <div class="relative w-full max-w-[280px] md:max-w-[320px] aspect-[4/3] rounded-2xl overflow-hidden border border-gold-500/40 shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_25px_rgba(212,155,66,0.3)] mb-4 group">
+              <img src="https://lh3.googleusercontent.com/aida/ALJJyrBnsbRmwbdqLLaAzY6vswFjSa_lzgdfycgrcMFgRnWVpMGpWJITk1Csyp4Q40eAEbmwG0ib3Uoxh7pg1-xqFr9XyjEPjVqPc8l7A8HZ_1w7ZIo47URKHSz1VbqhRJHoZFrS7YFRX9G2rCnU6NrXMasfLHQwG9uQ8esFB91HOxXH6bStfw6-rjAnKb1Kv_KAml3pW6l7VtVs4_lKkmwtBTrcxZDKCaZNfKlLcDcKZzSz" alt="Le Choixpeau Magique sur son tabouret de chêne" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#1c0f0b] via-transparent to-transparent opacity-80"></div>
+              <div class="absolute bottom-2 left-3 right-3 text-left">
+                <span class="text-[10px] uppercase font-serif tracking-widest text-gold-400 px-2 py-0.5 rounded bg-black/60 border border-gold-500/30 backdrop-blur-sm">Grand Vestibule de Poudlard</span>
+              </div>
+            </div>
+
+            <!-- Titres et Textes officiels -->
+            <div class="space-y-1.5 px-2">
+              <h2 class="text-2xl md:text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ffe4a0] via-[#d49b42] to-[#eec66a] drop-shadow-sm">
+                Quelle Maison t'attend ?
+              </h2>
+              <p class="text-xs md:text-sm text-[#e6d3c0]/90 leading-relaxed font-sans max-w-md mx-auto">
+                « Laisse le Choixpeau révéler ta Maison… ou choisis toi-même ta destinée. »
+              </p>
+            </div>
+
+            <!-- Citation de bienvenue du Choixpeau -->
+            <div class="mt-4 p-3 rounded-xl bg-surface-dim/80 border border-gold-500/25 max-w-md text-left flex items-start gap-3">
+              <span class="text-xl">🧙‍♂️</span>
+              <p class="text-[11px] md:text-xs text-[#d8c2ad] italic font-serif leading-snug">
+                « Courageux, loyal, érudit ou rusé ? Pose-moi sur ta tête et voyons où bat ton cœur véritable… »
+              </p>
+            </div>
+          </div>
+
+          <!-- Les deux grands boutons clairement différenciés -->
+          <div class="w-full space-y-2.5 max-w-md pt-2">
+            <button onclick="startQuiz()" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 text-[#1b0d09] font-serif font-bold text-sm tracking-wide shadow-[0_6px_20px_rgba(212,155,66,0.35)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-gold-300/40">
+              <span class="text-base">✨</span>
+              <span>Passer le test du Choixpeau</span>
+            </button>
+            <button onclick="openHouseGallery()" class="w-full py-3.5 px-5 rounded-2xl bg-surface-container hover:bg-surface-high border border-gold-500/40 text-gold-300 font-serif font-semibold text-xs tracking-wider uppercase hover:border-gold-400 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+              <span>Choisir ma Maison</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 2A : QUESTIONNAIRE DU CHOIXPEAU (6 questions existantes) -->
+        <!-- ========================================================================= -->
+        <section id="step-quiz" class="hidden flex-1 flex flex-col justify-between py-1">
+          <!-- Progression -->
+          <div class="space-y-1.5 pb-2">
+            <div class="flex items-center justify-between text-[11px] font-serif text-gold-400">
+              <span id="quiz-progress-text">Question 1 sur 6</span>
+              <span class="italic text-gold-400/70">Le Choixpeau s'interroge…</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface-dim rounded-full overflow-hidden border border-gold-500/20">
+              <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-gold-600 to-gold-400 transition-all duration-300" style="width: 16.6%;"></div>
+            </div>
+          </div>
+
+          <!-- Énoncé de la Question -->
+          <div class="my-auto py-2">
+            <div class="p-3.5 rounded-2xl bg-surface-dim/90 border border-gold-500/30 text-center mb-4">
+              <span class="text-[10px] uppercase font-serif tracking-widest text-gold-400/80 block mb-1">Dilemme Moral Magique</span>
+              <h3 id="quiz-question-title" class="text-base md:text-lg font-serif font-bold text-[#faead3] leading-snug">
+                Face à une porte verrouillée par un enchantement inconnu dans un couloir oublié, que fais-tu ?
+              </h3>
+            </div>
+
+            <!-- Réponses (4 options) -->
+            <div id="quiz-options-container" class="space-y-2">
+              <!-- Rempli par JavaScript -->
+            </div>
+          </div>
+
+          <!-- Navigation du Quiz -->
+          <div class="flex items-center justify-between pt-3 border-t border-gold-500/20">
+            <button onclick="quizPrev()" id="btn-quiz-prev" class="px-3.5 py-2 rounded-xl bg-surface-container border border-gold-500/30 text-xs font-serif text-gold-400 hover:bg-surface-high disabled:opacity-30 disabled:pointer-events-none">
+              ← Précédente
+            </button>
+            <span class="text-[11px] text-gold-400/60 font-serif italic">Réponse instinctive requise</span>
+            <button onclick="quizNext()" id="btn-quiz-next" class="px-4 py-2 rounded-xl bg-gold-500 text-[#1b0d09] text-xs font-serif font-bold hover:bg-gold-400 disabled:opacity-40 disabled:pointer-events-none transition-colors">
+              Continuer →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 2B : GALERIE DES 4 MAISONS (Choix direct) -->
+        <!-- ========================================================================= -->
+        <section id="step-gallery" class="hidden flex-1 flex flex-col justify-between py-1">
+          <div class="text-center space-y-1 mb-2">
+            <h3 class="text-lg md:text-xl font-serif font-bold text-gold-300">Les Quatre Grandes Maisons</h3>
+            <p class="text-xs text-[#d8c2ad]">Touche le blason de l'illustre lignée que tu souhaites rejoindre.</p>
+          </div>
+
+          <!-- Grille des 4 Maisons avec blasons officiels existants -->
+          <div class="grid grid-cols-2 gap-2.5 my-auto max-w-lg mx-auto w-full">
+            <!-- Gryffondor -->
+            <div onclick="selectManualHouse('gryffindor')" id="house-card-gryffindor" class="house-card cursor-pointer p-3 rounded-2xl bg-surface-dim/90 border border-gold-500/30 hover:border-gold-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-16 h-16 rounded-xl overflow-hidden mb-2 border border-gold-500/40 shadow-md">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrBO0C_bpLRJg4dlYHximvs_IGDYFGNmgRybHoYKG_eA9RmTzV5-mHkcC81WdEfpGRI8CgxkvTX-p3d-potBpEYTQ5KyylusfL8bM1TaQD_v86oRcli1V37Hfgc8t5ji8DJ9QW2-4zQR0Gp40qnIG7OIw74ssun-j08Qmx4xgT1xIdJwv5Hi8CuMPzBfiSgCMYOz1qWP_757Xx8NzHIFxp4n_YPnySKrY3ZLLJydX30V2g" alt="Blason Gryffondor" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-serif font-bold text-sm text-[#fcd8d8] group-hover:text-gold-300">Gryffondor</h4>
+              <p class="text-[10px] text-gold-400/80 font-serif italic">Lion d'or · Courage & Hardiesse</p>
+            </div>
+
+            <!-- Serpentard -->
+            <div onclick="selectManualHouse('slytherin')" id="house-card-slytherin" class="house-card cursor-pointer p-3 rounded-2xl bg-surface-dim/90 border border-gold-500/30 hover:border-gold-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-16 h-16 rounded-xl overflow-hidden mb-2 border border-gold-500/40 shadow-md">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrBy8Burzoi2Qii6Q00rluvXqll4rhheGsdTp3pNh1OQB0vsbwjxXGWrGeoljgZA2jF-wKpzrul_KegGe1EcH8kKMuy5cOBm5RcsgTfqWaJIfStLCdembk5z9ejiBiIs6TXLp3E7djD2pkTFyp2gVNnGMbUQdCku3hxXm_AT9pupS7MzHZy0oWUpcMNzURSuCzUCEAzRUruo_90GClc7PyvExo8pIrPz2N3mF0QVxUxV0g" alt="Blason Serpentard" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-serif font-bold text-sm text-[#d4f2df] group-hover:text-gold-300">Serpentard</h4>
+              <p class="text-[10px] text-emerald-400/90 font-serif italic">Serpent d'argent · Ambition & Ruse</p>
+            </div>
+
+            <!-- Serdaigle -->
+            <div onclick="selectManualHouse('ravenclaw')" id="house-card-ravenclaw" class="house-card cursor-pointer p-3 rounded-2xl bg-surface-dim/90 border border-gold-500/30 hover:border-gold-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-16 h-16 rounded-xl overflow-hidden mb-2 border border-gold-500/40 shadow-md">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrD3m53fGpsv8uySgyjB6YWO_RwXuMMN4b4nqXa98gaI9vuU_YbcIGToeqhurn_-X86gD2OjqLwA8r4GCqDG4URUMylYwU-ARb2i8t50W5wb6hY6HOqbU8Cu0AoX8fY0NPKbE37uQeLRkaEpNJvNFxOP4vKrSNPxzjs0ii6BWDoG60ZzPHrHhIZB4VnwQU0qzXgSKXM9JNqEEG3q_HnHyCm898tlJRqXCYFfIBNj0tJYFw" alt="Blason Serdaigle" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-serif font-bold text-sm text-[#d8ebff] group-hover:text-gold-300">Serdaigle</h4>
+              <p class="text-[10px] text-cyan-400/90 font-serif italic">Aigle de bronze · Sagesse & Érudition</p>
+            </div>
+
+            <!-- Poufsouffle -->
+            <div onclick="selectManualHouse('hufflepuff')" id="house-card-hufflepuff" class="house-card cursor-pointer p-3 rounded-2xl bg-surface-dim/90 border border-gold-500/30 hover:border-gold-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-16 h-16 rounded-xl overflow-hidden mb-2 border border-gold-500/40 shadow-md">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrDSlJO754N3-zGXqD0quGRWmkMy5ef92ANGnqPLAOGMfGN19gwF5qOnPxdA-3SAmdle4qPuLLrv3RrOwdQjcSax5UOTWgL_E46DlHLZmvcTXolSUayBxlPGH43bUZwlznG1ycEctPHqZEKQlYmnMTelc0EnqjzESod82K7ArZIVEaYdGUTIag7VCsk3QhclIfz7xgN4tSRe4aiDpzxJ1tXkknBGFWDfNHwIt5XzdEPhBQ" alt="Blason Poufsouffle" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-serif font-bold text-sm text-[#ffe8b3] group-hover:text-gold-300">Poufsouffle</h4>
+              <p class="text-[10px] text-amber-400/90 font-serif italic">Blaireau fidèle · Loyauté & Constance</p>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-gold-500/20 flex items-center justify-between">
+            <button onclick="goToStep('intro')" class="px-3.5 py-2 rounded-xl bg-surface-container border border-gold-500/30 text-xs font-serif text-gold-400 hover:bg-surface-high">
+              ← Retour au Choixpeau
+            </button>
+            <button onclick="confirmManualHouseSelection()" id="btn-confirm-gallery" class="px-5 py-2.5 rounded-xl bg-gold-500 text-[#1b0d09] font-serif font-bold text-xs hover:bg-gold-400 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-md">
+              Voir la révélation →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 3 : SCÈNE DE RÉVÉLATION & CONFIRMATION DE LA MAISON -->
+        <!-- ========================================================================= -->
+        <section id="step-reveal" class="hidden flex-1 flex flex-col items-center justify-between text-center py-2">
+          <div class="w-full flex flex-col items-center space-y-3">
+            <span class="text-[10px] uppercase font-serif tracking-[0.25em] text-gold-400 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30">
+              Scellé par le Choixpeau Magique
+            </span>
+
+            <!-- Grande Illustration du Blason de la Maison -->
+            <div class="relative w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden border-2 border-gold-400 shadow-[0_0_35px_rgba(212,155,66,0.45)] group">
+              <img id="reveal-crest-img" src="https://lh3.googleusercontent.com/aida/ALJJyrBO0C_bpLRJg4dlYHximvs_IGDYFGNmgRybHoYKG_eA9RmTzV5-mHkcC81WdEfpGRI8CgxkvTX-p3d-potBpEYTQ5KyylusfL8bM1TaQD_v86oRcli1V37Hfgc8t5ji8DJ9QW2-4zQR0Gp40qnIG7OIw74ssun-j08Qmx4xgT1xIdJwv5Hi8CuMPzBfiSgCMYOz1qWP_757Xx8NzHIFxp4n_YPnySKrY3ZLLJydX30V2g" alt="Blason Révélé" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Titre et Fondateur -->
+            <div class="space-y-1">
+              <h2 id="reveal-house-name" class="text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500">
+                Gryffondor !
+              </h2>
+              <p id="reveal-house-values" class="text-xs font-serif text-gold-300/90 font-medium tracking-wide">
+                « Courage, bravoure et force d'âme »
+              </p>
+            </div>
+
+            <!-- Explication élégante -->
+            <div class="p-3.5 rounded-2xl bg-surface-dim/90 border border-gold-500/30 text-left max-w-md">
+              <div class="flex items-center gap-2 mb-1.5 text-gold-400 text-xs font-serif">
+                <span>📜</span>
+                <span id="reveal-founder-text" class="font-bold">Fondée par Godric Gryffondor</span>
+              </div>
+              <p id="reveal-description-text" class="text-[11px] md:text-xs text-[#ddcfc0] leading-relaxed">
+                Le Choixpeau n'a pas hésité un instant : ton cœur s'élève face aux défis, défend sans relâche les membres de ta maisonnée et puise sa magie dans la noblesse de ses intentions.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bouton de confirmation menant directement à la Cérémonie du Patronus -->
+          <div class="w-full max-w-md pt-3">
+            <button onclick="proceedToPatronusCeremony()" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-gold-600 via-gold-500 to-gold-400 text-[#1b0d09] font-serif font-bold text-sm tracking-wide shadow-[0_6px_20px_rgba(212,155,66,0.35)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-gold-300/40">
+              <span>Confirmer ma Maison & Poursuivre le Rituel</span>
+              <span>→</span>
+            </button>
+            <p class="text-[10px] text-gold-400/60 font-serif italic text-center mt-2">
+              Prochaine étape : L'apparition de ton esprit protecteur (Patronus)
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- LOGIQUE APPLICATIVE COMPLETE DU QUIZ ET DES CHOIX -->
+  <script>
+    const housesData = {
+      gryffindor: {
+        name: "Gryffondor",
+        founder: "Fondée par Godric Gryffondor",
+        crest: "https://lh3.googleusercontent.com/aida/ALJJyrBO0C_bpLRJg4dlYHximvs_IGDYFGNmgRybHoYKG_eA9RmTzV5-mHkcC81WdEfpGRI8CgxkvTX-p3d-potBpEYTQ5KyylusfL8bM1TaQD_v86oRcli1V37Hfgc8t5ji8DJ9QW2-4zQR0Gp40qnIG7OIw74ssun-j08Qmx4xgT1xIdJwv5Hi8CuMPzBfiSgCMYOz1qWP_757Xx8NzHIFxp4n_YPnySKrY3ZLLJydX30V2g",
+        values: "« Courage, bravoure et hardiesse d'esprit »",
+        desc: "Ton cœur bat avec ardeur face aux épreuves du quotidien. Tu sais défendre tes proches, prendre des initiatives généreuses pour ta maisonnée et insuffler une énergie communicative à chaque rituel partagé."
+      },
+      slytherin: {
+        name: "Serpentard",
+        founder: "Fondée par Salazar Serpentard",
+        crest: "https://lh3.googleusercontent.com/aida/ALJJyrBy8Burzoi2Qii6Q00rluvXqll4rhheGsdTp3pNh1OQB0vsbwjxXGWrGeoljgZA2jF-wKpzrul_KegGe1EcH8kKMuy5cOBm5RcsgTfqWaJIfStLCdembk5z9ejiBiIs6TXLp3E7djD2pkTFyp2gVNnGMbUQdCku3hxXm_AT9pupS7MzHZy0oWUpcMNzURSuCzUCEAzRUruo_90GClc7PyvExo8pIrPz2N3mF0QVxUxV0g",
+        values: "« Ambition, ruse, grandeur et perspicacité »",
+        desc: "Un esprit stratégique et une détermination sans faille. Tu organises les affaires du foyer avec une rare clairvoyance, ne laissant aucun imprévu au hasard et visant l'excellence pour les tiens."
+      },
+      ravenclaw: {
+        name: "Serdaigle",
+        founder: "Fondée par Rowena Serdaigle",
+        crest: "https://lh3.googleusercontent.com/aida/ALJJyrD3m53fGpsv8uySgyjB6YWO_RwXuMMN4b4nqXa98gaI9vuU_YbcIGToeqhurn_-X86gD2OjqLwA8r4GCqDG4URUMylYwU-ARb2i8t50W5wb6hY6HOqbU8Cu0AoX8fY0NPKbE37uQeLRkaEpNJvNFxOP4vKrSNPxzjs0ii6BWDoG60ZzPHrHhIZB4VnwQU0qzXgSKXM9JNqEEG3q_HnHyCm898tlJRqXCYFfIBNj0tJYFw",
+        values: "« Sagesse, curiosité, érudition et créativité »",
+        desc: "Ton intelligence alerte et ton amour du savoir illuminent le logis. Tu trouves des solutions ingénieuses aux défis du quotidien, conserves précieusement les archives et nourris l'esprit de toute la maisonnée."
+      },
+      hufflepuff: {
+        name: "Poufsouffle",
+        founder: "Fondée par Helga Poufsouffle",
+        crest: "https://lh3.googleusercontent.com/aida/ALJJyrDSlJO754N3-zGXqD0quGRWmkMy5ef92ANGnqPLAOGMfGN19gwF5qOnPxdA-3SAmdle4qPuLLrv3RrOwdQjcSax5UOTWgL_E46DlHLZmvcTXolSUayBxlPGH43bUZwlznG1ycEctPHqZEKQlYmnMTelc0EnqjzESod82K7ArZIVEaYdGUTIag7VCsk3QhclIfz7xgN4tSRe4aiDpzxJ1tXkknBGFWDfNHwIt5XzdEPhBQ",
+        values: "« Loyauté, patience, bienveillance et constance »",
+        desc: "Le pilier le plus solide et chaleureux de la maison. D'une fidélité à toute épreuve, tu veilles au bien-être de chacun, sans jamais chercher la gloire mais en rendant chaque journée douce et réconfortante."
+      }
+    };
+
+    // Les 6 Questions existantes du Choixpeau
+    const quizQuestions = [
+      {
+        question: "Face à une porte verrouillée par un enchantement inconnu dans un couloir oublié, que fais-tu ?",
+        answers: [
+          { text: "Je tente de crocheter ou analyser calmement la serrure avec minutie.", house: "ravenclaw" },
+          { text: "Je cherche une entrée dérobée ou un mécanisme secret moins évident.", house: "slytherin" },
+          { text: "J'enfonce la porte ou j'utilise un sortilège de rupture sans hésiter.", house: "gryffindor" },
+          { text: "Je cherche les clés dans la loge du gardien pour éviter d'endommager la porte.", house: "hufflepuff" }
+        ]
+      },
+      {
+        question: "Quelle qualité est la plus précieuse au sein d'une maisonnée harmonieuse ?",
+        answers: [
+          { text: "La loyauté indéfectible et l'entraide de chaque instant.", house: "hufflepuff" },
+          { text: "La clarté d'esprit et la transmission des savoirs essentiels.", house: "ravenclaw" },
+          { text: "L'audace d'entreprendre et de protéger les siens quoi qu'il en coûte.", house: "gryffindor" },
+          { text: "La prévoyance, l'ambition et la réussite des projets familiaux.", house: "slytherin" }
+        ]
+      },
+      {
+        question: "Dans le grand Grimoire des recettes de Dobby, quelle concoction t'attire en premier ?",
+        answers: [
+          { text: "Une potion de Vivacité d'Esprit aux aromates rares et subtils.", house: "ravenclaw" },
+          { text: "Un élixir de Force Céleste qui redouble le courage et l'énergie.", house: "gryffindor" },
+          { text: "Un Philtre de Prospérité assurant succès et abondance au domaine.", house: "slytherin" },
+          { text: "Un bouillon mijoté au chaudron, réconfortant et généreux pour tous.", house: "hufflepuff" }
+        ]
+      },
+      {
+        question: "Quand un différend surgit lors de l'attribution des corvées du logis :",
+        answers: [
+          { text: "Je propose une règle équitable et vérifiable que tout le monde peut suivre.", house: "ravenclaw" },
+          { text: "Je prends en charge spontanément la part la plus lourde pour apaiser.", house: "hufflepuff" },
+          { text: "Je tranche avec franchise et invite chacun à assumer son devoir.", house: "gryffindor" },
+          { text: "Je négocie habilement les tâches selon les forces et faiblesses de chacun.", house: "slytherin" }
+        ]
+      },
+      {
+        question: "Quel instrument magique emporterais-tu en priorité sur le Chemin de Traverse ?",
+        answers: [
+          { text: "Une montre enchantée à gousset indiquant la position et l'humeur des tiens.", house: "hufflepuff" },
+          { text: "Une épée gravée d'argent capable de fendre toute obscurité.", house: "gryffindor" },
+          { text: "Un registre alchimique infini qui consigne secrets et transactions.", house: "slytherin" },
+          { text: "Un astrolabe céleste dévoilant les vérités cachées du monde.", house: "ravenclaw" }
+        ]
+      },
+      {
+        question: "Au crépuscule, quel lieu de la maisonnée t'inspire la plus grande paix ?",
+        answers: [
+          { text: "L'âtre crépite dans la cuisine avec une tarte tiède et le thé prêt.", house: "hufflepuff" },
+          { text: "La haute tour d'observation sous la voûte constellée d'étoiles.", house: "ravenclaw" },
+          { text: "Le cabinet privé en bois d'acajou où se tissent les grands destins.", house: "slytherin" },
+          { text: "La grande terrasse ouverte face au vent et aux cimes lointaines.", house: "gryffindor" }
+        ]
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let quizScores = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+    let selectedAnswerForCurrentQ = null;
+    let selectedManualHouseKey = null;
+
+    function goToStep(step) {
+      AudioEngine.playChime('select');
+      ['step-intro', 'step-quiz', 'step-gallery', 'step-reveal'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById('btn-back').classList.toggle('hidden', step === 'intro');
+      
+      if (step === 'intro') {
+        document.getElementById('step-intro').classList.remove('hidden');
+        document.getElementById('modal-header-title').textContent = "La Cérémonie du Choixpeau";
+      } else if (step === 'quiz') {
+        document.getElementById('step-quiz').classList.remove('hidden');
+        document.getElementById('modal-header-title').textContent = "Questionnaire du Choixpeau";
+        renderQuestion();
+      } else if (step === 'gallery') {
+        document.getElementById('step-gallery').classList.remove('hidden');
+        document.getElementById('modal-header-title').textContent = "Choix Direct de la Maison";
+      } else if (step === 'reveal') {
+        document.getElementById('step-reveal').classList.remove('hidden');
+        document.getElementById('modal-header-title').textContent = "Révélation de la Maison";
+        AudioEngine.playChime('reveal');
+      }
+    }
+
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      quizScores = { gryffindor: 0, slytherin: 0, ravenclaw: 0, hufflepuff: 0 };
+      selectedAnswerForCurrentQ = null;
+      goToStep('quiz');
+    }
+
+    function openHouseGallery() {
+      selectedManualHouseKey = null;
+      document.querySelectorAll('.house-card').forEach(el => el.classList.remove('border-gold-400', 'bg-gold-500/20', 'ring-2', 'ring-gold-400'));
+      document.getElementById('btn-confirm-gallery').disabled = true;
+      goToStep('gallery');
+    }
+
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestionIndex];
+      document.getElementById('quiz-progress-text').textContent = `Question ${currentQuestionIndex + 1} sur ${quizQuestions.length}`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%`;
+      document.getElementById('quiz-question-title').textContent = q.question;
+      
+      const container = document.getElementById('quiz-options-container');
+      container.innerHTML = '';
+      selectedAnswerForCurrentQ = null;
+      document.getElementById('btn-quiz-next').disabled = true;
+
+      q.answers.forEach((ans, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full p-3 rounded-xl bg-surface-container/80 border border-gold-500/25 hover:border-gold-400 hover:bg-surface-high transition-all text-left flex items-start gap-2.5 text-xs text-[#e6d3c0] font-sans";
+        btn.onclick = () => selectQuizOption(btn, ans.house);
+        btn.innerHTML = `
+          <span class="w-5 h-5 rounded-full border border-gold-500/40 flex items-center justify-center text-[10px] text-gold-400 font-serif flex-shrink-0 mt-0.5">
+            ${String.fromCharCode(65 + idx)}
+          </span>
+          <span class="leading-snug">${ans.text}</span>
+        `;
+        container.appendChild(btn);
+      });
+
+      document.getElementById('btn-quiz-prev').disabled = currentQuestionIndex === 0;
+      document.getElementById('btn-quiz-next').textContent = currentQuestionIndex === quizQuestions.length - 1 ? "Découvrir ma Maison ✨" : "Continuer →";
+    }
+
+    function selectQuizOption(btnEl, house) {
+      AudioEngine.playChime('select');
+      document.querySelectorAll('#quiz-options-container button').forEach(b => {
+        b.classList.remove('border-gold-400', 'bg-gold-500/20', 'ring-1', 'ring-gold-400');
+      });
+      btnEl.classList.add('border-gold-400', 'bg-gold-500/20', 'ring-1', 'ring-gold-400');
+      selectedAnswerForCurrentQ = house;
+      document.getElementById('btn-quiz-next').disabled = false;
+    }
+
+    function quizNext() {
+      if (!selectedAnswerForCurrentQ) return;
+      quizScores[selectedAnswerForCurrentQ]++;
+
+      if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        // Calcul de la maison gagnante
+        let winningHouse = 'gryffindor';
+        let maxScore = -1;
+        for (const [house, score] of Object.entries(quizScores)) {
+          if (score > maxScore) {
+            maxScore = score;
+            winningHouse = house;
+          }
+        }
+        showRevealScreen(winningHouse, true);
+      }
+    }
+
+    function quizPrev() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+
+    function selectManualHouse(houseKey) {
+      AudioEngine.playChime('select');
+      selectedManualHouseKey = houseKey;
+      document.querySelectorAll('.house-card').forEach(el => {
+        el.classList.remove('border-gold-400', 'bg-gold-500/20', 'ring-2', 'ring-gold-400');
+      });
+      const target = document.getElementById(`house-card-${houseKey}`);
+      if (target) {
+        target.classList.add('border-gold-400', 'bg-gold-500/20', 'ring-2', 'ring-gold-400');
+      }
+      document.getElementById('btn-confirm-gallery').disabled = false;
+    }
+
+    function confirmManualHouseSelection() {
+      if (!selectedManualHouseKey) return;
+      showRevealScreen(selectedManualHouseKey, false);
+    }
+
+    function showRevealScreen(houseKey, wasQuiz = true) {
+      const data = housesData[houseKey] || housesData.gryffindor;
+      document.getElementById('reveal-crest-img').src = data.crest;
+      document.getElementById('reveal-house-name').textContent = data.name + " !";
+      document.getElementById('reveal-house-values').textContent = data.values;
+      document.getElementById('reveal-founder-text').textContent = data.founder;
+      document.getElementById('reveal-description-text').textContent = wasQuiz
+        ? data.desc
+        : `Tu as scellé ton allégeance à la noble maison ${data.name}. Tes valeurs de loyauté, d'engagement et de dévouement accompagneront chaque rituel de ton foyer.`;
+
+      // Sauvegarde locale dans session storage pour le profil
+      try {
+        sessionStorage.setItem('dobby_selected_house', houseKey);
+      } catch(e) {}
+
+      goToStep('reveal');
+    }
+
+    function proceedToPatronusCeremony() {
+      AudioEngine.playChime('reveal');
+      // Animation de transition fluide vers la fenêtre Patronus
+      const mainContainer = document.querySelector('main > div');
+      mainContainer.classList.add('transition-all', 'duration-500', 'opacity-0', 'scale-95');
+      setTimeout(() => {
+        // Redirection vers la deuxième fenêtre
+        window.location.href = '#patronus';
+        alert("✨ Maison confirmée avec succès ! La Cérémonie de découverte du Patronus s'ouvre au crépuscule...");
+      }, 500);
+    }
+  </script>
+</body>
+</html>

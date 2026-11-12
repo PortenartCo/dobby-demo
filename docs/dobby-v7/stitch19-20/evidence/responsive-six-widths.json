@@ -1,0 +1,963 @@
+{
+  "status": "PASS",
+  "widths": [
+    320,
+    390,
+    768,
+    1024,
+    1440,
+    1920
+  ],
+  "results": [
+    {
+      "width": 320,
+      "file": "famille.html",
+      "geometry": {
+        "width": 320,
+        "body": 320,
+        "main": 320,
+        "overflow": 0,
+        "height": 1703,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.311926605504587,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 550
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 320,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 320,
+      "file": "traverse.html",
+      "geometry": {
+        "width": 320,
+        "body": 320,
+        "main": 320,
+        "overflow": 0,
+        "height": 1965,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.348623853211009,
+          "assetRatio": 1.4927113702623906
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 540
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 320,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 320,
+      "file": "missions.html",
+      "geometry": {
+        "width": 320,
+        "body": 320,
+        "main": 320,
+        "overflow": 0,
+        "height": 958,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.7875,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 114,
+        "touch": 114
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 320,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 320,
+      "file": "index.html",
+      "geometry": {
+        "width": 320,
+        "body": 320,
+        "main": 320,
+        "overflow": 0,
+        "height": 2314,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.5698924731182795,
+          "assetRatio": 1.7916666666666667
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 610
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 320,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 320,
+      "shortForm": {
+        "top": 276,
+        "bottom": 328,
+        "hit": true
+      },
+      "dialog": {
+        "wheel": 450,
+        "touch": 169
+      },
+      "nativeDialog": {
+        "wheel": 450,
+        "touch": 312
+      }
+    },
+    {
+      "width": 390,
+      "file": "famille.html",
+      "geometry": {
+        "width": 390,
+        "body": 390,
+        "main": 390,
+        "overflow": 0,
+        "height": 1404,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.6330275229357798,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 556
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "file": "traverse.html",
+      "geometry": {
+        "width": 390,
+        "body": 390,
+        "main": 390,
+        "overflow": 0,
+        "height": 1847,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.6697247706422018,
+          "assetRatio": 1.4927113702623906
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 563
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "file": "missions.html",
+      "geometry": {
+        "width": 390,
+        "body": 390,
+        "main": 390,
+        "overflow": 0,
+        "height": 907,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.225,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 63,
+        "touch": 63
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "file": "index.html",
+      "geometry": {
+        "width": 390,
+        "body": 390,
+        "main": 390,
+        "overflow": 0,
+        "height": 2141,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 1.946236559139785,
+          "assetRatio": 1.7916666666666667
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 555
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 390,
+      "shortForm": {
+        "top": 276,
+        "bottom": 328,
+        "hit": true
+      },
+      "dialog": {
+        "wheel": 450,
+        "touch": 190
+      },
+      "nativeDialog": {
+        "wheel": 450,
+        "touch": 299
+      }
+    },
+    {
+      "width": 768,
+      "file": "famille.html",
+      "geometry": {
+        "width": 768,
+        "body": 768,
+        "main": 768,
+        "overflow": 0,
+        "height": 1298,
+        "hero": null
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 542
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 768,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 768,
+      "file": "traverse.html",
+      "geometry": {
+        "width": 768,
+        "body": 768,
+        "main": 768,
+        "overflow": 0,
+        "height": 1399,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.9159663865546217,
+          "assetRatio": 1.4927113702623906
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 361
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 768,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 768,
+      "file": "missions.html",
+      "geometry": {
+        "width": 768,
+        "body": 768,
+        "main": 768,
+        "overflow": 0,
+        "height": 907,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 4.4875,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 63,
+        "touch": 63
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 768,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 768,
+      "file": "index.html",
+      "geometry": {
+        "width": 768,
+        "body": 768,
+        "main": 768,
+        "overflow": 0,
+        "height": 2191,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.9322033898305087,
+          "assetRatio": 1.7916666666666667
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 525
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 768,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 768,
+      "shortForm": {
+        "top": 276,
+        "bottom": 328,
+        "hit": true
+      },
+      "dialog": {
+        "wheel": 450,
+        "touch": 186
+      },
+      "nativeDialog": {
+        "wheel": 450,
+        "touch": 298
+      }
+    },
+    {
+      "width": 1024,
+      "file": "famille.html",
+      "geometry": {
+        "width": 1024,
+        "body": 1024,
+        "main": 1024,
+        "overflow": 0,
+        "height": 1454,
+        "hero": null
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 525
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 1024,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1024,
+      "file": "traverse.html",
+      "geometry": {
+        "width": 1024,
+        "body": 1024,
+        "main": 1024,
+        "overflow": 0,
+        "height": 1424,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 3.11284046692607,
+          "assetRatio": 1.4927113702623906
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 520
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 1024,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1024,
+      "file": "missions.html",
+      "geometry": {
+        "width": 1024,
+        "body": 1024,
+        "main": 1024,
+        "overflow": 0,
+        "height": 907,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 6.0875,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 63,
+        "touch": 63
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 1024,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1024,
+      "file": "index.html",
+      "geometry": {
+        "width": 1024,
+        "body": 1024,
+        "main": 1024,
+        "overflow": 0,
+        "height": 2258,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 3.126777983920841,
+          "assetRatio": 1.7916666666666667
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 493
+      },
+      "chrome": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 1024,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 1024,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1024,
+      "shortForm": {
+        "top": 276,
+        "bottom": 328,
+        "hit": true
+      },
+      "dialog": {
+        "wheel": 450,
+        "touch": 161
+      },
+      "nativeDialog": {
+        "wheel": 450,
+        "touch": 301
+      }
+    },
+    {
+      "width": 1440,
+      "file": "famille.html",
+      "geometry": {
+        "width": 1440,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 1478,
+        "hero": null
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 515
+      },
+      "chrome": {
+        "header": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 80,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "file": "traverse.html",
+      "geometry": {
+        "width": 1440,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 1537,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.8851674641148324,
+          "assetRatio": 1.4927113702623906
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 543
+      },
+      "chrome": {
+        "header": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 80,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "file": "missions.html",
+      "geometry": {
+        "width": 1440,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 907,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 7.6875,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 63,
+        "touch": 63
+      },
+      "chrome": {
+        "header": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 80,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "file": "index.html",
+      "geometry": {
+        "width": 1440,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 2371,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.894230769230769,
+          "assetRatio": 1.7916666666666667
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 555
+      },
+      "chrome": {
+        "header": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 80,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "shortForm": {
+        "top": 276,
+        "bottom": 328,
+        "hit": true
+      },
+      "dialog": {
+        "wheel": 450,
+        "touch": 132
+      },
+      "nativeDialog": {
+        "wheel": 450,
+        "touch": 203
+      }
+    },
+    {
+      "width": 1920,
+      "file": "famille.html",
+      "geometry": {
+        "width": 1920,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 1566,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.8660287081339715,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 547
+      },
+      "chrome": {
+        "header": {
+          "x": 320,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 320,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1920,
+      "file": "traverse.html",
+      "geometry": {
+        "width": 1920,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 1537,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.8851674641148324,
+          "assetRatio": 1.4927113702623906
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 547
+      },
+      "chrome": {
+        "header": {
+          "x": 320,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 320,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1920,
+      "file": "missions.html",
+      "geometry": {
+        "width": 1920,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 907,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 7.6875,
+          "assetRatio": 1.7902097902097902
+        }
+      },
+      "movement": {
+        "wheel": 63,
+        "touch": 63
+      },
+      "chrome": {
+        "header": {
+          "x": 320,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 320,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1920,
+      "file": "index.html",
+      "geometry": {
+        "width": 1920,
+        "body": 1280,
+        "main": 1280,
+        "overflow": 0,
+        "height": 2371,
+        "hero": {
+          "fit": "contain",
+          "frameRatio": 2.894230769230769,
+          "assetRatio": 1.7916666666666667
+        }
+      },
+      "movement": {
+        "wheel": 450,
+        "touch": 528
+      },
+      "chrome": {
+        "header": {
+          "x": 320,
+          "y": 0,
+          "width": 1280,
+          "height": 68,
+          "hit": true
+        },
+        "dock": {
+          "x": 320,
+          "y": 763,
+          "width": 1280,
+          "height": 81,
+          "hit": true
+        }
+      }
+    },
+    {
+      "width": 1920,
+      "shortForm": {
+        "top": 276,
+        "bottom": 328,
+        "hit": true
+      },
+      "dialog": {
+        "wheel": 450,
+        "touch": 132
+      },
+      "nativeDialog": {
+        "wheel": 450,
+        "touch": 203
+      }
+    }
+  ],
+  "physicalKeyboard": false,
+  "backendVerified": false
+}

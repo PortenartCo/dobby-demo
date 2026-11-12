@@ -15,7 +15,10 @@ function copy(file){const rel=path.relative(repo,file).split(path.sep).join('/')
 if(/\.html$/.test(file)){let text=raw.toString(),runtime=path.relative(path.dirname(target),path.join(out,'review-runtime.js')).split(path.sep).join('/'),config=path.relative(path.dirname(target),path.join(out,'review-config.js')).split(path.sep).join('/');text=text.replace(/<link\b[^>]*href=["']https?:[^>]*>/gi,'');text=text.replace('<head>',`<head><meta http-equiv="Content-Security-Policy" content="${csp}">${configured?`<script src="${config}"></script>`:''}<script src="${runtime}"></script>`);bytes=Buffer.from(text);}
 if(rel==='essai-stitch-v5-famille/family-v2.js')bytes=Buffer.from(raw.toString().replace('function openModal() {',"function openModal() {\n  if(window.DobbyReview){alert('Démonstration isolée : aucun compte familial réel. Les données restent dans cet aperçu.');return;}"));
 if(configured&&rel==='essai-stitch-v5-famille/family-profile.js'){
- const source=raw.toString(),marker='const linkedMember=()=>null;';if(!source.includes(marker))throw Error('Verified profile association stub changed; review required.');
+ const source=raw.toString(),marker="const linkedMember=(members,context)=>context?.identityVerified===true&&typeof context.memberId==='string'?members.find(member=>member.id===context.memberId)||null:null;";
+ // Deliberately match the complete reviewed native implementation exactly once.
+ // Persona association belongs only to the generated historical review copy.
+ if(source.split(marker).length!==2)throw Error('Verified profile association implementation changed; review required.');
  bytes=Buffer.from(source.replace(marker,"const linkedMember=members=>window.DobbyReview?.demoMemberId?(members||[]).find(member=>member.id===window.DobbyReview.demoMemberId)||null:null;"));
 }
 if(configured&&rel==='essai-stitch-v5-famille/family-v2.js'){

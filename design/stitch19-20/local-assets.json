@@ -1,0 +1,128 @@
+{
+  "title": "Audited existing local artwork",
+  "assets": [
+    {
+      "role": "welcome-dobby-lantern",
+      "path": "essai-v6-preview/assets/v6/traverse.png",
+      "width": 512,
+      "height": 343,
+      "mimeType": "image/jpeg",
+      "bytes": 80007,
+      "sha256": "ee369ba1493c160e326ed9fe402851a959aa1078e0dbe19556b58ecd911c5c05"
+    },
+    {
+      "role": "welcome-dobby-hearth-closeup",
+      "path": "essai-stitch-v7/assets/remaining/41e997ebd3dbb0da.png",
+      "width": 512,
+      "height": 286,
+      "mimeType": "image/jpeg",
+      "bytes": 46685,
+      "sha256": "2d81b25fb96c0b076b4023505baad42afcac5bd5fd36ecf55e3356a821480451"
+    },
+    {
+      "role": "dobby-hearth-portrait",
+      "path": "essai-stitch-v7/assets/onboarding/ritual-hearth-original.png",
+      "width": 1024,
+      "height": 1536,
+      "mimeType": "image/png",
+      "bytes": 2810785,
+      "sha256": "9f018aece060b32b88da7a969c67d4656be279d1176c93eb993bdee35420fc0f"
+    },
+    {
+      "role": "sorting-hat",
+      "path": "essai-stitch-v7/assets/ceremony-v2/sorting-hat-cinematic.png",
+      "width": 1376,
+      "height": 768,
+      "mimeType": "image/png",
+      "bytes": 1553869,
+      "sha256": "0a0dd977eff92d06157590355fd18bb54c64062921b6af7aab7b2f289b15b7a9"
+    },
+    {
+      "role": "house-gryffindor",
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-gryffindor.png",
+      "width": 1024,
+      "height": 1024,
+      "mimeType": "image/png",
+      "bytes": 1421843,
+      "sha256": "7cdcee1094f4eb7f36da04e321ce54e3122295b05d4afa083251d7e4c827028c"
+    },
+    {
+      "role": "house-slytherin",
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-slytherin.png",
+      "width": 1024,
+      "height": 1024,
+      "mimeType": "image/png",
+      "bytes": 1513821,
+      "sha256": "a51c6e16dc3cf2456ab8063a3d548dcf662d493520ebbb2472dcf294e3f2c4d9"
+    },
+    {
+      "role": "house-ravenclaw",
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-ravenclaw.png",
+      "width": 1024,
+      "height": 1024,
+      "mimeType": "image/png",
+      "bytes": 1464723,
+      "sha256": "77612a996215a2cf8335a5fa5e7e40e15ec1760bf4bc0cc9ae9da4d957ff868d"
+    },
+    {
+      "role": "house-hufflepuff",
+      "path": "essai-stitch-v7/assets/ceremony-v2/house-hufflepuff.png",
+      "width": 1024,
+      "height": 1024,
+      "mimeType": "image/png",
+      "bytes": 1541475,
+      "sha256": "221590fbe9cf1f5142e19aca58c0456c2491c41bc64cebaa46b029fba1ee10f4"
+    },
+    {
+      "role": "native-eight-human-portraits",
+      "path": "essai-stitch-v7/assets/magic/avatars.png",
+      "width": 1254,
+      "height": 1254,
+      "mimeType": "image/png",
+      "bytes": 2203900,
+      "sha256": "ee8454034a57ce8f7e57d3da20e91b1a0fc121e5f9e88cec0c13c6119838d2bf"
+    },
+    {
+      "role": "recovered-sixteen-human-portraits",
+      "path": "essai-stitch-v7/assets/magic/portraits-09-24.png",
+      "width": 1254,
+      "height": 1254,
+      "mimeType": "image/png",
+      "bytes": 2678231,
+      "sha256": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9"
+    },
+    {
+      "role": "twelve-patronuses",
+      "path": "essai-stitch-v7/assets/magic/patronuses.png",
+      "width": 1254,
+      "height": 1254,
+      "mimeType": "image/png",
+      "bytes": 2056119,
+      "sha256": "d5cfbc8a1eb77c015bf826af4d3b833013434fc3008e40ab83e1bacb54fa6acf"
+    }
+  ],
+  "avatars": {
+    "originalIds": "portrait-1..portrait-8",
+    "originalAtlasCrop": "Keep native 400% 400%, X column/3; Y 16.666667% or 83.333333%.",
+    "recoveredIds": "portrait-9..portrait-24",
+    "recoveredAtlasCrop": "4×4; 400% 400%; X column/3, Y row/3.",
+    "status": "Sixteen coherent human portraits recovered locally; no missing resource claim."
+  },
+  "patronuses": {
+    "ids": [
+      "stag",
+      "otter",
+      "fox",
+      "wolf",
+      "cat",
+      "owl",
+      "horse",
+      "hare",
+      "swan",
+      "lynx",
+      "badger",
+      "dolphin"
+    ],
+    "atlasCrop": "4×3; 400% 300%; X column/3, Y row/2; display ratio 3:4."
+  }
+}

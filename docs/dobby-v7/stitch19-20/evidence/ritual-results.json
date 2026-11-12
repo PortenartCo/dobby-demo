@@ -1,0 +1,53 @@
+{
+  "origin": "http://127.0.0.1:8819",
+  "base": "/essai-stitch-v7",
+  "realAccounts": false,
+  "externalBackend": "blocked",
+  "businessMocks": false,
+  "results": [
+    {
+      "name": "first single touch uses default ON and green flames",
+      "status": "PASS"
+    },
+    {
+      "name": "effects false sound false reduced false",
+      "status": "PASS"
+    },
+    {
+      "name": "effects false sound true reduced false",
+      "status": "PASS"
+    },
+    {
+      "name": "effects true sound false reduced true",
+      "status": "PASS"
+    },
+    {
+      "name": "effects true sound true reduced true",
+      "status": "PASS"
+    },
+    {
+      "name": "late image decode preserves short sound with effects false reduced false",
+      "status": "PASS"
+    },
+    {
+      "name": "late image decode preserves short sound with effects true reduced true",
+      "status": "PASS"
+    },
+    {
+      "name": "session entry bypasses seen intro and ends at Traverse",
+      "status": "PASS"
+    },
+    {
+      "name": "configured profile retains legacy bypass but session entry shows Cheminette",
+      "status": "PASS"
+    },
+    {
+      "name": "leaving a running traversal closes audio and animation without late navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "hidden traversal can be retried without duplicate animation or audio",
+      "status": "PASS"
+    }
+  ]
+}

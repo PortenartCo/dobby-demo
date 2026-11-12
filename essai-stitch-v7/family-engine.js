@@ -38,6 +38,12 @@ window.DobbyFamilyStitchEngine=(()=>{
   if(Object.hasOwn(values,'birthdate')&&values.birthdate===''&&current?.birthdate&&!win().DobbyFamilyMemberPolicy.validDate(current.birthdate))values.clearBirthdate='true';
   const structured=['firstName','lastName','profileFirstName','profileLastName'].some(key=>Object.hasOwn(values,key));
   if(structured&&!Object.hasOwn(values,'name'))values.name=[values.firstName??values.profileFirstName??current?.firstName??'',values.lastName??values.profileLastName??current?.lastName??''].map(value=>String(value).trim()).filter(Boolean).join(' ');
+  const api=win().DobbyFamilyUI,context=api?.getContext?.(),bound=api?.access?.state?.();
+  if(current&&context?.identityVerified&&bound?.verified&&context.memberId===id&&bound.memberId===id&&context.userId===bound.userId&&context.householdId===bound.householdId){
+   if(!memberPermissions(id).canEdit||typeof api.access.updateMember!=='function')throw Error('Modification du profil serveur indisponible pour ce compte.');
+   if(['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony'].some(key=>Object.hasOwn(values,key)))throw Error('Utilisez les questionnaires ou galeries magiques pour confirmer ce résultat.');
+   return api.access.updateMember({memberId:id,values,expectedRevision:bound.familyRevision,operationId:crypto.randomUUID()}).then(()=>id);
+  }
   memberForm(id);const form=win().document.getElementById('v23MemberForm');
   if(values.avatar&&![...form.elements.avatar.options].some(o=>o.value===values.avatar))form.elements.avatar.add(new (win().Option)(values.avatar,values.avatar));
   for(const name of ['firstName','lastName','nickname','memberCategory','notes','species','clearBirthdate','magicHouseId','magicPatronusId','magicAvatarId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony','profileFirstName','profileLastName'])if(Object.hasOwn(values,name)){const input=win().document.createElement('input');input.type='hidden';input.name=name;form.append(input);}
@@ -47,6 +53,7 @@ window.DobbyFamilyStitchEngine=(()=>{
  // Answers, never a caller-selected result ID. The native adapter recomputes
  // with E06 and grants a one-form confirmation capability to its own writer.
  const saveMagicResult=(id,kind,answers)=>win().DobbyFamilyMembers.saveMagicResult(id,kind,answers);
+ const saveMagicChoice=(id,kind,resultId)=>win().DobbyFamilyMembers.saveMagicChoice(id,kind,resultId);
  const finishMagicCeremony=id=>win().DobbyFamilyMembers.finishMagicCeremony(id);
  function deleteMember(id){requireRecord(read().members,id);page('health');action('v23Member','delete',{id});return !read().members.some(x=>x.id===id);}
  function localForm(id,personId){requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}
@@ -99,5 +106,5 @@ window.DobbyFamilyStitchEngine=(()=>{
  const saveSharedMemo=(id,values,expected)=>memoWrite('save',id,values,expected);
  const deleteSharedMemo=(id,expected)=>memoWrite('delete',id,null,expected);
  const importLocalMemo=id=>memoWrite('import',id);
- return Object.freeze({saveSharedMemo,deleteSharedMemo,importLocalMemo,requireRecord,unsupportedFields,ensureEditable,memberPermissions,memberCategory,memberMealEligibility,visitPermissions,saveMagicResult,finishMagicCeremony,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
+ return Object.freeze({saveSharedMemo,deleteSharedMemo,importLocalMemo,requireRecord,unsupportedFields,ensureEditable,memberPermissions,memberCategory,memberMealEligibility,visitPermissions,saveMagicResult,saveMagicChoice,finishMagicCeremony,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
 })();

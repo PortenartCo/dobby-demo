@@ -1,0 +1,134 @@
+{
+  "rpc": [
+    {
+      "name": "dobby_v7_accept_invitation",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_token text, p_operation_id uuid"
+    },
+    {
+      "name": "dobby_v7_bind_existing_member",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_user_id uuid, p_member_id text, p_operation_id uuid"
+    },
+    {
+      "name": "dobby_v7_context",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": ""
+    },
+    {
+      "name": "dobby_v7_create_household",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_name text, p_operation_id uuid"
+    },
+    {
+      "name": "dobby_v7_create_invitation",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_expires_in_hours integer, p_operation_id uuid"
+    },
+    {
+      "name": "dobby_v7_preview_invitation",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_token text"
+    },
+    {
+      "name": "dobby_v7_revoke_invitation",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_invitation_id uuid"
+    },
+    {
+      "name": "dobby_v7_update_magic",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid"
+    },
+    {
+      "name": "dobby_v7_update_member",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid"
+    },
+    {
+      "name": "dobby_v7_update_profile",
+      "owner": "dobby_v7_writer",
+      "settings": [
+        "search_path=\"\""
+      ],
+      "arguments": "p_profile jsonb, p_expected_revision bigint"
+    }
+  ],
+  "counts": {
+    "bindings": 0,
+    "invitations": 0,
+    "pendingProfiles": 0
+  },
+  "verification": "dobby-stitch19-20-v2",
+  "privateTables": [
+    {
+      "rls": true,
+      "name": "account_links",
+      "forced": true
+    },
+    {
+      "rls": true,
+      "name": "install_secret",
+      "forced": true
+    },
+    {
+      "rls": true,
+      "name": "invitations",
+      "forced": true
+    },
+    {
+      "rls": true,
+      "name": "operations",
+      "forced": true
+    },
+    {
+      "rls": true,
+      "name": "pending_profiles",
+      "forced": true
+    }
+  ],
+  "moduleTriggers": [
+    {
+      "name": "dobby_missions_v2_guard",
+      "definition": "CREATE TRIGGER dobby_missions_v2_guard BEFORE INSERT OR DELETE OR UPDATE ON dobby_v2_modules FOR EACH ROW EXECUTE FUNCTION dobby_runes_private.guard_missions()"
+    },
+    {
+      "name": "dobby_v2_modules_stamp_trigger",
+      "definition": "CREATE TRIGGER dobby_v2_modules_stamp_trigger BEFORE INSERT OR UPDATE ON dobby_v2_modules FOR EACH ROW EXECUTE FUNCTION dobby_v2_modules_stamp()"
+    },
+    {
+      "name": "dobby_v7_family_guard",
+      "definition": "CREATE TRIGGER dobby_v7_family_guard BEFORE INSERT OR DELETE OR UPDATE ON dobby_v2_modules FOR EACH ROW EXECUTE FUNCTION dobby_v7_private.guard_family()"
+    }
+  ],
+  "databaseVersion": "17.11",
+  "moduleStampDefinitionMd5": "81320b020efdd9c11fc8a2b0e9cb692a",
+  "missionsWriterDefinitionMd5": "3a5bc8dc7117925a158e1fd70dc05709"
+}

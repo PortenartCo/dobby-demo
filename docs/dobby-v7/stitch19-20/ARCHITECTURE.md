@@ -22,7 +22,7 @@ session du Rituel mène à Traverse, sans répéter les cérémonies terminées.
 corrections de défilement et de largeur sont ciblées et partagées entre les modules.
 
 Les seize portraits humains supplémentaires retrouvés dans une archive locale
-peuvent être raccordés au catalogue après contrôle de leur provenance ; les huit
+sont raccordés au catalogue après contrôle de leur provenance ; les huit
 premiers gardent leurs identifiants et leur cadrage. Aucune image n’est générée.
 
 ## Répartition de l’implémentation
@@ -47,3 +47,14 @@ Les tests locaux utilisent des fixtures annoncées comme telles. Ils ne certifie
 pas les comptes, invitations ou droits réels. Les parties validées sont déployables
 selon la demande ; les fonctions dépendantes du backend restent exclues d’une
 déclaration opérationnelle et de leur mise en production avant recette réelle.
+
+
+## État confirmé après exécution manuelle
+
+L’installation V7 et sa vérification structurelle ont été exécutées par l’utilisateur.
+Ses deux comptes Auth de synchronisation sont conservés ; les deux anciennes
+appartenances V2 ont été désactivées après diagnostic, sans supprimer le foyer ni
+ses six modules. Le parcours retenu crée un nouveau foyer propre : aucune liaison
+historique par 04 n’est utilisée pour ces comptes. Les réglages Auth utilisent la
+racine exacte comme Site URL et Redirect URL. La recette réelle des deux sessions
+reste distincte des tests locaux et suit la publication du candidat validé.

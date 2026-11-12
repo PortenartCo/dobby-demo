@@ -3,8 +3,19 @@
   "02-verify.sql": "696dbb98bf12cad2f26249ed3959aae5f1ac6e55802f90aa16b58593ca371d30",
   "03-rollback.sql": "5092e3a54d9f0ce319a74d7204e5832a7279b31d6275ec3efdcf97dd752c03ad",
   "04-link-existing-owner.sql": "b46e350b6eb6f018d4ca159f32db92b6070b72a296b3135358fc6a961442ac89",
-  "README.md": "7a5d19673f37ec710299e45c7361c9f4246fa77a555a89349b9c07ee16072b70",
-  "DASHBOARD.md": "591b69c3c614299ed791e51125fa9ddd3009a4ff8d5443781b3d0a05a120d623",
+  "README.md": "a3d0eb028d3e48d591347f3bdf58b385a740075b70033ee24923a295a8174518",
+  "DASHBOARD.md": "d02c7d4b4e93025c4d1a567e402d60d8fea6fe63958d640877f8033d0a9e40e3",
   "evidence/local-test-results.json": "17f65fd035c9b3a94f66df1c296030d671413b0724a359f5f79d5ce790d60b5c",
-  "evidence/independent-review-v2.md": "d9c1c25e8e2ac24b086e0ee331fe8ebfe74c688067b78f24b37ab58e9d7baffe"
+  "evidence/independent-review-v2.md": "d9c1c25e8e2ac24b086e0ee331fe8ebfe74c688067b78f24b37ab58e9d7baffe",
+  "evidence/live-user-verification-20261112.json": "abe5f319014de9eb9d38977b27c10b7d0b525a406f256fbae388f9f8c4613b46",
+  "evidence/live-auth-public-settings-20261112.json": "06fcca554f4424572875e7d413b8af8f1dbfe7bb42f17542c0a84a90954067d7",
+  "evidence/live-anonymous-readonly-20261112.json": "6e3ed108642ab8294f3996978635ce207f4df4f1d50c6e8917bae32332ad03c1",
+  "05-diagnostic-fresh-start.sql": "9c8eba5965cb69ebb1e80c8b9883c2d20ee29a5628d1a3374cd5b649551987b5",
+  "06-disable-test-memberships.sql": "521546b32851e705483c6ff5ddec959af567154536d7a40f780d066426ff402d",
+  "07-verify-fresh-start.sql": "1c6dfd6e33cc3ad637a541de2d474c17cf9cc10f6f45135c6155d60ab9cf3ff8",
+  "08-rollback-test-memberships.sql": "b6bb6bb18980aa8f1882907895c4c6081dbebd975ad7f6d9e46eed9173bdec56",
+  "REPARTIR-FOYER-TEST.md": "22ca80d62e3da1abdaaac3718b525d37800314f28b6438e64e229fc6688dd2c9",
+  "evidence/live-user-fresh-start-20261113.json": "c7e5659e6c2d97ac2c54e44744486e9bff42c371dbc5217eb087d415b44cbf76",
+  "evidence/fresh-start-independent-review.md": "b03debb55cdc558d9cfffc7d99e61ef8976f7f27069b53dba8001cba420d8fa1",
+  "evidence/fresh-start-local-results.json": "fc20bdac3a48f9770f7b31ae0a967d452a0ea0df933e4b6a7b0d71dbee8e8bb2"
 }

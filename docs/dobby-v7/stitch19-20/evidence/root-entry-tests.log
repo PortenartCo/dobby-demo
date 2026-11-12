@@ -1,0 +1,67 @@
+BROWSER 156.0.8078.79 AUTH_FIXTURES_ONLY no live certification
+PASS ordinary canonical root opens logged-out welcome
+PASS ordinary root deep link cannot bypass canonical access
+PASS ordinary root route with type metadata still enters access
+PASS existing root session enters Cheminette even with old route hash
+PASS exact-root PKCE callback forwards the code without requiring a flow query
+PASS root recovery callback reaches the native password form
+PASS legacy implicit root callback credentials reach only private callback input
+PASS root provider error is visible and sanitized query
+PASS root provider error is visible and sanitized fragment
+PASS signup mismatch can be corrected by editing only the first password
+PASS recovery mismatch can be corrected by editing only the first password
+PASS root invitation survives forwarding despite an ordinary legacy hash
+{
+  "liveBackend": false,
+  "canonical": "https://portenartco.github.io/dobby-demo/",
+  "results": [
+    {
+      "name": "ordinary canonical root opens logged-out welcome",
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary root deep link cannot bypass canonical access",
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary root route with type metadata still enters access",
+      "status": "PASS"
+    },
+    {
+      "name": "existing root session enters Cheminette even with old route hash",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-root PKCE callback forwards the code without requiring a flow query",
+      "status": "PASS"
+    },
+    {
+      "name": "root recovery callback reaches the native password form",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy implicit root callback credentials reach only private callback input",
+      "status": "PASS"
+    },
+    {
+      "name": "root provider error is visible and sanitized query",
+      "status": "PASS"
+    },
+    {
+      "name": "root provider error is visible and sanitized fragment",
+      "status": "PASS"
+    },
+    {
+      "name": "signup mismatch can be corrected by editing only the first password",
+      "status": "PASS"
+    },
+    {
+      "name": "recovery mismatch can be corrected by editing only the first password",
+      "status": "PASS"
+    },
+    {
+      "name": "root invitation survives forwarding despite an ordinary legacy hash",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+BROWSER 156.0.8078.79 AUTH_FIXTURES_ONLY no live certification
+PASS editing invitation B cannot install or accept delayed preview A
+PASS actual Members invitation action opens native invitation creation
+PASS failed invitation creation has visible inline error outside access screen
+PASS owner-bound invitation survives full reload and restored Auth refresh
+PASS personal profile edit action opens fused identity and portrait form
+PASS failed PKCE confirmation preserves invitation belonging to restored Auth owner
+PASS direct account A to B switch cannot save A rendered profile draft into B
+{
+  "liveBackend": false,
+  "results": [
+    {
+      "name": "editing invitation B cannot install or accept delayed preview A",
+      "status": "PASS"
+    },
+    {
+      "name": "actual Members invitation action opens native invitation creation",
+      "status": "PASS"
+    },
+    {
+      "name": "failed invitation creation has visible inline error outside access screen",
+      "status": "PASS"
+    },
+    {
+      "name": "owner-bound invitation survives full reload and restored Auth refresh",
+      "status": "PASS"
+    },
+    {
+      "name": "personal profile edit action opens fused identity and portrait form",
+      "status": "PASS"
+    },
+    {
+      "name": "failed PKCE confirmation preserves invitation belonging to restored Auth owner",
+      "status": "PASS"
+    },
+    {
+      "name": "direct account A to B switch cannot save A rendered profile draft into B",
+      "status": "PASS"
+    }
+  ]
+}

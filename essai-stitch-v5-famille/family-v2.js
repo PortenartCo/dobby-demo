@@ -9,7 +9,7 @@ const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
   db: null, core: null, key: null, session: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
-  homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null
+  homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null
 };
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
@@ -400,6 +400,7 @@ render = function () {
 };
 let repaintQueued = false;
 function repaint() {
+  notifyAccess();
   if (repaintQueued) return;
   repaintQueued = true;
   queueMicrotask(() => {
@@ -516,6 +517,7 @@ async function login(form) {
     password: String(data.get('password') || '')
   });
   f.epoch += 1;
+  f.accessContext = null;
   await keepSession(result);
   f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   try {
@@ -534,6 +536,7 @@ async function login(form) {
 async function logout() {
   const old = f.session;
   f.epoch += 1;
+  f.accessContext = null;
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
   await delMeta('session');
@@ -697,13 +700,57 @@ save = function() {
   return result;
 };
 // E06 facade: same native login and membership verification, no alternate auth.
-function connectionState(){return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),memberId:null};}
+function verifiedBinding(){const binding=f.accessContext;return binding&&binding.epoch===f.epoch&&binding.userId===f.session?.user_id&&binding.householdId===f.householdId&&f.context&&f.verifiedContext===f.context&&!f.membershipRejected?binding:null;}
+function connectionState(){const binding=verifiedBinding();return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),identityVerified:Boolean(binding),memberId:binding?.memberId||null,permissions:binding?{...binding.permissions}:{}};}
 async function signIn(email,password){
  if(!f.ready)throw Error('Connexion en cours d’initialisation.');
  if(!f.key)throw Error('Configuration publique absente : connexion indisponible sur cet appareil.');
  const form=document.createElement('form');for(const[name,value]of Object.entries({key:f.key,email,password})){const input=document.createElement('input');input.name=name;input.value=String(value||'');form.append(input);}await login(form);return connectionState();
 }
-window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
+let accessController=null,accessPromise=null,lastAccessEvent='';
+const accessListeners=new Set();
+function notifyAccess(){
+ const state=accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false};
+ const signature=JSON.stringify(state);if(signature===lastAccessEvent)return;lastAccessEvent=signature;
+ for(const listener of accessListeners){try{listener(JSON.parse(signature));}catch{}}
+ if(typeof window.dispatchEvent==='function'&&typeof CustomEvent==='function')window.dispatchEvent(new CustomEvent('dobby:access-change'));
+}
+function ensureAccess(){
+ if(!accessPromise)accessPromise=import('./family-access.mjs').then(({createFamilyAccess})=>{
+  accessController=createFamilyAccess({crypto:window.crypto||globalThis.crypto,now:Date.now,
+   snapshot:()=>({ready:f.ready,configured:Boolean(f.key),userId:f.session?.user_id||null,householdId:f.householdId,epoch:f.epoch,verified:Boolean(verifiedBinding()),rejected:f.membershipRejected}),
+   meta,putMeta,delMeta,updateMeta,
+   auth:async(path,method,body,options={})=>raw(path,method,body,{},options.authenticated?await token():null),
+   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),
+   clearBinding:()=>{f.accessContext=null;},
+   async installSession(result,before){
+    if(f.epoch!==before.epoch||(f.session?.user_id||null)!==before.userId)throw Error('Le compte a changé pendant la connexion.');
+    f.epoch++;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
+    await keepSession(result);repaint();refreshModal();
+   },
+   async bind(context,before){
+    const guard=()=>{if(f.epoch!==before.epoch||f.session?.user_id!==context.userId)throw Error('Le compte a changé pendant la vérification.');};
+    guard();try{await requireHousehold();guard();
+     if(f.householdId!==context.householdId)throw Error('Le contexte serveur ne correspond pas au foyer autorisé.');
+     if(!f.provider?.adoptVerifiedFamily)throw Error('Le registre familial natif est indisponible.');
+     await f.provider.adoptVerifiedFamily({...context,identityVerified:true});guard();
+     f.accessContext={...context,epoch:f.epoch};
+    }finally{if(f.checkingEpoch===before.epoch)f.checkingEpoch=null;}
+   },
+   logout,
+   notify:notifyAccess
+  });return accessController;
+ });return accessPromise;
+}
+const accessFacade=Object.freeze({
+ get ready(){return ensureAccess();},
+ state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
+ subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
+ ...Object.fromEntries(['refresh','signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
+});
+window.DobbyFamilyAccess=accessFacade;
+window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,
   // V7 consumes the existing cache and writers directly, without a second basket.
   grocery: Object.freeze({
     read: () => ({context:f.context, status:status(), error:f.error, homeSupported:f.homeSupported, items:visible().map(x=>({...x})), ready:f.ready}),
@@ -764,7 +811,7 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
     },
     resolve: choose, sync
   }),
-  getContext: () => f.context ? { householdId: f.householdId, userId: f.session?.user_id } : null,
+  getContext: () => {const binding=verifiedBinding();return f.context ? { householdId: f.householdId, userId: f.session?.user_id,...(binding?{memberId:binding.memberId,permissions:{...binding.permissions},identityVerified:true,familyRevision:binding.familyRevision||null}:{} ) } : null;},
   authorized, meta, putMeta, updateMeta, esc, showMessage, repaint, openModal,
   storageFetch,
   getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
@@ -779,11 +826,18 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,
     repaint();
   }
 });
+async function loadPublicKey(){
+ const existing=await meta('publicKey');if(existing){try{return validateKey(existing);}catch{return null;}}
+ let config=window.DobbyPublicConfig;
+ if(!config)try{if(window.parent&&window.parent!==window&&window.parent.location.origin===window.location.origin)config=window.parent.DobbyPublicConfig;}catch{}
+ if(!config||config.projectRef&&config.projectRef!=='pqcdkrwljgvgagzwrcmg')return null;
+ try{const key=validateKey(config.publicKey);await putMeta('publicKey',key);return key;}catch{return null;}
+}
 async function boot() {
   try {
     f.core = await import('./family-core.mjs');
     f.db = await openDb(DB_NAME, 1, true);
-    f.key = await meta('publicKey');
+    f.key = await loadPublicKey();
     f.session = await meta('session');
     f.ready = true;
     if (f.session) {

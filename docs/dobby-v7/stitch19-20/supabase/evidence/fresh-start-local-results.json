@@ -1,0 +1,20 @@
+{
+  "checks": 5,
+  "passed": [
+    "NULL/wrong household, wrong role and wrong row count refused with no mutation",
+    "private binding, new active household and third Auth account refused with no mutation",
+    "exactly two memberships disabled; Auth/V1/household/six full module rows/roles/joined_at preserved; read-only 07 passes",
+    "pre-bootstrap rollback restores exactly original fixture, including both active owners",
+    "both existing Auth accounts reach fresh profile; create clean household and join by invitation; old six modules/V1/Auth untouched; late rollback/reapply refused"
+  ],
+  "fictionalFixtureOnly": true,
+  "remoteSupabaseOperations": 0,
+  "postgresVersion": "17.7",
+  "actualCatalogVersion": "17.11",
+  "hashes": {
+    "06-disable-test-memberships.sql": "521546b32851e705483c6ff5ddec959af567154536d7a40f780d066426ff402d",
+    "07-verify-fresh-start.sql": "1c6dfd6e33cc3ad637a541de2d474c17cf9cc10f6f45135c6155d60ab9cf3ff8",
+    "08-rollback-test-memberships.sql": "b6bb6bb18980aa8f1882907895c4c6081dbebd975ad7f6d9e46eed9173bdec56"
+  },
+  "localDatabaseAfterTest": "Fictional new household created with same two fictional Auth users; old test household retained inactive"
+}

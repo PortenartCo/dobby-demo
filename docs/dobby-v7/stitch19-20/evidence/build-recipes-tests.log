@@ -1,0 +1,81 @@
+✔ E07.3 preview is a new isolated profile and retains source byte provenance (578.988761ms)
+✔ V1 remains compatible; no default duration or servings fabricated (5.814206ms)
+✔ V2 keeps explicit total as single authority and preserves detailed durations (1.17585ms)
+✔ V2 permits unknown total, and sums only complete known components (0.299773ms)
+✔ One classic recipe carries an unverified TM5 adaptation without invented parameters (0.34478ms)
+✔ Version and media references reject unsafe input; ordinary missing image stays explicit (1.083924ms)
+✔ Prompt collects all successive photos, final explicit consent and exact question (0.388125ms)
+✔ Actual native validator keeps V1 strict and accepts V2 culinary unknowns (9.709736ms)
+✔ Oversized ZIP is refused before allocating arrayBuffer (0.441924ms)
+✔ Extended metadata rejects truncation/coercion and normalizes Unicode media consistently (4.057626ms)
+✔ Actual native V2 keeps a known ingredient unit when quantity is unknown (17.251564ms)
+✔ Actual native TM5 presentation never calls an imported unverified variant human-verified (6.396888ms)
+✔ V2 never turns boolean/array ingredient quantities into real amounts (0.292483ms)
+✔ reads a stored descriptor and byte-identical nested raster image (4.300696ms)
+✔ reads deflate and data descriptors through the native bounded stream (20.128552ms)
+✔ normalizes safe UTF-8 names to NFC and accepts spaces (0.687017ms)
+✔ rejects traversal, encoded aliases and ambiguous/platform paths (1.637463ms)
+✔ rejects duplicate names, Unicode normalization and directory-case aliases (0.510646ms)
+✔ requires exactly one JSON and only approved raster files (0.695039ms)
+✔ sniffs image content rather than trusting extensions (1.116462ms)
+✔ rejects symlinks, special files and hidden/system attributes (0.776859ms)
+✔ refuses encryption, unsupported flags and compression methods (0.637324ms)
+✔ rejects multipart, ZIP64 and corrupt central-directory bounds (0.670182ms)
+✔ rejects local-central metadata and filename disagreement (0.725073ms)
+✔ rejects corrupt stored/deflated content by CRC (17.806155ms)
+✔ rejects truncated archives, trailers and orphan/prepended data (0.47973ms)
+✔ enforces entry, image, JSON and total compressed limits before decompression (2.314035ms)
+✔ bounds the actual decompressed stream even when declared size is a lie (3.325752ms)
+✔ bounds the complete declared image volume without allocating the announced output (0.489795ms)
+✔ rejects corrupt data descriptors and malformed extra fields (0.85137ms)
+✔ checks ordinary PNG, JPEG and all three WebP dimension headers before bitmap decoding (1.041131ms)
+✔ rejects raster pixel bombs from their headers before allocating a bitmap (1.474342ms)
+✔ refuses missing, zero, truncated or conflicting raster dimensions explicitly (2.283389ms)
+✔ allows the exact40MP limit and refuses animated WebP (0.318852ms)
+/workspace/dobby-stitch19-20/scripts/build-dobby-review.cjs:7
+if(fs.existsSync(out))throw Error('Output must be a new directory: '+out);
+                      ^
+
+Error: Output must be a new directory: /tmp/dobby-e074-build-ZSMd9P/first
+    at Object.<anonymous> (/workspace/dobby-stitch19-20/scripts/build-dobby-review.cjs:7:29)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
+✔ E07.4 bundle is reproducible, isolated and records exact source/binary provenance (972.874721ms)
+✔ V2 incomplete native records keep actual unknown values, V1 direct validation remains strict (9.327435ms)
+✔ V1/V2 missing fields are normalized without culinary defaults and preserve source version (1.061712ms)
+✔ stage metadata has stable ingredient references, exact method and source provenance without inventing mapping (0.877369ms)
+✔ invalid entry metadata does not block later entries; invalid amounts are never culinary missing values (0.297801ms)
+✔ TM5 incomplete data is saveable unverified with no invented instruction, portions or settings (0.205404ms)
+✔ V2 missing units are accepted but invalid structures, bounds and coercions are rejected (16.169472ms)
+✔ prompt prioritizes a real ZIP conditionally, exact cumulative question and exact method metadata (0.427794ms)
+✔ raw invalid portions and typed text stay errors instead of becoming unknown values (0.463947ms)
+✔ step-only images never become an implicit cover; legacy provenance stays unknown (0.327856ms)
+✔ image provenance is retained for legacy additional image descriptors (0.306945ms)
+✔ explicit French durations and ranges are seconds; no quantities, temperatures or invented timer (7.953141ms)
+✔ independent timers use persistent deadlines and reload catches suspension without duplicate ends (6.550685ms)
+✔ pause, resume, adjustment, custom duration, reset and removal do not affect other timers (4.652877ms)
+✔ two deadlines in the same millisecond notify individually once; reset permits one new run (1.285032ms)
+✔ lists and running ticks never write each second; only actual transitions persist (1.218013ms)
+✔ quota failure preserves persisted timers and pending completion remains retryable (1.86446ms)
+✔ post-write storage rejection restores original bytes and cannot erase an older timer (2.504907ms)
+✔ scope, limits, corrupt data and strict inputs are isolated and never silently reset (1.276289ms)
+✔ adjusting an already finished timer to zero does not duplicate the same alert (0.955113ms)
+✔ malformed compound and negative durations never yield a misleading partial number (3.141661ms)
+✔ E07-P01 builds a fresh namespace while retaining E07.4 demo meals and provenance (624.009639ms)
+✔ integrated bundle uses the actual modules, isolated persona and guarded native client (398.491487ms)
+✔ historical review association transform rejects changed or duplicate native implementations (2.895396ms)
+ℹ tests 58
+ℹ suites 0
+ℹ pass 58
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1223.31479

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>DOBBY V7 — Cérémonie de Découverte du Patronus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            surface: {
+              DEFAULT: '#0f172a',
+              dim: '#0b1120',
+              container: '#151e34',
+              high: '#1e293b',
+              bright: '#334155'
+            },
+            patronus: {
+              300: '#e0f2fe',
+              400: '#bae6fd',
+              500: '#7dd3fc',
+              silver: '#e2e8f0',
+              glow: '#38bdf8'
+            },
+            gold: {
+              400: '#eec66a',
+              500: '#d49b42'
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'Playfair Display', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(11, 17, 32, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(125, 211, 252, 0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(125, 211, 252, 0.6); }
+
+    @keyframes etherealFloat {
+      0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4)); }
+      50% { transform: translateY(-6px) scale(1.02); filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.7)); }
+    }
+    .animate-ethereal { animation: etherealFloat 4.5s ease-in-out infinite; }
+
+    @keyframes patronusMist {
+      0% { opacity: 0.15; transform: scale(0.95) rotate(0deg); }
+      50% { opacity: 0.45; transform: scale(1.05) rotate(180deg); }
+      100% { opacity: 0.15; transform: scale(0.95) rotate(360deg); }
+    }
+    .animate-mist { animation: patronusMist 16s linear infinite; }
+  </style>
+</head>
+<body class="h-full bg-[#070b14] text-[#f0f9ff] font-sans antialiased overflow-hidden select-none">
+  <!-- Audio Synthesizer Expecto Patronum -->
+  <script>
+    const PatronusAudio = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      playSilverBell(freq = 880) {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+          osc.frequency.exponentialRampToValueAtTime(freq * 1.5, now + 0.3);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.65);
+          if (navigator.vibrate) navigator.vibrate(20);
+        } catch(e) {}
+      },
+      playExpectoPatronum() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const now = this.ctx.currentTime;
+          // Celestial chime wave
+          [440, 554.37, 659.25, 880, 1108.73, 1318.51].forEach((f, i) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(f, now + i * 0.09);
+            gain.gain.setValueAtTime(0.001, now + i * 0.09);
+            gain.gain.exponentialRampToValueAtTime(0.14, now + i * 0.09 + 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 1.8);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + i * 0.09);
+            osc.stop(now + i * 0.09 + 1.9);
+          });
+          if (navigator.vibrate) navigator.vibrate([25, 50, 80]);
+        } catch(e) {}
+      }
+    };
+  </script>
+
+  <!-- BACKGROUND: Chemin de Traverse aux lueurs spectrales argentées & bleutées -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <img src="https://lh3.googleusercontent.com/aida/ALJJyrDd6KW50qkK6NgRWuMBmQkDDi-8Vlwu8_h91GcV4lMonWiZGrB8JEJ1UatWNWo34q4O-3SVFfKcSKVVV6Zey-iNZ9QQYkOXp2uN0qrlStDRadMAYmCFOLDKwEMSBBO1NrY4qOd9AolhTG-0nLrby9H_fyc2ONGuwiGwdQoYG1FPrmeiQkcj92fkaqLAf60McPArZnVyR4cFN3DBwwszR9RlK-AlW3yTRDQYqIyNz7sK7Q" alt="Chemin de Traverse" class="w-full h-full object-cover scale-105 filter blur-[7px] brightness-[0.22] contrast-125">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#070b14] via-[#070b14]/80 to-[#070b14]/65"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(56,189,248,0.18),transparent_70%)]"></div>
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-mist"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-mist" style="animation-delay: -8s;"></div>
+  </div>
+
+  <!-- CONTAINER PRINCIPAL DE LA CÉRÉMONIE -->
+  <main class="relative z-10 w-full h-full flex flex-col justify-center items-center p-3 sm:p-5 md:p-8">
+    <div class="w-full max-w-[440px] md:max-w-[760px] h-[92vh] max-h-[820px] bg-[#0c1424]/95 backdrop-blur-xl border border-patronus-500/40 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.9),0_0_35px_rgba(56,189,248,0.25)] flex flex-col overflow-hidden relative">
+      
+      <!-- Halo céleste en haut de fenêtre -->
+      <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-48 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- En-tête de fenêtre modale -->
+      <header class="flex items-center justify-between px-5 pt-4 pb-3 border-b border-patronus-500/20 z-10 bg-[#0c1424]/90">
+        <div class="flex items-center gap-2">
+          <button id="btn-patronus-back" onclick="goToPatronusStep('intro')" class="hidden p-2 rounded-xl bg-surface-container/70 border border-patronus-500/30 text-patronus-400 hover:text-patronus-300 hover:bg-surface-high transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <div>
+            <span class="text-[10px] tracking-[0.25em] uppercase text-patronus-400/90 font-serif block">Rituel d'Initiation · Étape 2/2</span>
+            <h1 id="patronus-header-title" class="text-sm font-serif font-semibold text-[#f0f9ff] tracking-wide">L'Apparition du Patronus</h1>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-[11px] text-patronus-300 font-serif">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-300 animate-pulse"></span>
+          <span>Expecto Patronum</span>
+        </div>
+      </header>
+
+      <!-- ZONE DE CONTENU DYNAMIQUE -->
+      <div class="flex-1 overflow-y-auto px-5 py-4 flex flex-col relative z-10" id="patronus-container">
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 1 : FENÊTRE D'INTRODUCTION DU PATRONUS -->
+        <!-- ========================================================================= -->
+        <section id="patronus-step-intro" class="flex-1 flex flex-col items-center justify-between text-center space-y-4 py-2">
+          <div class="w-full flex flex-col items-center">
+            <!-- Apparition éthérée lumineuse du Cerf Patronus -->
+            <div class="relative w-full max-w-[280px] md:max-w-[320px] aspect-[4/3] rounded-2xl overflow-hidden border border-cyan-400/40 shadow-[0_10px_35px_rgba(0,0,0,0.85),0_0_30px_rgba(56,189,248,0.35)] mb-4 group">
+              <img src="https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj" alt="Patronus Cerf Éthéré" class="w-full h-full object-cover animate-ethereal scale-105">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0c1424] via-transparent to-transparent opacity-75"></div>
+              <div class="absolute bottom-2 left-3 right-3 text-left">
+                <span class="text-[10px] uppercase font-serif tracking-widest text-patronus-300 px-2 py-0.5 rounded bg-black/60 border border-cyan-400/30 backdrop-blur-sm">Onde de Lumière Céleste</span>
+              </div>
+            </div>
+
+            <!-- Titres et Textes officiels -->
+            <div class="space-y-1.5 px-2">
+              <h2 class="text-2xl md:text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e0f2fe] via-[#7dd3fc] to-[#bae6fd] drop-shadow-sm">
+                Quel est ton Patronus ?
+              </h2>
+              <p class="text-xs md:text-sm text-[#cbd5e1] leading-relaxed font-sans max-w-md mx-auto">
+                « Découvre l'esprit protecteur qui t'accompagnera dans ton aventure magique. »
+              </p>
+            </div>
+
+            <!-- Citation protectrice -->
+            <div class="mt-4 p-3 rounded-xl bg-surface-dim/80 border border-patronus-500/25 max-w-md text-left flex items-start gap-3">
+              <span class="text-xl">✨</span>
+              <p class="text-[11px] md:text-xs text-[#94a3b8] italic font-serif leading-snug">
+                « Né de tes souvenirs les plus heureux et de ton dévouement envers le foyer, le Patronus repousse toute ombre… »
+              </p>
+            </div>
+          </div>
+
+          <!-- Les deux boutons d'action -->
+          <div class="w-full space-y-2.5 max-w-md pt-2">
+            <button onclick="startPatronusQuiz()" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-sky-500 via-cyan-400 to-blue-500 text-[#070b14] font-serif font-bold text-sm tracking-wide shadow-[0_6px_25px_rgba(56,189,248,0.4)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-cyan-200/50">
+              <span class="text-base">🪄</span>
+              <span>Découvrir mon Patronus</span>
+            </button>
+            <button onclick="openPatronusGallery()" class="w-full py-3.5 px-5 rounded-2xl bg-surface-container hover:bg-surface-high border border-patronus-500/40 text-patronus-300 font-serif font-semibold text-xs tracking-wider uppercase hover:border-cyan-400 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+              <span>Choisir mon Patronus</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 2A : QUESTIONNAIRE DU PATRONUS (5 questions existantes) -->
+        <!-- ========================================================================= -->
+        <section id="patronus-step-quiz" class="hidden flex-1 flex flex-col justify-between py-1">
+          <!-- Progression -->
+          <div class="space-y-1.5 pb-2">
+            <div class="flex items-center justify-between text-[11px] font-serif text-patronus-300">
+              <span id="patronus-progress-text">Évocation 1 sur 5</span>
+              <span class="italic text-patronus-400/70">Appel des souvenirs heureux…</span>
+            </div>
+            <div class="w-full h-1.5 bg-surface-dim rounded-full overflow-hidden border border-cyan-500/20">
+              <div id="patronus-progress-bar" class="h-full bg-gradient-to-r from-cyan-500 to-sky-300 transition-all duration-300" style="width: 20%;"></div>
+            </div>
+          </div>
+
+          <!-- Question courante -->
+          <div class="my-auto py-2">
+            <div class="p-3.5 rounded-2xl bg-surface-dim/90 border border-cyan-500/30 text-center mb-4">
+              <span class="text-[10px] uppercase font-serif tracking-widest text-cyan-400/80 block mb-1">Invocation de Lumière Pure</span>
+              <h3 id="patronus-question-title" class="text-base md:text-lg font-serif font-bold text-[#f0f9ff] leading-snug">
+                Quel souvenir fait naître en toi la lueur argentée la plus pure et inaltérable ?
+              </h3>
+            </div>
+
+            <!-- Réponses du Patronus -->
+            <div id="patronus-options-container" class="space-y-2">
+              <!-- Rempli par JavaScript -->
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="flex items-center justify-between pt-3 border-t border-cyan-500/20">
+            <button onclick="patronusQuizPrev()" id="btn-patronus-prev" class="px-3.5 py-2 rounded-xl bg-surface-container border border-cyan-500/30 text-xs font-serif text-patronus-300 hover:bg-surface-high disabled:opacity-30 disabled:pointer-events-none">
+              ← Précédente
+            </button>
+            <span class="text-[11px] text-cyan-300/60 font-serif italic">Souvenir le plus lumineux</span>
+            <button onclick="patronusQuizNext()" id="btn-patronus-next" class="px-4 py-2 rounded-xl bg-cyan-400 text-[#070b14] text-xs font-serif font-bold hover:bg-cyan-300 disabled:opacity-40 disabled:pointer-events-none transition-colors">
+              Poursuivre →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 2B : GALERIE DES 12 PATRONUS (Choix direct) -->
+        <!-- ========================================================================= -->
+        <section id="patronus-step-gallery" class="hidden flex-1 flex flex-col justify-between py-1">
+          <div class="text-center space-y-1 mb-2">
+            <h3 class="text-lg md:text-xl font-serif font-bold text-patronus-300">Les Douze Esprits Protecteurs</h3>
+            <p class="text-xs text-[#94a3b8]">Sélectionne l'apparition spirituelle qui veillera sur ta maisonnée.</p>
+          </div>
+
+          <!-- Grille des 12 Patronus officiels -->
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 my-auto max-w-xl mx-auto w-full overflow-y-auto max-h-[380px] p-1" id="patronus-grid">
+            <!-- 1. Cerf -->
+            <div onclick="selectManualPatronus('stag')" id="pcard-stag" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj" alt="Cerf" class="w-full h-full object-cover">
+              </div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Cerf</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Guide Majestueux</span>
+            </div>
+
+            <!-- 2. Loutre -->
+            <div onclick="selectManualPatronus('otter')" id="pcard-otter" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrBrkvtuzmxpwpL_2SYg1WgQbgxrIyvFBRahlgDQIW4cza6gmVvGmjwNDQ0e-uxjhVYDLkrljIiUYps4stQ7ONbxaTCG3xWNCrqXzMdYSMmrzq3rY-giMLrw_Zzz6q2LGqUW3enN71J0-FGslBdDxyFICCu-1c6vlMp1OGnubVRnSgDtKEdx9rg6Sy837USbfp89elWKRdsiPNlkQyDuTR5HXzdwsuw1sxFip_1QdgZH" alt="Loutre" class="w-full h-full object-cover">
+              </div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Loutre</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Joie & Espièglerie</span>
+            </div>
+
+            <!-- 3. Blaireau -->
+            <div onclick="selectManualPatronus('badger')" id="pcard-badger" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40">
+                <img src="https://lh3.googleusercontent.com/aida/ALJJyrBRbzfYuSUYEq8Z8m2Qdq35QPJfj3PLyxJe3XIWHhTL1XmxXc_UcDLFzE6FA_zlK9zwMMgmeKWKz6kGKoQ0w2SpC-USPy3CoHuKGab4zUBZeL8yJ6lqNoEydxj_SZsvfxQt8y_VDaZ-viKwBtMpgT5tjHSjwnOFnh20qWSek_KwIKThaHDKxGRlbCi12dVjQPf0oqp87NPXZLPFln-VUeijOzzFze8p8kBqRJgWHbdg1Q" alt="Blaireau" class="w-full h-full object-cover">
+              </div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Blaireau</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Fidélité Absolue</span>
+            </div>
+
+            <!-- 4. Renard -->
+            <div onclick="selectManualPatronus('fox')" id="pcard-fox" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🦊</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Renard</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Ruse & Finesse</span>
+            </div>
+
+            <!-- 5. Loup -->
+            <div onclick="selectManualPatronus('wolf')" id="pcard-wolf" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🐺</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Loup</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Force de la Meute</span>
+            </div>
+
+            <!-- 6. Chat -->
+            <div onclick="selectManualPatronus('cat')" id="pcard-cat" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🐱</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Chat</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Indépendance & Grâce</span>
+            </div>
+
+            <!-- 7. Hibou -->
+            <div onclick="selectManualPatronus('owl')" id="pcard-owl" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🦉</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Hibou</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Clairvoyance Nocturne</span>
+            </div>
+
+            <!-- 8. Cheval -->
+            <div onclick="selectManualPatronus('horse')" id="pcard-horse" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🐴</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Cheval</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Noblesse & Élan</span>
+            </div>
+
+            <!-- 9. Lièvre -->
+            <div onclick="selectManualPatronus('hare')" id="pcard-hare" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🐇</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Lièvre</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Agilité & Douceur</span>
+            </div>
+
+            <!-- 10. Cygne -->
+            <div onclick="selectManualPatronus('swan')" id="pcard-swan" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🦢</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Cygne</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Pureté & Dévouement</span>
+            </div>
+
+            <!-- 11. Lynx -->
+            <div onclick="selectManualPatronus('lynx')" id="pcard-lynx" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🐾</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Lynx</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Vigilance Secrète</span>
+            </div>
+
+            <!-- 12. Dauphin -->
+            <div onclick="selectManualPatronus('dolphin')" id="pcard-dolphin" class="patronus-card cursor-pointer p-2 rounded-xl bg-surface-dim/80 border border-cyan-500/25 hover:border-cyan-400 transition-all flex flex-col items-center text-center group">
+              <div class="w-12 h-12 rounded-lg overflow-hidden mb-1 border border-cyan-400/40 bg-black/40 flex items-center justify-center text-cyan-300 text-lg">🐬</div>
+              <span class="font-serif font-bold text-xs text-[#f0f9ff] group-hover:text-cyan-300">Dauphin</span>
+              <span class="text-[9px] text-cyan-400/80 italic font-serif">Harmonie & Protection</span>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-cyan-500/20 flex items-center justify-between">
+            <button onclick="goToPatronusStep('intro')" class="px-3.5 py-2 rounded-xl bg-surface-container border border-cyan-500/30 text-xs font-serif text-patronus-300 hover:bg-surface-high">
+              ← Retour à l'invocation
+            </button>
+            <button onclick="confirmManualPatronus()" id="btn-confirm-patronus" class="px-5 py-2.5 rounded-xl bg-cyan-400 text-[#070b14] font-serif font-bold text-xs hover:bg-cyan-300 disabled:opacity-40 disabled:pointer-events-none transition-all shadow-md">
+              Voir l'Apparition →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉTAPE 3 : RÉVÉLATION & CONFIRMATION FINALE DU PATRONUS -->
+        <!-- ========================================================================= -->
+        <section id="patronus-step-reveal" class="hidden flex-1 flex flex-col items-center justify-between text-center py-2">
+          <div class="w-full flex flex-col items-center space-y-3">
+            <span class="text-[10px] uppercase font-serif tracking-[0.25em] text-cyan-300 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30">
+              Esprit Protecteur Consacré
+            </span>
+
+            <!-- Grande Illustration du Patronus -->
+            <div class="relative w-40 h-40 md:w-52 md:h-52 rounded-2xl overflow-hidden border-2 border-cyan-300 shadow-[0_0_40px_rgba(56,189,248,0.55)] group">
+              <img id="patronus-reveal-img" src="https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj" alt="Patronus Révélé" class="w-full h-full object-cover animate-ethereal">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+            </div>
+
+            <!-- Titre et Nom -->
+            <div class="space-y-1">
+              <h2 id="patronus-reveal-name" class="text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-200 via-cyan-300 to-blue-200">
+                Le Cerf Majestueux !
+              </h2>
+              <p id="patronus-reveal-subtitle" class="text-xs font-serif text-cyan-200/90 font-medium tracking-wide">
+                « Gardien protecteur, noblesse d'âme et fierté tranquille »
+              </p>
+            </div>
+
+            <!-- Explication magique -->
+            <div class="p-3.5 rounded-2xl bg-surface-dim/90 border border-cyan-500/30 text-left max-w-md">
+              <div class="flex items-center gap-2 mb-1.5 text-cyan-300 text-xs font-serif">
+                <span>🛡️</span>
+                <span class="font-bold">Signification & Présence au Logis</span>
+              </div>
+              <p id="patronus-reveal-desc" class="text-[11px] md:text-xs text-[#cbd5e1] leading-relaxed">
+                Le Cerf incarne la force inébranlable et la bienveillance d'un guide protecteur. Dans l'univers de DOBBY, il veille sur l'harmonie du foyer, éclaire tes décisions et repousse les tracas du quotidien par sa sérénité majestueuse.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bouton de confirmation menant au retour sur le Chemin de Traverse -->
+          <div class="w-full max-w-md pt-3">
+            <button onclick="finalizeIdentityAndEnterApp()" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-400 text-[#070b14] font-serif font-bold text-sm tracking-wide shadow-[0_6px_25px_rgba(56,189,248,0.45)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 border border-white/40">
+              <span>✨ Confirmer mon Patronus & Entrer au Logis</span>
+            </button>
+            <p class="text-[10px] text-cyan-300/60 font-serif italic text-center mt-2">
+              Ton identité magique est désormais scellée dans ton grimoire de profil.
+            </p>
+          </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- ÉCRAN FINAL DE CONFIRMATION (RETOUR CHEMIN DE TRAVERSE) -->
+        <!-- ========================================================================= -->
+        <section id="patronus-step-final" class="hidden flex-1 flex flex-col items-center justify-center text-center space-y-4 py-6">
+          <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-3xl shadow-[0_0_25px_rgba(52,211,153,0.4)]">
+            ✨
+          </div>
+          <div class="space-y-2 max-w-sm">
+            <h2 class="text-2xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-gold-400">
+              Bienvenue dans ta Maisonnée !
+            </h2>
+            <p class="text-xs text-[#cbd5e1] leading-relaxed">
+              Ta Maison et ton Patronus sont désormais associés à ton profil personnel. Dobby est prêt à t'accompagner au cœur du Chemin de Traverse.
+            </p>
+          </div>
+          <div class="p-3.5 rounded-2xl bg-surface-dim/80 border border-gold-500/30 max-w-xs text-left w-full space-y-2">
+            <div class="flex items-center justify-between text-xs font-serif">
+              <span class="text-gold-400">Maison Consacrée :</span>
+              <span id="final-badge-house" class="font-bold text-[#fcd8d8]">Gryffondor</span>
+            </div>
+            <div class="flex items-center justify-between text-xs font-serif">
+              <span class="text-cyan-300">Patronus Protecteur :</span>
+              <span id="final-badge-patronus" class="font-bold text-cyan-200">Cerf Majestueux</span>
+            </div>
+          </div>
+          <button onclick="goToTraverseDirectly()" class="py-3 px-8 rounded-xl bg-gold-500 hover:bg-gold-400 text-[#1b0d09] font-serif font-bold text-xs tracking-wider uppercase transition-all shadow-lg">
+            Rejoindre Dobby sur le Chemin de Traverse →
+          </button>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- LOGIQUE DU QUESTIONNAIRE ET DU CHOIX PATRONUS -->
+  <script>
+    const patronusData = {
+      stag: {
+        name: "Le Cerf Majestueux",
+        subtitle: "« Gardien protecteur, noblesse d'âme et fierté tranquille »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Le Cerf incarne la force inébranlable et la bienveillance d'un guide protecteur. Dans l'univers de DOBBY, il veille sur l'harmonie du foyer, éclaire tes décisions et repousse les tracas du quotidien par sa sérénité majestueuse."
+      },
+      otter: {
+        name: "La Loutre Céleste",
+        subtitle: "« Joie de vivre, curiosité vive et amour inconditionnel »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrBrkvtuzmxpwpL_2SYg1WgQbgxrIyvFBRahlgDQIW4cza6gmVvGmjwNDQ0e-uxjhVYDLkrljIiUYps4stQ7ONbxaTCG3xWNCrqXzMdYSMmrzq3rY-giMLrw_Zzz6q2LGqUW3enN71J0-FGslBdDxyFICCu-1c6vlMp1OGnubVRnSgDtKEdx9rg6Sy837USbfp89elWKRdsiPNlkQyDuTR5HXzdwsuw1sxFip_1QdgZH",
+        desc: "La Loutre s'épanouit dans le partage, le rire et la complicité familiale. Protectrice joyeuse et inventive, elle transforme les corvées ordinaires en moments de jeu et apporte une douceur infinie au logis."
+      },
+      badger: {
+        name: "Le Blaireau Fidèle",
+        subtitle: "« Ténacité douce, constance et protection du sanctuaire »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrBRbzfYuSUYEq8Z8m2Qdq35QPJfj3PLyxJe3XIWHhTL1XmxXc_UcDLFzE6FA_zlK9zwMMgmeKWKz6kGKoQ0w2SpC-USPy3CoHuKGab4zUBZeL8yJ6lqNoEydxj_SZsvfxQt8y_VDaZ-viKwBtMpgT5tjHSjwnOFnh20qWSek_KwIKThaHDKxGRlbCi12dVjQPf0oqp87NPXZLPFln-VUeijOzzFze8p8kBqRJgWHbdg1Q",
+        desc: "D'un dévouement sans borne, le Blaireau défend farouchement le sanctuaire familial. Il ne recule devant aucun effort pour préserver la paix et la sécurité de ceux qui partagent son toit."
+      },
+      fox: {
+        name: "Le Renard Lumineux",
+        subtitle: "« Ruse bienveillante, esprit vif et adaptabilité »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Rapide et ingénieux, le Renard dénoue les situations les plus complexes avec élégance et malice, assurant la sérénité du logis avec un regard toujours pétillant."
+      },
+      wolf: {
+        name: "Le Loup Solidaire",
+        subtitle: "« Force de la meute, instinct protecteur et vigilance »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Fidèle gardien de la maisonnée, le Loup protège son clan avec une loyauté farouche et veille sur le sommeil et la tranquillité de chaque membre."
+      },
+      cat: {
+        name: "Le Chat Éthéré",
+        subtitle: "« Calme souverain, indépendance et présence réconfortante »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrBrkvtuzmxpwpL_2SYg1WgQbgxrIyvFBRahlgDQIW4cza6gmVvGmjwNDQ0e-uxjhVYDLkrljIiUYps4stQ7ONbxaTCG3xWNCrqXzMdYSMmrzq3rY-giMLrw_Zzz6q2LGqUW3enN71J0-FGslBdDxyFICCu-1c6vlMp1OGnubVRnSgDtKEdx9rg6Sy837USbfp89elWKRdsiPNlkQyDuTR5HXzdwsuw1sxFip_1QdgZH",
+        desc: "Une présence silencieuse et apaisante qui dissipe le stress et invite au repos. Il veille sur le confort des coins lecture et la chaleur de l'âtre."
+      },
+      owl: {
+        name: "Le Grand Duc Céleste",
+        subtitle: "« Sagesse nocturne, prévoyance et clarté d'esprit »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Veilleur infatigable, il apporte la lucidité dans les moments de doute et s'assure que rien d'essentiel ne soit omis dans l'almanach du foyer."
+      },
+      horse: {
+        name: "L'Étalon d'Argent",
+        subtitle: "« Élan généreux, endurance et noblesse de cœur »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Un souffle de liberté et de vitalité qui porte la famille vers l'avant et donne du courage pour relever tous les défis de la vie quotidienne."
+      },
+      hare: {
+        name: "Le Lièvre Agile",
+        subtitle: "« Vivacité d'esprit, spontanéité et douceur »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrBrkvtuzmxpwpL_2SYg1WgQbgxrIyvFBRahlgDQIW4cza6gmVvGmjwNDQ0e-uxjhVYDLkrljIiUYps4stQ7ONbxaTCG3xWNCrqXzMdYSMmrzq3rY-giMLrw_Zzz6q2LGqUW3enN71J0-FGslBdDxyFICCu-1c6vlMp1OGnubVRnSgDtKEdx9rg6Sy837USbfp89elWKRdsiPNlkQyDuTR5HXzdwsuw1sxFip_1QdgZH",
+        desc: "Prompt à réagir et plein de malice, le Lièvre apporte de la légèreté dans les journées denses et déjoue les imprévus avec agilité."
+      },
+      swan: {
+        name: "Le Cygne Immaculé",
+        subtitle: "« Grâce intemporelle, fidélité et dévouement absolu »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Symbole de loyauté éternelle et d'harmonie, il enveloppe le foyer d'une aura protectrice empreinte de beauté et de tendresse."
+      },
+      lynx: {
+        name: "Le Lynx Boréal",
+        subtitle: "« Vigilance discrète, perspicacité et sang-froid »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrDkv4kcpQ6GpyV9A4rWWH4LlHU3-yG4BE_ClYosjD-obitRwksZhzxwxzFuHzrpX7T6jbjtyIWNkYCUduzv7CMyrDMV2v9TLVU0OL-20R9ul6joTLd0A-lWH8OyhRn_-kJNK9N4mV3NmyhZsdpBHLsPj8BO6uuexMzPO6KAm7TlEnBCLFtLkUCfUO4y2zWT6Qk_IFfHevSXUeD46nG4zfuO3m-HBgqwwFQ-22EuqPOj",
+        desc: "Rien n'échappe à son regard perçant. Il veille dans l'ombre pour préserver la quiétude et la sécurité de chacun sans jamais s'imposer."
+      },
+      dolphin: {
+        name: "Le Dauphin Astral",
+        subtitle: "« Compassion, esprit d'entraide et allégresse »",
+        img: "https://lh3.googleusercontent.com/aida/ALJJyrBrkvtuzmxpwpL_2SYg1WgQbgxrIyvFBRahlgDQIW4cza6gmVvGmjwNDQ0e-uxjhVYDLkrljIiUYps4stQ7ONbxaTCG3xWNCrqXzMdYSMmrzq3rY-giMLrw_Zzz6q2LGqUW3enN71J0-FGslBdDxyFICCu-1c6vlMp1OGnubVRnSgDtKEdx9rg6Sy837USbfp89elWKRdsiPNlkQyDuTR5HXzdwsuw1sxFip_1QdgZH",
+        desc: "Messager de bonne humeur et de réconciliation, il enseigne la douceur et la solidarité au sein de chaque génération du logis."
+      }
+    };
+
+    // Les 5 Questions existantes du Patronus
+    const patronusQuestions = [
+      {
+        question: "Quel souvenir fait naître en toi la lueur argentée la plus pure et inaltérable ?",
+        answers: [
+          { text: "Un éclat de rire partagé autour de la grande table du festin.", patronus: "otter" },
+          { text: "Le sentiment d'avoir protégé et soutenu un être cher en détresse.", patronus: "stag" },
+          { text: "Une veillée paisible et silencieuse où chacun se sentait en sécurité.", patronus: "badger" },
+          { text: "Une victoire difficile remportée grâce à la ruse et la persévérance.", patronus: "fox" }
+        ]
+      },
+      {
+        question: "Dans l'obscurité d'une nuit sans lune, quelle silhouette te rassure le plus ?",
+        answers: [
+          { text: "Un pas majestueux aux ramures scintillantes fendant les brumes.", patronus: "stag" },
+          { text: "Un souffle vif et loyal marchant à tes côtés à la lisière des bois.", patronus: "badger" },
+          { text: "Une onde fluide et agile qui glisse à fleur d'eau sans bruit.", patronus: "otter" },
+          { text: "Un battement d'ailes silencieux observant d'en haut la canopée.", patronus: "owl" }
+        ]
+      },
+      {
+        question: "Quel mot résonne le plus profondément en toi lorsque le doute s'installe ?",
+        answers: [
+          { text: "Constance : ce qui a été bâti avec amour ne tombera jamais.", patronus: "badger" },
+          { text: "Courage : tant qu'il y a un souffle, il y a de l'espoir.", patronus: "stag" },
+          { text: "Légèreté : la joie est le plus puissant des boucliers.", patronus: "otter" },
+          { text: "Patience : l'aube revient toujours après la plus longue nuit.", patronus: "swan" }
+        ]
+      },
+      {
+        question: "Comment exprimes-tu spontanément ta bienveillance envers les tiens ?",
+        answers: [
+          { text: "En allégeant leur fardeau par des gestes discrets et constants.", patronus: "badger" },
+          { text: "En les faisant sourire et en désamorçant les tensions par l'humour.", patronus: "otter" },
+          { text: "En me dressant en première ligne face aux tracas qui les menacent.", patronus: "stag" },
+          { text: "En leur apportant conseil et écoute attentive sans jugement.", patronus: "cat" }
+        ]
+      },
+      {
+        question: "Quelle promesse ferais-tu au seuil de ta demeure magique ?",
+        answers: [
+          { text: "« Que cette porte reste toujours ouverte à la paix et au réconfort. »", patronus: "badger" },
+          { text: "« Que chacun y trouve la force de grandir et de rayonner. »", patronus: "stag" },
+          { text: "« Que les jours y soient légers et bercés d'insouciance. »", patronus: "otter" },
+          { text: "« Que la vérité et la sagesse y éclairent chaque décision. »", patronus: "fox" }
+        ]
+      }
+    ];
+
+    let currentPatronusQIndex = 0;
+    let patronusScores = {};
+    let selectedPatronusQAnswer = null;
+    let selectedManualPatronusKey = null;
+
+    function goToPatronusStep(step) {
+      PatronusAudio.playSilverBell(step === 'reveal' ? 1046 : 659);
+      ['patronus-step-intro', 'patronus-step-quiz', 'patronus-step-gallery', 'patronus-step-reveal', 'patronus-step-final'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById('btn-patronus-back').classList.toggle('hidden', step === 'intro' || step === 'final');
+
+      if (step === 'intro') {
+        document.getElementById('patronus-step-intro').classList.remove('hidden');
+        document.getElementById('patronus-header-title').textContent = "L'Apparition du Patronus";
+      } else if (step === 'quiz') {
+        document.getElementById('patronus-step-quiz').classList.remove('hidden');
+        document.getElementById('patronus-header-title').textContent = "Invocation du Patronus";
+        renderPatronusQuestion();
+      } else if (step === 'gallery') {
+        document.getElementById('patronus-step-gallery').classList.remove('hidden');
+        document.getElementById('patronus-header-title').textContent = "Choix de l'Esprit Protecteur";
+      } else if (step === 'reveal') {
+        document.getElementById('patronus-step-reveal').classList.remove('hidden');
+        document.getElementById('patronus-header-title').textContent = "Consécration du Patronus";
+        PatronusAudio.playExpectoPatronum();
+      } else if (step === 'final') {
+        document.getElementById('patronus-step-final').classList.remove('hidden');
+        document.getElementById('patronus-header-title').textContent = "Identité Magique Scellée";
+      }
+    }
+
+    function startPatronusQuiz() {
+      currentPatronusQIndex = 0;
+      patronusScores = { stag: 0, otter: 0, badger: 0, fox: 0, owl: 0, swan: 0, cat: 0 };
+      selectedPatronusQAnswer = null;
+      goToPatronusStep('quiz');
+    }
+
+    function openPatronusGallery() {
+      selectedManualPatronusKey = null;
+      document.querySelectorAll('.patronus-card').forEach(el => el.classList.remove('border-cyan-400', 'bg-cyan-500/20', 'ring-2', 'ring-cyan-300'));
+      document.getElementById('btn-confirm-patronus').disabled = true;
+      goToPatronusStep('gallery');
+    }
+
+    function renderPatronusQuestion() {
+      const q = patronusQuestions[currentPatronusQIndex];
+      document.getElementById('patronus-progress-text').textContent = `Évocation ${currentPatronusQIndex + 1} sur ${patronusQuestions.length}`;
+      document.getElementById('patronus-progress-bar').style.width = `${((currentPatronusQIndex + 1) / patronusQuestions.length) * 100}%`;
+      document.getElementById('patronus-question-title').textContent = q.question;
+
+      const container = document.getElementById('patronus-options-container');
+      container.innerHTML = '';
+      selectedPatronusQAnswer = null;
+      document.getElementById('btn-patronus-next').disabled = true;
+
+      q.answers.forEach((ans, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full p-3 rounded-xl bg-surface-container/80 border border-cyan-500/25 hover:border-cyan-400 hover:bg-surface-high transition-all text-left flex items-start gap-2.5 text-xs text-[#cbd5e1] font-sans";
+        btn.onclick = () => selectPatronusQuizOption(btn, ans.patronus);
+        btn.innerHTML = `
+          <span class="w-5 h-5 rounded-full border border-cyan-400/40 flex items-center justify-center text-[10px] text-cyan-300 font-serif flex-shrink-0 mt-0.5">
+            ${String.fromCharCode(65 + idx)}
+          </span>
+          <span class="leading-snug">${ans.text}</span>
+        `;
+        container.appendChild(btn);
+      });
+
+      document.getElementById('btn-patronus-prev').disabled = currentPatronusQIndex === 0;
+      document.getElementById('btn-patronus-next').textContent = currentPatronusQIndex === patronusQuestions.length - 1 ? "Invoquer mon Patronus ✨" : "Poursuivre →";
+    }
+
+    function selectPatronusQuizOption(btnEl, patronusKey) {
+      PatronusAudio.playSilverBell(780);
+      document.querySelectorAll('#patronus-options-container button').forEach(b => {
+        b.classList.remove('border-cyan-400', 'bg-cyan-500/20', 'ring-1', 'ring-cyan-300');
+      });
+      btnEl.classList.add('border-cyan-400', 'bg-cyan-500/20', 'ring-1', 'ring-cyan-300');
+      selectedPatronusQAnswer = patronusKey;
+      document.getElementById('btn-patronus-next').disabled = false;
+    }
+
+    function patronusQuizNext() {
+      if (!selectedPatronusQAnswer) return;
+      patronusScores[selectedPatronusQAnswer] = (patronusScores[selectedPatronusQAnswer] || 0) + 1;
+
+      if (currentPatronusQIndex < patronusQuestions.length - 1) {
+        currentPatronusQIndex++;
+        renderPatronusQuestion();
+      } else {
+        // Détermination du Patronus
+        let winningPatronus = 'stag';
+        let maxScore = -1;
+        for (const [key, score] of Object.entries(patronusScores)) {
+          if (score > maxScore) {
+            maxScore = score;
+            winningPatronus = key;
+          }
+        }
+        showPatronusReveal(winningPatronus, true);
+      }
+    }
+
+    function patronusQuizPrev() {
+      if (currentPatronusQIndex > 0) {
+        currentPatronusQIndex--;
+        renderPatronusQuestion();
+      }
+    }
+
+    function selectManualPatronus(pKey) {
+      PatronusAudio.playSilverBell(820);
+      selectedManualPatronusKey = pKey;
+      document.querySelectorAll('.patronus-card').forEach(el => {
+        el.classList.remove('border-cyan-400', 'bg-cyan-500/20', 'ring-2', 'ring-cyan-300');
+      });
+      const target = document.getElementById(`pcard-${pKey}`);
+      if (target) {
+        target.classList.add('border-cyan-400', 'bg-cyan-500/20', 'ring-2', 'ring-cyan-300');
+      }
+      document.getElementById('btn-confirm-patronus').disabled = false;
+    }
+
+    function confirmManualPatronus() {
+      if (!selectedManualPatronusKey) return;
+      showPatronusReveal(selectedManualPatronusKey, false);
+    }
+
+    function showPatronusReveal(pKey, wasQuiz = true) {
+      const data = patronusData[pKey] || patronusData.stag;
+      document.getElementById('patronus-reveal-img').src = data.img;
+      document.getElementById('patronus-reveal-name').textContent = data.name + " !";
+      document.getElementById('patronus-reveal-subtitle').textContent = data.subtitle;
+      document.getElementById('patronus-reveal-desc').textContent = wasQuiz
+        ? data.desc
+        : `Tu as choisi d'invoquer ${data.name}. Cet esprit céleste veillera sur chacun de tes pas et gardera ton foyer en paix tout au long de votre aventure.`;
+
+      try {
+        sessionStorage.setItem('dobby_selected_patronus', pKey);
+      } catch(e) {}
+
+      goToPatronusStep('reveal');
+    }
+
+    function finalizeIdentityAndEnterApp() {
+      PatronusAudio.playExpectoPatronum();
+      const house = sessionStorage.getItem('dobby_selected_house') || 'Gryffondor';
+      const patronus = sessionStorage.getItem('dobby_selected_patronus') || 'stag';
+      
+      document.getElementById('final-badge-house').textContent = house.charAt(0).toUpperCase() + house.slice(1);
+      document.getElementById('final-badge-patronus').textContent = (patronusData[patronus] || patronusData.stag).name;
+
+      goToPatronusStep('final');
+    }
+
+    function goToTraverseDirectly() {
+      PatronusAudio.playSilverBell(1200);
+      alert("✨ Retour sur le Chemin de Traverse ! Vos choix de Maison et de Patronus sont désormais enregistrés.");
+    }
+  </script>
+</body>
+</html>

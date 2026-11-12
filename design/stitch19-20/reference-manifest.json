@@ -1,0 +1,141 @@
+{
+  "title": "DOBBY V7 Stitch 19/20 — immutable visual references",
+  "sourceInputManifestSha256": "31b82c738e107880aaa6931f3e1622738d8d90a11a56ef5cc8280f8f9ec0a5cf",
+  "sourceArchives": {
+    "19": {
+      "sourcePath": "05_ARCHIVES_ORIGINALES/Stitch_19_original.zip",
+      "bytes": 1052153,
+      "sha256": "41c116f121f85dc45e887949737a9a16632a0fe0361a147c718ac1f3e5d8d7b5",
+      "copied": false
+    },
+    "20": {
+      "sourcePath": "05_ARCHIVES_ORIGINALES/Stitch_20_original.zip",
+      "bytes": 964316,
+      "sha256": "d6c257b7334c83294b1e7b553380f6f5e4b5615da803f5c391731a11b173a4fa",
+      "copied": false
+    }
+  },
+  "policy": "Visual references only. Remote images, synthetic accounts, questionnaires, scoring, demo persistence and simulated invitation states are not application logic.",
+  "copies": [
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/apothecary_curiosities/DESIGN.md",
+      "path": "design/stitch19-20/stitch19/apothecary_curiosities/DESIGN.md",
+      "bytes": 12042,
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_bienvenue_dans_dobby/code.html",
+      "path": "design/stitch19-20/stitch19/dobby_bienvenue_dans_dobby/code.html",
+      "bytes": 14586,
+      "sha256": "78292c05d55af92cd8ee1ef60835defe984a05a1d45d32cb493e715dd3ccc65b",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_connexion_et_inscription/code.html",
+      "path": "design/stitch19-20/stitch19/dobby_connexion_et_inscription/code.html",
+      "bytes": 25056,
+      "sha256": "041eb9a2028cbd543f2046cc50b0999f25f979f7c30430a1d5333e64765db9f1",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_cr_ation_d_un_nouveau_foyer/code.html",
+      "path": "design/stitch19-20/stitch19/dobby_cr_ation_d_un_nouveau_foyer/code.html",
+      "bytes": 17198,
+      "sha256": "0155b48de224259476c2fe6419eaa6b1737cc4ddd984126d9e486f251ff807d5",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_cr_ation_d_un_nouveau_foyer/screen.png",
+      "path": "design/stitch19-20/stitch19/dobby_cr_ation_d_un_nouveau_foyer/screen.png",
+      "bytes": 400406,
+      "sha256": "8767282d15b7869f60679104ded216f1c15aebd162524e1a64a08efef628017c",
+      "byteIdentical": true,
+      "width": 487,
+      "height": 1832
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_cr_ation_de_mon_profil/code.html",
+      "path": "design/stitch19-20/stitch19/dobby_cr_ation_de_mon_profil/code.html",
+      "bytes": 27002,
+      "sha256": "5af82eeb30f122487b1bcf4a015524dcf33c68d883716868b042d09b54007b08",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_cr_ation_de_mon_profil_galerie_24_portraits/code.html",
+      "path": "design/stitch19-20/stitch19/dobby_cr_ation_de_mon_profil_galerie_24_portraits/code.html",
+      "bytes": 51634,
+      "sha256": "e599a041f886bc4b605fd7122334f03bd533ef6e6a741c8a8c62315ff3329874",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_cr_ation_de_mon_profil_galerie_24_portraits/screen.png",
+      "path": "design/stitch19-20/stitch19/dobby_cr_ation_de_mon_profil_galerie_24_portraits/screen.png",
+      "bytes": 245643,
+      "sha256": "badd1c4d0fd01d7b423f96774a371eda5aaa18639b12b811b643aead96f9d763",
+      "byteIdentical": true,
+      "width": 462,
+      "height": 1600
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_rejoindre_un_foyer/code.html",
+      "path": "design/stitch19-20/stitch19/dobby_rejoindre_un_foyer/code.html",
+      "bytes": 32550,
+      "sha256": "f014d005d67b9f15d511f10119bb30f28cf4d80db8702793e68d60c687607d60",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "03_STITCH_19/stitch_dobby_assistant_mobile_app/dobby_rejoindre_un_foyer/screen.png",
+      "path": "design/stitch19-20/stitch19/dobby_rejoindre_un_foyer/screen.png",
+      "bytes": 369911,
+      "sha256": "c3ea7c218dfefacd417df0d6e4d7f50eb36b991584759b492aed3011186836b0",
+      "byteIdentical": true,
+      "width": 487,
+      "height": 1527
+    },
+    {
+      "sourcePath": "04_STITCH_20/stitch_dobby_assistant_mobile_app/apothecary_curiosities/DESIGN.md",
+      "path": "design/stitch19-20/stitch20/apothecary_curiosities/DESIGN.md",
+      "bytes": 12042,
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "04_STITCH_20/stitch_dobby_assistant_mobile_app/dobby_c_r_monie_de_d_couverte_du_patronus/code.html",
+      "path": "design/stitch19-20/stitch20/dobby_c_r_monie_de_d_couverte_du_patronus/code.html",
+      "bytes": 48712,
+      "sha256": "1a08ea313fa326a6081d484786c8262958db1db3555f91ac23e1a14158e47565",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "04_STITCH_20/stitch_dobby_assistant_mobile_app/dobby_c_r_monie_de_d_couverte_du_patronus/screen.png",
+      "path": "design/stitch19-20/stitch20/dobby_c_r_monie_de_d_couverte_du_patronus/screen.png",
+      "bytes": 494904,
+      "sha256": "4d6d8537777e025b7762a84b2efc3154f71ad9474dd7c4b265b3fe50457f9b9f",
+      "byteIdentical": true,
+      "width": 1600,
+      "height": 1280
+    },
+    {
+      "sourcePath": "04_STITCH_20/stitch_dobby_assistant_mobile_app/dobby_c_r_monie_de_la_maison_magique/code.html",
+      "path": "design/stitch19-20/stitch20/dobby_c_r_monie_de_la_maison_magique/code.html",
+      "bytes": 36783,
+      "sha256": "73db5ab19166c6a99eb6c372fb18997b8795bc05702a05d13570adbe0d6ebbaf",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "04_STITCH_20/stitch_dobby_assistant_mobile_app/dobby_c_r_monie_de_la_maison_magique/screen.png",
+      "path": "design/stitch19-20/stitch20/dobby_c_r_monie_de_la_maison_magique/screen.png",
+      "bytes": 442827,
+      "sha256": "60817ec93f53e3b4a5c91de82fd0cdafa98a80cf1ffb0beaf002d70bf2e4e87a",
+      "byteIdentical": true,
+      "width": 1600,
+      "height": 1280
+    }
+  ],
+  "missingSourceScreenshots": [
+    "stitch19/dobby_bienvenue_dans_dobby/screen.png",
+    "stitch19/dobby_connexion_et_inscription/screen.png",
+    "stitch19/dobby_cr_ation_de_mon_profil/screen.png"
+  ]
+}

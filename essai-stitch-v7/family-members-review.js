@@ -49,7 +49,9 @@ window.DobbyFamilyMembersReview=(()=>{'use strict';
   if(!access.canCreate){const reason=make('p',access.reason||'Votre compte doit être associé au foyer avant d’ajouter un membre.','fam-permission-message');reason.id='fam-create-permission';main.append(reason);}
   const invitation=make('section','','fam-invite-panel');invitation.id='fam-invite-panel';invitation.hidden=true;invitation.append(make('h2','Inviter une personne','fam-section-title'),make('p','Les adultes rejoignent le foyer avec leur propre compte. Le rattachement sécurisé des comptes et l’envoi des invitations doivent être activés avant de poursuivre.','fam-muted'));
   const emailLabel=make('label','Adresse e-mail','fam-field'),email=make('input');email.type='email';email.name='inviteEmail';email.disabled=true;email.placeholder='personne@exemple.be';emailLabel.append(email);const send=make('button','Envoyer l’invitation','fa-button fam-gold');send.type='button';send.disabled=true;invitation.append(emailLabel,send);main.append(invitation);
-  invite.onclick=()=>{invitation.hidden=!invitation.hidden;invite.setAttribute('aria-expanded',String(!invitation.hidden));};
+  const account=c.E.win().DobbyFamilyUI?.access?.state?.();
+  if(account?.verified&&account.permissions?.canInvite&&window.DobbyAccess){invitation.remove();invite.setAttribute('aria-haspopup','dialog');invite.setAttribute('aria-controls','access-invite-dialog');invite.onclick=()=>window.DobbyAccess.invite().catch(error=>c.notice(error.message));}
+  else invite.onclick=()=>{invitation.hidden=!invitation.hidden;invite.setAttribute('aria-expanded',String(!invitation.hidden));};
   const tools=make('section','','fam-member-tools');tools.setAttribute('aria-label','Rechercher un membre');
   const searchLabel=make('label','Rechercher un membre','fam-field'),search=make('input');search.id='search-input';search.type='search';search.placeholder='Prénom, nom ou surnom';search.value=ui.query||'';searchLabel.append(search);tools.append(searchLabel);
   const clear=c.button('search-clear','Effacer la recherche');clear.id='clear-search-btn';clear.hidden=!ui.query;tools.append(clear);main.append(tools);
