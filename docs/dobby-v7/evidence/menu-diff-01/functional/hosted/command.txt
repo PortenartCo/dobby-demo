@@ -1,0 +1,9 @@
+Working directory: /workspace/dobby-v7-menu-simplification
+
+DOBBY_MENU_BASE=https://portenartco.github.io/dobby-demo/essai-dobby-v7-menu-review-20261112/essai-stitch-v7/ DOBBY_MENU_RUN=hosted node essai-stitch-v7/tests/menu-diff-acceptance.cjs > /tmp/menu-diff-acceptance-hosted.log 2>&1
+
+Exit code: 0
+Result: PASS at 320, 390 and 1440 px (24 named assertion groups).
+The unchanged targeted test used fresh TEST profiles and existing native UI, including real native restoration confirmations. No external-origin request or uncaught browser error occurred.
+Full output: run.log
+Machine receipt: results.json

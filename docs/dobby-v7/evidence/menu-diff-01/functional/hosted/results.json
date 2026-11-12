@@ -1,0 +1,288 @@
+{
+  "suite": "MENU-DIFF-01-B",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-menu-review-20261112/essai-stitch-v7/",
+  "startedAt": "2026-11-12T10:12:23.095Z",
+  "sourceSha": "382b3277c84beec81b4dee2a2e6de9b59a624448",
+  "scope": "Targeted functional acceptance only; no broad suite or removed-route sweep",
+  "fixturePolicy": "Fresh browser contexts; TEST data only; native state seeding and native attachment writer; no real account/backend",
+  "widths": [
+    {
+      "width": 320,
+      "height": 844,
+      "assertions": [
+        "five-real-menu-cards-and-compact-layout",
+        "immediate-search-clear-and-empty-result",
+        "house-equipment-maintenance-and-native-data-export",
+        "documents-detail-and-native-local-attachment",
+        "contracts-native-E08-and-contract-detail",
+        "contacts-native-edit-form-and-return-menu",
+        "settings-native-complete-export-and-genuine-restore-roundtrip",
+        "targeted-menu-screenshot-and-small-viewport-access"
+      ],
+      "blockedExternalOrigins": [],
+      "status": "pass",
+      "layout": {
+        "header": {
+          "x": 0,
+          "y": 120,
+          "width": 320,
+          "height": 68,
+          "top": 120,
+          "right": 320,
+          "bottom": 188,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 320,
+          "height": 81,
+          "top": 763,
+          "right": 320,
+          "bottom": 844,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 120,
+          "top": 0,
+          "right": 320,
+          "bottom": 120,
+          "left": 0
+        },
+        "headerPosition": "fixed",
+        "dockPosition": "fixed",
+        "width": 320,
+        "height": 844,
+        "scrollWidth": 320
+      },
+      "searchCases": 11,
+      "equipmentExport": {
+        "filename": "dobby_maison_sauvegarde.json",
+        "sha256": "bc2078f0ea80d13a617a3c8bf078a2e62976800b699083b734ebf5b758d22e4d",
+        "bytes": 571
+      },
+      "attachment": {
+        "filename": "test-menu-diff.pdf",
+        "bytes": 61,
+        "sha256": "ee18062b5321341a619ad3b44b996b461287b724c95997f27d0eca8c2ea3ffdf"
+      },
+      "backupRoundtrip": {
+        "filename": "dobby_sauvegarde_complete_2026-11-12.json",
+        "format": "dobby-complete-backup",
+        "version": 1,
+        "bytes": 4429,
+        "sha256": "53e066c19d8a9977af7d4c3cc5457e690b6ec0c6b54dc2fce89fdb443c338fcd",
+        "attachmentCount": 1,
+        "nativeValidation": "pass",
+        "previewNonMutating": true,
+        "nativeConfirmationAccepted": true,
+        "recordsRestored": [
+          "familyMembers",
+          "famLists",
+          "famHealth",
+          "famContacts",
+          "houseItems",
+          "houseLogs",
+          "houseDocs",
+          "familyDocs"
+        ],
+        "attachmentBytesRestored": true
+      },
+      "oldFamilleNamespacePreserved": {
+        "key": "dobby-review-v7-famille-20261112|TEST-MENU-DIFF-SENTINEL",
+        "seededBeforeEnvelope": true,
+        "checkedAfterNativeRestoreAndReload": true
+      },
+      "screenshot": "docs/dobby-v7/evidence/menu-diff-01/functional/hosted/menu-320.png"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "assertions": [
+        "five-real-menu-cards-and-compact-layout",
+        "immediate-search-clear-and-empty-result",
+        "house-equipment-maintenance-and-native-data-export",
+        "documents-detail-and-native-local-attachment",
+        "contracts-native-E08-and-contract-detail",
+        "contacts-native-edit-form-and-return-menu",
+        "settings-native-complete-export-and-genuine-restore-roundtrip",
+        "targeted-menu-screenshot-and-small-viewport-access"
+      ],
+      "blockedExternalOrigins": [],
+      "status": "pass",
+      "layout": {
+        "header": {
+          "x": 0,
+          "y": 120,
+          "width": 390,
+          "height": 68,
+          "top": 120,
+          "right": 390,
+          "bottom": 188,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 81,
+          "top": 763,
+          "right": 390,
+          "bottom": 844,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 120,
+          "top": 0,
+          "right": 390,
+          "bottom": 120,
+          "left": 0
+        },
+        "headerPosition": "fixed",
+        "dockPosition": "fixed",
+        "width": 390,
+        "height": 844,
+        "scrollWidth": 390
+      },
+      "searchCases": 11,
+      "equipmentExport": {
+        "filename": "dobby_maison_sauvegarde.json",
+        "sha256": "bc2078f0ea80d13a617a3c8bf078a2e62976800b699083b734ebf5b758d22e4d",
+        "bytes": 571
+      },
+      "attachment": {
+        "filename": "test-menu-diff.pdf",
+        "bytes": 61,
+        "sha256": "ee18062b5321341a619ad3b44b996b461287b724c95997f27d0eca8c2ea3ffdf"
+      },
+      "backupRoundtrip": {
+        "filename": "dobby_sauvegarde_complete_2026-11-12.json",
+        "format": "dobby-complete-backup",
+        "version": 1,
+        "bytes": 4429,
+        "sha256": "213d42ecda2f71c5da9691a7c21686d650981e03d67f5903d8db60c77056e7a4",
+        "attachmentCount": 1,
+        "nativeValidation": "pass",
+        "previewNonMutating": true,
+        "nativeConfirmationAccepted": true,
+        "recordsRestored": [
+          "familyMembers",
+          "famLists",
+          "famHealth",
+          "famContacts",
+          "houseItems",
+          "houseLogs",
+          "houseDocs",
+          "familyDocs"
+        ],
+        "attachmentBytesRestored": true
+      },
+      "oldFamilleNamespacePreserved": {
+        "key": "dobby-review-v7-famille-20261112|TEST-MENU-DIFF-SENTINEL",
+        "seededBeforeEnvelope": true,
+        "checkedAfterNativeRestoreAndReload": true
+      },
+      "screenshot": "docs/dobby-v7/evidence/menu-diff-01/functional/hosted/menu-390.png"
+    },
+    {
+      "width": 1440,
+      "height": 844,
+      "assertions": [
+        "five-real-menu-cards-and-compact-layout",
+        "immediate-search-clear-and-empty-result",
+        "house-equipment-maintenance-and-native-data-export",
+        "documents-detail-and-native-local-attachment",
+        "contracts-native-E08-and-contract-detail",
+        "contacts-native-edit-form-and-return-menu",
+        "settings-native-complete-export-and-genuine-restore-roundtrip",
+        "targeted-menu-screenshot-and-small-viewport-access"
+      ],
+      "blockedExternalOrigins": [],
+      "status": "pass",
+      "layout": {
+        "header": {
+          "x": 480,
+          "y": 120,
+          "width": 480,
+          "height": 68,
+          "top": 120,
+          "right": 960,
+          "bottom": 188,
+          "left": 480
+        },
+        "dock": {
+          "x": 480,
+          "y": 763,
+          "width": 480,
+          "height": 81,
+          "top": 763,
+          "right": 960,
+          "bottom": 844,
+          "left": 480
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 120,
+          "top": 0,
+          "right": 1440,
+          "bottom": 120,
+          "left": 0
+        },
+        "headerPosition": "fixed",
+        "dockPosition": "fixed",
+        "width": 1440,
+        "height": 844,
+        "scrollWidth": 1440
+      },
+      "searchCases": 11,
+      "equipmentExport": {
+        "filename": "dobby_maison_sauvegarde.json",
+        "sha256": "bc2078f0ea80d13a617a3c8bf078a2e62976800b699083b734ebf5b758d22e4d",
+        "bytes": 571
+      },
+      "attachment": {
+        "filename": "test-menu-diff.pdf",
+        "bytes": 61,
+        "sha256": "ee18062b5321341a619ad3b44b996b461287b724c95997f27d0eca8c2ea3ffdf"
+      },
+      "backupRoundtrip": {
+        "filename": "dobby_sauvegarde_complete_2026-11-12.json",
+        "format": "dobby-complete-backup",
+        "version": 1,
+        "bytes": 4429,
+        "sha256": "0affe41726e06239b73b439840d17e896c4b61ac476a961483232cec70264c44",
+        "attachmentCount": 1,
+        "nativeValidation": "pass",
+        "previewNonMutating": true,
+        "nativeConfirmationAccepted": true,
+        "recordsRestored": [
+          "familyMembers",
+          "famLists",
+          "famHealth",
+          "famContacts",
+          "houseItems",
+          "houseLogs",
+          "houseDocs",
+          "familyDocs"
+        ],
+        "attachmentBytesRestored": true
+      },
+      "oldFamilleNamespacePreserved": {
+        "key": "dobby-review-v7-famille-20261112|TEST-MENU-DIFF-SENTINEL",
+        "seededBeforeEnvelope": true,
+        "checkedAfterNativeRestoreAndReload": true
+      },
+      "screenshot": "docs/dobby-v7/evidence/menu-diff-01/functional/hosted/menu-1440.png"
+    }
+  ],
+  "status": "pass",
+  "completedAt": "2026-11-12T10:12:53.622Z"
+}
