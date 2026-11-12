@@ -52,6 +52,13 @@ cas d’échec, pour préserver les archives lors de la campagne globale.
 | Génération | **73 fichiers** reproduits sans changement |
 | Ressources | 15 références identiques et 11 ressources locales vérifiées par SHA-256 |
 
+La première CI a révélé une mesure transitoire du Menu lors d’un redimensionnement :
+le test lisait encore la hauteur précédente avant la mise à jour de `100dvh`.
+L’attente de stabilisation du viewport a été corrigée dans le test, avec maintien
+des bornes de l’en-tête et du dock et ajout du contrôle de clic. Les six cas de
+redimensionnement 480/420 passent sur **Chrome 157.0.8103.50**, identique au runner
+GitHub, sans changement de CSS produit. Voir [la preuve](evidence/menu-chrome157-proof.json).
+
 La campagne historique locale contient plusieurs époques de source et des
 checkpoints parallèles vérifiés par empreintes. Elle ne se présente pas comme une
 exécution unique d’un commit immuable. La CI GitHub du candidat fournit ce contrôle
