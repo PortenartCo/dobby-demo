@@ -21,7 +21,9 @@ test('preview V5 source matches original except isolated storage and explicitly 
   // Fixed literal amendments, not broad function skips: every byte outside the
   // reviewed E07.3 amendments must still match the original V5 source.
   const amendments=JSON.parse(source('./fixtures/e07-3-native-extensions.json'));
-  let e073Normalized=preview;
+  const sharedTaskRetention={before:"if(t.state==='open'&&!current.has(t.key)){",after:"if(t.state==='open'&&!current.has(t.key)&&!s.runeSyncRequired&&!window.DobbySharedRunesV2?.available?.()){"};
+  assert.equal(preview.split(sharedTaskRetention.after).length-1,1,'Shared task retention has one native boundary');
+  let e073Normalized=preview.replace(sharedTaskRetention.after,sharedTaskRetention.before);
   const e074=JSON.parse(source('./fixtures/e07-4-native-extensions.json'));
   for(const amendment of [...e074.patches].reverse()){assert.equal(e073Normalized.split(amendment.after).length-1,amendment.occurrences||1,'Each E07.4 amendment occurs exactly once');e073Normalized=e073Normalized.replaceAll(amendment.after,amendment.before);}
   for(const amendment of amendments.patches){assert.equal(e073Normalized.split(amendment.after).length-1,1,'Each approved amendment occurs exactly once');e073Normalized=e073Normalized.replaceAll(amendment.after,amendment.before);}

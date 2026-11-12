@@ -1413,7 +1413,7 @@ function expected(){const result=[];
  return result;
 }
 function reconcile(){const s=getState();if(!Array.isArray(s.autoTasks))s.autoTasks=[];const current=new Map(expected().map(x=>[x.key,x]));let changed=false;
- for(const t of s.autoTasks){if(t.state==='open'&&!current.has(t.key)){t.state='obsolete';changed=true}}
+ for(const t of s.autoTasks){if(t.state==='open'&&!current.has(t.key)&&!s.runeSyncRequired&&!window.DobbySharedRunesV2?.available?.()){t.state='obsolete';changed=true}}
  for(const [key,x] of current){if(!s.autoTasks.some(t=>t.key===key)){s.autoTasks.push({...x,state:'open',createdAt:new Date().toISOString()});changed=true}}
  return changed;
 }
