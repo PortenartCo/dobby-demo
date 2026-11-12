@@ -8,6 +8,7 @@ export function comparable(row) {
     quantity: row?.quantity == null ? null : Number(row.quantity),
     unit: String(row?.unit ?? '').trim(),
     checked: Boolean(row?.checked),
+    at_home_quantity: Number(row?.at_home_quantity ?? 0),
     deleted_at: Number.isFinite(stamp) ? stamp : null
   };
 }
@@ -20,6 +21,7 @@ export function cleanFromRemote(row) {
   return {
     id: row.id, title: row.title, quantity: row.quantity == null ? null : Number(row.quantity),
     unit: row.unit || '', checked: Boolean(row.checked),
+    ...('at_home_quantity' in row ? {at_home_quantity:Number(row.at_home_quantity ?? 0)} : {}),
     deleted_at: row.deleted_at || null,
     created_at: row.created_at, updated_at: row.updated_at,
     baseRevision: Number(row.revision),
@@ -37,7 +39,7 @@ export function newLocal(id, title, quantity, unit, now) {
 }
 
 export function editLocal(item, changes, now) {
-  const editable = ['title', 'quantity', 'unit', 'checked', 'deleted_at'];
+  const editable = ['title', 'quantity', 'unit', 'checked', 'deleted_at', 'at_home_quantity'];
   const next = { ...item };
   for (const field of editable) {
     if (Object.prototype.hasOwnProperty.call(changes, field)) next[field] = changes[field];
@@ -87,6 +89,7 @@ export function toServerPayload(item) {
   return {
     title: String(item.title).trim(),
     quantity: item.quantity == null ? null : Number(item.quantity), unit: String(item.unit || ''),
-    checked: Boolean(item.checked), deleted_at: item.deleted_at || null
+    checked: Boolean(item.checked), deleted_at: item.deleted_at || null,
+    ...('at_home_quantity' in item ? {at_home_quantity:Number(item.at_home_quantity ?? 0)} : {})
   };
 }

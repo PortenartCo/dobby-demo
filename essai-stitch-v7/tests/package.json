@@ -7,7 +7,8 @@
     "test:checkpoint": "node ci.cjs",
     "test:register-family": "node register-family.cjs",
     "test:all": "DOBBY_FINAL=1 node ci.cjs",
-    "test:e07-p02": "node --test e07-p02-model.test.cjs && node e07-p02-effects.cjs && node e07-p02-browser.cjs && node e07-p02-family.cjs"
+    "test:e07-p02": "node --test e07-p02-model.test.cjs && node e07-p02-effects.cjs && node e07-p02-browser.cjs && node e07-p02-family.cjs",
+    "test:e07-p02-shared-home": "cd ../.. && node --test essai-stitch-v5-famille/tests/family-core.test.mjs essai-stitch-v7/tests/e07-p02-model.test.cjs essai-stitch-v7/tests/e07-p02-home-core.test.mjs && node essai-stitch-v7/tests/e07-p02-home-race.cjs && node essai-stitch-v7/tests/e07-p02-shared-home.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
