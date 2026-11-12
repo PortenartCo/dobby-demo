@@ -1,0 +1,352 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../review-config.js"></script><script src="../../../review-runtime.js"></script><script src="../../../shared-home-demo.js"></script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type">
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body data-stitch-source="dobby_cr_er_et_attribuer_une_mission" class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-20 px-gutter-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Retour vers La Bibliothèque des Missions" class="w-11 h-11 flex items-center justify-center rounded-xl bg-surface-container text-primary hover:bg-surface-container-high transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><div class="flex flex-col"><h1 class="font-headline-sm text-headline-sm text-primary tracking-wide leading-tight">Nouvelle Mission</h1><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Parchemin de Quête Familiale</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Fermer le parchemin" class="w-11 h-11 flex items-center justify-center rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">close</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-space-xs shadow-[0_0_12px_rgba(249,187,95,0.25)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-20 pb-safe bg-surface min-h-screen px-margin-mobile"><div class="flex flex-col w-full pb-36">
+<!-- 1. Bannière de statut et note didactique (Apothecary Cartouche) -->
+<section class="mb-space-md">
+<div class="relative bg-surface-container-high rounded-xl p-space-md shadow-md overflow-hidden border border-[#d49b42]/20">
+<div class="absolute -right-4 -bottom-4 w-20 h-20 bg-primary/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center gap-space-xs mb-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">Cible d'Évolution · Registre du Logis</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        Formulaire de consignation des quêtes familiales. L'attribution et la synchronisation partagées restent conservées localement sur cet appareil.
+      </p>
+<div class="mt-space-sm pt-space-xs flex items-center justify-between text-on-surface-variant/70 border-t border-white/5">
+<span class="font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary shadow-sm"></span>
+<span class="font-medium">Registre Local Souverain</span>
+</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wider text-secondary-fixed bg-secondary-container/40 px-2 py-0.5 rounded-full">AES-256 v4.8</span>
+</div>
+</div>
+</section>
+
+<!-- Formulaire découpé en cartes d'étapes ordonnées -->
+<form class="flex flex-col gap-space-md" id="quest-form">
+
+<!-- ÉTAPE 1 : Intitulé & Rôle -->
+<section class="bg-surface-container-low border border-[#d49b42]/20 rounded-xl p-4 shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center justify-between border-b border-[#d49b42]/15 pb-2.5">
+  <div class="flex items-center gap-2">
+    <span class="w-6 h-6 rounded-full bg-primary/20 text-[#f9bb5f] flex items-center justify-center font-bold text-xs">1</span>
+    <h2 class="font-['Playfair_Display'] text-[16px] font-semibold text-[#fcf7ee] tracking-wide">Intitulé &amp; Rôle de la Quête</h2>
+  </div>
+  <span class="text-[11px] font-semibold text-primary/80 uppercase tracking-wider">Étape 1/3</span>
+</div>
+
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] text-[#d49b42] uppercase" for="quest-title"><span class="material-symbols-outlined text-[14px]">edit_note</span>Intitulé de la mission <span class="text-error">*</span></label>
+<span class="text-[11px] text-on-surface-variant font-medium">Requis</span>
+</div>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-xl bg-surface-container-lowest font-['Playfair_Display'] text-[16px] font-semibold text-[#fcf7ee] placeholder:text-on-surface-variant/40 border border-[#d49b42]/30 shadow-inner focus:outline-none focus:ring-2 focus:ring-[#d49b42] focus:border-[#d49b42] focus:shadow-[0_0_12px_rgba(212,155,66,0.35)] transition-all" id="quest-title" name="quest-title" placeholder="Ex: Dépoussiérer la verrière &amp; nourrir les chouettes" required="" type="text" value="Nettoyer la cheminée du salon">
+<div class="absolute right-3 top-3.5 text-primary/40 pointer-events-none">
+<span class="material-symbols-outlined text-[22px]">ink_pen</span>
+</div>
+</div>
+<!-- Puces de suggestions rapides -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-1 no-scrollbar">
+<button class="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-bright transition-colors text-[12px] font-medium border border-white/5" type="button">
+<span class="">🧹</span> Balai &amp; poussière
+</button>
+<button class="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-bright transition-colors text-[12px] font-medium border border-white/5" type="button">
+<span class="">🧺</span> Étendre la lessive
+</button>
+<button class="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-bright transition-colors text-[12px] font-medium border border-white/5" type="button">
+<span class="">🌿</span> Arroser les plantes
+</button>
+<button class="shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container text-on-surface hover:bg-surface-bright transition-colors text-[12px] font-medium border border-white/5" type="button">
+<span class="">📦</span> Ranger l'entrée
+</button>
+</div>
+</div>
+
+<div class="flex flex-col gap-1.5 pt-1">
+<label class="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] text-[#d49b42] uppercase" for="quest-notes"><span class="material-symbols-outlined text-[14px]">history_edu</span>Consignes &amp; notes d'exécution</label>
+<textarea class="w-full p-3 rounded-xl bg-surface-container-lowest text-[#fcf7ee] placeholder:text-on-surface-variant/40 font-body-sm text-body-sm border border-[#d49b42]/30 shadow-inner focus:outline-none focus:ring-2 focus:ring-[#d49b42] focus:border-[#d49b42] focus:shadow-[0_0_12px_rgba(212,155,66,0.35)] transition-all resize-none leading-relaxed" id="quest-notes" placeholder="Précisez l'emplacement des produits ou un mot d'encouragement..." rows="2">Déposer la cendre froide dans le seau en fonte sous l'escalier. Ne pas oublier d'aérer 10 minutes !</textarea>
+</div>
+</section>
+
+<!-- ÉTAPE 2 : Assignation du membre & Récurrence -->
+<section class="bg-surface-container-low border border-[#d49b42]/20 rounded-xl p-4 shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center justify-between border-b border-[#d49b42]/15 pb-2.5">
+  <div class="flex items-center gap-2">
+    <span class="w-6 h-6 rounded-full bg-primary/20 text-[#f9bb5f] flex items-center justify-center font-bold text-xs">2</span>
+    <h2 class="font-['Playfair_Display'] text-[16px] font-semibold text-[#fcf7ee] tracking-wide">Assignation &amp; Récurrence</h2>
+  </div>
+  <span class="text-[11px] font-semibold text-primary/80 uppercase tracking-wider">Étape 2/3</span>
+</div>
+
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] text-[#d49b42] uppercase"><span class="material-symbols-outlined text-[14px]">group</span>Membre de la maisonnée assigné</label>
+
+<!-- Grille de membres -->
+<div class="grid grid-cols-2 gap-2" id="assignee-selector">
+<!-- Membre 1 (Sélectionné) -->
+<button class="member-btn relative flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-high text-left shadow-sm ring-2 ring-primary transition-all" data-member="Thomas" type="button">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Thomas" src="../../assets/remaining/e272634cf3c9749c.png">
+<div class="member-check absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[12px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-primary truncate leading-tight">Thomas</span>
+<div class="flex items-center gap-1 mt-0.5">
+<div class="w-10 h-1.5 rounded-full bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 65%;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">65%</span>
+</div>
+</div>
+</button>
+
+<!-- Membre 2 -->
+<button class="member-btn relative flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-lowest text-left shadow-sm transition-all hover:bg-surface-container border border-white/5" data-member="Léa" type="button">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Léa" src="../../assets/remaining/1821694e91cb7863.png">
+<div class="member-check hidden absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[12px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface truncate leading-tight">Léa</span>
+<div class="flex items-center gap-1 mt-0.5">
+<div class="w-10 h-1.5 rounded-full bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 80%;"></div>
+</div>
+<span class="text-[10px] text-error font-medium">80%</span>
+</div>
+</div>
+</button>
+
+<!-- Membre 3 -->
+<button class="member-btn relative flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-lowest text-left shadow-sm transition-all hover:bg-surface-container border border-white/5" data-member="Hugo" type="button">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Hugo" src="../../assets/remaining/817ba58754f5c34a.png">
+<div class="member-check hidden absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[12px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface truncate leading-tight">Hugo</span>
+<div class="flex items-center gap-1 mt-0.5">
+<div class="w-10 h-1.5 rounded-full bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 40%;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">40%</span>
+</div>
+</div>
+</button>
+
+<!-- Membre 4 -->
+<button class="member-btn relative flex items-center gap-2.5 p-2.5 rounded-xl bg-surface-container-lowest text-left shadow-sm transition-all hover:bg-surface-container border border-white/5" data-member="Chloé" type="button">
+<div class="relative w-10 h-10 rounded-full overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Chloé" src="../../assets/remaining/41aa60c1babe2637.png">
+<div class="member-check hidden absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[12px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] text-on-surface truncate leading-tight">Chloé</span>
+<div class="flex items-center gap-1 mt-0.5">
+<div class="w-10 h-1.5 rounded-full bg-surface-container-lowest overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 30%;"></div>
+</div>
+<span class="text-[10px] text-on-surface-variant font-medium">30%</span>
+</div>
+</div>
+</button>
+</div>
+
+<!-- Option collective -->
+<button class="member-btn w-full flex items-center justify-between p-2.5 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container transition-all border border-white/5" data-member="Toute la maisonnée" type="button">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">castle</span>
+</div>
+<div class="flex flex-col">
+<span class="font-semibold text-[13px] text-on-surface">Toute la maisonnée</span>
+<span class="text-[11px] text-on-surface-variant">Quête solidaire &amp; collective</span>
+</div>
+</div>
+<div class="member-check hidden w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[11px] font-bold">check</span>
+</div>
+</button>
+</div>
+
+<div class="flex flex-col gap-2 pt-2 border-t border-[#d49b42]/15">
+<label class="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] text-[#d49b42] uppercase"><span class="material-symbols-outlined text-[14px]">autorenew</span>Récurrence de la quête</label>
+<div class="grid grid-cols-4 gap-1 p-1 bg-surface-container-lowest rounded-xl border border-white/5">
+<button class="recurrence-btn py-1.5 text-center rounded-lg text-[12px] font-semibold bg-surface-container-high text-primary shadow-inner transition-all" type="button">Unique</button>
+<button class="recurrence-btn py-1.5 text-center rounded-lg text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-all" type="button">Quotidien</button>
+<button class="recurrence-btn py-1.5 text-center rounded-lg text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-all" type="button">Semaine</button>
+<button class="recurrence-btn py-1.5 text-center rounded-lg text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-all" type="button">Mensuel</button>
+</div>
+</div>
+</section>
+
+<!-- ÉTAPE 3 : Récompense magique & Échéance -->
+<section class="bg-surface-container-low border border-[#d49b42]/20 rounded-xl p-4 shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center justify-between border-b border-[#d49b42]/15 pb-2.5">
+  <div class="flex items-center gap-2">
+    <span class="w-6 h-6 rounded-full bg-primary/20 text-[#f9bb5f] flex items-center justify-center font-bold text-xs">3</span>
+    <h2 class="font-['Playfair_Display'] text-[16px] font-semibold text-[#fcf7ee] tracking-wide">Récompense &amp; Échéance</h2>
+  </div>
+  <span class="text-[11px] font-semibold text-primary/80 uppercase tracking-wider">Étape 3/3</span>
+</div>
+
+<!-- Récompense & Points Clavier Numérique -->
+<div class="flex flex-col gap-2">
+<label class="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] text-[#d49b42] uppercase"><span class="material-symbols-outlined text-[14px]">award_star</span>Niveau d'Effort &amp; Chaussettes d'or</label>
+<div class="grid grid-cols-3 gap-2" id="effort-selector">
+<button class="effort-btn flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container-lowest text-center gap-1 transition-all hover:bg-surface-container border border-white/5" data-reward="10 runes" type="button">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase">Légère</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">token</span>
+<span class="font-headline-sm text-[18px] font-bold">10</span>
+</div>
+<span class="text-[11px] text-on-surface-variant">Runes</span>
+</button>
+<button class="effort-btn flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container-high text-center gap-1 transition-all ring-2 ring-primary shadow-sm border border-primary/30" data-reward="25 runes" type="button">
+<span class="text-[11px] font-bold text-tertiary uppercase">Régulière</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">token</span>
+<span class="font-headline-sm text-[18px] font-bold">25</span>
+</div>
+<span class="text-[11px] text-primary font-medium">Runes</span>
+</button>
+<button class="effort-btn flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container-lowest text-center gap-1 transition-all hover:bg-surface-container border border-white/5" data-reward="50 runes" type="button">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase">Majeure</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[15px]">token</span>
+<span class="font-headline-sm text-[18px] font-bold">50</span>
+</div>
+<span class="text-[11px] text-on-surface-variant">Runes</span>
+</button>
+</div>
+
+<!-- Champ numérique personnalisé avec focus doré et inputmode numeric -->
+<div class="flex items-center gap-2 mt-1 bg-surface-container-lowest p-2.5 rounded-xl border border-[#d49b42]/20">
+  <div class="flex items-center gap-1.5 text-primary shrink-0">
+    <span class="material-symbols-outlined text-[18px]">pin</span>
+    <label class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider" for="custom-runes">Valeur précise</label>
+  </div>
+  <input class="w-full h-8 px-2 rounded-lg bg-surface-container-high text-[#fcf7ee] font-semibold text-sm border border-[#d49b42]/30 focus:outline-none focus:ring-2 focus:ring-[#d49b42] focus:border-[#d49b42] focus:shadow-[0_0_12px_rgba(212,155,66,0.35)] transition-all" id="custom-runes" inputmode="numeric" pattern="[0-9]*" placeholder="25" type="text" value="25">
+  <span class="text-[11px] text-primary font-bold pr-1">Runes</span>
+</div>
+</div>
+
+<!-- Échéance & Calendrier avec Focus Dorés -->
+<div class="flex flex-col gap-2 pt-2 border-t border-[#d49b42]/15">
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-1.5 text-[11px] font-semibold tracking-[0.1em] text-[#d49b42] uppercase"><span class="material-symbols-outlined text-[14px]">hourglass_top</span>Échéance de complétion</label>
+</div>
+<!-- Sélecteurs rapides -->
+<div class="grid grid-cols-4 gap-1 bg-surface-container-lowest p-1 rounded-xl border border-white/5">
+<button class="quick-date-btn py-1.5 text-center rounded-lg text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-all" type="button">Aujourd'hui</button>
+<button class="quick-date-btn py-1.5 text-center rounded-lg text-[12px] font-bold bg-primary text-on-primary shadow-sm transition-all" type="button">Demain</button>
+<button class="quick-date-btn py-1.5 text-center rounded-lg text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-all" type="button">Week-end</button>
+<button class="quick-date-btn py-1.5 text-center rounded-lg text-[12px] font-medium text-on-surface-variant hover:text-on-surface transition-all" type="button">Précise</button>
+</div>
+
+<!-- Inputs d'almanach et sablier avec focus dorés -->
+<div class="grid grid-cols-2 gap-2">
+<div class="flex items-center gap-2 bg-surface-container-lowest h-12 px-3 rounded-xl border border-[#d49b42]/20 focus-within:ring-2 focus-within:ring-[#d49b42] focus-within:border-[#d49b42] focus-within:shadow-[0_0_12px_rgba(212,155,66,0.35)] transition-all">
+<span class="material-symbols-outlined text-tertiary text-[18px]">calendar_month</span>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-[10px] font-semibold text-on-surface-variant uppercase tracking-wider">Almanach</span>
+<input class="bg-transparent text-sm text-on-surface font-medium focus:outline-none truncate" id="date-display" type="text" value="Jeudi 27 Octobre">
+</div>
+</div>
+
+<div class="flex items-center gap-2 bg-surface-container-lowest h-12 px-3 rounded-xl border border-[#d49b42]/20 focus-within:ring-2 focus-within:ring-[#d49b42] focus-within:border-[#d49b42] focus-within:shadow-[0_0_12px_rgba(212,155,66,0.35)] transition-all">
+<span class="material-symbols-outlined text-tertiary text-[18px]">schedule</span>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-[10px] font-semibold text-on-surface-variant uppercase tracking-wider">Moment</span>
+<input class="bg-transparent text-sm text-on-surface font-medium focus:outline-none truncate" id="time-display" type="text" value="Avant 18h00">
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Sceau Officiel de Sécurité Locale DOBBY (AES-256 v4.8) -->
+<footer class="mt-2 mb-2 text-center px-4">
+<div class="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full bg-surface-container-lowest border border-[#d49b42]/30 shadow-inner text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">security</span>
+<span class="text-[11px] font-semibold tracking-wider text-[#fadcd5] uppercase">Sceau de Sécurité Locale DOBBY</span>
+<span class="text-[10px] bg-secondary-container text-secondary font-bold px-1.5 py-0.5 rounded">AES-256 v4.8</span>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant/70 mt-1.5 max-w-xs mx-auto leading-tight">
+  Données cryptées &amp; protégées localement sur ce terminal. Aucune indiscrétion vers des nuages tiers.
+</p>
+</footer>
+
+</form>
+
+<!-- Barre de validation ancrée (Sticky Bottom Bar 52px) -->
+<div class="fixed bottom-0 left-0 right-0 z-50 bg-[#1e100c]/95 backdrop-blur-xl border-t border-[#d49b42]/30 px-4 py-3 shadow-[0_-8px_24px_rgba(0,0,0,0.6)]">
+  <button class="w-full h-[52px] rounded-xl bg-gradient-to-r from-[#f9bb5f] to-[#d49b42] text-[#180b07] font-semibold text-base flex items-center justify-center gap-2 shadow-lg hover:brightness-110 active:scale-[0.98] transition-all" form="quest-form" type="submit">
+    <span class="material-symbols-outlined text-[20px] font-bold">auto_fix_high</span>
+    <span class="">Inscrire la mission au registre</span>
+  </button>
+</div>
+
+<!-- Modal / Parcours de Confirmation Pré-enregistrement -->
+<div class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-background/80 backdrop-blur-sm transition-opacity" id="confirm-modal">
+<div class="relative w-full max-w-md bg-surface-container-high rounded-xl p-space-lg shadow-2xl flex flex-col gap-space-md animate-in fade-in duration-200 border border-[#d49b42]/30">
+<!-- En-tête Parchemin -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[18px]">bookmark</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">Sceller la Quête ?</h2>
+</div>
+<button class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center hover:text-on-surface" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Récapitulatif -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl flex flex-col gap-space-xs border border-white/5">
+<div class="flex items-start justify-between gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Quête :</span>
+<span class="font-headline-sm text-headline-sm text-primary text-right font-semibold" id="summary-title">Nettoyer la cheminée du salon</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Attribuée à :</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold" id="summary-member">Thomas</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Échéance :</span>
+<span class="font-body-md text-body-md text-on-surface" id="summary-due">Demain avant 18h</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Récompense :</span>
+<span class="font-body-md text-body-md text-tertiary font-bold" id="summary-reward">25 runes</span>
+</div>
+<div class="pt-2 mt-1 flex items-center justify-between text-on-surface-variant/70 border-t border-white/5">
+<span class="font-label-sm text-label-sm uppercase">Sécurité :</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">DOBBY AES-256 v4.8</span>
+</div>
+</div>
+<!-- Boutons de validation finale -->
+<div class="flex flex-col gap-space-xs">
+<button class="w-full h-14 rounded-xl bg-gradient-to-r from-[#f9bb5f] to-[#d49b42] text-[#180b07] font-headline-sm text-[17px] font-bold flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">done_all</span>
+<span class="">Confirmer et Consigner</span>
+</button>
+<button class="w-full h-11 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-bright transition-colors border border-white/5" type="button">
+          Modifier la mission
+        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Client Micro-Interactions Script -->
+</main>
+
+</body></html>
