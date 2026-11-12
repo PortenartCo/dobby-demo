@@ -42,3 +42,13 @@ Commit source : `a60632d20f8951d37352de4c37d063c1667e0fe1`, poussé sur la branc
 Tests finaux : 25 modèle/cœur + 13 contrats natifs V2 ; scénario dédié de course IndexedDB ; 10 points du scénario HTTP à deux utilisateurs ; aperçu A/B vérifié depuis le commit poussé ; reprise des effets conservée. Aucun autre module UI ni ancien aperçu modifié. La synchronisation sur deux comptes Supabase réels demeure non vérifiée (schéma inaccessible et migration non appliquée).
 
 Contrôle final d’affichage : le pied des vues Courses lit maintenant le statut du panier natif, plutôt que celui du module Menus. Le test à deux clients a reproduit puis corrigé le libellé contradictoire « Données locales (non synchronisées) » alors que le panier partagé était à jour. Ce changement dans `cuisine.js` est strictement limité au statut des routes Courses ; aucun choix de repas modifié.
+
+## Publication autorisée de l’aperçu
+
+L’utilisateur a autorisé explicitement l’ajout du seul nouveau répertoire statique sur `main`. Le commit de publication `9494b897a3895519f87d0bbc4b069dc36701b00e` ajoute uniquement 284 fichiers sous `essai-dobby-e07-p02-shared-home-review-20261112/` ; toutes les autres entrées de l’arbre parent sont conservées. Aucun autre worktree modifié, aucune fusion des sources. Source finale du paquet : `dbb61df9d46a414ef1dadd29a849955b44c93bc7`.
+
+URL : https://portenartco.github.io/dobby-demo/essai-dobby-e07-p02-shared-home-review-20261112/
+
+Cette exception de publication ne vaut pas autorisation de migration : le SQL reste non exécuté et les essais à deux comptes Supabase réels restent non effectués.
+
+Vérification publique réussie : `e07-p02-shared-home-preview.cjs` exécuté sur l’URL Pages, avec disponibilité partagée A/B, modification, annulation, reload, navigation et reset ; zéro requête externe/erreur/ressource manquante. Manifeste public `committed`, source `dbb61df9d46a414ef1dadd29a849955b44c93bc7`, `realBackend:false`, `schemaStatus:proposed-not-applied`. Preuve finale : `evidence/e07-p02-shared-home/hosted/verification.json`. Le paquet autonome final est `/workspace/scratch/dobby-e07-p02-shared-home-dbb61df.zip` ; le premier paquet a60632d reste conservé.
