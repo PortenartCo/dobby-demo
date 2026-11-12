@@ -15,7 +15,7 @@
 - [x] Implémenter `menu-layout.html`, sa dérivation dans `build-register.cjs`, l’alias `settings` dans `register.js`, les adaptateurs Menu/Paramètres dans `tools-register.js` et les styles limités aux deux vues dans `register.css`. Retirer le message de partage générique de ces deux pages dans `family.js`.
 - [x] Adapter les seules assertions historiques qui attendent les accès supprimés ; conserver leur couverture par routes profondes ou dock.
 - [x] Exécuter les tests Menu, la commande npm test existante, les contrôles pertinents Famille/globaux/préservation/navigation et la génération reproductible.
-- [ ] Revue indépendante du diff, captures des trois résolutions, rapport d’implémentation, commit local et état propre.
+- [x] Revue indépendante du diff, captures des trois résolutions, rapport d’implémentation, commit local et état propre.
 
 ## Points de revue
 
