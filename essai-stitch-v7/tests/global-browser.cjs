@@ -155,7 +155,7 @@ async function homeAmount(page, name, amount) {
 
 async function runJourney(browser, width) {
   const report = { width, status: 'RUNNING', base: base.href, realBackend: false,
-    checks: [], screenshots: [], externalRequests: [], networkMutations: [], errors: [], missing: [] };
+    checks: [], screenshots: [], externalRequests: [], networkMutations: [], errors: [], missing: [], consoleErrors: [], failedRequests: [], navigations: [] };
   const context = await browser.newContext({ viewport: { width, height: 900 },
     locale: 'fr-BE', timezoneId: 'Europe/Brussels', reducedMotion: 'reduce' });
   let current = 'manifest', page;
@@ -181,6 +181,9 @@ async function runJourney(browser, width) {
     p.setDefaultTimeout(15000);
     p.on('dialog', dialog => dialog.accept());
     p.on('pageerror', error => report.errors.push({ url: p.url(), message: error.message }));
+    p.on('console', message => { if(message.type()==='error')report.consoleErrors.push({url:p.url(),message:message.text().slice(0,1200),location:message.location()}); });
+    p.on('requestfailed', request => report.failedRequests.push({url:request.url(),error:request.failure()?.errorText}));
+    p.on('framenavigated', frame => report.navigations.push({top:frame===p.mainFrame(),url:frame.url()}));
     p.on('response', response => {
       if (response.status() >= 400) report.missing.push({ url: response.url(), status: response.status() });
     });
@@ -510,11 +513,14 @@ async function runJourney(browser, width) {
             familyReady: window.DobbyFamilyStitch?.ready, cuisineReady: window.DobbyCuisine?.ready,
             iframeSrc: frame?.getAttribute('src'), deferredSrc: frame?.dataset.globalEngineSrc,
             nativeURL: native?.location.href, nativeDocument: native?.document.readyState,
+            loadingText:document.getElementById('dv7-loading')?.textContent, familyView:window.DobbyFamilyStitch?.view, registerBusy:window.DobbyRegister?.busy,
+            nativeGlobals:{health:!!native?.DobbyFamilyHealth,agenda:!!native?.DobbyFamilyAgenda,missions:native?.DobbyFamilyMissions?.available,go:typeof native?.go,shoppingDraft:typeof native?.shoppingDraft},
             nativeStatus: status && {ready:status.ready,status:status.status,error:status.error},
             resetPending: !!raw?.getItem.call(localStorage,key+'reset-in-progress'),
             generation: JSON.parse(raw?.getItem.call(localStorage,key+'backend-v1')||'{}').generation };
         });
-        console.error('GLOBAL_FAILURE_LIFECYCLE', JSON.stringify({width,lifecycle:report.lifecycleAtFailure,errors:report.errors}));
+        const chromeState=await page.evaluate(()=>Promise.race([Promise.resolve(window.DobbyChrome?.ready).then(()=>'resolved',error=>'rejected:'+error.message),new Promise(resolve=>setTimeout(()=>resolve('pending'),500))]));
+        console.error('GLOBAL_FAILURE_LIFECYCLE', JSON.stringify({width,lifecycle:report.lifecycleAtFailure,chromeReady:chromeState,errors:report.errors,consoleErrors:report.consoleErrors.slice(-12),failedRequests:report.failedRequests.slice(-12),navigations:report.navigations.slice(-18)}));
       } catch (diagnosticError) { console.error('GLOBAL_FAILURE_LIFECYCLE_UNAVAILABLE', diagnosticError.message); }
       try { report.nativeAtFailure = await state(page); } catch {}
       try { report.basketAtFailure = await basket(page); } catch {}
@@ -532,6 +538,7 @@ async function runJourney(browser, width) {
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
     args: ['--no-sandbox'] });
+  console.log('GLOBAL_BROWSER_VERSION',browser.version());
   try {
     for (const width of widths) await runJourney(browser, width);
   } finally { await browser.close(); }
