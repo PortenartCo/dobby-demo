@@ -56,5 +56,35 @@ window.DobbyFamilyStitchEngine=(()=>{
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
  function saveContact(id,values){const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
  function deleteContact(id){requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
- return Object.freeze({requireRecord,unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
+ // Shared memos use the native state/save pipeline and its family module.
+ function changeSharedMemo(p){
+  const before=st.sharedFamilyNotes,rows=before||[];
+  if(!Array.isArray(rows))throw Error('Registre des mémos illisible. Les données sont conservées.');
+  let id=p.id,values=p.values,existing=rows.find(row=>row.id===id);
+  if(p.action==='import'){
+   const source=(st.familyNotes||[]).find(row=>row.id===id);if(!source||typeof source.id!=='string'||!source.id)throw Error('Ancien mémo local introuvable.');
+   id='memo-import-'+encodeURIComponent(source.id);existing=rows.find(row=>row.id===id);
+   if(existing)return id; // Repeated import never reverts later shared edits.
+   values={title:source.title,body:source.body,tags:source.tags||''};
+  }else if(id){
+   if(!existing)throw Error('Ce mémo a été supprimé. Revenez au registre.');
+   if(JSON.stringify(existing)!==JSON.stringify(p.expected))throw Error('Ce mémo a été modifié depuis son ouverture. Votre saisie est conservée. Revenez au registre pour comparer les versions.');
+  }
+  let next;
+  if(p.action==='delete')next=rows.filter(row=>row.id!==id);
+  else{
+   const title=String(values?.title||'').trim(),body=String(values?.body||'').trim(),tags=String(values?.tags||'').trim();
+   if(!title||title.length>140||!body||body.length>10000||tags.length>300)throw Error('Renseignez le titre (140 caractères), le contenu (10000) et les mots-clés (300 maximum).');
+   id ||= 'memo-'+crypto.randomUUID();const row={...existing,id,title,body,tags,updatedAt:new Date().toISOString()};
+   next=existing?rows.map(item=>item.id===id?row:item):[...rows,row];
+  }
+  st.sharedFamilyNotes=next;
+  try{save();}catch(error){if(before===undefined)delete st.sharedFamilyNotes;else st.sharedFamilyNotes=before;throw error;}
+  render();return id;
+ }
+ const memoWrite=(action,id,values,expected)=>evaluate('return ('+changeSharedMemo.toString()+')(p);',{action,id,values,expected});
+ const saveSharedMemo=(id,values,expected)=>memoWrite('save',id,values,expected);
+ const deleteSharedMemo=(id,expected)=>memoWrite('delete',id,null,expected);
+ const importLocalMemo=id=>memoWrite('import',id);
+ return Object.freeze({saveSharedMemo,deleteSharedMemo,importLocalMemo,requireRecord,unsupportedFields,ensureEditable,get lastError(){return lastError;},clearError(){lastError='';},win,evaluate,read,rewardSummary,page,action,submit,notices,memberForm,saveMember,deleteMember,localForm,sharedForm,saveVisit,deleteVisit,eventForm,saveEvent,deleteEvent,exportEvent,contactForm,saveContact,deleteContact});
 })();
