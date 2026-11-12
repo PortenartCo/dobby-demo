@@ -1,0 +1,41 @@
+{
+  "kind": "original-adapted-illustration",
+  "role": "E06-01 central illustration replacement",
+  "file": "ritual-hearth-original.png",
+  "sha256": "9f018aece060b32b88da7a969c67d4656be279d1176c93eb993bdee35420fc0f",
+  "width": 1024,
+  "height": 1536,
+  "generatedAtUTC": "2026-11-11T07:54:15.602988+00:00",
+  "tool": "image_gen.imagegen",
+  "generation": {
+    "operation": "reference-image edit and portrait recomposition",
+    "transparentBackground": false,
+    "referencePath": "essai-stitch-v7/assets/remaining/41e997ebd3dbb0da.png",
+    "referenceSha256": "2d81b25fb96c0b076b4023505baad42afcac5bd5fd36ecf55e3356a821480451",
+    "generatedArtifact": "exec-224caf9c-86ae-4036-a23c-b1ed907b3e55.png",
+    "composition": "Portrait 2:3; Dobby standing full body beside a grand carved stone fireplace on the left, warm fire, old library and amber candles; no UI, text, logo or screenshot."
+  },
+  "authorization": "User E06-01 mission explicitly authorizes a local authorized replacement or original adapted composition with explicit provenance if the external central media is unusable.",
+  "substitution": {
+    "isReplacement": true,
+    "isOriginalRitualStitchMedia": false,
+    "originalRitualHtml": "Supplied DOBBY-E06-RITUEL-SOURCE-STITCH.zip/code.html (repository path selected by integration owner)",
+    "originalRitualHtmlSha256": "4e49be83d86f00d0ea267f58332d73012373807b4e65964b549e7797249f4054",
+    "reason": "The external URL embedded by the supplied Ritual HTML returns text/html, not usable image bytes. The screenshot also shows its broken-image alt text. This new adapted illustration is not claimed as recovered original Stitch media."
+  },
+  "historicalReference": {
+    "module": "E02 Parler à Dobby",
+    "localProvenance": "essai-stitch-v7/assets/remaining/provenance.json",
+    "sourceUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDRPBTgFlcZRvuwaeAK9H_1W2WV1OEF7xy_KsTXJPJmR360u8ZElCSXz9ydOqvzFakeefjarmyXjbjWbsF_QV-klz4_8EPBpEQhOslpLOmMZ9tAwzuom5VrfVdpqlIraRpDvdhwV3ETg4ppQqPwwDcqlEv3Z7FvQOdmzY-U5tvzbtmCMX1RYu3pfvUBsOy1Q5dsUj1rmkEwISOPYoMjLEl8FEVcr70ZUGns3pt9B1v_",
+    "publicationContract": "docs/dobby-v7/E02-PARLER-A-DOBBY.md"
+  },
+  "visualReview": {
+    "dobbyAndFireplaceVisibleTogether": true,
+    "wholeScreenshotUsed": false,
+    "recommendedFireFocusInImage": {
+      "x": 0.25,
+      "y": 0.63
+    },
+    "review": "Generated portrait inspected: Dobby full body with ears and feet intact, visible stone fireplace and hearth on left, no interface or text."
+  }
+}

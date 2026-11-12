@@ -1,0 +1,346 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../review-config.js"></script><script src="../../family-config.js"></script><script src="../../review-runtime.js"></script><script src="../../global-demo.js"></script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type">
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body data-stitch-source="dobby_fiche_d_taill_e_d_une_recette" class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_4px_20px_rgba(24,11,7,0.45)]"><div class="h-14 px-4 flex items-center justify-between gap-2 border-b border-[#d49b42]/20 bg-[#1e100c]/95 backdrop-blur-md"><button aria-label="Retour" class="w-9 h-9 rounded-full bg-[#271814] flex items-center justify-center text-[#d49b42] hover:bg-[#372622] transition-colors shrink-0"><span class="material-symbols-outlined text-[20px]">chevron_left</span></button><div class="flex-1 text-center min-w-0 px-2"><h1 class="font-headline-sm text-[18px] font-semibold text-[#fcf7ee] truncate" style="font-family: 'Playfair Display', serif;">Fiche Recette</h1></div><div class="flex items-center justify-end gap-1.5 shrink-0"><button aria-label="Mettre en favori" class="w-9 h-9 rounded-full bg-[#271814] flex items-center justify-center text-[#d49b42] hover:bg-[#372622] transition-colors"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span></button><button aria-label="Profil" class="w-9 h-9 rounded-full bg-[#d49b42] flex items-center justify-center text-[#180b07] font-bold"><span class="material-symbols-outlined text-[18px]">person</span></button></div></div></header><main class="flex flex-col relative w-full bg-surface min-h-screen pt-14"><div class="flex flex-col w-full">
+<!-- 1. Bandeau Supérieur / Avertissement Souveraineté Locale -->
+<section class="px-gutter-mobile pt-space-sm pb-space-xs">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-space-xs shadow-md"><div class="flex items-center justify-between gap-space-xs"><div class="flex items-center gap-1.5 min-w-0"><span class="material-symbols-outlined text-[#d49b42] text-[16px] shrink-0" style="font-variation-settings: 'FILL' 1;">lock</span><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase truncate">Sanctuaire Culinaire · Chiffré Local</span></div><div class="flex items-center gap-1 shrink-0"><button aria-label="Favori du Logis" class="flex items-center gap-1 px-2 py-1 rounded-lg bg-[#180b07] text-[#d49b42] text-[11px] font-medium tracking-[0.15em] uppercase active:scale-95 transition-transform" id="favorite-btn"><span class="material-symbols-outlined text-[15px] text-[#d49b42]" style="font-variation-settings: 'FILL' 1;">star</span><span class="hidden sm:inline">Favori</span></button><button aria-label="Partager et exporter" class="p-1.5 rounded-lg bg-[#180b07] text-[#d4c4b1] hover:text-[#d49b42] active:scale-95 transition-transform" id="export-btn"><span class="material-symbols-outlined text-[16px]">share</span></button></div></div><p class="font-body-sm text-[13px] text-[#d4c4b1] leading-tight">Formule culinaire et annotations scellées exclusivement sur cet appareil. Consultation intégrale hors-ligne sans connexion requise.</p></div>
+</section>
+<!-- 2. Illustration & En-tête de Recette -->
+<section class="px-gutter-mobile py-space-sm flex flex-col gap-space-md">
+<!-- Image Card avec Scrim -->
+<div class="relative w-full h-72 rounded-xl overflow-hidden shadow-xl bg-surface-container-lowest">
+<img alt="Gratin de potimarron rôti" class="w-full h-full object-cover" data-alt="A rustic cast iron baking dish filled with bubbling roasted pumpkin and red kuri squash gratin, crusted in aged melted golden cheese, sprinkled with toasted chopped hazelnuts and crumbled chestnuts. Moody candlelit apothecary kitchen setting, warm mahogany wooden shelves in background, antique bronze utensils, dark atmospheric food photography with soft golden steam rising." src="../assets/cuisine/79c03c9c7f248a66.png">
+<!-- Dégradé protecteur pour lisibilité -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/30 to-transparent"></div>
+<!-- Badges flottants sur image -->
+<div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
+<span class="inline-flex items-center gap-1 bg-surface-container-highest/90 text-tertiary px-2 py-0.5 rounded font-label-sm text-label-sm backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+          Four d'Automne
+        </span>
+<span class="inline-flex items-center gap-1 bg-secondary-container/90 text-on-secondary-container px-2 py-0.5 rounded font-label-sm text-label-sm backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px]">eco</span>
+          100% Terroir Bio
+        </span>
+</div>
+<div class="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+<span class="bg-surface-container-high/90 text-primary-fixed px-2.5 py-1 rounded font-label-md text-label-md shadow-md backdrop-blur-sm">
+          ⭐ Noté 4.9/5 par la maisonnée
+        </span>
+<span class="bg-primary text-on-primary font-label-sm text-label-sm px-2 py-1 rounded font-bold uppercase tracking-wider shadow-sm">
+          Dobby Signature
+        </span>
+</div>
+</div>
+<!-- Titres & Description -->
+<div class="flex flex-col gap-space-xs">
+<h2 class="text-headline-lg-mobile text-[#fcf7ee] font-bold leading-tight" style="font-family: &quot;Playfair Display&quot;, serif;">Gratin de potimarron rôti, noisettes &amp; châtaignes</h2>
+<p class="font-body-md text-body-md text-on-surface-variant italic leading-snug">
+        « Douceur automnale au parmesan affiné 24 mois, crème d'Isigny onctueuse et croquant de noisettes torréfiées sur lit de braises. »
+      </p>
+</div>
+<!-- Métadonnées & Puces Alchimiques -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs"><div class="bg-[#271814] p-3 rounded-xl border border-[#d49b42]/20 flex flex-col gap-1 shadow-sm"><div class="flex items-center gap-1 text-[#d49b42]"><span class="material-symbols-outlined text-[16px]">timer</span><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Préparation</span></div><span class="text-[22px] font-semibold text-[#fcf7ee] leading-tight" style="font-family: 'Playfair Display', serif;">20 min</span></div><div class="bg-[#271814] p-3 rounded-xl border border-[#d49b42]/20 flex flex-col gap-1 shadow-sm"><div class="flex items-center gap-1 text-[#d49b42]"><span class="material-symbols-outlined text-[16px]">oven_gen</span><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Cuisson</span></div><span class="text-[22px] font-semibold text-[#fcf7ee] leading-tight" style="font-family: 'Playfair Display', serif;">25 min</span></div><div class="bg-[#271814] p-3 rounded-xl border border-[#d49b42]/20 flex flex-col gap-1 shadow-sm"><div class="flex items-center gap-1 text-[#d49b42]"><span class="material-symbols-outlined text-[16px]">psychology</span><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Niveau</span></div><span class="text-[18px] font-semibold text-[#fcf7ee] leading-tight truncate" style="font-family: 'Playfair Display', serif;">Apprenti</span></div><div class="bg-[#271814] p-3 rounded-xl border border-[#d49b42]/20 flex flex-col gap-1 shadow-sm"><div class="flex items-center gap-1 text-[#d49b42]"><span class="material-symbols-outlined text-[16px]">savings</span><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Coût / Part</span></div><span class="text-[22px] font-semibold text-[#fcf7ee] leading-tight" style="font-family: 'Playfair Display', serif;">3,20 €</span></div></div>
+</section>
+<!-- 3. Sélecteur de Confection : Traditionnelle vs Thermomix TM5 -->
+<section class="px-gutter-mobile py-space-sm">
+<div class="bg-surface-container-high rounded-xl p-space-sm flex flex-col gap-space-sm shadow-md">
+<div class="flex items-center justify-between"><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-[#d49b42]">science</span>Méthode de confection</span><span class="text-[11px] font-medium tracking-[0.15em] uppercase text-[#d49b42] bg-[#180b07] px-2 py-0.5 rounded border border-[#d49b42]/30">Double formule</span></div>
+<!-- Toggle Segmenté Ergonomique -->
+<div class="grid grid-cols-2 gap-space-xs p-1 bg-surface-container-lowest rounded-lg">
+<button class="py-2.5 px-space-xs rounded font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all text-on-primary bg-primary font-bold shadow" id="mode-trad-btn">
+<span class="text-base leading-none">🪵</span>
+<span class="">Traditionnelle</span>
+</button>
+<button class="py-2.5 px-space-xs rounded font-label-md text-label-md flex items-center justify-center gap-1.5 transition-all text-on-surface-variant hover:text-on-surface bg-transparent" id="mode-tm5-btn">
+<span class="text-base leading-none">🤖</span>
+<span class="">Thermomix TM5</span>
+</button>
+</div>
+<!-- Ruban Info TM5 spécifique (dynamique) -->
+<div class="bg-surface-container rounded-lg p-space-sm flex items-start gap-space-xs" id="method-banner">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">outdoor_grill</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-semibold text-primary">Confection au four &amp; fonte d'antan</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Rôtissage direct à 190°C dans un plat frotté d'ail, assurant une caramélisation naturelle de la courge.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Ajustement Interactif des Convives -->
+<section class="px-gutter-mobile py-space-sm">
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-sm shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-headline-sm text-[#fcf7ee] font-semibold" style="font-family: &quot;Playfair Display&quot;, serif;">Portions servies</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Ajustement alchimique en direct</span>
+</div>
+<!-- Contrôleur Tactile (+ / - min 48px) -->
+<div class="flex items-center bg-surface-container-lowest rounded-lg p-1">
+<button aria-label="Diminuer les portions" class="w-12 h-12 flex items-center justify-center rounded bg-surface-container text-primary hover:bg-surface-container-high active:scale-90 transition-transform" id="btn-decrease">
+<span class="material-symbols-outlined text-[24px]">remove</span>
+</button>
+<div class="w-14 text-center">
+<span class="font-headline-md text-headline-md font-bold text-primary" id="servings-display">4</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Ajustement alchimique en direct</span>
+</div>
+<button aria-label="Augmenter les portions" class="w-12 h-12 flex items-center justify-center rounded bg-surface-container text-primary hover:bg-surface-container-high active:scale-90 transition-transform" id="btn-increase">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</button>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/90 italic flex items-center gap-1.5 pt-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">balance</span>
+        Les proportions ci-dessous s'adaptent instantanément pour éviter tout gaspillage.
+      </p>
+</div>
+</section>
+<!-- 5. Double Vue Par Onglets : Ingrédients vs Préparation -->
+<section class="px-gutter-mobile py-space-sm flex flex-col gap-space-sm">
+<div class="flex rounded-lg bg-surface-container-lowest p-1 shadow-inner">
+<button class="flex-1 py-3 rounded font-label-md text-label-md font-bold text-on-primary bg-primary flex items-center justify-center gap-1.5 transition-all" id="tab-btn-ingredients">
+<span class="material-symbols-outlined text-[18px]">soup_kitchen</span>
+<span class="">Garde-manger (8)</span>
+</button>
+<button class="flex-1 py-3 rounded font-label-md text-label-md font-medium text-on-surface-variant hover:text-on-surface bg-transparent flex items-center justify-center gap-1.5 transition-all" id="tab-btn-steps">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+<span class="">Formule pas-à-pas (5)</span>
+</button>
+</div>
+<!-- Onglet 1 : Ingrédients -->
+<div class="flex flex-col gap-space-sm" id="tab-content-ingredients">
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-sm shadow-md">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="checked-counter">0 sur 8 rassemblés</span>
+</div>
+<!-- Liste Ingrédients avec Checkboxes Skéuomorphiques -->
+<div class="flex flex-col gap-space-xs" id="ingredients-list">
+<!-- Item 1 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Potimarron bio ferme (dés de 2 cm)</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 2 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Noisettes concassées torréfiées</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 3 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Châtaignes cuites au naturel émiettées</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 4 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Crème fraîche épaisse d'Isigny AOP</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 5 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Parmesan affiné 24 mois râpé minute</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 6 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Gousses d'ail confites écrasées</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 7 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Muscade râpée &amp; poivre noir frais</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+<!-- Item 8 -->
+<label class="ingredient-row flex items-center gap-space-sm p-space-sm bg-surface-container-low rounded-lg cursor-pointer active:bg-surface-container-high transition-colors">
+<input class="sr-only ingredient-checkbox" type="checkbox">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[18px] text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 flex items-baseline justify-between gap-space-xs">
+<span class="font-body-md text-body-md text-on-surface ingredient-name">Huile d'olive 1ère pression à froid</span>
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Vérification des Vivres</span>
+</div>
+</label>
+</div>
+<!-- Bouton Panier Tactile -->
+<button class="mt-space-xs w-full py-3.5 px-space-md rounded-lg bg-surface-container-high text-primary hover:bg-surface-container-highest font-label-md text-label-md font-semibold flex items-center justify-center gap-2 active:scale-98 transition-all shadow-sm" id="add-to-cart-btn">
+<span class="material-symbols-outlined text-[20px]">shopping_basket</span>
+<span class="">Ajouter les vivres manquants au Panier</span>
+</button>
+</div>
+</div>
+<!-- Onglet 2 : Préparation Pas-à-Pas -->
+<div class="hidden flex flex-col gap-space-sm" id="tab-content-steps">
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Grimoire Opératoire</span>
+<span class="font-label-sm text-label-sm text-secondary">5 phases d'alchimie</span>
+</div>
+<!-- Étape 1 -->
+<div class="flex gap-space-sm relative">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm font-bold flex items-center justify-center shadow-md">
+              1
+            </div>
+<div class="w-0.5 flex-1 bg-surface-container-highest my-1"></div>
+</div>
+<div class="flex-1 pb-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Préparation du potimarron</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 10 min
+              </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-1 leading-relaxed">
+              Brossez soigneusement le potimarron sous l'eau tiède. Ne l'épluchez point : sa peau fine fondra à la cuisson et enrichira le mets d'une saveur noisettée. Évidez les pépins puis détaillez la chair en cubes réguliers d'environ 2 centimètres.
+            </p>
+</div>
+</div>
+<!-- Étape 2 (avec variante contextuelle) -->
+<div class="flex gap-space-sm relative">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm font-bold flex items-center justify-center shadow-md">
+              2
+            </div>
+<div class="w-0.5 flex-1 bg-surface-container-highest my-1"></div>
+</div>
+<div class="flex-1 pb-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Pré-cuisson alchimique</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 12 min
+              </span>
+</div>
+<!-- Texte Trad -->
+<p class="font-body-md text-body-md text-on-surface mt-1 leading-relaxed" id="step2-trad">
+              Dans une cocotte chaude avec un filet d'huile d'olive, faites revenir les cubes de potimarron à feu doux pendant 10 minutes avec l'ail écrasé, jusqu'à ce qu'ils soient légèrement dorés mais encore fermes à cœur.
+            </p>
+<!-- Texte TM5 -->
+<div class="hidden bg-surface-container-lowest p-space-sm rounded-lg mt-2 flex flex-col gap-1" id="step2-tm5">
+<span class="font-label-sm text-label-sm font-bold text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">precision_manufacturing</span>
+                Paramétrage Thermomix TM5 certifié :
+              </span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Placer les dés dans le bol. Ajouter 500g d'eau dans le fond de cuve, installer le Varoma ou programmer : <strong>15 min / 100°C / Vitesse 1 / Sens Inverse</strong> pour attendrir la chair tout en gardant des morceaux entiers.
+              </p>
+</div>
+</div>
+</div>
+<!-- Étape 3 -->
+<div class="flex gap-space-sm relative">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm font-bold flex items-center justify-center shadow-md">
+              3
+            </div>
+<div class="w-0.5 flex-1 bg-surface-container-highest my-1"></div>
+</div>
+<div class="flex-1 pb-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Liaison de crème &amp; épices</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 5 min
+              </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-1 leading-relaxed">
+              Dans un bol en grès, fouettez la crème d'Isigny avec la pulpe d'ail confite, la muscade fraîchement râpée, le poivre noir concassé et la moitié du parmesan affiné. Le mélange doit être velouté et parfumé.
+            </p>
+</div>
+</div>
+<!-- Étape 4 -->
+<div class="flex gap-space-sm relative">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm font-bold flex items-center justify-center shadow-md">
+              4
+            </div>
+<div class="w-0.5 flex-1 bg-surface-container-highest my-1"></div>
+</div>
+<div class="flex-1 pb-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Dressage &amp; croquant boisé</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 5 min
+              </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-1 leading-relaxed">
+              Frottez votre plat de cuisson d'une gousse d'ail coupée. Déposez les cubes de potimarron, parsemez des éclats de châtaignes cuites, puis nappez de la préparation crémeuse. Saupoudrez enfin du reste de parmesan et des noisettes torréfiées.
+            </p>
+</div>
+</div>
+<!-- Étape 5 -->
+<div class="flex gap-space-sm relative">
+<div class="flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container font-headline-sm text-headline-sm font-bold flex items-center justify-center shadow-md">
+              5
+            </div>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Enfournement au feu d'or</h3>
+<span class="font-label-sm text-label-sm text-tertiary font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span> 25 min
+              </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-1 leading-relaxed">
+              Glissez le plat au four préchauffé à 190°C à mi-hauteur. Laissez bouillonner et gratiner jusqu'à obtention d'une croûte noisette ambrée et croustillante. Laissez reposer 5 minutes avant de convier les hôtes à table.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Barre d'Actions Immersive & Navigation -->
+<section class="px-gutter-mobile pt-space-sm pb-space-xl flex flex-col gap-space-sm"><button class="w-full h-12 rounded-xl bg-[#d49b42] text-[#180b07] font-semibold text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all" id="cook-mode-btn"><span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span><span class="">Lancer le Mode Cuisine (Plein Écran)</span></button><div class="grid grid-cols-2 gap-2.5"><button class="h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 text-[#fcf7ee] hover:bg-[#372622] font-semibold text-sm flex items-center justify-center gap-1.5 active:scale-98 transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px] text-[#d49b42]">calendar_month</span><span class="">Planifier au Menu</span></button><button class="h-12 rounded-xl bg-[#271814] border border-[#d49b42]/30 text-[#fcf7ee] hover:bg-[#372622] font-semibold text-sm flex items-center justify-center gap-1.5 active:scale-98 transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px] text-[#d49b42]">auto_stories</span><span class="">Au Grimoire</span></button></div><div class="mt-space-sm flex flex-col items-center text-center p-space-sm rounded-xl bg-surface-container-lowest border border-[#d49b42]/20"><div class="w-9 h-9 rounded-full bg-[#271814] flex items-center justify-center mb-1 text-[#d49b42]"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span></div><span class="text-[11px] font-medium tracking-[0.15em] text-[#d49b42] uppercase">Authenticité Culinaire Dobby</span><span class="font-body-sm text-[13px] text-[#d4c4b1] max-w-xs mt-0.5">Recette originale testée et approuvée au chaudron. Aucun pisteur externe · Préservation souveraine sur mémoire locale.</span></div></section>
+<!-- Notification Toast Discrète -->
+<div class="fixed bottom-6 left-4 right-4 bg-primary text-on-primary p-space-sm rounded-lg shadow-2xl flex items-center justify-between transition-transform duration-300 translate-y-32 z-50 pointer-events-none" id="toast">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-md text-label-md font-bold" id="toast-text">Ingrédients exportés vers le panier !</span>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

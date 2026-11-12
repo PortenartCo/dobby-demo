@@ -1,0 +1,8 @@
+/* Shared preferences remain a single native record in ceremony and regular chrome. */
+body.e06-active>header>div{height:112px!important}
+body.e06-active>main.e06-main{padding-top:128px!important}
+[data-e01-ceremony-preferences]{display:flex;justify-content:center;gap:6px}
+.e06-header-center .e01-ceremony-toggle{display:flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:4px;border:1px solid #d49b4266;border-radius:10px;background:#291810;color:#f9bb5f;cursor:pointer}
+.e06-header-center .e01-ceremony-toggle[aria-pressed=true]{background:#f9bb5f;color:#291810}
+.e06-header-center .e01-ceremony-toggle .material-symbols-outlined{font-size:22px}
+html.e01-effects-off .fa-enter,html.e01-effects-off .cu-enter{animation:none!important;transition:none!important}
