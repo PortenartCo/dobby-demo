@@ -1,0 +1,155 @@
+/* E07 corrections stay on the new Cuisine presentations. Original source classes remain. */
+body.e07-cuisine [data-e07-hero]{height:190px!important}
+body.e07-cuisine [data-e07-hero] img{object-position:50% 40%}
+body.e07-cuisine [data-e07-hero]>.absolute.top-2\.5.left-2\.5{max-width:60%;font-size:10px}
+body.e07-cuisine [data-e07-hero]>.absolute.top-2\.5.right-2\.5{max-width:32%;right:8px;white-space:normal;line-height:1.3}
+body.e07-cuisine .e07-dinner>div:nth-child(2){gap:8px;flex-wrap:wrap}
+body.e07-cuisine .e07-dinner>div:nth-child(3){flex-direction:column;align-items:stretch;gap:12px}
+body.e07-cuisine .e07-dinner h3{white-space:normal;overflow:visible;text-overflow:clip}
+body.e07-cuisine .e07-meal-meta{flex-wrap:wrap;gap:6px}
+body.e07-cuisine .e07-dinner button{min-height:44px}
+body.e07-cuisine .e07-dinner button[aria-label]{min-width:44px}
+body.e07-cuisine .e07-dinner>div:nth-child(3)>div:last-child{justify-content:flex-end;flex-wrap:wrap}
+body.e07-cuisine [data-e07-week]>div:first-child{flex-wrap:wrap;gap:8px}
+body.e07-cuisine .e07-week-day{align-items:stretch}
+body.e07-cuisine .e07-week-day>div:first-child{width:100%;align-items:flex-start}
+body.e07-cuisine .e07-week-day>div:first-child>div{flex:1;min-width:0}
+.e07-week-entry{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:2px 8px;align-items:start;padding:3px 0}
+.e07-week-recipe{grid-column:1;min-height:44px;text-align:left;white-space:normal;overflow-wrap:anywhere;font:600 15px/1.3 'EB Garamond',serif;color:#fadcd5}
+.e07-week-entry small{grid-column:1;color:#d4c4b1;font:11px/1.4 Literata,serif}
+.e07-week-entry>.cu-button{grid-column:2;grid-row:1/3;padding:8px;min-width:44px;align-self:center}
+body.e07-cuisine [data-e07-basket]>div:first-child{flex-wrap:wrap;gap:8px}
+body.e07-cuisine main :is(h1,h2,h3,p,button){overflow-wrap:anywhere}
+body.e07-cuisine .e07-week-day .truncate{white-space:normal;overflow:visible;text-overflow:clip}
+
+body.e07-cuisine main .material-symbols-outlined{font-size:18px}
+body.e07-cuisine [data-e07-hero] .material-symbols-outlined{font-size:14px}
+body.e07-cuisine [data-e07-hero]>.absolute.bottom-2\.5{gap:6px}
+body.e07-cuisine [data-e07-hero]>.absolute.bottom-2\.5>div{min-width:0}
+body.e07-shop .e07-scope{white-space:normal;max-width:45%;text-align:center}
+body.e07-shop main h1{min-width:0}
+body.e07-shop .e07-progress{flex-wrap:wrap;gap:8px}
+body.e07-shop .e07-shop-actions{flex-wrap:wrap}
+body.e07-shop .e07-shop-actions>button:first-child{min-width:160px;padding:8px}
+body.e07-shop .e07-item{align-items:flex-start}
+body.e07-shop .e07-item .item-title{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+body.e07-shop .e07-item-heading{flex-wrap:wrap;gap:4px 8px}
+body.e07-shop .e07-item-heading .item-title{flex:1 1 130px}
+body.e07-shop .e07-quantity{white-space:normal;max-width:100%;flex-shrink:1}
+body.e07-shop .e07-item .check-btn{width:48px;height:48px;flex:none}
+body.e07-shop .e07-item .check-btn .material-symbols-outlined{font-size:24px}
+body.e07-shop .e07-item[data-checked=true] .check-btn{background:#f9bb5f;color:#442b00}
+body.e07-shop .e07-item[data-checked=false] .check-btn{background:#43302c;color:#f9bb5f}
+body.e07-shop .provision-card[data-state=skip]{opacity:.65}
+.e07-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+.e07-choices .cu-button{padding:8px 5px;font-size:11px;min-height:44px}
+.e07-choices [aria-pressed=true]{background:#d49b42;color:#180b07;border-color:#f9bb5f}
+body.e07-shop #btn-submit-cart{width:calc(100% - 24px);margin:8px 12px;min-height:52px}
+body.e07-shop #cu-shared .shop-item{flex-direction:column;align-items:stretch;min-width:0}
+body.e07-shop #cu-shared :is(strong,p,button){white-space:normal;overflow-wrap:anywhere}
+.e07-category-filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+body.e07-shop [data-e07-category]>div:first-child{flex-wrap:wrap;gap:8px}
+body.e07-shop [data-e07-category] h2{min-width:0}
+
+/* E07.1: existing Taverne only; common header/dock geometry stays untouched. */
+body.e07-cuisine[data-cuisine-view="taverne"] [data-e071-kicker]{top:auto;left:auto;right:10px;bottom:10px;max-width:calc(100% - 20px);font-size:10px}
+body.e07-cuisine[data-cuisine-view="taverne"] .e071-heading{margin-block:8px 0}
+body.e07-cuisine .e071-actions{width:100%;justify-content:stretch!important}
+body.e07-cuisine .e071-primary{width:100%;height:52px;min-height:52px;justify-content:center;font:600 16px/1.3 'Playfair Display',Georgia,serif;border-radius:12px}
+body.e07-cuisine .e071-with-image{grid-template-columns:48px minmax(0,1fr) 44px;gap:4px 8px}
+body.e07-cuisine .e071-with-image .e07-week-recipe,body.e07-cuisine .e071-with-image small{grid-column:2}
+body.e07-cuisine .e071-with-image>.cu-button{grid-column:3}
+body.e07-cuisine .e071-meal-visual{grid-column:1;grid-row:1/3;width:48px;height:48px;align-self:center;overflow:hidden;border-radius:10px;border:1px solid #d49b4244;background:#372622}
+body.e07-cuisine .e071-meal-visual :is(img,.dv7-meal-visual){width:100%;height:100%;min-height:0;padding:0;object-fit:cover;border-radius:0;font-size:27px;display:flex;align-items:center;justify-content:center}
+body.e07-cuisine .e071-add-slot{margin-top:6px;font-size:11px;padding:8px}
+/* E07.2 uses the same source cards, gold controls and compact illustration. */
+body.e07-shop [data-e072-kicker]{position:absolute;bottom:10px;right:10px;top:auto;left:auto;max-width:calc(100% - 20px);padding:5px 8px;border:1px solid #d49b4277;border-radius:8px;background:#281712dc;font:10px/1.4 Literata,serif;color:#fcf7ee}
+body.e07-shop .e072-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+body.e07-shop .e072-actions>button{width:100%;height:auto;min-height:48px;padding:10px;white-space:normal}
+.e072-purchased{padding:12px;background:#281712;border:1px solid #d49b4244;border-radius:12px}
+.e072-purchased summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#f9bb5f;font:600 16px 'Playfair Display',serif}
+.e072-purchased article{margin-top:8px}
+.e072-item-controls{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.e072-item-controls .cu-button{padding:6px 10px;min-height:44px}
+.e072-tools,.e072-status{display:flex;gap:8px;flex-wrap:wrap}
+.e072-tools .cu-button{flex:1 1 130px}
+.e072-status{font:12px/1.4 Literata,serif}
+.e072-status button{font-size:12px;padding:6px 10px}
+.e072-dialog{margin:0!important;border:1px solid #d49b4288!important}
+.e072-dialog h2{font:600 20px 'Playfair Display',serif;margin-bottom:8px}
+.e072-dialog p{font-size:14px;margin:8px 0}
+.e072-dialog .cu-field{min-width:0}
+.e072-import-row{display:flex;gap:8px;align-items:center;padding:8px 0;font-size:15px}
+.e072-import-row input{width:44px;height:44px;flex:none;accent-color:#d49b42}
+.e072-import-row small{display:block;font-size:11px;color:#d4c4b1}
+/* Review consolidation: the three principal controls share the source gold CTA. */
+body.e07-shop :is(.e072-actions>button,.e072-tools>button){width:100%;min-height:52px;padding:12px;font:600 16px/1.35 'Playfair Display',Georgia,serif;justify-content:center;border-radius:12px}
+body.e07-shop .e072-tools{display:flex;flex-direction:column;gap:8px}
+body.e07-shop .e072-tools>button{flex:none}
+body.e07-shop .e072-tools>button:disabled{opacity:.55}
+body.e07-shop .e072-tools p{margin:0;color:#d4c4b1;font:14px/1.5 Literata,serif}
+body.e07-shop .e072-tools [data-e072-success]{padding:12px;border:1px solid #d49b4288;border-radius:10px;color:#f9dca7;background:#332619}
+.e072-range{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.e072-range input{width:100%;min-width:0;font-size:16px;color-scheme:dark}
+.e072-range-shortcuts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.e072-range-shortcuts .cu-button{min-height:44px;padding:8px;font-size:14px;flex:1 1 70px}
+.e072-range-shortcuts [aria-pressed=true]{background:#d49b42;color:#180b07}
+.e072-dialog h3{font:600 16px/1.4 'Playfair Display',Georgia,serif;margin-top:14px}
+.e072-dialog [data-e072-range-stale]{color:#f9bb5f}
+@media(max-width:359px){.e072-range{grid-template-columns:minmax(0,1fr)}}
+
+/* E07.3 keeps the source Taverne card treatment; day/week browsing is compact. */
+body.e07-cuisine[data-cuisine-view="taverne"] .e073-day-meals{gap:14px}
+body.e07-cuisine[data-cuisine-view="taverne"] .e073-day-heading{gap:8px;align-items:flex-start!important;flex-wrap:wrap}
+body.e07-cuisine[data-cuisine-view="taverne"] .e073-day-heading h2{font-size:18px;line-height:1.35}
+body.e07-cuisine[data-cuisine-view="taverne"] .e073-day-heading>span{font:600 13px/1.4 Literata,Georgia,serif;white-space:normal;text-align:right;max-width:100%}
+.e073-meal-slot{min-width:0;padding:12px;border:1px solid #d49b4238;border-radius:12px;background:#20120ed9;display:flex;flex-direction:column;gap:10px}
+.e073-slot-label{margin:0;color:#f9bb5f;font:700 14px/1.3 Literata,Georgia,serif;letter-spacing:.09em}
+.e073-meal-content{display:grid;grid-template-columns:80px minmax(0,1fr);gap:12px;align-items:start}
+.e073-meal-copy{min-width:0}
+body.e07-cuisine .e073-meal-copy :is(h3,h4){margin:0;font:600 16px/1.4 'Playfair Display',Georgia,serif;white-space:normal;overflow:visible;text-overflow:clip}
+.e073-meal-copy p{margin:6px 0 0;color:#e6d7c3;font:14px/1.5 Literata,Georgia,serif}
+.e073-meal-copy .e073-meal-category{color:#eec66a}
+.e073-meal-visual{width:80px;height:80px;overflow:hidden;border:1px solid #d49b4240;border-radius:10px;background:#372622}
+.e073-meal-visual :is(img,.dv7-meal-visual){display:flex;width:100%;height:100%;min-height:0;padding:0;align-items:center;justify-content:center;object-fit:cover;border-radius:0;font-size:38px}
+.e073-meal-actions{display:flex;flex-direction:column;gap:8px}
+.e073-meal-actions .e073-change-meal{width:100%;font-size:16px}
+body.e07-cuisine [data-e07-week] .e073-week-heading{gap:10px;align-items:flex-start}
+.e073-week-navigation{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:6px;align-items:center}
+.e073-week-navigation>.cu-button{width:44px;height:44px;padding:8px}
+.e073-week-navigation>span{min-width:0;text-align:center;color:#f9dca7;font:600 14px/1.4 Literata,Georgia,serif}
+.e073-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:100%;min-width:0}
+.e073-calendar-day{min-width:0;min-height:98px;padding:7px 2px;border:1px solid #d49b423f;border-radius:10px;background:#281712;color:#f2e1cc;display:flex;flex-direction:column;align-items:center;gap:3px;font:600 14px/1.2 Literata,Georgia,serif}
+.e073-calendar-day[aria-pressed="true"]{border-color:#f9bb5f;background:#4b321c;box-shadow:inset 0 0 0 1px #f9bb5f;color:#ffdfa7}
+.e073-calendar-day .e073-day-name{font-size:11px;text-transform:uppercase;letter-spacing:0}
+.e073-calendar-day strong{font-size:18px;line-height:1.2}
+.e073-calendar-slot{font:600 11px/1.4 Literata,Georgia,serif;white-space:nowrap;letter-spacing:0;color:#d4c4b1}
+.e073-calendar-slot[data-planned="true"]{color:#f9ca76}
+.e073-calendar-legend{margin:0;color:#e6d7c3;font:14px/1.5 Literata,Georgia,serif}
+.e073-week-detail{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid #d49b4240;border-radius:14px;background:#281712}
+.e073-week-detail>h3{margin:0;color:#f9dca7;font:600 18px/1.4 'Playfair Display',Georgia,serif;text-transform:capitalize}
+.e073-week-detail>.e073-meal-slot{background:#1e110d}
+body.e07-cuisine [data-e073-grimoire] button{min-height:52px;min-width:44px;padding:12px 10px}
+body.e07-cuisine [data-e073-grimoire] button p{font-size:16px;line-height:1.4}
+body.e07-cuisine [data-e073-grimoire] button span:not(.material-symbols-outlined){font-size:14px;line-height:1.4}
+body.e07-cuisine [data-e073-grimoire]>div.grid{gap:10px}
+body.e07-cuisine [data-e073-grimoire] button>div{gap:8px;min-width:0}
+body.e07-cuisine [data-e073-grimoire] button>div>div:last-child{min-width:0}
+body.e07-cuisine [data-e07-basket] p.font-bold{font-size:16px;line-height:1.4}
+body.e07-cuisine [data-e07-basket] p:not(.font-bold),body.e07-cuisine [data-e07-basket]>div:first-child>span{font-size:14px;line-height:1.5;color:#e6d7c3}
+body.e07-cuisine [data-e07-basket] button{min-height:52px;font-size:16px}
+@media(max-width:379px){.e073-calendar-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.e073-meal-content{grid-template-columns:64px minmax(0,1fr);gap:10px}.e073-meal-visual{width:64px;height:64px}body.e07-cuisine [data-e073-grimoire]>div.grid{grid-template-columns:minmax(0,1fr)}}
+
+body.e07-cuisine [data-e073-grimoire]>button span.font-bold{font-size:16px;line-height:1.4}
+
+/* E07-P02: two presentations of the same native list. */
+.e072-modes{display:flex;gap:8px;margin:10px 0}
+.e072-modes button{flex:1;min-width:0;white-space:normal;min-height:44px}
+.e072-modes [aria-pressed=true]{background:#d49b42;color:#281712}
+.e072-options{width:100%;padding:8px;border:1px solid #d49b4244;border-radius:8px}
+.e072-options summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.e072-options p{margin:8px 0;color:#d4c4b1}
+.e072-at-home{padding:12px;border:1px solid #afcdc066;border-radius:12px}
+.e072-at-home h2{font:600 18px 'Playfair Display',serif;color:#afcdc0;margin-bottom:8px}
+body[data-shop-mode=store] .e072-item-controls [data-cu-action=e072-home],body[data-shop-mode=store] .e072-item-controls [data-cu-action=e072-home-clear]{display:none}
+.e072-import-row>span{min-width:0;overflow-wrap:anywhere}

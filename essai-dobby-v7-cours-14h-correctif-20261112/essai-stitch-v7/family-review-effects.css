@@ -1,0 +1,23 @@
+/* FAM-01 shares E01's palette, motes and keyframes without altering common
+   navigation/effects files or adding another preference or render loop. */
+#fam01-ambience {
+ position: fixed;
+ top: var(--e01-top);
+ bottom: var(--e01-bottom);
+ left: 50%;
+ width: min(480px, 100%);
+ transform: translateX(-50%);
+ overflow: hidden;
+ pointer-events: none;
+ contain: layout paint style;
+ z-index: 40;
+ opacity: var(--e013-intensity);
+}
+#fam01-ambience.fam01-effects-paused .e013-particle { animation-play-state: paused !important; }
+/* Source entry and ornamental animations follow the same OFF preference. */
+.e01-effects-off body.fa-active :is(.fa-enter, .animate-pulse, .animate-ping, .animate-bounce, .anim-sparkle) { animation: none !important; }
+.e01-effects-off #fam01-ambience { display: none; }
+@media (prefers-reduced-motion: reduce) {
+ #fam01-ambience { display: none; }
+ #fam01-ambience .e013-particle { animation: none !important; }
+}

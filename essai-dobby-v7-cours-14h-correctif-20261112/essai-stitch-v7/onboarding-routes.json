@@ -1,0 +1,56 @@
+[
+  {
+    "view": "onboarding-foyer",
+    "id": "dobby_mon_foyer_magique",
+    "status": "verified-partial",
+    "blocked": [
+      "Account/household creation, invitations and account/member association require verified server capabilities"
+    ]
+  },
+  {
+    "view": "onboarding-identity",
+    "id": "dobby_mon_identit",
+    "status": "verified-functional",
+    "blocked": [
+      "Personal photos unavailable; parental authorization not represented"
+    ]
+  },
+  {
+    "view": "onboarding-house",
+    "id": "dobby_le_myst_re_des_quatre_maisons",
+    "status": "verified-partial",
+    "blocked": [
+      "Original sorting-hat image URL returns HTML, illustration unavailable"
+    ]
+  },
+  {
+    "view": "onboarding-house-result",
+    "id": "dobby_la_r_v_lation_de_la_maison",
+    "status": "verified-functional",
+    "blocked": []
+  },
+  {
+    "view": "onboarding-patronus",
+    "id": "dobby_le_miroir_des_mes",
+    "status": "verified-functional",
+    "blocked": []
+  },
+  {
+    "view": "onboarding-patronus-result",
+    "id": "dobby_l_apparition_du_patronus",
+    "status": "verified-functional",
+    "blocked": []
+  },
+  {
+    "view": "onboarding-final",
+    "id": "dobby_mon_identit_magique_consacr_e",
+    "status": "verified-functional",
+    "blocked": []
+  },
+  {
+    "view": "onboarding-ritual",
+    "id": "dobby_le_rituel_de_la_chemin_e",
+    "status": "source-backed-functional",
+    "blocked": []
+  }
+]

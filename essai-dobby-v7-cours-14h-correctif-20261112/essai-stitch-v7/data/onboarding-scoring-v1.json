@@ -1,0 +1,572 @@
+{
+  "id": "DOBBY-E06-TESTS-V1",
+  "date": "2026-11-10",
+  "status": "functional_rules_ready_for_review",
+  "purpose": "Ludique et narratif ; ne constitue pas une evaluation psychologique validee.",
+  "globalRules": {
+    "notSaved": "Reponses brutes non necessaires a la persistance du profil",
+    "resultsEditableManually": true,
+    "independentResults": true,
+    "algorithmVersion": "e06-v1"
+  },
+  "house": {
+    "labels": [
+      "gryffondor",
+      "serpentard",
+      "serdaigle",
+      "poufsouffle"
+    ],
+    "axes": [
+      "action",
+      "investigation",
+      "lien",
+      "anticipation"
+    ],
+    "axisPoints": {
+      "primary": 3,
+      "secondary": 1
+    },
+    "weights": {
+      "gryffondor": {
+        "action": 3,
+        "investigation": 2,
+        "lien": 1,
+        "anticipation": 0
+      },
+      "serpentard": {
+        "action": 1,
+        "investigation": 0,
+        "lien": 2,
+        "anticipation": 3
+      },
+      "serdaigle": {
+        "action": 2,
+        "investigation": 3,
+        "lien": 0,
+        "anticipation": 1
+      },
+      "poufsouffle": {
+        "action": 0,
+        "investigation": 1,
+        "lien": 3,
+        "anticipation": 2
+      }
+    },
+    "baseQuestionCount": 6,
+    "extraQuestionIfTopGapAtMost": 1,
+    "questions": [
+      {
+        "id": "q1",
+        "title": "L'horloge oubliée",
+        "prompt": "Une vieille horloge du château s'arrête mystérieusement chaque nuit à 23 h 17. Tu as une heure pour découvrir pourquoi. Que fais-tu en premier ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "J'observe les détails de son mécanisme.",
+            "primary": "investigation",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "B",
+            "text": "Je cherche ce qui se passe dans le château à cette heure précise.",
+            "primary": "anticipation",
+            "secondary": "lien"
+          },
+          {
+            "id": "C",
+            "text": "Je tente une expérience pour voir comment elle réagit.",
+            "primary": "action",
+            "secondary": "investigation"
+          },
+          {
+            "id": "D",
+            "text": "Je retrouve quelqu'un qui connaît son histoire.",
+            "primary": "lien",
+            "secondary": "action"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "title": "Une invitation inattendue",
+        "prompt": "On t'invite à organiser une soirée dans une salle du château que tu n'as jamais visitée. Quelle idée te semble la plus intéressante ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Modifier le programme sans que personne ne s'en aperçoive.",
+            "primary": "anticipation",
+            "secondary": "investigation"
+          },
+          {
+            "id": "B",
+            "text": "Trouver une autre salle qui offrirait de nouvelles possibilités.",
+            "primary": "action",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "C",
+            "text": "Conserver l'idée initiale, mais changer la manière de l'organiser.",
+            "primary": "investigation",
+            "secondary": "lien"
+          },
+          {
+            "id": "D",
+            "text": "Attendre de connaître l'avis des personnes concernées.",
+            "primary": "lien",
+            "secondary": "action"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "title": "Le cadeau du bibliothécaire",
+        "prompt": "Un bibliothécaire magique te propose de choisir un cadeau très particulier. Quelle proposition choisis-tu ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Un souvenir dont tu ignores encore l'importance.",
+            "primary": "investigation",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "B",
+            "text": "La réponse à une question que tu n'as jamais osé poser.",
+            "primary": "action",
+            "secondary": "lien"
+          },
+          {
+            "id": "C",
+            "text": "La possibilité de revivre un moment, mais différemment.",
+            "primary": "lien",
+            "secondary": "action"
+          },
+          {
+            "id": "D",
+            "text": "Un indice qui te sera utile un jour, sans savoir quand.",
+            "primary": "anticipation",
+            "secondary": "investigation"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "title": "La mélodie dans la forêt",
+        "prompt": "En traversant une forêt enchantée, tu entends une musique qui semble venir de très loin. Que fais-tu ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Je cherche un chemin pour atteindre sa source.",
+            "primary": "action",
+            "secondary": "investigation"
+          },
+          {
+            "id": "B",
+            "text": "Je m'arrête pour en reconnaître la mélodie.",
+            "primary": "investigation",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "C",
+            "text": "J'invite mon compagnon à écouter avec moi.",
+            "primary": "lien",
+            "secondary": "action"
+          },
+          {
+            "id": "D",
+            "text": "Je mémorise l'endroit pour y revenir plus tard.",
+            "primary": "anticipation",
+            "secondary": "lien"
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "title": "Le sortilège capricieux",
+        "prompt": "Tu essaies un sortilège qui échoue trois fois, sans produire deux fois le même effet. Quelle est ta première réaction ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Je teste une nouvelle combinaison.",
+            "primary": "action",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "B",
+            "text": "Je vérifie s'il existe un motif entre les échecs.",
+            "primary": "investigation",
+            "secondary": "action"
+          },
+          {
+            "id": "C",
+            "text": "Je demande à chacun ce qu'il a remarqué.",
+            "primary": "lien",
+            "secondary": "investigation"
+          },
+          {
+            "id": "D",
+            "text": "Je laisse le problème de côté quelques minutes pour revenir avec une autre idée.",
+            "primary": "anticipation",
+            "secondary": "lien"
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "title": "Le couloir inconnu",
+        "prompt": "Tu découvres un couloir que tu n'avais jamais remarqué, alors que tu passes devant chaque jour. Quel détail te marque le plus ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Un passage que personne ne semble avoir emprunté.",
+            "primary": "action",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "B",
+            "text": "Une inscription presque effacée sur une pierre.",
+            "primary": "investigation",
+            "secondary": "lien"
+          },
+          {
+            "id": "C",
+            "text": "Une petite scène entre deux inconnus.",
+            "primary": "lien",
+            "secondary": "action"
+          },
+          {
+            "id": "D",
+            "text": "Un objet qui n'est manifestement pas à sa place.",
+            "primary": "anticipation",
+            "secondary": "investigation"
+          }
+        ]
+      },
+      {
+        "id": "q7",
+        "title": "La carte qui disparaît",
+        "prompt": "Une carte enchantée du château s’efface sous tes yeux. Tu ne peux sauver qu’un seul détail. Lequel ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Un détail inattendu du dessin.",
+            "primary": "investigation",
+            "secondary": "anticipation"
+          },
+          {
+            "id": "B",
+            "text": "La destination que je voulais atteindre.",
+            "primary": "action",
+            "secondary": "investigation"
+          },
+          {
+            "id": "C",
+            "text": "Une annotation laissée par un autre voyageur.",
+            "primary": "lien",
+            "secondary": "action"
+          },
+          {
+            "id": "D",
+            "text": "Un chemin de rechange pour plus tard.",
+            "primary": "anticipation",
+            "secondary": "lien"
+          }
+        ]
+      }
+    ],
+    "secondaryTieWeights": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "patronus": {
+    "modes": [
+      "attention",
+      "relation",
+      "memoire",
+      "exploration"
+    ],
+    "nuances": [
+      "ancrage",
+      "resonance",
+      "elan"
+    ],
+    "animalGrid": [
+      [
+        "hibou",
+        "lynx",
+        "renard"
+      ],
+      [
+        "blaireau",
+        "loup",
+        "dauphin"
+      ],
+      [
+        "cygne",
+        "loutre",
+        "cerf"
+      ],
+      [
+        "chat",
+        "lievre",
+        "cheval"
+      ]
+    ],
+    "axisPoints": {
+      "primary": 3,
+      "secondary": 1
+    },
+    "baseQuestionCount": 5,
+    "extraQuestionOnModeOrNuanceTie": true,
+    "questions": [
+      {
+        "id": "q1",
+        "title": "La vitre embuée",
+        "prompt": "Dans une serre ancienne, une vitre s'embue soudainement et révèle quelques mots mystérieux. Ils commencent déjà à disparaître. Tu ne peux en retenir qu'une chose. Laquelle ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "La forme étrange des lettres.",
+            "modePrimary": "attention",
+            "modeSecondary": "memoire",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "B",
+            "text": "L'impression que ces mots m'ont laissée.",
+            "modePrimary": "relation",
+            "modeSecondary": "attention",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "ancrage"
+          },
+          {
+            "id": "C",
+            "text": "Le dernier mot, juste avant qu'il disparaisse.",
+            "modePrimary": "memoire",
+            "modeSecondary": "exploration",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "ancrage"
+          },
+          {
+            "id": "D",
+            "text": "L'endroit précis où les mots sont apparus.",
+            "modePrimary": "exploration",
+            "modeSecondary": "relation",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "resonance"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "title": "L'escalier de minuit",
+        "prompt": "Tu découvres un escalier qui mène à un lieu différent chaque fois qu'on l'emprunte. Un ami te propose de t'accompagner. Qu'est-ce qui te tente le plus ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Découvrir où l'escalier nous conduira cette fois.",
+            "modePrimary": "exploration",
+            "modeSecondary": "memoire",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "B",
+            "text": "Revenir un autre jour, à un moment particulier.",
+            "modePrimary": "memoire",
+            "modeSecondary": "attention",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "C",
+            "text": "Y aller ensemble et comparer nos impressions.",
+            "modePrimary": "relation",
+            "modeSecondary": "exploration",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "D",
+            "text": "Observer ce qui change entre deux passages.",
+            "modePrimary": "attention",
+            "modeSecondary": "relation",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "resonance"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "title": "Le message sans signature",
+        "prompt": "Dans la poche d'un vieux manteau, tu trouves un billet portant cette phrase : « Ce qui compte sera là au bon moment. » Quelle question te vient spontanément à l'esprit ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Qui a écrit ces mots ?",
+            "modePrimary": "memoire",
+            "modeSecondary": "relation",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "B",
+            "text": "Pourquoi ce billet se trouve-t-il ici ?",
+            "modePrimary": "attention",
+            "modeSecondary": "exploration",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "C",
+            "text": "Quel est ce fameux moment ?",
+            "modePrimary": "exploration",
+            "modeSecondary": "attention",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "D",
+            "text": "Qu'aurait compris une autre personne en le lisant ?",
+            "modePrimary": "relation",
+            "modeSecondary": "memoire",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "ancrage"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "title": "L'étoile tombée",
+        "prompt": "Une minuscule étoile tombe dans la cour du château. Elle conservera sa lumière pendant une heure. Que choisis-tu d'en faire ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "Éclairer un souvenir que j'aimerais retrouver.",
+            "modePrimary": "memoire",
+            "modeSecondary": "relation",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "B",
+            "text": "La montrer à quelqu'un qui apprécierait ce moment.",
+            "modePrimary": "relation",
+            "modeSecondary": "exploration",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "C",
+            "text": "Découvrir un recoin que personne ne remarque.",
+            "modePrimary": "exploration",
+            "modeSecondary": "attention",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "D",
+            "text": "L'observer pour comprendre comment elle brille.",
+            "modePrimary": "attention",
+            "modeSecondary": "memoire",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "resonance"
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "title": "Le livre des instants précieux",
+        "prompt": "Un livre enchanté peut conserver un seul souvenir de ton année. Lequel aimerais-tu y déposer ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "La première fois où j'ai essayé quelque chose de nouveau.",
+            "modePrimary": "exploration",
+            "modeSecondary": "attention",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "B",
+            "text": "Un moment très simple dont je me souviens encore.",
+            "modePrimary": "memoire",
+            "modeSecondary": "relation",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "C",
+            "text": "Une découverte que je n'ai racontée à personne.",
+            "modePrimary": "attention",
+            "modeSecondary": "exploration",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "D",
+            "text": "Une conversation ou une rencontre inattendue.",
+            "modePrimary": "relation",
+            "modeSecondary": "memoire",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "ancrage"
+          }
+        ]
+      },
+      {
+        "id": "q6",
+        "title": "La lanterne du jardin",
+        "prompt": "Une lanterne apparaît à l'entrée d'un jardin endormi. Sa lumière change lorsque tu t'en approches. Que remarques-tu d'abord ?",
+        "answers": [
+          {
+            "id": "A",
+            "text": "La manière dont elle découpe les ombres.",
+            "modePrimary": "attention",
+            "modeSecondary": "memoire",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "elan"
+          },
+          {
+            "id": "B",
+            "text": "Le sentier qu’elle semble inviter à suivre.",
+            "modePrimary": "exploration",
+            "modeSecondary": "relation",
+            "nuancePrimary": "elan",
+            "nuanceSecondary": "ancrage"
+          },
+          {
+            "id": "C",
+            "text": "Le souvenir que sa lumière réveille.",
+            "modePrimary": "memoire",
+            "modeSecondary": "exploration",
+            "nuancePrimary": "ancrage",
+            "nuanceSecondary": "resonance"
+          },
+          {
+            "id": "D",
+            "text": "La personne à qui j’aimerais montrer cette lanterne.",
+            "modePrimary": "relation",
+            "modeSecondary": "attention",
+            "nuancePrimary": "resonance",
+            "nuanceSecondary": "elan"
+          }
+        ]
+      }
+    ],
+    "secondaryTieWeights": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "tieRule": "Ordre de tri : score brut, somme des points ponderes par position de question (uniquement en egalite), puis rotation deterministe des candidats encore ex aequo suivant la somme des indices de reponse. Aucun hasard ni horloge."
+}
