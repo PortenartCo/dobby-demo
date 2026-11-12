@@ -2,9 +2,9 @@
   "sourceState": "committed",
   "sourceDirtyPaths": [],
   "version": "V7-COURS-14H",
-  "sourceSha": "cdd7204809dbcf87b91a2a40a449c7269cc63a39",
+  "sourceSha": "96bb78ebe5861a058f2e38cdf32670049bf8faab",
   "base": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
-  "entry": "essai-stitch-v7/traverse.html?client=A",
+  "entry": "essai-stitch-v7/famille.html?client=A#onboarding-ritual?record=replay",
   "storagePrefix": "dobby-review-v7-cours-14h-20261112|client-{A|B}|",
   "realBackend": false,
   "demoMemberAssociation": "explicit-fictional-persona-only",
@@ -2354,19 +2354,19 @@
     {
       "path": "index.html",
       "generated": true,
-      "sha256": "6c508050a979d962b9b1281b437072a831b5ccd1abe12c0d030de9d7a50ac7b2",
+      "sha256": "9974e1ddc2f4d1c3edb19758fd8e63d27e516f68b512f5fc126a3d303ea6befc",
       "transformed": true,
       "transforms": [
         {
           "type": "course-entry",
-          "entry": "essai-stitch-v7/traverse.html?client=A"
+          "entry": "essai-stitch-v7/famille.html?client=A#onboarding-ritual?record=replay"
         }
       ]
     },
     {
       "path": "README.md",
       "generated": true,
-      "sha256": "115bfdd188aecd4a4763aef0d3790ba347a32bbdd881db8c82a77f3dbb8eed18",
+      "sha256": "50e319e85e08c297ae8eb4873fd3d13ec4198a4ba9180aff112405495d5fc3bc",
       "transformed": true,
       "transforms": [
         {
@@ -2419,10 +2419,10 @@
   "fixtureSha256": "109f38eeb979141fa0929f6cbf5e300e726df3eba4a94dc28998efe26592c9e7",
   "builderSource": {
     "path": "scripts/build-dobby-course-14h-review.cjs",
-    "sha256": "639b76bf7bdcdb5b5984353edeeca5abb9700154e309bb3ea3706a98e2cb4aef"
+    "sha256": "c96a1d009f0c5ce3d09c33ed7c00e2b89f3da9be22f9696c3ffa5230a890d81d"
   },
   "publication": "new-directory-only",
-  "readmeSha256": "115bfdd188aecd4a4763aef0d3790ba347a32bbdd881db8c82a77f3dbb8eed18",
+  "readmeSha256": "50e319e85e08c297ae8eb4873fd3d13ec4198a4ba9180aff112405495d5fc3bc",
   "familySource": "a28a1e74e6fd6fcb0db8b154002ce032ae10f130",
   "selectedClientKey": "dobby-review-v7-cours-14h-20261112|selected-client",
   "resetKey": "dobby-review-v7-cours-14h-20261112|reset-in-progress",
