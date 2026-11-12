@@ -1,0 +1,30 @@
+/* FAM-17: Apothecary & Curiosities, local typography and canonical chrome. */
+body.fa-active .fam-detail-page{padding:88px 16px 120px;display:flex;flex-direction:column;gap:16px;--fam-primary:#f9bb5f;--fam-accent:#d49b42;--fam-surface:#2c1c18}
+.fam-detail-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fam-detail-toolbar>button:last-child{background:#f9bb5f;color:#180b07}
+.fam-detail-hero{padding:24px 16px 18px;background:linear-gradient(130deg,var(--fam-surface),#2c1c18);border:1px solid #d49b424d;border-radius:8px;box-shadow:0 8px 24px #0c0705a0;text-align:center}
+.fam-detail-hero h1{font:600 28px/1.2 'Playfair Display',Georgia,serif;color:var(--fam-primary);margin:12px 0 4px}
+.fam-detail-avatar{margin:auto;width:100px;height:116px;border:2px solid var(--fam-accent);border-radius:14px 14px 8px 8px;box-shadow:0 0 24px #d49b4233}
+.fam-detail-avatar .dobby-avatar-face{width:100%;height:100%;font-size:60px;border-radius:inherit}
+.fam-detail-nickname{font:italic 14px/1.5 Literata,Georgia,serif;color:#d4c4b1;margin:6px 0}
+.fam-detail-badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:12px}
+.fam-detail-badges span{padding:4px 8px;border-radius:12px;border:1px solid var(--fam-accent);background:#180b0766;font:11px/1.4 Literata,Georgia,serif;color:var(--fam-primary)}
+.fam-detail-grade{font-size:13px;color:var(--fam-primary);margin:12px 0 0}
+.fam-detail-card{padding:16px;border-radius:8px;border:1px solid #d49b4238;background:#2c1c18;box-shadow:0 8px 24px #0c070580}
+.fam-detail-card h2{font:600 19px/1.35 'Playfair Display',Georgia,serif;color:#fcf7ee;margin:0 0 14px}
+.fam-detail-card h3{font:600 16px/1.4 'Playfair Display',Georgia,serif;color:var(--fam-primary);margin:0 0 8px}
+.fam-detail-registry{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0}
+.fam-detail-registry dt{font:11px/1.4 Literata,Georgia,serif;color:#d4c4b1}
+.fam-detail-registry dd{margin:4px 0 0;font:16px/1.4 'EB Garamond',Georgia,serif;color:#fadcd5;overflow-wrap:anywhere}
+.fam-detail-magic-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fam-detail-magic-card{padding:12px 8px;background:#180b07;border:1px solid #d49b4222;border-radius:6px;min-width:0}
+.fam-detail-magic-card .mp-sprite{margin:4px auto 10px;max-width:100%;width:110px;height:110px}
+.fam-detail-magic-card p{font-size:13px;line-height:1.5}
+.fam-detail-magic-card button{padding:8px;font-size:12px;width:100%}
+.fam-detail-house-mark{height:110px;display:flex;align-items:center;justify-content:center;color:var(--fam-primary);font:600 21px/1.2 'Playfair Display',Georgia,serif}
+.fam-detail-rune-total{font:600 26px/1.4 'Playfair Display',Georgia,serif;color:#f9bb5f}
+.fam-detail-card progress{width:100%;height:10px;accent-color:#f9bb5f}
+.fam-detail-card>.fa-button{width:100%;justify-content:space-between;margin-top:10px}
+.fam-detail-memory{white-space:pre-wrap;font-style:italic}
+.fam-detail-status{font:12px/1.5 Literata,Georgia,serif;color:#d4c4b1}
+@media(max-width:359px){.fam-detail-toolbar button{font-size:12px;padding:8px}.fam-detail-hero h1{font-size:25px}.fam-detail-magic-card .mp-sprite{height:90px;width:90px}}

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Le chapeau de cérémonie</title>
+  <desc id="desc">Illustration originale pour DOBBY : un vieux chapeau de sorcier brun, tout en plis, repose sur un tabouret de bois dans un grand hall éclairé par une lanterne.</desc>
+  <defs>
+    <radialGradient id="hall"><stop stop-color="#704b35"/><stop offset=".55" stop-color="#2a211d"/><stop offset="1" stop-color="#111311"/></radialGradient>
+    <radialGradient id="glow"><stop stop-color="#ffd98f" stop-opacity=".6"/><stop offset="1" stop-color="#e8a947" stop-opacity="0"/></radialGradient>
+    <linearGradient id="stone" x2="0" y2="1"><stop stop-color="#4d4940"/><stop offset="1" stop-color="#252622"/></linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b18b59"/><stop offset=".26" stop-color="#795338"/><stop offset=".52" stop-color="#3b2a22"/><stop offset=".78" stop-color="#886140"/><stop offset="1" stop-color="#382921"/></linearGradient>
+    <linearGradient id="brim" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a47a4d"/><stop offset=".48" stop-color="#5d402c"/><stop offset="1" stop-color="#2b211b"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2=".2"><stop stop-color="#2e1d16"/><stop offset=".45" stop-color="#855933"/><stop offset=".7" stop-color="#4e321f"/><stop offset="1" stop-color="#201710"/></linearGradient>
+    <linearGradient id="metal" x2="1" y2="1"><stop stop-color="#e3b66b"/><stop offset=".4" stop-color="#805e31"/><stop offset=".65" stop-color="#d8a950"/><stop offset="1" stop-color="#4a371f"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="shadow" x="-.4" y="-.4" width="1.8" height="2"><feDropShadow dy="12" stdDeviation="12" flood-color="#080907" flood-opacity=".8"/></filter>
+    <filter id="texture"><feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="3" seed="17" result="grain"/><feColorMatrix in="grain" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".1"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+    <pattern id="floor" width="120" height="56" patternUnits="userSpaceOnUse"><path d="M0 0H120V56H0Z" fill="#2b2620" stroke="#65513a" stroke-opacity=".25"/><path d="M60 0V56" stroke="#120f0b" stroke-opacity=".4"/></pattern>
+  </defs>
+  <path fill="url(#hall)" d="M0 0H960V540H0Z"/>
+  <g opacity=".6" fill="url(#stone)" stroke="#83715a" stroke-opacity=".2" stroke-width="2">
+    <path d="M50 435V188Q50 30 210-24Q370 30 370 188V435H320V190Q320 88 210 35Q100 88 100 190V435Z"/>
+    <path d="M646 435V135Q646 2 793-46Q940 2 940 135V435H898V142Q898 50 793 9Q688 50 688 142V435Z"/>
+  </g>
+  <g stroke="#a59373" stroke-opacity=".1" fill="none"><path d="M51 151H105M65 94L115 121M115 24L146 76M211-15V35M304 29L275 77M352 98L308 126M320 190H370M666 80L705 101M710 8L734 47M849 4L831 43M915 70L879 96"/></g>
+  <ellipse cx="526" cy="350" rx="275" ry="224" fill="url(#glow)" opacity=".5"/>
+  <path d="M0 440Q440 409 960 442V540H0Z" fill="url(#floor)"/>
+  <path d="M0 442Q440 409 960 442" stroke="#bd945b" stroke-opacity=".23" fill="none"/>
+  <ellipse cx="518" cy="495" rx="205" ry="26" fill="#080b08" opacity=".75" filter="url(#soft)"/>
+  <g filter="url(#shadow)">
+    <path d="M419 393L407 513Q414 522 424 515L451 395M565 395L594 513Q604 522 614 511L598 391" fill="url(#wood)" stroke="#281b13" stroke-width="4"/>
+    <path d="M432 472Q507 482 597 472" fill="none" stroke="#684325" stroke-width="10"/>
+    <ellipse cx="510" cy="391" rx="124" ry="24" fill="url(#wood)" stroke="#b17e49" stroke-opacity=".5" stroke-width="3"/>
+    <ellipse cx="510" cy="385" rx="118" ry="18" fill="#9d7046"/>
+    <path d="M410 385Q500 371 609 384M421 392Q511 377 598 392" fill="none" stroke="#402b1e" stroke-width="2" opacity=".65"/>
+  </g>
+  <g filter="url(#shadow)">
+    <path d="M279 357Q303 331 365 326Q393 304 434 312Q543 299 632 323Q685 325 735 352Q714 373 677 374Q626 408 547 393Q482 411 428 390Q342 393 279 357Z" fill="url(#brim)" stroke="#b18c5b" stroke-opacity=".55" stroke-width="3"/>
+    <path d="M286 356Q375 372 432 360Q522 338 635 355Q689 367 729 352" fill="none" stroke="#d0a368" stroke-width="2" opacity=".5"/>
+    <path d="M371 343Q398 306 403 270Q407 225 448 177Q464 155 479 115Q499 77 555 92L602 106Q578 114 551 117Q557 145 544 170Q526 199 552 231Q587 268 613 337Q517 367 371 343Z" fill="url(#cloth)" stroke="#c19a66" stroke-opacity=".45" stroke-width="2"/>
+    <path d="M479 115Q510 123 551 117M448 177Q475 164 500 168Q481 203 466 210M544 170Q526 179 514 200M403 270Q434 248 455 252M552 231Q523 223 506 245M398 307Q437 288 464 294M578 280Q551 273 524 289M389 331Q477 348 602 332" fill="none" stroke="#241d19" stroke-width="9" stroke-linecap="round" opacity=".65"/>
+    <path d="M481 121Q499 133 514 131M448 186L427 225M409 271Q431 257 447 261M555 237L578 278M402 314Q435 300 458 303M532 289Q558 284 574 292" fill="none" stroke="#d4b27e" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+    <path d="M431 251Q456 234 477 248Q463 263 442 261ZM491 246Q514 228 535 247Q520 257 499 257Z" fill="#261f1b"/>
+    <path d="M443 250Q457 245 469 250M501 247Q516 241 528 247" fill="none" stroke="#b49666" stroke-width="2" opacity=".75"/>
+    <path d="M465 281Q482 286 499 279L492 305Q474 314 450 306Q460 297 465 281Z" fill="#221b17"/>
+    <path d="M451 306Q474 319 497 307M460 281Q481 290 501 279" stroke="#bb935f" stroke-width="2" fill="none" opacity=".7"/>
+    <path d="M413 226L430 236L425 254L408 243Z" fill="#97704b" stroke="#3c2e22" stroke-width="2"/>
+    <path d="M414 230L422 236M411 237L421 243M418 235L414 245M425 239L421 249" stroke="#d3b583" stroke-width="1.5"/>
+    <path d="M376 344Q474 370 616 339" fill="none" stroke="#2b211b" stroke-width="12" opacity=".75"/>
+    <path d="M381 341Q470 364 611 336" fill="none" stroke="#a7804e" stroke-width="2"/>
+  </g>
+  <g transform="translate(168 168)">
+    <ellipse cx="0" cy="82" rx="135" ry="158" fill="url(#glow)"/>
+    <path d="M0-28V-12M-7-28Q0-40 7-28" stroke="#ba9557" stroke-width="4" fill="none"/>
+    <path d="M-31 0L-21-12H21L31 0L22 99H-22Z" fill="#2b2419" stroke="url(#metal)" stroke-width="4"/>
+    <path d="M-20 8H20L14 84H-14Z" fill="#e9b356" opacity=".8"/>
+    <path d="M-2 24Q-20 53-1 70Q18 55 1 42Q8 28-2 24" fill="#ffe5a0"/>
+    <path d="M-31 0H31M0 0V93M-25 94H25M-33 102H33" stroke="url(#metal)" stroke-width="5"/>
+  </g>
+  <g fill="#f4d291"><circle cx="302" cy="188" r="1.5"/><circle cx="353" cy="245" r="1"/><circle cx="651" cy="184" r="1.4"/><circle cx="687" cy="266" r="1"/><circle cx="595" cy="72" r="1.2"/><circle cx="389" cy="103" r="1"/><circle cx="726" cy="329" r="1.6"/><circle cx="286" cy="306" r="1"/><circle cx="620" cy="424" r="1"/></g>
+  <path d="M0 0H960V540H0Z" fill="transparent" filter="url(#texture)" opacity=".4"/>
+  <path d="M16 16H944V524H16Z" fill="none" stroke="#d5b06c" stroke-opacity=".2"/>
+</svg>

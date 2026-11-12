@@ -1,0 +1,421 @@
+<!DOCTYPE html><html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../review-config.js"></script><script src="../../../family-config.js"></script><script src="../../../review-runtime.js"></script><script src="../../../global-demo.js"></script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type">
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#1e100c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body data-stitch-source="dobby_maison_quipements_du_logis_2" class="bg-background font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_12px_32px_rgba(212,155,66,0.12)]"><div class="h-12 px-gutter-mobile flex items-center justify-between relative"><div class="flex items-center gap-space-xs"><button aria-label="Menu Alchimique" class="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-container-high/80 text-primary shadow-[0_2px_8px_rgba(0,0,0,0.4)] active:scale-95 transition-all hover:bg-surface-container border border-primary/20"><svg class="w-6 h-6 text-[#eec66a]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"></path></svg></button></div><div class="flex-1 flex items-center justify-center text-center px-space-xs"><div class="h-12 px-space-md rounded-xl bg-surface-container-highest/90 shadow-[inset_0_1px_2px_rgba(249,187,95,0.2),0_4px_16px_rgba(0,0,0,0.6)] flex flex-col items-center justify-center border border-primary/20"><h1 class="font-headline-sm text-headline-sm tracking-widest text-[#eec66a] drop-shadow-[0_2px_6px_rgba(249,187,95,0.4)] uppercase leading-none">DOBBY</h1><span class="font-label-sm text-[9.5px] text-amber-200/80 tracking-wider leading-tight mt-0.5 uppercase">ÉQUIPEMENTS &amp; LOGIS • ATELIER DU FOYER</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Activer ou couper le son magique" class="relative w-12 h-12 rounded-xl bg-surface-container-high/90 text-primary border border-primary/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.4)] active:scale-95 transition-all hover:bg-surface-container" id="btn-sound-toggle"><span class="material-symbols-outlined text-[22px]" id="sound-icon">volume_up</span><span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.9)]" id="sound-indicator"></span></button><div class="w-12 h-12 rounded-xl bg-[#f3c25b] flex items-center justify-center shadow-[0_0_12px_rgba(249,187,95,0.4)] cursor-pointer active:scale-95 transition-all"><span class="material-symbols-outlined text-[#180b07] text-[22px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full text-on-surface">
+<!-- Scène Hero Immersive STRICTEMENT conforme au gabarit Taverne Gourmande -->
+<div class="px-gutter-mobile pt-3 flex flex-col items-center">
+<div class="w-full h-[220px] rounded-2xl overflow-hidden border border-amber-900/40 relative shadow-2xl">
+<img alt="Dobby atelier équipements" class="w-full h-full object-cover object-center" src="../../assets/remaining/fallback-salon.png">
+<div class="absolute inset-0 bg-gradient-to-t from-[#180b07] via-transparent to-transparent"></div>
+<div class="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-amber-900/30 shadow-md">
+<span class="relative flex h-2 w-2 items-center justify-center">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-[10px] text-primary tracking-wider uppercase font-semibold font-label-sm">✦ FOURNEAUX &amp; CONDUITS ✦</span>
+<span class="material-symbols-outlined text-[13px] text-primary animate-pulse">local_fire_department</span>
+</div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-amber-900/30 shadow-md">
+<span class="text-[10px] text-primary tracking-wider uppercase font-semibold font-label-sm">6 ÉQUIPEMENTS</span>
+<span class="material-symbols-outlined text-[13px] text-primary">verified</span>
+</div>
+</div>
+<div class="w-full pt-4 flex flex-col items-center text-center">
+<div class="text-[11px] font-semibold tracking-[0.2em] text-[#d49b42] uppercase text-center mt-1 flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">build</span>
+<span class="">✧ ENTRETIEN &amp; ÉQUIPEMENTS DU LOGIS ✧</span>
+<span class="material-symbols-outlined text-[14px]">hardware</span>
+</div>
+<h1 class="font-['Playfair_Display'] text-2xl font-bold text-[#fcf7ee] text-center mt-1 tracking-wide">Maison &amp; Équipements</h1>
+<div class="px-2 mt-2 mb-2 max-w-sm">
+<p class="text-sm text-[#e6d7c3] text-center italic leading-relaxed">« Dobby veille sur chaque rouage, poêle et chaudière du logis ! Rien ne s'arrête tant que Dobby est là. » — <span class="not-italic text-primary font-label-sm">Note de Dobby</span></p>
+</div>
+<div class="w-full max-w-xs mt-1">
+<button class="h-12 w-full rounded-xl bg-[#d49b42] hover:bg-[#eec66a] text-[#180b07] font-semibold text-sm tracking-wide shadow-md flex items-center justify-center gap-2 active:scale-[0.98] transition-all" id="btn-add-equipment" type="button">
+<svg class="w-5 h-5 text-[#180b07]" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24">
+<line x1="12" x2="12" y1="5" y2="19"></line>
+<line x1="5" x2="19" y1="12" y2="12"></line>
+</svg>
+<span class="">Enregistrer un équipement</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Barre d'outils rapides : Historique & Sauvegarde Locale -->
+<div class="px-gutter-mobile mt-5">
+<div class="grid grid-cols-2 gap-2">
+<button class="min-h-[42px] px-3 py-2 rounded-xl bg-surface-container-high/90 border border-primary/20 text-on-surface hover:text-primary flex items-center justify-center gap-1.5 font-label-sm text-[12px] shadow-sm active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">history_edu</span>
+<span class="">Historique d'entretien</span>
+</button>
+<button class="min-h-[42px] px-3 py-2 rounded-xl bg-surface-container-high/90 border border-secondary/20 text-on-surface hover:text-secondary flex items-center justify-center gap-1.5 font-label-sm text-[12px] shadow-sm active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_download</span>
+<span class="">Export / Sauvegarde locale</span>
+</button>
+</div>
+</div>
+<!-- Recherche d'équipement & Filtres de Pièces -->
+<div class="px-gutter-mobile mt-4 flex flex-col gap-2.5">
+<div class="relative flex items-center w-full">
+<div class="absolute left-3.5 flex items-center pointer-events-none text-primary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-11 pl-10 pr-10 bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-md text-sm rounded-xl border border-amber-900/30 shadow-inner focus:outline-none focus:border-primary/50 transition-all" id="equipmentSearchInput" placeholder="Rechercher un appareil, marque, réf..." type="search">
+<button aria-label="Effacer" class="hidden absolute right-3 w-6 h-6 items-center justify-center text-outline hover:text-on-surface" id="clearSearchBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Filtres par Pièce -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 font-label-sm" id="roomFilterRow"><span class="text-outline-variant uppercase tracking-wider text-[10px] shrink-0 mr-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-primary">filter_list</span>Pièces :</span><button class="room-chip shrink-0 flex items-center gap-1.5 px-4 h-9 whitespace-nowrap text-xs font-semibold tracking-wide rounded-xl transition-all active:scale-95 bg-[#d49b42] text-[#180b07] shadow-sm shadow-[#d49b42]/30 border border-[#d49b42]" type="button"><span class="material-symbols-outlined text-[15px]">auto_awesome</span><span class="">Toutes</span></button><button class="room-chip shrink-0 flex items-center gap-1.5 px-4 h-9 whitespace-nowrap text-xs tracking-wide rounded-xl transition-all active:scale-95 bg-surface-container-low border border-primary/20 text-[#eec66a]/80 hover:text-[#fcf7ee] hover:border-primary/40" type="button"><span class="material-symbols-outlined text-[15px]">chair</span><span class="">Salon</span></button><button class="room-chip shrink-0 flex items-center gap-1.5 px-4 h-9 whitespace-nowrap text-xs tracking-wide rounded-xl transition-all active:scale-95 bg-surface-container-low border border-primary/20 text-[#eec66a]/80 hover:text-[#fcf7ee] hover:border-primary/40" type="button"><span class="material-symbols-outlined text-[15px]">soup_kitchen</span><span class="">Cuisine</span></button><button class="room-chip shrink-0 flex items-center gap-1.5 px-4 h-9 whitespace-nowrap text-xs tracking-wide rounded-xl transition-all active:scale-95 bg-surface-container-low border border-primary/20 text-[#eec66a]/80 hover:text-[#fcf7ee] hover:border-primary/40" type="button"><span class="material-symbols-outlined text-[15px]">local_laundry_service</span><span class="">Buanderie</span></button><button class="room-chip shrink-0 flex items-center gap-1.5 px-4 h-9 whitespace-nowrap text-xs tracking-wide rounded-xl transition-all active:scale-95 bg-surface-container-low border border-primary/20 text-[#eec66a]/80 hover:text-[#fcf7ee] hover:border-primary/40" type="button"><span class="material-symbols-outlined text-[15px]">yard</span><span class="">Jardin</span></button></div>
+</div>
+<!-- INVENTAIRE COMPLET DES ÉQUIPEMENTS (6 cartes) -->
+<div class="px-gutter-mobile mt-4 flex flex-col gap-3.5" id="equipmentList">
+<!-- 1. Poêle à bois scandinave & Conduit (Révision requise) -->
+<article class="equipment-card rounded-xl bg-surface-container p-4 shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-amber-900/30 flex flex-col gap-3" data-room="Salon">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-tertiary shrink-0 shadow-inner border border-primary/20">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">fireplace</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-['Playfair_Display'] text-[17px] font-semibold text-[#fcf7ee] leading-tight">Poêle à bois scandinave</h2>
+</div>
+<p class="font-label-md text-xs text-on-surface-variant mt-0.5">Contura 810 Style · Réf. CT-810-NOIR</p>
+<div class="inline-flex items-center gap-1 mt-1 text-[11px] font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[13px]">room</span>
+<span class="">Salon / Pièce à vivre</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-error-container/60 border border-error/30 text-error text-[10px] font-semibold uppercase tracking-wider shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>
+        Révision requise
+      </span>
+</div>
+<!-- Jauge d'usure / encrassement conduit -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+          Niveau d'encrassement du conduit
+        </span>
+<span class="text-tertiary font-bold">85% (Ramonage dû)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-gradient-to-r from-tertiary to-error rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<!-- Métadonnées : Entretien & Garantie -->
+<div class="grid grid-cols-2 gap-2 text-[12px] font-body-sm text-on-surface-variant pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary">calendar_clock</span>
+<span class="">Dernier : 12 Mai 2024</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline">verified_user</span>
+<span class="">Garantie : 5 ans (Échue)</span>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-between gap-2">
+<button class="flex-1 min-h-[40px] py-1.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-xs flex items-center justify-center gap-1.5 transition-colors border border-primary/20" type="button">
+<span class="">Consulter la fiche &amp; notice</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+<button class="min-h-[40px] px-3 rounded-lg bg-tertiary-container/40 text-on-tertiary-container font-label-md text-xs flex items-center justify-center gap-1 transition-colors border border-tertiary/30" type="button">
+<span class="material-symbols-outlined text-[16px]">build</span>
+<span class="">Ramoner</span>
+</button>
+</div>
+</article>
+<!-- 2. Pompe à chaleur air/eau (En service) -->
+<article class="equipment-card rounded-xl bg-surface-container p-4 shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-amber-900/30 flex flex-col gap-3" data-room="Buanderie">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner border border-primary/20">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">mode_fan</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-['Playfair_Display'] text-[17px] font-semibold text-[#fcf7ee] leading-tight">Pompe à Chaleur &amp; Ballon</h2>
+<p class="font-label-md text-xs text-on-surface-variant mt-0.5">Daikin Altherma 3 · Réf. DAIK-PAC-2023</p>
+<div class="inline-flex items-center gap-1 mt-1 text-[11px] font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[13px]">room</span>
+<span class="">Local technique / Buanderie</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/80 border border-secondary/40 text-secondary text-[10px] font-semibold uppercase tracking-wider shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        En service
+      </span>
+</div>
+<!-- Jauge filtre fluide -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">filter_alt</span>
+          Propreté filtre magnétique &amp; pression
+        </span>
+<span class="text-secondary font-bold">25% usure (Optimal)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 25%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[12px] font-body-sm text-on-surface-variant pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">calendar_today</span>
+<span class="">Entretien : Octobre 2024</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">shield</span>
+<span class="">Garantie : Active (Nov. 2028)</span>
+</div>
+</div>
+<div class="pt-1">
+<button class="w-full min-h-[40px] py-1.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-xs flex items-center justify-center gap-1.5 transition-colors border border-primary/20" type="button">
+<span class="">Consulter le contrat &amp; fiche technique</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- 3. Lave-vaisselle silencieux (En service) -->
+<article class="equipment-card rounded-xl bg-surface-container p-4 shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-amber-900/30 flex flex-col gap-3" data-room="Cuisine">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner border border-primary/20">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">countertops</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-['Playfair_Display'] text-[17px] font-semibold text-[#fcf7ee] leading-tight">Lave-vaisselle silencieux</h2>
+<p class="font-label-md text-xs text-on-surface-variant mt-0.5">Bosch Serie 6 Zeolith · Réf. SMV6ZCX07E</p>
+<div class="inline-flex items-center gap-1 mt-1 text-[11px] font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[13px]">room</span>
+<span class="">Cuisine des Délices</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/80 border border-secondary/40 text-secondary text-[10px] font-semibold uppercase tracking-wider shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        En service
+      </span>
+</div>
+<!-- Jauge filtre et sel régénérant -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">water_drop</span>
+          Niveau sel régénérant &amp; filtre fond
+        </span>
+<span class="text-tertiary font-bold">50% (Cycle détartrage prévu)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 50%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[12px] font-body-sm text-on-surface-variant pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">cleaning_services</span>
+<span class="">Détartrage : dans 25j</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">shield</span>
+<span class="">Garantie : Active (Janv. 2026)</span>
+</div>
+</div>
+<div class="pt-1">
+<button class="w-full min-h-[40px] py-1.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-xs flex items-center justify-center gap-1.5 transition-colors border border-primary/20" type="button">
+<span class="">Consulter la notice &amp; facture</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- 4. Détecteurs de fumée & monoxyde (En service) -->
+<article class="equipment-card rounded-xl bg-surface-container p-4 shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-amber-900/30 flex flex-col gap-3" data-room="Salon">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner border border-primary/20">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-['Playfair_Display'] text-[17px] font-semibold text-[#fcf7ee] leading-tight">Détecteurs de fumée &amp; CO</h2>
+<p class="font-label-md text-xs text-on-surface-variant mt-0.5">Kidde Protect 10Y · 3 modules jumelés</p>
+<div class="inline-flex items-center gap-1 mt-1 text-[11px] font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[13px]">room</span>
+<span class="">Salon, Couloir &amp; Palier</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/80 border border-secondary/40 text-secondary text-[10px] font-semibold uppercase tracking-wider shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        En service
+      </span>
+</div>
+<!-- Jauge pile scellée 10 ans -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">battery_full</span>
+          Autonomie pile scellée (Norme EN 14604)
+        </span>
+<span class="text-secondary font-bold">80% (Valide jusqu'en 2032)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 80%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[12px] font-body-sm text-on-surface-variant pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">hearing</span>
+<span class="">Test sonore : Juin 2025</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">check_circle</span>
+<span class="">Certifié NF DAAF</span>
+</div>
+</div>
+<div class="pt-1">
+<button class="w-full min-h-[40px] py-1.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-xs flex items-center justify-center gap-1.5 transition-colors border border-primary/20" type="button">
+<span class="">Vérifier les 3 détecteurs</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- 5. Lave-linge séchant (En service) -->
+<article class="equipment-card rounded-xl bg-surface-container p-4 shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-amber-900/30 flex flex-col gap-3" data-room="Buanderie">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner border border-primary/20">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">local_laundry_service</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-['Playfair_Display'] text-[17px] font-semibold text-[#fcf7ee] leading-tight">Lave-linge séchant TwinDos</h2>
+<p class="font-label-md text-xs text-on-surface-variant mt-0.5">Miele W1 · Réf. WWD660-FR</p>
+<div class="inline-flex items-center gap-1 mt-1 text-[11px] font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[13px]">room</span>
+<span class="">Buanderie / Sous-sol</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/80 border border-secondary/40 text-secondary text-[10px] font-semibold uppercase tracking-wider shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        En service
+      </span>
+</div>
+<!-- Jauge filtre peluche & bac vidange -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">tune</span>
+          Propreté filtre pompe &amp; cartouche TwinDos
+        </span>
+<span class="text-secondary font-bold">30% usure</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 30%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[12px] font-body-sm text-on-surface-variant pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-primary">rotate_right</span>
+<span class="">Cycle tambour 90°C : 60j</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">shield</span>
+<span class="">Garantie : Active (Sept. 2027)</span>
+</div>
+</div>
+<div class="pt-1">
+<button class="w-full min-h-[40px] py-1.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-xs flex items-center justify-center gap-1.5 transition-colors border border-primary/20" type="button">
+<span class="">Consulter la fiche &amp; cycles</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- 6. Robot tondeuse & station (Révision requise) -->
+<article class="equipment-card rounded-xl bg-surface-container p-4 shadow-[0_8px_20px_rgba(0,0,0,0.5)] border border-amber-900/30 flex flex-col gap-3" data-room="Jardin">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner border border-primary/20">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">yard</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-['Playfair_Display'] text-[17px] font-semibold text-[#fcf7ee] leading-tight">Robot tondeuse &amp; Station</h2>
+<p class="font-label-md text-xs text-on-surface-variant mt-0.5">Husqvarna Automower 310 · Réf. HQV-310</p>
+<div class="inline-flex items-center gap-1 mt-1 text-[11px] font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[13px]">room</span>
+<span class="">Jardin &amp; Allée Enchantée</span>
+</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-tertiary-container/60 border border-tertiary/40 text-tertiary text-[10px] font-semibold uppercase tracking-wider shrink-0 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+        Révision requise
+      </span>
+</div>
+<!-- Jauge d'usure des lames pivotantes -->
+<div class="rounded-lg bg-surface-container-lowest/80 p-2.5 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">content_cut</span>
+          Usure des lames &amp; batterie station
+        </span>
+<span class="text-tertiary font-bold">78% (Affûtage recommandé)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 78%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-[12px] font-body-sm text-on-surface-variant pt-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary">build_circle</span>
+<span class="">Dernier affûtage : Sept. 2024</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-outline">history_toggle_off</span>
+<span class="">Garantie : Expirée (Mars 2024)</span>
+</div>
+</div>
+<div class="pt-1 flex items-center justify-between gap-2">
+<button class="flex-1 min-h-[40px] py-1.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-primary font-label-md text-xs flex items-center justify-center gap-1.5 transition-colors border border-primary/20" type="button">
+<span class="">Consulter la notice &amp; câble</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+<button class="min-h-[40px] px-3 rounded-lg bg-surface-container-highest text-on-surface font-label-md text-xs flex items-center justify-center gap-1 transition-colors border border-primary/20" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary">content_cut</span>
+<span class="">Changer lames</span>
+</button>
+</div>
+</article>
+</div>
+<!-- État vide si aucune correspondance recherche -->
+<div class="hidden px-gutter-mobile mt-4 flex-col items-center justify-center text-center p-8 rounded-2xl bg-surface-container-low border border-amber-900/30" id="noMatchContainer">
+<div class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center text-primary mb-3">
+<span class="material-symbols-outlined text-[36px]">search_off</span>
+</div>
+<h3 class="font-['Playfair_Display'] text-lg font-bold text-[#fcf7ee] mb-1">Aucun appareil trouvé</h3>
+<p class="text-xs text-on-surface-variant max-w-xs mb-4">Aucun équipement ne correspond à votre filtre ou terme de recherche.</p>
+<button class="px-4 py-2 rounded-xl bg-primary text-on-primary font-semibold text-xs tracking-wide" type="button">
+    Réinitialiser les filtres
+  </button>
+</div>
+<!-- Note bienveillante de Dobby -->
+<div class="px-gutter-mobile mt-6 mb-4">
+<div class="p-3.5 rounded-xl bg-surface-container-lowest shadow-[inset_0_1px_2px_rgba(249,187,95,0.2)] border border-amber-900/30 flex items-start gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+</div>
+<div class="flex-1">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Conseil d'entretien de Dobby</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-relaxed">
+        « Dobby a noté le ramonage du poêle et l'affûtage des lames du robot. N'oubliez pas d'archiver les factures locales pour conserver vos garanties d'assurance ! »
+      </p>
+</div>
+</div>
+</div><div class="px-gutter-mobile mb-6"><div class="rounded-2xl bg-surface-container-lowest border border-primary/20 p-4 shadow-md flex flex-col items-center text-center gap-2.5"><div class="flex items-center justify-center gap-2 text-primary"><span class="material-symbols-outlined text-[20px] text-[#eec66a]">security</span><h3 class="font-['Playfair_Display'] text-[#eec66a] text-sm font-semibold tracking-wide uppercase">SCEAU DE PROTECTION LOCALE DOBBY</h3></div><p class="text-xs text-on-surface-variant leading-relaxed max-w-sm">Données et inventaire des équipements stockés exclusivement en mémoire locale hermétique sur cet appareil. Aucun cloud public, synchronisation externe ni télémétrie distante.</p><div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-low border border-primary/20 text-[11px] text-[#eec66a]/90 font-label-sm"><span class="w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.9)]"></span><span class="">AES-256 CHIFFRÉ · v4.8</span></div></div></div>
+</div>
+</main>
+<!-- Barre de navigation inférieure (4 onglets : Famille/Maison actif) -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-8px_24px_rgba(12,7,5,0.85)]" data-active-classes="text-primary bg-surface-container-high/80 shadow-[inset_0_1px_2px_rgba(249,187,95,0.25)]"><div class="flex justify-around items-center h-20 px-space-xs"><a class="flex flex-col items-center justify-center gap-0.5 min-w-[64px] h-14 rounded-xl text-on-surface-variant transition-all hover:text-on-surface" data-path="traverse-accueil" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm tracking-wide">Traverse</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[64px] h-14 rounded-xl text-on-surface-variant transition-all hover:text-on-surface" data-path="parchemins-missions" href="#"><span class="material-symbols-outlined text-[24px]">history_edu</span><span class="font-label-sm text-label-sm tracking-wide">Missions</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[64px] h-14 rounded-xl text-on-surface-variant transition-all hover:text-on-surface" data-path="taverne-repas" href="#"><span class="material-symbols-outlined text-[24px]">skillet</span><span class="font-label-sm text-label-sm tracking-wide">Taverne</span></a><a class="flex flex-col items-center justify-center gap-0.5 min-w-[64px] h-14 rounded-xl text-primary bg-surface-container-high/80 shadow-[inset_0_1px_2px_rgba(249,187,95,0.25)] transition-all" data-path="famille-agenda" href="#"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">family_restroom</span><span class="font-label-sm text-label-sm font-semibold tracking-wide">Famille</span></a></div></nav>
+
+
+
+</body></html>
