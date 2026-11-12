@@ -476,7 +476,48 @@ async function runJourney(browser, width) {
         await B.close();
       });
     }
-    await step('E02, E06 and E08 remain reachable, dock and browser navigation work', async () => {
+    await step('E02 reads and updates the same shared Courses, E06/E08 and navigation remain reachable', async () => {
+      await open(page, 'famille.html', 'chat');
+      await page.locator('#user-input').waitFor();
+      const sendChat = async text => {
+        await page.locator('#user-input').fill(text);
+        await page.locator('[data-fa-action=rg-chat-send]').click();
+        await page.waitForFunction(() => !DobbyChat.busy);
+        return page.locator('[data-e02-message=dobby]').last().textContent();
+      };
+      const assertSharedRead = async () => {
+        const current = await basket(page);
+        assert.equal(current.shared, true, 'E02 uses the active simulated family list');
+        const answer = await sendChat('quelles sont les courses');
+        assert.ok(answer.includes(current.items.length + ' article(s)'), 'E02 reports the authoritative grocery count');
+        for (const item of current.items.slice(0, 8)) {
+          assert.ok(answer.includes(item.name), 'E02 reads the same shared article: ' + item.name);
+        }
+      };
+      await assertSharedRead();
+      const localBeforeChat = await native(page,
+        'return JSON.stringify({items:st.shopFinal.items,extras:st.extras,history:st.shopHistory});');
+      const chatItem = 'DÉMO — Article conversation ' + width;
+      assert.match(await sendChat('acheter ' + chatItem), /Dobby a ajouté/);
+      await sync(page);
+      const added = (await grocery(page)).items.filter(row => row.title === chatItem);
+      assert.equal(added.length, 1, 'Chat adds through the native family grocery writer');
+      assert.match(await sendChat('acheter ' + chatItem), /déjà/);
+      assert.deepEqual((await grocery(page)).items.filter(row => row.title === chatItem).map(row => row.id),
+        added.map(row => row.id), 'A repeated chat command keeps the same native grocery row');
+      assert.equal(await native(page,
+        'return JSON.stringify({items:st.shopFinal.items,extras:st.extras,history:st.shopHistory});'),
+        localBeforeChat, 'Shared chat commands do not create a hidden local basket or change archives');
+      await assertSharedRead();
+      await page.reload();
+      await ready(page, 'family');
+      await page.locator('#user-input').waitFor();
+      await assertSharedRead();
+      await page.getByRole('link', { name: 'Voir les courses', exact: true }).last().click();
+      await page.waitForURL(url => url.hash.startsWith('#shop'));
+      await ready(page, 'cuisine');
+      assert.ok((await page.locator('[data-e072-list]').innerText()).includes(chatItem),
+        'The chat result opens the same persisted family grocery item');
       await open(page, 'famille.html', 'chat');
       await page.locator('#user-input').waitFor();
       await shot(page, '13-dobby', width, report);
