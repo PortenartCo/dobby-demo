@@ -1,0 +1,27 @@
+E07_P01_CI_START e07-p01.cjs
+E07_P01_CI_PASS e07-p01.cjs
+E07_P01_CI_START e07-p01-visual.cjs
+E07_P01_CI_PASS e07-p01-visual.cjs
+E07_P01_CI_START e07-3-taverne.cjs
+E07_P01_CI_PASS e07-3-taverne.cjs
+E07_P01_CI_START e07-3-catalogue.cjs
+E073_CATALOGUE_PASS 320 unique total, keyword/category/dual filters, BASE/custom favorite confirmation/persistence, native draft/V2 unknown-total edit and metadata preservation, unchanged menus/TM
+E073_CATALOGUE_PASS 390 unique total, keyword/category/dual filters, BASE/custom favorite confirmation/persistence, native draft/V2 unknown-total edit and metadata preservation, unchanged menus/TM
+ AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   "Unexpected token ')'",
++   "Unexpected token ')'"
++ ]
+- []
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/e07-3-catalogue.cjs:21:118 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+

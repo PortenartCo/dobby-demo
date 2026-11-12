@@ -1,0 +1,11 @@
+✔ E07-P01 builds a fresh namespace while retaining E07.4 demo meals and provenance (421.790223ms)
+✔ E09 generator makes a new isolated Salon preview with exact current sources and refuses to replace it (353.003806ms)
+✔ integrated bundle uses the actual modules, isolated persona and guarded native client (267.831522ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 490.066929

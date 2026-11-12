@@ -26,7 +26,7 @@ Modules attendus dans la candidate : E01 Accueil, E02 conversation/commandes exi
 ## Réconciliation
 
 - `scripts/build-dobby-review.cjs` : conflit réel entre ajout du profil E07-P01 et ajout E09. Réconciliation des options, destinations, configurations et champs du manifeste, avec maintien des deux profils.
-- `family-modules.js` : réconciliation sémantique E09/Runes dans le writer familial existant. Les mémos partagés `sharedFamilyNotes` restent dans le payload familial versionné ; `familyNotes` reste privé jusqu’à import explicite. Le ledger Missions/Runes conserve son protocole atomique et ses gains identifiés.
+- `family-modules.js` (commit `990c48660d9060554a4d236d72a7c8a92b3b664d`) : réconciliation sémantique E09/Runes dans le writer familial existant. Les mémos partagés `sharedFamilyNotes` restent dans le payload familial versionné ; `familyNotes` reste privé jusqu’à import explicite. Le ledger Missions/Runes conserve son protocole atomique et ses gains identifiés. Dépendances sources `821acbf` / `ed1585f` (récurrences et récompenses personnalisées), `fff0c8e` (client V2), `f1aff5a` (reprise explicite des anciennes missions). Les propositions SQL de ces branches restent exclues. Les champs inconnus des Missions bloquent une conversion qui les perdrait, avant toute écriture ; ils ne sont pas supprimés.
 - `family-v2.js` : le client Courses natif E07 reste la source de vérité, y compris disponibilités et révisions. Le domaine et l’attente du démarrage sont transformés seulement dans la copie générée de démonstration.
 - La source canonique est régénérée ; le manifeste distingue empreintes source et empreintes des copies transformées.
 
@@ -43,11 +43,24 @@ Safari/iPhone, commandes vocales et appareils physiques ne sont pas validés par
 ## Preuves et résultats
 
 - Baseline native après E09 : 119 tests, 119 réussis, 0 échec ([journal](evidence/global-review-20261112/baseline-native.log)).
-- Tests ciblés finaux, CI de la candidate, recette transversale, captures et comparaison HTTP : en cours.
+- Tests natifs après réconciliation : `node --test essai-stitch-v5-famille/tests/*.test.mjs` → 186/186, 0 échec ([journal](evidence/global-review-20261112/native-final.log)).
+- Tests des générateurs integrated/E07-P01/E09 → 3/3 ([journal](evidence/global-review-20261112/build-boundaries.log)). `global-build.test.cjs` → 1/1, couverture exacte de tous les fichiers publiés et refus d’écrasement.
+- Catalogue E07 après correction de l’état intermédiaire → 320/390/1440 réussis ([journal](evidence/global-review-20261112/catalogue-stable.log)).
+- Récurrences, montants personnalisés et presets natifs : trois scripts Chromium réussis ([recurrence](evidence/global-review-20261112/browser-recurrence-writer.log), [writer](evidence/global-review-20261112/browser-rewards-writer.log), [presets](evidence/global-review-20261112/browser-rewards-preset.log)).
+- Revue indépendante de la réconciliation native : aucun défaut actionnable. Revue indépendante du harness : P1 reset incomplet reproduit sur pièce jointe native ; correction exigée avant publication.
+- CI initiale `43130740616` synchronisation réussie ; `43130740640` arrêt sur assertion historique des compensations Runes. Le résultat final sera donné séparément après correction et campagne finale.
+- Recette globale et hébergée : en cours ; les instantanés locaux portent chacun le SHA exact testé.
 
 ## Anomalies
 
-La qualification finale P0–P3 sera publiée à partir des résultats de la candidate stable. Les éventuels échecs de tests pendant une modification intermédiaire ne constituent pas un résultat de recette de la candidate.
+| Priorité | Constat | Suite |
+|---|---|---|
+| P1, en correction avant publication | Reset initial conservait des pièces jointes/timers/backups fictifs secondaires. | Reproduction native `houseStore → reset → houseRead` ; correction et régression dédiées obligatoires. |
+| P2, revue visuelle | Éditeur d’un mémo partagé : mentions héritées « Plumier privé / Conservation locale » malgré le statut partagé natif affiché en bas. | Clarifier le libellé lors de la revue E09 ; aucun traitement de données réelles dans cet aperçu. |
+| P2, revue visuelle | À 320 px, les longs noms fictifs se replient fortement dans les cartes d’attribution de mission. | Utilisable sans débordement ; arbitrage de présentation différé. |
+| P3 | L’Agenda revient au jour courant après rechargement ; sélectionner à nouveau la date retrouve l’événement enregistré. | Conservation de la date sélectionnée à arbitrer. |
+
+La qualification finale sera actualisée après recette stable. Les erreurs des états intermédiaires ne sont pas assimilées au résultat final.
 
 ## Revue dirigée avec ChatGPT
 
