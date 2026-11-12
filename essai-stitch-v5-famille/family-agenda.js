@@ -121,6 +121,16 @@ function formField(name,label,value,type='text',required=false,attrs=''){
   return '<label>'+esc(label)+'<input name="'+name+'" type="'+type+'" value="'+esc(value||'')+'" '+
     (required?'required ':'')+attrs+'></label>';
 }
+function preparationField(id){
+  const api=window.DobbyFamilyPreparations;if(!api)return '';
+  const data=api.read(),existing=data.eventPreparations.find(row=>row.eventId===id);
+  if(existing)return '<input type="hidden" name="preparationTemplateId" value="'+esc(existing.templateId)+'">';
+  if(!data.templates.length)return '';
+  // V7 presents this selector in its event-association screen. An empty value
+  // keeps ordinary native events free of implicit preparation snapshots.
+  return '<select name="preparationTemplateId" hidden aria-hidden="true"><option value="">Aucun préparatif</option>'+data.templates.map(row=>
+    '<option value="'+esc(row.id)+'">'+esc(row.name)+'</option>').join('')+'</select>';
+}
 function showForm(id){
   const record=id?item(id):null;
   if(id&&!record)throw Error('Événement introuvable');
@@ -132,6 +142,7 @@ function showForm(id){
     '<p class="fp-description">Cet agenda est partagé avec les membres du foyer. '+
     'Pour un rendez-vous médical ou une donnée confidentielle, ne pas utiliser ce formulaire.</p>'+
     '<form id="fpEventForm"><input type="hidden" name="id" value="'+esc(record?.id||'')+'">'+
+    preparationField(record?.id)+
     formField('title','Intitulé',record?.title,'text',true,'maxlength="120"')+
     '<div class="fp-form-row">'+
       formField('date','Date',recordDate,'date',true)+
@@ -154,7 +165,10 @@ function closeDialog(){
   const layer=document.getElementById('fpDialogLayer');
   if(layer)layer.hidden=true;
 }
-function mutate() {save();render();}
+function eventTransaction(change){
+  const keys=['familyEvents','familyEventPreparations'],before=keys.map(key=>({key,had:Object.hasOwn(st,key),value:st[key]}));
+  try{change();save();}catch(error){for(const row of before){if(row.had)st[row.key]=row.value;else delete st[row.key];}throw error;}
+}
 function downloadIcs(id){
   const record=item(id);if(!record)throw Error('Événement introuvable');
   const blob=new Blob([core.eventIcs(record,new Date().toISOString())],
@@ -180,8 +194,11 @@ document.addEventListener('click',event=>{
       const record=item(id);
       if(!record)return;
       if(confirm('Supprimer cet événement familial : « '+record.title+' » ?')){
-        st.familyEvents=st.familyEvents.filter(x=>x.id!==id);
-        mutate();
+        eventTransaction(()=>{
+          window.DobbyFamilyPreparations?.stageDeleteEvent(id);
+          st.familyEvents=st.familyEvents.filter(x=>x.id!==id);
+        });
+        render();
       }
     }
   }catch(error){alert(error?.message||'Action impossible');}
@@ -199,12 +216,13 @@ function submitFamilyEvent(event){
       location:data.get('location'),note:data.get('note')
     });
     if(existing && !item(existing))throw Error('L’événement a été supprimé entre-temps');
-    if(data.has('preparationTemplate'))record.preparation=window.DobbyPreparations.association(String(data.get('preparationTemplate')||''),item(existing)?.preparation);
-    const before=st.familyEvents;
-    st.familyEvents=existing
-      ? st.familyEvents.map(row=>row.id===existing?{...row,...record}:row)
-      : [...st.familyEvents,record];
-    try{mutate();}catch(error){st.familyEvents=before;throw error;}closeDialog();
+    eventTransaction(()=>{
+      window.DobbyFamilyPreparations?.stageEvent(id,String(data.get('preparationTemplateId')||''));
+      st.familyEvents=existing
+        ? st.familyEvents.map(row=>row.id===existing?{...row,...record}:row)
+        : [...st.familyEvents,record];
+    });
+    closeDialog();render();
   }catch(error){alert(error?.message||'Enregistrement impossible');}
 }
 document.addEventListener('keydown',event=>{

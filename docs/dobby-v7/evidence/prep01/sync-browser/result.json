@@ -1,0 +1,25 @@
+{
+  "realBackend": false,
+  "realAccounts": false,
+  "profiles": 2,
+  "viewport": 390,
+  "checks": [
+    "A native template write reaches B with exact IDs, order, quantities, units and version",
+    "Native event association preserves stable event ID and copies independent preparation item IDs",
+    "B UI checkbox reaches A without checking the reusable template",
+    "Concurrent Courses sends plus reload/replay produce one native shared row and preserve preparation state",
+    "A offline native edit survives full page reload, reconnects through the native queue and reaches B exactly",
+    "A real A/B CAS race retains A local pending content and B confirmed content across reload without silent resolution"
+  ],
+  "status": "PASS",
+  "familyRevision": 6,
+  "acceptedGroceryCreates": 1,
+  "rejectedFamilyCAS": 1,
+  "errors": [],
+  "unexpected": [],
+  "limits": [
+    "HTTP server boundaries are simulated; no live backend or real accounts",
+    "One Chromium viewport; no physical iPhone",
+    "Conflict preservation is verified; explicit human conflict resolution is not exercised"
+  ]
+}

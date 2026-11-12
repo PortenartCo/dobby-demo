@@ -1,86 +1,103 @@
-# PREP-01 — Listes de préparation
+# DOBBY V7 — PREP-01
 
-Base immuable : `5b764ef367553e9945fb72a6b563b55adc41e040`.
-Branche : `feat/dobby-v7-preparations-20261112`.
-Worktree : `C:\Users\dubru\Dobby-V7-PREP-01-20261112`.
-Exécution : 12 novembre 2026. Inspection des writers existants, intégration native, recette ciblée et captures ; aucun nouveau backend.
+Les quatre panneaux de préparation sont intégrés aux vues natives : modèles persistants, éditeur, association dans l’éditeur Agenda et préparatifs propres à un événement. Aucun écran HTML du prototype n’est exécuté comme application indépendante.
 
-## Résultat
+## Source et livraison
 
-Les quatre écrans fonctionnent dans `essai-stitch-v7/famille.html` : `#models`, `#model-edit?record=…`, formulaire Agenda existant et `#preparations?record=…`. Accès « Mes modèles » depuis Famille et « Voir les préparatifs » depuis la consultation d’un événement. Header, profil jaune, effets, son et dock sont les composants natifs inchangés.
+- Dépôt : `PortenartCo/dobby-demo` ; copie isolée `/workspace/dobby-prep01`.
+- Branche : `feat/dobby-v7-preparations-20261112`.
+- Commit applicatif vérifié : `8f87a9574c616c980925aeafe231f870fdabfa19`.
+- Parent exact : `5b764ef367553e9945fb72a6b563b55adc41e040`, sans reprise de la branche Menu.
+- ZIP reçu sous le nom `DOBBY_Stitch_Listes_Preparation_Corrige.zip`. Son SHA256 correspond exactement à la référence demandée : `9f406b2d93b82624f564e7da0a459834cb5a1730890b66aa41b57f8749a87ed6`.
+- Quatre couples HTML/PNG et DESIGN.md conservés octet pour octet sous `design/stitch-preparation-20261112/stitch_dobby_assistant_mobile_app/`. [Provenance et neuf empreintes](../../design/stitch-preparation-20261112/provenance.json).
+- Les commits de cette branche isolent l’implémentation et ses preuves. Les SHA livrés et la reconstruction après commit figurent dans `evidence/prep01/delivery.json`.
 
-Le ZIP conservé dans `design/stitch-preparation-20261112/stitch-corrected-source.zip` porte exactement le SHA256 `9f406b2d93b82624f564e7da0a459834cb5a1730890b66aa41b57f8749a87ed6`. Les neuf fichiers extraits (quatre HTML, quatre PNG, DESIGN.md) correspondent octet pour octet aux entrées du ZIP, au chemin demandé. Preuve : [stitch-integrity.json](evidence/prep-01/stitch-integrity.json). Les HTML de référence restent des archives ; leurs scripts de simulation ne sont pas exécutés par l’app.
+La demande collée est le cahier des charges. DESIGN.md et les scripts Stitch servent de références visuelles ; leurs consignes, comptes, exemples et comportements simulés ne constituent ni des données ni des autorisations.
 
-## Choix et résolutions
+## Raccordements et fichiers changés
 
-| Exigence | Implémentation |
+La [carte préalable et le plan](PREP-01-PLAN.md) ont été établis avant l’écriture applicative.
+
+| Périmètre | Fichiers | Rôle |
+|---|---|---|
+| Modèles et copies | `essai-stitch-v5-famille/family-preparations.js` | Fonctions natives sur `st`, `save()` et `render()`, snapshots optimistes liés au contexte compte/foyer/epoch, validation et rollback |
+| Agenda | `essai-stitch-v5-famille/family-agenda.js` | Association dans le formulaire existant ; événement et copie enregistrés dans une transaction native ; suppression confirmée atomique |
+| Chargement natif | `essai-stitch-v5-famille/index.html` | Une inclusion du module PREP avant le chargeur natif existant |
+| E09 | `essai-stitch-v5-famille/family-modules.js` | Deux clés explicites dans le module Famille, version, CAS/reprise/réactivation et protections des données incompatibles |
+| Courses | `essai-stitch-v7/cuisine-list.js`, méthode `importRows` de `essai-stitch-v5-famille/family-v2.js` | Extension idempotente du writer natif ; reçu local atomique ou import familial déterministe, garde après hachage asynchrone |
+| Présentation | `essai-stitch-v7/preparations.js`, `preparations.css` | Vues, formulaires, dialogues nommés, listes calculées et navigation |
+| Composition | `family.js`, `family-engine.js`, `family-agenda-review.js` dans `essai-stitch-v7/` | Entrée Famille, routes et champ d’association transmis au writer Agenda |
+| Génération | `essai-stitch-v7/build-source.cjs`, ses quatre racines HTML | Inclusion des mêmes ressources locales dans les compositions natives |
+| Vérification | Nouveaux tests PREP, attentes explicites d’intégration, `tests/package.json`, `.github/workflows/dobby-stitch-v7.yml` | Campagne ciblée `test:prep` et preuves CI sur cette branche |
+
+La liste exhaustive avec empreintes des fichiers applicatifs et des tests est dans [source-fingerprints.json](evidence/prep01/source-fingerprints.json). Les writers de mémos E09, E02, Missions, Runes, le moteur Cuisine et le backend de simulation restent préservés. Le contrôle de fidélité soustrait uniquement la nouvelle fonction `addOnce`/son export et la méthode native `importRows` ; il continue d’épingler tous les autres octets de ces fichiers. Ces exceptions sont couvertes par des tests comportementaux.
+
+## Comportement livré
+
+- Famille → **Mes modèles** : état vide, tri alphabétique, création, ouverture, modification, annulation, duplication persistée avec nouvelles identités, suppression confirmée. Aucun compteur ou tri de fréquence inventé. Réorganisation explicite avec boutons Monter/Descendre accessibles.
+- Éléments : libellé, quantité facultative et unité ; saisie par formulaires, édition et suppression confirmée. Les textes utilisateur passent par le DOM textuel, jamais par interpolation HTML.
+- Agenda : section **Liste de préparation** dans le formulaire natif importé. Sélection d’un modèle réel ou aucune liste ; aperçu calculé. Aucune recommandation artificielle. Une nouvelle copie reçoit de nouveaux IDs d’items et utilise l’ID stable de l’événement comme identité de liste.
+- Événement existant : édition du titre/date conserve la copie et toutes les coches. Le changement ou la suppression du modèle ne modifie pas la copie. La suppression native d’événement supprime ses préparatifs, conserve les modèles et restaure les données si la sauvegarde échoue.
+- Préparatifs : titre/date/lieu issus de l’événement, compteur et progression calculés, cochage/décochage, éléments terminés en bas, ajout/édition/suppression, persistance après refresh, retour déterministe à la consultation de l’événement. Lien supprimé et version inconnue affichent une sortie utilisable.
+- Courses : jeton stable `prep:<eventId>:<itemId>`, reçu relu après écriture. Double clic, reprise, cache rechargé, suppression et archivage ne recréent pas l’achat. Des préparatifs différents portant le même libellé conservent leurs contributions distinctes. Le préparatif n’est jamais coché par cet envoi. Le libellé de succès distingue écrit local confirmé, attente de synchronisation et conflit.
+- Le header, le profil jaune, les préférences et le dock à cinq destinations viennent des composants DOBBY existants. Le Menu et les liens des anciennes listes ne sont pas reconstruits.
+
+Quantités : précision native Courses limitée à deux décimales et maximum 999999 ; un dépassement est refusé, sans arrondi silencieux. Limites de formulaire : nom 140 caractères, libellé 200, unité 40, 200 modèles/éléments maximum. Pas de nouvelle dépendance applicative, police/CDN/asset distant du ZIP.
+
+## E09 et conflits
+
+`familyPreparationTemplates`, `familyEventPreparations`, `familyPreparationsVersion:1` passent par le payload JSON existant du module Famille. Le client ajoute les deux collections à sa sérialisation et conserve le mécanisme de CAS et les sauvegardes natives. Aucune table, migration, RLS, RPC ou modification d’un service connecté.
+
+Les données reçues sont validées avant remplacement. Les versions locale/distante inconnues bloquent l’échange ; les champs inconnus compatibles sont conservés. Une ancienne copie distante privée des registres entraîne le conflit/rétablissement explicite existant. Le démarrage peut réhydrater les seules clés absentes depuis les métadonnées déjà acquittées ; une suppression locale explicite `[]` n’est pas rétablie automatiquement. La réactivation conserve les ajouts locaux compatibles ou expose un conflit, notamment lorsqu’un couple événement/préparatifs deviendrait orphelin. Elle n’introduit pas un nouveau moteur de fusion Agenda.
+
+## Vérifications et preuves
+
+Les commandes sont exécutées à la racine avec Node 24.19 et Chromium local, serveur statique `http://127.0.0.1:8765`. Les tests navigateur bloquent ou interceptent les services externes. [Commandes et résultats](evidence/prep01/verification.json), [journaux](evidence/prep01/logs/).
+
+| Vérification | Résultat final |
 |---|---|
-| Mes modèles | Registre réel `st.preparationTemplates`, état vide, tri alphabétique. Aucun usage inventé, modèle recommandé ou modèle démo injecté. |
-| Créer / modifier | Brouillon mémoire, champs nom/éléments/quantité/unité, ajout et édition en ligne sans `prompt`, retrait confirmé, flèches monter/descendre avec ordre persistant. Annuler ne sauvegarde rien. |
-| Dupliquer | Writer natif dédié dans le même registre : nouvel ID du modèle et de chaque item, copie profonde incluant les champs inconnus. Le modèle enregistré est la source de duplication. |
-| Agenda | Ajout des cartes radio « aucune liste » / modèles réellement enregistrés dans `#fa-native-form`. Validation, normalisation, ID et sauvegarde restent ceux de `fpEventForm`. Aucun second éditeur d’événement. |
-| Copie indépendante | `familyEvents[].preparation = {version:1, templateId, items}`. Création des IDs d’items à l’association. Garder le même modèle conserve exactement la copie et ses coches ; changer/retirer une association existante demande confirmation. La suppression d’un modèle conserve les copies existantes. |
-| Préparatifs | Titre et date actuels de l’événement, ajout/édition/suppression, cocher/décocher, groupe terminé après le groupe à préparer, progression calculée, retour explicite à l’événement. Aucun champ priorité/emplacement/document/urgence inventé. |
-| Courses | `DobbyCuisineList.addPreparation` appelle le writer E07 natif. Local : transaction `save()` dans `shopFinal`, reçu dans `shopFinal.imports`. Foyer : `grocery.importRows` et son cache/outbox IndexedDB existants. Token déterministe `prep-01|eventId|itemId`, conservé après retrait/archivage ; un rejeu ne remplace pas les quantités/unités ou modifications ultérieures. Le préparatif n’est jamais coché automatiquement. |
-| Accusé Courses | Message seulement après retour du write local/IndexedDB. En foyer, la synchronisation distante est explicitement distincte et suit le statut Courses existant. Les erreurs du writer remontent sans annonce de succès. |
-| Sérialisation E09 | Clé additive `preparationTemplates` dans le module Famille, protocole `preparationsVersion:1`, préparatifs embarqués dans les événements. Validation avant adoption, conservation des extensions inconnues, CAS et résolution de conflit E09 réutilisés. Aucun nouveau stockage métier ni API réseau. |
-| Clients anciens / conflit | Détection du retrait du protocole ou d’une copie d’événement. Copie locale conservée ; récupération explicite via E09, en préservant les champs distants de l’événement. Fusion à trois versions des registres à la réactivation. |
-| Compatibilité | `famLists` historique conservé sans modification ni nouvel accès Menu. Pas de changement Supabase, RLS, SQL, migrations, preview Famille publié ou branche Menu. |
+| Baseline au SHA imposé : native/core, fidélité transverse et writer mémo | 13/13 |
+| Baseline Agenda/Mémos | 320, 390 et 1440 px |
+| `npm run test:prep --prefix essai-stitch-v7/tests` | 50/50 tests Node ; parcours UI aux trois largeurs ; version inconnue ; parcours A/B |
+| Suite native Famille/Agenda/E09/identités, incluant les nouveaux tests | 232/232 |
+| Modèles Courses E07-P02 et disponibilité/archives | 20/20 |
+| E07-P02 partagé navigateur | Liste unique, quantités, achats réversibles, hors ligne/reprise et rejeu |
+| E01 navigateur | 390/1440 : cinq destinations, préférences, date/Agenda et absence de mutations de consultation |
+| Agenda/Mémos existants après intégration | 320/390/1440 : CRUD, IDs, provenance, brouillons, retours, persistance |
+| Génération canonique et CSS | Reconstruction reproductible ; ressources PREP locales |
+| Syntaxe, empreintes des références, `git diff --check` | Réussis |
 
-Le writer d’import Courses a reçu deux protections ciblées : création conditionnelle dans une transaction IndexedDB (un cache incomplet ne peut pas écraser une ligne déjà stockée), et recontrôle du foyer après calcul asynchrone de l’ID. Le reste de l’adaptateur E07 est identique à la base, après normalisation CRLF/LF ; tests de frontière dédiés.
+Le test A/B utilise deux contextes navigateur et le client natif, en simulant uniquement les frontières HTTP. Il vérifie les tableaux/IDs/quantités exacts, copie indépendante et coches, édition hors ligne suivie d’un rechargement complet/reconnexion, **un seul POST Courses accepté**, et un vrai conflit CAS avec conservation des deux copies après refresh. [Résultat structuré](evidence/prep01/sync-browser/result.json).
 
-## Fichiers
+Les tests ont été écrits et observés en échec avant correction : API absente, identité pendant le hachage, comptes/foyers périmés, versions inconnues, réactivation, valeurs distantes invalides, dialogue sans nom et lien supprimé. Les journaux RED importants sont conservés, avec uniquement les espaces de fin de ligne normalisés. Le contrôle de whitespace applicatif exclut le seul DESIGN.md immuable du ZIP, dont la ligne 138 contient déjà un espace final ; son empreinte originale reste préservée. Deux essais de la suite native lancés sans `DOBBY_TEST_ORIGIN` ont atteint `ERR_CONNECTION_REFUSED` sur le port par défaut 8893 dans les deux tests navigateur FAM ; la commande finale avec le serveur 8765 passe 232/232. Aucun échec de code préexistant n’est allégué et aucun échec final n’est laissé comme « connu ».
 
-- `essai-stitch-v5-famille/preparations.js` : validation, association, mutations du registre et des copies avec rollback `save()` et garde de version périmée.
-- `essai-stitch-v5-famille/index.html`, `family-agenda.js`, `family-modules.js`, `family-v2.js` : chargement et raccordement aux pipelines natifs Agenda / Famille E09 / Courses.
-- `essai-stitch-v7/preparations.js`, `preparations.css` : composants des quatre parcours et adaptation brun-or, Playfair Display / Literata locales, sans CDN ajouté.
-- `essai-stitch-v7/family.js`, `family-engine.js`, `family-agenda-review.js`, `famille.html`, `build-source.cjs`, `cuisine-list.js` : routes, formulaire unique, façades, générateur et action Courses.
-- `essai-stitch-v7/tests/prep-01*.{js,cjs,mjs}` et `essai-stitch-v5-famille/tests/helpers/modules-harness.mjs` : tests spécifiques et chargement du même validateur dans la fixture E09.
-- `.gitignore` : exclusion exacte de l’export temporaire de base `/.tmp/prep-base/` ; les autres modifications restent visibles.
-- `design/stitch-preparation-20261112/` et `docs/dobby-v7/evidence/prep-01/` : références et preuves.
+La campagne historique complète V7 n’est pas lancée : le périmètre modifie Famille/Agenda, l’import Courses et E09. Les contrôles ciblés ci-dessus couvrent ces frontières ; les autres modules restent protégés par les empreintes et leurs sources conservées.
 
-## Tests
+## Comparaison visuelle
 
-| Gate | Résultat et preuve |
-|---|---|
-| Tests ciblés finaux | **PASS 77/77**, [journal final](evidence/prep-01/final-after-duplicate-tests.txt). PREP, Agenda, Courses E07, Famille, permissions membres, mémos E09, conflits et reprise. |
-| Recette navigateur native | **PASS 36 contrôles**, [résultat](evidence/prep-01/browser-final-after-duplicate.json), script reproductible `essai-stitch-v7/tests/prep-01-browser.js`. Création, ordre sauvegardé, édition, copie, annulation, association, indépendance, coches/décoches, progression, re-navigation, suppression, double clic/rejeu Courses et conservation de `famLists`. |
-| Refresh navigateur | **PASS** : route préparatifs, deux items relus, une ligne Courses et quantité 2 relues, modèle et anciennes listes conservés. [Preuve de rechargement](evidence/prep-01/reload-result.txt). Les IDs diffèrent entre exécutions isolées successives. |
-| Sécurité texte saisi | **PASS** : chaîne `<img … onerror=…>` affichée comme texte, aucun élément HTML créé ; test dans le script navigateur. Pour les captures, la fixture a ensuite reçu un libellé TEST lisible. |
-| A/B E09 simulé | **PASS sur fixture seulement** : deux clients indépendants, modèle et coches, CAS conflictuel, redémarrage avec mutation en attente, récupération après client ancien et extensions inconnues. `realBackend:false`. |
-| Responsive | **PASS 12 parcours rendus**, quatre écrans aux viewports internes réels 320/390/1440 px, aucun débordement de document ni contrôle actif tronqué, header unique et cinq liens dock. [Mesures des contrôles actifs](evidence/prep-01/responsive-active-controls.json). |
-| `git diff --check` / syntaxe | **PASS**. |
-| Ancien test de hash FAM | **FAIL historique confirmé sur base ET branche** : 1/3 PASS, 2/3 FAIL, mêmes assertions et mêmes hashes CRLF. [Base](evidence/prep-01/base-historical-boundary.txt), [branche](evidence/prep-01/branch-historical-boundary.txt). Le test original est conservé. Les trois tests de frontière PREP normalisés LF passent et vérifient les ajouts explicitement autorisés. |
+Palette mahogany/or, Playfair Display/EB Garamond, hiérarchie, cartes et champs suivent le Stitch corrigé. Le chrome natif est conservé ; l’association réutilise la forme native de l’Agenda. Les actions d’édition et la réorganisation restent explicites et utilisables au clavier. Le contrôle de largeur vérifie l’absence de débordement à 320/390/1440 ; les formulaires et le bas du dialogue Agenda restent accessibles par défilement.
 
-Les deux assertions historiques sont `chat-engine.js` : attendu `ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd`, obtenu `6bc9c7e381d37ece7e284206f329ff801fb974d32822564742a8e19a4bc97cf1` ; bloc mémo E09 : attendu `56f0b224b0fcc0a764b398a7bf205ee5fd7da395b1f938d3316ec087ee7f08c8`, obtenu `4b1e43625dba1129c28e7fa9fcbd03dec13d5841b5c71455f1e17c8964e11bfa`. Comparaison sur export du SHA base avec les mêmes fins de ligne Windows (`core.autocrlf=true`). Aucune régression PREP dissimulée par une modification de ces attentes.
+| Panneau | Référence immuable | 320 | 390 | 1440 |
+|---|---|---|---|---|
+| Mes modèles | [Stitch](../../design/stitch-preparation-20261112/stitch_dobby_assistant_mobile_app/dobby_mes_listes_types/screen.png) | [Capture](evidence/prep01/browser/models-320.png) | [Capture](evidence/prep01/browser/models-390.png) | [Capture](evidence/prep01/browser/models-1440.png) |
+| Éditeur | [Stitch](../../design/stitch-preparation-20261112/stitch_dobby_assistant_mobile_app/dobby_modifier_une_liste_type/screen.png) | [Capture](evidence/prep01/browser/editor-320.png) | [Capture](evidence/prep01/browser/editor-390.png) | [Capture](evidence/prep01/browser/editor-1440.png) |
+| Association Agenda | [Stitch](../../design/stitch-preparation-20261112/stitch_dobby_assistant_mobile_app/dobby_agenda_association_liste/screen.png) | [Capture](evidence/prep01/browser/association-320.png) | [Capture](evidence/prep01/browser/association-390.png) | [Capture](evidence/prep01/browser/association-1440.png) |
+| Préparatifs | [Stitch](../../design/stitch-preparation-20261112/stitch_dobby_assistant_mobile_app/dobby_pr_paratifs_des_vacances/screen.png) | [Capture](evidence/prep01/browser/event-320.png) | [Capture](evidence/prep01/browser/event-390.png) | [Capture](evidence/prep01/browser/event-1440.png) |
 
-Commande des tests finaux : `node --test --test-isolation=none` avec les fichiers listés dans le journal (PREP, `e07-p02-model`, `e09-memo-writer`, `modules-flow`, `e06-sync`, `family-agenda`, `family-core`, `family-notes-sync`, `family-member-policy.test.mjs`). Le mode sans isolation de processus est nécessaire ici : le lancement de sous-processus Node/Chromium échoue avec `spawn EPERM`. Une première tentative du test navigateur membre `.cjs` a aussi révélé son module Playwright non résolu depuis V5 ; la suite de permissions `.mjs` et les parcours natifs ont bien été exécutés. L’essai interrompu reste dans `native-regressions.txt` ; le journal final est la référence.
+Les captures sont des fixtures explicitement nommées TEST. Le libellé HTML hostile affiché comme texte sert de preuve de rendu sûr. Il n’y a aucune donnée métier initiale PREP dans l’application. L’ergonomie mobile est vérifiée dans Chromium ; aucun clavier d’iPhone physique n’a été testé.
 
-## Captures
+## Revue indépendante et réserves
 
-Captures depuis le navigateur connecté, dans un contexte neuf `PREP-01-native-review`. Les seuls exemples ajoutés sont des fixtures `TEST — …` dans ce contexte, jamais des valeurs par défaut de l’app.
+Une revue complète indépendante et une revue visuelle en lecture seule ont été réalisées. Trois P2 ont été corrigés et couverts RED→GREEN : rétrogradation d’une version locale inconnue, préparatifs rendus orphelins lors d’une réactivation, et modèle distant contenant des éléments cochés. Les problèmes de lien supprimé, nom de dialogue et densité visuelle ont également été corrigés. [Compte rendu](evidence/prep01/independent-review.md).
 
-| Écran | 320 px | 390 px | 1440 px |
-|---|---|---|---|
-| Mes modèles | [PNG](evidence/prep-01/models-320.png) | [PNG](evidence/prep-01/models-390.png) | [PNG](evidence/prep-01/models-1440.png) |
-| Modifier | [PNG](evidence/prep-01/model-edit-320.png) | [PNG](evidence/prep-01/model-edit-390.png) | [PNG](evidence/prep-01/model-edit-1440.png) |
-| Association dans Agenda | [PNG](evidence/prep-01/agenda-320.png) | [PNG](evidence/prep-01/agenda-390.png) | [PNG](evidence/prep-01/agenda-1440.png) |
-| Préparatifs | [PNG](evidence/prep-01/preparations-320.png) | [PNG](evidence/prep-01/preparations-390.png) | [PNG](evidence/prep-01/preparations-1440.png) |
+- Aucune recette sur Supabase réel, deux appareils physiques ou comptes réels ; les résultats A/B ne prouvent pas un fonctionnement de production.
+- Le schéma JSON existant accepte ces champs dans les tests. L’état du serveur déployé, sa limite de payload et ses permissions n’ont pas été modifiés ni certifiés. Une réserve serveur doit être instruite séparément si l’environnement réel les refuse.
+- Un ancien client peut toujours écrire une copie distante dépourvue d’extensions. Le client PREP conserve les copies et bloque/rétablit explicitement ; aucune contrainte serveur nouvelle n’empêche l’ancien client d’écrire.
+- Les assets doivent avoir été chargés pour une navigation hors réseau ; la reprise testée concerne les données et la file native. La résolution humaine des conflits est couverte par les contrôles natifs de module, pas par une recette connectée réelle.
+- La fidélité est raisonnable, avec chrome natif, tri alphabétique et actions de réorganisation adaptées. Aucune prétention de comparaison pixel parfaite ou de nouvelle maquette desktop de référence.
 
-Le redimensionnement de la fenêtre du navigateur connecté a été refusé automatiquement. Alternative de vérification : app complète chargée dans un cadre de même origine dont le viewport interne mesuré est 320, 390 ou 1440 px. Les captures ciblent ce cadre et incluent le chrome natif. Ce contrôle ne constitue pas une recette sur appareil physique. Les anciennes mesures `responsive-final.json` incluent des jours de calendrier dans un défilement horizontal derrière la modale ; `responsive-active-controls.json` vérifie bien les contrôles actifs de la modale affichée.
+## Retour arrière
 
-## Réserves et livraison Git
+Avant intégration future, conserver la branche et ses preuves ; revenir au SHA parent dans une copie distincte permet de relire l’ancienne source. Ne pas réutiliser un ancien client pour écraser un foyer contenant des préparatifs. Après intégration future, privilégier un revert du commit applicatif avec conservation/export des registres et reçus, puis réévaluer E09 avant écriture distante. Aucun retour arrière n’a été exécuté ou prétendu testé sur un service réel. Aucun effet de production n’a été créé par cette mission.
 
-La synchronisation avec deux vrais comptes Supabase n’a pas été testée. Les fixtures A/B prouvent le client, pas l’acceptation serveur de l’extension JSON. Si le serveur refuse ces champs, le code conserve les données et l’état en attente/conflit ; aucune migration ou modification RLS n’est autorisée ou effectuée. Aucun succès distant n’est annoncé sur la seule base du write local.
-
-Le contrôle automatique a refusé le nettoyage récursif du répertoire temporaire de comparaison (« blocked by policy »). L’export immuable `.tmp/prep-base/` est conservé localement et exclu précisément par `.gitignore` ; aucun travail d’un autre worktree n’est modifié.
-
-**Git — BLOQUÉ par les permissions de cet environnement.** La branche courante a été vérifiée : `feat/dobby-v7-preparations-20261112`. La tentative `git add` des seuls chemins de la mission échoue :
-
-```text
-fatal: Unable to create 'C:/Users/dubru/Dobby-E04-Runes-20261110/.git/worktrees/Dobby-V7-PREP-01-20261112/index.lock': Permission denied
-```
-
-Ce chemin est celui des métadonnées Git du worktree, hors de la racine inscriptible de la session. Aucun contournement ou changement de droits effectué. **Aucun commit créé, aucun push tenté, worktree non propre** : code, références, rapport et preuves restent présents, non commis, dans le worktree autorisé. La condition DONE « commits isolés / worktree propre / push conditionnel » reste donc non satisfaite. Les gates fonctionnels locaux ci-dessus sont PASS, avec les réserves explicites de navigateur et serveur.
-
-Un patch de secours limité aux sources et tests est fourni dans [source-changes.patch](evidence/prep-01/source-changes.patch). Les références et preuves volumineuses restent dans leurs dossiers. Aucune fusion, publication ou mise en ligne.
+**Aucune fusion, publication, migration ou modification Supabase.** La seule livraison distante prévue est le push de la branche dédiée après vérification.

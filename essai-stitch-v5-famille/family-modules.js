@@ -9,7 +9,7 @@ const DEFINITIONS = [
   { id:'recipes', title:'Recettes et Thermomix', keys:['customRecipes','tmAdaptations'], pages:['recipes'] },
   { id:'missions', title:'Missions familiales', keys:['autoTasks','manualMissions','runeCredits'], pages:['missions'] },
   { id:'house', title:'Maison et entretiens', keys:['houseItems','houseLogs'], pages:['house'] },
-  { id:'family', title:'Famille, événements et mémos', keys:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes','preparationTemplates'], pages:['family'] },
+  { id:'family', title:'Famille, événements et mémos', keys:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes','familyPreparationTemplates','familyEventPreparations'], pages:['family'] },
   { id:'contracts', title:'Documents et contrats du foyer', keys:[], pages:['documents'] }
 ];
 const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));
@@ -30,11 +30,16 @@ function pick(id) {
   }
   const definition = byId.get(id);
   if (!definition) throw Error('Module inconnu');
+  if(id==='family'&&!preparationLocalCompatible())throw Error('Version locale des préparations familiales incompatible. Données conservées, synchronisation bloquée.');
   const data = id==='family'?JSON.parse(states.family?.synced||'{}'):{};
   for (const key of definition.keys) {
     if (st[key] !== undefined) data[key] = JSON.parse(JSON.stringify(st[key]));
   }
-  if(id==='family'){data.sharedFamilyNotes=JSON.parse(JSON.stringify(st.sharedFamilyNotes||[]));data.familyNotesVersion=1;if(st.preparationTemplates!==undefined||(st.familyEvents||[]).some(e=>e.preparation!==undefined)||data.preparationsVersion===1){data.preparationTemplates=JSON.parse(JSON.stringify(st.preparationTemplates||[]));data.preparationsVersion=1;}}
+  if(id==='family'){
+    data.sharedFamilyNotes=JSON.parse(JSON.stringify(st.sharedFamilyNotes||[]));data.familyNotesVersion=1;
+    for(const key of preparationKeys)data[key]=JSON.parse(JSON.stringify(st[key]!==undefined?st[key]:data[key]??[]));
+    data.familyPreparationsVersion=1;
+  }
   if(id==='missions'){data.runeCredits=st.runeCredits||[];data.runeLedgerVersion=missionVersion(data);}
   return data;
 }
@@ -79,8 +84,8 @@ function retainedCredits(payload){missionPayload(payload);return runes.mergeCred
 function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manualMissions:payload.manualMissions||[]};}
 function pendingRunes(){if(runesV2Available()){try{return outstandingRequests(st.runeCredits||[]).length>0||Boolean(states.missions?.pendingOperation);}catch{return true;}}if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const key=c=>c?.eventId||c?.missionId,ids=new Set((st.runeCredits||[]).map(key));return(st.runeRequests||[]).some(c=>!c||!ids.has(key(c)));}
 function assertLocalRewardSharing(){if(runesV2Available())return;if(states.missions?.runeProtocol===2)throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
-function initialPayload(id){const payload=pick(id);if(id==='missions'&&runesV2Available())return {...missionPayloadV2(payload),runeRequests:runes.normalizeRequests(st.runeRequests||[])};if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
-function synchronized(id,revision,payload){return{active:true,revision,synced:moduleDigest(id,id==='family'?familySnapshot(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:payload.familyNotesVersion===1}:{})};}
+function initialPayload(id){const payload=pick(id);if(id==='family')return familySnapshot(payload);if(id==='missions'&&runesV2Available())return {...missionPayloadV2(payload),runeRequests:runes.normalizeRequests(st.runeRequests||[])};if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
+function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:moduleDigest(id,id==='family'?familySnapshot(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
 function applyCredits(credits){const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
 function verifyProtocol(state,remote){
@@ -117,8 +122,47 @@ async function syncMissions(state,remote){
 
 // E09: additive family registry. Keep unknown extension fields, CAS and the
 // existing explicit whole-module conflict chooser. Never include familyNotes.
+const preparationKeys=['familyPreparationTemplates','familyEventPreparations'];
+const preparationLocalCompatible=()=>st.familyPreparationsVersion===undefined||st.familyPreparationsVersion===1;
+const preparationId=value=>typeof value==='string'&&value.trim()!==''&&value.length<=200;
+const preparationText=(value,max)=>typeof value==='string'&&value.length<=max;
+function preparationItems(items,template=false){
+ if(!Array.isArray(items)||items.length>200)throw Error('Éléments de préparation invalides');
+ const ids=new Set();for(const item of items){
+  if(!item||typeof item!=='object'||Array.isArray(item)||!preparationId(item.id)||ids.has(item.id)||!preparationText(item.label,200)||!item.label.trim()||!preparationText(item.unit,40)||typeof item.done!=='boolean'||template&&item.done!==false||item.qty!==null&&(typeof item.qty!=='number'||!Number.isFinite(item.qty)||item.qty<0||item.qty>999999||Number(item.qty.toFixed(2))!==item.qty))throw Error('Élément de préparation invalide');
+  ids.add(item.id);
+ }
+}
+function preparationPayload(payload){
+ const version=payload.familyPreparationsVersion;
+ if(version!==undefined&&version!==1)throw Error('Version des préparations familiales incompatible');
+ if(version!==1&&preparationKeys.some(key=>payload[key]!==undefined)||version===1&&preparationKeys.some(key=>!Array.isArray(payload[key])))throw Error('Protocole des préparations familiales incomplet');
+ for(const key of preparationKeys){
+  const rows=payload[key]??[];if(rows.length>200)throw Error('Registre des préparations familiales trop volumineux');
+  const ids=new Set();for(const row of rows){
+   if(!row||typeof row!=='object'||Array.isArray(row)||row.version!==1||!preparationId(row.id)||ids.has(row.id))throw Error('Préparation familiale invalide');
+   if(key==='familyPreparationTemplates'&&(!preparationText(row.name,140)||!row.name.trim())||key==='familyEventPreparations'&&(row.id!==row.eventId||!preparationId(row.eventId)||!preparationId(row.templateId)))throw Error('Identité de préparation familiale invalide');
+   preparationItems(row.items,key==='familyPreparationTemplates');ids.add(row.id);
+  }
+ }
+}
+function hydratePreparationState(){
+ if(!preparationLocalCompatible())return;
+ const state=states.family;if(!state?.synced)return;
+ const payload=JSON.parse(state.synced);if(payload.familyPreparationsVersion!==1)return;
+ preparationPayload(payload);
+ // Older native/preview initializers can seed an acknowledged module without
+ // copying its newer keys into st. Absence must not become a pending deletion.
+ const missing=preparationKeys.filter(key=>st[key]===undefined),previousProtocol=state.preparationsProtocol,previousApplying=applying;
+ applying=true;
+ try{
+  if(state.preparationsProtocol===undefined)state.preparationsProtocol=true;
+  for(const key of missing)st[key]=JSON.parse(JSON.stringify(payload[key]));
+  if(missing.length)save();
+ }catch(error){for(const key of missing)delete st[key];if(previousProtocol===undefined)delete state.preparationsProtocol;else state.preparationsProtocol=previousProtocol;throw error;}
+ finally{applying=previousApplying;}
+}
 function familyPayload(payload){
- window.DobbyPreparations.validate(payload);
  if(!payload||typeof payload!=='object'||Array.isArray(payload))throw Error('Module Famille invalide');
  for(const key of byId.get('family').keys)if(payload[key]!==undefined&&!Array.isArray(payload[key]))throw Error('Registre familial invalide : '+key);
  if(payload.familyNotesVersion!==undefined&&payload.familyNotesVersion!==1)throw Error('Version des mémos familiaux incompatible');
@@ -126,47 +170,54 @@ function familyPayload(payload){
  const ids=new Set();for(const row of payload.sharedFamilyNotes||[]){
   if(!row||typeof row.id!=='string'||!row.id||ids.has(row.id)||typeof row.title!=='string'||!row.title.trim()||row.title.length>140||typeof row.body!=='string'||!row.body.trim()||row.body.length>10000||row.tags!==undefined&&(typeof row.tags!=='string'||row.tags.length>300))throw Error('Mémo familial invalide');ids.add(row.id);
  }
+ preparationPayload(payload);
  return payload;
 }
-function familySnapshot(payload){familyPayload(payload);return{...payload,sharedFamilyNotes:payload.sharedFamilyNotes||[],familyNotesVersion:1};}
+function familySnapshot(payload){familyPayload(payload);return{...payload,sharedFamilyNotes:payload.sharedFamilyNotes||[],familyNotesVersion:1,familyPreparationTemplates:payload.familyPreparationTemplates??[],familyEventPreparations:payload.familyEventPreparations??[],familyPreparationsVersion:1};}
+function familyRegistryMissing(state,payload){return Boolean(state?.familyProtocol&&payload.familyNotesVersion!==1||state?.preparationsProtocol&&payload.familyPreparationsVersion!==1);}
 function verifyFamilyProtocol(state,payload){
  familyPayload(payload);
- const previous=JSON.parse(state?.synced||'{}');if(previous.preparationsVersion===1&&payload.preparationsVersion!==1)throw Error('Un ancien client a retiré les préparatifs. Copie locale conservée ; résolution explicite nécessaire.');
- for(const event of previous.familyEvents||[])if(event.preparation&&(payload.familyEvents||[]).some(next=>next.id===event.id&&!Object.hasOwn(next,'preparation')))throw Error('Un ancien client a retiré une copie de préparatifs. Copie locale conservée.');
- if(state?.familyProtocol&&payload.familyNotesVersion!==1)throw Error('Un ancien client a retiré le registre des mémos. Copie locale conservée ; rétablissement explicite nécessaire.');
+ if(familyRegistryMissing(state,payload))throw Error('Un ancien client a retiré un registre familial. Copie locale conservée ; rétablissement explicite nécessaire.');
 }
 function joiningFamily(payload){
- const next=familySnapshot(payload),base=JSON.parse(states.family?.synced||'{}').sharedFamilyNotes||[];
- const local=new Map((st.sharedFamilyNotes||[]).map(row=>[row.id,row])),remote=new Map(next.sharedFamilyNotes.map(row=>[row.id,row])),prior=new Map(base.map(row=>[row.id,row]));
- const rows=[];let conflict=null;
- if(states.family?.familyProtocol&&payload.familyNotesVersion!==1)return{payload:{...next,sharedFamilyNotes:st.sharedFamilyNotes||[]},conflict:'protocol'};
- for(const id of new Set([...local.keys(),...remote.keys(),...prior.keys()])){
-  const here=local.get(id),there=remote.get(id),before=prior.get(id),changed=moduleDigest('family',here)!==moduleDigest('family',before),remoteChanged=moduleDigest('family',there)!==moduleDigest('family',before);
-  if(changed&&remoteChanged&&moduleDigest('family',here)!==moduleDigest('family',there))conflict='edit';
-  const row=changed?here:there;if(row)rows.push(row);
+ const next=familySnapshot(payload),base=JSON.parse(states.family?.synced||'{}'),keys=['sharedFamilyNotes',...preparationKeys];let conflict=null;
+ if(familyRegistryMissing(states.family,payload)){
+  for(const key of keys)next[key]=st[key]??[];
+  return{payload:next,conflict:'protocol'};
  }
- const merged={...next,sharedFamilyNotes:rows};
- if(st.preparationTemplates!==undefined||next.preparationsVersion===1){
-  for(const key of ['preparationTemplates','familyEvents']){
-   const baseRows=JSON.parse(states.family?.synced||'{}')[key]||[],here=new Map((st[key]||[]).map(r=>[r.id,r])),there=new Map((next[key]||[]).map(r=>[r.id,r])),prior=new Map(baseRows.map(r=>[r.id,r]));
-   merged[key]=[];for(const id of new Set([...here.keys(),...there.keys(),...prior.keys()])){const a=here.get(id),b=there.get(id),old=prior.get(id),changed=moduleDigest('family',a)!==moduleDigest('family',old),remoteChanged=moduleDigest('family',b)!==moduleDigest('family',old);if(changed&&remoteChanged&&moduleDigest('family',a)!==moduleDigest('family',b))conflict='edit';const row=changed?a:b;if(row)merged[key].push(row);}
+ for(const key of keys){
+  const local=new Map((st[key]??[]).map(row=>[row.id,row])),remote=new Map(next[key].map(row=>[row.id,row])),prior=new Map((base[key]??[]).map(row=>[row.id,row])),rows=[];
+  for(const id of new Set([...local.keys(),...remote.keys(),...prior.keys()])){
+   const here=local.get(id),there=remote.get(id),before=prior.get(id),changed=moduleDigest('family',here)!==moduleDigest('family',before),remoteChanged=moduleDigest('family',there)!==moduleDigest('family',before);
+   if(changed&&remoteChanged&&moduleDigest('family',here)!==moduleDigest('family',there))conflict='edit';
+   const row=changed?here:there;if(row)rows.push(row);
   }
-  merged.preparationsVersion=1;
+  next[key]=rows;
  }
- return{payload:merged,conflict};
+ // Keep a newly created or edited local snapshot with its local event until
+ // the user chooses a copy. Ordinary remote event metadata can still refresh
+ // an unchanged local event with the same stable ID.
+ const localEvents=new Map((st.familyEvents||[]).map(row=>[row.id,row])),incomingEvents=new Map((next.familyEvents||st.familyEvents||[]).map(row=>[row.id,row])),priorEvents=new Map((base.familyEvents||[]).map(row=>[row.id,row])),priorPreparations=new Map((base.familyEventPreparations||[]).map(row=>[row.id,row]));
+ for(const preparation of st.familyEventPreparations||[]){
+  if(moduleDigest('family',preparation)===moduleDigest('family',priorPreparations.get(preparation.id)))continue;
+  const localEvent=localEvents.get(preparation.eventId),incomingEvent=incomingEvents.get(preparation.eventId),eventChanged=moduleDigest('family',localEvent)!==moduleDigest('family',priorEvents.get(preparation.eventId));
+  if(localEvent&&(!incomingEvent||eventChanged&&moduleDigest('family',localEvent)!==moduleDigest('family',incomingEvent))){
+   next.familyEvents=st.familyEvents;next.familyEventPreparations=st.familyEventPreparations;conflict='edit';break;
+  }
+ }
+ return{payload:next,conflict};
 }
 function joiningState(id,revision,payload,issue,remote){
  const state=synchronized(id,revision,payload);
- if(id==='family'&&issue){state.conflict={remote,...(issue==='protocol'?{familyProtocol:true}:{})};if(issue==='protocol')state.familyProtocol=true;}
+ if(id==='family'&&issue){state.conflict={remote,...(issue==='protocol'?{familyProtocol:true}:{})};if(issue==='protocol'){state.familyProtocol=states.family?.familyProtocol||state.familyProtocol;state.preparationsProtocol=states.family?.preparationsProtocol||state.preparationsProtocol;}}
  return state;
 }
 async function restoredFamily(state,remote){
- familyPayload(remote.payload);if(remote.payload.familyNotesVersion!==1)return;
- try{verifyFamilyProtocol(state,remote.payload);}catch(error){return familyConflict(state,remote,error);}
+ familyPayload(remote.payload);if(familyRegistryMissing(state,remote.payload))return;
  // A peer restored the registry. Keep differing local content behind the same
  // explicit chooser as ordinary concurrent edits; never strand this device.
  const incoming=familySnapshot({...JSON.parse(state.synced||'{}'),...remote.payload});
- if(moduleDigest('family',pick('family'))===moduleDigest('family',incoming))Object.assign(state,synchronized('family',Number(remote.revision),incoming));
+ if(moduleDigest('family',pick('family'))===moduleDigest('family',incoming))Object.assign(state,synchronized('family',Number(remote.revision),incoming,remote.payload));
  else{state.familyProtocol=true;state.conflict={remote};}
  await persist();
 }
@@ -190,9 +241,9 @@ async function syncFamily(state,remote){
  const incoming=familySnapshot({...base,...remote.payload});
  if(revision!==state.revision){
   if(localJson!==state.synced)return familyConflict(state,remote);
-  applyShared('family',incoming);Object.assign(state,synchronized('family',revision,incoming));await persist();return;
+  applyShared('family',incoming);Object.assign(state,synchronized('family',revision,incoming,remote.payload));await persist();return;
  }
- if(localJson===state.synced&&remote.payload.familyNotesVersion===1)return;
+ if(localJson===state.synced&&remote.payload.familyNotesVersion===1&&remote.payload.familyPreparationsVersion===1)return;
  // Preserve remote fields an earlier client could not know, plus absent fields
  // from old versions. Current client only replaces its explicit family keys.
  return writeFamily(state,remote,{...remote.payload,...local},localJson);
@@ -200,19 +251,13 @@ async function syncFamily(state,remote){
 async function recoverFamily(){
  const state=states.family;if(!state?.conflict?.familyProtocol)throw Error('Aucun registre à rétablir');
  const remote=await readRow('family');if(!remote)throw Error('Module Famille inaccessible');familyPayload(remote.payload);
- const remembered=JSON.parse(state.synced||'{}'),local=pick('family');
- const missingPreparation=remembered.preparationsVersion===1&&(remote.payload.preparationsVersion!==1||(remembered.familyEvents||[]).some(e=>e.preparation&&(remote.payload.familyEvents||[]).some(next=>next.id===e.id&&!Object.hasOwn(next,'preparation'))));
- if(missingPreparation){
-  if(!confirm('Rétablir les modèles et préparatifs conservés sur cet appareil ? Les autres champs actuels du foyer seront conservés. Mettez à jour les anciens clients.'))return;
-  backupLocal('family');const localSnapshot=moduleDigest('family',local),events=new Map((st.familyEvents||[]).map(e=>[e.id,e]));
-  const desired={...remote.payload,preparationsVersion:1,preparationTemplates:st.preparationTemplates||[],familyEvents:(remote.payload.familyEvents||[]).map(e=>events.get(e.id)?.preparation&&!Object.hasOwn(e,'preparation')?{...e,preparation:events.get(e.id).preparation}:e)};
-  if(remote.payload.familyNotesVersion!==1){desired.sharedFamilyNotes=st.sharedFamilyNotes||[];desired.familyNotesVersion=1;}
-  return writeFamily(state,remote,desired,localSnapshot);
- }
- if(remote.payload.familyNotesVersion===1)return restoredFamily(state,remote);
- if(!confirm('Rétablir les mémos conservés sur cet appareil ? Les autres données actuelles du foyer seront conservées. Mettez à jour tous les appareils avant de continuer.'))return;
+ if(!familyRegistryMissing(state,remote.payload))return restoredFamily(state,remote);
+ if(!confirm('Rétablir les registres familiaux conservés sur cet appareil ? Les autres données actuelles du foyer seront conservées. Mettez à jour tous les appareils avant de continuer.'))return;
  backupLocal('family');const localSnapshot=moduleDigest('family',pick('family'));
- await writeFamily(state,remote,{...remote.payload,sharedFamilyNotes:st.sharedFamilyNotes||[],familyNotesVersion:1},localSnapshot);
+ const desired={...remote.payload};
+ if(remote.payload.familyNotesVersion!==1){desired.sharedFamilyNotes=st.sharedFamilyNotes||[];desired.familyNotesVersion=1;}
+ if(remote.payload.familyPreparationsVersion!==1){for(const key of preparationKeys)desired[key]=st[key]??[];desired.familyPreparationsVersion=1;}
+ await writeFamily(state,remote,desired,localSnapshot);
 }
 
 // V2 uses the existing Missions payload and native ledger. Only the server can
@@ -663,7 +708,7 @@ async function start() {
   if(changed){contextGeneration++;runeCapability=null;}
   ctx = c; checked = false; backendReady = false; lastError = '';
   const generation=contextGeneration, startToken=liveContextToken();
-  if (changed){const restored=await api.meta(storageKey())||{};if(generation!==contextGeneration||startToken!==liveContextToken())return;states=restored;}
+  if (changed){const restored=await api.meta(storageKey())||{};if(generation!==contextGeneration||startToken!==liveContextToken())return;states=restored;hydratePreparationState();}
   runes=await window.DobbyRunesReady;if(generation!==contextGeneration||startToken!==liveContextToken())return;if(!runes)throw Error('Règles de runes indisponibles');
   if(states.missions?.synced)states.missions.synced=moduleDigest('missions',JSON.parse(states.missions.synced));
   if(states.missions?.active&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}
@@ -705,6 +750,7 @@ function reset() {
 function stateLabel(def) {
   if (!ctx) return api.getContext() ? 'Initialisation du foyer' : 'Foyer non connecté';
   if (!backendReady) return checked ? 'Données locales (non synchronisées)' : 'Vérification en cours';
+  if(def.id==='family'&&!preparationLocalCompatible())return 'Version locale des préparations incompatible — données conservées';
   if(def.id==='missions'){try{runes.normalizeCredits(st.runeCredits||[]);runes.normalizeRequests(st.runeRequests||[]);}catch{return 'Historique de runes à vérifier';}if(!runesV2Available()&&(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined))))return 'Partage des nouvelles récompenses bloqué — validation serveur nécessaire';}
   const info = states[def.id];
   if(def.id==='missions'&&(info?.conflict?.legacyUnversioned||info?.conflict?.legacyConverted))return 'Ancien registre : reprise explicite requise, données conservées';
@@ -737,7 +783,7 @@ function html() {
     else if (backendReady && ctx && info?.active) {
       actions = '<button type="button" data-fm-action="refresh" data-module="' + def.id + '">Synchroniser</button>' +
         '<button type="button" data-fm-action="disable" data-module="' + def.id + '">Garder local seulement</button>';
-      if (def.id==='family'&&info.conflict?.familyProtocol) actions += '<p>Un ancien client a retiré le registre. Les registres locaux sont conservés.</p><button type="button" data-fm-action="family-recover" data-module="family">Rétablir les registres conservés</button>';
+      if (def.id==='family'&&info.conflict?.familyProtocol) actions += '<p>Un registre familial est incompatible ou absent. Les mémos et préparations locaux sont conservés.</p><button type="button" data-fm-action="family-recover" data-module="family">Rétablir les registres conservés</button>';
       else if (info.conflict) actions +=
         '<div class="fv2-conflict">Deux versions différentes ont été détectées. Aucune n’a été écrasée.' +
         '<button type="button" data-fm-action="server" data-module="' + def.id + '">Conserver la version du foyer</button>' +
@@ -967,7 +1013,7 @@ async function sync() {
 }
 function onSave() {
   if (!ctx || !backendReady || applying || inFlight || !DEFINITIONS.some(d=>
-    states[d.id]?.active && !states[d.id].conflict && (moduleDigest(d.id,pick(d.id)) !== states[d.id].synced || d.id==='missions'&&pendingRunes()))) return;
+    states[d.id]?.active && !states[d.id].conflict && (d.id!=='family'||preparationLocalCompatible()) && (moduleDigest(d.id,pick(d.id)) !== states[d.id].synced || d.id==='missions'&&pendingRunes()))) return;
   if (timer) clearTimeout(timer);
   timer = setTimeout(() => { timer = null; void sync(); }, 1500);
 }
@@ -981,13 +1027,13 @@ async function resolve(id, preference) {
     backupLocal(id);if(preference==='server')applyShared(id,remote.payload);else applyCredits(credits);
     Object.assign(state,synchronized(id,Number(remote.revision),remote.payload));await persist();await sync();api.repaint();api.openModal();return;
   }
-  if(id==='family'&&state?.conflict?.familyProtocol)throw Error('Registre des mémos retiré par un ancien client : utilisez Rétablir les mémos conservés.');
+  if(id==='family'&&state?.conflict?.familyProtocol)throw Error('Registre familial incompatible ou retiré : utilisez Rétablir les registres conservés après mise à jour des appareils.');
   const remote = id==='family'?await readRow(id):state?.conflict?.remote || await readRow(id);
   if(id==='family'){verifyFamilyProtocol(state,remote?.payload);backupLocal(id);}
   if (!remote) throw Error('Version familiale inaccessible');
   if(id==='family'&&preference==='server'){
     const incoming=familySnapshot({...JSON.parse(state.synced||'{}'),...remote.payload});
-    applyShared(id,incoming);Object.assign(state,synchronized(id,Number(remote.revision),incoming));await persist();await sync();api.repaint();api.openModal();return;
+    applyShared(id,incoming);Object.assign(state,synchronized(id,Number(remote.revision),incoming,remote.payload));await persist();await sync();api.repaint();api.openModal();return;
   }
   if (preference === 'server') {
     backupLocal(id);

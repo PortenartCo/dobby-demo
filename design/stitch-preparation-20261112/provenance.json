@@ -1,0 +1,45 @@
+{
+  "receivedArchive": "DOBBY_Stitch_Listes_Preparation_Corrige.zip",
+  "requestedArchive": "stitch_dobby_assistant_mobile_app (15).zip",
+  "sha256": "9f406b2d93b82624f564e7da0a459834cb5a1730890b66aa41b57f8749a87ed6",
+  "base": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "usage": "Immutable visual references only; no prototype scripts loaded by application",
+  "files": [
+    {
+      "path": "stitch_dobby_assistant_mobile_app/apothecary_curiosities/DESIGN.md",
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_agenda_association_liste/code.html",
+      "sha256": "b8dcb2b0cd51f8ff56495022100d920538acbb7e539b2a4b43ecb074e4b44484"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_agenda_association_liste/screen.png",
+      "sha256": "ed0dba85b3b8c03d624b27586f76e3cc8ab6cf3bd108695f4b4c56a375adf743"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_mes_listes_types/code.html",
+      "sha256": "b083d015832a6f1468c060b0b27f9a6357f47b21203cfd697d042286d7319965"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_mes_listes_types/screen.png",
+      "sha256": "7296e4ea962f97fe1776dacde538022c657d8ee4fd76b4640d3ea69cd1765416"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_modifier_une_liste_type/code.html",
+      "sha256": "7761242fe93d4b8c637c46b2510f4b646b542523b0352f9fb09ef471233e9d55"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_modifier_une_liste_type/screen.png",
+      "sha256": "27f263959e656532de5fd3a88538ac469e17e4b118fdd0fa1154238f71db00ce"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_pr_paratifs_des_vacances/code.html",
+      "sha256": "85dc1b03ebb38fe8ca40b0ce36f619ed7a2f58d3c54ef24e42a665c507f7a875"
+    },
+    {
+      "path": "stitch_dobby_assistant_mobile_app/dobby_pr_paratifs_des_vacances/screen.png",
+      "sha256": "52466231850a58e98b3e440159654c2699c0bb070275e104904d615cb28eb5a1"
+    }
+  ]
+}

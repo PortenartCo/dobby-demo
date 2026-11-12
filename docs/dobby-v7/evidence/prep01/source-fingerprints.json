@@ -1,0 +1,109 @@
+{
+  "base": "5b764ef367553e9945fb72a6b563b55adc41e040",
+  "files": [
+    {
+      "path": ".github/workflows/dobby-stitch-v7.yml",
+      "sha256": "035642d1465dd8f2d0f406e28354641bbd20d262729021944c11855f4aaf5ed2"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-agenda.js",
+      "sha256": "21982220fe46f67dee9dcffca6b89809cead2e2ac05456df9987f9881d656994"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "sha256": "4609948cce404335580dd3e76f2f2a9b2564d795325d348e6c517c64b1ba9254"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-preparations.js",
+      "sha256": "6549f20f83605dad800276f9ccc8fe4780b875436ab65c45b18f658b030000a4"
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "sha256": "05f4ffd7fcd7637bac3e207a78be2060ac3906d627dcf137aa79c72a591521e9"
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "sha256": "489a264e0d021927a4f3d2db73691716865015092d4b64fa6335e41fcdf2370d"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/integration.test.mjs",
+      "sha256": "5103c955ab41c5e885eb500006ba93ced3f449dee52a7b9cc8f361b376fe4be2"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/prep-writer.test.cjs",
+      "sha256": "83ebf372d4173b6cf86e830bf075f627a19ab6d382c87cc423d1e52b6af76865"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/preparation-sync.test.cjs",
+      "sha256": "cc1f28c8c555c54d4d9afa18cf3c599d5fa5ef31fbd15874c791879653cdbac0"
+    },
+    {
+      "path": "essai-stitch-v7/build-source.cjs",
+      "sha256": "9fcd4a1e72e75d0d64536f722e54666b1ec0f0c488ca6ef1308ed925db3ef2e6"
+    },
+    {
+      "path": "essai-stitch-v7/cuisine-list.js",
+      "sha256": "6d9f3e974dbea948341dea9c0dbb9317878357bb687860b8f12126af003f7bc0"
+    },
+    {
+      "path": "essai-stitch-v7/famille.html",
+      "sha256": "18d166b195994c0aa78eec22cff96134561b179cf1321a86b143ae2614d398b0"
+    },
+    {
+      "path": "essai-stitch-v7/family-agenda-review.js",
+      "sha256": "064eadd062276ab819f11eb9042a968ca0be88120abc4a65cac0ebee25ece4f2"
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "sha256": "55b6801dfb0c8b816dcc99b08e458ccd823425816687ace2bfec171db9169e52"
+    },
+    {
+      "path": "essai-stitch-v7/family.js",
+      "sha256": "4209535344ced00b1d08df2684077a5286e16944a3abfdbb88bf1d24abfca542"
+    },
+    {
+      "path": "essai-stitch-v7/index.html",
+      "sha256": "3c3524fc55f9d8ce76824ce3f44b57d1b8338c7eb219a899279b2999033bb3b8"
+    },
+    {
+      "path": "essai-stitch-v7/missions.html",
+      "sha256": "16e229cc1329f9d7163a289b8d36290b87b3f5e5d06617364fa763a8613f18cf"
+    },
+    {
+      "path": "essai-stitch-v7/preparations.css",
+      "sha256": "39106b7e0cab9cca2e97e8200a75a07795d2ad85a35a7124f6bfc8b79b748d06"
+    },
+    {
+      "path": "essai-stitch-v7/preparations.js",
+      "sha256": "bed0e757e132d7c29d75a7e1d87c30e0102e97d6dd1ea654921a03c1b4c5274e"
+    },
+    {
+      "path": "essai-stitch-v7/tests/fam-integration-transverse.test.cjs",
+      "sha256": "eb1af927d2b331db0a641bf3bb874095c15acffe1879cdccf50e22d98f71c467"
+    },
+    {
+      "path": "essai-stitch-v7/tests/package.json",
+      "sha256": "7c191326c7c7da6d4829547cea8ea7a8bce1240bd7037384696b0d9a6aba45e8"
+    },
+    {
+      "path": "essai-stitch-v7/tests/prep-courses.test.cjs",
+      "sha256": "6a92ba9ada4a6f822b7534f4ca5c611eabfab988d37da76ed426a9a480793a20"
+    },
+    {
+      "path": "essai-stitch-v7/tests/prep-invalid.cjs",
+      "sha256": "8a93fb7530d8b0fdacee4a461d93c4a7cf04ce34980cc1795e4221482249bb5d"
+    },
+    {
+      "path": "essai-stitch-v7/tests/prep-sync.cjs",
+      "sha256": "7c123cf8d31989dfbc1033b0d2a557d3d4387220578fbecc811b4b327076adba"
+    },
+    {
+      "path": "essai-stitch-v7/tests/prep-ui.cjs",
+      "sha256": "e54af5849aae1c0ba460703d56d48a755356db066a6ca9531e640c86e2e45d8d"
+    },
+    {
+      "path": "essai-stitch-v7/traverse.html",
+      "sha256": "bd9dfb651cb19699e42068e626d64bb6029068b456e12a622c2cd4523df49907"
+    }
+  ]
+}

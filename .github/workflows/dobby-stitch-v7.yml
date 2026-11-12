@@ -198,6 +198,19 @@ jobs:
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/runes-history.cjs
           DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ DOBBY_GLOBAL_EVIDENCE=docs/dobby-v7/evidence/global-review-20261112/ci-current CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
           DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
+      - name: PREP-01 native writers and isolated browser journeys
+        if: github.ref_name == 'feat/dobby-v7-preparations-20261112' || github.head_ref == 'feat/dobby-v7-preparations-20261112'
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8871
+        run: |
+          python3 -m http.server 8871 --bind 127.0.0.1 > /tmp/dobby-prep-http.log 2>&1 &
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" npm run test:prep --prefix essai-stitch-v7/tests
       - name: Keep current global review evidence
         if: always() && steps.historical-reuse.outputs.reusable == 'true'
         uses: actions/upload-artifact@v4

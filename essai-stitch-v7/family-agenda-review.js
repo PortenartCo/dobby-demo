@@ -23,7 +23,8 @@ window.DobbyFamilyAgendaReview=(()=>{
   const event=find(id);session={id,snapshot:clone(event),origin:origin(c.ui,viewOrigin(c)),mode:'read'};setDialog(c,{kind:'event-read',id});
   const panel=dialog(c,event.title);panel.dataset.famEventRead='';const details=node('dl',undefined,'fam-review-details');
   for(const [label,value]of [['Date',labelDate(event.date)],['Heure',event.time],['Catégorie',event.category],['Personne / groupe',event.person],['Lieu',event.location]])if(value)details.append(node('dt',label),node('dd',value));
-  panel.append(details);if(event.preparation)panel.append(primary(c.button('preparations','Voir les préparatifs',{record:id})));if(event.note)panel.append(node('p',event.note,'fam-review-body'));
+  panel.append(details);if(event.note)panel.append(node('p',event.note,'fam-review-body'));
+  try{if(window.DobbyPreparations?.read().eventPreparations.some(row=>row.eventId===id))panel.append(primary(c.button('prep-event-open','Préparatifs de cet événement',{record:id})));}catch(error){panel.append(node('p','Préparatifs indisponibles : '+error.message));}
   panel.append(row(c,primary(c.button('event-edit','Modifier',{record:id})),c.button('event-delete','Supprimer',{record:id}),c.button('event-export','Exporter (.ics)',{record:id})),c.button('dialog-close','Retour'));
   panel.querySelector('button')?.focus();
  }
@@ -44,7 +45,7 @@ window.DobbyFamilyAgendaReview=(()=>{
   }
   if(!id&&!values&&c.ui.day)form.elements.namedItem('date').value=c.ui.day;
   const people=node('datalist');people.id='fa-event-people';for(const member of E.read().members)people.append(new Option(member.name,member.name));form.append(people);form.elements.namedItem('person').setAttribute('list',people.id);
-  window.DobbyPreparationUI.association(form,event);
+  window.DobbyPreparations?.association(form,event);
   const save=node('button',id?'Enregistrer les modifications':'Enregistrer l’événement','fa-button fam-review-primary');save.type='submit';
   form.append(row(c,save,c.button('dialog-close','Annuler')));panel.append(form);form.querySelector('input:not([type="hidden"])')?.focus();
  }
@@ -56,7 +57,6 @@ window.DobbyFamilyAgendaReview=(()=>{
   const id=form.dataset.record||null;if(id)fresh(id);const values=Object.fromEntries(new FormData(form));
   // E.saveEvent invokes the original fpEventForm submit listener, including
   // its native validation, stable identifier and family synchronization.
-  const previous=id?find(id).preparation:null;if(previous&&values.preparationTemplate!==previous.templateId&&!confirm('Remplacer les préparatifs de cet événement ? La copie actuelle sera retirée.'))return;
   E.saveEvent(id,values);c.ui.day=values.date;return closeEvent(c);
  }
  function renderAgenda(c){
