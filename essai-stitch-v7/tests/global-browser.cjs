@@ -501,6 +501,21 @@ async function runJourney(browser, width) {
     report.error = error.stack;
     if (page) {
       report.failedURL = page.url();
+      try {
+        report.lifecycleAtFailure = await page.evaluate(() => {
+          const frame = document.getElementById('dv7-engine'), native = frame?.contentWindow;
+          const raw = Storage.prototype.__reviewRaw, key = 'dobby-review-v7-global-20261112|';
+          const status = native?.DobbyFamilyUI?.grocery.read();
+          return { top: location.href, stitchReady: window.DobbyStitchV7?.ready,
+            familyReady: window.DobbyFamilyStitch?.ready, cuisineReady: window.DobbyCuisine?.ready,
+            iframeSrc: frame?.getAttribute('src'), deferredSrc: frame?.dataset.globalEngineSrc,
+            nativeURL: native?.location.href, nativeDocument: native?.document.readyState,
+            nativeStatus: status && {ready:status.ready,status:status.status,error:status.error},
+            resetPending: !!raw?.getItem.call(localStorage,key+'reset-in-progress'),
+            generation: JSON.parse(raw?.getItem.call(localStorage,key+'backend-v1')||'{}').generation };
+        });
+        console.error('GLOBAL_FAILURE_LIFECYCLE', JSON.stringify({width,lifecycle:report.lifecycleAtFailure,errors:report.errors}));
+      } catch (diagnosticError) { console.error('GLOBAL_FAILURE_LIFECYCLE_UNAVAILABLE', diagnosticError.message); }
       try { report.nativeAtFailure = await state(page); } catch {}
       try { report.basketAtFailure = await basket(page); } catch {}
       try { report.fixtureAtFailure = await demo(page, 'state'); } catch {}

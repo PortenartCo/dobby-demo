@@ -177,10 +177,19 @@ jobs:
             BROWSER="$(command -v chromium)"
           fi
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/runes-history.cjs
-          DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
+          DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ DOBBY_GLOBAL_EVIDENCE=docs/dobby-v7/evidence/global-review-20261112/ci-current CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
           DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
+      - name: Keep current global review evidence
+        if: always() && steps.historical-reuse.outputs.reusable == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-stitch-visual-evidence
+          path: |
+            docs/dobby-v7/evidence/global-review-20261112/ci-current/
+            docs/dobby-v7/evidence/global-review-20261112/historical-reuse.json
+          retention-days: 14
       - name: Keep root, Cuisine and Family comparisons (320/390px)
-        if: always()
+        if: always() && steps.historical-reuse.outputs.reusable != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: dobby-v7-stitch-visual-evidence

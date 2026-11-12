@@ -1,0 +1,58 @@
+GLOBAL_CHECK 320 entry, explicit simulation and native clients
+GLOBAL_CHECK 320 E09 create a fictive member through its visible form
+GLOBAL_CHECK 320 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 320 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 320 E05 chosen member profile survives reload and browser history
+GO_BACK_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#members?person=local-1794449173386-bkevomu","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#members?person=local-1794449173386-bkevomu","history":14,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":14,"nativeReady":true}]}
+GO_BACK_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#personal?person=local-1794449173386-bkevomu","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#personal?person=local-1794449173386-bkevomu","history":14,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":14,"nativeReady":true}]}
+GLOBAL_CHECK 320 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 320 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 320 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 320 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 320 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 320 E02, E06 and E08 remain reachable, dock and browser navigation work
+GO_BACK_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":true}]}
+GO_BACK_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":false}]}
+GO_FORWARD_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":true}]}
+GO_FORWARD_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":false}]}
+GLOBAL_CHECK 320 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 320 http://127.0.0.1:8766/dobby-global-history-fix/
+GLOBAL_CHECK 390 entry, explicit simulation and native clients
+GLOBAL_CHECK 390 E09 create a fictive member through its visible form
+GLOBAL_CHECK 390 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 390 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 390 E05 chosen member profile survives reload and browser history
+GO_BACK_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#members?person=local-1794449203071-3z8z35t","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#members?person=local-1794449203071-3z8z35t","history":14,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":14,"nativeReady":true}]}
+GO_BACK_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#personal?person=local-1794449203071-3z8z35t","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#personal?person=local-1794449203071-3z8z35t","history":14,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":14,"nativeReady":true}]}
+GLOBAL_CHECK 390 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 390 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 390 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 390 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 390 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 390 Two tabs A/B: native grocery, Runes V2 and memo synchronization
+GLOBAL_CHECK 390 E02, E06 and E08 remain reachable, dock and browser navigation work
+GO_BACK_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","history":36,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":36,"nativeReady":true}]}
+GO_BACK_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","history":36,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":36,"nativeReady":false}]}
+GO_FORWARD_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","history":36,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":36,"nativeReady":true}]}
+GO_FORWARD_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","history":36,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":36,"nativeReady":false}]}
+GLOBAL_CHECK 390 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 390 http://127.0.0.1:8766/dobby-global-history-fix/
+GLOBAL_CHECK 1440 entry, explicit simulation and native clients
+GLOBAL_CHECK 1440 E09 create a fictive member through its visible form
+GLOBAL_CHECK 1440 E03/E04 create, assign and persist a native mission
+GLOBAL_CHECK 1440 E01 completion confirms exactly one Runes V2 gain
+GLOBAL_CHECK 1440 E05 chosen member profile survives reload and browser history
+GO_BACK_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#members?person=local-1794449251685-1ndmd67","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#members?person=local-1794449251685-1ndmd67","history":14,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":14,"nativeReady":true}]}
+GO_BACK_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#personal?person=local-1794449251685-1ndmd67","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#personal?person=local-1794449251685-1ndmd67","history":14,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":14,"nativeReady":true}]}
+GLOBAL_CHECK 1440 E07 plan an existing recipe in the real Midi slot
+GLOBAL_CHECK 1440 E07 one shared Courses list imports ingredients without duplicates
+GLOBAL_CHECK 1440 E07 availability persists in the native shared grocery row
+GLOBAL_CHECK 1440 E09 create and retrieve an ordinary family event
+GLOBAL_CHECK 1440 E09 create and retrieve a shared family memo
+GLOBAL_CHECK 1440 E02, E06 and E08 remain reachable, dock and browser navigation work
+GO_BACK_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":true}]}
+GO_BACK_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":false}]}
+GO_FORWARD_BEFORE {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/famille.html?client=A#menu?person=review-person","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":true}]}
+GO_FORWARD_AFTER {"top":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","frames":[{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v7/traverse.html?client=A","history":32,"ready":true},{"url":"http://127.0.0.1:8766/dobby-global-history-fix/essai-stitch-v5-famille/index.html","history":32,"nativeReady":false}]}
+GLOBAL_CHECK 1440 Visible reset clears only this demo and refreshes other open tabs
+DOBBY_GLOBAL_BROWSER_PASS 1440 http://127.0.0.1:8766/dobby-global-history-fix/
