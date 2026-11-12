@@ -1,0 +1,111 @@
+✔ shared memo create/read/update/delete propagates without publishing legacy notes or private health (15.941199ms)
+✔ concurrent edits use module conflict, retaining both copies until explicit resolution and backup (5.125007ms)
+✔ offline memo remains pending across a client reload, then synchronizes (3.766686ms)
+✔ old payload and unknown family extensions survive a write; absent fields do not clear existing data (5.999119ms)
+✔ activation and joining preserve new offline memos alongside remote memos, with local notes excluded (21.034888ms)
+✔ an old client dropping the memo extension is detected and local acknowledged copy is retained (5.008131ms)
+✔ edits during PATCH are not falsely acknowledged or replaced (3.920988ms)
+✔ invalid memo payload blocks before replacing any other family fields (3.617453ms)
+✔ a rival write between GET and PATCH loses CAS and keeps the local memo pending in conflict (3.540106ms)
+✖ server conflict choice acknowledges updated unknown family fields before the next memo edit (8.499144ms)
+✖ a second device can refresh and resolve after another device restores the memo protocol (4.818295ms)
+✖ edits during protocol recovery preserve latest remote member fields on the following sync (4.879046ms)
+✖ reactivation takes remote edits of unchanged memos and retains a distinct pending import (3.919055ms)
+✖ genuinely divergent memo edits on reactivation become an active resolvable conflict (3.392405ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 9
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1657.495161
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:46:1
+✖ server conflict choice acknowledges updated unknown family fields before the next memo edit (8.499144ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'old' !== 'NEW'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:47:472)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'old',
+    expected: 'NEW',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:49:1
+✖ a second device can refresh and resolve after another device restores the memo protocol (4.818295ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Conflit/. Input:
+  
+  'Conflit à résoudre'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:50:408)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Conflit à résoudre',
+    expected: /Conflit/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:52:1
+✖ edits during protocol recovery preserve latest remote member fields on the following sync (4.879046ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'new-remote-member'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:54:78)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'new-remote-member',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:56:1
+✖ reactivation takes remote edits of unchanged memos and retains a distinct pending import (3.919055ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:57:355)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:59:1
+✖ genuinely divergent memo edits on reactivation become an active resolvable conflict (3.392405ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Conflit/. Input:
+  
+  'Partage désactivé'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-e09-famille-salon-20261112/essai-stitch-v5-famille/tests/family-notes-sync.test.mjs:60:306)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Partage désactivé',
+    expected: /Conflit/,
+    operator: 'match',
+    diff: 'simple'
+  }

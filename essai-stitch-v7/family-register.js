@@ -4,7 +4,7 @@
  const R=window.DobbyRegister,E=window.DobbyFamilyStitchEngine,{q,all,note,target,bind,button,box,card,field}=R;
  const views=['contacts','contact-edit','memos','memo-edit','lists','list-detail'];
  const filter={contacts:'',memos:''};let context,contactRole='',memoSnapshot=null;const memoSnapshots=new Map();
- const memoLocal=(data,id=context.ui.record)=>Boolean(id&&context.ui.scope==='local'&&(data.state.familyNotes||[]).some(row=>row.id===id));
+ const memoLocal=(data,id=context.ui.record)=>Boolean(id&&(data.state.familyNotes||[]).some(row=>row.id===id)&&(context.ui.scope==='local'||!(data.state.sharedFamilyNotes||[]).some(row=>row.id===id)));
  const memoRows=data=>memoLocal(data)?data.state.familyNotes:(data.state.sharedFamilyNotes||[]);
  const openMemo=(id=null,scope='shared')=>context.open('memo-edit',{record:id,scope});
  function nativeNotes(id){E.evaluate('go("documents");docEdit=null;docDetail=null;docNoteEdit=null;render();');E.action('doc',id?'editnote':'newnote',id?{id}:{});}
