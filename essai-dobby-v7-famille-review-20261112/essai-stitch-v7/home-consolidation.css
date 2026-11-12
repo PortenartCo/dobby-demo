@@ -1,0 +1,29 @@
+/* Consolidated home cards; E03 and the shared empty component stay independent. */
+body[data-dv7-screen="traverse"] .e01-empty{border:0;padding:0;color:#d4c4b1}
+body[data-dv7-screen="traverse"] .e01-empty strong{display:block;color:#f9bb5f;font:600 18px/1.35 Georgia,serif}
+body[data-dv7-screen="traverse"] .e01-empty p{margin:5px 0 0;font-size:14px;line-height:1.5}
+body[data-dv7-screen="traverse"] [data-e01-meal]{cursor:default}
+body[data-dv7-screen="traverse"] .e01-meal-entry{display:grid;grid-template-columns:78px minmax(0,1fr);gap:8px 12px;cursor:pointer;border-bottom:1px solid #78350f55}
+body[data-dv7-screen="traverse"] .e01-meal-entry:last-child{border-bottom:0}
+body[data-dv7-screen="traverse"] .e01-meal-slot{grid-column:1/-1;color:#d49b42;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+body[data-dv7-screen="traverse"] .e01-meal-image{grid-column:1;grid-row:2/4;width:78px;height:86px;overflow:hidden;border-radius:12px;border:1px solid #d49b4244}
+body[data-dv7-screen="traverse"] .e01-meal-thumb{width:100%;height:100%;object-fit:cover}
+body[data-dv7-screen="traverse"] .e01-meal-image .dv7-meal-visual{font-size:36px}
+body[data-dv7-screen="traverse"] .e01-meal-entry>.flex{min-width:0;margin-top:0}
+body[data-dv7-screen="traverse"] .e01-meal-entry>.flex>.flex{flex-direction:column;gap:5px}
+body[data-dv7-screen="traverse"] .e01-meal-entry>.grid{grid-column:2;margin:0;padding:0}
+body[data-dv7-screen="traverse"] .e01-meal-entry>.e01-empty{grid-column:1/-1}
+body[data-dv7-screen="traverse"] .e01-quick-card{background:#2b1b17;border:1px solid #78350f66;border-radius:16px;overflow:hidden;padding:16px;box-shadow:0 10px 15px -3px #0003}
+body[data-dv7-screen="traverse"] .e01-quick-card h2{color:#fcf7ee;font:600 18px/1.3 Georgia,serif;margin:0 0 8px}
+body[data-dv7-screen="traverse"] .e01-quick-card label{display:block;font-size:14px;color:#fadcd5;margin:10px 0 6px}
+body[data-dv7-screen="traverse"] .e01-quick-fields{display:flex;gap:8px;min-width:0}
+body[data-dv7-screen="traverse"] .e01-quick-fields input{flex:1;min-width:0;min-height:46px;border:1px solid #d49b4266;border-radius:10px;background:#180b07;color:#fcf7ee;padding:10px;font-size:16px}
+body[data-dv7-screen="traverse"] .e01-quick-fields button{min-height:46px;background:linear-gradient(110deg,#d49b42,#f3c25b);color:#180b07;border-radius:10px;padding:10px 12px;font-size:16px;font-weight:700}
+body[data-dv7-screen="traverse"] .e01-quick-card a{display:inline-block;color:#f9bb5f;font-size:15px;padding:8px 0;text-decoration:underline;text-underline-offset:3px}
+body[data-dv7-screen="traverse"] .e01-notice{font-size:13px;line-height:1.5;color:#d4c4b1;margin:8px 0}
+body[data-dv7-screen="traverse"] [data-e01-complete][aria-pressed="true"]{color:#a5c9ac;background:#a5c9ac22}
+body[data-dv7-screen="traverse"] [data-e01-complete]:disabled{opacity:.7}
+body[data-dv7-screen="traverse"] [data-e01-mission]>div.flex{flex:1;min-width:0}
+body[data-dv7-screen="traverse"] [data-e01-mission]>div.flex>div.min-w-0{flex:1;min-width:0}
+body[data-dv7-screen="traverse"] [data-e01-mission] .font-label-sm+span{overflow-wrap:anywhere}
+body[data-dv7-screen="traverse"] [data-e01-mission] p{white-space:normal;overflow-wrap:anywhere}
