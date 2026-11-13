@@ -4,6 +4,23 @@
 
 Les 60 décisions normatives sont reprises ci-dessous sans omission. Sources : [prompt](revue-generale/01_PROMPT_CODEX.md), [registre](revue-generale/02_REGISTRE_RECETTE.md), [manifest d’intégrité](revue-generale/evidence/input-integrity.json). Départ : main `b327aa5194b5f5897f4354e13266059815722eaa`, worktree indépendant `/workspace/dobby-v7-review`, branche `feat/dobby-v7-revue-generale-20261113`.
 
+## Complément de recette réelle — compte B (13 novembre 2026)
+
+**Statut : VALIDÉ PAR L'UTILISATEUR (recette fonctionnelle réelle, et non test simulé).**
+Après publication du bouton de déconnexion (PR #8), le propriétaire de DOBBY a confirmé le parcours complet du compte B : **déconnexion → retour à l'accès → reconnexion → Cheminette → conservation de la Maison et du Patronus**. Aucun SQL supplémentaire n'a été nécessaire pour ce contrôle.
+
+Ce résultat complète les vérifications familiales déjà obtenues : nouveau foyer créé, deux comptes Auth existants rattachés à deux profils distincts dans ce foyer, invitation réellement consommée, cérémonies réalisées et synchronisation bidirectionnelle des Courses réellement testée. Le blocage `FOYER-LOCAL-AUTRE` dans l'ancien profil Chrome a été évité avec une session vierge ; **la gestion ergonomique de l'ancien stockage local n'est pas corrigée ni certifiée par cette recette**.
+
+**Conséquences de classement :**
+- **Chantier Stitch 19/20 (PR #4 à #8)** : parcours nominal familial avec deux comptes et dernier test déconnexion/reconnexion **recettés** ; passation fonctionnelle possible sans nouvelle intervention SQL.
+- **S03** : création et accès au foyer validés sur le parcours réel testé. Les sous-cas non exercés (nouvel e-mail, confirmation/récupération et refus pertinents) ne sont pas certifiés.
+- **S04** : invitation nominale, rattachement des deux profils et reprise après invitation consommée validés en situation réelle. Expiration, révocation, rejeu concurrent et accès inter-foyers restent à recetter.
+- **S10, D02, M06, M07, M08, C07, F08, F09** : leurs réserves techniques et leurs gates demeurent **inchangés**.
+
+Les compteurs **50 faits / 4 partiels / 6 attentes** ci-dessous restent le **snapshot de la livraison du code** et ne doivent pas être recalculés sans nouvelle validation de tous les critères de chaque ID. Ce complément clôt uniquement les scénarios réellement confirmés.
+
+**Prochaine mission ciblée :** terminer les dépendances serveur selon [ACTIONS-MANUELLES-APRES-REVUE.md](ACTIONS-MANUELLES-APRES-REVUE.md) et les contrats V3/Rôles/Famille déjà présents ; commencer par un diagnostic Supabase regroupé en lecture seule, puis produire les migrations adaptées avant toute installation manuelle. Aucun ancien script `01`, `04`, `06` ou `11` ne doit être relancé. L'utilisateur conserve l'exécution manuelle des évolutions Supabase.
+
 ## Développement, tests et production
 
 Les tests de données utilisent les véritables moteurs, writers et IndexedDB natifs, avec données fictives et appels distants bloqués ou fixtures HTTP déclarées. Les API vocales sont simulées pour vérifier le cycle ; aucun service vocal nouveau n’est inventé. Les tests SQL sont limités à PostgreSQL 17.7 sans réseau. **Aucun accès Supabase distant, aucune modification de base et aucune migration automatique.**
