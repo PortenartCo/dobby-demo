@@ -16,20 +16,20 @@
     "reason": "T01-T13/C01-C07: tabs/day actions/shopping adapter; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
   },
   "essai-stitch-v5-famille/family-v2.js": {
-    "sha256": "a1604d2430eefef52de6dedf7f0e506ca8f5dbb37094285ca50b04fa8376c089",
-    "reason": "F09: canonical child REST/storage transport guard"
+    "sha256": "309f62fbca204f73cdb906828012858e980e37f3280f78799eff37502eb17e72",
+    "reason": "F09: canonical child REST/storage transport guard; technical reserves: canonical role precedence and epoch/identity guards before transport; reviewed05c5a35; authenticated native session with blank/disagreeing controller cannot use local fallback, reviewed3945ee4"
   },
   "essai-stitch-v5-famille/family-core.mjs": {
-    "sha256": "572239e897011d972fffd0dd83ea0488f4d251794a278df96f2dfc876c345d94",
-    "reason": "F09: pure shared write policy"
+    "sha256": "1ba68ae28dd05e0453657429f6f95e5ddbea269f3ab6e41fbd6c230607ea6d10",
+    "reason": "F09: pure shared write policy; technical reserves: complete canonical identity, bounded own-magic values, unchanged setup path; reviewed05c5a35; explicit canEdit/canMagic/canManageDependents grants respected, reviewedb988ec2"
   },
   "essai-stitch-v5-famille/family-missions.js": {
     "sha256": "38d8c5d06a5ab0c74bd52f5af711d3bf977e820d0b59dd13e040a81e4648a218",
     "reason": "M01-M09: participants and occurrence completion"
   },
   "essai-stitch-v5-famille/family-runes-core.mjs": {
-    "sha256": "4f63519da41c9f1ba9c49aa923093e92c5e96e058292c66d5d7b712803cbf2ec",
-    "reason": "M07-M08: unique integer reward allocations"
+    "sha256": "6de19613cd8bed777289b824538f6cde1012408e1da24b98f6afa6ef23625978",
+    "reason": "M07-M08: unique integer reward allocations; technical reserves: exact pending Rune sums through compensation, persistent Number format unchanged; reviewed0da2d66"
   },
   "memoWriter": {
     "sha256": "3339ebc0e184313c21877dcb702fcfd3af48e9d73a37e32b826ceececfd969b0",

@@ -74,6 +74,12 @@ Retour arrière : conserver profils/liens/historiques ; aucun reset Auth ou snap
 
 ## Complément de validation finale du lot
 
-Corrections **testées localement, non déployées par ce lot**. Rejeu final : 83/83 ciblés, 12/12 core/adoption et navigateur `reserves-family-access.cjs` verts. Les régressions `v7-family-review.cjs` (six largeurs) et les deux tests navigateur natifs `family-member-policy.test.cjs` passent également. Aucun compte ni projet distant n’est utilisé dans ces preuves.
+Au checkpoint du sous-lot, avant intégration : corrections **testées localement, non encore déployées à ce stade**. Rejeu final : 83/83 ciblés, 12/12 core/adoption et navigateur `reserves-family-access.cjs` verts. Les régressions `v7-family-review.cjs` (six largeurs) et les deux tests navigateur natifs `family-member-policy.test.cjs` passent également. Aucun compte ni projet distant n’est utilisé dans ces preuves.
 
 Contrôle de conservation : l’intégralité de `essai-stitch-v5-famille/index.html` correspond octet par octet au socle b77cb9d après **la seule insertion du champ canonique explicitement décrit plus haut** ; aucun autre amendement Auth/cérémonie historique n’est supprimé. Syntaxe, liens relatifs de cette fiche et `git diff --check` passent.
+
+## Complément du gel de la reprise
+
+La relecture indépendante a aussi reproduit la transition où une session Auth native existe déjà alors que son contrôleur V7 renvoie encore un état vide ou discordant. Le transport (`3945ee4`) et l’interface (`a3e5ac6`) distinguent désormais cette transition d’un véritable usage local sans session : aucune mutation n’emprunte le repli local. Les lectures de contexte/capacités et le setup Auth existant restent utilisables.
+
+Les refus explicites du serveur restent autoritaires (`b988ec2`) : `canEdit` doit être vrai pour les mutations générales du parent, `canMagic` pour la magie, et `canManageDependents` pour la magie d’autrui. Le rôle ne remplace pas un flag absent ou faux ; `canCreate=false` ne bloque pas Courses/événements si leur droit d’édition est bien fourni. La magie propre reste distincte de l’édition de l’identité. Les cas supplémentaires ont été reproduits rouges puis verts ; le sous-lot rapporte 91 tests ciblés réussis. La validation combinée finale de la reprise est consignée dans son [manifeste](evidence/validation-locale.json).

@@ -1,0 +1,10 @@
+test_canonical_constraint_verifies_and_reinstallation_preserves_values (__main__.ConstraintGuard.test_canonical_constraint_verifies_and_reinstallation_preserves_values) ... ok
+test_missing_constraint_is_installed_by_the_candidate (__main__.ConstraintGuard.test_missing_constraint_is_installed_by_the_candidate) ... ok
+test_same_name_unique_constraint_is_rejected (__main__.ConstraintGuard.test_same_name_unique_constraint_is_rejected) ... ok
+test_unvalidated_constraint_is_not_silently_repaired (__main__.ConstraintGuard.test_unvalidated_constraint_is_not_silently_repaired) ... ok
+test_verifier_rejects_or_constraint_that_accepts_invalid_values (__main__.ConstraintGuard.test_verifier_rejects_or_constraint_that_accepts_invalid_values) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.128s
+
+OK

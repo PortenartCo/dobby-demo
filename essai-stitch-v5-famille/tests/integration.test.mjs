@@ -25,6 +25,19 @@ test('preview V5 source matches original except isolated storage and explicitly 
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
   let familyNormalized=preview;
+  // Technical reserves add exactly one canonical category field to the existing
+  // context. Invert that reviewed literal before every historical proof.
+  const role=JSON.parse(source('./fixtures/reserves-canonical-role-native-extensions.json'));
+  const roleSha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(role.baseCommit,'b77cb9de100a864c8aace8fb9e07053220ccd23a');
+  assert.equal(role.approvedCommit,'05c5a359df6a156166a5d5cef6bb4a0ef68a3b45');
+  assert.equal(role.patches.length,1);
+  assert.equal(roleSha(familyNormalized),role.afterSha256,'Complete reviewed native role artifact');
+  for(const amendment of role.patches){
+    assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact canonical role amendment occurs once');
+    familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
+  }
+  assert.equal(roleSha(familyNormalized),role.beforeSha256,'Only the canonical role field differs from b77cb9d');
   // T09 changes only these three frozen literals. Verify the full native bytes
   // before and after inversion; the historical proofs below remain unchanged.
   const dessert=JSON.parse(source('./fixtures/dessert-preparations-native-extensions.json'));

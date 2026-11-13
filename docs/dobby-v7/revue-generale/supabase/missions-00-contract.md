@@ -100,7 +100,7 @@ est un travail explicite restant, pas une installation à exécuter telle quelle
 ## Ordre des actions manuelles, ultérieurement
 
 1. Dans le seul projet personnel `dobby-family-sync`, conserver une sauvegarde et
-   exécuter `missions-01-preflight.sql`. Examiner les définitions privées réelles
+   exécuter uniquement [le diagnostic regroupé de la reprise](../../reserves-techniques/serveur/00-diagnostic-regroupe.sql), qui remplace la collecte fragmentée `missions-01-preflight.sql`. Examiner les définitions privées réelles
    sur place ; ne transmettre aucun contenu de profil, token ou secret. Conserver
    les empreintes du writer/stamp/guard V2 avant intervention.
 2. Achever et tester en PostgreSQL local la migration SQL V3 à partir de ce

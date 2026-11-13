@@ -11,7 +11,7 @@
     "roles-02-verify.sql": "9b9c314a541a3546dd95206fae110ba179f5f53338d93457bd5ed536e4b5e88f",
     "roles-03-rollback.sql": "cbc565511ff46d41add4d836c078914681ee1753c089ab61953fd711e429d1a7",
     "tests/role-guard-fixture.sql": "01f387abdc59667d076bd40522fff00011d3e0b59bd871f24f81bfc5fe3eb61c",
-    "tests/run-role-guard-local.py": "e63f35ec665435c9940c0811399956a3c675e1fcd6413f8f4c1ca0324b5485e3"
+    "tests/run-role-guard-local.py": "23b378cb2e2c7d6e1310a4beb5a00ba2339df19a33bb6f5ab0ceec56312690e9"
   },
   "tests": [
     "exact verifier rejects permissive-looking restrictive policy",

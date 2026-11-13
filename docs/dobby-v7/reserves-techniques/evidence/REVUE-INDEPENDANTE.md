@@ -1,0 +1,12 @@
+# Revue indépendante — réserves techniques
+
+Les relectures ont porté sur le périmètre client et les candidats locaux, jamais sur le projet Supabase. Aucun résultat ci-dessous ne certifie les droits distants.
+
+- **C07 `075e80e`** : vérification exacte de la contrainte revue ; OR, autre type et NOT VALID refusés sans réécriture. Cinq tests nouveaux et les régressions de la candidate passent.
+- **Runes `0da2d66`** : le total temporairement hors plage puis compensé était arrondi ; calcul BigInt interne, retour Number borné et stockage inchangés. Quatre cas ciblés rouges puis verts, y compris dépassement final refusé.
+- **F09 `3d58820`** : la revue indépendante a reproduit le faux positif de normalisation SQL supprimant un espace dans le littéral du bucket. Comparaison stricte corrigée ; mutations USING/WITH CHECK et clé du helper testées. La candidate ne prétend couvrir que neuf policies directes, avec `completeF09=false`. Les writers privilégiés restent un domaine distinct.
+- **Famille `05c5a35` puis `3945ee4`** : catégorie du profil serveur et liaison complètes ; source du DTO vérifiée dans le SQL versionné, sans exécuter l’installation. Une revue a reproduit le contrôleur vide avec une session native authentifiée ; mutation désormais refusée avant envoi, avec et sans core. Lectures et setup Auth positifs préservés. Probes REST/Storage avec refresh 401 et droits révoqués vérifiés.
+- **UI `a3e5ac6` et permissions `b988ec2`** : état natif en transition en lecture seule, flags explicites canEdit/canMagic/canManageDependents autoritaires, mode local et démos préservés ; 54 tests de relecture ciblés réussis. Aucun nouveau droit serveur attribué.
+- **Diagnostic `7f1458f`, `0202335` et revue root** : une seule collecte READ ONLY ; la revue a fait inclure policies/triggers Storage génériques, rôles ACL et chaînes transitives, sans exporter les corps privés tiers. Les tests exacts vérifient absences, droits refusés, sortie unique, aucune ligne métier et dump avant/après inchangé. Le daemon Unix est fixé et les cinq sélecteurs Docker hérités ignorés ; test avec valeurs invalides réussi. SQL SHA256 `2fc4fbc16cb41481b68069c9145e67387daf496ae51f7676783e34ae0298e2fc`.
+
+Aucun autre écart concret démontré restant dans ces correctifs indépendants après relecture. Les inconnues du catalogue privé, le writer V3 réel, l’accès enfant ciblé, les droits serveur complets et la recette matérielle restent explicitement ouverts, avec leurs gates fermés. La recette réelle B demeure acquise.

@@ -5,6 +5,7 @@ The original installer is never replayed to set up this fixture. Only a unique
 fictional database and synthetic rows are created, then removed in tearDownClass.
 """
 import json
+import os
 from pathlib import Path
 import subprocess
 import unittest
@@ -13,16 +14,18 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1] / 'shopping'
 CONTAINER = 'dobby-stitch1920-pg-20261113-review'
+DOCKER = ['docker', '--host', 'unix:///var/run/docker.sock']
+LOCAL_ENV = {k:v for k,v in os.environ.items() if k not in {'DOCKER_HOST','DOCKER_CONTEXT','DOCKER_TLS','DOCKER_TLS_VERIFY','DOCKER_CERT_PATH'}}
 
 
 class ConstraintGuard(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        info = json.loads(subprocess.check_output(['docker', 'inspect', CONTAINER]))[0]
+        info = json.loads(subprocess.check_output(DOCKER + ['inspect', CONTAINER], env=LOCAL_ENV))[0]
         assert info['Config']['Image'] == 'postgres:17.7'
         assert info['HostConfig']['NetworkMode'] == 'none'
         assert not info['HostConfig']['PortBindings']
-        cls.base = ['docker', 'exec', '-i', CONTAINER, 'psql', '-X', '-qAt',
+        cls.base = DOCKER + ['exec', '-i', CONTAINER, 'psql', '-X', '-qAt',
                     '-v', 'ON_ERROR_STOP=1', '-U', 'dobby_local_test']
         cls.database = 'dobby_c07_constraint_' + uuid.uuid4().hex[:12]
         cls.sql('CREATE DATABASE ' + cls.database + ';', database='postgres')
@@ -34,7 +37,7 @@ class ConstraintGuard(unittest.TestCase):
     @classmethod
     def sql(cls, text, database=None):
         result = subprocess.run(cls.base + ['-d', database or cls.database],
-                                input=text, text=True, capture_output=True)
+                                input=text, text=True, capture_output=True, env=LOCAL_ENV)
         if result.returncode:
             raise AssertionError(result.stderr.strip())
         return result.stdout.strip()

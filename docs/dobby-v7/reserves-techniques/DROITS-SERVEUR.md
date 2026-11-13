@@ -46,7 +46,7 @@ Ce retour permettra de déterminer si le writer Missions privé bloque déjà le
 2. **Complétion enfant.** Une RPC étroite doit recevoir l'occurrence, les participants et l'opération/révision, vérifier l'attribution de l'enfant et recalculer le total/répartition côté serveur. Pas de barème, crédit arbitraire, réattribution, réouverture ou mutation annexe envoyée par l'enfant. L'ancien writer et les écritures directes ne doivent pas contourner cette exception. Le lot Missions conserve son contrat et son gate fermé.
 3. **Écritures privilégiées et Storage.** Rapprocher chaque writer effectif et ses policies, sans généraliser « SECURITY DEFINER ignore toute RLS ». Préparer seulement les restrictions dont le rôle et les dépendances réels sont connus. Ne pas toucher à d'autres buckets, aux fichiers existants ou aux rôles de service pour forcer un test.
 
-L'installation d'un delta futur et la recette réelle Parent / Enfant / autre foyer restent manuelles et distinctes de ces tests locaux. Aucun accès ou résultat n'est demandé pendant cette mission.
+L'installation d'un delta futur et la recette réelle Parent / Enfant / autre foyer restent manuelles et distinctes de ces tests locaux. Aucun accès Codex au projet n’est nécessaire : seule la sortie de catalogue du diagnostic unique permettra de préparer cette étape, sans nouvelle recette B.
 
 ## Preuves et reproduction
 

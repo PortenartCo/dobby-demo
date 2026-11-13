@@ -7,8 +7,11 @@ image = 'postgres:17.7'
 name = 'dobby-role-guard-fixture-' + uuid.uuid4().hex[:12]
 container = None
 results = []
+DOCKER = ['docker', '--host', 'unix:///var/run/docker.sock']
+LOCAL_ENV = {k:v for k,v in os.environ.items() if k not in {'DOCKER_HOST','DOCKER_CONTEXT','DOCKER_TLS','DOCKER_TLS_VERIFY','DOCKER_CERT_PATH'}}
 def command(args, **kwargs):
-    return subprocess.run(args, text=True, capture_output=True, **kwargs)
+    if args and args[0] == 'docker': args = DOCKER + args[1:]
+    return subprocess.run(args, text=True, capture_output=True, env=LOCAL_ENV, **kwargs)
 def sql(text, error=False, expected=None):
     process = command(['docker','exec','-i',container,'psql','-X','-qAt','-v','ON_ERROR_STOP=1','-U','dobby_roles_local','-d','postgres'], input=text)
     if expected:
@@ -39,7 +42,7 @@ try:
         '--env','POSTGRES_PASSWORD=FICTIONAL_LOCAL_ONLY',image])
     assert created.returncode == 0, created.stderr
     container = created.stdout.strip()
-    info = json.loads(subprocess.check_output(['docker','inspect',container]))[0]
+    info = json.loads(subprocess.check_output(DOCKER + ['inspect',container],env=LOCAL_ENV))[0]
     assert info['Name'] == '/' + name and info['HostConfig']['NetworkMode'] == 'none' and not info['HostConfig']['PortBindings']
     for _ in range(60):
         if command(['docker','exec',container,'pg_isready','-h','127.0.0.1','-U','dobby_roles_local']).returncode == 0:

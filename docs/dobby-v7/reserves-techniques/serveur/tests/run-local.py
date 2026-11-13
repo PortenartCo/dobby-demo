@@ -22,7 +22,7 @@ DATABASE = 'dobby_reserves_diagnostic_test'
 ROLE = 'dobby_diag_local'
 DOCKER = ['docker', '--host', 'unix:///var/run/docker.sock']
 DOCKER_ENV = {key: value for key, value in os.environ.items()
-              if key not in {'DOCKER_HOST', 'DOCKER_CONTEXT', 'DOCKER_TLS_VERIFY', 'DOCKER_CERT_PATH'}}
+              if key not in {'DOCKER_HOST', 'DOCKER_CONTEXT', 'DOCKER_TLS', 'DOCKER_TLS_VERIFY', 'DOCKER_CERT_PATH'}}
 diagnostic = DIAGNOSTIC.read_text()
 assert 'defensive test stub only' in HISTORICAL.read_text()
 
