@@ -1,0 +1,64 @@
+{
+  "verifiedAtUTC": "2026-11-13T11:06:49.122600+00:00",
+  "codeSha": "43eef7a57a56fe352f88902dfe89b208a4036495",
+  "testedHead": "cf4fae2afe099978cf8dcf7c7d5896b8e4fc4644",
+  "testedTreeIdenticalToMerge": true,
+  "canonicalUrl": "https://portenartco.github.io/dobby-demo/",
+  "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/12",
+  "pages": {
+    "status": "built",
+    "commit": "43eef7a57a56fe352f88902dfe89b208a4036495",
+    "run": "https://github.com/PortenartCo/dobby-demo/actions/runs/43413328142"
+  },
+  "ci": [
+    {
+      "name": "PR functional",
+      "status": "SUCCESS",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43411581079"
+    },
+    {
+      "name": "PR Sync",
+      "status": "SUCCESS",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43411581149"
+    },
+    {
+      "name": "Push functional",
+      "status": "SUCCESS",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43411573722"
+    },
+    {
+      "name": "Push Sync",
+      "status": "SUCCESS",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43411573564"
+    }
+  ],
+  "http": {
+    "passed": true,
+    "getComparisons": 152,
+    "uniqueFiles": 127,
+    "committedQueries": 24,
+    "supabaseContacted": false
+  },
+  "browser": {
+    "passed": true,
+    "observedResources": 120,
+    "accessVisible": true,
+    "pageErrors": 0,
+    "firstPartyErrors": 0,
+    "v3ReleaseGateOpen": false,
+    "supabaseRequestsExecuted": 0,
+    "nonGetRequestsExecuted": 0
+  },
+  "backendCatalogInstalledAndVerifiedByUser": true,
+  "runtimeCheckpoint30Received": false,
+  "clientProofFlagsOpened": false,
+  "newRealAuthRlsRpcOrBrowserRecipeVerified": false,
+  "rawCatalogPublished": false,
+  "limits": [
+    "Hosted metadata and static publication do not validate real Auth/RPC/RLS journeys.",
+    "User-only checkpoint30 is ready; Auth HTTP, multi-session concurrency, Storage physical operations and Safari remain pending.",
+    "Subsequent documentation-only commits may have a later Pages SHA while serving identical application bytes."
+  ],
+  "runtimeCheckpoint30AttemptedByUser": true,
+  "runtimeCheckpoint30PreflightStop": "RT-PREFLIGHT-THIRD-AUTH before business fixtures; user confirmed test Auth account not yet created"
+}
