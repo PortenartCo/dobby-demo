@@ -18,8 +18,11 @@ Les RPC publics conservent leur propriétaire technique fermé. Aucun droit
 supplémentaire n'est accordé sur Auth. Après ce correctif, utiliser 12 pour la
 vérification ; l'ancien 02 exige le propriétaire initial du helper privé.
 
-L'application réelle reste à confirmer par le retour utilisateur de 12 et par la
-recette authentifiée ; les tests locaux ne constituent pas cette confirmation.
+L'utilisateur a exécuté 11 puis transmis 12 : deux comptes atteignent la phase
+`profile`, sans erreur SQL. Ne pas réexécuter 11. Voir la
+[preuve agrégée](evidence/live-user-auth-fix-verification-20261113.json).
+La recette authentifiée dans les navigateurs reste à confirmer ; cette simulation
+en base ne valide pas les requêtes API.
 
 ## État reçu et réglages Auth
 

@@ -1,5 +1,10 @@
 # Correctif de connexion sur Supabase géré
 
+**Appliqué manuellement et vérifié par l'utilisateur le 13 novembre 2026. Ne pas
+réexécuter 11.** Le contrôle 12 retourne deux comptes en phase `profile` et aucun
+SQLSTATE d'erreur. La [preuve utilisateur](evidence/live-user-auth-fix-verification-20261113.json)
+conserve le résultat agrégé. La recette réelle dans les navigateurs reste à confirmer.
+
 Les diagnostics exécutés sur le projet familial ont confirmé deux faits :
 `dobby_v7_writer` ne peut pas utiliser le schéma `auth`, et le rôle du SQL Editor
 ne peut pas lui accorder ce droit. Les deux comptes Auth sont confirmés et ont
@@ -22,7 +27,7 @@ restent sous le rôle technique fermé. Aucun nouveau `SECURITY DEFINER` n’est
 Les empreintes des fonctions doivent correspondre aux diagnostics reçus.
 Un écart provoque l’annulation de toute la transaction.
 
-## Exécution manuelle
+## Exécution manuelle réalisée, conservée pour traçabilité
 
 Dans le SQL Editor du seul projet **dobby-family-sync** (`pqcdkrwljgvgagzwrcmg`),
 avec le même rôle que pour les diagnostics :
@@ -36,7 +41,6 @@ Ne relancer aucun reset, ni `01`, ni `04`. Le script `12` est le contrôle adapt
 `writerAuthSchemaUsage: false` reste attendu après correction : aucun droit
 supplémentaire n’est accordé sur le schéma géré par Supabase.
 
-Le SQL reste **à appliquer** tant que le résultat d’exécution n’a pas été reçu.
 La simulation du contexte en base ne valide pas les requêtes API ni les parcours
 réels : connexion, création du foyer, invitation, acceptation et synchronisation
 doivent ensuite être vérifiées dans les deux navigateurs indépendants.
