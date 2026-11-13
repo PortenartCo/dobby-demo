@@ -1,0 +1,70 @@
+✔ structured contract metadata and multi-file descriptors sync without local keys or binary data (10.155946ms)
+✔ legacy peer roundtrip preserves new metadata and pieces, restores them to remote, and local keys stay local (2.849061ms)
+✔ modern descriptor deletion propagates, unknown deep fields and local legacy/private retention survive (5.47089ms)
+✔ modern shared deletion retains an existing local legacy backup without immediately publishing it again (1.822276ms)
+✔ modern shared legacy-file withdrawal propagates without touching the old local binary metadata (1.554775ms)
+✔ native save/reload keeps deep extensions, stable ids and legacy invalid dates (5.911062ms)
+✔ edits require current row/context; denied children and failed saves cannot mutate state (3.547591ms)
+✔ multiple local attachments use native store without uploads and leave legacy blob untouched (3.001247ms)
+✔ explicit upload uses existing storage API, confirms cloud metadata only after success, and retains local piece (3.227242ms)
+✔ async writes reject household, row and role changes and discard only staged files (5.875221ms)
+✔ legacy import handler delegates metadata merge and native form preserves extensions (14.513033ms)
+✔ whole fiche deletion covers every piece and leaves unrelated files intact (2.006047ms)
+✔ file validation, forged references and child mutation calls cannot touch native stores (1.811489ms)
+✔ legacy local and shared slots remain independently readable/removable when they contain different files (1.300591ms)
+✔ a genuinely shared modern piece remains readable when its old local store is unavailable (2.098418ms)
+✔ download names remove paths/control characters and match the permitted binary MIME type (2.628908ms)
+✔ manifest normalizes all manual fields, preserves unknowns as null and amount zero (3.360539ms)
+✔ contract title matches the native writer boundary without truncation (0.680168ms)
+✔ invalid shape, versions, dates, coercions and out-of-range manual fields are refused (1.448136ms)
+✔ stable IDs, source descriptors and provenance reject duplicates and unavailable references (3.997297ms)
+✔ document display names are safe basenames with the same real type as their path (4.114552ms)
+✔ transport cannot import local keys, native attachments or arbitrary cloud references (0.899682ms)
+✔ ZIP returns normalized metadata and actual original PDF bytes without writing or AI calls (7.643328ms)
+✔ ZIP source relationships are exact: missing, extra, duplicate and mismatched source bytes fail (2.914566ms)
+✔ ZIP rejects unsafe paths, symlinks, metadata disagreement, corrupted checksums and foreign bytes (3.37215ms)
+✔ ZIP bounds are checked before inflation or allocating declared file sizes (13.500597ms)
+✔ deflate uses native streams and rejects or cancels output beyond its announced size (16.015997ms)
+✔ JSON size and batch limits are enforced, while JSON-only source absence remains explicit (7.471827ms)
+✔ raster signatures and declared dimensions are checked before decoding (0.496728ms)
+✔ external prompt gives exact cumulative schema and an honest downloadable ZIP/JSON fallback (0.264713ms)
+✔ dates reject rolled-over calendar days, timestamps and coerced values (2.179968ms)
+✔ calendar subtraction clamps the target month and preserves leap-year rules (0.514104ms)
+✔ day subtraction uses UTC calendar days and refuses invalid or out-of-range inputs (0.373404ms)
+✔ legacy contracts normalize unknown clauses without inventing cancellation dates (0.930416ms)
+✔ normalization preserves extensible metadata and isolates mutable nested values (0.350639ms)
+✔ explicit cancellation dates override clauses and invalid explicit dates are never substituted (0.196001ms)
+✔ cancellation requires known valid notice clauses and uses legacy deadline as expiry (0.270513ms)
+✔ reminder schedules derive only from a known cancellation date and keep explicit opt-out (0.477171ms)
+✔ next useful action chooses upcoming reminders, cancellation or expiry and retains overdue contracts (0.673127ms)
+✔ partial merges preserve legacy invalid dates, nested unknown fields and existing attachments (0.488778ms)
+✔ partial merges permit explicit field clearing while keeping independent metadata (0.23176ms)
+✔ validation accepts partial legacy rows, extensible types and unknown clauses (1.599528ms)
+✔ validation reports raw invalid values instead of silently normalizing them (2.002712ms)
+✔ title validation matches the native writer before any batch mutations (0.138364ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1616.73707
+CONTRACTS_UI_PASS 320
+CONTRACTS_UI_PASS 390
+CONTRACTS_UI_PASS 768
+CONTRACTS_UI_PASS 1024
+CONTRACTS_UI_PASS 1440
+CONTRACTS_IMPORT_UI_PASS
+CONTRACTS_EDGE_PASS list-geometry-keyboard-320
+CONTRACTS_EDGE_PASS list-geometry-keyboard-390
+CONTRACTS_EDGE_PASS list-geometry-keyboard-768
+CONTRACTS_EDGE_PASS list-geometry-keyboard-1024
+CONTRACTS_EDGE_PASS list-geometry-keyboard-1440
+CONTRACTS_EDGE_PASS unknown-fields-historical-date-edit-reload
+CONTRACTS_EDGE_PASS stale-form-rejects-overwrite-and-keeps-typing
+CONTRACTS_EDGE_PASS real-pdf-amendment-replacement-legacy-blob-retention
+CONTRACTS_EDGE_PASS native-delete-confirmation-and-all-attachment-cleanup
+CONTRACTS_EDGE_PASS explicit-child-ui-and-native-mutation-boundary
+CONTRACTS_EDGE_RESULT all acceptance edges passed
+CONTRACTS_ACCEPTANCE_PASS — native local persistence and labelled family fixtures; live backend unverified

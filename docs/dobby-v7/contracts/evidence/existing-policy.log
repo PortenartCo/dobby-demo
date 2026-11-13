@@ -1,0 +1,24 @@
+✔ child cannot mutate household snapshots, groceries, files or arbitrary RPCs (1.697948ms)
+✔ child can read shared data and only change its own magic through existing RPC (0.466232ms)
+✔ parent existing writes remain available; stale child verification is not permission (0.312042ms)
+✔ M06 normalizes multiple assignment without cloning and excludes animal profiles (2.351751ms)
+✔ M05 overdue is a separate status and never changes urgency or removes a mission (1.096962ms)
+✔ M05 recurrence occurrence identity remains separate from optional deadline (1.739752ms)
+✔ F07 pets have no magical capability even when a parent accompanies them (1.378322ms)
+✔ F09 demo parent manages all members of the current registry (0.152026ms)
+✔ F09 verified child cannot obtain identity writes from permissive client grants (0.353076ms)
+✔ F07 breed persists without replacing existing profile data (0.580128ms)
+✔ canonical child chat refuses grocery writes before native dispatch (5.663326ms)
+✔ canonical child cannot prepare mission deletion confirmation (2.08232ms)
+✔ loss of parent permissions blocks an already prepared deletion (3.917743ms)
+✔ authenticated identity without verified canonical binding cannot mutate (1.490101ms)
+✔ canonical parent keeps the existing grocery writer (2.223352ms)
+✔ profile or permission claims cannot replace the canonical member category (2.026028ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.939856
