@@ -1,0 +1,98 @@
+✔ Maison sync carries all program and serial metadata while native documents remain local (17.762632ms)
+✔ old Maison snapshots cannot drop programs, serial fields or classified log metadata (14.573692ms)
+✔ modern program deletion propagates while partial program edits retain nested unknown fields (27.504178ms)
+✔ native edits preserve IDs, unknown metadata, legacy dates and document references after reload (22.237732ms)
+✔ full program edits preserve nested extensions and removal requires explicit confirmation with history detachment (7.983704ms)
+✔ intervention edits and removal keep old unclassified logs and linked documents recoverable (4.261136ms)
+✔ all mutations reject stale rows, changed context, child actors and read-only permissions (5.213214ms)
+✔ validation rejects bad dates, amounts, foreign program IDs and malformed intervals before mutation (7.0657ms)
+✔ failed native saves roll back equipment, logs, plan detachments and document metadata (7.311206ms)
+✔ multiple local documents retain native IDs, validate binary type and open legacy bytes without network (71.545456ms)
+✔ async document staging rejects scope, row, permission and role changes then cleans only staged IDs (20.879938ms)
+✔ document reads reject a context switch before returning local contents (2.327686ms)
+✔ confirmed bulk import adds atomically, updates additively and preserves old history, plans, sources and files (3.382244ms)
+✔ bulk validation, second staged-file failure, quota and asynchronous context changes leave registry unchanged (10.925836ms)
+✔ a source-backed program with unknown frequency imports without an invented quantity or unit (1.440289ms)
+✔ canonical child and unverified bindings cannot inherit a parent grant from editable local member data (4.416814ms)
+✔ structured interventions retain the native backup note field and reject an empty intervention (4.032153ms)
+✔ native backup note compatibility bounds fallback summaries without discarding the structured description (2.269686ms)
+✔ equipment deletion refuses existing contract references and preserves every native blob (2.091019ms)
+✔ partial native backup restores additive metadata without erasing serials, plans, history or native files (3.273745ms)
+✔ partial restore rejects stale registry, changed foyer, denied rights and malformed archives without any save (34.96588ms)
+✔ partial native restore rolls back both native arrays on save failure and preserves unchanged historical dates (2.030787ms)
+✔ an authenticated bootstrap cannot use local-mode Maison writes before canonical verification (3.533837ms)
+✔ a verified canonical parent keeps Maison write rights despite an obsolete local child category (2.226641ms)
+✔ authenticated writes require a matching canonical profile and an explicit parental write grant (7.16232ms)
+✔ truly unauthenticated local Maison remains writable and a coherent verified child can read local documents (3.828713ms)
+✔ manifest preserves unknowns and zero, normalizes all documented fields and 0..N plans (3.852205ms)
+✔ the supplied original example remains compatible without inventing history (23.809968ms)
+✔ malformed JSON, wrong format/version, unexpected native storage keys and duplicate identifiers fail (2.672914ms)
+✔ strict dates, finite nonnegative amounts, currency, booleans and integer intervals refuse coercions (1.320374ms)
+✔ sources are scoped to their equipment; real references suppress only the corresponding uncertainty (3.256845ms)
+✔ canonical paths reject traversal, encodings, invisible names and Windows special files (0.517475ms)
+✔ stored and deflated ZIP return checked PDF bytes; source-only shared originals and URL-only documents work (9.634679ms)
+✔ missing, unused, duplicate, fake and wrong-root binary documents are refused (5.803992ms)
+✔ hostile ZIP paths, symlinks, encryption, metadata disagreement, CRC and trailing bytes fail (5.202863ms)
+✔ all transport limits reject oversized declarations and bombs before decompression (25.300522ms)
+✔ deflate streams work and stop on output beyond the declared size (37.821487ms)
+✔ PDF, PNG, JPEG and WebP signatures/dimensions are verified and other types cannot masquerade as allowed files (1.163105ms)
+✔ empty provenance records cannot make an unsourced plan appear verified (0.463821ms)
+✔ duplicate local document paths are refused while one original can justify several sources (0.520734ms)
+✔ ZIP catches normalized duplicates, file/directory collisions and overlaps before extracting bytes (1.290608ms)
+✔ total expanded bytes are bounded before inflation and bad UTF-8 JSON is refused (58.525992ms)
+✔ normalization is idempotent and leaves the input untouched (0.362543ms)
+✔ a BOM hidden in a ZIP filename cannot masquerade as the root manifest (0.184291ms)
+✔ automatic uncertainty cannot produce a manifest that fails its own list bounds (0.187037ms)
+✔ calendar calculations reject invalid dates and clamp month ends and leap years (1.628807ms)
+✔ legacy plans remain stable read copies and explicit zero plans stay empty (0.842806ms)
+✔ two independent programs use only classified performed logs and never invent a date (1.161089ms)
+✔ unclassified legacy history cannot become a program through absent identities (0.141256ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1684.128209
+MAISON_UI_PASS 320 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 390 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 768 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 1024 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 1440 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_IMPORT_UI_PASS
+MAISON_DOCUMENTS_PASS 390 create-two-classified-logs
+MAISON_DOCUMENTS_PASS 390 multiple-pdf-image-plan-log-associations
+MAISON_DOCUMENTS_PASS 390 real-pdf-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 390 real-image-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 390 unrelated-edit-and-reload-preserve-all-documents
+MAISON_DOCUMENTS_PASS 390 source-only-original-import-and-reload
+MAISON_DOCUMENTS_PASS 390 link-contract-by-id-preserve-other-equipment-and-block-delete
+MAISON_DOCUMENTS_PASS 390 log-edit-delete-confirmations-and-independent-recalculation
+MAISON_DOCUMENTS_PASS 390 remove-program-keeps-history-and-documents
+MAISON_DOCUMENTS_PASS 390 native-complete-backup-download-includes-exact-bytes
+MAISON_DOCUMENTS_PASS 390 complete-backup-restore-in-new-context
+MAISON_DOCUMENTS_PASS 390 unlinked-equipment-delete-confirmation-and-file-cleanup
+MAISON_DOCUMENTS_PASS 390 no-browser-errors-or-horizontal-overflow
+MAISON_DOCUMENTS_PASS 1440 create-two-classified-logs
+MAISON_DOCUMENTS_PASS 1440 multiple-pdf-image-plan-log-associations
+MAISON_DOCUMENTS_PASS 1440 real-pdf-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 1440 real-image-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 1440 unrelated-edit-and-reload-preserve-all-documents
+MAISON_DOCUMENTS_PASS 1440 source-only-original-import-and-reload
+MAISON_DOCUMENTS_PASS 1440 link-contract-by-id-preserve-other-equipment-and-block-delete
+MAISON_DOCUMENTS_PASS 1440 log-edit-delete-confirmations-and-independent-recalculation
+MAISON_DOCUMENTS_PASS 1440 remove-program-keeps-history-and-documents
+MAISON_DOCUMENTS_PASS 1440 native-complete-backup-download-includes-exact-bytes
+MAISON_DOCUMENTS_PASS 1440 complete-backup-restore-in-new-context
+MAISON_DOCUMENTS_PASS 1440 unlinked-equipment-delete-confirmation-and-file-cleanup
+MAISON_DOCUMENTS_PASS 1440 no-browser-errors-or-horizontal-overflow
+MAISON_DOCUMENTS_UI_PASS
+MAISON_REVIEW_PASS partial-backup-preserves-modern-metadata
+MAISON_REVIEW_PASS partial-preview-revision-guard
+MAISON_REVIEW_PASS full-restore-scope-change-during-read
+MAISON_REVIEW_PASS dynamic-program-draft-navigation
+MAISON_REVIEW_PASS edited-log-identity-survives-upload
+MAISON_REVIEW_PASS transport-native-name-limit
+MAISON_REVIEW_PASS native-save-side-effects-rollback
+MAISON_ACCEPTANCE_PASS — local native DOM/IndexedDB and labelled rights/sync fixtures; real household server recipe pending

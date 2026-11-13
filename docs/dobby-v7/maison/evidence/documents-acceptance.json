@@ -1,0 +1,158 @@
+{
+  "format": "dobby-maison-documents-acceptance",
+  "externalNetwork": "aborted",
+  "scenarios": [
+    {
+      "width": 390,
+      "label": "create-two-classified-logs",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "multiple-pdf-image-plan-log-associations",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "pdf-renderer-state",
+      "result": "pass",
+      "details": {
+        "url": "chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html",
+        "loaded": 100,
+        "viewer": true
+      }
+    },
+    {
+      "width": 390,
+      "label": "real-pdf-renderer-and-exact-download",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "real-image-renderer-and-exact-download",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "unrelated-edit-and-reload-preserve-all-documents",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "source-only-original-import-and-reload",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "link-contract-by-id-preserve-other-equipment-and-block-delete",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "log-edit-delete-confirmations-and-independent-recalculation",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "remove-program-keeps-history-and-documents",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "native-complete-backup-download-includes-exact-bytes",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "complete-backup-restore-in-new-context",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "unlinked-equipment-delete-confirmation-and-file-cleanup",
+      "result": "pass"
+    },
+    {
+      "width": 390,
+      "label": "no-browser-errors-or-horizontal-overflow",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "create-two-classified-logs",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "multiple-pdf-image-plan-log-associations",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "pdf-renderer-state",
+      "result": "pass",
+      "details": {
+        "url": "chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html",
+        "loaded": 100,
+        "viewer": true
+      }
+    },
+    {
+      "width": 1440,
+      "label": "real-pdf-renderer-and-exact-download",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "real-image-renderer-and-exact-download",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "unrelated-edit-and-reload-preserve-all-documents",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "source-only-original-import-and-reload",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "link-contract-by-id-preserve-other-equipment-and-block-delete",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "log-edit-delete-confirmations-and-independent-recalculation",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "remove-program-keeps-history-and-documents",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "native-complete-backup-download-includes-exact-bytes",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "complete-backup-restore-in-new-context",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "unlinked-equipment-delete-confirmation-and-file-cleanup",
+      "result": "pass"
+    },
+    {
+      "width": 1440,
+      "label": "no-browser-errors-or-horizontal-overflow",
+      "result": "pass"
+    }
+  ],
+  "failures": [],
+  "browser": "154.0.8037.57"
+}

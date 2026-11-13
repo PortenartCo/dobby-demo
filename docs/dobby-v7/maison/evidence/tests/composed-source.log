@@ -1,0 +1,18 @@
+✔ preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions (337.515581ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (2.787559ms)
+✔ module adapter fails closed when Supabase modules table is missing (3.080295ms)
+✔ module schema enforces household isolation and excludes health and attachments (0.193482ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (0.145087ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (0.179582ms)
+✔ manual missions remain separate from automatic tasks (0.183725ms)
+✔ binary file uploads do not use the JSON modules API (0.582858ms)
+✔ shared health visits do not automatically upload previous local health records (0.45006ms)
+✔ a health document remains local until the user chooses household sharing (1.551805ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 444.53419

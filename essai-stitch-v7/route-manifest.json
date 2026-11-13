@@ -177,7 +177,7 @@
       "route": "famille.html#equipment-edit",
       "template": "templates/remaining/equipment-edit.html",
       "unsupported": [
-        "Numéro de série et photo non stockés. Garantie native sous forme de date, pas de durée en mois."
+        "Série, emplacements et programmes enregistrés nativement sur cet appareil ; synchronisation réelle des nouveaux champs entre deux comptes non validée. Pièces jointes locales."
       ],
       "verification": {
         "tests": [
@@ -1025,7 +1025,7 @@
       "route": "famille.html#equipment",
       "template": "templates/remaining/equipment.html",
       "unsupported": [
-        "Historique natif : date, note et entretien réalisé. Pas de montant ni de prestataire par intervention, ni modification/suppression d’une intervention native. Fichiers locaux existants conservés."
+        "Historique par programme avec prestataire, montant et modification/suppression contrôlés. Pièces locales ; aucun partage de PDF ni rappel système automatiquement activé. Recette serveur réelle des nouveaux champs restante."
       ],
       "verification": {
         "tests": [
@@ -1231,7 +1231,7 @@
       "route": "famille.html#maintenance",
       "template": "templates/remaining/maintenance.html",
       "unsupported": [
-        "Historique natif : date, note et entretien réalisé. Pas de montant ni de prestataire par intervention, ni modification/suppression d’une intervention native. Fichiers locaux existants conservés."
+        "Historique par programme avec prestataire, montant et modification/suppression contrôlés. Pièces locales ; aucun partage de PDF ni rappel système automatiquement activé. Recette serveur réelle des nouveaux champs restante."
       ],
       "verification": {
         "tests": [
@@ -1572,7 +1572,7 @@
       "route": "famille.html#house-1",
       "template": "templates/remaining/house-1.html",
       "unsupported": [
-        "Photos d’appareil non stockées ; recherche et listes natives réelles."
+        "Couverture photographique propre à chaque appareil non gérée ; images disponibles en pièces locales. Nouveaux champs à vérifier en synchronisation réelle sur deux comptes."
       ],
       "verification": {
         "tests": [
@@ -1606,7 +1606,7 @@
       "route": "famille.html#house",
       "template": "templates/remaining/house.html",
       "unsupported": [
-        "Photos d’appareil non stockées ; recherche et listes natives réelles."
+        "Couverture photographique propre à chaque appareil non gérée ; images disponibles en pièces locales. Nouveaux champs à vérifier en synchronisation réelle sur deux comptes."
       ],
       "verification": {
         "tests": [

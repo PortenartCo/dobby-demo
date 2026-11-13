@@ -1,0 +1,76 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Documents associés/. Input:
+
+'✦ ARCHIVES & SCRIPTORIUM ✦\n' +
+  '—\n' +
+  '✧\n' +
+  'ARCHIVES & BIBLIOTHÈQUE DOCUMENTAIRE\n' +
+  '✧\n' +
+  'Archives & Scriptorium\n' +
+  '\n' +
+  'Registre des fiches enregistrées dans DOBBY.\n' +
+  '\n' +
+  'search\n' +
+  'cancel\n' +
+  '\n' +
+  '2 documents enregistrés\n' +
+  '\n' +
+  'Toutes\n' +
+  'Contrats\n' +
+  'Autre\n' +
+  'Contrat partagé\n' +
+  '\n' +
+  'Contrats\n' +
+  '\n' +
+  'Sans référence\n' +
+  '\n' +
+  'Consulter\n' +
+  'Archive privée\n' +
+  '\n' +
+  'Autre\n' +
+  '\n' +
+  'Sans référence\n' +
+  '\n' +
+  'Consulter\n' +
+  'Archives\n' +
+  'Ajouter un document\n' +
+  'Importer un fichier\n' +
+  'Contrats & Assurances\n' +
+  'Autre présentation\n' +
+  'Mémos locaux\n' +
+  'Exporter les fiches et mémos (JSON)\n' +
+  '\n' +
+  'Export et fusion des métadonnées ; les fichiers joints ne sont pas inclus. La confirmation native précède toute fusion.\n' +
+  '\n' +
+  'Importer une sauvegarde de fiches JSON\n' +
+  '\n' +
+  'Aucun fichier sélectionné\n' +
+  '\n' +
+  'Enregistrement et partage\n' +
+  '\n' +
+  'Partage familial des fiches Contrats/Assurances selon le module Documents existant. Les autres fiches restent locales sauf partage explicite. Les pièces jointes sont transférées séparément.\n' +
+  '\n' +
+  'Gérer le foyer\n' +
+  'Synchroniser le foyer\n' +
+  '\n' +
+  'Membres et agenda : Foyer non connecté\n' +
+  '\n' +
+  'Les données partagées sont en lecture seule pour ce profil. Leur gestion exige des droits canoniques vérifiés. Un enfant peut seulement valider ses missions autorisées et modifier sa propre Maison et son propre Patronus.'
+
+    at /workspace/dobby-demo/.worktrees/maison-equipements-20261113/essai-stitch-v7/tests/contracts-archives-permissions.cjs:7:247 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '✦ ARCHIVES & SCRIPTORIUM ✦\n' +
+    '—\n' +
+    '✧\n' +
+    'ARCHIVES & BIBLIOTHÈQUE DOCUMENTAIRE\n' +
+    '✧\n' +
+    'Archives & Scriptorium\n' +
+    '\n' +
+    'Registre des fiches enregistrées dans DOBBY.\n' +
+    '\n' +
+    'search\n' +
+    '...',
+  expected: /Documents associés/,
+  operator: 'match',
+  diff: 'simple'
+}

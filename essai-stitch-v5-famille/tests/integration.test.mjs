@@ -10,7 +10,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
   const preview=source('../index.html').replaceAll('\r\n','\n');
   const preparationScript='<script src="./family-preparations.js"></script>';
@@ -25,6 +25,25 @@ test('preview V5 source matches original except isolated storage and approved E0
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
   let familyNormalized=preview;
+  // Maison and the newly merged canonical role amendment affect independent
+  // exact literals. Preserve both immutable parent artifacts and their proofs.
+  const maisonSource=source('./fixtures/maison-native-extensions.json');
+  const maison=JSON.parse(maisonSource),outer=JSON.parse(source('./fixtures/maison-reserves-native-composition.json'));
+  const outerSha=value=>createHash('sha256').update(value).digest('hex');
+  const nativeRole=JSON.parse(source('./fixtures/reserves-canonical-role-native-extensions.json'));
+  const reverseNative=(text,fixture)=>{
+    for(const amendment of [...fixture.patches].reverse()){
+      assert.equal(text.split(amendment.after).length-1,1,'Exact Maison/Role composition amendment: '+amendment.label);
+      text=text.replace(amendment.after,amendment.before);
+    }
+    return text;
+  };
+  assert.equal(outerSha(maisonSource),outer.maisonFixtureSha256,'Frozen Maison fixture unchanged');
+  assert.equal(outerSha(preview),outer.composedSha256,'Complete Maison/Role/Contracts native artifact pinned');
+  assert.equal(outerSha(reverseNative(preview,nativeRole)),maison.afterSha256,'Removing Role restores the exact Maison parent artifact');
+  familyNormalized=reverseNative(preview,maison);
+  assert.equal(outerSha(familyNormalized),outer.reservesSourceSha256,'Removing Maison restores the exact newly merged main artifact');
+  assert.equal(outerSha(reverseNative(familyNormalized,nativeRole)),maison.beforeSha256,'Both amendment inversions restore the exact shared Contracts parent');
   // Compose the two independently approved literal amendments. Their frozen
   // JSON fixtures and both complete branch artifacts remain byte-exact.
   const roleSource=source('./fixtures/reserves-canonical-role-native-extensions.json');
@@ -40,7 +59,7 @@ test('preview V5 source matches original except isolated storage and approved E0
   assert.equal(composition.baseCommit,role.baseCommit);
   assert.equal(role.patches.length,1);
   assert.equal(contracts.patches.length,1);
-  assert.equal(composedSha(preview),composition.composedSha256,'Complete composed native artifact is pinned');
+  assert.equal(composedSha(familyNormalized),composition.composedSha256,'Complete composed native artifact is pinned');
   const invert=(text,fixture)=>{
     for(const amendment of [...fixture.patches].reverse()){
       assert.notEqual(amendment.after,amendment.before,'Each reviewed amendment changes an exact literal');
@@ -49,7 +68,7 @@ test('preview V5 source matches original except isolated storage and approved E0
     }
     return text;
   };
-  const roleOnly=invert(preview,contracts),contractsOnly=invert(preview,role);
+  const roleOnly=invert(familyNormalized,contracts),contractsOnly=invert(familyNormalized,role);
   assert.equal(composedSha(roleOnly),role.afterSha256,'Removing Contracts restores the complete reviewed role artifact');
   assert.equal(composedSha(contractsOnly),contracts.afterSha256,'Removing role restores the complete reviewed Contracts artifact');
   familyNormalized=invert(roleOnly,role);

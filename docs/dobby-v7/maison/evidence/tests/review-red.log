@@ -1,0 +1,83 @@
+MAISON_REVIEW_FAIL partial-backup-preserves-modern-metadata Expected values to be strictly equal:
++ actual - expected
+
++ undefined
+- 'S123'
+
+MAISON_REVIEW_FAIL partial-preview-revision-guard Expected values to be strictly equal:
++ actual - expected
+
++ 'Old backup'
+- 'Changed after preview'
+
+MAISON_REVIEW_FAIL full-restore-scope-change-during-read Rejected restore must not put previous household state into new context
++ actual - expected
+
++ 'boiler'
+- 'other-context'
+
+MAISON_REVIEW_FAIL dynamic-program-draft-navigation Expected values to be strictly equal:
+
+0 !== 1
+
+MAISON_REVIEW_FAIL edited-log-identity-survives-upload Editing through attachment must not duplicate intervention
+
+2 !== 1
+
+MAISON_REVIEW_FAIL transport-native-name-limit Transport rejects names that native writer cannot persist
+
+true !== false
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   {
++     message: 'Expected values to be strictly equal:\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       '+ undefined\n' +
++       "- 'S123'\n",
++     test: 'partial-backup-preserves-modern-metadata'
++   },
++   {
++     message: 'Expected values to be strictly equal:\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       "+ 'Old backup'\n" +
++       "- 'Changed after preview'\n",
++     test: 'partial-preview-revision-guard'
++   },
++   {
++     message: 'Rejected restore must not put previous household state into new context\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       "+ 'boiler'\n" +
++       "- 'other-context'\n",
++     test: 'full-restore-scope-change-during-read'
++   },
++   {
++     message: 'Expected values to be strictly equal:\n\n0 !== 1\n',
++     test: 'dynamic-program-draft-navigation'
++   },
++   {
++     message: 'Editing through attachment must not duplicate intervention\n\n2 !== 1\n',
++     test: 'edited-log-identity-survives-upload'
++   },
++   {
++     message: 'Transport rejects names that native writer cannot persist\n' +
++       '\n' +
++       'true !== false\n',
++     test: 'transport-native-name-limit'
++   }
++ ]
+- []
+
+    at /workspace/dobby-demo/.worktrees/maison-equipements-20261113/essai-stitch-v7/tests/maison-review-regressions.cjs:12:187 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

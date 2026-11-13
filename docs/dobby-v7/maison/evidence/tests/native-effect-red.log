@@ -1,0 +1,29 @@
+MAISON_REVIEW_FAIL native-save-side-effects-rollback Rejected native save must roll back its derived maintenance tasks
++ actual - expected
+
++ '[{"key":"equipment:quota-legacy:2027-01-31","origin":"equipment","originId":"quota-legacy","sourceDate":"2027-01-31","due":"2027-01-17","title":"Planifier l’entretien : TEST quota legacy","sourceLabel":"TEST quota legacy","state":"open","createdAt":"2026-11-13T12:34:54.335Z"}]'
+- '[]'
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   {
++     message: 'Rejected native save must roll back its derived maintenance tasks\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       `+ '[{"key":"equipment:quota-legacy:2027-01-31","origin":"equipment","originId":"quota-legacy","sourceDate":"2027-01-31","due":"2027-01-17","title":"Planifier l’entretien : TEST quota legacy","sourceLabel":"TEST quota legacy","state":"open","createdAt":"2026-11-13T12:34:54.335Z"}]'\n` +
++       "- '[]'\n",
++     test: 'native-save-side-effects-rollback'
++   }
++ ]
+- []
+
+    at /workspace/dobby-demo/.worktrees/maison-equipements-20261113/essai-stitch-v7/tests/maison-review-regressions.cjs:13:187 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

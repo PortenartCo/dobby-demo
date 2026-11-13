@@ -1494,12 +1494,15 @@ reconcile();existingSave();
  document.addEventListener('change',async e=>{
   if(e.target.id!=='dobbyFullRestore')return;const input=e.target,file=input.files?.[0];if(!file)return;input.disabled=true;
   let oldSt=st,oldCustom=custom,rawBefore,oldFiles=null,replaced=false;
+  const restoreScope=window.DobbyFamilyHouse?.contextSnapshot?.();
+  const sameRestoreScope=()=>restoreScope===window.DobbyFamilyHouse?.contextSnapshot?.();
+  const assertRestoreScope=()=>{window.DobbyFamilyHouse?.assertWritable?.();if(!sameRestoreScope())throw Error('Le foyer ou le compte a changé pendant la restauration.');};
   try{
-   if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const data=JSON.parse(await file.text()),incoming=validatePayload(data);
+   assertRestoreScope();if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const data=JSON.parse(await file.text()),incoming=validatePayload(data);assertRestoreScope();
    if(!confirm('Remplacer toutes les données locales par cette sauvegarde ? Les données actuelles seront perdues si tu n’en as pas conservé une copie.'))return;
-   rawBefore=localStorage.getItem(key);oldFiles=await listAttachments();
+   assertRestoreScope();rawBefore=localStorage.getItem(key);oldFiles=await listAttachments();assertRestoreScope();
    // Replacement of all documents is one IndexedDB transaction. Keep prior blobs for rollback.
-   await replaceAttachments(incoming);replaced=true;
+   await replaceAttachments(incoming);replaced=true;assertRestoreScope();
    st=data.state;custom=st.customRecipes;
    st.page='family';st.extraPage='';st.detail=null;st.houseView=null;houseEdit=null;docEdit=null;docDetail=null;docNoteEdit=null;batchCandidate=null;smartReset();
    localStorage.setItem(key,JSON.stringify(st));
@@ -1508,8 +1511,8 @@ reconcile();existingSave();
    alert('Sauvegarde restaurée : recettes, fiches et pièces jointes disponibles sur cet appareil.');
   }catch(err){
    let rollbackError='';if(replaced&&oldFiles){try{await replaceAttachments(oldFiles)}catch(e){rollbackError=' Restauration des anciens fichiers impossible : ne ferme pas Dobby et conserve tes sauvegardes.'}}
-   st=oldSt;custom=oldCustom;
-   try{if(rawBefore!==undefined){if(rawBefore===null)localStorage.removeItem(key);else localStorage.setItem(key,rawBefore)}render()}catch(e){rollbackError+=' État précédent non rétabli.'}
+   if(sameRestoreScope()){st=oldSt;custom=oldCustom;}
+   try{if(sameRestoreScope()&&rawBefore!==undefined){if(rawBefore===null)localStorage.removeItem(key);else localStorage.setItem(key,rawBefore)}render()}catch(e){rollbackError+=' État précédent non rétabli.'}
    alert('Restauration refusée ou interrompue : '+(err?.message||'fichier invalide')+rollbackError);
   }finally{input.disabled=false}
  });
