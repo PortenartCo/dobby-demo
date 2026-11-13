@@ -1,5 +1,6 @@
 // Pure merge rules: shared by browser pilot and automated tests.
 // No network calls, credentials, or browser storage in this module.
+import {MISSION_V3_RELEASE_VERIFIED,normalizeMissionIntent} from './family-mission-intents.mjs';
 
 export function comparable(row) {
   const stamp = row?.deleted_at ? Date.parse(row.deleted_at) : null;
@@ -98,7 +99,13 @@ export function toServerPayload(item) {
  * Child mission completion remains unavailable until its server protocol is
  * installed and verified; own magic uses the existing targeted canonical RPC.
  */
-const readRPCs=new Set(['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities']);
+const readRPCs=new Set(['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities','dobby_missions_v3_capabilities']);
+export function isCanonicalChildMissionCompletion({query='',body={},access=null}={}){
+ if(access?.verified!==true||access.phase!=='active'||access.profile?.memberCategory!=='child'||!access.memberId||!access.householdId||access.permissions?.canCompleteMissionsV3!==true||
+  query.split('?')[0].replace(/^rpc\//,'')!=='dobby_missions_v3_write'||Object.keys(body).some(key=>!['p_household_id','p_expected_revision','p_operation_id','p_intent'].includes(key))||
+  body.p_household_id!==access.householdId||!Number.isSafeInteger(body.p_expected_revision)||body.p_expected_revision<1||typeof body.p_operation_id!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.p_operation_id))return false;
+ try{return normalizeMissionIntent(body.p_intent).kind==='complete';}catch{return false;}
+}
 export function assertSharedWrite({method='GET',query='',body={},access=null}={}) {
  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase()))return;
  const category=access?.profile?.memberCategory;
@@ -110,5 +117,6 @@ export function assertSharedWrite({method='GET',query='',body={},access=null}={}
  if(readRPCs.has(rpc))return;
  if(category==='child'&&access.verified===true&&access.phase==='active'&&
     rpc==='dobby_v7_update_magic'&&body?.p_member_id===access.memberId)return;
+ if(MISSION_V3_RELEASE_VERIFIED&&method.toUpperCase()==='POST'&&isCanonicalChildMissionCompletion({query,body,access}))return;
  throw Error('Compte enfant en lecture seule : écriture partagée indisponible avant validation serveur. Seule sa propre Maison et son propre Patronus peuvent être modifiés.');
 }

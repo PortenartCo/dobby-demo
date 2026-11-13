@@ -22,10 +22,20 @@ const preserved = {
   'essai-stitch-v7/tests/helpers/e02-shared-groceries.cjs': '4c599d0a9f09ac72c4cb04777091dd3559ede85498a858226a03774317bda4ef'
 };
 
-test('Family source boundaries preserve history plus explicitly reviewed 60-point amendments', () => {
+test('Family source boundaries preserve history plus reviewed general and family-core amendments', () => {
+  const reviews=require('./fixtures/revue-generale-source-extensions.json');
+  const socle=require('./fixtures/family-socle-source-extensions.json');
+  for(const [file,amendment]of Object.entries(socle.files)){
+    assert.ok(Object.hasOwn(preserved,file),file+' is an existing source boundary');
+    assert.ok(amendment.reason,file+' records the family-core amendment');
+    assert.equal(amendment.reviewSha256,reviews[file]?.sha256,file+' preserves the previous review anchor');
+    assert.ok(amendment.tests.length,file+' records targeted semantic checks');
+    for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+  }
   for (const [file, expected] of Object.entries(preserved)) {
     let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
-    const review=require('./fixtures/revue-generale-source-extensions.json')[file];
+    const review=reviews[file],amendment=socle.files[file];
+    if(amendment){assert.equal(digest(source),amendment.sha256,file+' family-core amendment changed');continue;}
     if(review){assert.ok(review.reason);assert.equal(digest(source),review.sha256,file+' reviewed amendment changed');continue;}
     if(file.endsWith('/family-v2.js')){
       const amendment=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/stitch19-20-access-extensions.json'),'utf8'));

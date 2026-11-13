@@ -50,6 +50,7 @@ window.DobbyFamilyMembersReview=(()=>{'use strict';
   const invitation=make('section','','fam-invite-panel');invitation.id='fam-invite-panel';invitation.hidden=true;invitation.append(make('h2','Inviter une personne','fam-section-title'),make('p','Les adultes rejoignent le foyer avec leur propre compte. Le rattachement sécurisé des comptes et l’envoi des invitations doivent être activés avant de poursuivre.','fam-muted'));
   const emailLabel=make('label','Adresse e-mail','fam-field'),email=make('input');email.type='email';email.name='inviteEmail';email.disabled=true;email.placeholder='personne@exemple.be';emailLabel.append(email);const send=make('button','Envoyer l’invitation','fa-button fam-gold');send.type='button';send.disabled=true;invitation.append(emailLabel,send);main.append(invitation);
   const account=c.E.win?.()?.DobbyFamilyUI?.access?.state?.();
+  if(account?.verified&&account.profile?.memberCategory==='child'){invite.disabled=true;invite.title='Les invitations sont réservées aux parents du foyer.';}
   if(account?.verified&&account.permissions?.canInvite&&window.DobbyAccess){invitation.remove();invite.setAttribute('aria-haspopup','dialog');invite.setAttribute('aria-controls','access-invite-dialog');invite.onclick=()=>window.DobbyAccess.invite().catch(error=>c.notice(error.message));}
   else invite.onclick=()=>{invitation.hidden=!invitation.hidden;invite.setAttribute('aria-expanded',String(!invitation.hidden));};
   const tools=make('section','','fam-member-tools');tools.setAttribute('aria-label','Rechercher un membre');

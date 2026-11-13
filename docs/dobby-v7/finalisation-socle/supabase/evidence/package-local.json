@@ -1,0 +1,44 @@
+{
+  "package": "dobby-v7-family-core-manual-v1",
+  "status": "PASS",
+  "postgresVersion": "17.7",
+  "network": "none",
+  "executionRole": "postgres non-superuser direct login",
+  "remoteSupabaseAccess": false,
+  "realAuthRlsRpcOrBrowserVerified": false,
+  "filesSha256": {
+    "10-install-socle.sql": "1230b6df9b619275c441860e0e4d9f4380159a759448299f2e96b2bdd7053497",
+    "11-install-storage.sql": "f9951a13a9a67d5e8098c2e20960ccfa094cdc0dc972767cf03d480a71645630",
+    "20-verify-socle.sql": "d568225582a5b606e6739735e2a7de355bdaba23d9bb76cdba3d96ba686a150c",
+    "90-rollback-suspend.sql": "75021015c3c40198c49d674c02a10bdceb990498dd02accf33775128da3ec161"
+  },
+  "sourceSha256": {
+    "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql": "f74c6913484d2c5914b8923058f268ab9edfb2579d92f49bc12723a7e43af5d7",
+    "docs/dobby-v7/finalisation-socle/supabase/missions/01-apply.sql": "5f8cca31d1e79a0fa6bb8e4134470bdc483b53da4683feb672d544e4d5bd2b3a",
+    "docs/dobby-v7/revue-generale/supabase/shopping/01-install.sql": "3328e26059dc14226cee942af00fefedc164a336f3a277201a0115bff1dc9d4c",
+    "docs/dobby-v7/finalisation-socle/supabase/family/03-install-storage-policies.sql": "f9951a13a9a67d5e8098c2e20960ccfa094cdc0dc972767cf03d480a71645630",
+    "docs/dobby-v7/revue-generale/supabase/shopping/02-verify.sql": "d1da6c2d10c2b7675e034109843649addd4a464580c87990985b6695813e9b75",
+    "docs/dobby-v7/finalisation-socle/supabase/family/02-verify-family.sql": "146e12850c2e4f66fcde926b48cb076af9f245b9e2db33bb9b949d4c6153bc2c",
+    "docs/dobby-v7/finalisation-socle/supabase/missions/02-verify.sql": "763150e8585e2e6ee38638693889b9f037774628200dac668d4c14dc61952dbd",
+    "docs/dobby-v7/finalisation-socle/supabase/shopping/04-verify-catalog.sql": "468b8147f19bbe22e514d10d3507d2ee7a79e8823c8a4700c2626de49fd25f53",
+    "docs/dobby-v7/finalisation-socle/supabase/family/04-verify-storage.sql": "e4a61cf437b434efabf43bb823760417ecc2f6ebeebbb53250270eb4b5c348af",
+    "docs/dobby-v7/finalisation-socle/supabase/family/05-rollback-suspend.sql": "d70dca5b9c3ff0f4813f8c14abde1dfa1ace44d14a0d294c8c36cca1ce6af3ec",
+    "docs/dobby-v7/finalisation-socle/supabase/missions/03-rollback-conservative.sql": "9242a2837924ca737f1a87a63c1e62d0858d535697a85068870d089943f56a16",
+    "docs/dobby-v7/revue-generale/supabase/shopping/03-rollback.sql": "e2eadf4a6664b120cf6d46ebb5d08e3da6f1945d02e88fb1148f36952e9616a0"
+  },
+  "checks": [
+    "failure injected after Courses ADD COLUMN rolls back all Family/Missions/Courses DDL, global role creation and existing business data",
+    "exact 10 installs as direct non-superuser postgres and preserves two accounts, bindings, profiles, legacy ledger, grocery and Storage rows",
+    "exact 20 parses one final four-section JSON; C07 contract and protections true; all client gates false; missing Storage protection reported false",
+    "exact 11 returns managed-ownership 42501 and leaves zero partial policies; 10 stays installed and all data/gates preserved",
+    "exact 11 with local table-owner permission creates exactly five policies; exact 20 observes them with all real-proof flags still false",
+    "exact 90 suspends capabilities/RPCs and retains all accounts, profiles, ledgers, receipts, availability, file metadata and five Storage policies"
+  ],
+  "limits": [
+    "Fictional local data and private reconstructed actual DOBBY catalog only.",
+    "Storage managed foldername implementation is an interface fixture; hosted ownership/delegation is not certified.",
+    "The positive Storage-owner branch is local only and is not an instruction to change managed ownership.",
+    "Client release gates stay false; no installation or recipe on real Supabase is claimed.",
+    "Raw catalog/definitions and failure-injected SQL remain private outside the public repository."
+  ]
+}

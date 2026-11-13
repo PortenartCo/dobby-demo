@@ -52,7 +52,8 @@ export function normalizeMission(raw){
   if(due&&!validDate(due))throw Error('Date d’échéance invalide');
   if(!MISSION_CATEGORIES.includes(category))throw Error('Catégorie non autorisée');
   if(!['open','done'].includes(status))throw Error('État de mission invalide');
-  if(raw.assigneeIds!==undefined&&(!Array.isArray(raw.assigneeIds)||raw.assigneeIds.length>200||raw.assigneeIds.some(id=>typeof id!=='string'||!id.trim()||id.length>100)))throw Error('Attribution de mission invalide');
+  if(raw.assigneeIds!==undefined&&(!Array.isArray(raw.assigneeIds)||raw.assigneeIds.length>200||raw.assigneeIds.some(id=>raw.participantVersion===1?!runes.validV3MemberId(id):typeof id!=='string'||!id.trim()||id.length>100)))throw Error('Attribution de mission invalide');
+  if(raw.participantVersion===1&&raw.assigneeId!==undefined&&raw.assigneeId!==''&&!runes.validV3MemberId(raw.assigneeId))throw Error('Attribution de mission invalide');
   if(raw.allFamily!==undefined&&typeof raw.allFamily!=='boolean')throw Error('Attribution familiale invalide');
   if(raw.participantVersion!==undefined&&raw.participantVersion!==1)throw Error('Version de participation invalide');
   if(raw.priority!==undefined&&!['normal','urgent'].includes(raw.priority))throw Error('Priorité de mission invalide');
@@ -70,7 +71,7 @@ export function normalizeMission(raw){
     ...(recurrence?{recurrence}:{}),
     ...(raw.effort!==undefined?{effort:raw.effort}:{}),
     ...(raw.rewardVersion===1?{rewardVersion:1}:{}),
-    assigneeId:short(raw.assigneeId,100),
+    assigneeId:raw.participantVersion===1?String(raw.assigneeId??''):short(raw.assigneeId,100),
     ...(raw.assigneeIds!==undefined?{assigneeIds:[...new Set(raw.assigneeIds)].sort()}:{}),
     note:short(raw.note,400),
     createdAt:short(raw.createdAt,40),

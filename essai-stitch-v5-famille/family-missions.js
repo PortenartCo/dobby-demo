@@ -1,6 +1,9 @@
 /* Shared manual missions for Dobby V5. Separate from V5 autoTasks/reconcile(). */
 (async function(){
 'use strict';
+window.DobbyMissionIntentsReady=import('./family-mission-intents.mjs?v=20261113-socle-1');
+// Failed optional V3 loading leaves its release gate closed and V2 intact.
+window.DobbyMissionIntentsReady.catch(()=>{});
 const core=await import('./family-missions-core.mjs?v=20261113-review-1');
 const esc=window.DobbyFamilyUI?.esc||(x=>String(x||''));
 if(!Array.isArray(st.manualMissions))st.manualMissions=[];
@@ -14,6 +17,7 @@ const find=id=>st.manualMissions.find(x=>x.id===id);
 let projecting=false;
 function project(){
   if(projecting)return;
+  if(requiresSync()&&window.DobbySharedRunesV3?.available?.()&&members().find(member=>member.id===window.DobbyFamilyUI?.getContext()?.memberId)?.memberCategory==='child')return;
   const rows=core.projectRecurringMissions(st.manualMissions);
   if(rows.length===st.manualMissions.length)return;
   const previous=st.manualMissions;projecting=true;st.manualMissions=rows;
@@ -123,7 +127,7 @@ function saveForm(event){
     if(participantVersion===1){try{assigneeIds=JSON.parse(String(data.get('assigneeIds')||'[]'));}catch{throw Error('Attribution de mission invalide');}}
     const allFamily=participantVersion===1?data.get('allFamily')==='true':old?.allFamily;
     if(participantVersion===1&&assigneeIds.some(id=>!core.humanMembers(members()).some(m=>m.id===id)&&!old?.assigneeIds?.includes(id)&&old?.assigneeId!==id))throw Error('Un membre choisi n’est plus dans le foyer. Votre formulaire reste ouvert.');
-    if(requiresSync()&&participantVersion===1&&(allFamily||assigneeIds.length>1))throw Error('Attribution multiple partagée en attente de validation serveur. Aucune modification enregistrée.');
+    if(requiresSync()&&!window.DobbySharedRunesV3?.available?.()&&participantVersion===1&&(allFamily||assigneeIds.length>1))throw Error('Attribution multiple partagée en attente de validation serveur. Aucune modification enregistrée.');
     let row=core.normalizeMission({
       ...old,
       id:existing||('fm-'+crypto.randomUUID()),
@@ -176,7 +180,7 @@ document.addEventListener('click',event=>{
     else if(a==='edit')showForm(id);
     else if(a==='close')close();
     else if(a==='toggle'){
-      if(find(id)?.participantVersion===1){if(find(id).status==='open')showParticipants(id);else completeMission(id,[],'reopen');return;}
+      if(find(id)?.participantVersion===1||requiresSync()&&window.DobbySharedRunesV3?.available?.()){if(find(id).status==='open')showParticipants(id);else Promise.resolve(completeMission(id,[],'reopen')).catch(error=>alert(error.message));return;}
       assertParentWrite();
       const current=find(id);if(!current)return;
       if(requiresSync()&&sharedRunesV2()&&current.status==='open'&&current.rewardVersion===1&&current.assigneeId&&!members().some(member=>member.id===current.assigneeId))throw Error('Choisissez un responsable présent dans le foyer ou retirez l’attribution avant de terminer cette mission.');
@@ -211,7 +215,11 @@ function assertParentWrite(){
 function completeMission(id,participantIds,operation='complete'){
   const current=find(id);if(!current)throw Error('Mission introuvable');
   if(operation==='complete'&&current.status==='done'||operation==='reopen'&&current.status==='open')return false;
-  if(requiresSync())throw Error('Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.');
+  if(requiresSync()){
+    const transport=window.DobbySharedRunesV3;
+    if(!transport?.available?.())throw Error('Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.');
+    return(operation==='complete'?transport.complete(id,participantIds):transport.reopen(id)).then(result=>{close();render();return result;});
+  }
   const date=new Date().toISOString(),previous={manualMissions:st.manualMissions,runeCredits:st.runeCredits,runeRequests:st.runeRequests};
   const requests=current.status==='done'?core.runes.reopeningRequests(current,st.runeCredits,st.runeRequests,date):core.runes.completionRequests(current,members(),participantIds,st.runeCredits,st.runeRequests,date);
   const credits=core.runes.acceptRequests(st.runeCredits,[...st.runeRequests,...requests],0);
@@ -224,13 +232,13 @@ function showParticipants(id){
   layer.innerHTML='<div class="fms-dialog" role="dialog" aria-modal="true" aria-label="Participants réels"><button type="button" class="fms-close" data-fms-action="close" aria-label="Fermer">×</button><h2>Qui a participé ?</h2><p>La récompense totale est partagée uniquement entre les personnes choisies.</p><form id="fmsParticipants">'+ids.map(id=>'<label><input type="checkbox" name="participant" value="'+esc(id)+'">'+esc(person(id))+'</label>').join('')+'<button type="submit" class="fms-main">Confirmer la mission</button></form></div>';
   const allowEmpty=core.runes.canCompleteWithoutParticipants(current,members()),submit=layer.querySelector('button[type=submit]');
   if(!ids.length){layer.querySelector('p').textContent=allowEmpty?'Aucun membre pouvant recevoir des Runes. La mission sera terminée sans récompense.':'Les personnes attribuées ne sont plus disponibles. Vérifiez l’attribution avant de terminer.';if(submit)submit.disabled=!allowEmpty;}
-  layer.hidden=false;layer.querySelector('form').addEventListener('submit',event=>{event.preventDefault();try{completeMission(id,[...new FormData(event.target).getAll('participant')]);}catch(error){alert(error.message);}});
+  layer.hidden=false;layer.querySelector('form').addEventListener('submit',async event=>{event.preventDefault();if(submit.disabled)return;submit.disabled=true;try{await completeMission(id,[...new FormData(event.target).getAll('participant')]);}catch(error){alert(error.message);}finally{if(submit.isConnected)submit.disabled=false;}});
 }
-function sharedRunesV2(){return window.DobbySharedRunesV2?.available?.()===true;}
+function sharedRunesV2(){return window.DobbySharedRunesV2?.available?.()===true||window.DobbySharedRunesV3?.available?.()===true;}
 function pendingGrant(id){return pendingEvent(id,true);}
-function pendingEvent(id,grantOnly=false){if(!requiresSync())return false;const confirmed=new Map((st.runeCredits||[]).map(row=>[core.runes.eventKey(row),row]));return(st.runeRequests||[]).some(row=>row.missionId===id&&(!grantOnly||(row.kind||'grant')==='grant')&&(!confirmed.has(core.runes.eventKey(row))||['memberId','effort','amount','customRunes','kind','cycle','reverses'].some(key=>confirmed.get(core.runes.eventKey(row))[key]!==row[key])));}
+function pendingEvent(id,grantOnly=false){if(!requiresSync())return false;const confirmed=new Map((st.runeCredits||[]).map(row=>[core.runes.eventKey(row),row]));return(st.runeRequests||[]).some(row=>row.missionId===id&&(!grantOnly||(row.kind||'grant')==='grant')&&(!confirmed.has(core.runes.eventKey(row))||['memberId','effort','amount','customRunes','kind','cycle','reverses','allocations'].some(key=>JSON.stringify(confirmed.get(core.runes.eventKey(row))[key])!==JSON.stringify(row[key]))));}
 function requiresSync(){const configured=window.DobbyFamilyUI?.isModuleConfigured?.('missions');return st.runeSyncRequired===true||configured===true||(configured==null&&Boolean(window.DobbyFamilyUI?.getContext()));}
-window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,participantVersion:1,complete:completeMission,reopen:id=>completeMission(id,[],'reopen'),assignmentIds:(mission)=>core.assignmentIds(mission,members()),completionCandidateIds:mission=>core.runes.completionCandidateIds(mission,members()),canCompleteWithoutParticipants:mission=>core.runes.canCompleteWithoutParticipants(mission,members()),requiresSync,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){return{...core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests),shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};}});
+window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,participantVersion:1,complete:completeMission,reopen:id=>completeMission(id,[],'reopen'),assignmentIds:(mission)=>core.assignmentIds(mission,members()),completionCandidateIds:mission=>core.runes.completionCandidateIds(mission,members()),canCompleteWithoutParticipants:mission=>core.runes.canCompleteWithoutParticipants(mission,members()),requiresSync,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){const v3=window.DobbySharedRunesV3,summary=v3?.available?.()&&v3.summary?v3.summary(memberId):core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests);return{...summary,shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};}});
 // Resume a sleeping/offline tab without an unbounded timer or extra writer.
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){project();render();}});
 window.addEventListener('focus',()=>{project();render();});

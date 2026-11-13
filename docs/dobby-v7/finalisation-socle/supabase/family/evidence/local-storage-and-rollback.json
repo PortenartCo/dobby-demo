@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "postgresVersion": "17.7",
+  "network": "none",
+  "scope": "fictional local Storage catalog and direct role boundaries; no hosted delegation claim",
+  "checks": [
+    "managed ownership refusal returns 42501-equivalent and rolls back all five policy creations",
+    "parent B CRUD accepted; child shared read only; foreign household read/write denied",
+    "exact family and Storage metadata verification reports expected protections without real-auth claim",
+    "uncommitted child acceptance holds suspension barrier; subsequent Storage removal refuses that active child",
+    "conservative rollback suspends F08/new publication while retaining all links/profiles/credits and RLS hardening",
+    "Storage-only rollback refuses active children; after fictional access suspension removes exactly five policies without file changes"
+  ],
+  "filesSha256": {
+    "01-install-family.sql": "f74c6913484d2c5914b8923058f268ab9edfb2579d92f49bc12723a7e43af5d7",
+    "02-verify-family.sql": "146e12850c2e4f66fcde926b48cb076af9f245b9e2db33bb9b949d4c6153bc2c",
+    "03-install-storage-policies.sql": "f9951a13a9a67d5e8098c2e20960ccfa094cdc0dc972767cf03d480a71645630",
+    "04-verify-storage.sql": "e4a61cf437b434efabf43bb823760417ecc2f6ebeebbb53250270eb4b5c348af",
+    "05-rollback-suspend.sql": "d70dca5b9c3ff0f4813f8c14abde1dfa1ace44d14a0d294c8c36cca1ce6af3ec",
+    "06-rollback-storage.sql": "36b83c5b35470a93d86f99683c5948e1fddf2c7553363fb91ef86b9f89b52c04"
+  },
+  "limitations": [
+    "No hosted SQL Editor Storage ownership/delegation success is inferred.",
+    "The foldername fixture follows the documented interface; actual managed implementation is not exported.",
+    "No remote Supabase mutation or real Auth/browser/file upload tested.",
+    "Default functional rollback retains authorization hardening; Storage removal is separate and not routine."
+  ]
+}
