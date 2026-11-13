@@ -1,0 +1,93 @@
+{
+  "status": "PASS",
+  "fixtureOnly": true,
+  "remoteSupabaseOperations": 0,
+  "networkMode": "none",
+  "authUsersOriginally": 2,
+  "temporaryAuthUsersPerFlow": 2,
+  "hashGuardsUntouched": true,
+  "productionTransactionBodiesUnmodified": true,
+  "cases": [
+    {
+      "variant": "legacy_blank_blocks_json-lowercase",
+      "before42501": true,
+      "readOnlyAccountProbe": {
+        "phaseCounts": {
+          "active": 2,
+          "profile": 2
+        },
+        "probedAccountCount": 4,
+        "errorSqlstateCounts": {}
+      },
+      "verificationReadOnlyEnforced": true,
+      "verificationClaimsRestoredBeforeRollback": true,
+      "createInviteAcceptProfileMagicNativeTrigger": true,
+      "privateAndAnonymousDenied": true,
+      "missingMalformedMetadataClaimsDenied": true,
+      "rollbackBodiesAndFailureRestored": true,
+      "outerRollbackRestoresAllOriginalDataAndMetadata": true
+    },
+    {
+      "variant": "legacy_blank_blocks_json-uppercase",
+      "before42501": true,
+      "readOnlyAccountProbe": {
+        "phaseCounts": {
+          "active": 2,
+          "profile": 2
+        },
+        "probedAccountCount": 4,
+        "errorSqlstateCounts": {}
+      },
+      "verificationReadOnlyEnforced": true,
+      "verificationClaimsRestoredBeforeRollback": true,
+      "createInviteAcceptProfileMagicNativeTrigger": true,
+      "privateAndAnonymousDenied": true,
+      "missingMalformedMetadataClaimsDenied": true,
+      "rollbackBodiesAndFailureRestored": true,
+      "outerRollbackRestoresAllOriginalDataAndMetadata": true
+    },
+    {
+      "variant": "legacy_blank_uses_json-lowercase",
+      "before42501": true,
+      "readOnlyAccountProbe": {
+        "phaseCounts": {
+          "active": 2,
+          "profile": 2
+        },
+        "probedAccountCount": 4,
+        "errorSqlstateCounts": {}
+      },
+      "verificationReadOnlyEnforced": true,
+      "verificationClaimsRestoredBeforeRollback": true,
+      "createInviteAcceptProfileMagicNativeTrigger": true,
+      "privateAndAnonymousDenied": true,
+      "missingMalformedMetadataClaimsDenied": true,
+      "rollbackBodiesAndFailureRestored": true,
+      "outerRollbackRestoresAllOriginalDataAndMetadata": true
+    },
+    {
+      "variant": "legacy_blank_uses_json-uppercase",
+      "before42501": true,
+      "readOnlyAccountProbe": {
+        "phaseCounts": {
+          "active": 2,
+          "profile": 2
+        },
+        "probedAccountCount": 4,
+        "errorSqlstateCounts": {}
+      },
+      "verificationReadOnlyEnforced": true,
+      "verificationClaimsRestoredBeforeRollback": true,
+      "createInviteAcceptProfileMagicNativeTrigger": true,
+      "privateAndAnonymousDenied": true,
+      "missingMalformedMetadataClaimsDenied": true,
+      "rollbackBodiesAndFailureRestored": true,
+      "outerRollbackRestoresAllOriginalDataAndMetadata": true
+    }
+  ],
+  "files": {
+    "12-verify-auth-schema-fallback.sql": "16632c0de4d65ea314cb82f09b899cb0747f91bbc228593d0b67a49e33503cc2",
+    "13-rollback-auth-schema-fallback.sql": "8c7b6a7505c84614f0d95cb640bca2362acaf40c4b6fbc8f16e944ba21d73266",
+    "11-apply-auth-schema-fallback.sql": "89ad617b164b6b94a6751da7ba6e6ee2d9a7eaf6a03206ad50b9083324692cc6"
+  }
+}

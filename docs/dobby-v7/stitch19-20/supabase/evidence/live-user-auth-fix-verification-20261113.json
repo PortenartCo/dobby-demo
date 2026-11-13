@@ -1,0 +1,38 @@
+{
+  "source": "user-executed SQL11 and read-only SQL12",
+  "date": "2026-11-13",
+  "scope": "personal-family-project-only",
+  "appliedByUser": true,
+  "repairResult": {
+    "repair": "dobby-v7-jwt-sub-invoker-v1",
+    "stampMd5": "6e2372696dc78db3a039342f66feadcf",
+    "actorOwner": "postgres",
+    "actorVariant": "legacy_blank_uses_json",
+    "functionsChanged": 2,
+    "authSchemaUntouched": true,
+    "actorSecurityInvoker": true,
+    "realAuthOrApiVerified": false,
+    "noAccountOrHouseholdReset": true,
+    "actorOriginalWriterOwnerRestored": false
+  },
+  "repairVerification": {
+    "readOnly": true,
+    "actorOwner": "postgres",
+    "verification": "dobby-v7-jwt-sub-invoker-v1",
+    "actorDefinitionMd5": "b8cefee1f90f53c8bda4132fe4ae3358",
+    "stampDefinitionMd5": "6e2372696dc78db3a039342f66feadcf",
+    "actorSecurityInvoker": true,
+    "contextDatabaseProbe": {
+      "phaseCounts": {"profile": 2},
+      "probedAccountCount": 2,
+      "errorSqlstateCounts": {}
+    },
+    "realAuthOrApiVerified": false,
+    "writerAuthSchemaUsage": false,
+    "writerCanExecuteActor": true,
+    "actorOwnerIsSchemaOwner": true,
+    "callerCanExecuteContext": true
+  },
+  "realAuthenticatedJourneysVerified": false,
+  "nextStep": "User browser acceptance: profile, household, invitation, acceptance, sync, reconnect"
+}
