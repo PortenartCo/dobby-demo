@@ -1,0 +1,29 @@
+{
+  "purpose": "Explicit PR15 native readiness amendments above the unchanged PR11 reconciliation; complete current sources are checked once, with no older-fingerprint fallback.",
+  "baseCommit": "25dd637c1b827bd09a46d8a55be63d9c14966f19",
+  "parentManifest": {
+    "path": "essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json",
+    "sha256": "faa208f102e406cb51666e0cfa42726d555cb3e3bad825e44856d070c61df567"
+  },
+  "files": {
+    "essai-stitch-v5-famille/family-v2.js": {
+      "beforeSha256": "d3112bdc15bd9537fa3c6450acdb14910843b16d0b7a5db5e33142e54fdfc7ef",
+      "afterSha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+      "reason": "Complete cached-household bootstrap before automatic access refresh; retain the parent's serialized membership checks, actor binding guards, pending family-edit refusal and foreign-device marker isolation.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-access-bootstrap.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-native.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-native-socle.test.mjs"
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "81bfa7ada452c5a45d5b3e13904bcf68b41f4790545acb5f73f08a045fa2cd65",
+      "afterSha256": "4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc",
+      "reason": "Restore acknowledged module state and pending operations after an interrupted start; reject late reads from another actor or an obsolete same-actor restoration without replacing completed restoration or adoption.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-module-start-recovery.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-bootstrap.test.mjs"
+      ]
+    }
+  }
+}

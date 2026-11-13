@@ -8,8 +8,14 @@ const crypto = require('node:crypto');
 const repo = path.resolve(__dirname, '../..');
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const reconciliation = require('./fixtures/reconciliation-main-43eef-source-extensions.json');
-function currentFingerprint(file,source,review,composed){
-  const expected=composed?composed.mergedSha256:review.sha256;
+const readiness = require('./fixtures/pr15-native-readiness-source-extensions.json');
+function currentFingerprint(file,source,review,composed,extension=readiness.files[file]){
+  const previous=composed?composed.mergedSha256:review.sha256;
+  if(extension){
+    assert.ok(composed,file+' readiness extension requires the frozen reconciliation');
+    assert.equal(extension.beforeSha256,previous,file+' readiness extension preserves its exact parent');
+  }
+  const expected=extension?extension.afterSha256:previous;
   assert.match(expected,/^[a-f0-9]{64}$/,file+' complete approved SHA-256');
   assert.equal(digest(source),expected,file+' current reviewed source changed');
 }
@@ -115,6 +121,35 @@ test('a tampered reconciliation fingerprint cannot fall back to a valid older re
   const review=require('./fixtures/revue-generale-source-extensions.json')[file];
   assert.equal(digest(source),review.sha256,'The unchanged Contracts writer is a valid older review');
   assert.throws(()=>currentFingerprint(file,source,review,{...reconciliation.files[file],mergedSha256:'0'.repeat(64)}),/current reviewed source changed/);
+});
+
+test('native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources',()=>{
+  assert.equal(readiness.baseCommit,'25dd637c1b827bd09a46d8a55be63d9c14966f19');
+  assert.equal(readiness.parentManifest.path,'essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json');
+  assert.equal(digest(fs.readFileSync(path.join(repo,readiness.parentManifest.path))),readiness.parentManifest.sha256,'Frozen PR11 reconciliation remains byte-exact');
+  assert.deepEqual(Object.keys(readiness.files).sort(),[
+    'essai-stitch-v5-famille/family-modules.js',
+    'essai-stitch-v5-famille/family-v2.js'
+  ],'Only the reviewed access/bootstrap and module restoration sources are extended');
+  for(const[file,extension]of Object.entries(readiness.files)){
+    assert.equal(extension.beforeSha256,reconciliation.files[file].mergedSha256,file+' retains its complete PR11 parent');
+    assert.notEqual(extension.afterSha256,extension.beforeSha256,file+' records a real source amendment');
+    assert.ok(extension.reason,file+' explains the reviewed amendment');
+    assert.ok(extension.tests.length,file+' records targeted semantic checks');
+    for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    currentFingerprint(file,source,null,reconciliation.files[file]);
+    assert.throws(()=>currentFingerprint(file,source+'\n/* unreviewed source byte */',null,reconciliation.files[file]),/current reviewed source changed/);
+    assert.throws(()=>currentFingerprint(file,source,null,reconciliation.files[file],{...extension,afterSha256:'0'.repeat(64)}),/current reviewed source changed/);
+    assert.throws(()=>currentFingerprint(file,source,null,reconciliation.files[file],{...extension,beforeSha256:'0'.repeat(64)}),/preserves its exact parent/);
+  }
+});
+
+test('a readiness extension cannot fall back to valid frozen-parent bytes',()=>{
+  const file='essai-stitch-v5-famille/family-v2.js',previous='fixture: reviewed PR11 source',next='fixture: reviewed PR15 source';
+  const review={sha256:digest(previous)},composed={mergedSha256:digest(previous)},extension={beforeSha256:digest(previous),afterSha256:digest(next)};
+  currentFingerprint(file,next,review,composed,extension);
+  assert.throws(()=>currentFingerprint(file,previous,review,composed,extension),/current reviewed source changed/,'A matching older review never rescues a failed current fingerprint');
 });
 
 // Courses intentionally evolves for C01-C07 and independent dessert imports.

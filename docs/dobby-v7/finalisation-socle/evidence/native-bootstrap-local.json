@@ -1,0 +1,26 @@
+{
+  "verification": "dobby-native-bootstrap-recovery-local-v1",
+  "baseMain": "25dd637c1b827bd09a46d8a55be63d9c14966f19",
+  "scope": "local fictional IndexedDB, DOM and HTTP services; actual native transport, access controller and module provider",
+  "sources": {
+    "essai-stitch-v5-famille/family-v2.js": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+    "essai-stitch-v5-famille/family-modules.js": "4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc"
+  },
+  "causalBootstrapBeforeFix": {"passed": 4, "failed": 1},
+  "bootstrapAfterFix": {"passed": 5, "failed": 0},
+  "moduleRecoveryAfterFix": {"passed": 5, "failed": 0},
+  "offlineFamilyAndConflictRegressions": {"passed": 436, "failed": 0},
+  "manualHttpProbeMocks": {"passed": 72, "failed": 0},
+  "sourceProvenance": {"passed": 9, "failed": 0},
+  "nativeSourceIntegration": {"passed": 10, "failed": 0},
+  "prepTwoBrowserFixturePassed": true,
+  "independentReviewPassed": true,
+  "publicationFlagsOpened": false,
+  "realUserNativeRecoveryVerified": false,
+  "limits": [
+    "The base-main reproduction demonstrates an initial context request racing cached-household restoration; its later automatic recovery is not claimed to fail systematically.",
+    "Base main already serializes public access refresh and Sync. No additional membership coalescing was retained.",
+    "The candidate waits for cached-household restoration and retries interrupted module-state hydration while preserving pending operations, acknowledged revisions and actor/household guards.",
+    "User checkpoint 31 must be repeated after publication before declaring the connected client recovered. No live Supabase call or gate activation was performed by these tests."
+  ]
+}
