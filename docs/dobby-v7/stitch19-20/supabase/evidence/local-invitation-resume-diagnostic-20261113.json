@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "sourceSha256": "f7b9ac318e04119a31dd22f31ff917045172046f54d3e7bb933faf52d207ba49",
+  "fixtureOnly": true,
+  "remoteSupabaseOperations": 0,
+  "readOnlyEnforced": true,
+  "claimsRestoredBeforeRollback": true,
+  "allRowsMetadataAndMembershipsPreserved": true,
+  "onlyExistingPrivateAggregateHelper": true,
+  "noIdentifiersNamesOrTokensInOutput": true,
+  "result": {
+    "scope": "personal-family-project-only",
+    "readOnly": true,
+    "authUsers": {
+      "count": 2,
+      "status": "exact"
+    },
+    "privateV7": {
+      "counts": {
+        "bindings": 2,
+        "invitations": 1,
+        "pendingProfiles": 0
+      },
+      "status": "exact",
+      "coverage": "bindings,pendingProfiles,invitations; existing installer-only aggregate helper"
+    },
+    "diagnostic": "dobby-v7-invitation-resume-readonly-v1",
+    "memberships": {
+      "counts": {
+        "rows": 4,
+        "activeRows": 2,
+        "activeOwners": 1,
+        "inactiveRows": 2,
+        "activeMembers": 1,
+        "distinctActiveAccounts": 2
+      },
+      "status": "exact"
+    },
+    "householdShapes": {
+      "groups": [
+        {
+          "shape": {
+            "activeOwners": 0,
+            "activeMembers": 0,
+            "canonicalProfiles": 0,
+            "inactiveMemberships": 2,
+            "canonicalRegistryStatus": "array",
+            "distinctCanonicalProfileIds": 0
+          },
+          "households": 1
+        },
+        {
+          "shape": {
+            "activeOwners": 1,
+            "activeMembers": 1,
+            "canonicalProfiles": 2,
+            "inactiveMemberships": 0,
+            "canonicalRegistryStatus": "array",
+            "distinctCanonicalProfileIds": 2
+          },
+          "households": 1
+        }
+      ],
+      "status": "exact"
+    },
+    "noResetPerformed": true,
+    "contextDatabaseProbe": {
+      "status": "exact",
+      "phaseCounts": {
+        "active": 2
+      },
+      "probedAccountCount": 2,
+      "errorSqlstateCounts": {},
+      "activeHouseholdGroups": [
+        {
+          "activeAccounts": 2,
+          "distinctCanonicalProfiles": 2
+        }
+      ],
+      "callerCanExecuteContext": true
+    },
+    "invitationDispositions": {
+      "reason": "Private FORCE RLS visibility remains closed; only the existing global invitation count is read.",
+      "status": "unavailable"
+    },
+    "realAuthOrBrowserAdoptionVerified": false
+  }
+}

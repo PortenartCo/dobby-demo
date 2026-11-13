@@ -1,0 +1,105 @@
+{
+  "passed": true,
+  "review": "invitation-resume",
+  "localBrowserFixturesOnly": true,
+  "realBackendOrUserJourneyVerified": false,
+  "sourceSha256": {
+    "essai-stitch-v7/access.js": "182083cbe1eb50025d892befddee8d1bfb8e573c37b73854f31e2e2c81b1e7d1",
+    "essai-stitch-v7/tests/stitch-access-races.cjs": "58df8562d3fbc4567e5c52592899ad0e6d2e38cce1431985222e0350166fe32a"
+  },
+  "regressions": [
+    {
+      "name": "login displays safe diagnostic for Auth refusal",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for household refusal after Auth",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unconfirmed email",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unrecognized credentials",
+      "status": "PASS"
+    },
+    {
+      "name": "editing invitation B cannot install or accept delayed preview A",
+      "status": "PASS"
+    },
+    {
+      "name": "actual Members invitation action opens native invitation creation",
+      "status": "PASS"
+    },
+    {
+      "name": "failed invitation creation has visible inline error outside access screen",
+      "status": "PASS"
+    },
+    {
+      "name": "owner-bound invitation survives full reload and restored Auth refresh",
+      "status": "PASS"
+    },
+    {
+      "name": "personal profile edit action opens fused identity and portrait form",
+      "status": "PASS"
+    },
+    {
+      "name": "failed PKCE confirmation preserves invitation belonging to restored Auth owner",
+      "status": "PASS"
+    },
+    {
+      "name": "direct account A to B switch cannot save A rendered profile draft into B",
+      "status": "PASS"
+    },
+    {
+      "name": "committed invitation with failed native adoption resumes through one refresh without replay",
+      "status": "PASS"
+    },
+    {
+      "name": "already verified account can leave an invalid invitation for its existing household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed profile",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed unavailable",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed active is unverified",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves same token of another owner",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves newer token of same owner",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery refresh preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery CAS preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "valid invitation for another household keeps the explicit acceptance path",
+      "status": "PASS"
+    },
+    {
+      "name": "initialization stale owner cleanup preserves a newer current owner invitation",
+      "status": "PASS"
+    }
+  ],
+  "independentAdditionalRace": "Delayed old-owner cleanup preserves new-owner same-token metadata and in-memory state; see independent-race.log"
+}

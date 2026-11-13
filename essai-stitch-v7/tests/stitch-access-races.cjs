@@ -7,41 +7,55 @@ const executablePath=process.env.CHROMIUM_PATH||'/workspace/scratch/chrome-ci156
 const results=[];
 let browser;
 
-async function fixture({phase='active',deferPreview=false,signInError=null}={}){
+async function fixture({phase='active',deferPreview=false,signInError=null,previewInvalid=false,acceptCommittedFailure=false}={}){
  const context=await browser.newContext({viewport:{width:390,height:844},locale:'fr-BE',reducedMotion:'reduce'});
  const external=[];
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():(external.push(new URL(route.request().url()).origin),route.abort()));
- await context.addInitScript(({phase,deferPreview,signInError})=>{
+ await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const grants={canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true};
-  let restored={phase,configured:true,authenticated:true,userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
+  const active=()=>({phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ACCESS-OWNER',householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1,profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},pendingCeremony:true,permissions:grants});
+  let restored=JSON.parse(sessionStorage.getItem('dobby-test-restored-access')||'null')||{phase,configured:true,authenticated:phase!=='unavailable',userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
   // Mirror native access: synchronous state starts blank until refresh resolves.
   let state={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null};
   const listeners=new Set(),emit=()=>{for(const listener of listeners)listener({...state});return {...state};};
-  window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0};
-  window.__accessRace.switchAccount=()=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'}};state={...restored};return emit();};
+  window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0,recoveryArmed:false,recoveryPending:false,releaseRecovery:null,pauseCas:false,casPending:false,releaseCas:null,consumed:false,metadataReadReplacements:0};
+  const record=call=>{window.__accessRace.calls.push(call);const history=JSON.parse(sessionStorage.getItem('dobby-test-access-calls')||'[]');history.push(call);sessionStorage.setItem('dobby-test-access-calls',JSON.stringify(history));};
+  window.__accessRace.armRecovery=({phase='active',verified=phase==='active',defer=false,pendingCeremony=true}={})=>{window.__accessRace.recoveryArmed={phase,verified,defer,pendingCeremony,userId:state.userId};};
+  window.__accessRace.switchAccount=(overrides={})=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'},...overrides};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();};
   const invitation=token=>({status:'valid',household:{id:'TEST-HH-'+token,name:'TEST foyer '+token},inviter:{name:'TEST invitant'},expiresAt:'2099-11-12T12:00:00Z'});
   const access={ready:Promise.resolve(),state:()=>({...state}),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},
-   signIn:async()=>{window.__accessRace.calls.push({kind:'signIn'});throw Object.assign(Error('PRIVATE SERVER DETAIL private@example.test private-token'),signInError||{});},
-   refresh:async()=>{window.__accessRace.refreshes++;state={...restored};return emit();},
-   confirmFromURL:async()=>{window.__accessRace.calls.push({kind:'confirm'});throw Error('TEST expired PKCE confirmation');},
-   saveProfile:async(values,options)=>{window.__accessRace.calls.push({kind:'saveProfile',userId:state.userId,values:{...values},options:{...options}});state={...state,profile:{...state.profile,...values}};return emit();},
-   previewInvitation:async token=>{window.__accessRace.calls.push({kind:'preview',token});if(deferPreview){window.__accessRace.previewPending=true;await new Promise(resolve=>window.__accessRace.releasePreview=resolve);window.__accessRace.previewPending=false;}return invitation(token);},
-   acceptInvitation:async token=>{window.__accessRace.calls.push({kind:'accept',token});throw Error('TEST acceptance deliberately stops before navigation');},
-   createInvitation:async()=>{window.__accessRace.calls.push({kind:'create'});throw new TypeError('TEST network unavailable');}
+   signIn:async()=>{record({kind:'signIn'});throw Object.assign(Error('PRIVATE SERVER DETAIL private@example.test private-token'),signInError||{});},
+   refresh:async()=>{window.__accessRace.refreshes++;const recovery=window.__accessRace.recoveryArmed;record({kind:'refresh',recovery:!!recovery});if(recovery){window.__accessRace.recoveryArmed=false;if(recovery.defer){window.__accessRace.recoveryPending=true;await new Promise(resolve=>window.__accessRace.releaseRecovery=resolve);window.__accessRace.recoveryPending=false;}if(state.userId===recovery.userId){restored={...active(),phase:recovery.phase,verified:recovery.verified,authenticated:recovery.phase!=='unavailable',pendingCeremony:recovery.pendingCeremony,...(recovery.phase==='active'?{}:{householdId:null,memberId:null})};state={...restored};}}else state={...restored};return emit();},
+   confirmFromURL:async()=>{record({kind:'confirm'});throw Error('TEST expired PKCE confirmation');},
+   saveProfile:async(values,options)=>{record({kind:'saveProfile',userId:state.userId,values:{...values},options:{...options}});state={...state,profile:{...state.profile,...values}};return emit();},
+   previewInvitation:async token=>{record({kind:'preview',token});if(deferPreview){window.__accessRace.previewPending=true;await new Promise(resolve=>window.__accessRace.releasePreview=resolve);window.__accessRace.previewPending=false;}return previewInvalid||window.__accessRace.consumed?{status:'invalid'}:invitation(token);},
+   acceptInvitation:async token=>{record({kind:'accept',token});if(acceptCommittedFailure){window.__accessRace.consumed=true;restored=active();state={phase:'unavailable',configured:true,userId:'TEST-ACCESS-OWNER',authenticated:false,verified:false};emit();throw Error('TEST server accepted; first native adoption failed');}throw Error('TEST acceptance deliberately stops before navigation');},
+   createInvitation:async()=>{record({kind:'create'});throw new TypeError('TEST network unavailable');}
   };
   let native;
   Object.defineProperty(window,'DobbyFamilyUI',{configurable:true,get:()=>native,set:api=>{native={...api,access,
    connectionState:()=>({...api.connectionState(),configured:true,verified:state.verified,identityVerified:state.verified,access:state.verified?'verified':'local',verifying:false}),
-   getContext:()=>state.verified?{userId:state.userId,householdId:state.householdId,memberId:state.memberId,identityVerified:true,permissions:grants,familyRevision:1}:null
+   getContext:()=>state.verified?{userId:state.userId,householdId:state.householdId,memberId:state.memberId,identityVerified:true,permissions:grants,familyRevision:1}:null,
+   meta:async key=>{const saved=await api.meta(key),replacement=sessionStorage.getItem('dobby-test-replace-invitation-after-read');if(key==='v7-incoming-invitation'&&replacement){sessionStorage.removeItem('dobby-test-replace-invitation-after-read');await api.putMeta(key,JSON.parse(replacement));window.__accessRace.metadataReadReplacements++;}return saved;},
+   updateMeta:async(key,change)=>{if(key==='v7-incoming-invitation'&&window.__accessRace.pauseCas){window.__accessRace.pauseCas=false;window.__accessRace.casPending=true;await new Promise(resolve=>window.__accessRace.releaseCas=resolve);window.__accessRace.casPending=false;}return api.updateMeta(key,change);}
   };}});
- },{phase,deferPreview,signInError});
+ },{phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure});
  const page=await context.newPage();page.setDefaultTimeout(6000);
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const load=async route=>{await page.goto(origin+'/essai-stitch-v7/famille.html#'+route);await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.state().userId==='TEST-ACCESS-OWNER');};
  const native=code=>page.evaluate(code=>DobbyFamilyStitchEngine.evaluate(code),code);
  const seedMember=()=>native('st.familyMembers=[{id:"TEST-CANONICAL-MEMBER",name:"TEST Access",firstName:"TEST",lastName:"Access",memberCategory:"parent",magicProfile:{avatarId:"portrait-9",houseId:"ravenclaw",patronusId:"otter",ceremonyStatus:"complete"}}];save();');
- return{context,page,errors,external,load,native,seedMember};
+ const calls=()=>page.evaluate(()=>JSON.parse(sessionStorage.getItem('dobby-test-access-calls')||'[]'));
+ return{context,page,errors,external,load,native,seedMember,calls};
+}
+
+async function invalidInvitation({page,load,native},token='TEST-RECOVERY-INVITATION'){
+ await load('access-join');await page.getByLabel('Code ou lien d’invitation',{exact:true}).fill(token);
+ await page.getByRole('button',{name:'Vérifier l’invitation',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+ await page.locator('[data-access-invitation][data-invitation-state=invalid]').waitFor();
+ assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),{token,userId:'TEST-ACCESS-OWNER'});
+ return token;
 }
 async function check(name,options,action){
  if(process.env.DOBBY_ACCESS_CASE_PATTERN&&!new RegExp(process.env.DOBBY_ACCESS_CASE_PATTERN).test(name))return;
@@ -139,6 +153,82 @@ async function check(name,options,action){
    await page.waitForFunction(()=>!window.DobbyAccess?.busy);
    const writes=await native('return window.__accessRace.calls.filter(row=>row.kind==="saveProfile");');
    assert.equal(writes.filter(row=>row.userId==='TEST-ACCESS-OTHER'&&row.values.firstName==='TEST A unsaved identity').length,0,'Equal family revisions must not allow account A\'s draft to overwrite account B\'s profile');
+  });
+  await check('committed invitation with failed native adoption resumes through one refresh without replay',{phase:'household',acceptCommittedFailure:true},async f=>{
+   const {page,load,native,calls}=f,token='TEST-RECOVERY-CONSUMED';
+   await load('access-join');await page.getByLabel('Code ou lien d’invitation',{exact:true}).fill(token);
+   await page.getByRole('button',{name:'Vérifier l’invitation',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   await page.getByRole('button',{name:'Rejoindre ce foyer',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   assert.deepEqual(await native('const s=DobbyFamilyUI.access.state();return {phase:s.phase,userId:s.userId,authenticated:s.authenticated,verified:s.verified};'),{phase:'unavailable',userId:'TEST-ACCESS-OWNER',authenticated:false,verified:false});
+   await page.getByRole('button',{name:'Vérifier l’invitation',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   await page.locator('[data-access-invitation][data-invitation-state=invalid]').waitFor();
+   await native('window.__accessRace.armRecovery();');
+   await page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}).click();
+   await page.waitForURL(url=>url.pathname.endsWith('/traverse.html'));
+   const history=await calls();assert.equal(history.filter(row=>row.kind==='accept').length,1,'Acceptance is never replayed after the server consumed the token');
+   assert.equal(history.filter(row=>row.kind==='refresh'&&row.recovery).length,1,'Recovery performs one fresh access check');
+   await page.waitForFunction(()=>window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI?.connectionState?.().ready);
+   assert.equal(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),null,'Only the recovered owner token is cleared');
+  });
+  await check('already verified account can leave an invalid invitation for its existing household',{previewInvalid:true},async f=>{
+   const {page,native,calls,seedMember}=f;await invalidInvitation(f);await seedMember();
+   await native('window.__accessRace.armRecovery({pendingCeremony:false});');
+   await page.getByRole('button',{name:'Accéder à mon foyer',exact:true}).click();
+   await page.waitForURL(url=>url.hash.startsWith('#onboarding-ritual'));
+   assert.equal(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),null);
+   const history=await calls();assert.equal(history.filter(row=>row.kind==='refresh'&&row.recovery).length,1);assert.equal(history.filter(row=>row.kind==='accept').length,0);
+  });
+  for(const target of [{phase:'profile'},{phase:'household'},{phase:'unavailable'},{phase:'active',verified:false}])await check('invitation recovery preserves pending token when refreshed '+target.phase+(target.verified===false?' is unverified':''),{phase:'unavailable',previewInvalid:true},async f=>{
+   const {page,native,calls}=f,token=await invalidInvitation(f),before=page.url();
+   await native('window.__accessRace.armRecovery('+JSON.stringify(target)+');');
+   await page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   assert.equal(page.url(),before,'Incomplete identity cannot navigate to the household');
+   assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),{token,userId:'TEST-ACCESS-OWNER'});
+   const history=await calls();assert.equal(history.filter(row=>row.kind==='refresh'&&row.recovery).length,1);assert.equal(history.filter(row=>row.kind==='accept').length,0);
+  });
+  for(const replacement of [{token:'TEST-RECOVERY-INVITATION',userId:'TEST-ACCESS-OTHER'},{token:'TEST-NEWER-INVITATION',userId:'TEST-ACCESS-OWNER'}])await check('invitation recovery CAS preserves '+(replacement.userId==='TEST-ACCESS-OTHER'?'same token of another owner':'newer token of same owner'),{phase:'unavailable',previewInvalid:true},async f=>{
+   const {page,native,calls}=f;await invalidInvitation(f);const before=page.url();
+   await native('window.__accessRace.armRecovery();window.__accessRace.pauseCas=true;');
+   await page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}).click();
+   await page.waitForFunction(()=>DobbyFamilyStitchEngine.win().__accessRace.casPending);
+   await native('return DobbyFamilyUI.putMeta("v7-incoming-invitation",'+JSON.stringify(replacement)+');');
+   await native('window.__accessRace.releaseCas();');await page.waitForFunction(()=>!DobbyAccess.busy);
+   assert.equal(page.url(),before,'A superseded invitation cannot authorize navigation');
+   assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),replacement);
+   assert.equal((await calls()).filter(row=>row.kind==='accept').length,0);
+  });
+  for(const boundary of ['refresh','CAS'])await check('account switch during invitation recovery '+boundary+' preserves new owner token and blocks navigation',{phase:'unavailable',previewInvalid:true},async f=>{
+   const {page,native,calls}=f;await invalidInvitation(f);const replacement={token:'TEST-OTHER-OWNER-INVITATION',userId:'TEST-ACCESS-OTHER'};
+   await native(boundary==='refresh'?'window.__accessRace.armRecovery({defer:true});':'window.__accessRace.armRecovery();window.__accessRace.pauseCas=true;');
+   await page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}).click();
+   await page.waitForFunction(boundary=>DobbyFamilyStitchEngine.win().__accessRace[boundary==='refresh'?'recoveryPending':'casPending'],boundary);
+   await native('return DobbyFamilyUI.putMeta("v7-incoming-invitation",'+JSON.stringify(replacement)+');');
+   // Native session installation withdraws member/household authority before
+   // the replacement account has completed its own server verification.
+   await native('window.__accessRace.switchAccount({phase:"unavailable",authenticated:false,verified:false,householdId:null,memberId:null});window.__accessRace.'+(boundary==='refresh'?'releaseRecovery':'releaseCas')+'();');
+   await page.waitForFunction(()=>!window.DobbyAccess?.busy&&window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI?.access?.state()?.userId==='TEST-ACCESS-OTHER');
+   const after=new URL(page.url());assert.ok(after.pathname.endsWith('/famille.html')&&after.hash.startsWith('#access'),'Account changes may redirect to safe access, never Traverse or the earlier owner ritual: '+after.href);
+   assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),replacement);
+   assert.equal((await calls()).filter(row=>row.kind==='accept').length,0);
+  });
+  await check('valid invitation for another household keeps the explicit acceptance path',{},async({page,load,native,calls})=>{
+   await load('access-join');await page.getByLabel('Code ou lien d’invitation',{exact:true}).fill('TEST-OTHER-HOUSEHOLD-INVITATION');
+   await page.getByRole('button',{name:'Vérifier l’invitation',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   await page.getByRole('button',{name:'Rejoindre ce foyer',exact:true}).waitFor();
+   assert.equal(await page.getByRole('button',{name:'Accéder à mon foyer',exact:true}).count(),0);
+   assert.equal(await page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}).count(),0);
+   assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),{token:'TEST-OTHER-HOUSEHOLD-INVITATION',userId:'TEST-ACCESS-OWNER'});
+   assert.equal((await calls()).filter(row=>row.kind==='accept').length,0);
+  });
+  await check('initialization stale owner cleanup preserves a newer current owner invitation',{phase:'household'},async({page,load,native})=>{
+   await load('access-join');
+   const newer={token:'TEST-INITIALIZE-NEWER-INVITATION',userId:'TEST-ACCESS-OWNER'};
+   await native('return DobbyFamilyUI.putMeta("v7-incoming-invitation",{token:"TEST-INITIALIZE-OTHER-INVITATION",userId:"TEST-ACCESS-OTHER"});');
+   await native('sessionStorage.setItem("dobby-test-replace-invitation-after-read",'+JSON.stringify(JSON.stringify(newer))+');');
+   await page.evaluate(()=>history.replaceState(null,'','#access'));await page.reload();
+   await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&!window.DobbyAccess?.busy&&document.body.dataset.familyView!=='access');
+   assert.equal(await native('return window.__accessRace.metadataReadReplacements;'),1,'The newer pointer is committed after the stale initialization read');
+   assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),newer,'Initialization may clear only the stale token and owner it actually read');
   });
  }finally{await browser.close();}
  console.log(JSON.stringify({liveBackend:false,results},null,2));
