@@ -108,27 +108,41 @@ async function raw(path, method, body, headers = {}, bearer = null) {
   }
   return data;
 }
-async function keepSession(result) {
+function requestActor(){return{epoch:f.epoch,userId:f.session?.user_id||null,householdId:f.householdId||null};}
+function assertRequestActor(expected){
+  const actual=requestActor();
+  if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
+}
+async function keepSession(result,expected=null) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
+  if(expected)assertRequestActor(expected);
   const old = f.session || {};
-  f.session = {
+  const next = {
     access_token: result.access_token, refresh_token: result.refresh_token,
     expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
     user_id: result.user?.id || old.user_id,
     email: result.user?.email || old.email || ''
   };
-  await putMeta('session', f.session);
+  if(expected){
+    await updateMeta('session',()=>{assertRequestActor(expected);return next;});
+    assertRequestActor(expected);f.session=next;
+  }else{f.session=next;await putMeta('session',f.session);}
 }
-async function refreshToken() {
+async function refreshToken(expected=requestActor()) {
+  assertRequestActor(expected);
   if (!f.session?.refresh_token) throw Error('Session expirée');
   const result = await raw('/auth/v1/token?grant_type=refresh_token', 'POST', {
     refresh_token: f.session.refresh_token
   });
-  await keepSession(result);
+  assertRequestActor(expected);
+  if(result?.user?.id!==undefined&&result.user.id!==expected.userId)throw Error('Le compte retourné par la connexion ne correspond pas à la session.');
+  await keepSession(result,expected);assertRequestActor(expected);
 }
-async function token() {
+async function token(expected=requestActor()) {
+  assertRequestActor(expected);
   if (!f.session) throw Error('Connexion requise');
-  if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken();
+  if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken(expected);
+  assertRequestActor(expected);
   return f.session.access_token;
 }
 function assertNativeSharedWrite(method,query,body={}) {
@@ -140,29 +154,23 @@ function assertNativeSharedWrite(method,query,body={}) {
   }
   if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state});return;}
   const rpc=query.split('?')[0].replace(/^rpc\//,'');
-  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities'].includes(rpc))return;
+  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||['dobby_v7_context','dobby_v7_preview_invitation','dobby_v7_family_capabilities','dobby_v7_preview_child_invitation','dobby_missions_v2_capabilities','dobby_missions_v3_capabilities'].includes(rpc))return;
   if(!state?.userId&&!state?.authenticated&&!state?.memberId&&!state?.profile?.memberCategory&&state?.phase!=='active')return;
   throw Error('Permissions serveur indisponibles : écriture partagée bloquée.');
 }
-function transportScopeGuard(){
-  const epoch=f.epoch,userId=f.session?.user_id,householdId=f.householdId;
-  return()=>{if(epoch!==f.epoch||userId!==f.session?.user_id||householdId!==f.householdId)throw Error('Le compte ou le foyer a changé pendant la requête.');};
-}
 async function authorized(method, query, body, headers = {}) {
-  const guard=transportScopeGuard();
+  const expected=requestActor();
   assertNativeSharedWrite(method,query,body);
-  let bearer = await token();
-  guard();
+  let bearer = await token(expected);assertRequestActor(expected);
   assertNativeSharedWrite(method,query,body);
-  try { return await raw('/rest/v1/' + query, method, body, headers, bearer); }
+  try { const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result; }
   catch (e) {
+    assertRequestActor(expected);
     if (e.status !== 401) throw e;
-    guard();
     assertNativeSharedWrite(method,query,body);
-    await refreshToken(); bearer = f.session.access_token;
-    guard();
+    await refreshToken(expected);assertRequestActor(expected);bearer=f.session.access_token;
     assertNativeSharedWrite(method,query,body);
-    return raw('/rest/v1/' + query, method, body, headers, bearer);
+    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result;
   }
 }
 const SHARED_BUCKET='dobby-family-files';
@@ -173,14 +181,13 @@ function validStoragePath(path){
     /^[a-f0-9-]{36}\.(pdf|jpg|png|webp)$/i.test(sections[1]);
 }
 async function storageFetch(method,path,file){
-  const guard=transportScopeGuard();
+  const expected=requestActor();
   assertNativeSharedWrite(method,'storage');
   if(!validStoragePath(path))throw Error('Fichier hors du foyer');
   if(method==='POST' && (!file || !['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)
       || file.size>10485760 || file.size<=0))throw Error('PDF ou image de 10 Mo maximum');
   const send=async()=>{
-    const jwt=await token();
-    guard();
+    assertRequestActor(expected);const jwt=await token(expected);assertRequestActor(expected);
     assertNativeSharedWrite(method,'storage');
     if(!validStoragePath(path))throw Error('Fichier hors du foyer');
     const target=method==='GET'?'authenticated/'+SHARED_BUCKET+'/'+path:
@@ -190,18 +197,19 @@ async function storageFetch(method,path,file){
     if(method==='POST'){headers['Content-Type']=file.type;headers['x-upsert']='false';body=file;}
     if(method==='DELETE'){headers['Content-Type']='application/json';body=JSON.stringify({prefixes:[path]});}
     const response=await fetch(PROJECT+'/storage/v1/object/'+target,{method,headers,body,cache:'no-store'});
+    assertRequestActor(expected);
     if(!response.ok){
       let detail={};try{detail=await response.json()}catch{}
       const e=Error(detail.message||detail.error||('Stockage Dobby HTTP '+response.status));
       e.status=response.status;throw e;
     }
-    return method==='GET'?await response.blob():true;
+    const result=method==='GET'?await response.blob():true;assertRequestActor(expected);return result;
   };
   try{return await send()}catch(e){
+    assertRequestActor(expected);
     if(e.status!==401)throw e;
-    guard();
     assertNativeSharedWrite(method,'storage');
-    await refreshToken();return send();
+    await refreshToken(expected);assertRequestActor(expected);return send();
   }
 }
 async function requireHousehold() {
@@ -753,7 +761,13 @@ save = function() {
   return result;
 };
 // E06 facade: same native login and membership verification, no alternate auth.
-function verifiedBinding(){const binding=f.accessContext;return binding&&binding.epoch===f.epoch&&binding.userId===f.session?.user_id&&binding.householdId===f.householdId&&f.context&&f.verifiedContext===f.context&&!f.membershipRejected?binding:null;}
+function structuralNativeBinding(){const binding=f.accessContext;return binding&&binding.epoch===f.epoch&&binding.userId===f.session?.user_id&&binding.householdId===f.householdId&&f.context&&f.verifiedContext===f.context&&!f.membershipRejected?binding:null;}
+function verifiedBinding(){
+ const binding=structuralNativeBinding();if(!binding)return null;
+ const live=accessController?.state();
+ if(live?.verified!==true||live.phase!=='active'||live.userId!==binding.userId||live.householdId!==binding.householdId||live.memberId!==binding.memberId)return null;
+ return{...binding,permissions:{...live.permissions}};
+}
 function connectionState(){const binding=verifiedBinding();return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),identityVerified:Boolean(binding),memberId:binding?.memberId||null,permissions:binding?{...binding.permissions}:{}};}
 async function signIn(email,password){
  if(!f.ready)throw Error('Connexion en cours d’initialisation.');
@@ -771,9 +785,13 @@ function notifyAccess(){
 function ensureAccess(){
  if(!accessPromise)accessPromise=import('./family-access.mjs').then(({createFamilyAccess})=>{
   accessController=createFamilyAccess({crypto:window.crypto||globalThis.crypto,now:Date.now,
-   snapshot:()=>({ready:f.ready,configured:Boolean(f.key),userId:f.session?.user_id||null,householdId:f.householdId,epoch:f.epoch,verified:Boolean(verifiedBinding()),rejected:f.membershipRejected}),
+   snapshot:()=>({ready:f.ready,configured:Boolean(f.key),userId:f.session?.user_id||null,householdId:f.householdId,epoch:f.epoch,verified:Boolean(structuralNativeBinding()),rejected:f.membershipRejected}),
    meta,putMeta,delMeta,updateMeta,
-   auth:async(path,method,body,options={})=>raw(path,method,body,{},options.authenticated?await token():null),
+   auth:async(path,method,body,options={})=>{
+    if(!options.authenticated)return raw(path,method,body);
+    const expected=requestActor(),jwt=await token(expected);assertRequestActor(expected);
+    const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;
+   },
    rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),
    clearBinding:()=>{f.accessContext=null;},
    async installSession(result,before){
@@ -819,7 +837,7 @@ const accessFacade=Object.freeze({
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
  refresh:refreshPublicAccess,
- ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;

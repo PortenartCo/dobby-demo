@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "postgresVersion": "17.7",
+  "scope": "exact family candidate on real-catalog model; fictional local data only",
+  "network": "none",
+  "directSqlEditorLogin": "postgres NOSUPERUSER",
+  "installationSha256": "f74c6913484d2c5914b8923058f268ab9edfb2579d92f49bc12723a7e43af5d7",
+  "checks": [
+    "exact apply as direct LOGIN postgres NOSUPERUSER (RESET ROLE cannot elevate)",
+    "writer runtime closed, ADMIN-only maintenance retained, no auth/schema CREATE workaround",
+    "canonical category wins over membership/age; publication flags closed, anonymous preview capability safe",
+    "retained old-writer active profile/avatar and new-household RPCs pass the new family guard",
+    "non-owner parent manages another parent; animal magic denied by RPC",
+    "generic new Auth profile and adult invitation retain their native working path",
+    "targeted accept keeps exact TEXT ID/full profile/magic/unknowns and family revision; exact/new-op replay no duplicate",
+    "foreign household, animal target and already-bound child refused without duplicate/profile mutation",
+    "concurrent invitation consumption by two accounts has one effective canonical binding",
+    "child own House/Patronus RPC only; profile/avatar/others/invites refused; opaque history retained",
+    "child shared reads; direct family/menus/recipes/contracts/Courses writes and foreign HH refused; parent B Courses accepted",
+    "V7-bound accounts cannot read or mutate unscoped V1 dataset; legacy rows retained",
+    "expired/revoked targeted invitation refused with exact profile and revision retained",
+    "parent direct UPDATE versus canonical RPC cannot invert advisory/family locks; stale CAS preserved"
+  ],
+  "limitations": [
+    "No remote Supabase mutation or real Auth/RPC/browser validation.",
+    "Storage policies are a separate required step.",
+    "Missions V3 eligible-completion exception tested by its separate suite.",
+    "Raw live function definitions are private, not included in public evidence."
+  ]
+}

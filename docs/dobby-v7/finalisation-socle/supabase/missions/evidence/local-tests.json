@@ -1,0 +1,34 @@
+{
+  "scope": "fictional local actual-catalog baseline only",
+  "postgres": "17.7",
+  "network": "none",
+  "realAuthOrSupabaseVerified": false,
+  "checks": [
+    "real canonical parent/child links in fictional household; second parent and other household",
+    "first already-completed V2-to-V3 operation upgrades metadata once without granting or rewriting history",
+    "parent B can manage; V1/V2 events including offset dates and root/mission/credit extensions preserved exactly",
+    "child, foreign household, unlinked actor, pets, removed IDs, direct table, V2 and private-receipt refusals are atomic",
+    "25→13+12 one atomic credit; exact lost-response replay; UUID actor/content mismatch; repeated completion no extra credit",
+    "whole-allocation reversal, next cycle, parent-only reopen, old receipt returns current module",
+    "solo, zero, true unassigned parent, no deleted-assignee fallback, canonical 120-char TEXT IDs and JS UTF-16 ordering",
+    "competing actual PostgreSQL transactions: one commit and one CAS; one grant per real recurrence occurrence",
+    "two actual concurrent identical operations: one effect, one replay, one complete allocation",
+    "numeric overflow and receipt failure after module UPDATE roll back module, credits, revision and receipt",
+    "legacy V1/V2 exact compensation and dates preserved; no retroactive eligibility; next V2-to-V3 cycle credits only current amount",
+    "existing parent V2 activation remains usable on V2 household; downgrade or fallback from V3 is refused",
+    "V2/V3 share one UUID namespace; both reuse directions and concurrent cross-protocol reuse reject a second effect",
+    "historical credit/mission/root tampering refused with no partial module or receipt mutation",
+    "capability scoped to canonical household; writer closure; original V2 alias unreachable from clients",
+    "inactive canonical account refused and real membership deactivation waits for the authorized transaction",
+    "unknown future ledger protocol is preserved and refused without downgrade or data loss",
+    "exact read-only verification and conservative rollback preserve all ledgers/receipts and close new RPC access"
+  ],
+  "status": "PASS",
+  "migrationSha256": "5f8cca31d1e79a0fa6bb8e4134470bdc483b53da4683feb672d544e4d5bd2b3a",
+  "familyMigrationSha256": "f74c6913484d2c5914b8923058f268ab9edfb2579d92f49bc12723a7e43af5d7",
+  "limits": [
+    "No live Supabase/Auth/browser adoption proof.",
+    "Frontend V3 gates stay closed.",
+    "Private actual baseline definitions are outside the public repository."
+  ]
+}

@@ -33,3 +33,12 @@ test('reserves: verified member form rights use canonical category, never a prom
  const parent=P.permissions(members[2],{...base,memberCategory:'parent',members});assert.equal(parent.canEdit,true);assert.equal(parent.canCreate,true);
  for(const memberCategory of [undefined,'unknown']){const missing=P.permissions(own,{...base,memberCategory,members:promoted});assert.equal(missing.canEdit,false);assert.equal(missing.canCreate,false);assert.equal(missing.canMagic,false);}
 });
+
+test('merged: complete household and child linking use gated grants under the canonical parent category',()=>{
+ const access={verified:true,userId:'TEST-U',householdId:'TEST-H',actorId:'p',memberCategory:'parent',members,permissions:{canEdit:true,canMagic:true,canCreate:true,familyRolesVerified:true,canManageHousehold:true,canLinkExistingChild:true}};
+ assert.equal(P.permissions(members[1],access).canEdit,true);assert.equal(P.permissions(members[1],access).canMagic,true);assert.equal(P.permissions(members[2],access).canLinkExistingChild,true);
+ assert.equal(P.permissions({id:'foreign',memberCategory:'child'},access).canEdit,false);
+ for(const permissions of [{...access.permissions,familyRolesVerified:false},{...access.permissions,canManageHousehold:false}]){assert.equal(P.permissions(members[1],{...access,permissions}).canEdit,false);assert.equal(P.permissions(members[2],{...access,permissions}).canLinkExistingChild,false);}
+ const canonicalChild={...access,actorId:'c',memberCategory:'child',members:members.map(row=>row.id==='c'?{...row,memberCategory:'parent'}:row)};
+ assert.equal(P.permissions(canonicalChild.members.find(row=>row.id==='c'),canonicalChild).canEdit,false);assert.equal(P.permissions(members[1],canonicalChild).canMagic,false);
+});

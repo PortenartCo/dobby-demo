@@ -1,0 +1,50 @@
+{
+  "diagnosticSha256": "04430e13166419ba8bfea40afccdbac87444a0b4ac00c1a16fde9808cab47e97",
+  "postgresVersion": "17.7",
+  "network": "none",
+  "remoteSupabaseAccess": false,
+  "scope": "exact diagnostic only; fictional local data; no historical campaign replay",
+  "checks": [
+    {
+      "case": "existing fictional partial catalog",
+      "status": "PASS",
+      "singleJsonResult": true,
+      "readOnly": true,
+      "applicationRowsUnchanged": true
+    },
+    {
+      "case": "catalog available without application privileges",
+      "status": "PASS",
+      "singleJsonResult": true,
+      "readOnly": true,
+      "applicationRowsUnchanged": true
+    },
+    {
+      "case": "non-superuser fictional SQL Editor",
+      "status": "PASS",
+      "singleJsonResult": true,
+      "readOnly": true,
+      "applicationRowsUnchanged": true
+    },
+    {
+      "case": "missing application catalog is reported safely",
+      "status": "PASS",
+      "singleJsonResult": true,
+      "readOnly": true,
+      "applicationRowsUnchanged": true
+    },
+    {
+      "case": "existing unrestricted numeric availability column",
+      "status": "PASS",
+      "singleJsonResult": true,
+      "readOnly": true,
+      "applicationRowsUnchanged": true
+    }
+  ],
+  "limits": [
+    "No backend migration installed or certified.",
+    "Private Missions fixture functions are incomplete; not a V3 proof.",
+    "No real Auth, RLS/RPC business recipe, Safari or physical microphone proof.",
+    "Raw catalog and function-definition outputs are never saved in public evidence."
+  ]
+}

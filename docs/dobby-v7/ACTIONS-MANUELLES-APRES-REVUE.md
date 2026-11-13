@@ -2,6 +2,10 @@
 
 La recette finale B déconnexion/reconnexion, Cheminette et conservation Maison/Patronus est validée au commit `b77cb9d`. **Ne pas la redemander.** Les deux comptes, le foyer et les données existantes sont conservés.
 
+Le catalogue regroupé a déjà été reçu. Le [lot de finalisation du socle](finalisation-socle/supabase/README.md) remplace les préflights et candidats provisoires concernés ; la [matrice des dix réserves](finalisation-socle/MATRICE-RESERVES.md) distingue ses preuves nouvelles des recettes réelles restantes. Ces références ne constituent pas une deuxième installation à enchaîner.
+
+**Aucune action Supabase distante n'a été effectuée pendant cette mission**, y compris en lecture, par API, MCP, CLI, navigateur ou déploiement automatique. Le déploiement ne contient aucun lanceur de migration. Les tests SQL utilisent exclusivement un conteneur PostgreSQL 17.7 `--network none`, sans port, et des données `TEST`. Les résultats locaux ne certifient pas le catalogue ni les droits réels.
+
 ## Supabase : réutiliser le travail déjà effectué
 
 Le chantier distinct [PR 12](https://github.com/PortenartCo/dobby-demo/pull/12) a reçu le diagnostic réel. Sa description rapporte ensuite l’installation manuelle par l’utilisateur du nouveau socle `10`, de Storage `11` et le retour de vérification `20`. Voir la [passation précise](reserves-techniques/PASSATION-SOCLE-CONCURRENT.md), qui distingue ces résultats rapportés des vérifications réalisées par notre mission.

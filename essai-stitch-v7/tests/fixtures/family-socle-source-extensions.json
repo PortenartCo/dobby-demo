@@ -1,0 +1,43 @@
+{
+  "baseCommit": "b77cb9de100a864c8aace8fb9e07053220ccd23a",
+  "purpose": "Subsequent family-core amendments anchored to the preserved general-review manifest. Historical review hashes and evidence stay unchanged; current source bytes remain checked exactly.",
+  "files": {
+    "essai-stitch-v5-famille/family-v2.js": {
+      "reviewSha256": "a1604d2430eefef52de6dedf7f0e506ca8f5dbb37094285ca50b04fa8376c089",
+      "sha256": "a7945f23301cd89ece5998861c9c5d048fdb3c1f50bfa173ee35833b9cdaf265",
+      "reason": "S10/F08/F09: bind authorization, refresh and Storage responses to the current actor; use live canonical permissions and the targeted child-access facade while release gates remain closed.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-access-native-socle.test.mjs",
+        "essai-stitch-v7/tests/stitch-family-socle.cjs"
+      ]
+    },
+    "essai-stitch-v5-famille/family-core.mjs": {
+      "reviewSha256": "572239e897011d972fffd0dd83ea0488f4d251794a278df96f2dfc876c345d94",
+      "sha256": "caae1ee08e19fd87d26963e65f1677103a16991daf2e2f32efaa28ca21032326",
+      "reason": "F09/M08: recognize the canonical child completion intent and V3 capability endpoint without opening the release flag or permitting a V2/snapshot fallback.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs",
+        "essai-stitch-v5-famille/tests/family-write-policy.test.mjs"
+      ]
+    },
+    "essai-stitch-v5-famille/family-missions.js": {
+      "reviewSha256": "38d8c5d06a5ab0c74bd52f5af711d3bf977e820d0b59dd13e040a81e4648a218",
+      "sha256": "20ed02f00bbf4516f169395b0a9d8f945e30cc926e6cccc83738ebbb9dc50a52",
+      "reason": "M06/M07/M08: connect native participation, completion, reopen and summaries to the closed-gate V3 intent provider; retain V2 behavior and compare full allocations when resuming pending events.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/mission-intents-provider.test.mjs",
+        "essai-stitch-v5-famille/tests/missions-v3-sharing-gate.test.mjs",
+        "essai-stitch-v7/tests/missions-intent-ui.cjs"
+      ]
+    },
+    "essai-stitch-v5-famille/family-runes-core.mjs": {
+      "reviewSha256": "4f63519da41c9f1ba9c49aa923093e92c5e96e058292c66d5d7b712803cbf2ec",
+      "sha256": "f683ee397730b89144b106c2e62f171420945c584f251300561ca76a745a9554",
+      "reason": "M07/M08: accept canonical PostgreSQL TEXT participant IDs for V3 allocations, preserving the legacy V1/V2 event length limit and deterministic JavaScript ordering.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs",
+        "essai-stitch-v5-famille/tests/mission-participants-runes.test.mjs"
+      ]
+    }
+  }
+}

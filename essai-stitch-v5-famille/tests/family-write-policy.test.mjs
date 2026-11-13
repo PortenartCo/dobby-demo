@@ -71,3 +71,26 @@ test('reserves: own magic requires explicit magic grant for child and parent ind
  for(const canManageDependents of [false,undefined])assert.throws(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_update_magic',body:{...body,p_member_id:'TEST-DEPENDENT'},access:{...state('parent'),permissions:{canEdit:true,canMagic:true,canManageDependents}}}),/lecture seule|droits|vérifi/);
  assert.doesNotThrow(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_update_magic',body:{...body,p_member_id:'TEST-DEPENDENT'},access:{...state('parent'),permissions:{canEdit:true,canMagic:true,canManageDependents:true}}}));
 });
+
+test('merged: household magic requires parent canonical identity, own magic grant and all household gates',()=>{
+ const body={p_member_id:'OTHER-PARENT',p_values:{magicHouseId:'ravenclaw'}},allowed={...state('parent'),permissions:{canEdit:false,canMagic:true,familyRolesVerified:true,canManageHousehold:true},capabilities:{familyRolesReady:true}};
+ const request={method:'POST',query:'rpc/dobby_v7_update_magic',body,access:allowed};
+ assert.doesNotThrow(()=>assertSharedWrite(request));
+ for(const permissions of [{...allowed.permissions,canMagic:false},{...allowed.permissions,familyRolesVerified:false},{...allowed.permissions,canManageHousehold:false}])assert.throws(()=>assertSharedWrite({...request,access:{...allowed,permissions}}),/lecture seule/);
+ for(const capabilities of [{familyRolesReady:false},{}])assert.throws(()=>assertSharedWrite({...request,access:{...allowed,capabilities}}),/lecture seule/);
+ assert.throws(()=>assertSharedWrite({...request,access:{...allowed,profile:{id:'TEST-MEMBER',memberCategory:'child'}}}),/lecture seule/);
+});
+test('merged: child-link setup mutation requires authenticated unlinked setup and explicit ready capability',()=>{
+ const access={phase:'household',authenticated:true,verified:false,userId:'TEST-U',profile:null,capabilities:{childAccountLinkReady:true}},request={method:'POST',query:'rpc/dobby_v7_accept_child_invitation',access};
+ assert.doesNotThrow(()=>assertSharedWrite(request));
+ for(const patch of [{authenticated:false},{memberId:'TEST-MEMBER'},{householdId:'TEST-HOME'},{profile:{memberCategory:'child'}},{capabilities:{childAccountLinkReady:false}}])assert.throws(()=>assertSharedWrite({...request,access:{...access,...patch}}),/lecture seule/);
+});
+
+test('merged: already-linked canonical child can replay only the gated child-invitation acceptance packet',()=>{
+ const access={...state('child'),permissions:{canEdit:false,canMagic:false},capabilities:{familyRolesReady:true,childAccountLinkReady:true}},body={p_token:'a'.repeat(64),p_operation_id:'00000000-0000-4000-8000-000000000001'},request={method:'POST',query:'rpc/dobby_v7_accept_child_invitation',body,access};
+ assert.doesNotThrow(()=>assertSharedWrite(request));
+ for(const patch of [{authenticated:false},{verified:false},{phase:'household'},{userId:null},{householdId:''},{memberId:''},{profile:{id:'OTHER',memberCategory:'child'}},{profile:{id:'TEST-MEMBER',memberCategory:'pet'}},{capabilities:{familyRolesReady:false,childAccountLinkReady:true}},{capabilities:{familyRolesReady:true,childAccountLinkReady:false}}])assert.throws(()=>assertSharedWrite({...request,access:{...access,...patch}}),/lecture seule/);
+ for(const invalid of [{...body,p_member_id:'OTHER'},{...body,p_values:{nickname:'changed'}},{...body,p_token:'a'.repeat(63)},{...body,p_token:'A'.repeat(64)},{...body,p_token:'b'.repeat(64)+' '},{...body,p_operation_id:'invalid'},null,[]])assert.throws(()=>assertSharedWrite({...request,body:invalid}),/lecture seule/);
+ for(const method of ['PATCH','DELETE'])assert.throws(()=>assertSharedWrite({...request,method}),/lecture seule/);
+ for(const query of ['rpc/dobby_v7_accept_invitation','rpc/dobby_v7_update_member','rpc/dobby_v7_create_child_invitation','dobby_v2_modules','storage'])assert.throws(()=>assertSharedWrite({...request,query}),/lecture seule/);
+});

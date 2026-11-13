@@ -17,20 +17,23 @@ export const ledgerVersion=rows=>(rows||[]).some(row=>row?.allocations!==undefin
 const cycleOf=row=>row.cycle??0;
 const compareId=(a,b)=>a<b?-1:a>b?1:0;
 const validMemberId=id=>typeof id==='string'&&Boolean(id.trim())&&id.length<=100;
+// Only V3 participants/allocations use the canonical PostgreSQL TEXT bound.
+// Legacy V1/V2 event validation keeps its historical UTF-16 length limit.
+export const validV3MemberId=id=>typeof id==='string'&&Boolean(id.trim())&&!/[\u0000\uD800-\uDFFF]/u.test(id)&&Array.from(id).length<=120;
 export const isHumanMember=member=>Boolean(member)&&![member.memberCategory,member.type,member.kind].some(value=>['pet','animal','guardian','baby'].includes(value));
 const declaredAssignees=mission=>Array.isArray(mission.assigneeIds)&&mission.assigneeIds.length?mission.assigneeIds:mission.assigneeId?[mission.assigneeId]:[];
 const unassignedMission=mission=>mission.allFamily!==true&&!declaredAssignees(mission).length;
 // Completion candidates differ from assignment: an unassigned task may be done
 // by any real eligible member, but participation is always explicitly selected.
 export function completionCandidateIds(mission,members){
- const humans=(Array.isArray(members)?members:[]).filter(member=>isHumanMember(member)&&validMemberId(member.id)),known=new Set(humans.map(member=>member.id));
+ const humans=(Array.isArray(members)?members:[]).filter(member=>isHumanMember(member)&&((mission.participantVersion===1||mission.allFamily===true)?validV3MemberId(member.id):validMemberId(member.id))),known=new Set(humans.map(member=>member.id));
  const ids=mission.allFamily===true||unassignedMission(mission)?[...known]:declaredAssignees(mission).filter(id=>known.has(id));
  return [...new Set(ids)].sort(compareId);
 }
 export const canCompleteWithoutParticipants=(mission,members)=>unassignedMission(mission)&&!completionCandidateIds(mission,members).length;
 export function allocateReward(amount,participantIds){
  if(!Number.isSafeInteger(amount)||amount<0)throw Error('Total de runes à répartir invalide');
- if(!Array.isArray(participantIds)||!participantIds.length||participantIds.some(id=>!validMemberId(id))||new Set(participantIds).size!==participantIds.length)throw Error('Choisissez des participants distincts');
+ if(!Array.isArray(participantIds)||!participantIds.length||participantIds.some(id=>!validV3MemberId(id))||new Set(participantIds).size!==participantIds.length)throw Error('Choisissez des participants distincts');
  const ids=[...participantIds].sort(compareId),base=Math.floor(amount/ids.length),remainder=amount%ids.length;
  return ids.map((memberId,index)=>({memberId,amount:base+(index<remainder?1:0)}));
 }
@@ -46,7 +49,7 @@ export function rewardFor(mission){
 }
 function request(raw){
  if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(key=>![...keys,'revision','customRunes','eventId','kind','cycle','reverses','allocations'].includes(key)))throw Error('Historique de runes non pris en charge');
- if(typeof raw.missionId!=='string'||!/^[A-Za-z0-9_-]{1,80}$/.test(raw.missionId)||typeof raw.memberId!=='string'||!raw.memberId.trim()||raw.memberId.length>100)throw Error('Bénéficiaire ou mission de runes invalide');
+ if(typeof raw.missionId!=='string'||!/^[A-Za-z0-9_-]{1,80}$/.test(raw.missionId)||(raw.allocations!==undefined?!validV3MemberId(raw.memberId):!validMemberId(raw.memberId)))throw Error('Bénéficiaire ou mission de runes invalide');
  const reward=rewardFor(raw);if(raw.amount!==reward.amount)throw Error('Valeur de récompense invalide');
  if(typeof raw.date!=='string'||!Number.isFinite(Date.parse(raw.date))||typeof raw.title!=='string'||!raw.title.trim()||raw.title.length>140)throw Error('Date ou intitulé de runes invalide');
  const row={missionId:raw.missionId,memberId:raw.memberId,...reward,date:new Date(raw.date).toISOString(),title:raw.title};

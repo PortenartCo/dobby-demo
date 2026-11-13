@@ -1,0 +1,69 @@
+{
+  "kind": "published-main-runtime-reconciliation",
+  "reservesParent": "709c6f1057d70f90f76489014687022f4d56f086",
+  "publishedMainParent": "43eef7a57a56fe352f88902dfe89b208a4036495",
+  "commonBase": "70c56eb156758d4c0447b8ec8f3fd84e1efeaa22",
+  "resolvedRuntimeConflicts": [
+    "family-access.mjs",
+    "family-core.mjs",
+    "family-member-policy.js",
+    "family-modules.js",
+    "family-v2.js"
+  ],
+  "sourceProvenanceFixture": "essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json",
+  "sourceProvenanceSha256": "faa208f102e406cb51666e0cfa42726d555cb3e3bad825e44856d070c61df567",
+  "gitParentSourceBlobsVerified": 19,
+  "fullCurrentSourceFingerprintsVerified": 10,
+  "frozenParentFixturesVerified": 5,
+  "nativeHtmlSha256": "6ab491966d025d9beb427b2b8d77ba27fa4216ec09bf286687e691bf5153b56d",
+  "singleParentRuntimePreservation": {
+    "reservesOnlyFiles": 6,
+    "publishedMainOnlyFiles": 8,
+    "verifiedAgainstGitParents": true
+  },
+  "historicalEvidenceSha256": {
+    "docs/dobby-v7/reserves-techniques/evidence/validation-locale.json": "0728c8d5094bb5363800d4db1d7434df9d8b2298ef4bae94e07d5d33bc99e32b",
+    "docs/dobby-v7/reserves-techniques/evidence/validation-reconciliee.json": "7808a54d765c6655b769d83ef8385e4a688013672eefb007aaccc63acc18a0a1"
+  },
+  "historicalEvidenceUnchanged": true,
+  "targetedProvenance": {
+    "command": "node --test essai-stitch-v5-famille/tests/integration.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs",
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0,
+    "tamperedFingerprintRejectedWithoutFallback": true
+  },
+  "runtimeOwnerReportedChecks": {
+    "canonicalAccessTransportPolicyAndOfflinePrep": "PASS",
+    "childAcceptanceReplayAndTransportTests": 63,
+    "childAcceptanceReplayAndTransportFailures": 0,
+    "prepSyncChecks": 8,
+    "groupsMayOverlap": true
+  },
+  "independentReview": {
+    "reviewer": "Transversal",
+    "status": "PASS",
+    "scope": [
+      "both Git parent source anchors",
+      "all ten current source fingerprints",
+      "five frozen fixtures",
+      "initial and same-operation child acceptance replay with real core",
+      "rejection of other child, household and parent targets",
+      "V2/V3 gates and BigInt composition"
+    ]
+  },
+  "releaseGatesOpened": false,
+  "completeCombinedSuiteRun": false,
+  "completeCombinedRemoteCiPassed": false,
+  "remoteSupabaseAccessed": false,
+  "sqlExecutedDuringReconciliation": false,
+  "pushPerformed": false,
+  "mergeToMainPerformed": false,
+  "deploymentPerformed": false,
+  "remainingGates": [
+    "combined units and build on the merged candidate",
+    "integrate later published docs-only main without app-byte drift",
+    "fresh exact-head GitHub CI",
+    "fresh published-main/ref integration gate before any merge"
+  ]
+}

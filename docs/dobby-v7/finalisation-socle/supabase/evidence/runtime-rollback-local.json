@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "sqlSha256": "34c17d852513f468a63aabe08329fdf375a84d1b6f1dd368b49354a6b40bf3dd",
+  "postgresVersion": "17.7",
+  "network": "none",
+  "executionRole": "postgres direct login NOSUPERUSER; business probes authenticated NOSUPERUSER NOBYPASSRLS",
+  "fixture": "exact installed manual-package model, two original fictional Parents plus one separate confirmed unbound fictional Auth",
+  "sqlEditorEffectiveSelect": "inherited pg_read_all_data, matching the catalog entry supplied by the user; no GRANT in 30",
+  "runtimeChecksPassed": 38,
+  "runtimeChecksFailed": 0,
+  "runtimeChecksNotExecuted": 0,
+  "innerRollbackObserved": true,
+  "twelveTablesUnchangedAfterFinalRollbackLocally": true,
+  "roleAttributesAndMembershipsUnchangedLocally": true,
+  "originalParentLinksAfterTest": 2,
+  "fictionalAuthAccountsAfterTest": 3,
+  "resultContainsUuid": false,
+  "remoteSupabaseAccess": false,
+  "realAuthHttpVerified": false,
+  "storagePhysicalUploadVerified": false,
+  "storageDeleteVerified": false,
+  "limits": [
+    "This is local evidence, not execution on the hosted family project.",
+    "The user-run 30 result will observe rollback of the inner fixture subtransaction before the final outer cleanup.",
+    "No multi-session concurrency, Auth HTTP login, mail, actual Storage upload or Storage DELETE claimed.",
+    "No raw private catalog, personal values, invitation token, password/hash or family content in public evidence."
+  ],
+  "f08MissionsBaselineCheckedBeforeV3": true,
+  "rootIndependentExactExecution": {
+    "nominal38Passed": true,
+    "postRollbackStateObserved": true,
+    "lateFailureAfterFamilyAndMissions": "division_by_zero 22012 injected only in a private test copy",
+    "lateFailureReportedWithoutPersonalData": true,
+    "tablesRolesAndMembershipsUnchangedAfterLateFailure": true,
+    "independentReview": "PASS on exact source SHA"
+  }
+}

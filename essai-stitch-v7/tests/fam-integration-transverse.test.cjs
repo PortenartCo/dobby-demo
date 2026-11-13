@@ -7,6 +7,12 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const repo = path.resolve(__dirname, '../..');
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
+const reconciliation = require('./fixtures/reconciliation-main-43eef-source-extensions.json');
+function currentFingerprint(file,source,review,composed){
+  const expected=composed?composed.mergedSha256:review.sha256;
+  assert.match(expected,/^[a-f0-9]{64}$/,file+' complete approved SHA-256');
+  assert.equal(digest(source),expected,file+' current reviewed source changed');
+}
 const preserved = {
   'essai-stitch-v7/chat-engine.js': 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd',
   'essai-stitch-v7/chat.js': 'ada18c51fbf9c03327269aafd767c79463545562fc7514b608f3eb7814360485',
@@ -22,10 +28,25 @@ const preserved = {
   'essai-stitch-v7/tests/helpers/e02-shared-groceries.cjs': '4c599d0a9f09ac72c4cb04777091dd3559ede85498a858226a03774317bda4ef'
 };
 
-test('Family source boundaries preserve history plus explicitly reviewed 60-point amendments', () => {
+test('Family source boundaries preserve history plus reviewed general and family-core amendments', () => {
+  const reviews=require('./fixtures/revue-generale-source-extensions.json');
+  const socle=require('./fixtures/family-socle-source-extensions.json');
+  for(const [file,amendment]of Object.entries(socle.files)){
+    assert.ok(Object.hasOwn(preserved,file),file+' is an existing source boundary');
+    assert.ok(amendment.reason,file+' records the family-core amendment');
+    const composed=reconciliation.files[file];
+    assert.ok(composed,file+' records both published-main and reserves parents');
+    assert.equal(amendment.reviewSha256,reconciliation.mainReviewAnchors[file],file+' preserves the published-main review anchor');
+    assert.equal(amendment.sha256,composed.publishedMainSha256,file+' preserves the complete published-main source');
+    assert.equal(reviews[file]?.sha256,composed.reservesSha256,file+' preserves the complete reserves review anchor');
+    assert.ok(amendment.tests.length,file+' records targeted semantic checks');
+    for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+  }
   for (const [file, expected] of Object.entries(preserved)) {
     let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
-    const review=require('./fixtures/revue-generale-source-extensions.json')[file];
+    const review=reviews[file],amendment=socle.files[file],composed=reconciliation.files[file];
+    if(composed){currentFingerprint(file,source,review,composed);continue;}
+    if(amendment){assert.equal(digest(source),amendment.sha256,file+' family-core amendment changed');continue;}
     if(review){assert.ok(review.reason);assert.equal(digest(source),review.sha256,file+' reviewed amendment changed');continue;}
     if(file.endsWith('/family-v2.js')){
       const amendment=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/stitch19-20-access-extensions.json'),'utf8'));
@@ -46,8 +67,54 @@ test('every reviewed whole-file amendment retains its exact source fingerprint',
     if(file==='memoWriter')continue; // Its exact bounded writer has its own proof below.
     assert.ok(review.reason,file+' approval reason');
     assert.match(review.sha256,/^[a-f0-9]{64}$/,file+' complete SHA-256');
-    assert.equal(digest(fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n')),review.sha256,file+' reviewed source changed');
+    currentFingerprint(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),review,reconciliation.files[file]);
   }
+});
+
+test('published-main reconciliation preserves both parent manifests and every full current source',()=>{
+  const reviews=require('./fixtures/revue-generale-source-extensions.json');
+  assert.equal(reconciliation.reservesParent,'709c6f1057d70f90f76489014687022f4d56f086');
+  assert.equal(reconciliation.publishedMainParent,'43eef7a57a56fe352f88902dfe89b208a4036495');
+  assert.deepEqual(Object.keys(reconciliation.frozenFixtures).sort(),[
+    'essai-stitch-v5-famille/tests/fixtures/contracts-native-extensions.json',
+    'essai-stitch-v5-famille/tests/fixtures/contracts-reserves-native-composition.json',
+    'essai-stitch-v5-famille/tests/fixtures/reserves-canonical-role-native-extensions.json',
+    'essai-stitch-v7/tests/fixtures/family-socle-source-extensions.json',
+    'essai-stitch-v7/tests/fixtures/revue-generale-source-extensions.json'
+  ].sort(),'Every frozen parent fixture remains required');
+  assert.deepEqual(Object.keys(reconciliation.files).sort(),[
+    'essai-stitch-v5-famille/family-access.mjs',
+    'essai-stitch-v5-famille/family-core.mjs',
+    'essai-stitch-v5-famille/family-files.js',
+    'essai-stitch-v5-famille/family-member-policy.js',
+    'essai-stitch-v5-famille/family-mission-intents.mjs',
+    'essai-stitch-v5-famille/family-missions-core.mjs',
+    'essai-stitch-v5-famille/family-missions.js',
+    'essai-stitch-v5-famille/family-modules.js',
+    'essai-stitch-v5-famille/family-runes-core.mjs',
+    'essai-stitch-v5-famille/family-v2.js'
+  ].sort(),'Every composed source remains required');
+  for(const[file,expected]of Object.entries(reconciliation.frozenFixtures)){
+    assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen parent fixture changed');
+  }
+  for(const[file,record]of Object.entries(reconciliation.files)){
+    for(const key of ['reservesSha256','publishedMainSha256'])if(record[key]!==null)assert.match(record[key],/^[a-f0-9]{64}$/,file+' exact parent '+key);
+    assert.equal(record.reservesSha256===null,file==='essai-stitch-v5-famille/family-mission-intents.mjs',file+' records parent absence only for the newly introduced module');
+    assert.notEqual(record.publishedMainSha256,null,file+' exists in published main');
+    if(reviews[file])assert.equal(record.reservesSha256,reviews[file].sha256,file+' preserves its exact reserves parent review');
+    assert.ok(record.reason,file+' composition reason');
+    assert.ok(record.tests.length,file+' targeted semantic checks');
+    for(const check of record.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+    currentFingerprint(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),null,record);
+  }
+});
+
+test('a tampered reconciliation fingerprint cannot fall back to a valid older review',()=>{
+  const file='essai-stitch-v5-famille/family-files.js';
+  const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+  const review=require('./fixtures/revue-generale-source-extensions.json')[file];
+  assert.equal(digest(source),review.sha256,'The unchanged Contracts writer is a valid older review');
+  assert.throws(()=>currentFingerprint(file,source,review,{...reconciliation.files[file],mergedSha256:'0'.repeat(64)}),/current reviewed source changed/);
 });
 
 // Courses intentionally evolves for C01-C07 and independent dessert imports.
