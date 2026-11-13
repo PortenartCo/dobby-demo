@@ -7,7 +7,7 @@ if(!api)throw Error('Foyer Dobby indisponible');
 let busy=false,message='';
 const esc=api.esc;
 const isShared=d=>Boolean(d) &&
-  (['Contrats','Assurances'].includes(d.category)||d.sharedToHousehold===true);
+  d.retainedLocalOnly!==true && (['Contrats','Assurances'].includes(d.category)||d.sharedToHousehold===true);
 const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs:[];
 const byId=id=>documents().find(x=>x.id===id);
 const active=()=>Boolean(api.getContext() && api.isModuleActive('contracts'));
@@ -114,7 +114,29 @@ function report(err){
   redraw();
 }
 function saveFiche(){save();redraw();}
+function assertNativeWrite(){
+  if(typeof window.DobbyFamilyContracts?.assertWritable!=='function')throw Error('Droits natifs des contrats indisponibles. Aucune modification effectuée.');
+  window.DobbyFamilyContracts.assertWritable();
+}
+function guardedDocument(d){return Boolean(d)&&(isShared(d)||['Contrats','Assurances'].includes(d.category)||d.retainedLocalOnly===true);}
+function permitLegacyMutation(event,d){
+  if(!guardedDocument(d))return true;
+  try{assertNativeWrite();return true;}
+  catch(error){event.preventDefault();event.stopImmediatePropagation();report(error);return false;}
+}
+// The legacy fields deliberately preserve extensions on save, but their direct
+// form/file handlers predate parent/child policy. Guard them at capture time.
+document.addEventListener('submit',event=>{
+  if(event.target.id!=='familyDocForm')return;
+  const prior=typeof docEdit==='string'?byId(docEdit):null,category=event.target.elements?.namedItem('category')?.value;
+  permitLegacyMutation(event,guardedDocument(prior)?prior:{category});
+},true);
+document.addEventListener('change',event=>{
+  if(event.target.id==='familyDocFile')permitLegacyMutation(event,detail());
+},true);
 async function upload(d,file,name){
+  assertNativeWrite();
+  if(d.retainedLocalOnly===true)throw Error('Cette copie locale a été retirée du foyer. Son partage demande une nouvelle action explicite.');
   if(!active())throw Error('Activez le partage Documents dans « Gérer le foyer »');
   if(!isShared(d))throw Error('Partagez d’abord cette fiche');
   if(d.cloudPath)throw Error('Retirez d’abord le fichier précédent');
@@ -123,13 +145,14 @@ async function upload(d,file,name){
   };
   if(!file || !types[file.type] || file.size<=0 || file.size>10485760)
     throw Error('Choisissez un PDF ou une image de 10 Mo maximum');
-  const context=api.getContext();
+  const context=api.getContext(),expected=window.DobbyFamilyContracts?.snapshot(d.id);
   const path=context.householdId+'/'+crypto.randomUUID()+'.'+types[file.type];
   busy=true;message='';redraw();
   try{
     await api.storageFetch('POST',path,file);
-    if(api.getContext()?.householdId!==context.householdId || !byId(d.id)){
-      await api.storageFetch('DELETE',path).catch(()=>{});
+    assertNativeWrite();
+    if(api.getContext()?.householdId!==context.householdId || !byId(d.id) || expected&&expected!==window.DobbyFamilyContracts.snapshot(d.id)){
+      if(api.getContext()?.householdId===context.householdId)await api.storageFetch('DELETE',path).catch(()=>{});
       throw Error('Foyer ou fiche modifié pendant le transfert');
     }
     const doc=byId(d.id);
@@ -151,37 +174,38 @@ async function openCloud(d){
   }finally{setTimeout(()=>URL.revokeObjectURL(url),6000);}
 }
 async function removeCloud(d){
+  assertNativeWrite();
   if(!active()||!d.cloudPath)return;
-  if(!confirm('Supprimer ce fichier partagé pour les membres du foyer ? La fiche et votre éventuelle copie locale resteront disponibles.'))return;
+  if(!confirm('Retirer cette pièce de la fiche ? La copie sur le serveur est conservée ; sa suppression physique demande une intervention distincte.'))return;
   busy=true;message='';redraw();
   try{
-    await api.storageFetch('DELETE',d.cloudPath);
-    for(const k of CloudFields)delete d[k];
-    message='Fichier retiré du foyer. La fiche reste disponible.';
-    saveFiche();
+    if(!window.DobbyFamilyContracts)throw Error('Gestion native des pièces indisponible.');
+    const result=await window.DobbyFamilyContracts.removeAttachment(d.id,'legacy-cloud');
+    message='Pièce retirée de la fiche. '+result.notice;redraw();
   }finally{busy=false;redraw();}
 }
 document.addEventListener('click',async(event)=>{
   // The original V5 'Supprimer' action knows only the local binary store.
-  // For a cloud attachment, delete its object before deleting the fiche.
+  // Shared metadata mutations always pass the native guard, including fiches
+  // with no attachment. Shared bytes remain until a distinct physical cleanup.
   const oldDelete=event.target.closest('[data-doc="delete"]');
-  if(oldDelete && byId(oldDelete.dataset.id)?.cloudPath){
+  if(oldDelete && (isShared(byId(oldDelete.dataset.id))||byId(oldDelete.dataset.id)?.cloudPath||byId(oldDelete.dataset.id)?.attachments?.length||byId(oldDelete.dataset.id)?.retainedLocalOnly===true)){
     event.preventDefault();event.stopImmediatePropagation();
     if(busy)return;
     const d=byId(oldDelete.dataset.id);
     try{
-      if(!active())throw Error('Connectez le foyer pour retirer ce fichier partagé');
-      if(!confirm('Supprimer cette fiche et son fichier partagé du foyer ?'))return;
+      assertNativeWrite();
+      if(!confirm('Supprimer cette fiche et ses pièces locales ? Les copies sur le serveur sont conservées ; leur suppression physique demande une intervention distincte.'))return;
       busy=true;
-      await api.storageFetch('DELETE',d.cloudPath);
-      await houseRead('family-'+d.id,true).catch(()=>{});
-      st.familyDocs=st.familyDocs.filter(x=>x.id!==d.id);
+      if(!window.DobbyFamilyContracts)throw Error('Gestion native des contrats indisponible.');
+      const result=await window.DobbyFamilyContracts.delete(d.id,window.DobbyFamilyContracts.snapshot(d.id));
       if(typeof docDetail!=='undefined')docDetail=null;
-      message='Fiche et fichier supprimés du foyer.';
-      saveFiche();
+      message='Fiche retirée. '+result.notice;redraw();
     }catch(e){report(e);}finally{busy=false;redraw();}
     return;
   }
+  const oldDetach=event.target.closest('[data-doc="detach"]');
+  if(oldDetach&&!permitLegacyMutation(event,byId(oldDetach.dataset.id)))return;
   const button=event.target.closest('[data-fds]');
   if(!button)return;
   event.preventDefault();event.stopImmediatePropagation();
@@ -191,23 +215,18 @@ document.addEventListener('click',async(event)=>{
   try{
     const action=button.dataset.fds;
     if(action==='toggle'){
+      assertNativeWrite();
+      if(d.retainedLocalOnly===true)throw Error('Cette copie locale a été retirée du foyer. Son partage demande une nouvelle action explicite.');
       if(!active())throw Error('Le module Documents n’est pas actif');
       if(!categoryAllowed(d))throw Error('Cette fiche ne peut pas être partagée ici');
       if(d.sharedToHousehold){
-        if(!confirm('Arrêter de partager cette fiche ? La copie locale restera disponible. Le fichier commun sera retiré.'))return;
-        if(d.cloudPath){
-          busy=true;
-          try{
-            await api.storageFetch('DELETE',d.cloudPath);
-            for(const k of CloudFields)delete d[k];
-          } finally {busy=false;}
-        }
+        if(!confirm('Arrêter de partager cette fiche ? La copie locale restera disponible. Les copies sur le serveur sont conservées ; leur suppression physique demande une intervention distincte.'))return;
         d.sharedToHousehold=false;
       } else {
         if(!confirm('Partager cette fiche avec les membres connectés du foyer ?'))return;
         d.sharedToHousehold=true;
       }
-      message=d.sharedToHousehold?'Fiche partagée avec le foyer.':'Fiche conservée uniquement sur cet appareil.';
+      message=d.sharedToHousehold?'Fiche partagée avec le foyer.':'Fiche conservée sur cet appareil. La copie sur le serveur est conservée ; sa suppression physique demande une intervention distincte.';
       saveFiche();
     }
     if(action==='open')await openCloud(d);
