@@ -66,7 +66,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: node scripts/check-dobby-review-reuse.cjs
       - name: Exhaustive review registry coverage
-        run: node scripts/check-review-consolidation.cjs --final
+        run: |
+          node scripts/check-review-consolidation.cjs --final
+          node scripts/check-dobby-review60-report.cjs
       - name: Check V7 JavaScript syntax
         run: |
           node --check essai-stitch-v7/build-source.cjs
@@ -244,6 +246,27 @@ jobs:
             BROWSER="$(command -v chromium)"
           fi
           CHROMIUM_PATH="$BROWSER" npm run test:prep --prefix essai-stitch-v7/tests
+      - name: Current general review native acceptance (60 requirements)
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8873
+          DOBBY_REVIEW_EVIDENCE: docs/dobby-v7/evidence/revue-generale/ci-current
+        run: |
+          python3 -m http.server 8873 --bind 127.0.0.1 > /tmp/dobby-review60-http.log 2>&1 &
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          node --test essai-stitch-v5-famille/tests/missions-review.test.mjs essai-stitch-v5-famille/tests/v7-family-policy.test.mjs essai-stitch-v5-famille/tests/family-write-policy.test.mjs essai-stitch-v7/tests/v7-chat-permissions.test.cjs
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/revue-generale-ci.cjs
+      - name: Keep current general review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-revue-generale-native-evidence
+          path: docs/dobby-v7/evidence/revue-generale/ci-current/
+          retention-days: 14
       - name: Keep current native Stitch19/20 evidence
         if: always() && (github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.event_name == 'pull_request')
         uses: actions/upload-artifact@v4

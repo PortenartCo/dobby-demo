@@ -92,6 +92,7 @@
   const backup=el('a','','rg-menu-card');backup.href=rootUrl('backup')+'?origin=settings';bind(backup,'backup',{origin:'settings'});
   const icon=el('span','save','rg-menu-icon material-symbols-outlined'),chevron=el('span','chevron_right','rg-menu-chevron material-symbols-outlined');icon.setAttribute('aria-hidden','true');chevron.setAttribute('aria-hidden','true');
   backup.append(icon,el('span','Sauvegarde et restauration','rg-menu-label'),chevron);c.main.replaceChildren(title,back,backup);
+  const shopping=el('section','','rg-shopping-settings');c.main.append(shopping);window.DobbyShoppingUI?.mountSettings(shopping,{E:window.DobbyCuisineEngine});
  }
  function personal(){window.DobbyMagicProfile.render(c);}
 

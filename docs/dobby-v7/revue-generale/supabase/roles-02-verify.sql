@@ -1,0 +1,3 @@
+-- Lecture seule structurelle, distincte de la recette A/B.
+SELECT count(*)=9 AS neuf_policies_restrictives FROM pg_policies WHERE policyname IN ('dobby_review_dobby_v2_modules_insert','dobby_review_dobby_v2_modules_update','dobby_review_dobby_v2_modules_delete','dobby_review_dobby_v2_grocery_insert','dobby_review_dobby_v2_grocery_update','dobby_review_dobby_v2_grocery_delete','dobby_review_objects_insert','dobby_review_objects_update','dobby_review_objects_delete') AND permissive='RESTRICTIVE';
+SELECT NOT has_function_privilege('anon','public.dobby_v7_review_parent(text)','EXECUTE') AS anon_refuse;

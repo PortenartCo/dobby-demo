@@ -1,0 +1,17 @@
+✔ new stable memo identity persists on edit, delete never touches legacy records (5.486749ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (1.980751ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (4.861615ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (1.992007ms)
+✔ required and bounded fields and missing legacy import never create records (3.402762ms)
+✔ Family source boundaries preserve history plus explicitly reviewed 60-point amendments (5.788921ms)
+✔ Courses retains the native shopping contract including independent dessert import (54.062269ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (1.008145ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.763073ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.619067

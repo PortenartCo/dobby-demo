@@ -93,3 +93,22 @@ export function toServerPayload(item) {
     ...('at_home_quantity' in item ? {at_home_quantity:Number(item.at_home_quantity ?? 0)} : {})
   };
 }
+
+/* Client transport guard. This never certifies or replaces server ACL/RLS.
+ * Child mission completion remains unavailable until its server protocol is
+ * installed and verified; own magic uses the existing targeted canonical RPC.
+ */
+const readRPCs=new Set(['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities']);
+export function assertSharedWrite({method='GET',query='',body={},access=null}={}) {
+ if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase()))return;
+ const category=access?.profile?.memberCategory;
+ // Preserve historical clients; the canonical V7 access router requires a
+ // verified identity before shared use. A known child never inherits a parent
+ // permission from a stale or malformed context.
+ if(!category||category==='parent')return;
+ const rpc=query.split('?')[0].replace(/^rpc\//,'');
+ if(readRPCs.has(rpc))return;
+ if(category==='child'&&access.verified===true&&access.phase==='active'&&
+    rpc==='dobby_v7_update_magic'&&body?.p_member_id===access.memberId)return;
+ throw Error('Compte enfant en lecture seule : écriture partagée indisponible avant validation serveur. Seule sa propre Maison et son propre Patronus peuvent être modifiés.');
+}

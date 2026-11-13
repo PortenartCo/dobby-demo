@@ -1,0 +1,18 @@
+✔ native access keeps an unassigned authenticated session while legacy login still refuses it (34.663444ms)
+✔ native verified identity requires membership verification and canonical adoption (41.844398ms)
+✔ new access cannot bypass the existing browser household guard (10.810767ms)
+✔ an auth response arriving after logout cannot recreate a native session (6.915974ms)
+✔ native logout notifies access subscribers and unsubscribe prevents later delivery (14.679766ms)
+✔ public configuration accepts only this project publishable keys and preserves existing device configuration (2.886394ms)
+✔ native Auth errors retain GoTrue error_code without exposing the raw response (19.834106ms)
+✔ native GoTrue numeric HTTP codes do not hide the specific authentication reason (29.719515ms)
+✔ native context refusals retain SQLSTATE and leave the accepted Auth session unverified (4.93085ms)
+✔ native REST guard uses canonical child category even when client grants claim parent editing (6.10572ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 798.742236

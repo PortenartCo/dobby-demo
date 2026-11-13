@@ -22,9 +22,11 @@ const preserved = {
   'essai-stitch-v7/tests/helpers/e02-shared-groceries.cjs': '4c599d0a9f09ac72c4cb04777091dd3559ede85498a858226a03774317bda4ef'
 };
 
-test('Family integration preserves E02, existing Courses APIs, native Runes and runtime outside explicit PREP and verified access additions', () => {
+test('Family source boundaries preserve history plus explicitly reviewed 60-point amendments', () => {
   for (const [file, expected] of Object.entries(preserved)) {
     let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    const review=require('./fixtures/revue-generale-source-extensions.json')[file];
+    if(review){assert.ok(review.reason);assert.equal(digest(source),review.sha256,file+' reviewed amendment changed');continue;}
     if(file.endsWith('/family-v2.js')){
       const amendment=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/stitch19-20-access-extensions.json'),'utf8'));
       assert.equal(amendment.file,file);
@@ -57,12 +59,12 @@ test('all four functional roots still load the native shared Courses adapter bef
   }
 });
 
-test('E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical', () => {
+test('E09 memo writer retains identity/stale/import tests with the explicit child-write amendment', () => {
   const source = fs.readFileSync(path.join(repo, 'essai-stitch-v7/family-engine.js'), 'utf8').replace(/\r\n/g,'\n');
   const start = source.indexOf(' // Shared memos use the native state/save pipeline');
   const end = source.indexOf(' return Object.freeze(', start);
   assert.ok(start > -1 && end > start, 'Shared native memo writer remains identifiable');
-  assert.equal(digest(source.slice(start, end)), '56f0b224b0fcc0a764b398a7bf205ee5fd7da395b1f938d3316ec087ee7f08c8');
+  assert.equal(digest(source.slice(start, end)), require('./fixtures/revue-generale-source-extensions.json').memoWriter.sha256);
 });
 
 module.exports = { preserved };
