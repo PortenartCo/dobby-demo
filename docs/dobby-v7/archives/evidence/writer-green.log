@@ -1,12 +1,13 @@
-✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (19.083138ms)
-✔ stale row/context, denied child, missing source and failed local save cannot report success (8.584047ms)
-✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (2.780034ms)
-✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (2.173155ms)
-ℹ tests 4
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (19.625564ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (10.430909ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (2.880694ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (3.980434ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (3.057821ms)
+ℹ tests 5
 ℹ suites 0
-ℹ pass 4
+ℹ pass 5
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 116.138236
+ℹ duration_ms 124.026918

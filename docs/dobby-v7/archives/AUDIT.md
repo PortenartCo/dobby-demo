@@ -41,6 +41,8 @@ Commandes exécutées depuis la racine du dépôt :
 | `node essai-stitch-v7/tests/register-{documents,house,family,preservation,navigation}.cjs` exécutés séparément | Tous passent à 320/390 ; register-regressions.log |
 | `node essai-stitch-v7/tests/e07-p02-family.cjs` | Passe isolément sur main et sur le lot ; grocery-isolated.log et baseline-grocery.log |
 | `node essai-stitch-v7/build-source.cjs` ; `npm run build:css --prefix essai-stitch-v7` | Build réel réussi, CSS inchangé ; build.log |
+| `node --test essai-stitch-v7/tests/fam-integration-transverse.test.cjs` | 10/10 ; extension inverse explicite des sources Archives ; provenance-green.log |
+| `npm run test:prep --prefix essai-stitch-v7/tests` avec serveur et Chromium locaux | 57/57 et PREP UI/invalid/sync réussis ; prep-regression.log |
 | `npm run test:all --prefix essai-stitch-v7/tests` | Échec historique E08 décrit ci-dessous ; full-browser-suite.log |
 | `npm test --prefix essai-stitch-v7/tests` | Menu + recettes passent ; un scénario Courses a rencontré un snapshot périmé, puis passe isolément sans changement de code ; checkpoint-suite.log / grocery-isolated.log |
 

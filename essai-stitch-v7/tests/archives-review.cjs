@@ -3,7 +3,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
 (async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{
  const context=await b.newContext({viewport:{width:390,height:900}});await context.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());
- for(const scenario of ['planned','instructions','isolation','selection'].filter(name=>!process.env.DOBBY_ARCHIVE_REVIEW_CASE||name===process.env.DOBBY_ARCHIVE_REVIEW_CASE)){
+ for(const scenario of ['planned','instructions','isolation','selection','retired'].filter(name=>!process.env.DOBBY_ARCHIVE_REVIEW_CASE||name===process.env.DOBBY_ARCHIVE_REVIEW_CASE)){
   const p=await context.newPage();await p.goto(origin+'/essai-stitch-v7/index.html');await p.waitForFunction(()=>DobbyCuisine?.ready);
   await p.evaluate(()=>DobbyCuisineEngine.evaluate('const r=JSON.parse(JSON.stringify(BASE[0]));r.id="review-archive";r.name="TEST recette conservée";r.archive={version:1,archivedAt:new Date().toISOString()};custom=[r];st.customRecipes=custom;st.planned={[todayISO()+"-soir"]:{id:r.id,people:2,status:"prévu"}};st.famContacts=[{id:"denied",name:"SECRET_OTHER_HOME",note:"SECRET_NOTE",archive:{version:1,archivedAt:new Date().toISOString(),householdId:"other-home"}}];save();'));
   if(scenario==='planned'){await p.evaluate(()=>DobbyCuisine.open('taverne'));assert.ok((await p.locator('[data-e07-dinner]').innerText()).includes('TEST recette conservée'));assert.ok(await p.locator('[data-e07-dinner] [data-cu-action=recipe][data-id=review-archive]').count());}
@@ -15,6 +15,7 @@ const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
    await p.evaluate(()=>DobbyFamilyStitchEngine.evaluate('custom[0].archive.householdId="other-home";save();'));await p.goto(origin+'/essai-stitch-v7/index.html#recipe?id=review-archive');await p.waitForFunction(()=>DobbyCuisine?.ready);assert.ok(!(await p.locator('main').innerText()).includes('TEST recette conservée'));
   }
   if(scenario==='selection'){const error=await p.evaluate(()=>{try{DobbyCuisineEngine.choose({id:'review-archive',date:'2030-01-02',slot:'midi',adult:2,children:0});return null;}catch(e){return e.message;}});assert.match(error,/archiv|retirée/i);}
+  if(scenario==='retired'){await p.evaluate(()=>{DobbyCuisineEngine.evaluate('delete custom[0].archive;custom[0].removedAt=new Date().toISOString();save();');DobbyCuisine.open('recipe',{id:'review-archive'});});const archive=p.locator('[data-cu-action=archive-source]');assert.equal(await archive.isDisabled(),true);assert.match(await archive.getAttribute('title'),/réglages du Grimoire/);}
   await p.close();console.log('ARCHIVES_REVIEW_PASS',scenario);
  }
  await context.close();

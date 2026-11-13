@@ -9,7 +9,20 @@ const repo = path.resolve(__dirname, '../..');
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const reconciliation = require('./fixtures/reconciliation-main-43eef-source-extensions.json');
 const readiness = require('./fixtures/pr15-native-readiness-source-extensions.json');
+const archives = require('./fixtures/archives-source-extensions.json');
+function beforeArchives(file,source,extension=archives.files[file]){
+  if(!extension)return source;
+  assert.equal(digest(source),extension.afterSha256,file+' current reviewed source changed');
+  for(const patch of [...extension.patches].reverse()){
+    assert.notEqual(patch.after,patch.before,file+' archive amendment changes an exact literal');
+    assert.equal(source.split(patch.after).length-1,patch.occurrences||1,file+' exact archive amendment occurs once');
+    source=source.replaceAll(patch.after,()=>patch.before);
+  }
+  assert.equal(digest(source),extension.beforeSha256,file+' Archives reversal restores its complete parent');
+  return source;
+}
 function currentFingerprint(file,source,review,composed,extension=readiness.files[file]){
+  source=beforeArchives(file,source);
   const previous=composed?composed.mergedSha256:review.sha256;
   if(extension){
     assert.ok(composed,file+' readiness extension requires the frozen reconciliation');
@@ -52,6 +65,7 @@ test('Family source boundaries preserve history plus reviewed general and family
     let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
     const review=reviews[file],amendment=socle.files[file],composed=reconciliation.files[file];
     if(composed){currentFingerprint(file,source,review,composed);continue;}
+    source=beforeArchives(file,source);
     if(amendment){assert.equal(digest(source),amendment.sha256,file+' family-core amendment changed');continue;}
     if(review){assert.ok(review.reason);assert.equal(digest(source),review.sha256,file+' reviewed amendment changed');continue;}
     if(file.endsWith('/family-v2.js')){
@@ -59,7 +73,7 @@ test('Family source boundaries preserve history plus reviewed general and family
       assert.equal(amendment.file,file);
       for(const patch of amendment.patches){
         assert.equal(source.split(patch.after).length-1,1,patch.label+' has exactly one bounded native extension');
-        source=source.replace(patch.after,patch.before);
+        source=source.replaceAll(patch.after,()=>patch.before);
       }
       source=source.replace(/    async importRows\([\s\S]*?(?=    resolve: choose, sync)/,'');
     }
@@ -172,11 +186,24 @@ test('all four functional roots still load the native shared Courses adapter bef
 });
 
 test('E09 memo writer retains identity/stale/import tests with the explicit child-write amendment', () => {
-  const source = fs.readFileSync(path.join(repo, 'essai-stitch-v7/family-engine.js'), 'utf8').replace(/\r\n/g,'\n');
+  const source = beforeArchives('essai-stitch-v7/family-engine.js',fs.readFileSync(path.join(repo, 'essai-stitch-v7/family-engine.js'), 'utf8').replace(/\r\n/g,'\n'));
   const start = source.indexOf(' // Shared memos use the native state/save pipeline');
   const end = source.indexOf(' return Object.freeze(', start);
   assert.ok(start > -1 && end > start, 'Shared native memo writer remains identifiable');
   assert.equal(digest(source.slice(start, end)), require('./fixtures/revue-generale-source-extensions.json').memoWriter.sha256);
+});
+
+test('Archives amendments reverse exactly to current main and reject altered bytes or parent hashes',()=>{
+  assert.equal(archives.baseCommit,'2584a8955bac1358d08a8f59070179aa5d624071');
+  assert.equal(Object.keys(archives.files).length,6);
+  for(const [file,extension]of Object.entries(archives.files)){
+    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    const previous=beforeArchives(file,source);
+    assert.equal(digest(previous),extension.beforeSha256);
+    assert.throws(()=>beforeArchives(file,source+'\n/* unreviewed byte */'),/current reviewed source changed/);
+    assert.throws(()=>beforeArchives(file,source,{...extension,beforeSha256:'0'.repeat(64)}),/restores its complete parent/);
+    assert.throws(()=>beforeArchives(file,source,{...extension,afterSha256:'0'.repeat(64)}),/current reviewed source changed/);
+  }
 });
 
 module.exports = { preserved };

@@ -32,6 +32,7 @@
   writable(source);const row=get(source,id),already=archived(row);
   // Replayed confirmations are harmless even if their old snapshot is stale.
   if(already===toArchived)return false;
+  if(source==='recipes'&&row.removedAt)throw Error('Cette recette est également retirée du Grimoire. Restaurez-la dans les réglages du Grimoire avant de modifier son archivage.');
   if(options.expected!==snapshot(source,id))throw Error('La fiche ou le foyer a été modifié. Ouvrez à nouveau la confirmation.');
   const {context}=liveContext(),def=definition(source),shared=source!=='documents'||row.retainedLocalOnly!==true&&(['Contrats','Assurances'].includes(row.category)||row.sharedToHousehold===true),home=def.module&&shared&&window.DobbyFamilyUI?.isModuleActive?.(def.module)?context?.householdId:null;
   const now=new Date().toISOString(),archive={...row.archive,...(home?{householdId:home}:{}),version:1,archivedAt:toArchived?now:null,updatedAt:now,...(!toArchived?{lastArchivedAt:row.archive.archivedAt}: {})};

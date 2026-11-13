@@ -60,6 +60,7 @@
  function recipe(recipe,main){
   if(!E.read().state.customRecipes?.some(row=>row.id===recipe.id))return;
   const archived=api().archived(recipe),button=el('button',archived?'Retour aux Archives':'Archiver');button.type='button';button.dataset.cuAction='archive-source';main.append(button);
+  if(!archived){try{api().writable('recipes');if(recipe.removedAt)throw Error('Restaurez cette recette dans les réglages du Grimoire avant de l’archiver.');}catch(error){button.disabled=true;button.title=error.message;}}
   if(archived){main.prepend(el('p','Archivé · recette conservée, y compris dans les menus existants.','archive-source-status'));const reads=new Set(['back','recipes','taverne','e074-tab','e074-method','ingredients','steps','servings','archive-source']);for(const control of main.querySelectorAll('button[data-cu-action],input,select,textarea'))if(!reads.has(control.dataset.cuAction))control.disabled=true;}
  }
  window.DobbyArchivesUI=Object.freeze({render,decorate,guard,act,recipe,authorize,authorizeRecipe,recipeAction(id){if(api().archived(api().get('recipes',id)))location.href='./famille.html#documents';else confirmChange('recipes',id,true);},isArchived:row=>Boolean(row?.archive?.archivedAt)});

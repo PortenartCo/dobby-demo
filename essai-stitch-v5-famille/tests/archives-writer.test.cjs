@@ -40,3 +40,10 @@ test('unverified identity, duplicate identities and another household are refuse
  A.change('equipment','same',true,{confirmed:true,expected:A.snapshot('equipment','same')});connection.householdId='other';assert.equal(A.list().length,0);assert.throws(()=>A.get('equipment','same'),/introuvable|accès/i);
  connection.householdId='fixture-home';st.houseItems.push({...st.houseItems[0]});assert.throws(()=>A.change('equipment','same',false,{confirmed:true,expected:'old'}),/identité|ambigu/i);
 });
+test('native retired recipes cannot produce a false archive activation or erase their retirement',()=>{
+ const {A,st,writes}=setup();st.customRecipes[0].removedAt='2026-01-01T12:00:00.000Z';const before=json(st);
+ assert.throws(()=>A.change('recipes','recipe',true,{confirmed:true,expected:A.snapshot('recipes','recipe')}),/retirée|restaur/i);assert.deepEqual(json(st),before);assert.equal(writes(),0);
+ delete st.customRecipes[0].removedAt;A.change('recipes','recipe',true,{confirmed:true,expected:A.snapshot('recipes','recipe')});
+ st.customRecipes[0].removedAt='2026-01-01T12:00:00.000Z';const archived=json(st),count=writes();
+ assert.throws(()=>A.change('recipes','recipe',false,{confirmed:true,expected:A.snapshot('recipes','recipe')}),/retirée|restaur/i);assert.deepEqual(json(st),archived);assert.equal(writes(),count);
+});
