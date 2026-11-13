@@ -9,7 +9,7 @@ test('E05 catalogues have stable French identities without inferring a house or 
  const P=load();assert.ok(P,'Shared identity catalogue is available');
  assert.deepEqual(Array.from(P.houses,x=>x.id),['gryffindor','slytherin','ravenclaw','hufflepuff']);
  assert.deepEqual(Array.from(P.patronuses,x=>x.name),['Cerf','Loutre','Renard','Loup','Chat','Hibou','Cheval','Lièvre','Cygne','Lynx','Blaireau','Dauphin']);
- assert.equal(new Set(P.avatars.map(a=>a.id)).size,8);assert.equal(P.linkedMember([{id:'a'}],{userId:'u'}),null);
+ assert.equal(new Set(P.avatars.map(a=>a.id)).size,24);assert.equal(P.linkedMember([{id:'a'}],{userId:'u'}),null);
 });
 test('partial native profile patch preserves unknown fields, emoji, identity, and unrelated rewards',()=>{
  const P=load();assert.ok(P,'Shared profile patch exists');

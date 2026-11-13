@@ -1,0 +1,36 @@
+{
+  "source": "User SQL Editor reply, 13 November 2026 Europe/Paris",
+  "action": "disable-only-confirmed-test-memberships",
+  "appliedBy": "user manually",
+  "affectedMembershipRows": 2,
+  "oldHouseholdActiveRows": 0,
+  "authUsersPreserved": 2,
+  "moduleRowsPreserved": 6,
+  "moduleRowsUnchanged": true,
+  "rolesAndJoinedAtUnchanged": true,
+  "membershipMetadataUnchanged": true,
+  "legacyV1Untouched": true,
+  "noDeletion": true,
+  "verification": "dobby-stitch19-20-fresh-start-v1",
+  "databaseVersion": "17.11",
+  "authUsers": 2,
+  "globalActiveV2Memberships": 0,
+  "inactiveOldMemberships": 2,
+  "oldOwnerMemberships": 2,
+  "canonicalMembersInOldHousehold": 0,
+  "moduleRevisions": {
+    "house": 1,
+    "menus": 2,
+    "family": 2,
+    "recipes": 1,
+    "missions": 2,
+    "contracts": 3
+  },
+  "privateV7": {
+    "bindings": 0,
+    "invitations": 0,
+    "pendingProfiles": 0
+  },
+  "realAuthenticatedAccountJourneysVerified": false,
+  "householdIdOmittedFromPublicEvidence": true
+}

@@ -1696,14 +1696,18 @@ let v23MemberEdit=null;
 const v23Members=()=>st.familyMembers||[];
 const v23MemberById=id=>v23Members().find(x=>x.id===id);
 const v23ActiveMember=()=>v23MemberById(st.v23HealthMemberId)||v23Members()[0]||null;
-// Real account membership does not establish a member identity or a parental
-// role. Only the isolated review runtime supplies a fictional actor explicitly.
-const v23MemberContext=()=>({demo:!!window.DobbyReview,actorId:window.DobbyReview?.demoMemberId||null,members:v23Members()});
+// Server identity binding is distinct from household membership and local UI selection.
+const v23MemberContext=()=>{
+ if(window.DobbyReview)return{demo:true,actorId:window.DobbyReview.demoMemberId||null,members:v23Members()};
+ const api=window.DobbyFamilyUI,connection=api?.connectionState?.(),bound=api?.access?.state?.(),context=api?.getContext?.();
+ const verified=connection?.verified===true&&!connection.verifying&&connection.access!=='rejected'&&bound?.verified===true&&context?.identityVerified===true&&!!context.userId&&!!context.householdId&&!!context.memberId&&bound.userId===context.userId&&bound.householdId===context.householdId&&bound.memberId===context.memberId;
+ return{demo:false,verified,userId:verified?context.userId:null,householdId:verified?context.householdId:null,actorId:verified?context.memberId:null,permissions:verified?context.permissions:{},members:v23Members()};
+};
 const v23MemberPermissions=id=>window.DobbyFamilyMemberPolicy.permissions(v23MemberById(id),v23MemberContext());
 function v23HealthPermissions(record,shared=false){
  const context=v23MemberContext(),policy=window.DobbyFamilyMemberPolicy;
  const denied={canEdit:false,canCreate:false,canMagic:false,reason:policy.permissions(null,context).reason};
- if(!context.demo)return denied;
+ if(!context.demo&&!context.verified)return denied;
  let member;
  if(record?.personId)member=v23MemberById(record.personId);
  else{const matches=v23Members().filter(row=>row.name===String(record?.person||'').trim());if(matches.length===1)member=matches[0];}
@@ -1724,18 +1728,31 @@ let v23MagicScoring;
 async function v23SaveMagicResult(id,kind,answers){
  if(!['house','patronus'].includes(kind)||!Array.isArray(answers)||!answers.every(answer=>typeof answer==='string'))throw Error('Questionnaire magique invalide.');
  const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);
- const baseline=JSON.stringify(member),actor=v23MemberContext().actorId;
+ const baseline=JSON.stringify(member),actor=JSON.stringify(v23MemberContext());
  // Reuse the E06 barème and scoring; user supplied result IDs/algorithm tags
  // never grant a child permission to write a manually selected result.
  v23MagicScoring ||= Promise.all([import('../essai-stitch-v7/onboarding-scoring.mjs'),fetch('../essai-stitch-v7/data/onboarding-scoring-v1.json').then(response=>{if(!response.ok)throw Error('Barème E06 indisponible.');return response.json();})]).then(([module,config])=>module.createScoring(config));
  const scoring=await v23MagicScoring,rules=scoring.config[kind],count=rules.baseQuestionCount;
  if(answers.length<count||answers.length>rules.questions.length||answers.some((answer,index)=>!rules.questions[index]?.answers.some(row=>row.id===answer)))throw Error('Questionnaire magique incomplet ou invalide.');
  const result=scoring[kind](answers.slice(0,count),answers[count]);if(!result.result)throw Error('Questionnaire magique incomplet.');
- if(JSON.stringify(v23MemberById(id))!==baseline||v23MemberContext().actorId!==actor||!v23MemberPermissions(id).canMagic)throw Error('Le membre ou la persona a changé. Recommencez depuis sa fiche.');
+ if(JSON.stringify(v23MemberById(id))!==baseline||JSON.stringify(v23MemberContext())!==actor||!v23MemberPermissions(id).canMagic)throw Error('Le membre ou le compte a changé. Recommencez depuis sa fiche.');
  const values=kind==='house'?{magicHouseId:scoring.catalogueId(kind,result.result),magicHouseAlgorithm:scoring.version}:{magicPatronusId:scoring.catalogueId(kind,result.result),magicPatronusAlgorithm:scoring.version};
  return v23SubmitConfirmedMagic(member,values);
 }
+function v23SaveMagicChoice(id,kind,resultId){
+ const catalogue=kind==='house'?window.DobbyMagicIdentity.houses:kind==='patronus'?window.DobbyMagicIdentity.patronuses:null;
+ if(!catalogue?.some(row=>row.id===resultId))throw Error('Choix magique invalide.');
+ const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);
+ return v23SubmitConfirmedMagic(member,kind==='house'?{magicHouseId:resultId}:{magicPatronusId:resultId});
+}
 const v23SubmitConfirmedMagic=(member,values)=>{
+ const context=v23MemberContext();
+ if(context.verified){
+  const api=window.DobbyFamilyUI;if(!v23MemberPermissions(member.id).canMagic||typeof api.access?.updateMagic!=='function')throw Error('Enregistrement magique serveur indisponible pour ce compte.');
+  // Real bound entries are changed atomically on the server; never stage a
+  // full local snapshot first. The access adapter adopts the returned family.
+  return api.access.updateMagic({memberId:member.id,values,expectedRevision:api.access.state().familyRevision,operationId:crypto.randomUUID()});
+ }
  const id=member.id;st.page='family';st.extraPage='health';v23MemberEdit=id;render();
  const form=document.getElementById('v23MemberForm');
  if(member.avatar&&![...form.elements.avatar.options].some(option=>option.value===member.avatar))form.elements.avatar.add(new Option(member.avatar,member.avatar));
@@ -1747,10 +1764,10 @@ const v23SubmitConfirmedMagic=(member,values)=>{
 };
 const v23FinishMagicCeremony=id=>{
  const member=v23MemberById(id),access=v23MemberPermissions(id);if(!member||!access.canMagic)throw Error(access.reason);
- const complete=member.magicProfile?.houseAlgorithmVersion==='e06-v1'&&member.magicProfile?.patronusAlgorithmVersion==='e06-v1';
+ const complete=window.DobbyMagicIdentity.isCeremonyComplete(member);
  return v23SubmitConfirmedMagic(member,{magicCeremony:complete?'complete':'deferred'});
 };
-window.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite});
+window.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,saveMagicChoice:v23SaveMagicChoice,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite});
 const v23OldHealth=xhealth;
 xhealth=function(){
  const selected=v23ActiveMember();const people=v23Members();

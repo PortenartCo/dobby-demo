@@ -1,14 +1,61 @@
-const assert=require('node:assert/strict'),{chromium}=require('playwright'),origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
-(async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{const c=await b.newContext({viewport:{width:390,height:900},reducedMotion:'reduce'});await c.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await c.newPage();await p.goto(origin+'/essai-stitch-v7/famille.html#personal');await p.waitForFunction(()=>DobbyFamilyStitch?.ready);await p.evaluate(()=>DobbyFamilyStitchEngine.evaluate("st.familyMembers=[{id:'qa-member',name:'TEST — Identité',avatar:'🌿',birthdate:'',future:{keep:true}}];st.runeCredits=[];st.runeRequests=[];save();"));await p.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
-for(const [field,values,button,form,key]of [['magicPatronusId',['stag','otter','fox','wolf','cat','owl','horse','hare','swan','lynx','badger','dolphin'],'#magic-patronus-edit','#magic-patronus-form','patronusId'],['magicAvatarId',Array.from({length:8},(_,i)=>'portrait-'+(i+1)),'#magic-avatar-edit','#magic-avatar-form','avatarId']])for(const value of values){await p.locator(button).click();await p.locator('[name='+field+']').selectOption(value);await p.locator(form+' button[type=submit]').click();await p.waitForFunction(({key,value})=>DobbyFamilyStitchEngine.read().members[0].magicProfile[key]===value,{key,value});await p.locator(button).waitFor();}assert.deepEqual(await p.evaluate(()=>DobbyFamilyStitchEngine.read().members[0].future),{keep:true});
-// Generic links and Back to a person-less route must never retain or infer a profile.
-await p.evaluate(()=>DobbyFamilyStitch.open('salon'));await p.locator('[data-e01-destination="4"]').click();await p.waitForFunction(()=>DobbyFamilyStitch.view==='menu');await p.evaluate(()=>DobbyFamilyStitch.open('personal'));await p.waitForFunction(()=>DobbyFamilyStitch.view==='personal');assert.equal(await p.locator('[data-profile-member]').count(),0,'Generic entry requires an explicit choice');await p.locator('[data-magic-choose="qa-member"]').click();await p.locator('[data-profile-member]').waitFor();await p.goBack();await p.waitForFunction(()=>DobbyFamilyStitch.view==='personal');assert.equal(await p.locator('[data-profile-member]').count(),0,'Back to #personal restores the chooser');await p.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
-// Open editor protects a draft against refresh; stale native member blocks save.
-await p.locator('#magic-personal-edit').click();await p.locator('#magic-name').fill('TEST — Brouillon');await p.evaluate(()=>DobbyFamilyStitchEngine.evaluate("st.familyMembers[0].name='TEST — Modification distante';save();"));await p.locator('#magic-personal-form button[type=submit]').click();await p.locator('#fa-notice').waitFor();assert.match(await p.locator('#fa-notice').innerText(),/changé/);assert.equal(await p.evaluate(()=>DobbyFamilyStitchEngine.read().members[0].name),'TEST — Modification distante');await p.locator('#magic-personal-form button[type=button]').click();await p.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
-// No edit can cross a changed authenticated household context. Fixture only.
-await p.locator('#magic-personal-edit').click();const membersBefore=await p.evaluate(()=>DobbyFamilyStitchEngine.read().members);await p.evaluate(()=>{const w=DobbyFamilyStitchEngine.win();w.__testProfileApi=w.DobbyFamilyUI;w.DobbyFamilyUI={...w.DobbyFamilyUI,getContext:()=>({userId:'TEST-other',householdId:'TEST-other'})};});await p.locator('#magic-personal-form button[type=submit]').click();await p.locator('#fa-notice').waitFor();assert.match(await p.locator('#fa-notice').innerText(),/changé/);assert.deepEqual(await p.evaluate(()=>DobbyFamilyStitchEngine.read().members),membersBefore);await p.evaluate(()=>{const w=DobbyFamilyStitchEngine.win();w.DobbyFamilyUI=w.__testProfileApi;delete w.__testProfileApi;});await p.locator('#magic-personal-form button[type=button]').click();await p.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
-// Keyboard opens and cancels the only House editor, located inside its own card.
-await p.locator('#magic-house-edit').focus();await p.keyboard.press('Enter');assert.equal(await p.locator('[name=magicHouseId]').evaluate(el=>el===document.activeElement),true);assert.equal(await p.locator('[name=magicHouseId]').evaluate(el=>!!el.closest('.mp-house')),true);await p.locator('#magic-house-form button[type=button]').click();
-assert.equal(await p.locator('[data-magic-profile] input[type=file]').count(),0);assert.equal(await p.locator('[data-profile-member]').getAttribute('data-profile-member'),'qa-member');await p.locator('[data-e01-account]').click();await p.waitForFunction(()=>!!document.querySelector('[data-magic-profile]')&&!document.querySelector('[data-profile-member]'));assert.equal(await p.locator('[data-profile-member]').count(),0,'Gold account control does not reattribute last consulted member');
-for(const file of ['traverse.html','missions.html','index.html','famille.html','famille.html#menu']){await p.goto(origin+'/essai-stitch-v7/'+file);await p.waitForFunction(()=>DobbyStitchV7?.ready);await p.locator('[data-e01-account]').click();await p.waitForURL(/famille.html#personal/);await p.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal(await p.locator('[data-profile-member]').count(),0);assert.equal(await p.locator('body > nav a').count(),5);}
-await c.close();console.log('E05_EDGE_PASS 12 patronuses, 8 portraits, native extension preservation, stale save blocked, keyboard, five gold destinations, no inferred account identity');}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1});
+/* Local profile edge cases. Native-frame TEST parent permissions are removed
+   before Auth-context denial checks; no real account or remote transport. */
+const assert=require('node:assert/strict'),{chromium}=require('playwright');
+const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
+(async()=>{
+ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
+ try{
+  const context=await browser.newContext({viewport:{width:390,height:900},reducedMotion:'reduce'});
+  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():route.abort());
+  await context.addInitScript(()=>{if(location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))window.DobbyReview={demoMemberId:'qa-member'};});
+  const page=await context.newPage();page.setDefaultTimeout(12000);
+  await page.goto(origin+'/essai-stitch-v7/famille.html#personal');await page.waitForFunction(()=>DobbyFamilyStitch?.ready);
+  await page.evaluate(()=>DobbyFamilyStitchEngine.evaluate("st.familyMembers=[{id:'qa-member',memberCategory:'parent',name:'TEST — Identité',avatar:'🌿',birthdate:'',future:{keep:true}}];st.runeCredits=[];st.runeRequests=[];save();"));
+  await page.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
+  for(const value of ['stag','otter','fox','wolf','cat','owl','horse','hare','swan','lynx','badger','dolphin']){
+   await page.locator('.mp-patronus').getByRole('button',{name:'Refaire le test',exact:true}).click();
+   await page.getByRole('button',{name:'Choisir directement',exact:true}).click();await page.locator('[data-ceremony-choice="'+value+'"]').click();
+   await page.getByRole('button',{name:'Confirmer mon Patronus',exact:true}).click();await page.waitForFunction(()=>!document.querySelector('#dobby-ceremonies')&&!DobbyRegister.busy);
+   assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.read().members[0].magicProfile.patronusId),value);
+   await page.locator('.mp-patronus [data-media-id="'+value+'"]').waitFor();
+  }
+  for(const value of Array.from({length:24},(_,index)=>'portrait-'+(index+1))){
+   await page.locator('#magic-avatar-edit').click();await page.locator('[name=magicAvatarId]').selectOption(value);await page.locator('#magic-avatar-form button[type=submit]').click();
+   await page.waitForFunction(value=>DobbyFamilyStitchEngine.read().members[0].magicProfile.avatarId===value,value);await page.locator('#magic-avatar-edit').waitFor();
+  }
+  assert.deepEqual(await page.evaluate(()=>DobbyFamilyStitchEngine.read().members[0].future),{keep:true});
+  // Generic links and Back must never infer a profile from the local persona.
+  await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.locator('[data-e01-destination="4"]').click();await page.waitForFunction(()=>DobbyFamilyStitch.view==='menu');
+  await page.evaluate(()=>DobbyFamilyStitch.open('personal'));await page.waitForFunction(()=>DobbyFamilyStitch.view==='personal');assert.equal(await page.locator('[data-profile-member]').count(),0,'Generic entry requires an explicit choice');
+  await page.locator('[data-magic-choose="qa-member"]').click();await page.locator('[data-profile-member]').waitFor();await page.goBack();await page.waitForFunction(()=>DobbyFamilyStitch.view==='personal');assert.equal(await page.locator('[data-profile-member]').count(),0,'Back restores the chooser');
+  await page.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
+  // The current identity form preserves an open draft and rejects a changed member.
+  await page.getByRole('button',{name:'Modifier les informations personnelles',exact:true}).click();await page.locator('#member-firstname').fill('TEST — Brouillon');
+  await page.evaluate(()=>DobbyFamilyStitchEngine.evaluate("st.familyMembers[0].name='TEST — Modification distante';save();"));
+  assert.equal(await page.locator('#member-firstname').inputValue(),'TEST — Brouillon','Native refresh preserves the open identity draft');
+  await page.getByRole('button',{name:'Enregistrer le membre',exact:true}).click();await page.locator('#fa-notice').waitFor();assert.match(await page.locator('#fa-notice').innerText(),/changé/);
+  assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.read().members[0].name),'TEST — Modification distante');await page.locator('#member-form').getByRole('button',{name:'Annuler',exact:true}).click();
+  await page.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
+  // No local demo permission may mask an account-context denial. The retained
+  // avatar editor also pins the full context captured when the form opened.
+  await page.locator('#magic-avatar-edit').click();await page.locator('[name=magicAvatarId]').selectOption('portrait-1');
+  const membersBefore=await page.evaluate(()=>DobbyFamilyStitchEngine.read().members);
+  await page.evaluate(()=>{const w=DobbyFamilyStitchEngine.win();w.__testProfileApi=w.DobbyFamilyUI;w.__testProfileReview=w.DobbyReview;delete w.DobbyReview;w.DobbyFamilyUI={...w.DobbyFamilyUI,getContext:()=>({userId:'TEST-other',householdId:'TEST-other'})};});
+  assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.memberPermissions('qa-member').canEdit),false,'The changed, unverified account has no demo permission');
+  await page.locator('#magic-avatar-form button[type=submit]').click();await page.locator('#fa-notice').waitFor();assert.match(await page.locator('#fa-notice').innerText(),/changé/);assert.deepEqual(await page.evaluate(()=>DobbyFamilyStitchEngine.read().members),membersBefore);
+  const denied=await page.evaluate(async()=>{try{await DobbyFamilyStitchEngine.saveMember('qa-member',{name:'TEST — Unauthorized identity'});return'saved';}catch(error){return error.message;}});
+  assert.match(denied,/suspendue|relié|droits|association/i,'The actual identity writer denies an unbound account');assert.deepEqual(await page.evaluate(()=>DobbyFamilyStitchEngine.read().members),membersBefore);
+  await page.evaluate(()=>{const w=DobbyFamilyStitchEngine.win();w.DobbyFamilyUI=w.__testProfileApi;w.DobbyReview=w.__testProfileReview;delete w.__testProfileApi;delete w.__testProfileReview;});
+  await page.locator('#magic-avatar-form button[type=button]').click();await page.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
+  // Keyboard opens the single current House modal and Escape returns to its trigger.
+  const houseTrigger=page.locator('.mp-house').getByRole('button',{name:'Refaire le test',exact:true});await houseTrigger.focus();await page.keyboard.press('Enter');
+  await page.locator('#dobby-ceremonies[data-ceremony-kind=house]').waitFor();assert.equal(await page.locator('#dobby-ceremonies[open]').count(),1);assert.equal(await page.evaluate(()=>document.querySelector('#dobby-ceremonies').contains(document.activeElement)),true);
+  await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.querySelector('#dobby-ceremonies'));assert.equal(await houseTrigger.evaluate(el=>el===document.activeElement),true);
+  assert.equal(await page.locator('[data-magic-profile] input[type=file]').count(),0);assert.equal(await page.locator('[data-profile-member]').getAttribute('data-profile-member'),'qa-member');
+  await page.locator('[data-e01-account]').click();await page.waitForFunction(()=>!!document.querySelector('[data-magic-profile]')&&!document.querySelector('[data-profile-member]'));assert.equal(await page.locator('[data-profile-member]').count(),0,'Gold account control never reattributes the consulted member');
+  for(const file of ['traverse.html','missions.html','index.html','famille.html','famille.html#menu']){
+   await page.goto(origin+'/essai-stitch-v7/'+file);await page.waitForFunction(()=>DobbyStitchV7?.ready);await page.locator('[data-e01-account]').click();await page.waitForURL(/famille.html#personal/);await page.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal(await page.locator('[data-profile-member]').count(),0);assert.equal(await page.locator('body > nav a').count(),5);
+  }
+  await context.close();console.log('E05_EDGE_PASS 12 native Patronus confirmations, 24 portraits, extensions, stale identity protection, unbound-context denial, modal keyboard, five gold destinations, no inferred account');
+ }finally{await browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

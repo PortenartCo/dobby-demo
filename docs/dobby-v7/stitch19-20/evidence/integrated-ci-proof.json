@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "browser": "Chrome 156.0.8078.79",
+  "sourceSha": "46535566f9b99267f5666db3377a59ed813994e8",
+  "archiveBefore": {
+    "sha256": "de080156fad68f559deb8800ff402686ea699ad1d0cab0eafb376e086dff7e83",
+    "files": 317
+  },
+  "archiveAfter": {
+    "sha256": "de080156fad68f559deb8800ff402686ea699ad1d0cab0eafb376e086dff7e83",
+    "files": 317
+  },
+  "trackedArchiveFiles": 274,
+  "temporaryRemoved": true,
+  "files": {
+    "essai-stitch-v7/tests/ci.cjs": "f17add2605d515fdf14a1b686591d0e135ecec0ce8127c9e9fd757491bbb0b8d",
+    "essai-stitch-v7/tests/integrated-preview-fixture.cjs": "2c5c54ed8177f8c0a72a900826585e4cc084756ac9ef1a9246e37e2f4d868c92",
+    "essai-stitch-v7/tests/integrated-preview-fixture.test.cjs": "66bd8d2dbf178a1d1198c8497883f258932d6e28a80fac1b67f24d586ce426a9",
+    "essai-stitch-v7/tests/integrated-preview.cjs": "ab9b68e694f06995ada087b5ef0afa0580123bf80742cab4b243d23b417726e0",
+    "scripts/build-dobby-review.cjs": "4bfb9176c5e7247ca0119fe658f691f42fb61efe34d1b7bd06e95b2a7dad9cbd",
+    "scripts/review/integrated-config.js": "f69f1982df929b391ff64388642ba79f18903e2348ae7842acf2b8aec109b653"
+  }
+}

@@ -7,7 +7,11 @@ window.DobbyFamilyMemberPolicy=(()=>{
  const reason='Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures.';
  function permissions(member,context={}){
   const denied={canEdit:false,canMagic:false,canCreate:false,reason};
-  if(context.demo!==true)return denied;
+  if(context.demo!==true){
+   if(context.verified!==true||!context.userId||!context.householdId||!context.actorId||!context.members?.some(row=>row.id===context.actorId))return denied;
+   const grants=context.permissions||{},own=!!member&&member.id===context.actorId,dependent=!!member&&grants.canManageDependents===true&&['baby','child','pet'].includes(category(member)),allowed=own||dependent;
+   return{canEdit:allowed&&grants.canEdit===true,canMagic:allowed&&grants.canMagic===true,canCreate:grants.canCreate===true,reason:allowed?'Droits du compte et du membre vérifiés par le service familial.':reason};
+  }
   const actor=context.members?.find(row=>row.id===context.actorId),role=category(actor);
   if(!actor||!role)return{...denied,reason:'Choisissez une persona fictive dont la catégorie est explicitement renseignée.'};
   if(role==='baby'||role==='pet')return{...denied,reason:'Les bébés et les animaux ne possèdent pas de session autonome.'};
@@ -26,7 +30,7 @@ window.DobbyFamilyMemberPolicy=(()=>{
    const baseline={name:existing.name,birthdate:existing.birthdate||'',avatar:existing.avatar||'👤'};
    for(const[key,value]of Object.entries(values))if(!magic.has(key)&&(!Object.hasOwn(baseline,key)||value!==baseline[key]))throw Error(p.reason);
   }
-  if(!magicResult&&['magicHouseId','magicPatronusId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony'].some(key=>Object.hasOwn(values,key)))throw Error('La Maison et le Patronus se découvrent uniquement par les questionnaires magiques E06. Aucun résultat ne peut être choisi manuellement.');
+  if(!magicResult&&['magicHouseId','magicPatronusId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony'].some(key=>Object.hasOwn(values,key)))throw Error('La Maison et le Patronus se confirment par les questionnaires ou galeries magiques E06. Utilisez leur action de confirmation.');
   if(existing&&Object.hasOwn(values,'memberCategory')&&values.memberCategory!==existing.memberCategory&&(category(existing)==='parent'||values.memberCategory==='parent'))throw Error('Le statut parental ne peut pas être accordé ou retiré par ce formulaire.');
   return p;
  }

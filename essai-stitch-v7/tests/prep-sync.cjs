@@ -30,6 +30,9 @@ async function expectRegistry(page,key,expected){await page.waitForFunction(({ke
     if(url.pathname==='/rest/v1/dobby_v2_memberships')return reply([{household_id:HH,user_id:user(index),active:true}]);
     if(url.pathname==='/rest/v1/dobby_v2_households')return reply([{id:HH}]);
     if(url.pathname==='/rest/v1/rpc/dobby_missions_v2_capabilities')return reply({});
+    // This legacy PREP fixture has household membership without a canonical
+    // login-profile binding. Explicitly model the new access API refusing it.
+    if(url.pathname==='/rest/v1/rpc/dobby_v7_context')return reply({protocol:1,phase:'rejected',userId:user(index),profile:null,reason:'existing_member_link_required'});
     const household=url.searchParams.get('household_id');if(household)assert.equal(household,'eq.'+HH,'Fixture requests stay in the one household');
     if(url.pathname==='/rest/v1/dobby_v2_grocery'){
      const id=(url.searchParams.get('id')||'').replace(/^eq\./,'');

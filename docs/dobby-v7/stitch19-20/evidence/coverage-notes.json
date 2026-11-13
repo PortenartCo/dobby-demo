@@ -1,0 +1,33 @@
+{
+  "scope": "Final local product source fingerprints match the 8-suite browser run exactly.",
+  "historicalCampaign": "65/65 passed; resumed actual failures with explicit source epochs. Full immutable GitHub run remains required.",
+  "nativeUnits": 288,
+  "nativeBrowserSuites": 8,
+  "finalAuthFocusedTests": 53,
+  "sourceSha256": {
+    "index.html": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+    "essai-stitch-v5-famille/family-access.mjs": "e6a4b41a21291441aed4b98197a8ffeb56fdb9a06cc852baa54c352320a157b1",
+    "essai-stitch-v5-famille/family-v2.js": "ff30185b2c7364703e1550d052a1c530113f09a5e864b6b429a8c86b9b8a34a9",
+    "essai-stitch-v5-famille/family-modules.js": "0a37ecfadd23401648eb7e832e7e66424ec5fa956d943974c70969c2577624c1",
+    "essai-stitch-v5-famille/family-profile.js": "d6faf10b1a2b79f0890ec08de43773a2c3128ccfca6e1dc5b9011b8e974a7125",
+    "essai-stitch-v7/access-config.js": "16cdc4629ad40e2577f23a8a8bf2ab87a8263b8a1bfff363850fca319822adfa",
+    "essai-stitch-v7/access-entry.js": "ce603b74022bc1f2319f46d5b3054cc902735317da5c383f44fb6d8adb9feeb3",
+    "essai-stitch-v7/access-flow.mjs": "3de70f89fe210902b85650dec30b79d80f8d3d3a5e9d1d49286b28d8fa50798f",
+    "essai-stitch-v7/access.js": "4d39e87dddadc65541f82e43ebb4a8d454c8bdc87b4190cdd118300d9dd49c1b",
+    "essai-stitch-v7/access.css": "7b6a09cb1a3f7fb53ecd3e5237abc23b84dacd41f5dab9e1cc436c63ac025202",
+    "essai-stitch-v7/family-engine.js": "093a355783fbb47ed2c503d580524322fd8073276da2503b0e5bb625e69e72a6",
+    "essai-stitch-v7/family.js": "8d1ab2260fe774f6a101f195106ccd636ff8ca9ab4144b4442e18812f5090ee1",
+    "essai-stitch-v7/ceremonies.js": "7515fb32b4ebfb9290d8a3cdfe03219f44dec86b35be1bd068bdafdbe0e5934c",
+    "essai-stitch-v7/ceremonies.css": "096fd647b08a05c957bc326bcf001e9076af21e104106e8364265888fa0b449e",
+    "essai-stitch-v7/responsive.css": "1b448d9fb5208dca0334443650664beef4a4a371ea8e73afe52f5b7c3a85c888",
+    "essai-stitch-v7/ritual.js": "3153b91dc892f1edfdc6cacba4d6e09951f7805601a774f32bb9fa9552d74484",
+    "essai-stitch-v7/ritual.css": "706d9d7dd65107ae6d10763df48f024460285530933dcd1c1daac9f3feb7133c",
+    "essai-stitch-v7/famille.html": "45add7fe7739148ac15f01372a3c2d400d2a0e13476c208a676602c63a78e2b5",
+    "essai-stitch-v7/traverse.html": "27b7c62be60f038d109cf7595c770c1b4242b1145c06c8b22226a2d092e47420",
+    "essai-stitch-v7/assets/magic/portraits-09-24.png": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9"
+  },
+  "externalSupabaseWritesByCodex": 0,
+  "databaseInstallationAndFreshStartAppliedBy": "user manually; separate receipts",
+  "realAuthenticatedJourneysVerified": false,
+  "deploymentVerified": false
+}

@@ -1,0 +1,43 @@
+{
+  "status": "REPRODUCED",
+  "receipts": [
+    {
+      "log": "menu-scroll-diagnostic.log",
+      "browser": "BROWSER 156.0.8078.79",
+      "iterations": 6,
+      "transientHeaderOverlapCount": 6,
+      "settledHeaderAndDockClearCount": 6,
+      "exampleBefore": {
+        "bodyMinHeight": "844px",
+        "scrollY": 364,
+        "lastTop": -90,
+        "headerBottom": 68
+      },
+      "exampleAfter": {
+        "bodyMinHeight": "480px",
+        "scrollY": 0,
+        "lastTop": 274,
+        "headerBottom": 68
+      }
+    },
+    {
+      "log": "menu-scroll-chrome157-diagnostic.log",
+      "browser": "BROWSER 157.0.8103.50",
+      "iterations": 6,
+      "transientHeaderOverlapCount": 6,
+      "settledHeaderAndDockClearCount": 6,
+      "exampleBefore": {
+        "bodyMinHeight": "844px",
+        "scrollY": 364,
+        "lastTop": -90,
+        "headerBottom": 68
+      },
+      "exampleAfter": {
+        "bodyMinHeight": "480px",
+        "scrollY": 0,
+        "lastTop": 274,
+        "headerBottom": 68
+      }
+    }
+  ]
+}

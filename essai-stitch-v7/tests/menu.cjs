@@ -9,6 +9,8 @@ const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const evidence = path.resolve(__dirname, '../../docs/dobby-v7/evidence/menu-01-08');
 const labels = ['Maison & Équipements', 'Archives documentaires', 'Contrats & Assurances', 'Contacts', 'Paramètres'];
 const destinations = ['house', 'documents', 'contracts', 'contacts', 'settings'];
+const widths = (process.env.DOBBY_MENU_WIDTHS || '320,390,1440').split(',').map(Number);
+assert.ok(widths.length && widths.every(width => [320,390,1440].includes(width)) && new Set(widths).size === widths.length, 'Requested Menu widths must be a nonempty subset of 320/390/1440');
 const fixtureBytes = '%PDF-1.4\nTEST — Menu attachment, ephemeral profile only.\n%%EOF';
 const stateKeys = ['familyMembers', 'famLists', 'famHealth', 'famContacts', 'houseItems', 'houseLogs', 'familyDocs'];
 const removedRoutes = [
@@ -59,6 +61,29 @@ async function assertChrome(page, width, height = 844) {
   assert.ok(geometry.scrollWidth <= width + 1, 'No horizontal document overflow');
   return geometry;
 }
+async function assertShortMenuViewport(page, width, height) {
+  // Resizing updates dynamic viewport units on the next animation frame.
+  // Measuring/scrolling the old 844px body first can transiently put a card
+  // under the fixed header, before the browser clamps its stale scroll offset.
+  await page.setViewportSize({width, height});
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  await page.waitForFunction(expected => innerWidth === expected.width && innerHeight === expected.height && document.documentElement.clientHeight === expected.height, {width, height});
+  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const chrome = await assertChrome(page, width, height);
+  const measured = await page.locator('main a.module-item').last().evaluate(card => {
+    const rect = card.getBoundingClientRect(), hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    return {last: rect.toJSON(), scrollY, maximumScroll: Math.max(0, document.documentElement.scrollHeight - innerHeight), scrollHeight: document.documentElement.scrollHeight, viewportHeight: innerHeight, bodyMinHeight: getComputedStyle(document.body).minHeight, hit: Boolean(hit && (hit === card || card.contains(hit)))};
+  });
+  const diagnostic = JSON.stringify({width, height, ...measured, header: chrome.header, dock: chrome.dock});
+  console.log('MENU_SHORT_VIEWPORT', diagnostic);
+  assert.ok(Math.abs(measured.scrollY - measured.maximumScroll) <= 1, 'Menu reaches its actual settled maximum scroll: ' + diagnostic);
+  if (measured.maximumScroll > 1) assert.ok(measured.scrollY > 0, 'Overflowing Menu scrolls in the reduced viewport');
+  assert.ok(measured.last.bottom <= chrome.dock.top + 1, 'Last card stays fully above the fixed dock after scrolling: ' + diagnostic);
+  assert.ok(measured.last.top >= chrome.header.bottom - 1, 'Last card stays below the fixed header: ' + diagnostic);
+  assert.equal(measured.hit, true, 'The last Menu card remains clickable between the fixed header and dock: ' + diagnostic);
+  return {height, chrome, ...measured};
+}
 async function visibleLabels(page) {
   return page.locator('main a.module-item:visible').evaluateAll(cards => cards.map(card => {
     const copy = card.cloneNode(true);
@@ -72,7 +97,8 @@ async function visibleLabels(page) {
   const receipt = {suite: 'MENU-01–08', origin, offlineExternalRequests: true, freshContexts: true, widths: [], status: 'running'};
   const browser = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox']});
   try {
-    for (const width of [320, 390, 1440]) {
+    console.log('MENU_BROWSER', browser.version());
+    for (const width of widths) {
       const context = await browser.newContext({viewport: {width, height: 844}, locale: 'fr-BE', reducedMotion: 'reduce', acceptDownloads: true});
       const blockedExternal = [];
       await context.route('**/*', route => {
@@ -246,18 +272,20 @@ async function visibleLabels(page) {
         await page.evaluate(() => document.fonts.ready);
         const screenshot = path.join(evidence, 'menu-' + width + '.png');
         await page.screenshot({path: screenshot, fullPage: true, animations: 'disabled'});
-        await page.setViewportSize({width, height: 480});
-        await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
-        await page.waitForFunction(() => scrollY > 0);
-        const scrollLayout = await assertChrome(page, width, 480);
-        const last = await page.locator('main a.module-item').last().boundingBox();
-        assert.ok(last.y + last.height <= scrollLayout.dock.top + 1, 'Last card stays fully above the fixed dock after scrolling');
-        assert.ok(last.y >= scrollLayout.header.bottom - 1, 'Last card stays below the fixed header');
+        const shortViewports = [];
+        // Exercise rapid tall-to-short resizes where desktop fits without
+        // scrolling at 480px and does require scrolling at 420px.
+        for (const shortHeight of [480, 420]) {
+          await page.setViewportSize({width, height: 844});
+          shortViewports.push(await assertShortMenuViewport(page, width, shortHeight));
+          await page.screenshot({path: path.join(evidence, 'menu-short-' + width + '-' + shortHeight + '.png'), animations: 'disabled'});
+        }
+        const scrollLayout = shortViewports[0].chrome;
         await page.setViewportSize({width, height: 844});
         await page.locator('main a.module-item').last().click();
         await familyView(page, 'settings');
         assert.deepEqual(errors, [], 'No uncaught browser errors');
-        receipt.widths.push({width, height: 844, cards: labels, searchCases: searchCases.length, fiveDestinations: 'pass', backForwardReload: 'pass', nativeDataPreserved: stateKeys, removedRoutes: removedRoutes.map(([route]) => route), nativeQueryUnchanged: true, attachmentBytesPreserved: true, backup: backupReceipt, headerAndDock: 'unique, fixed and visible', horizontalOverflow: false, lastCardDockOverlap: false, shortViewportHeight: 480, settingsMenuDockActive: true, backupContextualBack: 'settings', screenshot: path.relative(path.resolve(__dirname, '../..'), screenshot), layout: {first: firstLayout, scrolled: scrollLayout}, blockedExternalOrigins: [...new Set(blockedExternal)], errors});
+        receipt.widths.push({width, height: 844, cards: labels, searchCases: searchCases.length, fiveDestinations: 'pass', backForwardReload: 'pass', nativeDataPreserved: stateKeys, removedRoutes: removedRoutes.map(([route]) => route), nativeQueryUnchanged: true, attachmentBytesPreserved: true, backup: backupReceipt, headerAndDock: 'unique, fixed and visible', horizontalOverflow: false, lastCardDockOverlap: false, shortViewportHeight: 480, shortViewports, settingsMenuDockActive: true, backupContextualBack: 'settings', screenshot: path.relative(path.resolve(__dirname, '../..'), screenshot), layout: {first: firstLayout, scrolled: scrollLayout}, blockedExternalOrigins: [...new Set(blockedExternal)], errors});
         console.log('MENU_PASS', width, 'five links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved');
       } finally {
         await context.close();

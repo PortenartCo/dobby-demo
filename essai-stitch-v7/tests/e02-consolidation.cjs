@@ -161,9 +161,15 @@ async function voiceCases(page){
    await page.goto(origin+appPath+'/famille.html#chat',{waitUntil:'domcontentloaded'});await ready(page);await decoded(page);
    if(process.env.E02_BASELINE){await page.screenshot({path:path.join(out,`before-${width}.png`)});await context.close();continue;}
    await page.goto(origin+appPath+'/famille.html#chat',{waitUntil:'domcontentloaded'});await ready(page);await decoded(page);await page.evaluate(()=>scrollTo(0,0));
-   const geometry=await page.locator('[data-e02-hero]').evaluate(frame=>{const image=frame.querySelector('img'),r=frame.getBoundingClientRect();return {width:r.width,height:r.height,decoded:image.complete&&image.naturalWidth>0,sourceRatio:image.naturalWidth/image.naturalHeight,fit:getComputedStyle(image).objectFit};});
-   assert.ok(geometry.height>=230&&geometry.height<=310,'Dobby has a prominent responsive hero');assert.equal(geometry.decoded,true);
-   assert.ok(geometry.width/geometry.height<=geometry.sourceRatio+.01,'the frame cannot crop the top or bottom of the original character');assert.equal(geometry.fit,'cover');
+   const geometry=await page.locator('[data-e02-hero]').evaluate(frame=>{
+    const image=frame.querySelector('img'),r=frame.getBoundingClientRect(),box=image.getBoundingClientRect(),sourceRatio=image.naturalWidth/image.naturalHeight;
+    const scale=Math.min(box.width/image.naturalWidth,box.height/image.naturalHeight),paintWidth=image.naturalWidth*scale,paintHeight=image.naturalHeight*scale;
+    return {width:r.width,height:r.height,decoded:image.complete&&image.naturalWidth>0&&image.naturalHeight>0,sourceRatio,fit:getComputedStyle(image).objectFit,paintWidth,paintHeight,inside:box.left+(box.width-paintWidth)/2>=r.left-.5&&box.right-(box.width-paintWidth)/2<=r.right+.5&&box.top+(box.height-paintHeight)/2>=r.top-.5&&box.bottom-(box.height-paintHeight)/2<=r.bottom+.5};
+   });
+   assert.ok(geometry.height>=230&&geometry.height<=(width>=768?420:310),'Dobby has a prominent hero that expands on desktop');assert.equal(geometry.decoded,true);
+   assert.ok(geometry.paintWidth>100&&geometry.paintHeight>100,'The decoded original character remains visibly painted');
+   assert.ok(Math.abs(geometry.paintWidth/geometry.paintHeight-geometry.sourceRatio)<.001,'The full painted illustration preserves its decoded natural ratio');
+   assert.equal(geometry.inside,true,'The full painted illustration fits within its responsive image frame');assert.equal(geometry.fit,'contain','The original Dobby illustration stays fully visible without cropping');
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    await page.screenshot({path:path.join(out,`after-${width}.png`)});
    if(width===390)storageEvidence=await voiceCases(page);

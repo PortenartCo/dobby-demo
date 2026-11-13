@@ -2,7 +2,13 @@ name: Dobby V7 - Stitch functional UI
 on:
   push:
     paths:
+      - 'index.html'
+      - 'index-v2.9.2.html'
       - 'essai-stitch-v7/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-sync-v1/**'
+      - 'essai-sync-v2/**'
+      - 'design/stitch19-20/**'
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
@@ -14,7 +20,13 @@ on:
       - '.github/workflows/dobby-stitch-v7.yml'
   pull_request:
     paths:
+      - 'index.html'
+      - 'index-v2.9.2.html'
       - 'essai-stitch-v7/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-sync-v1/**'
+      - 'essai-sync-v2/**'
+      - 'design/stitch19-20/**'
       - 'design/stitch-53/**'
       - 'design/stitch-e07/**'
       - 'scripts/build-dobby-review.cjs'
@@ -91,6 +103,8 @@ jobs:
           node --check essai-stitch-v7/cuisine-e07.js
           node --check essai-stitch-v7/cuisine-list.js
           node --check essai-stitch-v5-famille/family-v2.js
+          node --check essai-stitch-v5-famille/family-access.mjs
+          for file in essai-stitch-v7/access*.js essai-stitch-v7/access-flow.mjs essai-stitch-v7/ceremonies.js essai-stitch-v7/tests/stitch*.cjs; do node --check "$file"; done
           node --check scripts/build-dobby-review.cjs
           node --check scripts/check-dobby-review-reuse.cjs
           node --check scripts/review/review-runtime.js
@@ -125,7 +139,7 @@ jobs:
       - name: Existing offline, family and conflict regressions
         run: node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs
       - name: Integrated preview builder and byte provenance
-        run: node --test essai-stitch-v7/tests/integrated-build.test.cjs
+        run: node --test essai-stitch-v7/tests/integrated-build.test.cjs essai-stitch-v7/tests/integrated-preview-fixture.test.cjs
       - name: E06 exhaustive scoring, identity and draft isolation
         run: node --test essai-stitch-v7/tests/e06-*.test.mjs
       - name: Recipe formats, ZIP, E07.4 timers and isolated preview contracts
@@ -147,7 +161,7 @@ jobs:
       - name: Functional Stitch roots and source fidelity
         if: steps.historical-reuse.outputs.reusable != 'true'
         env:
-          DOBBY_FINAL: ${{ github.ref_name == 'feat/dobby-v7-global-review-20261112' && '1' || '0' }}
+          DOBBY_FINAL: ${{ (github.ref_name == 'feat/dobby-v7-global-review-20261112' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.head_ref == 'feat/dobby-v7-stitch19-20-integration-20261112') && '1' || '0' }}
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/dobby-v7-http.log 2>&1 &
           sleep 1
@@ -198,8 +212,27 @@ jobs:
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/runes-history.cjs
           DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ DOBBY_GLOBAL_EVIDENCE=docs/dobby-v7/evidence/global-review-20261112/ci-current CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
           DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
+      - name: Stitch19/20 native access, ceremonies, portraits and six-width interactions
+        if: github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.head_ref == 'feat/dobby-v7-stitch19-20-integration-20261112'
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8872
+          DOBBY_STITCH1920_EVIDENCE: docs/dobby-v7/evidence/stitch19-20/ci-current
+        run: |
+          python3 -m http.server 8872 --bind 127.0.0.1 > /tmp/dobby-stitch1920-http.log 2>&1 &
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          elif command -v chromium >/dev/null; then
+            BROWSER="$(command -v chromium)"
+          elif command -v chromium-browser >/dev/null; then
+            BROWSER="$(command -v chromium-browser)"
+          else
+            echo "No Chrome/Chromium available on runner"
+            exit 1
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/stitch19-20-ci.cjs
       - name: PREP-01 native writers and isolated browser journeys
-        if: github.ref_name == 'main' || startsWith(github.ref_name, 'feat/dobby-v7-prep') || github.event_name == 'pull_request'
+        if: github.ref_name == 'main' || startsWith(github.ref_name, 'feat/dobby-v7-prep') || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.event_name == 'pull_request'
         env:
           DOBBY_TEST_ORIGIN: http://127.0.0.1:8871
         run: |
@@ -211,6 +244,13 @@ jobs:
             BROWSER="$(command -v chromium)"
           fi
           CHROMIUM_PATH="$BROWSER" npm run test:prep --prefix essai-stitch-v7/tests
+      - name: Keep current native Stitch19/20 evidence
+        if: always() && (github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.head_ref == 'feat/dobby-v7-stitch19-20-integration-20261112')
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-stitch19-20-native-evidence
+          path: docs/dobby-v7/evidence/stitch19-20/ci-current/
+          retention-days: 14
       - name: Keep current global review evidence
         if: always() && steps.historical-reuse.outputs.reusable == 'true'
         uses: actions/upload-artifact@v4

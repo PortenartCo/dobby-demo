@@ -1,0 +1,1441 @@
+{
+  "version": 1,
+  "campaign": "Authoritative ci.cjs DOBBY_FINAL=1, one passed-prefix campaign resumed at actual failures; explicit parallel joins",
+  "updatedAt": "2026-11-12T23:30:31.802436+00:00",
+  "status": "PASS",
+  "count": 65,
+  "passed": 65,
+  "pending": [],
+  "currentRuntimeSourceUnchangedSinceFinalEpoch": true,
+  "sourceChangesSinceFinalEpoch": [],
+  "sourceEpochs": [
+    "stitch19-20-historical-source-before.json",
+    "stitch19-20-historical-source-stable.json",
+    "stitch19-20-historical-source-stable2.json",
+    "stitch19-20-historical-source-stable3.json",
+    "stitch19-20-historical-source-stable4.json",
+    "stitch19-20-historical-source-stable5.json"
+  ],
+  "separateRootValidation": "Four isolated product files changed across early epochs; root ran focused native/Auth/adoption/ceremony and final native8 checks. This manifest does not pretend one immutable source epoch for the entire passed prefix.",
+  "realBackendVerified": false,
+  "realAccountsVerified": false,
+  "attempts": [
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment2.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment3.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment4.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment5.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment6.json",
+      "exitCode": 1,
+      "sourceUnchanged": false,
+      "sourceChanges": [
+        "essai-stitch-v5-famille/family-access.mjs"
+      ],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment7.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment8.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "integrated-preview.cjs",
+          "owner": "stitch_access_review",
+          "status": "PENDING",
+          "requirement": "Actual all-three-width GREEN plus source/config/builder/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment9.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "integrated-preview.cjs",
+          "owner": "stitch_access_review",
+          "status": "PENDING",
+          "requirement": "Actual all-three-width GREEN plus source/config/builder/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment10.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "integrated-preview.cjs",
+          "owner": "stitch_access_review",
+          "status": "PENDING",
+          "requirement": "Actual all-three-width GREEN plus source/config/builder/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment11.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "integrated-preview.cjs",
+          "owner": "stitch_access_review",
+          "status": "PENDING",
+          "requirement": "Actual all-three-width GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "e05-native.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        },
+        {
+          "name": "e05.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        },
+        {
+          "name": "e05-edge.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment12.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "e05-native.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "e05.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "e05-edge.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment13.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment14.json",
+      "exitCode": 1,
+      "sourceUnchanged": false,
+      "sourceChanges": [
+        "essai-stitch-v5-famille/family-access.mjs",
+        "essai-stitch-v5-famille/family-v2.js"
+      ],
+      "pendingParallelCheckpoints": []
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment15.json",
+      "exitCode": 1,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "family.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-edge.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-review.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-shared.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-visual.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment16.json",
+      "exitCode": 1,
+      "sourceUnchanged": false,
+      "sourceChanges": [
+        "essai-stitch-v7/family.js"
+      ],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "family.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-edge.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-review.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-shared.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-visual.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment17.json",
+      "exitCode": 1,
+      "sourceUnchanged": false,
+      "sourceChanges": [
+        "essai-stitch-v7/family.js"
+      ],
+      "pendingParallelCheckpoints": [
+        {
+          "name": "family.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-edge.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-review.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-shared.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        },
+        {
+          "name": "family-visual.cjs",
+          "owner": "stitch_access_captures",
+          "status": "PENDING",
+          "requirement": "Actual complete GREEN plus source/config/builder/test hashes before campaign PASS."
+        }
+      ]
+    },
+    {
+      "manifest": "/workspace/scratch/stitch19-20-historical-segment18.json",
+      "exitCode": 0,
+      "sourceUnchanged": true,
+      "sourceChanges": [],
+      "pendingParallelCheckpoints": []
+    }
+  ],
+  "results": [
+    {
+      "checkpoint": "menu-build.test.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "bdd3a2c35e3276ae29cf715b0e26d686eb8c344910c6c4c2d441fc2dbed9e6ff",
+      "proof": {
+        "name": "menu-build.test.cjs",
+        "exitCode": 0,
+        "testSha256": "bdd3a2c35e3276ae29cf715b0e26d686eb8c344910c6c4c2d441fc2dbed9e6ff",
+        "evidence": "stitch19-20-historical-final.log",
+        "sourceEpoch": "initial; later isolated Auth/adoption/ceremony fixes verified separately by root",
+        "initialPrefixTestFilesUnchanged": true
+      }
+    },
+    {
+      "checkpoint": "menu.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "58c673150fa73375e7eea38ca6b14d9b510b7c0e5f3ff0e68f6490cdd0980112",
+      "proof": {
+        "name": "menu.cjs",
+        "exitCode": 0,
+        "testSha256": "58c673150fa73375e7eea38ca6b14d9b510b7c0e5f3ff0e68f6490cdd0980112",
+        "evidence": "stitch19-20-historical-final.log",
+        "sourceEpoch": "initial; later isolated Auth/adoption/ceremony fixes verified separately by root",
+        "initialPrefixTestFilesUnchanged": true
+      }
+    },
+    {
+      "checkpoint": "consolidation-shared.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "19163ecfb4b1db081df3073f47b7d77ebf3a2db0a3cfb48bee28211fb5aa0132",
+      "proof": {
+        "name": "consolidation-shared.cjs",
+        "exitCode": 0,
+        "testSha256": "19163ecfb4b1db081df3073f47b7d77ebf3a2db0a3cfb48bee28211fb5aa0132",
+        "evidence": "stitch19-20-historical-final.log",
+        "sourceEpoch": "initial; later isolated Auth/adoption/ceremony fixes verified separately by root",
+        "initialPrefixTestFilesUnchanged": true
+      }
+    },
+    {
+      "checkpoint": "e01-consolidation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "9c9b3d9895166637a8d4695558f0819847678577826ac620901978b55135694e",
+      "proof": {
+        "name": "e01-consolidation.cjs",
+        "exitCode": 0,
+        "testSha256": "9c9b3d9895166637a8d4695558f0819847678577826ac620901978b55135694e",
+        "evidence": "stitch19-20-historical-final.log",
+        "sourceEpoch": "initial; later isolated Auth/adoption/ceremony fixes verified separately by root",
+        "initialPrefixTestFilesUnchanged": true
+      }
+    },
+    {
+      "checkpoint": "e02-consolidation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "d2dba5d0a08ae219385150e972c0e23185b8f01aad322eee8c0fdf68c837cf45",
+      "proof": {
+        "name": "e02-consolidation.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e02-consolidation.cjs"
+        ],
+        "testSha256": "d2dba5d0a08ae219385150e972c0e23185b8f01aad322eee8c0fdf68c837cf45",
+        "exitCode": 0,
+        "durationMs": 11301,
+        "evidence": "stitch19-20-historical-segment3.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e05-consolidation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "8137734b6751456efa1816f7992161d11d41368655191381fb03317307a2eb01",
+      "proof": {
+        "name": "e05-consolidation.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e05-consolidation.cjs"
+        ],
+        "testSha256": "8137734b6751456efa1816f7992161d11d41368655191381fb03317307a2eb01",
+        "exitCode": 0,
+        "reusedSplitWidthEvidence": [
+          "/workspace/scratch/stitch-e05-consolidation-green.log",
+          "/workspace/scratch/stitch-e05-consolidation-otherwidths-green.log"
+        ],
+        "widths": [
+          320,
+          390,
+          1440
+        ],
+        "evidence": "stitch19-20-historical-segment3.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-consolidation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "cc842a95ce31709127bd0e63fa1ebedbfa5fbe0b3c9ede4432b44298a377cc10",
+      "proof": {
+        "name": "e06-consolidation.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-consolidation.cjs"
+        ],
+        "testSha256": "cc842a95ce31709127bd0e63fa1ebedbfa5fbe0b3c9ede4432b44298a377cc10",
+        "exitCode": 0,
+        "durationMs": 26425,
+        "evidence": "stitch19-20-historical-segment4.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e07-consolidation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "9061ca1fe74d71fa636e34a0623a39172b59032d1521cf551ef0bd06610605df",
+      "proof": {
+        "name": "e07-consolidation.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-consolidation.cjs"
+        ],
+        "testSha256": "9061ca1fe74d71fa636e34a0623a39172b59032d1521cf551ef0bd06610605df",
+        "exitCode": 0,
+        "durationMs": 11751,
+        "evidence": "stitch19-20-historical-segment4.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-auth.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "43dcee627e43a55ae0c55dbd4e5813471db020a33aa91f9efeb819ed862b0a2b",
+      "proof": {
+        "name": "e06-auth.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-auth.cjs"
+        ],
+        "testSha256": "43dcee627e43a55ae0c55dbd4e5813471db020a33aa91f9efeb819ed862b0a2b",
+        "exitCode": 0,
+        "durationMs": 7104,
+        "evidence": "stitch19-20-historical-segment4.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "1df5af603c19f006271d3f234736c1dfd97cd0aba45b8f182b3dc40f17bfd3a8",
+      "proof": {
+        "name": "e06.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06.cjs"
+        ],
+        "testSha256": "1df5af603c19f006271d3f234736c1dfd97cd0aba45b8f182b3dc40f17bfd3a8",
+        "exitCode": 0,
+        "durationMs": 17303,
+        "evidence": "stitch19-20-historical-segment5.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-edge.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "9a93165bf1110f204964a992149a43373770cf2d3707dbc5fc5c5bc6924eb557",
+      "proof": {
+        "name": "e06-edge.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-edge.cjs"
+        ],
+        "testSha256": "9a93165bf1110f204964a992149a43373770cf2d3707dbc5fc5c5bc6924eb557",
+        "exitCode": 0,
+        "durationMs": 4510,
+        "evidence": "stitch19-20-historical-segment5.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-recovery.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "e9db43c81cbe8fab3412ec707d76716a6a4283f8272239b44354ddc7883bd608",
+      "proof": {
+        "name": "e06-recovery.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-recovery.cjs"
+        ],
+        "testSha256": "e9db43c81cbe8fab3412ec707d76716a6a4283f8272239b44354ddc7883bd608",
+        "exitCode": 0,
+        "durationMs": 2636,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-review.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "a9ccca34ccde7813b4f1857135ef2fbfa287329253698ec42d5e6dd0b6908aa1",
+      "proof": {
+        "name": "e06-review.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-review.cjs"
+        ],
+        "testSha256": "a9ccca34ccde7813b4f1857135ef2fbfa287329253698ec42d5e6dd0b6908aa1",
+        "exitCode": 0,
+        "reusedSplitWidthEvidence": [
+          "/workspace/scratch/e06-review-green.log"
+        ],
+        "widths": [],
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-shared.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "9acfd7de835e8e87ad9d21e02f2157a7088b9454474ad80a7e14962d4b9cd19d",
+      "proof": {
+        "name": "e06-shared.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-shared.cjs"
+        ],
+        "testSha256": "9acfd7de835e8e87ad9d21e02f2157a7088b9454474ad80a7e14962d4b9cd19d",
+        "exitCode": 0,
+        "reusedSplitWidthEvidence": [
+          "/workspace/scratch/e06-shared-green.log"
+        ],
+        "widths": [
+          320,
+          390
+        ],
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e06-visual.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "a76f422fbbe9d15905dd1582bcc187e01aadcfecb7c34a1d84c3d33bcc425750",
+      "proof": {
+        "name": "e06-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e06-visual.cjs"
+        ],
+        "testSha256": "a76f422fbbe9d15905dd1582bcc187e01aadcfecb7c34a1d84c3d33bcc425750",
+        "exitCode": 0,
+        "durationMs": 6049,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e08.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "d3eeb7625ea06ee97e81ff7158b2574ec73377956195c212d163d3051517007f",
+      "proof": {
+        "name": "e08.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e08.cjs"
+        ],
+        "testSha256": "d3eeb7625ea06ee97e81ff7158b2574ec73377956195c212d163d3051517007f",
+        "exitCode": 0,
+        "durationMs": 12628,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e03-counts.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "50540cb21881e91f666ff454d172edc837bf87f3ca8c04277e315beda8dd91e4",
+      "proof": {
+        "name": "e03-counts.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e03-counts.cjs"
+        ],
+        "testSha256": "50540cb21881e91f666ff454d172edc837bf87f3ca8c04277e315beda8dd91e4",
+        "exitCode": 0,
+        "durationMs": 1242,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e03.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "68ca095fb3ab26207d2b3aba41ba438ff5905a465b4941401c5c51fb91f2bbb3",
+      "proof": {
+        "name": "e03.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e03.cjs"
+        ],
+        "testSha256": "68ca095fb3ab26207d2b3aba41ba438ff5905a465b4941401c5c51fb91f2bbb3",
+        "exitCode": 0,
+        "durationMs": 47928,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e07-2-boot.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "d7a6589b75731a87fcb1134b74d4ab6916d19bdb5e715c71226fbf8591e78056",
+      "proof": {
+        "name": "e07-2-boot.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-2-boot.cjs"
+        ],
+        "testSha256": "d7a6589b75731a87fcb1134b74d4ab6916d19bdb5e715c71226fbf8591e78056",
+        "exitCode": 0,
+        "durationMs": 3277,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e07-2-model.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "33bb47e691565645c60e495eb9395c2171c96bcfdd1f988538fdd06a87eafec6",
+      "proof": {
+        "name": "e07-2-model.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-2-model.cjs"
+        ],
+        "testSha256": "33bb47e691565645c60e495eb9395c2171c96bcfdd1f988538fdd06a87eafec6",
+        "exitCode": 0,
+        "durationMs": 2524,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "e07-2.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "4269efacacf5c5237e18b3b35fe5546686eff226451383c154a05e92f8e1478a",
+      "proof": {
+        "name": "e07-2.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-2.cjs"
+        ],
+        "testSha256": "4269efacacf5c5237e18b3b35fe5546686eff226451383c154a05e92f8e1478a",
+        "exitCode": 0,
+        "durationMs": 10720,
+        "evidence": "stitch19-20-historical-segment6.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable.json"
+      }
+    },
+    {
+      "checkpoint": "build-dobby-review.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "4bfb9176c5e7247ca0119fe658f691f42fb61efe34d1b7bd06e95b2a7dad9cbd",
+      "proof": {
+        "name": "build-dobby-review.cjs",
+        "exitCode": 0,
+        "testSha256": "4bfb9176c5e7247ca0119fe658f691f42fb61efe34d1b7bd06e95b2a7dad9cbd",
+        "evidence": "/workspace/scratch/stitch-ci-integrated-temp-green.log",
+        "joinedProof": "stitch-ci-integrated-checkpoint.json",
+        "temporaryFixture": true
+      }
+    },
+    {
+      "checkpoint": "integrated-preview.cjs",
+      "env": {
+        "DOBBY_PREVIEW_BASE": "http://127.0.0.1:8765/.dobby-ci-integrated-hvZRZ6/bundle/"
+      },
+      "status": "PASS",
+      "testSha256": "ab9b68e694f06995ada087b5ef0afa0580123bf80742cab4b243d23b417726e0",
+      "proof": {
+        "name": "integrated-preview.cjs",
+        "exitCode": 0,
+        "testSha256": "ab9b68e694f06995ada087b5ef0afa0580123bf80742cab4b243d23b417726e0",
+        "evidence": "/workspace/scratch/stitch-ci-integrated-temp-green.log",
+        "joinedProof": "stitch-ci-integrated-checkpoint.json",
+        "widths": [
+          320,
+          390,
+          1440
+        ],
+        "temporaryFixture": true
+      }
+    },
+    {
+      "checkpoint": "e07-1-context.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "6809ea00b9f1b710b4608f28d906664612ada9a0ece9d8e5191904b2a89ebaa5",
+      "proof": {
+        "name": "e07-1-context.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-1-context.cjs"
+        ],
+        "env": {},
+        "testSha256": "6809ea00b9f1b710b4608f28d906664612ada9a0ece9d8e5191904b2a89ebaa5",
+        "exitCode": 0,
+        "durationMs": 5209,
+        "evidence": "stitch19-20-historical-segment8.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e07-1.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "926540f6593f32d6f139104eb514710eab4a2e419960686069620f487baf4be2",
+      "proof": {
+        "name": "e07-1.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-1.cjs"
+        ],
+        "env": {},
+        "testSha256": "926540f6593f32d6f139104eb514710eab4a2e419960686069620f487baf4be2",
+        "exitCode": 0,
+        "durationMs": 26879,
+        "evidence": "stitch19-20-historical-segment8.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e07-native-actions.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "f3c41d3dce0132300e85079e54214ce87ecddb8a6725960a23e3d369b5c3df91",
+      "proof": {
+        "name": "e07-native-actions.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07-native-actions.cjs"
+        ],
+        "env": {},
+        "testSha256": "f3c41d3dce0132300e85079e54214ce87ecddb8a6725960a23e3d369b5c3df91",
+        "exitCode": 0,
+        "durationMs": 3452,
+        "evidence": "stitch19-20-historical-segment10.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e07.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "500351b78ea770b86d5b6bfbb14948d062b7b2ac38407f2cc30d09660febe7b6",
+      "proof": {
+        "name": "e07.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e07.cjs"
+        ],
+        "env": {},
+        "testSha256": "500351b78ea770b86d5b6bfbb14948d062b7b2ac38407f2cc30d09660febe7b6",
+        "exitCode": 0,
+        "durationMs": 10611,
+        "evidence": "stitch19-20-historical-segment11.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e05-native.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "fa47f09695182e12e4a7a03fa77d84376e5dc2a200ee611cd777b1fa01938a4a",
+      "proof": {
+        "name": "e05-native.cjs",
+        "exitCode": 0,
+        "testSha256": "fa47f09695182e12e4a7a03fa77d84376e5dc2a200ee611cd777b1fa01938a4a",
+        "evidence": "/workspace/scratch/e05-native-stitch1920-green.log",
+        "joinedProof": "/workspace/scratch/stitch19-20-historical-e05-joined.json"
+      }
+    },
+    {
+      "checkpoint": "e05.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "eb9a743452e8497cff63f1578c581d8eee0f19310dda2466fdf1db271c01d50c",
+      "proof": {
+        "name": "e05.cjs",
+        "exitCode": 0,
+        "testSha256": "eb9a743452e8497cff63f1578c581d8eee0f19310dda2466fdf1db271c01d50c",
+        "evidence": "/workspace/scratch/e05-stitch1920-final.log",
+        "joinedProof": "/workspace/scratch/stitch19-20-historical-e05-joined.json"
+      }
+    },
+    {
+      "checkpoint": "e05-edge.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "6f16a8a72b0da438b4df2f30d5d54f81f1687c9ba823c52573689524434d5c63",
+      "proof": {
+        "name": "e05-edge.cjs",
+        "exitCode": 0,
+        "testSha256": "6f16a8a72b0da438b4df2f30d5d54f81f1687c9ba823c52573689524434d5c63",
+        "evidence": "/workspace/scratch/e05-edge-stitch1920-green.log",
+        "joinedProof": "/workspace/scratch/stitch19-20-historical-e05-joined.json"
+      }
+    },
+    {
+      "checkpoint": "e04.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "01c7aca51cd6dfa7bb14a709f2e5cd0c26ac011818f53e2cdbc0e10b77a0914c",
+      "proof": {
+        "name": "e04.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e04.cjs"
+        ],
+        "env": {},
+        "testSha256": "01c7aca51cd6dfa7bb14a709f2e5cd0c26ac011818f53e2cdbc0e10b77a0914c",
+        "exitCode": 0,
+        "durationMs": 20859,
+        "evidence": "stitch19-20-historical-segment11.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "runes-native.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "2360a81169077e638be39df50a34f4a4241aa1f2e8e46b8927faa32cca0246c5",
+      "proof": {
+        "name": "runes-native.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/runes-native.cjs"
+        ],
+        "env": {},
+        "testSha256": "2360a81169077e638be39df50a34f4a4241aa1f2e8e46b8927faa32cca0246c5",
+        "exitCode": 0,
+        "durationMs": 2994,
+        "evidence": "stitch19-20-historical-segment11.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e04-runes.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "900dd2c76fd3e149549cea49631853de4f3bf24e2ebea9aac7df69e0716d275a",
+      "proof": {
+        "name": "e04-runes.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e04-runes.cjs"
+        ],
+        "env": {},
+        "testSha256": "900dd2c76fd3e149549cea49631853de4f3bf24e2ebea9aac7df69e0716d275a",
+        "exitCode": 0,
+        "durationMs": 46035,
+        "evidence": "stitch19-20-historical-segment12.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e02.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "b4f9e1c75a85719ddd01016a26147d57f10d63d5d326b413dd7d9faa74110f2d",
+      "proof": {
+        "name": "e02.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e02.cjs"
+        ],
+        "env": {},
+        "testSha256": "b4f9e1c75a85719ddd01016a26147d57f10d63d5d326b413dd7d9faa74110f2d",
+        "exitCode": 0,
+        "durationMs": 7540,
+        "evidence": "stitch19-20-historical-segment13.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e02-edge.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "f3a667df3007721a71b3843b272ba34b692c003760ca5d58f61c622aae3affa6",
+      "proof": {
+        "name": "e02-edge.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e02-edge.cjs"
+        ],
+        "env": {},
+        "testSha256": "f3a667df3007721a71b3843b272ba34b692c003760ca5d58f61c622aae3affa6",
+        "exitCode": 0,
+        "durationMs": 6290,
+        "evidence": "stitch19-20-historical-segment13.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e02-voice-history.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "e127fbd3b2e3fad6a1eda9ecd5007e0908086b6b9b6204f79e735f3dd24cf41f",
+      "proof": {
+        "name": "e02-voice-history.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e02-voice-history.cjs"
+        ],
+        "env": {},
+        "testSha256": "e127fbd3b2e3fad6a1eda9ecd5007e0908086b6b9b6204f79e735f3dd24cf41f",
+        "exitCode": 0,
+        "durationMs": 6859,
+        "evidence": "stitch19-20-historical-segment13.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e01.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "cd3be139a32d78643fa5a198c00273e8b89607cd6db52f83b48266a520cb428e",
+      "proof": {
+        "name": "e01.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e01.cjs"
+        ],
+        "env": {},
+        "testSha256": "cd3be139a32d78643fa5a198c00273e8b89607cd6db52f83b48266a520cb428e",
+        "exitCode": 0,
+        "durationMs": 52649,
+        "evidence": "stitch19-20-historical-segment14.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e01-3.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "68fb2964d1e496a081b8bc63ff8e063139cf0ca14e8d191a736e610a4e037d79",
+      "proof": {
+        "name": "e01-3.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e01-3.cjs"
+        ],
+        "env": {},
+        "testSha256": "68fb2964d1e496a081b8bc63ff8e063139cf0ca14e8d191a736e610a4e037d79",
+        "exitCode": 0,
+        "durationMs": 23636,
+        "evidence": "stitch19-20-historical-segment14.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable2.json"
+      }
+    },
+    {
+      "checkpoint": "e01-1-visual.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "479e7790012bae88d814cbc112a0053379737ab415a63d45bd3196f1fa4168e8",
+      "proof": {
+        "name": "e01-1-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e01-1-visual.cjs"
+        ],
+        "env": {},
+        "testSha256": "479e7790012bae88d814cbc112a0053379737ab415a63d45bd3196f1fa4168e8",
+        "exitCode": 0,
+        "durationMs": 12191,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "e01-visual.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "c9083ef8e8e312fd4491b8d11e42cc5d7dba46025e892b6f1b9f877305ce6ce2",
+      "proof": {
+        "name": "e01-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/e01-visual.cjs"
+        ],
+        "env": {},
+        "testSha256": "c9083ef8e8e312fd4491b8d11e42cc5d7dba46025e892b6f1b9f877305ce6ce2",
+        "exitCode": 0,
+        "durationMs": 5464,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "smoke.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "219898eeba7ca1ae089d93886bf78ef4a0de81bebe1419277340f7b9139dfc2b",
+      "proof": {
+        "name": "smoke.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/smoke.cjs"
+        ],
+        "env": {},
+        "testSha256": "219898eeba7ca1ae089d93886bf78ef4a0de81bebe1419277340f7b9139dfc2b",
+        "exitCode": 0,
+        "durationMs": 20338,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "cuisine.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "1f2063693e36c8daf73d6fd4c221b74690f6e755f68e0eb3f2cc10d8cd7babc1",
+      "proof": {
+        "name": "cuisine.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/cuisine.cjs"
+        ],
+        "env": {},
+        "testSha256": "1f2063693e36c8daf73d6fd4c221b74690f6e755f68e0eb3f2cc10d8cd7babc1",
+        "exitCode": 0,
+        "durationMs": 13599,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "cuisine-family.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "1799a79fa3716a78cb9942c053e94289eb54a5d8890ce6c2f7997900b620057b",
+      "proof": {
+        "name": "cuisine-family.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/cuisine-family.cjs"
+        ],
+        "env": {},
+        "testSha256": "1799a79fa3716a78cb9942c053e94289eb54a5d8890ce6c2f7997900b620057b",
+        "exitCode": 0,
+        "durationMs": 12162,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "cuisine-visual.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "a3934a58e61b6dec22f0412d4c07c397cc13110b5c7dbf82b93f5151009d504a",
+      "proof": {
+        "name": "cuisine-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/cuisine-visual.cjs"
+        ],
+        "env": {},
+        "testSha256": "a3934a58e61b6dec22f0412d4c07c397cc13110b5c7dbf82b93f5151009d504a",
+        "exitCode": 0,
+        "durationMs": 42190,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "family.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "2248142ee92342357eb96eeaf7b513626a78f65c484bae22378df4f2367a1e67",
+      "proof": {
+        "name": "family.cjs",
+        "exitCode": 0,
+        "testSha256": "2248142ee92342357eb96eeaf7b513626a78f65c484bae22378df4f2367a1e67",
+        "evidence": "/workspace/scratch/family-stitch1920-final.log",
+        "joinedProof": "stitch19-20-historical-family-joined.json"
+      }
+    },
+    {
+      "checkpoint": "family-edge.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "e9f876a60978ca08b80519b0b9456fac917a74bcea55c50468bb1f563ea1e573",
+      "proof": {
+        "name": "family-edge.cjs",
+        "exitCode": 0,
+        "testSha256": "e9f876a60978ca08b80519b0b9456fac917a74bcea55c50468bb1f563ea1e573",
+        "evidence": "/workspace/scratch/family-edge-stitch1920-final-current.log",
+        "joinedProof": "stitch19-20-historical-family-joined.json"
+      }
+    },
+    {
+      "checkpoint": "family-review.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "5e4a337473c4fb0cbe53d04808fe0a3c56eb0cc15cb4fdb58c0480bf1e02ad46",
+      "proof": {
+        "name": "family-review.cjs",
+        "exitCode": 0,
+        "testSha256": "5e4a337473c4fb0cbe53d04808fe0a3c56eb0cc15cb4fdb58c0480bf1e02ad46",
+        "evidence": "/workspace/scratch/family-review-stitch1920-final-current.log",
+        "joinedProof": "stitch19-20-historical-family-joined.json"
+      }
+    },
+    {
+      "checkpoint": "family-shared.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "efecedf17428c1d92001032af6d022e7567eb38cd8b0a687ab601d42a379716b",
+      "proof": {
+        "name": "family-shared.cjs",
+        "exitCode": 0,
+        "testSha256": "efecedf17428c1d92001032af6d022e7567eb38cd8b0a687ab601d42a379716b",
+        "evidence": "/workspace/scratch/family-shared-stitch1920-final-current.log",
+        "joinedProof": "stitch19-20-historical-family-joined.json"
+      }
+    },
+    {
+      "checkpoint": "family-visual.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "743135b582c97901e2d6acf0c493b30447770abc475b3a37c7b7964874987cd9",
+      "proof": {
+        "name": "family-visual.cjs",
+        "exitCode": 0,
+        "testSha256": "743135b582c97901e2d6acf0c493b30447770abc475b3a37c7b7964874987cd9",
+        "evidence": "/workspace/scratch/family-visual-stitch1920-final-current.log",
+        "joinedProof": "stitch19-20-historical-family-joined.json"
+      }
+    },
+    {
+      "checkpoint": "register-house.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "f6e6ec5b2f54b091806cb024d7b149cc993d9e02688539474846ea45fb607979",
+      "proof": {
+        "name": "register-house.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-house.cjs"
+        ],
+        "env": {},
+        "testSha256": "f6e6ec5b2f54b091806cb024d7b149cc993d9e02688539474846ea45fb607979",
+        "exitCode": 0,
+        "durationMs": 10877,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "register-visual.cjs",
+      "env": {
+        "DOBBY_LOT": "3"
+      },
+      "status": "PASS",
+      "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+      "proof": {
+        "name": "register-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-visual.cjs"
+        ],
+        "env": {
+          "DOBBY_LOT": "3"
+        },
+        "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+        "exitCode": 0,
+        "durationMs": 45415,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "register-documents.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "b0531a6b0fe41ae988757eafd04d4cd3600498b52a66a1f26b9c140e2e269c8c",
+      "proof": {
+        "name": "register-documents.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-documents.cjs"
+        ],
+        "env": {},
+        "testSha256": "b0531a6b0fe41ae988757eafd04d4cd3600498b52a66a1f26b9c140e2e269c8c",
+        "exitCode": 0,
+        "durationMs": 10241,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "register-visual.cjs",
+      "env": {
+        "DOBBY_LOT": "4"
+      },
+      "status": "PASS",
+      "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+      "proof": {
+        "name": "register-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-visual.cjs"
+        ],
+        "env": {
+          "DOBBY_LOT": "4"
+        },
+        "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+        "exitCode": 0,
+        "durationMs": 33952,
+        "evidence": "stitch19-20-historical-segment15.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable3.json"
+      }
+    },
+    {
+      "checkpoint": "register-tools.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "aae913ec2eb532f06fc2d02afc34294abb8435361bbca1fb497b0559c97c7adf",
+      "proof": {
+        "name": "register-tools.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-tools.cjs"
+        ],
+        "env": {},
+        "testSha256": "aae913ec2eb532f06fc2d02afc34294abb8435361bbca1fb497b0559c97c7adf",
+        "exitCode": 0,
+        "durationMs": 16407,
+        "evidence": "stitch19-20-historical-segment16.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-visual.cjs",
+      "env": {
+        "DOBBY_LOT": "5"
+      },
+      "status": "PASS",
+      "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+      "proof": {
+        "name": "register-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-visual.cjs"
+        ],
+        "env": {
+          "DOBBY_LOT": "5"
+        },
+        "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+        "exitCode": 0,
+        "durationMs": 22458,
+        "evidence": "stitch19-20-historical-segment16.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-family.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "143d602da4b63525f7c9d34ea82d96a62b5e59e4ba4ed111cc9f66d4f0ea7e04",
+      "proof": {
+        "name": "register-family.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-family.cjs"
+        ],
+        "env": {},
+        "testSha256": "143d602da4b63525f7c9d34ea82d96a62b5e59e4ba4ed111cc9f66d4f0ea7e04",
+        "exitCode": 0,
+        "durationMs": 9376,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-visual.cjs",
+      "env": {
+        "DOBBY_LOT": "2b"
+      },
+      "status": "PASS",
+      "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+      "proof": {
+        "name": "register-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-visual.cjs"
+        ],
+        "env": {
+          "DOBBY_LOT": "2b"
+        },
+        "testSha256": "a95462eeb5b7f331599b1e3c4c5f4976bf49acda5e85a19ea333a5c60d8dd3f3",
+        "exitCode": 0,
+        "durationMs": 25536,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-sync.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "3f81129b1b3922c44efaf3b9085ec413d309a120e0ecfb7525622ad0acab6f5b",
+      "proof": {
+        "name": "register-sync.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-sync.cjs"
+        ],
+        "env": {},
+        "testSha256": "3f81129b1b3922c44efaf3b9085ec413d309a120e0ecfb7525622ad0acab6f5b",
+        "exitCode": 0,
+        "durationMs": 13844,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-documents-sync.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "9c1af977f046024bad24fad6b31327d0632041196bbb43b45f4e3d612f034693",
+      "proof": {
+        "name": "register-documents-sync.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-documents-sync.cjs"
+        ],
+        "env": {},
+        "testSha256": "9c1af977f046024bad24fad6b31327d0632041196bbb43b45f4e3d612f034693",
+        "exitCode": 0,
+        "durationMs": 11193,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-import-reading.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "52491d53c2911a6b360802a1968bb7f9d0d083d0db854e0680b3e92e1fc5b7a8",
+      "proof": {
+        "name": "register-import-reading.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-import-reading.cjs"
+        ],
+        "env": {},
+        "testSha256": "52491d53c2911a6b360802a1968bb7f9d0d083d0db854e0680b3e92e1fc5b7a8",
+        "exitCode": 0,
+        "durationMs": 5386,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-missions-sync.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "5a1fcbf98bc66f123b0c299290ede3a1934857b1debc30e47b9043e007b2689a",
+      "proof": {
+        "name": "register-missions-sync.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-missions-sync.cjs"
+        ],
+        "env": {},
+        "testSha256": "5a1fcbf98bc66f123b0c299290ede3a1934857b1debc30e47b9043e007b2689a",
+        "exitCode": 0,
+        "durationMs": 7509,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-preservation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "01fc0d2d73ab2f86a4dc54d2979514511c9347d59bd9efa12efb9b8341c3ef7e",
+      "proof": {
+        "name": "register-preservation.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-preservation.cjs"
+        ],
+        "env": {},
+        "testSha256": "01fc0d2d73ab2f86a4dc54d2979514511c9347d59bd9efa12efb9b8341c3ef7e",
+        "exitCode": 0,
+        "durationMs": 3526,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-navigation.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "a57b2718d44a6380273d49f0858d198de3da13a5db8880a1c090f0dd08bfa914",
+      "proof": {
+        "name": "register-navigation.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-navigation.cjs"
+        ],
+        "env": {},
+        "testSha256": "a57b2718d44a6380273d49f0858d198de3da13a5db8880a1c090f0dd08bfa914",
+        "exitCode": 0,
+        "durationMs": 30778,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-root-visual.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "ee7d4d64816a82a5a6563be3bd02b689af80cef073885fd5f5b225500bd629d4",
+      "proof": {
+        "name": "register-root-visual.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-root-visual.cjs"
+        ],
+        "env": {},
+        "testSha256": "ee7d4d64816a82a5a6563be3bd02b689af80cef073885fd5f5b225500bd629d4",
+        "exitCode": 0,
+        "durationMs": 24848,
+        "evidence": "stitch19-20-historical-segment17.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable4.json"
+      }
+    },
+    {
+      "checkpoint": "register-review.cjs",
+      "env": {},
+      "status": "PASS",
+      "testSha256": "a2c65a826c1c4763a8eb12725b3e2bbbc4dc65a849ce2baa21d3d4353c2bf764",
+      "proof": {
+        "name": "register-review.cjs",
+        "args": [
+          "/workspace/dobby-stitch19-20/essai-stitch-v7/tests/register-review.cjs"
+        ],
+        "env": {},
+        "testSha256": "a2c65a826c1c4763a8eb12725b3e2bbbc4dc65a849ce2baa21d3d4353c2bf764",
+        "exitCode": 0,
+        "durationMs": 26571,
+        "evidence": "stitch19-20-historical-segment18.log",
+        "sourceEpoch": "/workspace/scratch/stitch19-20-historical-source-stable5.json"
+      }
+    }
+  ]
+}

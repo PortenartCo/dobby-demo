@@ -1,0 +1,87 @@
+{
+  "status": "PASS",
+  "completedAt": "2026-11-12T23:41:34.476366+00:00",
+  "sourceCommit": "a6dce1b84ab7f0555bc6b2bdba7aee1f849bf503",
+  "browser": "Chrome for Testing157.0.8103.50 (same version as GHA runner image)",
+  "test": "essai-stitch-v7/tests/menu.cjs",
+  "testSha256": "021ccc60aef84b2536496a57c438836891686ca2ab3a359f9e85a596524cddc9",
+  "greenLog": "/workspace/scratch/stitch-menu-chrome157-green.log",
+  "greenLogSha256": "3500aae7be023f9b776a0980ce84dc0d841418265dc6575a190693baa38b59a2",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "shortViewportCases": [
+    {
+      "width": 320,
+      "height": 480,
+      "scrollY": 234,
+      "maximumScroll": 234,
+      "lastTop": 304,
+      "lastBottom": 372,
+      "headerBottom": 68,
+      "dockTop": 399,
+      "centerHit": true
+    },
+    {
+      "width": 320,
+      "height": 420,
+      "scrollY": 294,
+      "maximumScroll": 294,
+      "lastTop": 244,
+      "lastBottom": 312,
+      "headerBottom": 68,
+      "dockTop": 339,
+      "centerHit": true
+    },
+    {
+      "width": 390,
+      "height": 480,
+      "scrollY": 204,
+      "maximumScroll": 204,
+      "lastTop": 304,
+      "lastBottom": 372,
+      "headerBottom": 68,
+      "dockTop": 399,
+      "centerHit": true
+    },
+    {
+      "width": 390,
+      "height": 420,
+      "scrollY": 264,
+      "maximumScroll": 264,
+      "lastTop": 244,
+      "lastBottom": 312,
+      "headerBottom": 68,
+      "dockTop": 339,
+      "centerHit": true
+    },
+    {
+      "width": 1440,
+      "height": 480,
+      "scrollY": 0,
+      "maximumScroll": 0,
+      "lastTop": 274,
+      "lastBottom": 342,
+      "headerBottom": 68,
+      "dockTop": 399,
+      "centerHit": true
+    },
+    {
+      "width": 1440,
+      "height": 420,
+      "scrollY": 30,
+      "maximumScroll": 30,
+      "lastTop": 244,
+      "lastBottom": 312,
+      "headerBottom": 68,
+      "dockTop": 339,
+      "centerHit": true
+    }
+  ],
+  "causalProof": "/workspace/scratch/stitch-menu-viewport-causal-proof.json",
+  "productionChanges": false,
+  "syntax": "PASS",
+  "preservedAssertions": "All5 links/12filters/browserhistory/15removedroutes/native records/attachmentbytes/nativebackup/sourcefidelity; header/dock clearance retained and centerhit tests added."
+}

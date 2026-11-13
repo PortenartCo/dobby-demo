@@ -1,0 +1,25 @@
+{
+  "checks": 12,
+  "passed": [
+    "managed NOSUPERUSER CREATEROLE NOBYPASSRLS apply; temporary roles/CREATE closed; read-only verify",
+    "pending profile atomically bound; concurrent household creation and replay",
+    "opaque invitation, safe anonymous preview, membership role, acceptance replay",
+    "expired/revoked admission denied, prior success replay harmless, cross-household RLS",
+    "snapshot guard, Missions unchanged, opaque data preservation, magic source/CAS/replay",
+    "native member writer preserves magic/opaque fields; other adult/category escalation denied",
+    "bound profile CAS rejects missing/stale revision; omitted surname and opaque data preserved",
+    "concurrent family CAS and single-use invitation serialize safely",
+    "failed adoption rolls back membership, profile binding and invitation consumption",
+    "managed installer legacy bootstrap/replay/reassignment refusal; truthful nonzero counts; admin helpers denied clients",
+    "legacy IDs preserved; child-owner and unbound-owner snapshot bypass denied; verified parent permitted",
+    "verification and rollback preserve households, canonical members, bindings and Missions code"
+  ],
+  "fixtureOnly": true,
+  "remoteSupabaseOperations": 0,
+  "postgresVersion": "17.7",
+  "liveCatalogVersion": "17.11",
+  "installerRole": "NOSUPERUSER CREATEROLE NOBYPASSRLS database owner",
+  "migrationSha256": "96f2845158fdcc66621c3bdc69f0d5f227b5427e181e9afad6f15f87f1d0ea3d",
+  "missionsPrivateSourceAvailable": false,
+  "databaseAfterTest": "V7 rolled back; fixture data preserved"
+}

@@ -742,6 +742,39 @@ async function start() {
   checked = true;
   api.repaint();
 }
+// Access onboarding adopts only a server-confirmed canonical registry. This is
+// the existing snapshot/cache path, never an alternate member writer or upload.
+async function adoptVerifiedFamily(binding) {
+  const token=liveContextToken(),generation=contextGeneration;
+  const guard=()=>{
+    const actual=api.getContext(),connection=api.connectionState?.();
+    if(!token||generation!==contextGeneration||token!==liveContextToken()||
+      !backendReady||connection?.verified!==true||connection?.verifying||
+      binding?.identityVerified!==true||!actual||actual.userId!==binding.userId||
+      actual.householdId!==binding.householdId||typeof binding.memberId!=='string'||!binding.memberId)
+      throw Error('Contexte du foyer non vérifié pour ce membre.');
+  };
+  const pending=()=>{const state=states.family;return Boolean(state?.conflict||state?.active&&moduleDigest('family',pick('family'))!==state.synced);};
+  guard();if(inFlight||pending())throw Error('Le registre familial contient des modifications locales en attente ou un conflit.');
+  const remote=await readRow('family');guard();
+  if(!remote||!Number.isSafeInteger(Number(remote.revision))||Number(remote.revision)<1)throw Error('Registre familial serveur indisponible.');
+  try{verifyFamilyProtocol(states.family,remote.payload);}catch(error){
+    if(states.family?.active)return familyConflict(states.family,remote,error);
+    throw error;
+  }
+  const incoming=familySnapshot({...JSON.parse(states.family?.synced||'{}'),...remote.payload});
+  const matches=(remote.payload.familyMembers||[]).filter(member=>member?.id===binding.memberId);
+  if(matches.length!==1)throw Error('Le membre canonique est absent ou ambigu dans le foyer.');
+  if(inFlight||pending())throw Error('Le registre familial contient des modifications locales en attente ou un conflit.');
+  if(!states.family?.active&&byId.get('family').keys.some(key=>Array.isArray(st[key])&&st[key].length)&&
+    moduleDigest('family',pick('family'))!==moduleDigest('family',incoming))
+    throw Error('Un registre familial local existe déjà. Comparez et sauvegardez ses données avant de rejoindre le foyer.');
+  backupLocal('family');guard();
+  applyShared('family',incoming);
+  states.family=synchronized('family',Number(remote.revision),incoming,remote.payload);
+  if(!sharedAvailable.includes('family'))sharedAvailable.push('family');
+  await persist();guard();api.repaint();
+}
 function reset() {
   contextGeneration++;runeCapability=null;missionWriteFlight=null;
   ctx = null; checked = false; backendReady = false; lastError = ''; states = {}; sharedAvailable = [];
@@ -1089,7 +1122,7 @@ document.addEventListener('click', async e => {
   }
 },true);
 window.DobbySharedRunesV2=Object.freeze({available:runesV2Available});
-api.registerModules({start,reset,html,labelFor,sync,onSave,
+api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,
   isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }
