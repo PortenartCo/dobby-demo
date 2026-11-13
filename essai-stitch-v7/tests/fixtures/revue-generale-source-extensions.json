@@ -8,16 +8,16 @@
     "reason": "D01-D04: maintained voice lifecycle"
   },
   "essai-stitch-v7/cuisine-engine.js": {
-    "sha256": "5d76a0ba615fbbdcc2c811484e52e903ad0f4255860be4b04d880d6291ff1c9e",
-    "reason": "T01-T13: independent components and portions; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
+    "sha256": "c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f",
+    "reason": "T01-T13: independent components and portions; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091); readonly wording applies to any unverifiable/denied profile; no longer mislabels an unknown parent as a child"
   },
   "essai-stitch-v7/cuisine-e07.js": {
     "sha256": "57e819f519786e17e8e0730043096451b0606f43d97e473b9623b6f0a38443a5",
     "reason": "T01-T13/C01-C07: tabs/day actions/shopping adapter; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
   },
   "essai-stitch-v5-famille/family-v2.js": {
-    "sha256": "309f62fbca204f73cdb906828012858e980e37f3280f78799eff37502eb17e72",
-    "reason": "F09: canonical child REST/storage transport guard; technical reserves: canonical role precedence and epoch/identity guards before transport; reviewed05c5a35; authenticated native session with blank/disagreeing controller cannot use local fallback, reviewed3945ee4"
+    "sha256": "7d6dc7c11366f7ad1e7d49b4e6acb85316b1a62c96af6f61042733c5eac6d179",
+    "reason": "F09: canonical child REST/storage transport guard; technical reserves: canonical role precedence and epoch/identity guards before transport; reviewed05c5a35; authenticated native session with blank/disagreeing controller cannot use local fallback, reviewed3945ee4; legacy and cached-session Sync adopts canonical context; Sync/public context reads serialized with fresh GET, no Auth rewrite or permissive fallback; reviewed70ba482"
   },
   "essai-stitch-v5-famille/family-core.mjs": {
     "sha256": "1ba68ae28dd05e0453657429f6f95e5ddbea269f3ab6e41fbd6c230607ea6d10",
