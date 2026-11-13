@@ -27,7 +27,7 @@
  function contactEdit(data){const row=requireRow(data.state.famContacts,context.ui.record)||{};R.mountForm('contact-form');field('#contact-name',row.name,'name',{required:true,max:140});field('#contact-role',row.role,'role');field('#contact-phone',row.phone,'phone');field('#contact-email',row.email,'email');field('#contact-notes',row.note,'note',{max:500});formButtons();meta('Nom, rôle, téléphone, courriel et note sont enregistrés dans le répertoire natif. Photos, blasons et disponibilités structurées : non disponibles.');R.guardFields(q('#rg-form'),row,E.contactForm(row.id));}
  function memos(data){
   memoSnapshots.clear();context.main.replaceChildren();context.main.classList.add('fam-review-main');q('#fa-supplement')?.replaceChildren();
-  const header=memoNode('section',undefined,'fam-review-heading');header.append(memoNode('h1','Mémos familiaux'),memoPrimary(button('rg-memo-new','Ajouter un mémo')));context.main.append(header);
+  const header=memoNode('section',undefined,'fam-review-heading');header.append(memoNode('h1','Notes du foyer'),memoPrimary(button('rg-memo-new','Ajouter un mémo')));context.main.append(header);
   const query=memoNode('label',undefined,'fam-review-query');query.append(document.createTextNode('Rechercher un mémo'));const search=memoNode('input');search.id='memoSearchInput';search.type='search';search.value=filter.memos;search.placeholder='Titre, texte ou mots-clés';query.append(search);context.main.append(query);
   if(filter.memos)context.main.append(button('rg-memo-query-clear','Effacer la recherche'));
   search.oninput=()=>{filter.memos=search.value;const start=search.selectionStart;memos(E.read());const next=q('#memoSearchInput');next.focus();if(start!==null)next.setSelectionRange(start,start);};
@@ -37,7 +37,7 @@
   const rows=(data.state.sharedFamilyNotes||[]).filter(matches);for(const row of rows){memoSnapshots.set(row.id,JSON.parse(JSON.stringify(row)));container.append(preview(row));}
   if(!rows.length)container.append(note('Aucun mémo familial correspondant.'));
   const legacy=memoNode('details',undefined,'fam-review-legacy');legacy.dataset.e09Legacy='';legacy.append(memoNode('summary','Anciens mémos locaux ('+(data.state.familyNotes||[]).length+')'),note('L’import volontaire crée une copie familiale et conserve l’original sur cet appareil.'));
-  for(const row of (data.state.familyNotes||[]).filter(matches))legacy.append(preview(row,'local'),button('rg-memo-import','Importer dans les mémos familiaux',{record:row.id}));if(!(data.state.familyNotes||[]).length)legacy.append(note('Aucun ancien mémo local.'));context.main.append(legacy);memoStatus(data);context.main.append(button('salon','Revenir au Salon'));
+  for(const row of (data.state.familyNotes||[]).filter(matches))legacy.append(preview(row,'local'),button('rg-memo-import','Importer dans les mémos familiaux',{record:row.id}));if(!(data.state.familyNotes||[]).length)legacy.append(note('Aucun ancien mémo local.'));context.main.append(legacy);memoStatus(data);context.main.append(button('menu','Revenir au Menu'));
  }
  function memoEdit(data){
   if(!context.ui.record)context.ui.scope='shared';const local=memoLocal(data),row=requireRow(memoRows(data),context.ui.record)||{};memoSnapshot=row.id?JSON.parse(JSON.stringify(row)):null;

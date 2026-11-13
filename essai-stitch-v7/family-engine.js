@@ -4,6 +4,7 @@ window.DobbyFamilyStitchEngine=(()=>{
  const win=()=>document.getElementById('dv7-engine').contentWindow;
  const evaluate=(code,values={})=>win().eval(`(function(p){${code}})(${JSON.stringify(values)})`);
  let lastError='';
+ const guardSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.())throw Error('Les données du foyer sont en lecture seule pour un enfant.');};
  function notices(callback){win().alert=message=>{lastError=String(message);callback(lastError);};}
  function read(){
   const data=evaluate('return JSON.parse(JSON.stringify({state:st,members:st.familyMembers||[],local:st.famHealth||[],shared:st.sharedHealthVisits||[],events:st.familyEvents||[],contacts:st.famContacts||[]}));');
@@ -46,7 +47,7 @@ window.DobbyFamilyStitchEngine=(()=>{
   }
   memberForm(id);const form=win().document.getElementById('v23MemberForm');
   if(values.avatar&&![...form.elements.avatar.options].some(o=>o.value===values.avatar))form.elements.avatar.add(new (win().Option)(values.avatar,values.avatar));
-  for(const name of ['firstName','lastName','nickname','memberCategory','notes','species','clearBirthdate','magicHouseId','magicPatronusId','magicAvatarId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony','profileFirstName','profileLastName'])if(Object.hasOwn(values,name)){const input=win().document.createElement('input');input.type='hidden';input.name=name;form.append(input);}
+  for(const name of ['firstName','lastName','nickname','memberCategory','notes','species','breed','clearBirthdate','magicHouseId','magicPatronusId','magicAvatarId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony','profileFirstName','profileLastName'])if(Object.hasOwn(values,name)){const input=win().document.createElement('input');input.type='hidden';input.name=name;form.append(input);}
   if(values.birthdate){const check=win().document.createElement('input');check.type='date';check.value=values.birthdate;if(check.value!==values.birthdate)throw Error('Date de naissance enregistrée dans un format incompatible. Corrigez explicitement cette date avant d’enregistrer.');}
   submit('v23MemberForm',values);if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');return read().state.v23HealthMemberId;
  }
@@ -70,12 +71,12 @@ window.DobbyFamilyStitchEngine=(()=>{
  }
  function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}
  function eventForm(id){requireRecord(read().events,id);page();action('fpAction',id?'edit':'new',id?{id}:{});return win().document.getElementById('fpEventForm');}
- function saveEvent(id,values){const form=eventForm(id);if(Object.hasOwn(values,'preparationTemplateId')&&!form.elements.namedItem('preparationTemplateId')){const input=win().document.createElement('input');input.type='hidden';input.name='preparationTemplateId';form.append(input);}submit('fpEventForm',values);}
- function deleteEvent(id){requireRecord(read().events,id);page();action('fpAction','delete',{id});}
+ function saveEvent(id,values){guardSharedWrite();const form=eventForm(id);if(Object.hasOwn(values,'preparationTemplateId')&&!form.elements.namedItem('preparationTemplateId')){const input=win().document.createElement('input');input.type='hidden';input.name='preparationTemplateId';form.append(input);}submit('fpEventForm',values);}
+ function deleteEvent(id){guardSharedWrite();requireRecord(read().events,id);page();action('fpAction','delete',{id});}
  function exportEvent(id){page();action('fpAction','ics',{id});}
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
- function saveContact(id,values){const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
- function deleteContact(id){requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
+ function saveContact(id,values){guardSharedWrite();const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
+ function deleteContact(id){guardSharedWrite();requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
  // Shared memos use the native state/save pipeline and its family module.
  function changeSharedMemo(p){
   const before=st.sharedFamilyNotes,rows=before||[];
@@ -102,7 +103,7 @@ window.DobbyFamilyStitchEngine=(()=>{
   try{save();}catch(error){if(before===undefined)delete st.sharedFamilyNotes;else st.sharedFamilyNotes=before;throw error;}
   render();return id;
  }
- const memoWrite=(action,id,values,expected)=>evaluate('return ('+changeSharedMemo.toString()+')(p);',{action,id,values,expected});
+ const memoWrite=(action,id,values,expected)=>{guardSharedWrite();return evaluate('return ('+changeSharedMemo.toString()+')(p);',{action,id,values,expected});};
  const saveSharedMemo=(id,values,expected)=>memoWrite('save',id,values,expected);
  const deleteSharedMemo=(id,expected)=>memoWrite('delete',id,null,expected);
  const importLocalMemo=id=>memoWrite('import',id);

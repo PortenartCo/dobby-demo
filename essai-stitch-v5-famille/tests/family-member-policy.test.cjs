@@ -21,7 +21,7 @@ test('FAM native form guards, model compatibility and child E06 confirmation use
   assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.memberPermissions('test-child').canEdit),true);
   const childId=await page.evaluate(()=>DobbyFamilyStitchEngine.saveMember('test-child',{firstName:'TEST Camille',lastName:'Fictive',nickname:'TEST Lutin',memberCategory:'child',notes:'TEST Mémoire gardée',species:'',birthdate:'2017-05-06'}));
   assert.equal(childId,'test-child');let saved=await native(`return st.familyMembers.find(m=>m.id==='test-child');`);assert.equal(saved.name,'TEST Camille Fictive');assert.equal(saved.avatar,'🐉');assert.equal(saved.opaque.keep,true);assert.equal(saved.notes,'TEST Mémoire gardée');
-  const canonical=await native('return st.familyMembers;');await directSave('test-parent-b',{name:'TEST Autre parent interdit'});await directDelete('test-parent-b');assert.deepEqual(await native('return st.familyMembers;'),canonical);
+  const canonical=await native('return st.familyMembers;');assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.memberPermissions('test-parent-b').canEdit),true,'V7 parent manages the full current household');
   for(const id of ['test-parent-a','test-child'])for(const values of [{magicHouseId:'slytherin',magicHouseAlgorithm:'e06-v1'},{magicPatronusId:'otter'},{magicCeremony:'complete'}]){await directSave(id,values);assert.deepEqual(await native('return st.familyMembers;'),canonical,'Parent cannot assign manual magical results to any profile');}
   const newId=await page.evaluate(()=>DobbyFamilyStitchEngine.saveMember(null,{firstName:'TEST Chaton',lastName:'',memberCategory:'pet',species:'chat',nickname:'TEST Moustache',notes:'TEST Rituel'}));assert.ok(newId);assert.equal((await native(`return st.familyMembers.find(m=>m.id===${JSON.stringify(newId)});`)).species,'chat');
   await page.evaluate(id=>DobbyFamilyStitchEngine.deleteMember(id),newId);
@@ -63,14 +63,12 @@ test('FAM15 native local and shared medical operations enforce actor and old/new
   await native(`window.__testPersona='test-child';window.DobbyReview=Object.freeze({root:location.origin+'/',get demoMemberId(){return window.__testPersona;}});`);
   for(const actor of ['test-child','test-baby','test-pet']){await native('window.__testPersona='+JSON.stringify(actor)+';');for(const scope of ['local','shared']){await submit(scope,scope+'-test-child','test-child',{note:'TEST refus enfant'});await remove(scope,scope+'-test-child');}}assert.deepEqual(await snapshot(),allBefore,'Child, baby and pet cannot mutate local/shared medical records');
   await native(`window.__testPersona='test-parent-a';`);
-  for(const scope of ['local','shared']){
-   await submit(scope,scope+'-test-parent-b','test-child',{note:'TEST transfert depuis autre parent'});await submit(scope,scope+'-test-child','test-parent-b',{note:'TEST transfert vers autre parent'});await remove(scope,scope+'-test-parent-b');
-  }assert.deepEqual(await snapshot(),allBefore,'Reassignment checks both the original and proposed owner');
-  for(const scope of ['local','shared'])for(const id of ['test-parent-a','test-child'])await submit(scope,scope+'-'+id,id,{note:'TEST modification autorisée'});
-  const allowed=await snapshot();for(const rows of [allowed.local,allowed.shared])for(const id of ['test-parent-a','test-child'])assert.equal(rows.find(row=>row.id.endsWith(id)).note,'TEST modification autorisée');
+  assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.memberPermissions('test-parent-b').canEdit),true,'V7 parent may manage other members of this household');
+  for(const scope of ['local','shared'])for(const id of ['test-parent-a','test-parent-b','test-child'])await submit(scope,scope+'-'+id,id,{note:'TEST modification autorisée'});
+  const allowed=await snapshot();for(const rows of [allowed.local,allowed.shared])for(const id of ['test-parent-a','test-parent-b','test-child'])assert.equal(rows.find(row=>row.id.endsWith(id)).note,'TEST modification autorisée');
   await submit('shared','shared-foyer','',{note:'TEST foyer autorisé'});assert.equal((await snapshot()).shared.find(row=>row.id==='shared-foyer').note,'TEST foyer autorisé');
   await native(`window.__testPersona='test-child';`);const foyerBefore=await snapshot();await submit('shared','shared-foyer','',{note:'TEST refus foyer enfant'});assert.deepEqual(await snapshot(),foyerBefore);
-  await native(`window.__testPersona='test-parent-a';`);for(const scope of ['local','shared'])await remove(scope,scope+'-test-child');const removed=await snapshot();assert.equal(removed.local.some(row=>row.personId==='test-child'),false);assert.equal(removed.shared.some(row=>row.personId==='test-child'),false);assert.equal(removed.local.find(row=>row.personId==='test-parent-b').note,'TEST privé');
+  await native(`window.__testPersona='test-parent-a';`);for(const scope of ['local','shared'])await remove(scope,scope+'-test-child');const removed=await snapshot();assert.equal(removed.local.some(row=>row.personId==='test-child'),false);assert.equal(removed.shared.some(row=>row.personId==='test-child'),false);assert.equal(removed.local.find(row=>row.personId==='test-parent-b').note,'TEST modification autorisée');
   assert.deepEqual(errors,[]);await context.close();
  }finally{await browser.close();}
 });
