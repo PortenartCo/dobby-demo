@@ -1,5 +1,7 @@
 /* Focused access regressions. Auth/account/invitation outcomes are explicitly
- * local UI fixtures; no live account, permission or Supabase certification. */
+ * local UI fixtures; no live account, permission or Supabase certification.
+ * Positive active DTOs mirror dobby_v7_context: matching profile.id/memberId,
+ * canonical memberCategory and the existing server permission fixture. */
 const assert=require('node:assert/strict');
 const {chromium}=require('playwright');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8819';
@@ -14,15 +16,15 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
  await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const grants={canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true};
-  const active=()=>({phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ACCESS-OWNER',householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1,profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},pendingCeremony:true,permissions:grants});
-  let restored=JSON.parse(sessionStorage.getItem('dobby-test-restored-access')||'null')||{phase,configured:true,authenticated:phase!=='unavailable',userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
+  const active=()=>({phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ACCESS-OWNER',householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1,profile:{id:'TEST-CANONICAL-MEMBER',memberCategory:'parent',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},pendingCeremony:true,permissions:grants});
+  let restored=JSON.parse(sessionStorage.getItem('dobby-test-restored-access')||'null')||{phase,configured:true,authenticated:phase!=='unavailable',userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',...(phase==='active'?{memberCategory:'parent'}:{}),firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
   // Mirror native access: synchronous state starts blank until refresh resolves.
   let state={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null};
   const listeners=new Set(),emit=()=>{for(const listener of listeners)listener({...state});return {...state};};
   window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0,recoveryArmed:false,recoveryPending:false,releaseRecovery:null,pauseCas:false,casPending:false,releaseCas:null,consumed:false,metadataReadReplacements:0,logoutPending:false,releaseLogout:null};
   const record=call=>{window.__accessRace.calls.push(call);const history=JSON.parse(sessionStorage.getItem('dobby-test-access-calls')||'[]');history.push(call);sessionStorage.setItem('dobby-test-access-calls',JSON.stringify(history));};
   window.__accessRace.armRecovery=({phase='active',verified=phase==='active',defer=false,pendingCeremony=true}={})=>{window.__accessRace.recoveryArmed={phase,verified,defer,pendingCeremony,userId:state.userId};};
-  window.__accessRace.switchAccount=(overrides={})=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'},...overrides};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();};
+  window.__accessRace.switchAccount=(overrides={})=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',memberCategory:'parent',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'},...overrides};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();};
   const invitation=token=>({status:'valid',household:{id:'TEST-HH-'+token,name:'TEST foyer '+token},inviter:{name:'TEST invitant'},expiresAt:'2099-11-12T12:00:00Z'});
   const access={ready:Promise.resolve(),state:()=>({...state}),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},
    signIn:async()=>{record({kind:'signIn'});throw Object.assign(Error('PRIVATE SERVER DETAIL private@example.test private-token'),signInError||{});},
