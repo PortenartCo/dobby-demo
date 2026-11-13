@@ -10,3 +10,6 @@ Source normative : 00_LIRE_D_ABORD.md, 01_PROMPT_CODEX.md, 02_REGISTRE_RECETTE.m
 - Autorisation utilisateur explicite de développement/tests/intégration/déploiement ; aucune question ni confirmation intermédiaire. Les consignes de validation conversationnelle des skills sont supplantées par cette autorisation.
 
 Avant chaque push/merge/publication : relire main et branches de la première mission/correctifs, CI et déploiement ; réconcilier toute évolution avant intégration.
+
+## Réconciliation pendant l’exécution
+Le contrôle a détecté la nouvelle branche `fix/dobby-v7-visible-logout-20261113` / PR #8, absente au départ. Son main `1896a94` a été attendu jusqu'à réussite de la CI 43348867844 et fin de Pages 43348867014, puis intégré sans conflit. Les refs initiales et celles explicitement réconciliées sont conservées séparément ; le gate continue de refuser toute évolution ultérieure non rapprochée. Aucun force-push ni écrasement de la première mission.

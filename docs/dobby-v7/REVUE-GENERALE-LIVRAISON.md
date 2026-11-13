@@ -1,6 +1,6 @@
 # DOBBY V7 — livraison de la revue générale
 
-**Checkpoint avant intégration : code développé, contrôles finaux en cours ; aucune publication de cette branche encore revendiquée.**
+**Candidat vérifié avant publication : contrôles locaux terminés ; CI distante et déploiement de cette branche à confirmer.**
 
 Les 60 décisions normatives sont reprises ci-dessous sans omission. Sources : [prompt](revue-generale/01_PROMPT_CODEX.md), [registre](revue-generale/02_REGISTRE_RECETTE.md), [manifest d’intégrité](revue-generale/evidence/input-integrity.json). Départ : main `b327aa5194b5f5897f4354e13266059815722eaa`, worktree indépendant `/workspace/dobby-v7-review`, branche `feat/dobby-v7-revue-generale-20261113`.
 
@@ -25,7 +25,7 @@ Statut de déploiement provisoire avant le contrôle final. La preuve de code d�
 | S07 | FAIT_TESTÉ_NON_DÉPLOYÉ | `access.js, access-flow.mjs, ceremonies.js, ritual.js, responsive.css, index.html` | Première session sans double basculement, audio OFF respecté, effets OFF mais navigation OK — `stitch19-20-ci.cjs + 79 unités accès/E06` | [preuve](revue-generale/evidence/baseline-hosted.json) | Test natif local/fixture ; publication et recette distante distinguées. |
 | S08 | FAIT_TESTÉ_NON_DÉPLOYÉ | `access.js, access-flow.mjs, ceremonies.js, ritual.js, responsive.css, index.html` | Tests 320/390/768/1024/1440/1920 px, portrait/paysage, wheel/tactile, clavier, modales, header/dock — `stitch19-20-ci.cjs + 79 unités accès/E06` | [preuve](revue-generale/evidence/baseline-hosted.json) | Test natif local/fixture ; publication et recette distante distinguées. |
 | S09 | FAIT_TESTÉ_NON_DÉPLOYÉ | `access.js, access-flow.mjs, ceremonies.js, ritual.js, responsive.css, index.html` | URL directe après déploiement, SHA servi, HTTP 200 images/script, retour Auth, vieux liens préservés — `stitch19-20-ci.cjs + 79 unités accès/E06` | [preuve](revue-generale/evidence/baseline-hosted.json) | Test natif local/fixture ; publication et recette distante distinguées. |
-| S10 | PARTIEL | `access.js, access-flow.mjs, ceremonies.js, ritual.js, responsive.css, index.html` | Liens cohérents, zéro double profil, restrictions prouvées seulement si SQL réellement appliqué/testé — `stitch19-20-ci.cjs + 79 unités accès/E06` | [preuve](revue-generale/evidence/baseline-hosted.json) | Liaison canonique préservée, transport enfant renforcé ; nouvelles permissions serveur non installées/recettées. |
+| S10 | PARTIEL | `access.js, access-flow.mjs, ceremonies.js, ritual.js, responsive.css, index.html` | Liens cohérents, zéro double profil, restrictions prouvées seulement si SQL réellement appliqué/testé — `stitch19-20-ci.cjs + 79 unités accès/E06` | [preuve](revue-generale/evidence/baseline-hosted.json) | Liaison canonique et synchronisation Courses de base déjà confirmées par l’utilisateur dans la première mission, preuves conservées ; nouveaux droits enfants non installés/recettés. |
 | D01 | FAIT_TESTÉ_NON_DÉPLOYÉ | `chat.js, chat.css, chat-engine.js` | L'action principale reste immédiatement visible à 320 px — `v7-transversal.cjs + e02-consolidation/voice-history` | [preuve](revue-generale/evidence/chat-320.png) | Test natif local/fixture ; publication et recette distante distinguées. |
 | D02 | PARTIEL | `chat.js, chat.css, chat-engine.js` | Pointer/touch/mouse, permission refusée, sortie de zone, aucun démarrage autonome ni mode toggle — `v7-transversal.cjs + e02-consolidation/voice-history` | [preuve](revue-generale/evidence/chat-320.png) | Cycle pression/relâchement/cancel/blur/perte de zone/retard permission testé avec API vocale simulée ; microphone matériel/Safari à recetter. |
 | D03 | FAIT_TESTÉ_NON_DÉPLOYÉ | `chat.js, chat.css, chat-engine.js` | Pendant l'écoute = halo visible, après = éteint ; pas de micro résiduel — `v7-transversal.cjs + e02-consolidation/voice-history` | [preuve](revue-generale/evidence/chat-320.png) | Test natif local/fixture ; publication et recette distante distinguées. |
@@ -80,10 +80,22 @@ Statut de déploiement provisoire avant le contrôle final. La preuve de code d�
 ## Réconciliation et preuves détaillées
 
 - Mission Stitch PR #4 et correctifs #5–#7 déjà intégrés au départ ; les 78 ressources initiales ont été comparées octet par octet au SHA b327aa5.
-- Le gate de publication a détecté la nouvelle PR #8 Déconnexion publiée pendant le travail. Elle doit être rapprochée du dernier main et son déploiement terminé avant la publication de la revue générale. Aucun écrasement ni force-push.
+- Le gate de publication a détecté la nouvelle PR #8 Déconnexion publiée pendant le travail. Elle a été intégrée depuis `main` `1896a94c587219ecb2de641b1a3cece74c5d6fb1` après CI réussie et Pages terminé ; vérification de 116 ressources HTTP 200 identiques, y compris les URLs réelles des scripts. Aucun écrasement ni force-push.
 - Rapports de lot : [Missions](revue-generale/MISSIONS-RUNES.md), [Famille](revue-generale/evidence/family-report.md), [Repas](revue-generale/evidence/meals-report.md), [Courses](revue-generale/evidence/shopping-report.md), [Transversal](revue-generale/evidence/transversal-report.md).
 - La revue indépendante a trouvé puis revérifié le défaut de complétion des missions sans responsable ; aucun P1/P2 démontré restant après correctif.
 
 ## Opérations restant à traiter
 
 Le récapitulatif unique est [ACTIONS-MANUELLES-APRES-REVUE.md](ACTIONS-MANUELLES-APRES-REVUE.md). Il sépare les scripts exécutables proposés, les vérifications réelles et les nouvelles itérations techniques encore nécessaires. Aucune demande intermédiaire n’a été adressée à l’utilisateur.
+
+## Validation locale du candidat combiné
+
+- 444 tests unitaires/offline/builder : tous réussis, aucun ignoré.
+- Campagne Stitch 19/20 : 8 groupes réussis, empreintes inchangées ; comprend la déconnexion de la PR #8, les 24 portraits, les vrais questionnaires, reprises et erreurs d’accès.
+- Revue générale : 11 scripts navigateur natifs réussis avec empreintes inchangées, dont six largeurs pour les modules concernés. Le profil (3 scripts) et les contrats E08 ont ensuite passé leurs contrôles séparés. La CI dédiée rassemble ces 15 scripts.
+- `npm test --prefix essai-stitch-v7/tests` : campagne par défaut Menu/P01/P02 réussie ; cas multi-client et CAS en fixtures HTTP, sans accès distant.
+- SQL Courses exact : installation répétée/vérification, précision .001, bornes et NaN/Infinity, CAS périmé, PATCH ancien client, retrait conservateur et refus d’un type incompatible, tous vérifiés dans PostgreSQL isolé.
+- SQL rôles provisoire : neuf policies restrictives, lecture enfant conservée, parent borné à son foyer et rollback sans perte testés localement. Aucun test des vraies RPC privilégiées ne peut être déduit de cette fixture.
+- Génération HTML/CSS reproductible et syntaxe des sources modifiées vérifiées. Les preuves initiales du dépôt sont préservées ; les nouvelles captures sont dans `revue-generale/evidence/screens/`.
+
+Les gestes tactiles/CDP et la géométrie du clavier sont des simulations navigateur, distinctes d’un iPhone matériel. Aucun envoi Auth ni requête Supabase n’a été fait pour vérifier la production.

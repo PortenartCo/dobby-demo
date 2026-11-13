@@ -1,0 +1,937 @@
+{
+  "sourceSha": "1896a94c587219ecb2de641b1a3cece74c5d6fb1",
+  "canonicalUrl": "https://portenartco.github.io/dobby-demo/",
+  "supabaseContacted": false,
+  "javascriptExecuted": false,
+  "passed": true,
+  "results": [
+    {
+      "file": "essai-stitch-v5-famille/family-access.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-access.mjs",
+      "http": 200,
+      "sha256": "5aca6a415d0411b0a440623ff6849b976d705fc08eef5b2276ab5783cff54372",
+      "matchesCommit": true,
+      "bytes": 18791
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-agenda-core.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-agenda-core.mjs",
+      "http": 200,
+      "sha256": "635e3b2e976828da6a62223f25423b7c7215cbe48ae66f8c354e969861380d56",
+      "matchesCommit": true,
+      "bytes": 6624
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-agenda.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-agenda.css",
+      "http": 200,
+      "sha256": "c79d5685d69865c14dfd2398dd188cfe9bc8aee3bdacac863f7d5e8f687fe426",
+      "matchesCommit": true,
+      "bytes": 4803
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-agenda.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-agenda.js",
+      "http": 200,
+      "sha256": "21982220fe46f67dee9dcffca6b89809cead2e2ac05456df9987f9881d656994",
+      "matchesCommit": true,
+      "bytes": 13150
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-core.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-core.mjs",
+      "http": 200,
+      "sha256": "97d441e7ab9d661f609988915a6a31ef116cef916005f156b7698ce5a0b49a24",
+      "matchesCommit": true,
+      "bytes": 3754
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-files.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-files.css",
+      "http": 200,
+      "sha256": "bd187f9f5dce3f217ea4443db06ce7c9c1bf1c49e27c7ea6061694a7658d3c0c",
+      "matchesCommit": true,
+      "bytes": 2164
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-files.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-files.js",
+      "http": 200,
+      "sha256": "99e6a77a7bdefa71cab209052311abe10ccc1f09496c74921fda06b914f860ad",
+      "matchesCommit": true,
+      "bytes": 11786
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-health-core.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-health-core.mjs",
+      "http": 200,
+      "sha256": "7f866f2b88d3bedc68920964cf576945f24cb4a5f0a1f70cd8abaea060e927ff",
+      "matchesCommit": true,
+      "bytes": 999
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-health.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-health.css",
+      "http": 200,
+      "sha256": "e93af3d0508bbf570b19f0a03b80edbb53f0023e72f1dc73c32bbf44cbc1237d",
+      "matchesCommit": true,
+      "bytes": 2401
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-health.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-health.js",
+      "http": 200,
+      "sha256": "7df847364898e6855c1f38e3d5f729aec4806e90c433d2be3e6c12eb5262ca0b",
+      "matchesCommit": true,
+      "bytes": 6627
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-member-policy.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-member-policy.js?v=20261112-fam15",
+      "http": 200,
+      "sha256": "85435769266b02e6df6ba07bfb1919309405d027baf8345df50abb5e4616280b",
+      "matchesCommit": true,
+      "bytes": 6873
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-missions-core.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-missions-core.mjs",
+      "http": 200,
+      "sha256": "9a170534936d1f0c8c2d5cbced305dd32498c49e80f2063e138e1c10d36227eb",
+      "matchesCommit": true,
+      "bytes": 6492
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-missions.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-missions.css",
+      "http": 200,
+      "sha256": "065d0e2b541cc31d451872b47a97f7d2a52df04babc2ddcdddd99c2351837eaf",
+      "matchesCommit": true,
+      "bytes": 3088
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-missions.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-missions.js",
+      "http": 200,
+      "sha256": "33a48e99ab18f99ee9648f3594bf4fbf79c855401f4710911a16d5e931744349",
+      "matchesCommit": true,
+      "bytes": 17214
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-modules.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-modules.js",
+      "http": 200,
+      "sha256": "0a37ecfadd23401648eb7e832e7e66424ec5fa956d943974c70969c2577624c1",
+      "matchesCommit": true,
+      "bytes": 86496
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-preparations.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-preparations.js",
+      "http": 200,
+      "sha256": "6549f20f83605dad800276f9ccc8fe4780b875436ab65c45b18f658b030000a4",
+      "matchesCommit": true,
+      "bytes": 8228
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-profile.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1",
+      "http": 200,
+      "sha256": "d6faf10b1a2b79f0890ec08de43773a2c3128ccfca6e1dc5b9011b8e974a7125",
+      "matchesCommit": true,
+      "bytes": 3834
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-runes-core.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-runes-core.mjs",
+      "http": 200,
+      "sha256": "5f90167122a88042b35846ee6887de115724ac3c45938434f1aca06cf47cbf7c",
+      "matchesCommit": true,
+      "bytes": 9662
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-v2.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-v2.css",
+      "http": 200,
+      "sha256": "0f9b890734f9616c2a0b23e18b714d711b6f86e03e7ee79cc04edd702fd7c3ed",
+      "matchesCommit": true,
+      "bytes": 5435
+    },
+    {
+      "file": "essai-stitch-v5-famille/family-v2.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/family-v2.js",
+      "http": 200,
+      "sha256": "9e35446e76363c71ca4ca778e35e293d0909444794dee1788911c117d4f89512",
+      "matchesCommit": true,
+      "bytes": 49134
+    },
+    {
+      "file": "essai-stitch-v5-famille/index.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/index.html",
+      "http": 200,
+      "sha256": "9f4f0cf228ad58f006d4ce3fdb3416fe22877c5ecc8af5bd3f9f21dcd6487b33",
+      "matchesCommit": true,
+      "bytes": 1229948
+    },
+    {
+      "file": "essai-stitch-v5-famille/stitch-v5.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/stitch-v5.css?v=20261107-1",
+      "http": 200,
+      "sha256": "007d1f67e118640a47c975559dcb48ec1dc95aea14533749bf4021f07b17816c",
+      "matchesCommit": true,
+      "bytes": 8818
+    },
+    {
+      "file": "essai-stitch-v5-famille/stitch-v5.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v5-famille/stitch-v5.js?v=20261110-e06-1",
+      "http": 200,
+      "sha256": "852b7e780cc09061735791b656a99af761e0e23dea13e5982ed27e2e97b3e211",
+      "matchesCommit": true,
+      "bytes": 14888
+    },
+    {
+      "file": "essai-stitch-v7/access-config.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/access-config.js",
+      "http": 200,
+      "sha256": "16cdc4629ad40e2577f23a8a8bf2ab87a8263b8a1bfff363850fca319822adfa",
+      "matchesCommit": true,
+      "bytes": 445
+    },
+    {
+      "file": "essai-stitch-v7/access-entry.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/access-entry.js",
+      "http": 200,
+      "sha256": "ce603b74022bc1f2319f46d5b3054cc902735317da5c383f44fb6d8adb9feeb3",
+      "matchesCommit": true,
+      "bytes": 1952
+    },
+    {
+      "file": "essai-stitch-v7/access-flow.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/access-flow.mjs",
+      "http": 200,
+      "sha256": "3de70f89fe210902b85650dec30b79d80f8d3d3a5e9d1d49286b28d8fa50798f",
+      "matchesCommit": true,
+      "bytes": 1326
+    },
+    {
+      "file": "essai-stitch-v7/access.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/access.css",
+      "http": 200,
+      "sha256": "7b6a09cb1a3f7fb53ecd3e5237abc23b84dacd41f5dab9e1cc436c63ac025202",
+      "matchesCommit": true,
+      "bytes": 5994
+    },
+    {
+      "file": "essai-stitch-v7/access.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/access.js",
+      "http": 200,
+      "sha256": "dd0fefae02e58ab73846960979b8dded3562adb5067301b6bc25f00b2e619d59",
+      "matchesCommit": true,
+      "bytes": 26425
+    },
+    {
+      "file": "essai-stitch-v7/assets/cuisine/e07-courses.png",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/cuisine/e07-courses.png",
+      "http": 200,
+      "sha256": "c9dc299237cd1d83eb28cd6bccccd64455faeefac6267fa5c9645b493727d368",
+      "matchesCommit": true,
+      "bytes": 1744032
+    },
+    {
+      "file": "essai-stitch-v7/assets/cuisine/e07-taverne.png",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/cuisine/e07-taverne.png",
+      "http": 200,
+      "sha256": "0c9e6100d63284219fe025e523b82624508a7a9bb48504367c10720045ed44dc",
+      "matchesCommit": true,
+      "bytes": 1762216
+    },
+    {
+      "file": "essai-stitch-v7/assets/import-runtime/pdf.min.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/import-runtime/pdf.min.js",
+      "http": 200,
+      "sha256": "5b5799e6f8c680663207ac5b42ee14eed2a406fa7af48f50c154f0c0b1566946",
+      "matchesCommit": true,
+      "bytes": 320004
+    },
+    {
+      "file": "essai-stitch-v7/assets/import-runtime/pdf.worker.min.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/import-runtime/pdf.worker.min.js",
+      "http": 200,
+      "sha256": "feabdf309770ed24bba31a5467836cdc8cf639c705af27d52b585b041bb8527b",
+      "matchesCommit": true,
+      "bytes": 1087212
+    },
+    {
+      "file": "essai-stitch-v7/assets/import-runtime/tesseract-core-lstm.wasm.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/import-runtime/tesseract-core-lstm.wasm.js",
+      "http": 200,
+      "sha256": "8f04aa0cc81e7bde33f80e92fa01a7a665f0b4884d098acf5de9c7104a11dfaa",
+      "matchesCommit": true,
+      "bytes": 3938277
+    },
+    {
+      "file": "essai-stitch-v7/assets/import-runtime/tesseract.min.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/import-runtime/tesseract.min.js",
+      "http": 200,
+      "sha256": "a8e29918d098b2b06e1012bdaeffb4aec0445c5d5654709023e0bd1f442a80e8",
+      "matchesCommit": true,
+      "bytes": 66695
+    },
+    {
+      "file": "essai-stitch-v7/assets/import-runtime/worker.min.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/import-runtime/worker.min.js",
+      "http": 200,
+      "sha256": "aca1229639fc9907d86f96e825955a2b7c5716d17f3bc3acd71f9c7ab66181fc",
+      "matchesCommit": true,
+      "bytes": 123724
+    },
+    {
+      "file": "essai-stitch-v7/assets/magic/portraits-09-24.png",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/assets/magic/portraits-09-24.png",
+      "http": 200,
+      "sha256": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9",
+      "matchesCommit": true,
+      "bytes": 2678231
+    },
+    {
+      "file": "essai-stitch-v7/bridge.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/bridge.js",
+      "http": 200,
+      "sha256": "bd38906782a9a08e857848fa26c27eb53d60df733d4998e6362bf7af3dab85a9",
+      "matchesCommit": true,
+      "bytes": 19713
+    },
+    {
+      "file": "essai-stitch-v7/ceremonies.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ceremonies.css",
+      "http": 200,
+      "sha256": "096fd647b08a05c957bc326bcf001e9076af21e104106e8364265888fa0b449e",
+      "matchesCommit": true,
+      "bytes": 5362
+    },
+    {
+      "file": "essai-stitch-v7/ceremonies.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ceremonies.js",
+      "http": 200,
+      "sha256": "7515fb32b4ebfb9290d8a3cdfe03219f44dec86b35be1bd068bdafdbe0e5934c",
+      "matchesCommit": true,
+      "bytes": 11489
+    },
+    {
+      "file": "essai-stitch-v7/ceremony-art.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ceremony-art.css",
+      "http": 200,
+      "sha256": "467cc8cbedeea257bd83644b438d8a125486a6380ee514771f1f7902f272d406",
+      "matchesCommit": true,
+      "bytes": 1191
+    },
+    {
+      "file": "essai-stitch-v7/ceremony-art.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ceremony-art.js",
+      "http": 200,
+      "sha256": "0b843f41a7ea939215fd0e265efc915f2c8ad3b671fe4f02905f25fe105c4e11",
+      "matchesCommit": true,
+      "bytes": 1733
+    },
+    {
+      "file": "essai-stitch-v7/chat-engine.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/chat-engine.js",
+      "http": 200,
+      "sha256": "ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd",
+      "matchesCommit": true,
+      "bytes": 12449
+    },
+    {
+      "file": "essai-stitch-v7/chat.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/chat.css",
+      "http": 200,
+      "sha256": "986bfe9db58c5352e801ffde602512442cad8d6147a923db9f5a906f48c78153",
+      "matchesCommit": true,
+      "bytes": 2839
+    },
+    {
+      "file": "essai-stitch-v7/chat.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/chat.js",
+      "http": 200,
+      "sha256": "ada18c51fbf9c03327269aafd767c79463545562fc7514b608f3eb7814360485",
+      "matchesCommit": true,
+      "bytes": 19617
+    },
+    {
+      "file": "essai-stitch-v7/chrome-source.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/chrome-source.html",
+      "http": 200,
+      "sha256": "2a61515a534d7c11eaf6bd708e8252b5b1d4c85d1b3481f90aed63f94cdd25ca",
+      "matchesCommit": true,
+      "bytes": 4722
+    },
+    {
+      "file": "essai-stitch-v7/chrome.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/chrome.css",
+      "http": 200,
+      "sha256": "f30b875cc3869d9cff772656204902977dd9173b92633dd40650e0739f1fb7d4",
+      "matchesCommit": true,
+      "bytes": 7930
+    },
+    {
+      "file": "essai-stitch-v7/chrome.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/chrome.js?v=20261110-e06-1",
+      "http": 200,
+      "sha256": "e67638abc31a31301bf5c6d041361d0eae99bd19481fab9e264469c9d82acdbf",
+      "matchesCommit": true,
+      "bytes": 15154
+    },
+    {
+      "file": "essai-stitch-v7/consolidation.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/consolidation.css",
+      "http": 200,
+      "sha256": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "matchesCommit": true,
+      "bytes": 805
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-e07.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-e07.css",
+      "http": 200,
+      "sha256": "22143da5dd9fc40a81500c919ec21d0b499c2ddd40736a257c3c66be69591e08",
+      "matchesCommit": true,
+      "bytes": 13396
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-e07.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-e07.js",
+      "http": 200,
+      "sha256": "f99698719062154405d2bb03528c65b76cf73ddb4bb2b5ddeecc7c31684cab9b",
+      "matchesCommit": true,
+      "bytes": 36491
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-e073.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-e073.css",
+      "http": 200,
+      "sha256": "cf6f8ee76a78ca485d414f896bbd852aa2f36e8e19e706f755324d6c3c6adf72",
+      "matchesCommit": true,
+      "bytes": 3867
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-e074.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-e074.css",
+      "http": 200,
+      "sha256": "34493e48ce6212a025640c6a2ad50c178216ec862eb8c1ea04745347d1ab9b15",
+      "matchesCommit": true,
+      "bytes": 8776
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-e074.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-e074.js",
+      "http": 200,
+      "sha256": "29bd775e7820347e93aab8a6981f791e4c9045eb5145b1d59896fa1649642db8",
+      "matchesCommit": true,
+      "bytes": 29755
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-engine.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-engine.js",
+      "http": 200,
+      "sha256": "4eb0ec960701457c64fe26d4f802a195619af99bc6be827723a4fb639b2b5044",
+      "matchesCommit": true,
+      "bytes": 33320
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-list.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-list.js",
+      "http": 200,
+      "sha256": "6d9f3e974dbea948341dea9c0dbb9317878357bb687860b8f12126af003f7bc0",
+      "matchesCommit": true,
+      "bytes": 23739
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-p01.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-p01.css",
+      "http": 200,
+      "sha256": "7a995a944d01e005454b3f8379c00126930ae7a71ff4f022896e789870155687",
+      "matchesCommit": true,
+      "bytes": 6562
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-p01.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-p01.js",
+      "http": 200,
+      "sha256": "ff769e9b3c0bb46723f67ead5ad774313d92aa249deb498ae4b910d48463a8ac",
+      "matchesCommit": true,
+      "bytes": 18943
+    },
+    {
+      "file": "essai-stitch-v7/cuisine-timers.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine-timers.js",
+      "http": 200,
+      "sha256": "7492217e618c2a88d0bfb015c2dc1430f06df933769013e0057fc0dc768f05f0",
+      "matchesCommit": true,
+      "bytes": 8812
+    },
+    {
+      "file": "essai-stitch-v7/cuisine.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine.css",
+      "http": 200,
+      "sha256": "ac69388a3d7dc6d00681a38addbd95d0c635fc5e3d76a78e183e5af4d1d837bb",
+      "matchesCommit": true,
+      "bytes": 4603
+    },
+    {
+      "file": "essai-stitch-v7/cuisine.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/cuisine.js",
+      "http": 200,
+      "sha256": "7e02139e97d72d54bcb2dd10428a2c663cd5d292fd6603bf20a5a56bcffc9eaa",
+      "matchesCommit": true,
+      "bytes": 86641
+    },
+    {
+      "file": "essai-stitch-v7/documents-register.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/documents-register.js",
+      "http": 200,
+      "sha256": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a",
+      "matchesCommit": true,
+      "bytes": 32520
+    },
+    {
+      "file": "essai-stitch-v7/engine-policy.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/engine-policy.js",
+      "http": 200,
+      "sha256": "84628209c7709cbd239c35c101c1f1ffcfc6cf16d7bd04f82c0d28265eeed985",
+      "matchesCommit": true,
+      "bytes": 542
+    },
+    {
+      "file": "essai-stitch-v7/famille.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/famille.html#access",
+      "http": 200,
+      "sha256": "45add7fe7739148ac15f01372a3c2d400d2a0e13476c208a676602c63a78e2b5",
+      "matchesCommit": true,
+      "bytes": 43839
+    },
+    {
+      "file": "essai-stitch-v7/family-agenda-review.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-agenda-review.css",
+      "http": 200,
+      "sha256": "9e77368c444fbe0bbef5c1eb6cffcefaee8fe4fe85424782e69a29b48568aeb5",
+      "matchesCommit": true,
+      "bytes": 3908
+    },
+    {
+      "file": "essai-stitch-v7/family-agenda-review.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-agenda-review.js",
+      "http": 200,
+      "sha256": "064eadd062276ab819f11eb9042a968ca0be88120abc4a65cac0ebee25ece4f2",
+      "matchesCommit": true,
+      "bytes": 11764
+    },
+    {
+      "file": "essai-stitch-v7/family-engine.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-engine.js?v=20261110-e06-1",
+      "http": 200,
+      "sha256": "093a355783fbb47ed2c503d580524322fd8073276da2503b0e5bb625e69e72a6",
+      "matchesCommit": true,
+      "bytes": 11704
+    },
+    {
+      "file": "essai-stitch-v7/family-member-detail.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-member-detail.css",
+      "http": 200,
+      "sha256": "45175957acb6879234a67137323cd622a37edf6f75d7725cd21212ce205a61c3",
+      "matchesCommit": true,
+      "bytes": 3199
+    },
+    {
+      "file": "essai-stitch-v7/family-member-detail.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-member-detail.js",
+      "http": 200,
+      "sha256": "6aa17c67188e87a823472bc5d35db1f99f8fd5b9d429391da30d38aaf536603e",
+      "matchesCommit": true,
+      "bytes": 6166
+    },
+    {
+      "file": "essai-stitch-v7/family-members-review.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-members-review.css",
+      "http": 200,
+      "sha256": "3569f27399531b75796e0b75242913d5a85b627279d89dbc7d5ec52bf36775ab",
+      "matchesCommit": true,
+      "bytes": 5153
+    },
+    {
+      "file": "essai-stitch-v7/family-members-review.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-members-review.js",
+      "http": 200,
+      "sha256": "5a81cced6b133089c9f2611d69c9dfd0875aba17e805ddab01782e34b459ab3f",
+      "matchesCommit": true,
+      "bytes": 14644
+    },
+    {
+      "file": "essai-stitch-v7/family-register.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-register.js",
+      "http": 200,
+      "sha256": "37b844f7ab58425554ba9df86ec23c2551c9248e3270d0e77d0aff96610abd6f",
+      "matchesCommit": true,
+      "bytes": 21370
+    },
+    {
+      "file": "essai-stitch-v7/family-review-effects.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-review-effects.css",
+      "http": 200,
+      "sha256": "fabcfb35afe36abd2096740bf9ce65ea5e0d15b239a65399bcd04153730769ff",
+      "matchesCommit": true,
+      "bytes": 939
+    },
+    {
+      "file": "essai-stitch-v7/family-review-effects.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family-review-effects.js",
+      "http": 200,
+      "sha256": "d2892fd9025c3a81f2119435cba8153f1cdcf262999df98086efbb53555bfe95",
+      "matchesCommit": true,
+      "bytes": 3835
+    },
+    {
+      "file": "essai-stitch-v7/family.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family.css",
+      "http": 200,
+      "sha256": "e4f40e37390701605de3021f9e11458f932acb6267ffbf9fe567014991f8667e",
+      "matchesCommit": true,
+      "bytes": 5438
+    },
+    {
+      "file": "essai-stitch-v7/family.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/family.js?v=20261110-e06-1",
+      "http": 200,
+      "sha256": "8d1ab2260fe774f6a101f195106ccd636ff8ca9ab4144b4442e18812f5090ee1",
+      "matchesCommit": true,
+      "bytes": 57483
+    },
+    {
+      "file": "essai-stitch-v7/home-consolidation.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/home-consolidation.css",
+      "http": 200,
+      "sha256": "ee2f7dc9226d53060b41f7eaf8aa7aa0eed02c4cf8b8b86faf4aed7e4356b11a",
+      "matchesCommit": true,
+      "bytes": 3232
+    },
+    {
+      "file": "essai-stitch-v7/home.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/home.js",
+      "http": 200,
+      "sha256": "2c9d381ca7783a202a7aaf0deaff6e1d45a6844b80e8e105fb9a8d4ef4d1bf45",
+      "matchesCommit": true,
+      "bytes": 16446
+    },
+    {
+      "file": "essai-stitch-v7/house-register.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/house-register.js",
+      "http": 200,
+      "sha256": "a45ffd1fd76ceac3709ae7284f552e7d2af9f8124e38f46803e50bd1cce252d4",
+      "matchesCommit": true,
+      "bytes": 23018
+    },
+    {
+      "file": "essai-stitch-v7/import-runtime.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/import-runtime.js",
+      "http": 200,
+      "sha256": "0f63752ec1d5e5c50085013b15d3c5582d759bc8c4df0efcddd3db41ec6faa06",
+      "matchesCommit": true,
+      "bytes": 1437
+    },
+    {
+      "file": "essai-stitch-v7/index.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/index.html",
+      "http": 200,
+      "sha256": "ef5a176dbcd71454ae9b5cd7a532f5003b1756d75041aa90b6da8edc0f5a5a3a",
+      "matchesCommit": true,
+      "bytes": 27884
+    },
+    {
+      "file": "essai-stitch-v7/magic-content.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/magic-content.js",
+      "http": 200,
+      "sha256": "5ffc7c99f7fa968af0e337c94957e42baf61dca8a4fc97fd587901184dbdd14c",
+      "matchesCommit": true,
+      "bytes": 6975
+    },
+    {
+      "file": "essai-stitch-v7/magic-profile.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/magic-profile.css",
+      "http": 200,
+      "sha256": "41bc6a8365952f61a4de0494b97143bd1042d11d753a80bd015da59592e4fbcf",
+      "matchesCommit": true,
+      "bytes": 6835
+    },
+    {
+      "file": "essai-stitch-v7/magic-profile.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/magic-profile.js?v=20261110-e06-1",
+      "http": 200,
+      "sha256": "64c2e45a394f390b6caf0e9e5715f5010e93eaa89332136c09183adae1df5fac",
+      "matchesCommit": true,
+      "bytes": 13568
+    },
+    {
+      "file": "essai-stitch-v7/member-avatar.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/member-avatar.css",
+      "http": 200,
+      "sha256": "993ec7dbca47727f3d1a18fff5c1a9ffc899e93c8906df4e67449d59166ee62e",
+      "matchesCommit": true,
+      "bytes": 2161
+    },
+    {
+      "file": "essai-stitch-v7/member-avatar.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/member-avatar.js",
+      "http": 200,
+      "sha256": "38aae9280d8416c36fed28b5a41ebb9ffa94e48face29052da4ce9f1f70fb7a1",
+      "matchesCommit": true,
+      "bytes": 6312
+    },
+    {
+      "file": "essai-stitch-v7/menu-layout.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/menu-layout.html",
+      "http": 200,
+      "sha256": "f58ecdee60af16cfb00b4fa1378de1aeca89da0a1edb210dfae81cd2276bcec9",
+      "matchesCommit": true,
+      "bytes": 2837
+    },
+    {
+      "file": "essai-stitch-v7/missions-layout.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/missions-layout.html",
+      "http": 200,
+      "sha256": "1ead425ba11217531b532ca4eae36fe5b8f9b48da97df1621998c30653ed8bdd",
+      "matchesCommit": true,
+      "bytes": 1990
+    },
+    {
+      "file": "essai-stitch-v7/missions.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/missions.css",
+      "http": 200,
+      "sha256": "f7e4d1d0562252c66e4a73052ec1ef25f9df4da4110ecf49858ad508c6a7dd49",
+      "matchesCommit": true,
+      "bytes": 4262
+    },
+    {
+      "file": "essai-stitch-v7/missions.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/missions.html",
+      "http": 200,
+      "sha256": "eae0b0d556344eb88884d66c3b4513f61b458a9bdf061c89de67fc3702c0b526",
+      "matchesCommit": true,
+      "bytes": 11868
+    },
+    {
+      "file": "essai-stitch-v7/missions.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/missions.js",
+      "http": 200,
+      "sha256": "f9ab9474832b15e0d62804d9afd879ba3a11ec66c50661f085d76c539745eb69",
+      "matchesCommit": true,
+      "bytes": 5575
+    },
+    {
+      "file": "essai-stitch-v7/onboarding-drafts.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/onboarding-drafts.mjs",
+      "http": 200,
+      "sha256": "b4fb3cd453b78c66ee1975a6443ccffa51b7220431a4ee7b99ca4f5d20c7217c",
+      "matchesCommit": true,
+      "bytes": 4815
+    },
+    {
+      "file": "essai-stitch-v7/onboarding-engine.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/onboarding-engine.js",
+      "http": 200,
+      "sha256": "327eabd01c447c8dfd81d1a095ae52c0d37e202b8f6525644440362d3e20c909",
+      "matchesCommit": true,
+      "bytes": 6411
+    },
+    {
+      "file": "essai-stitch-v7/onboarding-route-data.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/onboarding-route-data.js",
+      "http": 200,
+      "sha256": "696dcbced5594163f03fed324be5fc95d54ce31181ac0f8120ca0fa31c847d20",
+      "matchesCommit": true,
+      "bytes": 1169
+    },
+    {
+      "file": "essai-stitch-v7/onboarding-scoring.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/onboarding-scoring.mjs",
+      "http": 200,
+      "sha256": "6a674f9e463993b52a046f8358b33302da7731eac72e684f4090e7e0076542de",
+      "matchesCommit": true,
+      "bytes": 3720
+    },
+    {
+      "file": "essai-stitch-v7/onboarding.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/onboarding.css",
+      "http": 200,
+      "sha256": "b268dce63cce476f3cdcfa785c986c39f7d64f733e6ffbd5ed1b144d64da8f2f",
+      "matchesCommit": true,
+      "bytes": 7812
+    },
+    {
+      "file": "essai-stitch-v7/onboarding.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/onboarding.js",
+      "http": 200,
+      "sha256": "2bb685cce15dcf0b01c0b334ac5860d7c7572cdad337c4527455d7c159916f20",
+      "matchesCommit": true,
+      "bytes": 27269
+    },
+    {
+      "file": "essai-stitch-v7/preparations.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/preparations.css",
+      "http": 200,
+      "sha256": "39106b7e0cab9cca2e97e8200a75a07795d2ad85a35a7124f6bfc8b79b748d06",
+      "matchesCommit": true,
+      "bytes": 5688
+    },
+    {
+      "file": "essai-stitch-v7/preparations.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/preparations.js",
+      "http": 200,
+      "sha256": "bed0e757e132d7c29d75a7e1d87c30e0102e97d6dd1ea654921a03c1b4c5274e",
+      "matchesCommit": true,
+      "bytes": 17001
+    },
+    {
+      "file": "essai-stitch-v7/recipe-import-format.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/recipe-import-format.mjs",
+      "http": 200,
+      "sha256": "af7c4d266167ccdaad76e6ebf8bbac41e2ef2e747ad3a1db604e83a0a4b4ea04",
+      "matchesCommit": true,
+      "bytes": 17224
+    },
+    {
+      "file": "essai-stitch-v7/recipe-import-zip.mjs",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/recipe-import-zip.mjs",
+      "http": 200,
+      "sha256": "1344e6d0a7a391c0dceab2c93f50ac6a42bc32ccc4cf46af976a93e8f7d988b0",
+      "matchesCommit": true,
+      "bytes": 16656
+    },
+    {
+      "file": "essai-stitch-v7/recipe-import.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/recipe-import.css",
+      "http": 200,
+      "sha256": "f2d85d6abf7d59186690c50b8d8f8373f341a97fa62ba0cac3ee26bf49094f69",
+      "matchesCommit": true,
+      "bytes": 1689
+    },
+    {
+      "file": "essai-stitch-v7/recipe-import.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/recipe-import.js",
+      "http": 200,
+      "sha256": "2eb087d8ba64c479ba52936a9e2fbd845ca85fe0fe81a6577f6e79b32bf370ed",
+      "matchesCommit": true,
+      "bytes": 23270
+    },
+    {
+      "file": "essai-stitch-v7/register-route-data.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/register-route-data.js",
+      "http": 200,
+      "sha256": "7210810057c52e7cbc70fc5c81ce2221b3e402e6eb22224598038b863e11e22a",
+      "matchesCommit": true,
+      "bytes": 9316
+    },
+    {
+      "file": "essai-stitch-v7/register.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/register.css",
+      "http": 200,
+      "sha256": "c13f1a1858802ef1fcc47bf6ca2a4a08dffa5ec2c8efadf7de664c67799da1b2",
+      "matchesCommit": true,
+      "bytes": 11419
+    },
+    {
+      "file": "essai-stitch-v7/register.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/register.js",
+      "http": 200,
+      "sha256": "13242be6c7adabdb329362bd3c90ac7dc5a7cdaeb0bfd44b0b65685751ef1f42",
+      "matchesCommit": true,
+      "bytes": 9482
+    },
+    {
+      "file": "essai-stitch-v7/responsive.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/responsive.css",
+      "http": 200,
+      "sha256": "1b448d9fb5208dca0334443650664beef4a4a371ea8e73afe52f5b7c3a85c888",
+      "matchesCommit": true,
+      "bytes": 3524
+    },
+    {
+      "file": "essai-stitch-v7/ritual-effects.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ritual-effects.js",
+      "http": 200,
+      "sha256": "38d6c0b7840e5ecc3c3b15f8ca494ffce97224df62e112870950fcbee77a042e",
+      "matchesCommit": true,
+      "bytes": 12887
+    },
+    {
+      "file": "essai-stitch-v7/ritual.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ritual.css",
+      "http": 200,
+      "sha256": "706d9d7dd65107ae6d10763df48f024460285530933dcd1c1daac9f3feb7133c",
+      "matchesCommit": true,
+      "bytes": 7957
+    },
+    {
+      "file": "essai-stitch-v7/ritual.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/ritual.js",
+      "http": 200,
+      "sha256": "3153b91dc892f1edfdc6cacba4d6e09951f7805601a774f32bb9fa9552d74484",
+      "matchesCommit": true,
+      "bytes": 9572
+    },
+    {
+      "file": "essai-stitch-v7/root-adapters.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/root-adapters.js",
+      "http": 200,
+      "sha256": "d40a3039169ada135e5ad3f750eb8538f8730398710bea33d7e1176e86fdf946",
+      "matchesCommit": true,
+      "bytes": 3752
+    },
+    {
+      "file": "essai-stitch-v7/stitch-tailwind.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/stitch-tailwind.css",
+      "http": 200,
+      "sha256": "59d885da03858cea85a8fbe8e1144db1a77e94fd605cc3df2f3d7a0cebad7de4",
+      "matchesCommit": true,
+      "bytes": 130342
+    },
+    {
+      "file": "essai-stitch-v7/tailwind-input.css",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/tailwind-input.css",
+      "http": 200,
+      "sha256": "cc1a7ad0d019ddb1d32d0ecb588ba0ac26ce41d8625dd6c366348b25f83a28ec",
+      "matchesCommit": true,
+      "bytes": 59
+    },
+    {
+      "file": "essai-stitch-v7/tools-register.js",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/tools-register.js",
+      "http": 200,
+      "sha256": "976fed52d97db2962c43d8def77e35f5dbe313225b8f6952137ddc33a5c93108",
+      "matchesCommit": true,
+      "bytes": 25127
+    },
+    {
+      "file": "essai-stitch-v7/traverse.html",
+      "url": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/traverse.html",
+      "http": 200,
+      "sha256": "27b7c62be60f038d109cf7595c770c1b4242b1145c06c8b22226a2d092e47420",
+      "matchesCommit": true,
+      "bytes": 26237
+    },
+    {
+      "file": "index-v2.9.2.html",
+      "url": "https://portenartco.github.io/dobby-demo/index-v2.9.2.html",
+      "http": 200,
+      "sha256": "72de30105ed567c19be7f2b99dd81414c63fc7aa5110fdfdd71572f26f3cf6a6",
+      "matchesCommit": true,
+      "bytes": 1173425
+    },
+    {
+      "file": "index.html",
+      "url": "https://portenartco.github.io/dobby-demo/index.html",
+      "http": 200,
+      "sha256": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+      "matchesCommit": true,
+      "bytes": 2003
+    }
+  ]
+}

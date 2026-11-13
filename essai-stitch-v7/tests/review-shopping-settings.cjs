@@ -2,7 +2,7 @@
  * Synthetic grocery boundary only; production UI+model run unchanged. */
 const assert=require('node:assert/strict'),{chromium}=require('playwright');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
-(async()=>{const b=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});try{const p=await b.newPage();await p.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());await p.goto(origin+'/essai-stitch-v7/index.html#shop');await p.waitForFunction(()=>window.DobbyCuisine?.ready);await p.evaluate(()=>{
+(async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{const p=await b.newPage();await p.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());await p.goto(origin+'/essai-stitch-v7/index.html#shop');await p.waitForFunction(()=>window.DobbyCuisine?.ready);await p.evaluate(()=>{
  DobbyCuisineEngine.evaluate(`st.shopFinal={e072:true,id:'settings-fixture',items:[{id:'local',name:'Article local conservé',qty:1,unit:'pièce',done:false}],imports:[],meals:[]};save();`);
  const shared={context:'fixture-A',items:[],homeSupported:true,status:'à jour',error:'Erreur de synchronisation persistante'},writes=[];window.__settingsBoundary={shared,writes};
  const grocery={read:()=>shared,importRows:async(rows,scope)=>{writes.push({rows,scope});return rows.length;},sync:async()=>{}};

@@ -1,0 +1,13 @@
+E05_NATIVE_PASS actual form, forged magic rejection, trusted manual/calculated writers, extensions, reload, validation, quota rollback, unchanged rewards
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+6 !== 5
+
+    at /workspace/dobby-v7-review/essai-stitch-v7/tests/e05.cjs:18:159 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 6,
+  expected: 5,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
