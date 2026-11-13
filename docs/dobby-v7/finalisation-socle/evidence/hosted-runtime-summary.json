@@ -1,0 +1,32 @@
+{
+  "scope": "user-executed hosted database/RPC runtime checkpoint with simulated SQL JWT claims",
+  "checkpoint": "30-runtime-rollback",
+  "executedByUser": true,
+  "hostedDatabaseRuntimeResultReceived": true,
+  "checksPassed": 38,
+  "checksFailed": 0,
+  "checksSkipped": 0,
+  "authorizationMode": "SQL role and simulated JWT claims; no real Auth HTTP session tested",
+  "innerRollbackObserved": true,
+  "observedTableCount": 12,
+  "observedTablesUnchangedAfterInnerRollback": true,
+  "sqlRoleRestored": true,
+  "thirdTestAuthAccountCreatedByUser": true,
+  "thirdTestAuthAccountLeftUnlinkedAfterRollback": true,
+  "allClientProofFlagsClosed": true,
+  "clientReleaseGatesOpened": false,
+  "realHttpAuthLoginVerified": false,
+  "realHttpRpcUnderAuthSessionVerified": false,
+  "physicalStorageOperationsVerified": false,
+  "realConcurrentMultiSessionVerified": false,
+  "completeNewUserJourneysVerified": false,
+  "rawRuntimeResultPublished": false,
+  "limits": [
+    "This is a real hosted PostgreSQL/RPC execution result, not only a catalog or local-fixture check.",
+    "Authorization was exercised through SQL roles and simulated JWT claims, not a browser login or a real HTTP Auth session.",
+    "The observed rollback preserved the twelve monitored tables and restored the SQL role; it does not establish every behavior outside this checkpoint.",
+    "Physical Storage operations and concurrent browser sessions still require separate checks.",
+    "The two existing family accounts, household and historical data were preserved. No client proof flag or release gate was opened."
+  ],
+  "next": "Validate the applicable read-only HTTP/Auth boundaries and remaining real journeys before any controlled activation; do not replay installation."
+}

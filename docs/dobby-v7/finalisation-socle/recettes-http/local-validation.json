@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "scope": "private console probe, local mocks only",
+  "checksPassed": 28,
+  "checksFailed": 0,
+  "scriptSha256": "0fd4d561e5e0f2f967d7de8ebc87df0b8c47dbb04aec6cf54499e27d2e3571af",
+  "testSha256": "f7ff755434fecd0f35d4b4e2254db30df8f1e0ec535a48b4e690795ad2d897a6",
+  "remoteSupabaseAccessByAgent": false,
+  "realAuthHttpVerifiedLocally": false,
+  "productOrCommittedDocsModifiedByThisSubtask": false,
+  "businessMutationRequestedByProbe": false,
+  "publicationFlagsModified": false,
+  "automaticRefreshOrRetryRequested": false,
+  "localMetadataWritesRequested": false,
+  "checks": [
+    "Parent A and B: three allowlisted direct GET RPC, then fixed-family Auth GET /user",
+    "Unbound third Auth: no profile, household or guessed Missions household",
+    "Opened proof flags and incomplete contracts fail without repair or activation",
+    "Other sites/projects rejected before requests",
+    "Raw server errors reduced to a fixed reference and numeric HTTP status",
+    "Account/household replacement, persisted-session mismatch and Auth subject mismatch fail closed",
+    "Stalled reads time out",
+    "Expired or near-expiry sessions and HTTP 401 cause no refresh, retry or POST fallback",
+    "Current client capabilities are read after the final Auth await; fixed-domain redirects are refused",
+    "Exact Console entry emits one aggregate JSON and no session object"
+  ],
+  "limits": [
+    "No live service, password login, e-mail, invitation, Storage object or concurrent session tested locally.",
+    "The future user-run probe verifies an Auth HTTP session and PostgREST read endpoints, not the password-grant request itself.",
+    "The probe never calls the native authorized transport, refresh, retry, or metadata writers; it refuses sessions with less than 120 seconds remaining."
+  ]
+}
