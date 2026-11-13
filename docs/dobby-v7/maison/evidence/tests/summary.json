@@ -1,12 +1,12 @@
 {
   "nativeAndSync": {
-    "passed": 440,
+    "passed": 503,
     "failed": 0,
     "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs essai-stitch-v5-famille/tests/*.test.mjs",
     "log": "native.log"
   },
   "maisonFocused": {
-    "passed": 45,
+    "passed": 49,
     "failed": 0,
     "log": "focused.log",
     "overlapsNative": true
@@ -25,5 +25,6 @@
   "contractsCurrentAcceptance": "PASS",
   "liveBackendVerified": false,
   "remoteSupabaseAccess": false,
-  "historicalCampaign": "NOT_GREEN; eight initial failures reproduced on pristine main, further campaign output reported separately"
+  "historicalCampaign": "NOT_GREEN; all14 failures reproduced on pristine initial main54d74b9 before PR11 merge",
+  "integratedMain": "25dd637c1b827bd09a46d8a55be63d9c14966f19"
 }
