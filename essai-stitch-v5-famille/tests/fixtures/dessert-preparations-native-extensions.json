@@ -1,0 +1,25 @@
+{
+  "description": "Frozen exact T09 native amendments, reversed before historical Stitch19/20, FAM and culinary source-preservation proofs. No function or block is omitted.",
+  "baseCommit": "ed0ec7fda5a4bf7a92846ee31e2fba786753a406",
+  "approvedCommit": "456a091d61ddd18fecf261b1d71f5f0a227ccc74",
+  "sourcePath": "essai-stitch-v5-famille/index.html",
+  "beforeSha256": "9f4f0cf228ad58f006d4ce3fdb3416fe22877c5ecc8af5bd3f9f21dcd6487b33",
+  "afterSha256": "4be86846dcb849cf990fafdfa564ce25e7415c8df7cf52dd0a24b72b828a836d",
+  "patches": [
+    {
+      "label": "T09 independent dessert preparation ingredient identity",
+      "before": "const mealSignature=(key,m)=>key+'|'+m.id+'|'+(m.adult??m.people)+'|'+(m.children??0)+'|'+(m.childFactor??0.65);",
+      "after": "const mealSignature=(key,m)=>key+'|'+m.id+'|'+(m.adult??m.people)+'|'+(m.children??0)+'|'+(m.childFactor??0.65)+(m.dessertIngredientRef?'|'+m.dessertIngredientRef:'');"
+    },
+    {
+      "label": "T09 canonical pending sources, batch deduplication and legacy coverage",
+      "before": "function pendingMeals(){return Object.entries(st.planned).filter(([key,m])=>m&&m.status!=='annulé'&&!covered(key,m))};",
+      "after": "function pendingMeals(){const registry=st.planned.__dobbyDessertPreparationsV1;if(Object.prototype.hasOwnProperty.call(st.planned,'__dobbyDessertPreparationsV1')&&(!registry||registry.kind!=='dessert-preparations'||registry.version!==1||!registry.batches||typeof registry.batches!=='object'||Array.isArray(registry.batches)))throw Error('Version des préparations dessert non prise en charge. Les données sont conservées.');const seen=new Set(),rows=[];for(const [key,m]of Object.entries(st.planned)){if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)(-dessert)?$/.test(key)||!m||m.status==='annulé')continue;const batch=m.dessertPreparationId?registry?.batches?.[m.dessertPreparationId]:null;if(m.dessertPreparationId&&!batch)throw Error('Préparation dessert introuvable. Les données sont conservées.');if(batch){if(batch.status==='prepared'||batch.legacyCovered===true||seen.has(batch.id))continue;seen.add(batch.id);const services=Object.entries(st.planned).filter(([k,x])=>/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)-dessert$/.test(k)&&x?.status!=='annulé'&&x?.dessertPreparationId===batch.id).map(([k])=>k),source={...m,id:batch.recipeId,adult:batch.totalPortions,children:0,people:batch.totalPortions,childFactor:1,_e072ImportRef:batch.importRef,_dessertPreparationId:batch.id,_dessertRecipeSnapshot:batch.recipeSnapshot,_dessertServices:services};rows.push([key,source]);}else if(!covered(key,m))rows.push([key,m]);}return rows};"
+    },
+    {
+      "label": "T09 native summary uses the recorded culinary snapshot",
+      "before": "let r=getR(m.id);if(!r)return;r.ingredients.forEach",
+      "after": "let r=m._dessertRecipeSnapshot||getR(m.id);if(!r)return;r.ingredients.forEach"
+    }
+  ]
+}
