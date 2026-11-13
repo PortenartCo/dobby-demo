@@ -4,7 +4,7 @@ const repo=path.resolve(__dirname,'../..'),out=path.join(repo,'docs/dobby-v7/evi
 fs.mkdirSync(out,{recursive:true});
 const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(path.join(repo,file))).digest('hex');
 const sources=['essai-stitch-v7/cuisine-p01.js','essai-stitch-v7/cuisine-p01.css','essai-stitch-v7/cuisine.js','essai-stitch-v7/cuisine-e07.js','essai-stitch-v7/cuisine-engine.js','scripts/build-dobby-review.cjs','scripts/review/e07-p01-config.js'];
-const before=Object.fromEntries(sources.map(f=>[f,sha(f)])),boundariesOnly=process.argv.includes('--boundaries-only'),files=['e07-p01.cjs','e07-p01-visual.cjs','e07-3-taverne.cjs','e07-3-catalogue.cjs','e07-4-b-ui.cjs','e07-4-engine.cjs','e07-4-render-race.cjs'],report=boundariesOnly?'boundaries-results.json':'results.json';
+const before=Object.fromEntries(sources.map(f=>[f,sha(f)])),boundariesOnly=process.argv.includes('--boundaries-only'),files=['e07-p01.cjs','e07-p01-visual.cjs','e07-3-taverne.cjs','e07-3-catalogue.cjs','e07-4-b-ui.cjs','e07-4-engine.cjs','e07-4-render-race.cjs','v7-meals-model.cjs','v7-meals-ui.cjs','v7-meals-child.cjs'],report=boundariesOnly?'boundaries-results.json':'results.json';
 for(const file of boundariesOnly?files.slice(2):files){
  console.log('E07_P01_CI_START',file);
  const result=spawnSync(process.execPath,[path.join(__dirname,file)],{cwd:repo,encoding:'utf8',maxBuffer:20*1024*1024,env:{...process.env,DOBBY_TEST_ORIGIN:origin,DOBBY_E074:'1',DOBBY_E074_ENGINE_WIDTHS:'390',DOBBY_E073_TAVERNE_EVIDENCE:path.join(out,'taverne'),DOBBY_E073_CATALOGUE_EVIDENCE:path.join(out,'catalogue')}});

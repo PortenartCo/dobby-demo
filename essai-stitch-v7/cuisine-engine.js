@@ -53,15 +53,18 @@ window.DobbyCuisineEngine = (() => {
   function reserveIngredients() {
     return evaluate(`return Object.entries(st.have||{}).flatMap(([id,raw])=>{const quantity=Number(raw),at=id.lastIndexOf('|'),name=(at<0?id:id.slice(0,at)).trim(),unit=at<0?'':id.slice(at+1).trim();return name&&Number.isFinite(quantity)&&quantity>0?[{id,name,quantity,unit}]:[];}).sort((a,b)=>a.name.localeCompare(b.name,'fr-BE'));`);
   }
+  const assertSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.()===true)throw Error('Les données partagées sont en lecture seule pour votre profil enfant.');};
   function choose(values) {
+    assertSharedWrite();
     const recipe=read().recipes.find(r=>r.id===values.id);if(recipe?.removedAt)throw Error('Cette recette est retirée du catalogue.');if(!recipe||!Number.isFinite(Number(recipe.servings))||Number(recipe.servings)<=0)throw Error('Complétez les portions de référence de cette recette avant de planifier ce repas.');
     evaluate('st.day=p.date;st.slot=p.slot;st.choice="library";st.filter="";st.cat="Toutes";st.favorites=false;st.note=p.note||"";', values);
     page('pick'); field('adults', values.adult); field('children', values.children);
     click('select', { id: values.id });
     return evaluate('return st.page==="plan" && st.planned[st.day+"-"+st.slot]?.id===p.id;', values);
   }
-  function cookAt(id,index=null,method='classic') {
-    return transaction(`const r=getR(p.id);if(!r)throw Error('Recette introuvable.');if(!['classic','tm5'].includes(p.method))throw Error('Méthode de préparation invalide.');const steps=p.method==='tm5'?(st.tmAdaptations?.[p.id]?.steps||(r.thermomix?r.steps:null)):(r.thermomix?null:r.steps);if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible ; complétez ses étapes.');if(p.index!==null&&(!Number.isInteger(p.index)||p.index<0||p.index>=steps.length))throw Error('Étape de préparation invalide.');st.cookProgress||={};if(typeof st.cookProgress!=='object'||Array.isArray(st.cookProgress))throw Error('Progression de cuisson invalide.');const progress=st.cookProgress[p.id]||{},saved=progress[p.method],index=p.index===null?(Number.isInteger(saved)&&saved>=0?Math.min(saved,steps.length-1):0):p.index;st.cookProgress[p.id]={...progress,[p.method]:index};st.extraPage='';st.detail=p.id;st.page='recipes';st.cook=true;st.cookStep=index;st.cookMethod=p.method;st.tmEditor=false;st.tmView=false;result={id:p.id,index,method:p.method};`,{id,index,method});
+  function cookAt(id,index=null,method='classic',meal=null) {
+    if(meal)componentKey(meal);
+    return transaction(`const r=getR(p.id);if(!r)throw Error('Recette introuvable.');if(!['classic','tm5'].includes(p.method))throw Error('Méthode de préparation invalide.');const steps=p.method==='tm5'?(st.tmAdaptations?.[p.id]?.steps||(r.thermomix?r.steps:null)):(r.thermomix?null:r.steps);if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible ; complétez ses étapes.');if(p.index!==null&&(!Number.isInteger(p.index)||p.index<0||p.index>=steps.length))throw Error('Étape de préparation invalide.');st.cookProgress||={};if(typeof st.cookProgress!=='object'||Array.isArray(st.cookProgress))throw Error('Progression de cuisson invalide.');const context=p.meal||(st.cook&&st.detail===p.id?st.cookMeal:null);if(context){const key=context.date+'-'+context.slot+(context.component==='dessert'?'-dessert':''),record=st.planned[key];if(!record||record.id!==p.id||record.status==='annulé')throw Error('Ce repas a changé. Actualisez le planning.');if(Object.prototype.hasOwnProperty.call(context,'expectedMeal')&&JSON.stringify(record)!==JSON.stringify(context.expectedMeal))throw Error('Ce repas a changé. Actualisez le planning.');st.cookMeal={...context,key,id:p.id,expectedMeal:JSON.parse(JSON.stringify(record))};}else st.cookMeal=null;const progressKey=st.cookMeal?st.cookMeal.key+'|'+p.id:p.id,progress=st.cookProgress[progressKey]||{},saved=progress[p.method],index=p.index===null?(Number.isInteger(saved)&&saved>=0?Math.min(saved,steps.length-1):0):p.index;st.cookProgress[progressKey]={...progress,[p.method]:index};st.extraPage='';st.detail=p.id;st.page='recipes';st.cook=true;st.cookStep=index;st.cookMethod=p.method;st.tmEditor=false;st.tmView=false;result={id:p.id,index,method:p.method};`,{id,index,method,meal});
   }
   function mealAction(action, values) {
     const validDate=value=>{if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;const d=new Date(value+'T12:00:00');return Number.isFinite(d.getTime())&&[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')===value;};
@@ -92,7 +95,28 @@ window.DobbyCuisineEngine = (() => {
       result={date:p.action==='move'?p.destination:p.date,slot:p.slot,meal:JSON.parse(JSON.stringify(meal))};`, {...values,action});
     }catch(error){if(error.name==='DobbyMealCancelled')return false;throw error;}
   }
-  function favorite(id) { page('recipes', id); click('fav', { id }); }
+  const componentKey=values=>{
+    const date=values.date,d=new Date(date+'T12:00:00');
+    if(typeof date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!Number.isFinite(d.getTime())||[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')!==date||!['midi','soir'].includes(values.slot)||!['main','dessert'].includes(values.component||'main'))throw Error('Date, créneau ou préparation invalide.');
+    return date+'-'+values.slot+(values.component==='dessert'?'-dessert':'');
+  };
+  function componentAction(action,values){
+    const key=componentKey(values);if(!['status','move','portions'].includes(action))throw Error('Action de préparation invalide.');
+    if(action==='status'&&!['prévu','reporté','préparé','annulé'].includes(values.status))throw Error('Statut de préparation invalide.');
+    if(action==='portions'&&(![values.adult,values.children].every(n=>Number.isInteger(n)&&n>=0)||values.adult+values.children<1||values.adult+values.children>20))throw Error('Choisissez entre 1 et 20 convives entiers.');
+    if(action==='move'&&values.destinationSlot&&values.destinationSlot!==values.slot)throw Error('Midi et Soir restent indépendants.');const destinationKey=action==='move'?componentKey({...values,date:values.destination}):null;
+    if(values.confirmed===false)return false;
+    if(action==='move'&&destinationKey===key)return false;
+    if(values.component!=='dessert'&&action!=='portions')return mealAction(action,values);
+    if((action==='move'||action==='status'&&values.status==='annulé')&&values.confirmed!==true&&!window.confirm(action==='move'?'Déplacer ce dessert ?':'Retirer ce dessert du planning ?'))return false;
+    return transaction(`const source=st.planned[p.key];if(!source)throw Error('Cette préparation n’est plus disponible.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(source)!==JSON.stringify(p.expectedMeal))throw Error('La préparation a changé. Ouvrez à nouveau la confirmation.');
+      if(p.action==='move'){const target=st.planned[p.destinationKey]||null;if(Object.prototype.hasOwnProperty.call(p,'expectedDestination')&&JSON.stringify(target)!==JSON.stringify(p.expectedDestination))throw Error('La destination a changé. Ouvrez à nouveau la confirmation.');if(p.expectedPlanning&&JSON.stringify(st.planned)!==JSON.stringify(p.expectedPlanning))throw Error('Le calendrier a changé. Ouvrez à nouveau la confirmation.');const next={...st.planned};delete next[p.key];let moving=source,date=p.destination;for(let i=0;i<370;i++){const key=date+'-'+p.slot+'-dessert',occupied=next[key];next[key]=moving;if(!occupied){moving=null;break;}moving=occupied;date=addDays(date,1);}if(moving)throw Error('Aucun créneau libre trouvé.');st.planned=next;}
+      else if(p.action==='portions')st.planned[p.key]={...source,adult:p.adult,children:p.children,people:p.adult+p.children};else st.planned[p.key]={...source,status:p.status};result={date:p.action==='move'?p.destination:p.date,slot:p.slot,meal:JSON.parse(JSON.stringify(st.planned[p.action==='move'?p.destinationKey:p.key]))};`,{...values,action,key,destinationKey});
+  }
+  function finishCook(){
+    return transaction(`if(!st.cook)throw Error('Aucune préparation en cours.');const recipe=getR(st.detail),steps=st.cookMethod==='tm5'?(st.tmAdaptations?.[st.detail]?.steps||(recipe?.thermomix?recipe.steps:null)):recipe?.steps;if(!steps?.length||st.cookStep!==steps.length-1)throw Error('Terminez la dernière étape avant de confirmer la préparation.');const context=st.cookMeal;if(context){const record=st.planned[context.key];if(!record||record.id!==context.id||record.status==='annulé'||JSON.stringify(record)!==JSON.stringify(context.expectedMeal))throw Error('Le repas a changé pendant la préparation. Vérifiez le planning.');st.planned[context.key]={...record,status:'préparé'};}st.cook=false;st.cookMeal=null;result={prepared:context?.key||null};`);
+  }
+  function favorite(id) { assertSharedWrite();page('recipes', id); click('fav', { id }); }
   function cook(id, action) {
     if (evaluate('return st.detail!==p.id||!st.cook;', { id })) { page('recipes', id); click('cook'); }
     if (action) click(action);
@@ -100,6 +124,7 @@ window.DobbyCuisineEngine = (() => {
   function tm5(id) { evaluate('st.extraPage="";st.page="recipes";st.detail=p.id;st.tmEditor=true;st.tmView=false;st.cook=false;render();', { id }); }
   // A native mutation is either persisted in full or restored byte-for-byte.
   function transaction(code, values={}) {
+    assertSharedWrite();
     return evaluate(`const before={state:JSON.parse(JSON.stringify(st)),custom:JSON.parse(JSON.stringify(custom)),raw:localStorage.getItem(key),favorites:BASE.map(r=>[r.id,r.fav])};
       try{let result;${code};save();render();return result;}catch(error){st=before.state;custom=before.custom;st.customRecipes=custom;for(const [id,fav]of before.favorites){const r=BASE.find(x=>x.id===id);if(r)r.fav=fav;}let restored=false;try{if(before.raw===null)localStorage.removeItem(key);else localStorage.setItem(key,before.raw);restored=localStorage.getItem(key)===before.raw;}catch{}if(!restored)throw Error('La restauration locale n’a pas pu être confirmée après : '+error.message);throw error;}`,values);
   }
@@ -114,11 +139,11 @@ window.DobbyCuisineEngine = (() => {
   const removeRecipe=(id,options={})=>retirement(id,options,true);
   const restoreRecipe=(id,options={})=>retirement(id,options,false);
   function planRecipe(values) {
-    const {id,date,slot,adult,children}=values;
+    const {id,date,slot,adult,children}=values;const plannedKey=componentKey(values);
     if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!['midi','soir'].includes(slot))throw Error('Date ou créneau invalide.');
     const d=new Date(date+'T12:00:00');if(Number.isNaN(d.getTime())||[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')!==date)throw Error('Date invalide.');
     if(![adult,children].every(n=>Number.isInteger(n)&&n>=0)||adult+children<1||adult+children>20)throw Error('Choisissez entre 1 et 20 convives entiers.');
-    return transaction(`const r=getR(p.id),key=p.date+'-'+p.slot,prior=st.planned[key]||null;if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(prior)!==JSON.stringify(p.expectedMeal))throw Error('Ce créneau a changé. Ouvrez à nouveau la confirmation.');if(prior&&p.replaceConfirmed!==true)throw Error('Confirmez le remplacement du repas existant.');st.day=p.date;st.slot=p.slot;st.adult=p.adult;st.children=p.children;st.people=p.adult+p.children;if(p.note!==undefined)st.note=p.note;const config={...prior,people:p.adult+p.children,adult:p.adult,children:p.children,childFactor:prior?.childFactor??0.65};delete config.id;delete config.status;if(prior?.id!==p.id)delete config._e072ImportRef;if(p.note!==undefined)config.note=p.note;planSelectedMeal(p.id,config);result={id:p.id,key,meal:JSON.parse(JSON.stringify(st.planned[key]))};`,values);
+    return transaction(`const r=getR(p.id),key=p.plannedKey,prior=st.planned[key]||null;if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(prior)!==JSON.stringify(p.expectedMeal))throw Error('Ce créneau a changé. Ouvrez à nouveau la confirmation.');if(prior&&p.replaceConfirmed!==true)throw Error('Confirmez le remplacement du repas existant.');st.day=p.date;st.slot=p.slot;st.adult=p.adult;st.children=p.children;st.people=p.adult+p.children;if(p.note!==undefined)st.note=p.note;const config={...prior,people:p.adult+p.children,adult:p.adult,children:p.children,childFactor:prior?.childFactor??0.65};delete config.id;delete config.status;if(prior?.id!==p.id)delete config._e072ImportRef;if(p.note!==undefined)config.note=p.note;if(p.component==='dessert')st.planned[key]={id:p.id,...config,status:'prévu'};else planSelectedMeal(p.id,config);result={id:p.id,key,meal:JSON.parse(JSON.stringify(st.planned[key]))};`,{...values,plannedKey});
   }
   const boundedText=(x,max=2000)=>{if(x===null||x===undefined)return '';if(!['string','number'].includes(typeof x)||String(x).length>max)throw Error('Texte TM5 invalide ou trop long.');return String(x).trim();};
   function normalizeTMEdit(raw,humanVerified=false) {
@@ -168,6 +193,7 @@ window.DobbyCuisineEngine = (() => {
     return evaluate('batchCandidate=validateBatch(p.text);batchCandidate.warnings ||= [];render();return batchCandidate;', {text:await file.text()});
   }
   function commitBatch(choices) {
+    assertSharedWrite();
     for (const [index, value] of Object.entries(choices)) field('collision' + index, value);
     field('batchConfirmed', true); click('batchCommit');
   }
@@ -199,6 +225,7 @@ window.DobbyCuisineEngine = (() => {
   }
   function prepareRecipeImport(file) { return window.DobbyRecipeImport.prepare(file,{E:this}); }
   function commitRecipeImport(plan) {
+    assertSharedWrite();
     return evaluate(`
       const token=()=>{const c=window.DobbyFamilyUI?.connectionState?.()||{};return JSON.stringify({epoch:c.epoch??null,userId:c.userId??null,householdId:c.householdId??null});};
       if(token()!==p.context)throw Error('Le foyer a changé : analysez à nouveau le fichier.');
@@ -245,5 +272,5 @@ window.DobbyCuisineEngine = (() => {
       ingredients:r.ingredients.map(([name,quantity,unit],i)=>({id:d.ingredientIds?.[i]||'ingredient-'+i,name,quantity,unit})),steps:r.steps,stepDetails:[...(d.stepDetails||[]).filter(s=>s.method!=='tm5'),...(st.tmAdaptations?.[r.id]?.stepDetails||d.stepDetails?.filter(s=>s.method==='tm5')||[])].map(s=>({...s,images:[]})),source:r.source||'',reviewed:r.reviewed===true,durations:{preparation:null,cooking:null,rest:null,...d.durations,total:r.minutes??null},equipment:d.equipment||[],notes:d.notes||[],missing:d.missing||[],uncertain:d.uncertain||[],image:null,images:[],tm5:st.tmAdaptations?.[r.id]||null,mediaNotice:r.localMedia?'Photographies conservées sur cet appareil, non comprises dans cet export JSON.':''};});downloadJson(p.id?'dobby-recette.json':'dobby-recettes.json',{format:'dobby-recipes',version:2,recipes});`,{id});
   }
 
-  return Object.freeze({ win, evaluate, page, read, amount, portions, familyCounts, reserveIngredients, choose, mealAction, favorite, cook, cookAt, tm5, saveTM, saveRecipe, saveRecipeWithMedia, prepareRecipeMedia, recipeUsage, removeRecipe, restoreRecipe, planRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });
+  return Object.freeze({ win, evaluate, page, read, amount, portions, familyCounts, reserveIngredients, choose, mealAction, componentAction, finishCook, favorite, cook, cookAt, tm5, saveTM, saveRecipe, saveRecipeWithMedia, prepareRecipeMedia, recipeUsage, removeRecipe, restoreRecipe, planRecipe, batch, commitBatch, shop, finalCheck, history, family, familyCheck, exportRecipes, prepareRecipeImport, commitRecipeImport });
 })();
