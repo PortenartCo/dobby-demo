@@ -59,9 +59,9 @@ Recette technique locale du 13 novembre 2026. PASS désigne uniquement les tests
 | REGRESSION | R07 | La navigation entre Archives, détail source et retour fonctionne. | PASS | archives-ui.cjs et register-navigation.cjs ; evidence/register-regressions.log |
 | REGRESSION | R08 | Les gardes Parents/Enfants ne sont pas affaiblis. | PASS | archives-writer.test.cjs ; contrats-permissions ; evidence/native-suite.log |
 | REGRESSION | R09 | La suite ciblée et la CI finale passent au SHA livré. | BLOCKED | suite Archives et native vertes ; historique exhaustif échoue sur ancien libellé E08, reproduit sur main : evidence/full-browser-suite.log et baseline-historical.log ; CI finale à constater |
-| REGRESSION | R10 | La PR et les captures avant/après sont produites sans fusion/déploiement abusif. | BLOCKED | PR en brouillon à créer ; evidence/before-* et empty/list/confirm/reactivate-* ; aucun déploiement |
+| REGRESSION | R10 | La PR et les captures avant/après sont produites sans fusion/déploiement abusif. | PASS | PR https://github.com/PortenartCo/dobby-demo/pull/17 en brouillon ; evidence/before-* et empty/list/confirm/reactivate-* ; aucun déploiement |
 
-**Total provisoire : 54 PASS, 2 BLOCKED (CI globale et création PR encore à constater).**
+**Total : 55 PASS, 1 BLOCKED (R09 : CI globale, échec historique documenté).**
 
 ## Exigences de preuves
 

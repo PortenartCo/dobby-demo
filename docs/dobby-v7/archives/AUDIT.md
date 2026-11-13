@@ -64,7 +64,7 @@ La PR Maison #16 reste indépendante : aucun cherry-pick ni remplacement de ses 
 
 Images avant : `evidence/before-{320,390,768,1440}.png`. Après : `empty-*`, `list-*`, `detail-*`, `confirm-*`, `reactivate-*`. `archived-contract-pdf-390.png` montre la consultation du PDF depuis le vrai contrat archivé. Les quatre largeurs ont été automatisées ; une inspection visuelle a couvert hero, recherche, liste, dialogue mobile et PDF. Le SHA256 du visuel est fixé dans `essai-stitch-v7/assets/archives/provenance.json` et correspond octet pour octet au fichier fourni.
 
-Développement et tests locaux : réalisés. PR/CI : à constater dans le reçu de livraison. Fusion, publication, SQL distant, activation de gates : non effectués. Recette réelle des deux comptes familiaux : différée, conformément à la demande.
+Développement et tests locaux : réalisés. PR : #17 créée en brouillon ; CI et reçu dans DELIVERY.md. Fusion, publication, SQL distant, activation de gates : non effectués. Recette réelle des deux comptes familiaux : différée, conformément à la demande.
 
 ## Retour arrière
 
