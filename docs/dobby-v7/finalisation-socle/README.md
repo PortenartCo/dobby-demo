@@ -17,6 +17,6 @@ L'installation et le [catalogue hébergé](evidence/hosted-installation-summary.
 
 **BLOQUÉ** : frontières HTTP/Auth, acceptation UI, Storage physique et concurrence multi-session avant activation des nouveaux parcours ; Safari physique reste à recetter. Les flags et gates demeurent **false**, sans déclaration globale des nouvelles fonctions comme opérationnelles.
 
-**Ne rejouer ni `00`, ni `10`, ni `11`, ni `20`, ni `30`.** Le troisième compte Auth de test a été créé et reste non lié après l'annulation ; ne pas le recréer. Les deux comptes et le foyer déjà validés sont conservés. Le prochain paquet de contrôles HTTP en lecture seule est en préparation ; aucun lien ou SQL d'activation n'est anticipé. Aucun identifiant personnel, mot de passe ou jeton n'est demandé dans la conversation.
+**Ne rejouer ni `00`, ni `10`, ni `11`, ni `20`, ni `30`.** Le troisième compte Auth de test a été créé et reste non lié après l'annulation ; ne pas le recréer. Les deux comptes et le foyer déjà validés sont conservés. Le [contrôle HTTP 31 en lecture seule](recettes-http/README.md) est prêt ; aucun SQL d’activation n’est demandé. Aucun identifiant personnel, mot de passe ou jeton n'est demandé dans la conversation.
 
 Aucun SQL distant par l'agent, aucun reset, aucune recréation de compte/foyer et aucun rejeu de Stitch 01/04/06/11. La suite du chantier suit les checkpoints serveur ; une preuve locale n'est pas un succès Supabase.
