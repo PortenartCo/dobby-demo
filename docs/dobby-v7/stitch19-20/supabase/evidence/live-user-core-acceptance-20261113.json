@@ -1,0 +1,15 @@
+{
+  "source": "user browser acceptance reports",
+  "date": "2026-11-13",
+  "existingAuthAccountsPreserved": 2,
+  "serverAccountLinkingVerified": true,
+  "secondAccountFreshBrowserEntryVerified": true,
+  "initialLocalRefusal": "FOYER-LOCAL-AUTRE; existing browser retained old test household",
+  "ceremoniesVerifiedByUser": true,
+  "grocerySyncAtoBVerifiedByUser": true,
+  "grocerySyncBtoAVerifiedByUser": true,
+  "logoutAndReconnectVerifiedByUser": false,
+  "remainingBlocker": "No visible logout action in V7 account profile; implementation added for final browser acceptance",
+  "newAuthEmailConfirmationOrPasswordRecoveryVerified": false,
+  "noAdditionalSupabaseChangesRequired": true
+}

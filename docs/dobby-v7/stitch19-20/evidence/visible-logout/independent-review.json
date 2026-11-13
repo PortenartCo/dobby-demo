@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "localBrowserFixturesOnly": true,
+  "realUserLogoutAndReconnectVerified": false,
+  "sourceSha256": {
+    "essai-stitch-v7/access.js": "dd0fefae02e58ab73846960979b8dded3562adb5067301b6bc25f00b2e619d59",
+    "essai-stitch-v7/magic-profile.js": "64c2e45a394f390b6caf0e9e5715f5010e93eaa89332136c09183adae1df5fac",
+    "essai-stitch-v7/tests/stitch-access-races.cjs": "d6004146adba32dfe11fc1fd6e893983d772cf9b53b011944c846f6daf57b26a"
+  },
+  "independentBrowserResults": [
+    {
+      "name": "visible account logout works for verified member and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for unverified native user and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "deferred account logout serializes repeated activation and keeps cached members",
+      "status": "PASS"
+    },
+    {
+      "name": "independent logout refuses success when a newer native session exists",
+      "status": "PASS"
+    },
+    {
+      "name": "independent failed logout stays inline and preserves current identity",
+      "status": "PASS"
+    }
+  ]
+}

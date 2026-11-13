@@ -26,6 +26,7 @@ const sourceFiles = [
   'essai-stitch-v7/access-entry.js',
   'essai-stitch-v7/access-flow.mjs',
   'essai-stitch-v7/access.js',
+  'essai-stitch-v7/magic-profile.js',
   'essai-stitch-v7/access.css',
   'essai-stitch-v7/family-engine.js',
   'essai-stitch-v7/family.js',

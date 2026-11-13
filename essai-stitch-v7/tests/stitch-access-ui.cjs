@@ -120,9 +120,15 @@ async function capture(page,name,width){
    await page.setViewportSize({width,height:420});
    const invitationResumeAction=await reachable(page,page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}));
    await page.screenshot({path:path.join(out,'join-resume-short-'+width+'.png'),animations:'disabled'});
+   await page.evaluate(()=>DobbyMagicProfile.openAccount());
+   await page.getByRole('heading',{name:'Profil magique',exact:true}).waitFor();
+   const logout=page.getByRole('button',{name:'Se déconnecter',exact:true});
+   const logoutAction=await reachable(page,logout);
+   assert.equal(await logout.evaluate(button=>!!button.closest('details:not([open])')),false,'Sign out must be visible without opening account details');
+   await page.screenshot({path:path.join(out,'account-logout-short-'+width+'.png'),animations:'disabled'});
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    assert.deepEqual(errors,[]);
-   results.push({width,welcomeMotion,loginMotion,signupShortMotion,signupShortAction,profileMotion,profileShortMotion,profileShortAction,createMotion,joinMotion,joinShortMotion,joinShortAction,invitationResumeAction});
+   results.push({width,welcomeMotion,loginMotion,signupShortMotion,signupShortAction,profileMotion,profileShortMotion,profileShortAction,createMotion,joinMotion,joinShortMotion,joinShortAction,invitationResumeAction,logoutAction});
    await context.close();console.log('STITCH_ACCESS_UI_PASS',width);
   }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',widths,authOutcomes:'local fixtures',backendVerified:false,physicalKeyboard:false,shortViewportHeight:420,exactReturn,results},null,2)+'\n');

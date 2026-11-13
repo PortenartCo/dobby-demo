@@ -7,7 +7,7 @@ window.DobbyAccess = (() => {
   const model = import('./access-flow.mjs');
   const pendingKey = 'v7-incoming-invitation', recoveryKey='v7-access-recovery';
   let context, initialized, operation, unsubscribe, invitationToken = '', invitation = null;
-  let callbackError = '', recovery = false, lastUser = null, creatingInvitation = null;
+  let callbackError = '', recovery = false, lastUser = null, creatingInvitation = null, loggingOut = false;
   const api = () => E.win().DobbyFamilyUI;
   const account = () => api().access;
   const state = () => account().state();
@@ -136,7 +136,7 @@ window.DobbyAccess = (() => {
           const previous={token:invitationToken,userId:lastUser};
           invitationToken='';invitation=null;
           void clearInvitation(previous);recovery=false;void api().putMeta(recoveryKey,null);
-          if(!(operation&&context?.ui.view==='access-auth'))location.replace('./famille.html#access');
+          if(!loggingOut&&!(operation&&context?.ui.view==='access-auth'))location.replace('./famille.html#access');
         }
         lastUser=next.userId;
       });
@@ -300,7 +300,18 @@ window.DobbyAccess = (() => {
     dialog.append(el('h2','Inviter un proche'),info,message,generate,output,button('Copier le lien',async()=>{if(!output.hidden){await navigator.clipboard.writeText(output.value);status('Lien copié.',false,dialog);}},true),close);
     dialog.addEventListener('cancel',event=>{if(operation)event.preventDefault();else dialog.remove();});document.body.append(dialog);dialog.showModal();
   }
+  function logout(scope) {
+    return run(async()=>{
+      loggingOut=true;
+      try {
+        await account().logout();
+        if(api().connectionState?.().userId||state().userId)throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');
+        callbackError='';recovery=false;
+        await go('access-welcome');
+      } finally {loggingOut=false;}
+    },scope);
+  }
   window.addEventListener('pageshow',event=>{if(event.persisted)void boot();});
   window.addEventListener('load',()=>void boot(),{once:true});
-  return Object.freeze({handles:view=>views.has(view),prepare,render,refresh,leave,invite,editProfile:()=>go('access-profile',{mode:'edit'}),get busy(){return !!operation;}});
+  return Object.freeze({handles:view=>views.has(view),prepare,render,refresh,leave,invite,logout,editProfile:()=>go('access-profile',{mode:'edit'}),get busy(){return !!operation;}});
 })();
