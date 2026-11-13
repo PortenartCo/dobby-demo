@@ -8,10 +8,22 @@ const crypto = require('node:crypto');
 const repo = path.resolve(__dirname, '../..');
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const reconciliation = require('./fixtures/reconciliation-main-43eef-source-extensions.json');
+const maison = require('./fixtures/maison-source-extensions.json');
+function beforeMaison(file,source){
+  const amendment=maison.files[file];if(!amendment)return source;
+  assert.equal(digest(source),amendment.afterSha256,file+' complete Maison source changed');
+  for(const patch of [...amendment.patches].reverse()){
+    assert.notEqual(patch.after,patch.before,patch.label+' is an exact source amendment');
+    assert.equal(source.split(patch.after).length-1,1,patch.label+' occurs exactly once');
+    source=source.replace(patch.after,()=>patch.before);
+  }
+  assert.equal(digest(source),amendment.beforeSha256,file+' Maison reversal preserves the complete published-main source');
+  return source;
+}
 function currentFingerprint(file,source,review,composed){
   const expected=composed?composed.mergedSha256:review.sha256;
   assert.match(expected,/^[a-f0-9]{64}$/,file+' complete approved SHA-256');
-  assert.equal(digest(source),expected,file+' current reviewed source changed');
+  assert.equal(digest(beforeMaison(file,source)),expected,file+' current reviewed source changed');
 }
 const preserved = {
   'essai-stitch-v7/chat-engine.js': 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd',
@@ -115,6 +127,24 @@ test('a tampered reconciliation fingerprint cannot fall back to a valid older re
   const review=require('./fixtures/revue-generale-source-extensions.json')[file];
   assert.equal(digest(source),review.sha256,'The unchanged Contracts writer is a valid older review');
   assert.throws(()=>currentFingerprint(file,source,review,{...reconciliation.files[file],mergedSha256:'0'.repeat(64)}),/current reviewed source changed/);
+});
+
+test('Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits',()=>{
+  const reviews=require('./fixtures/revue-generale-source-extensions.json');
+  assert.equal(maison.baseCommit,'25dd637c1b827bd09a46d8a55be63d9c14966f19');
+  assert.equal(maison.frozenParentFixture.file,'essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json');
+  assert.equal(digest(fs.readFileSync(path.join(repo,maison.frozenParentFixture.file))),maison.frozenParentFixture.sha256,'The complete reconciliation parent fixture remains frozen');
+  assert.deepEqual(Object.keys(maison.files).sort(),['essai-stitch-v5-famille/family-modules.js','essai-stitch-v5-famille/stitch-v5.js','essai-stitch-v7/build-source.cjs','essai-stitch-v7/family.js'].sort(),'Only the four reviewed Maison integration surfaces are normalized');
+  for(const[file,amendment]of Object.entries(maison.files)){
+    const expected=reconciliation.files[file]?.mergedSha256||reviews[file]?.sha256;
+    assert.equal(amendment.beforeSha256,expected,file+' retains its exact published parent proof');
+    assert.ok(amendment.reason);assert.ok(amendment.patches.length);assert.ok(amendment.tests.length);
+    for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    assert.equal(digest(beforeMaison(file,source)),expected,file+' exact literals recover the full immutable parent');
+    assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete Maison source changed/);
+    assert.throws(()=>currentFingerprint(file,source,reviews[file],{mergedSha256:'0'.repeat(64)}),/current reviewed source changed/,'Maison normalization never bypasses a failed parent fingerprint');
+  }
 });
 
 // Courses intentionally evolves for C01-C07 and independent dessert imports.

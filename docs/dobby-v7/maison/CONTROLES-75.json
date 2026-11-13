@@ -792,7 +792,7 @@
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
       ],
-      "note": "49 tests Maison et503 tests natifs/sync ; vrai DOM et IndexedDB, six régressions de revue RED→GREEN."
+      "note": "49 tests Maison et 503 tests natifs/sync ; vrai DOM et IndexedDB, sept cas RED→GREEN (six de revue et le retour arrière après quota)."
     },
     {
       "id": "P03",

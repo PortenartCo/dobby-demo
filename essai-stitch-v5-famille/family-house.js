@@ -102,8 +102,9 @@ function equipmentRecord(id,values,prior,items,additive=false){
 }
 function commit(next){
  const before=Object.fromEntries(KEYS.map(key=>[key,{had:own(st,key),value:st[key]}]));
+ const derivedTasks={had:own(st,'autoTasks'),value:clone(st.autoTasks)};
  for(const key of KEYS)if(own(next,key))st[key]=next[key];
- try{save();}catch(error){for(const key of KEYS){if(before[key].had)st[key]=before[key].value;else delete st[key];}throw error;}
+ try{save();}catch(error){for(const key of KEYS){if(before[key].had)st[key]=before[key].value;else delete st[key];}if(derivedTasks.had)st.autoTasks=derivedTasks.value;else delete st.autoTasks;throw error;}
  // A rendering error must not turn a successfully persisted binary into an orphan.
  try{render();}catch(error){console.error('Affichage Maison indisponible après enregistrement.',error);}
 }
