@@ -18,6 +18,14 @@ La [synthèse publique de vérification](https://github.com/PortenartCo/dobby-de
 
 ## État et suites
 
-Le blocage initial « sources serveur manquantes » est **repris par le chantier du socle**, et non remis à la charge de l’utilisateur par cette mission. Aucune nouvelle action SQL n’est demandée ici. Les essais réels des nouvelles capacités Parent/Enfant/Missions/Storage resteront à organiser après l’intégration du client correspondant et selon ses gates ; aucun succès fonctionnel nouveau n’est annoncé par cette passation.
+Le blocage initial « sources serveur manquantes » est **repris par le chantier du socle**, et non remis à la charge de l’utilisateur par cette mission. Aucune nouvelle collecte ou installation SQL n’est demandée ici. Les essais réels des nouvelles capacités Parent/Enfant/Missions/Storage resteront à organiser après l’intégration du client correspondant et selon ses gates ; aucun succès fonctionnel nouveau n’est annoncé par cette passation.
 
 Avant chaque intégration/publication, le gate vérifie de nouveau `main`, ses CI et Pages, ainsi que les références de la première mission. Le chevauchement de sources avec ce chantier concerne les gardes Famille/Runes, le workflow et la notice manuelle ; il doit conserver ces corrections à sa réconciliation. Une modification concurrente fusionnée impose de réconcilier le nouveau code et ses tests avant de continuer. Cette note décrit les checkpoints observés ; elle n’annonce ni la fusion de PR 12 ni sa recette runtime. La fusion concurrente de PR 13 est conservée dans notre réconciliation, sans attribuer ses développements à ce lot.
+
+## Complément ultérieur : recette serveur 30 disponible
+
+Le checkpoint concurrent `cf4fae2afe099978cf8dcf7c7d5896b8e4fc4644` fournit désormais le contrôle `30-runtime-rollback.sql` et sa [notice](https://github.com/PortenartCo/dobby-demo/blob/cf4fae2afe099978cf8dcf7c7d5896b8e4fc4644/docs/dobby-v7/finalisation-socle/supabase/RECETTE-SERVEUR-ROLLBACK.md). Ce nouveau contrôle est la prochaine action serveur manuelle, avec un troisième Auth confirmé et non lié ; il ne remplace ni une recette Auth/HTTP réelle ni le matériel. Le chantier rapporte 38 contrôles locaux et une annulation intégrale ; cette mission réutilise cette livraison au lieu de créer un second SQL, sans l’exécuter sur le serveur. Les installations `10/11`, la vérification `20` et le diagnostic `00` restent à ne pas rejouer.
+
+## Intégration ultérieure du socle dans main
+
+PR 12 a été fusionnée dans `main 43eef7a57a56fe352f88902dfe89b208a4036495` pendant la correction PREP. Le nouveau main est la seule source de cette réconciliation ; sa branche historique n’est pas fusionnée à part. Ses API et gates fermés doivent être conservés avec nos gardes canoniques, la sérialisation Sync et la revalidation readonly du pending. Son code garde lui aussi l’ancien refus d’adoption pending ; le correctif PREP n’est donc pas une duplication d’une fonctionnalité déjà intégrée. La preuve d’installation et le contrôle 30 restent ceux du chantier du socle, sans nouvelle intervention Supabase par cette mission.

@@ -1,0 +1,69 @@
+
+> test:prep
+> node --test ../../essai-stitch-v5-famille/tests/prep-writer.test.cjs ../../essai-stitch-v5-famille/tests/preparation-sync.test.cjs prep-courses.test.cjs fam-integration-transverse.test.cjs e09-memo-writer.test.cjs && node prep-ui.cjs && node prep-invalid.cjs && node prep-sync.cjs
+
+✔ template CRUD uses stable identities and preserves unknown row and item metadata (10.196972ms)
+✔ event snapshot copies independent item IDs and progress survives template edit and deletion (5.23967ms)
+✔ stale template and checklist edits reject without losing concurrent content or caller drafts (2.697016ms)
+✔ identical registry data cannot authorize a draft after an account, household or epoch switch (6.966147ms)
+✔ context-only clients reject switched household drafts and local mode remains writable (2.669323ms)
+✔ new item extensions are copied without sharing caller objects and duplicates retain version one (3.016301ms)
+✔ unknown protocol, invalid registries and unsupported rows block every write without changing data (12.867766ms)
+✔ validation rejects invalid required fields, duplicate ids, excessive items and unsupported precision (4.834993ms)
+✔ save failure rolls back native registries including initially absent fields (8.047048ms)
+✔ numeric quantities never admit tiny fractional values beyond native precision (11.239932ms)
+✔ native event submit persists event and independent preparation together, while failure keeps draft open (34.512729ms)
+✔ native event edits preserve progress and deletion rolls back both records if persistence fails (5.827147ms)
+✔ preparation templates and event snapshots propagate with existing family fields and unknown metadata intact (35.313821ms)
+✔ offline preparation changes survive reload and reconnect through the native module metadata (10.376999ms)
+✔ a newly initialized client restores preparation arrays omitted by an older fixture from its acknowledged native metadata (14.428515ms)
+✔ native metadata hydration preserves an explicit local preparation deletion (10.673948ms)
+✔ activate, join and activate-all retain distinct offline preparations alongside the remote registry (34.721412ms)
+✔ reactivation merges unchanged remote preparations and local additions by stable ID (6.166683ms)
+✔ divergent preparation reactivation retains local data behind the explicit native conflict chooser (8.083792ms)
+✔ reactivating a locally created event and preparation retains their association behind explicit conflict (6.01248ms)
+✔ remote event deletion cannot detach an offline preparation edit during reactivation (7.443056ms)
+✔ a locally changed associated event is retained when remote metadata diverges during reactivation (8.456949ms)
+✔ fresh remote metadata for the same unchanged local event remains compatible with an offline preparation edit (7.884908ms)
+✔ preparation writes preserve unknown family extensions and tolerate an initially unversioned older payload (8.742145ms)
+✔ choosing an older family copy does not falsely acknowledge a preparation protocol absent on the server (9.982477ms)
+✔ invalid local preparation data cannot be published by initial module activation (3.985234ms)
+✔ unsupported local preparation protocol cannot be downgraded and published during activation (3.309234ms)
+✔ unsupported local preparation protocol retains both copies without writes or an automatic-save exception (8.294845ms)
+✔ unknown preparation protocol blocks the complete family update without altering local records (5.52675ms)
+✔ malformed preparation registries are rejected before any family data is replaced (79.098496ms)
+✔ acknowledged preparations removed by an older peer remain local until explicit recovery (10.428431ms)
+✔ an edit while preparation PATCH is in flight stays local and pending (3.919296ms)
+✔ a concurrent rival preparation update loses CAS without acknowledging or overwriting local changes (3.344641ms)
+✔ new stable memo identity persists on edit, delete never touches legacy records (5.369578ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (3.081385ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (6.565974ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (2.4555ms)
+✔ required and bounded fields and missing legacy import never create records (3.383277ms)
+✔ Family source boundaries preserve history plus explicitly reviewed 60-point amendments (5.759413ms)
+✔ every reviewed whole-file amendment retains its exact source fingerprint (3.023564ms)
+✔ Courses retains the native shopping contract including independent dessert import (108.617776ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (1.184548ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.320466ms)
+✔ local double click and replay retain one exact quantity, unit and unchecked preparation (21.728339ms)
+✔ local deletion and archived receipts suppress resurrection after a fresh list (3.386299ms)
+✔ local persistence or render failure rolls back both native row and receipt (7.26228ms)
+✔ a local save without a durable receipt cannot report success (1.368209ms)
+✔ shared offline queue survives cache reload and never writes a local fallback (18.956906ms)
+✔ shared persisted tombstones and conflict receipts survive a stale client cache (13.735463ms)
+✔ native import rejects a scope switch during the deterministic hash without a write (2.649822ms)
+✔ native numeric import API stays compatible and addOnce rejects precision loss (2.30825ms)
+✔ equal product names from distinct source items retain both quantities (6.183796ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 52
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1907.332189
+PREP_UI_PASS 320
+PREP_UI_PASS 390
+PREP_UI_PASS 1440
+PREP_INVALID_PASS unknown local version is preserved with working Family navigation
+PREP_SYNC_PASS native A/B exact arrays, event snapshot, UI toggle, offline reload/reconnect, shared Courses idempotence and preserved CAS conflict

@@ -10,6 +10,12 @@ Le chantier distinct [PR 12](https://github.com/PortenartCo/dobby-demo/pull/12) 
 
 Le diagnostic déjà reçu a permis à l’autre chantier de développer les RPC Missions V3 et l’invitation enfant au même `member_id`, avec renforcement des permissions. Ces fonctions ne sont pas réimplémentées ou comptées deux fois ici. Leur code, leur installation rapportée et leur recette fonctionnelle sont des états distincts : les flags de preuve et de release restent annoncés fermés. Après intégration du client correspondant, suivre sa recette REST/RPC/Storage et Parent/Enfant, sans rejouer la recette B ni transformer son compte en enfant. F08 nécessitera un troisième compte Auth de test confirmé et non lié, conservant les comptes A/B existants. Le catalogue seul ne prouve pas ces parcours.
 
+## Prochaine recette serveur existante : contrôle 30
+
+Le chantier du socle a depuis livré [la notice du contrôle 30](https://github.com/PortenartCo/dobby-demo/blob/cf4fae2afe099978cf8dcf7c7d5896b8e4fc4644/docs/dobby-v7/finalisation-socle/supabase/RECETTE-SERVEUR-ROLLBACK.md) et son SQL, au checkpoint `cf4fae2`. Ce n’est ni une migration ni une répétition du diagnostic. Après la vérification du socle déjà rapportée, l’utilisateur seul prépare un troisième compte Auth de test confirmé et non lié, puis exécute le fichier complet selon cette notice. Ne modifier ni connecter les deux Parents existants pour fabriquer un compte enfant ; ne pas connecter le compte test avant le contrôle. Ne transmettre aucun e-mail, mot de passe ou jeton ; seul le JSON `runtime_verification` est utile dans ce chantier.
+
+Les appels sous `authenticated` et les données fictives sont annulés puis contrôlés après annulation. L’Auth/HTTP réel, la concurrence multi-session et les fichiers physiques Storage ne sont pas prouvés par ce SQL. Les gates restent fermés jusqu’aux preuves adaptées. Les essais navigateur des nouvelles capacités viendront après le client correspondant, pas en répétant B.
+
 ## Contrôle matériel indépendant
 
 Une seule [séance micro et Safari/iPhone](reserves-techniques/CONTROLES-MATERIELS.md) reste nécessaire : permission tardive/refus, arrêt au relâchement ou à la sortie, saisie et dock accessibles avec clavier, safe areas et portrait/paysage. Un navigateur simulé ne peut pas certifier ces matériels. Aucun compte, foyer ou contenu familial à recréer ; transmettre seulement appareil/navigateur/version et étape réussie ou en anomalie.

@@ -1,0 +1,121 @@
+{
+  "beforeHead": "db900a8cef0ada71433c69615a784607e4fbbf7a",
+  "afterHead": "db900a8cef0ada71433c69615a784607e4fbbf7a",
+  "command": "CHROMIUM_PATH=/usr/bin/chromium DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node essai-stitch-v7/tests/contracts-ci.cjs",
+  "workflow": ".github/workflows/dobby-stitch-v7.yml:249",
+  "exitCode": 0,
+  "marker": "CONTRACTS_ACCEPTANCE_PASS — native local persistence and labelled family fixtures; live backend unverified",
+  "units": {
+    "pass": 51,
+    "fail": 0,
+    "skipped": 0
+  },
+  "uiWidths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "browserCampaigns": 5,
+  "acceptanceEdges": [
+    "list-geometry-keyboard-320",
+    "list-geometry-keyboard-390",
+    "list-geometry-keyboard-768",
+    "list-geometry-keyboard-1024",
+    "list-geometry-keyboard-1440",
+    "unknown-fields-historical-date-edit-reload",
+    "stale-form-rejects-overwrite-and-keeps-typing",
+    "real-pdf-amendment-replacement-legacy-blob-retention",
+    "native-delete-confirmation-and-all-attachment-cleanup",
+    "explicit-child-ui-and-native-mutation-boundary"
+  ],
+  "applicationFingerprints": {
+    "count": 211,
+    "changed": []
+  },
+  "runtimeOrFixtureEdits": [],
+  "externalNetwork": "Browser HTTP(S) requests outside explicit loopback origin aborted; unit drivers use in-memory maps. No real backend accessed.",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "log": {
+    "path": "/workspace/dobby-reserves-contracts-ci.log",
+    "sha256": "0b905147294424a9b21d26881b32e01dbfd8f571961354168d6cb5f1040dfaeb"
+  },
+  "testedFiles": [
+    {
+      "path": "essai-stitch-v7/tests/contracts-ci.cjs",
+      "sha256": "70e078c66b064cbca56a4fd1ed9625f34c7ada19a52207503ea3118ff0a1fcaa"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-model.test.mjs",
+      "sha256": "2c67b1750cf5bd54f43c76c65b2013c1e1f145f422d824a8d537e777fbd46a9d"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-import.test.mjs",
+      "sha256": "ee06e2a698a78406f93bd5e2221acdb7a7122f6cb066d66b16a6947904a4dafc"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/contracts-writer.test.cjs",
+      "sha256": "49c3177733c0025bf7efeda8c5377d7193d12e8357966580d51590463e7a7d6b"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/contracts-sync.test.mjs",
+      "sha256": "ac92b2028e1559caab6fc69d5ec4ee824b1aaefcb006bdb29bd29b2a8238deae"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-ui.cjs",
+      "sha256": "61e0a21895df5209a587d1156239aa838449db841c850bd4793c755064a2d2e7"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-import-ui.cjs",
+      "sha256": "cda746dcd3937c32bc798f51729fbb21e55a3201c6a409f8b3fd4154cc3dac71"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-source-ui.cjs",
+      "sha256": "be2093e9a428a2cb1eaefe8c21e5f90fb16d0b0da1e3e2cebdbfaf67cedc4cab"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-archives-permissions.cjs",
+      "sha256": "8418b97b9f1ab70f62b2d5bc61affa27a9209d57aa96a707bcc394dd65387476"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-edge-ui.cjs",
+      "sha256": "3ef8d52e98d84da1e0496208e4964611943512d7837ab434ab8f961e901c346c"
+    }
+  ],
+  "screens": [
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-detail-1440.png",
+      "sha256": "a363e3b35696d667fe5f3248fbc02c3bb5d0850815305d3365dd32d2f073036e"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-detail-390.png",
+      "sha256": "15c34628ede53580f441819f28ce7d3def80a8e2fab3a0a6b1baf351ef2461d2"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-form-1440.png",
+      "sha256": "8df8709945df01fd7a14e4030be3d10dc0c201560053bf9b87228e1966259433"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-form-390.png",
+      "sha256": "d8e4ef1262404b3838a5086f8a0bfffaebcc5c59c77746d34a334375b8e27522"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-import-1440.png",
+      "sha256": "49a1ddf56ba5bcdd3a84d240e0911975cf62fe5a974d3a355ac72355cbabb5c0"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-import-390.png",
+      "sha256": "3426fb857a35782f5d312f57eb3a02f1d2d581eebc4b4bc714fa6d264a44c78f"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-list-1440.png",
+      "sha256": "e44673af763151428c66c002dc8bc5bd57144ca281e3cc9012e22c7cc2b7f9e5"
+    },
+    {
+      "path": "/workspace/dobby-reserves-contracts-evidence/screens/edge-list-390.png",
+      "sha256": "7e170d0a218e087cdec0c8352aa54bedfad6e038f24efec595ff2157496970e8"
+    }
+  ],
+  "independentReadOnlyReview": "PASS: all routes installed before navigation; pure local units or in-memory VM drivers; no canonical fixture mismatch."
+}

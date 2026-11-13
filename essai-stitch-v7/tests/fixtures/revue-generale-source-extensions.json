@@ -16,8 +16,8 @@
     "reason": "T01-T13/C01-C07: tabs/day actions/shopping adapter; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
   },
   "essai-stitch-v5-famille/family-v2.js": {
-    "sha256": "7d6dc7c11366f7ad1e7d49b4e6acb85316b1a62c96af6f61042733c5eac6d179",
-    "reason": "F09: canonical child REST/storage transport guard; technical reserves: canonical role precedence and epoch/identity guards before transport; reviewed05c5a35; authenticated native session with blank/disagreeing controller cannot use local fallback, reviewed3945ee4; legacy and cached-session Sync adopts canonical context; Sync/public context reads serialized with fresh GET, no Auth rewrite or permissive fallback; reviewed70ba482"
+    "sha256": "4fb7d8e030aae7dd033bc21d20da92b92ce2a3569ec286f207101b3b00a90bce",
+    "reason": "F09: canonical child REST/storage transport guard; technical reserves: canonical role precedence and epoch/identity guards before transport; reviewed05c5a35; authenticated native session with blank/disagreeing controller cannot use local fallback, reviewed3945ee4; legacy and cached-session Sync adopts canonical context; Sync/public context reads serialized with fresh GET, no Auth rewrite or permissive fallback; reviewed70ba482; PREP proved offline reload/reconnect deadlock: readonly identity revalidation for active pending/conflicted family, fresh canonical GET and owner/epoch guards, no snapshot/pending/base/conflict change; clean initial adoption unchanged; independent review and 79 focused tests"
   },
   "essai-stitch-v5-famille/family-core.mjs": {
     "sha256": "1ba68ae28dd05e0453657429f6f95e5ddbea269f3ab6e41fbd6c230607ea6d10",
@@ -32,8 +32,8 @@
     "reason": "M07-M08: unique integer reward allocations; technical reserves: exact pending Rune sums through compensation, persistent Number format unchanged; reviewed0da2d66"
   },
   "essai-stitch-v5-famille/family-modules.js": {
-    "sha256": "c63d1268d03b53c373ac05c041ab02cab6a6a7966bf162ff260c8722b014bab8",
-    "reason": "PR13 Contracts: versioned extensible metadata and multi-piece synchronization, preserving local references; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+    "sha256": "1195ca01d9f577e84cae7b3348670bf42728461171959cdc6b93fdf6d586cac1",
+    "reason": "PR13 Contracts: versioned extensible metadata and multi-piece synchronization, preserving local references; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22; PREP proved offline reload/reconnect deadlock: readonly identity revalidation for active pending/conflicted family, fresh canonical GET and owner/epoch guards, no snapshot/pending/base/conflict change; clean initial adoption unchanged; independent review and 79 focused tests"
   },
   "essai-stitch-v5-famille/family-files.js": {
     "sha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",

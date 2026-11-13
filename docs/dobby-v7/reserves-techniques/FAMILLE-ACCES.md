@@ -93,3 +93,11 @@ La campagne CI a détecté que l’ancienne entrée native pouvait établir une 
 La reprise du cache a aussi reproduit deux vérifications de contexte concurrentes (bootstrap et Sync), qui laissaient une intention en attente malgré un parent finalement vérifié. Les lectures publiques et le drain Sync du même propriétaire sont sérialisés ; une lecture publique après attente effectue un GET neuf, sans réutiliser un ancien résultat pour confirmer une mutation. Les changements d’epoch/utilisateur/foyer refusent les anciennes attentes ; les refus 404/403 restent fermés. Les tests natifs finaux de ce correctif sont **70/70 verts**.
 
 La preuve navigateur indépendante couvre le vrai formulaire legacy et les vraies commandes Sync, sans helper d’identité ou refresh caché : Courses Famille, reprise offline/reload, CAS, **11 cas partagés complets**, dont V7 absent en lecture seule sans PATCH. Tous les acteurs sont fictifs ; ce n’est pas une nouvelle recette B. La relecture indépendante des slots et de la preuve native ne trouve plus d’écart démontré.
+
+## Reprise native hors ligne : correctif `1856bc1`
+
+Le parcours PREP canonique a démontré qu’une modification en attente survivait au reload mais ne pouvait plus repartir : l’adoption initiale du registre distant refuse à juste titre d’écraser un snapshot pending ; `driver.bind` dépendait pourtant de cette adoption pour confirmer l’identité. La nouvelle revalidation lit le registre distant frais et confirme seulement identité, catégorie et permissions. Elle ne touche ni snapshot, ni base CAS, ni queue, ni conflit. Le chemin propre conserve son adoption fraîche après édition du profil ou de la magie.
+
+Même owner/foyer/epoch/génération et partage toujours actif sont recontrôlés après attente. Une désactivation, un refus réseau/403/404, un changement d’acteur ou un protocole périmé refuse la liaison ; il n’existe aucun fallback d’adoption après ce refus. Une identité valide peut retrouver la résolution explicite d’un conflit sans le résoudre automatiquement.
+
+[79 tests ciblés](evidence/prep-revalidation-79-tests.log) et [PREP complet](evidence/prep-complet-local.log) passent, dont deux clients fictifs, offline complet, reload, reconnexion, CAS et vrai choix UI. L’ancienne adoption pending reste refusée. Aucune requête vers le projet réel.

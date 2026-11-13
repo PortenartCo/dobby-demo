@@ -207,6 +207,11 @@
   "manualActionsNow": [
     "physical microphone and iPhone/Safari"
   ],
-  "laterSocleAcceptance": "Actual new RPC/REST/Storage and child Auth recipes after its client integration and gates; no old B recipe",
-  "exactHeadRemoteCiPassedAtThisCheckpoint": false
+  "laterSocleAcceptance": "SQL30 does not prove real Auth/HTTP, multi-session concurrency, physical Storage upload/delete; those remain gated",
+  "exactHeadRemoteCiPassedAtThisCheckpoint": false,
+  "manualActionsAtLatestHandoff": [
+    "PR12 existing runtime rollback checkpoint30 with a confirmed unbound third test Auth account",
+    "one physical microphone and iPhone/Safari session"
+  ],
+  "serverHandoffSupplement": "PR12 cf4fae2 provides checkpoint30; no agent execution and no diagnostic/install replay"
 }
