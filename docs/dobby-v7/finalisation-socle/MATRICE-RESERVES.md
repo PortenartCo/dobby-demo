@@ -39,7 +39,7 @@ Preuves nouvelles : [catalogue reçu, résumé non confidentiel](CATALOGUE-RECU.
 
 L'installation utilisateur et le catalogue sont **confirmés**, H. **Ne rejouer ni `10`, ni `11`, ni `20`, ni le diagnostic `00` déjà reçu.** Le [paquet manuel](supabase/README.md) conserve la traçabilité de l'installation et du retour conservateur. L'utilisateur seul exécute les SQL du projet familial. Stitch **01/04/06/11** et le provisoire `roles-01-apply.sql` ne doivent pas être rejoués.
 
-La prochaine étape `30`, recette technique ciblée en transaction avec `ROLLBACK`, est en préparation. Un troisième compte Auth de test confirmé et non lié est nécessaire, sans recréer les deux comptes existants ni transmettre d'identifiant personnel. Cette étape et les parcours Auth/navigateur restent à effectuer avant toute nouvelle `RECETTE_RÉELLE_VALIDÉE`.
+La prochaine étape [30](supabase/30-runtime-rollback.sql) est prête : recette technique ciblée avec annulation interne observée puis `ROLLBACK` final ([notice](supabase/RECETTE-SERVEUR-ROLLBACK.md)). Un troisième compte Auth de test confirmé et non lié est nécessaire, sans recréer les deux comptes existants ni transmettre d'identifiant personnel. Les 38 contrôles locaux ne remplacent pas le retour hébergé ni les parcours Auth/navigateur encore nécessaires avant toute nouvelle `RECETTE_RÉELLE_VALIDÉE`.
 
 Les constantes clientes `MISSION_V3_RELEASE_VERIFIED` et `FAMILY_FEATURE_RELEASE` restent fermées. Les flags privés de preuve Famille/Storage/Enfant/Missions sont confirmés false. Le contrôle de catalogue ne certifie pas les recettes réelles. Aucun compte, foyer, profil, crédit ou stockage hors ligne n'est réinitialisé.
 
