@@ -66,7 +66,9 @@ Vérification de développement uniquement :
 `python3 docs/dobby-v7/reserves-techniques/serveur/tests/run-local.py`.
 Elle emploie exclusivement PostgreSQL **17.7** dans le conteneur dédié
 `dobby-v7-reserves-diag-pg-20261113`, `--network none`, sans port ni montage hôte,
-et recrée sa seule base fictive `dobby_reserves_diagnostic_test`. La fixture
+via le socket Linux fixe `unix:///var/run/docker.sock` (contexte Docker et options
+d'hôte/TLS hérités ignorés), et recrée sa seule base fictive
+`dobby_reserves_diagnostic_test`. Aucun hôte distant n'est configurable. La fixture
 historique `stitch19-20/supabase/tests/catalog-fixture.sql` est déclarée : son
 `guard_missions` est un **stub défensif**, jamais la source privée réelle.
 Le complément [`tests/metadata-fixture.sql`](tests/metadata-fixture.sql) est

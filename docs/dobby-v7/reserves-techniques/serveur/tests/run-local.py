@@ -7,6 +7,7 @@ No remote connection parameter, Supabase client or application RPC invocation.
 """
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -19,32 +20,37 @@ SUPPLEMENT = HERE / 'metadata-fixture.sql'
 CONTAINER = 'dobby-v7-reserves-diag-pg-20261113'
 DATABASE = 'dobby_reserves_diagnostic_test'
 ROLE = 'dobby_diag_local'
+DOCKER = ['docker', '--host', 'unix:///var/run/docker.sock']
+DOCKER_ENV = {key: value for key, value in os.environ.items()
+              if key not in {'DOCKER_HOST', 'DOCKER_CONTEXT', 'DOCKER_TLS_VERIFY', 'DOCKER_CERT_PATH'}}
 diagnostic = DIAGNOSTIC.read_text()
 assert 'defensive test stub only' in HISTORICAL.read_text()
 
+# Fixed Linux Unix socket; inherited Docker contexts/remote/TLS settings cannot
+# redirect even the first inspect/create/delete command to a different daemon.
 # No configurable host/URL, docker pull, mounted socket, network or published port.
-inspect = subprocess.run(['docker', 'inspect', CONTAINER], text=True, capture_output=True)
+inspect = subprocess.run(DOCKER + ['inspect', CONTAINER], text=True, capture_output=True, env=DOCKER_ENV)
 if inspect.returncode:
-    subprocess.run(['docker', 'run', '--detach', '--pull=never', '--name', CONTAINER,
+    subprocess.run(DOCKER + ['run', '--detach', '--pull=never', '--name', CONTAINER,
                     '--network', 'none', '--env', 'POSTGRES_USER=' + ROLE,
                     '--env', 'POSTGRES_PASSWORD=fictional-local-diagnostic-only',
-                    'postgres:17.7'], check=True, capture_output=True)
-    subprocess.run(['docker', 'exec', CONTAINER, 'sh', '-c',
+                    'postgres:17.7'], check=True, capture_output=True, env=DOCKER_ENV)
+    subprocess.run(DOCKER + ['exec', CONTAINER, 'sh', '-c',
                     'until pg_isready -U dobby_diag_local -d postgres >/dev/null; do sleep 1; done'],
-                   check=True, timeout=30)
-info = json.loads(subprocess.check_output(['docker', 'inspect', CONTAINER], text=True))[0]
+                   check=True, timeout=30, env=DOCKER_ENV)
+info = json.loads(subprocess.check_output(DOCKER + ['inspect', CONTAINER], text=True, env=DOCKER_ENV))[0]
 assert info['HostConfig']['NetworkMode'] == 'none'
 assert not info['HostConfig']['PortBindings']
 assert all(x['Type'] == 'volume' and x['Destination'] == '/var/lib/postgresql/data'
            for x in info['Mounts']), 'No host bind mounts or shared sockets'
 assert info['Config']['Image'] == 'postgres:17.7'
-BASE = ['docker', 'exec', '-i', CONTAINER, 'psql', '-X', '-qAt',
+BASE = DOCKER + ['exec', '-i', CONTAINER, 'psql', '-X', '-qAt',
         '-v', 'ON_ERROR_STOP=1', '-v', 'VERBOSITY=verbose', '-U', ROLE]
 
 
 def sql(source, database=DATABASE, prefix='', error=None):
     result = subprocess.run(BASE + ['-d', database], input=prefix + source,
-                            text=True, capture_output=True, timeout=45)
+                            text=True, capture_output=True, timeout=45, env=DOCKER_ENV)
     if error:
         assert result.returncode and error in result.stderr, result.stderr
         assert not result.stdout.strip(), result.stdout
@@ -103,8 +109,8 @@ assert any(x['name'] == 'assert_payload' for x in baseline['unresolvedQualifiedC
 print('PASS declared historical fixture: absent availability and unresolved private helpers are visible; guard is a STUB')
 
 sql(SUPPLEMENT.read_text())
-before_dump = subprocess.check_output(['docker', 'exec', CONTAINER, 'pg_dump', '-U', ROLE,
-                                       '--no-owner', '--no-privileges', DATABASE], text=True)
+before_dump = subprocess.check_output(DOCKER + ['exec', CONTAINER, 'pg_dump', '-U', ROLE,
+                                       '--no-owner', '--no-privileges', DATABASE], text=True, env=DOCKER_ENV)
 present, output = run()
 again, _ = run()
 assert present == again, 'Repeated exact SQL must return the same complete JSON'
@@ -150,8 +156,8 @@ assert not any(x['schema'] in ('auth', 'unrelated_service_private') for x in pre
 for sentinel in ['ROW-ONLY-', 'UNRELATED-PRIVATE-SOURCE-SENTINEL', 'UNRELATED-PUBLIC-SOURCE-SENTINEL',
                  'UNREACHABLE-V7-SOURCE-SENTINEL', 'UNRELATED-TRIGGER-SOURCE-SENTINEL']:
     assert sentinel not in output, sentinel
-after_dump = subprocess.check_output(['docker', 'exec', CONTAINER, 'pg_dump', '-U', ROLE,
-                                      '--no-owner', '--no-privileges', DATABASE], text=True)
+after_dump = subprocess.check_output(DOCKER + ['exec', CONTAINER, 'pg_dump', '-U', ROLE,
+                                      '--no-owner', '--no-privileges', DATABASE], text=True, env=DOCKER_ENV)
 # pg_dump randomizes its psql restrict token; no other byte may change.
 def stable_dump(value):
     return re.sub(r'^\\(?:un)?restrict .*$', '', value, flags=re.M)
