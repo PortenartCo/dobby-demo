@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "supabaseContacted": false,
+  "fixtures": false,
+  "results": [
+    {
+      "width": 390,
+      "passed": true,
+      "route": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/famille.html#access-auth?origin=salon&mode=login",
+      "blockedExternalOrigins": [
+        "https://lh3.googleusercontent.com",
+        "https://fonts.googleapis.com"
+      ],
+      "liveAuthVerified": false
+    },
+    {
+      "width": 1440,
+      "passed": true,
+      "route": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/famille.html#access-auth?origin=salon&mode=login",
+      "blockedExternalOrigins": [
+        "https://lh3.googleusercontent.com",
+        "https://fonts.googleapis.com"
+      ],
+      "liveAuthVerified": false
+    }
+  ]
+}
