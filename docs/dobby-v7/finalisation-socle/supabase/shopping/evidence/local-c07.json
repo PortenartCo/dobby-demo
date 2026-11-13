@@ -1,0 +1,35 @@
+{
+  "scope": "C07 exact observed-catalog local clone only; no historical campaign replay",
+  "postgresVersion": "17.7",
+  "network": "none",
+  "publishedPorts": false,
+  "remoteSupabaseAccess": false,
+  "executedAsInstaller": "postgres NOSUPERUSER table owner",
+  "fixtureManagedAuthOwnerSchemaUsageCreateRestored": true,
+  "originalFilesSha256": {
+    "01-install.sql": "3328e26059dc14226cee942af00fefedc164a336f3a277201a0115bff1dc9d4c",
+    "02-verify.sql": "d1da6c2d10c2b7675e034109843649addd4a464580c87990985b6695813e9b75",
+    "03-rollback.sql": "e2eadf4a6664b120cf6d46ebb5d08e3da6f1945d02e88fb1148f36952e9616a0"
+  },
+  "newFilesSha256": {
+    "04-verify-catalog.sql": "468b8147f19bbe22e514d10d3507d2ee7a79e8823c8a4700c2626de49fd25f53",
+    "tests/local-only-runtime.sql": "2cc5994e0cae7df3f0cc395ebb876058187079c78af82dcc3fd066744a6f6cb4"
+  },
+  "checks": {
+    "originalAdditiveInstallerOnObservedCatalog": "PASS",
+    "existingNativeValuesUnchanged": "PASS",
+    "newFieldDefaultZeroAndUnscaledNumeric": "PASS",
+    "unchangedOriginalMetadataVerification": "PASS",
+    "newCatalogVerificationAllChecks": "PASS",
+    "exactObservedStampMd5Preserved": "PASS",
+    "runtimePoint001NoFalsePurchaseRevisionCASLegacyOmissionBoundsImportIdentity": "PASS",
+    "runtimeFictionalRowsRolledBack": "PASS",
+    "originalApplicationRollbackKeepsColumnAndRows": "PASS"
+  },
+  "realAuthRlsOrBrowserVerified": false,
+  "limits": [
+    "Runtime assertions execute as local fixture administrator, not an Auth account.",
+    "F09 child/inter-household refusals require the separate actual family backend installation and verification.",
+    "No real C07 migration installed; user installation output and targeted A/B recipe remain necessary."
+  ]
+}
