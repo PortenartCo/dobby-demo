@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "browser": "157.0.8103.50",
+  "testCount": 26,
+  "liveBackend": false,
+  "authOutcomes": "local fixtures; no live certification",
+  "baseCommit": "b327aa5194b5f5897f4354e13266059815722eaa",
+  "files": {
+    "essai-stitch-v7/access.js": "dd0fefae02e58ab73846960979b8dded3562adb5067301b6bc25f00b2e619d59",
+    "essai-stitch-v7/magic-profile.js": "64c2e45a394f390b6caf0e9e5715f5010e93eaa89332136c09183adae1df5fac",
+    "essai-stitch-v7/tests/stitch-access-races.cjs": "d6004146adba32dfe11fc1fd6e893983d772cf9b53b011944c846f6daf57b26a"
+  },
+  "results": [
+    {
+      "name": "login displays safe diagnostic for Auth refusal",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for household refusal after Auth",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unconfirmed email",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unrecognized credentials",
+      "status": "PASS"
+    },
+    {
+      "name": "editing invitation B cannot install or accept delayed preview A",
+      "status": "PASS"
+    },
+    {
+      "name": "actual Members invitation action opens native invitation creation",
+      "status": "PASS"
+    },
+    {
+      "name": "failed invitation creation has visible inline error outside access screen",
+      "status": "PASS"
+    },
+    {
+      "name": "owner-bound invitation survives full reload and restored Auth refresh",
+      "status": "PASS"
+    },
+    {
+      "name": "personal profile edit action opens fused identity and portrait form",
+      "status": "PASS"
+    },
+    {
+      "name": "failed PKCE confirmation preserves invitation belonging to restored Auth owner",
+      "status": "PASS"
+    },
+    {
+      "name": "direct account A to B switch cannot save A rendered profile draft into B",
+      "status": "PASS"
+    },
+    {
+      "name": "committed invitation with failed native adoption resumes through one refresh without replay",
+      "status": "PASS"
+    },
+    {
+      "name": "already verified account can leave an invalid invitation for its existing household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed profile",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed unavailable",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed active is unverified",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves same token of another owner",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves newer token of same owner",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery refresh preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery CAS preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "valid invitation for another household keeps the explicit acceptance path",
+      "status": "PASS"
+    },
+    {
+      "name": "initialization stale owner cleanup preserves a newer current owner invitation",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for verified member and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for unverified native user and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "deferred account logout serializes repeated activation and keeps cached members",
+      "status": "PASS"
+    }
+  ],
+  "redEvidence": "/workspace/scratch/stitch-visible-logout-red.log"
+}

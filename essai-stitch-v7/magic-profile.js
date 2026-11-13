@@ -26,6 +26,13 @@ window.DobbyMagicProfile=(()=>{'use strict';
  function render(c){
   const member=c.data.members.find(m=>m.id===c.ui.person),main=c.main;main.replaceChildren();main.className='mp-page';main.dataset.magicProfile='true';
   const h=make('h1','Profil magique','font-headline-lg-mobile');main.append(c.ui.origin==='member-detail'?c.button('member-detail','← Fiche du membre',{person:c.ui.person,origin:c.ui.memberOrigin||'members'}):c.button('members','← Membres du foyer'),h);
+  const native=E.win().DobbyFamilyUI;
+  if(window.DobbyAccess&&(native?.access?.state?.().userId||native?.connectionState?.().userId)){
+    const actions=make('section','','mp-session-actions'),logout=make('button','Se déconnecter','fa-button');
+    logout.type='button';logout.dataset.accountLogout='';logout.onclick=()=>void window.DobbyAccess.logout(main);
+    const status=make('p','','access-status');status.dataset.accessStatus='';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.hidden=true;
+    actions.append(logout,status);main.append(actions);
+  }
   const account=()=>{const d=make('details','','mp-card mp-account');d.id='magic-account';d.append(make('summary','Compte et paramètres'),c.paragraph(E.win().DobbyFamilyUI?.access?.state?.().verified?'Votre compte est relié à son profil personnel dans le foyer. Les droits de chaque membre sont vérifiés.':'Les profils appartiennent au registre du foyer. L’association de ce compte doit être vérifiée avant une modification.'),c.button('account','Ouvrir les paramètres de connexion et du foyer'));window.DobbyRitual?.settings(d,c);return d;};
   const family=()=>{const section=card('Profils de la famille','mp-family');for(const m of c.data.members){const b=make('button','','mp-family-choice');b.type='button';b.dataset.magicChoose=m.id;b.append(window.DobbyMemberAvatar.create(m,{className:'mp-small-avatar'}),make('span',m.name));b.setAttribute('aria-pressed',String(m.id===member?.id));b.onclick=()=>window.DobbyRegister.run(()=>c.open('personal',{person:m.id,record:null}));section.append(b);}if(!c.data.members.length)section.append(c.paragraph('Aucun membre dans le registre du foyer.'));section.append(c.button('members','Ouvrir le registre familial'),c.button('onboarding-ritual','Première connexion et cérémonie magique',{person:''}));return section;};
   function card(title,className=''){const s=make('section','','mp-card '+className);s.append(make('h2',title,'font-headline-sm'));return s;}
