@@ -54,7 +54,7 @@ function mount(){if(window.DobbyOnboarding?.chrome()){
  const header=document.querySelector('body>header'),center=header?.querySelector('.e06-header-center');
  if(center&&!center.querySelector('[data-e01-ceremony-preferences]')){const controls=document.createElement('div');controls.dataset.e01CeremonyPreferences='true';
  for(const [name,glyph,label]of [['effects','auto_awesome','Activer ou désactiver les effets visuels'],['sound','volume_off','Activer ou désactiver les sons et vibrations']]){const b=document.createElement('button');b.type='button';b.dataset.e01Toggle=name;b.className='e01-ceremony-toggle';b.setAttribute('aria-label',label);const icon=document.createElement('span');icon.className='material-symbols-outlined';icon.textContent=glyph;if(name==='sound')icon.id='magic-sound-icon';b.append(icon);controls.append(b);}center.append(controls);}
- apply();return;}if(!template)return;const current=document.querySelector('body > header');if(current){
+ }else{if(!template)return;const current=document.querySelector('body > header');if(current){
  // Preserve contextual source title/actions below the permanent bar (save,
  // back, current cooking step). Global controls belong only to the bar.
  if(!current.dataset.e01Chrome&&!document.querySelector('main [data-e01-context]')){
@@ -66,7 +66,8 @@ function mount(){if(window.DobbyOnboarding?.chrome()){
  const sound=header.querySelector('#magic-sound-toggle');sound.dataset.e01Toggle='sound';sound.setAttribute('aria-label','Activer ou désactiver les sons et vibrations');
  const person=header.querySelector('span.material-symbols-outlined:last-child')?.closest('div.cursor-pointer');if(person){const b=document.createElement('button');b.type='button';b.className=person.className;b.innerHTML=person.innerHTML;b.dataset.e01Account='true';b.dataset.faAction='account';b.setAttribute('aria-label','Ouvrir le Profil magique');person.replaceWith(b);}
  const subtitle=header.querySelector('.whitespace-nowrap');if(subtitle){const section=sectionTitle().toLocaleUpperCase('fr'),label='MAISON & QUOTIDIEN · '+section;subtitle.dataset.e01Subtitle='true';const prefix=document.createElement('span'),name=document.createElement('span');prefix.className='e011-band-prefix';prefix.textContent='MAISON & QUOTIDIEN · ';name.className='e011-band-section';name.textContent=section;subtitle.replaceChildren(prefix,name);subtitle.title=label;}current.replaceWith(header);
- }
+ }}
+ if(!template){apply();return;}
  let nav=document.querySelector('body > nav');if(!nav?.dataset.e01Chrome){const replacement=template.querySelector('nav').cloneNode(true);replacement.dataset.e01Chrome='true';const row=replacement.firstElementChild,source=[...row.children];row.replaceChildren();destinations.forEach(([label,icon,href],i)=>{const a=(source[i]||source[3]).cloneNode(true);a.href=href;a.dataset.e01Destination=String(i);a.removeAttribute('aria-current');a.removeAttribute('data-path');a.querySelector('.material-symbols-outlined').textContent=icon;a.querySelector('.material-symbols-outlined').setAttribute('aria-hidden','true');a.lastElementChild.textContent=label;a.setAttribute('aria-label',label);row.append(a);});if(nav)nav.replaceWith(replacement);else document.body.append(replacement);nav=replacement;}
  nav.hidden=false;const family=document.body.dataset.familyView,cuisine=document.body.dataset.cuisineView;const active=['menu','settings','memos','memo-edit','contacts','contact-edit','house','house-1','house-backup','equipment','equipment-edit','maintenance','documents','documents-1','document','document-edit','contract','contract-1','contract-edit','contracts','backup','import-file','search'].includes(family)?5:family==='mission-edit'||document.body.dataset.dv7Screen==='missions'?1:cuisine?.startsWith('shop')?3:document.body.dataset.dv7Screen==='taverne'&&cuisine?2:document.body.dataset.dv7Screen==='traverse'&&!family?0:document.body.dataset.dv7Screen==='traverse'&&family==='salon'?0:4;
  for(const a of nav.querySelectorAll('a')){const index=Number(a.dataset.e01Destination),on=index===active;a.href=destinations[index][2];a.className=template.querySelectorAll('nav a')[on?0:1].className;if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');a.lastElementChild.className=template.querySelectorAll('nav a')[on?0:1].lastElementChild.className;}
@@ -94,7 +95,9 @@ document.addEventListener('click',async event=>{
  if(!toggle&&!account&&!nav){if(event.target.closest('button,a,[role=link],[role=button]'))feedback(event);return;}event.preventDefault();event.stopImmediatePropagation();
  if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
  feedback(event);
+ const onboardingWait=window.DobbyOnboarding?.handles(document.body.dataset.familyView)?window.DobbyOnboarding.wait({leave:true}):null;
  if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
+ if(onboardingWait)await onboardingWait;
  if(account){window.DobbyStitchV7.close(false);window.DobbyMagicProfile.openAccount()?.catch?.(console.error);return;}
  const index=Number(nav.dataset.e01Destination);if(index===0&&location.pathname.endsWith('traverse.html')){window.DobbyStitchV7.close(false);window.DobbyHome.reset();return;}
  if(index===4&&window.DobbyFamilyStitch?.ready){window.DobbyStitchV7.close(false);window.DobbyFamilyStitch.open('salon').catch(console.error);return;}
