@@ -45,7 +45,7 @@
   },
   "sha256": {
     "essai-stitch-v5-famille/family-mission-intents.mjs": "557fad9b9808673f3ce535435e7bf00b20a4451c2c39ad2c9cc003dd3a023abe",
-    "essai-stitch-v5-famille/family-modules.js": "c2f51f174b23cfbc8ff79eded61c1487852efd5ed01f27773597dc8246c4e5f7",
+    "essai-stitch-v5-famille/family-modules.js": "067fd71a15348f033e8047879d233dee6f5e6baf8fd444d4b09c65ec984ae5ac",
     "essai-stitch-v5-famille/family-missions.js": "20ed02f00bbf4516f169395b0a9d8f945e30cc926e6cccc83738ebbb9dc50a52",
     "essai-stitch-v5-famille/family-core.mjs": "caae1ee08e19fd87d26963e65f1677103a16991daf2e2f32efaa28ca21032326",
     "essai-stitch-v5-famille/family-runes-core.mjs": "f683ee397730b89144b106c2e62f171420945c584f251300561ca76a745a9554",
@@ -76,5 +76,12 @@
     ],
     "browserChange": false,
     "remoteSupabaseAccess": false
+  },
+  "mainIntegration": {
+    "mainSha": "70c56eb156758d4c0447b8ec8f3fd84e1efeaa22",
+    "conflict": "synchronized retains both contractSynced(payload) and gated V3 runeProtocol",
+    "focusedNodeCasesPassed": 31,
+    "independentReview": "PASS",
+    "releaseGatesRemainClosed": true
   }
 }
