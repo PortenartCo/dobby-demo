@@ -88,3 +88,10 @@ body:is([data-family-view="menu"],[data-family-view="settings"]) main.rg-menu-pa
 .rg-menu-page .rg-menu-chevron{flex:none;font-size:20px;color:#9d8e7e}
 .rg-menu-page .rg-menu-back{align-self:flex-start;display:flex;align-items:center;min-height:44px;color:#f9bb5f;font:14px/20px Literata,Georgia,serif;text-decoration:underline}
 .rg-menu-page #no-module-found{margin:0;padding:16px 0}
+/* Review M01: one wizard step visible; browser draft fields remain mounted. */
+body[data-family-view="mission-edit"] #rg-form [hidden],body[data-family-view="mission-edit"] [data-fa-action="rg-save"][hidden]{display:none!important}
+body[data-family-view="mission-edit"] .e04-wizard-navigation{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+body[data-family-view="mission-edit"] .quick-date-btn{white-space:normal;min-height:44px;line-height:1.2;overflow-wrap:anywhere}
+body[data-family-view="mission-edit"] .quick-date-btn[aria-pressed=true]{background:#d49b42;color:#180b07}
+.dv7-participant-dialog{position:fixed;max-height:calc(100dvh - 32px);width:min(480px,calc(100vw - 32px));overflow:auto;border:1px solid #d49b42;border-radius:16px;background:#271814;color:#fcf7ee;padding:20px;box-sizing:border-box}
+.dv7-participant-dialog::backdrop{background:#080401cc}.dv7-participant-dialog form{display:grid;gap:14px}.dv7-participant-dialog label{display:flex;align-items:center;gap:10px;min-height:48px}.dv7-participant-dialog input{width:20px;height:20px;accent-color:#d49b42}.dv7-participant-dialog .dobby-member-avatar{width:36px;height:36px}.dv7-participant-dialog button{min-height:44px;padding:8px 12px;border:1px solid #d49b42;border-radius:10px;background:#372622;color:#f9bb5f}.dv7-participant-dialog h2{font-size:22px}.dv7-participant-dialog [role=alert]{color:#ffd3bf}
