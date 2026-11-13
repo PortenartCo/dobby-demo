@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "main": "1896a94c587219ecb2de641b1a3cece74c5d6fb1",
+  "previousMissionRefs": {
+    "feat/dobby-v7-stitch19-20-integration-20261112": "efea3a3718fb717a0c264744c40c39a3e711a5b2",
+    "fix/dobby-v7-invitation-resume-20261113": "d5d49368d1948d19dc9b5316e63a41eb967e446a",
+    "fix/dobby-v7-managed-auth-compat-20261113": "29f133c226e0cfacff1a88d55cd397d9f0000151",
+    "fix/dobby-v7-signin-diagnostics-20261113": "23f1cd0b0612930b1c6dc5ea6f2f7b91fbdb1d09",
+    "fix/dobby-v7-visible-logout-20261113": "62ba0bee0e96abc771eee8e394fd47bf8b4f06ff"
+  },
+  "ci": [
+    {
+      "id": 43348867844,
+      "name": "Dobby V7 - Stitch functional UI",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43348867844"
+    },
+    {
+      "id": 43348867014,
+      "name": "pages build and deployment",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43348867014"
+    }
+  ],
+  "pages": {
+    "status": "built",
+    "commit": "1896a94c587219ecb2de641b1a3cece74c5d6fb1",
+    "updated_at": "2026-11-13T02:01:06Z"
+  }
+}

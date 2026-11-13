@@ -1,0 +1,77 @@
+REVIEW60_START missions-review.cjs
+MISSIONS_REVIEW_PASS 320
+MISSIONS_REVIEW_PASS 390
+MISSIONS_REVIEW_PASS 768
+MISSIONS_REVIEW_PASS 1024
+MISSIONS_REVIEW_PASS 1440
+MISSIONS_REVIEW_PASS 1920
+REVIEW60_START missions-unassigned-review.cjs
+MISSIONS_UNASSIGNED_REVIEW_PASS 320 wizard/unassigned actual participants/empty no-credit/stale-assignment blocked
+REVIEW60_START v7-meals-model.cjs
+V7_MEALS_MODEL_PASS independent dessert, quantities, stale refusal, preparation, move, reload; local fixture only
+REVIEW60_START v7-meals-ui.cjs
+V7_MEALS_UI_PASS tabs, day/week actions, portions, dessert selection, accordion filters, isolated finish, auto return and six widths
+REVIEW60_START v7-meals-child.cjs
+V7_MEALS_CHILD_PASS canonical child reads recipes; UI and adapter reject shared writes; local fixture only
+REVIEW60_START v7-dessert-preparations.cjs
+V7_DESSERT_PREPARATIONS_PASS advance UI, batch8→4+4, explicit reuse, import once, old purchases, resize block, release/move/reload, stale/scope/version, main independent
+REVIEW60_START v7-dessert-batch-edges.cjs
+V7_DESSERT_BATCH_EDGES_PASS actualUI8→4+4, ready-only display, manual mark, independentbatch, legacybought/move, frozen device/portions, same-recipe replacement origin
+REVIEW60_START v7-dessert-responsive.cjs
+DESSERT_RESPONSIVE_PASS 320 dialogs, fractional input, keyboard geometry, no overflow
+DESSERT_RESPONSIVE_PASS 390 dialogs, fractional input, keyboard geometry, no overflow
+DESSERT_RESPONSIVE_PASS 768 dialogs, fractional input, keyboard geometry, no overflow
+DESSERT_RESPONSIVE_PASS 1024 dialogs, fractional input, keyboard geometry, no overflow
+DESSERT_RESPONSIVE_PASS 1440 dialogs, fractional input, keyboard geometry, no overflow
+DESSERT_RESPONSIVE_PASS 1920 dialogs, fractional input, keyboard geometry, no overflow
+REVIEW60_START review-shopping.cjs
+SHOPPING_REVIEW_PASS 320
+SHOPPING_REVIEW_PASS 390
+SHOPPING_REVIEW_PASS 768
+SHOPPING_REVIEW_PASS 1024
+SHOPPING_REVIEW_PASS 1440
+SHOPPING_REVIEW_PASS 1920
+REVIEW60_START review-shopping-settings.cjs
+SHOPPING_SETTINGS_SCOPE_PASS
+SHOPPING_MENU_SETTINGS_ROUTE_PASS
+REVIEW60_START review-shopping-role.cjs
+SHOPPING_EXPLICIT_CHILD_READONLY_PASS
+REVIEW60_START v7-family-review.cjs
+V7 F01-F08/F10 local browser contract passed
+REVIEW60_START v7-transversal.cjs
+V7_TRANSVERSAL_PASS six routes/dock, hold/cancel/blur/leave/late callback, keyboard, halo OFF, draft/send, six widths
+REVIEW60_START v7-home-review.cjs
+V7_HOME_REVIEW_PASS banner/title, empty event action, native save and return, today filter, shared effects, badge and six widths
+REVIEW60_START v7-connected-ceremony-dock.cjs
+V7_CONNECTED_CEREMONY_DOCK_PASS 320
+V7_CONNECTED_CEREMONY_DOCK_PASS 390
+REVIEW60_START e08.cjs
+E08_COUNT_PASS 320 0
+E08_COUNT_PASS 320 1
+E08_COUNT_PASS 320 10
+E08_COUNT_PASS 320 50
+E08_BROWSER_PASS 320
+E08_COUNT_PASS 360 0
+E08_COUNT_PASS 360 1
+E08_COUNT_PASS 360 10
+E08_COUNT_PASS 360 50
+E08_BROWSER_PASS 360
+E08_COUNT_PASS 390 0
+E08_COUNT_PASS 390 1
+E08_COUNT_PASS 390 10
+E08_COUNT_PASS 390 50
+E08_BROWSER_PASS 390
+E08_COUNT_PASS 1440 0
+E08_COUNT_PASS 1440 1
+E08_COUNT_PASS 1440 10
+E08_COUNT_PASS 1440 50
+E08_BROWSER_PASS 1440
+REVIEW60_START e05-native.cjs
+E05_NATIVE_PASS actual form, forged magic rejection, trusted manual/calculated writers, extensions, reload, validation, quota rollback, unchanged rewards
+REVIEW60_START e05.cjs
+E05_PROFILE_PASS 320 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 390 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+E05_PROFILE_PASS 1440 themes, native edits, reload, media, explicit account choice, legacy emoji, shared avatars, bars
+REVIEW60_START e05-edge.cjs
+E05_EDGE_PASS 12 native Patronus confirmations, 24 portraits, extensions, stale identity protection, unbound-context denial, modal keyboard, six gold destinations, no inferred account
+REVIEW60_PASS 19 native campaigns; immutable source; fixture/backend distinction retained

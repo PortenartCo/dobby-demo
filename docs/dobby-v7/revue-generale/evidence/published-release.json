@@ -1,0 +1,39 @@
+{
+  "verifiedAtUTC": "2026-11-13T04:20:28.697406+00:00",
+  "codeSha": "7526b0c0dc39e6a50470f91f8331510795364a00",
+  "canonicalUrl": "https://portenartco.github.io/dobby-demo/",
+  "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/9",
+  "featureHead": "804347b4f41762e19be3f10bfe3f34c6f0e122b6",
+  "pages": {
+    "status": "built",
+    "commit": "7526b0c0dc39e6a50470f91f8331510795364a00"
+  },
+  "ci": [
+    {
+      "id": 43363811427,
+      "name": "Dobby Sync regression (local)",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43363811427"
+    },
+    {
+      "id": 43363811192,
+      "name": "pages build and deployment",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43363811192"
+    },
+    {
+      "id": 43363811340,
+      "name": "Dobby V7 - Stitch functional UI",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43363811340"
+    }
+  ],
+  "hostedResourceCount": 119,
+  "liveBackendVerifiedByThisMission": false,
+  "supabaseAccessedByThisMission": false,
+  "statusCounts": {
+    "FAIT_TESTÉ_DÉPLOYÉ": 50,
+    "PARTIEL": 4,
+    "ATTENTE_UTILISATEUR": 6
+  }
+}
