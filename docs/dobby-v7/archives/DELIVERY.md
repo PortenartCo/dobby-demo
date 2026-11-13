@@ -3,7 +3,7 @@
 - PR en brouillon : https://github.com/PortenartCo/dobby-demo/pull/17
 - Base main : `25dd637c1b827bd09a46d8a55be63d9c14966f19` (toujours courante au contrôle avant push).
 - Commit fonctionnel et preuves : `39305c1b2afdfc03351ee4825e36ef9016c673d7`.
-- Les commits suivants ne complètent que la documentation de livraison ; le code vérifié reste identique à ce commit fonctionnel.
+- Les commits suivants complètent la documentation de livraison et la configuration CI ; le code vérifié reste identique à ce commit fonctionnel.
 - Bilan : **55 PASS, R09 BLOCKED**. Aucun statut de recette réelle A/B n'est revendiqué.
 
 La campagne locale Archives, les 486 tests natifs, les 66 tests de modèles/build et la campagne Contrats (51 tests natifs plus navigateur) passent. Les PDF originaux/avenants ont été consultés depuis l'archive et comparés octet pour octet. Une restauration native complète a été exécutée dans un profil TEST ; les anciennes sauvegardes partielles préservent aussi le statut.
