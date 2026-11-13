@@ -76,3 +76,21 @@ test('V1 history coexists unchanged with allocation events and aggregate overflo
  assert.throws(()=>confirm(complete(mission(),['a','b']),huge),/capacité numérique/i);
  assert.equal(R.completionRequest({id:'fm-pet',title:'TEST — Animal',status:'open',assigneeId:'pet',effort:'light',rewardVersion:1},members,[],[],date),null,'legacy API also excludes animals');
 });
+
+test('unassigned completion offers real humans and requires their explicit participation',()=>{
+ const unassigned=mission({assigneeIds:[],assigneeId:'',allFamily:false});
+ assert.deepEqual(R.completionCandidateIds(unassigned,[...members,{id:'baby',memberCategory:'baby'}]),['a','b','c']);
+ assert.throws(()=>complete(unassigned,[]),/participant/i);
+ const event=complete(unassigned,['b'])[0];assert.equal(event.amount,25);assert.deepEqual(event.allocations,[{memberId:'b',amount:25}]);
+ const credits=confirm([event]);assert.equal(R.memberSummary('a',credits).total,0);assert.equal(R.memberSummary('b',credits).total,25);
+ assert.deepEqual(R.completionCandidateIds(mission({assigneeIds:['removed']}),members),[]);
+ assert.throws(()=>complete(mission({assigneeIds:['removed']}),['a']),/attribu/i);
+});
+test('a genuinely unassigned mission in an empty household completes without fabricating a reward',()=>{
+ const unassigned=mission({assigneeIds:[],assigneeId:'',allFamily:false});
+ assert.equal(R.canCompleteWithoutParticipants(unassigned,[]),true);
+ assert.deepEqual(R.completionRequests(unassigned,[],[],[],[],date),[]);
+ assert.equal(R.canCompleteWithoutParticipants(mission({assigneeIds:['removed']}),[]),false);
+ assert.throws(()=>R.completionRequests(mission({assigneeIds:['removed']}),[],[],[],[],date),/participant/i);
+ assert.throws(()=>R.completionRequests(unassigned,[],['unknown'],[],[],date),/inconnu/i);
+});

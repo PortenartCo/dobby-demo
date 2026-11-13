@@ -43,7 +43,12 @@ est un travail explicite restant, pas une installation à exécuter telle quelle
    aucune copie par personne. Les participants sélectionnés sont non vides,
    distincts, humains, existants dans le foyer et autorisés par l’attribution.
    Tous les bénéficiaires sont explicitement sélectionnés ; pas de bénéficiaire
-   implicite, pas d’animal, pas d’ID arbitraire ou retiré.
+   implicite, pas d’animal, pas d’ID arbitraire ou retiré. Pour une mission
+   réellement sans attribution, un parent choisit les participants parmi les
+   membres humains actuels. Une attribution devenue introuvable ne déclenche
+   jamais ce repli. Sans aucun humain dans un foyer local et sans attribution,
+   terminer sans crédit reste possible ; aucune allocation fictive n’est créée.
+   Cela n’autorise pas un enfant à compléter une mission non attribuée.
 4. Le total est lu dans la **mission enregistrée et verrouillée** :
    `light=10`, `regular=25`, `major=50`, ou `customRunes`, entier JSON exact entre
    0 et `9007199254740991`. Une mission historique sans `rewardVersion:1` ne gagne

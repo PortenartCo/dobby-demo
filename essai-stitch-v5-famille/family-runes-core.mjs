@@ -17,7 +17,17 @@ export const ledgerVersion=rows=>(rows||[]).some(row=>row?.allocations!==undefin
 const cycleOf=row=>row.cycle??0;
 const compareId=(a,b)=>a<b?-1:a>b?1:0;
 const validMemberId=id=>typeof id==='string'&&Boolean(id.trim())&&id.length<=100;
-export const isHumanMember=member=>Boolean(member)&&![member.memberCategory,member.type,member.kind].some(value=>['pet','animal','guardian'].includes(value));
+export const isHumanMember=member=>Boolean(member)&&![member.memberCategory,member.type,member.kind].some(value=>['pet','animal','guardian','baby'].includes(value));
+const declaredAssignees=mission=>Array.isArray(mission.assigneeIds)&&mission.assigneeIds.length?mission.assigneeIds:mission.assigneeId?[mission.assigneeId]:[];
+const unassignedMission=mission=>mission.allFamily!==true&&!declaredAssignees(mission).length;
+// Completion candidates differ from assignment: an unassigned task may be done
+// by any real eligible member, but participation is always explicitly selected.
+export function completionCandidateIds(mission,members){
+ const humans=(Array.isArray(members)?members:[]).filter(member=>isHumanMember(member)&&validMemberId(member.id)),known=new Set(humans.map(member=>member.id));
+ const ids=mission.allFamily===true||unassignedMission(mission)?[...known]:declaredAssignees(mission).filter(id=>known.has(id));
+ return [...new Set(ids)].sort(compareId);
+}
+export const canCompleteWithoutParticipants=(mission,members)=>unassignedMission(mission)&&!completionCandidateIds(mission,members).length;
 export function allocateReward(amount,participantIds){
  if(!Number.isSafeInteger(amount)||amount<0)throw Error('Total de runes à répartir invalide');
  if(!Array.isArray(participantIds)||!participantIds.length||participantIds.some(id=>!validMemberId(id))||new Set(participantIds).size!==participantIds.length)throw Error('Choisissez des participants distincts');
@@ -111,10 +121,11 @@ export function reopeningRequest(mission,credits=[],requests=[],date){
 export function completionRequests(mission,members,participantIds,credits=[],requests=[],date){
  if(mission?.rewardVersion!==1||mission.status!=='open')return [];
  const humanMembers=Array.isArray(members)?members.filter(isHumanMember):[],known=new Set(humanMembers.map(member=>member.id));
- const reward=rewardFor(mission),allocations=allocateReward(reward.amount,participantIds);
- const assigned=new Set(Array.isArray(mission.assigneeIds)?mission.assigneeIds:mission.assigneeId?[mission.assigneeId]:[]);
+ const reward=rewardFor(mission);
+ if(canCompleteWithoutParticipants(mission,members)&&Array.isArray(participantIds)&&!participantIds.length)return [];
+ const allocations=allocateReward(reward.amount,participantIds),allowed=new Set(completionCandidateIds(mission,members));
  if(allocations.some(part=>!known.has(part.memberId)))throw Error('Participant inconnu ou animal non autorisé');
- if(mission.allFamily!==true&&allocations.some(part=>!assigned.has(part.memberId)))throw Error('Participant non attribué à cette mission');
+ if(allocations.some(part=>!allowed.has(part.memberId)))throw Error('Participant non attribué à cette mission');
  const history=acceptRequests(credits,requests,0),past=history.filter(row=>row.missionId===mission.id);
  if(activeCredits(history).some(row=>row.missionId===mission.id))return [];
  const cycle=past.length?Math.max(...past.map(cycleOf))+1:0;

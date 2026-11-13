@@ -15,7 +15,7 @@ export function addCalendarDays(day,count){
   const date=new Date(day+'T12:00:00Z');date.setUTCDate(date.getUTCDate()+count);return iso(date);
 }
 export const occurrenceId=(seriesId,date)=>seriesId+'-r'+date.replaceAll('-','');
-export const humanMembers=members=>(Array.isArray(members)?members:[]).filter(m=>m&&typeof m.id==='string'&&!['pet','baby'].includes(m.memberCategory));
+export const humanMembers=members=>(Array.isArray(members)?members:[]).filter(m=>m&&typeof m.id==='string'&&runes.isHumanMember(m));
 export function assignmentIds(mission,members){
   const people=humanMembers(members),ids=mission.allFamily?people.map(m=>m.id):(mission.assigneeIds||[mission.assigneeId].filter(Boolean));
   return [...new Set(ids.filter(id=>people.some(m=>m.id===id)))].sort();

@@ -72,3 +72,12 @@ test('M05 native recurrence writer keeps attribution schedule separate from an a
  const c=await native({shared:false});c.click('edit');c.save({participantVersion:'1',assigneeIds:'["member-a","member-b"]',allFamily:'false',recurrenceFrequency:'daily',recurrenceStart:'2026-12-01',recurrenceWeekdays:'2',recurrenceMonthDay:'1',recurrenceState:'active',due:''});
  assert.equal(c.alerts.length,0);const root=c.st.manualMissions[0];assert.equal(root.due,'');assert.equal(root.deadlineOffsetDays,null);assert.equal(root.recurrence.rules[0].start,'2026-12-01');const rows=core.projectRecurringMissions(c.st.manualMissions,'2026-12-02');assert.equal(rows.length,2);assert.equal(rows[1].due,'');assert.equal(rows[1].occurrenceDate,'2026-12-02');assert.deepEqual(rows[1].assigneeIds,['member-a','member-b']);
 });
+
+test('unassigned new native mission can credit selected actual participants without assignment',async()=>{
+ const c=await native({shared:false,initial:mission({participantVersion:1,assigneeId:'',assigneeIds:[],allFamily:false,effort:'regular'})});
+ c.complete(['member-b']);assert.equal(c.st.manualMissions[0].status,'done');assert.equal(core.runes.memberSummary('member-b',c.st.runeCredits).total,25);assert.equal(core.runes.memberSummary('member-a',c.st.runeCredits).total,0);assert.deepEqual(c.st.manualMissions[0].assigneeIds,[]);
+});
+test('unassigned empty native household completion records no reward; stale assignment remains blocked',async()=>{
+ const c=await native({shared:false,initial:mission({participantVersion:1,assigneeId:'',assigneeIds:[],allFamily:false})});c.st.familyMembers=[];c.complete([]);assert.equal(c.st.manualMissions[0].status,'done');assert.deepEqual(clone(c.st.runeCredits),[]);assert.deepEqual(clone(c.st.runeRequests),[]);
+ const stale=await native({shared:false,initial:mission({participantVersion:1,assigneeId:'removed',assigneeIds:['removed'],allFamily:false})}),before=clone(stale.st);assert.throws(()=>stale.complete(['member-a']),/attribu/i);assert.deepEqual(clone(stale.st),before);
+});
