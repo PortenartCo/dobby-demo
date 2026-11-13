@@ -1,112 +1,112 @@
 {
-  "sourceSha": "b988ec214875fc0a60f47ff42d3f75f9222d7a2c",
-  "startedAt": "2026-11-13T09:33:24.447Z",
+  "sourceSha": "b53b73f6cc145fe6a970841b5aa6e12cda51a6e4",
+  "startedAt": "2026-11-13T10:19:34.454Z",
   "liveBackendVerified": false,
   "speechHardwareVerified": false,
   "results": [
     {
       "name": "missions-review.cjs",
       "exitCode": 0,
-      "durationMs": 20318
+      "durationMs": 19246
     },
     {
       "name": "missions-unassigned-review.cjs",
       "exitCode": 0,
-      "durationMs": 3522
+      "durationMs": 3572
     },
     {
       "name": "v7-meals-model.cjs",
       "exitCode": 0,
-      "durationMs": 2925
+      "durationMs": 3025
     },
     {
       "name": "v7-meals-ui.cjs",
       "exitCode": 0,
-      "durationMs": 11228
+      "durationMs": 12154
     },
     {
       "name": "v7-meals-child.cjs",
       "exitCode": 0,
-      "durationMs": 2306
+      "durationMs": 3395
     },
     {
       "name": "v7-dessert-preparations.cjs",
       "exitCode": 0,
-      "durationMs": 7423
+      "durationMs": 12561
     },
     {
       "name": "v7-dessert-batch-edges.cjs",
       "exitCode": 0,
-      "durationMs": 5678
+      "durationMs": 9106
     },
     {
       "name": "v7-dessert-responsive.cjs",
       "exitCode": 0,
-      "durationMs": 8794
+      "durationMs": 11969
     },
     {
       "name": "review-shopping.cjs",
       "exitCode": 0,
-      "durationMs": 41508
+      "durationMs": 56044
     },
     {
       "name": "review-shopping-settings.cjs",
       "exitCode": 0,
-      "durationMs": 3465
+      "durationMs": 4600
     },
     {
       "name": "review-shopping-role.cjs",
       "exitCode": 0,
-      "durationMs": 2253
+      "durationMs": 3244
     },
     {
       "name": "v7-family-review.cjs",
       "exitCode": 0,
-      "durationMs": 6923
+      "durationMs": 11205
     },
     {
       "name": "reserves-family-access.cjs",
       "exitCode": 0,
-      "durationMs": 2084
+      "durationMs": 3028
     },
     {
       "name": "v7-transversal.cjs",
       "exitCode": 0,
-      "durationMs": 7358
+      "durationMs": 10799
     },
     {
       "name": "v7-home-review.cjs",
       "exitCode": 0,
-      "durationMs": 8897
+      "durationMs": 10501
     },
     {
       "name": "v7-connected-ceremony-dock.cjs",
       "exitCode": 0,
-      "durationMs": 17185
+      "durationMs": 19049
     },
     {
       "name": "e08.cjs",
       "exitCode": 0,
-      "durationMs": 16822
+      "durationMs": 24528
     },
     {
       "name": "e05-native.cjs",
       "exitCode": 0,
-      "durationMs": 2868
+      "durationMs": 3634
     },
     {
       "name": "e05.cjs",
       "exitCode": 0,
-      "durationMs": 21074
+      "durationMs": 27309
     },
     {
       "name": "e05-edge.cjs",
       "exitCode": 0,
-      "durationMs": 14773
+      "durationMs": 21103
     }
   ],
   "passed": true,
-  "completedAt": "2026-11-13T09:36:51.889Z",
+  "completedAt": "2026-11-13T10:24:04.587Z",
   "sourceSha256": {
     "essai-stitch-v5-famille/family-access.mjs": "16a6ff51583d9dbcc6ee59a36abe93da67015f64b499f488dd9e8b8785281ca7",
     "essai-stitch-v5-famille/family-agenda-core.mjs": "635e3b2e976828da6a62223f25423b7c7215cbe48ae66f8c354e969861380d56",
@@ -127,7 +127,7 @@
     "essai-stitch-v5-famille/family-profile.js": "d6faf10b1a2b79f0890ec08de43773a2c3128ccfca6e1dc5b9011b8e974a7125",
     "essai-stitch-v5-famille/family-runes-core.mjs": "6de19613cd8bed777289b824538f6cde1012408e1da24b98f6afa6ef23625978",
     "essai-stitch-v5-famille/family-v2.css": "0f9b890734f9616c2a0b23e18b714d711b6f86e03e7ee79cc04edd702fd7c3ed",
-    "essai-stitch-v5-famille/family-v2.js": "309f62fbca204f73cdb906828012858e980e37f3280f78799eff37502eb17e72",
+    "essai-stitch-v5-famille/family-v2.js": "7d6dc7c11366f7ad1e7d49b4e6acb85316b1a62c96af6f61042733c5eac6d179",
     "essai-stitch-v5-famille/family-write-policy.mjs": "4027d0967384b8b393e7d9af93a2f3417dbd82f2a322d7ed83123cd0d4daa205",
     "essai-stitch-v5-famille/index.html": "a4fcff363c1a9de6bde9de2a011401fb68aae0574456ef35e38c68324d91bb9d",
     "essai-stitch-v5-famille/stitch-v5.css": "007d1f67e118640a47c975559dcb48ec1dc95aea14533749bf4021f07b17816c",
@@ -159,15 +159,15 @@
     "essai-stitch-v7/cuisine-e073.css": "cf6f8ee76a78ca485d414f896bbd852aa2f36e8e19e706f755324d6c3c6adf72",
     "essai-stitch-v7/cuisine-e074.css": "34493e48ce6212a025640c6a2ad50c178216ec862eb8c1ea04745347d1ab9b15",
     "essai-stitch-v7/cuisine-e074.js": "dae609aaff32b5200112c27a800448aa05a78e6f5f53506ba15a21cdd2b6316d",
-    "essai-stitch-v7/cuisine-engine.js": "5d76a0ba615fbbdcc2c811484e52e903ad0f4255860be4b04d880d6291ff1c9e",
+    "essai-stitch-v7/cuisine-engine.js": "c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f",
     "essai-stitch-v7/cuisine-list.js": "16fedfd16a4dcc7929fa219aae68c5b385d2f1d3ef48ad31ff85e2396b5270cd",
     "essai-stitch-v7/cuisine-p01.css": "130cca758246ffe50d71c51f16c5d35e4d32230d62cd6d1a851c4d1d73f56fc2",
     "essai-stitch-v7/cuisine-p01.js": "23413675d792ffe1a0a201b6bbbe3d29b6d9ce41c1316c4a76c2ce35515732a6",
     "essai-stitch-v7/cuisine-shopping.css": "06f5131cb5ba87568cae2c4f9874fa37cde319a52b2cb88e9e3773172ed3fe2d",
-    "essai-stitch-v7/cuisine-shopping.js": "4525dc55ee5d516b7fe54a99f5b6b990e3cede6577db487805b47035be938658",
+    "essai-stitch-v7/cuisine-shopping.js": "536c1893c384f4b46bed98c1b7cf001d882bb914301c0c4f9fbd0e3404bae89c",
     "essai-stitch-v7/cuisine-timers.js": "7492217e618c2a88d0bfb015c2dc1430f06df933769013e0057fc0dc768f05f0",
     "essai-stitch-v7/cuisine.css": "ac69388a3d7dc6d00681a38addbd95d0c635fc5e3d76a78e183e5af4d1d837bb",
-    "essai-stitch-v7/cuisine.js": "80fd34022cbdfa2aee7d173c0ee56fb4528631a30086e1fe11bfc39325e2ca01",
+    "essai-stitch-v7/cuisine.js": "503c01f598d9de88d804a7e4eb9b5590abbe4e0dec6251f3be3dce939b11cbae",
     "essai-stitch-v7/documents-register.js": "2489e433a02a1a362fede4a20188d8c1e01f62d8d7b7e00697f75ad5b854593a",
     "essai-stitch-v7/engine-policy.js": "84628209c7709cbd239c35c101c1f1ffcfc6cf16d7bd04f82c0d28265eeed985",
     "essai-stitch-v7/famille.html": "0be04cd067682c4dd5b0bceb6f6613728c7bc4ee63954bf48b699c1f1b355ca5",

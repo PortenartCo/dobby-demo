@@ -1,0 +1,43 @@
+{
+  "scope": "Local synthetic HTTP fixtures only; no real backend/B recipe",
+  "runtimeSha256": "7d6dc7c11366f7ad1e7d49b4e6acb85316b1a62c96af6f61042733c5eac6d179",
+  "verificationSource": "Observed functions.exec command completion outputs in this chat; not a new test execution",
+  "tests": [
+    {
+      "command": "node essai-stitch-v7/tests/e07-p02-family.cjs",
+      "evidenceDirectory": "/workspace/dobby-canonical-grocery-fixtures/family-ready",
+      "exitCode": 0,
+      "observedOutput": "CUISINE_FAMILY_PASS 390px"
+    },
+    {
+      "command": "node essai-stitch-v7/tests/cuisine-family.cjs",
+      "evidenceDirectory": "/workspace/dobby-canonical-grocery-fixtures/cuisine-family-ready",
+      "exitCode": 0,
+      "observedOutput": "CUISINE_FAMILY_PASS 320px; CUISINE_FAMILY_PASS 390px"
+    },
+    {
+      "command": "node essai-stitch-v7/tests/e07-p02-shared-home.cjs",
+      "machineReport": "/workspace/dobby-canonical-grocery-fixtures/shared-serialized/shared-home-results.json",
+      "exitCode": 0,
+      "observedOutput": "CUISINE_SHARED_HOME_PASS",
+      "checks": [
+        "A declares 200 g of 500 g; B reads 200 g available and 300 g to buy",
+        "B modifies and cancels the shared declaration",
+        "Offline availability can be changed again after reload, stays pending, and reaches B with its latest value",
+        "An incompatible name/unit edit after offline reload resets availability in the durable queue and on B",
+        "Concurrent revision CAS rejects the stale PATCH; explicit server and local resolutions converge",
+        "Legacy homeByScope stays intact, ignored by shared snapshots, and never auto-published",
+        "Grouped edits roll back atomically on a stale row; g/kg availability retains gram precision and survives compatible editing",
+        "Simple native edits share availability; delete/archive and re-add leave no residual declaration",
+        "Repeated import/reload remains idempotent and checking/unchecking preserves availability",
+        "Old schema supports ordinary CRUD and fails availability with migration guidance and no false local success",
+        "Authenticated membership without canonical V7 context stays read-only and never sends a grocery write"
+      ]
+    },
+    {
+      "command": "node essai-stitch-v7/tests/e07-p02-home-race.cjs",
+      "exitCode": 0,
+      "observedOutput": "CUISINE_SHARED_HOME_RACE_PASS queued group edit survives concurrent pull, CAS and reload"
+    }
+  ]
+}
