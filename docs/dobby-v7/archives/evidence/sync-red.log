@@ -1,0 +1,43 @@
+✖ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (12.502069ms)
+✖ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (4.93364ms)
+✖ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (8.947796ms)
+✖ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (4.190395ms)
+✔ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (4.568042ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.55027
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (12.502069ms)
+  TypeError: Cannot read properties of undefined (reading 'archivedAt')
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:15:58)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (4.93364ms)
+  TypeError: Cannot read properties of undefined (reading 'archivedAt')
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:15:58)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (8.947796ms)
+  TypeError: Cannot read properties of undefined (reading 'archivedAt')
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:15:58)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (4.190395ms)
+  TypeError: Cannot read properties of undefined (reading 'archivedAt')
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:15:58)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

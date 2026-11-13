@@ -1,0 +1,55 @@
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (15.039593ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (13.378964ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (4.038697ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (1.538734ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (3.821664ms)
+✖ failed native archive save rolls back derived task side effects as well as its source row (3.705739ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 240.326131
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/archives-writer.test.cjs:50:1
+✖ failed native archive save rolls back derived task side effects as well as its source row (3.705739ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    {
+      autoTasks: [
+        {
+          id: 'existing-task',
+          opaque: {
+            keep: 1
+          },
+  +       status: 'changed'
+  -       status: 'pending'
+        },
+  +     {
+  +       id: 'derived-task'
+  +     }
+      ],
+      customRecipes: [
+        {
+          id: 'recipe',
+          ingredients: [
+
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-writer.test.cjs:53:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { familyMembers: [ [Object] ], familyDocs: [ [Object] ], houseItems: [ [Object] ], houseLogs: [ [Object] ], houseDocs: [ [Object] ], customRecipes: [ [Object] ], planned: { '2026-11-14-midi': [Object] }, famContacts: [ [Object] ], familyNotes: [ [Object] ], sharedFamilyNotes: [ [Object] ], autoTasks: [ [Object], [Object] ] },
+    expected: { familyMembers: [ [Object] ], familyDocs: [ [Object] ], houseItems: [ [Object] ], houseLogs: [ [Object] ], houseDocs: [ [Object] ], customRecipes: [ [Object] ], planned: { '2026-11-14-midi': [Object] }, famContacts: [ [Object] ], familyNotes: [ [Object] ], sharedFamilyNotes: [ [Object] ], autoTasks: [ [Object] ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

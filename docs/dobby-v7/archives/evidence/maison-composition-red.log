@@ -1,0 +1,214 @@
+✔ Maison sync carries all program and serial metadata while native documents remain local (25.748003ms)
+✔ old Maison snapshots cannot drop programs, serial fields or classified log metadata (4.211467ms)
+✔ modern program deletion propagates while partial program edits retain nested unknown fields (15.584846ms)
+✔ native edits preserve IDs, unknown metadata, legacy dates and document references after reload (10.356806ms)
+✔ full program edits preserve nested extensions and removal requires explicit confirmation with history detachment (5.638826ms)
+✔ intervention edits and removal keep old unclassified logs and linked documents recoverable (2.844365ms)
+✔ all mutations reject stale rows, changed context, child actors and read-only permissions (3.680188ms)
+✔ validation rejects bad dates, amounts, foreign program IDs and malformed intervals before mutation (3.182944ms)
+✔ failed native saves roll back equipment, logs, plan detachments and document metadata (6.620694ms)
+✔ multiple local documents retain native IDs, validate binary type and open legacy bytes without network (15.554695ms)
+✔ async document staging rejects scope, row, permission and role changes then cleans only staged IDs (18.103776ms)
+✔ document reads reject a context switch before returning local contents (2.102554ms)
+✔ confirmed bulk import adds atomically, updates additively and preserves old history, plans, sources and files (3.057034ms)
+✔ bulk validation, second staged-file failure, quota and asynchronous context changes leave registry unchanged (7.802141ms)
+✔ a source-backed program with unknown frequency imports without an invented quantity or unit (1.001484ms)
+✔ canonical child and unverified bindings cannot inherit a parent grant from editable local member data (3.708327ms)
+✔ structured interventions retain the native backup note field and reject an empty intervention (1.393125ms)
+✔ native backup note compatibility bounds fallback summaries without discarding the structured description (1.956383ms)
+✔ equipment deletion refuses existing contract references and preserves every native blob (1.791658ms)
+✔ partial native backup restores additive metadata without erasing serials, plans, history or native files (7.191886ms)
+✔ partial restore rejects stale registry, changed foyer, denied rights and malformed archives without any save (13.546822ms)
+✔ partial native restore rolls back both native arrays on save failure and preserves unchanged historical dates (3.712191ms)
+✔ an authenticated bootstrap cannot use local-mode Maison writes before canonical verification (3.610258ms)
+✔ a verified canonical parent keeps Maison write rights despite an obsolete local child category (1.198571ms)
+✔ authenticated writes require a matching canonical profile and an explicit parental write grant (5.07772ms)
+✔ truly unauthenticated local Maison remains writable and a coherent verified child can read local documents (3.226905ms)
+✔ manifest preserves unknowns and zero, normalizes all documented fields and 0..N plans (4.575219ms)
+✔ the supplied original example remains compatible without inventing history (19.342056ms)
+✔ malformed JSON, wrong format/version, unexpected native storage keys and duplicate identifiers fail (2.797591ms)
+✔ strict dates, finite nonnegative amounts, currency, booleans and integer intervals refuse coercions (2.028399ms)
+✔ sources are scoped to their equipment; real references suppress only the corresponding uncertainty (0.744412ms)
+✔ canonical paths reject traversal, encodings, invisible names and Windows special files (0.543576ms)
+✔ stored and deflated ZIP return checked PDF bytes; source-only shared originals and URL-only documents work (12.243384ms)
+✔ missing, unused, duplicate, fake and wrong-root binary documents are refused (8.560296ms)
+✔ hostile ZIP paths, symlinks, encryption, metadata disagreement, CRC and trailing bytes fail (5.726999ms)
+✔ all transport limits reject oversized declarations and bombs before decompression (34.8161ms)
+✔ deflate streams work and stop on output beyond the declared size (16.349666ms)
+✔ PDF, PNG, JPEG and WebP signatures/dimensions are verified and other types cannot masquerade as allowed files (1.221108ms)
+✔ empty provenance records cannot make an unsourced plan appear verified (0.239274ms)
+✔ duplicate local document paths are refused while one original can justify several sources (0.328612ms)
+✔ ZIP catches normalized duplicates, file/directory collisions and overlaps before extracting bytes (1.742941ms)
+✔ total expanded bytes are bounded before inflation and bad UTF-8 JSON is refused (61.902363ms)
+✔ normalization is idempotent and leaves the input untouched (0.28639ms)
+✔ a BOM hidden in a ZIP filename cannot masquerade as the root manifest (0.162418ms)
+✔ automatic uncertainty cannot produce a manifest that fails its own list bounds (0.413505ms)
+✔ calendar calculations reject invalid dates and clamp month ends and leap years (1.769655ms)
+✔ legacy plans remain stable read copies and explicit zero plans stay empty (1.1125ms)
+✔ two independent programs use only classified performed logs and never invent a date (1.792377ms)
+✔ unclassified legacy history cannot become a program through absent identities (0.340715ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1866.225407
+MAISON_UI_PASS 320 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 390 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 768 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 1024 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_UI_PASS 1440 Stitch21, single search, create/edit/cancel, locations/serial/legacy preservation, independent 12/36 plans, history/reload, keyboard/chrome/settings
+MAISON_IMPORT_UI_PASS
+MAISON_DOCUMENTS_PASS 390 create-two-classified-logs
+MAISON_DOCUMENTS_PASS 390 multiple-pdf-image-plan-log-associations
+MAISON_DOCUMENTS_PASS 390 real-pdf-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 390 real-image-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 390 unrelated-edit-and-reload-preserve-all-documents
+MAISON_DOCUMENTS_PASS 390 source-only-original-import-and-reload
+MAISON_DOCUMENTS_FAIL 390 link-contract-by-id-preserve-other-equipment-and-block-delete page.waitForFunction: Timeout 15000ms exceeded.
+MAISON_DOCUMENTS_PASS 390 log-edit-delete-confirmations-and-independent-recalculation
+MAISON_DOCUMENTS_PASS 390 remove-program-keeps-history-and-documents
+MAISON_DOCUMENTS_PASS 390 native-complete-backup-download-includes-exact-bytes
+MAISON_DOCUMENTS_FAIL 390 complete-backup-restore-in-new-context Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    'fixture-other',
++   'fixture-boiler'
+  ]
+
+MAISON_DOCUMENTS_FAIL 390 unlinked-equipment-delete-confirmation-and-file-cleanup The input did not match the regular expression /Supprimer cet équipement/. Input:
+
+'Retirer ce programme ? Son historique et ses documents seront conservés comme antérieurs / non classés.'
+
+MAISON_DOCUMENTS_PASS 390 no-browser-errors-or-horizontal-overflow
+MAISON_DOCUMENTS_PASS 1440 create-two-classified-logs
+MAISON_DOCUMENTS_PASS 1440 multiple-pdf-image-plan-log-associations
+MAISON_DOCUMENTS_PASS 1440 real-pdf-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 1440 real-image-renderer-and-exact-download
+MAISON_DOCUMENTS_PASS 1440 unrelated-edit-and-reload-preserve-all-documents
+MAISON_DOCUMENTS_PASS 1440 source-only-original-import-and-reload
+MAISON_DOCUMENTS_FAIL 1440 link-contract-by-id-preserve-other-equipment-and-block-delete page.waitForFunction: Timeout 15000ms exceeded.
+MAISON_DOCUMENTS_PASS 1440 log-edit-delete-confirmations-and-independent-recalculation
+MAISON_DOCUMENTS_PASS 1440 remove-program-keeps-history-and-documents
+MAISON_DOCUMENTS_PASS 1440 native-complete-backup-download-includes-exact-bytes
+MAISON_DOCUMENTS_FAIL 1440 complete-backup-restore-in-new-context Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    'fixture-other',
++   'fixture-boiler'
+  ]
+
+MAISON_DOCUMENTS_FAIL 1440 unlinked-equipment-delete-confirmation-and-file-cleanup The input did not match the regular expression /Supprimer cet équipement/. Input:
+
+'Retirer ce programme ? Son historique et ses documents seront conservés comme antérieurs / non classés.'
+
+MAISON_DOCUMENTS_PASS 1440 no-browser-errors-or-horizontal-overflow
+AssertionError [ERR_ASSERTION]: Document acceptance failures: 390:link-contract-by-id-preserve-other-equipment-and-block-delete, 390:complete-backup-restore-in-new-context, 390:unlinked-equipment-delete-confirmation-and-file-cleanup, 1440:link-contract-by-id-preserve-other-equipment-and-block-delete, 1440:complete-backup-restore-in-new-context, 1440:unlinked-equipment-delete-confirmation-and-file-cleanup
++ actual - expected
+
++ [
++   {
++     label: 'link-contract-by-id-preserve-other-equipment-and-block-delete',
++     message: 'page.waitForFunction: Timeout 15000ms exceeded.',
++     stack: 'page.waitForFunction: Timeout 15000ms exceeded.\n' +
++       '    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:50:109\n' +
++       '    at async check (/workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:12:39)\n' +
++       '    at async /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:48:3',
++     width: 390
++   },
++   {
++     label: 'complete-backup-restore-in-new-context',
++     message: 'Expected values to be strictly deep-equal:\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       '  [\n' +
++       "    'fixture-other',\n" +
++       "+   'fixture-boiler'\n" +
++       '  ]\n',
++     stack: 'AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       '  [\n' +
++       "    'fixture-other',\n" +
++       "+   'fixture-boiler'\n" +
++       '  ]\n' +
++       '\n' +
++       '    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:63:1213\n' +
++       '    at async check (/workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:12:39)\n' +
++       '    at async /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:62:13',
++     width: 390
++   },
++   {
++     label: 'unlinked-equipment-delete-confirmation-and-file-cleanup',
++     message: 'The input did not match the regular expression /Supprimer cet équipement/. Input:\n' +
++       '\n' +
++       "'Retirer ce programme ? Son historique et ses documents seront conservés comme antérieurs / non classés.'\n",
++     stack: 'AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Supprimer cet équipement/. Input:\n' +
++       '\n' +
++       "'Retirer ce programme ? Son historique et ses documents seront conservés comme antérieurs / non classés.'\n" +
++       '\n' +
++       '    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:66:137\n' +
++       '    at async check (/workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:12:39)\n' +
++       '    at async /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:65:3',
++     width: 390
++   },
++   {
++     label: 'link-contract-by-id-preserve-other-equipment-and-block-delete',
++     message: 'page.waitForFunction: Timeout 15000ms exceeded.',
++     stack: 'page.waitForFunction: Timeout 15000ms exceeded.\n' +
++       '    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:50:109\n' +
++       '    at async check (/workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:12:39)\n' +
++       '    at async /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:48:3',
++     width: 1440
++   },
++   {
++     label: 'complete-backup-restore-in-new-context',
++     message: 'Expected values to be strictly deep-equal:\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       '  [\n' +
++       "    'fixture-other',\n" +
++       "+   'fixture-boiler'\n" +
++       '  ]\n',
++     stack: 'AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n' +
++       '+ actual - expected\n' +
++       '\n' +
++       '  [\n' +
++       "    'fixture-other',\n" +
++       "+   'fixture-boiler'\n" +
++       '  ]\n' +
++       '\n' +
++       '    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:63:1213\n' +
++       '    at async check (/workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:12:39)\n' +
++       '    at async /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:62:13',
++     width: 1440
++   },
++   {
++     label: 'unlinked-equipment-delete-confirmation-and-file-cleanup',
++     message: 'The input did not match the regular expression /Supprimer cet équipement/. Input:\n' +
++       '\n' +
++       "'Retirer ce programme ? Son historique et ses documents seront conservés comme antérieurs / non classés.'\n",
++     stack: 'AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Supprimer cet équipement/. Input:\n' +
++       '\n' +
++       "'Retirer ce programme ? Son historique et ses documents seront conservés comme antérieurs / non classés.'\n" +
++       '\n' +
++       '    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:66:137\n' +
++       '    at async check (/workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:12:39)\n' +
++       '    at async /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:65:3',
++     width: 1440
++   }
++ ]
+- []
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/maison-documents-ui.cjs:70:136 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

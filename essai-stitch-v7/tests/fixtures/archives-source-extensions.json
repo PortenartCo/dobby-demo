@@ -1,0 +1,132 @@
+{
+  "baseCommit": "2584a8955bac1358d08a8f59070179aa5d624071",
+  "reason": "Exact Archives lifecycle adapters and UI wiring over reviewed current main; prior manifests remain frozen.",
+  "files": {
+    "essai-stitch-v5-famille/family-contracts.js": {
+      "beforeSha256": "29d074cf2c3b5b474f65f6e70e8418786b43e12762df712801ecbfa10b1fda37",
+      "afterSha256": "f05d49cb311ab940f0816c9dfdb4691fd62641c01eb2f99e8ead85ab594a7d0a",
+      "patches": [
+        {
+          "before": "function find(id){const row=rows().find(row=>row.id===id);if(!row)throw Error('Cette fiche a été supprimée.');return row;}\n",
+          "after": "function find(id){window.DobbyArchiveSources?.get('documents',id);const row=rows().find(row=>row.id===id);if(!row)throw Error('Cette fiche a été supprimée.');return row;}\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc",
+      "afterSha256": "5bb6d9e00fdeb13dbb19dc4402240ba6c1ac4bc6cbe910541192052c0308abc6",
+      "patches": [
+        {
+          "before": "function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:moduleDigest(id,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}\n",
+          "after": "function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:archiveSynced(id,payload,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}\n",
+          "occurrences": 1
+        },
+        {
+          "before": "",
+          "after": "// Old peers may omit extensible lifecycle metadata. Omission never reactivates\n// a known fiche, and removing an archived fiche requires explicit resolution.\nfunction archivePayload(id,payload){\n const keys={contracts:['contracts'],house:['houseItems'],recipes:['customRecipes'],family:['famContacts','sharedFamilyNotes']}[id];\n if(!keys||!payload||typeof payload!=='object')return payload;\n const next=JSON.parse(JSON.stringify(payload));\n for(const key of keys){\n  const before=key==='contracts'?(st.familyDocs||[]).filter(isSharedDocument):st[key]||[];\n  if(!Array.isArray(next[key]))continue;\n  const incoming=new Map(next[key].map(row=>[row.id,row]));\n  for(const row of before){\n   if(!row.archive)continue;const there=incoming.get(row.id);\n   if(!there&&row.archive.archivedAt)throw Error('Une fiche archivée manque dans la version du foyer. Données locales conservées ; comparez les versions.');\n   if(there&&!Object.hasOwn(there,'archive'))there.archive=JSON.parse(JSON.stringify(row.archive));\n  }\n }\n return next;\n}\nfunction archiveSynced(id,payload,normal){return moduleDigest(id,digest(archivePayload(id,payload))!==digest(payload)?payload:normal);}\n",
+          "occurrences": 1
+        },
+        {
+          "before": "",
+          "after": "  payload=archivePayload(id,payload);\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    state.synced = moduleDigest(id,id==='contracts'?contractSynced(remote.payload):pick(id));\n",
+          "after": "    state.synced = archiveSynced(id,remote.payload,id==='contracts'?contractSynced(remote.payload):pick(id));\n",
+          "occurrences": 2
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine-engine.js": {
+      "beforeSha256": "c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f",
+      "afterSha256": "bef27304829046b02e4a98af76176906ff7d8d7f86f86fbf0074bedbba75e3da",
+      "patches": [
+        {
+          "before": "    data.removedIds=data.recipes.filter(r=>r.removedAt).map(r=>r.id);data.catalogueRecipes=data.recipes.filter(r=>!r.removedAt);\n",
+          "after": "    data.removedIds=data.recipes.filter(r=>r.removedAt).map(r=>r.id);data.catalogueRecipes=data.recipes.filter(r=>!r.removedAt&&!r.archive?.archivedAt);\n",
+          "occurrences": 1
+        },
+        {
+          "before": "",
+          "after": "    if(read().customIds.includes(values.id))win().DobbyArchiveSources?.assertMutable('recipes',values.id);\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    const recipe=read().recipes.find(r=>r.id===values.id);if(recipe?.removedAt)throw Error('Cette recette est retirée du catalogue.');if(!recipe||!Number.isFinite(Number(recipe.servings))||Number(recipe.servings)<=0)throw Error('Complétez les portions de référence de cette recette avant de planifier ce repas.');\n",
+          "after": "    const recipe=read().recipes.find(r=>r.id===values.id);if(recipe?.removedAt||recipe?.archive?.archivedAt)throw Error('Cette recette est retirée du catalogue.');if(!recipe||!Number.isFinite(Number(recipe.servings))||Number(recipe.servings)<=0)throw Error('Complétez les portions de référence de cette recette avant de planifier ce repas.');\n",
+          "occurrences": 1
+        },
+        {
+          "before": "",
+          "after": "    if(read().customIds.includes(id))win().DobbyArchiveSources?.get('recipes',id);\n",
+          "occurrences": 1
+        },
+        {
+          "before": "  function favorite(id) { assertSharedWrite();page('recipes', id); click('fav', { id }); }\n",
+          "after": "  function favorite(id) { if(read().customIds.includes(id))win().DobbyArchiveSources?.assertMutable('recipes',id);assertSharedWrite();page('recipes', id); click('fav', { id }); }\n",
+          "occurrences": 1
+        },
+        {
+          "before": "    return transaction(`const r=getR(p.id),key=p.plannedKey,prior=st.planned[key]||null;if(!r||r.removedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(prior)!==JSON.stringify(p.expectedMeal))throw Error('Ce créneau a changé. Ouvrez à nouveau la confirmation.');if(prior&&p.replaceConfirmed!==true)throw Error('Confirmez le remplacement du repas existant.');st.day=p.date;st.slot=p.slot;st.adult=p.adult;st.children=p.children;st.people=p.adult+p.children;if(p.note!==undefined)st.note=p.note;const config={...prior,people:p.adult+p.children,adult:p.adult,children:p.children,childFactor:prior?.childFactor??0.65};delete config.id;delete config.status;if(prior?.id!==p.id)delete config._e072ImportRef;if(prior?.dessertPreparationId){delete config.dessertPreparationId;delete config.dessertPortions;delete config._e072ImportRef;}if(p.component==='dessert'&&(!prior||prior.id!==p.id||['préparé','annulé'].includes(prior.status)||prior.dessertPreparationId)){delete config._e072ImportRef;config.dessertIngredientRef='dessert-service-'+crypto.randomUUID();}if(p.note!==undefined)config.note=p.note;if(p.component==='dessert')st.planned[key]={id:p.id,...config,status:'prévu'};else planSelectedMeal(p.id,config);result={id:p.id,key,meal:JSON.parse(JSON.stringify(st.planned[key]))};`,{...values,plannedKey});\n",
+          "after": "    return transaction(`const r=getR(p.id),key=p.plannedKey,prior=st.planned[key]||null;if(!r||r.removedAt||r.archive?.archivedAt)throw Error('Cette recette est retirée du catalogue.');if(r.servings==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0)throw Error('Complétez les portions de référence avant de planifier ce repas.');if(Object.prototype.hasOwnProperty.call(p,'expectedMeal')&&JSON.stringify(prior)!==JSON.stringify(p.expectedMeal))throw Error('Ce créneau a changé. Ouvrez à nouveau la confirmation.');if(prior&&p.replaceConfirmed!==true)throw Error('Confirmez le remplacement du repas existant.');st.day=p.date;st.slot=p.slot;st.adult=p.adult;st.children=p.children;st.people=p.adult+p.children;if(p.note!==undefined)st.note=p.note;const config={...prior,people:p.adult+p.children,adult:p.adult,children:p.children,childFactor:prior?.childFactor??0.65};delete config.id;delete config.status;if(prior?.id!==p.id)delete config._e072ImportRef;if(prior?.dessertPreparationId){delete config.dessertPreparationId;delete config.dessertPortions;delete config._e072ImportRef;}if(p.component==='dessert'&&(!prior||prior.id!==p.id||['préparé','annulé'].includes(prior.status)||prior.dessertPreparationId)){delete config._e072ImportRef;config.dessertIngredientRef='dessert-service-'+crypto.randomUUID();}if(p.note!==undefined)config.note=p.note;if(p.component==='dessert')st.planned[key]={id:p.id,...config,status:'prévu'};else planSelectedMeal(p.id,config);result={id:p.id,key,meal:JSON.parse(JSON.stringify(st.planned[key]))};`,{...values,plannedKey});\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    "essai-stitch-v7/family-engine.js": {
+      "beforeSha256": "c8565b639c981aaac7fc753562027853f4823925a5d1a9bb0d18d079261fdd13",
+      "afterSha256": "72a90d372c86e98b55ae1bbd76549cf9fa4024bab4d4a952890ccdeb2a53f4ae",
+      "patches": [
+        {
+          "before": " function unsupportedFields(row,form){const fields=[...form.elements],names=new Set(['id',...fields.map(field=>field.getAttribute('name')).filter(Boolean)]),extra=Object.keys(row||{}).filter(key=>!names.has(key));for(const field of fields){const name=field.getAttribute('name');if(field.type==='date'&&row?.[name]&&!field.value)extra.push(name);}return extra;}\n",
+          "after": " function unsupportedFields(row,form){const fields=[...form.elements],names=new Set(['id','archive',...fields.map(field=>field.getAttribute('name')).filter(Boolean)]),extra=Object.keys(row||{}).filter(key=>!names.has(key));for(const field of fields){const name=field.getAttribute('name');if(field.type==='date'&&row?.[name]&&!field.value)extra.push(name);}return extra;}\n",
+          "occurrences": 1
+        },
+        {
+          "before": " function saveContact(id,values){guardSharedWrite();const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}\n",
+          "after": " function saveContact(id,values){if(id)win().DobbyArchiveSources?.assertMutable('contacts',id);guardSharedWrite();const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}\n",
+          "occurrences": 1
+        },
+        {
+          "before": "",
+          "after": "  if(p.id&&p.action!=='import')window.DobbyArchiveSources?.assertMutable('sharedNotes',p.id);\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    "essai-stitch-v7/family.js": {
+      "beforeSha256": "e8a6cd6dff9dee7759887728bb0a4f9a4f54c8df1c126cd907c9efa3757a7ef5",
+      "afterSha256": "a085d7503f2cf719333ad95e615040e5c9d2bba4965f089dec6288bc8412d569",
+      "patches": [
+        {
+          "before": "  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','menu','settings'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}\n",
+          "after": "  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','menu','settings','documents','documents-1'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}\n",
+          "occurrences": 1
+        },
+        {
+          "before": "  if(action.startsWith('rg-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});\n",
+          "after": "  if(action.startsWith('archive-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});if(action.startsWith('rg-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});\n",
+          "occurrences": 1
+        },
+        {
+          "before": "  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);\n",
+          "after": "  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,#archive-confirm,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);\n",
+          "occurrences": 1
+        }
+      ]
+    },
+    "essai-stitch-v7/build-source.cjs": {
+      "beforeSha256": "0f648b957d60b12db436501a8f9845db81599edc82af3bb6c406191598ad654f",
+      "afterSha256": "aee02430f01f10230e953e63f5fa76aa33b7e76aaedfb8ce1056dcc2c869f654",
+      "patches": [
+        {
+          "before": "html=html.replace('</body>',`<iframe title=\"Moteur fonctionnel DOBBY\" id=\"dv7-engine\" src=\"../essai-stitch-v5-famille/index.html\" aria-hidden=\"true\" tabindex=\"-1\"></iframe><div id=\"dv7-panel\" hidden><div id=\"dv7-panel-top\"><button id=\"dv7-close\" type=\"button\">← Retour à DOBBY</button><span id=\"dv7-panel-title\">Dobby</span></div></div><link rel=\"stylesheet\" href=\"./cuisine.css\"><link rel=\"stylesheet\" href=\"./cuisine-e073.css\"><link rel=\"stylesheet\" href=\"./recipe-import.css\"><script src=\"./root-adapters.js\"></script><script src=\"./cuisine-engine.js\"></script><script src=\"./cuisine-list.js\"></script><link rel=\"stylesheet\" href=\"./cuisine-shopping.css\"><script src=\"./cuisine-shopping.js\"></script><script src=\"./recipe-import.js\"></script><link rel=\"stylesheet\" href=\"./cuisine-e074.css\"><script src=\"./cuisine-timers.js\"></script><script src=\"./cuisine-e074.js\"></script><script src=\"./cuisine.js\"></script><link rel=\"stylesheet\" href=\"./family.css\"><script src=\"./family-engine.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./member-avatar.css\"><script src=\"../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1\"></script><script src=\"./member-avatar.js\"></script><link rel=\"stylesheet\" href=\"./magic-profile.css\"><script src=\"./magic-content.js\"></script><link rel=\"stylesheet\" href=\"./ceremony-art.css\"><script src=\"./ceremony-art.js\"></script><script src=\"./magic-profile.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./register.css\"><script src=\"./register-route-data.js\"></script><script src=\"./register.js\"></script><link rel=\"stylesheet\" href=\"./preparations.css\"><script src=\"./preparations.js\"></script><script src=\"./family-agenda-review.js\"></script><link rel=\"stylesheet\" href=\"./family-agenda-review.css\"><script src=\"./family-register.js\"></script><script src=\"./house-register.js\"></script><script src=\"./import-runtime.js\"></script><link rel=\"stylesheet\" href=\"./contracts.css\"><script src=\"./contracts-register.js\"></script><script src=\"./contracts-import.js\"></script><script src=\"./documents-register.js\"></script><script src=\"./tools-register.js\"></script><link rel=\"stylesheet\" href=\"./chat.css\"><script src=\"./chat-engine.js\"></script><script src=\"./chat.js\"></script><script src=\"./onboarding-route-data.js\"></script><script src=\"./onboarding-engine.js\"></script><link rel=\"stylesheet\" href=\"./onboarding.css\"><link rel=\"stylesheet\" href=\"./ritual.css\"><script src=\"./ritual-effects.js\"></script><script src=\"./ritual.js\"></script><script src=\"./onboarding.js\"></script><script src=\"./family-members-review.js\"></script><link rel=\"stylesheet\" href=\"./family-members-review.css\"><script src=\"./family-member-detail.js\"></script><link rel=\"stylesheet\" href=\"./family-member-detail.css\"><script src=\"./family.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./chrome.css\"><link rel=\"stylesheet\" href=\"./consolidation.css\"><script src=\"./chrome.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./family-review-effects.css\"><script src=\"./family-review-effects.js\"></script><link rel=\"stylesheet\" href=\"./home-consolidation.css\"><script src=\"./home.js\"></script><script src=\"./bridge.js\"></script></body>`);\n",
+          "after": "html=html.replace('</body>',`<iframe title=\"Moteur fonctionnel DOBBY\" id=\"dv7-engine\" src=\"../essai-stitch-v5-famille/index.html\" aria-hidden=\"true\" tabindex=\"-1\"></iframe><div id=\"dv7-panel\" hidden><div id=\"dv7-panel-top\"><button id=\"dv7-close\" type=\"button\">← Retour à DOBBY</button><span id=\"dv7-panel-title\">Dobby</span></div></div><link rel=\"stylesheet\" href=\"./cuisine.css\"><link rel=\"stylesheet\" href=\"./cuisine-e073.css\"><link rel=\"stylesheet\" href=\"./recipe-import.css\"><script src=\"./root-adapters.js\"></script><script src=\"./cuisine-engine.js\"></script><script src=\"./cuisine-list.js\"></script><link rel=\"stylesheet\" href=\"./cuisine-shopping.css\"><script src=\"./cuisine-shopping.js\"></script><script src=\"./recipe-import.js\"></script><link rel=\"stylesheet\" href=\"./cuisine-e074.css\"><script src=\"./cuisine-timers.js\"></script><script src=\"./cuisine-e074.js\"></script><script src=\"./cuisine.js\"></script><link rel=\"stylesheet\" href=\"./family.css\"><script src=\"./family-engine.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./member-avatar.css\"><script src=\"../essai-stitch-v5-famille/family-profile.js?v=20261110-e06-1\"></script><script src=\"./member-avatar.js\"></script><link rel=\"stylesheet\" href=\"./magic-profile.css\"><script src=\"./magic-content.js\"></script><link rel=\"stylesheet\" href=\"./ceremony-art.css\"><script src=\"./ceremony-art.js\"></script><script src=\"./magic-profile.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./register.css\"><script src=\"./register-route-data.js\"></script><script src=\"./register.js\"></script><link rel=\"stylesheet\" href=\"./archives.css\"><script src=\"./archives-register.js\"></script><link rel=\"stylesheet\" href=\"./preparations.css\"><script src=\"./preparations.js\"></script><script src=\"./family-agenda-review.js\"></script><link rel=\"stylesheet\" href=\"./family-agenda-review.css\"><script src=\"./family-register.js\"></script><script src=\"./house-register.js\"></script><script src=\"./import-runtime.js\"></script><link rel=\"stylesheet\" href=\"./contracts.css\"><script src=\"./contracts-register.js\"></script><script src=\"./contracts-import.js\"></script><script src=\"./documents-register.js\"></script><script src=\"./tools-register.js\"></script><link rel=\"stylesheet\" href=\"./chat.css\"><script src=\"./chat-engine.js\"></script><script src=\"./chat.js\"></script><script src=\"./onboarding-route-data.js\"></script><script src=\"./onboarding-engine.js\"></script><link rel=\"stylesheet\" href=\"./onboarding.css\"><link rel=\"stylesheet\" href=\"./ritual.css\"><script src=\"./ritual-effects.js\"></script><script src=\"./ritual.js\"></script><script src=\"./onboarding.js\"></script><script src=\"./family-members-review.js\"></script><link rel=\"stylesheet\" href=\"./family-members-review.css\"><script src=\"./family-member-detail.js\"></script><link rel=\"stylesheet\" href=\"./family-member-detail.css\"><script src=\"./family.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./chrome.css\"><link rel=\"stylesheet\" href=\"./consolidation.css\"><script src=\"./chrome.js?v=20261110-e06-1\"></script><link rel=\"stylesheet\" href=\"./family-review-effects.css\"><script src=\"./family-review-effects.js\"></script><link rel=\"stylesheet\" href=\"./home-consolidation.css\"><script src=\"./home.js\"></script><script src=\"./bridge.js\"></script></body>`);\n",
+          "occurrences": 1
+        }
+      ]
+    }
+  }
+}

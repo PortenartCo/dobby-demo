@@ -1,0 +1,15 @@
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (14.500474ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (8.83694ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (3.089071ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (2.547375ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (2.263025ms)
+✔ failed native archive save rolls back derived task side effects as well as its source row (1.522545ms)
+✔ partial restores retain lifecycle, reject reactivation and refuse another household (2.523483ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.384587

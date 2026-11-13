@@ -1,0 +1,55 @@
+
+> test:all
+> DOBBY_FINAL=1 node ci.cjs
+
+✔ a fresh register generation keeps the six-card canonical Menu and all other sources (123.040968ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 128.809776
+MENU_BROWSER 154.0.8037.57
+MENU_SHORT_VIEWPORT {"width":320,"height":480,"last":{"x":16,"y":304,"width":288,"height":68,"top":304,"right":304,"bottom":372,"left":16},"scrollY":312,"maximumScroll":312,"scrollHeight":792,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":320,"height":81,"top":399,"right":320,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":320,"height":420,"last":{"x":16,"y":244,"width":288,"height":68,"top":244,"right":304,"bottom":312,"left":16},"scrollY":372,"maximumScroll":372,"scrollHeight":792,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":320,"height":81,"top":339,"right":320,"bottom":420,"left":0}}
+MENU_PASS 320 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":390,"height":480,"last":{"x":16,"y":304,"width":358,"height":68,"top":304,"right":374,"bottom":372,"left":16},"scrollY":282,"maximumScroll":282,"scrollHeight":762,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":390,"height":81,"top":399,"right":390,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":390,"height":420,"last":{"x":16,"y":244,"width":358,"height":68,"top":244,"right":374,"bottom":312,"left":16},"scrollY":342,"maximumScroll":342,"scrollHeight":762,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":390,"height":81,"top":339,"right":390,"bottom":420,"left":0}}
+MENU_PASS 390 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":1440,"height":480,"last":{"x":934.65625,"y":274,"width":409.34375,"height":68,"top":274,"right":1344,"bottom":342,"left":934.65625},"scrollY":0,"maximumScroll":0,"scrollHeight":480,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":399,"width":1280,"height":81,"top":399,"right":1360,"bottom":480,"left":80}}
+MENU_SHORT_VIEWPORT {"width":1440,"height":420,"last":{"x":934.65625,"y":244,"width":409.34375,"height":68,"top":244,"right":1344,"bottom":312,"left":934.65625},"scrollY":30,"maximumScroll":30,"scrollHeight":450,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":339,"width":1280,"height":81,"top":339,"right":1360,"bottom":420,"left":80}}
+MENU_PASS 1440 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /0 contrats et assurances enregistrés/. Input:
+
+'Contrats & Assurances\n' +
+  '\n' +
+  'Retrouvez les contrats, assurances et échéances du foyer.\n' +
+  '\n' +
+  'Ajouter un contrat manuellement\n' +
+  'Importer des contrats avec une IA\n' +
+  'Rechercher un contrat\n' +
+  '\n' +
+  '0 éléments enregistrés\n' +
+  '\n' +
+  'Aucun contrat enregistré. Ajoutez votre premier contrat.'
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/consolidation-shared.cjs:2:1422 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Contrats & Assurances\n' +
+    '\n' +
+    'Retrouvez les contrats, assurances et échéances du foyer.\n' +
+    '\n' +
+    'Ajouter un contrat manuellement\n' +
+    'Importer des contrats avec une IA\n' +
+    'Rechercher un contrat\n' +
+    '\n' +
+    '0 éléments enregistrés\n' +
+    '\n' +
+    '...',
+  expected: /0 contrats et assurances enregistrés/,
+  operator: 'match',
+  diff: 'simple'
+}

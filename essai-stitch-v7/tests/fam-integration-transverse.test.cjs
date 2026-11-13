@@ -11,6 +11,19 @@ const reconciliation = require('./fixtures/reconciliation-main-43eef-source-exte
 const maison = require('./fixtures/maison-source-extensions.json');
 const readiness = require('./fixtures/pr15-native-readiness-source-extensions.json');
 const composition = require('./fixtures/maison-pr15-source-composition.json');
+const archives = require('./fixtures/archives-main16-source-extensions.json');
+function beforeArchives(file,source,extension=archives.files[file]){
+  if(!extension)return source;
+  assert.equal(digest(source),extension.afterSha256,file+' current reviewed source changed');
+  for(const patch of [...extension.patches].reverse()){
+    assert.notEqual(patch.after,patch.before,file+' archive amendment changes an exact literal');
+    assert.equal(source.split(patch.after).length-1,patch.occurrences||1,file+' exact archive amendment occurs once');
+    source=source.replaceAll(patch.after,()=>patch.before);
+  }
+  assert.equal(digest(source),extension.beforeSha256,file+' Archives reversal restores its complete parent');
+  return source;
+}
+function readReviewed(file){return beforeArchives(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'));}
 function reverseLiterals(file,source,patches){
   for(const patch of [...patches].reverse()){
     assert.notEqual(patch.after,patch.before,patch.label+' is an exact source amendment');
@@ -85,7 +98,7 @@ test('Family source boundaries preserve history plus reviewed general and family
     for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
   }
   for (const [file, expected] of Object.entries(preserved)) {
-    let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    let source=readReviewed(file);
     const review=reviews[file],amendment=socle.files[file],composed=reconciliation.files[file];
     if(composed){currentFingerprint(file,source,review,composed);continue;}
     if(amendment){assert.equal(digest(source),amendment.sha256,file+' family-core amendment changed');continue;}
@@ -109,7 +122,7 @@ test('every reviewed whole-file amendment retains its exact source fingerprint',
     if(file==='memoWriter')continue; // Its exact bounded writer has its own proof below.
     assert.ok(review.reason,file+' approval reason');
     assert.match(review.sha256,/^[a-f0-9]{64}$/,file+' complete SHA-256');
-    currentFingerprint(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),review,reconciliation.files[file]);
+    currentFingerprint(file,readReviewed(file),review,reconciliation.files[file]);
   }
 });
 
@@ -147,13 +160,13 @@ test('published-main reconciliation preserves both parent manifests and every fu
     assert.ok(record.reason,file+' composition reason');
     assert.ok(record.tests.length,file+' targeted semantic checks');
     for(const check of record.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
-    currentFingerprint(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),null,record);
+    currentFingerprint(file,readReviewed(file),null,record);
   }
 });
 
 test('a tampered reconciliation fingerprint cannot fall back to a valid older review',()=>{
   const file='essai-stitch-v5-famille/family-files.js';
-  const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+  const source=readReviewed(file);
   const review=require('./fixtures/revue-generale-source-extensions.json')[file];
   assert.equal(digest(source),review.sha256,'The unchanged Contracts writer is a valid older review');
   assert.throws(()=>currentFingerprint(file,source,review,{...reconciliation.files[file],mergedSha256:'0'.repeat(64)}),/current reviewed source changed/);
@@ -180,7 +193,7 @@ test('Maison source amendments preserve every frozen published-main fingerprint 
     assert.equal(amendment.beforeSha256,expected,file+' retains its exact published parent proof');
     assert.ok(amendment.reason);assert.ok(amendment.patches.length);assert.ok(amendment.tests.length);
     for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
-    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    const source=readReviewed(file);
     assert.equal(digest(beforeMaison(file,source)),expected,file+' exact literals recover the full immutable parent');
     assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete Maison source changed/);
     assert.throws(()=>currentFingerprint(file,source,reviews[file],{mergedSha256:'0'.repeat(64)}),/current reviewed source changed|preserves its exact parent/,'Maison normalization never bypasses a failed parent fingerprint');
@@ -203,7 +216,7 @@ test('native readiness amendments preserve the frozen reconciliation and pin exa
     assert.ok(extension.reason,file+' explains the reviewed amendment');
     assert.ok(extension.tests.length,file+' records targeted semantic checks');
     for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
-    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    const source=readReviewed(file);
     currentFingerprint(file,source,null,reconciliation.files[file]);
     assert.throws(()=>currentFingerprint(file,source+'\n/* unreviewed source byte */',null,reconciliation.files[file]),/current reviewed source changed/);
     assert.throws(()=>currentFingerprint(file,source,null,reconciliation.files[file],{...extension,afterSha256:'0'.repeat(64)}),/current reviewed source changed/);
@@ -238,11 +251,25 @@ test('all four functional roots still load the native shared Courses adapter bef
 });
 
 test('E09 memo writer retains identity/stale/import tests with the explicit child-write amendment', () => {
-  const source = fs.readFileSync(path.join(repo, 'essai-stitch-v7/family-engine.js'), 'utf8').replace(/\r\n/g,'\n');
+  const source = readReviewed('essai-stitch-v7/family-engine.js');
   const start = source.indexOf(' // Shared memos use the native state/save pipeline');
   const end = source.indexOf(' return Object.freeze(', start);
   assert.ok(start > -1 && end > start, 'Shared native memo writer remains identifiable');
   assert.equal(digest(source.slice(start, end)), require('./fixtures/revue-generale-source-extensions.json').memoWriter.sha256);
+});
+
+test('Archives amendments reverse exactly to current main and reject altered bytes or parent hashes',()=>{
+  assert.equal(archives.baseCommit,'a4190bb3b1b2fd95995e33dbce09ffb31c77614c');
+  assert.equal(Object.keys(archives.files).length,7);
+  for(const[file,expected]of Object.entries(archives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen earlier Archives proof');
+  for(const [file,extension]of Object.entries(archives.files)){
+    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    const previous=beforeArchives(file,source);
+    assert.equal(digest(previous),extension.beforeSha256);
+    assert.throws(()=>beforeArchives(file,source+'\n/* unreviewed byte */'),/current reviewed source changed/);
+    assert.throws(()=>beforeArchives(file,source,{...extension,beforeSha256:'0'.repeat(64)}),/restores its complete parent/);
+    assert.throws(()=>beforeArchives(file,source,{...extension,afterSha256:'0'.repeat(64)}),/current reviewed source changed/);
+  }
 });
 
 module.exports = { preserved };

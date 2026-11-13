@@ -12,7 +12,19 @@ const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
 test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const preview=source('../index.html').replaceAll('\r\n','\n');
+  const archivePreview=source('../index.html').replaceAll('\r\n','\n');
+  const archiveAmendments=JSON.parse(source('./fixtures/archives-main16-native-extensions.json'));
+  const sha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(archiveAmendments.baseCommit,'a4190bb3b1b2fd95995e33dbce09ffb31c77614c');
+  assert.equal(sha(source('./fixtures/archives-native-extensions.json')),archiveAmendments.frozenParentFixture.sha256,'Frozen Archives pre-Maison proof remains byte-exact');
+  assert.equal(sha(archivePreview),archiveAmendments.afterSha256,'Complete Archives native artifact is pinned');
+  let preview=archivePreview;
+  for(const amendment of [...archiveAmendments.patches].reverse()){
+    assert.notEqual(amendment.after,amendment.before);
+    assert.equal(preview.split(amendment.after).length-1,1,'Exact Archives amendment occurs once: '+amendment.label);
+    preview=preview.replace(amendment.after,amendment.before);
+  }
+  assert.equal(sha(preview),archiveAmendments.beforeSha256,'Reversing only eight Archives literals restores the complete immutable main');
   const preparationScript='<script src="./family-preparations.js"></script>';
   assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs

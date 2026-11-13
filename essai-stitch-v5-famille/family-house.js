@@ -14,7 +14,7 @@ function merge(before,patch){
  return out;
 }
 function rows(key){const value=st[key]??[];if(!Array.isArray(value))throw Error('Registre Maison invalide. Données conservées.');return value;}
-function find(id,items=rows('houseItems')){const value=items.find(row=>row.id===id);if(!value)throw Error('Cet équipement a été supprimé.');return value;}
+function find(id,items=rows('houseItems')){const value=items.find(row=>row.id===id);if(!value)throw Error('Cet équipement a été supprimé.');if(rows('houseItems').some(row=>row.id===id))window.DobbyArchiveSources?.get('equipment',id);return value;}
 function context(){
  const api=window.DobbyFamilyUI;let connection=null,live=null,bound=null;
  try{connection=api?.connectionState?.();}catch{}
@@ -50,7 +50,7 @@ function snapshot(id=null){
 }
 function registrySnapshot(){return JSON.stringify({context:contextSnapshot(),...Object.fromEntries(KEYS.map(key=>[key,rows(key)]))});}
 const token=expected=>typeof expected==='string'?expected:expected?.snapshot;
-function current(id,expected){assertWritable();if(token(expected)!==snapshot(id))throw Error('La fiche ou le foyer a été modifié depuis son ouverture. Votre saisie est conservée.');return id?find(id):null;}
+function current(id,expected){assertWritable();if(token(expected)!==snapshot(id))throw Error('La fiche ou le foyer a été modifié depuis son ouverture. Votre saisie est conservée.');if(id)window.DobbyArchiveSources?.assertMutable('equipment',id);return id?find(id):null;}
 function currentRegistry(expected){assertWritable();if(token(expected)!==registrySnapshot())throw Error('Le registre ou le foyer a été modifié depuis son ouverture. Votre saisie est conservée.');}
 function validDate(value){
  if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value)||Number(value.slice(0,4))<1)return false;
@@ -171,7 +171,7 @@ async function addDocuments(itemId,files,associations,expected){
 }
 function documentRow(id){const doc=rows('houseDocs').find(row=>row.id===id);if(!doc)throw Error('Document introuvable.');return doc;}
 async function openDocument(id){
- assertReadable();const doc=documentRow(id),expected=snapshot(doc.itemId),blob=await houseRead(doc.id);assertReadable();
+ assertReadable();const doc=documentRow(id);find(doc.itemId);const expected=snapshot(doc.itemId),blob=await houseRead(doc.id);assertReadable();
  if(expected!==snapshot(doc.itemId))throw Error('La fiche ou le foyer a été modifié pendant la lecture.');if(!blob)throw Error('Fichier absent de cet appareil.');return blob;
 }
 async function removeDocument(id,expected){const doc=documentRow(id);current(doc.itemId,expected);commit({houseDocs:rows('houseDocs').filter(row=>row.id!==id)});return cleanup([id]);}
@@ -190,7 +190,7 @@ async function importEquipment(entries,files,expected){
    if(entry.action==='skip'){result.push({action:'skip',status:'skipped',documentIds:[]});continue;}
    const id=entry.action==='update'?entry.targetId:entry.values?.id||'eq-'+crypto.randomUUID();
    if(!identity(id)||targets.has(id)||entry.action==='add'&&items.some(row=>row.id===id))throw Error('Identité de l’équipement importé invalide.');targets.add(id);
-   const prior=entry.action==='update'?find(id,items):null,record=equipmentRecord(id,entry.values,prior,items,true);
+   if(entry.action==='update')window.DobbyArchiveSources?.assertMutable('equipment',id);const prior=entry.action==='update'?find(id,items):null,record=equipmentRecord(id,entry.values,prior,items,true);
    const index=items.findIndex(row=>row.id===id);if(index<0)items.push(record);else items[index]=record;
    const outcome={action:entry.action,status:prior?'updated':'added',id,documentIds:[]};result.push(outcome);
    if(entry.documents!==undefined&&!Array.isArray(entry.documents))throw Error('Documents importés invalides.');
@@ -211,7 +211,7 @@ function restoreBackup(data,expected){
  for(const patch of data.items){
   if(!object(patch)||!identity(patch.id)||seenItems.has(patch.id))throw Error('Identité d’équipement de sauvegarde invalide.');seenItems.add(patch.id);
   if(own(patch,'maintenancePlans')&&(!Array.isArray(patch.maintenancePlans)||patch.maintenancePlans.some(plan=>!object(plan)||!identity(plan.id))))throw Error('Identité de programme de sauvegarde invalide.');
-  const index=items.findIndex(row=>row.id===patch.id),prior=index<0?null:items[index],record=equipmentRecord(patch.id,patch,prior,items,true);
+  const index=items.findIndex(row=>row.id===patch.id),prior=index<0?null:items[index],record=equipmentRecord(patch.id,window.DobbyArchiveSources?.mergeRestored('equipment',prior,patch)||patch,prior,items,true);
   if(index<0){items.push(record);counts.itemsAdded++;}else{items[index]=record;counts.itemsUpdated++;}
  }
  for(const patch of data.logs){

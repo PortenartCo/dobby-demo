@@ -333,6 +333,36 @@ jobs:
           path: docs/dobby-v7/evidence/
           retention-days: 14
 
+  archives-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependencies only
+        run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: Archives lifecycle, conservation and four-width browser acceptance
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8876
+        run: |
+          python3 -m http.server 8876 --bind 127.0.0.1 > /tmp/dobby-archives-http.log 2>&1 &
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/archives-ci.cjs
+      - name: Keep Archives acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-archives-native-evidence
+          path: docs/dobby-v7/archives/evidence/
+          retention-days: 14
+
   reserves-sql-local:
     runs-on: ubuntu-latest
     timeout-minutes: 15

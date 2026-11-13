@@ -25,7 +25,7 @@ function merge(before,patch){
  return out;
 }
 function rows(){if(st.familyDocs===undefined)return[];if(!Array.isArray(st.familyDocs))throw Error('Registre de contrats invalide. Données conservées.');return st.familyDocs;}
-function find(id){const row=rows().find(row=>row.id===id);if(!row)throw Error('Cette fiche a été supprimée.');return row;}
+function find(id){window.DobbyArchiveSources?.get('documents',id);const row=rows().find(row=>row.id===id);if(!row)throw Error('Cette fiche a été supprimée.');return row;}
 function context(){
  const api=window.DobbyFamilyUI;let connection=null,live=null;
  try{connection=api?.connectionState?.();}catch{}
@@ -91,6 +91,7 @@ function attachmentInput(prior,input,strict){
  return result.concat((prior||[]).filter(row=>!seen.has(row.id)).map(clone));
 }
 function mergeImported(prior,input){
+ if(window.DobbyArchiveSources)input=window.DobbyArchiveSources.mergeRestored('documents',prior,input);
  if(!object(input))throw Error('Fiche importée invalide.');
  const record=merge(prior,input);
  if(prior?.retainedLocalOnly===true)record.retainedLocalOnly=true;

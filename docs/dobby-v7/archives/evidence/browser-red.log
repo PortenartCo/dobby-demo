@@ -1,0 +1,61 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Aucun élément archivé pour le moment/. Input:
+
+'✦ ARCHIVES & SCRIPTORIUM ✦\n' +
+  '—\n' +
+  '✧\n' +
+  'ARCHIVES & BIBLIOTHÈQUE DOCUMENTAIRE\n' +
+  '✧\n' +
+  'Archives & Scriptorium\n' +
+  '\n' +
+  'Registre des fiches enregistrées dans DOBBY.\n' +
+  '\n' +
+  'search\n' +
+  'cancel\n' +
+  '\n' +
+  '0 documents enregistrés\n' +
+  '\n' +
+  'Toutes\n' +
+  '\n' +
+  'Aucun document correspondant.\n' +
+  '\n' +
+  'Archives\n' +
+  'Ajouter un document\n' +
+  'Importer un fichier\n' +
+  'Contrats & Assurances\n' +
+  'Autre présentation\n' +
+  'Mémos locaux\n' +
+  'Exporter les fiches et mémos (JSON)\n' +
+  '\n' +
+  'Export et fusion des métadonnées ; les fichiers joints ne sont pas inclus. La confirmation native précède toute fusion.\n' +
+  '\n' +
+  'Importer une sauvegarde de fiches JSON\n' +
+  '\n' +
+  'Aucun fichier sélectionné\n' +
+  '\n' +
+  'Enregistrement et partage\n' +
+  '\n' +
+  'Partage familial des fiches Contrats/Assurances selon le module Documents existant. Les autres fiches restent locales sauf partage explicite. Les pièces jointes sont transférées séparément.\n' +
+  '\n' +
+  'Gérer le foyer\n' +
+  'Synchroniser le foyer\n' +
+  '\n' +
+  'Membres et agenda : Foyer non connecté'
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-ui.cjs:10:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: '✦ ARCHIVES & SCRIPTORIUM ✦\n' +
+    '—\n' +
+    '✧\n' +
+    'ARCHIVES & BIBLIOTHÈQUE DOCUMENTAIRE\n' +
+    '✧\n' +
+    'Archives & Scriptorium\n' +
+    '\n' +
+    'Registre des fiches enregistrées dans DOBBY.\n' +
+    '\n' +
+    'search\n' +
+    '...',
+  expected: /Aucun élément archivé pour le moment/,
+  operator: 'match',
+  diff: 'simple'
+}

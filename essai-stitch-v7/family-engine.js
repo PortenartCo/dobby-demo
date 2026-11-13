@@ -25,7 +25,7 @@ window.DobbyFamilyStitchEngine=(()=>{
   form.requestSubmit();
   if(lastError)throw Error(lastError);
  }
- function unsupportedFields(row,form){const fields=[...form.elements],names=new Set(['id',...fields.map(field=>field.getAttribute('name')).filter(Boolean)]),extra=Object.keys(row||{}).filter(key=>!names.has(key));for(const field of fields){const name=field.getAttribute('name');if(field.type==='date'&&row?.[name]&&!field.value)extra.push(name);}return extra;}
+ function unsupportedFields(row,form){const fields=[...form.elements],names=new Set(['id','archive',...fields.map(field=>field.getAttribute('name')).filter(Boolean)]),extra=Object.keys(row||{}).filter(key=>!names.has(key));for(const field of fields){const name=field.getAttribute('name');if(field.type==='date'&&row?.[name]&&!field.value)extra.push(name);}return extra;}
  function ensureEditable(row,form){if(unsupportedFields(row,form).length)throw Error('Cette fiche contient des informations supplémentaires ou dans un ancien format que ce formulaire ne peut pas conserver. La modification est bloquée ; les informations existantes restent intactes.');}
  const requireRecord=(rows,id)=>{if(id&&!rows.some(x=>x.id===id))throw Error('Cette fiche a été supprimée. Revenez au registre.');};
  function memberForm(id){requireRecord(read().members,id);page('health');action('v23Member',id?'edit':'new',id?{id}:{});}
@@ -75,10 +75,11 @@ window.DobbyFamilyStitchEngine=(()=>{
  function deleteEvent(id){guardSharedWrite();requireRecord(read().events,id);page();action('fpAction','delete',{id});}
  function exportEvent(id){page();action('fpAction','ics',{id});}
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
- function saveContact(id,values){guardSharedWrite();const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
+ function saveContact(id,values){if(id)win().DobbyArchiveSources?.assertMutable('contacts',id);guardSharedWrite();const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
  function deleteContact(id){guardSharedWrite();requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
  // Shared memos use the native state/save pipeline and its family module.
  function changeSharedMemo(p){
+  if(p.id&&p.action!=='import')window.DobbyArchiveSources?.assertMutable('sharedNotes',p.id);
   const before=st.sharedFamilyNotes,rows=before||[];
   if(!Array.isArray(rows))throw Error('Registre des mémos illisible. Les données sont conservées.');
   let id=p.id,values=p.values,existing=rows.find(row=>row.id===id);

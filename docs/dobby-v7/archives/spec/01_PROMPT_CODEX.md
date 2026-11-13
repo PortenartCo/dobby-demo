@@ -1,0 +1,47 @@
+# CODEX — DOBBY V7 / Archives & Scriptorium
+
+**MODE : EXECUTION.** Les décisions fonctionnelles et graphiques sont validées. Exécute la mission en autonomie sur une branche/worktree indépendant, avec checkpoints, tests et preuves vérifiables. Ne pose de question que pour une dépendance irréversible ou un blocage réel. **N'exécute pas de SQL distant, ne fusionne pas et ne publie pas en production sans autorisation de publication distincte.**
+
+## 1. Départ, sources, sécurité du chantier
+
+- Dépôt : `PortenartCo/dobby-demo`. Dernier `main` observé : `54d74b9448a1c518d8a3c483cd4deaea1e493748` le 13/11/2026 ; **récupère le `main` courant et vérifie les PR ouvertes**, en particulier #11 et #15. Ne travaille pas sur une branche parallèle non fusionnée. La PR #13 Contrats et #12 Famille sont déjà dans `main`.
+- Cherche le `AGENTS.md` applicable s'il en existe un dans la révision courante, respecte ses gates. Pas de fichier `AGENTS.md` trouvé dans l'arbre `main` au précontrôle.
+- Sources déjà identifiées : `essai-stitch-v7/documents-register.js`, `contracts-register.js`, `house-register.js`, `register.js`, `family.js`, `family-engine.js`, `register.css`, `register-routes.json`, `essai-stitch-v5-famille/family-contracts.js`, `family-modules.js`, `family-v2.js`. Parcours recettes/notes/contacts : identifier leurs writers réels **par recherche ciblée** avant modification. `essai-stitch-v7/tests/contracts-archives-permissions.cjs`, `register-documents.cjs`, `register-documents-sync.cjs`, `register-house.cjs`, `contracts-ci.cjs`, `register-navigation.cjs` existent.
+- Lis `02_CAHIER_DES_CHARGES.md`, `03_TESTS_RECETTE.md` et `04_REFERENCES_TECHNIQUES.md`. Les images et captures originales sont dans `assets/` et `captures_revue/`. Ne recrée pas le graphisme Stitch : utilise uniquement son image panoramique existante.
+
+## 2. Travail à réaliser — quatre checkpoints
+
+**C0 — Inventaire limité (aucune mutation)** : cartographie les enregistrements canoniques archivables et les vrais writers, la visibilité du statut dans l'UI, les mécanismes de sauvegarde/synchronisation et les droits Parents/Enfants. Identifie les migrations nécessaires ou évitables. Fournis un court tableau source → ID canonique → writer → partage → statut. Ne considère pas automatiquement tout historique, ledger, rendez-vous confirmé ou achat effectué comme une fiche désactivable ; les exclusions doivent être motivées et sécurisées.
+
+**C1 — Cycle de vie réversible** : développe l'opération « Archiver » depuis les fiches sources, avec confirmation avant mutation. L'élément conserve son ID, son contenu, ses documents, ses références, son historique et la preuve de date d'archivage ; il quitte la liste des actifs. « Réactiver » n'est disponible que dans Archives, confirme avant mutation, préserve le même objet et le réaffiche dans sa source. Utilise un état canonique dans la donnée d'origine et un agrégateur **dérivé** ; ni copie de fichier, ni second registre, ni writer concurrent. Assure compatibilité des anciens objets dépourvus de statut (actifs), persistance locale, synchronisation propre aux modules déjà partagés, absence de perte des champs inconnus, refus des actions non autorisées et gestion des conflits. Protéger les enregistrements et documents existants est une exigence bloquante.
+
+**C2 — Archives UI Stitch 22** : remplace seulement le bandeau par `assets/Stitch22-screen.png` (1376×768), sans refaire la page. Cartouche « ✦ ARCHIVES & SCRIPTORIUM ✦ » ancré en bas à droite de l'image, contraste et recadrage mobile/PC maîtrisés. Une recherche corrigée, sans chevauchement de sous-titre, double bordure ni icônes décalées. Liste unique des **seuls éléments archivés** (ordre date d'archivage décroissant) avec type, module source, date et actions « Consulter » / « Réactiver ». Consultation de la vraie fiche d'origine en mode archivé ; écran vide « Aucun élément archivé pour le moment ». Ne créer aucune donnée de démonstration.
+
+**C3 — Simplification + intégration + preuves** : supprime sur la page Archives les filtres « Toutes » / « Assurances », tout le bloc « Archives » d'ajout/import/export/liens/mémos, le JSON d'import de sauvegarde, le bloc « Enregistrement et partage », « Gérer le foyer », « Synchroniser le foyer » et les messages techniques parasites. Les fonctionnalités réelles d'import de contrats, de sauvegarde et de synchronisation doivent rester disponibles via leurs **modules canoniques** et `Menu → Paramètres` ; ne supprime pas les données/handlers nécessaires. Teste tous les parcours ciblés et les non-régressions, ouvre une PR avec rapport et captures. Stoppe avant fusion ou publication.
+
+## 3. Comportement requis et garde-fous
+
+- Actions source obligatoires pour Contrats & Assurances, Maison & Équipements et recettes personnelles ; étendre aux contacts, notes et autres fiches effectivement archivables **après inventaire et sans casser leur sémantique**. Le registre central est extensible, mais les cas complexes (Missions/Runes, santé, identité des membres, journaux, menus déjà planifiés) ne doivent pas être archivés artificiellement ni leurs historiques modifiés : marquer clairement les exceptions et justifier les garde-fous.
+- Ne pas détruire ni masquer définitivement les anciens documents autonomes `familyDocs` qui n'ont pas de module d'origine. Leur accès natif doit rester garanti par un chemin approprié, hors de la liste des archives non archivées ; aucun archivage silencieux.
+- Contrats : confirmer en rappelant que l'archivage **ne résilie pas le contrat** ; préserver échéances, préavis et documents. Ne pas inventer d'action juridique ou d'alerte. Réactivation : afficher les dates réelles recalculées/relues, ne pas simuler des dates futures.
+- Recettes : conserver menus/plannings/courses déjà construits, sans déplacer ni dupliquer la recette ou déclencher une modification de panier ; si elle est archivée, ne plus proposer la recette parmi les sélections actives, sans casser les références déjà enregistrées.
+- Documents : les binaires restent dans leurs stockages existants ; **ne jamais copier des pièces dans un nouveau dépôt** ni supprimer silencieusement des objets Storage. Un lien expiré ou un fichier absent doit produire un état honnête.
+- Droits : aucune fuite de documents privés vers Archives partagées ; respecter lecture seule Enfant, foyer canonique, déconnexion/changement de compte et restrictions RLS déjà présentes. Pas de service-role côté client ; ne pas affaiblir les politiques pour faire passer les tests.
+- Préserver les routes, moteurs, theme, header/dock fixes, Contrats E08, missions/runes, synchronisation Courses/Recettes, sauvegardes Paramètres, page Maison et invariants Family V3. Pas d'appels IA ni de nouvelles dépendances pour cet archivage. Pas de nouvelle architecture globale si une extension locale suffit.
+- Ne pas utiliser les exemples fictifs de la revue (assurance, chaudière, recette) comme données de production.
+
+## 4. Tests et définition de DONE
+
+- **Tests causaux RED → GREEN** des états (création, confirmation, annulation, réactivation, mêmes IDs, conservation champs inconnus/pièces, migration de lecture anciens formats), des filtres actifs, tri, recherche, absence de doublons et cas d'erreur.
+- Browser réel automatisé aux largeurs **320, 390, 768 et 1440 px** ; capture du hero Stitch22 et des états liste vide, liste avec archives, détail et confirmation. Pas de chevauchement, clipping, scroll horizontal ni barre de navigation masquée.
+- Contrôles d'autorisation et de synchronisation avec **fixtures explicitement identifiées** ; changement d'utilisateur/foyer, données locales hors ligne, rejeu et conflits. Ne pas présenter une simulation comme recette serveur à deux comptes.
+- Rejouer les tests pertinents existants et adapter, **sans supprimer leurs assertions de conservation**, ceux qui ciblent les anciens boutons désormais retirés. Étendre aux tests de contrats, pièces, Maison, Recettes, navigation, sauvegarde et Family/Runes si du code transverse est modifié.
+- Build réel et CI PR au SHA final. N'élargir à la suite exhaustive qu'au checkpoint final ou si une régression transversale est possible ; éviter les campagnes identiques redondantes sans changement de code.
+- Remplir `03_TESTS_RECETTE.md` avec statut PASS/FAIL/BLOCKED et preuves exactes. Livrer PR, SHA, fichiers modifiés, tests exécutés, captures comparatives, limites, vérification de la réversibilité. **Distinction obligatoire : code, tests, intégration, déploiement, recette réelle**. Ne pas dire « déployé » si la PR n'est pas fusionnée et publiée.
+- Si une mutation de schéma Supabase est réellement indispensable : fournir proposition SQL manuelle séparée, préflight/idempotence/rollback/contrôles, **aucune exécution distante ni activation de flag**. Ne pas rejouer les lots SQL de Family V3 déjà installés.
+
+## 5. Conditions d'arrêt
+
+Arrêter et exposer l'écart seulement si : identité canonique ou champ persistant risquent d'être perdus ; synchronisation non compatible avec ancien pair ; permissions du foyer non vérifiables ; collision PR #11/#15 impossible à isoler ; migration irréversible ou nouveau writer exigé ; un test de conservation bloquant échoue. En dehors de ces cas, corrige et reprends dans le worktree.
+
+**Remise attendue :** une PR autonome **non fusionnée**, un rapport concis et vérifiable, captures avant/après, bilan de chaque checkpoint et liste précise des fonctionnalités prêtes versus celles restant soumises à recette globale A/B future.
