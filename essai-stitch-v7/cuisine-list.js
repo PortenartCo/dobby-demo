@@ -127,15 +127,15 @@ window.DobbyCuisineList=(()=>{
     const s=snapshot(E),receipts=E.evaluate('return [...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[]),...(st.shopFinal?.imports||[])];');
     const rows=E.evaluate(`const result=[];for(const [key,m]of pendingMeals()){
       const date=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)(-dessert)?$/.test(key))continue;
-      const r=getR(m.id);if(!r)continue;const grouped=new Map(),ref=m._e072ImportRef||(key+'|'+m.id);
+      const r=m._dessertRecipeSnapshot||getR(m.id);if(!r)continue;const grouped=new Map(),ref=m._e072ImportRef||m.dessertIngredientRef||(key+'|'+m.id);
       for(const [name,q,unit]of r.ingredients){const token=ref+'|'+name.trim().toLocaleLowerCase('fr-BE')+'|'+(unit||'').trim().toLocaleLowerCase('fr-BE');
         const qty=q==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0?null:Number(q)*portionCount(m)/r.servings;
         const before=grouped.get(token);if(before)before.qty=before.qty==null||qty==null?null:before.qty+qty;
-        else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+(key.endsWith('-dessert')?'Dessert · ':'')+r.name,meal:mealSignature(key,m)});
+        else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+(key.endsWith('-dessert')?'Dessert · ':'')+r.name,meal:mealSignature(key,m),...(m._dessertPreparationId?{preparationId:m._dessertPreparationId,serviceKeys:m._dessertServices}:{})});
       }result.push(...grouped.values());}return result;`,range);
     // Normalize quantities without changing provenance tokens from E07.2.
     for(const row of rows){const m=measure(row);row.originalUnit=row.unit;row.qty=m.qty;row.unit=m.unit;}
-    const inRange=row=>row.key.slice(0,10)>=range.start&&row.key.slice(0,10)<=range.end;
+    const inRange=row=>(row.serviceKeys||[row.key]).some(key=>key.slice(0,10)>=range.start&&key.slice(0,10)<=range.end);
     let proposed;
     if(s.shared){
       // Allocate manual coverage over the complete source set before asking the
@@ -174,7 +174,7 @@ window.DobbyCuisineList=(()=>{
     const selected=new Map(proposal.rows.map(x=>[x.token,x])),groups=current.rows.filter(x=>selected.has(x.token));
     for(const group of groups)if(JSON.stringify(group)!==JSON.stringify(selected.get(group.token)))throw Error('Les articles ou un apport ont changé. Ouvrez un nouveau récapitulatif.');
     if(!groups.length)return 0;const rows=groups.flatMap(x=>x.contributions);
-    const tag=`for(const row of p.rows)if(st.planned[row.key])st.planned[row.key]._e072ImportRef=row.ref;`;
+    const tag=`for(const row of p.rows){if(st.planned[row.key])st.planned[row.key]._e072ImportRef=row.ref;if(row.preparationId){const batch=st.planned.__dobbyDessertPreparationsV1?.batches?.[row.preparationId];if(!batch)throw Error('La préparation dessert a changé.');batch.imported=true;}}`;
     if(current.scope!=='local'){const result=await family(E).importRows(rows,current.scope);transaction(E,tag+`const scopes=st.shopFinal.sharedOrigins ||= {};const origins=scopes[p.scope] ||= {};for(const item of p.origins)origins[item.key]=[...new Set([origins[item.key],item.origin].filter(Boolean))].join(' ; ');`,{rows,scope:current.scope,origins:groups.map(x=>({key:keyOf(x),origin:x.origin}))});return result;}
     // Prepare one update per compatible product, using the native transaction.
     const items=E.read().state.shopFinal.items.map(parse),updates=[];
