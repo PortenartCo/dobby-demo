@@ -11,6 +11,9 @@ const f = {
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
   homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null
 };
+let syncCycle=null,publicContextRead=null;
+const verificationOwner=()=>({epoch:f.epoch,userId:f.session?.user_id,householdId:f.householdId});
+const sameVerificationOwner=owner=>Boolean(owner&&owner.epoch===f.epoch&&owner.userId===f.session?.user_id&&(!owner.householdId||owner.householdId===f.householdId));
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -143,11 +146,17 @@ async function token(expected=requestActor()) {
   return f.session.access_token;
 }
 function assertNativeSharedWrite(method,query,body={}) {
-  const state=accessController?.state?.()||f.accessContext;
-  const category=(st.familyMembers||[]).find(member=>member.id===state?.memberId)?.memberCategory||state?.profile?.memberCategory;
-  if(!category||category==='parent')return;
-  if(!f.core?.assertSharedWrite)throw Error('Permissions serveur indisponibles : écriture partagée bloquée.');
-  f.core.assertSharedWrite({method,query,body,access:{...state,profile:{...state?.profile,memberCategory:category}}});
+  let state=accessController?.state?.()||f.accessContext;
+  // A new native Auth session can precede the next V7 context refresh. Its
+  // blank/stale V7 state is authenticated but unverified, never local-only.
+  if(f.session&&(!f.session.user_id||state?.userId!==f.session.user_id||state?.authenticated!==true)){
+    state={phase:'unavailable',userId:f.session.user_id||null,authenticated:true,verified:false};
+  }
+  if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state});return;}
+  const rpc=query.split('?')[0].replace(/^rpc\//,'');
+  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||['dobby_v7_context','dobby_v7_preview_invitation','dobby_v7_family_capabilities','dobby_v7_preview_child_invitation','dobby_missions_v2_capabilities','dobby_missions_v3_capabilities'].includes(rpc))return;
+  if(!state?.userId&&!state?.authenticated&&!state?.memberId&&!state?.profile?.memberCategory&&state?.phase!=='active')return;
+  throw Error('Permissions serveur indisponibles : écriture partagée bloquée.');
 }
 async function authorized(method, query, body, headers = {}) {
   const expected=requestActor();
@@ -180,6 +189,7 @@ async function storageFetch(method,path,file){
   const send=async()=>{
     assertRequestActor(expected);const jwt=await token(expected);assertRequestActor(expected);
     assertNativeSharedWrite(method,'storage');
+    if(!validStoragePath(path))throw Error('Fichier hors du foyer');
     const target=method==='GET'?'authenticated/'+SHARED_BUCKET+'/'+path:
       method==='DELETE'?SHARED_BUCKET:SHARED_BUCKET+'/'+path;
     const headers={apikey:f.key,Authorization:'Bearer '+jwt};
@@ -198,6 +208,7 @@ async function storageFetch(method,path,file){
   try{return await send()}catch(e){
     assertRequestActor(expected);
     if(e.status!==401)throw e;
+    assertNativeSharedWrite(method,'storage');
     await refreshToken(expected);assertRequestActor(expected);return send();
   }
 }
@@ -314,9 +325,24 @@ async function sync() {
   if (f.syncing) { f.again = true; return; }
   f.syncing = true;
   const epoch = f.epoch;
+  const cycle={...verificationOwner(),promise:null};let finishCycle;
+  cycle.promise=new Promise(resolve=>{finishCycle=resolve;});syncCycle=cycle;
   try {
+    // A bootstrap context read which already started owns verification first.
+    // Public reads started later wait for this complete drain instead.
+    if(sameVerificationOwner(publicContextRead)){
+      try {await publicContextRead.promise;}catch {}
+      if(epoch!==f.epoch)return;
+    }
     await requireHousehold();
+    cycle.householdId=f.householdId;
     if (epoch !== f.epoch) return;
+    // Login and cached-session recovery share the same canonical read under
+    // the existing sync lock. bind() may verify the household, never sync().
+    if(!verifiedBinding()){
+      try {await (await ensureAccess()).refresh();}catch {}
+      if(epoch!==f.epoch)return;
+    }
     await pull(epoch);
     const queue = [...f.cache.values()].filter(x => x.syncState === 'pending')
       .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
@@ -334,6 +360,8 @@ async function sync() {
   } finally {
     if(f.checkingEpoch===epoch)f.checkingEpoch=null;
     f.syncing = false;
+    if(syncCycle===cycle)syncCycle=null;
+    finishCycle();
     repaint();
     if (f.again) {
       f.again = false;
@@ -344,6 +372,7 @@ async function sync() {
 function status() {
   if (!f.session) return 'Non connecté';
   if (!f.context) return f.error || 'Foyer à vérifier';
+  if (accessController && !verifiedBinding()) return 'Foyer connecté en lecture seule : profil et droits V7 à vérifier.';
   const arr = [...f.cache.values()];
   const conflicts = arr.filter(x => x.syncState === 'conflict').length;
   const pending = arr.filter(x => x.syncState === 'pending').length;
@@ -775,7 +804,9 @@ function ensureAccess(){
     guard();try{await requireHousehold();guard();
      if(f.householdId!==context.householdId)throw Error('Le contexte serveur ne correspond pas au foyer autorisé.');
      if(!f.provider?.adoptVerifiedFamily)throw Error('Le registre familial natif est indisponible.');
-     await f.provider.adoptVerifiedFamily({...context,identityVerified:true});guard();
+     const binding={...context,identityVerified:true};
+     const revalidated=await f.provider.revalidateExistingFamily?.(binding);guard();
+     if(revalidated!==true){await f.provider.adoptVerifiedFamily(binding);guard();}
      f.accessContext={...context,epoch:f.epoch};
     }finally{if(f.checkingEpoch===before.epoch)f.checkingEpoch=null;}
    },
@@ -784,11 +815,29 @@ function ensureAccess(){
   });return accessController;
  });return accessPromise;
 }
+async function refreshPublicAccess(){
+ const owner=verificationOwner();
+ // Serialize actual reads, never reuse an earlier GET as confirmation of a
+ // later mutation. The internal Sync read does not call this waiting facade.
+ for(;;){
+  if(!sameVerificationOwner(owner))throw Error('Le compte ou le foyer a changé pendant la vérification.');
+  const pending=sameVerificationOwner(syncCycle)?syncCycle:sameVerificationOwner(publicContextRead)?publicContextRead:null;
+  if(!pending)break;
+  try {await pending.promise;}catch {}
+ }
+ const entry={...verificationOwner(),promise:null};
+ entry.promise=ensureAccess().then(controller=>{
+  if(!sameVerificationOwner(entry))throw Error('Le compte ou le foyer a changé pendant la vérification.');
+  return controller.refresh();
+ });publicContextRead=entry;
+ try{return await entry.promise;}finally{if(publicContextRead===entry)publicContextRead=null;}
+}
 const accessFacade=Object.freeze({
  get ready(){return ensureAccess();},
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
- ...Object.fromEntries(['refresh','signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ refresh:refreshPublicAccess,
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;

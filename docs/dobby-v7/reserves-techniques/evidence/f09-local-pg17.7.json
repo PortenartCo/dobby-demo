@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "postgres": "17.7",
+  "imageId": "sha256:6c2f8e0ad2949b4e100456f138b1184fe58cb2010cd7a9721008abb87f501458",
+  "network": "none",
+  "fictionalOnly": true,
+  "liveBackendVerified": false,
+  "completeF09": false,
+  "sourceSha256": {
+    "roles-01-apply.sql": "583963d61a271f021a3a94051a8dcff4f5819f6ee0fdeb7542185b3e0da3a615",
+    "roles-02-verify.sql": "9b9c314a541a3546dd95206fae110ba179f5f53338d93457bd5ed536e4b5e88f",
+    "roles-03-rollback.sql": "cbc565511ff46d41add4d836c078914681ee1753c089ab61953fd711e429d1a7",
+    "tests/role-guard-fixture.sql": "01f387abdc59667d076bd40522fff00011d3e0b59bd871f24f81bfc5fe3eb61c",
+    "tests/run-role-guard-local.py": "23b378cb2e2c7d6e1310a4beb5a00ba2339df19a33bb6f5ab0ceec56312690e9"
+  },
+  "tests": [
+    "exact verifier rejects permissive-looking restrictive policy",
+    "quoted whitespace mutants rejected in both Storage clauses and helper JSON key",
+    "verifier rejects PUBLIC execute, SECURITY DEFINER helper, wrong policy role, altered body and privileged client",
+    "child: insert/update/delete restricted",
+    "pet: insert/update/delete restricted",
+    "revoked: insert/update/delete restricted",
+    "unknown: insert/update/delete restricted",
+    "parent-no-edit: insert/update/delete restricted",
+    "canonical bindings protected and permission revocation is effective without trusting JWT user_metadata",
+    "canonical parent own household only; storage root/move isolation; unrelated bucket unchanged",
+    "LIMITATION reproduced: restricted authenticated policies do not cover separate SECURITY DEFINER writer role",
+    "rollback preserves all rows and restores prior direct permissions",
+    "prerequisites reject disabled RLS and login-enabled context owner without partial install"
+  ]
+}

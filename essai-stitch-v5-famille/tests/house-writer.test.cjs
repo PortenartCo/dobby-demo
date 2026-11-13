@@ -2,12 +2,13 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const source=new URL('../family-house.js',`file://${__filename}`),json=value=>JSON.parse(JSON.stringify(value));
 function setup(state={}){
  const st={houseItems:[],houseLogs:[],houseDocs:[],familyMembers:[{id:'parent',memberCategory:'parent'}],...state},saved=[],files=new Map();
- const connection={epoch:1,userId:'user',householdId:'home',memberId:'parent',access:'verified',identityVerified:true},live={...connection,permissions:{canEdit:true}};
- const api={getContext:()=>({...live}),connectionState:()=>({...connection})};
+ const connection={epoch:1,userId:'user',householdId:'home',memberId:'parent',access:'verified',verified:true,identityVerified:true,permissions:{canEdit:true}},live={...connection,permissions:{canEdit:true}};
+ const bound={authenticated:true,verified:true,phase:'active',userId:'user',householdId:'home',memberId:'parent',profile:{id:'parent',memberCategory:'parent'},permissions:{canEdit:true}};
+ const api={getContext:()=>({...live}),connectionState:()=>({...connection}),access:{state:()=>bound}};
  const env=vm.createContext({st,crypto,Blob,Uint8Array,window:{DobbyFamilyUI:api},save:()=>saved.push(json(st)),render:()=>{},houseStore:async(blob,key)=>{files.set(key,blob);},houseRead:async(key,remove)=>remove?files.delete(key):files.get(key)});
  if(fs.existsSync(source))vm.runInContext(fs.readFileSync(source,'utf8'),env);
  assert.ok(env.window.DobbyFamilyHouse,'native Maison writer exists');
- return{st,saved,files,connection,live,api,env,H:env.window.DobbyFamilyHouse};
+ return{st,saved,files,connection,live,bound,api,env,H:env.window.DobbyFamilyHouse};
 }
 const plan=(id='flue')=>({id,title:id,lastKnownDate:'2024-02-29',interval:{value:12,unit:'months'},nextDateOverride:''});
 const add=H=>H.save(null,{name:'Chaudière',maintenancePlans:[plan(),{...plan('boiler'),interval:{value:36,unit:'months'}}]},H.snapshot());
@@ -39,11 +40,11 @@ test('intervention edits and removal keep old unclassified logs and linked docum
 });
 
 test('all mutations reject stale rows, changed context, child actors and read-only permissions',async()=>{
- const {H,st,connection,live,env,files}=setup(),id=add(H),expected=H.snapshot(id);st.houseLogs.push({id:'new',itemId:id,date:'2025-01-01',note:'Concurrent'});
+ const {H,st,connection,live,bound,env,files}=setup(),id=add(H),expected=H.snapshot(id);st.houseLogs.push({id:'new',itemId:id,date:'2025-01-01',note:'Concurrent'});
  assert.throws(()=>H.save(id,{name:'Stale'},expected),/modifi|version/i);assert.throws(()=>H.save(null,{name:'No snapshot'}),/modifi|version/i);
  const current=H.snapshot(id);connection.epoch++;assert.throws(()=>H.save(id,{name:'Scope'},current),/modifi|foyer/i);
  for(const mode of ['child','denied','unverified','readonly']){
-  st.familyMembers[0].memberCategory=mode==='child'?'child':'parent';live.permissions.canEdit=mode!=='denied';connection.identityVerified=mode!=='unverified';live.identityVerified=mode!=='unverified';env.window.parent={DobbyFamilyStitch:{sharedReadOnly:()=>mode==='readonly'}};
+  st.familyMembers[0].memberCategory=mode==='child'?'child':'parent';bound.profile.memberCategory=mode==='child'?'child':'parent';live.permissions.canEdit=mode!=='denied';connection.identityVerified=mode!=='unverified';live.identityVerified=mode!=='unverified';env.window.parent={DobbyFamilyStitch:{sharedReadOnly:()=>mode==='readonly'}};
   const token=H.snapshot(id);assert.throws(()=>H.save(id,{name:'Forbidden'},token),/parent|lecture|vérifi|autorisé/i);assert.throws(()=>H.saveLog(id,null,{date:'2025-01-01',note:'Forbidden'},token),/parent|lecture|vérifi|autorisé/i);await assert.rejects(H.addDocuments(id,[file()],{},token),/parent|lecture|vérifi|autorisé/i);await assert.rejects(H.delete(id,token),/parent|lecture|vérifi|autorisé/i);
  }
  assert.equal(st.houseItems[0].name,'Chaudière');assert.equal(files.size,0);
@@ -75,10 +76,10 @@ test('multiple local documents retain native IDs, validate binary type and open 
 
 test('async document staging rejects scope, row, permission and role changes then cleans only staged IDs',async()=>{
  for(const change of ['scope','row','permission','child']){
-  const {H,st,connection,live,env,files}=setup(),id=add(H),old=file('old.pdf');files.set('unrelated',old);let release;
+  const {H,st,connection,live,bound,env,files}=setup(),id=add(H),old=file('old.pdf');files.set('unrelated',old);let release;
   env.houseStore=async(blob,key)=>{files.set(key,blob);await new Promise(resolve=>release=resolve);};
   const pending=H.addDocuments(id,[file()],{},H.snapshot(id));while(!release)await new Promise(resolve=>setImmediate(resolve));
-  if(change==='scope')connection.householdId='other';if(change==='row')st.houseItems[0].notes='Concurrent';if(change==='permission')live.permissions.canEdit=false;if(change==='child')st.familyMembers[0].memberCategory='child';release();
+  if(change==='scope')connection.householdId='other';if(change==='row')st.houseItems[0].notes='Concurrent';if(change==='permission')live.permissions.canEdit=false;if(change==='child'){st.familyMembers[0].memberCategory='child';bound.profile.memberCategory='child';}release();
   await assert.rejects(pending,/modifi|foyer|parent|lecture/i);assert.equal(st.houseDocs.length,0);assert.equal(files.size,1);assert.equal(files.get('unrelated'),old);
  }
 });
@@ -111,7 +112,7 @@ test('a source-backed program with unknown frequency imports without an invented
 test('canonical child and unverified bindings cannot inherit a parent grant from editable local member data',()=>{
  for(const mode of ['canonical-child','cached','stale-bound']){
   const {H,st,api,connection}=setup(),id=add(H),before=json(st);
-  api.access={state:()=>({verified:mode!=='stale-bound',userId:'user',householdId:'home',memberId:'parent',profile:{memberCategory:mode==='canonical-child'?'child':'parent'},permissions:{canEdit:true}})};
+  api.access={state:()=>({authenticated:true,phase:'active',verified:mode!=='stale-bound',userId:'user',householdId:'home',memberId:'parent',profile:{id:'parent',memberCategory:mode==='canonical-child'?'child':'parent'},permissions:{canEdit:true}})};
   if(mode==='cached')connection.access='cached';
   assert.throws(()=>H.save(id,{name:'Escalated'},H.snapshot(id)),/parent|vérifi|lecture|autorisé/i);assert.deepEqual(json(st),before);
  }
@@ -151,10 +152,10 @@ test('partial native backup restores additive metadata without erasing serials, 
 
 test('partial restore rejects stale registry, changed foyer, denied rights and malformed archives without any save',()=>{
  for(const mode of ['stale','scope','child','format','duplicate','date','log-date','log-note','orphan','reassigned','count']){
-  const {H,st,saved,connection}=setup(),id=add(H),logId=H.saveLog(id,null,{date:'2025-01-01',note:'Existing'},H.snapshot(id));
+  const {H,st,saved,connection,bound}=setup(),id=add(H),logId=H.saveLog(id,null,{date:'2025-01-01',note:'Existing'},H.snapshot(id));
   assert.equal(typeof H.restoreBackup,'function','native partial restore API exists');
   const data={format:'dobby-house',version:1,items:[{id,name:'Changed'}],logs:[]},expected=H.registrySnapshot();
-  if(mode==='stale')st.houseItems[0].notes='Concurrent';if(mode==='scope')connection.epoch++;if(mode==='child')st.familyMembers[0].memberCategory='child';if(mode==='format')data.version=2;
+  if(mode==='stale')st.houseItems[0].notes='Concurrent';if(mode==='scope')connection.epoch++;if(mode==='child'){st.familyMembers[0].memberCategory='child';bound.profile.memberCategory='child';}if(mode==='format')data.version=2;
   if(mode==='duplicate')data.items.push({id,name:'Duplicate'});if(mode==='date')data.items[0].purchased='2026-02-30';if(mode==='log-date')data.logs=[{id:'bad',itemId:id,date:'2026-02-30',note:'Invalid'}];if(mode==='orphan')data.logs=[{id:'bad',itemId:'missing',date:'2025-01-01',note:'Orphan'}];
   if(mode==='log-note')data.logs=[{id:'bad',itemId:id,date:'2025-01-01'}];
   if(mode==='reassigned'){data.items.push({id:'other',name:'Other'});data.logs=[{id:logId,itemId:'other',date:'2025-01-01',note:'Moved'}];}if(mode==='count')data.items=new Array(1001).fill({id:'one',name:'Too many'});
@@ -166,4 +167,31 @@ test('partial native restore rolls back both native arrays on save failure and p
  const {H,st,env}=setup({houseItems:[{id:'old',name:'Old',purchased:'date papier',opaque:9}],houseLogs:[{id:'old-log',itemId:'old',date:'date papier',note:'Old',planId:'historical-missing',opaque:7}]}),data={format:'dobby-house',version:1,items:[{id:'old',name:'Updated',purchased:'date papier'}],logs:[{id:'old-log',itemId:'old',date:'date papier',note:'Updated'}]};
  assert.equal(typeof H.restoreBackup,'function','native partial restore API exists');const before=json(st);env.save=()=>{throw Error('quota');};assert.throws(()=>H.restoreBackup(data,H.registrySnapshot()),/quota/);assert.deepEqual(json(st),before);
  env.save=()=>{};H.restoreBackup(data,H.registrySnapshot());assert.equal(st.houseItems[0].purchased,'date papier');assert.equal(st.houseItems[0].opaque,9);assert.equal(st.houseLogs[0].date,'date papier');assert.equal(st.houseLogs[0].planId,'historical-missing');assert.equal(st.houseLogs[0].opaque,7);
+});
+
+test('an authenticated bootstrap cannot use local-mode Maison writes before canonical verification',()=>{
+ const {H,st,api,connection}=setup(),id=add(H);Object.assign(connection,{access:'local',userId:'user',householdId:null,memberId:null,identityVerified:false});
+ api.getContext=()=>null;api.access={state:()=>({authenticated:true,userId:'user',verified:false,phase:'unavailable',profile:null,permissions:{}})};
+ const before=json(st);assert.throws(()=>H.save(id,{name:'Unauthorized bootstrap'},H.snapshot(id)),/vérifi|lecture|canonique/i);assert.deepEqual(json(st),before);
+});
+
+test('a verified canonical parent keeps Maison write rights despite an obsolete local child category',()=>{
+ const {H,st,api}=setup(),id=add(H);st.familyMembers[0].memberCategory='child';
+ api.access={state:()=>({authenticated:true,verified:true,phase:'active',userId:'user',householdId:'home',memberId:'parent',profile:{id:'parent',memberCategory:'parent'},permissions:{canEdit:true}})};
+ H.save(id,{name:'Canonical parent edit'},H.snapshot(id));assert.equal(st.houseItems[0].name,'Canonical parent edit');
+});
+
+test('authenticated writes require a matching canonical profile and an explicit parental write grant',()=>{
+ for(const mode of ['profile','grant','phase','authenticated']){
+  const {H,st,api}=setup(),id=add(H),canonical={authenticated:true,verified:true,phase:'active',userId:'user',householdId:'home',memberId:'parent',profile:{id:'parent',memberCategory:'parent'},permissions:{canEdit:true}};
+  if(mode==='profile')canonical.profile.id='other';if(mode==='grant')canonical.permissions={};if(mode==='phase')canonical.phase='cached';if(mode==='authenticated')canonical.authenticated=false;
+  api.access={state:()=>canonical};const before=json(st);assert.throws(()=>H.save(id,{name:'Malformed canonical'},H.snapshot(id)),/vérifi|parent|lecture|canonique/i);assert.deepEqual(json(st),before);
+ }
+});
+
+test('truly unauthenticated local Maison remains writable and a coherent verified child can read local documents',async()=>{
+ const local=setup();Object.assign(local.connection,{userId:null,householdId:null,memberId:null,access:'local',verified:false,identityVerified:false});local.api.getContext=()=>null;local.api.access={state:()=>({authenticated:false,verified:false,phase:'signed-out',userId:null,memberId:null,profile:null,permissions:{}})};
+ const localId=add(local.H);assert.equal(local.st.houseItems[0].id,localId);
+ const {H,st,bound,live,connection,files}=setup(),id=add(H),[docId]=await H.addDocuments(id,[file()],{},H.snapshot(id));st.familyMembers[0].memberCategory='parent';bound.profile.memberCategory='child';bound.permissions.canEdit=false;live.permissions.canEdit=false;connection.permissions.canEdit=false;
+ assert.equal(await H.openDocument(docId),files.get(docId));assert.throws(()=>H.save(id,{name:'Child forbidden'},H.snapshot(id)),/parent|lecture/i);
 });

@@ -5,7 +5,7 @@
   "baselineDirectory": "/tmp/dobby-maison-main-baseline",
   "baselineOrigin": "http://127.0.0.1:8899",
   "candidateDirectory": "/workspace/dobby-demo/.worktrees/maison-equipements-20261113",
-  "scope": "Only observed failed historical scripts rerun; 3 already established baseline logs reused. Does not claim full campaign green or completion.",
+  "scope": "Only observed failed historical scripts rerun;3 already established baseline logs reused.14 failure comparisons total. Does not claim full campaign green or completion.",
   "sourceIntegrity": {
     "baselineHouseRegisterMatchesCommit": true,
     "baselineHouseRegisterSha256": "a45ffd1fd76ceac3709ae7284f552e7d2af9f8124e38f46803e50bd1cce252d4",
@@ -154,17 +154,135 @@
         "An unavailable shared adapter must report its failure"
       ],
       "helperSourceLine": "helpers/e02-shared-groceries.cjs:98:12"
+    },
+    {
+      "test": "e01-3.cjs",
+      "passorfail": "fail",
+      "baselineExitCode": 1,
+      "candidateExitCode": 1,
+      "classification": "unchanged_preexisting_failure",
+      "sameAssertionTypeAndLine": true,
+      "failureType": "TimeoutError",
+      "sourceLine": "54:120",
+      "details": "Existing navigation expectation times out in page.waitForURL at54:120.",
+      "testSourceIdentical": true,
+      "testSha256": "68fb2964d1e496a081b8bc63ff8e063139cf0ca14e8d191a736e610a4e037d79",
+      "baselineLog": "/tmp/dobby-maison-baseline-e01-3.log",
+      "candidateLog": "/tmp/dobby-maison-historical-final-snapshot.log",
+      "baselineRun": "executed original script in baseline export with DOBBY_TEST_ORIGIN=http://127.0.0.1:8899, maximum2 concurrent"
+    },
+    {
+      "test": "smoke.cjs",
+      "passorfail": "fail",
+      "baselineExitCode": 1,
+      "candidateExitCode": 1,
+      "classification": "unchanged_preexisting_failure",
+      "sameAssertionTypeAndLine": true,
+      "failureType": "Error",
+      "sourceLine": "8:81",
+      "details": "Platform-specific Chrome executable hardcoded to Windows path unavailable in current Linux environment.",
+      "testSourceIdentical": true,
+      "testSha256": "c1cd9a91849f46652ae0f117a7a6d46174a6a65878c81ccf733031b9cc4d2b47",
+      "baselineLog": "/tmp/dobby-maison-baseline-smoke.log",
+      "candidateLog": "/tmp/dobby-maison-historical-final-snapshot.log",
+      "baselineRun": "executed original script in baseline export with DOBBY_TEST_ORIGIN=http://127.0.0.1:8899, maximum2 concurrent"
+    },
+    {
+      "test": "cuisine.cjs",
+      "passorfail": "fail",
+      "baselineExitCode": 1,
+      "candidateExitCode": 1,
+      "classification": "unchanged_preexisting_failure",
+      "sameAssertionTypeAndLine": true,
+      "failureType": "TimeoutError",
+      "sourceLine": "44:42",
+      "details": "Missing historical #cook-mode-btn produces locator.click timeout12000ms.",
+      "testSourceIdentical": true,
+      "testSha256": "1f2063693e36c8daf73d6fd4c221b74690f6e755f68e0eb3f2cc10d8cd7babc1",
+      "baselineLog": "/tmp/dobby-maison-baseline-cuisine.log",
+      "candidateLog": "/tmp/dobby-maison-historical-final-snapshot.log",
+      "baselineRun": "executed original script in baseline export with DOBBY_TEST_ORIGIN=http://127.0.0.1:8899, maximum2 concurrent"
+    },
+    {
+      "test": "family.cjs",
+      "passorfail": "fail",
+      "baselineExitCode": 1,
+      "candidateExitCode": 1,
+      "classification": "unchanged_preexisting_failure",
+      "sameAssertionTypeAndLine": true,
+      "failureType": "TimeoutError",
+      "sourceLine": "20:41",
+      "details": "Historical selectOption targets member-category, which is currently a hidden input; not-visible timeout.",
+      "testSourceIdentical": true,
+      "testSha256": "2248142ee92342357eb96eeaf7b513626a78f65c484bae22378df4f2367a1e67",
+      "baselineLog": "/tmp/dobby-maison-baseline-family.log",
+      "candidateLog": "/tmp/dobby-maison-historical-final-snapshot.log",
+      "baselineRun": "executed original script in baseline export with DOBBY_TEST_ORIGIN=http://127.0.0.1:8899, maximum2 concurrent",
+      "hiddenInputDiagnosticIdentical": true
+    },
+    {
+      "test": "family-edge.cjs",
+      "passorfail": "fail",
+      "baselineExitCode": 1,
+      "candidateExitCode": 1,
+      "classification": "unchanged_preexisting_failure",
+      "sameAssertionTypeAndLine": true,
+      "failureType": "TimeoutError",
+      "sourceLine": "17:117",
+      "details": "Same hidden member-category input cannot be targeted by historical selectOption.",
+      "testSourceIdentical": true,
+      "testSha256": "e9f876a60978ca08b80519b0b9456fac917a74bcea55c50468bb1f563ea1e573",
+      "baselineLog": "/tmp/dobby-maison-baseline-family-edge.log",
+      "candidateLog": "/tmp/dobby-maison-historical-final-snapshot.log",
+      "baselineRun": "executed original script in baseline export with DOBBY_TEST_ORIGIN=http://127.0.0.1:8899, maximum2 concurrent",
+      "hiddenInputDiagnosticIdentical": true
+    },
+    {
+      "test": "family-review.cjs",
+      "passorfail": "fail",
+      "baselineExitCode": 1,
+      "candidateExitCode": 1,
+      "classification": "unchanged_preexisting_failure",
+      "sameAssertionTypeAndLine": true,
+      "failureType": "AssertionError",
+      "sourceLine": "12:9",
+      "details": "Same selected-state parental-role assertions fail at320 and390, false !== true; other review cases pass.",
+      "testSourceIdentical": true,
+      "testSha256": "5e4a337473c4fb0cbe53d04808fe0a3c56eb0cc15cb4fdb58c0480bf1e02ad46",
+      "baselineLog": "/tmp/dobby-maison-baseline-family-review.log",
+      "candidateLog": "/tmp/dobby-maison-historical-final-snapshot.log",
+      "baselineRun": "executed original script in baseline export with DOBBY_TEST_ORIGIN=http://127.0.0.1:8899, maximum2 concurrent",
+      "reviewSubcaseResultsIdentical": true,
+      "reviewSubcases": [
+        "FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 320",
+        "FAMILY_REVIEW_PASS source privacy disclosures match actual scope 320",
+        "FAMILY_REVIEW_FAIL selected states match the current operation 320 The current edit form cannot change a parental role",
+        "FAMILY_REVIEW_PASS unsupported antecedents are not an empty clinical record 390",
+        "FAMILY_REVIEW_PASS source privacy disclosures match actual scope 390",
+        "FAMILY_REVIEW_FAIL selected states match the current operation 390 The current edit form cannot change a parental role"
+      ]
     }
   ],
   "summary": {
-    "comparedHistoricalFailures": 8,
-    "unchangedPreexistingFailures": 8,
+    "comparedHistoricalFailures": 14,
+    "unchangedPreexistingFailures": 14,
     "actualRegressionsObservedAmongComparedTests": 0,
-    "allTestsGreen": false
+    "allTestsGreen": false,
+    "uncomparedFailuresInFinalSnapshot": []
   },
   "notes": [
     "All baseline test artifacts written only under /tmp export or /tmp logs. No current checkout test scripts executed.",
     "Integrated fixture temporary preview used original script and correct real baseline SHA; initial build attempt without Git metadata failed before browser execution, then rerun succeeded in building and reproduced candidate assertion.",
-    "Campaign failure discovery was sampled once after initial baseline runs; any later root campaign failures remain outside this comparison until supplied."
-  ]
+    "Campaign failure discovery was sampled once after initial baseline runs; any later root campaign failures remain outside this comparison until supplied.",
+    "Final single post-additional-six snapshot reached lot5 visual tests; no new failure names beyond the14 now compared. Later root campaign completion remains root-owned."
+  ],
+  "updatedAt": "2026-11-13T12:08:32.034111+00:00",
+  "finalFailureSnapshot": {
+    "file": "/tmp/dobby-maison-historical-final-snapshot.log",
+    "sha256": "efde655087d980e65c75f6cce2f497f8e079bdb8b14bec8d01b3e3186ee268ef",
+    "restCampaignFailureCount": 13,
+    "e01ConsolidationFailureFromEarlierLogAlsoIncluded": true,
+    "lastProgressLine": "REGISTER_VISUAL 5 personal 320",
+    "campaignStillProgressingAtSnapshot": true
+  }
 }

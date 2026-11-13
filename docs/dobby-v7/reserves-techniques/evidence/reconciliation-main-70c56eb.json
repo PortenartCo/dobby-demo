@@ -1,0 +1,61 @@
+{
+  "kind": "targeted-local-main-reconciliation",
+  "commonBase": "b77cb9de100a864c8aace8fb9e07053220ccd23a",
+  "reservesParent": "7448e0c2cac0e73dbe551f8a3d7a72c86f101204",
+  "contractsMainParent": "70c56eb156758d4c0447b8ec8f3fd84e1efeaa22",
+  "mainPr": 13,
+  "textualConflictPaths": [
+    "essai-stitch-v5-famille/tests/integration.test.mjs"
+  ],
+  "sourceSha256": {
+    "essai-stitch-v5-famille/index.html": "6ab491966d025d9beb427b2b8d77ba27fa4216ec09bf286687e691bf5153b56d",
+    "essai-stitch-v5-famille/family-modules.js": "c63d1268d03b53c373ac05c041ab02cab6a6a7966bf162ff260c8722b014bab8",
+    "essai-stitch-v5-famille/family-files.js": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",
+    "essai-stitch-v5-famille/family-contracts.js": "29d074cf2c3b5b474f65f6e70e8418786b43e12762df712801ecbfa10b1fda37",
+    "essai-stitch-v5-famille/stitch-v5.js": "4feec5a812ba31bdb278029591b837613949198b4cea025bf2cae2531c6efa2e",
+    "essai-stitch-v7/family.js": "e8a6cd6dff9dee7759887728bb0a4f9a4f54c8df1c126cd907c9efa3757a7ef5",
+    "essai-stitch-v7/build-source.cjs": "0f648b957d60b12db436501a8f9845db81599edc82af3bb6c406191598ad654f",
+    ".github/workflows/dobby-stitch-v7.yml": "b4ae036b2e1e526839def1eef99159028e893ac73c866c35ccf6c3cc39ec3abd"
+  },
+  "nativeCompositionFixture": "essai-stitch-v5-famille/tests/fixtures/contracts-reserves-native-composition.json",
+  "frozenFixturesUnchanged": true,
+  "proof": "Both exact frozen literal inversions restore each full parent artifact, then the identical complete b77cb9d source before every historical T09/Stitch/FAM proof.",
+  "retainedWorkflowChecks": [
+    "Native contracts and external AI import acceptance",
+    "reserves-sql-local"
+  ],
+  "historicalLocalValidation": {
+    "path": "docs/dobby-v7/reserves-techniques/evidence/validation-locale.json",
+    "sha256": "0728c8d5094bb5363800d4db1d7434df9d8b2298ef4bae94e07d5d33bc99e32b",
+    "unchangedFromReservesParent": true,
+    "scope": "Historical local runtime proof, not certification of this reconciled tree"
+  },
+  "targetedChecks": [
+    {
+      "command": "node --test essai-stitch-v5-famille/tests/integration.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs essai-stitch-v7/tests/reserves-family-role.test.mjs essai-stitch-v5-famille/tests/contracts-sync.test.mjs essai-stitch-v5-famille/tests/contracts-writer.test.cjs essai-stitch-v7/tests/contracts-model.test.mjs essai-stitch-v7/tests/contracts-import.test.mjs",
+      "exitCode": 0,
+      "passed": 72,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test essai-stitch-v7/tests/fam-integration-build.test.cjs essai-stitch-v7/tests/menu-review-build.test.cjs",
+      "exitCode": 0,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "name": "Frozen fixture bytes, five main-native writer/loader/build bytes, four generated roots ordered Contracts dependencies, workflow union",
+      "exitCode": 0
+    }
+  ],
+  "completeCombinedSuiteRun": false,
+  "completeCombinedBrowserCampaignRun": false,
+  "exactReconciledRemoteCiPassed": false,
+  "supabaseAccessed": false,
+  "pushPerformed": false,
+  "mergeToMainPerformed": false,
+  "deploymentPerformed": false,
+  "remainingGate": "Combined units/build and fresh exact-head GitHub CI are required before integration; the old b53b73f local proof is retained as history."
+}

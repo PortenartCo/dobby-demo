@@ -2,6 +2,7 @@
   "format": "dobby-maison-75-controls",
   "date": "2026-11-13",
   "initialMain": "54d74b9448a1c518d8a3c483cd4deaea1e493748",
+  "integratedMain": "25dd637c1b827bd09a46d8a55be63d9c14966f19",
   "publishedSha": null,
   "verificationUrl": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/famille.html#house",
   "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/16",
@@ -780,7 +781,7 @@
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
       ],
-      "note": "Base54d74b9 ; branche et worktree indépendants. #12/#13 fusionnées et conservées ; #11 brouillon conflictuel, intact."
+      "note": "Base54d74b9 ; branche et worktree indépendants. #12/#13 fusionnées et conservées ; #11 initialement brouillon conflictuel, puis fusionnée pendant la mission au SHA25dd637 ; rapprochement natif validé sans perdre ses gardes."
     },
     {
       "id": "P02",
@@ -791,7 +792,7 @@
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
       ],
-      "note": "45 tests Maison et440 tests natifs/sync ; vrai DOM et IndexedDB, six régressions de revue RED→GREEN."
+      "note": "49 tests Maison et503 tests natifs/sync ; vrai DOM et IndexedDB, six régressions de revue RED→GREEN."
     },
     {
       "id": "P03",

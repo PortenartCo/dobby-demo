@@ -502,8 +502,10 @@ async function activateMissionsV2(remote){
 // events are passed to the historical V2 snapshot writer.
 function runesV3Available(){return Boolean(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true&&missionV3Transport?.available());}
 function v3Actor(){
- const actual=api.getContext(),matches=(st.familyMembers||[]).filter(member=>member.id===actual?.memberId);
- return{...actual,category:matches.length===1?matches[0].memberCategory:null,token:liveContextToken()};
+ const actual=api.getContext(),canonical=api.access?.state?.();
+ const coherent=actual?.identityVerified===true&&canonical?.authenticated===true&&canonical.verified===true&&canonical.phase==='active'&&
+  canonical.userId===actual.userId&&canonical.householdId===actual.householdId&&canonical.memberId===actual.memberId&&canonical.profile?.id===actual.memberId;
+ return{...actual,permissions:coherent?{...canonical.permissions}:{},category:coherent?canonical.profile.memberCategory:null,token:liveContextToken()};
 }
 function validateLocalMissionHistory(){
  if(runesV3Available())missionIntentCore.validateMissionV3Module({module:'missions',revision:1,payload:pick('missions')});
@@ -961,6 +963,35 @@ async function start() {
 }
 // Access onboarding adopts only a server-confirmed canonical registry. This is
 // the existing snapshot/cache path, never an alternate member writer or upload.
+async function revalidateExistingFamily(binding) {
+  const state=states.family;
+  if(!state?.active||!state.conflict&&moduleDigest('family',pick('family'))===state.synced)return false;
+  const token=liveContextToken(),generation=contextGeneration;
+  const guard=()=>{
+    const actual=api.getContext(),connection=api.connectionState?.();
+    if(!token||generation!==contextGeneration||token!==liveContextToken()||states.family!==state||state.active!==true||
+      !backendReady||inFlight||connection?.verified!==true||connection?.verifying||
+      binding?.phase!=='active'||binding.authenticated!==true||binding.identityVerified!==true||
+      !actual||typeof binding.userId!=='string'||!binding.userId||actual.userId!==binding.userId||
+      typeof binding.householdId!=='string'||!binding.householdId||actual.householdId!==binding.householdId||
+      typeof binding.memberId!=='string'||!binding.memberId||binding.profile?.id!==binding.memberId||
+      !['parent','child'].includes(binding.profile?.memberCategory)||
+      !binding.permissions||typeof binding.permissions!=='object'||Array.isArray(binding.permissions)||
+      ['canEdit','canMagic','canCreate','canManageDependents','canInvite'].some(key=>typeof binding.permissions[key]!=='boolean'))
+      throw Error('Contexte canonique du foyer non vérifié pour ce membre.');
+  };
+  guard();const remote=await readRow('family');guard();
+  if(!remote||remote.module!=='family'||remote.household_id!==undefined&&remote.household_id!==binding.householdId||
+    !Number.isSafeInteger(Number(remote.revision))||Number(remote.revision)<1)
+    throw Error('Registre familial serveur indisponible pour ce foyer.');
+  verifyFamilyProtocol(state,remote.payload);
+  const matches=Array.isArray(remote.payload?.familyMembers)?remote.payload.familyMembers.filter(member=>member?.id===binding.memberId):[];
+  if(matches.length!==1||matches[0].memberCategory!==binding.profile.memberCategory)
+    throw Error('Le membre canonique est absent, ambigu ou de catégorie différente dans le foyer.');
+  // Identity confirmation does not adopt data. The acknowledged CAS base,
+  // pending snapshot and explicit conflict choice remain owned by native sync.
+  return true;
+}
 async function adoptVerifiedFamily(binding) {
   const token=liveContextToken(),generation=contextGeneration;
   const guard=()=>{
@@ -1258,6 +1289,10 @@ async function syncOne(id) {
   await persist();
 }
 async function sync() {
+  if(inFlight||!liveContextToken())return;
+  // Canonical binding publishes memberId after the initial membership check.
+  // Re-read capabilities for that changed token before draining old V2 queues.
+  await start();
   if (!ctx || !checked || !backendReady || inFlight) return;
   inFlight = true;let success=false;
   try {
@@ -1346,7 +1381,7 @@ document.addEventListener('click', async e => {
 },true);
 window.DobbySharedRunesV2=Object.freeze({available:runesV2Available});
 window.DobbySharedRunesV3=Object.freeze({available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}});
-api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,
+api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,
   isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }

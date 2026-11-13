@@ -24,3 +24,7 @@ Aucun rappel automatique ni transport partagé de PDF n’est activé. Les éch�
 - Retrait d’un programme/intervention : confirmation, conservation des documents et du journal sous références antérieures.
 - Les anciens snapshots non versionnés ne peuvent pas effacer silencieusement des fiches enrichies ou des interventions classées ; conflit conservateur à résoudre avec un client à jour.
 - Annulation et lectures asynchrones : aucune écriture avant confirmation, contrôle de contexte/révision après les attentes ; import natif atomique avec nettoyage des binaires temporaires en cas d’échec.
+
+## Mise à jour d’intégration
+
+La PR11 a été fusionnée pendant cette mission, au SHA25dd637c1b827bd09a46d8a55be63d9c14966f19. Le candidat la reprend intégralement. Ses gardes canoniques, revalidations sans perte du pending et gates fermés sont conservés. Le writer Maison suit désormais son contexte Auth actif ; un bootstrap identifié ne peut plus emprunter le mode local et une catégorie locale obsolète ne remplace pas le rôle canonique. La preuve des littéraux natifs Maison/Role/Contrats conserve tous les anciens fixtures et retrouve chaque parent exact par inversion. Voir MAIN-RECONCILIATION.md.

@@ -1,5 +1,7 @@
 -- MANUEL. Retire uniquement les restrictions ajoutees, sans supprimer de donnees.
 BEGIN;
+SET LOCAL lock_timeout='5s';
+SET LOCAL statement_timeout='60s';
 DROP POLICY IF EXISTS dobby_review_dobby_v2_modules_insert ON public.dobby_v2_modules;
 DROP POLICY IF EXISTS dobby_review_dobby_v2_modules_update ON public.dobby_v2_modules;
 DROP POLICY IF EXISTS dobby_review_dobby_v2_modules_delete ON public.dobby_v2_modules;

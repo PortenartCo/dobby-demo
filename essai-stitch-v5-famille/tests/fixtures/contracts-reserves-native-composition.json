@@ -1,0 +1,11 @@
+{
+  "description": "Compose exactly the frozen canonical-role and Contracts literal amendments; prove both complete parent artifacts and both inversion orders before every historical source proof.",
+  "sourcePath": "essai-stitch-v5-famille/index.html",
+  "baseCommit": "b77cb9de100a864c8aace8fb9e07053220ccd23a",
+  "reservesParent": "7448e0c2cac0e73dbe551f8a3d7a72c86f101204",
+  "contractsParent": "70c56eb156758d4c0447b8ec8f3fd84e1efeaa22",
+  "roleFixtureSha256": "929212221b5a7fcc0b109432143f2996d512340ab465f4a2b32b11e24880d826",
+  "contractsFixtureSha256": "dd7a7a85bae223449b28bce83875d3e02751f4c5bdfa860297b6f68715462a76",
+  "beforeSha256": "4be86846dcb849cf990fafdfa564ce25e7415c8df7cf52dd0a24b72b828a836d",
+  "composedSha256": "6ab491966d025d9beb427b2b8d77ba27fa4216ec09bf286687e691bf5153b56d"
+}

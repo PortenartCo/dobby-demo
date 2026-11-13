@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {webcrypto} from 'node:crypto';
 import {createFamilyAccess,FAMILY_FEATURE_RELEASE,verifiedFamilyCapabilities} from '../family-access.mjs';
+import {assertSharedWrite} from '../family-core.mjs';
 
 // Fictional transport only. These checks never call Auth or a remote database.
 const USER='TEST-auth-child',HH='TEST-household',CHILD='local-child-history:07',PARENT='local-parent:03',TOKEN='a'.repeat(64);
@@ -12,13 +13,13 @@ const ready=()=>({protocol:2,installed:true,familyRolesAvailable:true,childAccou
 const parent=()=>({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:PARENT,profile:{id:PARENT,name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true,canCreate:true,canManageDependents:false,canInvite:true,canManageHousehold:true},familyRevision:8});
 const child=()=>({...parent(),memberId:CHILD,profile:{id:CHILD,name:'TEST Enfant',memberCategory:'child',avatar:'🐉',magicProfile:{version:1,houseId:'ravenclaw',patronusId:'otter',futureHistory:{keep:'TEST'}}}});
 const preview=()=>({status:'valid',kind:'child-account',targetMemberId:CHILD,household:{id:HH,name:'TEST Foyer'},inviter:{name:'TEST Parent'},expiresAt:'2099-11-13T12:00:00Z'});
-function fixture({flags,context=parent(),caps=ready()}={}){
+function fixture({flags,context=parent(),caps=ready(),guarded=false}={}){
  const native={ready:true,configured:true,userId:USER,householdId:context.householdId||null,epoch:0,verified:false},metadata=new Map(),calls=[];
  let current=context,capabilities=caps,binding=null,intercept=null;
  const driver={crypto:webcrypto,now:()=>Date.now(),snapshot:()=>({...native}),
   meta:async key=>metadata.get(key)??null,putMeta:async(key,value)=>metadata.set(key,structuredClone(value)),delMeta:async key=>metadata.delete(key),updateMeta:async(key,change)=>metadata.set(key,change(metadata.get(key)??null)),
   clearBinding:()=>{binding=null;native.verified=false;},bind:async value=>{binding=structuredClone(value);native.verified=true;},notify(){},
-  rpc:async(name,body,options)=>{calls.push({name,body:structuredClone(body),options,actor:native.userId,householdId:native.householdId});if(intercept){const result=await intercept(name,body,options);if(result!==undefined)return result;}
+  rpc:async(name,body,options)=>{if(guarded)assertSharedWrite({method:'POST',query:'rpc/'+name,body,access:api.state()});calls.push({name,body:structuredClone(body),options,actor:native.userId,householdId:native.householdId});if(intercept){const result=await intercept(name,body,options);if(result!==undefined)return result;}
    if(name==='dobby_v7_context')return structuredClone(current);
    if(name==='dobby_v7_family_capabilities')return structuredClone(capabilities);
    if(name==='dobby_v7_preview_child_invitation')return preview();
@@ -49,10 +50,20 @@ test('Available alone, absent verification, absent storage proof or a closed rel
  assert.equal(verifiedFamilyCapabilities(ready(),{familyRoles:true,childAccountLink:false}).childAccountLinkReady,false);
  assert.equal(closed(ready()).childAccountLinkReady,true);
 });
+test('canonical mission-completion grants retain explicit booleans without inferring a role or opening a release gate',async()=>{
+ for(const category of ['parent','child','baby','pet'])for(const grant of [true,false,undefined,'true']){
+  const context=parent();context.profile.memberCategory=category;
+  if(grant!==undefined)context.permissions.canCompleteMissionsV3=grant;
+  const f=fixture({context});await f.api.refresh();
+  assert.equal(f.api.state().permissions.canCompleteMissionsV3,['parent','child'].includes(category)&&grant===true);
+  assert.equal(f.api.state().capabilities.familyRolesReady,false,'The published family release gate remains closed');
+  assert.deepEqual(f.calls.map(call=>call.name),['dobby_v7_context']);
+ }
+});
 
 test('full parent management needs a fresh server capability and remains scoped to the current member register',async()=>{
  const f=fixture({flags:release});await f.api.refresh();const live=f.api.state();assert.equal(live.permissions.canManageHousehold,true);
- const P=policy(),members=[live.profile,{id:'local-other-parent',memberCategory:'parent'},{id:CHILD,memberCategory:'child'}],context={verified:true,userId:USER,householdId:HH,actorId:PARENT,members,permissions:live.permissions};
+ const P=policy(),members=[live.profile,{id:'local-other-parent',memberCategory:'parent'},{id:CHILD,memberCategory:'child'}],context={verified:true,userId:USER,householdId:HH,actorId:PARENT,memberCategory:live.profile.memberCategory,members,permissions:live.permissions};
  assert.equal(P.permissions(members[1],context).canEdit,true);assert.equal(P.permissions(members[2],context).canLinkExistingChild,true);
  assert.equal(P.permissions({id:'foreign-child',memberCategory:'child'},context).canEdit,false);
  assert.equal(P.permissions(members[1],{...context,permissions:{...live.permissions,familyRolesVerified:false}}).canEdit,false);
@@ -74,7 +85,7 @@ test('a canonical child keeps own magic only even when the transport claims pare
  await assert.rejects(f.api.updateMember({memberId:CHILD,values:{avatar:'👤'},expectedRevision:8}),/non autorisée/);
  await assert.rejects(f.api.updateMagic({memberId:PARENT,values:{magicHouseId:'ravenclaw'},expectedRevision:8}),/non autorisée/);
  await f.api.updateMagic({memberId:CHILD,values:{magicHouseId:'ravenclaw'},expectedRevision:8});
- const P=policy(),members=[live.profile,{id:PARENT,memberCategory:'parent'}],context={verified:true,userId:USER,householdId:HH,actorId:CHILD,members,permissions:parent().permissions};
+ const P=policy(),members=[live.profile,{id:PARENT,memberCategory:'parent'}],context={verified:true,userId:USER,householdId:HH,actorId:CHILD,memberCategory:live.profile.memberCategory,members,permissions:parent().permissions};
  assert.equal(P.permissions(members[0],context).canEdit,false);assert.equal(P.permissions(members[0],context).canMagic,true);assert.equal(P.permissions(members[1],context).canMagic,false);
  assert.throws(()=>P.assertWrite(members[0],{notes:'TEST',magicHouseId:'ravenclaw'},context,{magicResult:true}),/uniquement/);
 });
@@ -102,8 +113,8 @@ test('the existing generic invitation still uses its own endpoint while addition
  assert.equal(f.calls.some(call=>/child|family_capabilities/.test(call.name)),false);
 });
 
-test('targeted acceptance bypasses pending profile creation and adopts only the original canonical child, including replay',async()=>{
- const f=fixture({flags:release,context:{protocol:1,phase:'profile',userId:USER,profile:null}});await f.api.refresh();
+test('targeted acceptance and its canonical child replay both pass the real shared-write guard without creating a profile',async()=>{
+ const f=fixture({flags:release,context:{protocol:1,phase:'profile',userId:USER,profile:null},guarded:true});await f.api.refresh();
  await f.api.previewChildInvitation(TOKEN);assert.equal(f.api.state().phase,'profile');
  const first=await f.api.acceptChildInvitation(TOKEN),second=await f.api.acceptChildInvitation(TOKEN);
  assert.equal(first.memberId,CHILD);assert.equal(second.memberId,CHILD);assert.equal(f.binding.memberId,CHILD);
@@ -111,6 +122,13 @@ test('targeted acceptance bypasses pending profile creation and adopts only the 
  assert.equal(f.calls.some(call=>['dobby_v7_update_profile','dobby_v7_accept_invitation','dobby_v7_create_household'].includes(call.name)),false);
  const requests=f.calls.filter(call=>call.name==='dobby_v7_accept_child_invitation');assert.equal(requests.length,2);assert.equal(requests[0].body.p_operation_id,requests[1].body.p_operation_id);
  assert.doesNotMatch(JSON.stringify([...f.metadata.entries()]),new RegExp(TOKEN));
+});
+test('active parent, another canonical child or another household cannot use a targeted child replay',async()=>{
+ for(const context of [parent(),{...child(),memberId:'other-child',profile:{...child().profile,id:'other-child'}},{...child(),householdId:'other-household'}]){
+  const f=fixture({flags:release,context,guarded:true});await f.api.refresh();await f.api.previewChildInvitation(TOKEN);const before=f.calls.length;
+  await assert.rejects(f.api.acceptChildInvitation(TOKEN),/enfant|profil|foyer|cible/i);
+  assert.equal(f.calls.slice(before).some(call=>call.name==='dobby_v7_accept_child_invitation'),false,'A different active identity never dispatches the targeted replay');
+ }
 });
 
 test('a child acceptance response cannot replace the target with another canonical profile during fresh adoption',async()=>{

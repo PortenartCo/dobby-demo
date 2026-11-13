@@ -1,0 +1,122 @@
+{
+  "beforeHead": "9c10ff6a140c07971a0a5ac689eb1e943b0482c2",
+  "afterHead": "9c10ff6a140c07971a0a5ac689eb1e943b0482c2",
+  "command": "CHROMIUM_PATH=/usr/bin/chromium DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node essai-stitch-v7/tests/contracts-ci.cjs",
+  "exitCode": 0,
+  "marker": "CONTRACTS_ACCEPTANCE_PASS — native local persistence and labelled family fixtures; live backend unverified",
+  "units": {
+    "pass": 51,
+    "fail": 0,
+    "skipped": 0
+  },
+  "uiWidths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "browserCampaigns": 5,
+  "acceptanceEdges": [
+    "list-geometry-keyboard-320",
+    "list-geometry-keyboard-390",
+    "list-geometry-keyboard-768",
+    "list-geometry-keyboard-1024",
+    "list-geometry-keyboard-1440",
+    "unknown-fields-historical-date-edit-reload",
+    "stale-form-rejects-overwrite-and-keeps-typing",
+    "real-pdf-amendment-replacement-legacy-blob-retention",
+    "native-delete-confirmation-and-all-attachment-cleanup",
+    "explicit-child-ui-and-native-mutation-boundary"
+  ],
+  "applicationFingerprints": {
+    "count": 212,
+    "changed": [],
+    "beforeSha256": "daed73fed9596b4b8a4eff87d4e657329ee272585ebe3b28a1d0271ed623a705",
+    "afterSha256": "daed73fed9596b4b8a4eff87d4e657329ee272585ebe3b28a1d0271ed623a705"
+  },
+  "runtimeOrFixtureEdits": [],
+  "externalNetwork": "Browser HTTP(S) requests outside explicit loopback origin aborted; unit drivers use in-memory Maps. No real backend accessed.",
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "log": {
+    "path": "/workspace/dobby-reserves-socle-contracts-final.log",
+    "sha256": "968ec6683c8daceec319737b4f0f5c6a226af3c60b7df1c8c34f86c5cddb46ca"
+  },
+  "testedFiles": [
+    {
+      "path": "essai-stitch-v7/tests/contracts-ci.cjs",
+      "sha256": "70e078c66b064cbca56a4fd1ed9625f34c7ada19a52207503ea3118ff0a1fcaa"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-model.test.mjs",
+      "sha256": "2c67b1750cf5bd54f43c76c65b2013c1e1f145f422d824a8d537e777fbd46a9d"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-import.test.mjs",
+      "sha256": "ee06e2a698a78406f93bd5e2221acdb7a7122f6cb066d66b16a6947904a4dafc"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/contracts-writer.test.cjs",
+      "sha256": "49c3177733c0025bf7efeda8c5377d7193d12e8357966580d51590463e7a7d6b"
+    },
+    {
+      "path": "essai-stitch-v5-famille/tests/contracts-sync.test.mjs",
+      "sha256": "ac92b2028e1559caab6fc69d5ec4ee824b1aaefcb006bdb29bd29b2a8238deae"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-ui.cjs",
+      "sha256": "61e0a21895df5209a587d1156239aa838449db841c850bd4793c755064a2d2e7"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-import-ui.cjs",
+      "sha256": "cda746dcd3937c32bc798f51729fbb21e55a3201c6a409f8b3fd4154cc3dac71"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-source-ui.cjs",
+      "sha256": "be2093e9a428a2cb1eaefe8c21e5f90fb16d0b0da1e3e2cebdbfaf67cedc4cab"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-archives-permissions.cjs",
+      "sha256": "8418b97b9f1ab70f62b2d5bc61affa27a9209d57aa96a707bcc394dd65387476"
+    },
+    {
+      "path": "essai-stitch-v7/tests/contracts-edge-ui.cjs",
+      "sha256": "3ef8d52e98d84da1e0496208e4964611943512d7837ab434ab8f961e901c346c"
+    }
+  ],
+  "screens": [
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-detail-1440.png",
+      "sha256": "13251cf2c030889a0b2f3136e58714d61fbbe96d0052b0b2dfd9223a21607f46"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-detail-390.png",
+      "sha256": "f6c59044627bdca34a84330d38dfb74e9de5ab2480619e6984363a7b024e8423"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-form-1440.png",
+      "sha256": "b05324ef49a854856ca82f9de61d21fb70c0644591e09609ad26cdf61d0b2cab"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-form-390.png",
+      "sha256": "e18854b58f0c3733c84fc11a19f30608a86008b28c519ad5f77e891044fc7272"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-import-1440.png",
+      "sha256": "cfeb98c0c815762c75fc063a72f04358aa59d9163011797e47264e7b7ae84724"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-import-390.png",
+      "sha256": "5f0a5603864526db3a07e984ab44659895943608f856f32b6dbc2969a651cc2b"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-list-1440.png",
+      "sha256": "21a68c822f05bc91a935214c083c1e740aeb36e44256554f3649a8a2362c1f8b"
+    },
+    {
+      "path": "/workspace/dobby-reserves-socle-contracts-final-evidence/screens/edge-list-390.png",
+      "sha256": "f6c2df5e4d04d3fa2601842f1eb916f396e23e9eadb9d122e58e81dee3eee9b5"
+    }
+  ],
+  "independentReadOnlyReview": "PASS: tests/contracts* and modules-harness unchanged db900..9c10, browser routes before navigation, local units and in-memory drivers."
+}

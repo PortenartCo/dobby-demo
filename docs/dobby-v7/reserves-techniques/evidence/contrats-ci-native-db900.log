@@ -1,0 +1,79 @@
+✔ structured contract metadata and multi-file descriptors sync without local keys or binary data (12.616494ms)
+✔ legacy peer roundtrip preserves new metadata and pieces, restores them to remote, and local keys stay local (9.895359ms)
+✔ modern descriptor deletion propagates, unknown deep fields and local legacy/private retention survive (8.763824ms)
+✔ modern shared deletion retains an existing local legacy backup without immediately publishing it again (2.177292ms)
+✔ an unrelated contract edit never republishes a remotely deleted local backup (2.756883ms)
+✔ an authoritative modern restoration rejoins its local backup and survives the next unrelated edit (4.708866ms)
+✔ modern shared legacy-file withdrawal propagates without touching the old local binary metadata (3.230975ms)
+✔ native save/reload keeps deep extensions, stable ids and legacy invalid dates (11.921324ms)
+✔ edits require current row/context; denied children and failed saves cannot mutate state (4.554764ms)
+✔ multiple local attachments use native store without uploads and leave legacy blob untouched (4.844669ms)
+✔ explicit upload uses existing storage API, confirms cloud metadata only after success, and retains local piece (3.024812ms)
+✔ async writes reject household, row and role changes and discard only staged files (6.113289ms)
+✔ legacy import handler delegates metadata merge and native form preserves extensions (16.737582ms)
+✔ whole fiche deletion covers every piece and leaves unrelated files intact (2.425193ms)
+✔ file validation, forged references and child mutation calls cannot touch native stores (2.096943ms)
+✔ legacy local and shared slots remain independently readable/removable when they contain different files (1.87371ms)
+✔ a genuinely shared modern piece remains readable when its old local store is unavailable (3.04979ms)
+✔ download names remove paths/control characters and match the permitted binary MIME type (3.731097ms)
+✔ quota rejection never deletes shared bytes for a single piece or a whole fiche (5.814963ms)
+✔ shared removal persists metadata first, preserves cloud bytes and truthfully reports distinct physical cleanup (3.439298ms)
+✔ native Archives delete of a shared piece-free fiche is guarded before confirmation for a child (1.851154ms)
+✔ raw legacy shared metadata submit/detach/local picker reject children while private Archives stays writable (1.271824ms)
+✔ retained local-only flag survives edits/imports and rejects file sharing without uploading (1.25881ms)
+✔ manifest normalizes all manual fields, preserves unknowns as null and amount zero (3.781387ms)
+✔ contract title matches the native writer boundary without truncation (1.304737ms)
+✔ invalid shape, versions, dates, coercions and out-of-range manual fields are refused (2.170531ms)
+✔ stable IDs, source descriptors and provenance reject duplicates and unavailable references (7.228905ms)
+✔ document display names are safe basenames with the same real type as their path (0.782928ms)
+✔ transport cannot import local keys, native attachments or arbitrary cloud references (0.993926ms)
+✔ ZIP returns normalized metadata and actual original PDF bytes without writing or AI calls (4.655298ms)
+✔ ZIP source relationships are exact: missing, extra, duplicate and mismatched source bytes fail (3.493628ms)
+✔ ZIP rejects unsafe paths, symlinks, metadata disagreement, corrupted checksums and foreign bytes (5.613542ms)
+✔ ZIP bounds are checked before inflation or allocating declared file sizes (17.451868ms)
+✔ deflate uses native streams and rejects or cancels output beyond its announced size (22.539564ms)
+✔ JSON size and batch limits are enforced, while JSON-only source absence remains explicit (18.317979ms)
+✔ raster signatures and declared dimensions are checked before decoding (0.95498ms)
+✔ external prompt gives exact cumulative schema and an honest downloadable ZIP/JSON fallback (0.360411ms)
+✔ dates reject rolled-over calendar days, timestamps and coerced values (2.409324ms)
+✔ calendar subtraction clamps the target month and preserves leap-year rules (0.876358ms)
+✔ day subtraction uses UTC calendar days and refuses invalid or out-of-range inputs (0.392355ms)
+✔ legacy contracts normalize unknown clauses without inventing cancellation dates (1.160892ms)
+✔ normalization preserves extensible metadata and isolates mutable nested values (0.367553ms)
+✔ explicit cancellation dates override clauses and invalid explicit dates are never substituted (0.171896ms)
+✔ cancellation requires known valid notice clauses and uses legacy deadline as expiry (0.277203ms)
+✔ reminder schedules derive only from a known cancellation date and keep explicit opt-out (0.43891ms)
+✔ next useful action chooses upcoming reminders, cancellation or expiry and retains overdue contracts (0.609165ms)
+✔ partial merges preserve legacy invalid dates, nested unknown fields and existing attachments (0.50137ms)
+✔ partial merges permit explicit field clearing while keeping independent metadata (0.158587ms)
+✔ validation accepts partial legacy rows, extensible types and unknown clauses (0.422004ms)
+✔ validation reports raw invalid values instead of silently normalizing them (2.225436ms)
+✔ title validation matches the native writer before any batch mutations (0.128749ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1632.614971
+CONTRACTS_UI_PASS 320
+CONTRACTS_UI_PASS 390
+CONTRACTS_UI_PASS 768
+CONTRACTS_UI_PASS 1024
+CONTRACTS_UI_PASS 1440
+CONTRACTS_IMPORT_UI_PASS
+CONTRACTS_SOURCE_UI_PASS
+CONTRACTS_ARCHIVES_PERMISSIONS_PASS
+CONTRACTS_EDGE_PASS list-geometry-keyboard-320
+CONTRACTS_EDGE_PASS list-geometry-keyboard-390
+CONTRACTS_EDGE_PASS list-geometry-keyboard-768
+CONTRACTS_EDGE_PASS list-geometry-keyboard-1024
+CONTRACTS_EDGE_PASS list-geometry-keyboard-1440
+CONTRACTS_EDGE_PASS unknown-fields-historical-date-edit-reload
+CONTRACTS_EDGE_PASS stale-form-rejects-overwrite-and-keeps-typing
+CONTRACTS_EDGE_PASS real-pdf-amendment-replacement-legacy-blob-retention
+CONTRACTS_EDGE_PASS native-delete-confirmation-and-all-attachment-cleanup
+CONTRACTS_EDGE_PASS explicit-child-ui-and-native-mutation-boundary
+CONTRACTS_EDGE_RESULT all acceptance edges passed
+CONTRACTS_ACCEPTANCE_PASS — native local persistence and labelled family fixtures; live backend unverified

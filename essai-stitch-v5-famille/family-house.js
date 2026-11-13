@@ -29,14 +29,21 @@ function contextSnapshot(){
 function assertReadable(){
  const {connection:c,live:l,bound:b}=context();
  if(c?.verifying||c?.access==='rejected'||b?.phase==='rejected')throw Error('Le foyer doit être vérifié avant cette opération.');
- if(c?.access&&c.access!=='local'&&(c.access!=='verified'||c.identityVerified!==true||l?.identityVerified!==true||b&&b.verified!==true))throw Error('Le parent autorisé doit être vérifié pour ce foyer.');
+ const authenticated=Boolean(c?.userId||c?.connected||l?.userId||b?.authenticated||b?.userId||b?.memberId||b?.profile?.id||b?.phase==='active');
+ if(authenticated){
+  const coherent=c?.access==='verified'&&c.verified===true&&c.identityVerified===true&&l?.identityVerified===true&&b?.authenticated===true&&b.verified===true&&b.phase==='active'&&
+   identity(b.userId)&&identity(b.householdId)&&identity(b.memberId)&&b.profile?.id===b.memberId&&['parent','child'].includes(b.profile.memberCategory)&&
+   ['userId','householdId','memberId'].every(key=>c[key]===b[key]&&l[key]===b[key]);
+  if(!coherent)throw Error('Le compte doit être relié à une identité canonique vérifiée pour ce foyer.');
+ }else if(c?.access&&c.access!=='local')throw Error('Le foyer doit être vérifié avant cette opération.');
  for(const key of ['userId','householdId','memberId'])if(c?.[key]&&l?.[key]&&c[key]!==l[key]||b?.[key]&&l?.[key]&&b[key]!==l[key])throw Error('Le foyer ou le compte a changé.');
+ return{connection:c,live:l,bound:b,authenticated};
 }
 function assertWritable(){
- assertReadable();const {connection:c,live:l,bound:b}=context(),memberId=l?.memberId||b?.memberId||c?.memberId;
- const actor=(st.familyMembers||[]).find(row=>row.id===memberId),categories=[actor?.memberCategory,b?.profile?.memberCategory];
+ const {connection:c,live:l,bound:b,authenticated}=assertReadable(),memberId=l?.memberId||b?.memberId||c?.memberId;
+ const actor=(st.familyMembers||[]).find(row=>row.id===memberId),category=authenticated?b.profile.memberCategory:actor?.memberCategory;
  let readOnly=false;try{readOnly=window.parent?.DobbyFamilyStitch?.sharedReadOnly?.()===true;}catch{}
- if(readOnly||categories.some(category=>category&&category!=='parent')||[l?.permissions,b?.permissions,c?.permissions].some(permissions=>permissions?.canEdit===false))throw Error('La Maison est en lecture seule pour ce compte. Seul un parent autorisé peut la modifier.');
+ if(readOnly||category&&category!=='parent'||authenticated&&b.permissions?.canEdit!==true||[l?.permissions,b?.permissions,c?.permissions].some(permissions=>permissions?.canEdit===false))throw Error('La Maison est en lecture seule pour ce compte. Seul un parent autorisé peut la modifier.');
 }
 function snapshot(id=null){
  return JSON.stringify({context:contextSnapshot(),row:id?rows('houseItems').find(row=>row.id===id)||null:null,logs:id?rows('houseLogs').filter(row=>row.itemId===id):[],docs:id?rows('houseDocs').filter(row=>row.itemId===id):[]});
