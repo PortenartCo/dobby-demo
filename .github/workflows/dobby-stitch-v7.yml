@@ -213,7 +213,7 @@ jobs:
           DOBBY_GLOBAL_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ DOBBY_GLOBAL_EVIDENCE=docs/dobby-v7/evidence/global-review-20261112/ci-current CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-browser.cjs
           DOBBY_GLOBAL_RESET_BASE=http://127.0.0.1:8765/essai-dobby-v7-global-review-20261112/ CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/global-reset.cjs
       - name: Stitch19/20 native access, ceremonies, portraits and six-width interactions
-        if: github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.head_ref == 'feat/dobby-v7-stitch19-20-integration-20261112'
+        if: github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.event_name == 'pull_request'
         env:
           DOBBY_TEST_ORIGIN: http://127.0.0.1:8872
           DOBBY_STITCH1920_EVIDENCE: docs/dobby-v7/evidence/stitch19-20/ci-current
@@ -245,7 +245,7 @@ jobs:
           fi
           CHROMIUM_PATH="$BROWSER" npm run test:prep --prefix essai-stitch-v7/tests
       - name: Keep current native Stitch19/20 evidence
-        if: always() && (github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.head_ref == 'feat/dobby-v7-stitch19-20-integration-20261112')
+        if: always() && (github.ref_name == 'main' || github.ref_name == 'feat/dobby-v7-stitch19-20-integration-20261112' || github.event_name == 'pull_request')
         uses: actions/upload-artifact@v4
         with:
           name: dobby-v7-stitch19-20-native-evidence
