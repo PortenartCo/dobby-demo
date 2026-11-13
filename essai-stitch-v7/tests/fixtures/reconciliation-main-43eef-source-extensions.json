@@ -1,0 +1,128 @@
+{
+  "purpose": "Third explicit reconciliation layer: preserve both frozen parent manifests and check every complete current source; never fall back after a composed fingerprint fails.",
+  "reservesParent": "709c6f1057d70f90f76489014687022f4d56f086",
+  "publishedMainParent": "43eef7a57a56fe352f88902dfe89b208a4036495",
+  "parentManifests": {
+    "reservesReviewSha256": "37aa458bb4df7ace967f4fd88f90714a9a205afcf3cc489d347584aed710b8f7",
+    "publishedMainReviewSha256": "6896ad260b5baec309acb199de2ca32b688b2586aa05ef16ad2569180926fbe1",
+    "publishedMainSocleSha256": "54dcfaa35a11623de698560c8df47556b51c8aa5e0b3c5d5d982ebc6ccff5bba"
+  },
+  "gitParentAnchorsVerified": true,
+  "frozenFixtures": {
+    "essai-stitch-v7/tests/fixtures/revue-generale-source-extensions.json": "37aa458bb4df7ace967f4fd88f90714a9a205afcf3cc489d347584aed710b8f7",
+    "essai-stitch-v7/tests/fixtures/family-socle-source-extensions.json": "54dcfaa35a11623de698560c8df47556b51c8aa5e0b3c5d5d982ebc6ccff5bba",
+    "essai-stitch-v5-famille/tests/fixtures/reserves-canonical-role-native-extensions.json": "929212221b5a7fcc0b109432143f2996d512340ab465f4a2b32b11e24880d826",
+    "essai-stitch-v5-famille/tests/fixtures/contracts-native-extensions.json": "dd7a7a85bae223449b28bce83875d3e02751f4c5bdfa860297b6f68715462a76",
+    "essai-stitch-v5-famille/tests/fixtures/contracts-reserves-native-composition.json": "199a411f709ed2b012aa7a5bad9c9975355cb5daf6fff0bd7569b4781d508610"
+  },
+  "mainReviewAnchors": {
+    "essai-stitch-v5-famille/family-v2.js": "a1604d2430eefef52de6dedf7f0e506ca8f5dbb37094285ca50b04fa8376c089",
+    "essai-stitch-v5-famille/family-core.mjs": "572239e897011d972fffd0dd83ea0488f4d251794a278df96f2dfc876c345d94",
+    "essai-stitch-v5-famille/family-missions.js": "38d8c5d06a5ab0c74bd52f5af711d3bf977e820d0b59dd13e040a81e4648a218",
+    "essai-stitch-v5-famille/family-runes-core.mjs": "4f63519da41c9f1ba9c49aa923093e92c5e96e058292c66d5d7b712803cbf2ec"
+  },
+  "nativeHtmlSha256": "6ab491966d025d9beb427b2b8d77ba27fa4216ec09bf286687e691bf5153b56d",
+  "files": {
+    "essai-stitch-v5-famille/family-access.mjs": {
+      "reason": "Compose canonical category/profile identity and explicit permission grants with published-main capability-gated child access, preserving account-bound continuations and closed release flags. A canonical-child acceptance replay rechecks a verified preview for the identical member and household before the RPC.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-access-native.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-socle.test.mjs"
+      ],
+      "reservesSha256": "16a6ff51583d9dbcc6ee59a36abe93da67015f64b499f488dd9e8b8785281ca7",
+      "publishedMainSha256": "e519d722f073b015a9e978d9f6b4070d4377b6216e73de7af7855e21966b442f",
+      "mergedSha256": "aebf62597958d3cc255267b969cd4ddf4c6d59c2a0d38a6d04ee871f00a96cab"
+    },
+    "essai-stitch-v5-famille/family-core.mjs": {
+      "reason": "Compose complete canonical write authorization and bounded own magic with the published-main exact child completion intent; no release gate or V2 snapshot fallback opens. Preserve the exact typed child-acceptance replay transport shape while account/category authority and release gates remain unchanged.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-write-policy.test.mjs",
+        "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-native-socle.test.mjs"
+      ],
+      "reservesSha256": "1ba68ae28dd05e0453657429f6f95e5ddbea269f3ab6e41fbd6c230607ea6d10",
+      "publishedMainSha256": "caae1ee08e19fd87d26963e65f1677103a16991daf2e2f32efaa28ca21032326",
+      "mergedSha256": "9586ea059a9c00b02bf0beb70e0118390523f601d72109c46b4fdc551831e8b9"
+    },
+    "essai-stitch-v5-famille/family-files.js": {
+      "reason": "Unchanged exact PR13 Contracts file writer retained from both parents; included to prove that the reconciled hash never falls back to an older review.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/integration.test.mjs",
+        "essai-stitch-v7/tests/contracts-archives-permissions.cjs"
+      ],
+      "reservesSha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",
+      "publishedMainSha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",
+      "mergedSha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa"
+    },
+    "essai-stitch-v5-famille/family-member-policy.js": {
+      "reason": "Compose verified canonical category precedence and explicit grant restrictions with capability-gated management of already-linked parents and exact household membership.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-member-policy.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-socle.test.mjs"
+      ],
+      "reservesSha256": "d2429f8fffaa01b51e3197a8b348b85246e648dac7c19d6f0afb73f9148e5603",
+      "publishedMainSha256": "391cd7eb561c636a16b20f7715bc377f8a58a78c953947c8d4fc68c47243d090",
+      "mergedSha256": "088ee243c487eadb5da735bf0d15504095dcfb7191ed5a4b7e416059219977fd"
+    },
+    "essai-stitch-v5-famille/family-mission-intents.mjs": {
+      "reason": "Preserve the exact new published-main durable V3 intent module with its release gate closed and no old snapshot-writer fallback.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs"
+      ],
+      "reservesSha256": null,
+      "publishedMainSha256": "557fad9b9808673f3ce535435e7bf00b20a4451c2c39ad2c9cc003dd3a023abe",
+      "mergedSha256": "557fad9b9808673f3ce535435e7bf00b20a4451c2c39ad2c9cc003dd3a023abe"
+    },
+    "essai-stitch-v5-famille/family-missions-core.mjs": {
+      "reason": "Preserve the published-main native missions model extension used by the closed-gate V3 intent provider.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs",
+        "essai-stitch-v5-famille/tests/missions-review.test.mjs"
+      ],
+      "reservesSha256": "eba5355ffd00b3bc64f998eb9c2a177d09a3b0ef79ef9499d52a322e8387d6de",
+      "publishedMainSha256": "3e67f4550025aace7d49f66191177652cc674b95f00edb9cef6cc80b20ca8f84",
+      "mergedSha256": "3e67f4550025aace7d49f66191177652cc674b95f00edb9cef6cc80b20ca8f84"
+    },
+    "essai-stitch-v5-famille/family-missions.js": {
+      "reason": "Preserve the published-main canonical V3 intent integration and allocation comparisons while shared activation remains closed.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/mission-intents-provider.test.mjs",
+        "essai-stitch-v5-famille/tests/mission-participants-runes.test.mjs"
+      ],
+      "reservesSha256": "38d8c5d06a5ab0c74bd52f5af711d3bf977e820d0b59dd13e040a81e4648a218",
+      "publishedMainSha256": "20ed02f00bbf4516f169395b0a9d8f945e30cc926e6cccc83738ebbb9dc50a52",
+      "mergedSha256": "20ed02f00bbf4516f169395b0a9d8f945e30cc926e6cccc83738ebbb9dc50a52"
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "reason": "Compose published-main V3 providers and Contracts metadata with readonly canonical identity revalidation of pending/conflicted family state; preserve snapshots, pending operations, bases and explicit conflict resolution.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/preparation-sync.test.cjs",
+        "essai-stitch-v5-famille/tests/mission-intents-provider.test.mjs"
+      ],
+      "reservesSha256": "1195ca01d9f577e84cae7b3348670bf42728461171959cdc6b93fdf6d586cac1",
+      "publishedMainSha256": "067fd71a15348f033e8047879d233dee6f5e6baf8fd444d4b09c65ec984ae5ac",
+      "mergedSha256": "81bfa7ada452c5a45d5b3e13904bcf68b41f4790545acb5f73f08a045fa2cd65"
+    },
+    "essai-stitch-v5-famille/family-runes-core.mjs": {
+      "reason": "Compose exact BigInt accumulation/compensation with published-main PostgreSQL TEXT120 participant identities and deterministic UTF-16 order; persistence and release gate remain unchanged.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/reserves-runes-exact-pending.test.mjs",
+        "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs"
+      ],
+      "reservesSha256": "6de19613cd8bed777289b824538f6cde1012408e1da24b98f6afa6ef23625978",
+      "publishedMainSha256": "f683ee397730b89144b106c2e62f171420945c584f251300561ca76a745a9554",
+      "mergedSha256": "f312f669ebf72635262075c8c16120dfa0782db1465871dc3cd4f683a090deb7"
+    },
+    "essai-stitch-v5-famille/family-v2.js": {
+      "reason": "Compose canonical projections, epoch/account/bearer guards after awaits and 401 retries with published-main capability withdrawal and targeted APIs; retain serialized fresh Sync and readonly offline identity revalidation.",
+      "tests": [
+        "essai-stitch-v5-famille/tests/family-access-native.test.mjs",
+        "essai-stitch-v5-famille/tests/family-access-native-socle.test.mjs",
+        "essai-stitch-v7/tests/prep-sync.cjs"
+      ],
+      "reservesSha256": "4fb7d8e030aae7dd033bc21d20da92b92ce2a3569ec286f207101b3b00a90bce",
+      "publishedMainSha256": "a7945f23301cd89ece5998861c9c5d048fdb3c1f50bfa173ee35833b9cdaf265",
+      "mergedSha256": "d3112bdc15bd9537fa3c6450acdb14910843b16d0b7a5db5e33142e54fdfc7ef"
+    }
+  }
+}

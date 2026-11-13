@@ -8,28 +8,52 @@
     "reason": "D01-D04: maintained voice lifecycle"
   },
   "essai-stitch-v7/cuisine-engine.js": {
-    "sha256": "5d76a0ba615fbbdcc2c811484e52e903ad0f4255860be4b04d880d6291ff1c9e",
-    "reason": "T01-T13: independent components and portions; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
+    "sha256": "c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f",
+    "reason": "T01-T13: independent components and portions; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091); readonly wording applies to any unverifiable/denied profile; no longer mislabels an unknown parent as a child"
   },
   "essai-stitch-v7/cuisine-e07.js": {
     "sha256": "57e819f519786e17e8e0730043096451b0606f43d97e473b9623b6f0a38443a5",
     "reason": "T01-T13/C01-C07: tabs/day actions/shopping adapter; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
   },
   "essai-stitch-v5-famille/family-v2.js": {
-    "sha256": "a1604d2430eefef52de6dedf7f0e506ca8f5dbb37094285ca50b04fa8376c089",
-    "reason": "F09: canonical child REST/storage transport guard"
+    "sha256": "4fb7d8e030aae7dd033bc21d20da92b92ce2a3569ec286f207101b3b00a90bce",
+    "reason": "F09: canonical child REST/storage transport guard; technical reserves: canonical role precedence and epoch/identity guards before transport; reviewed05c5a35; authenticated native session with blank/disagreeing controller cannot use local fallback, reviewed3945ee4; legacy and cached-session Sync adopts canonical context; Sync/public context reads serialized with fresh GET, no Auth rewrite or permissive fallback; reviewed70ba482; PREP proved offline reload/reconnect deadlock: readonly identity revalidation for active pending/conflicted family, fresh canonical GET and owner/epoch guards, no snapshot/pending/base/conflict change; clean initial adoption unchanged; independent review and 79 focused tests"
   },
   "essai-stitch-v5-famille/family-core.mjs": {
-    "sha256": "572239e897011d972fffd0dd83ea0488f4d251794a278df96f2dfc876c345d94",
-    "reason": "F09: pure shared write policy"
+    "sha256": "1ba68ae28dd05e0453657429f6f95e5ddbea269f3ab6e41fbd6c230607ea6d10",
+    "reason": "F09: pure shared write policy; technical reserves: complete canonical identity, bounded own-magic values, unchanged setup path; reviewed05c5a35; explicit canEdit/canMagic/canManageDependents grants respected, reviewedb988ec2"
   },
   "essai-stitch-v5-famille/family-missions.js": {
     "sha256": "38d8c5d06a5ab0c74bd52f5af711d3bf977e820d0b59dd13e040a81e4648a218",
     "reason": "M01-M09: participants and occurrence completion"
   },
   "essai-stitch-v5-famille/family-runes-core.mjs": {
-    "sha256": "4f63519da41c9f1ba9c49aa923093e92c5e96e058292c66d5d7b712803cbf2ec",
-    "reason": "M07-M08: unique integer reward allocations"
+    "sha256": "6de19613cd8bed777289b824538f6cde1012408e1da24b98f6afa6ef23625978",
+    "reason": "M07-M08: unique integer reward allocations; technical reserves: exact pending Rune sums through compensation, persistent Number format unchanged; reviewed0da2d66"
+  },
+  "essai-stitch-v5-famille/family-modules.js": {
+    "sha256": "1195ca01d9f577e84cae7b3348670bf42728461171959cdc6b93fdf6d586cac1",
+    "reason": "PR13 Contracts: versioned extensible metadata and multi-piece synchronization, preserving local references; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22; PREP proved offline reload/reconnect deadlock: readonly identity revalidation for active pending/conflicted family, fresh canonical GET and owner/epoch guards, no snapshot/pending/base/conflict change; clean initial adoption unchanged; independent review and 79 focused tests"
+  },
+  "essai-stitch-v5-famille/family-files.js": {
+    "sha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",
+    "reason": "PR13 Contracts: native file permissions and reference withdrawal retain published binary bytes; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v5-famille/family-contracts.js": {
+    "sha256": "29d074cf2c3b5b474f65f6e70e8418786b43e12762df712801ecbfa10b1fda37",
+    "reason": "PR13 Contracts: native metadata and attachment writer, no automatic upload; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v5-famille/stitch-v5.js": {
+    "sha256": "4feec5a812ba31bdb278029591b837613949198b4cea025bf2cae2531c6efa2e",
+    "reason": "PR13 Contracts: native writer loader after family-files; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v7/build-source.cjs": {
+    "sha256": "0f648b957d60b12db436501a8f9845db81599edc82af3bb6c406191598ad654f",
+    "reason": "PR13 Contracts: generated functional roots retain Contracts styles/register/import dependencies; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v7/family.js": {
+    "sha256": "e8a6cd6dff9dee7759887728bb0a4f9a4f54c8df1c126cd907c9efa3757a7ef5",
+    "reason": "Reconciliation of main70c56eb Contracts route decoration with reserves7448e0c complete canonical sharedReadOnly guards; both features preserved, no permissive fallback"
   },
   "memoWriter": {
     "sha256": "3339ebc0e184313c21877dcb702fcfd3af48e9d73a37e32b826ceececfd969b0",

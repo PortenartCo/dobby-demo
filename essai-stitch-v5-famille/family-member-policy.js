@@ -7,9 +7,9 @@ window.DobbyFamilyMemberPolicy=(()=>{
  const reason='Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures.';
  function permissions(member,context={}){
   const denied={canEdit:false,canMagic:false,canCreate:false,canLinkExistingChild:false,reason};
-  const actor=context.members?.find(row=>row.id===context.actorId),role=category(actor),registered=!!member&&context.members?.some(row=>row.id===member.id),pet=category(member)==='pet';
+  const actor=context.members?.find(row=>row.id===context.actorId),role=context.demo===true?category(actor):categories.includes(context.memberCategory)?context.memberCategory:null,registered=!!member&&context.members?.some(row=>row.id===member.id),pet=category(member)==='pet';
   if(context.demo!==true){
-   if(context.verified!==true||!context.userId||!context.householdId||!context.actorId||!context.members?.some(row=>row.id===context.actorId))return denied;
+   if(!['parent','child'].includes(role)||context.verified!==true||!context.userId||!context.householdId||!context.actorId||!context.members?.some(row=>row.id===context.actorId))return denied;
    const grants=context.permissions||{},own=registered&&member.id===context.actorId,dependent=registered&&grants.canManageDependents===true&&['baby','child','pet'].includes(category(member)),household=role==='parent'&&grants.familyRolesVerified===true&&grants.canManageHousehold===true,allowed=own||dependent||registered&&household;
    return{canEdit:role==='parent'&&allowed&&grants.canEdit===true,canMagic:!pet&&allowed&&grants.canMagic===true&&(role==='parent'||role==='child'&&own),canCreate:role==='parent'&&grants.canCreate===true,canLinkExistingChild:registered&&category(member)==='child'&&household&&grants.canLinkExistingChild===true,reason:role==='child'?'Un enfant peut uniquement confirmer sa propre Maison et son propre Patronus ; les données du foyer restent en lecture seule.':allowed?'Droits du compte et du membre vérifiés par le service familial ; règles serveur V7 à valider.':reason};
   }

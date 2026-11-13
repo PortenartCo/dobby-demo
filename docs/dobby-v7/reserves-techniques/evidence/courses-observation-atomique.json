@@ -1,0 +1,58 @@
+{
+  "baseline": "e8b5f90",
+  "runtimeChanged": false,
+  "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "regression": {
+    "red": {
+      "exitCode": 1,
+      "assertion": "authenticated false !== true, helper line29 from e8b5f90"
+    },
+    "green": {
+      "exitCode": 0,
+      "cases": 8
+    }
+  },
+  "family": {
+    "exitCode": 0,
+    "width": 390,
+    "marker": "CUISINE_FAMILY_PASS"
+  },
+  "sharedHome": {
+    "exitCode": 0,
+    "status": "PASS",
+    "checks": 11,
+    "negativeCanonicalContext": "Authenticated membership without canonical V7 context stays read-only and never sends a grocery write"
+  },
+  "files": [
+    {
+      "path": "essai-stitch-v7/tests/helpers/canonical-grocery-fixture.cjs",
+      "sha256": "80a8c5bff113b2587d7a2d23c6abe14eaaaa6c3bfd1ef1be471f1c46bf770b04"
+    },
+    {
+      "path": "essai-stitch-v7/tests/canonical-grocery-fixture.test.cjs",
+      "sha256": "2d1cf39bf70f19b14513f57b4af9d4a06f1aeb7742720636f1ebf890a88463b5"
+    },
+    {
+      "path": "essai-stitch-v7/tests/e07-p02-family.cjs",
+      "sha256": "9bb7079350383d56e6784cc8337342c6c996036e62d6c9bd65f17ca3928cffad"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/workspace/dobby-canonical-snapshot-red.log",
+      "sha256": "2e468548aff8576057b0612ffe914e90ac07879191c5eb0933ca589deb5a3a8c"
+    },
+    {
+      "path": "/workspace/dobby-canonical-snapshot-green.log",
+      "sha256": "a5df3e5522bed208e1cc429975d1ebcd2acf94f10b26ed7cd2e2ce8e1f0e3386"
+    },
+    {
+      "path": "/workspace/dobby-canonical-snapshot-family.log",
+      "sha256": "73858a2136c6c054bbd441096e94ebdd05f179a08e205b8a59c2ed8d8a6f517d"
+    },
+    {
+      "path": "/workspace/dobby-canonical-snapshot-shared-home.log",
+      "sha256": "2108ed02f0cdce7aa6a0dfb8c17ad2c0c4f9036aca31f9e2334d7e97e5f44723"
+    }
+  ]
+}

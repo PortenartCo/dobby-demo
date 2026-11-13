@@ -1,5 +1,6 @@
 /* Canonical root and callback forwarding. Auth outcomes are local UI fixtures;
- * this does not certify an external redirect allowlist or live family accounts. */
+ * this does not certify an external redirect allowlist or live family accounts.
+ * A positive active DTO carries the server member's id and memberCategory. */
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
@@ -17,7 +18,7 @@ async function check(name,{suffix='',session=false}={},verify){
  await context.addInitScript(({session})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const blank={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null};
-  const active={phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ROOT-ACCOUNT',householdId:'TEST-ROOT-HOUSEHOLD',memberId:'TEST-ROOT-MEMBER',profile:{id:'TEST-ROOT-MEMBER',firstName:'TEST',lastName:'Root',avatarId:'portrait-1'},permissions:{canEdit:true},pendingCeremony:false,familyRevision:1};
+  const active={phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ROOT-ACCOUNT',householdId:'TEST-ROOT-HOUSEHOLD',memberId:'TEST-ROOT-MEMBER',profile:{id:'TEST-ROOT-MEMBER',memberCategory:'parent',firstName:'TEST',lastName:'Root',avatarId:'portrait-1'},permissions:{canEdit:true},pendingCeremony:false,familyRevision:1};
   let state={...blank};
   window.__rootEntry={calls:[],refreshes:0};
   const access={ready:Promise.resolve(),state:()=>({...state}),subscribe:()=>()=>{},

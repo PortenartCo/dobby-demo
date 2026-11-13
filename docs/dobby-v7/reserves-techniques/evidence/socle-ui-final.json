@@ -1,0 +1,18 @@
+{
+  "scope": "local-fixtures-only",
+  "realAuthOrRlsVerified": false,
+  "results": [
+    {
+      "case": "published child access stays disabled",
+      "status": "FIXTURE_PASS"
+    },
+    {
+      "case": "typed child acceptance bypasses duplicate profile onboarding",
+      "status": "FIXTURE_PASS"
+    },
+    {
+      "case": "active child identity remains read-only",
+      "status": "FIXTURE_PASS"
+    }
+  ]
+}

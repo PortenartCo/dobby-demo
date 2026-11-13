@@ -1,0 +1,7 @@
+PASS absent schemas/tables/functions: exact SQL yields one JSON without missing-object failure
+PASS declared historical fixture: absent availability and unresolved private helpers are visible; guard is a STUB
+PASS present metadata/ACL/RLS/CAS source/dependencies/roles; no RPC executes, no row or unrelated source leaks; dump unchanged
+PASS availability states: missing CHECK, misleading OR, NOT VALID, fixed scale and wrong default never classify as compliant
+PASS insufficient catalogue permission aborts visibly; schema USAGE denial is not disguised as object absence
+PASS diagnosticSha256=2fc4fbc16cb41481b68069c9145e67387daf496ae51f7676783e34ae0298e2fc
+LOCAL FICTIONAL FIXTURE ONLY: no real guard source, migration, Supabase project or account verified.

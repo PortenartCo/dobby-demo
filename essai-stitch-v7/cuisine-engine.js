@@ -55,7 +55,7 @@ window.DobbyCuisineEngine = (() => {
   function reserveIngredients() {
     return evaluate(`return Object.entries(st.have||{}).flatMap(([id,raw])=>{const quantity=Number(raw),at=id.lastIndexOf('|'),name=(at<0?id:id.slice(0,at)).trim(),unit=at<0?'':id.slice(at+1).trim();return name&&Number.isFinite(quantity)&&quantity>0?[{id,name,quantity,unit}]:[];}).sort((a,b)=>a.name.localeCompare(b.name,'fr-BE'));`);
   }
-  const assertSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.()===true)throw Error('Les données partagées sont en lecture seule pour votre profil enfant.');};
+  const assertSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.()===true)throw Error('Les données partagées sont en lecture seule pour ce profil.');};
   function choose(values) {
     assertSharedWrite();
     const recipe=read().recipes.find(r=>r.id===values.id);if(recipe?.removedAt)throw Error('Cette recette est retirée du catalogue.');if(!recipe||!Number.isFinite(Number(recipe.servings))||Number(recipe.servings)<=0)throw Error('Complétez les portions de référence de cette recette avant de planifier ce repas.');

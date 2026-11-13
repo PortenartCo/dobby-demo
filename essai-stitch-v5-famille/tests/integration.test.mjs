@@ -10,7 +10,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Contracts native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
   const preview=source('../index.html').replaceAll('\r\n','\n');
   const preparationScript='<script src="./family-preparations.js"></script>';
@@ -25,14 +25,39 @@ test('preview V5 source matches original except isolated storage and approved E0
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
   let familyNormalized=preview;
-  const contracts=JSON.parse(source('./fixtures/contracts-native-extensions.json'));
-  assert.equal(contracts.baseCommit,'b77cb9de100a864c8aace8fb9e07053220ccd23a');
-  assert.equal(createHash('sha256').update(familyNormalized).digest('hex'),contracts.afterSha256,'Complete contract native source is pinned');
-  for(const amendment of [...contracts.patches].reverse()){
-    assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact contract native amendment occurs once: '+amendment.label);
-    familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
-  }
-  assert.equal(createHash('sha256').update(familyNormalized).digest('hex'),contracts.beforeSha256,'Contract native extension reverses to the complete preceding source');
+  // Compose the two independently approved literal amendments. Their frozen
+  // JSON fixtures and both complete branch artifacts remain byte-exact.
+  const roleSource=source('./fixtures/reserves-canonical-role-native-extensions.json');
+  const contractsSource=source('./fixtures/contracts-native-extensions.json');
+  const role=JSON.parse(roleSource),contracts=JSON.parse(contractsSource);
+  const composition=JSON.parse(source('./fixtures/contracts-reserves-native-composition.json'));
+  const composedSha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(composedSha(roleSource),composition.roleFixtureSha256,'Frozen role fixture is unchanged');
+  assert.equal(composedSha(contractsSource),composition.contractsFixtureSha256,'Frozen Contracts fixture is unchanged');
+  assert.equal(role.baseCommit,'b77cb9de100a864c8aace8fb9e07053220ccd23a');
+  assert.equal(role.approvedCommit,'05c5a359df6a156166a5d5cef6bb4a0ef68a3b45');
+  assert.equal(contracts.baseCommit,role.baseCommit);
+  assert.equal(composition.baseCommit,role.baseCommit);
+  assert.equal(role.patches.length,1);
+  assert.equal(contracts.patches.length,1);
+  assert.equal(composedSha(preview),composition.composedSha256,'Complete composed native artifact is pinned');
+  const invert=(text,fixture)=>{
+    for(const amendment of [...fixture.patches].reverse()){
+      assert.notEqual(amendment.after,amendment.before,'Each reviewed amendment changes an exact literal');
+      assert.equal(text.split(amendment.after).length-1,1,'Exact composed amendment occurs once: '+amendment.label);
+      text=text.replace(amendment.after,amendment.before);
+    }
+    return text;
+  };
+  const roleOnly=invert(preview,contracts),contractsOnly=invert(preview,role);
+  assert.equal(composedSha(roleOnly),role.afterSha256,'Removing Contracts restores the complete reviewed role artifact');
+  assert.equal(composedSha(contractsOnly),contracts.afterSha256,'Removing role restores the complete reviewed Contracts artifact');
+  familyNormalized=invert(roleOnly,role);
+  const contractsNormalized=invert(contractsOnly,contracts);
+  assert.equal(composedSha(familyNormalized),role.beforeSha256,'Role reversal restores every byte of its immutable base');
+  assert.equal(composedSha(contractsNormalized),contracts.beforeSha256,'Contracts reversal restores every byte of its immutable base');
+  assert.equal(familyNormalized,contractsNormalized,'Both inversion orders recover the identical complete historical source');
+  assert.equal(composedSha(familyNormalized),composition.beforeSha256,'Composition preserves the shared base before historical proofs');
   // T09 changes only these three frozen literals. Verify the full native bytes
   // before and after inversion; the historical proofs below remain unchanged.
   const dessert=JSON.parse(source('./fixtures/dessert-preparations-native-extensions.json'));

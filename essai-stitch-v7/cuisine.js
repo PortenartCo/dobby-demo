@@ -354,9 +354,9 @@ window.DobbyCuisine = (() => {
   async function refresh() {if(!ready||busy)return;busy=true;try{if(ui.view.startsWith('shop')&&E.read().state.page!=='shop')E.page('shop');await render();}finally{busy=false;}}
   const sharedMutation=action=>/^(pick|new-recipe|manual-recipe|favorite|plan-recipe|save-meal|cooked|move-meal|cancel-meal|save-recipe|save-tm|batch-commit|edit-recipe)$|^e07p01-(cook|cook-component|dessert|dessert-reuse|dessert-allocate|advance|advance-start|portions|move|prepared|cancel|confirm-move)$|^p01-save$|^e074-(plan|plan-confirm|plan-slot|plan-shift|remove|remove-confirm|restore|add-tm-step|cook-next)$|^e073-import-(commit|confirm)$/.test(action);
   const readOnly=()=>window.DobbyFamilyStitch?.sharedReadOnly?.()===true;
-  function gateSharedControls(){if(!readOnly())return;for(const el of $$('[data-cu-action]'))if(sharedMutation(el.dataset.cuAction)){el.disabled=true;el.setAttribute('aria-disabled','true');el.title='Les données partagées sont en lecture seule pour votre profil enfant.';}const info=document.createElement('p');info.dataset.mealsReadonly='';info.setAttribute('role','status');info.textContent='Les repas et recettes du foyer sont en lecture seule pour votre profil enfant.';$('main').append(info);}
+  function gateSharedControls(){if(!readOnly())return;for(const el of $$('[data-cu-action]'))if(sharedMutation(el.dataset.cuAction)){el.disabled=true;el.setAttribute('aria-disabled','true');el.title='Les données partagées sont en lecture seule pour ce profil.';}const info=document.createElement('p');info.dataset.mealsReadonly='';info.setAttribute('role','status');info.textContent='Les repas et recettes du foyer sont en lecture seule pour ce profil.';$('main').append(info);}
   async function act(action, el) {
-    if(sharedMutation(action)&&readOnly())throw Error('Les données partagées sont en lecture seule pour votre profil enfant.');
+    if(sharedMutation(action)&&readOnly())throw Error('Les données partagées sont en lecture seule pour ce profil.');
     if(ui.recipeSaving&&action!=='dismiss')return;
     const data=E.read();
     if(await window.DobbyCuisineP01?.action(action,el,{E,ui,pristine,bind,text,button,input,empty,notice,open,render,recipeVisual}))return;

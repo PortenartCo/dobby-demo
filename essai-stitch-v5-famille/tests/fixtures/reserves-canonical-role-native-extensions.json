@@ -1,0 +1,15 @@
+{
+  "description": "One exact canonical role field amendment; reverse it before all historical source proofs. No function or block is omitted.",
+  "baseCommit": "b77cb9de100a864c8aace8fb9e07053220ccd23a",
+  "approvedCommit": "05c5a359df6a156166a5d5cef6bb4a0ef68a3b45",
+  "sourcePath": "essai-stitch-v5-famille/index.html",
+  "beforeSha256": "4be86846dcb849cf990fafdfa564ce25e7415c8df7cf52dd0a24b72b828a836d",
+  "afterSha256": "a4fcff363c1a9de6bde9de2a011401fb68aae0574456ef35e38c68324d91bb9d",
+  "patches": [
+    {
+      "label": "Canonical category from verified matching server profile",
+      "before": " return{demo:false,verified,userId:verified?context.userId:null,householdId:verified?context.householdId:null,actorId:verified?context.memberId:null,permissions:verified?context.permissions:{},members:v23Members()};",
+      "after": " return{demo:false,verified,userId:verified?context.userId:null,householdId:verified?context.householdId:null,actorId:verified?context.memberId:null,memberCategory:verified&&bound.profile?.id===context.memberId?bound.profile.memberCategory:null,permissions:verified?context.permissions:{},members:v23Members()};"
+    }
+  ]
+}

@@ -86,9 +86,11 @@ test('V3 IDs preserve 120 PostgreSQL characters and exact JavaScript UTF-16 lexi
  assert.throws(()=>R.normalizeCredits([{missionId:'old',memberId:'x'.repeat(101),title:'TEST',effort:'regular',amount:25,date:'2026-11-13T12:00:00Z',revision:0}]),/Bénéficiaire/);
 });
 test('child completion exception requires exact canonical body and stays closed in this release',()=>{
- const access={verified:true,phase:'active',memberId:'b',householdId:'home-a',profile:{memberCategory:'child'},permissions:{canCompleteMissionsV3:true}};
+ const access={authenticated:true,userId:'account-b',verified:true,phase:'active',memberId:'b',householdId:'home-a',profile:{id:'b',memberCategory:'child'},permissions:{canCompleteMissionsV3:true}};
  const request={query:'rpc/dobby_missions_v3_write',body:{p_household_id:'home-a',p_expected_revision:4,p_operation_id:'00000000-0000-4000-8000-000000000001',p_intent:{kind:'complete',missionId:'test-mission',participantIds:['b']}},access};
  assert.equal(isCanonicalChildMissionCompletion(request),true);
+ for(const patch of [{authenticated:false},{userId:null},{householdId:''},{memberId:''},{profile:{id:'other',memberCategory:'child'}},{profile:{memberCategory:'child'}},{permissions:{canCompleteMissionsV3:false}},{permissions:{canCompleteMissionsV3:'true'}}])assert.equal(isCanonicalChildMissionCompletion({...request,access:{...access,...patch}}),false,'Incomplete identity or non-boolean grant never authorizes V3');
+ for(const p_expected_revision of [0,Number.MAX_SAFE_INTEGER,1.5,'4'])assert.equal(isCanonicalChildMissionCompletion({...request,body:{...request.body,p_expected_revision}}),false);
  for(const bad of [{...request,access:{...access,verified:false}},{...request,body:{...request.body,p_household_id:'foreign'}},{...request,body:{...request.body,p_intent:{kind:'reopen',missionId:'test-mission'}}},{...request,body:{...request.body,p_intent:{...request.body.p_intent,amount:999}}}])assert.equal(isCanonicalChildMissionCompletion(bad),false);
  assert.throws(()=>assertSharedWrite({...request,method:'POST'}),/lecture seule/);
 });

@@ -34,30 +34,63 @@ function native({futureFeatures=false}={}){
  const source=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,authorized,token,refreshToken,storageFetch};})();');
  vm.runInNewContext(source,sandbox);const f=sandbox.window.__native.f;f.db=db;f.ready=true;f.key='sb_publishable_test_native_only';f.core=familyCore;f.provider={start:async()=>{},reset(){},adoptVerifiedFamily:async()=>{},html:()=>'',sync:async()=>{}};
  const session=(userId=USER)=>({access_token:'TEST-access-'+userId,refresh_token:'TEST-refresh-'+userId,user_id:userId,expires_at:Math.floor(Date.now()/1000)+3600});
- const establish=()=>{f.session=session();f.householdId=HH;f.context=HH+':'+USER;f.verifiedContext=f.context;db.rows.set('session',{id:'session',value:structuredClone(f.session)});};
+ const establish=async()=>{
+  await sandbox.window.DobbyFamilyUI.access.ready;
+  // Seed only the fictional Auth session; native refresh must verify and bind it.
+  f.session=session();db.rows.set('session',{id:'session',value:structuredClone(f.session)});
+  const state=await sandbox.window.DobbyFamilyUI.access.refresh();
+  assert.equal(state.verified,true);assert.equal(state.phase,'active');assert.equal(state.memberId,MEMBER);assert.equal(state.profile.id,MEMBER);assert.equal(state.profile.memberCategory,'parent');assert.equal(state.permissions.canEdit,true);
+  assert.equal(sandbox.window.DobbyFamilyUI.connectionState().identityVerified,true);
+  requests.length=0;
+ };
  const switchAccount=({userId=OTHER,householdId=HH2,epoch=true}={})=>{f.session=session(userId);f.householdId=householdId;f.context=householdId+':'+userId;f.verifiedContext=f.context;if(epoch)f.epoch++;db.rows.set('session',{id:'session',value:structuredClone(f.session)});};
  return{f,db,requests,sandbox,api:sandbox.window.DobbyFamilyUI,transport:sandbox.window.__native,establish,switchAccount,intercept:fn=>interceptor=fn,setCapabilities:value=>capabilities=value,setContext:value=>context=value,
   readNativeMemberPermissions(id){vm.runInNewContext(fs.readFileSync(new URL('../family-member-policy.js',import.meta.url),'utf8'),sandbox);const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8'),start=html.indexOf('const v23Members='),end=html.indexOf('function v23HealthPermissions',start);vm.runInNewContext(html.slice(start,end)+'\nwindow.__memberPermissions=v23MemberPermissions;',sandbox);return sandbox.window.__memberPermissions(id);}};
 }
 function replaceWhenTokenReturns(f,replacement){let armed=true;Object.defineProperty(f.f.session,'access_token',{configurable:true,get(){if(armed){armed=false;queueMicrotask(()=>f.switchAccount(replacement));}return'TEST-access-original';}});}
 const mutationRequests=f=>f.requests.filter(request=>request.path==='/rest/v1/rpc/dobby_v7_update_member');
+async function linkedChild(){
+ const f=native({futureFeatures:true});f.setContext({protocol:1,phase:'profile',userId:USER,profile:null});await f.api.access.ready;await f.api.access.signIn('fixture@example.test','TEST-fixture-password');
+ f.intercept(request=>{
+  if(request.path.endsWith('/dobby_v7_preview_child_invitation'))return{ok:true,status:200,text:async()=>JSON.stringify({status:'valid',kind:'child-account',targetMemberId:CHILD,household:{id:HH,name:'TEST Foyer'},inviter:{name:'TEST Parent'},expiresAt:'2099-11-13T12:00:00Z'})};
+  if(request.path.endsWith('/dobby_v7_accept_child_invitation')){f.setContext({...active(),memberId:CHILD,profile:{id:CHILD,name:'TEST Child',memberCategory:'child'}});return{ok:true,status:200,text:async()=>'{}'};}
+  return null;
+ });
+ await f.api.access.previewChildInvitation(TOKEN);await f.api.access.acceptChildInvitation(TOKEN);
+ assert.equal(f.api.access.state().verified,true);assert.equal(f.api.access.state().memberId,CHILD);assert.equal(f.api.access.state().profile.memberCategory,'child');f.requests.length=0;return f;
+}
+test('the actual native child replay retries a same-actor 401 with its original operation and fresh bearer',async()=>{
+ const f=await linkedChild();let attempts=0;f.intercept(request=>request.path.endsWith('/dobby_v7_accept_child_invitation')&&attempts++===0?{ok:false,status:401,text:async()=>'{}'}:null);
+ await f.api.access.acceptChildInvitation(TOKEN);const requests=f.requests.filter(request=>request.path.endsWith('/dobby_v7_accept_child_invitation'));
+ assert.equal(requests.length,2);assert.deepEqual(JSON.parse(requests[0].options.body),JSON.parse(requests[1].options.body));assert.equal(requests[1].options.headers.Authorization,'Bearer TEST-access-refreshed');assert.equal(f.api.access.state().memberId,CHILD);
+});
+test('the native targeted replay cannot cross an account, epoch or household change after awaiting a token',async t=>{
+ for(const[label,replacement]of [['account',{userId:OTHER,householdId:HH2}],['epoch',{userId:USER,householdId:HH}],['household',{userId:USER,householdId:HH2,epoch:false}]])await t.test(label,async()=>{
+  const f=await linkedChild();f.intercept(()=>null);replaceWhenTokenReturns(f,replacement);
+  await assert.rejects(f.api.access.acceptChildInvitation(TOKEN),/compte|foyer|indisponible|refus/i);assert.equal(f.requests.some(request=>request.path.endsWith('/dobby_v7_accept_child_invitation')),false);assert.equal(f.requests.some(request=>request.path==='/auth/v1/token'),false);
+ });
+});
+test('a targeted replay 401 cannot refresh or resend under another native account',async()=>{
+ const f=await linkedChild();f.intercept(request=>request.path.endsWith('/dobby_v7_accept_child_invitation')?{ok:false,status:401,text:async()=>{queueMicrotask(()=>f.switchAccount());return'{}';}}:null);
+ await assert.rejects(f.api.access.acceptChildInvitation(TOKEN),/compte|foyer|indisponible|refus/i);assert.equal(f.requests.filter(request=>request.path.endsWith('/dobby_v7_accept_child_invitation')).length,1);assert.equal(f.requests.some(request=>request.path==='/auth/v1/token'),false);
+});
 
 test('the actual authorized transport rejects an account, epoch or household switch after token resolution',async t=>{
  for(const[label,replacement]of [['account',{userId:OTHER,householdId:HH2}],['epoch',{userId:USER,householdId:HH}],['household',{userId:USER,householdId:HH2,epoch:false}]])await t.test(label,async()=>{
-  const f=native();f.establish();replaceWhenTokenReturns(f,replacement);
+  const f=native();await f.establish();replaceWhenTokenReturns(f,replacement);
   await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER,p_values:{notes:'TEST'}}),/compte|foyer/i);
   assert.equal(mutationRequests(f).length,0);assert.equal(f.requests.length,0);
  });
 });
 
 test('a 401 from the original actor cannot refresh or retry under a replacement account',async()=>{
- const f=native();f.establish();f.intercept(request=>request.path.startsWith('/rest/v1/')?{ok:false,status:401,text:async()=>{queueMicrotask(()=>f.switchAccount());return'{}';}}:null);
+ const f=native();await f.establish();f.intercept(request=>request.path.startsWith('/rest/v1/')?{ok:false,status:401,text:async()=>{queueMicrotask(()=>f.switchAccount());return'{}';}}:null);
  await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/compte|foyer/i);
  assert.equal(mutationRequests(f).length,1);assert.equal(f.requests.some(request=>request.path==='/auth/v1/token'),false);
 });
 
 test('a late refresh response cannot overwrite the replacement account or send its pending mutation',async()=>{
- const f=native();f.establish();f.f.session.expires_at=0;let release;
+ const f=native();await f.establish();f.f.session.expires_at=0;let release;
  f.intercept(request=>request.path==='/auth/v1/token'?new Promise(resolve=>release=resolve):null);
  const pending=f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER});while(!release)await new Promise(resolve=>setImmediate(resolve));
  f.switchAccount();release({ok:true,status:200,text:async()=>JSON.stringify({access_token:'TEST-stale-A',refresh_token:'TEST-stale-refresh-A',expires_in:3600,user:{id:USER}})});
@@ -65,33 +98,33 @@ test('a late refresh response cannot overwrite the replacement account or send i
 });
 
 test('a refresh response for another Auth user is refused even when the local actor did not change',async()=>{
- const f=native();f.establish();f.f.session.expires_at=0;
+ const f=native();await f.establish();f.f.session.expires_at=0;
  f.intercept(request=>request.path==='/auth/v1/token'?{ok:true,status:200,text:async()=>JSON.stringify({access_token:'TEST-wrong-user',refresh_token:'TEST-wrong-refresh',expires_in:3600,user:{id:OTHER}})}:null);
  await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/compte|identit/i);
  assert.equal(f.f.session.user_id,USER);assert.equal(f.db.rows.get('session').value.user_id,USER);assert.equal(mutationRequests(f).length,0);
 });
 
 test('a legitimate refresh of the same actor keeps its epoch and household and uses its new token',async()=>{
- const f=native();f.establish();const epoch=f.f.epoch;f.f.session.expires_at=0;
+ const f=native();await f.establish();const epoch=f.f.epoch;f.f.session.expires_at=0;
  await f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER});
  assert.equal(f.f.session.user_id,USER);assert.equal(f.f.householdId,HH);assert.equal(f.f.epoch,epoch);assert.equal(f.db.rows.get('session').value.access_token,'TEST-access-refreshed');assert.equal(mutationRequests(f).length,1);assert.equal(mutationRequests(f)[0].options.headers.Authorization,'Bearer TEST-access-refreshed');
 });
 
 test('a same-actor 401 refresh retries with the refreshed token',async()=>{
- const f=native();f.establish();let attempts=0;f.intercept(request=>request.path.startsWith('/rest/v1/')&&attempts++===0?{ok:false,status:401,text:async()=>'{}'}:null);
+ const f=native();await f.establish();let attempts=0;f.intercept(request=>request.path.startsWith('/rest/v1/')&&attempts++===0?{ok:false,status:401,text:async()=>'{}'}:null);
  await f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER});assert.equal(mutationRequests(f).length,2);assert.equal(mutationRequests(f)[1].options.headers.Authorization,'Bearer TEST-access-refreshed');
 });
 
 test('authenticated password updates and storage mutations share the same token-boundary guard',async t=>{
  for(const route of ['password','storage'])await t.test(route,async()=>{
-  const f=native();f.establish();await f.api.access.ready;replaceWhenTokenReturns(f,{});
+  const f=native();await f.establish();replaceWhenTokenReturns(f,{});
   const pending=route==='password'?f.api.access.updatePassword('TEST-new-fixture-password'):f.transport.storageFetch('DELETE',HH+'/00000000-0000-4000-8000-000000000099.pdf');
   await assert.rejects(pending,route==='password'?/indisponible|compte|foyer/i:/compte|foyer/i);assert.equal(f.requests.length,0);
  });
 });
 
 test('a storage 401 cannot refresh or resend the old file operation after an account replacement',async()=>{
- const f=native();f.establish();f.intercept(request=>request.path.startsWith('/storage/v1/')?{ok:false,status:401,json:async()=>{queueMicrotask(()=>f.switchAccount());return{};}}:null);
+ const f=native();await f.establish();f.intercept(request=>request.path.startsWith('/storage/v1/')?{ok:false,status:401,json:async()=>{queueMicrotask(()=>f.switchAccount());return{};}}:null);
  await assert.rejects(f.transport.storageFetch('DELETE',HH+'/00000000-0000-4000-8000-000000000099.pdf'),/compte|foyer/i);
  assert.equal(f.requests.filter(request=>request.path.startsWith('/storage/v1/')).length,1);assert.equal(f.requests.some(request=>request.path==='/auth/v1/token'),false);
 });

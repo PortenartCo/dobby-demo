@@ -10,7 +10,7 @@ vm.runInNewContext(source('../../essai-stitch-v5-famille/family-profile.js'),rea
 vm.runInNewContext(source('../../essai-stitch-v5-famille/family-member-policy.js'),realm);
 const M=realm.window.DobbyMagicIdentity,P=realm.window.DobbyFamilyMemberPolicy;
 const members=[{id:'self',name:'TEST Profil',memberCategory:'parent'},{id:'other',name:'TEST Autre parent',memberCategory:'parent'},{id:'child',name:'TEST Enfant',memberCategory:'child'}];
-const context={demo:false,verified:true,userId:'user',householdId:'home',actorId:'self',members,permissions:{canEdit:true,canMagic:true,canCreate:true,canManageDependents:false}};
+const context={demo:false,verified:true,userId:'user',householdId:'home',actorId:'self',memberCategory:'parent',members,permissions:{canEdit:true,canMagic:true,canCreate:true,canManageDependents:false}};
 
 test('server-bound own member gains only explicit permissions; selected actors and other adults remain denied',()=>{
  assert.equal(P.permissions(members[0],context).canEdit,true);
@@ -75,7 +75,7 @@ test('gallery selection and intro progress resume per canonical member and compl
 test('verified native magical and own-profile writes use atomic server adapters before any local form mutation',async()=>{
  const html=source('../../essai-stitch-v5-famille/index.html'),start=html.indexOf('let v23MemberEdit=null;'),end=html.indexOf('const v23OldHealth=xhealth;',start);
  const st={familyMembers:structuredClone(members)},calls=[];
- let bound={verified:true,userId:'user',householdId:'home',memberId:'self',familyRevision:17};
+ let bound={verified:true,userId:'user',householdId:'home',memberId:'self',profile:{id:'self',memberCategory:'parent'},familyRevision:17};
  const api={connectionState:()=>({verified:true,verifying:false,access:'verified'}),getContext:()=>({userId:'user',householdId:'home',memberId:'self',identityVerified:true,permissions:{canMagic:true,canEdit:true}}),isModuleActive:()=>false,getModuleStatus:()=>'',access:{state:()=>bound,async updateMagic(args){calls.push(['magic',args]);st.familyMembers[0]=M.patch(st.familyMembers[0],args.values);return'self';},async updateMember(args){calls.push(['member',args]);st.familyMembers[0]=M.patch(st.familyMembers[0],args.values);return'self';}}};
  const native={window:{...realm.window,DobbyFamilyUI:api},DobbyFamilyUI:api,st,crypto:{randomUUID:()=> 'test-operation'},JSON,Object,Array,String};
  const nativeContext=vm.createContext(native);vm.runInContext(html.slice(start,end),nativeContext);native.DobbyFamilyMembers=native.window.DobbyFamilyMembers;

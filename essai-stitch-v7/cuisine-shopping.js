@@ -5,7 +5,7 @@ const symbol=name=>{const s=document.createElement('span');s.className='material
 const quantity=(n,singular,plural=singular+'s')=>n+' '+(n===1?singular:plural);
 const dayAt=(day,offset)=>c.E.evaluate('return addDays(p.day,p.offset);',{day,offset});
 const childReadOnly=()=>window.DobbyFamilyStitch?.sharedReadOnly?.()===true;
-const readOnlyReason='Les courses sont en lecture seule pour un profil enfant.';
+const readOnlyReason='Les courses sont en lecture seule pour ce profil.';
 const readOnlyActions=new Set(['e072-add','e072-edit','e072-save','e072-home','e072-home-all','e072-home-partial','e072-home-save','e072-home-clear','e072-delete','e072-confirm-delete','e072-check','e072-preview','e072-confirm','e072-transfer','e072-confirm-transfer','e072-finish','e072-confirm-finish','e072-conflict-server','e072-conflict-local']);
 const homeWarning=state=>state.homeSupported===false?'Disponibilité partagée indisponible : mise à jour de la base requise.':'Disponibilité partagée indisponible : vérification en attente.';
 let shopDialog=null,purchasedOpen=true,working=false,successMessage='';
