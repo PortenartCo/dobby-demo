@@ -1,0 +1,36 @@
+{
+  "scope": "client familial et intégration des intentions ; fixtures locales seulement",
+  "realSupabaseAccess": false,
+  "releaseGatesOpen": false,
+  "familyFocusedNodeCases": 45,
+  "familyBrowserFixtureScenarios": 3,
+  "combinedCausalNodeCases": 176,
+  "combinedFailures": 0,
+  "independentReview": {
+    "status": "PASS_AFTER_FIX",
+    "findingsCorrected": [
+      "Comptes/foyers vérifiés avant les mutations différées",
+      "Transport token/refresh/retry/mot de passe/Storage protégé contre identité remplacée",
+      "Fermeture des permissions propagée aux trois façades natives"
+    ],
+    "remainingMaterialFindings": []
+  },
+  "sha256": {
+    "essai-stitch-v5-famille/family-access.mjs": "e519d722f073b015a9e978d9f6b4070d4377b6216e73de7af7855e21966b442f",
+    "essai-stitch-v5-famille/family-v2.js": "a7945f23301cd89ece5998861c9c5d048fdb3c1f50bfa173ee35833b9cdaf265",
+    "essai-stitch-v5-famille/family-member-policy.js": "391cd7eb561c636a16b20f7715bc377f8a58a78c953947c8d4fc68c47243d090",
+    "essai-stitch-v7/access.js": "738acf98ada357004bbe17a42f4b31158e33895ad511ea901cbf24839c319c36",
+    "essai-stitch-v7/access-flow.mjs": "80a7becc87c9f9c40f47f687ee74b580b66d4810f99d119bb4c45085513a0898",
+    "essai-stitch-v7/family-member-detail.js": "0f0ec9c5979e7f1c2096ea135c26da97f3d5885c89fb2beb1122211d3af62733",
+    "essai-stitch-v7/family-members-review.js": "df5402ab242fe59b342d0d6081eb83dafe416f1b90a1d91231b4f7331947777a",
+    "essai-stitch-v5-famille/tests/family-access-socle.test.mjs": "36819dbdbd97f747c1f2aeb1af2b1a295e802edf251e392cbac0519bcf87f737",
+    "essai-stitch-v5-famille/tests/family-access-native-socle.test.mjs": "9d3f97695ffaf9df31668ba1b377f283ab2d7d8e2c0de91b2cd24c42e50aa4f6",
+    "essai-stitch-v7/tests/access-flow-child-socle.test.mjs": "6bfb5b8d1c4cc6cc2d2a597c696694296659c0078e2cd445ad3c62e3f607620e",
+    "essai-stitch-v7/tests/stitch-family-socle.cjs": "5c323491cd7c77c9a0a5284431fa86e0a02b1b1115acdf705137b5fbf59b4433"
+  },
+  "limits": [
+    "Aucune certification Auth/RLS/RPC réelle.",
+    "Gates F08/F09/V3 fermés en publication.",
+    "La recette nominale B est déjà validée historiquement ; les changements actuels ont leurs tests ciblés."
+  ]
+}
