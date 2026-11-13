@@ -1,6 +1,6 @@
 # C07 — Disponibilité partagée : lot manuel
 
-Statut **ATTENTE_UTILISATEUR**. Aucun de ces fichiers n’a été exécuté par Codex, localement ou à distance. Aucune connexion Supabase n’a été établie. Le SQL n’est pas déclaré validé sur PostgreSQL ; les tests HTTP utilisent uniquement des fixtures synthétiques.
+Statut **ATTENTE_UTILISATEUR**. Aucune connexion ni exécution Supabase distante n’a eu lieu. Le candidat exact d’installation, de vérification et de retour arrière a été testé uniquement sur PostgreSQL 17.7 local, dans un conteneur sans réseau ni port et avec des données fictives. Les contrôles .001, bornes/NaN/Infinity, révision périmée, ancien PATCH, répétition d’installation et refus d’un type incompatible passent (`../tests/run-shopping-local.py`). Cette fixture ne certifie ni les RLS/RPC réelles ni le catalogue distant ; les tests HTTP sont également synthétiques.
 
 La migration proposée ajoute seulement `public.dobby_v2_grocery.at_home_quantity numeric NOT NULL DEFAULT 0`, sans échelle fixe pour conserver `0.001 kg`. Les disponibilités des anciennes lignes commencent à zéro. Aucun article, achat, reçu d’import ou état local n’est supprimé ou copié automatiquement. La contrainte autorise de 0 à 999999 et exclut NaN/Infinity ; elle ne lie pas la valeur à `quantity`, pour préserver les PATCH des anciens clients qui omettent le champ.
 

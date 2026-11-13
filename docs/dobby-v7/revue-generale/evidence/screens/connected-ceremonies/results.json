@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "liveBackendVerified": false,
+  "physicalIPhone": false,
+  "results": [
+    {
+      "width": 320,
+      "status": "PASS",
+      "cases": [
+        "house quiz resume",
+        "patronus quiz resume",
+        "pending identity draft navigation",
+        "pending final save navigation",
+        "ritual first touch/green",
+        "ritual dock cancellation",
+        "reduced ritual",
+        "auth hidden"
+      ]
+    },
+    {
+      "width": 390,
+      "status": "PASS",
+      "cases": [
+        "house quiz resume",
+        "patronus quiz resume",
+        "pending identity draft navigation",
+        "pending final save navigation",
+        "ritual first touch/green",
+        "ritual dock cancellation",
+        "reduced ritual",
+        "auth hidden"
+      ]
+    }
+  ]
+}
