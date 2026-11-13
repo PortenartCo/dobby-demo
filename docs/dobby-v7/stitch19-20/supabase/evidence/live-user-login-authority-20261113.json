@@ -1,0 +1,48 @@
+{
+  "source": "user-executed read-only SQL09 and SQL10",
+  "date": "2026-11-13",
+  "scope": "personal-family-project-only",
+  "rootCauseVerifiedInDatabase": true,
+  "rootCause": "Dedicated writer lacks auth schema USAGE and SQL Editor cannot grant it",
+  "sql09": {
+    "readOnly": true,
+    "authSummary": {
+      "accounts": 2,
+      "emailConfirmed": 2,
+      "passwordPresent": 2,
+      "signedInSinceRelease": 2
+    },
+    "permissions": {
+      "contextOwnerIsWriter": true,
+      "writerAuthUidExecute": true,
+      "writerAuthSchemaUsage": false,
+      "contextSecurityDefiner": true,
+      "writerPublicSchemaUsage": true,
+      "writerPrivateSchemaUsage": true,
+      "authenticatedContextExecute": true,
+      "authenticatedPublicSchemaUsage": true
+    },
+    "contextDatabaseProbe": {
+      "phaseCounts": {},
+      "errorSqlstateCounts": {
+        "42501": 2
+      }
+    }
+  },
+  "sql10": {
+    "readOnly": true,
+    "authOwnerIsCaller": false,
+    "callerIsSuperuser": false,
+    "actorDefinitionMd5": "ca66dec1067c5cb1a77139730dcf2d9c",
+    "callerCanSetWriter": false,
+    "stampDefinitionMd5": "81320b020efdd9c11fc8a2b0e9cb692a",
+    "stampOwnerIsCaller": true,
+    "callerCanAdminWriter": false,
+    "callerCanCreateRoles": true,
+    "callerCanSetAuthOwner": false,
+    "writerAuthSchemaUsage": false,
+    "callerCanGrantAuthUsage": false
+  },
+  "fixAppliedByUser": false,
+  "realAuthenticatedJourneyVerified": false
+}

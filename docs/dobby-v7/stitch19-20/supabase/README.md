@@ -1,6 +1,25 @@
 # Installation familiale manuelle — Stitch 19/20
 
-Ces évolutions reposent sur le diagnostic catalogue transmis par l'utilisateur : PostgreSQL **17.11**, six tables publiques existantes, appartenances V2 `owner/member`, modules JSON natifs et protection Missions déjà installée. **L'utilisateur a exécuté `01-apply.sql` puis transmis la vérification structurelle réussie de `02-verify.sql` le 12 novembre 2026. Ne pas réexécuter `01-apply.sql`.** Codex n'a effectué aucune modification distante SQL/API/MCP. Les seuls contrôles directs de Codex sont des lectures des paramètres Auth publics.
+Ces évolutions reposent sur le diagnostic catalogue transmis par l'utilisateur : PostgreSQL **17.11**, six tables publiques existantes, appartenances V2 `owner/member`, modules JSON natifs et protection Missions déjà installée. **L'utilisateur a exécuté `01-apply.sql` puis transmis la vérification structurelle réussie de `02-verify.sql` le 12 novembre 2026. Ne pas réexécuter `01-apply.sql`.** Codex n'a effectué aucune modification distante SQL/API/MCP. Les contrôles directs distants de Codex sont des lectures publiques anonymes.
+
+## Correctif du refus de connexion — 13 novembre 2026
+
+Les diagnostics utilisateur 09 et 10 ont identifié le droit `USAGE` absent sur le
+schéma géré `auth`, que le SQL Editor ne peut pas accorder. La vérification
+structurelle initiale ne détectait pas cette restriction. Le
+[guide du correctif de connexion](CORRECTIF-CONNEXION.md) décrit les scripts
+manuels 11 et 12, leurs validations et le retour arrière 13.
+
+Deux fonctions sont adaptées : le helper privé d'identité reste
+`SECURITY INVOKER` sous le propriétaire du schéma, avec exécution fermée, et une
+branche V7 est ajoutée au stamp natif. Sa nouvelle empreinte est explicite ; les
+branches Missions et habituelle et les autres fonctions restent inchangées.
+Les RPC publics conservent leur propriétaire technique fermé. Aucun droit
+supplémentaire n'est accordé sur Auth. Après ce correctif, utiliser 12 pour la
+vérification ; l'ancien 02 exige le propriétaire initial du helper privé.
+
+L'application réelle reste à confirmer par le retour utilisateur de 12 et par la
+recette authentifiée ; les tests locaux ne constituent pas cette confirmation.
 
 ## État reçu et réglages Auth
 

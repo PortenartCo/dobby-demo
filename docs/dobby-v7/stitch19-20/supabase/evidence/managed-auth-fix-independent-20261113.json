@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "frozenFiles": {
+    "11-apply-auth-schema-fallback.sql": "89ad617b164b6b94a6751da7ba6e6ee2d9a7eaf6a03206ad50b9083324692cc6",
+    "12-verify-auth-schema-fallback.sql": "16632c0de4d65ea314cb82f09b899cb0747f91bbc228593d0b67a49e33503cc2",
+    "13-rollback-auth-schema-fallback.sql": "8c7b6a7505c84614f0d95cb640bca2362acaf40c4b6fbc8f16e944ba21d73266"
+  },
+  "localOnly": true,
+  "network": "none",
+  "uppercaseHelperAccepted": true,
+  "quotedWrongCaseSourceRejectedBeforeDDL": true,
+  "finalVerificationDataHashUnchanged": true,
+  "nonemptySessionClaimsRestored": true,
+  "applyResult": {
+    "repair": "dobby-v7-jwt-sub-invoker-v1",
+    "stampMd5": "6e2372696dc78db3a039342f66feadcf",
+    "actorOwner": "dobby_stitch1920_installer",
+    "actorVariant": "legacy_blank_uses_json",
+    "functionsChanged": 2,
+    "authSchemaUntouched": true,
+    "actorSecurityInvoker": true,
+    "realAuthOrApiVerified": false,
+    "noAccountOrHouseholdReset": true,
+    "actorOriginalWriterOwnerRestored": false
+  },
+  "verificationResult": {
+    "readOnly": true,
+    "actorOwner": "dobby_stitch1920_installer",
+    "verification": "dobby-v7-jwt-sub-invoker-v1",
+    "actorDefinitionMd5": "b8cefee1f90f53c8bda4132fe4ae3358",
+    "stampDefinitionMd5": "6e2372696dc78db3a039342f66feadcf",
+    "actorSecurityInvoker": true,
+    "contextDatabaseProbe": {
+      "phaseCounts": {
+        "active": 1,
+        "profile": 1
+      },
+      "probedAccountCount": 2,
+      "errorSqlstateCounts": {}
+    },
+    "realAuthOrApiVerified": false,
+    "writerAuthSchemaUsage": false,
+    "writerCanExecuteActor": true,
+    "actorOwnerIsSchemaOwner": true,
+    "callerCanExecuteContext": true
+  },
+  "unchanged13RollbackCoveredBy": "behavior-results.json"
+}

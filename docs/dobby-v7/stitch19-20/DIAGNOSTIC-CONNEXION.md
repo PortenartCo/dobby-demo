@@ -2,8 +2,10 @@
 
 Le bouton « Se connecter » a affiché un message commun aux réponses HTTP 401 et
 403. Ce message ne permettait pas de distinguer un refus du service Auth d’un
-refus du RPC familial après installation de la session. La cause réelle reste
-à établir ; aucun compte, mot de passe, droit ou foyer n’est modifié par ce correctif.
+refus du RPC familial après installation de la session. Les diagnostics SQL 09
+et 10 ont ensuite confirmé un droit `USAGE` absent sur le schéma `auth`, que le
+SQL Editor ne peut pas accorder. Le diagnostic d'interface ne modifie aucun
+compte, mot de passe, droit ou foyer.
 
 Les erreurs de connexion comportent désormais une référence fixe :
 
@@ -25,6 +27,10 @@ le contexte en base pour chaque compte. Il retourne uniquement des compteurs,
 des phases et des SQLSTATE. La transaction est en lecture seule et annulée.
 Ce contrôle ne valide ni le mot de passe, ni la clé API, ni le JWT, ni PostgREST.
 Transmettre uniquement la cellule JSON `login_diagnostic`.
+
+La correction de cette restriction Supabase est décrite dans le
+[guide du correctif de connexion](supabase/CORRECTIF-CONNEXION.md), avec SQL
+d’application, vérification et retour arrière. Son application est manuelle.
 
 Ne relancer aucun reset, ni `01-apply.sql`, ni `04-link-existing-owner.sql`.
 Les étapes création du foyer, invitation, acceptation et synchronisation réelle
