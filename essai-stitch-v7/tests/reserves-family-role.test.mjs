@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-function readonly({role='child',members=[],verified=true,matching=true,demo=null,offline=false,boundOverride={}}={}){
+function readonly({role='child',members=[],verified=true,matching=true,demo=null,offline=false,boundOverride={},nativeUser=null,contextUser=null}={}){
  const bound=offline?{}:{authenticated:true,phase:'active',userId:'TEST-U',householdId:'TEST-H',memberId:'TEST-M',verified,profile:{id:'TEST-M',memberCategory:role},...boundOverride};
- const native={...(demo?{DobbyReview:{demoMemberId:demo}}:{}),DobbyFamilyUI:{access:{state:()=>bound},getContext:()=>offline?null:{identityVerified:verified,userId:matching?'TEST-U':'OTHER-U',householdId:'TEST-H',memberId:'TEST-M'}}};
+ const native={...(demo?{DobbyReview:{demoMemberId:demo}}:{}),DobbyFamilyUI:{access:{state:()=>bound},connectionState:()=>({userId:nativeUser}),getContext:()=>offline?(contextUser?{userId:contextUser}:null):{identityVerified:verified,userId:matching?'TEST-U':'OTHER-U',householdId:'TEST-H',memberId:'TEST-M'}}};
  const realm={window:{DobbyFamilyStitchEngine:{win:()=>native,read:()=>({members})}}};
  vm.runInNewContext(fs.readFileSync(new URL('../family.js',import.meta.url),'utf8'),realm);return realm.window.DobbyFamilyStitch.sharedReadOnly();
 }
@@ -25,4 +25,11 @@ test('reserves: explicit local demo roles and unauthenticated local use retain t
 
 test('reserves: parent UI requires the complete canonical binding, including authentication and profile identity',()=>{
  for(const boundOverride of [{authenticated:false},{userId:null},{householdId:''},{memberId:null},{profile:{memberCategory:'parent'}},{profile:{id:'OTHER',memberCategory:'parent'}}])assert.equal(readonly({role:'parent',boundOverride}),true);
+});
+
+test('reserves: blank V7 state with a real native account remains readonly during context replacement',()=>{
+ assert.equal(readonly({offline:true,nativeUser:'TEST-NEW-ACCOUNT'}),true,'connectionState identifies a native session even when V7 state is blank');
+ assert.equal(readonly({offline:true,contextUser:'TEST-NEW-ACCOUNT'}),true,'A native household context also prevents the local fallback');
+ assert.equal(readonly({offline:true}),false,'A genuinely local session retains local editing');
+ assert.equal(readonly({offline:true,nativeUser:'TEST-NEW-ACCOUNT',demo:'TEST-M',members:[{id:'TEST-M',memberCategory:'parent'}]}),false,'Explicit local demo behavior is unchanged');
 });
