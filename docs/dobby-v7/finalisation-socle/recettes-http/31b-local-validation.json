@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "offline mocks and actual native controller bind-failure fixture",
+  "testsPassed": 30,
+  "testsFailed": 0,
+  "scriptSha256": "d0ef13c781be1a5f5905e1bc3a0441448221e08fcfd537b3ebed5aacb7f6483d",
+  "testSha256": "70f431660ae44bab7be80968f43aa278ab3a2b7805e7d9939cef95e99b4aba1a",
+  "supabaseAccessByAgent": false,
+  "maximumHttpRequests": 2,
+  "httpOrder": ["GET Auth /user", "GET PostgREST dobby_v7_context"],
+  "contextRequestRequiresVerifiedAuthSubject": true,
+  "automaticRefreshRetryOrMetadataWrites": false,
+  "acceptedNativeState": "loaded controller, unavailable, authenticated false, coherent nonempty native/access user",
+  "localMarkerRead": "deviceHouseholdId; only presence/match booleans returned",
+  "errors": "fixed status/code/message whitelist only; absent initial errors are not reconstructed",
+  "doesNotValidate31OrUnblock32": true
+}

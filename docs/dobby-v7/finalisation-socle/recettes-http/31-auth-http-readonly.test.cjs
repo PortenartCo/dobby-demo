@@ -2,6 +2,8 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
+const {webcrypto}=require('node:crypto');
+const {pathToFileURL}=require('node:url');
 const {run}=require('./31-auth-http-readonly.js');
 
 const USER='TEST_PRIVATE_AUTH_A',HH='TEST_PRIVATE_HOUSEHOLD',MEMBER='TEST_PRIVATE_TEXT_MEMBER',TOKEN='TEST_PRIVATE_ACCESS_TOKEN',KEY='sb_publishable_TEST_PUBLIC_KEY';
@@ -45,6 +47,45 @@ test('opened proof flags or an incomplete capability contract fail without openi
 });
 test('the script rejects another site or project before any request',async t=>{
  for(const kind of ['site','project'])await t.test(kind,async()=>{const f=fixture();if(kind==='site')f.host.location.origin='https://another.invalid';else f.host.DobbyPublicConfig.projectRef='professional-project-not-allowed';const report=await run({hostWindow:f.host});assert.equal(report.result,'FAIL');assert.equal(f.calls.length,0);assertPrivate(report);});
+});
+test('native readiness reports only booleans and a fixed phase before each local readiness refusal',async t=>{
+ const cases=[
+  ['ready',c=>({...c,ready:false}),null,'ready'],
+  ['configured',c=>({...c,configured:false}),null,'configured'],
+  ['verifying',c=>({...c,verifying:true}),null,'verifying'],
+  ['hasUserId',c=>({...c,userId:null}),null,'hasUserId'],
+  ['accessAuthenticated',null,a=>({...a,authenticated:false}),'accessAuthenticated'],
+  ['accessAuthenticatedAbsent',null,a=>{const copy={...a};delete copy.authenticated;return copy;},'accessAuthenticated'],
+  ['sessionMatchesAccess',null,a=>({...a,userId:'TEST_PRIVATE_AUTH_B'}),'sessionMatchesAccess'],
+  ['epochInteger',c=>({...c,epoch:undefined}),null,'epochInteger'],
+  ['unknownPhase',c=>({...c,ready:false}),a=>({...a,phase:TOKEN}),'ready']
+ ];
+ for(const[name,changeConnection,changeAccount,field]of cases)await t.test(name,async()=>{
+  const f=fixture(),connection=f.api.connectionState,state=f.api.access.state;
+  if(changeConnection)f.api.connectionState=()=>changeConnection(connection());if(changeAccount)f.api.access.state=()=>changeAccount(state());
+  const report=await run({hostWindow:f.host});assert.equal(report.result,'FAIL');assert.equal(report.reference,'SESSION_NON_PRETE');assert.equal(report.stage,'native-interface');assert.equal(report.actorClass,null);assert.deepEqual(report.checks,{});assert.equal(f.calls.length,0);
+  const readiness=report.nativeReadiness;assert.equal(readiness[field],field==='verifying');
+  assert.deepEqual(Object.keys(readiness),['ready','configured','verifying','hasUserId','accessAuthenticated','hasAccessAuthenticatedField','sessionMatchesAccess','epochInteger','accessPhase']);
+  for(const[key,value]of Object.entries(readiness))assert.equal(typeof value,key==='accessPhase'?'string':'boolean');
+  assert.equal(readiness.hasAccessAuthenticatedField,name!=='accessAuthenticatedAbsent');assert.equal(readiness.accessPhase,name==='unknownPhase'?'unknown':'active');assertPrivate(report);
+ });
+});
+test('actual family-v2 exports distinguish boot readiness, unloaded access controller and loaded blank controller without HTTP',async t=>{
+ const productRoot=process.env.DOBBY_SOURCE_ROOT||process.cwd(),accessModule=await import(pathToFileURL(productRoot+'/essai-stitch-v5-famille/family-access.mjs').href);
+ const source=fs.readFileSync(productRoot+'/essai-stitch-v5-famille/family-v2.js','utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f};})();');
+ for(const phase of ['boot-not-ready','controller-unloaded','controller-loaded-blank'])await t.test(phase,async()=>{
+  let requests=0;const node=()=>({dataset:{},append(){},remove(){},addEventListener(){},querySelector:()=>null,querySelectorAll:()=>[],style:{},elements:[],hidden:true});
+  const sandbox={__accessModule:accessModule,st:{page:'home'},save(){},render(){},drawShop:()=>'',queueMicrotask,setInterval:()=>0,setTimeout,clearTimeout,crypto:webcrypto,TextEncoder,URL,URLSearchParams,btoa,document:{getElementById:()=>null,addEventListener(){},createElement:node,body:{append(){}}},window:{addEventListener(){},dispatchEvent(){}},CustomEvent:class{},navigator:{onLine:true},localStorage:{getItem:()=>null,setItem(){}},fetch:async()=>{requests++;throw Error('NATIVE_HTTP_FORBIDDEN');}};
+  vm.runInNewContext(source,sandbox);const native=sandbox.window,model=native.__native.f;native.location={origin:'https://portenartco.github.io',pathname:'/dobby-demo/essai-stitch-v5-famille/index.html'};native.fetch=sandbox.fetch;native.AbortController=AbortController;
+  if(phase!=='boot-not-ready'){model.ready=true;model.key=KEY;model.session={user_id:USER};}
+  if(phase==='controller-loaded-blank')await native.DobbyFamilyUI.access.ready;
+  const host={location:{origin:'https://portenartco.github.io',pathname:'/dobby-demo/essai-stitch-v7/famille.html'},DobbyPublicConfig:{projectRef:'pqcdkrwljgvgagzwrcmg'},DobbyFamilyStitchEngine:{win:()=>native}};
+  const report=await run({hostWindow:host}),r=report.nativeReadiness;assert.equal(report.reference,'SESSION_NON_PRETE');assert.equal(requests,0);assert.equal(r.epochInteger,true);assert.equal(r.accessAuthenticated,false);
+  if(phase==='boot-not-ready'){assert.equal(r.ready,false);assert.equal(r.configured,false);assert.equal(r.hasUserId,false);assert.equal(r.hasAccessAuthenticatedField,false);assert.equal(r.accessPhase,'signed-out');}
+  if(phase==='controller-unloaded'){assert.equal(r.ready,true);assert.equal(r.configured,true);assert.equal(r.hasUserId,true);assert.equal(r.hasAccessAuthenticatedField,false);assert.equal(r.sessionMatchesAccess,true);assert.equal(r.accessPhase,'unavailable');}
+  if(phase==='controller-loaded-blank'){assert.equal(r.ready,true);assert.equal(r.hasUserId,true);assert.equal(r.hasAccessAuthenticatedField,true);assert.equal(r.sessionMatchesAccess,false);assert.equal(r.accessPhase,'signed-out');}
+  assertPrivate(report);
+ });
 });
 test('a raw RPC error is reduced to a fixed stage and numeric HTTP status only',async()=>{
  const f=fixture();f.rpc(()=>{throw Object.assign(Error('TEST_PRIVATE_ACCESS_TOKEN private-fixture@example.invalid'),{status:403,code:USER,cause:{secret:TOKEN}});});

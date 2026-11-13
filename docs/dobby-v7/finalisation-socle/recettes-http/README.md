@@ -15,6 +15,8 @@ Ne copier ni captures réseau, ni en-têtes, ni stockage navigateur, ni coordonn
 
 Si le résultat est `FAIL`, transmettre ce même JSON agrégé. Il fournit une étape et une référence fixe, sans reproduire une réponse brute du serveur. `SESSION_NON_PRETE` ou `SESSION_CHANGEANTE` peut nécessiter d'attendre la fin du chargement et de relancer le seul script de lecture ; aucun SQL à rejouer.
 
+Pour `SESSION_NON_PRETE`, le rapport ajoute `nativeReadiness` : uniquement des booléens et un code de phase fixe. Ces valeurs distinguent l'initialisation native de l'état de la façade d'accès ; un écran Famille déjà affiché ne suffit pas à les déduire. Le script ne tente pas d'initialiser la façade, n'appelle ni `ready` ni `refresh`, et n'assouplit aucun contrôle. Renvoyer le JSON avant de modifier le compte ou de prescrire une reconnexion ; aucun SQL n'est nécessaire.
+
 `SESSION_A_RECONNECTER` indique un jeton expiré, dont l'expiration est inconnue, avec moins de deux minutes de validité restante, ou un refus HTTP 401. Le script s'arrête sans renouvellement ni retry. Se déconnecter/reconnecter normalement dans l'interface, puis relancer le script. Les destinations et en-têtes sont fixes pour le seul projet familial ; une redirection HTTP est refusée.
 
 ## Résultats attendus
@@ -33,6 +35,6 @@ Les véritables essais Storage seront également distincts : objet TEST sans con
 
 ## Validation locale du script
 
-Les **28 tests ciblés ont réussi** : mocks de l'interface native et du réseau, puis exécution du fichier exact dans un contexte Console simulé. Ils vérifient le scénario Parent, le compte non lié, les GET exclusifs, les expirations/401 sans refresh ou retry, les redirections refusées, le remplacement de compte/foyer, les gates relus après le dernier GET Auth et l'absence de données personnelles dans le résultat. **Aucun appel à Supabase réel ni login Auth réel n'a été effectué par l'agent.**
+Les **42 tests ciblés ont réussi** : mocks de l'interface native et du réseau, exécution du fichier exact dans une Console simulée, puis véritables exports `family-v2.js` en VM dans trois états locaux : boot non prêt, contrôleur d'accès absent, contrôleur chargé encore vide. Les diagnostics échoués ne font aucun HTTP et ne retournent que des booléens/codes fixes. Les garanties GET exclusifs, expirations/401 sans refresh/retry, gardes et confidentialité restent vérifiées. **Aucun appel à Supabase réel ni login Auth réel n'a été effectué par l'agent.**
 
-Commande locale : `node --test 31-auth-http-readonly.test.cjs`. La [preuve locale](local-validation.json) identifie le fichier testé.
+Commande locale, depuis la racine du worktree DOBBY (les tests VM lisent ses sources réelles) : `node --test /workspace/scratch/dobby-socle/auth-http-readonly/31-auth-http-readonly.test.cjs`. Une autre racine peut être indiquée par `DOBBY_SOURCE_ROOT`. La [preuve locale](local-validation.json) identifie le fichier testé.

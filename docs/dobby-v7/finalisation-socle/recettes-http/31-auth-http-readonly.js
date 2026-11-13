@@ -18,6 +18,7 @@
   const AUTH_USER_URL=FAMILY_ORIGIN+'/auth/v1/user';
   const PROJECT_REF='pqcdkrwljgvgagzwrcmg';
   const MIN_SESSION_TTL_SECONDS=120;
+  const accessPhases=new Set(['signed-out','email-confirmation','profile','household','active','rejected','unavailable']);
   const id=value=>typeof value==='string'&&value.length>0&&value.length<=120;
   const object=value=>Boolean(value&&typeof value==='object'&&!Array.isArray(value));
   const fail=reference=>{const error=Error(reference);error.probeReference=reference;throw error;};
@@ -39,7 +40,15 @@
       if(configuration?.projectRef!==PROJECT_REF)fail('CONFIGURATION_PUBLIQUE_INCOHERENTE');
       const snapshot=()=>{
         const connection=api.connectionState(),account=api.access.state();
-        if(connection.ready!==true||connection.configured!==true||connection.verifying||!id(connection.userId)||account.authenticated!==true||account.userId!==connection.userId||!Number.isSafeInteger(connection.epoch))fail('SESSION_NON_PRETE');
+        const readiness={ready:connection?.ready===true,configured:connection?.configured===true,
+          verifying:Boolean(connection?.verifying),hasUserId:id(connection?.userId),
+          accessAuthenticated:account?.authenticated===true,
+          hasAccessAuthenticatedField:object(account)&&Object.hasOwn(account,'authenticated'),
+          sessionMatchesAccess:id(connection?.userId)&&account?.userId===connection.userId,
+          epochInteger:Number.isSafeInteger(connection?.epoch),
+          accessPhase:accessPhases.has(account?.phase)?account.phase:'unknown'};
+        report.nativeReadiness=readiness;
+        if(!readiness.ready||!readiness.configured||readiness.verifying||!readiness.hasUserId||!readiness.accessAuthenticated||!readiness.sessionMatchesAccess||!readiness.epochInteger)fail('SESSION_NON_PRETE');
         return{epoch:connection.epoch,userId:connection.userId,householdId:connection.householdId||null,memberId:account.memberId||null};
       };
       const owner=snapshot();
