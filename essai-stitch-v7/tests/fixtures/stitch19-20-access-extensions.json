@@ -4,6 +4,11 @@
   "purpose": "Exact reversible amendments for public family config, verified server identity and native access facade. Preserve every other byte before applying existing PREP preservation checks.",
   "patches": [
     {
+      "label": "Preserve string PostgREST codes and GoTrue error_code reasons",
+      "before": "    error.code = data?.code;\n",
+      "after": "    error.code = typeof data?.code === 'string' ? data.code : data?.error_code;\n"
+    },
+    {
       "label": "Explicit native verified-access amendment 1",
       "before": "const f = {\n  db: null, core: null, key: null, session: null, context: null, householdId: null,\n  cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,\n  homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null\n};\nconst now = () => new Date().toISOString();\nconst esc = x => String(x == null ? '' : x).replace(/[&<>\"']/g, c => ({\n",
       "after": "const f = {\n  db: null, core: null, key: null, session: null, context: null, householdId: null,\n  cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,\n  homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null\n};\nconst now = () => new Date().toISOString();\nconst esc = x => String(x == null ? '' : x).replace(/[&<>\"']/g, c => ({\n"

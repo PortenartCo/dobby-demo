@@ -7,11 +7,11 @@ const executablePath=process.env.CHROMIUM_PATH||'/workspace/scratch/chrome-ci156
 const results=[];
 let browser;
 
-async function fixture({phase='active',deferPreview=false}={}){
+async function fixture({phase='active',deferPreview=false,signInError=null}={}){
  const context=await browser.newContext({viewport:{width:390,height:844},locale:'fr-BE',reducedMotion:'reduce'});
  const external=[];
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():(external.push(new URL(route.request().url()).origin),route.abort()));
- await context.addInitScript(({phase,deferPreview})=>{
+ await context.addInitScript(({phase,deferPreview,signInError})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const grants={canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true};
   let restored={phase,configured:true,authenticated:true,userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
@@ -22,6 +22,7 @@ async function fixture({phase='active',deferPreview=false}={}){
   window.__accessRace.switchAccount=()=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'}};state={...restored};return emit();};
   const invitation=token=>({status:'valid',household:{id:'TEST-HH-'+token,name:'TEST foyer '+token},inviter:{name:'TEST invitant'},expiresAt:'2099-11-12T12:00:00Z'});
   const access={ready:Promise.resolve(),state:()=>({...state}),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},
+   signIn:async()=>{window.__accessRace.calls.push({kind:'signIn'});throw Object.assign(Error('PRIVATE SERVER DETAIL private@example.test private-token'),signInError||{});},
    refresh:async()=>{window.__accessRace.refreshes++;state={...restored};return emit();},
    confirmFromURL:async()=>{window.__accessRace.calls.push({kind:'confirm'});throw Error('TEST expired PKCE confirmation');},
    saveProfile:async(values,options)=>{window.__accessRace.calls.push({kind:'saveProfile',userId:state.userId,values:{...values},options:{...options}});state={...state,profile:{...state.profile,...values}};return emit();},
@@ -34,7 +35,7 @@ async function fixture({phase='active',deferPreview=false}={}){
    connectionState:()=>({...api.connectionState(),configured:true,verified:state.verified,identityVerified:state.verified,access:state.verified?'verified':'local',verifying:false}),
    getContext:()=>state.verified?{userId:state.userId,householdId:state.householdId,memberId:state.memberId,identityVerified:true,permissions:grants,familyRevision:1}:null
   };}});
- },{phase,deferPreview});
+ },{phase,deferPreview,signInError});
  const page=await context.newPage();page.setDefaultTimeout(6000);
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const load=async route=>{await page.goto(origin+'/essai-stitch-v7/famille.html#'+route);await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.state().userId==='TEST-ACCESS-OWNER');};
@@ -53,6 +54,24 @@ async function check(name,options,action){
  browser=await chromium.launch({executablePath,args:['--no-sandbox']});
  console.log('BROWSER',browser.version(),'AUTH_FIXTURES_ONLY no live certification');
  try{
+  for(const [name,error,expected] of [
+   ['Auth refusal',{stage:'auth',status:401,code:'private-token'},/CONNEXION-401/],
+   ['household refusal after Auth',{stage:'context',status:403,code:'42501'},/FOYER-403/],
+   ['unconfirmed email',{stage:'auth',status:400,code:'email_not_confirmed'},/adresse e-mail.*confirmée.*CONNEXION-400-EMAIL/i],
+   ['unrecognized credentials',{stage:'auth',status:400,code:'invalid_credentials'},/adresse e-mail ou le mot de passe.*CONNEXION-400-IDENTIFIANTS/i]
+  ])await check('login displays safe diagnostic for '+name,{signInError:error},async({page,load,native})=>{
+   await load('access-auth');
+   await page.getByLabel('Adresse e-mail',{exact:true}).fill('fixture@example.test');
+   await page.getByLabel('Mot de passe',{exact:true}).fill('fixture-password');
+   await page.getByRole('button',{name:'Se connecter',exact:true}).click();
+   await page.waitForFunction(()=>!DobbyAccess.busy);
+   const message=await page.locator('[data-access-status]').innerText();
+   assert.match(message,expected);
+   assert.doesNotMatch(message,/PRIVATE|private@example|private-token|42501/);
+   assert.equal(await page.getByLabel('Adresse e-mail',{exact:true}).inputValue(),'fixture@example.test');
+   assert.equal(await page.getByRole('button',{name:'Se connecter',exact:true}).isEnabled(),true);
+   assert.equal(await native('return window.__accessRace.calls.filter(row=>row.kind==="signIn").length;'),1);
+  });
   await check('editing invitation B cannot install or accept delayed preview A',{phase:'household',deferPreview:true},async({page,load,native})=>{
    await load('access-join');const input=page.getByLabel('Code ou lien d’invitation',{exact:true});
    await input.fill('TEST-TOKEN-A');await page.getByRole('button',{name:'Vérifier l’invitation',exact:true}).click();

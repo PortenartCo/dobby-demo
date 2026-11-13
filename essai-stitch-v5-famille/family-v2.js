@@ -100,7 +100,7 @@ async function raw(path, method, body, headers = {}, bearer = null) {
   if (!response.ok) {
     const error = Error(data?.msg || data?.error_description || data?.message || ('HTTP ' + response.status));
     error.status = response.status;
-    error.code = data?.code;
+    error.code = typeof data?.code === 'string' ? data.code : data?.error_code;
     throw error;
   }
   return data;

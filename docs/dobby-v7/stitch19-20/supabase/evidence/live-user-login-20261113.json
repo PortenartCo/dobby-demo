@@ -1,0 +1,14 @@
+{
+  "source": "user-reported acceptance test",
+  "date": "2026-11-13",
+  "deployedCommit": "6b11db2ea60eefb0611972226c801bb3f08760f3",
+  "action": "Se connecter",
+  "outcome": "failed",
+  "displayedMessage": "La connexion ou l’accès au foyer n’a pas été confirmé. Vérifiez vos informations.",
+  "derivedFromClientMessage": "HTTP 401 or 403; failing Auth/context boundary not yet known",
+  "rootCauseVerified": false,
+  "realAccountsVerified": false,
+  "realInvitationsVerified": false,
+  "noResetRequested": true,
+  "nextEvidence": "Safe stage reference on next user-owned attempt and manual read-only login_diagnostic SQL result"
+}

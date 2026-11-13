@@ -26,6 +26,27 @@ test('a new authenticated account retains its native session without inventing a
  assert.equal(f.native.userId,USER);assert.equal(f.api.state().phase,'profile');assert.equal(f.api.state().memberId,null);assert.equal(f.api.state().verified,false);assert.equal(f.binding(),null);
  assert.equal(f.calls[0].path,'/auth/v1/token?grant_type=password');assert.equal(f.calls[0].body.email,'camille@example.test');
 });
+
+test('sign-in Auth refusals carry a safe stage while withholding provider details',async()=>{
+ const f=await fixture();f.driver.auth=async()=>{throw Object.assign(Error('PRIVATE_RESPONSE camille@example.test'),{status:403,code:'email_not_confirmed',stage:'untrusted',cause:{token:'PRIVATE_TOKEN'}});};
+ await assert.rejects(f.api.signIn('camille@example.test','fixture-password'),error=>{
+  assert.equal(error.stage,'auth');assert.equal(error.status,403);assert.equal(error.code,'email_not_confirmed');
+  assert.equal(error.cause,undefined);assert.doesNotMatch(error.message+JSON.stringify(error),/PRIVATE_RESPONSE|camille@example|PRIVATE_TOKEN|untrusted/);return true;
+ });
+ assert.equal(f.native.userId,null);assert.equal(f.api.state().verified,false);
+});
+
+test('context RPC refusals are distinct from other RPC and native binding failures',async()=>{
+ const f=await fixture();f.driver.rpc=async()=>{throw Object.assign(Error('PRIVATE_CONTEXT_RESPONSE'),{status:403,code:'42501'});};
+ await assert.rejects(f.api.signIn('camille@example.test','fixture-password'),error=>{
+  assert.equal(error.stage,'context');assert.equal(error.status,403);assert.equal(error.code,'42501');assert.doesNotMatch(error.message,/PRIVATE_CONTEXT_RESPONSE/);return true;
+ });
+ assert.equal(f.native.userId,USER);assert.equal(f.api.state().verified,false);
+ await assert.rejects(f.api.saveProfile({firstName:'Camille'}),error=>{assert.equal(error.stage,'service');return true;});
+ const binding=await fixture();binding.setContext(active());binding.driver.bind=async()=>{throw Object.assign(Error('Binding refused'),{status:403});};
+ await assert.rejects(binding.api.signIn('camille@example.test','fixture-password'),error=>{assert.notEqual(error.stage,'context');return true;});
+ assert.equal(binding.api.state().verified,false);
+});
 test('email confirmation never creates a profile or household and persists only a scoped PKCE flow',async()=>{
  const f=await fixture();f.setAuth({id:USER,identities:[]});await f.api.signUp('camille@example.test','fixture-password',{redirectTo:'https://example.test/dobby/'});
  assert.equal(f.api.state().phase,'email-confirmation');assert.equal(f.native.userId,null);assert.equal(f.calls.some(x=>x.name),false);

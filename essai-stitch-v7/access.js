@@ -23,6 +23,17 @@ window.DobbyAccess = (() => {
     target.textContent=text; target.dataset.error=String(error); target.hidden=!text;
   }
   function publicError(error) {
+    // Report only fixed stages/statuses and known Auth reasons. Server text may
+    // contain account details and must never become a support diagnostic.
+    const stage=error?.stage,code=error?.code;
+    const http=Number.isInteger(error?.status)&&error.status>=100&&error.status<=599?String(error.status):'INDISPONIBLE';
+    if(stage==='auth'){
+      if(code==='invalid_credentials')return 'L’adresse e-mail ou le mot de passe n’a pas été reconnu. Référence : CONNEXION-'+http+'-IDENTIFIANTS.';
+      if(code==='email_not_confirmed')return 'Votre adresse e-mail doit être confirmée avant la connexion. Référence : CONNEXION-'+http+'-EMAIL.';
+      if(error?.status===429)return 'Trop de tentatives de connexion. Patientez avant de réessayer. Référence : CONNEXION-429.';
+      return 'Le service de connexion n’a pas confirmé la demande. Référence : CONNEXION-'+http+'.';
+    }
+    if(stage==='context')return 'Le serveur n’a pas permis de vérifier l’accès au foyer. Référence : FOYER-'+http+'.';
     if(/adresse e.mail valide/i.test(error?.message||''))return 'Indiquez une adresse e-mail valide.';
     if(/réseau|network|fetch/i.test(error?.message||''))return 'La connexion est interrompue. Votre saisie est conservée ; réessayez.';
     if(/compte.*changé|foyer.*changé|contexte/i.test(error?.message||''))return 'Le compte ou le foyer a changé. Reconnectez-vous avant de continuer.';
