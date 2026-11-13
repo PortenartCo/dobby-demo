@@ -1,0 +1,51 @@
+{
+  "head": "9c10ff6a140c07971a0a5ac689eb1e943b0482c2",
+  "chromium": "154.0.8037.57",
+  "origin": "http://127.0.0.1:8765",
+  "status": "PASS",
+  "appFilesVerified": 212,
+  "modifiedAppFiles": [],
+  "realAuthOrBackendVerified": false,
+  "checks": [
+    {
+      "command": "npm run test:prep --prefix essai-stitch-v7/tests",
+      "exitCode": 0,
+      "units": 54,
+      "viewports": [
+        320,
+        390,
+        1440
+      ],
+      "syncChecks": 8,
+      "log": "/workspace/dobby-reserves-socle-prep-final-retry.log",
+      "evidence": "/workspace/dobby-reserves-socle-prep-final-retry",
+      "syncEvidence": "/workspace/dobby-reserves-socle-prep-final-retry/sync/result.json"
+    },
+    {
+      "command": "node essai-stitch-v7/tests/stitch-family-socle.cjs",
+      "exitCode": 0,
+      "cases": 3,
+      "result": "/workspace/dobby-reserves-socle-ui-final-family.json",
+      "log": "/workspace/dobby-reserves-socle-ui-final-family.log"
+    },
+    {
+      "command": "node essai-stitch-v7/tests/missions-intent-ui.cjs",
+      "exitCode": 0,
+      "log": "/workspace/dobby-reserves-socle-ui-final-missions.log"
+    }
+  ],
+  "retainedInitialFailure": {
+    "command": "npm run test:prep --prefix essai-stitch-v7/tests",
+    "exitCode": 1,
+    "location": "prep-invalid.cjs initial page.goto waiting for load",
+    "timeoutMs": 8000,
+    "log": "/workspace/dobby-reserves-socle-prep-final.log",
+    "isolatedRetryExitCode": 0,
+    "isolatedRetryLog": "/workspace/dobby-reserves-socle-prep-invalid-retry.log",
+    "sourceOrFixtureEdited": false
+  },
+  "limits": [
+    "Local browser/API fixtures only; no live Supabase/Auth/RLS verification",
+    "One initial 8-second navigation timeout retained alongside the complete unchanged rerun PASS"
+  ]
+}

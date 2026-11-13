@@ -281,7 +281,7 @@ jobs:
           else
             BROWSER="$(command -v chromium)"
           fi
-          node --test essai-stitch-v5-famille/tests/missions-review.test.mjs essai-stitch-v5-famille/tests/v7-family-policy.test.mjs essai-stitch-v5-famille/tests/family-write-policy.test.mjs essai-stitch-v7/tests/v7-chat-permissions.test.cjs
+          node --test essai-stitch-v5-famille/tests/missions-review.test.mjs essai-stitch-v5-famille/tests/v7-family-policy.test.mjs essai-stitch-v5-famille/tests/family-write-policy.test.mjs essai-stitch-v7/tests/v7-chat-permissions.test.cjs essai-stitch-v7/tests/reserves-family-role.test.mjs
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/revue-generale-ci.cjs
       - name: Keep current general review evidence
         if: always()
@@ -313,3 +313,39 @@ jobs:
           name: dobby-v7-stitch-visual-evidence
           path: docs/dobby-v7/evidence/
           retention-days: 14
+
+  reserves-sql-local:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stock PostgreSQL fixtures only, no network or host mounts
+        run: |
+          set -euo pipefail
+          unset DOCKER_HOST DOCKER_CONTEXT DOCKER_TLS DOCKER_TLS_VERIFY DOCKER_CERT_PATH
+          docker --host=unix:///var/run/docker.sock pull postgres:17.7
+          docker --host=unix:///var/run/docker.sock run --detach --pull=never --name dobby-stitch1920-pg-20261113-review --network none --env POSTGRES_USER=dobby_local_test --env POSTGRES_PASSWORD=FICTIONAL_CI_ONLY postgres:17.7
+          for attempt in $(seq 1 40); do
+            if docker --host=unix:///var/run/docker.sock exec dobby-stitch1920-pg-20261113-review pg_isready -U dobby_local_test -d postgres; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Exact grouped diagnostic and C07/F09 candidate checks
+        env:
+          DOBBY_ROLE_EVIDENCE_DIR: ${{ runner.temp }}/dobby-reserves-sql/roles
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/dobby-reserves-sql"
+          python3 docs/dobby-v7/reserves-techniques/serveur/tests/run-local.py | tee "$RUNNER_TEMP/dobby-reserves-sql/diagnostic.log"
+          python3 docs/dobby-v7/revue-generale/supabase/tests/run-shopping-constraint-guard-local.py 2>&1 | tee "$RUNNER_TEMP/dobby-reserves-sql/c07.log"
+          python3 docs/dobby-v7/revue-generale/supabase/tests/run-role-guard-local.py | tee "$RUNNER_TEMP/dobby-reserves-sql/f09.log"
+      - name: Keep fictional SQL evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-reserves-isolated-sql-evidence
+          path: ${{ runner.temp }}/dobby-reserves-sql/
+          retention-days: 14
+      - name: Remove only the fixed CI fixture containers
+        if: always()
+        run: docker --host=unix:///var/run/docker.sock rm --force --volumes dobby-stitch1920-pg-20261113-review dobby-v7-reserves-diag-pg-20261113 || true

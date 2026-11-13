@@ -37,7 +37,7 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
  function requireSession(){const native=requireConfigured();if(!native.userId)throw Error('Connexion requise.');return native;}
  function failure(error,stage='service'){const result=Error(error?.status===401||error?.status===403?'Accès refusé par le serveur familial.':error instanceof TypeError?'Réseau indisponible. Réessayez sans recréer votre compte.':'Service familial indisponible. Les capacités serveur doivent être vérifiées.');result.status=error?.status;result.code=error?.code;result.stage=stage;return result;}
  async function rpc(name,body={},options={}){try{return await driver.rpc(name,body,options);}catch(error){throw failure(error,name==='dobby_v7_context'?'context':'service');}}
- function profile(raw){if(raw===null||raw===undefined)return null;if(!object(raw))throw Error('Profil serveur invalide.');const result={};for(const key of ['id','name','firstName','lastName','birthdate','avatar','avatarId','memberCategory'])if(raw[key]!==undefined){if(typeof raw[key]!=='string'||raw[key].length>200)throw Error('Profil serveur invalide.');result[key]=raw[key];}if(raw.magicProfile!==undefined){if(!object(raw.magicProfile))throw Error('Profil magique serveur invalide.');result.magicProfile=clone(raw.magicProfile);}return result;}
+ function profile(raw){if(raw===null||raw===undefined)return null;if(!object(raw))throw Error('Profil serveur invalide.');const result={};for(const key of ['id','name','firstName','lastName','birthdate','avatar','avatarId'])if(raw[key]!==undefined){if(typeof raw[key]!=='string'||raw[key].length>200)throw Error('Profil serveur invalide.');result[key]=raw[key];}if(raw.memberCategory!==undefined){if(!['parent','child','baby','pet'].includes(raw.memberCategory))throw Error('Catégorie du profil serveur invalide.');result.memberCategory=raw.memberCategory;}if(raw.magicProfile!==undefined){if(!object(raw.magicProfile))throw Error('Profil magique serveur invalide.');result.magicProfile=clone(raw.magicProfile);}return result;}
  async function capabilities(native){
   if(!features.familyRoles&&!features.childAccountLink)return verifiedFamilyCapabilities(null,features);
   try{const raw=await rpc('dobby_v7_family_capabilities',{},native.userId?{}:{public:true});guard(native);return verifiedFamilyCapabilities(raw,features);}catch(error){guard(native);return verifiedFamilyCapabilities(null,features);}
@@ -53,6 +53,7 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
    next.permissions.familyRolesVerified=capabilities.familyRolesReady;
    next.permissions.canManageHousehold=category==='parent'&&capabilities.familyRolesReady&&raw.permissions.canManageHousehold===true;
    next.permissions.canLinkExistingChild=next.permissions.canManageHousehold&&capabilities.childAccountLinkReady;
+   next.permissions.canCompleteMissionsV3=['parent','child'].includes(category)&&raw.permissions.canCompleteMissionsV3===true;
    if(category==='child')for(const key of ['canEdit','canCreate','canManageDependents','canInvite','canManageHousehold','canLinkExistingChild'])next.permissions[key]=false;
    if(category==='baby'||category==='pet')for(const key of [...permissionKeys,'canManageHousehold','canLinkExistingChild'])next.permissions[key]=false;
    next.pendingCeremony=raw.pendingCeremony===true;
@@ -144,6 +145,9 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
   if(!live.capabilities.childAccountLinkReady||!['profile','household','active'].includes(live.phase)||live.phase==='active'&&!live.verified)throw Error('Le rattachement sécurisé d’un compte enfant n’est pas encore disponible.');
   const preview=childPreview?.token===clean&&childPreview.owner===signature(before)?childPreview.invitation:await previewChildInvitation(clean);guard(before);
   if(preview.status!=='valid')throw Error('Cette invitation enfant n’est pas valide ou n’est plus disponible.');
+  if(live.phase==='active'&&(live.profile?.memberCategory!=='child'||live.profile.id!==live.memberId||
+    live.memberId!==preview.targetMemberId||live.householdId!==preview.household.id))
+   throw Error('Le rejeu de cette invitation est réservé au même profil enfant canonique et au même foyer.');
   const id=await operation('accept-child-invitation',clean);
   guardMutation(before);
   await rpc('dobby_v7_accept_child_invitation',{p_token:clean,p_operation_id:id});guard(before);

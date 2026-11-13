@@ -11,7 +11,7 @@ const mission={id:'v3-test',title:'TEST — Native intent',category:'Famille',st
 function setup({verifiedRelease=true,sendHook}={}){
  const backend=makeBackend(),normal=backend.authorized,receipts=new Map(),writes=[];
  backend.rows.set('missions',{module:'missions',revision:4,payload:{autoTasks:[],manualMissions:[clone(mission)],runeCredits:[],runeRequests:[],runeLedgerVersion:2,extension:{keep:'TEST-extension'}}});
- let client,context={userId:'account-a',householdId:HH,memberId:'a',identityVerified:true,permissions:{canEdit:true}};
+ let client,context={userId:'account-a',householdId:HH,memberId:'a',identityVerified:true,permissions:{canEdit:true,canCompleteMissionsV3:false}},canonical={authenticated:true,verified:true,phase:'active',userId:'account-a',householdId:HH,memberId:'a',profile:{id:'a',memberCategory:'parent'},permissions:{canEdit:true,canCompleteMissionsV3:false}};
  backend.authorized=async(user,method,path,body)=>{
   if(path.startsWith('rpc/dobby_missions_v3_capabilities'))return capability;
   if(path.startsWith('rpc/dobby_missions_v2_capabilities'))return{protocol:2,maxPayloadBytes:262144,directWritesBlocked:true};
@@ -32,10 +32,10 @@ function setup({verifiedRelease=true,sendHook}={}){
   return normal(user,method,path,body);
  };
  client=makeClient('account-a',backend,false,true,{crypto:webcrypto,state:{familyMembers:clone(members)},window:{DobbyMissionIntentsReady:Promise.resolve({...intents,MISSION_V3_RELEASE_VERIFIED:verifiedRelease})},api:{
-  getContext:()=>clone(context),
+  getContext:()=>clone(context),access:{state:()=>clone(canonical)},
   updateMeta:async(key,update)=>{const value=update(client.metadata.get(key)||null);client.metadata.set(key,clone(value));return clone(value);}
  }});
- return{client,backend,writes,setContext:value=>{context={...context,...value};}};
+ return{client,backend,writes,setContext:value=>{context={...context,...value};},setCanonical:value=>{canonical={...canonical,...value};}};
 }
 test('native provider keeps shipped V3 gate closed despite an advertised compatible backend',async t=>{
  const h=setup({verifiedRelease:false});t.after(()=>h.client.provider.reset());await h.client.provider.start();assert.equal(h.client.window.DobbySharedRunesV3.available(),false);await assert.rejects(()=>h.client.window.DobbySharedRunesV3.complete('v3-test',['a','b']),/validation serveur/i);assert.equal(h.writes.length,0);
@@ -61,4 +61,10 @@ test('native completion uses the displayed reward revision and never rebases to 
 test('a new credit extension remains raw and does not falsely mark V3 history incompatible',async t=>{
  const h=setup({sendHook:response=>{response.module.payload.runeCredits[0].extension={keep:true};return response;}});t.after(()=>h.client.provider.reset());await h.client.provider.start();await h.client.action('activate','missions');
  await h.client.window.DobbySharedRunesV3.complete('v3-test',['a','b']);assert.deepEqual(clone(h.client.st.runeCredits[0].extension),{keep:true});assert.doesNotMatch(h.client.provider.statusFor('missions'),/Historique.*vérifier|bloqué/);assert.equal(h.client.window.DobbySharedRunesV3.summary('a').total,13);assert.deepEqual(clone(h.client.st.runeCredits[0].extension),{keep:true});
+});
+
+test('native V3 provider never promotes a canonical child using a local parent member record',async t=>{
+ const h=setup();t.after(()=>h.client.provider.reset());h.client.st.familyMembers.find(row=>row.id==='a').memberCategory='parent';h.setContext({permissions:{canEdit:true,canCompleteMissionsV3:true}});h.setCanonical({profile:{id:'a',memberCategory:'child'},permissions:{canEdit:false,canCompleteMissionsV3:false}});
+ await h.client.provider.start();assert.equal(h.client.window.DobbySharedRunesV3.available(),false);const before=clone(h.client.st);
+ await assert.rejects(()=>h.client.window.DobbySharedRunesV3.complete('v3-test',['a']),/validation serveur|canonique/);assert.equal(h.writes.length,0);assert.deepEqual(clone(h.client.st),before);
 });

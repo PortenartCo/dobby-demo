@@ -3,11 +3,13 @@
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
+const {canonicalGroceryFixture,assertCanonicalGroceryIdentity}=require(path.join(__dirname,'helpers/canonical-grocery-fixture.cjs'));
 const evidence=path.resolve(process.env.DOBBY_E07_SHARED_HOME_EVIDENCE||path.join(__dirname,'../../docs/dobby-v7/evidence/e07-p02-shared-home'));
 fs.mkdirSync(evidence,{recursive:true});
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
 const hh='00000000-0000-4000-8000-000000000010';
 const users={A:'00000000-0000-4000-8000-000000000001',B:'00000000-0000-4000-8000-000000000002',legacy:'00000000-0000-4000-8000-000000000003'};
+const canonical=canonicalGroceryFixture(hh,users);
 const carrot='00000000-0000-4000-8000-000000000101';
 const title='TEST — Disponibilité commune';
 const report={fixture:'Two isolated browsers, distinct users, same household, HTTP only',checks:[],requests:[]};
@@ -22,15 +24,15 @@ const item=async(page,name=title)=>(await model(page,'snapshot')).items.find(x=>
 async function settle(page){
   await native(page,'sync');
   // Pending tombstones are absent from read().items; native status includes them.
-  await page.waitForFunction(()=>{const r=DobbyCuisineEngine.win().DobbyFamilyUI.grocery.read();return r.ready&&/à jour/.test(r.status)&&r.items.every(x=>x.syncState==='clean');});
+  await page.waitForFunction(()=>{const r=DobbyCuisineEngine.win().DobbyFamilyUI.grocery.read();return r.ready&&/à jour/.test(r.status)&&r.items.every(x=>x.syncState==='clean')&&DobbyCuisineEngine.win().DobbyFamilyUI.getContext()?.identityVerified===true;});
 }
 async function amount(page,home,needed,name=title){const x=await item(page,name);assert.ok(x,'Shared item exists: '+name);assert.equal(x.atHomeQty,home,name+' available at home');assert.equal(x.qty,needed,name+' remaining to buy');return x;}
 async function shot(page,name){await page.evaluate(()=>DobbyCuisine.refresh());await page.screenshot({path:path.join(evidence,name+'.png'),fullPage:true});}
-function fixture({supportsHome=true}={}){
+function fixture({supportsHome=true,supportsContext=true}={}){
   const rows=new Map(),writes=[],clients=new Map();let gate=null;
   const row=(id,name,quantity,unit='g')=>({id,household_id:hh,title:name,quantity,unit,checked:false,deleted_at:null,created_at:'2026-11-12T10:00:00.000Z',updated_at:'2026-11-12T10:00:00.000Z',revision:1,...(supportsHome?{at_home_quantity:0}:{})});
   rows.set(carrot,row(carrot,title,500));
-  return {rows,writes,clients,
+  return {rows,writes,clients,supportsContext,
     holdPatch(label,id){let reach,release;const reached=new Promise(r=>reach=r),released=new Promise(r=>release=r);gate={label,id,reach,released,hit:false};return{reached,release(){release();}};},
     async attach(context,label){
       const state={offline:false};clients.set(label,state);
@@ -39,14 +41,16 @@ function fixture({supportsHome=true}={}){
         if(req.url().startsWith(origin+'/'))return baseline?.has(url.pathname)?route.fulfill({contentType:'text/javascript',body:baseline.get(url.pathname)}):route.continue();
         if(!url.pathname.startsWith('/auth/v1/')&&!url.pathname.startsWith('/rest/v1/'))return route.abort();
         if(state.offline)return route.abort();
+        report.requests.push({label,method,path:url.pathname,query:url.search});
         const fulfill=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
         if(url.pathname.includes('/auth/v1/token'))return fulfill({access_token:'fixture-access-'+label,refresh_token:'fixture-refresh-'+label,expires_in:3600,user:{id:users[label],email:label.toLowerCase()+'@fixture.example.test'}});
-        if(url.pathname.includes('dobby_v2_memberships'))return fulfill([{household_id:hh,active:true,user_id:users[label]}]);
+        if(url.pathname.includes('dobby_v2_memberships'))return fulfill([{household_id:hh,active:true,user_id:users[label],role:'owner'}]);
         if(url.pathname.includes('dobby_v2_households'))return fulfill([{id:hh}]);
+        if(url.pathname.endsWith('/rpc/dobby_v7_context'))return supportsContext?fulfill(canonical.context(label)):fulfill({code:'PGRST205',message:'Canonical identity context absent in negative grocery fixture'},404);
+        if(url.pathname.endsWith('/dobby_v2_modules')){assert.equal(method,'GET','Grocery fixture does not mutate the canonical family registry');return fulfill(url.searchParams.get('module')==='eq.family'?[canonical.familyRow]:url.searchParams.has('module')?[]:[{module:'family'}]);}
         if(!url.pathname.includes('dobby_v2_grocery'))return fulfill({code:'PGRST205',message:'Optional modules absent in this grocery fixture'},404);
         const id=(url.searchParams.get('id')||'').replace(/^eq\./,'');
         assert.equal((url.searchParams.get('household_id')||'eq.'+hh).replace(/^eq\./,''),hh,'All grocery reads and writes stay inside the fixture household');
-        report.requests.push({label,method,path:url.pathname,query:url.search});
         if(method==='GET'){
           const select=url.searchParams.get('select')||'*';
           if(!supportsHome&&select.split(',').includes('at_home_quantity'))return fulfill({code:'42703',message:'column dobby_v2_grocery.at_home_quantity does not exist'},400);
@@ -82,14 +86,20 @@ async function login(browser,server,label){
   await engine.locator('#fv2LoginForm [name="email"]').fill(label.toLowerCase()+'@fixture.example.test');
   await engine.locator('#fv2LoginForm [name="password"]').fill('fixture-only-password');
   await engine.locator('#fv2LoginForm button[type="submit"]').click();
-  await page.waitForFunction(()=>DobbyCuisineEngine.win().DobbyFamilyUI.getContext()?.householdId);
-  await page.locator('#dv7-close').click();await settle(page);await page.evaluate(()=>DobbyCuisine.refresh());
+  if(server.supportsContext){
+    await page.waitForFunction(()=>DobbyCuisineEngine.win().DobbyFamilyUI.getContext()?.identityVerified===true);
+    await assertCanonicalGroceryIdentity(page,canonical.context(label));
+  }else{
+    await page.waitForFunction(()=>{const a=DobbyCuisineEngine.win().DobbyFamilyUI;return a.connectionState().userId&&a.access.state().phase==='unavailable';});
+    assert.notEqual(await page.evaluate(()=>DobbyCuisineEngine.win().DobbyFamilyUI.getContext()?.identityVerified),true);
+  }
+  await page.locator('#dv7-close').click();if(server.supportsContext)await settle(page);await page.evaluate(()=>DobbyCuisine.refresh());
   assert.equal(await page.evaluate(()=>DobbyCuisineEngine.win().DobbyFamilyUI.getContext().userId),users[label]);
   return{context,page,state};
 }
 (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
-  const server=fixture();let A,B,old;
+  const server=fixture();let A,B,old,unverified;
   try{
     A=await login(browser,server,'A');B=await login(browser,server,'B');
     assert.notEqual((await model(A.page,'snapshot')).scope,(await model(B.page,'snapshot')).scope,'Separate users have separate native caches');
@@ -230,11 +240,20 @@ async function login(browser,server,label){
     assert.ok(legacyServer.writes.length>=3);assert.ok(legacyServer.writes.every(x=>!Object.hasOwn(x.body,'at_home_quantity')),'Existing CRUD on old schema never sends an unavailable column');
     assert.equal(legacyServer.rows.get(carrot).quantity,600);assert.equal(legacyServer.rows.get(carrot).checked,true);
     record('Old schema supports ordinary CRUD and fails availability with migration guidance and no false local success');
+    const unverifiedServer=fixture({supportsContext:false});unverified=await login(browser,unverifiedServer,'A');
+    assert.equal(await unverified.page.locator('[data-cu-action=e072-add]').isDisabled(),true,'Authenticated membership alone is not a canonical parent');
+    assert.equal(await unverified.page.locator('[data-cu-action=e072-check]').first().isDisabled(),true);
+    const beforeUnverified=JSON.stringify((await native(unverified.page,'read')).items);
+    await assert.rejects(unverified.page.evaluate(()=>DobbyShoppingUI.action('e072-add',{dataset:{}},{E:DobbyCuisineEngine,render:()=>DobbyCuisine.refresh()})),/lecture seule/i);
+    await assert.rejects(unverified.page.evaluate(({id,household})=>DobbyCuisineEngine.win().DobbyFamilyUI.authorized('PATCH','dobby_v2_grocery?id=eq.'+id+'&household_id=eq.'+household,{checked:true}),{id:carrot,household:hh}),/lecture seule|canoniques/i);
+    assert.equal(JSON.stringify((await native(unverified.page,'read')).items),beforeUnverified,'Unverified identity preserves the native grocery cache');
+    assert.equal(unverifiedServer.writes.length,0,'No grocery write is sent without a verified canonical parent');
+    record('Authenticated membership without canonical V7 context stays read-only and never sends a grocery write');
     report.status='PASS';report.writes=server.writes;report.legacyWrites=legacyServer.writes;
     console.log('CUISINE_SHARED_HOME_PASS two clients, shared availability, offline/reload, actual CAS conflicts, grouped units, legacy schema and import/check regression (HTTP fixture only)');
   }catch(error){
     report.status='FAIL';report.error=error.stack;report.writes=server.writes;
-    for(const [label,client]of [['A',A],['B',B]])if(client){try{report[label]={snapshot:await model(client.page,'snapshot'),native:await native(client.page,'read')};}catch{}}
+    for(const [label,client]of [['A',A],['B',B]])if(client){try{report[label]={snapshot:await model(client.page,'snapshot'),native:await native(client.page,'read'),identity:await client.page.evaluate(()=>{const api=DobbyCuisineEngine.win().DobbyFamilyUI;return{access:api.access.state(),binding:api.getContext(),connection:api.connectionState()};})};}catch{}}
     throw error;
   }finally{
     fs.writeFileSync(path.join(evidence,'shared-home-results.json'),JSON.stringify(report,null,2));

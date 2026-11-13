@@ -1,0 +1,79 @@
+
+> test:prep
+> node --test ../../essai-stitch-v5-famille/tests/prep-writer.test.cjs ../../essai-stitch-v5-famille/tests/preparation-sync.test.cjs prep-courses.test.cjs fam-integration-transverse.test.cjs e09-memo-writer.test.cjs && node prep-ui.cjs && node prep-invalid.cjs && node prep-sync.cjs
+
+✔ template CRUD uses stable identities and preserves unknown row and item metadata (7.923905ms)
+✔ event snapshot copies independent item IDs and progress survives template edit and deletion (4.090337ms)
+✔ stale template and checklist edits reject without losing concurrent content or caller drafts (2.211193ms)
+✔ identical registry data cannot authorize a draft after an account, household or epoch switch (7.086183ms)
+✔ context-only clients reject switched household drafts and local mode remains writable (2.118712ms)
+✔ new item extensions are copied without sharing caller objects and duplicates retain version one (2.877371ms)
+✔ unknown protocol, invalid registries and unsupported rows block every write without changing data (16.161296ms)
+✔ validation rejects invalid required fields, duplicate ids, excessive items and unsupported precision (4.667808ms)
+✔ save failure rolls back native registries including initially absent fields (3.657281ms)
+✔ numeric quantities never admit tiny fractional values beyond native precision (3.075294ms)
+✔ native event submit persists event and independent preparation together, while failure keeps draft open (8.692155ms)
+✔ native event edits preserve progress and deletion rolls back both records if persistence fails (5.306769ms)
+✔ preparation templates and event snapshots propagate with existing family fields and unknown metadata intact (35.46566ms)
+✔ offline preparation changes survive reload and reconnect through the native module metadata (12.152243ms)
+✔ a newly initialized client restores preparation arrays omitted by an older fixture from its acknowledged native metadata (17.522214ms)
+✔ native metadata hydration preserves an explicit local preparation deletion (14.484371ms)
+✔ activate, join and activate-all retain distinct offline preparations alongside the remote registry (58.699646ms)
+✔ reactivation merges unchanged remote preparations and local additions by stable ID (17.241119ms)
+✔ divergent preparation reactivation retains local data behind the explicit native conflict chooser (24.165682ms)
+✔ reactivating a locally created event and preparation retains their association behind explicit conflict (13.839848ms)
+✔ remote event deletion cannot detach an offline preparation edit during reactivation (12.786705ms)
+✔ a locally changed associated event is retained when remote metadata diverges during reactivation (14.608799ms)
+✔ fresh remote metadata for the same unchanged local event remains compatible with an offline preparation edit (6.078208ms)
+✔ preparation writes preserve unknown family extensions and tolerate an initially unversioned older payload (9.580034ms)
+✔ choosing an older family copy does not falsely acknowledge a preparation protocol absent on the server (16.446331ms)
+✔ invalid local preparation data cannot be published by initial module activation (5.534391ms)
+✔ unsupported local preparation protocol cannot be downgraded and published during activation (5.231609ms)
+✔ unsupported local preparation protocol retains both copies without writes or an automatic-save exception (15.054367ms)
+✔ unknown preparation protocol blocks the complete family update without altering local records (13.536208ms)
+✔ malformed preparation registries are rejected before any family data is replaced (60.292803ms)
+✔ acknowledged preparations removed by an older peer remain local until explicit recovery (4.851361ms)
+✔ an edit while preparation PATCH is in flight stays local and pending (3.577383ms)
+✔ a concurrent rival preparation update loses CAS without acknowledging or overwriting local changes (3.234343ms)
+✔ new stable memo identity persists on edit, delete never touches legacy records (7.567602ms)
+✔ explicit import is idempotent, retains local source and never silently replaces an edited shared memo (3.997567ms)
+✔ stale edit and stale deletion are rejected with both data and typed draft untouched (7.37675ms)
+✔ storage failure rolls back shared registry and does not erase historical local notes (3.183054ms)
+✔ required and bounded fields and missing legacy import never create records (5.52936ms)
+✔ Family source boundaries preserve history plus reviewed general and family-core amendments (14.152177ms)
+✔ every reviewed whole-file amendment retains its exact source fingerprint (10.981517ms)
+✔ published-main reconciliation preserves both parent manifests and every full current source (9.613805ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (2.233078ms)
+✔ Courses retains the native shopping contract including independent dessert import (73.920057ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (2.819999ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.590981ms)
+✔ local double click and replay retain one exact quantity, unit and unchecked preparation (32.019932ms)
+✔ local deletion and archived receipts suppress resurrection after a fresh list (5.335099ms)
+✔ local persistence or render failure rolls back both native row and receipt (9.353204ms)
+✔ a local save without a durable receipt cannot report success (2.591349ms)
+✔ shared offline queue survives cache reload and never writes a local fallback (30.742631ms)
+✔ shared persisted tombstones and conflict receipts survive a stale client cache (9.125925ms)
+✔ native import rejects a scope switch during the deterministic hash without a write (4.678318ms)
+✔ native numeric import API stays compatible and addOnce rejects precision loss (6.440241ms)
+✔ equal product names from distinct source items retain both quantities (11.379135ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 54
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2035.186642
+PREP_UI_PASS 320
+PREP_UI_PASS 390
+PREP_UI_PASS 1440
+page.goto: Timeout 8000ms exceeded.
+Call log:
+[2m  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/famille.html", waiting until "load"[22m
+
+    at /workspace/dobby-v7-review/essai-stitch-v7/tests/prep-invalid.cjs:5:341 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/famille.html", waiting until "load"'
+  ],
+  name: 'TimeoutError'
+}

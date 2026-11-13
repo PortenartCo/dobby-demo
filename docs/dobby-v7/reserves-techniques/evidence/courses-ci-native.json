@@ -1,0 +1,17 @@
+{
+  "command": "DOBBY_FINAL=0 CHROMIUM_PATH=/usr/bin/chromium DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node essai-stitch-v7/tests/ci.cjs",
+  "exitCode": 0,
+  "beforeHead": "b53b73f6cc145fe6a970841b5aa6e12cda51a6e4",
+  "afterHead": "b53b73f6cc145fe6a970841b5aa6e12cda51a6e4",
+  "sourceFiles": 427,
+  "sourceHashesUnchanged": true,
+  "changedSources": [],
+  "log": "/workspace/dobby-canonical-grocery-ci-default.log",
+  "logSha256": "d5836ac776910b15cfeecc96c02db33f5c00aa1c0b632d65b8b232c15232c9f6",
+  "beforeManifest": "/workspace/dobby-canonical-grocery-ci-before.json",
+  "afterManifest": "/workspace/dobby-canonical-grocery-ci-after.json",
+  "finalMarker": "E07_P01_P02_TARGETED_CI_PASS",
+  "realBackendAccess": false,
+  "BRecipeRetested": false,
+  "syntheticNativeFamilyClient": true
+}

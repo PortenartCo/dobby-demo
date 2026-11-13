@@ -21,6 +21,8 @@ Les compteurs **50 faits / 4 partiels / 6 attentes** ci-dessous restent le **sna
 
 **Prochaine mission ciblée :** terminer les dépendances serveur selon [ACTIONS-MANUELLES-APRES-REVUE.md](ACTIONS-MANUELLES-APRES-REVUE.md) et les contrats V3/Rôles/Famille déjà présents ; commencer par un diagnostic Supabase regroupé en lecture seule, puis produire les migrations adaptées avant toute installation manuelle. Aucun ancien script `01`, `04`, `06` ou `11` ne doit être relancé. L'utilisateur conserve l'exécution manuelle des évolutions Supabase.
 
+**Reprise technique depuis `b77cb9d` :** les seules réserves sont suivies dans le [bilan ciblé](reserves-techniques/BILAN-RESERVES.md). Les [actions manuelles actuelles](ACTIONS-MANUELLES-APRES-REVUE.md) commencent par un diagnostic serveur regroupé ; les anciennes listes d’installation ne sont pas à rejouer.
+
 ## Développement, tests et production
 
 Les tests de données utilisent les véritables moteurs, writers et IndexedDB natifs, avec données fictives et appels distants bloqués ou fixtures HTTP déclarées. Les API vocales sont simulées pour vérifier le cycle ; aucun service vocal nouveau n’est inventé. Les tests SQL sont limités à PostgreSQL 17.7 sans réseau. **Aucun accès Supabase distant, aucune modification de base et aucune migration automatique.**

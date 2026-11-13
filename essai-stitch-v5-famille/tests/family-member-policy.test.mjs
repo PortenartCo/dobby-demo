@@ -113,3 +113,13 @@ test('medical write permission resolves canonical or unique legacy attribution, 
  h.ctx.medical={person:'Foyer'};assert.equal(vm.runInContext('v23HealthPermissions(medical,true).canEdit',h.ctx),true);assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),false);
  h.st.familyMembers.push({id:'duplicate',name:'TEST Enfant',memberCategory:'child'});h.ctx.medical={person:'TEST Enfant'};assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),false);
 });
+
+test('reserves: native member context carries the server category without inferring it from owner or registry role',()=>{
+ const h=nativeHarness(),binding={verified:true,userId:'TEST-U',householdId:'TEST-H',memberId:'child',profile:{id:'child',memberCategory:'child'}};
+ const api={connectionState:()=>({verified:true,verifying:false,access:'verified'}),access:{state:()=>binding},getContext:()=>({identityVerified:true,userId:'TEST-U',householdId:'TEST-H',memberId:'child',permissions:{canEdit:true,canMagic:true,canCreate:true,canManageDependents:true}})};
+ h.ctx.window.DobbyFamilyUI=api;h.st.familyMembers.find(m=>m.id==='child').memberCategory='parent';
+ const child=vm.runInContext('v23MemberPermissions("child")',h.ctx);assert.equal(child.canEdit,false);assert.equal(child.canCreate,false);assert.equal(child.canMagic,true);
+ delete binding.profile.memberCategory;const missing=vm.runInContext('v23MemberPermissions("child")',h.ctx);assert.equal(missing.canEdit,false);assert.equal(missing.canMagic,false);
+ binding.profile.memberCategory='parent';h.st.familyMembers.find(m=>m.id==='child').memberCategory='child';const parent=vm.runInContext('v23MemberPermissions("child")',h.ctx);assert.equal(parent.canEdit,true);
+ delete binding.profile.id;const incomplete=vm.runInContext('v23MemberPermissions("child")',h.ctx);assert.equal(incomplete.canEdit,false);assert.equal(incomplete.canMagic,false);
+});

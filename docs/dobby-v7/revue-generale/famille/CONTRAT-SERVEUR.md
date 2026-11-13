@@ -2,6 +2,8 @@
 
 **État : ATTENTE_UTILISATEUR.** Aucun accès Supabase distant, migration, vérification Auth/RLS/RPC ni recette réelle à deux comptes n’a été exécuté par Codex. Les tests navigateur utilisent des personnes fictives et bloquent les requêtes externes. Un contrôle d’interface ou un test local ne prouve aucune autorisation serveur.
 
+Pour la levée des réserves techniques postérieure à la revue générale, le point d’entrée est désormais [FAMILLE-ACCES.md](../../reserves-techniques/FAMILLE-ACCES.md) et son **diagnostic groupé de catalogue**. Ne pas demander d’exécuter séparément l’ancien `VERIFIER-PROFIL-EXISTANT.sql` ni rejouer les installations historiques. Stitch et la recette B sont clos ; les nouveaux accès enfants restent fermés.
+
 ## F08 — Donner accès à DOBBY au même enfant
 
 Le bouton est volontairement désactivé (`data-backend-gate="child-account-link"`). Il n’appelle ni inscription, ni invitation générique, ni création d’un deuxième profil. Aucun âge n’accorde un accès ou un rôle parent automatiquement.
