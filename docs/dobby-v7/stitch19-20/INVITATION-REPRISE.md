@@ -21,10 +21,14 @@ selon l'état réel du profil.
 
 Les invitations valides conservent leur confirmation explicite. Les protections
 des données locales restent actives ; les refus locaux connus affichent une
-référence fixe sans reprendre les messages du serveur. La cause initiale du refus
-local du compte B reste à établir.
+référence fixe sans reprendre les messages du serveur. Le refus local du compte B
+a ensuite été identifié : son navigateur habituel conservait la liaison de
+l'ancien foyer de test (`FOYER-LOCAL-AUTRE`). Une session privée vierge a permis
+la connexion au foyer déjà lié, sans nouveau compte ni réinitialisation.
 
 Le SQL14 est uniquement un diagnostic. Aucun reset, nouvelle invitation ou
 modification de base supplémentaire n'est nécessaire pour ce correctif.
-La reprise du compte B, la synchronisation des Courses et la reconnexion réelle
-restent à confirmer dans les navigateurs.
+L'utilisateur a confirmé l'accès de B, les cérémonies et la synchronisation des
+Courses dans les deux sens. Le dernier contrôle, déconnexion puis reconnexion,
+a révélé une action de déconnexion trop peu accessible. Une action visible est
+ajoutée en haut du Profil magique ; la reconnexion réelle reste à confirmer.

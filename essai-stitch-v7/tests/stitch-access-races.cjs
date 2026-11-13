@@ -7,11 +7,11 @@ const executablePath=process.env.CHROMIUM_PATH||'/workspace/scratch/chrome-ci156
 const results=[];
 let browser;
 
-async function fixture({phase='active',deferPreview=false,signInError=null,previewInvalid=false,acceptCommittedFailure=false}={}){
+async function fixture({phase='active',deferPreview=false,signInError=null,previewInvalid=false,acceptCommittedFailure=false,deferLogout=false}={}){
  const context=await browser.newContext({viewport:{width:390,height:844},locale:'fr-BE',reducedMotion:'reduce'});
  const external=[];
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():(external.push(new URL(route.request().url()).origin),route.abort()));
- await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure})=>{
+ await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const grants={canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true};
   const active=()=>({phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ACCESS-OWNER',householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1,profile:{id:'TEST-CANONICAL-MEMBER',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},pendingCeremony:true,permissions:grants});
@@ -19,7 +19,7 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
   // Mirror native access: synchronous state starts blank until refresh resolves.
   let state={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null};
   const listeners=new Set(),emit=()=>{for(const listener of listeners)listener({...state});return {...state};};
-  window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0,recoveryArmed:false,recoveryPending:false,releaseRecovery:null,pauseCas:false,casPending:false,releaseCas:null,consumed:false,metadataReadReplacements:0};
+  window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0,recoveryArmed:false,recoveryPending:false,releaseRecovery:null,pauseCas:false,casPending:false,releaseCas:null,consumed:false,metadataReadReplacements:0,logoutPending:false,releaseLogout:null};
   const record=call=>{window.__accessRace.calls.push(call);const history=JSON.parse(sessionStorage.getItem('dobby-test-access-calls')||'[]');history.push(call);sessionStorage.setItem('dobby-test-access-calls',JSON.stringify(history));};
   window.__accessRace.armRecovery=({phase='active',verified=phase==='active',defer=false,pendingCeremony=true}={})=>{window.__accessRace.recoveryArmed={phase,verified,defer,pendingCeremony,userId:state.userId};};
   window.__accessRace.switchAccount=(overrides={})=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'},...overrides};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();};
@@ -31,6 +31,7 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
    saveProfile:async(values,options)=>{record({kind:'saveProfile',userId:state.userId,values:{...values},options:{...options}});state={...state,profile:{...state.profile,...values}};return emit();},
    previewInvitation:async token=>{record({kind:'preview',token});if(deferPreview){window.__accessRace.previewPending=true;await new Promise(resolve=>window.__accessRace.releasePreview=resolve);window.__accessRace.previewPending=false;}return previewInvalid||window.__accessRace.consumed?{status:'invalid'}:invitation(token);},
    acceptInvitation:async token=>{record({kind:'accept',token});if(acceptCommittedFailure){window.__accessRace.consumed=true;restored=active();state={phase:'unavailable',configured:true,userId:'TEST-ACCESS-OWNER',authenticated:false,verified:false};emit();throw Error('TEST server accepted; first native adoption failed');}throw Error('TEST acceptance deliberately stops before navigation');},
+   logout:async()=>{record({kind:'logout'});if(deferLogout){window.__accessRace.logoutPending=true;await new Promise(resolve=>window.__accessRace.releaseLogout=resolve);window.__accessRace.logoutPending=false;}restored={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null,householdId:null,memberId:null,profile:null,permissions:{},pendingCeremony:false};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();},
    createInvitation:async()=>{record({kind:'create'});throw new TypeError('TEST network unavailable');}
   };
   let native;
@@ -40,7 +41,7 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
    meta:async key=>{const saved=await api.meta(key),replacement=sessionStorage.getItem('dobby-test-replace-invitation-after-read');if(key==='v7-incoming-invitation'&&replacement){sessionStorage.removeItem('dobby-test-replace-invitation-after-read');await api.putMeta(key,JSON.parse(replacement));window.__accessRace.metadataReadReplacements++;}return saved;},
    updateMeta:async(key,change)=>{if(key==='v7-incoming-invitation'&&window.__accessRace.pauseCas){window.__accessRace.pauseCas=false;window.__accessRace.casPending=true;await new Promise(resolve=>window.__accessRace.releaseCas=resolve);window.__accessRace.casPending=false;}return api.updateMeta(key,change);}
   };}});
- },{phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure});
+ },{phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout});
  const page=await context.newPage();page.setDefaultTimeout(6000);
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const load=async route=>{await page.goto(origin+'/essai-stitch-v7/famille.html#'+route);await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.state().userId==='TEST-ACCESS-OWNER');};
@@ -229,6 +230,35 @@ async function check(name,options,action){
    await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&!window.DobbyAccess?.busy&&document.body.dataset.familyView!=='access');
    assert.equal(await native('return window.__accessRace.metadataReadReplacements;'),1,'The newer pointer is committed after the stale initialization read');
    assert.deepEqual(await native('return DobbyFamilyUI.meta("v7-incoming-invitation");'),newer,'Initialization may clear only the stale token and owner it actually read');
+  });
+  for(const phase of ['active','unavailable'])await check('visible account logout works for '+(phase==='active'?'verified member':'unverified native user')+' and preserves cached family',{phase},async({page,load,native,seedMember,calls})=>{
+   await load('members');await seedMember();const cached=await native('return st.familyMembers;');
+   await page.locator('[data-e01-account]').click();await page.getByRole('heading',{name:'Profil magique',exact:true}).waitFor();
+   const logout=page.getByRole('button',{name:'Se déconnecter',exact:true});
+   await logout.waitFor();await page.evaluate(()=>scrollTo(0,0));
+   assert.equal(await logout.isEnabled(),true,'A native user may sign out even while household identity is unverified');
+   const position=await logout.evaluate(el=>{const r=el.getBoundingClientRect();return {hiddenDetails:!!el.closest('details:not([open])'),top:r.top,bottom:r.bottom,height:innerHeight};});
+   assert.ok(!position.hiddenDetails&&position.top>=0&&position.bottom<=position.height,'Logout is visible at the top without opening settings: '+JSON.stringify(position));
+   await logout.click();await page.getByRole('heading',{name:'Bienvenue dans DOBBY',exact:true}).waitFor();
+   assert.equal((await calls()).filter(row=>row.kind==='logout').length,1,'The visible action calls the native account logout once');
+   assert.deepEqual(await native('const s=DobbyFamilyUI.access.state();return {phase:s.phase,userId:s.userId,verified:s.verified,permissions:s.permissions};'),{phase:'signed-out',userId:null,verified:false,permissions:{}});
+   assert.equal(await native('return DobbyFamilyUI.connectionState().identityVerified;'),false);
+   assert.equal(await native('return DobbyFamilyUI.getContext();'),null);
+   assert.deepEqual(await native('return st.familyMembers;'),cached,'Signing out must preserve cached member identities and magical choices');
+  });
+  await check('deferred account logout serializes repeated activation and keeps cached members',{deferLogout:true},async({page,load,native,seedMember,calls})=>{
+   await load('members');await seedMember();const cached=await native('return st.familyMembers;');
+   await page.locator('[data-e01-account]').click();await page.getByRole('heading',{name:'Profil magique',exact:true}).waitFor();
+   const logout=page.getByRole('button',{name:'Se déconnecter',exact:true});await logout.click();
+   await page.waitForFunction(()=>DobbyFamilyStitchEngine.win().__accessRace.logoutPending);
+   assert.equal(await logout.isDisabled(),true,'Logout locks its visible action while the native operation is pending');
+   await logout.evaluate(el=>{el.dispatchEvent(new MouseEvent('click',{bubbles:true}));el.dispatchEvent(new MouseEvent('click',{bubbles:true}));});
+   assert.equal((await calls()).filter(row=>row.kind==='logout').length,1,'Repeated handlers must share one pending logout operation');
+   assert.deepEqual(await native('return st.familyMembers;'),cached);
+   await native('window.__accessRace.releaseLogout();');
+   await page.getByRole('heading',{name:'Bienvenue dans DOBBY',exact:true}).waitFor();
+   assert.equal((await calls()).filter(row=>row.kind==='logout').length,1);
+   assert.deepEqual(await native('return st.familyMembers;'),cached);
   });
  }finally{await browser.close();}
  console.log(JSON.stringify({liveBackend:false,results},null,2));
