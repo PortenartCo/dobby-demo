@@ -117,9 +117,12 @@ async function capture(page,name,width){
    await page.locator('[data-access-invitation][data-invitation-state=expired]').waitFor();
    assert.equal(await page.getByRole('button',{name:'Rejoindre ce foyer',exact:true}).count(),0,'Expired invitation cannot retain a valid acceptance control');
    assert.match(await page.locator('[data-access-invitation]').innerText(),/expiré/i);
+   await page.setViewportSize({width,height:420});
+   const invitationResumeAction=await reachable(page,page.getByRole('button',{name:'Vérifier mon accès au foyer',exact:true}));
+   await page.screenshot({path:path.join(out,'join-resume-short-'+width+'.png'),animations:'disabled'});
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    assert.deepEqual(errors,[]);
-   results.push({width,welcomeMotion,loginMotion,signupShortMotion,signupShortAction,profileMotion,profileShortMotion,profileShortAction,createMotion,joinMotion,joinShortMotion,joinShortAction});
+   results.push({width,welcomeMotion,loginMotion,signupShortMotion,signupShortAction,profileMotion,profileShortMotion,profileShortAction,createMotion,joinMotion,joinShortMotion,joinShortAction,invitationResumeAction});
    await context.close();console.log('STITCH_ACCESS_UI_PASS',width);
   }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',widths,authOutcomes:'local fixtures',backendVerified:false,physicalKeyboard:false,shortViewportHeight:420,exactReturn,results},null,2)+'\n');

@@ -1,0 +1,31 @@
+{
+  "source": "user browser report and user-executed read-only SQL14",
+  "date": "2026-11-13",
+  "scope": "personal-family-project-only",
+  "browserReport": {
+    "householdCreated": true,
+    "invitationGenerated": true,
+    "secondProfileVisibleInFamily": true,
+    "secondAccountOpeningHouseholdConfirmed": false,
+    "subsequentInvitationPreview": "invalid or no longer available"
+  },
+  "databaseVerification": {
+    "readOnly": true,
+    "authUsers": 2,
+    "bindings": 2,
+    "pendingProfiles": 0,
+    "invitations": 1,
+    "activeMemberships": 2,
+    "activeOwners": 1,
+    "activeMembers": 1,
+    "phaseCounts": {"active": 2},
+    "activeHouseholdGroups": [{"activeAccounts": 2, "distinctCanonicalProfiles": 2}],
+    "errorSqlstateCounts": {},
+    "privateInvitationDispositionDirectlyVisible": false,
+    "noResetPerformed": true
+  },
+  "serverAccountLinkingVerified": true,
+  "initialNativeAdoptionFailureCauseVerified": false,
+  "secondBrowserResumptionVerified": false,
+  "realGrocerySynchronizationAndReconnectVerified": false
+}

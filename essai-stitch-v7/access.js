@@ -34,6 +34,9 @@ window.DobbyAccess = (() => {
       return 'Le service de connexion n’a pas confirmé la demande. Référence : CONNEXION-'+http+'.';
     }
     if(stage==='context')return 'Le serveur n’a pas permis de vérifier l’accès au foyer. Référence : FOYER-'+http+'.';
+    if(error?.message==='Ce navigateur conserve les données locales d’un autre foyer. Utilisez un profil de navigateur distinct.')return 'Ce navigateur conserve les données d’un autre foyer. Ouvrez DOBBY dans un profil de navigateur distinct. Référence : FOYER-LOCAL-AUTRE.';
+    if(error?.message==='Le registre familial contient des modifications locales en attente ou un conflit.')return 'Le registre familial local contient une opération en cours ou un conflit. Vos données sont conservées. Référence : FOYER-LOCAL-ATTENTE.';
+    if(error?.message==='Un registre familial local existe déjà. Comparez et sauvegardez ses données avant de rejoindre le foyer.')return 'Des données familiales locales doivent être examinées avant d’ouvrir ce foyer. Référence : FOYER-LOCAL-EXISTANT.';
     if(/adresse e.mail valide/i.test(error?.message||''))return 'Indiquez une adresse e-mail valide.';
     if(/réseau|network|fetch/i.test(error?.message||''))return 'La connexion est interrompue. Votre saisie est conservée ; réessayez.';
     if(/compte.*changé|foyer.*changé|contexte/i.test(error?.message||''))return 'Le compte ou le foyer a changé. Reconnectez-vous avant de continuer.';
@@ -79,7 +82,28 @@ window.DobbyAccess = (() => {
     invitationToken=token;invitation=null;
     await api().putMeta(pendingKey,{token,userId:state().userId||null});
   }
-  async function clearInvitation() { invitationToken='';invitation=null;await api().putMeta(pendingKey,null); }
+  async function clearInvitation(expected={token:invitationToken,userId:state().userId||null},expectedActor=null) {
+    let matched=false;
+    await api().updateMeta(pendingKey,saved=>{
+      if(expectedActor&&actorToken()!==expectedActor)return saved;
+      if(saved&&(saved.token!==expected.token||saved.userId&&saved.userId!==expected.userId))return saved;
+      matched=true;return null;
+    });
+    if(matched&&(state().userId||null)===expected.userId&&invitationToken===expected.token){invitationToken='';invitation=null;}
+    return matched;
+  }
+  async function resumeHousehold() {
+    const pending={token:invitationToken,userId:state().userId||null};
+    if(!pending.userId)throw Error('Connexion requise.');
+    const fresh=await account().refresh();
+    if(fresh.userId!==pending.userId||state().userId!==pending.userId)throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');
+    if(fresh.phase!=='active'||!fresh.authenticated||!fresh.verified||!fresh.householdId||!fresh.memberId)throw Error('Le rattachement au foyer n’a pas été confirmé.');
+    const owner=actorToken(fresh),{destination}=await model;
+    assertActor(owner);
+    if(invitationToken!==pending.token||!await clearInvitation(pending,owner))throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');
+    assertActor(owner);
+    await go(destination(state(),{invitationPending:false}));
+  }
   function invitationInput(value) {
     const text=String(value||'').trim();
     try {const url=new URL(text);return url.searchParams.get('invite')||url.searchParams.get('invitation')||'';}
@@ -100,7 +124,7 @@ window.DobbyAccess = (() => {
       // Restore only after Auth/context refresh: the initial facade may still be blank.
       const saved=await api().meta(pendingKey),owner=state().userId;
       if(saved?.token&&(!saved.userId||saved.userId===owner))invitationToken=saved.token;
-      else if(saved?.userId&&saved.userId!==owner)await api().putMeta(pendingKey,null);
+      else if(saved?.userId&&saved.userId!==owner)await clearInvitation({token:saved.token,userId:saved.userId});
       if(incoming?.invitation)await rememberInvitation(incoming.invitation);
       const recoveryRecord=await api().meta(recoveryKey);
       if(recovery&&owner)await api().putMeta(recoveryKey,{userId:owner});
@@ -109,7 +133,9 @@ window.DobbyAccess = (() => {
       lastUser=state().userId;
       unsubscribe=account().subscribe?.(next=>{
         if(lastUser&&next.userId!==lastUser){
-          void clearInvitation();recovery=false;void api().putMeta(recoveryKey,null);
+          const previous={token:invitationToken,userId:lastUser};
+          invitationToken='';invitation=null;
+          void clearInvitation(previous);recovery=false;void api().putMeta(recoveryKey,null);
           if(!(operation&&context?.ui.view==='access-auth'))location.replace('./famille.html#access');
         }
         lastUser=next.userId;
@@ -212,7 +238,12 @@ window.DobbyAccess = (() => {
       delete result.dataset.invitationState;
       if(!invitation){result.append(el('p','Vérifiez votre invitation avant de rejoindre le foyer.'));return;}
       result.dataset.invitationState=invitation.status;
-      if(invitation.status!=='valid'){result.append(el('p',invitation.status==='expired'?'Cette invitation a expiré. Demandez un nouveau lien à la personne qui vous invite.':'Cette invitation n’est pas valide ou n’est plus disponible.'));return;}
+      if(invitation.status!=='valid'){
+        result.append(el('p',invitation.status==='expired'?'Cette invitation a expiré. Demandez un nouveau lien à la personne qui vous invite.':'Cette invitation n’est pas valide ou n’est plus disponible.'));
+        const current=state();
+        if(current.userId)result.append(button(current.phase==='active'&&current.verified?'Accéder à mon foyer':'Vérifier mon accès au foyer',resumeHousehold));
+        return;
+      }
       result.append(el('p','UNE PLACE VOUS ATTEND','access-kicker'),el('h2',invitation.household.name),el('p','Invitation de '+invitation.inviter.name));
       if(invitation.expiresAt){const when=new Date(invitation.expiresAt);if(Number.isFinite(when.getTime()))result.append(el('p','Valable jusqu’au '+when.toLocaleDateString('fr-FR'),'access-note'));}
       const current=state();
