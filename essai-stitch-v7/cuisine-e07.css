@@ -143,13 +143,6 @@ body.e07-cuisine [data-e07-basket] button{min-height:52px;font-size:16px}
 body.e07-cuisine [data-e073-grimoire]>button span.font-bold{font-size:16px;line-height:1.4}
 
 /* E07-P02: two presentations of the same native list. */
-.e072-modes{display:flex;gap:8px;margin:10px 0}
-.e072-modes button{flex:1;min-width:0;white-space:normal;min-height:44px}
-.e072-modes [aria-pressed=true]{background:#d49b42;color:#281712}
-.e072-options{width:100%;padding:8px;border:1px solid #d49b4244;border-radius:8px}
-.e072-options summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
-.e072-options p{margin:8px 0;color:#d4c4b1}
 .e072-at-home{padding:12px;border:1px solid #afcdc066;border-radius:12px}
 .e072-at-home h2{font:600 18px 'Playfair Display',serif;color:#afcdc0;margin-bottom:8px}
-body[data-shop-mode=store] .e072-item-controls [data-cu-action=e072-home],body[data-shop-mode=store] .e072-item-controls [data-cu-action=e072-home-clear]{display:none}
 .e072-import-row>span{min-width:0;overflow-wrap:anywhere}

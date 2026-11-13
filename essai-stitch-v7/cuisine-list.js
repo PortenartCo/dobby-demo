@@ -126,12 +126,12 @@ window.DobbyCuisineList=(()=>{
     range=importRange(E,range);
     const s=snapshot(E),receipts=E.evaluate('return [...Object.values(st.shopHistory||{}).flatMap(x=>x.imports||[]),...(st.shopFinal?.imports||[])];');
     const rows=E.evaluate(`const result=[];for(const [key,m]of pendingMeals()){
-      const date=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)$/.test(key))continue;
+      const date=key.slice(0,10);if(!/^\\d{4}-\\d{2}-\\d{2}-(midi|soir)(-dessert)?$/.test(key))continue;
       const r=getR(m.id);if(!r)continue;const grouped=new Map(),ref=m._e072ImportRef||(key+'|'+m.id);
       for(const [name,q,unit]of r.ingredients){const token=ref+'|'+name.trim().toLocaleLowerCase('fr-BE')+'|'+(unit||'').trim().toLocaleLowerCase('fr-BE');
         const qty=q==null||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0?null:Number(q)*portionCount(m)/r.servings;
         const before=grouped.get(token);if(before)before.qty=before.qty==null||qty==null?null:before.qty+qty;
-        else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+r.name,meal:mealSignature(key,m)});
+        else grouped.set(token,{token,key,ref,name,qty,unit:unit||'',origin:key+' · '+(key.endsWith('-dessert')?'Dessert · ':'')+r.name,meal:mealSignature(key,m)});
       }result.push(...grouped.values());}return result;`,range);
     // Normalize quantities without changing provenance tokens from E07.2.
     for(const row of rows){const m=measure(row);row.originalUnit=row.unit;row.qty=m.qty;row.unit=m.unit;}
