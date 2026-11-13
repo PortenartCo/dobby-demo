@@ -1,24 +1,26 @@
-/* E02 uses the original Stitch 1 frames/bubbles; layout changes stay in chat. */
-body:is([data-family-view=chat],[data-family-view=chat-2]){--e02-keyboard-inset:0px;--e02-composer-height:140px;padding-bottom:0}
-body:is([data-family-view=chat],[data-family-view=chat-2]) > main{padding-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 24px)!important;min-height:100dvh}
-.e02-body{padding-bottom:0!important;flex:1}
-.e02-hero{gap:12px;margin-bottom:16px}
-[data-e02-hero]{height:clamp(252px,32dvh,300px)!important;flex-shrink:0}
-[data-e02-hero] > img{object-fit:cover;object-position:center}
+/* Voice first, then an ordinary text composer and the private local history. */
+body:is([data-family-view=chat],[data-family-view=chat-2]){--e02-keyboard-inset:0px;padding-bottom:0}
+body:is([data-family-view=chat],[data-family-view=chat-2]) > main{padding-bottom:calc(var(--e01-bottom) + 24px)!important;min-height:100dvh}
+.e02-body{display:flex;flex-direction:column;gap:20px;min-width:0}
+.e02-hero{display:flex;flex-direction:column;align-items:center;gap:16px;margin:0;text-align:center;padding-top:8px}
 .e02-hero h1{font-size:24px;line-height:30px;margin:0}
-.e02-private-badge{top:auto!important;left:auto!important;right:10px!important;bottom:10px!important;max-width:calc(100% - 20px)}
+.e02-voice-primary{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+.e02-hold-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:156px;min-height:156px;border:3px solid #a67a35;border-radius:50%;background:radial-gradient(circle at 35% 25%,#f8d483,#d49b42);color:#27160a;font-size:16px;font-weight:700;box-shadow:0 4px 18px #0005;touch-action:none!important;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:pointer}
+.e02-hold-button .material-symbols-outlined{font-size:48px;line-height:1}
+.e02-hold-button:focus-visible{outline:3px solid #fcf7ee;outline-offset:6px}
+/* This is functional press feedback and deliberately independent of ambience. */
+.e02-hold-button[aria-pressed=true]{border-color:#fff0ad!important;box-shadow:0 0 0 5px #f9bb5f66,0 0 32px 9px #f9bb5faa,inset 0 0 15px #fff3c4!important;background:radial-gradient(circle at 35% 25%,#fff2b4,#eeb64c)}
+.e02-hold-hint{margin:0;color:#f9d797;font-size:14px;line-height:20px}
 body:is([data-family-view=chat],[data-family-view=chat-2]) > nav[data-e01-chrome]{bottom:var(--e02-keyboard-inset)!important}
-body:is([data-family-view=chat],[data-family-view=chat-2]) .e02-composer.fixed,body:is([data-family-view=chat],[data-family-view=chat-2]) .e02-composer{position:fixed!important;bottom:calc(var(--e01-bottom) + var(--e02-keyboard-inset))!important;left:50%!important;right:auto!important;width:min(480px,100%)!important;transform:translateX(-50%)!important;z-index:10900;padding:8px 0 0!important}
-.e02-composer > div{padding-inline:12px;max-width:none}
-.e02-composer input{font-size:16px;min-height:44px}
-.e02-composer .e02-composer-button{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;flex:0 0 44px;background:#f9bb5f;color:#462a00;box-shadow:0 2px 8px #0006}
-.e02-status{font-size:11px;line-height:16px;color:#d4c4b1;text-align:center;min-height:16px;margin:0;padding-bottom:6px}
+body:is([data-family-view=chat],[data-family-view=chat-2]) .e02-composer.fixed,body:is([data-family-view=chat],[data-family-view=chat-2]) .e02-composer{position:static!important;inset:auto!important;width:100%!important;max-width:100%!important;transform:none!important;z-index:auto;padding:0!important;margin:0!important;border-radius:16px;overflow:visible}
+.e02-composer > div{padding:12px!important;max-width:none!important}
+.e02-composer input{font-size:16px;min-height:48px;min-width:0;scroll-margin-block:100px calc(var(--e01-bottom) + var(--e02-keyboard-inset) + 24px)}
+.e02-composer .e02-composer-button{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;flex:0 0 48px;background:#f9bb5f;color:#462a00;box-shadow:0 2px 8px #0006}
+.e02-status{font-size:12px;line-height:18px;color:#d4c4b1;text-align:center;min-height:18px;margin:8px 0 0}
 .e02-voice-controls,.e02-message-actions{display:flex;gap:8px;flex-wrap:wrap}
-.e02-text-action{display:inline-flex;align-items:center;min-height:32px;padding:4px 6px;color:#f9bb5f;font-size:12px;line-height:18px;text-decoration:underline;text-underline-offset:3px}
-[data-e02-thread]{flex:1;gap:16px;scroll-margin-bottom:calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 20px)}
-[data-e02-thread] > *{scroll-margin-block:90px calc(var(--e02-composer-height) + var(--e01-bottom) + var(--e02-keyboard-inset) + 20px)}
+.e02-text-action{display:inline-flex;align-items:center;min-height:36px;padding:4px 6px;color:#f9bb5f;font-size:12px;line-height:18px;text-decoration:underline;text-underline-offset:3px}
+[data-e02-thread]{display:flex;flex-direction:column;gap:16px;min-width:0;scroll-margin-bottom:calc(var(--e01-bottom) + 24px)}
+[data-e02-thread] > *{scroll-margin-block:90px calc(var(--e01-bottom) + 24px)}
 .e02-message{min-width:0}.e02-message p{white-space:pre-wrap;overflow-wrap:anywhere}.e02-message > div{min-width:0}
 body:is([data-family-view=chat],[data-family-view=chat-2]) .fa-sharing-status{display:none}
 #e02-confirmation{margin-inline:0;width:100%;max-width:100%}
-/* Override the shared ID-scoped fixed-footer rule when the keyboard overlays the page. */
-body:is([data-family-view=chat],[data-family-view=chat-2]) #fa-supplement .e02-composer.fixed{bottom:calc(var(--e01-bottom) + var(--e02-keyboard-inset))!important}

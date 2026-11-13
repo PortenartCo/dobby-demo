@@ -60,7 +60,7 @@ async function visibleLabels(page) {
   }));
 }
 async function menu(page) {
-  await page.locator('body > nav [data-e01-destination="4"]').click();
+  await page.locator('body > nav [data-e01-destination="5"]').click();
   await view(page, 'menu');
   assert.deepEqual(await visibleLabels(page), labels, 'Existing dock returns to the complete Menu');
 }
@@ -251,7 +251,7 @@ async function downloaded(page, selector) {
           const before = await snapshot(page);
           await moduleFromMenu(page, 4);
           assert.equal(await page.locator('main h1').innerText(), 'Paramètres');
-          assert.equal(await page.locator('body > nav [data-e01-destination="4"]').getAttribute('aria-current'), 'page');
+          assert.equal(await page.locator('body > nav [data-e01-destination="5"]').getAttribute('aria-current'), 'page');
           await chrome(page);
           assert.equal(await page.locator('main [data-e01-toggle]').count(), 0);
           await page.getByRole('link', {name: 'Retour au Menu', exact: true}).click();
