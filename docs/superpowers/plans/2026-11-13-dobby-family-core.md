@@ -32,3 +32,12 @@
 ## Revue et validation ciblées
 
 La revue du diagnostic doit vérifier lecture seule, absence de données personnelles, couverture des dépendances et droits de maintenance PostgreSQL 17. La revue serveur doit vérifier concurrence, conservation intégrale des crédits, autorité canonique, fermeture des rôles et absence de contournement via RPC privilégiées. Aucun rejeu des anciennes campagnes sans lien causal avec un changement.
+
+## Avancement
+
+- A terminé : dix identifiants réconciliés ; reconnexion B déjà réellement validée.
+- B terminé : fichier exact testé sur cinq contextes locaux, revu indépendamment, exécuté par l'utilisateur et retour complet reçu le 13 novembre. Sources brutes conservées privées. Premier commit `92cb130`.
+- Modèle privé reconstruit : treize helpers Missions et fonctions natives critiques reproduisent les empreintes reçues. Sessions de test SQL Editor `postgres` non superuser, conteneur sans réseau.
+- C en cours : migrations Famille/V3 coordonnées, transport V3 séparé et parcours enfant derrière gates fermés. C07 existant validé sur clone exact ; pas encore installé réellement.
+- Protection du stockage conservée : les données applicatives globales empêchent une bascule sûre par suppression d'un simple marqueur.
+- D/E à suivre : tests/revue complets du candidat, paquet manuel regroupé, résultats utilisateur, CI/publication des seuls chemins indépendants validés puis vérification hébergée.

@@ -1,5 +1,7 @@
 # DOBBY V7 — opérations manuelles après revue
 
+> Mise à jour du 13 novembre : le catalogue regroupé a été reçu et le [nouveau lot de finalisation du socle](finalisation-socle/supabase/README.md) remplace les préflights/candidats provisoires concernés. Ne pas refaire le diagnostic ni installer `roles-01-apply.sql`. La [matrice des dix réserves](finalisation-socle/MATRICE-RESERVES.md) distingue les preuves nouvelles des recettes réelles restantes.
+
 **Aucune action Supabase distante n'a été effectuée pendant cette mission**, y compris en lecture, par API, MCP, CLI, navigateur ou déploiement automatique. Le déploiement ne contient aucun lanceur de migration. Les tests SQL utilisent exclusivement un conteneur PostgreSQL 17.7 `--network none`, sans port, et des données `TEST`. Les résultats locaux ne certifient pas le catalogue ni les droits réels.
 
 Le projet concerné est exclusivement le projet personnel **dobby-family-sync**. Les projets professionnels Portenart sont hors périmètre. Ne communiquer aucun secret, mot de passe, token d'invitation, contenu familial ni export de données personnelles dans le dépôt ou les preuves.

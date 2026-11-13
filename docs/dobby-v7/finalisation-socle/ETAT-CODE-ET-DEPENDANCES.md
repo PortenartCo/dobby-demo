@@ -1,4 +1,6 @@
-# État du code et dépendances serveur
+# Audit initial du code et dépendances serveur
+
+> État historique avant réception du catalogue. Les développements effectués ensuite sont consolidés dans la [matrice actuelle](MATRICE-RESERVES.md) et le [paquet manuel](supabase/README.md). Ne pas interpréter les absences décrites ci-dessous comme l’état final du candidat.
 
 Analyse ciblée du `main` `b77cb9d`, sans rejeu de campagne ni accès Supabase distant. Aucun changement produit n'est activé par ces constats.
 
