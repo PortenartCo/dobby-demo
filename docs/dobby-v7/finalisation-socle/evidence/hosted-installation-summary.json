@@ -1,0 +1,22 @@
+{
+  "scope": "user-returned hosted metadata compared with tested local candidate",
+  "installationReportedByUser": true,
+  "hostedCatalogVerificationReceived": true,
+  "functionHashesCompared": 36,
+  "exactDefinitionHashesMatched": 6,
+  "crlfSourceVariantHashesMatched": 30,
+  "unmatchedFunctionHashes": 0,
+  "lineEndingExplanation": "SQL Editor submitted CRLF function-body line endings; canonical PostgreSQL headers unchanged. Expected CRLF-body hashes computed from the tested source match.",
+  "familyPrivateTablesClosed": true,
+  "nativeActorRepairPreserved": true,
+  "groceryStampPreserved": true,
+  "legacyV2BodyPreserved": true,
+  "legacyAliasClientAccessClosed": true,
+  "availabilityCatalogPassed": true,
+  "storageRestrictivePoliciesPresent": true,
+  "storageParentUpdatePolicyPresent": true,
+  "allClientProofFlagsClosed": true,
+  "realAuthRlsRpcOrBrowserRecipeVerified": false,
+  "rawCatalogPublished": false,
+  "next": "Targeted real RPC/RLS recipes and Auth adoption before activation; no reset or installation replay."
+}

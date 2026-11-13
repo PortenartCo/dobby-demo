@@ -1,5 +1,7 @@
 # Missions V3 — writer d'intentions
 
+**Installation utilisateur confirmée le 13 novembre 2026.** Le lot regroupé `10` et sa vérification `20` ont réussi. Ne pas rejouer l'installation Missions ci-dessous : son ordre décrit les sources du paquet déjà appliqué. Le [résumé hébergé](../../evidence/hosted-installation-summary.json) confirme les définitions installées, sans certifier les opérations métier ou Auth/HTTP. Les flags de preuve et la release V3 restent fermés en attendant ces contrôles.
+
 Ce lot est préparé pour le **seul projet familial** à partir du catalogue technique reçu le 13 novembre 2026. L'utilisateur applique les SQL personnellement. Aucun accès SQL distant ni modification Supabase par l'agent. Le client reste fermé avant validation réelle du serveur.
 
 ## Ordre manuel

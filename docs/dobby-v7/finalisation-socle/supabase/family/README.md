@@ -1,5 +1,7 @@
 # S10/F08/F09 — socle familial et rattachement enfant
 
+**Installation utilisateur confirmée le 13 novembre 2026.** Le lot regroupé `10`, Storage `11` et la vérification `20` ont réussi ; les cinq policies Storage attendues sont présentes. Ne pas rejouer les installations ni le diagnostic. Le [résumé hébergé](../../evidence/hosted-installation-summary.json) décrit ces preuves de catalogue ; les contrôles RPC/RLS et Auth réels restent distincts, avec tous les flags clients fermés.
+
 **État : CODE_DÉVELOPPÉ / TESTS_PASS locaux ; installation réelle non effectuée par l'agent.** Ce lot est adapté au catalogue familial PostgreSQL 17.11 reçu le 13 novembre 2026. Aucun résultat de fixture ne certifie Supabase Auth, les RPC/RLS hébergées ou une recette navigateur réelle.
 
 Le lot ne recrée aucun compte ou foyer. Les liaisons existantes, profils, choix magiques, Missions, crédits et reçus sont conservés. Ne pas rejouer Stitch **01/04/06/11**, ni le lot provisoire `roles-01-apply.sql`.

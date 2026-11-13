@@ -1,6 +1,6 @@
 # C07 — disponibilité à domicile : intervention adaptée au catalogue reçu
 
-Le diagnostic familial reçu confirme que `at_home_quantity` est **absente**. Le lot Courses déjà livré convient : aucune copie ni nouvelle version de sa migration n'est nécessaire. Son installation réelle reste à effectuer personnellement par l'utilisateur, dans le seul projet `dobby-family-sync`, selon l'ordre du [lot serveur regroupé](../README.md). Aucun SQL distant n'a été exécuté par Codex.
+Le diagnostic initial avait confirmé l'absence de `at_home_quantity`. **L'utilisateur a depuis appliqué le lot regroupé `10` et sa vérification `20` avec succès**, le 13 novembre 2026, dans le seul projet `dobby-family-sync`. Les neuf contrôles de catalogue Courses passent ; ne pas rejouer l'installation ni le diagnostic. Le [résumé hébergé](../../evidence/hosted-installation-summary.json) ne certifie pas encore les opérations ou droits à l'exécution. Aucun SQL distant n'a été exécuté par Codex.
 
 ## Décision et conservation des données
 
