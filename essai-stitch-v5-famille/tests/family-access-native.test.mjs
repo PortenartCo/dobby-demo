@@ -8,16 +8,16 @@ import * as familyCore from '../family-core.mjs';
 const USER='00000000-0000-4000-8000-000000000001',HH='00000000-0000-4000-8000-000000000010';
 function database(){const rows=new Map();return{rows,transaction(){const tx={};tx.objectStore=()=>{const request=produce=>{const req={};queueMicrotask(()=>{try{req.result=produce();req.onsuccess?.();tx.oncomplete?.();}catch(error){tx.error=error;tx.onerror?.();}});return req;};return{get:key=>request(()=>rows.get(key)),put:row=>request(()=>rows.set(row.id,row)),delete:key=>request(()=>rows.delete(key)),getAll:()=>request(()=>[])};};return tx;}};}
 function native({httpFailures={}}={}){
- const db=database(),requests=[];let members=[],context={protocol:1,phase:'profile',userId:USER,profile:null},releaseAuth=null;
+ const db=database(),requests=[];let members=[],context={protocol:1,phase:'profile',userId:USER,profile:null},releaseAuth=null,releaseContext=null;
  const node=()=>({dataset:{},append(){},remove(){},addEventListener(){},querySelector:()=>null,querySelectorAll:()=>[],style:{},elements:[],hidden:true});
  const sandbox={__accessModule:accessModule,st:{page:'home'},save(){},render(){},drawShop:()=>'',queueMicrotask,setInterval:()=>0,setTimeout,clearTimeout,crypto:webcrypto,TextEncoder,URL,URLSearchParams,btoa,
   document:{getElementById:()=>null,addEventListener(){},createElement:node,body:{append(){}}},window:{addEventListener(){},dispatchEvent(){}},CustomEvent:class{},navigator:{onLine:true},localStorage:{getItem:()=>null,setItem(){}},
   FormData:class{constructor(form){this.values=new Map(form.children.map(x=>[x.name,x.value]));}get(key){return this.values.get(key);}},
-  fetch:async(url,options={})=>{const u=new URL(url);requests.push({path:u.pathname,query:u.search,options});const failure=httpFailures[u.pathname];if(failure)return{ok:false,status:failure.status,text:async()=>JSON.stringify(failure.body)};let body=[];if(u.pathname==='/auth/v1/token'){if(releaseAuth)await new Promise(resolve=>{releaseAuth.resolve=resolve;});body={access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:USER,email:'fixture@example.test'}};}else if(u.pathname.endsWith('/dobby_v7_context'))body=context;else if(u.pathname.endsWith('/dobby_v2_memberships'))body=members;else if(u.pathname.endsWith('/dobby_v2_households'))body=[{id:HH}];return{ok:true,status:200,text:async()=>JSON.stringify(body)};}};
+  fetch:async(url,options={})=>{const u=new URL(url);requests.push({path:u.pathname,query:u.search,options});const failure=httpFailures[u.pathname];if(failure)return{ok:false,status:failure.status,text:async()=>JSON.stringify(failure.body)};let body=[];if(u.pathname==='/auth/v1/token'){if(releaseAuth)await new Promise(resolve=>{releaseAuth.resolve=resolve;});body={access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:USER,email:'fixture@example.test'}};}else if(u.pathname.endsWith('/dobby_v7_context')){const response=context;if(releaseContext)await new Promise(resolve=>releaseContext.releases.push(resolve));body=response;}else if(u.pathname.endsWith('/dobby_v2_memberships'))body=members;else if(u.pathname.endsWith('/dobby_v2_households'))body=[{id:HH}];return{ok:true,status:200,text:async()=>JSON.stringify(body)};}};
  sandbox.document.createElement=tag=>tag==='form'?{children:[],append(child){this.children.push(child);}}:node();
  const source=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,logout,...(typeof loadPublicKey===\"function\"?{loadPublicKey}:{})};})();');vm.runInNewContext(source,sandbox);
  const f=sandbox.window.__native.f;f.db=db;f.ready=true;f.key='sb_publishable_native_fixture_only';f.provider={start:async()=>{},reset(){},adoptVerifiedFamily:async value=>{assert.equal(value.memberId,'local-person');},html:()=>'',sync:async()=>{}};
- return{state:sandbox.st,api:sandbox.window.DobbyFamilyUI,f,db,requests,window:sandbox.window,loadPublicKey:sandbox.window.__native.loadPublicKey,setMembers:rows=>{members=rows;},setContext:value=>{context=value;},holdAuth:()=>{releaseAuth={resolve:null};return releaseAuth;},logout:()=>sandbox.window.__native.logout()};
+ return{state:sandbox.st,api:sandbox.window.DobbyFamilyUI,f,db,requests,window:sandbox.window,loadPublicKey:sandbox.window.__native.loadPublicKey,setMembers:rows=>{members=rows;},setContext:value=>{context=value;},holdAuth:()=>{releaseAuth={resolve:null};return releaseAuth;},holdContext:()=>{releaseContext={releases:[]};return releaseContext;},releaseContext:()=>{const gate=releaseContext;releaseContext=null;for(const resolve of gate?.releases||[])resolve();},logout:()=>sandbox.window.__native.logout()};
 }
 test('native access keeps an unassigned authenticated session while legacy login still refuses it',async()=>{
  const f=native();assert.ok(f.api.access,'Native facade exposes access');await f.api.access.ready;await f.api.access.signIn('fixture@example.test','fixture-password');assert.equal(f.f.session.user_id,USER);assert.equal(f.api.access.state().phase,'profile');assert.equal(f.api.getContext(),null);assert.ok(f.db.rows.get('session'));
@@ -186,4 +186,82 @@ test('reserves: native own-magic RPC requires the server magic grant rather than
   const pending=fixture.api.authorized('POST','rpc/dobby_v7_update_magic',{p_member_id:'local-person',p_values:{magicHouseId:'ravenclaw'}});
   if(canMagic===true){await pending;assert.equal(fixture.requests.length,before+1);}else{await assert.rejects(pending,/lecture seule|vérifi/);assert.equal(fixture.requests.length,before);}
  }
+});
+
+test('reserves: visible legacy login refreshes the same canonical V7 parent context without another Auth or data mutation',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true,canCreate:false},familyRevision:1});
+ await fixture.api.signIn('fixture@example.test','fixture-password');
+ assert.equal(fixture.api.access.state().verified,true,'The existing legacy form must adopt the confirmed V7 identity');assert.equal(fixture.api.getContext().memberId,'local-person');
+ assert.equal(fixture.requests.filter(r=>r.path==='/auth/v1/token').length,1,'Canonical refresh does not repeat credential Auth');
+ assert.equal(fixture.requests.filter(r=>r.options.method!=='GET'&&!['/auth/v1/token','/rest/v1/rpc/dobby_v7_context'].includes(r.path)).length,0,'Bridge only reads context and family; no new business mutation');
+ const before=fixture.requests.length;await fixture.api.authorized('PATCH','dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST authorized'});assert.equal(fixture.requests.length,before+1);
+});
+test('reserves: legacy login keeps its session and reads when V7 is absent or refused, but remains readonly',async()=>{
+ for(const status of [404,403]){
+ const fixture=native({httpFailures:{'/rest/v1/rpc/dobby_v7_context':{status,body:{code:status===404?'PGRST202':'42501',message:'TEST unavailable V7'}}}});fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ await fixture.api.signIn('fixture@example.test','fixture-password');
+ assert.equal(fixture.f.session.user_id,USER);assert.equal(fixture.api.getContext().householdId,HH);assert.equal(fixture.api.access.state().verified,false);
+ assert.equal(fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,1,'Legacy login attempts the canonical read even when unavailable');
+ assert.match(fixture.api.grocery.read().status,/lecture seule|droits.*vérifi/i,'Unavailable canonical rights are reported honestly');
+ await fixture.api.authorized('GET','dobby_v2_grocery?household_id=eq.'+HH);const before=fixture.requests.length;
+ await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST forbidden'}),/lecture seule|vérifi/);assert.equal(fixture.requests.length,before);
+ }
+});
+
+test('reserves: native Sync revalidates a cached session before restoring shared writes',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:1});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');fixture.f.accessContext=null;fixture.f.verifiedContext=null;
+ assert.equal(fixture.api.access.state().verified,false);const before=fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length;
+ await fixture.api.grocery.sync();
+ assert.equal(fixture.api.access.state().verified,true,'Sync must re-read and adopt canonical context after the ephemeral binding is lost');assert.equal(fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,before+1);
+ assert.equal(fixture.requests.filter(r=>r.path==='/auth/v1/token').length,1,'A valid cached session does not repeat credential Auth');
+});
+test('reserves: Sync remains readonly while V7 is unavailable and only a confirmed canonical response restores writes',async()=>{
+ const failures={'/rest/v1/rpc/dobby_v7_context':{status:404,body:{code:'PGRST202',message:'TEST missing V7'}}},fixture=native({httpFailures:failures});fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:1});
+ await fixture.api.signIn('fixture@example.test','fixture-password');const before=fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length;
+ await fixture.api.grocery.sync();assert.equal(fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,before+1);assert.equal(fixture.api.access.state().verified,false);
+ await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST still forbidden'}),/lecture seule|vérifi/);
+ delete failures['/rest/v1/rpc/dobby_v7_context'];await fixture.api.grocery.sync();assert.equal(fixture.api.access.state().verified,true);const count=fixture.requests.length;
+ await fixture.api.authorized('PATCH','dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST confirmed'});assert.equal(fixture.requests.length,count+1);assert.equal(fixture.requests.filter(r=>r.path==='/auth/v1/token').length,1);
+});
+
+
+test('reserves: Sync waits for a canonical bootstrap refresh already in progress before draining',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:1});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');fixture.f.accessContext=null;fixture.f.verifiedContext=null;
+ const count=()=>fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,before=count(),gate=fixture.holdContext(),refresh=fixture.api.access.refresh();
+ while(!gate.releases.length)await Promise.resolve();const syncing=fixture.api.grocery.sync(),outcome=Promise.allSettled([refresh,syncing]);
+ for(let tick=0;tick<100;tick++)await Promise.resolve();const inFlight=count()-before;fixture.releaseContext();const results=await outcome;
+ assert.equal(inFlight,1,'Bootstrap and Sync must not invalidate the same canonical binding concurrently');assert.ok(results.every(result=>result.status==='fulfilled'));assert.equal(fixture.api.access.state().verified,true);assert.equal(count()-before,1);
+});
+test('reserves: public canonical refresh waits for the current Sync drain and still makes a fresh read',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:1});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');fixture.f.accessContext=null;fixture.f.verifiedContext=null;
+ const count=()=>fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,before=count(),gate=fixture.holdContext(),syncing=fixture.api.grocery.sync();
+ while(!gate.releases.length)await Promise.resolve();const refresh=fixture.api.access.refresh(),outcome=Promise.allSettled([syncing,refresh]);
+ for(let tick=0;tick<100;tick++)await Promise.resolve();const inFlight=count()-before;fixture.releaseContext();const results=await outcome;
+ assert.equal(inFlight,1,'A public refresh cannot clear identity while Sync is validating/draining');assert.ok(results.every(result=>result.status==='fulfilled'));assert.equal(count()-before,2,'The public refresh performs a new read after Sync rather than returning a cached GET');
+ assert.equal(fixture.api.access.state().verified,true);
+});
+
+
+test('reserves: queued public refresh makes a fresh GET after an earlier context response',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ const current={protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Before',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:1};fixture.setContext(current);
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');const gate=fixture.holdContext(),first=fixture.api.access.refresh();
+ while(!gate.releases.length)await Promise.resolve();const second=fixture.api.access.refresh(),outcome=Promise.all([first,second]);fixture.setContext({...current,familyRevision:2,profile:{...current.profile,name:'TEST After Confirmed Update'}});
+ for(let tick=0;tick<50;tick++)await Promise.resolve();assert.equal(gate.releases.length,1,'Later refresh waits rather than borrowing or racing the earlier GET');fixture.releaseContext();const [oldRead,freshRead]=await outcome;
+ assert.equal(oldRead.familyRevision,1);assert.equal(freshRead.familyRevision,2);assert.equal(freshRead.profile.name,'TEST After Confirmed Update');
+});
+test('reserves: a context refresh queued behind Sync cannot cross an account epoch replacement',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:1});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');fixture.f.accessContext=null;fixture.f.verifiedContext=null;const gate=fixture.holdContext(),syncing=fixture.api.grocery.sync();
+ while(!gate.releases.length)await Promise.resolve();const refresh=fixture.api.access.refresh(),outcome=Promise.allSettled([syncing,refresh]),before=fixture.requests.length;
+ fixture.f.epoch++;fixture.f.session={...fixture.f.session,user_id:'TEST-NEW-ACCOUNT'};fixture.f.householdId='TEST-OTHER-HOME';fixture.f.context=null;fixture.f.accessContext=null;fixture.f.verifiedContext=null;fixture.releaseContext();const results=await outcome;
+ assert.equal(results[1].status,'rejected');assert.match(results[1].reason.message,/compte|foyer/);assert.equal(fixture.requests.length,before,'No queued read dispatches with the replacement owner');assert.equal(fixture.f.session.user_id,'TEST-NEW-ACCOUNT');
 });

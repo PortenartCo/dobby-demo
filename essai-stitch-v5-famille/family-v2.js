@@ -11,6 +11,9 @@ const f = {
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
   homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null
 };
+let syncCycle=null,publicContextRead=null;
+const verificationOwner=()=>({epoch:f.epoch,userId:f.session?.user_id,householdId:f.householdId});
+const sameVerificationOwner=owner=>Boolean(owner&&owner.epoch===f.epoch&&owner.userId===f.session?.user_id&&(!owner.householdId||owner.householdId===f.householdId));
 const now = () => new Date().toISOString();
 const esc = x => String(x == null ? '' : x).replace(/[&<>"']/g, c => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -314,9 +317,24 @@ async function sync() {
   if (f.syncing) { f.again = true; return; }
   f.syncing = true;
   const epoch = f.epoch;
+  const cycle={...verificationOwner(),promise:null};let finishCycle;
+  cycle.promise=new Promise(resolve=>{finishCycle=resolve;});syncCycle=cycle;
   try {
+    // A bootstrap context read which already started owns verification first.
+    // Public reads started later wait for this complete drain instead.
+    if(sameVerificationOwner(publicContextRead)){
+      try {await publicContextRead.promise;}catch {}
+      if(epoch!==f.epoch)return;
+    }
     await requireHousehold();
+    cycle.householdId=f.householdId;
     if (epoch !== f.epoch) return;
+    // Login and cached-session recovery share the same canonical read under
+    // the existing sync lock. bind() may verify the household, never sync().
+    if(!verifiedBinding()){
+      try {await (await ensureAccess()).refresh();}catch {}
+      if(epoch!==f.epoch)return;
+    }
     await pull(epoch);
     const queue = [...f.cache.values()].filter(x => x.syncState === 'pending')
       .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
@@ -334,6 +352,8 @@ async function sync() {
   } finally {
     if(f.checkingEpoch===epoch)f.checkingEpoch=null;
     f.syncing = false;
+    if(syncCycle===cycle)syncCycle=null;
+    finishCycle();
     repaint();
     if (f.again) {
       f.again = false;
@@ -344,6 +364,7 @@ async function sync() {
 function status() {
   if (!f.session) return 'Non connecté';
   if (!f.context) return f.error || 'Foyer à vérifier';
+  if (accessController && !verifiedBinding()) return 'Foyer connecté en lecture seule : profil et droits V7 à vérifier.';
   const arr = [...f.cache.values()];
   const conflicts = arr.filter(x => x.syncState === 'conflict').length;
   const pending = arr.filter(x => x.syncState === 'pending').length;
@@ -774,11 +795,29 @@ function ensureAccess(){
   });return accessController;
  });return accessPromise;
 }
+async function refreshPublicAccess(){
+ const owner=verificationOwner();
+ // Serialize actual reads, never reuse an earlier GET as confirmation of a
+ // later mutation. The internal Sync read does not call this waiting facade.
+ for(;;){
+  if(!sameVerificationOwner(owner))throw Error('Le compte ou le foyer a changé pendant la vérification.');
+  const pending=sameVerificationOwner(syncCycle)?syncCycle:sameVerificationOwner(publicContextRead)?publicContextRead:null;
+  if(!pending)break;
+  try {await pending.promise;}catch {}
+ }
+ const entry={...verificationOwner(),promise:null};
+ entry.promise=ensureAccess().then(controller=>{
+  if(!sameVerificationOwner(entry))throw Error('Le compte ou le foyer a changé pendant la vérification.');
+  return controller.refresh();
+ });publicContextRead=entry;
+ try{return await entry.promise;}finally{if(publicContextRead===entry)publicContextRead=null;}
+}
 const accessFacade=Object.freeze({
  get ready(){return ensureAccess();},
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
- ...Object.fromEntries(['refresh','signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ refresh:refreshPublicAccess,
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;
