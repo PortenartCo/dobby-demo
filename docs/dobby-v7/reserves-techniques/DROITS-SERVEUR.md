@@ -1,10 +1,12 @@
 # F09 — Droits serveur Parent / Enfant : réserve technique ciblée
 
+> Checkpoint de ce sous-lot : les dépendances serveur décrites ci-dessous sont depuis reprises par le chantier du socle. Voir la [passation actualisée](PASSATION-SOCLE-CONCURRENT.md). Aucun diagnostic, ancien installateur ou candidat SQL supplémentaire n’est à exécuter maintenant.
+
 Périmètre repris depuis `origin/main` **b77cb9d**. La recette réelle finale du compte B est consignée et le chantier Stitch est clos. Ce travail n'a effectué **aucune lecture ni écriture distante**, aucun appel API/CLI de production, aucune connexion à Supabase. Aucun ancien installateur `01`, rattachement `04`, reset `06` ou correctif `11` n'a été rejoué. Aucun gate n'est activé.
 
-**Conclusion : F09 complet reste en attente de vérification serveur et de développements ciblés.** Les sources permettent de corriger une vraie faiblesse du vérificateur du candidat restrictif et de tester ses limites. Elles ne permettent pas de certifier les guards privés Missions absents, ni d'inventer leur remplacement.
+**Conclusion actuelle : les évolutions F09 complètes sont reprises par le socle, avec installation et contrôle de catalogue rapportés ; la recette réelle reste en attente.** Notre lot corrige une faiblesse du vérificateur provisoire et en teste les limites, sans poser ce candidat ni dupliquer les nouveaux guards.
 
-## Éléments établis par les sources
+## Éléments établis initialement sur les sources b77cb9d
 
 | Sujet | Preuve disponible | Conséquence exacte |
 |---|---|---|
@@ -32,21 +34,17 @@ Le candidat reste partiel et non appliqué :
 
 Le rollback retire seulement ces neuf policies et leur helper. Il conserve les données, mais **réouvre les droits directs antérieurs** ; il ne doit pas être présenté comme une correction ni servir à activer les parcours enfant.
 
-## Ce qui dépend du diagnostic unique
+## Diagnostic initial désormais reçu dans le chantier du socle
 
-Prochaine collecte éventuelle, ultérieurement et manuellement : [serveur/00-diagnostic-regroupe.sql](serveur/00-diagnostic-regroupe.sql), selon [son README](serveur/README.md). Aucune autre collecte `roles-00` ni requête métier n'est nécessaire.
+Les besoins initiaux portaient sur les RPC/guards, propriétaires, ACL, dépendances et policies. Ils sont depuis couverts par le catalogue reçu dans le chantier du socle. **Aucune nouvelle collecte, installation du provisoire `roles-01` ou répétition du contrôle `20` n’est demandée.** Lire la [passation](PASSATION-SOCLE-CONCURRENT.md) ; les recettes réelles restent distinctes des métadonnées.
 
-Les métadonnées utiles sont les corps et dépendances des RPC/guards, owners/SECURITY DEFINER/search_path/ACL effectives, appartenances des rôles writers, grants/RLS/policies et triggers des tables/modules/anciens endpoints/Storage. Une définition inaccessible doit rester « inconnue », sans la remplacer par un stub. Les propriétés du bucket sont des lignes applicatives exclues du diagnostic initial de catalogue ; leur éventuelle vérification restera une action distincte précisément justifiée.
-
-Ce retour permettra de déterminer si le writer Missions privé bloque déjà les enfants, si un chemin privilégié reste ouvert et quel delta exact préparer. Avant cela, il n'existe pas de fondement suffisant pour un installateur F09 global. **Ne pas exécuter le candidat `roles-01` comme prochaine étape automatique.**
-
-## Évolutions serveur à préparer après cet examen
+## Exigences initiales reprises par le chantier du socle
 
 1. **Parent et autres profils du même foyer.** Un delta ciblé doit autoriser les champs ordinaires autorisés sur les profils du foyer, y compris déjà liés, avec acteur parent canonique, appartenance active, verrouillage, CAS et reçu idempotent. Il doit conserver les identifiants, liens Auth, historique, magie, missions et Runes. Ni réaffectation de compte/foyer, ni promotion/déclassement parent, ni suppression de parent ne doivent devenir un effet d'un simple PATCH de fiche. Ne pas desserrer globalement `assert_snapshot` pour contourner le refus actuel.
 2. **Complétion enfant.** Une RPC étroite doit recevoir l'occurrence, les participants et l'opération/révision, vérifier l'attribution de l'enfant et recalculer le total/répartition côté serveur. Pas de barème, crédit arbitraire, réattribution, réouverture ou mutation annexe envoyée par l'enfant. L'ancien writer et les écritures directes ne doivent pas contourner cette exception. Le lot Missions conserve son contrat et son gate fermé.
 3. **Écritures privilégiées et Storage.** Rapprocher chaque writer effectif et ses policies, sans généraliser « SECURITY DEFINER ignore toute RLS ». Préparer seulement les restrictions dont le rôle et les dépendances réels sont connus. Ne pas toucher à d'autres buckets, aux fichiers existants ou aux rôles de service pour forcer un test.
 
-L'installation d'un delta futur et la recette réelle Parent / Enfant / autre foyer restent manuelles et distinctes de ces tests locaux. Aucun accès Codex au projet n’est nécessaire : seule la sortie de catalogue du diagnostic unique permettra de préparer cette étape, sans nouvelle recette B.
+Ces exigences sont reprises par le candidat complet du socle et son installation rapportée ; elles ne constituent plus une nouvelle demande de développement ou d’installation dans cette mission. La recette réelle Parent/Enfant/autre foyer et Storage reste à effectuer selon ses gates, sans nouvelle recette B.
 
 ## Preuves et reproduction
 
@@ -60,4 +58,4 @@ Résultat local final : **PASS, 13 groupes de contrôles**, PostgreSQL 17.7 stoc
 
 Cas : enfant/animal/acteur absent ou révoqué/parent sans droit ; INSERT/UPDATE/DELETE des trois cibles ; `user_metadata` sans autorité ; parent limité au foyer ; Storage sans dossier ou déplacé hors foyer ; policies/ACL/helper/client altérés refusés par le vérificateur ; prérequis RLS/propriétaire refusés sans pose partielle ; rollback sans perte de lignes. Un writer SECURITY DEFINER fictif volontairement non protégé réussit aussi son écriture sous un rôle distinct : **limite reproduite**, pas certification ni accusation de la base réelle.
 
-Statut de F09 : **PARTIEL / ATTENTE_UTILISATEUR pour les inconnues serveur**, sans réouverture du chantier Stitch ni activation de droits non vérifiés.
+Statut actuel : **REPRIS PAR LE SOCLE / RECETTE RUNTIME EN ATTENTE**, sans réouverture du chantier Stitch ni activation de droits non vérifiés.

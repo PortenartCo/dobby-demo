@@ -1,10 +1,8 @@
 # Diagnostic serveur regroupé — lecture seule
 
-**Une seule action manuelle maintenant :** exécuter le fichier complet
-[`00-diagnostic-regroupe.sql`](00-diagnostic-regroupe.sql) dans l'éditeur SQL du
-seul projet personnel DOBBY, puis conserver l'unique résultat JSON
-`diagnostic_serveur`. Aucun identifiant de compte, foyer ou enfant à renseigner.
-Ne rejouer aucun ancien install/correctif `01`, `04`, `06` ou `11`.
+**Archive d’investigation — ne pas exécuter maintenant.** Un diagnostic réel a déjà été reçu dans le chantier de finalisation du socle ; sa description rapporte également une installation et sa vérification manuelles. Lire la [passation](../PASSATION-SOCLE-CONCURRENT.md) avant toute utilisation. Réutiliser d’abord ces résultats, sans nouveau diagnostic ni installation par défaut.
+
+Le fichier [`00-diagnostic-regroupe.sql`](00-diagnostic-regroupe.sql) reste disponible pour un manque technique précis, dans le seul projet personnel DOBBY, avec résultat JSON `diagnostic_serveur`. Aucun identifiant de compte, foyer ou enfant à renseigner. Ne rejouer aucun ancien install/correctif Stitch `01`, `04`, `06` ou `11`.
 
 Ce diagnostic ne corrige rien. Il réunit les besoins des anciens préflights
 Courses `00`, Missions `01`, Rôles `00` et du contrôle Famille ; **ne pas les
@@ -57,10 +55,7 @@ functionDependencies[], unresolvedQualifiedCalls[], roles[], roleMemberships[], 
   exportés automatiquement (`sourceIncluded:false`) ; aucune ligne de bucket
   n'est lue.
 
-Les absences sont des constats, pas des migrations à installer. Le catalogue
-réel, les sources privées réelles et leurs garanties restent inconnus tant que
-ce JSON n'a pas été examiné. Missions V3, invitation ciblant un enfant existant
-et validation complète des permissions restent bloquées à cette étape.
+Les absences sont des constats, pas des migrations à installer. Le catalogue réel et les sources privées ont depuis été reçus dans le chantier du socle ; notre SQL ne doit pas déclencher une seconde collecte. Les preuves de parcours réel restent distinctes de ce catalogue.
 
 Vérification de développement uniquement :
 `python3 docs/dobby-v7/reserves-techniques/serveur/tests/run-local.py`.

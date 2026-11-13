@@ -1,14 +1,16 @@
 # Réserves Missions / Runes V3
 
+> Checkpoint de ce sous-lot : les dépendances serveur décrites ci-dessous sont depuis reprises par le chantier du socle. Voir la [passation actualisée](PASSATION-SOCLE-CONCURRENT.md). Aucun diagnostic, ancien installateur ou candidat SQL supplémentaire n’est à exécuter maintenant.
+
 Base auditée : `main b77cb9de100a864c8aace8fb9e07053220ccd23a`, branche `feat/dobby-v7-reserves-techniques-20261113`, le 13 novembre 2026. La recette réelle finale B est acquise selon le complément de livraison de ce commit. Elle n’a pas été rejouée. Aucun accès Supabase, appel Auth/REST/Storage distant ou SQL de production n’a été effectué ; aucun ancien installateur n’a été exécuté.
 
 ## Résultat du lot autonome
 
 Une correction indépendante a été trouvée et testée : le solde de Runes en attente pouvait perdre une unité lors d’une compensation, même avec un total final valide. Le calcul interne est désormais exact. Le format des crédits, les identités d’événement, les writers, les allocations, les montants persistés et les gates restent inchangés.
 
-**V3 partagé reste en attente du catalogue réel et de son implémentation serveur adaptée.** Aucune migration V3 ni nouvelle signature RPC n’est inventée dans ce lot. Le contrat existant décrit des invariants ; il ne constitue ni un serveur installé ni une certification des droits.
+**V3 partagé est repris par le chantier du socle : catalogue reçu, implémentation et installation rapportées, recettes runtime encore en attente et gates fermés.** Aucune migration V3 ni nouvelle signature RPC n’est inventée dans ce lot. Le contrat existant décrit des invariants ; il ne constitue ni un serveur installé ni une certification des droits.
 
-## Rapprochement avec l’existant
+## Rapprochement initial avec la base b77cb9d
 
 | Sujet | Constat actuel | Suite retenue |
 |---|---|---|
@@ -21,7 +23,7 @@ Une correction indépendante a été trouvée et testée : le solde de Runes en 
 | Gate natif V3 | `family-missions.js::completeMission` refuse toute participation partagée avant mutation ; `requiresSync` conserve le besoin de confirmation après désactivation du module. | Gate conservé fermé. |
 | Gate transport / rétrogradation | `family-modules.js::assertParticipantSharing` refuse attribution multiple/famille entière, allocations et version ≥3, y compris copie locale/mémorisée. Il est appelé avant activation, réception, construction de payload V2 et envoi de l’outbox. `missionVersion` conserve la version 3. | Code inspecté ; aucun fallback V1/V2 ajouté, aucun gate levé sur fixture. |
 | Contrat serveur | [Contrat V3 existant](../revue-generale/supabase/missions-00-contract.md) déjà explicite sur foyer canonique, enfant assigné, montant lu dans la mission verrouillée, parts recalculées, CAS/UUID et atomicité. | Réutilisation ; aucune API sans consommateur ajoutée. |
-| Préflight existant | L’ancien préflight Missions fournit surtout métadonnées et empreintes d’un sous-ensemble nommé. Les corps privés réels et la fermeture de leurs dépendances ne sont pas disponibles. | Prochaine action remplacée par **le diagnostic regroupé unique** de cette mission. |
+| Préflight existant | L’ancien préflight Missions fournit surtout métadonnées et empreintes d’un sous-ensemble nommé. Les corps privés réels et la fermeture de leurs dépendances ne sont pas disponibles. | Besoin initial depuis couvert par le diagnostic reçu dans le chantier du socle ; aucune collecte supplémentaire. |
 
 Sources principales : [cœur runique](../../../essai-stitch-v5-famille/family-runes-core.mjs), [writer natif Missions](../../../essai-stitch-v5-famille/family-missions.js), [synchronisation existante et gates](../../../essai-stitch-v5-famille/family-modules.js). Les tests V3 existants ont été lus pour éviter une seconde implémentation ; aucune ancienne campagne ou recette de compte n’a été relancée.
 
@@ -49,11 +51,11 @@ Résultat avant correction : **2 échecs / 4**, perte d’une unité reproduite 
 
 Ces tests purs utilisent des identifiants fictifs et ne contactent aucun serveur. Ils ne certifient ni RLS ni CAS distant. Ils constituent une nouvelle preuve ciblée, distincte de la recette B acquise.
 
-## Données serveur strictement nécessaires
+## Besoins initiaux de catalogue — depuis couverts par le socle
 
-Le seul diagnostic à présenter à l’utilisateur est [serveur/00-diagnostic-regroupe.sql](serveur/00-diagnostic-regroupe.sql), préparé avec le lot transversal. Le besoin Missions lui a été transmis ; aucun deuxième SQL de diagnostic ou installateur n’est ajouté ici.
+Le diagnostic [serveur/00-diagnostic-regroupe.sql](serveur/00-diagnostic-regroupe.sql) avait été préparé pour ces besoins. Le catalogue réel et les corps privés ont depuis été reçus dans le chantier du socle : **aucune nouvelle collecte n’est à présenter à l’utilisateur**.
 
-Ce diagnostic doit permettre de rapprocher :
+Les besoins initiaux, désormais repris dans ce chantier, étaient les suivants :
 
 - les définitions exactes de `public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)`, `public.dobby_missions_v2_capabilities(uuid)`, `public.dobby_v2_modules_stamp()` et de toutes les fonctions des triggers co-présents sur `public.dobby_v2_modules` ;
 - toutes les fonctions du schéma privé `dobby_runes_private`, sans se limiter aux noms déjà connus (`guard_missions`, `assert_payload`, `assert_ledger`, `same_award`, `event_key`, `request_user_id`, `lock_active_membership`) ;
@@ -68,11 +70,8 @@ Les seules empreintes ne permettent pas de concevoir une migration sûre. La fix
 
 La correction arithmétique est indépendante du catalogue et peut suivre le processus Git de ce lot après les contrôles ciblés. **Elle n’autorise aucune activation V3.**
 
-Pour la réserve partagée, l’ordre est :
+Pour la réserve partagée, le diagnostic, le développement et l’installation manuelle sont depuis rapportés dans le chantier du socle. **Ne répéter aucun de ces checkpoints.** La prochaine preuve utile porte sur les transactions/RPC/REST réelles, les permissions et les parcours complets, après intégration du client correspondant et selon ses gates. Aucun test B nominal n’est à recommencer.
 
-1. **Utilisateur :** exécuter seulement le diagnostic regroupé en lecture seule dans le projet familial personnel et conserver son résultat technique. Ne rejouer aucun ancien script `01`, `04`, `06` ou `11`.
-2. **Développement :** analyser ces définitions et toutes les dépendances non résolues, puis produire une migration V3 adaptée avec son verify et son rollback conservateur. Tester localement les transactions, CAS/réponse perdue, montant entier exact, participants autorisés, enfant assigné, extérieur au foyer et incompatibilité de writer, sans toucher au projet distant.
-3. **Utilisateur, uniquement après livraison de ce paquet adapté :** appliquer et vérifier manuellement la nouvelle migration. La recette éventuelle porte seulement sur la nouvelle capacité V3 et ses refus/compensations ; la recette B nominale ne doit pas être recommencée.
-4. **Activation séparée :** garder le gate fermé jusqu’aux preuves serveur et fonctionnelles de cette nouvelle capacité. Aucun crédit V3 ne doit être réinterprété en V1/V2 lors d’un rollback ; conserver crédits et reçus, et la lecture seule si le writer antérieur n’est pas compatible.
+Le gate reste fermé jusqu’à ces preuves. Aucun crédit V3 ne doit être réinterprété en V1/V2 lors d’un rollback ; conserver crédits, reçus et lecture seule si le writer antérieur n’est pas compatible.
 
-À ce checkpoint, restent donc explicitement non livrés : le writer transactionnel V3 réel, son installation/rollback adapté au catalogue, sa certification RLS/RPC et son activation. Ces dépendances restent isolées ; aucun faux succès backend, reset du foyer ou réattribution de crédit n’est proposé.
+Ce sous-lot ne livre pas une seconde implémentation V3 : writer, migrations et retour conservateur sont repris par le socle, avec installation utilisateur rapportée. Sa certification runtime réelle et son activation restent en attente. Aucun faux succès backend, reset du foyer ou réattribution de crédit n’est proposé.

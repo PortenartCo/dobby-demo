@@ -1,0 +1,14 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at assertCanonicalGroceryIdentity (/workspace/dobby-v7-review/essai-stitch-v7/tests/helpers/canonical-grocery-fixture.cjs:29:9)
+    at async checkCanonicalGrocerySnapshot (/workspace/dobby-v7-review/essai-stitch-v7/tests/canonical-grocery-fixture.test.cjs:32:3)
+    at async [stdin]:12:6 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

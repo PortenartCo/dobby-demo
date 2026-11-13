@@ -1,8 +1,10 @@
 # Courses — réserve C07
 
+> Checkpoint de ce sous-lot : les dépendances serveur décrites ci-dessous sont depuis reprises par le chantier du socle. Voir la [passation actualisée](PASSATION-SOCLE-CONCURRENT.md). Aucun diagnostic, ancien installateur ou candidat SQL supplémentaire n’est à exécuter maintenant.
+
 Reprise limitée à C07 depuis `main b77cb9d`, le 13 novembre 2026. La recette finale B et la clôture Stitch sont conservées ; aucune nouvelle recette générale n’a été lancée. Aucun accès Supabase distant, aucune API ni installation distante. Les seuls SQL exécutés pendant cette reprise l’ont été sur PostgreSQL standard 17.7 fictif, sans réseau ni port.
 
-**Statut : `ATTENTE_UTILISATEUR` pour le catalogue serveur réel.** Le client et son blocage explicite étaient déjà prêts. Une lacune autonome a été démontrée dans le vérificateur SQL préparé, puis corrigée et testée. Aucune autre modification applicative ou activation de gate n’est justifiée par les éléments disponibles.
+**État actuel : contrat Courses installé et catalogue validé selon le retour du chantier socle ; recette de disponibilité réelle encore en attente.** Le client et son blocage explicite étaient déjà prêts. Une lacune autonome a été démontrée dans le vérificateur SQL préparé, puis corrigée et testée. Aucune autre modification applicative ou activation de gate n’est justifiée par les éléments disponibles.
 
 ## État du client conservé
 
@@ -37,18 +39,8 @@ Environnement vérifié : image `postgres:17.7`, `NetworkMode=none`, aucun port 
 
 Ces preuves ne disent rien de la présence actuelle de la colonne sur le projet personnel. Elles ne remplacent ni le catalogue réel ni une vérification des autorisations du serveur. Aucun test physique ou navigateur général n’a été relancé.
 
-## Action manuelle strictement conditionnelle
+## Passation actuelle — aucune action SQL supplémentaire
 
-**Seule prochaine action initiale :** l’utilisateur exécute le [diagnostic regroupé en lecture seule](serveur/00-diagnostic-regroupe.sql) selon son [mode d’emploi](serveur/README.md). Il regroupe les métadonnées nécessaires : colonne/type/précision/défaut, contrainte exacte et validation, droits effectifs, RLS et définitions des triggers de révision. Ne pas exécuter en plus l’ancien préflight C07 par défaut et ne rejouer aucun installateur Stitch.
+Le diagnostic réel reçu et le retour de vérification du socle indiquent désormais une colonne et un contrat conformes. **Ne pas réinstaller C07 ni relancer notre diagnostic ou un ancien préflight.** Le correctif du vérificateur livré ici conserve son intérêt pour détecter une définition affaiblie, mais ne justifie pas une seconde installation.
 
-Après examen de cette sortie :
-
-| Constat réel | Suite conditionnelle |
-|---|---|
-| Colonne, contrainte et préconditions déjà conformes | **Aucune installation C07.** Si une erreur persiste, en examiner la cause effective — permissions, cache de schéma ou transport — avant toute DDL. |
-| Colonne ou contrainte absente, table existante et autres préconditions confirmées | Examiner le candidat C07 **révisé** et la sauvegarde nécessaire ; l’application ciblée reste exclusivement manuelle. Utiliser ensuite sa vérification de métadonnées, sans assimiler cette réussite à une preuve des RLS. |
-| Type/échelle/défaut, contrainte, droits ou trigger incompatibles ou incertains | **Arrêt de l’installation.** Adapter une proposition à la définition réellement observée ; ne pas convertir la colonne, réécrire les disponibilités ou assouplir les RLS pour forcer le passage. |
-
-Une éventuelle vérification fonctionnelle postérieure porterait uniquement sur C07 et les comptes/données de test autorisés ; elle n’est pas une nouvelle condition imposée à la recette finale B déjà acquise. Le [rollback préparé](../revue-generale/supabase/shopping/03-rollback.sql) conserve la colonne additive et ses valeurs ; aucune suppression de colonne n’est prévue.
-
-Le [lot C07 existant](../revue-generale/supabase/shopping/README.md) est réutilisé. Aucun deuxième paquet de diagnostic n’a été créé. Le blocage restant concerne la connaissance et, seulement si nécessaire, l’intervention manuelle sur le serveur réel ; aucune lacune cliente supplémentaire n’a été démontrée dans ce périmètre.
+La prochaine preuve utile est le parcours réel de disponibilité partagée et ses refus Parent/Enfant/inter-foyers, suivi par le chantier du socle après intégration du client concerné. Ce parcours ne remet pas en cause la recette B terminée. Le [rollback préparé](../revue-generale/supabase/shopping/03-rollback.sql) conserve la colonne additive et ses valeurs ; aucun retour SQL n’est demandé.

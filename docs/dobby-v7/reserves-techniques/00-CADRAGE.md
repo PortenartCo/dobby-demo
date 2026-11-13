@@ -20,3 +20,7 @@ Aucun accès au projet Supabase distant : pas de SQL, API, Auth, Storage, CLI ou
 ## Séquence et critères de fin
 
 Commencer par un seul diagnostic manuel ciblé, en lecture seule, donnant les structures, droits et définitions nécessaires. Tester son SQL exact dans PostgreSQL fictif sans réseau. Développer et tester les corrections indépendantes prouvées. Les définitions privées distantes absentes sont un blocage explicite à la migration complète et à son activation, pas un motif de réinitialisation. Livrer le paquet diagnostic, les preuves locales, le bilan par réserve et les seules actions manuelles indispensables. Ne pas recalculer le snapshot historique 50/4/6 de la première livraison sans validation complète de chaque critère.
+
+## Actualisation de clôture
+
+Le diagnostic réel et les évolutions serveur sont désormais repris par le chantier concurrent du socle. La [passation](PASSATION-SOCLE-CONCURRENT.md) remplace la demande initiale de collecte : aucun SQL supplémentaire à exécuter, aucun développement serveur à compter deux fois. Nos corrections indépendantes et leurs preuves restent valides ; les nouvelles capacités du socle ne sont pas activées par ce lot.

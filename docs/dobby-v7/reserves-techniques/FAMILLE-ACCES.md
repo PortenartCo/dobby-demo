@@ -1,5 +1,7 @@
 # Réserves techniques — accès Parent/Enfant et profil enfant évolutif
 
+> Checkpoint de ce sous-lot : les dépendances serveur décrites ci-dessous sont depuis reprises par le chantier du socle. Voir la [passation actualisée](PASSATION-SOCLE-CONCURRENT.md). Aucun diagnostic, ancien installateur ou candidat SQL supplémentaire n’est à exécuter maintenant.
+
 ## Périmètre et baseline
 
 Socle `b77cb9de100a864c8aace8fb9e07053220ccd23a`, branche `feat/dobby-v7-reserves-techniques-20261113`. Stitch 19/20 et la recette B sont clos et préservés. Ce lot ne change aucun parcours Auth, cérémonie, inscription ou invitation générique. Aucun accès Supabase distant, ni en lecture ni en écriture, et aucun rejeu des scripts historiques 01/04/06/11. Les deux comptes Auth et les profils existants ne sont ni supprimés, ni fusionnés, ni réinitialisés. Toutes les éventuelles interventions serveur appartiennent à l’utilisateur.
@@ -20,7 +22,7 @@ Baseline persistée avant le correctif :
 | Parent déjà lié | Ses droits existants restent conditionnés à la liaison canonique vérifiée et aux grants actuels ; une catégorie enfant locale périmée ne le rétrograde plus | La gestion de tous les autres profils liés/parentaux reste bornée par l’ancien writer serveur, sans faux succès local |
 | Propre magie de l’enfant | Seul le RPC existant ciblant son `member_id` et des champs magiques chaîne est admis par le guard ; identité/notes/catégorie mêlées au payload refusées | Le moteur E06 et ses cérémonies ne sont pas modifiés ; le serveur doit encore garantir son propre périmètre |
 | Changement de droits pendant une attente | Recontrôle de la liaison et du rôle après attente du bearer, avant l’envoi REST/Storage et lors de la reprise après 401 ; compte/foyer/epoch et chemin fichier revalidés | La garde locale ne remplace pas les verrous, contrôles d’identité et policies serveur |
-| F08 : Donner accès à DOBBY | Bouton visible désactivé et contrat de rattachement au même profil conservé ; aucune invocation de l’invitation générique | API ciblée à développer après le diagnostic du catalogue réel, puis à tester et installer manuellement |
+| F08 : Donner accès à DOBBY | Bouton visible désactivé et contrat de rattachement au même profil conservé ; aucune invocation de l’invitation générique | API/client ciblés repris par le socle, installation serveur rapportée ; recette réelle et activation encore en attente |
 
 La définition locale historique inspectée est `docs/dobby-v7/stitch19-20/supabase/01-apply.sql`, fonction `public.dobby_v7_context` : elle sélectionne le membre complet `p`, lit `p->>'memberCategory'`, puis renvoie `'profile',p`. Le correctif lit donc un champ du DTO existant, sans inventer une capacité ou une migration. Cela ne constitue pas une lecture ni une vérification du serveur actuel.
 
@@ -42,9 +44,9 @@ node --test essai-stitch-v5-famille/tests/family-access-native.test.mjs essai-st
 DOBBY_TEST_ORIGIN=http://127.0.0.1:8863 node essai-stitch-v7/tests/reserves-family-access.cjs
 ```
 
-## F08 — contrat ciblé restant à réaliser
+## F08 — invariants repris par le chantier du socle
 
-Le [contrat détaillé Famille](../revue-generale/famille/CONTRAT-SERVEUR.md) reste une spécification, pas une API opérationnelle. Le diagnostic groupé doit établir la présence **ou l’absence** de fonctions/colonnes ciblées avant de choisir leurs noms et de livrer du SQL.
+Le [contrat détaillé Famille](../revue-generale/famille/CONTRAT-SERVEUR.md) fournit les invariants repris par le socle. Le catalogue a été reçu, l’API ciblée développée et l’installation rapportée dans ce chantier. Leur présence ne constitue pas encore une recette fonctionnelle réelle.
 
 Le futur parcours doit respecter ensemble les invariants suivants :
 
@@ -58,7 +60,7 @@ Le futur parcours doit respecter ensemble les invariants suivants :
 
 La fonction historique `dobby_v7_bind_existing_member` n’est pas ce parcours complet : elle suppose un compte déjà membre actif et ne fournit pas la création/acceptation d’une invitation enfant ciblée. Ne pas contourner cette limite par l’ancienne invitation générique ni exposer un lien manuel arbitraire.
 
-## F09 — dépendances serveur inchangées
+## F09 — dépendances reprises par le socle
 
 Les policies proposées dans l’autre lot ne couvrent pas à elles seules les fonctions privilégiées. L’ancienne définition de `dobby_v7_update_member` n’autorise que son propre profil ou un dépendant non lié : la gestion complète d’un autre parent ou d’un enfant déjà lié exige encore une évolution serveur ciblée. Les validations de mission enfant dépendent du protocole de participants/Rune unique du lot Missions, toujours fermé tant qu’il n’est pas vérifié.
 
@@ -66,11 +68,11 @@ Le futur serveur doit borner les parents à leur foyer et refuser à l’enfant 
 
 ## Actions manuelles strictement minimales
 
-1. **Seul point d’entrée actuel :** l’utilisateur exécute une fois le [diagnostic groupé en lecture seule](serveur/00-diagnostic-regroupe.sql), selon le README voisin, puis transmet uniquement son résultat de catalogue. Il collecte sources/ACL/propriétaires/search_path des fonctions V7 et helpers ainsi que contraintes/colonnes des invitations/liens ; aucune ligne de données métier, identité réelle ou jeton. Ne pas demander le vieux `VERIFIER-PROFIL-EXISTANT.sql` ni rejouer les scripts 01/04/06/11.
-2. **Après analyse de ce résultat :** une prochaine itération livre les évolutions serveur réellement nécessaires, leurs tests locaux et leur rollback conservateur, puis l’utilisateur examine et installe les seuls scripts validés. Aucune migration F08 complète n’est fournie ni présentée comme prête dans ce lot. Les boutons et gates dépendants restent fermés jusque-là.
-3. **Après installation applicable seulement :** recette parent/enfant/foyer extérieur en sessions séparées et appels REST/RPC directs ; pour F08, invitation ciblée, expiration/révocation/rejeu et deux acceptations concurrentes, avec même identifiant, nombre de membres inchangé et historique conservé. Cette recette complète les nouvelles réserves ; elle ne demande pas de rejouer la recette B déjà validée.
+Aucune action SQL supplémentaire : ne pas relancer le diagnostic, les paquets du socle ou les anciens scripts Stitch. Les développements serveur sont repris par l’autre chantier et ne sont pas comptés une seconde fois ici.
 
-Retour arrière : conserver profils/liens/historiques ; aucun reset Auth ou snapshot aveugle. Un retrait d’une garde cliente ne peut servir à activer un parcours enfant sans protection serveur. Le rollback de futures évolutions F08 sera celui livré et testé avec leur implémentation réelle, pas un script hypothétique annoncé disponible aujourd’hui.
+La recette future porte sur les nouveaux droits Parent/Enfant/autre foyer et le rattachement au même profil, après intégration du client correspondant et selon ses gates. Elle ne transforme pas B en enfant et ne répète pas sa recette validée. La [séance physique micro/iPhone](CONTROLES-MATERIELS.md) reste indépendante.
+
+Les retours arrière doivent conserver profils, liens et historique ; aucun reset Auth ou snapshot aveugle. Un retrait de garde cliente ne peut activer un parcours enfant sans preuve serveur. Employer le retour conservateur du paquet exact du socle si nécessaire, pas un script ancien par analogie.
 
 ## Complément de validation finale du lot
 

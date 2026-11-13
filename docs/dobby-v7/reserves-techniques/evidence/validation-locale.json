@@ -212,7 +212,17 @@
   "serverGatesActivated": false,
   "physicalHardwareVerified": false,
   "manualActionsNow": [
-    "one_grouped_readonly_catalogue_diagnostic",
     "one_real_microphone_and_iPhone_session"
-  ]
+  ],
+  "crossMissionServerHandoff": {
+    "pullRequest": 12,
+    "sourceHead": "7a8999f47f7478af533f9b81faad0e634a7926b5",
+    "actualCatalogueReceivedElsewhere": true,
+    "manualInstallationReportedElsewhere": true,
+    "verifiedRemotelyByThisMission": false,
+    "repeatDiagnosticRequested": false,
+    "newClientGatesActivatedByThisMission": false,
+    "summaryPath": "docs/dobby-v7/finalisation-socle/evidence/hosted-installation-summary.json"
+  },
+  "supabaseAccessScope": "This technical-reserves mission only; user installation reported separately in PR12"
 }
