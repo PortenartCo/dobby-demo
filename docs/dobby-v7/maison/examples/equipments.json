@@ -1,0 +1,69 @@
+{
+  "format": "dobby-equipment",
+  "version": 1,
+  "equipment": [
+    {
+      "importKey": "test-une-chaudiere",
+      "name": "TEST - Chaudière de démonstration",
+      "category": "Chauffage",
+      "brand": null,
+      "model": null,
+      "serialNumber": null,
+      "manufacturerReference": null,
+      "place": "Chaufferie",
+      "purchase": {
+        "date": null,
+        "amount": null,
+        "currency": null,
+        "seller": null,
+        "invoiceReference": null
+      },
+      "warranty": {
+        "endDate": null,
+        "details": null
+      },
+      "maintenancePlans": [
+        {
+          "importKey": "test-ramonage",
+          "title": "Ramonage du conduit",
+          "interval": {
+            "value": 12,
+            "unit": "months"
+          },
+          "lastKnownDate": null,
+          "nextDateOverride": null,
+          "overrideReason": null,
+          "usualProvider": null,
+          "notes": "Exemple de test uniquement, périodicité à vérifier pour le véritable appareil.",
+          "sourceRefs": []
+        },
+        {
+          "importKey": "test-entretien",
+          "title": "Entretien de la chaudière",
+          "interval": {
+            "value": 36,
+            "unit": "months"
+          },
+          "lastKnownDate": null,
+          "nextDateOverride": null,
+          "overrideReason": null,
+          "usualProvider": null,
+          "notes": "Exemple de test uniquement, périodicité à vérifier pour le véritable appareil.",
+          "sourceRefs": []
+        }
+      ],
+      "documents": [],
+      "sources": [],
+      "notes": "FICTION — NE PAS IMPORTER SUR LE FOYER REEL",
+      "missing": [
+        "Marque",
+        "Modèle exact",
+        "Numéro de série",
+        "Dates et justificatifs"
+      ],
+      "uncertain": [
+        "12 et 36 mois : valeurs de recette fictives, aucune obligation réglementaire établie"
+      ]
+    }
+  ]
+}
