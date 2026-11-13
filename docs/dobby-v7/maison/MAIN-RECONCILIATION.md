@@ -13,3 +13,11 @@ Un seul conflit textuel : `essai-stitch-v5-famille/tests/integration.test.mjs`. 
 Validation combinée :503 tests natifs/synchronisation,49 tests Maison, recette DOM/IndexedDB Maison avec cinq largeurs, import et documents, accès Famille et courses de liaison Auth. Les captures et les tests restent fictifs ; aucune recette serveur réelle ni mutation Supabase.
 
 La CI b12cfaf a découvert un test Contrats lisant le DOM avant la fin du rendu asynchrone. La course a été reproduite avec un chargement retardé250ms ; attendre à la fois la route et le titre de la bonne fiche conserve toutes les assertions de permissions. Aucun correctif produit Contrats ni droit supplémentaire.
+
+## Nouveau main PR15
+
+La PR15 a été fusionnée au SHA2584a8955bac1358d08a8f59070179aa5d624071 pendant la dernière CI Maison. Le candidat98f6bc9 a donc été suspendu avant fusion ; aucun résultat antérieur n’est utilisé seul comme autorisation de fusion du nouveau composé.
+
+Les ajouts de restauration du contexte familial (family-v2 avant ready, moduleStateRestored dans family-modules) sont intégrés sans perte des gardes Maison/PR11. Les fixtures de provenance déjà figées PR11, PR15 et Maison restent inchangées ; une nouvelle composition vérifie l’inversion exacte vers chaque parent. Aucun outil des nouvelles recettes HTTP n’a été exécuté contre Supabase dans cette mission. Les nouvelles preuves serveur reçues du socle gardent leur portée déclarée ; aucune recette de synchronisation Maison à deux comptes n’en est déduite.
+
+Suite native/synchronisation du composé :513/513. Les parcours Maison et PREP sont rejoués et la nouvelle révision attend sa propre CI avant toute fusion.

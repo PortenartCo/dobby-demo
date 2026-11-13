@@ -1,6 +1,6 @@
 # Campagnes actuelles et contrôles historiques
 
-Les contrôles Maison actuels passent : 49 tests ciblés, cinq largeurs, import JSON/ZIP et conservation des sources, recette documentaire et restauration complète des quatre binaires, six cas de revue reproduits puis corrigés, plus un septième cas de refus de stockage avec annulation des tâches dérivées. Les 503 tests natifs/synchronisation passent. La campagne Contrats actuelle passe également.
+Les contrôles Maison actuels passent : 49 tests ciblés, cinq largeurs, import JSON/ZIP et conservation des sources, recette documentaire et restauration complète des quatre binaires, six cas de revue reproduits puis corrigés, plus un septième cas de refus de stockage avec annulation des tâches dérivées. Les 513 tests natifs/synchronisation passent. La campagne Contrats actuelle passe également.
 
 Une seule campagne historique complète supplémentaire a été lancée avec `DOBBY_FINAL=1`, puis reprise au point d’arrêt pour collecter les résultats sans répéter ses premières étapes. Elle n’est pas présentée verte. Son premier contrôle Contrats de consolidation exigeait un ancien libellé et une illustration supprimée par la PR13 ; l’assertion a été alignée sur la liste Contrats déjà approuvée, sans changer le produit.
 
@@ -24,6 +24,6 @@ La campagne historique a terminé ses autres parcours. Les14 échecs comparés (
 
 ## Dernier contrôle de persistance et de provenance
 
-Un refus de localStorage après reconcile() annulait les fiches Maison mais laissait une tâche d’entretien dérivée en mémoire. Le cas native-save-side-effects-rollback reproduit ce défaut puis vérifie le retour arrière des fiches et des tâches. Les sept parcours de régression passent, ainsi que les 49 tests Maison et les 503 tests natifs/synchronisation.
+Un refus de localStorage après reconcile() annulait les fiches Maison mais laissait une tâche d’entretien dérivée en mémoire. Le cas native-save-side-effects-rollback reproduit ce défaut puis vérifie le retour arrière des fiches et des tâches. Les sept parcours de régression passent, ainsi que les 49 tests Maison et les 513 tests natifs/synchronisation.
 
 La recette PREP conserve ses six fixtures de source historiques inchangées. Une nouvelle fixture externe maison-source-extensions.json inverse neuf ajouts exacts sur quatre fichiers et impose leurs empreintes complètes avant de rejouer les preuves existantes. Un octet étranger ou une empreinte parent altérée reste refusé ; aucune assertion historique supprimée.

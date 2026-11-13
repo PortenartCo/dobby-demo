@@ -2,7 +2,11 @@
   "format": "dobby-maison-75-controls",
   "date": "2026-11-13",
   "initialMain": "54d74b9448a1c518d8a3c483cd4deaea1e493748",
-  "integratedMain": "25dd637c1b827bd09a46d8a55be63d9c14966f19",
+  "integratedMain": "2584a8955bac1358d08a8f59070179aa5d624071",
+  "integratedMains": [
+    "25dd637c1b827bd09a46d8a55be63d9c14966f19",
+    "2584a8955bac1358d08a8f59070179aa5d624071"
+  ],
   "publishedSha": null,
   "verificationUrl": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/famille.html#house",
   "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/16",
@@ -781,7 +785,7 @@
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
       ],
-      "note": "Base54d74b9 ; branche et worktree indépendants. #12/#13 fusionnées et conservées ; #11 initialement brouillon conflictuel, puis fusionnée pendant la mission au SHA25dd637 ; rapprochement natif validé sans perdre ses gardes."
+      "note": "Base54d74b9 ; branche et worktree indépendants. #12/#13 fusionnées et conservées ; #11 initialement brouillon conflictuel, puis fusionnée pendant la mission au SHA25dd637 ; rapprochement natif validé sans perdre ses gardes. La PR15 fusionnée ensuite au SHA2584a89 est également intégrée et retestée ; ses gardes de restauration du contexte sont conservées."
     },
     {
       "id": "P02",
@@ -792,7 +796,7 @@
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
         "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
       ],
-      "note": "49 tests Maison et 503 tests natifs/sync ; vrai DOM et IndexedDB, sept cas RED→GREEN (six de revue et le retour arrière après quota)."
+      "note": "49 tests Maison et 513 tests natifs/sync ; vrai DOM et IndexedDB, sept cas RED→GREEN (six de revue et le retour arrière après quota)."
     },
     {
       "id": "P03",

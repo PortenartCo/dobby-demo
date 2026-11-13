@@ -1,0 +1,44 @@
+{
+  "checkpoint": "31b",
+  "scope": "user-returned partial HTTP evidence for Parent A only",
+  "authHttpStatus": 200,
+  "contextRpcHttpStatus": 200,
+  "contextPhase": "active",
+  "canonicalCategory": "parent",
+  "subjectCheckPassed": true,
+  "householdCheckPassed": true,
+  "profileCheckPassed": true,
+  "deviceMarkerCheckPassed": true,
+  "nativeAccessVerified": false,
+  "nativeAccessPhase": "unavailable",
+  "checkpoint31Passed": false,
+  "parentBExecuted": false,
+  "thirdAccountExecuted": false,
+  "fullConnectedJourneyVerified": false,
+  "clientProofFlagsOpened": false,
+  "localBootstrapRacesReproduced": true,
+  "candidateFixPublished": false,
+  "rawHttpResultPublished": false,
+  "limits": [
+    "Successful Auth and canonical-context HTTP responses do not establish native client adoption or completion of checkpoint 31.",
+    "No success is assigned to Parent B, the third test account, child acceptance UI, physical Storage or concurrent sessions.",
+    "Two bootstrap races were initially observed. Main25 already serializes concurrent checks; the remaining candidate delays ready until household restoration.",
+    "The candidate is validated locally and awaits CI/publication. User recovery must still be confirmed by a new checkpoint 31 result."
+  ],
+  "concurrentHouseholdChecksSerializedByMain": "25dd637",
+  "candidateFixScope": "delay native ready until household restoration completes; retain serialized sync from main25",
+  "candidateFixLocallyValidated": true,
+  "candidateFixAwaitingCIAndPublication": true,
+  "userNativeAccessRecoveryVerified": false,
+  "localNativeRegressionBaseline": {
+    "passed": 4,
+    "failed": 1
+  },
+  "localNativeRegressionCandidate": {
+    "passed": 5,
+    "failed": 0
+  },
+  "localTargetedModuleChecksPassed": 54,
+  "localHttpProbeChecksPassed": 72,
+  "localPrepBrowserABPassed": true
+}

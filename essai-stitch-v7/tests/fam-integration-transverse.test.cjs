@@ -9,21 +9,51 @@ const repo = path.resolve(__dirname, '../..');
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const reconciliation = require('./fixtures/reconciliation-main-43eef-source-extensions.json');
 const maison = require('./fixtures/maison-source-extensions.json');
-function beforeMaison(file,source){
-  const amendment=maison.files[file];if(!amendment)return source;
-  assert.equal(digest(source),amendment.afterSha256,file+' complete Maison source changed');
-  for(const patch of [...amendment.patches].reverse()){
+const readiness = require('./fixtures/pr15-native-readiness-source-extensions.json');
+const composition = require('./fixtures/maison-pr15-source-composition.json');
+function reverseLiterals(file,source,patches){
+  for(const patch of [...patches].reverse()){
     assert.notEqual(patch.after,patch.before,patch.label+' is an exact source amendment');
-    assert.equal(source.split(patch.after).length-1,1,patch.label+' occurs exactly once');
+    assert.equal(source.split(patch.after).length-1,1,patch.label+' occurs exactly once in '+file);
     source=source.replace(patch.after,()=>patch.before);
   }
+  return source;
+}
+function compositionParents(file,source){
+  const proof=composition.files[file];if(!proof)return null;
+  const house=maison.files[file],ready=readiness.files[file];
+  assert.equal(digest(source),proof.mergedSha256,file+' complete Maison source changed: current reviewed source changed');
+  assert.equal(proof.baseSha256,reconciliation.files[file].mergedSha256,file+' composition retains the frozen PR11 parent');
+  assert.equal(proof.maisonSha256,house.afterSha256,file+' composition retains the frozen Maison parent');
+  assert.equal(proof.readinessSha256,ready.afterSha256,file+' composition retains the frozen readiness parent');
+  assert.equal(house.beforeSha256,proof.baseSha256,file+' Maison retains the common parent');
+  assert.equal(ready.beforeSha256,proof.baseSha256,file+' readiness retains the common parent');
+  const withoutMaison=reverseLiterals(file,source,house.patches),withoutReadiness=reverseLiterals(file,source,proof.readinessPatches);
+  assert.equal(digest(withoutMaison),proof.readinessSha256,file+' removing Maison recovers the complete PR15 artifact');
+  assert.equal(digest(withoutReadiness),proof.maisonSha256,file+' removing PR15 recovers the complete Maison artifact');
+  const first=reverseLiterals(file,withoutMaison,proof.readinessPatches),second=reverseLiterals(file,withoutReadiness,house.patches);
+  assert.equal(first,second,file+' both exact inversion orders recover identical source bytes');
+  assert.equal(digest(first),proof.baseSha256,file+' removing both amendments recovers the complete PR11 artifact');
+  return{withoutMaison,withoutReadiness};
+}
+function beforeMaison(file,source){
+  const amendment=maison.files[file];if(!amendment)return source;
+  const parents=compositionParents(file,source);if(parents)source=parents.withoutReadiness;
+  assert.equal(digest(source),amendment.afterSha256,file+' complete Maison source changed');
+  source=reverseLiterals(file,source,amendment.patches);
   assert.equal(digest(source),amendment.beforeSha256,file+' Maison reversal preserves the complete published-main source');
   return source;
 }
-function currentFingerprint(file,source,review,composed){
-  const expected=composed?composed.mergedSha256:review.sha256;
+function currentFingerprint(file,source,review,composed,extension=readiness.files[file]){
+  const previous=composed?composed.mergedSha256:review.sha256;
+  if(extension){
+    assert.ok(composed,file+' readiness extension requires the frozen reconciliation');
+    assert.equal(extension.beforeSha256,previous,file+' readiness extension preserves its exact parent');
+  }
+  const expected=extension?extension.afterSha256:previous;
   assert.match(expected,/^[a-f0-9]{64}$/,file+' complete approved SHA-256');
-  assert.equal(digest(beforeMaison(file,source)),expected,file+' current reviewed source changed');
+  const parents=compositionParents(file,source),normalized=parents?parents.withoutMaison:beforeMaison(file,source);
+  assert.equal(digest(normalized),expected,file+' current reviewed source changed');
 }
 const preserved = {
   'essai-stitch-v7/chat-engine.js': 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd',
@@ -132,6 +162,16 @@ test('a tampered reconciliation fingerprint cannot fall back to a valid older re
 test('Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits',()=>{
   const reviews=require('./fixtures/revue-generale-source-extensions.json');
   assert.equal(maison.baseCommit,'25dd637c1b827bd09a46d8a55be63d9c14966f19');
+  assert.equal(composition.baseCommit,maison.baseCommit);
+  assert.equal(composition.maisonParent,'98f6bc953e7434184c759e0a812b72a4745bc4e3');
+  assert.equal(composition.readinessParent,'2584a8955bac1358d08a8f59070179aa5d624071');
+  assert.deepEqual(Object.keys(composition.files),['essai-stitch-v5-famille/family-modules.js'],'Only the independently changed module source requires composition');
+  assert.deepEqual(Object.keys(composition.frozenFixtures).sort(),[
+    'essai-stitch-v7/tests/fixtures/maison-source-extensions.json',
+    'essai-stitch-v7/tests/fixtures/pr15-native-readiness-source-extensions.json',
+    'essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json'
+  ].sort(),'Both outer parent manifests and their common reconciliation remain required');
+  for(const[file,expected]of Object.entries(composition.frozenFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen parent fixture remains byte-exact');
   assert.equal(maison.frozenParentFixture.file,'essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json');
   assert.equal(digest(fs.readFileSync(path.join(repo,maison.frozenParentFixture.file))),maison.frozenParentFixture.sha256,'The complete reconciliation parent fixture remains frozen');
   assert.deepEqual(Object.keys(maison.files).sort(),['essai-stitch-v5-famille/family-modules.js','essai-stitch-v5-famille/stitch-v5.js','essai-stitch-v7/build-source.cjs','essai-stitch-v7/family.js'].sort(),'Only the four reviewed Maison integration surfaces are normalized');
@@ -143,8 +183,39 @@ test('Maison source amendments preserve every frozen published-main fingerprint 
     const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
     assert.equal(digest(beforeMaison(file,source)),expected,file+' exact literals recover the full immutable parent');
     assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete Maison source changed/);
-    assert.throws(()=>currentFingerprint(file,source,reviews[file],{mergedSha256:'0'.repeat(64)}),/current reviewed source changed/,'Maison normalization never bypasses a failed parent fingerprint');
+    assert.throws(()=>currentFingerprint(file,source,reviews[file],{mergedSha256:'0'.repeat(64)}),/current reviewed source changed|preserves its exact parent/,'Maison normalization never bypasses a failed parent fingerprint');
+    const parents=compositionParents(file,source);
+    if(parents)for(const parent of [parents.withoutMaison,parents.withoutReadiness])assert.throws(()=>currentFingerprint(file,parent,reviews[file],reconciliation.files[file]),/current reviewed source changed/,'Neither valid earlier branch artifact can replace the current composed source');
   }
+});
+
+test('native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources',()=>{
+  assert.equal(readiness.baseCommit,'25dd637c1b827bd09a46d8a55be63d9c14966f19');
+  assert.equal(readiness.parentManifest.path,'essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json');
+  assert.equal(digest(fs.readFileSync(path.join(repo,readiness.parentManifest.path))),readiness.parentManifest.sha256,'Frozen PR11 reconciliation remains byte-exact');
+  assert.deepEqual(Object.keys(readiness.files).sort(),[
+    'essai-stitch-v5-famille/family-modules.js',
+    'essai-stitch-v5-famille/family-v2.js'
+  ],'Only the reviewed access/bootstrap and module restoration sources are extended');
+  for(const[file,extension]of Object.entries(readiness.files)){
+    assert.equal(extension.beforeSha256,reconciliation.files[file].mergedSha256,file+' retains its complete PR11 parent');
+    assert.notEqual(extension.afterSha256,extension.beforeSha256,file+' records a real source amendment');
+    assert.ok(extension.reason,file+' explains the reviewed amendment');
+    assert.ok(extension.tests.length,file+' records targeted semantic checks');
+    for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    currentFingerprint(file,source,null,reconciliation.files[file]);
+    assert.throws(()=>currentFingerprint(file,source+'\n/* unreviewed source byte */',null,reconciliation.files[file]),/current reviewed source changed/);
+    assert.throws(()=>currentFingerprint(file,source,null,reconciliation.files[file],{...extension,afterSha256:'0'.repeat(64)}),/current reviewed source changed/);
+    assert.throws(()=>currentFingerprint(file,source,null,reconciliation.files[file],{...extension,beforeSha256:'0'.repeat(64)}),/preserves its exact parent/);
+  }
+});
+
+test('a readiness extension cannot fall back to valid frozen-parent bytes',()=>{
+  const file='essai-stitch-v5-famille/family-v2.js',previous='fixture: reviewed PR11 source',next='fixture: reviewed PR15 source';
+  const review={sha256:digest(previous)},composed={mergedSha256:digest(previous)},extension={beforeSha256:digest(previous),afterSha256:digest(next)};
+  currentFingerprint(file,next,review,composed,extension);
+  assert.throws(()=>currentFingerprint(file,previous,review,composed,extension),/current reviewed source changed/,'A matching older review never rescues a failed current fingerprint');
 });
 
 // Courses intentionally evolves for C01-C07 and independent dessert imports.
