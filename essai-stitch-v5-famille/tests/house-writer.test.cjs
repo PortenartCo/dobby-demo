@@ -136,3 +136,34 @@ test('equipment deletion refuses existing contract references and preserves ever
  await assert.rejects(H.delete(id,H.snapshot(id)),/contrat|association/i);assert.deepEqual(json(st),before);assert.ok(files.has(docId));
  st.familyDocs[0].contract.equipmentIds=['other'];await H.delete(id,H.snapshot(id));assert.equal(st.houseItems.length,0);assert.equal(st.houseDocs.length,0);assert.equal(files.size,0);assert.deepEqual(json(st.familyDocs[0].contract.equipmentIds),['other']);
 });
+
+test('partial native backup restores additive metadata without erasing serials, plans, history or native files',async()=>{
+ const {H,st,saved,files}=setup(),id=add(H),logId=H.saveLog(id,null,{planId:'flue',date:'2025-01-01',note:'Travaux',provider:'Artisan',future:{kept:true}},H.snapshot(id));
+ H.save(id,{serialNumber:'SERIAL',manufacturerReference:'REF',opaque:{kept:true},sources:[{id:'local-source'}]},H.snapshot(id));
+ const [docId]=await H.addDocuments(id,[file()],{planId:'flue',logId},H.snapshot(id));st.houseItems[0].maintenancePlans[0].interval.page=4;
+ const archive={format:'dobby-house',version:1,items:[{id,name:'Ancienne archive',brand:'Archive',maintenancePlans:[{...plan(),title:'Ramonage sauvegardé'}],sources:[{id:'archive-source'}],foreign:{value:3}},{id:'restored',name:'Équipement restauré',purchased:'2024-02-29'}],logs:[{id:logId,itemId:id,date:'2025-01-01',note:'Note sauvegardée'},{id:'restored-log',itemId:'restored',date:'2024-03-31',note:'Ancienne intervention'}]},before=JSON.stringify(archive),writes=saved.length;
+ assert.equal(typeof H.restoreBackup,'function','native partial restore API exists');const result=H.restoreBackup(archive,H.registrySnapshot());
+ assert.equal(saved.length,writes+1);assert.deepEqual(json(result),{itemsAdded:1,itemsUpdated:1,logsAdded:1,logsUpdated:1});assert.equal(JSON.stringify(archive),before);
+ const row=st.houseItems.find(x=>x.id===id);assert.equal(row.serialNumber,'SERIAL');assert.equal(row.manufacturerReference,'REF');assert.equal(row.opaque.kept,true);assert.equal(row.foreign.value,3);assert.equal(row.maintenancePlans.length,2);assert.equal(row.maintenancePlans[0].interval.page,4);assert.equal(row.sources.length,2);
+ assert.equal(st.houseLogs.find(x=>x.id===logId).planId,'flue');assert.equal(st.houseLogs.find(x=>x.id===logId).provider,'Artisan');assert.equal(st.houseLogs.find(x=>x.id===logId).future.kept,true);assert.equal(st.houseLogs.length,2);assert.equal(st.houseDocs[0].id,docId);assert.equal(files.size,1);assert.ok(files.has(docId));
+ H.restoreBackup({format:'dobby-house',version:1,items:[{id,name:'Archive plus ancienne'}],logs:[]},H.registrySnapshot());assert.equal(st.houseItems.find(x=>x.id===id).maintenancePlans.length,2);assert.equal(st.houseLogs.length,2);assert.equal(st.houseDocs.length,1);
+});
+
+test('partial restore rejects stale registry, changed foyer, denied rights and malformed archives without any save',()=>{
+ for(const mode of ['stale','scope','child','format','duplicate','date','log-date','log-note','orphan','reassigned','count']){
+  const {H,st,saved,connection}=setup(),id=add(H),logId=H.saveLog(id,null,{date:'2025-01-01',note:'Existing'},H.snapshot(id));
+  assert.equal(typeof H.restoreBackup,'function','native partial restore API exists');
+  const data={format:'dobby-house',version:1,items:[{id,name:'Changed'}],logs:[]},expected=H.registrySnapshot();
+  if(mode==='stale')st.houseItems[0].notes='Concurrent';if(mode==='scope')connection.epoch++;if(mode==='child')st.familyMembers[0].memberCategory='child';if(mode==='format')data.version=2;
+  if(mode==='duplicate')data.items.push({id,name:'Duplicate'});if(mode==='date')data.items[0].purchased='2026-02-30';if(mode==='log-date')data.logs=[{id:'bad',itemId:id,date:'2026-02-30',note:'Invalid'}];if(mode==='orphan')data.logs=[{id:'bad',itemId:'missing',date:'2025-01-01',note:'Orphan'}];
+  if(mode==='log-note')data.logs=[{id:'bad',itemId:id,date:'2025-01-01'}];
+  if(mode==='reassigned'){data.items.push({id:'other',name:'Other'});data.logs=[{id:logId,itemId:'other',date:'2025-01-01',note:'Moved'}];}if(mode==='count')data.items=new Array(1001).fill({id:'one',name:'Too many'});
+  const before=json(st),writes=saved.length;assert.throws(()=>H.restoreBackup(data,expected),/modifi|foyer|parent|lecture|format|sauvegarde|identit|date|équipement|intervention|collection/i);assert.deepEqual(json(st),before);assert.equal(saved.length,writes);
+ }
+});
+
+test('partial native restore rolls back both native arrays on save failure and preserves unchanged historical dates',()=>{
+ const {H,st,env}=setup({houseItems:[{id:'old',name:'Old',purchased:'date papier',opaque:9}],houseLogs:[{id:'old-log',itemId:'old',date:'date papier',note:'Old',planId:'historical-missing',opaque:7}]}),data={format:'dobby-house',version:1,items:[{id:'old',name:'Updated',purchased:'date papier'}],logs:[{id:'old-log',itemId:'old',date:'date papier',note:'Updated'}]};
+ assert.equal(typeof H.restoreBackup,'function','native partial restore API exists');const before=json(st);env.save=()=>{throw Error('quota');};assert.throws(()=>H.restoreBackup(data,H.registrySnapshot()),/quota/);assert.deepEqual(json(st),before);
+ env.save=()=>{};H.restoreBackup(data,H.registrySnapshot());assert.equal(st.houseItems[0].purchased,'date papier');assert.equal(st.houseItems[0].opaque,9);assert.equal(st.houseLogs[0].date,'date papier');assert.equal(st.houseLogs[0].planId,'historical-missing');assert.equal(st.houseLogs[0].opaque,7);
+});

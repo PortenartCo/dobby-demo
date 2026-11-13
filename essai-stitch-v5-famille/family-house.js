@@ -194,6 +194,31 @@ async function importEquipment(entries,files,expected){
   currentRegistry(expected);if(result.some(row=>row.status!=='skipped'))commit({houseItems:items,houseDocs:[...rows('houseDocs'),...pending.map(value=>value.doc)]});return result;
  }catch(error){await cleanup(staged);throw error;}
 }
-window.DobbyFamilyHouse=Object.freeze({snapshot,registrySnapshot,contextSnapshot,assertWritable,save:saveEquipment,saveLog,deleteLog,addDocuments,openDocument,removeDocument,delete:deleteEquipment,importEquipment});
+function restoreBackup(data,expected){
+ currentRegistry(expected);
+ if(!object(data)||data.format!=='dobby-house'||data.version!==1||!Array.isArray(data.items)||!Array.isArray(data.logs)||data.items.length>1000||data.logs.length>20000)throw Error('Format ou collections de sauvegarde Maison invalides.');
+ const items=clone(rows('houseItems')),logs=clone(rows('houseLogs')),seenItems=new Set(),seenLogs=new Set(),counts={itemsAdded:0,itemsUpdated:0,logsAdded:0,logsUpdated:0};
+ // This partial archive has no deletion semantics and contains no binary data.
+ // Older exporters may omit every field added by a newer Maison client.
+ for(const patch of data.items){
+  if(!object(patch)||!identity(patch.id)||seenItems.has(patch.id))throw Error('Identité d’équipement de sauvegarde invalide.');seenItems.add(patch.id);
+  if(own(patch,'maintenancePlans')&&(!Array.isArray(patch.maintenancePlans)||patch.maintenancePlans.some(plan=>!object(plan)||!identity(plan.id))))throw Error('Identité de programme de sauvegarde invalide.');
+  const index=items.findIndex(row=>row.id===patch.id),prior=index<0?null:items[index],record=equipmentRecord(patch.id,patch,prior,items,true);
+  if(index<0){items.push(record);counts.itemsAdded++;}else{items[index]=record;counts.itemsUpdated++;}
+ }
+ for(const patch of data.logs){
+  if(!object(patch)||!identity(patch.id)||!identity(patch.itemId)||seenLogs.has(patch.id))throw Error('Identité d’intervention de sauvegarde invalide.');seenLogs.add(patch.id);
+  const item=find(patch.itemId,items),index=logs.findIndex(log=>log.id===patch.id),prior=index<0?null:logs[index];
+  if(prior&&prior.itemId!==patch.itemId)throw Error('L’équipement d’une intervention ne peut pas être réaffecté par une sauvegarde.');
+  const record=merge(prior,patch);
+  if(!prior&&!validDate(record.date))throw Error('Date d’intervention de sauvegarde invalide.');dateField(patch,prior,'date');
+  if((!prior||record.note!==prior.note)&&(typeof record.note!=='string'||record.note.length>2000))throw Error('Note d’intervention de sauvegarde invalide.');
+  if(!empty(record.planId)&&!planRows(item).some(plan=>plan.id===record.planId)&&record.planId!==prior?.planId)throw Error('Programme d’intervention de sauvegarde invalide.');
+  if(index<0){logs.push(record);counts.logsAdded++;}else{logs[index]=record;counts.logsUpdated++;}
+ }
+ if(items.length>3000||logs.length>20000)throw Error('Collections de sauvegarde Maison trop importantes.');
+ currentRegistry(expected);if(data.items.length||data.logs.length)commit({houseItems:items,houseLogs:logs});return counts;
+}
+window.DobbyFamilyHouse=Object.freeze({snapshot,registrySnapshot,contextSnapshot,assertWritable,save:saveEquipment,saveLog,deleteLog,addDocuments,openDocument,removeDocument,delete:deleteEquipment,importEquipment,restoreBackup});
 window.DobbyHouseReady=Promise.resolve(window.DobbyFamilyHouse);
 })();
