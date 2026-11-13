@@ -146,7 +146,12 @@ export function gradeFor(total){
 }
 export function memberSummary(memberId,credits=[],requests=[]){
  const rows=normalizeCredits(credits),known=new Map(rows.map(c=>[eventKey(c),c])),mine=rows.filter(c=>includesMember(c,memberId)).map(c=>c.allocations?{...c,allocationTotal:c.amount,memberId,amount:memberAmount(c,memberId)}:c),queue=normalizeRequests(requests).filter(c=>includesMember(c,memberId));
- const total=activeCredits(rows).reduce((sum,c)=>sum+memberAmount(c,memberId),0),pending=queue.filter(c=>!known.has(eventKey(c))).reduce((sum,c)=>sum+(c.kind==='reversal'?-1:1)*memberAmount(c,memberId),0),settledElsewhere=queue.filter(c=>known.has(eventKey(c))&&!sameAward(c,known.get(eventKey(c)))).length;
- if(!Number.isSafeInteger(pending))throw Error('Total de runes en attente invalide');
+ const total=activeCredits(rows).reduce((sum,c)=>sum+memberAmount(c,memberId),0),settledElsewhere=queue.filter(c=>known.has(eventKey(c))&&!sameAward(c,known.get(eventKey(c)))).length;
+ // Event order can temporarily exceed Number's safe range before an exact
+ // compensation cancels it. Keep the signed sum exact, then enforce the same
+ // public Number bounds without changing stored events or their amounts.
+ const exactPending=queue.filter(c=>!known.has(eventKey(c))).reduce((sum,c)=>sum+(c.kind==='reversal'?-1n:1n)*BigInt(memberAmount(c,memberId)),0n),limit=BigInt(Number.MAX_SAFE_INTEGER);
+ if(exactPending>limit||exactPending< -limit)throw Error('Total de runes en attente invalide');
+ const pending=Number(exactPending);
  return {total,pending,settledElsewhere,grade:gradeFor(total),credits:mine};
 }
