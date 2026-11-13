@@ -161,6 +161,7 @@
          const filesCss=document.createElement('link');filesCss.rel='stylesheet';filesCss.href='./family-files.css?v=20261108-9';document.head.append(filesCss);
          const files=document.createElement('script');files.src='./family-files.js?v=20261108-9';
          files.onload=function(){
+           const house=document.createElement('script');house.src='./family-house.js?v=20261113-maison-1';document.body.append(house);
            const contracts=document.createElement('script');contracts.src='./family-contracts.js?v=20261113-1';
            document.body.append(contracts);
            const healthCss=document.createElement('link');healthCss.rel='stylesheet';healthCss.href='./family-health.css?v=20261108-7';document.head.append(healthCss);

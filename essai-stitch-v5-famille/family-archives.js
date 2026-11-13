@@ -19,6 +19,7 @@
  function archived(row){if(row.archive!==undefined&&(!row.archive||row.archive.version!==1||row.archive.archivedAt!==null&&!Number.isFinite(Date.parse(row.archive.archivedAt))))throw Error('Version d’archive incompatible. Données conservées.');return Boolean(row.archive?.archivedAt);}
  function writable(source){
   const def=definition(source),api=window.DobbyFamilyUI,{context,connection}=liveContext(),bound=api?.access?.state?.();
+  if(source==='equipment')window.DobbyFamilyHouse?.assertWritable();
   const memberId=context?.memberId||bound?.memberId||connection?.memberId,member=(st.familyMembers||[]).find(x=>x.id===memberId),category=member?.memberCategory||bound?.profile?.memberCategory;
   if(connection?.userId&&context?.identityVerified!==true&&bound?.verified!==true)throw Error('Identité du compte à vérifier avant cette modification.');
   let child=false;try{child=window.parent?.DobbyFamilyStitch?.sharedReadOnly?.()===true;}catch{}
@@ -38,9 +39,9 @@
   const now=new Date().toISOString(),archive={...row.archive,...(home?{householdId:home}:{}),version:1,archivedAt:toArchived?now:null,updatedAt:now,...(!toArchived?{lastArchivedAt:row.archive.archivedAt}: {})};
   if(source==='documents')window.DobbyFamilyContracts.save(id,{archive},window.DobbyFamilyContracts.snapshot(id));
   else{
-   const def=definition(source),before=st[def.key],beforeCustom=source==='recipes'?custom:null,next=rows(source).map(value=>value.id===id?{...value,archive}:value);
+   const def=definition(source),before=st[def.key],beforeCustom=source==='recipes'?custom:null,hadTasks=Object.hasOwn(st,'autoTasks'),beforeTasks=st.autoTasks===undefined?undefined:clone(st.autoTasks),next=rows(source).map(value=>value.id===id?{...value,archive}:value);
    st[def.key]=next;if(source==='recipes')custom=next;
-   try{save();}catch(error){if(before===undefined)delete st[def.key];else st[def.key]=before;if(source==='recipes')custom=beforeCustom;throw error;}
+   try{save();}catch(error){if(before===undefined)delete st[def.key];else st[def.key]=before;if(source==='recipes')custom=beforeCustom;if(hadTasks)st.autoTasks=beforeTasks;else delete st.autoTasks;throw error;}
    render();
   }
   if(archived(get(source,id))!==toArchived)throw Error('L’enregistrement de l’archive n’a pas été confirmé.');
@@ -57,6 +58,11 @@
   return result.sort((a,b)=>Date.parse(b.archivedAt)-Date.parse(a.archivedAt)||a.source.localeCompare(b.source)||String(a.id).localeCompare(String(b.id)));
  }
  function assertMutable(source,id){const row=get(source,id);if(archived(row))throw Error('Cette fiche est archivée et en lecture seule. Réactivez-la depuis Archives & Scriptorium.');}
+ function mergeRestored(source,prior,incoming){
+  if(prior?.archive||incoming.archive)writable(source);
+  if(prior){get(source,prior.id);if(Object.hasOwn(incoming,'archive')&&JSON.stringify(incoming.archive)!==JSON.stringify(prior.archive))throw Error('Le statut d’archive se modifie uniquement depuis Archives & Scriptorium.');}
+  const merged={...prior,...incoming};if(!visible(merged))throw Error('Cette sauvegarde appartient à un autre foyer.');archived(merged);return merged;
+ }
  // Extend the existing form/action owners before their handlers execute. The
  // source arrays, save(), files and sync writers remain the only persistence.
  if(typeof document!=='undefined'&&document.addEventListener){
@@ -78,5 +84,5 @@
    if(source)refuse(event,()=>mutating?assertMutable(source,id):get(source,id));
   },true);
  }
- window.DobbyArchiveSources=Object.freeze({get,snapshot,change,list,archived,writable,assertMutable,sources:clone(sources)});
+ window.DobbyArchiveSources=Object.freeze({get,snapshot,change,list,archived,writable,assertMutable,mergeRestored,sources:clone(sources)});
 })();

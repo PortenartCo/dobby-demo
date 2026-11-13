@@ -33,8 +33,8 @@ Commandes exécutées depuis la racine du dépôt :
 
 | Commande | Résultat observé |
 |---|---|
-| `node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs` avec `DOBBY_TEST_ORIGIN=http://127.0.0.1:8765` | 496/496 ; native-suite.log |
-| `node essai-stitch-v7/tests/archives-ci.cjs` | 9 tests writer/sync, 4 largeurs UI, parcours sources/PDF/backup et régressions de revue ; archives-final.log |
+| `node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs` avec `DOBBY_TEST_ORIGIN=http://127.0.0.1:8765` | 525/525 ; native-suite-main16.log |
+| `node essai-stitch-v7/tests/archives-ci.cjs` | 12 tests writer/sync, 4 largeurs UI, parcours sources/PDF/backup et régressions de revue ; archives-main16.log |
 | `node essai-stitch-v7/tests/archives-sources.cjs` | Conservation d'une mise à jour du contrat archivé, originaux/avenants, sauvegarde partielle ancienne et restauration complète ; sources-final.log |
 | `node essai-stitch-v7/tests/contracts-ci.cjs` | Campagne E08, import externe ZIP/JSON, pièces et refus Enfant ; contracts-regression.log |
 | `node --test essai-stitch-v7/tests/e07-4-*.test.* essai-stitch-v7/tests/e07-3-*.test.* essai-stitch-v7/tests/e07-p01*.test.* essai-stitch-v7/tests/e09-memo-writer.test.cjs essai-stitch-v7/tests/integrated-build.test.cjs essai-stitch-v7/tests/integrated-preview-fixture.test.cjs` | 66/66 ; cuisine-models.log |
@@ -50,7 +50,7 @@ Les campagnes locales ont utilisé du HTTP local et des fixtures, avec le trafic
 
 ## Réserve globale vérifiée
 
-L'exhaustif historique s'arrête dans `consolidation-shared.cjs` : il attend `0 contrats et assurances enregistrés`, alors que le module canonique E08 de main affiche `0 éléments enregistrés`. Le même test exécuté avec les fichiers de production de main `25dd637` servis via un serveur local de référence échoue à la même assertion : `baseline-historical.log`. Cette ancienne attente de présentation n'a pas été réécrite pour faire passer le lot. Les tests E08 actuels de `contracts-ci.cjs` passent. R09 reste bloqué tant que la CI globale n'est pas verte.
+L'exhaustif historique s'arrête dans `consolidation-shared.cjs` : il attend `0 contrats et assurances enregistrés`, alors que le module canonique E08 de main affiche `0 éléments enregistrés`. Le même test exécuté avec les fichiers de production de main `25dd637` servis via un serveur local de référence échoue à la même assertion : `baseline-historical.log`. Cette ancienne attente de présentation n'a pas été réécrite pour faire passer le lot. Les tests E08 actuels de `contracts-ci.cjs` passent. Cette attente a été corrigée en amont par Maison #16. Le dernier exhaustif et sa réserve sont détaillés ci-dessous.
 
 L'ancienne fixture `register-documents-sync.cjs` ne fournissait pas de contexte canonique au parent simulé : son échec sur main est conservé dans `baseline-documents-sync.log`. Elle fournit maintenant le DTO canonique partagé avec les autres recettes, attend la fin de connexion puis passe par `access.refresh`. Aucune garde de production n'a été abaissée.
 
@@ -60,7 +60,7 @@ L'ancienne fixture `register-documents-sync.cjs` ne fournissait pas de contexte 
 
 La restauration complète native a réellement été confirmée dans un profil TEST, avec comparaison de la fiche et des octets du PDF. Les imports partiels anciens et les mises à jour du contrat conservent le statut. Cela ne constitue pas un rollback de production.
 
-La PR Maison #16 reste indépendante : aucun cherry-pick ni remplacement de ses développements. Les zones communes sont les hooks de liste Maison, les payloads génériques, le build et les quatre racines HTML. Si #16 arrive dans main avant ce lot, il faudra composer les amendements natifs et rejouer les tests sur cette nouvelle base ; aucune fusion de #16 n'a été effectuée ici.
+La PR Maison #16 a depuis été fusionnée dans main a4190bb. Ses équipements, programmes multiples, pièces, import IA et protections natives sont intégrés dans la branche Archives. Aucun développement Maison n’est remplacé ; les extensions Archives sont ajoutées à ses sources canoniques.
 
 ## Captures et niveaux de preuve
 
@@ -73,3 +73,13 @@ Développement et tests locaux : réalisés. PR : #17 créée en brouillon ; un 
 ## Retour arrière
 
 Retirer le commit de ce lot avant fusion ; après une éventuelle intégration autorisée, revert du lot. Les champs JSON extensibles restent conservés. Un ancien client ne connaît pas les filtres d'archivage : conserver une sauvegarde native et remettre ce lot pour retrouver le cycle complet. Aucun rollback de production exécuté.
+
+## Composition finale avec Maison #16
+
+Main courant intégré : `a4190bb` (PR16, après PR15). Les conflits ont été composés dans la branche de travail, sans fusion de la PR Archives. La suite native complète passe **525/525** (`native-suite-main16.log`), la recette Archives couvre **12 tests writer/sync**, les quatre largeurs et sept scénarios de revue (`archives-main16.log`). La campagne Maison entière est rejouée, avec programmes multiples, PDF/image rendus et octets exacts, liens de contrats, sauvegarde/restauration et import externe (`maison-preservation.log`). PREP couvre désormais 58 tests ; les 21 contrôles combinés de provenance native/transverse passent (`main16-provenance.log`).
+
+Les anciennes empreintes Archives, Maison, PR11 et PR15 sont conservées octet pour octet. Deux nouveaux manifests Archives main16 inversent exactement huit littéraux natifs et sept sources complètes vers ce main. Aucune normalisation ne touche le code exécuté dans l'application.
+
+La revue de composition a fait corriger : le contexte source lors d'un lien vers un contrat, la protection du statut lors des imports partiels, les listes actives après réactivation dans un autre foyer, et le rollback des tâches dérivées lors d'un échec de sauvegarde. Une ancienne sauvegarde peut fusionner ses métadonnées après contrôle des droits, mais ne peut pas modifier le statut d'archive. Les références déjà liées restent consultables ; les nouvelles sélections excluent les archives.
+
+L'exhaustif historique a été rejoué sur le composé (`full-browser-main16.log`). Il dépasse maintenant E08, puis échoue dans `e01-consolidation.cjs:32`, qui attend « occurrences … aujourd’hui … 30 jours » dans le formulaire Missions actuel. Le même échec est reproduit sur une copie complète figée de main a4190bb, servie sur 127.0.0.1:8767 (`baseline-main16-e01.log`). Le formulaire Missions n'est pas modifié par ce lot. Cette réserve historique est distincte de la recette Archives et de la CI PR ciblée ; aucun succès exhaustif n'est revendiqué.

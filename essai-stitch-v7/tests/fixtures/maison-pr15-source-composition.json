@@ -1,0 +1,36 @@
+{
+  "purpose": "Exact composition of independently frozen Maison and PR15 source amendments. Reverse each branch to recover the other complete parent, then reverse both to the immutable PR11 source. No Git access is required in CI.",
+  "baseCommit": "25dd637c1b827bd09a46d8a55be63d9c14966f19",
+  "maisonParent": "98f6bc953e7434184c759e0a812b72a4745bc4e3",
+  "readinessParent": "2584a8955bac1358d08a8f59070179aa5d624071",
+  "frozenFixtures": {
+    "essai-stitch-v7/tests/fixtures/maison-source-extensions.json": "30ab63e353eb8733cf49216f34ad714d1bac4de915dfb5dd6ee15cebe46a972b",
+    "essai-stitch-v7/tests/fixtures/pr15-native-readiness-source-extensions.json": "b58787a1462820e15e55dd01433e3f72063d85c59f8ce357b2853fa9d04dc24d",
+    "essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json": "faa208f102e406cb51666e0cfa42726d555cb3e3bad825e44856d070c61df567"
+  },
+  "files": {
+    "essai-stitch-v5-famille/family-modules.js": {
+      "baseSha256": "81bfa7ada452c5a45d5b3e13904bcf68b41f4790545acb5f73f08a045fa2cd65",
+      "maisonSha256": "536a950bc4ee2d895069d3a3261529189c36d82ad3865192d60df5c90a662db4",
+      "readinessSha256": "4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc",
+      "mergedSha256": "af435d7fb77926e2df18bedd0cadc31bac7515b1d6be9163ab6d17e40856a0cf",
+      "readinessPatches": [
+        {
+          "label": "PR15-native-readiness-amendment-1",
+          "before": "const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));\nlet ctx = null, backendReady = false, checked = false, states = {}, inFlight = false;\nlet timer = null, applying = false, lastError = '', sharedAvailable = [];\n",
+          "after": "const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));\nlet ctx = null, backendReady = false, checked = false, moduleStateRestored = false, states = {}, inFlight = false;\nlet timer = null, applying = false, lastError = '', sharedAvailable = [];\n"
+        },
+        {
+          "label": "PR15-native-readiness-amendment-2",
+          "before": "  // Keep the success fast-path but retry when network or API checks failed.\n  if (ctx && next === ctx.userId + '|' + ctx.householdId && checked && backendReady && runeCapability?.token===liveContextToken()&&(!window.DobbyMissionIntentsReady||missionIntentCore)) return;\n  const changed = !ctx || next !== ctx.userId + '|' + ctx.householdId;\n  if(changed){contextGeneration++;runeCapability=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';}\n  ctx = c; checked = false; backendReady = false; lastError = '';\n  const generation=contextGeneration, startToken=liveContextToken();\n  if (changed){const restored=await api.meta(storageKey())||{};if(generation!==contextGeneration||startToken!==liveContextToken())return;states=restored;hydratePreparationState();}\n  runes=await window.DobbyRunesReady;if(generation!==contextGeneration||startToken!==liveContextToken())return;if(!runes)throw Error('Règles de runes indisponibles');\n",
+          "after": "  // Keep the success fast-path but retry when network or API checks failed.\n  if (ctx && next === ctx.userId + '|' + ctx.householdId && checked && backendReady && moduleStateRestored && runeCapability?.token===liveContextToken()&&(!window.DobbyMissionIntentsReady||missionIntentCore)) return;\n  const changed = !ctx || next !== ctx.userId + '|' + ctx.householdId;\n  if(changed){contextGeneration++;moduleStateRestored=false;runeCapability=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';}\n  ctx = c; checked = false; backendReady = false; lastError = '';\n  const generation=contextGeneration, startToken=liveContextToken();\n  // A concurrent membership check can invalidate this first read after ctx was\n  // assigned. Retry hydration until a guarded read actually completed.\n  if (!moduleStateRestored){\n    const restored=await api.meta(storageKey())||{};\n    if(generation!==contextGeneration||startToken!==liveContextToken())return;\n    if(!moduleStateRestored){states=restored;hydratePreparationState();moduleStateRestored=true;}\n  }\n  runes=await window.DobbyRunesReady;if(generation!==contextGeneration||startToken!==liveContextToken())return;if(!runes)throw Error('Règles de runes indisponibles');\n"
+        },
+        {
+          "label": "PR15-native-readiness-amendment-3",
+          "before": "  contextGeneration++;runeCapability=null;missionWriteFlight=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';\n  ctx = null; checked = false; backendReady = false; lastError = ''; states = {}; sharedAvailable = [];\n  if (timer) { clearTimeout(timer); timer = null; }\n",
+          "after": "  contextGeneration++;runeCapability=null;missionWriteFlight=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';\n  ctx = null; checked = false; backendReady = false; moduleStateRestored = false; lastError = ''; states = {}; sharedAvailable = [];\n  if (timer) { clearTimeout(timer); timer = null; }\n"
+        }
+      ]
+    }
+  }
+}

@@ -2,7 +2,7 @@
 (()=>{
  'use strict';const R=window.DobbyRegister,E=window.DobbyFamilyStitchEngine,{q,all,note,button,bind,target,card,box}=R;
  const views=['document-library','documents','documents-1','document-edit','document','contracts','contracts-1','contract-edit','contract','contract-1','import-file','import-review'];let c,query='',category='',fileMode='local',fileOwner=null,jsonRevision=0;
- const rows=()=>E.read().state.familyDocs,selected=()=>rows().find(d=>d.id===c.ui.record),contracts=()=>rows().filter(d=>['Contrats','Assurances'].includes(d.category));
+ const rows=()=>E.read().state.familyDocs.filter(row=>window.DobbyArchivesUI?.readable('documents',row)!==false),selected=()=>rows().find(d=>d.id===c.ui.record),contracts=()=>rows().filter(d=>['Contrats','Assurances'].includes(d.category));
  const shared=d=>['Contrats','Assurances'].includes(d.category)||d.sharedToHousehold===true;
  const childReadOnly=()=>window.DobbyFamilyStitch?.sharedReadOnly?.()===true,locked=d=>Boolean(d&&shared(d)&&childReadOnly());
  function guardWrite(d,cloud=false){if(locked(d)||cloud&&childReadOnly())throw Error('Les documents partagés du foyer sont en lecture seule pour un enfant.');}

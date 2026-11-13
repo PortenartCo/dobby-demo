@@ -1,0 +1,137 @@
+BROWSER 154.0.8037.57 AUTH_FIXTURES_ONLY no live certification
+FAIL login displays safe diagnostic for Auth refusal page.waitForFunction: Timeout 6000ms exceeded.
+PASS login displays safe diagnostic for household refusal after Auth
+PASS login displays safe diagnostic for unconfirmed email
+PASS login displays safe diagnostic for unrecognized credentials
+PASS editing invitation B cannot install or accept delayed preview A
+PASS actual Members invitation action opens native invitation creation
+PASS failed invitation creation has visible inline error outside access screen
+PASS owner-bound invitation survives full reload and restored Auth refresh
+PASS personal profile edit action opens fused identity and portrait form
+PASS failed PKCE confirmation preserves invitation belonging to restored Auth owner
+PASS direct account A to B switch cannot save A rendered profile draft into B
+PASS committed invitation with failed native adoption resumes through one refresh without replay
+PASS already verified account can leave an invalid invitation for its existing household
+PASS invitation recovery preserves pending token when refreshed profile
+PASS invitation recovery preserves pending token when refreshed household
+PASS invitation recovery preserves pending token when refreshed unavailable
+PASS invitation recovery preserves pending token when refreshed active is unverified
+PASS invitation recovery CAS preserves same token of another owner
+PASS invitation recovery CAS preserves newer token of same owner
+PASS account switch during invitation recovery refresh preserves new owner token and blocks navigation
+PASS account switch during invitation recovery CAS preserves new owner token and blocks navigation
+PASS valid invitation for another household keeps the explicit acceptance path
+PASS initialization stale owner cleanup preserves a newer current owner invitation
+PASS visible account logout works for verified member and preserves cached family
+PASS visible account logout works for unverified native user and preserves cached family
+PASS deferred account logout serializes repeated activation and keeps cached members
+{
+  "liveBackend": false,
+  "results": [
+    {
+      "name": "login displays safe diagnostic for Auth refusal",
+      "status": "FAIL",
+      "message": "page.waitForFunction: Timeout 6000ms exceeded."
+    },
+    {
+      "name": "login displays safe diagnostic for household refusal after Auth",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unconfirmed email",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unrecognized credentials",
+      "status": "PASS"
+    },
+    {
+      "name": "editing invitation B cannot install or accept delayed preview A",
+      "status": "PASS"
+    },
+    {
+      "name": "actual Members invitation action opens native invitation creation",
+      "status": "PASS"
+    },
+    {
+      "name": "failed invitation creation has visible inline error outside access screen",
+      "status": "PASS"
+    },
+    {
+      "name": "owner-bound invitation survives full reload and restored Auth refresh",
+      "status": "PASS"
+    },
+    {
+      "name": "personal profile edit action opens fused identity and portrait form",
+      "status": "PASS"
+    },
+    {
+      "name": "failed PKCE confirmation preserves invitation belonging to restored Auth owner",
+      "status": "PASS"
+    },
+    {
+      "name": "direct account A to B switch cannot save A rendered profile draft into B",
+      "status": "PASS"
+    },
+    {
+      "name": "committed invitation with failed native adoption resumes through one refresh without replay",
+      "status": "PASS"
+    },
+    {
+      "name": "already verified account can leave an invalid invitation for its existing household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed profile",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed unavailable",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed active is unverified",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves same token of another owner",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves newer token of same owner",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery refresh preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery CAS preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "valid invitation for another household keeps the explicit acceptance path",
+      "status": "PASS"
+    },
+    {
+      "name": "initialization stale owner cleanup preserves a newer current owner invitation",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for verified member and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for unverified native user and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "deferred account logout serializes repeated activation and keeps cached members",
+      "status": "PASS"
+    }
+  ]
+}

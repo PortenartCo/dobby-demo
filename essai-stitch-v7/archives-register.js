@@ -50,12 +50,13 @@
   const found=sourceFor(view,ctx);if(!found)return;const {source,row}=found,archived=api().archived(row);
   if(archived){
    const status=el('p','Archivé · fiche conservée dans son module d’origine.','archive-source-status');status.dataset.archiveStatus='';ctx.main.prepend(status);
-   for(const control of ctx.main.querySelectorAll('input,textarea,select,button')){if(control.tagName!=='BUTTON'||/rg-save|edit|delete|detach|remove|share|replace|toggle|cloud-local|log-save|memo-import|maintenance/.test(control.dataset.faAction||''))control.disabled=true;}
+   for(const control of ctx.main.querySelectorAll('input,textarea,select,button')){if(control.tagName!=='BUTTON'||/rg-save|edit|delete|detach|remove|share|replace|toggle|cloud-local|log-save|memo-import|rg-plan-|rg-house-link-contract/.test(control.dataset.faAction||''))control.disabled=true;}
    for(const label of ctx.main.querySelectorAll('label[for]')){if(document.getElementById(label.htmlFor)?.disabled){label.setAttribute('aria-disabled','true');label.style.pointerEvents='none';label.style.opacity='.5';}}
    ctx.main.append(R.button('archive-return','Retour aux Archives'));
   }else{const button=control('archive-request','Archiver',source,row.id);try{api().writable(source);}catch{button.disabled=true;}ctx.main.append(button);}
  }
- function guard(action,ctx){const found=sourceFor(ctx.ui.view,ctx);if(found&&api().archived(found.row)&&(/rg-save|edit|delete|detach|remove|replace|share|toggle|cloud-local|log-save|memo-import/.test(action)))throw Error('Cette fiche est archivée et en lecture seule. Réactivez-la depuis Archives & Scriptorium.');}
+ function readable(source,row){try{api().get(source,row.id);return true;}catch{return false;}}
+ function guard(action,ctx){const found=sourceFor(ctx.ui.view,ctx);if(found&&api().archived(found.row)&&(/rg-save|edit|delete|detach|remove|replace|share|toggle|cloud-local|log-save|memo-import|rg-plan-|rg-house-link-contract/.test(action)))throw Error('Cette fiche est archivée et en lecture seule. Réactivez-la depuis Archives & Scriptorium.');}
  function act(action,button){if(action==='archive-clear'){const input=document.querySelector('#archive-search');input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));input.focus();return;}const {source,record}=button.dataset;if(action==='archive-request')return confirmChange(source,record,true);if(action==='archive-reactivate')return confirmChange(source,record,false);if(action==='archive-open')return openSource(source,record);if(action==='archive-return')return window.DobbyFamilyStitch.open('documents');}
  function recipe(recipe,main){
   if(!E.read().state.customRecipes?.some(row=>row.id===recipe.id))return;
@@ -63,5 +64,5 @@
   if(!archived){try{api().writable('recipes');if(recipe.removedAt)throw Error('Restaurez cette recette dans les réglages du Grimoire avant de l’archiver.');}catch(error){button.disabled=true;button.title=error.message;}}
   if(archived){main.prepend(el('p','Archivé · recette conservée, y compris dans les menus existants.','archive-source-status'));const reads=new Set(['back','recipes','taverne','e074-tab','e074-method','ingredients','steps','servings','archive-source']);for(const control of main.querySelectorAll('button[data-cu-action],input,select,textarea'))if(!reads.has(control.dataset.cuAction))control.disabled=true;}
  }
- window.DobbyArchivesUI=Object.freeze({render,decorate,guard,act,recipe,authorize,authorizeRecipe,recipeAction(id){if(api().archived(api().get('recipes',id)))location.href='./famille.html#documents';else confirmChange('recipes',id,true);},isArchived:row=>Boolean(row?.archive?.archivedAt)});
+ window.DobbyArchivesUI=Object.freeze({render,decorate,guard,act,recipe,authorize,authorizeRecipe,recipeAction(id){if(api().archived(api().get('recipes',id)))location.href='./famille.html#documents';else confirmChange('recipes',id,true);},readable,isArchived:row=>Boolean(row?.archive?.archivedAt)});
 })();

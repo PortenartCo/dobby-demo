@@ -47,3 +47,14 @@ test('native retired recipes cannot produce a false archive activation or erase 
  st.customRecipes[0].removedAt='2026-01-01T12:00:00.000Z';const archived=json(st),count=writes();
  assert.throws(()=>A.change('recipes','recipe',false,{confirmed:true,expected:A.snapshot('recipes','recipe')}),/retirée|restaur/i);assert.deepEqual(json(st),archived);assert.equal(writes(),count);
 });
+test('failed native archive save rolls back derived task side effects as well as its source row',()=>{
+ const {A,st,env}=setup();st.autoTasks=[{id:'existing-task',status:'pending',opaque:{keep:1}}];const before=json(st),expected=A.snapshot('equipment','same');
+ env.save=()=>{st.autoTasks[0].status='changed';st.autoTasks.push({id:'derived-task'});throw Error('quota');};
+ assert.throws(()=>A.change('equipment','same',true,{confirmed:true,expected}),/quota/);assert.deepEqual(json(st),before);
+});
+test('partial restores retain lifecycle, reject reactivation and refuse another household',()=>{
+ const {A,st,connection}=setup();A.change('equipment','same',true,{confirmed:true,expected:A.snapshot('equipment','same')});const prior=json(st.houseItems[0]);
+ assert.deepEqual(json(A.mergeRestored('equipment',prior,{id:'same',name:'TEST ancien format'}).archive),prior.archive);
+ assert.throws(()=>A.mergeRestored('equipment',prior,{id:'same',archive:{...prior.archive,archivedAt:null}}),/uniquement depuis Archives/);assert.deepEqual(json(st.houseItems[0]),prior);
+ st.houseItems[0].archive.householdId='fixture-home';connection.householdId='other';assert.throws(()=>A.mergeRestored('equipment',st.houseItems[0],{id:'same',name:'Forged'}),/introuvable|accès/);
+});

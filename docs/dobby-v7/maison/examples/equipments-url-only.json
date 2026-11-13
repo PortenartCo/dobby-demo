@@ -1,0 +1,45 @@
+{
+  "format": "dobby-equipment",
+  "version": 1,
+  "equipment": [
+    {
+      "importKey": "fiction-pompe-1",
+      "name": "TEST — Pompe fictive, liens seulement",
+      "category": "Pompe",
+      "brand": null,
+      "model": null,
+      "serialNumber": null,
+      "manufacturerReference": null,
+      "place": null,
+      "purchase": { "date": null, "amount": null, "currency": null, "seller": null, "invoiceReference": null },
+      "warranty": { "endDate": null, "details": null },
+      "maintenancePlans": [],
+      "documents": [
+        {
+          "id": "fiction-notice",
+          "kind": "manual",
+          "title": "TEST — Lien de notice fictif",
+          "path": null,
+          "url": "https://manufacturer.invalid/fiction/pump/manual",
+          "official": null,
+          "sourceRefs": ["fiction-source"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "fiction-source",
+          "origin": "unknown",
+          "title": "Source de démonstration fictive",
+          "path": null,
+          "url": "https://manufacturer.invalid/fiction/pump/manual",
+          "page": null,
+          "retrievedAt": null,
+          "note": "URL .invalid réservée aux exemples ; aucune consultation ou provenance officielle revendiquée."
+        }
+      ],
+      "notes": "FICTION — NE PAS IMPORTER SUR LE FOYER RÉEL",
+      "missing": ["Modèle exact", "Notice réelle"],
+      "uncertain": ["Toutes les informations de cette fiche sont fictives."]
+    }
+  ]
+}

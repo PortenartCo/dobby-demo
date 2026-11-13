@@ -91,6 +91,7 @@ function attachmentInput(prior,input,strict){
  return result.concat((prior||[]).filter(row=>!seen.has(row.id)).map(clone));
 }
 function mergeImported(prior,input){
+ if(window.DobbyArchiveSources)input=window.DobbyArchiveSources.mergeRestored('documents',prior,input);
  if(!object(input))throw Error('Fiche importée invalide.');
  const record=merge(prior,input);
  if(prior?.retainedLocalOnly===true)record.retainedLocalOnly=true;

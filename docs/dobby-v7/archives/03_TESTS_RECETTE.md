@@ -22,7 +22,7 @@ Recette technique locale du 13 novembre 2026. PASS désigne uniquement les tests
 | CYCLE | A01 | Action Archiver depuis un contrat actif, avec confirmation avant écritures. | PASS | archives-ui.cjs ; evidence/confirm-320.png ; archives-writer.test.cjs |
 | CYCLE | A02 | Annulation d’archivage : aucune mutation ni nouvel archivage. | PASS | archives-ui.cjs et archives-writer.test.cjs (zéro save avant confirmation) |
 | CYCLE | A03 | Confirmation : le contrat quitte la liste active et apparaît dans Archives. | PASS | archives-ui.cjs (liste Contrats puis Archives) |
-| CYCLE | A04 | L’objet archivé conserve son ID, ses champs, son historique et ses références. | PASS | archives-writer.test.cjs ; archives-sources.cjs ; evidence/native-suite.log |
+| CYCLE | A04 | L’objet archivé conserve son ID, ses champs, son historique et ses références. | PASS | archives-writer.test.cjs ; archives-sources.cjs ; evidence/native-suite-main16.log |
 | CYCLE | A05 | Les PDF et avenants du contrat restent consultables depuis l’archive. | PASS | archives-sources.cjs (original + avenant PDF, octets exacts) ; evidence/archived-contract-pdf-390.png |
 | CYCLE | A06 | Avertissement explicite sur l’absence de résiliation contractuelle. | PASS | archives-ui.cjs ; evidence/confirm-320.png |
 | CYCLE | A07 | Action Archiver depuis un équipement, sans supprimer pièces ni historiques. | PASS | archives-ui.cjs ; archives-writer.test.cjs (houseLogs/houseDocs inchangés) |
@@ -53,12 +53,12 @@ Recette technique locale du 13 novembre 2026. PASS désigne uniquement les tests
 | REGRESSION | R01 | Le module Contrats E08 reste fonctionnel : formulaire, renon et pièces. | PASS | evidence/contracts-regression.log (campagne Contrats complète) |
 | REGRESSION | R02 | Import IA ZIP/JSON de contrats reste accessible depuis Contrats. | PASS | contracts-import-ui.cjs ; evidence/contracts-regression.log |
 | REGRESSION | R03 | Les opérations de sauvegarde restent accessibles dans Menu → Paramètres. | PASS | archives-ui.cjs ; archives-sources.cjs (Menu/Paramètres/backup) ; register-tools.cjs |
-| REGRESSION | R04 | La synchronisation familiale existante reste opérationnelle sur fixtures. | PASS | evidence/native-suite.log (496/496), sync-green.log et documents-sync.log (fixtures) |
+| REGRESSION | R04 | La synchronisation familiale existante reste opérationnelle sur fixtures. | PASS | evidence/native-suite-main16.log (525/525), sync-green.log et documents-sync.log (fixtures) |
 | REGRESSION | R05 | L’ajout/la modification d’équipement restent possibles. | PASS | register-house.cjs et register-preservation.cjs ; evidence/register-regressions.log |
 | REGRESSION | R06 | L’utilisation des recettes et la liste de courses restent intactes. | PASS | archives-review.cjs planned/selection ; evidence/cuisine-models.log ; grocery-isolated.log |
 | REGRESSION | R07 | La navigation entre Archives, détail source et retour fonctionne. | PASS | archives-ui.cjs et register-navigation.cjs ; evidence/register-regressions.log |
-| REGRESSION | R08 | Les gardes Parents/Enfants ne sont pas affaiblis. | PASS | archives-writer.test.cjs ; contrats-permissions ; evidence/native-suite.log |
-| REGRESSION | R09 | La suite ciblée et la CI finale passent au SHA livré. | BLOCKED | suite Archives et native vertes ; historique exhaustif échoue sur ancien libellé E08, reproduit sur main : evidence/full-browser-suite.log et baseline-historical.log ; CI finale à constater |
+| REGRESSION | R08 | Les gardes Parents/Enfants ne sont pas affaiblis. | PASS | archives-writer.test.cjs ; contrats-permissions ; evidence/native-suite-main16.log |
+| REGRESSION | R09 | La suite ciblée et la CI finale passent au SHA livré. | BLOCKED | suite Archives et native vertes ; historique exhaustif échoue sur ancien libellé E08, reproduit sur main : evidence/full-browser-suite.log et baseline-historical.log ; CI finale à constater ; main16 exhaustive Missions reproduit sur main figé : full-browser-main16.log / baseline-main16-e01.log |
 | REGRESSION | R10 | La PR et les captures avant/après sont produites sans fusion/déploiement abusif. | PASS | PR https://github.com/PortenartCo/dobby-demo/pull/17 en brouillon ; evidence/before-* et empty/list/confirm/reactivate-* ; aucun déploiement |
 
 **Total : 55 PASS, 1 BLOCKED (R09 : CI globale, échec historique documenté).**

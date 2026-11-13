@@ -58,6 +58,33 @@ function receiveContract(prior,incoming,modern){
   return record;
 }
 function contractSynced(payload){return payload.contractsVersion===1?pick('contracts'):payload;}
+// Old Maison clients replace rows without knowing program/serial metadata.
+// Merge omitted fields; only a versioned program list can remove a program.
+function houseShared(payload){
+ if(payload.houseVersion!==undefined&&payload.houseVersion!==1)throw Error('Version Maison incompatible. Données conservées.');
+ const modern=payload.houseVersion===1,out={...payload};
+ for(const key of ['houseItems','houseLogs']){
+  if(!Object.hasOwn(payload,key))continue;
+  if(!Array.isArray(payload[key]))throw Error('Registre Maison invalide. Données conservées.');
+  const old=Array.isArray(st[key])?st[key]:[],before=new Map(old.map(row=>[row.id,row])),seen=new Set();
+  out[key]=payload[key].map(row=>{
+   if(!row||typeof row!=='object'||Array.isArray(row)||typeof row.id!=='string'||!row.id||seen.has(row.id))throw Error('Identité Maison invalide. Données conservées.');seen.add(row.id);
+   const prior=before.get(row.id),merged=mergeContractMetadata(prior,row);
+   if(key==='houseItems'&&Object.hasOwn(row,'maintenancePlans')){
+    if(!Array.isArray(row.maintenancePlans))throw Error('Programmes Maison incompatibles. Données conservées.');
+    const priorPlans=Array.isArray(prior?.maintenancePlans)?prior.maintenancePlans:[],plans=new Map(priorPlans.map(plan=>[plan.id,plan])),ids=new Set();
+    merged.maintenancePlans=row.maintenancePlans.map(plan=>{
+     if(!plan||typeof plan!=='object'||Array.isArray(plan)||typeof plan.id!=='string'||!plan.id||ids.has(plan.id))throw Error('Identité de programme Maison invalide.');ids.add(plan.id);
+     return mergeContractMetadata(plans.get(plan.id),plan);
+    });
+    if(!modern)merged.maintenancePlans.push(...priorPlans.filter(plan=>!ids.has(plan.id)));
+   }
+   return merged;
+  });
+  if(!modern&&old.some(row=>!seen.has(row.id)&&(key==='houseItems'&&(Array.isArray(row.maintenancePlans)||row.serialNumber||row.manufacturerReference)||key==='houseLogs'&&row.planId)))throw Error('Une ancienne version Maison omet des programmes ou interventions. Données conservées ; utilisez une version à jour.');
+ }
+ return out;
+}
 function pick(id) {
   if (id === 'contracts') {
     return {contractsVersion:1,contracts:(st.familyDocs || []).filter(isSharedDocument).map(x=>contractMetadata(x,true))};
@@ -75,6 +102,7 @@ function pick(id) {
     data.familyPreparationsVersion=1;
   }
   if(id==='missions'){data.runeCredits=st.runeCredits||[];data.runeLedgerVersion=missionVersion(data);}
+  if(id==='house')data.houseVersion=1;
   return data;
 }
 function digest(value) { return JSON.stringify(value); }
@@ -134,7 +162,7 @@ function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manual
 function pendingRunes(){if(runesV3Available())return v3LegacyRequestsPending()||Boolean(states.missions?.v3Pending);if(runesV2Available()){try{return outstandingRequests(st.runeCredits||[]).length>0||Boolean(states.missions?.pendingOperation);}catch{return true;}}if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const key=c=>c?.eventId||c?.missionId,ids=new Set((st.runeCredits||[]).map(key));return(st.runeRequests||[]).some(c=>!c||!ids.has(key(c)));}
 function assertLocalRewardSharing(){assertParticipantSharing();if(runesV3Available()||runesV2Available())return;if(states.missions?.runeProtocol===2)throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
 function initialPayload(id){const payload=pick(id);if(id==='family')return familySnapshot(payload);if(id==='missions'&&runesV2Available())return {...missionPayloadV2(payload),runeRequests:runes.normalizeRequests(st.runeRequests||[])};if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
-function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:archiveSynced(id,payload,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
+function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:archiveSynced(id,payload,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'||id==='house'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
 function applyCredits(credits){if(runesV3Available())return applyMissionsV3({...pick('missions'),runeCredits:credits},false);assertParticipantSharing({runeCredits:credits});const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
 function verifyProtocol(state,remote){
@@ -871,6 +899,7 @@ function applyShared(id, payload) {
   if (!def || !payload || typeof payload !== 'object' || Array.isArray(payload)) throw Error('Payload invalide');
   if(id==='missions')verifyProtocol(states.missions||{},{payload});
   if(id==='family')familyPayload(payload);
+  if(id==='house')payload=houseShared(payload);
   const credits=id==='missions'?retainedCredits(payload):null;
   applying = true;
   try {
@@ -1266,7 +1295,7 @@ async function syncOne(id) {
     }
     applyShared(id, remote.payload);
     state.revision = remoteRevision;
-    state.synced = archiveSynced(id,remote.payload,id==='contracts'?contractSynced(remote.payload):pick(id));
+    state.synced = archiveSynced(id,remote.payload,id==='contracts'?contractSynced(remote.payload):id==='house'?remote.payload:pick(id));
     state.conflict = false;
     await persist();
     return;
