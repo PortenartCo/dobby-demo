@@ -44,21 +44,37 @@
     "finalStatus": "PASS, no material findings remaining in reviewed scope"
   },
   "sha256": {
-    "essai-stitch-v5-famille/family-mission-intents.mjs": "5adbeef2cc80f104d30c6190d160d7c22d794420e202d0669c5a43e13d541afc",
+    "essai-stitch-v5-famille/family-mission-intents.mjs": "557fad9b9808673f3ce535435e7bf00b20a4451c2c39ad2c9cc003dd3a023abe",
     "essai-stitch-v5-famille/family-modules.js": "c2f51f174b23cfbc8ff79eded61c1487852efd5ed01f27773597dc8246c4e5f7",
     "essai-stitch-v5-famille/family-missions.js": "20ed02f00bbf4516f169395b0a9d8f945e30cc926e6cccc83738ebbb9dc50a52",
     "essai-stitch-v5-famille/family-core.mjs": "caae1ee08e19fd87d26963e65f1677103a16991daf2e2f32efaa28ca21032326",
     "essai-stitch-v5-famille/family-runes-core.mjs": "f683ee397730b89144b106c2e62f171420945c584f251300561ca76a745a9554",
     "essai-stitch-v5-famille/family-missions-core.mjs": "3e67f4550025aace7d49f66191177652cc674b95f00edb9cef6cc80b20ca8f84",
     "essai-stitch-v7/tools-register.js": "29d00a355ff4bdcf361afadc7f6f832a176c11f085625cf4fff55a02254bab6b",
-    "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs": "6c97983f82a571db6e892b7e20035d05fa9d1c54f9ba1ce8f7e42eb23f26ede5",
-    "essai-stitch-v5-famille/tests/mission-intents-provider.test.mjs": "4ff1f8a214a5660308657c6f09dd68b10db555f7f872e535fbf745b6dae457f4",
+    "essai-stitch-v5-famille/tests/mission-intents-v3.test.mjs": "95384d31f6ed1c5c9d50169af5628d0f9645d1644c60cef2379353b9b7200bbc",
+    "essai-stitch-v5-famille/tests/mission-intents-provider.test.mjs": "dbac5923057654c6194116d7efd724cd6e67e534317b10ebd7d8aae12d637665",
     "essai-stitch-v7/tests/missions-intent-ui.cjs": "9c64b06d28a07c82f9e4732515a6d9cc06563a01dcab3db08ee29b89eaeddce7"
   },
   "limits": [
     "No real Supabase, Auth, RLS/RPC or physical device certification.",
     "Release gate false; future activation requires installed backend and real security validation.",
-    "Compiled/derived review bundles and CI workflow integration remain root responsibility."
+    "New module is included by the existing recursive preview builder; focused and browser checks are wired into CI. Publication and actual backend recipe remain separate proofs."
   ],
-  "finalFocusedNodeCases": 78
+  "finalFocusedNodeCases": 78,
+  "priorValidationCommit": "2af802d008a3f96a1130606341508eaeac9e2672",
+  "followupCapabilityHardening": {
+    "serverFieldRequired": "clientVerified === true",
+    "releaseGate": false,
+    "redThenGreen": true,
+    "focusedNodeCasesPassed": 26,
+    "newCases": 1,
+    "rejectedBeforePersistenceOrRpc": [
+      false,
+      "absent",
+      "true (string)",
+      1
+    ],
+    "browserChange": false,
+    "remoteSupabaseAccess": false
+  }
 }

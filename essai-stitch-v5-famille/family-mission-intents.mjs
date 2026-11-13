@@ -23,7 +23,7 @@ const award=row=>Object.fromEntries(['missionId','memberId','effort','amount','c
 export function missionV3Capability(value){
  return object(value)&&value.protocol===3&&value.intentVersion===1&&value.participantVersion===1&&
   value.contract===MISSION_V3_CONTRACT&&value.maxPayloadBytes===262144&&value.directWritesBlocked===true&&
-  value.atomicAllocations===true&&value.canonicalAuthorization===true&&Array.isArray(value.ledgerVersions)&&
+  value.atomicAllocations===true&&value.canonicalAuthorization===true&&value.clientVerified===true&&Array.isArray(value.ledgerVersions)&&
   [1,2,3].every(version=>value.ledgerVersions.includes(version));
 }
 export function normalizeMissionIntent(value){

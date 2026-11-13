@@ -6,7 +6,7 @@ import {normalizeMission} from '../family-missions-core.mjs';
 import {assertSharedWrite,isCanonicalChildMissionCompletion} from '../family-core.mjs';
 
 const copy=value=>structuredClone(value);
-const capability={protocol:3,intentVersion:1,participantVersion:1,ledgerVersions:[1,2,3],maxPayloadBytes:262144,directWritesBlocked:true,atomicAllocations:true,canonicalAuthorization:true,contract:'dobby-missions-intents-v3-1'};
+const capability={protocol:3,intentVersion:1,participantVersion:1,ledgerVersions:[1,2,3],maxPayloadBytes:262144,directWritesBlocked:true,atomicAllocations:true,canonicalAuthorization:true,clientVerified:true,contract:'dobby-missions-intents-v3-1'};
 const mission={id:'test-mission',title:'TEST — Mission',status:'open',effort:'regular',rewardVersion:1,participantVersion:1,assigneeIds:['a','b'],allFamily:false};
 const initial={module:'missions',revision:4,payload:{autoTasks:[],manualMissions:[mission],runeCredits:[],runeRequests:[],runeLedgerVersion:2,extension:{keep:true}}};
 const intent={kind:'complete',missionId:mission.id,participantIds:['b','a']};
@@ -23,6 +23,14 @@ test('release stays closed even when a server announces V3',async()=>{
  assert.equal(MISSION_V3_RELEASE_VERIFIED,false);
  const h=harness({releaseVerified:false});assert.equal(h.transport.available(),false);
  await assert.rejects(()=>h.transport.submit(intent,initial),/validation serveur/i);assert.equal(h.calls.length,0);assert.equal(h.pending,null);
+});
+test('server client verification must be explicitly true before any intent is persisted or sent',async()=>{
+ for(const clientVerified of [false,undefined,'true',1]){
+  const value={...capability,clientVerified};if(clientVerified===undefined)delete value.clientVerified;
+  let persisted=0;const h=harness({capability:()=>({value,token:h.actor.token}),writePending:async()=>{persisted++;}});
+  assert.equal(h.transport.available(),false);await assert.rejects(()=>h.transport.submit(intent,initial),/validation serveur/);
+  assert.equal(persisted,0);assert.equal(h.calls.length,0);assert.equal(h.pending,null);
+ }
 });
 test('complete sends only explicit participant IDs; persist precedes HTTP and receipt preserves allocations',async()=>{
  const h=harness();const send=h.settings.send;h.settings.send=async body=>{assert.ok(h.pending);assert.deepEqual(body.p_intent,{kind:'complete',missionId:'test-mission',participantIds:['a','b']});return send(body);};

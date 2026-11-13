@@ -5,7 +5,7 @@ import * as intents from '../family-mission-intents.mjs';
 import * as R from '../family-runes-core.mjs';
 import {makeBackend,makeClient,HH} from './helpers/modules-harness.mjs';
 const clone=value=>structuredClone(value);
-const capability={protocol:3,intentVersion:1,participantVersion:1,ledgerVersions:[1,2,3],maxPayloadBytes:262144,directWritesBlocked:true,atomicAllocations:true,canonicalAuthorization:true,contract:'dobby-missions-intents-v3-1'};
+const capability={protocol:3,intentVersion:1,participantVersion:1,ledgerVersions:[1,2,3],maxPayloadBytes:262144,directWritesBlocked:true,atomicAllocations:true,canonicalAuthorization:true,clientVerified:true,contract:'dobby-missions-intents-v3-1'};
 const members=[{id:'a',memberCategory:'parent'},{id:'b',memberCategory:'child'}];
 const mission={id:'v3-test',title:'TEST — Native intent',category:'Famille',status:'open',effort:'regular',rewardVersion:1,participantVersion:1,assigneeIds:['a','b'],allFamily:false,due:''};
 function setup({verifiedRelease=true,sendHook}={}){
