@@ -791,6 +791,35 @@ async function start() {
 }
 // Access onboarding adopts only a server-confirmed canonical registry. This is
 // the existing snapshot/cache path, never an alternate member writer or upload.
+async function revalidateExistingFamily(binding) {
+  const state=states.family;
+  if(!state?.active||!state.conflict&&moduleDigest('family',pick('family'))===state.synced)return false;
+  const token=liveContextToken(),generation=contextGeneration;
+  const guard=()=>{
+    const actual=api.getContext(),connection=api.connectionState?.();
+    if(!token||generation!==contextGeneration||token!==liveContextToken()||states.family!==state||state.active!==true||
+      !backendReady||inFlight||connection?.verified!==true||connection?.verifying||
+      binding?.phase!=='active'||binding.authenticated!==true||binding.identityVerified!==true||
+      !actual||typeof binding.userId!=='string'||!binding.userId||actual.userId!==binding.userId||
+      typeof binding.householdId!=='string'||!binding.householdId||actual.householdId!==binding.householdId||
+      typeof binding.memberId!=='string'||!binding.memberId||binding.profile?.id!==binding.memberId||
+      !['parent','child'].includes(binding.profile?.memberCategory)||
+      !binding.permissions||typeof binding.permissions!=='object'||Array.isArray(binding.permissions)||
+      ['canEdit','canMagic','canCreate','canManageDependents','canInvite'].some(key=>typeof binding.permissions[key]!=='boolean'))
+      throw Error('Contexte canonique du foyer non vérifié pour ce membre.');
+  };
+  guard();const remote=await readRow('family');guard();
+  if(!remote||remote.module!=='family'||remote.household_id!==undefined&&remote.household_id!==binding.householdId||
+    !Number.isSafeInteger(Number(remote.revision))||Number(remote.revision)<1)
+    throw Error('Registre familial serveur indisponible pour ce foyer.');
+  verifyFamilyProtocol(state,remote.payload);
+  const matches=Array.isArray(remote.payload?.familyMembers)?remote.payload.familyMembers.filter(member=>member?.id===binding.memberId):[];
+  if(matches.length!==1||matches[0].memberCategory!==binding.profile.memberCategory)
+    throw Error('Le membre canonique est absent, ambigu ou de catégorie différente dans le foyer.');
+  // Identity confirmation does not adopt data. The acknowledged CAS base,
+  // pending snapshot and explicit conflict choice remain owned by native sync.
+  return true;
+}
 async function adoptVerifiedFamily(binding) {
   const token=liveContextToken(),generation=contextGeneration;
   const guard=()=>{
@@ -1172,7 +1201,7 @@ document.addEventListener('click', async e => {
   }
 },true);
 window.DobbySharedRunesV2=Object.freeze({available:runesV2Available});
-api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,
+api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,
   isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }

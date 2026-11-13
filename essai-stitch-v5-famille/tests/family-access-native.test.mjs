@@ -28,6 +28,32 @@ test('native verified identity requires membership verification and canonical ad
  assert.equal(f.api.connectionState().identityVerified,true);assert.equal(f.api.getContext().memberId,'local-person');assert.equal(f.api.getContext().permissions.canMagic,true);assert.equal(f.db.rows.get('deviceHouseholdId').value,HH);assert.doesNotMatch(JSON.stringify(f.api.getContext()),/fixture-access|fixture-refresh/);
  await f.logout();assert.equal(f.api.connectionState().memberId,null);assert.equal(f.api.getContext(),null);assert.equal(f.api.access.state().phase,'signed-out');
 });
+test('native canonical recovery awaits read-only pending-family revalidation without adopting its snapshot',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',memberCategory:'parent'},permissions:{canEdit:false,canMagic:false},familyRevision:4});
+ let release,entered;const started=new Promise(resolve=>{entered=resolve;});let adoptions=0;
+ fixture.f.provider.revalidateExistingFamily=async binding=>{assert.equal(binding.userId,USER);assert.equal(binding.profile.memberCategory,'parent');assert.equal(binding.permissions.canEdit,false);entered();await new Promise(resolve=>{release=resolve;});return true;};
+ fixture.f.provider.adoptVerifiedFamily=async()=>{adoptions++;throw Error('Pending data must not be adopted');};
+ await fixture.api.access.ready;const pending=fixture.api.access.signIn('fixture@example.test','fixture-password');await started;
+ assert.equal(fixture.api.connectionState().identityVerified,false,'A pending GET cannot authorize writes');release();await pending;
+ assert.equal(adoptions,0);assert.equal(fixture.api.connectionState().identityVerified,true);assert.equal(fixture.api.access.state().permissions.canEdit,false);
+ const before=fixture.requests.length;await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.family',{payload:{}}),/lecture seule/i);assert.equal(fixture.requests.length,before);
+});
+test('native pending-family revalidation cannot install a canonical binding after logout',async()=>{
+ const fixture=native();fixture.setMembers([{household_id:HH}]);fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:4});
+ let release,entered;const started=new Promise(resolve=>{entered=resolve;});
+ fixture.f.provider.revalidateExistingFamily=async()=>{entered();await new Promise(resolve=>{release=resolve;});return true;};
+ await fixture.api.access.ready;const pending=fixture.api.access.signIn('fixture@example.test','fixture-password');await started;await fixture.logout();release();
+ await assert.rejects(pending,/compte.*chang/i);assert.equal(fixture.f.accessContext,null);assert.equal(fixture.api.connectionState().identityVerified,false);assert.equal(fixture.api.getContext(),null);assert.equal(fixture.api.access.state().phase,'signed-out');
+});
+test('a refused pending-family revalidation never falls back to historical adoption',async()=>{
+ const fixture=native();fixture.setMembers([{household_id:HH}]);fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true},familyRevision:4});
+ let release,entered,adoptions=0;const started=new Promise(resolve=>{entered=resolve;});
+ fixture.f.provider.revalidateExistingFamily=async()=>{entered();await new Promise(resolve=>{release=resolve;});throw Error('TEST — Canonical revalidation refused');};
+ fixture.f.provider.adoptVerifiedFamily=async()=>{adoptions++;};await fixture.api.access.ready;
+ const pending=fixture.api.access.signIn('fixture@example.test','fixture-password');await started;release();await assert.rejects(pending,/revalidation refused/);
+ assert.equal(adoptions,0);assert.equal(fixture.f.accessContext,null);assert.equal(fixture.api.access.state().verified,false);assert.equal(fixture.api.connectionState().identityVerified,false);
+});
 test('new access cannot bypass the existing browser household guard',async()=>{
  const f=native();assert.ok(f.api.access);f.db.rows.set('deviceHouseholdId',{id:'deviceHouseholdId',value:'other-household'});f.setMembers([{household_id:HH}]);f.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'Camille'},permissions:{canEdit:true}});await f.api.access.ready;await assert.rejects(f.api.access.signIn('fixture@example.test','fixture-password'),/navigateur|foyer/);assert.equal(f.api.connectionState().identityVerified,false);assert.equal(f.db.rows.get('deviceHouseholdId').value,'other-household');
 });

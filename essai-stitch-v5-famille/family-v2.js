@@ -786,7 +786,9 @@ function ensureAccess(){
     guard();try{await requireHousehold();guard();
      if(f.householdId!==context.householdId)throw Error('Le contexte serveur ne correspond pas au foyer autorisé.');
      if(!f.provider?.adoptVerifiedFamily)throw Error('Le registre familial natif est indisponible.');
-     await f.provider.adoptVerifiedFamily({...context,identityVerified:true});guard();
+     const binding={...context,identityVerified:true};
+     const revalidated=await f.provider.revalidateExistingFamily?.(binding);guard();
+     if(revalidated!==true){await f.provider.adoptVerifiedFamily(binding);guard();}
      f.accessContext={...context,epoch:f.epoch};
     }finally{if(f.checkingEpoch===before.epoch)f.checkingEpoch=null;}
    },
