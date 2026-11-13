@@ -134,7 +134,7 @@ function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manual
 function pendingRunes(){if(runesV3Available())return v3LegacyRequestsPending()||Boolean(states.missions?.v3Pending);if(runesV2Available()){try{return outstandingRequests(st.runeCredits||[]).length>0||Boolean(states.missions?.pendingOperation);}catch{return true;}}if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const key=c=>c?.eventId||c?.missionId,ids=new Set((st.runeCredits||[]).map(key));return(st.runeRequests||[]).some(c=>!c||!ids.has(key(c)));}
 function assertLocalRewardSharing(){assertParticipantSharing();if(runesV3Available()||runesV2Available())return;if(states.missions?.runeProtocol===2)throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
 function initialPayload(id){const payload=pick(id);if(id==='family')return familySnapshot(payload);if(id==='missions'&&runesV2Available())return {...missionPayloadV2(payload),runeRequests:runes.normalizeRequests(st.runeRequests||[])};if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
-function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:moduleDigest(id,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
+function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:archiveSynced(id,payload,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
 function applyCredits(credits){if(runesV3Available())return applyMissionsV3({...pick('missions'),runeCredits:credits},false);assertParticipantSharing({runeCredits:credits});const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
 function verifyProtocol(state,remote){
@@ -841,7 +841,27 @@ function backupLocal(id) {
   const key = 'dobby-v5-family-before-sync-' + id + '-' + new Date().toISOString();
   localStorage.setItem(key, digest(id==='missions'?{...pick(id),runeRequests:st.runeRequests||[],pendingOperation:states.missions?.pendingOperation||null}:pick(id)));
 }
+// Old peers may omit extensible lifecycle metadata. Omission never reactivates
+// a known fiche, and removing an archived fiche requires explicit resolution.
+function archivePayload(id,payload){
+ const keys={contracts:['contracts'],house:['houseItems'],recipes:['customRecipes'],family:['famContacts','sharedFamilyNotes']}[id];
+ if(!keys||!payload||typeof payload!=='object')return payload;
+ const next=JSON.parse(JSON.stringify(payload));
+ for(const key of keys){
+  const before=key==='contracts'?(st.familyDocs||[]).filter(isSharedDocument):st[key]||[];
+  if(!Array.isArray(next[key]))continue;
+  const incoming=new Map(next[key].map(row=>[row.id,row]));
+  for(const row of before){
+   if(!row.archive)continue;const there=incoming.get(row.id);
+   if(!there&&row.archive.archivedAt)throw Error('Une fiche archivée manque dans la version du foyer. Données locales conservées ; comparez les versions.');
+   if(there&&!Object.hasOwn(there,'archive'))there.archive=JSON.parse(JSON.stringify(row.archive));
+  }
+ }
+ return next;
+}
+function archiveSynced(id,payload,normal){return moduleDigest(id,digest(archivePayload(id,payload))!==digest(payload)?payload:normal);}
 function applyShared(id, payload) {
+  payload=archivePayload(id,payload);
   if(id==='missions'&&runesV3Available()){applyMissionsV3(payload);return;}
   if(id==='missions')assertParticipantSharing(payload||{});
   if(id==='missions'&&runesV2Available()){applyMissionsV2(payload);return;}
@@ -1240,7 +1260,7 @@ async function syncOne(id) {
     }
     applyShared(id, remote.payload);
     state.revision = remoteRevision;
-    state.synced = moduleDigest(id,id==='contracts'?contractSynced(remote.payload):pick(id));
+    state.synced = archiveSynced(id,remote.payload,id==='contracts'?contractSynced(remote.payload):pick(id));
     state.conflict = false;
     await persist();
     return;
@@ -1301,7 +1321,7 @@ async function resolve(id, preference) {
     backupLocal(id);
     applyShared(id, remote.payload);
     state.revision = Number(remote.revision);
-    state.synced = moduleDigest(id,id==='contracts'?contractSynced(remote.payload):pick(id));
+    state.synced = archiveSynced(id,remote.payload,id==='contracts'?contractSynced(remote.payload):pick(id));
   } else {
     if (!confirm('Conserver mes modifications locales ? Elles remplaceront la version actuelle du foyer si aucune nouvelle modification ne survient.')) return;
     state.revision = Number(remote.revision);

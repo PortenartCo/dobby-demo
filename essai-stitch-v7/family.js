@@ -66,7 +66,7 @@ window.DobbyFamilyStitch=(()=>{
   const nav=$('body > nav');if(nav)nav.hidden=ui.view!=='salon';
   if(!$('main h1')){const h=$('main h2');if(h){const h1=document.createElement('h1');h1.className=h.className;h1.append(...h.childNodes);h.replaceWith(h1);}else{$('main').prepend(Object.assign(document.createElement('h1'),{textContent:({'member-edit':'Fiche du membre','medical-edit':'Consultation & soins'})[ui.view]||'Famille',className:'fa-title'}));}}
   const visibleMain=$('body > main'),headerHeight=$('body > header')?.getBoundingClientRect().height||0;if(visibleMain&&parseFloat(getComputedStyle(visibleMain).paddingTop)<headerHeight)visibleMain.style.paddingTop=headerHeight+'px';
-  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','menu','settings'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}
+  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','menu','settings','documents','documents-1'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}
   for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl&&!b.closest('.prep-main'))unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');
  }
  function gateMedicalUI(){
@@ -210,7 +210,7 @@ window.DobbyFamilyStitch=(()=>{
   if(ui.view==='salon'&&action==='rg-memo-new')return open('memo-edit',{record:null,scope:'shared',origin:'salon',mode:'new'});
   if(ui.view==='salon'&&action==='rg-memo-edit')return open('memo-edit',{record:el.dataset.record,scope:'shared',origin:'salon',mode:'read'});
   if(action.startsWith('prep-'))return window.DobbyPreparations.action(familyContext(),action,el);
-  if(action.startsWith('rg-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});
+  if(action.startsWith('archive-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});if(action.startsWith('rg-'))return window.DobbyRegister.act(action,el,{data:E.read(),ui});
   if(action==='back'&&$('#fa-dialog')?.dataset.famEvent!==undefined)return window.DobbyFamilyAgendaReview.closeEvent(agendaContext());
   if(action==='back'&&ui.view==='health-person'&&ui.origin==='member-detail')return open('member-detail',{person:ui.person,origin:ui.memberOrigin});
   if(action==='back'&&window.DobbyPreparations?.handles(ui.view))return window.DobbyPreparations.action(familyContext(),ui.view==='preparation-event'?'prep-event-back':ui.view==='preparation-model'?'prep-cancel':'prep-family-back',el);
@@ -222,7 +222,7 @@ window.DobbyFamilyStitch=(()=>{
  async function refresh(){
   if(window.DobbyAccess?.handles(ui.view)){window.DobbyAccess.refresh();return;}
   if(window.DobbyOnboarding?.handles(ui.view)){window.DobbyOnboarding.refresh();return;}
-  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
+  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,#archive-confirm,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);
   const form=['member-edit','medical-edit'].includes(ui.view);let focus;
   if(form){if(availability(data)===formContext)return;const field=document.activeElement;if(field?.matches('input,textarea,select'))focus={id:field.id,start:field.selectionStart,end:field.selectionEnd};if(ui.view==='member-edit')ui.memberDraft=memberDraft();else ui.visitDraft=visitDraft();}
   else if(document.activeElement?.matches('input,textarea,select'))return;

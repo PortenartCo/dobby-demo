@@ -262,6 +262,23 @@ jobs:
             BROWSER="$(command -v chromium)"
           fi
           CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/contracts-ci.cjs
+      - name: Archives lifecycle, source conservation and responsive acceptance
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8874
+        run: |
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/archives-ci.cjs
+      - name: Keep Archives acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-archives-native-evidence
+          path: docs/dobby-v7/archives/evidence/
+          retention-days: 14
       - name: Keep contracts acceptance evidence
         if: always()
         uses: actions/upload-artifact@v4

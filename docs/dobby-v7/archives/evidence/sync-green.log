@@ -1,0 +1,34 @@
+✔ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (17.839558ms)
+✔ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (6.20241ms)
+✔ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (8.328513ms)
+✔ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (6.062171ms)
+✔ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (6.966581ms)
+✔ structured contract metadata and multi-file descriptors sync without local keys or binary data (19.302114ms)
+✔ legacy peer roundtrip preserves new metadata and pieces, restores them to remote, and local keys stay local (12.546497ms)
+✔ modern descriptor deletion propagates, unknown deep fields and local legacy/private retention survive (8.186714ms)
+✔ modern shared deletion retains an existing local legacy backup without immediately publishing it again (3.338664ms)
+✔ an unrelated contract edit never republishes a remotely deleted local backup (4.898797ms)
+✔ an authoritative modern restoration rejoins its local backup and survives the next unrelated edit (6.062495ms)
+✔ modern shared legacy-file withdrawal propagates without touching the old local binary metadata (3.963448ms)
+✔ shared memo create/read/update/delete propagates without publishing legacy notes or private health (29.101166ms)
+✔ concurrent edits use module conflict, retaining both copies until explicit resolution and backup (11.160662ms)
+✔ offline memo remains pending across a client reload, then synchronizes (10.484003ms)
+✔ old payload and unknown family extensions survive a write; absent fields do not clear existing data (7.573893ms)
+✔ activation and joining preserve new offline memos alongside remote memos, with local notes excluded (25.559651ms)
+✔ an old client dropping the memo extension is detected and local acknowledged copy is retained (5.394803ms)
+✔ edits during PATCH are not falsely acknowledged or replaced (7.045146ms)
+✔ invalid memo payload blocks before replacing any other family fields (3.803069ms)
+✔ a rival write between GET and PATCH loses CAS and keeps the local memo pending in conflict (4.334125ms)
+✔ server conflict choice acknowledges updated unknown family fields before the next memo edit (5.087036ms)
+✔ a second device can refresh and resolve after another device restores the memo protocol (7.949349ms)
+✔ edits during protocol recovery preserve latest remote member fields on the following sync (4.992247ms)
+✔ reactivation takes remote edits of unchanged memos and retains a distinct pending import (4.876038ms)
+✔ genuinely divergent memo edits on reactivation become an active resolvable conflict (5.904823ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1797.897763

@@ -1,0 +1,72 @@
+✖ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (14.096969ms)
+✖ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (5.047645ms)
+✔ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (5.2237ms)
+✔ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (5.564837ms)
+✖ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (4.788416ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 2
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1631.24433
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (14.096969ms)
+  AssertionError [ERR_ASSERTION]: Preserved status is repaired through the source CAS writer
+  + actual - expected
+  
+  + undefined
+  - '2026-11-13T12:00:00.000Z'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:16:34)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '2026-11-13T12:00:00.000Z',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (5.047645ms)
+  AssertionError [ERR_ASSERTION]: Preserved status is repaired through the source CAS writer
+  + actual - expected
+  
+  + undefined
+  - '2026-11-13T12:00:00.000Z'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:16:34)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '2026-11-13T12:00:00.000Z',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v5-famille/tests/archives-sync.test.mjs:6:2
+✖ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (4.788416ms)
+  AssertionError [ERR_ASSERTION]: Preserved status is repaired through the source CAS writer
+  + actual - expected
+  
+  + undefined
+  - '2026-11-13T12:00:00.000Z'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-sync.test.mjs:16:34)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: '2026-11-13T12:00:00.000Z',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

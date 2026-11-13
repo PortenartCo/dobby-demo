@@ -35,7 +35,7 @@
   }container.append(details);
  }
  function list(){const node=root();node.append(heading('Contrats & Assurances','Retrouvez les contrats, assurances et échéances du foyer.'));
-  const all=rows().filter(isContract),add=action('rg-contract-new','Ajouter un contrat manuellement'),importButton=action('rg-contract-ai','Importer des contrats avec une IA');add.disabled=importButton.disabled=readOnly();node.append(actions(add,importButton));
+  const all=rows().filter(row=>isContract(row)&&!window.DobbyArchivesUI?.isArchived(row)),add=action('rg-contract-new','Ajouter un contrat manuellement'),importButton=action('rg-contract-ai','Importer des contrats avec une IA');add.disabled=importButton.disabled=readOnly();node.append(actions(add,importButton));
   const label=el('label','Rechercher un contrat','contracts-search'),search=el('input');search.id='doc-search';search.type='search';search.value=query;search.placeholder='Nom, organisme ou référence';search.className='rg-input';label.htmlFor=search.id;label.append(search);node.append(label,el('p',all.length+' éléments enregistrés','contracts-count'));
   const container=el('section','','contracts-list');container.dataset.documentRows='true';node.append(container);
   function display(){container.replaceChildren();const term=query.toLocaleLowerCase('fr'),items=all.filter(row=>[row.title,row.provider,row.reference,row.note,typeNames[model.normalizeContract(row).type]].join(' ').toLocaleLowerCase('fr').includes(term)).sort((a,b)=>String(model.nextAction(a,today())||'9999').localeCompare(String(model.nextAction(b,today())||'9999'))||String(a.title).localeCompare(String(b.title),'fr'));

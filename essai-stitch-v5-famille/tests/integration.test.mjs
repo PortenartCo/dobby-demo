@@ -12,7 +12,18 @@ const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
 test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const preview=source('../index.html').replaceAll('\r\n','\n');
+  const archivePreview=source('../index.html').replaceAll('\r\n','\n');
+  const archiveAmendments=JSON.parse(source('./fixtures/archives-native-extensions.json'));
+  const sha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(archiveAmendments.baseCommit,'25dd637c1b827bd09a46d8a55be63d9c14966f19');
+  assert.equal(sha(archivePreview),archiveAmendments.afterSha256,'Complete Archives native artifact is pinned');
+  let preview=archivePreview;
+  for(const amendment of [...archiveAmendments.patches].reverse()){
+    assert.notEqual(amendment.after,amendment.before);
+    assert.equal(preview.split(amendment.after).length-1,1,'Exact Archives amendment occurs once: '+amendment.label);
+    preview=preview.replace(amendment.after,amendment.before);
+  }
+  assert.equal(sha(preview),archiveAmendments.beforeSha256,'Reversing only six Archives literals restores the complete immutable main');
   const preparationScript='<script src="./family-preparations.js"></script>';
   assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs
