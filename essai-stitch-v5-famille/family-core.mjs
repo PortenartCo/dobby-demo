@@ -99,16 +99,23 @@ export function toServerPayload(item) {
  * installed and verified; own magic uses the existing targeted canonical RPC.
  */
 const readRPCs=new Set(['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities']);
+const setupRPCs={profile:new Set(['dobby_v7_update_profile']),household:new Set(['dobby_v7_update_profile','dobby_v7_create_household','dobby_v7_accept_invitation'])};
+const ownMagicFields=new Set(['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony']);
 export function assertSharedWrite({method='GET',query='',body={},access=null}={}) {
  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase()))return;
  const category=access?.profile?.memberCategory;
- // Preserve historical clients; the canonical V7 access router requires a
- // verified identity before shared use. A known child never inherits a parent
- // permission from a stale or malformed context.
- if(!category||category==='parent')return;
  const rpc=query.split('?')[0].replace(/^rpc\//,'');
  if(readRPCs.has(rpc))return;
- if(category==='child'&&access.verified===true&&access.phase==='active'&&
-    rpc==='dobby_v7_update_magic'&&body?.p_member_id===access.memberId)return;
- throw Error('Compte enfant en lecture seule : écriture partagée indisponible avant validation serveur. Seule sa propre Maison et son propre Patronus peuvent être modifiés.');
+ // Local use without an authenticated identity is unchanged. An authenticated
+ // but incomplete/stale binding must never acquire parental capabilities.
+ if(!access?.userId&&!access?.authenticated&&!access?.memberId&&!category&&access?.phase!=='active')return;
+ const identified=typeof access?.userId==='string'&&access.userId.length>0;
+ const canonical=identified&&access.authenticated===true&&access.verified===true&&access.phase==='active'&&typeof access.householdId==='string'&&access.householdId.length>0&&typeof access.memberId==='string'&&access.memberId.length>0&&access.profile?.id===access.memberId;
+ const setup=identified&&access.authenticated===true&&access.verified===false&&!access.memberId&&!access.householdId&&!access.profile?.id&&!category;
+ if(setup&&setupRPCs[access.phase]?.has(rpc))return;
+ if(category==='parent'&&canonical)return;
+ const values=body?.p_values,magicOnly=values&&typeof values==='object'&&!Array.isArray(values)&&Object.keys(values).length>0&&Object.entries(values).every(([key,value])=>ownMagicFields.has(key)&&typeof value==='string');
+ if(category==='child'&&canonical&&
+    rpc==='dobby_v7_update_magic'&&body?.p_member_id===access.memberId&&magicOnly)return;
+ throw Error('Données partagées en lecture seule : identité et catégorie canoniques vérifiées requises. Un enfant peut uniquement confirmer sa propre Maison et son propre Patronus avec les valeurs magiques prévues.');
 }

@@ -1701,7 +1701,7 @@ const v23MemberContext=()=>{
  if(window.DobbyReview)return{demo:true,actorId:window.DobbyReview.demoMemberId||null,members:v23Members()};
  const api=window.DobbyFamilyUI,connection=api?.connectionState?.(),bound=api?.access?.state?.(),context=api?.getContext?.();
  const verified=connection?.verified===true&&!connection.verifying&&connection.access!=='rejected'&&bound?.verified===true&&context?.identityVerified===true&&!!context.userId&&!!context.householdId&&!!context.memberId&&bound.userId===context.userId&&bound.householdId===context.householdId&&bound.memberId===context.memberId;
- return{demo:false,verified,userId:verified?context.userId:null,householdId:verified?context.householdId:null,actorId:verified?context.memberId:null,permissions:verified?context.permissions:{},members:v23Members()};
+ return{demo:false,verified,userId:verified?context.userId:null,householdId:verified?context.householdId:null,actorId:verified?context.memberId:null,memberCategory:verified&&bound.profile?.id===context.memberId?bound.profile.memberCategory:null,permissions:verified?context.permissions:{},members:v23Members()};
 };
 const v23MemberPermissions=id=>window.DobbyFamilyMemberPolicy.permissions(v23MemberById(id),v23MemberContext());
 function v23HealthPermissions(record,shared=false){

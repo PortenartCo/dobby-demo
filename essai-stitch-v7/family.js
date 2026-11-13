@@ -24,12 +24,15 @@ window.DobbyFamilyStitch=(()=>{
  const belongs=(record,member,members)=>Boolean(member&&(record.personId?record.personId===member.id:record.person===member.name&&members.filter(m=>m.name===record.person).length===1));
  const nameFor=(record,data)=>data.members.find(x=>x.id===record.personId)?.name||record.person||'Foyer';
  function sharedReadOnly(){
-  try{const native=E.win(),api=native.DobbyFamilyUI,bound=api?.access?.state?.(),identity=api?.getContext?.();let id=native.DobbyReview?.demoMemberId;
-   if(!id&&bound?.verified&&identity?.identityVerified&&bound.userId===identity.userId&&bound.householdId===identity.householdId&&bound.memberId===identity.memberId)id=identity.memberId;
-   return E.read().members.find(member=>member.id===id)?.memberCategory==='child';
-  }catch{return false;}
+  try{const native=E.win(),api=native.DobbyFamilyUI,bound=api?.access?.state?.(),identity=api?.getContext?.(),demoId=native.DobbyReview?.demoMemberId;
+   if(demoId)return ['child','baby','pet'].includes(E.read().members.find(member=>member.id===demoId)?.memberCategory);
+   if(!bound?.userId&&!bound?.authenticated&&!bound?.memberId&&!bound?.profile?.memberCategory&&bound?.phase!=='active')return false;
+   const canonical=bound?.authenticated===true&&bound.verified&&['userId','householdId','memberId'].every(key=>typeof bound[key]==='string'&&bound[key].length>0)&&identity?.identityVerified&&bound.userId===identity.userId&&bound.householdId===identity.householdId&&bound.memberId===identity.memberId&&bound.profile?.id===bound.memberId;
+   return !canonical||bound.profile?.memberCategory!=='parent';
+  }catch{return true;}
  }
- const sharedReadReason='Les données partagées sont en lecture seule pour un enfant. Seules ses missions autorisées et sa propre Maison et son propre Patronus peuvent être validés.';
+
+ const sharedReadReason='Les données partagées sont en lecture seule pour ce profil. Leur gestion exige des droits canoniques vérifiés. Un enfant peut seulement valider ses missions autorisées et modifier sa propre Maison et son propre Patronus.';
  const prepReadActions=new Set(['prep-family-back','prep-agenda-back','prep-cancel','prep-event-open','prep-event-back','prep-courses','prep-open']);
  const sharedMutation=action=>/^event-(new|edit|delete)$|^(contact-new|contact-delete|health-contact-edit|family-local|family-server)$|^rg-(contact-(new|edit|delete)|memo-(new|edit|delete|import)|save|delete)$/.test(action)||action.startsWith('prep-')&&!prepReadActions.has(action);
  function gateSharedUI(){

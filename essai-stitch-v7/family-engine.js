@@ -4,7 +4,7 @@ window.DobbyFamilyStitchEngine=(()=>{
  const win=()=>document.getElementById('dv7-engine').contentWindow;
  const evaluate=(code,values={})=>win().eval(`(function(p){${code}})(${JSON.stringify(values)})`);
  let lastError='';
- const guardSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.())throw Error('Les données du foyer sont en lecture seule pour un enfant.');};
+ const guardSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.())throw Error('Les données du foyer sont en lecture seule pour ce profil.');};
  function notices(callback){win().alert=message=>{lastError=String(message);callback(lastError);};}
  function read(){
   const data=evaluate('return JSON.parse(JSON.stringify({state:st,members:st.familyMembers||[],local:st.famHealth||[],shared:st.sharedHealthVisits||[],events:st.familyEvents||[],contacts:st.famContacts||[]}));');

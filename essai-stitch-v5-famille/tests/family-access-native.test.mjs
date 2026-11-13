@@ -70,7 +70,7 @@ test('native context refusals retain SQLSTATE and leave the accepted Auth sessio
 
 test('native REST guard uses canonical child category even when client grants claim parent editing',async()=>{
  const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
- fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Child'},permissions:{canEdit:true,canMagic:true}});
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Child',memberCategory:'child'},permissions:{canEdit:true,canMagic:true}});
  await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
  fixture.state.familyMembers=[{id:'local-person',memberCategory:'child'}];
  const before=fixture.requests.length;
@@ -79,4 +79,68 @@ test('native REST guard uses canonical child category even when client grants cl
  assert.equal(fixture.requests.length,before,'Forbidden writes never reach transport');
  await fixture.api.authorized('GET','dobby_v2_modules');
  assert.equal(fixture.requests.length,before+1,'Child shared read remains available');
+});
+
+test('reserves: canonical child role survives parsing and a locally promoted or missing registry row cannot authorize transport',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Child',memberCategory:'child'},permissions:{canEdit:true,canMagic:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ assert.equal(fixture.api.access.state().profile.memberCategory,'child','Server category is retained as canonical metadata');
+ for(const members of [[{id:'local-person',memberCategory:'parent'}],[]]){
+  fixture.state.familyMembers=members;const before=fixture.requests.length;
+  await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.recipes',{payload:{}}),/lecture seule|catégorie|vérifi/i);
+  assert.equal(fixture.requests.length,before,'No request leaves transport after local role mutation or missing row');
+ }
+});
+
+test('reserves: verified canonical parent is not demoted by a stale local child row',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ fixture.state.familyMembers=[{id:'local-person',memberCategory:'child'}];const before=fixture.requests.length;
+ await fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.recipes',{payload:{}});
+ assert.equal(fixture.requests.length,before+1);
+});
+
+test('reserves: an authenticated context without a category stays connected but cannot write shared data',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Legacy'},permissions:{canEdit:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ assert.equal(fixture.api.access.state().verified,true);assert.equal(fixture.f.session.user_id,USER);
+ fixture.state.familyMembers=[{id:'local-person',memberCategory:'parent'}];const before=fixture.requests.length;
+ await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.family',{payload:{}}),/lecture seule|catégorie|vérifi/);assert.equal(fixture.requests.length,before);
+});
+test('reserves: malformed server category cannot become a canonical parent capability',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Invalid',memberCategory:'owner'},permissions:{canEdit:true}});
+ await fixture.api.access.ready;await assert.rejects(fixture.api.access.signIn('fixture@example.test','fixture-password'),/catégorie|invalide/i);
+ assert.equal(fixture.api.access.state().verified,false);assert.equal(fixture.f.session.user_id,USER,'Auth session is retained; only invalid canonical capability is refused');
+});
+
+test('reserves: transport rechecks canonical rights after awaiting a bearer token',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ const before=fixture.requests.length,pending=fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.family',{payload:{}});
+ fixture.f.verifiedContext=null;
+ await assert.rejects(pending,/lecture seule|vérifi|catégorie/);assert.equal(fixture.requests.length,before,'Revoked identity cannot dispatch a write queued before await token');
+});
+
+test('reserves: file transport also rechecks role after awaiting its bearer',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ const before=fixture.requests.length,pending=fixture.api.storageFetch('DELETE',HH+'/00000000-0000-4000-8000-000000000099.pdf');fixture.f.verifiedContext=null;
+ await assert.rejects(pending,/lecture seule|vérifi|catégorie/);assert.equal(fixture.requests.length,before,'Revoked role cannot dispatch a file deletion');
+});
+
+test('reserves: a queued request cannot reuse its old parent bearer after an account epoch switch',async()=>{
+ for(const file of [false,true]){
+  const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+  fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true}});
+  await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');const before=fixture.requests.length;
+  const pending=file?fixture.api.storageFetch('DELETE',HH+'/00000000-0000-4000-8000-000000000099.pdf'):fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.family',{payload:{}});
+  fixture.f.epoch++;fixture.f.session={...fixture.f.session,user_id:'TEST-REPLACEMENT'};
+  await assert.rejects(pending,/compte|foyer|contexte/);assert.equal(fixture.requests.length,before,'Old bearer never dispatches after account change');
+ }
 });

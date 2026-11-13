@@ -130,18 +130,30 @@ async function token() {
 }
 function assertNativeSharedWrite(method,query,body={}) {
   const state=accessController?.state?.()||f.accessContext;
-  const category=(st.familyMembers||[]).find(member=>member.id===state?.memberId)?.memberCategory||state?.profile?.memberCategory;
-  if(!category||category==='parent')return;
-  if(!f.core?.assertSharedWrite)throw Error('Permissions serveur indisponibles : écriture partagée bloquée.');
-  f.core.assertSharedWrite({method,query,body,access:{...state,profile:{...state?.profile,memberCategory:category}}});
+  if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state});return;}
+  const rpc=query.split('?')[0].replace(/^rpc\//,'');
+  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities'].includes(rpc))return;
+  if(!state?.userId&&!state?.authenticated&&!state?.memberId&&!state?.profile?.memberCategory&&state?.phase!=='active')return;
+  throw Error('Permissions serveur indisponibles : écriture partagée bloquée.');
+}
+function transportScopeGuard(){
+  const epoch=f.epoch,userId=f.session?.user_id,householdId=f.householdId;
+  return()=>{if(epoch!==f.epoch||userId!==f.session?.user_id||householdId!==f.householdId)throw Error('Le compte ou le foyer a changé pendant la requête.');};
 }
 async function authorized(method, query, body, headers = {}) {
+  const guard=transportScopeGuard();
   assertNativeSharedWrite(method,query,body);
   let bearer = await token();
+  guard();
+  assertNativeSharedWrite(method,query,body);
   try { return await raw('/rest/v1/' + query, method, body, headers, bearer); }
   catch (e) {
     if (e.status !== 401) throw e;
+    guard();
+    assertNativeSharedWrite(method,query,body);
     await refreshToken(); bearer = f.session.access_token;
+    guard();
+    assertNativeSharedWrite(method,query,body);
     return raw('/rest/v1/' + query, method, body, headers, bearer);
   }
 }
@@ -153,12 +165,16 @@ function validStoragePath(path){
     /^[a-f0-9-]{36}\.(pdf|jpg|png|webp)$/i.test(sections[1]);
 }
 async function storageFetch(method,path,file){
+  const guard=transportScopeGuard();
   assertNativeSharedWrite(method,'storage');
   if(!validStoragePath(path))throw Error('Fichier hors du foyer');
   if(method==='POST' && (!file || !['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)
       || file.size>10485760 || file.size<=0))throw Error('PDF ou image de 10 Mo maximum');
   const send=async()=>{
     const jwt=await token();
+    guard();
+    assertNativeSharedWrite(method,'storage');
+    if(!validStoragePath(path))throw Error('Fichier hors du foyer');
     const target=method==='GET'?'authenticated/'+SHARED_BUCKET+'/'+path:
       method==='DELETE'?SHARED_BUCKET:SHARED_BUCKET+'/'+path;
     const headers={apikey:f.key,Authorization:'Bearer '+jwt};
@@ -175,6 +191,8 @@ async function storageFetch(method,path,file){
   };
   try{return await send()}catch(e){
     if(e.status!==401)throw e;
+    guard();
+    assertNativeSharedWrite(method,'storage');
     await refreshToken();return send();
   }
 }
