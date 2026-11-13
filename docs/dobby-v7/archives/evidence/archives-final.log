@@ -1,12 +1,12 @@
-✔ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (17.089086ms)
-✔ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (9.396687ms)
-✔ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (6.753912ms)
-✔ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (5.971552ms)
-✔ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (11.013316ms)
-✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (19.599609ms)
-✔ stale row/context, denied child, missing source and failed local save cannot report success (12.479725ms)
-✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (4.007224ms)
-✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (3.332955ms)
+✔ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (28.569085ms)
+✔ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (16.69016ms)
+✔ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (9.619707ms)
+✔ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (8.302706ms)
+✔ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (12.946909ms)
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (55.39789ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (14.075168ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (4.28439ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (3.134832ms)
 ℹ tests 9
 ℹ suites 0
 ℹ pass 9
@@ -14,7 +14,7 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1661.342376
+ℹ duration_ms 1877.668489
 ARCHIVES_UI_PASS 320
 ARCHIVES_UI_PASS 390
 ARCHIVES_UI_PASS 768

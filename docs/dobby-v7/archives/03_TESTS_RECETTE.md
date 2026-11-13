@@ -53,7 +53,7 @@ Recette technique locale du 13 novembre 2026. PASS désigne uniquement les tests
 | REGRESSION | R01 | Le module Contrats E08 reste fonctionnel : formulaire, renon et pièces. | PASS | evidence/contracts-regression.log (campagne Contrats complète) |
 | REGRESSION | R02 | Import IA ZIP/JSON de contrats reste accessible depuis Contrats. | PASS | contracts-import-ui.cjs ; evidence/contracts-regression.log |
 | REGRESSION | R03 | Les opérations de sauvegarde restent accessibles dans Menu → Paramètres. | PASS | archives-ui.cjs ; archives-sources.cjs (Menu/Paramètres/backup) ; register-tools.cjs |
-| REGRESSION | R04 | La synchronisation familiale existante reste opérationnelle sur fixtures. | PASS | evidence/native-suite.log (486/486), sync-green.log et documents-sync.log (fixtures) |
+| REGRESSION | R04 | La synchronisation familiale existante reste opérationnelle sur fixtures. | PASS | evidence/native-suite.log (496/496), sync-green.log et documents-sync.log (fixtures) |
 | REGRESSION | R05 | L’ajout/la modification d’équipement restent possibles. | PASS | register-house.cjs et register-preservation.cjs ; evidence/register-regressions.log |
 | REGRESSION | R06 | L’utilisation des recettes et la liste de courses restent intactes. | PASS | archives-review.cjs planned/selection ; evidence/cuisine-models.log ; grocery-isolated.log |
 | REGRESSION | R07 | La navigation entre Archives, détail source et retour fonctionne. | PASS | archives-ui.cjs et register-navigation.cjs ; evidence/register-regressions.log |

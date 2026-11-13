@@ -2,11 +2,11 @@
 
 - PR en brouillon : https://github.com/PortenartCo/dobby-demo/pull/17
 - Base main : `25dd637c1b827bd09a46d8a55be63d9c14966f19` (toujours courante au contrôle avant push).
-- Commit fonctionnel et preuves : `39305c1b2afdfc03351ee4825e36ef9016c673d7`.
-- Les commits suivants complètent la documentation de livraison et la configuration CI ; le code vérifié reste identique à ce commit fonctionnel.
+- Commit initial Archives : `39305c1b2afdfc03351ee4825e36ef9016c673d7` ; intégration des correctifs déjà fusionnés de main #15 : `8b41f372104d5a4100b31d7cd750013d4417aa51`.
+- La mise à jour vers main `2584a89` conserve les correctifs Archives et les nouveaux correctifs de démarrage familial. Les suites ont été rejouées sur cette composition.
 - Bilan : **55 PASS, R09 BLOCKED**. Aucun statut de recette réelle A/B n'est revendiqué.
 
-La campagne locale Archives, les 486 tests natifs, les 66 tests de modèles/build et la campagne Contrats (51 tests natifs plus navigateur) passent. Les PDF originaux/avenants ont été consultés depuis l'archive et comparés octet pour octet. Une restauration native complète a été exécutée dans un profil TEST ; les anciennes sauvegardes partielles préservent aussi le statut.
+La campagne locale Archives, les 496 tests natifs, les 66 tests de modèles/build et la campagne Contrats (51 tests natifs plus navigateur) passent. Les PDF originaux/avenants ont été consultés depuis l'archive et comparés octet pour octet. Une restauration native complète a été exécutée dans un profil TEST ; les anciennes sauvegardes partielles préservent aussi le statut.
 
 L'exhaustif historique échoue sur l'attente E08 périmée détaillée dans AUDIT.md ; le même échec est reproduit avec main intact. La CI PR est lancée sur le SHA livré et son état doit être lu dans les checks GitHub. Les premiers runs du commit fonctionnel sont `43426788104` (Stitch) et `43426788072` (Sync) ; ils ne valent pas résultat d'un éventuel commit documentaire suivant.
 

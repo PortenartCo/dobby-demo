@@ -33,7 +33,7 @@ Commandes exécutées depuis la racine du dépôt :
 
 | Commande | Résultat observé |
 |---|---|
-| `node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs` avec `DOBBY_TEST_ORIGIN=http://127.0.0.1:8765` | 486/486 ; native-suite.log |
+| `node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs` avec `DOBBY_TEST_ORIGIN=http://127.0.0.1:8765` | 496/496 ; native-suite.log |
 | `node essai-stitch-v7/tests/archives-ci.cjs` | 9 tests writer/sync, 4 largeurs UI, parcours sources/PDF/backup et régressions de revue ; archives-final.log |
 | `node essai-stitch-v7/tests/archives-sources.cjs` | Conservation d'une mise à jour du contrat archivé, originaux/avenants, sauvegarde partielle ancienne et restauration complète ; sources-final.log |
 | `node essai-stitch-v7/tests/contracts-ci.cjs` | Campagne E08, import externe ZIP/JSON, pièces et refus Enfant ; contracts-regression.log |
@@ -63,6 +63,8 @@ La PR Maison #16 reste indépendante : aucun cherry-pick ni remplacement de ses 
 ## Captures et niveaux de preuve
 
 Images avant : `evidence/before-{320,390,768,1440}.png`. Après : `empty-*`, `list-*`, `detail-*`, `confirm-*`, `reactivate-*`. `archived-contract-pdf-390.png` montre la consultation du PDF depuis le vrai contrat archivé. Les quatre largeurs ont été automatisées ; une inspection visuelle a couvert hero, recherche, liste, dialogue mobile et PDF. Le SHA256 du visuel est fixé dans `essai-stitch-v7/assets/archives/provenance.json` et correspond octet pour octet au fichier fourni.
+
+Main a avancé pendant la vérification : #15 a été fusionnée dans `2584a8955bac1358d08a8f59070179aa5d624071`. La branche de travail a reçu cette mise à jour sans conflit au commit `8b41f372104d5a4100b31d7cd750013d4417aa51` ; les sources Archives ont été conservées. Les 496 tests natifs, Archives, Contrats et Courses ont été rejoués après cette mise à jour. Les huit campagnes Stitch19/20 et les scripts socle familial/Missions passent aussi dans le diagnostic local.
 
 Développement et tests locaux : réalisés. PR : #17 créée en brouillon ; un job Archives indépendant exécute la recette même si une campagne historique échoue. CI et reçu dans DELIVERY.md. Fusion, publication, SQL distant, activation de gates : non effectués. Recette réelle des deux comptes familiaux : différée, conformément à la demande.
 
