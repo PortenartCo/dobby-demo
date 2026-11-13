@@ -58,10 +58,12 @@ Recette technique locale du 13 novembre 2026. PASS désigne uniquement les tests
 | REGRESSION | R06 | L’utilisation des recettes et la liste de courses restent intactes. | PASS | archives-review.cjs planned/selection ; evidence/cuisine-models.log ; grocery-isolated.log |
 | REGRESSION | R07 | La navigation entre Archives, détail source et retour fonctionne. | PASS | archives-ui.cjs et register-navigation.cjs ; evidence/register-regressions.log |
 | REGRESSION | R08 | Les gardes Parents/Enfants ne sont pas affaiblis. | PASS | archives-writer.test.cjs ; contrats-permissions ; evidence/native-suite-main16.log |
-| REGRESSION | R09 | La suite ciblée et la CI finale passent au SHA livré. | BLOCKED | suite Archives et native vertes ; historique exhaustif échoue sur ancien libellé E08, reproduit sur main : evidence/full-browser-suite.log et baseline-historical.log ; CI finale à constater ; main16 exhaustive Missions reproduit sur main figé : full-browser-main16.log / baseline-main16-e01.log |
+| REGRESSION | R09 | La suite ciblée et la CI finale passent au SHA livré. | PASS | CI complète du code a0d5954 : run 43437263496 (Archives, source-backed-browser, SQL isolé) et Sync 43437263486 ; evidence/ci-code-a0d5954.json ; checks du SHA final documentaire dans PR #17 |
 | REGRESSION | R10 | La PR et les captures avant/après sont produites sans fusion/déploiement abusif. | PASS | PR https://github.com/PortenartCo/dobby-demo/pull/17 en brouillon ; evidence/before-* et empty/list/confirm/reactivate-* ; aucun déploiement |
 
-**Total : 55 PASS, 1 BLOCKED (R09 : CI globale, échec historique documenté).**
+**Total : 56 PASS sur la recette technique ciblée (fixtures et CI).**
+
+La campagne exhaustive historique conserve une réserve séparée sur une ancienne attente du formulaire Missions, reproduite sur main a4190bb figé (full-browser-main16.log et baseline-main16-e01.log). Aucun succès exhaustif ni recette réelle A/B n’est revendiqué. Les checks de PR #17 font foi pour le SHA final, y compris la clôture documentaire après la CI du code.
 
 ## Exigences de preuves
 

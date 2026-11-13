@@ -1,19 +1,19 @@
 # Reçu de livraison — Archives & Scriptorium
 
 - PR en brouillon : https://github.com/PortenartCo/dobby-demo/pull/17
-- Base main : `25dd637c1b827bd09a46d8a55be63d9c14966f19` (base de départ).
-- Commit initial Archives : `39305c1b2afdfc03351ee4825e36ef9016c673d7` ; intégration des correctifs déjà fusionnés de main #15 : `8b41f372104d5a4100b31d7cd750013d4417aa51`.
-- La mise à jour vers main `2584a89` conserve les correctifs Archives et les nouveaux correctifs de démarrage familial. Les suites ont été rejouées sur cette composition.
-- Bilan : **55 PASS, R09 BLOCKED**. Aucun statut de recette réelle A/B n'est revendiqué.
+- Branche : `feat/dobby-v7-archives-stitch22-20261113`.
+- Départ sur main `25dd637`, puis intégration de PR15 et du dernier main `a4190bb3b1b2fd95995e33dbce09ffb31c77614c` (PR16 Maison).
+- Commit de code validé : `a0d59549d8ac1fd66d3b42898ebd47d047f119c8`. La clôture suivante ne modifie que ce rapport, le bilan, l'inventaire et les preuves documentaires.
+- Bilan technique ciblé : **56 PASS**. Aucun statut de recette réelle A/B n'est revendiqué.
 
-La campagne locale Archives, les 525 tests natifs, les 66 tests de modèles/build et la campagne Contrats (51 tests natifs plus navigateur) passent. Les PDF originaux/avenants ont été consultés depuis l'archive et comparés octet pour octet. Une restauration native complète a été exécutée dans un profil TEST ; les anciennes sauvegardes partielles préservent aussi le statut.
+La CI complète du code est verte : run 43437263496, jobs Archives, source-backed-browser et SQL isolé ; Sync 43437263486. Snapshot dans evidence/ci-code-a0d5954.json. Les checks de PR #17 font foi pour le SHA final de livraison, y compris après clôture documentaire.
 
-L’exhaustif historique final échoue sur une attente Missions préexistante, reproduite sur main a4190bb figé et détaillée dans AUDIT.md. La CI PR finale est lancée après intégration de main a4190bb (Maison #16) et son état doit être lu dans les checks GitHub. Les premiers runs du commit fonctionnel sont `43426788104` (Stitch) et `43426788072` (Sync) ; ils ne valent pas résultat d'un éventuel commit documentaire suivant.
+La campagne Archives, les 525 tests natifs, les 66 tests de modèles/build, la campagne Contrats et la campagne Maison complète passent. Les PDF originaux/avenants et les pièces Maison ont été consultés et comparés octet pour octet. La restauration native complète a été exécutée dans des profils TEST. Les imports partiels anciens préservent le statut et refusent une réactivation implicite.
 
-Reproduction locale : serveur statique à la racine, variable `DOBBY_TEST_ORIGIN=http://127.0.0.1:8765`, puis `node essai-stitch-v7/tests/archives-ci.cjs`. Build reproductible post-commit : `node essai-stitch-v7/build-source.cjs`, `npm run build:css --prefix essai-stitch-v7`, puis diff nul sur les racines générées/templates/CSS.
+L'exhaustif historique final échoue sur une attente Missions préexistante, reproduite sur main a4190bb figé et détaillée dans AUDIT.md. Cette réserve reste séparée des 56 critères ciblés et de la CI réussie ; aucun succès de cette campagne exhaustive n'est revendiqué.
 
-Les fichiers exacts du lot sont dans MODIFIED_FILES.txt. Les sources du pack restent sous spec/ ; le bilan exécuté se trouve dans 03_TESTS_RECETTE.md. La revue indépendante et les régressions causales sont dans REVIEW.md.
+Reproduction locale : serveur statique à la racine, variable `DOBBY_TEST_ORIGIN=http://127.0.0.1:8765`, puis `CHROMIUM_PATH=/usr/bin/chromium node essai-stitch-v7/tests/archives-ci.cjs`. Build réel reproductible : `node essai-stitch-v7/build-source.cjs`, `npm run build:css --prefix essai-stitch-v7`, puis diff nul.
 
-Aucune fusion, publication de site, exécution SQL distante ni activation de gate. La recette des deux comptes familiaux reste groupée en fin de projet. Le checkout et la branche sont conservés pour la suite de la revue.
+Les fichiers exacts du lot sont dans MODIFIED_FILES.txt. Les sources du pack restent sous spec/ ; les 56 résultats figurent dans 03_TESTS_RECETTE.md. Les revues indépendantes, corrections et retests sont dans REVIEW.md. Les preuves finales de composition portent le suffixe main16 ; les précédentes sont conservées comme étapes historiques.
 
-Le checkpoint final de composition intègre Maison #16. Les preuves finales portent le suffixe main16 ; les preuves précédentes sont conservées comme étapes historiques. Voir AUDIT.md et REVIEW.md pour les corrections de composition et la distinction entre le ciblé et l’exhaustif historique.
+Aucune fusion, publication, exécution SQL distante ni activation de gate. La recette des deux comptes familiaux reste groupée en fin de projet. Le checkout et la branche sont conservés pour revue. Retour arrière : retrait/revert du lot ; aucun binaire déplacé.
