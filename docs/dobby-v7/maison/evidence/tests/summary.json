@@ -1,0 +1,29 @@
+{
+  "nativeAndSync": {
+    "passed": 440,
+    "failed": 0,
+    "command": "DOBBY_TEST_ORIGIN=http://127.0.0.1:8765 node --test essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v5-famille/tests/*.test.cjs essai-stitch-v5-famille/tests/*.test.mjs",
+    "log": "native.log"
+  },
+  "maisonFocused": {
+    "passed": 45,
+    "failed": 0,
+    "log": "focused.log",
+    "overlapsNative": true
+  },
+  "browserWidths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "reviewCausalCases": 6,
+  "documentsFunctionalCases": 26,
+  "nativeFullBackupBinaryCount": 4,
+  "realPDFRendererVerified": true,
+  "contractsCurrentAcceptance": "PASS",
+  "liveBackendVerified": false,
+  "remoteSupabaseAccess": false,
+  "historicalCampaign": "NOT_GREEN; eight initial failures reproduced on pristine main, further campaign output reported separately"
+}

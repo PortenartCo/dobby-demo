@@ -1,0 +1,841 @@
+{
+  "format": "dobby-maison-75-controls",
+  "date": "2026-11-13",
+  "initialMain": "54d74b9448a1c518d8a3c483cd4deaea1e493748",
+  "publishedSha": null,
+  "verificationUrl": "https://portenartco.github.io/dobby-demo/essai-stitch-v7/famille.html#house",
+  "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/16",
+  "remoteSupabaseAccess": false,
+  "remoteSupabaseMutations": false,
+  "counts": {
+    "PARTIEL": 73,
+    "BLOQUÉ_RECETTE_RÉELLE": 2
+  },
+  "controls": [
+    {
+      "id": "H01",
+      "criterion": "Image Stitch 21 remplace réellement le salon/horloge ; aucune image inventée.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "PNG fourni conservé octet par octet : SHA256 62ab48181717691560959080eac971233b6e2a2006e313b2201ec46183052bf2."
+    },
+    {
+      "id": "H02",
+      "criterion": "Cadrage image testé 320/390/768/1024/1440 : Dobby, buste et outils visibles.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Captures house-320/390/768/1024/1440.png ; image entière, tête, buste, clé et engrenages visibles."
+    },
+    {
+      "id": "H03",
+      "criterion": "Badge « FOURNEAUX & CONDUITS » supprimé ; module reste généraliste.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H04",
+      "criterion": "Bouton « + Ajouter un équipement » large, correctement centré et réactif.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H05",
+      "criterion": "Une seule recherche locale « Rechercher un équipement… », effacement et zéro résultat.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H06",
+      "criterion": "Filtres Tous / À surveiller / Garanties, filtres de pièce, variations superflues supprimés.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H07",
+      "criterion": "Boutons globaux Historique d’entretien et Export/Sauvegarde locale supprimés de la page Maison.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H08",
+      "criterion": "Conseil d’entretien Dobby vide/fictif et cartouche bouclier décoratif supprimés.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H09",
+      "criterion": "Encadrés Enregistrement et sauvegardes et initialisation du foyer supprimés de la vue Maison.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "H10",
+      "criterion": "Liste de vrais équipements ; Consulter/Modifier sur le bon ID, pas de fausse donnée.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Profils de recette fictifs isolés ; aucun exemple injecté chez un utilisateur."
+    },
+    {
+      "id": "H11",
+      "criterion": "Header/dock globaux restent visibles et opérationnels, sans régression UX.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-390.png",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/house-1440.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F01",
+      "criterion": "Création via Ajouter ouvre formulaire vierge, jamais équipement Poêle de test.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F02",
+      "criterion": "Titre exact « Ajout d’un équipement au Logis » en création.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F03",
+      "criterion": "Sélecteur Nouvel ajout/Édition (Poêle) supprimé.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F04",
+      "criterion": "Modification depuis carte ou fiche existante ouvre le bon équipement prérempli.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F05",
+      "criterion": "Titre de modification explicite ; navigation retour/annuler correcte.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F06",
+      "criterion": "Sanctuaire domestique privé, icône décorative et bouclier/tirets supprimés.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F07",
+      "criterion": "Emplacement est une vraie liste des endroits existants.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F08",
+      "criterion": "Action + Nouvel emplacement, sauvegarde et réutilisation sans doublons.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F09",
+      "criterion": "N° de série / Réf. constructeur facultatif saisissable, non « NON DISPONIBLE ».",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F10",
+      "criterion": "N° de série et champs ajoutés persistants (reload/édition, sync quand autorisée).",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Série et programmes conservés en édition/reload local et transport de métadonnées en fixture. Synchronisation réelle des nouveaux champs à deux comptes non établie ; avertissement explicite dans la fiche."
+    },
+    {
+      "id": "F11",
+      "criterion": "Création/modification préservent ID, marques, modèles, garantie, notes, champs historiques.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Édition réelle d’une ancienne fiche : ID, dates historiques, catégorie inconnue et objet opaque conservés."
+    },
+    {
+      "id": "F12",
+      "criterion": "Bouton « Rayer définitivement » absent en création ; suppression existante sécurisée depuis détail.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Confirmation et décompte ; suppression refusée tant qu’un contrat référence l’ID."
+    },
+    {
+      "id": "F13",
+      "criterion": "Alerte de ramonage fictive absente du formulaire.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "F14",
+      "criterion": "Blocs de sauvegarde et texte Membres et agenda supprimés du formulaire.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/preservation.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/create-320.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M01",
+      "criterion": "Un équipement accepte zéro, un, deux ou plus de types de maintenance indépendants.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M02",
+      "criterion": "Ajouter/éditer/retirer un type avec ID stable, nom et garde de conservation.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M03",
+      "criterion": "Exemple chaudière : ramonage 12 mois ET entretien 36 mois, sans double création équipement.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M04",
+      "criterion": "Dernière date connue propre à chaque type, distincte d’un événement historique.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Dates déclarées séparées du journal ; latest performed log du seul plan."
+    },
+    {
+      "id": "M05",
+      "criterion": "Fréquence paramétrable nombre positif mois/années ; widget ancien ramonage supprimé.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M06",
+      "criterion": "Prochaine échéance calculée d’après date et fréquence avec calendrier exact.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M07",
+      "criterion": "Dates de fin de mois et années bissextiles vérifiées.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "31 janvier +1 mois => 28/29 février ; 29 février +12/36 mois =>28 février ; pas d’addition de jours fixes."
+    },
+    {
+      "id": "M08",
+      "criterion": "Date prochaine explicite dérogatoire possible avec motif/source.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M09",
+      "criterion": "Aucune date inventée si aucune dernière date ou échéance explicite.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M10",
+      "criterion": "Historique rattaché à un équipement et au bon type (date, texte, prestataire, montant, note).",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M11",
+      "criterion": "Intervention réalisée sur A actualise A et non le programme B.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "M12",
+      "criterion": "Modifier/supprimer intervention avec confirmation et recalcul ciblé.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Régression causale : modification conservée sur le même log après ajout d’une facture ; aucun doublon."
+    },
+    {
+      "id": "M13",
+      "criterion": "Une date déclarée dans le formulaire ne fabrique pas une intervention.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Création de deux programmes datés sans événement historique supplémentaire."
+    },
+    {
+      "id": "M14",
+      "criterion": "Justificatifs et pièces conservés/associables à des interventions.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "PDF/image liés au programme et à l’intervention ; retrait d’un programme conserve les justificatifs et l’historique antérieur."
+    },
+    {
+      "id": "M15",
+      "criterion": "Alertes uniquement fondées sur données ; aucun rappel fictif ou obligation légale inventée.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Échéances affichées uniquement d’après les dates enregistrées ; aucun rappel système ou règle juridique inventé."
+    },
+    {
+      "id": "M16",
+      "criterion": "Anciennes données d’entretien lisibles et éditables sans perte, même sans type historique.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/house-model.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "D01",
+      "criterion": "Documents houseDocs existants et blobs conservés après migration/édition.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "Quatre binaires réels de test comparés octet par octet après export complet et restauration dans un profil neuf."
+    },
+    {
+      "id": "D02",
+      "criterion": "Ajouter et associer plusieurs documents à un équipement, avec types précis.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "D03",
+      "criterion": "Consultation PDF/image existante réelle, téléchargement quand possible.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "PDF effectivement rendu par Chromium, loadProgress=100, image décodée, téléchargement identique."
+    },
+    {
+      "id": "D04",
+      "criterion": "Notes/manuel/facture/attestation liés sans remplacement silencieux.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "D05",
+      "criterion": "Statut local vs partagé exact ; ne pas feindre un stockage cloud absent.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "Pièces locales clairement indiquées ; partage des PDF au foyer non installé/validé et non annoncé."
+    },
+    {
+      "id": "D06",
+      "criterion": "Association stable vers Contrats PR13, sans deuxième base de contrats.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "Association familyDocs[].contract.equipmentIds, renvoi vers le même contrat natif."
+    },
+    {
+      "id": "D07",
+      "criterion": "Un contrat pouvant viser plusieurs appareils conserve ses liens.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-documents-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-acceptance.json",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/documents-pdf-rendered-390.png"
+      ],
+      "note": "Ajout d’un appareil conserve l’autre ID déjà associé ; aucune seconde base Contrats."
+    },
+    {
+      "id": "A01",
+      "criterion": "Deux parcours distincts : ajout manuel et Importer des équipements avec mon IA.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A02",
+      "criterion": "Prompt externe copiable, cohérent avec le schéma réellement pris en charge.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A03",
+      "criterion": "Prompt demande plusieurs pièces progressivement et attend « J’ai terminé ».",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A04",
+      "criterion": "Prompt recherche documentations officielles du modèle EXACT si l’IA en est capable.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Recherche effectuée seulement par l’IA externe si ses outils le permettent ; priorité fabricant, modèle exact et incertitudes explicites."
+    },
+    {
+      "id": "A05",
+      "criterion": "Source URL/page et incertitudes par modèle/plan ; aucun document ni fréquence inventés.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Sources, pages, URLs et versions originales/revues conservées. Collisions de source.id remappées avec références cohérentes."
+    },
+    {
+      "id": "A06",
+      "criterion": "Livrable ZIP réellement lisible avec equipments.json + docs, fallback JSON.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A07",
+      "criterion": "Lecteur accepte dobby-equipment v1 et refuse autres formats trompeurs.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A08",
+      "criterion": "Validation de type, tailles, dates, nombre de fichiers, MIME réel et contenu.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "JSON2Mio, ZIP40Mio, total80Mio, fichier10Mio,200 entrées, ratio100:1 ; dates réelles, signatures et dimensions bornées."
+    },
+    {
+      "id": "A09",
+      "criterion": "Refus des chemins ZIP dangereux, doublons, bombes et archives corrompues.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Tests de traversal, noms alternatifs/BOM, symlink, doublons, CRC, en-têtes incohérents, archive tronquée et expansion excessive."
+    },
+    {
+      "id": "A10",
+      "criterion": "Aperçu éditable avant toute mutation, informations absentes clairement affichées.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A11",
+      "criterion": "Ajout/ignorer/mettre à jour avec résolution prudente des doublons.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A12",
+      "criterion": "Import préserve historiques, IDs, documents, inconnus et plans existants.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Fusion additive et atomique native ; importKey externe distinct de l’ID ; aucun effacement des anciens programmes/pièces/logs."
+    },
+    {
+      "id": "A13",
+      "criterion": "Plusieurs calendriers d’entretien importés indépendamment.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Parcours ou tests du critère effectués sur données de recette isolées, sans mutation distante."
+    },
+    {
+      "id": "A14",
+      "criterion": "Aucun appel IA, collecte externe ou envoi automatique de facture depuis DOBBY.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Aucun appel fournisseur IA ni téléchargement de notice depuis DOBBY ; liens ouverts seulement volontairement."
+    },
+    {
+      "id": "A15",
+      "criterion": "Annulation/erreur de parse/scope changé n’altère aucune fiche persistante.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/equipment-import.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v7/tests/maison-import-ui.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/import-preview-390.png"
+      ],
+      "note": "Annulation, lecture lente, changement de sélection/navigation/foyer/révision et erreur de quota testés sans écriture partielle."
+    },
+    {
+      "id": "S01",
+      "criterion": "Respect writer natif maison ; aucun deuxième moteur parallèle.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-sync.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log"
+      ],
+      "note": "Même st et save(), magasin IndexedDB natif ; restauration partielle désormais additive via ce writer."
+    },
+    {
+      "id": "S02",
+      "criterion": "Métadonnées maison et entretiens cohérentes dans synchro familiale existante.",
+      "status": "BLOQUÉ_RECETTE_RÉELLE",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-sync.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log"
+      ],
+      "note": "Fixtures de module houseVersion:1 passantes, anciens snapshots protégés. Aucun accès au serveur ; preuve opérationnelle à deux comptes manquante."
+    },
+    {
+      "id": "S03",
+      "criterion": "Permissions réelles Parent/Enfant et inter-foyer conservées ; gates non contournés.",
+      "status": "BLOQUÉ_RECETTE_RÉELLE",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-sync.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log"
+      ],
+      "note": "Refus natifs simulés enfant/cached/unverified et après changements de contexte ; gates Parent/Enfant/V3 conservés. Recette Auth/RLS réelle non certifiée."
+    },
+    {
+      "id": "S04",
+      "criterion": "Aucune migration Supabase ancienne rejouée, aucun accès/écriture distant Codex.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-sync.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log"
+      ],
+      "note": "Aucun outil SQL, migration, Storage ou opération distante sur un projet Supabase utilisé. Documentation publique seule consultée ; aucun fichier SQL modifié."
+    },
+    {
+      "id": "S05",
+      "criterion": "Si changement serveur, SQL manuel avec preflight/apply/verify/rollback et gate fermé.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-sync.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log"
+      ],
+      "note": "Aucun nouveau changement serveur nécessaire selon le contrat JSON versionné. Aucun script SQL à appliquer ; ne rejouer aucune ancienne migration. Gates du socle inchangés."
+    },
+    {
+      "id": "S06",
+      "criterion": "Sauvegarde/restauration natives toujours disponibles par Menu > Paramètres.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-writer.test.cjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/essai-stitch-v5-famille/tests/house-sync.test.mjs",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log"
+      ],
+      "note": "Menu→Paramètres→Sauvegarde, export/restauration complets et fusion partielle testés ; rejet lors d’un changement de foyer pendant lecture."
+    },
+    {
+      "id": "P01",
+      "criterion": "Branche et worktree isolés ; dernier main et PR11/12/13 correctement rapprochés.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/acceptance.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
+      ],
+      "note": "Base54d74b9 ; branche et worktree indépendants. #12/#13 fusionnées et conservées ; #11 brouillon conflictuel, intact."
+    },
+    {
+      "id": "P02",
+      "criterion": "Tests natifs ciblés et tests causaux nouvelles fonctions avec vrais DOM/IndexedDB.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/acceptance.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
+      ],
+      "note": "45 tests Maison et440 tests natifs/sync ; vrai DOM et IndexedDB, six régressions de revue RED→GREEN."
+    },
+    {
+      "id": "P03",
+      "criterion": "Captures 320/390/768/1024/1440, header/dock, scroll, claviers.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/acceptance.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
+      ],
+      "note": "Cinq largeurs, clavier Entrée/focus, scroll, header et dock six destinations ; pas de débordement horizontal."
+    },
+    {
+      "id": "P04",
+      "criterion": "Non-régression Contrats et import dobby-contracts, Recettes, Famille, sync, Menu.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/acceptance.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
+      ],
+      "note": "Contrats/import natif, Recettes/Courses, Famille, Missions et Menu : recettes actuelles passantes. Campagne historique supplémentaire comporte des assertions obsolètes reproduites sur main intact ; elle n’est pas déclarée verte (voir rapport de régression)."
+    },
+    {
+      "id": "P05",
+      "criterion": "CI, merge, publication et SHA hébergé vérifiés si gate de fusion satisfait.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/pull/16/checks",
+        "https://github.com/PortenartCo/dobby-demo/pull/16",
+        "https://portenartco.github.io/dobby-demo/"
+      ],
+      "note": "Fusion et publication non encore effectuées dans ce relevé prépublication."
+    },
+    {
+      "id": "P06",
+      "criterion": "Rapport par ID : statut honnête, preuve et actions manuelles restantes.",
+      "status": "PARTIEL",
+      "evidence": [
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/acceptance.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/evidence/tests/native.log",
+        "https://github.com/PortenartCo/dobby-demo/blob/feat/dobby-v7-maison-equipements-20261113/docs/dobby-v7/maison/AUDIT.md"
+      ],
+      "note": "75 IDs énumérés sans omission ; bilan final et reçu du SHA servi dans la PR16 après publication."
+    }
+  ]
+}
