@@ -81,7 +81,14 @@ async function shoppingSettings(page,copy=false){if(copy){await page.waitForFunc
     const call=(method,...args)=>page.evaluate(({method,args})=>DobbyCuisineList[method](DobbyCuisineEngine,...args),{method,args});
     const proposal=await call('preview');assert.equal(proposal.rows.length,1);assert.equal(proposal.rows[0].qty,300);assert.equal(proposal.rows[0].toBuyQty,500);await call('confirmImport',proposal);
     await page.waitForFunction(()=>DobbyCuisineEngine.win().DobbyFamilyUI.grocery.read().items.every(x=>x.syncState==='clean'));let item=(await call('snapshot')).items.find(x=>x.name==='TEST — Carottes');assert.equal(item.qty,500);await page.reload();await page.waitForFunction(()=>DobbyCuisine?.ready);await shoppingSettings(page);await page.locator('[data-shopping-setting=sync]').click();await page.waitForFunction(()=>DobbyCuisineEngine.win().DobbyFamilyUI.getContext()?.identityVerified===true);await assertCanonicalGroceryIdentity(page,canonical.context('A'));await page.waitForFunction(()=>DobbyCuisineEngine.win().DobbyFamilyUI.grocery.read().items.every(x=>x.syncState==='clean'));assert.equal((await call('preview')).rows.length,0,'Recipe receipts remain idempotent after remote normalization/reload');
-    item=(await call('snapshot')).items.find(x=>x.name==='TEST — Carottes');await call('home',item.id,150);assert.equal((await call('snapshot')).items.find(x=>x.id===item.id).qty,350);await call('home',item.id,500);assert.equal((await call('snapshot')).items.find(x=>x.id===item.id).done,false);await call('home',item.id,0);
+    // home() confirms the local IDB edit, then starts the HTTP sync in the
+    // background. Wait for its acknowledgement before the next independent
+    // scenario, so that acknowledgement cannot stale the next summary's CAS.
+    const settleHome=()=>page.waitForFunction(()=>{const api=DobbyCuisineEngine.win().DobbyFamilyUI,read=api.grocery.read();return !api.connectionState().verifying&&!read.error&&/à jour/.test(read.status)&&read.items.length>0&&read.items.every(x=>x.syncState==='clean');});
+    item=(await call('snapshot')).items.find(x=>x.name==='TEST — Carottes');await settleHome();
+    await call('home',item.id,150);assert.equal((await call('snapshot')).items.find(x=>x.id===item.id).qty,350);await settleHome();
+    await call('home',item.id,500);assert.equal((await call('snapshot')).items.find(x=>x.id===item.id).done,false);await settleHome();
+    await call('home',item.id,0);assert.equal((await call('snapshot')).items.find(x=>x.id===item.id).qty,500);await settleHome();
     assert.ok(writes.some(x=>x.method==='POST')&&writes.some(x=>x.method==='PATCH'));assert.ok(writes.every(x=>x.method!=='POST'||x.body.household_id===hh));
     console.log('CUISINE_FAMILY_PASS '+width+'px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)');
     await context.close();
