@@ -1,0 +1,26 @@
+name: DOBBY manual HTTP probes (local mocks)
+on:
+  push:
+    paths:
+      - 'docs/dobby-v7/finalisation-socle/recettes-http/**'
+      - '.github/workflows/dobby-manual-http-probes.yml'
+  pull_request:
+    paths:
+      - 'docs/dobby-v7/finalisation-socle/recettes-http/**'
+      - '.github/workflows/dobby-manual-http-probes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  local-mocks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify manual probes without live services
+        run: node --test docs/dobby-v7/finalisation-socle/recettes-http/*.test.cjs

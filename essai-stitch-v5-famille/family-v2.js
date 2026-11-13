@@ -930,12 +930,12 @@ async function boot() {
     f.db = await openDb(DB_NAME, 1, true);
     f.key = await loadPublicKey();
     f.session = await meta('session');
+    // Access initialization observes ready. Restore the cached household first,
+    // so its first authenticated request starts with the final native context.
+    if (f.session) await restoreCachedHousehold();
     f.ready = true;
-    if (f.session) {
-      await restoreCachedHousehold();
-      repaint();
-      void sync();
-    } else repaint();
+    repaint();
+    if (f.session) void sync();
   } catch (e) { showMessage('Initialisation familiale impossible : ' + fail(e)); }
 }
 window.addEventListener('online', () => void sync());

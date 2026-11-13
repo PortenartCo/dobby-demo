@@ -13,7 +13,7 @@ const DEFINITIONS = [
   { id:'contracts', title:'Documents et contrats du foyer', keys:[], pages:['documents'] }
 ];
 const byId = new Map(DEFINITIONS.map(x=>[x.id,x]));
-let ctx = null, backendReady = false, checked = false, states = {}, inFlight = false;
+let ctx = null, backendReady = false, checked = false, moduleStateRestored = false, states = {}, inFlight = false;
 let timer = null, applying = false, lastError = '', sharedAvailable = [];
 let runeCapability = null, contextGeneration = 0, missionWriteFlight = null;
 let missionIntentCore = null, runeV3Capability = null, missionV3Transport = null, missionV3Owner = '';
@@ -887,12 +887,18 @@ async function start() {
   if (!c) return;
   const next = c.userId + '|' + c.householdId;
   // Keep the success fast-path but retry when network or API checks failed.
-  if (ctx && next === ctx.userId + '|' + ctx.householdId && checked && backendReady && runeCapability?.token===liveContextToken()&&(!window.DobbyMissionIntentsReady||missionIntentCore)) return;
+  if (ctx && next === ctx.userId + '|' + ctx.householdId && checked && backendReady && moduleStateRestored && runeCapability?.token===liveContextToken()&&(!window.DobbyMissionIntentsReady||missionIntentCore)) return;
   const changed = !ctx || next !== ctx.userId + '|' + ctx.householdId;
-  if(changed){contextGeneration++;runeCapability=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';}
+  if(changed){contextGeneration++;moduleStateRestored=false;runeCapability=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';}
   ctx = c; checked = false; backendReady = false; lastError = '';
   const generation=contextGeneration, startToken=liveContextToken();
-  if (changed){const restored=await api.meta(storageKey())||{};if(generation!==contextGeneration||startToken!==liveContextToken())return;states=restored;hydratePreparationState();}
+  // A concurrent membership check can invalidate this first read after ctx was
+  // assigned. Retry hydration until a guarded read actually completed.
+  if (!moduleStateRestored){
+    const restored=await api.meta(storageKey())||{};
+    if(generation!==contextGeneration||startToken!==liveContextToken())return;
+    if(!moduleStateRestored){states=restored;hydratePreparationState();moduleStateRestored=true;}
+  }
   runes=await window.DobbyRunesReady;if(generation!==contextGeneration||startToken!==liveContextToken())return;if(!runes)throw Error('Règles de runes indisponibles');
   if(states.missions?.synced)states.missions.synced=moduleDigest('missions',JSON.parse(states.missions.synced));
   if(states.missions?.active&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}
@@ -996,7 +1002,7 @@ async function adoptVerifiedFamily(binding) {
 }
 function reset() {
   contextGeneration++;runeCapability=null;missionWriteFlight=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';
-  ctx = null; checked = false; backendReady = false; lastError = ''; states = {}; sharedAvailable = [];
+  ctx = null; checked = false; backendReady = false; moduleStateRestored = false; lastError = ''; states = {}; sharedAvailable = [];
   if (timer) { clearTimeout(timer); timer = null; }
 }
 function stateLabel(def) {
