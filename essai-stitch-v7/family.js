@@ -29,7 +29,7 @@ window.DobbyFamilyStitch=(()=>{
    const connection=api?.connectionState?.(),nativeSession=[connection?.userId,identity?.userId].some(id=>typeof id==='string'&&id.length>0);
    if(!nativeSession&&!bound?.userId&&!bound?.authenticated&&!bound?.memberId&&!bound?.profile?.memberCategory&&bound?.phase!=='active')return false;
    const canonical=bound?.authenticated===true&&bound.verified&&['userId','householdId','memberId'].every(key=>typeof bound[key]==='string'&&bound[key].length>0)&&identity?.identityVerified&&bound.userId===identity.userId&&bound.householdId===identity.householdId&&bound.memberId===identity.memberId&&bound.profile?.id===bound.memberId;
-   return !canonical||bound.profile?.memberCategory!=='parent';
+   return !canonical||bound.profile?.memberCategory!=='parent'||bound.permissions?.canEdit!==true;
   }catch{return true;}
  }
 

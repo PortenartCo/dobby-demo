@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {assertSharedWrite} from '../family-write-policy.mjs';
-const state=(category,verified=true)=>({phase:'active',authenticated:true,userId:'TEST-U',verified,householdId:'TEST-HOME',memberId:'TEST-MEMBER',profile:{id:'TEST-MEMBER',memberCategory:category}});
+const state=(category,verified=true)=>({phase:'active',authenticated:true,userId:'TEST-U',verified,householdId:'TEST-HOME',memberId:'TEST-MEMBER',profile:{id:'TEST-MEMBER',memberCategory:category},permissions:{canEdit:category==='parent',canMagic:['parent','child'].includes(category),canCreate:false}});
 test('child cannot mutate household snapshots, groceries, files or arbitrary RPCs',()=>{
  for(const query of ['dobby_v2_modules?module=eq.recipes','dobby_v2_grocery','rpc/dobby_missions_v2_write','rpc/dobby_v7_update_member','storage'])
   assert.throws(()=>assertSharedWrite({method:'POST',query,body:{},access:state('child')}),/lecture seule|serveur/);
@@ -53,4 +53,21 @@ test('reserves: setup exception cannot be borrowed by a linked or incoherent chi
  assert.doesNotThrow(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_accept_invitation',access:pending}));
  for(const patch of [{authenticated:false},{verified:true},{profile:{memberCategory:'child'}},{profile:{id:'TEST-MEMBER'}},{householdId:'TEST-HOME'},{memberId:'TEST-MEMBER'}])
   assert.throws(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_accept_invitation',access:{...pending,...patch}}),/lecture seule|vérifi|catégorie/);
+});
+
+
+test('reserves: parent role never overrides missing or negative shared-edit grants',()=>{
+ for(const permissions of [{canEdit:false},{},undefined]){
+  const access={...state('parent'),permissions};
+  for(const query of ['dobby_v2_modules?module=eq.family','dobby_v2_grocery','rpc/dobby_v7_update_member'])assert.throws(()=>assertSharedWrite({method:'POST',query,body:{},access}),/lecture seule|droits|vérifi/);
+ }
+ const allowed={...state('parent'),permissions:{canEdit:true,canCreate:false}};
+ for(const query of ['dobby_v2_modules?module=eq.family','dobby_v2_modules?module=eq.recipes','dobby_v2_grocery'])assert.doesNotThrow(()=>assertSharedWrite({method:'POST',query,body:{},access:allowed}),'canCreate for members does not block creation in other modules');
+});
+test('reserves: own magic requires explicit magic grant for child and parent independently of shared editing',()=>{
+ const body={p_member_id:'TEST-MEMBER',p_values:{magicHouseId:'ravenclaw'}};
+ for(const category of ['child','parent'])for(const permissions of [{canEdit:true,canMagic:false},{canEdit:true},{}])assert.throws(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_update_magic',body,access:{...state(category),permissions}}),/lecture seule|droits|vérifi/);
+ for(const category of ['child','parent'])assert.doesNotThrow(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_update_magic',body,access:{...state(category),permissions:{canEdit:false,canMagic:true}}}),'An explicit own-magic grant does not grant general editing');
+ for(const canManageDependents of [false,undefined])assert.throws(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_update_magic',body:{...body,p_member_id:'TEST-DEPENDENT'},access:{...state('parent'),permissions:{canEdit:true,canMagic:true,canManageDependents}}}),/lecture seule|droits|vérifi/);
+ assert.doesNotThrow(()=>assertSharedWrite({method:'POST',query:'rpc/dobby_v7_update_magic',body:{...body,p_member_id:'TEST-DEPENDENT'},access:{...state('parent'),permissions:{canEdit:true,canMagic:true,canManageDependents:true}}}));
 });

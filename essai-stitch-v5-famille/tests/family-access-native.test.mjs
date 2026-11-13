@@ -168,3 +168,22 @@ test('reserves: native role adaptation preserves context reads and authenticated
  await fixture.api.access.createHousehold('TEST New Household');await fixture.api.access.acceptInvitation('opaque-fixture-invitation');
  assert.equal(fixture.requests.filter(r=>r.path.endsWith('/dobby_v7_create_household')).length,1);assert.equal(fixture.requests.filter(r=>r.path.endsWith('/dobby_v7_accept_invitation')).length,1);
 });
+
+test('reserves: native parent write grants remain authoritative and do not depend on family member creation',async()=>{
+ for(const canEdit of [false,undefined,true]){
+  const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+  fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{...(canEdit===undefined?{}:{canEdit}),canMagic:true,canCreate:false}});
+  await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');const before=fixture.requests.length;
+  const pending=fixture.api.authorized('POST','dobby_v2_grocery',{title:'TEST New Article'});
+  if(canEdit===true){await pending;assert.equal(fixture.requests.length,before+1);}else{await assert.rejects(pending,/lecture seule|vérifi/);assert.equal(fixture.requests.length,before);}
+ }
+});
+test('reserves: native own-magic RPC requires the server magic grant rather than a parent or child label',async()=>{
+ for(const category of ['parent','child'])for(const canMagic of [false,undefined,true]){
+  const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+  fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Magic',memberCategory:category},permissions:{canEdit:category==='parent',...(canMagic===undefined?{}:{canMagic})}});
+  await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');const before=fixture.requests.length;
+  const pending=fixture.api.authorized('POST','rpc/dobby_v7_update_magic',{p_member_id:'local-person',p_values:{magicHouseId:'ravenclaw'}});
+  if(canMagic===true){await pending;assert.equal(fixture.requests.length,before+1);}else{await assert.rejects(pending,/lecture seule|vérifi/);assert.equal(fixture.requests.length,before);}
+ }
+});

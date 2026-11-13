@@ -113,9 +113,10 @@ export function assertSharedWrite({method='GET',query='',body={},access=null}={}
  const canonical=identified&&access.authenticated===true&&access.verified===true&&access.phase==='active'&&typeof access.householdId==='string'&&access.householdId.length>0&&typeof access.memberId==='string'&&access.memberId.length>0&&access.profile?.id===access.memberId;
  const setup=identified&&access.authenticated===true&&access.verified===false&&!access.memberId&&!access.householdId&&!access.profile?.id&&!category;
  if(setup&&setupRPCs[access.phase]?.has(rpc))return;
- if(category==='parent'&&canonical)return;
+ if(category==='parent'&&canonical&&access.permissions?.canEdit===true&&rpc!=='dobby_v7_update_magic')return;
  const values=body?.p_values,magicOnly=values&&typeof values==='object'&&!Array.isArray(values)&&Object.keys(values).length>0&&Object.entries(values).every(([key,value])=>ownMagicFields.has(key)&&typeof value==='string');
- if(category==='child'&&canonical&&
-    rpc==='dobby_v7_update_magic'&&body?.p_member_id===access.memberId&&magicOnly)return;
+ const own=body?.p_member_id===access?.memberId,dependent=category==='parent'&&access?.permissions?.canManageDependents===true&&typeof body?.p_member_id==='string'&&body.p_member_id.length>0;
+ if(['parent','child'].includes(category)&&canonical&&access.permissions?.canMagic===true&&
+    rpc==='dobby_v7_update_magic'&&(own||dependent)&&magicOnly)return;
  throw Error('Données partagées en lecture seule : identité et catégorie canoniques vérifiées requises. Un enfant peut uniquement confirmer sa propre Maison et son propre Patronus avec les valeurs magiques prévues.');
 }
