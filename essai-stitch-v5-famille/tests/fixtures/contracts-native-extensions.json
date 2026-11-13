@@ -1,0 +1,15 @@
+{
+  "description": "Exact contract metadata import preservation amendment; reverse before all historical native source proofs.",
+  "baseCommit": "b77cb9de100a864c8aace8fb9e07053220ccd23a",
+  "specification": "docs/dobby-v7/contracts/SPECIFICATION.md",
+  "sourcePath": "essai-stitch-v5-famille/index.html",
+  "beforeSha256": "4be86846dcb849cf990fafdfa564ce25e7415c8df7cf52dd0a24b72b828a836d",
+  "afterSha256": "1eb4d6f25a559eac0e73f0a864bb2e81daa2306b57c0360f2c5d882b9501701a",
+  "patches": [
+    {
+      "label": "preserve unknown contract metadata and existing file references on legacy metadata import",
+      "before": "docs.set(x.id,{...x,attachmentName:prior?.attachmentName||''})",
+      "after": "docs.set(x.id,window.DobbyFamilyContracts?window.DobbyFamilyContracts.mergeImported(prior,x):{...prior,...x,attachmentName:prior?.attachmentName||'',attachmentType:prior?.attachmentType||''})"
+    }
+  ]
+}

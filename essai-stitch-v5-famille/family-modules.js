@@ -19,15 +19,48 @@ let runeCapability = null, contextGeneration = 0, missionWriteFlight = null;
 let missionIntentCore = null, runeV3Capability = null, missionV3Transport = null, missionV3Owner = '';
 const esc = api.esc;
 function isSharedDocument(x) {
-  return x && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
+  return x && x.retainedLocalOnly!==true && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
 }
+// Preserve extensible JSON metadata, excluding device-only references and binary
+// values. Old peers may omit new fields; only the versioned list removes pieces.
+function contractMetadata(value,root=false){
+  if(value===null||typeof value==='string'||typeof value==='boolean')return value;
+  if(typeof value==='number')return Number.isFinite(value)?value:null;
+  if(Array.isArray(value))return value.map(item=>contractMetadata(item)).filter(item=>item!==undefined);
+  if(!value||typeof value!=='object'||Object.prototype.toString.call(value)!=='[object Object]')return undefined;
+  const out={};
+  for(const[key,item]of Object.entries(value)){
+    if(['__proto__','constructor','prototype','key','localKey','localPath','retainedLocalOnly'].includes(key)||root&&['attachmentName','attachmentType'].includes(key))continue;
+    const metadata=contractMetadata(item);if(metadata!==undefined)out[key]=metadata;
+  }
+  return out;
+}
+function mergeContractMetadata(prior,incoming){
+  const out={...(prior||{})};
+  for(const[key,value]of Object.entries(incoming||{})){
+    if(['__proto__','constructor','prototype'].includes(key))continue;
+    out[key]=value&&typeof value==='object'&&!Array.isArray(value)?mergeContractMetadata(out[key]&&typeof out[key]==='object'&&!Array.isArray(out[key])?out[key]:{},value):value;
+  }
+  return out;
+}
+function receiveContract(prior,incoming,modern){
+  const clean=contractMetadata(incoming,true),record=mergeContractMetadata(prior,clean);
+  // A complete modern family snapshot can explicitly restore a withdrawn ID.
+  // It becomes shared again while retaining this device's existing local file.
+  if(modern)delete record.retainedLocalOnly;
+  if(modern)for(const key of ['cloudPath','cloudName','cloudType','cloudSize'])if(!Object.hasOwn(clean,key))delete record[key];
+  if(Array.isArray(clean.attachments)){
+    const previous=new Map((prior?.attachments||[]).map(item=>[item.id,item])),ids=new Set(clean.attachments.map(item=>item.id));
+    record.attachments=clean.attachments.map(item=>mergeContractMetadata(previous.get(item.id),item));
+    if(!modern)record.attachments.push(...(prior?.attachments||[]).filter(item=>!ids.has(item.id)));
+  }
+  record.attachmentName=prior?.attachmentName||'';record.attachmentType=prior?.attachmentType||'';
+  return record;
+}
+function contractSynced(payload){return payload.contractsVersion===1?pick('contracts'):payload;}
 function pick(id) {
   if (id === 'contracts') {
-    const permitted = ['id','title','category','person','date','deadline','provider','reference',
-      'tags','note','sharedToHousehold','cloudPath','cloudName','cloudType','cloudSize'];
-    return {contracts:(st.familyDocs || []).filter(isSharedDocument).map(x=>{
-      const record={};for(const key of permitted)if(x[key]!==undefined)record[key]=x[key];return record;
-    })};
+    return {contractsVersion:1,contracts:(st.familyDocs || []).filter(isSharedDocument).map(x=>contractMetadata(x,true))};
   }
   const definition = byId.get(id);
   if (!definition) throw Error('Module inconnu');
@@ -101,7 +134,7 @@ function editableMissions(payload){return{autoTasks:payload.autoTasks||[],manual
 function pendingRunes(){if(runesV3Available())return v3LegacyRequestsPending()||Boolean(states.missions?.v3Pending);if(runesV2Available()){try{return outstandingRequests(st.runeCredits||[]).length>0||Boolean(states.missions?.pendingOperation);}catch{return true;}}if(!Array.isArray(st.runeCredits||[])||!Array.isArray(st.runeRequests||[]))return true;const key=c=>c?.eventId||c?.missionId,ids=new Set((st.runeCredits||[]).map(key));return(st.runeRequests||[]).some(c=>!c||!ids.has(key(c)));}
 function assertLocalRewardSharing(){assertParticipantSharing();if(runesV3Available()||runesV2Available())return;if(states.missions?.runeProtocol===2)throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');if(runes.ledgerVersion(st.runeCredits||[])===2||runes.ledgerVersion(st.runeRequests||[])===2||(st.manualMissions||[]).some(row=>row.customRunes!==undefined||row.recurrence?.rules?.some(rule=>rule.template?.customRunes!==undefined)))throw Error('Partage des compensations et récompenses personnalisées bloqué : données locales conservées, validation serveur distincte nécessaire.');}
 function initialPayload(id){const payload=pick(id);if(id==='family')return familySnapshot(payload);if(id==='missions'&&runesV2Available())return {...missionPayloadV2(payload),runeRequests:runes.normalizeRequests(st.runeRequests||[])};if(id==='missions'&&runes.ledgerVersion(st.runeRequests||[])===2)throw Error('Partage des compensations de runes bloqué : validation serveur distincte nécessaire.');return id==='missions'?{...missionPayload(payload),runeCredits:runes.acceptRequests(payload.runeCredits,st.runeRequests||[],1)}:payload;}
-function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:moduleDigest(id,id==='family'?familySnapshot(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
+function synchronized(id,revision,payload,protocol=payload){return{active:true,revision,synced:moduleDigest(id,id==='family'?familySnapshot(payload):id==='contracts'?contractSynced(payload):id==='missions'?payload:pick(id)),conflict:false,...(id==='missions'?{runeProtocol:runesV3Available()?3:runesV2Available()?2:payload.runeLedgerVersion===1}:id==='family'?{familyProtocol:protocol.familyNotesVersion===1,preparationsProtocol:protocol.familyPreparationsVersion===1}:{})};}
 function markMissionsShared(id){if(id==='missions'&&!st.runeSyncRequired){st.runeSyncRequired=true;save();}}
 function applyCredits(credits){if(runesV3Available())return applyMissionsV3({...pick('missions'),runeCredits:credits},false);assertParticipantSharing({runeCredits:credits});const before=applying;applying=true;try{st.runeCredits=runes.mergeCredits(credits,runes.mergeCredits(st.runeCredits||[],rememberedCredits()));save();render();}finally{applying=before;}}
 function verifyProtocol(state,remote){
@@ -821,6 +854,7 @@ function applyShared(id, payload) {
   try {
     if (id === 'contracts') {
       if (!Array.isArray(payload.contracts)) throw Error('Fiches de contrats invalides');
+      if(payload.contractsVersion!==undefined&&payload.contractsVersion!==1)throw Error('Version de contrats incompatible. Données conservées.');
       const incoming = payload.contracts.filter(isSharedDocument);
       const incomingIds = new Set(incoming.map(x=>x.id));
       const old = Array.isArray(st.familyDocs)?st.familyDocs:[];
@@ -828,10 +862,11 @@ function applyShared(id, payload) {
       const attachments = new Map(old.map(x=>[x.id,x]));
       const retained = old.filter(x=>
         (x.category==='Santé' && !isSharedDocument(x)) ||
-        (!incomingIds.has(x.id) && (!isSharedDocument(x) || Boolean(x.attachmentName))));
+        (!incomingIds.has(x.id) && (!isSharedDocument(x) || Boolean(x.attachmentName) || x.attachments?.some(item=>Boolean(item.key))))).map(x=>
+          payload.contractsVersion===1&&!incomingIds.has(x.id)&&isSharedDocument(x)?{...x,retainedLocalOnly:true}:x);
       st.familyDocs = retained.concat(incoming.filter(x=>!protectedIds.has(x.id)).map(x=>{
         const prior = attachments.get(x.id);
-        return {...x, attachmentName:prior?.attachmentName || '',attachmentType:prior?.attachmentType || ''};
+        return receiveContract(prior,x,payload.contractsVersion===1);
       }));
     }
     for (const key of def.keys) {
@@ -1174,7 +1209,7 @@ async function syncOne(id) {
     }
     applyShared(id, remote.payload);
     state.revision = remoteRevision;
-    state.synced = moduleDigest(id,pick(id));
+    state.synced = moduleDigest(id,id==='contracts'?contractSynced(remote.payload):pick(id));
     state.conflict = false;
     await persist();
     return;
@@ -1231,7 +1266,7 @@ async function resolve(id, preference) {
     backupLocal(id);
     applyShared(id, remote.payload);
     state.revision = Number(remote.revision);
-    state.synced = moduleDigest(id,pick(id));
+    state.synced = moduleDigest(id,id==='contracts'?contractSynced(remote.payload):pick(id));
   } else {
     if (!confirm('Conserver mes modifications locales ? Elles remplaceront la version actuelle du foyer si aucune nouvelle modification ne survient.')) return;
     state.revision = Number(remote.revision);

@@ -250,6 +250,25 @@ jobs:
             BROWSER="$(command -v chromium)"
           fi
           CHROMIUM_PATH="$BROWSER" npm run test:prep --prefix essai-stitch-v7/tests
+      - name: Native contracts and external AI import acceptance
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8874
+        run: |
+          python3 -m http.server 8874 --bind 127.0.0.1 > /tmp/dobby-contracts-http.log 2>&1 &
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          if command -v google-chrome >/dev/null; then
+            BROWSER="$(command -v google-chrome)"
+          else
+            BROWSER="$(command -v chromium)"
+          fi
+          CHROMIUM_PATH="$BROWSER" node essai-stitch-v7/tests/contracts-ci.cjs
+      - name: Keep contracts acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dobby-v7-contracts-native-evidence
+          path: docs/dobby-v7/contracts/evidence/
+          retention-days: 14
       - name: Current general review native acceptance (60 requirements)
         env:
           DOBBY_TEST_ORIGIN: http://127.0.0.1:8873
