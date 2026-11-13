@@ -129,7 +129,12 @@ async function token() {
   return f.session.access_token;
 }
 function assertNativeSharedWrite(method,query,body={}) {
-  const state=accessController?.state?.()||f.accessContext;
+  let state=accessController?.state?.()||f.accessContext;
+  // A new native Auth session can precede the next V7 context refresh. Its
+  // blank/stale V7 state is authenticated but unverified, never local-only.
+  if(f.session&&(!f.session.user_id||state?.userId!==f.session.user_id||state?.authenticated!==true)){
+    state={phase:'unavailable',userId:f.session.user_id||null,authenticated:true,verified:false};
+  }
   if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state});return;}
   const rpc=query.split('?')[0].replace(/^rpc\//,'');
   if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities'].includes(rpc))return;

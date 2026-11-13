@@ -144,3 +144,27 @@ test('reserves: a queued request cannot reuse its old parent bearer after an acc
   await assert.rejects(pending,/compte|foyer|contexte/);assert.equal(fixture.requests.length,before,'Old bearer never dispatches after account change');
  }
 });
+
+test('reserves: a replacement native Auth session cannot borrow the local fallback before V7 context refresh',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ fixture.f.epoch++;fixture.f.session={...fixture.f.session,user_id:'TEST-NEW-ACCOUNT',access_token:'fixture-new-account-token'};fixture.f.context=null;fixture.f.householdId=null;fixture.f.accessContext=null;fixture.f.verifiedContext=null;
+ assert.equal(fixture.api.access.state().phase,'signed-out');assert.equal(fixture.api.access.state().userId,null,'Old V7 state is blank while the native session already has another authenticated user');
+ const before=fixture.requests.length;
+ for(const [query,body] of [['dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST-unverified'}],['dobby_v2_modules?module=eq.family',{payload:{}}],['rpc/dobby_v7_update_profile',{p_profile:{firstName:'TEST not-yet-verified'}}]])
+  await assert.rejects(fixture.api.authorized(query.startsWith('rpc/')?'POST':'PATCH',query,body),/lecture seule|vérifi|catégorie/);
+ assert.equal(fixture.requests.length,before,'A fresh request captures the new epoch but still cannot dispatch without canonical context');
+ for(const name of ['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities'])await fixture.api.authorized('POST','rpc/'+name,{});
+ assert.equal(fixture.requests.length,before+3,'Read-only RPCs remain available even in the new-session blank-context window');assert.equal(fixture.api.access.state().verified,false);
+});
+
+test('reserves: native role adaptation preserves context reads and authenticated pre-household setup',async()=>{
+ const fixture=native();fixture.f.core=familyCore;await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ for(const name of ['dobby_v7_context','dobby_v7_preview_invitation','dobby_missions_v2_capabilities'])await fixture.api.authorized('POST','rpc/'+name,{});
+ await fixture.api.access.saveProfile({firstName:'TEST Draft'});
+ assert.equal(fixture.requests.filter(r=>r.path.endsWith('/dobby_v7_update_profile')).length,1);
+ fixture.setContext({protocol:1,phase:'household',userId:USER,profile:{firstName:'TEST Draft',name:'TEST Draft'}});await fixture.api.access.refresh();
+ await fixture.api.access.createHousehold('TEST New Household');await fixture.api.access.acceptInvitation('opaque-fixture-invitation');
+ assert.equal(fixture.requests.filter(r=>r.path.endsWith('/dobby_v7_create_household')).length,1);assert.equal(fixture.requests.filter(r=>r.path.endsWith('/dobby_v7_accept_invitation')).length,1);
+});
