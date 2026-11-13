@@ -10,7 +10,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Contracts native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Contracts/Maison native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
   const preview=source('../index.html').replaceAll('\r\n','\n');
   const preparationScript='<script src="./family-preparations.js"></script>';
@@ -25,6 +25,14 @@ test('preview V5 source matches original except isolated storage and approved E0
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
   let familyNormalized=preview;
+  const maison=JSON.parse(source('./fixtures/maison-native-extensions.json'));
+  assert.equal(maison.baseCommit,'54d74b9448a1c518d8a3c483cd4deaea1e493748');
+  assert.equal(createHash('sha256').update(familyNormalized).digest('hex'),maison.afterSha256,'Complete Maison native source is pinned');
+  for(const amendment of [...maison.patches].reverse()){
+    assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact Maison native amendment occurs once: '+amendment.label);
+    familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
+  }
+  assert.equal(createHash('sha256').update(familyNormalized).digest('hex'),maison.beforeSha256,'Maison extension reverses to the complete preceding source');
   const contracts=JSON.parse(source('./fixtures/contracts-native-extensions.json'));
   assert.equal(contracts.baseCommit,'b77cb9de100a864c8aace8fb9e07053220ccd23a');
   assert.equal(createHash('sha256').update(familyNormalized).digest('hex'),contracts.afterSha256,'Complete contract native source is pinned');
