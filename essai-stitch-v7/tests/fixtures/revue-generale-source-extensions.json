@@ -31,6 +31,30 @@
     "sha256": "6de19613cd8bed777289b824538f6cde1012408e1da24b98f6afa6ef23625978",
     "reason": "M07-M08: unique integer reward allocations; technical reserves: exact pending Rune sums through compensation, persistent Number format unchanged; reviewed0da2d66"
   },
+  "essai-stitch-v5-famille/family-modules.js": {
+    "sha256": "c63d1268d03b53c373ac05c041ab02cab6a6a7966bf162ff260c8722b014bab8",
+    "reason": "PR13 Contracts: versioned extensible metadata and multi-piece synchronization, preserving local references; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v5-famille/family-files.js": {
+    "sha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",
+    "reason": "PR13 Contracts: native file permissions and reference withdrawal retain published binary bytes; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v5-famille/family-contracts.js": {
+    "sha256": "29d074cf2c3b5b474f65f6e70e8418786b43e12762df712801ecbfa10b1fda37",
+    "reason": "PR13 Contracts: native metadata and attachment writer, no automatic upload; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v5-famille/stitch-v5.js": {
+    "sha256": "4feec5a812ba31bdb278029591b837613949198b4cea025bf2cae2531c6efa2e",
+    "reason": "PR13 Contracts: native writer loader after family-files; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v7/build-source.cjs": {
+    "sha256": "0f648b957d60b12db436501a8f9845db81599edc82af3bb6c406191598ad654f",
+    "reason": "PR13 Contracts: generated functional roots retain Contracts styles/register/import dependencies; approved main70c56eb156758d4c0447b8ec8f3fd84e1efeaa22"
+  },
+  "essai-stitch-v7/family.js": {
+    "sha256": "e8a6cd6dff9dee7759887728bb0a4f9a4f54c8df1c126cd907c9efa3757a7ef5",
+    "reason": "Reconciliation of main70c56eb Contracts route decoration with reserves7448e0c complete canonical sharedReadOnly guards; both features preserved, no permissive fallback"
+  },
   "memoWriter": {
     "sha256": "3339ebc0e184313c21877dcb702fcfd3af48e9d73a37e32b826ceececfd969b0",
     "reason": "F09: preserve stale/identity guards and additionally reject canonical child shared memo writes"

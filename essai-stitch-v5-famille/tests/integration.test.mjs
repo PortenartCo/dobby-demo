@@ -10,7 +10,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4/FAM/PREP/T09 native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
   const preview=source('../index.html').replaceAll('\r\n','\n');
   const preparationScript='<script src="./family-preparations.js"></script>';
@@ -25,19 +25,39 @@ test('preview V5 source matches original except isolated storage and explicitly 
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
   let familyNormalized=preview;
-  // Technical reserves add exactly one canonical category field to the existing
-  // context. Invert that reviewed literal before every historical proof.
-  const role=JSON.parse(source('./fixtures/reserves-canonical-role-native-extensions.json'));
-  const roleSha=value=>createHash('sha256').update(value).digest('hex');
+  // Compose the two independently approved literal amendments. Their frozen
+  // JSON fixtures and both complete branch artifacts remain byte-exact.
+  const roleSource=source('./fixtures/reserves-canonical-role-native-extensions.json');
+  const contractsSource=source('./fixtures/contracts-native-extensions.json');
+  const role=JSON.parse(roleSource),contracts=JSON.parse(contractsSource);
+  const composition=JSON.parse(source('./fixtures/contracts-reserves-native-composition.json'));
+  const composedSha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(composedSha(roleSource),composition.roleFixtureSha256,'Frozen role fixture is unchanged');
+  assert.equal(composedSha(contractsSource),composition.contractsFixtureSha256,'Frozen Contracts fixture is unchanged');
   assert.equal(role.baseCommit,'b77cb9de100a864c8aace8fb9e07053220ccd23a');
   assert.equal(role.approvedCommit,'05c5a359df6a156166a5d5cef6bb4a0ef68a3b45');
+  assert.equal(contracts.baseCommit,role.baseCommit);
+  assert.equal(composition.baseCommit,role.baseCommit);
   assert.equal(role.patches.length,1);
-  assert.equal(roleSha(familyNormalized),role.afterSha256,'Complete reviewed native role artifact');
-  for(const amendment of role.patches){
-    assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact canonical role amendment occurs once');
-    familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
-  }
-  assert.equal(roleSha(familyNormalized),role.beforeSha256,'Only the canonical role field differs from b77cb9d');
+  assert.equal(contracts.patches.length,1);
+  assert.equal(composedSha(preview),composition.composedSha256,'Complete composed native artifact is pinned');
+  const invert=(text,fixture)=>{
+    for(const amendment of [...fixture.patches].reverse()){
+      assert.notEqual(amendment.after,amendment.before,'Each reviewed amendment changes an exact literal');
+      assert.equal(text.split(amendment.after).length-1,1,'Exact composed amendment occurs once: '+amendment.label);
+      text=text.replace(amendment.after,amendment.before);
+    }
+    return text;
+  };
+  const roleOnly=invert(preview,contracts),contractsOnly=invert(preview,role);
+  assert.equal(composedSha(roleOnly),role.afterSha256,'Removing Contracts restores the complete reviewed role artifact');
+  assert.equal(composedSha(contractsOnly),contracts.afterSha256,'Removing role restores the complete reviewed Contracts artifact');
+  familyNormalized=invert(roleOnly,role);
+  const contractsNormalized=invert(contractsOnly,contracts);
+  assert.equal(composedSha(familyNormalized),role.beforeSha256,'Role reversal restores every byte of its immutable base');
+  assert.equal(composedSha(contractsNormalized),contracts.beforeSha256,'Contracts reversal restores every byte of its immutable base');
+  assert.equal(familyNormalized,contractsNormalized,'Both inversion orders recover the identical complete historical source');
+  assert.equal(composedSha(familyNormalized),composition.beforeSha256,'Composition preserves the shared base before historical proofs');
   // T09 changes only these three frozen literals. Verify the full native bytes
   // before and after inversion; the historical proofs below remain unchanged.
   const dessert=JSON.parse(source('./fixtures/dessert-preparations-native-extensions.json'));
@@ -185,7 +205,8 @@ test('binary file uploads do not use the JSON modules API',()=>{
   assert.match(bridge,/storage\/v1\/object/);
   assert.match(files,/api\.storageFetch\('POST',path,file\)/);
   assert.match(files,/api\.storageFetch\('GET',d\.cloudPath\)/);
-  assert.match(files,/api\.storageFetch\('DELETE',d\.cloudPath\)/);
+  assert.match(files,/DobbyFamilyContracts\.removeAttachment\(d\.id,'legacy-cloud'\)/);
+  assert.doesNotMatch(files,/api\.storageFetch\('DELETE',d\.cloudPath\)/,'Published shared bytes survive metadata removal until distinct physical cleanup');
   assert.match(bucketSql,/dobby-family-files/);
   assert.match(bucketSql,/m\.household_id::text=\(storage\.foldername\(name\)\)\[1\]/);
   assert.match(bucketSql,/public=false/);

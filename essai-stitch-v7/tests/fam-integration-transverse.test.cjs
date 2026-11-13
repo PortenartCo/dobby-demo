@@ -40,6 +40,16 @@ test('Family source boundaries preserve history plus explicitly reviewed 60-poin
   }
 });
 
+test('every reviewed whole-file amendment retains its exact source fingerprint', () => {
+  const reviews=require('./fixtures/revue-generale-source-extensions.json');
+  for(const[file,review]of Object.entries(reviews)){
+    if(file==='memoWriter')continue; // Its exact bounded writer has its own proof below.
+    assert.ok(review.reason,file+' approval reason');
+    assert.match(review.sha256,/^[a-f0-9]{64}$/,file+' complete SHA-256');
+    assert.equal(digest(fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n')),review.sha256,file+' reviewed source changed');
+  }
+});
+
 // Courses intentionally evolves for C01-C07 and independent dessert imports.
 // Verify native quantity/home/import/idempotence behavior, rather than freezing old UI bytes.
 test('Courses retains the native shopping contract including independent dessert import', () => {
