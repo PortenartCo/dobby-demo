@@ -5,6 +5,7 @@ const fs=require('node:fs'),path=require('node:path');
 const evidence=path.resolve(process.env.DOBBY_E07_EVIDENCE||path.resolve(__dirname,'../../docs/dobby-v7/evidence/e07-2'),'family');fs.mkdirSync(evidence,{recursive:true});
 const {chromium}=require('playwright');
 const {canonicalGroceryFixture,assertCanonicalGroceryIdentity}=require(path.join(__dirname,'helpers/canonical-grocery-fixture.cjs'));
+const {checkCanonicalGrocerySnapshot}=require('./canonical-grocery-fixture.test.cjs');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
 const hh='00000000-0000-4000-8000-000000000010',uid='00000000-0000-4000-8000-000000000001';
 const canonical=canonicalGroceryFixture(hh,{A:uid});
@@ -15,6 +16,7 @@ async function shoppingSettings(page,copy=false){if(copy){await page.waitForFunc
   const rows=new Map(),writes=[];let offline=false;
   async function eventually(test){const until=Date.now()+8000;while(!test()&&Date.now()<until)await new Promise(r=>setTimeout(r,30));assert.ok(test(),'Native sync reaches the HTTP fixture');}
   try{
+    console.log('CANONICAL_GROCERY_SNAPSHOT_PASS '+await checkCanonicalGrocerySnapshot(browser)+' cases');
     for(const width of [390]){
     rows.clear();writes.length=0;offline=false;
     const context=await browser.newContext({viewport:{width,height:844},locale:'fr-BE',reducedMotion:'reduce'});

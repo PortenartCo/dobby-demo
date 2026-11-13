@@ -20,12 +20,18 @@ function canonicalGroceryFixture(householdId,users){
 }
 async function assertCanonicalGroceryIdentity(page,expected){
  const {strict:assert}=require('node:assert');
- await page.waitForFunction(()=>{const api=DobbyCuisineEngine.win().DobbyFamilyUI;
-  return api.access.state().verified===true&&api.getContext()?.identityVerified===true&&!api.connectionState().verifying;});
- const actual=await page.evaluate(()=>{const api=DobbyCuisineEngine.win().DobbyFamilyUI;return{
-  access:api.access.state(),binding:api.getContext(),members:DobbyCuisineEngine.read().state.familyMembers,
-  readOnly:DobbyFamilyStitch.sharedReadOnly()
- };});
+ const observation=await page.waitForFunction(expected=>{
+  const api=DobbyCuisineEngine.win().DobbyFamilyUI,access=api.access.state(),binding=api.getContext();
+  if(access.authenticated!==true||access.verified!==true||access.phase!=='active'
+   ||binding?.identityVerified!==true||api.connectionState().verifying
+   ||['userId','householdId','memberId'].some(field=>access[field]!==expected[field]||binding[field]!==expected[field]))return false;
+  // Freeze the ready observation in this browser turn. Another canonical read
+  // may revoke the live binding before Playwright retrieves the result.
+  return JSON.stringify({access,binding,members:DobbyCuisineEngine.read().state.familyMembers,
+   readOnly:DobbyFamilyStitch.sharedReadOnly()});
+ },expected);
+ let actual;
+ try{actual=JSON.parse(await observation.jsonValue());}finally{await observation.dispose();}
  assert.equal(actual.access.authenticated,true);
  assert.equal(actual.access.verified,true);
  assert.equal(actual.access.phase,'active');
