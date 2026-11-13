@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import {createHash} from 'node:crypto';
 import * as runes from '../family-runes-core.mjs';
 
 const source = path => fs.readFileSync(new URL(path, import.meta.url), 'utf8');
@@ -9,7 +10,7 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4/FAM/PREP native extensions', () => {
+test('preview V5 source matches original except isolated storage and explicitly approved E05/E07.3/E07.4/FAM/PREP/T09 native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
   const preview=source('../index.html').replaceAll('\r\n','\n');
   const preparationScript='<script src="./family-preparations.js"></script>';
@@ -24,6 +25,20 @@ test('preview V5 source matches original except isolated storage and explicitly 
   const fam=JSON.parse(source('./fixtures/fam-native-extensions.json'));
   assert.equal(fam.baseCommit,'faf89d50555a3201385eae51f9ef5f93c5bf0499');
   let familyNormalized=preview;
+  // T09 changes only these three frozen literals. Verify the full native bytes
+  // before and after inversion; the historical proofs below remain unchanged.
+  const dessert=JSON.parse(source('./fixtures/dessert-preparations-native-extensions.json'));
+  assert.equal(dessert.baseCommit,'ed0ec7fda5a4bf7a92846ee31e2fba786753a406');
+  assert.equal(dessert.approvedCommit,'456a091d61ddd18fecf261b1d71f5f0a227ccc74');
+  assert.equal(dessert.patches.length,3);
+  const nativeSha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(nativeSha(familyNormalized),dessert.afterSha256,'Complete native source matches the reviewed T09 artifact');
+  for(const amendment of [...dessert.patches].reverse()){
+    assert.notEqual(amendment.after,amendment.before,'T09 amendment changes an exact literal');
+    assert.equal(familyNormalized.split(amendment.after).length-1,1,'Exact T09 native amendment occurs once: '+amendment.label);
+    familyNormalized=familyNormalized.replace(amendment.after,amendment.before);
+  }
+  assert.equal(nativeSha(familyNormalized),dessert.beforeSha256,'Only the three T09 literals reverse to the complete prior native source');
   // Stitch19/20 extends the canonical member context/writer with server-bound
   // identity and explicit manual choices. Reverse only these exact reviewed
   // literals before applying the earlier FAM source-preservation proof.

@@ -37,7 +37,7 @@ test('family bundle preserves global semantics and records exact source and name
  }finally{fs.rmSync(temp,{recursive:true,force:true});}
 });
 
-test('composed fictional A/B parents can edit dependents through the native policy',()=>{
+test('V7 composed fictional A/B parents can manage all current household members through the native policy',()=>{
  const source=fs.readFileSync(path.join(repo,'scripts/review/global-config.js'),'utf8').replaceAll(oldPrefix,prefix),family=fs.readFileSync(path.join(repo,'scripts/review/family-config.js'),'utf8');
  for(const client of ['A','B']){
   const top={location:{href:'https://preview.example.test/essai-stitch-v7/famille.html?client='+client,search:'?client='+client}},session=new Map();
@@ -47,7 +47,7 @@ test('composed fictional A/B parents can edit dependents through the native poli
   assert.equal(cfg.version,'V7-FAMILLE');assert.equal(cfg.demoMemberId,client==='B'?'review-person-b':'review-person');assert.equal(cfg.storagePrefix,prefix+'client-'+client+'|');assert.equal(session.get(prefix+'selected-client'),client);
   assert.equal(members.length,5);assert.deepEqual(Array.from(members.map(row=>row.memberCategory)).sort(),['baby','child','parent','parent','pet']);
   const actor=members.find(row=>row.id===cfg.demoMemberId),other=members.find(row=>row.memberCategory==='parent'&&row!==actor),permissionContext={demo:true,actorId:actor.id,members};
-  assert.equal(policy.permissions(actor,permissionContext).canEdit,true);assert.equal(policy.permissions(other,permissionContext).canEdit,false);assert.equal(policy.permissions(null,permissionContext).canCreate,true);
+  assert.equal(policy.permissions(actor,permissionContext).canEdit,true);assert.equal(policy.permissions(other,permissionContext).canEdit,true);assert.equal(policy.permissions(null,permissionContext).canCreate,true);assert.equal(policy.permissions({id:'foreign-child',memberCategory:'child'},permissionContext).canEdit,false,'A parent cannot manage a member absent from this household');
   for(const member of members){assert.match(member.name,/DÉMO/);assert.equal(member.name,[member.firstName,member.lastName].filter(Boolean).join(' '));if(['baby','child','pet'].includes(member.memberCategory))assert.equal(policy.permissions(member,permissionContext).canEdit,true);if(member.magicProfile){const magic=member.magicProfile;assert.equal(magic.version,1);for(const[key,rows]of [['houseId','houses'],['patronusId','patronuses'],['avatarId','avatars']])assert.ok(top.DobbyMagicIdentity[rows].some(row=>row.id===magic[key]),member.id+' '+key);}}
   assert.equal(seed.customRecipes.length,2);assert.equal(seed.manualMissions.length,2);assert.equal(original.initialState('2026-11-12').familyMembers.length,2,'Composition never mutates the base config');assert.ok(Object.isFrozen(cfg));
  }

@@ -17,9 +17,9 @@ test('FAM15 denies real writes even when a locally selected actor claims to be a
  assert.equal(result.canEdit,false);assert.equal(result.canMagic,false);assert.equal(result.canCreate,false);
  assert.throws(()=>P.assertWrite(row('child'),{notes:'TEST'},context('parent-a',false)),/compte connecté/);
 });
-test('FAM15 explicit fictional parent can edit self and dependents, never the other parent or an unknown category',()=>{
- for(const id of ['parent-a','child','baby','pet'])assert.equal(P.permissions(row(id),context('parent-a')).canEdit,true,id);
- for(const id of ['parent-b','legacy'])assert.equal(P.permissions(row(id),context('parent-a')).canEdit,false,id);
+test('V7 F09 explicit fictional parent can edit the complete current household',()=>{
+ for(const id of ['parent-a','parent-b','child','baby','pet','legacy'])assert.equal(P.permissions(row(id),context('parent-a')).canEdit,true,id);
+ assert.equal(P.permissions({id:'foreign',memberCategory:'child'},context('parent-a')).canEdit,false);
  assert.equal(P.permissions(null,context('parent-a')).canCreate,true);
  for(const memberCategory of ['baby','child','pet'])assert.doesNotThrow(()=>P.assertWrite(null,{memberCategory},context('parent-a')));
  for(const memberCategory of ['parent','adult',''])assert.throws(()=>P.assertWrite(null,{memberCategory},context('parent-a')),/création directe/);
@@ -71,7 +71,7 @@ function nativeHarness(actorId=null,demo=false){
  return{st,alerts,submit,remove,get saves(){return sandbox.saves;},ctx};
 }
 test('native direct submission and delete enforce FAM15 without the presentation facade',()=>{
- for(const[actor,demo,target]of [[null,false,'child'],['parent-a',true,'parent-b'],['child',true,'child'],['baby',true,'baby'],['pet',true,'pet']]){
+ for(const[actor,demo,target]of [[null,false,'child'],['child',true,'child'],['baby',true,'baby'],['pet',true,'pet']]){
   const h=nativeHarness(actor,demo),before=JSON.stringify(h.st.familyMembers);
   h.submit(target,{name:'TEST Changement interdit',birthdate:'',avatar:'👤',notes:'TEST'});
   h.remove(target);assert.equal(JSON.stringify(h.st.familyMembers),before);assert.equal(h.saves,0);assert.equal(h.alerts.length,2);
@@ -106,9 +106,9 @@ test('medical write permission resolves canonical or unique legacy attribution, 
  const own={personId:'parent-a',person:'TEST Parent A'},other={personId:'parent-b',person:'TEST Parent B'},child={personId:'child',person:'TEST Enfant'};
  for(const actor of [null,'child','baby','pet']){const h=nativeHarness(actor,!!actor);h.ctx.medical=child;assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),false);}
  const h=nativeHarness('parent-a',true);h.ctx.previous=other;h.ctx.next=child;
- assert.throws(()=>vm.runInContext('v23AssertHealthWrite(previous,next,false)',h.ctx),/parent|fiche/);
- h.ctx.previous=child;h.ctx.next=other;assert.throws(()=>vm.runInContext('v23AssertHealthWrite(previous,next,false)',h.ctx),/parent|fiche/);
- for(const medical of [own,child,{person:'TEST Enfant'}]){h.ctx.medical=medical;assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),true);}
+ assert.doesNotThrow(()=>vm.runInContext('v23AssertHealthWrite(previous,next,false)',h.ctx));
+ h.ctx.previous=child;h.ctx.next=other;assert.doesNotThrow(()=>vm.runInContext('v23AssertHealthWrite(previous,next,false)',h.ctx));
+ for(const medical of [own,other,child,{person:'TEST Enfant'}]){h.ctx.medical=medical;assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),true);}
  for(const medical of [{personId:'missing',person:'TEST Enfant'},{person:'TEST Inconnu'}]){h.ctx.medical=medical;assert.equal(vm.runInContext('v23HealthPermissions(medical,true).canEdit',h.ctx),false);}
  h.ctx.medical={person:'Foyer'};assert.equal(vm.runInContext('v23HealthPermissions(medical,true).canEdit',h.ctx),true);assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),false);
  h.st.familyMembers.push({id:'duplicate',name:'TEST Enfant',memberCategory:'child'});h.ctx.medical={person:'TEST Enfant'};assert.equal(vm.runInContext('v23HealthPermissions(medical,false).canEdit',h.ctx),false);

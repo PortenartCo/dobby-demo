@@ -1,7 +1,7 @@
 /* Shared manual missions for Dobby V5. Separate from V5 autoTasks/reconcile(). */
 (async function(){
 'use strict';
-const core=await import('./family-missions-core.mjs?v=20261111-rewards-2');
+const core=await import('./family-missions-core.mjs?v=20261113-review-1');
 const esc=window.DobbyFamilyUI?.esc||(x=>String(x||''));
 if(!Array.isArray(st.manualMissions))st.manualMissions=[];
 if(st.runeCredits===undefined)st.runeCredits=[];
@@ -78,6 +78,9 @@ function showForm(id){
     '<label>Catégorie<select name="category">'+core.MISSION_CATEGORIES.map(x=>
       '<option'+(x===(current?.category||'Famille')?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></label></div>'+
     '<label>Responsable<select name="assigneeId"><option value="">Non attribuée</option>'+selectable+'</select></label>'+
+    '<input type="hidden" name="assigneeIds" value="'+esc(JSON.stringify(current?.assigneeIds||[]))+'"><input type="hidden" name="allFamily" value="'+String(current?.allFamily===true)+'"><input type="hidden" name="participantVersion" value="'+(current?.participantVersion||'')+'">'+
+    '<label>Priorité<select name="priority"><option value="normal">Normale</option><option value="urgent"'+(current?.priority==='urgent'?' selected':'')+'>Urgente</option></select></label>'+
+    '<input type="hidden" name="recurrenceStart" value="'+esc(rule?.start||current?.due||core.brusselsDate())+'">'+
     '<label>Effort<select name="effort">'+core.runes.EFFORTS.map(e=>'<option value="'+e.id+'"'+(current?.customRunes===undefined&&e.id===(current?.effort||'regular')?' selected':'')+'>'+esc(e.label)+' — '+e.amount+' runes</option>').join('')+'<option value="custom"'+(current?.customRunes!==undefined?' selected':'')+'>Personnalisée</option></select></label>'+
     '<label>Récompense personnalisée (entier positif ou nul)<input name="customRunes" inputmode="numeric" pattern="[0-9]+" value="'+esc(current?.customRunes??'')+'"></label>'+
     '<label>Note non confidentielle<textarea name="note" maxlength="400">'+esc(current?.note||'')+'</textarea></label>'+
@@ -106,6 +109,7 @@ function saveForm(event){
   if(event.target?.getAttribute('id')!=='fmsForm')return;
   event.preventDefault();event.stopImmediatePropagation();
   try{
+    assertParentWrite();
     const data=new FormData(event.target),existing=String(data.get('missionKey')||''),
       old=existing?find(existing):null;
     if(existing&&!old)throw Error('La mission a été modifiée ou supprimée sur cet appareil');
@@ -114,12 +118,20 @@ function saveForm(event){
     const custom=chosenEffort==='custom';
     if(custom&&(!/^\d+$/.test(customText)||!Number.isSafeInteger(Number(customText))))throw Error('Saisissez un entier de runes positif ou nul représentable sans perte');
     if(custom&&requiresSync()&&!sharedRunesV2())throw Error('Les récompenses personnalisées sont disponibles sur cet appareil uniquement. Leur partage nécessite une validation serveur versionnée ; aucune modification enregistrée.');
+    const participantVersion=data.get('participantVersion')==='1'?1:old?.participantVersion;
+    let assigneeIds=old?.assigneeIds;
+    if(participantVersion===1){try{assigneeIds=JSON.parse(String(data.get('assigneeIds')||'[]'));}catch{throw Error('Attribution de mission invalide');}}
+    const allFamily=participantVersion===1?data.get('allFamily')==='true':old?.allFamily;
+    if(participantVersion===1&&assigneeIds.some(id=>!core.humanMembers(members()).some(m=>m.id===id)&&!old?.assigneeIds?.includes(id)&&old?.assigneeId!==id))throw Error('Un membre choisi n’est plus dans le foyer. Votre formulaire reste ouvert.');
+    if(requiresSync()&&participantVersion===1&&(allFamily||assigneeIds.length>1))throw Error('Attribution multiple partagée en attente de validation serveur. Aucune modification enregistrée.');
     let row=core.normalizeMission({
       ...old,
       id:existing||('fm-'+crypto.randomUUID()),
       title:data.get('title'),due:old?.seriesId?old.due:data.get('due'),effort:custom?(old?.effort||'regular'):chosenEffort,customRunes:custom?Number(customText):undefined,
       ...(!old||old.rewardVersion===1?{rewardVersion:1}:{}),
-      category:data.get('category'),assigneeId:data.get('assigneeId'),
+      category:data.get('category'),assigneeId:participantVersion===1?(allFamily?'':assigneeIds[0]||''):data.get('assigneeId'),
+      ...(participantVersion===1?{participantVersion,assigneeIds,allFamily}:{}),
+      ...(data.get('priority')?{priority:String(data.get('priority'))}:{}),
       note:data.get('note'),status:old?.status||'open',
       createdAt:old?.createdAt||now,completedAt:old?.completedAt||''
     });
@@ -129,23 +141,26 @@ function saveForm(event){
       const frequency=String(data.get('recurrenceFrequency')||'unique');
       if(old?.recurrence&&frequency==='unique')throw Error('Arrêtez la série pour conserver son historique');
       if(frequency!=='unique'){
-        if(!row.due)throw Error('Choisissez une date de début pour la série');
+        const start=String(data.get('recurrenceStart')||row.due||core.brusselsDate());
+        const firstStart=old?.recurrence?.rules[0]?.start||start;
+        if(row.due&&row.due<firstStart)throw Error('La date limite ne peut pas précéder la première occurrence de la série');
+        if(participantVersion===1&&!old?.recurrence){row={...row,deadlineOffsetDays:row.due?Math.round((Date.parse(row.due+'T12:00:00Z')-Date.parse(firstStart+'T12:00:00Z'))/86400000):null};}
         if(row.id.length>69)throw Error('Identifiant trop long pour une série');
         if(old?.recurrence&&row.due!==old.due)throw Error('La date de première occurrence est conservée ; modifiez les jours de récurrence');
-        const rules=old?.recurrence?.rules||[],last=rules.at(-1),today=core.brusselsDate(),from=last?(today>last.from?today:last.from):row.due;
+        const rules=old?.recurrence?.rules||[],last=rules.at(-1),today=core.brusselsDate(),from=last?(today>last.from?today:last.from):firstStart;
         // Future rows are new missions. A legacy first occurrence remains
         // ineligible; it does not remove eligibility from genuinely new rows.
-        const template={...last?.template,title:row.title,category:row.category,assigneeId:row.assigneeId,note:row.note,effort:row.effort,rewardVersion:1,customRunes:row.customRunes};
+        const template={...last?.template,title:row.title,category:row.category,assigneeId:row.assigneeId,assigneeIds:row.assigneeIds,allFamily:row.allFamily,participantVersion:row.participantVersion,priority:row.priority,deadlineOffsetDays:row.deadlineOffsetDays,note:row.note,effort:row.effort,rewardVersion:1,customRunes:row.customRunes};
         if(row.customRunes===undefined)delete template.customRunes;
-        const rule={from,start:rules[0]?.start||row.due,frequency,weekdays:String(data.get('recurrenceWeekdays')||'').split(',').filter(Boolean).map(Number).sort((a,b)=>a-b),monthDay:Number(data.get('recurrenceMonthDay')),shortMonth:'last-day',state:String(data.get('recurrenceState')||last?.state||'active'),template};
-        if(!last&&!core.recurrenceMatches(row.due,rule))throw Error('La première échéance doit correspondre aux jours de récurrence choisis. Ajustez la date ou les jours de la série.');
+        const rule={from,start:firstStart,frequency,weekdays:String(data.get('recurrenceWeekdays')||'').split(',').filter(Boolean).map(Number).sort((a,b)=>a-b),monthDay:Number(data.get('recurrenceMonthDay')),shortMonth:'last-day',state:String(data.get('recurrenceState')||last?.state||'active'),template};
+        if(!last&&!core.recurrenceMatches(firstStart,rule))throw Error('La première échéance doit correspondre aux jours de récurrence choisis. Ajustez la date ou les jours de la série.');
         const equal=last&&JSON.stringify({...last,from:''})===JSON.stringify({...rule,from:''});
         if(last?.state==='stopped'){
           if(rule.state!=='stopped'||rule.frequency!==last.frequency||rule.monthDay!==last.monthDay||JSON.stringify(rule.weekdays)!==JSON.stringify(last.weekdays))throw Error('Une série arrêtée ne peut pas être reprise');
         }else row=core.normalizeMission({...row,recurrence:{...old?.recurrence,version:1,seriesId:row.id,rules:equal?rules:[...rules,rule]}});
       }
     }
-    if(old&&pendingGrant(old.id)&&['assigneeId','effort','customRunes'].some(key=>old[key]!==row[key]))throw Error('Synchronisez l’attribution en attente avant de modifier le responsable ou la récompense. Votre formulaire reste ouvert.');
+    if(old&&pendingGrant(old.id)&&['assigneeId','assigneeIds','allFamily','effort','customRunes'].some(key=>JSON.stringify(old[key])!==JSON.stringify(row[key])))throw Error('Synchronisez l’attribution en attente avant de modifier le responsable ou la récompense. Votre formulaire reste ouvert.');
     const previous=st.manualMissions;
     st.manualMissions=core.projectRecurringMissions(existing?st.manualMissions.map(x=>x.id===existing?row:x):[...st.manualMissions,row]);
     try{persist();close();}catch(error){st.manualMissions=previous;throw error;}
@@ -161,6 +176,8 @@ document.addEventListener('click',event=>{
     else if(a==='edit')showForm(id);
     else if(a==='close')close();
     else if(a==='toggle'){
+      if(find(id)?.participantVersion===1){if(find(id).status==='open')showParticipants(id);else completeMission(id,[],'reopen');return;}
+      assertParentWrite();
       const current=find(id);if(!current)return;
       if(requiresSync()&&sharedRunesV2()&&current.status==='open'&&current.rewardVersion===1&&current.assigneeId&&!members().some(member=>member.id===current.assigneeId))throw Error('Choisissez un responsable présent dans le foyer ou retirez l’attribution avant de terminer cette mission.');
       const date=new Date().toISOString(),previous={manualMissions:st.manualMissions,runeCredits:st.runeCredits,runeRequests:st.runeRequests};
@@ -172,6 +189,7 @@ document.addEventListener('click',event=>{
       if(request){st.runeRequests=core.runes.normalizeRequests([...st.runeRequests,request]);if(!requiresSync())st.runeCredits=core.runes.acceptRequests(st.runeCredits,[request],0);}
       try{persist();}catch(error){Object.assign(st,previous);throw error;}
     }else if(a==='delete'){
+      assertParentWrite();
       const item=find(id);if(!item)return;
       if(pendingEvent(item.id))throw Error('Synchronisez l’attribution en attente avant de supprimer cette mission.');
       if(item.recurrence||item.seriesId)throw Error('L’historique des séries est conservé. Ouvrez la première occurrence pour suspendre ou arrêter la série.');
@@ -185,11 +203,34 @@ document.addEventListener('click',event=>{
 document.addEventListener('keydown',event=>{
   if(event.key==='Escape'&&!document.getElementById('fmsLayer')?.hidden)close();
 });
+function assertParentWrite(){
+  if(!requiresSync())return;
+  const context=window.DobbyFamilyUI?.getContext(),actor=members().find(m=>m.id===context?.memberId);
+  if(context?.identityVerified!==true||actor?.memberCategory!=='parent')throw Error('Modification partagée suspendue : identité parentale et autorisations serveur à vérifier.');
+}
+function completeMission(id,participantIds,operation='complete'){
+  const current=find(id);if(!current)throw Error('Mission introuvable');
+  if(operation==='complete'&&current.status==='done'||operation==='reopen'&&current.status==='open')return false;
+  if(requiresSync())throw Error('Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.');
+  const date=new Date().toISOString(),previous={manualMissions:st.manualMissions,runeCredits:st.runeCredits,runeRequests:st.runeRequests};
+  const requests=current.status==='done'?core.runes.reopeningRequests(current,st.runeCredits,st.runeRequests,date):core.runes.completionRequests(current,members(),participantIds,st.runeCredits,st.runeRequests,date);
+  const credits=core.runes.acceptRequests(st.runeCredits,[...st.runeRequests,...requests],0);
+  st.manualMissions=st.manualMissions.map(row=>row.id===id?{...row,status:current.status==='open'?'done':'open',completedAt:current.status==='open'?date:'',...(current.status==='open'?{participants:[...participantIds].sort()}: {})}:row);
+  st.runeRequests=core.runes.normalizeRequests([...st.runeRequests,...requests]);st.runeCredits=credits;
+  try{persist();close();}catch(error){Object.assign(st,previous);throw error;}
+}
+function showParticipants(id){
+  const current=find(id),ids=core.runes.completionCandidateIds(current,members()),layer=ensureLayer();
+  layer.innerHTML='<div class="fms-dialog" role="dialog" aria-modal="true" aria-label="Participants réels"><button type="button" class="fms-close" data-fms-action="close" aria-label="Fermer">×</button><h2>Qui a participé ?</h2><p>La récompense totale est partagée uniquement entre les personnes choisies.</p><form id="fmsParticipants">'+ids.map(id=>'<label><input type="checkbox" name="participant" value="'+esc(id)+'">'+esc(person(id))+'</label>').join('')+'<button type="submit" class="fms-main">Confirmer la mission</button></form></div>';
+  const allowEmpty=core.runes.canCompleteWithoutParticipants(current,members()),submit=layer.querySelector('button[type=submit]');
+  if(!ids.length){layer.querySelector('p').textContent=allowEmpty?'Aucun membre pouvant recevoir des Runes. La mission sera terminée sans récompense.':'Les personnes attribuées ne sont plus disponibles. Vérifiez l’attribution avant de terminer.';if(submit)submit.disabled=!allowEmpty;}
+  layer.hidden=false;layer.querySelector('form').addEventListener('submit',event=>{event.preventDefault();try{completeMission(id,[...new FormData(event.target).getAll('participant')]);}catch(error){alert(error.message);}});
+}
 function sharedRunesV2(){return window.DobbySharedRunesV2?.available?.()===true;}
 function pendingGrant(id){return pendingEvent(id,true);}
 function pendingEvent(id,grantOnly=false){if(!requiresSync())return false;const confirmed=new Map((st.runeCredits||[]).map(row=>[core.runes.eventKey(row),row]));return(st.runeRequests||[]).some(row=>row.missionId===id&&(!grantOnly||(row.kind||'grant')==='grant')&&(!confirmed.has(core.runes.eventKey(row))||['memberId','effort','amount','customRunes','kind','cycle','reverses'].some(key=>confirmed.get(core.runes.eventKey(row))[key]!==row[key])));}
 function requiresSync(){const configured=window.DobbyFamilyUI?.isModuleConfigured?.('missions');return st.runeSyncRequired===true||configured===true||(configured==null&&Boolean(window.DobbyFamilyUI?.getContext()));}
-window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){return{...core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests),shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};}});
+window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,participantVersion:1,complete:completeMission,reopen:id=>completeMission(id,[],'reopen'),assignmentIds:(mission)=>core.assignmentIds(mission,members()),completionCandidateIds:mission=>core.runes.completionCandidateIds(mission,members()),canCompleteWithoutParticipants:mission=>core.runes.canCompleteWithoutParticipants(mission,members()),requiresSync,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){return{...core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests),shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};}});
 // Resume a sleeping/offline tab without an unbounded timer or extra writer.
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){project();render();}});
 window.addEventListener('focus',()=>{project();render();});

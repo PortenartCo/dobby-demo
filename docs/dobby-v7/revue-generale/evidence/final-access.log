@@ -1,0 +1,270 @@
+STITCH19_20_CI_START access-routing
+✔ an existing bound account enters the fireplace, never a finished ceremony (1.213971ms)
+✔ an invitation keeps its confirmation even for an existing account (0.245397ms)
+✔ profile and household stages require the authenticated account (0.17676ms)
+✔ unverified or incomplete bindings cannot unlock the family (0.194097ms)
+✔ email confirmation never masquerades as an effective household (0.173682ms)
+✔ invitation and callback credentials leave the visible URL immediately (0.629098ms)
+✔ implicit callback tokens are private inputs, not routes or screenshot URLs (0.284651ms)
+✔ ordinary deep links retain their native context and cannot redirect to another origin (0.275024ms)
+✔ PKCE flow ids and provider errors do not stay in the public URL (0.364046ms)
+✔ an error-only provider callback is sanitized and is not treated as a successful login (0.591799ms)
+✔ all native Auth forms return to the exact public root (0.732179ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 124.490852
+STITCH19_20_CI_PASS access-routing
+STITCH19_20_CI_START canonical-root-entry
+BROWSER 154.0.8037.57 AUTH_FIXTURES_ONLY no live certification
+PASS ordinary canonical root opens logged-out welcome
+PASS ordinary root deep link cannot bypass canonical access
+PASS ordinary root route with type metadata still enters access
+PASS existing root session enters Cheminette even with old route hash
+PASS exact-root PKCE callback forwards the code without requiring a flow query
+PASS root recovery callback reaches the native password form
+PASS legacy implicit root callback credentials reach only private callback input
+PASS root provider error is visible and sanitized query
+PASS root provider error is visible and sanitized fragment
+PASS signup mismatch can be corrected by editing only the first password
+PASS recovery mismatch can be corrected by editing only the first password
+PASS root invitation survives forwarding despite an ordinary legacy hash
+{
+  "liveBackend": false,
+  "canonical": "https://portenartco.github.io/dobby-demo/",
+  "results": [
+    {
+      "name": "ordinary canonical root opens logged-out welcome",
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary root deep link cannot bypass canonical access",
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary root route with type metadata still enters access",
+      "status": "PASS"
+    },
+    {
+      "name": "existing root session enters Cheminette even with old route hash",
+      "status": "PASS"
+    },
+    {
+      "name": "exact-root PKCE callback forwards the code without requiring a flow query",
+      "status": "PASS"
+    },
+    {
+      "name": "root recovery callback reaches the native password form",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy implicit root callback credentials reach only private callback input",
+      "status": "PASS"
+    },
+    {
+      "name": "root provider error is visible and sanitized query",
+      "status": "PASS"
+    },
+    {
+      "name": "root provider error is visible and sanitized fragment",
+      "status": "PASS"
+    },
+    {
+      "name": "signup mismatch can be corrected by editing only the first password",
+      "status": "PASS"
+    },
+    {
+      "name": "recovery mismatch can be corrected by editing only the first password",
+      "status": "PASS"
+    },
+    {
+      "name": "root invitation survives forwarding despite an ordinary legacy hash",
+      "status": "PASS"
+    }
+  ]
+}
+STITCH19_20_CI_PASS canonical-root-entry
+STITCH19_20_CI_START access-ui
+STITCH_ACCESS_UI_PASS 320
+STITCH_ACCESS_UI_PASS 390
+STITCH_ACCESS_UI_PASS 768
+STITCH_ACCESS_UI_PASS 1024
+STITCH_ACCESS_UI_PASS 1440
+STITCH_ACCESS_UI_PASS 1920
+STITCH19_20_CI_PASS access-ui
+STITCH19_20_CI_START access-account-races
+BROWSER 154.0.8037.57 AUTH_FIXTURES_ONLY no live certification
+PASS login displays safe diagnostic for Auth refusal
+PASS login displays safe diagnostic for household refusal after Auth
+PASS login displays safe diagnostic for unconfirmed email
+PASS login displays safe diagnostic for unrecognized credentials
+PASS editing invitation B cannot install or accept delayed preview A
+PASS actual Members invitation action opens native invitation creation
+PASS failed invitation creation has visible inline error outside access screen
+PASS owner-bound invitation survives full reload and restored Auth refresh
+PASS personal profile edit action opens fused identity and portrait form
+PASS failed PKCE confirmation preserves invitation belonging to restored Auth owner
+PASS direct account A to B switch cannot save A rendered profile draft into B
+PASS committed invitation with failed native adoption resumes through one refresh without replay
+PASS already verified account can leave an invalid invitation for its existing household
+PASS invitation recovery preserves pending token when refreshed profile
+PASS invitation recovery preserves pending token when refreshed household
+PASS invitation recovery preserves pending token when refreshed unavailable
+PASS invitation recovery preserves pending token when refreshed active is unverified
+PASS invitation recovery CAS preserves same token of another owner
+PASS invitation recovery CAS preserves newer token of same owner
+PASS account switch during invitation recovery refresh preserves new owner token and blocks navigation
+PASS account switch during invitation recovery CAS preserves new owner token and blocks navigation
+PASS valid invitation for another household keeps the explicit acceptance path
+PASS initialization stale owner cleanup preserves a newer current owner invitation
+PASS visible account logout works for verified member and preserves cached family
+PASS visible account logout works for unverified native user and preserves cached family
+PASS deferred account logout serializes repeated activation and keeps cached members
+{
+  "liveBackend": false,
+  "results": [
+    {
+      "name": "login displays safe diagnostic for Auth refusal",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for household refusal after Auth",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unconfirmed email",
+      "status": "PASS"
+    },
+    {
+      "name": "login displays safe diagnostic for unrecognized credentials",
+      "status": "PASS"
+    },
+    {
+      "name": "editing invitation B cannot install or accept delayed preview A",
+      "status": "PASS"
+    },
+    {
+      "name": "actual Members invitation action opens native invitation creation",
+      "status": "PASS"
+    },
+    {
+      "name": "failed invitation creation has visible inline error outside access screen",
+      "status": "PASS"
+    },
+    {
+      "name": "owner-bound invitation survives full reload and restored Auth refresh",
+      "status": "PASS"
+    },
+    {
+      "name": "personal profile edit action opens fused identity and portrait form",
+      "status": "PASS"
+    },
+    {
+      "name": "failed PKCE confirmation preserves invitation belonging to restored Auth owner",
+      "status": "PASS"
+    },
+    {
+      "name": "direct account A to B switch cannot save A rendered profile draft into B",
+      "status": "PASS"
+    },
+    {
+      "name": "committed invitation with failed native adoption resumes through one refresh without replay",
+      "status": "PASS"
+    },
+    {
+      "name": "already verified account can leave an invalid invitation for its existing household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed profile",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed household",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed unavailable",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery preserves pending token when refreshed active is unverified",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves same token of another owner",
+      "status": "PASS"
+    },
+    {
+      "name": "invitation recovery CAS preserves newer token of same owner",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery refresh preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "account switch during invitation recovery CAS preserves new owner token and blocks navigation",
+      "status": "PASS"
+    },
+    {
+      "name": "valid invitation for another household keeps the explicit acceptance path",
+      "status": "PASS"
+    },
+    {
+      "name": "initialization stale owner cleanup preserves a newer current owner invitation",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for verified member and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "visible account logout works for unverified native user and preserves cached family",
+      "status": "PASS"
+    },
+    {
+      "name": "deferred account logout serializes repeated activation and keeps cached members",
+      "status": "PASS"
+    }
+  ]
+}
+STITCH19_20_CI_PASS access-account-races
+STITCH19_20_CI_START native-ceremony-dialogs
+CEREMONIES_MODAL_PASS 320
+CEREMONIES_MODAL_PASS 390
+CEREMONIES_MODAL_PASS 768
+CEREMONIES_MODAL_PASS 1024
+CEREMONIES_MODAL_PASS 1440
+CEREMONIES_MODAL_PASS 1920
+STITCH19_20_CI_PASS native-ceremony-dialogs
+STITCH19_20_CI_START portrait-assets-and-renderers
+STITCH19_20_PORTRAITS_PASS: 24 canonical IDs accepted, 8 unchanged native crops, 16 recovered cells, decoded local atlases, shared renderer, emoji and Patronus compatibility
+STITCH19_20_CI_PASS portrait-assets-and-renderers
+STITCH19_20_CI_START responsive-wheel-touch-and-keyboard
+STITCH_RESPONSIVE_PASS 320 native wheel/touch, shell, short form, modal and panel lock
+STITCH_RESPONSIVE_PASS 390 native wheel/touch, shell, short form, modal and panel lock
+STITCH_RESPONSIVE_PASS 768 native wheel/touch, shell, short form, modal and panel lock
+STITCH_RESPONSIVE_PASS 1024 native wheel/touch, shell, short form, modal and panel lock
+STITCH_RESPONSIVE_PASS 1440 native wheel/touch, shell, short form, modal and panel lock
+STITCH_RESPONSIVE_PASS 1920 native wheel/touch, shell, short form, modal and panel lock
+STITCH19_20_CI_PASS responsive-wheel-touch-and-keyboard
+STITCH19_20_CI_START entry-ritual
+PASS first single touch uses default ON and green flames
+PASS effects false sound false reduced false
+PASS effects false sound true reduced false
+PASS effects true sound false reduced true
+PASS effects true sound true reduced true
+PASS late image decode preserves short sound with effects false reduced false
+PASS late image decode preserves short sound with effects true reduced true
+PASS session entry bypasses seen intro and ends at Traverse
+PASS configured profile retains legacy bypass but session entry shows Cheminette
+PASS leaving a running traversal closes audio and animation without late navigation
+PASS hidden traversal can be retried without duplicate animation or audio
+STITCH_ENTRY_RITUAL_PASS default first touch/green flames; effects/sound/reduced independence; session/legacy entry; lifecycle cleanup
+STITCH19_20_CI_PASS entry-ritual
+STITCH19_20_CI_PASS all 8 native additions; source fingerprints unchanged

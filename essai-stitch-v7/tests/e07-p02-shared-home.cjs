@@ -106,7 +106,7 @@ async function login(browser,server,label){
 
     await model(B.page,'home',(await item(B.page)).id,125);await settle(B.page);await settle(A.page);await amount(A.page,125,375);
     await B.page.evaluate(()=>DobbyCuisine.refresh());const beforeCancel=server.writes.length;
-    await B.page.locator('[data-cu-action=e072-home]').first().click();await B.page.locator('#e072-home-qty').fill('99');await B.page.locator('[data-cu-action=e072-cancel]').click();
+    await B.page.locator('[data-cu-action=e072-home]').first().click();await B.page.locator('[data-cu-action=e072-home-partial]').click();await B.page.locator('#e072-home-qty').fill('99');await B.page.locator('[data-cu-action=e072-cancel]').click();
     await amount(B.page,125,375);assert.equal(server.writes.length,beforeCancel,'Cancelling the availability editor never submits a write');
     await model(B.page,'home',(await item(B.page)).id,0);await settle(B.page);await settle(A.page);await amount(A.page,0,500);
     record('B modifies and cancels the shared declaration');
@@ -221,6 +221,7 @@ async function login(browser,server,label){
 
     const legacyServer=fixture({supportsHome:false});old=await login(browser,legacyServer,'legacy');
     assert.equal((await native(old.page,'read')).homeSupported,false);
+    await old.page.evaluate(()=>DobbyCuisine.refresh());assert.match(await old.page.locator('[data-e072-backend-gate]').innerText(),/mise à jour de la base requise/);await old.page.locator('[data-cu-action=e072-home]').first().click();assert.equal(await old.page.locator('[data-cu-action=e072-home-all]').count(),0,'Unsupported backend never offers a false-success write');assert.match(await old.page.locator('[data-e072-dialog] [role=alert]').innerText(),/mise à jour/);await old.page.locator('[data-cu-action=e072-close]').click();
     const before=await old.page.evaluate(()=>DobbyCuisineEngine.evaluate('return JSON.stringify(st.shopFinal.homeByScope??null);'));
     await assert.rejects(model(old.page,'home',(await item(old.page)).id,200),/migration/i);
     assert.equal(await old.page.evaluate(()=>DobbyCuisineEngine.evaluate('return JSON.stringify(st.shopFinal.homeByScope??null);')),before,'Unsupported schema never stores a local false success');

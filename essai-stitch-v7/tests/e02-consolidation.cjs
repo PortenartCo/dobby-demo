@@ -7,7 +7,7 @@ async function install(context){
  await context.addInitScript(()=>{
   if(location.pathname.includes('essai-stitch-v5-famille/index.html')){
    window.__e02Identity={userId:'TEST-review-A',householdId:'TEST-review-household'};let nativeAPI;
-   Object.defineProperty(window,'DobbyFamilyUI',{configurable:true,get:()=>nativeAPI,set:api=>{nativeAPI={...api,getContext:()=>window.__e02Identity};}});
+   Object.defineProperty(window,'DobbyFamilyUI',{configurable:true,get:()=>nativeAPI,set:api=>{nativeAPI={...api,getContext:()=>({...window.__e02Identity,memberId:'TEST-chat-parent',identityVerified:true}),access:{...api.access,state:()=>({...api.access.state(),...window.__e02Identity,verified:true,memberId:'TEST-chat-parent',profile:{id:'TEST-chat-parent'},permissions:{canEdit:true}})}};}});
   }
   if(!location.pathname.includes('essai-stitch-v5-famille/')){
    window.__e02Speech={instances:[],spoken:[],failStart:false};
@@ -23,7 +23,7 @@ async function install(context){
   }
  });
 }
-async function ready(page){await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&window.DobbyFamilyStitch?.ready&&!document.querySelector('#user-input')?.disabled);}
+async function ready(page){await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&window.DobbyFamilyStitch?.ready&&!document.querySelector('#user-input')?.disabled);await page.evaluate(()=>DobbyFamilyStitchEngine.evaluate("if(!st.familyMembers.some(m=>m.id==='TEST-chat-parent')){st.familyMembers.push({id:'TEST-chat-parent',name:'TEST Parent Chat',memberCategory:'parent'});save();}"));}
 async function decoded(page){await page.evaluate(()=>Promise.all([document.fonts.ready,...[...document.images].map(image=>image.decode().catch(()=>{}))]));}
 const input=page=>page.locator('#user-input'),button=(page,name)=>page.locator('[data-fa-action="rg-chat-'+name+'"]');
 const status=page=>page.locator('[data-e02-status]').textContent();
@@ -36,7 +36,7 @@ async function voiceCases(page){
  const count=()=>page.locator('[data-e02-message=user]').count();
  await page.evaluate(()=>DobbyCuisineList.snapshot(DobbyFamilyStitchEngine));
  const initial=await native(page,'return JSON.stringify({items:st.shopFinal.items,history:st.shopHistory});');
- await button(page,'voice').click();
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});
  await page.waitForFunction(()=>document.querySelector('[data-fa-action=rg-chat-voice]').getAttribute('aria-pressed')==='true');
  await result(page,[{text:'acheter du lait TEST MULTISEGMENT',final:true}]);
  await page.waitForFunction(()=>!DobbyChat.busy);
@@ -52,32 +52,32 @@ async function voiceCases(page){
  await end(page);
  assert.equal(await count(),0,'natural browser end must never send a partial message');
  assert.equal(await input(page).inputValue(),'acheter du lait TEST MULTISEGMENT et du pain');
- await button(page,'resume').waitFor({state:'visible'});
- await button(page,'resume').click();
+ assert.equal(await button(page,'resume').count(),0,'no click-toggle resume control');
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});
  await result(page,[{text:'pour demain',final:true}]);
  assert.equal(await input(page).inputValue(),'acheter du lait TEST MULTISEGMENT et du pain pour demain');
  await page.evaluate(()=>{__e02OldResult?.({resultIndex:0,results:[Object.assign([{transcript:'SECRET OLD CALLBACK'}],{isFinal:true})]});__e02OldEnd?.();});
  assert.equal(await input(page).inputValue(),'acheter du lait TEST MULTISEGMENT et du pain pour demain','callbacks from the previous microphone run must be ignored');
- await button(page,'stop').click();
+ await button(page,'voice').dispatchEvent('pointerup',{pointerId:1});
  assert.equal(await count(),0,'Stop keeps the draft without sending');
  await page.screenshot({path:path.join(out,'dictation-paused-simulated-390.png')});
  await button(page,'abort').click();
  assert.equal(await input(page).inputValue(),'','Cancel explicitly restores the draft from before dictation');
  await input(page).fill('TEXTE AVANT DICTÉE');
- await button(page,'voice').click();
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});
  await result(page,[{text:'phrase reconnue',final:false}]);
  await error(page,'network');
  assert.equal(await input(page).inputValue(),'TEXTE AVANT DICTÉE phrase reconnue','network interruption preserves interim text');
  assert.match(await status(page),/conserv|brouillon/i);
  assert.equal(await count(),0);
- await button(page,'resume').click();
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});
  await result(page,[{text:'suite reconnue',final:true}]);
- await button(page,'stop').click();
+ await button(page,'voice').dispatchEvent('pointerup',{pointerId:1});
  assert.equal(await input(page).inputValue(),'TEXTE AVANT DICTÉE phrase reconnue suite reconnue');
  await button(page,'abort').click();
  assert.equal(await input(page).inputValue(),'TEXTE AVANT DICTÉE');
  await input(page).fill('');
- await button(page,'voice').click();await result(page,[{text:'première version',final:false}]);
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});await result(page,[{text:'première version',final:false}]);
  await page.evaluate(()=>{window.__e02BeforeEdit=__e02Speech.instances.at(-1).onresult;__e02Speech.deferStop=true;});
  await input(page).fill('Texte corrigé à la main');
  await page.evaluate(()=>__e02BeforeEdit?.({resultIndex:0,results:[Object.assign([{transcript:'ancienne transcription tardive'}],{isFinal:true})]}));
@@ -85,13 +85,13 @@ async function voiceCases(page){
  await page.evaluate(()=>__e02Speech.deferStop=false);
  await button(page,'abort').click();
  for(const name of ['no-speech','not-allowed','service-not-allowed','audio-capture','aborted']){
-  await button(page,'voice').click();await result(page,[{text:'TRANSCRIPTION '+name,final:false}]);await error(page,name);
+  await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});await result(page,[{text:'TRANSCRIPTION '+name,final:false}]);await error(page,name);
   assert.equal(await input(page).inputValue(),'TRANSCRIPTION '+name,`${name} keeps recognized text`);assert.equal(await count(),0);
   await button(page,'abort').click();
  }
- await page.evaluate(()=>__e02Speech.failStart=true);await button(page,'voice').click();
+ await page.evaluate(()=>__e02Speech.failStart=true);await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});
  assert.match(await status(page),/pas pu démarrer/i);assert.equal(await count(),0);
- await page.evaluate(()=>__e02Speech.failStart=false);await button(page,'resume').click();
+ await page.evaluate(()=>__e02Speech.failStart=false);await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});
  await result(page,[{text:'acheter du lait TEST EXPLICITE',final:true}]);
  await end(page);assert.equal(await count(),0);
  await page.locator('[data-e01-toggle=sound]').click();
@@ -113,12 +113,12 @@ async function voiceCases(page){
  assert.equal(await page.evaluate(()=>__e02Speech.spoken.length),1,'written requests stay written');
  await page.locator('[data-e01-toggle=sound]').click();
  const base=await count();
- await button(page,'voice').click();await result(page,[{text:'SECRET NAVIGATION',final:false}]);
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});await result(page,[{text:'SECRET NAVIGATION',final:false}]);
  await page.evaluate(()=>window.__e02LateNavigation=__e02Speech.instances.at(-1).onresult);
  await page.evaluate(()=>DobbyFamilyStitch.open('menu'));await page.evaluate(()=>__e02LateNavigation?.({resultIndex:0,results:[Object.assign([{transcript:'acheter du SECRET NAVIGATION'}],{isFinal:true})]}));
  await page.evaluate(()=>DobbyFamilyStitch.open('chat'));await ready(page);
  assert.equal(await input(page).inputValue(),'SECRET NAVIGATION','navigation retains an interrupted draft for the same identity');assert.equal(await count(),base);
- await input(page).fill('');await button(page,'voice').click();await result(page,[{text:'SECRET IDENTITY A',final:false}]);
+ await input(page).fill('');await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});await result(page,[{text:'SECRET IDENTITY A',final:false}]);
  await page.evaluate(()=>{window.__e02LateIdentity=__e02Speech.instances.at(-1).onresult;DobbyFamilyStitchEngine.win().__e02Identity={userId:'TEST-review-B',householdId:'TEST-review-household'};DobbyFamilyStitchEngine.evaluate('render();');});
  await page.waitForFunction(()=>!document.querySelector('#user-input').disabled&&document.querySelector('#user-input').value==='');
  await page.evaluate(()=>__e02LateIdentity?.({resultIndex:0,results:[Object.assign([{transcript:'acheter du SECRET IDENTITY A'}],{isFinal:true})]}));
@@ -148,7 +148,7 @@ async function voiceCases(page){
  }
  await send(page,'Réserve un billet de train');assert.match(await page.locator('#chat-thread').textContent(),/ne sait pas encore interpréter/);
  await page.evaluate(()=>{delete window.SpeechRecognition;delete window.webkitSpeechRecognition;});
- await button(page,'voice').click();assert.match(await status(page),/dictée.*clavier/i);
+ await button(page,'voice').dispatchEvent('pointerdown',{pointerId:1,button:0,isPrimary:true});assert.match(await status(page),/dictée.*clavier/i);
  assert.notEqual(await button(page,'voice').getAttribute('aria-pressed'),'true');
  return storageEvidence;
 }
@@ -161,20 +161,14 @@ async function voiceCases(page){
    await page.goto(origin+appPath+'/famille.html#chat',{waitUntil:'domcontentloaded'});await ready(page);await decoded(page);
    if(process.env.E02_BASELINE){await page.screenshot({path:path.join(out,`before-${width}.png`)});await context.close();continue;}
    await page.goto(origin+appPath+'/famille.html#chat',{waitUntil:'domcontentloaded'});await ready(page);await decoded(page);await page.evaluate(()=>scrollTo(0,0));
-   const geometry=await page.locator('[data-e02-hero]').evaluate(frame=>{
-    const image=frame.querySelector('img'),r=frame.getBoundingClientRect(),box=image.getBoundingClientRect(),sourceRatio=image.naturalWidth/image.naturalHeight;
-    const scale=Math.min(box.width/image.naturalWidth,box.height/image.naturalHeight),paintWidth=image.naturalWidth*scale,paintHeight=image.naturalHeight*scale;
-    return {width:r.width,height:r.height,decoded:image.complete&&image.naturalWidth>0&&image.naturalHeight>0,sourceRatio,fit:getComputedStyle(image).objectFit,paintWidth,paintHeight,inside:box.left+(box.width-paintWidth)/2>=r.left-.5&&box.right-(box.width-paintWidth)/2<=r.right+.5&&box.top+(box.height-paintHeight)/2>=r.top-.5&&box.bottom-(box.height-paintHeight)/2<=r.bottom+.5};
-   });
-   assert.ok(geometry.height>=230&&geometry.height<=(width>=768?420:310),'Dobby has a prominent hero that expands on desktop');assert.equal(geometry.decoded,true);
-   assert.ok(geometry.paintWidth>100&&geometry.paintHeight>100,'The decoded original character remains visibly painted');
-   assert.ok(Math.abs(geometry.paintWidth/geometry.paintHeight-geometry.sourceRatio)<.001,'The full painted illustration preserves its decoded natural ratio');
-   assert.equal(geometry.inside,true,'The full painted illustration fits within its responsive image frame');assert.equal(geometry.fit,'contain','The original Dobby illustration stays fully visible without cropping');
+   const geometry=await page.locator('[data-e02-voice-primary]').evaluate(frame=>{const r=frame.getBoundingClientRect(),button=frame.querySelector('button').getBoundingClientRect();return{top:r.top,bottom:r.bottom,buttonWidth:button.width,buttonHeight:button.height};});
+   assert.ok(geometry.top>=72&&geometry.bottom<500,'Primary voice visible immediately');assert.ok(geometry.buttonWidth>=140&&geometry.buttonHeight>=140,'large central voice target');
+   assert.match(await page.locator('[data-e02-voice-primary]').innerText(),/Maintenez appuyé pour parler/);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    await page.screenshot({path:path.join(out,`after-${width}.png`)});
    if(width===390)storageEvidence=await voiceCases(page);
    await page.setViewportSize({width,height:540});await input(page).focus();
-   const composer=await page.evaluate(()=>{const footer=document.querySelector('[data-e02-composer]').getBoundingClientRect(),nav=document.querySelector('body > nav[data-e01-chrome]').getBoundingClientRect();return {bottom:footer.bottom,navTop:nav.top,width:document.documentElement.scrollWidth};});
+   const composer=await page.evaluate(()=>{const footer=document.querySelector('#user-input').getBoundingClientRect(),nav=document.querySelector('body > nav[data-e01-chrome]').getBoundingClientRect();return {bottom:footer.bottom,navTop:nav.top,width:document.documentElement.scrollWidth};});
    assert.ok(composer.bottom<=composer.navTop+1,'the message field stays above the dock on a reduced viewport');assert.equal(composer.width,width);
    await page.screenshot({path:path.join(out,`keyboard-simulated-${width}.png`)});
    assert.deepEqual(errors,[]);await context.close();console.log('E02_CONSOLIDATION_PASS',width);

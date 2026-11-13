@@ -1,0 +1,11 @@
+# Rôles familiaux : garde manuelle provisoire
+
+**ATTENTE_UTILISATEUR. Non exécuté à distance.** Ne pas relancer la migration Stitch déjà installée. Ce pack restreint les écritures directes du rôle authenticated sur modules, courses et fichiers au parent canoniquement lié de son foyer ; il conserve toutes les lectures et ne touche aucune donnée. Il ne remplace pas l'audit des RPC SECURITY DEFINER existantes.
+
+1. Sauvegarder les définitions et le projet personnel habituel. Exécuter `roles-00-preflight.sql` en lecture seule. Vérifier qu'aucune policy restrictive préexistante incompatible, fonction privée ou rôle privilégié inconnu ne contourne le modèle.
+2. Examiner les corps réels du writer Missions V2 et ses helpers ; leur source privée manque dans le diagnostic fourni. **Ne pas activer le rattachement enfant ni les nouvelles validations partagées avant cet examen et l'installation du protocole participants.** Le script n'accorde aucun nouvel accès enfant.
+3. Dans le projet personnel uniquement, appliquer `roles-01-apply.sql` transactionnel puis `roles-02-verify.sql`. Une erreur annule la transaction ; ne pas contourner ni affaiblir les policies.
+4. Recette avec parent A, enfant B, autre foyer C : parent modifie dans A uniquement ; enfant lit mais PATCH/POST/DELETE directs refusés pour courses, menus, recettes, famille, contrats et fichiers ; modifier sa seule Maison/son Patronus via RPC ciblée est permis ; autre membre/foyer refusé. Tester également chaque RPC privilégiée et une révision périmée. Garder la validation mission enfant indisponible tant que le protocole total unique n'est pas vérifié.
+5. Retrait ciblé : `roles-03-rollback.sql`, qui restaure le comportement antérieur en retirant seulement ces restrictions. **Le retrait peut réouvrir les anciens droits ; garder les parcours enfant désactivés et ne pas l'utiliser comme solution normale.** Aucun profil, fichier ou historique supprimé.
+
+Les RPC V7 actuelles ne gèrent que son profil et les dépendants non liés. La gestion complète d'un autre parent, la race animale par RPC et le rattachement tardif au même profil exigent une évolution serveur ciblée (contrat détaillé dans le rapport Famille). Un parent n'est pas promu automatiquement par âge.

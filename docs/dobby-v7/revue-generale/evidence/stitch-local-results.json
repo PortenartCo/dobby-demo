@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "campaign": "stitch19-20-native",
+  "startedAt": "2026-11-13T02:07:23.064Z",
+  "sourceSha": "2c6b23527f5df293aa90a6b06be56e43abf50526",
+  "dirtyCheckout": true,
+  "origin": "http://127.0.0.1:8765",
+  "sourceSha256": {
+    "index.html": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+    "essai-stitch-v5-famille/family-access.mjs": "5aca6a415d0411b0a440623ff6849b976d705fc08eef5b2276ab5783cff54372",
+    "essai-stitch-v5-famille/family-v2.js": "a1604d2430eefef52de6dedf7f0e506ca8f5dbb37094285ca50b04fa8376c089",
+    "essai-stitch-v5-famille/family-modules.js": "98850b8517961a9b238de68d2155fe8d7f3b1a5df141ed4852ea6fc29fcf90e3",
+    "essai-stitch-v5-famille/family-profile.js": "d6faf10b1a2b79f0890ec08de43773a2c3128ccfca6e1dc5b9011b8e974a7125",
+    "essai-stitch-v7/access-config.js": "16cdc4629ad40e2577f23a8a8bf2ab87a8263b8a1bfff363850fca319822adfa",
+    "essai-stitch-v7/access-entry.js": "ce603b74022bc1f2319f46d5b3054cc902735317da5c383f44fb6d8adb9feeb3",
+    "essai-stitch-v7/access-flow.mjs": "3de70f89fe210902b85650dec30b79d80f8d3d3a5e9d1d49286b28d8fa50798f",
+    "essai-stitch-v7/access.js": "dd0fefae02e58ab73846960979b8dded3562adb5067301b6bc25f00b2e619d59",
+    "essai-stitch-v7/magic-profile.js": "64c2e45a394f390b6caf0e9e5715f5010e93eaa89332136c09183adae1df5fac",
+    "essai-stitch-v7/access.css": "7b6a09cb1a3f7fb53ecd3e5237abc23b84dacd41f5dab9e1cc436c63ac025202",
+    "essai-stitch-v7/family-engine.js": "4fc2ecb16f38504cf0410ac6176ac9a381e4ab4909100b0f9174defa2f621dfa",
+    "essai-stitch-v7/family.js": "6ad22be74783f4128db69ce05eb1a18d5778b563ac913b3ac948599908e2f7c3",
+    "essai-stitch-v7/ceremonies.js": "7515fb32b4ebfb9290d8a3cdfe03219f44dec86b35be1bd068bdafdbe0e5934c",
+    "essai-stitch-v7/ceremonies.css": "096fd647b08a05c957bc326bcf001e9076af21e104106e8364265888fa0b449e",
+    "essai-stitch-v7/responsive.css": "1b448d9fb5208dca0334443650664beef4a4a371ea8e73afe52f5b7c3a85c888",
+    "essai-stitch-v7/ritual.js": "3153b91dc892f1edfdc6cacba4d6e09951f7805601a774f32bb9fa9552d74484",
+    "essai-stitch-v7/ritual.css": "706d9d7dd65107ae6d10763df48f024460285530933dcd1c1daac9f3feb7133c",
+    "essai-stitch-v7/famille.html": "0be04cd067682c4dd5b0bceb6f6613728c7bc4ee63954bf48b699c1f1b355ca5",
+    "essai-stitch-v7/traverse.html": "ba46706bfc880090935c675db93373d0fe94efa2cee7f684a0a8677c50cd56dc",
+    "essai-stitch-v7/assets/magic/portraits-09-24.png": "c1c4e2d7819c1540b66046709525187ba8219ceaec8308de3d410f1238dc45a9"
+  },
+  "liveBackendVerified": false,
+  "realAccountsVerified": false,
+  "authOutcomes": "Declared local fixtures; no remote signup, session mutation or invitation certification.",
+  "separateRequiredCampaigns": [
+    "Native/offline unit contracts",
+    "E06 scoring and identity units",
+    "Full historical source/browser campaign",
+    "PREP-01 native writers and browser journeys"
+  ],
+  "results": [
+    {
+      "name": "access-routing",
+      "command": [
+        "node",
+        "--test",
+        "essai-stitch-v7/tests/access-flow.test.mjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 212,
+      "log": "logs/access-routing.log"
+    },
+    {
+      "name": "canonical-root-entry",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/stitch-root-entry.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 27942,
+      "log": "logs/canonical-root-entry.log"
+    },
+    {
+      "name": "access-ui",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/stitch-access-ui.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 66713,
+      "log": "logs/access-ui.log"
+    },
+    {
+      "name": "access-account-races",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/stitch-access-races.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 48378,
+      "log": "logs/access-account-races.log"
+    },
+    {
+      "name": "native-ceremony-dialogs",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/e06-ceremonies-ui.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 22154,
+      "log": "logs/native-ceremony-dialogs.log"
+    },
+    {
+      "name": "portrait-assets-and-renderers",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/stitch19-20-portraits.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 1201,
+      "log": "logs/portrait-assets-and-renderers.log"
+    },
+    {
+      "name": "responsive-wheel-touch-and-keyboard",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/stitch-responsive.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 74501,
+      "log": "logs/responsive-wheel-touch-and-keyboard.log"
+    },
+    {
+      "name": "entry-ritual",
+      "command": [
+        "node",
+        "essai-stitch-v7/tests/stitch-entry-ritual.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 29329,
+      "log": "logs/entry-ritual.log"
+    }
+  ],
+  "passed": true,
+  "completedAt": "2026-11-13T02:11:53.697Z"
+}

@@ -7,19 +7,19 @@ window.DobbyFamilyMemberPolicy=(()=>{
  const reason='Modification suspendue : le compte connecté n’est pas relié à un membre avec des droits parentaux vérifiés. Le serveur doit fournir cette association et contrôler les écritures.';
  function permissions(member,context={}){
   const denied={canEdit:false,canMagic:false,canCreate:false,reason};
+  const actor=context.members?.find(row=>row.id===context.actorId),role=category(actor),registered=!!member&&context.members?.some(row=>row.id===member.id),pet=category(member)==='pet';
   if(context.demo!==true){
    if(context.verified!==true||!context.userId||!context.householdId||!context.actorId||!context.members?.some(row=>row.id===context.actorId))return denied;
-   const grants=context.permissions||{},own=!!member&&member.id===context.actorId,dependent=!!member&&grants.canManageDependents===true&&['baby','child','pet'].includes(category(member)),allowed=own||dependent;
-   return{canEdit:allowed&&grants.canEdit===true,canMagic:allowed&&grants.canMagic===true,canCreate:grants.canCreate===true,reason:allowed?'Droits du compte et du membre vérifiés par le service familial.':reason};
+   const grants=context.permissions||{},own=registered&&member.id===context.actorId,dependent=registered&&grants.canManageDependents===true&&['baby','child','pet'].includes(category(member)),allowed=own||dependent;
+   return{canEdit:role==='parent'&&allowed&&grants.canEdit===true,canMagic:!pet&&allowed&&grants.canMagic===true&&(role==='parent'||role==='child'&&own),canCreate:role==='parent'&&grants.canCreate===true,reason:allowed?'Droits du compte et du membre vérifiés par le service familial ; règles serveur V7 à valider.':reason};
   }
-  const actor=context.members?.find(row=>row.id===context.actorId),role=category(actor);
   if(!actor||!role)return{...denied,reason:'Choisissez une persona fictive dont la catégorie est explicitement renseignée.'};
   if(role==='baby'||role==='pet')return{...denied,reason:'Les bébés et les animaux ne possèdent pas de session autonome.'};
-  if(role==='child')return{...denied,canMagic:!!member&&member.id===actor.id,reason:'Un enfant peut uniquement confirmer sa propre Maison et son propre Patronus par les questionnaires magiques.'};
-  const own=!!member&&member.id===actor.id,dependent=['baby','child','pet'].includes(category(member)),allowed=own||dependent;
-  return{canEdit:allowed,canMagic:allowed,canCreate:true,reason:allowed?'Droits limités à cette démonstration fictive.':member?'Un parent peut modifier sa fiche et celles des enfants, bébés et animaux, pas celle d’un autre parent ni une fiche sans catégorie.':'Création fictive réservée aux enfants, bébés et animaux.'};
+  if(role==='child')return{...denied,canMagic:registered&&member.id===actor.id,reason:'Un enfant peut uniquement confirmer sa propre Maison et son propre Patronus par les questionnaires magiques.'};
+  return{canEdit:registered,canMagic:registered&&!pet,canCreate:true,reason:registered?'Droits limités à cette démonstration fictive.':member?'Le membre doit appartenir au registre courant.':'Création fictive réservée aux enfants, bébés et animaux.'};
  }
  function assertWrite(existing,values,context,{magicResult=false}={}){
+  if((category(existing)==='pet'||values.memberCategory==='pet')&&magicResult)throw Error('Un animal gardien ne reçoit ni Maison ni Patronus.');
   const p=permissions(existing,context);
   if(!existing){if(!p.canCreate)throw Error(p.reason);if(!['baby','child','pet'].includes(values.memberCategory))throw Error('La création directe est réservée aux bébés, enfants et animaux. Les parents rejoignent le foyer par invitation.');}
   else if(!p.canEdit){
@@ -45,7 +45,7 @@ window.DobbyFamilyMemberPolicy=(()=>{
   if(structured){const first=patched.firstName||'',last=patched.lastName||'',joined=[first,last].filter(Boolean).join(' ');if(!first||joined.length>80)throw Error('Indiquez un prénom et un nom de 80 caractères maximum au total.');if(name&&name!==joined)throw Error('Le nom du membre doit correspondre au prénom et au nom renseignés.');patched.name=joined;}
   else if(name!==undefined){if(!name)throw Error('Indiquez le nom du membre.');if(existing?.firstName&&name!==[existing.firstName,existing.lastName||''].filter(Boolean).join(' '))throw Error('Modifiez le prénom et le nom dans les champs d’identité pour préserver leur cohérence.');patched.name=name;}
   if(!patched.name)throw Error('Indiquez le prénom du membre.');
-  for(const[key,max]of [['nickname',80],['notes',4000],['species',80]]){const value=text(source,key,max);if(value!==undefined)patched[key]=value;}
+  for(const[key,max]of [['nickname',80],['notes',4000],['species',80],['breed',80]]){const value=text(source,key,max);if(value!==undefined)patched[key]=value;}
   if(Object.hasOwn(source,'memberCategory')){if(!categories.includes(source.memberCategory))throw Error('Catégorie du membre invalide.');patched.memberCategory=source.memberCategory;}
   if(Object.hasOwn(source,'birthdate')){const value=text(source,'birthdate',20);if(value&&!validDate(value)){if(value!==existing?.birthdate)throw Error('Date de naissance invalide.');}/* A native date input cannot display a legacy invalid date. Preserve it unless the caller explicitly clears it. */patched.birthdate=!value&&existing?.birthdate&&!validDate(existing.birthdate)&&source.clearBirthdate!=='true'?existing.birthdate:value;}
   if(Object.hasOwn(source,'avatar')){const value=text(source,'avatar',80);patched.avatar=value||'👤';}

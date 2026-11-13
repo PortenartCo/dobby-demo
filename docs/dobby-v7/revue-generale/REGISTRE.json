@@ -1,0 +1,302 @@
+[
+  {
+    "id": "S01",
+    "requirement": "Bienvenue succincte et illustrée sans session ; connexion, inscription, invitation ; cinq écrans d'accès natifs, aucun écran familial fictif",
+    "acceptance": "Démarrage hors session, navigation réelle, bouton Continuer, pas d'identités fictives"
+  },
+  {
+    "id": "S02",
+    "requirement": "Session déjà active ou compte existant qui se connecte → Cheminette dès l'entrée → animation verte au premier appui → Traverse, pas de boucle",
+    "acceptance": "1 clic/toucher suffit ; retour normal ; aucune cérémonie déjà validée répétée"
+  },
+  {
+    "id": "S03",
+    "requirement": "Nouveau compte sans invitation → profil → création de foyer réel → Traverse",
+    "acceptance": "Le formulaire n'utilise ni nom factice ni foyer implicite ; création vérifiée ou clairement bloquée sans DB"
+  },
+  {
+    "id": "S04",
+    "requirement": "Nouveau compte invité → inscription/connexion → profil → confirmer le foyer réel/invitant ; états invitation exclusifs",
+    "acceptance": "Validité/expiration/invalidité, pas de simulation d'état visible ; sans vrai backend, gate honnête"
+  },
+  {
+    "id": "S05",
+    "requirement": "Maison : introduction sur Traverse, test natif 6 questions + éventuel départage OU choix manuel 4 Maisons ; révélation et confirmation",
+    "acceptance": "Questionnaires, blasons, score/version, provenance manuelle ou calculée ; reprise et non répétition"
+  },
+  {
+    "id": "S06",
+    "requirement": "Patronus : fenêtre après Maison, test natif 5 questions + éventuel départage OU choix manuel parmi 12 ; révélation proportionnée",
+    "acceptance": "12 résultats possibles, visuel non coupé, progression, enregistrement distinct, retour Traverse"
+  },
+  {
+    "id": "S07",
+    "requirement": "Cheminette et effets : ON par défaut sauf désactivation explicite, interrupteur reflétant l'état réel, son indépendant",
+    "acceptance": "Première session sans double basculement, audio OFF respecté, effets OFF mais navigation OK"
+  },
+  {
+    "id": "S08",
+    "requirement": "Défilement vertical naturel + responsive intelligent dans tout DOBBY",
+    "acceptance": "Tests 320/390/768/1024/1440/1920 px, portrait/paysage, wheel/tactile, clavier, modales, header/dock"
+  },
+  {
+    "id": "S09",
+    "requirement": "Entrée publique canonique V7, pas l'ancien V2.9.2 ; ressources graphiques et avatars utilisables",
+    "acceptance": "URL directe après déploiement, SHA servi, HTTP 200 images/script, retour Auth, vieux liens préservés"
+  },
+  {
+    "id": "S10",
+    "requirement": "Identité canonique compte ↔ membre ↔ foyer, synchronisation et permissions réelles, aucun faux succès",
+    "acceptance": "Liens cohérents, zéro double profil, restrictions prouvées seulement si SQL réellement appliqué/testé"
+  },
+  {
+    "id": "D01",
+    "requirement": "Vocal en premier, gros bouton centré en haut, « Maintenez appuyé pour parler »",
+    "acceptance": "L'action principale reste immédiatement visible à 320 px"
+  },
+  {
+    "id": "D02",
+    "requirement": "Micro actif **uniquement pendant la pression maintenue** ; relâchement/cancel/blur arrête l'écoute",
+    "acceptance": "Pointer/touch/mouse, permission refusée, sortie de zone, aucun démarrage autonome ni mode toggle"
+  },
+  {
+    "id": "D03",
+    "requirement": "Contour du bouton s'illumine pendant TOUT l'appui et s'éteint au relâchement, même si effets décoratifs OFF",
+    "acceptance": "Pendant l'écoute = halo visible, après = éteint ; pas de micro résiduel"
+  },
+  {
+    "id": "D04",
+    "requirement": "Champ texte et bouton Envoyer sous le vocal ; historique encore en dessous et privé",
+    "acceptance": "Ordre visuel, défilement, envoi texte et historique existant non perdus"
+  },
+  {
+    "id": "N01",
+    "requirement": "Dock global **Accueil / Tâches / Repas / Courses / Famille / Menu**",
+    "acceptance": "Exactement six raccourcis, toutes pages connectées, route et état actif corrects"
+  },
+  {
+    "id": "N02",
+    "requirement": "Dock fixe, utilisable à 320 px et sur iPhone, respect du clavier/scroll, absent avant connexion",
+    "acceptance": "Aucun débordement horizontal ni bouton inaccessible, compatible safe areas"
+  },
+  {
+    "id": "H01",
+    "requirement": "Bandeau « Les Courses du Foyer » identique au bandeau de la carte événementielle",
+    "acceptance": "Fond, icône dorée, titre, taille, marges et alignements harmonisés"
+  },
+  {
+    "id": "H02",
+    "requirement": "« Gazette des Curiosités » devient **« Événements du Jour »**",
+    "acceptance": "Intitulé changé sans modifier les événements du jour ni le visuel de la carte"
+  },
+  {
+    "id": "H03",
+    "requirement": "**« + Ajouter un événement »** directement dans la carte, même vide",
+    "acceptance": "Création via agenda familial natif ; jour courant rafraîchi ; événement futur absent de « du Jour »"
+  },
+  {
+    "id": "H04",
+    "requirement": "Cartouche « Chemin de Traverse » dans l'image d'accueil **en bas à droite**",
+    "acceptance": "Badge entièrement visible et Dobby non masqué aux formats testés"
+  },
+  {
+    "id": "H05",
+    "requirement": "Bouton Effets Famille harmonisé avec toute l'application",
+    "acceptance": "Même aspect/halo, état/persistance globaux, son indépendant"
+  },
+  {
+    "id": "M01",
+    "requirement": "Création de mission en **3 étapes** : définition ; attribution+récurrence ; récompense+date limite",
+    "acceptance": "Suivant/Retour, validation, conservation brouillon, aucune création avant validation finale"
+  },
+  {
+    "id": "M02",
+    "requirement": "Après création, retour automatique à **La Bibliothèque des Missions** avec nouvelle mission affichée",
+    "acceptance": "Writer appelé une fois, tâche visible, pas de doublon"
+  },
+  {
+    "id": "M03",
+    "requirement": "Retirer radio « Personnalisée », garder presets **10/25/50** et champ Runes personnalisé",
+    "acceptance": "Saisie perso désélectionne preset, sélection preset efface perso, entier ≥0, une seule valeur"
+  },
+  {
+    "id": "M04",
+    "requirement": "« Échéance de complétion » → **« Pour quand faut-il terminer la mission ? »**",
+    "acceptance": "Pas de limite (défaut), Aujourd'hui, Demain, Choisir date ; calendrier seulement si demandé"
+  },
+  {
+    "id": "M05",
+    "requirement": "Date limite ≠ date de création/attribution ; retirer raccourci Week-end, Almanach inutile, statut retard",
+    "acceptance": "Assignment automatique, calendrier cohérent avec récurrence, retard signalé sans supprimer"
+  },
+  {
+    "id": "M06",
+    "requirement": "Attribution multiple via vrais membres/avatars ou « Toute la famille »",
+    "acceptance": "Une mission, pas de clones, candidats cohérents, « aucun membre » si réellement vide uniquement"
+  },
+  {
+    "id": "M07",
+    "requirement": "À la validation, demander les **participants réels** et distribuer UNIQUEMENT la récompense totale entre eux",
+    "acceptance": "Solo=100 %, multi=partage entier, aucun participant non choisi rémunéré, zéro si montant nul"
+  },
+  {
+    "id": "M08",
+    "requirement": "Anti-double récompense / récurrence par occurrence / règles enfants",
+    "acceptance": "Idempotence, concurrence, deuxième validation sans crédit supplémentaire, enfant ne modifie pas Runes"
+  },
+  {
+    "id": "M09",
+    "requirement": "Urgence = **fine bordure jaune doré**, statique ; en retard indiqué séparément",
+    "acceptance": "Urgent/normal/urgent+retard/terminé rendus sans animation clignotante"
+  },
+  {
+    "id": "T01",
+    "requirement": "Deux onglets au sommet : **Les Repas** (défaut) et **Grimoire des recettes**, un contenu à la fois",
+    "acceptance": "Grimoire visible sans scroller ; aucun doublon panneau long"
+  },
+  {
+    "id": "T02",
+    "requirement": "« Courses du foyer » absent de Taverne, accessible depuis dock",
+    "acceptance": "Import d'ingrédients vers courses préservé malgré retrait de la carte"
+  },
+  {
+    "id": "T03",
+    "requirement": "Repas du **jour** prévu : bouton or **« Commencer à cuisiner »** direct mode Cuisine",
+    "acceptance": "Depuis midi/soir, sans passage obligé par fiche recette ; bouton « Entrer en mode cuisine » retiré de la fiche"
+  },
+  {
+    "id": "T04",
+    "requirement": "Repas du **jour** prévu : **« Voir la recette »** discret puis double bouton **Déplacer/Annuler**",
+    "acceptance": "Voir n'ouvre pas cuisine, déplacement natif, annulation confirmée sans effacer recette"
+  },
+  {
+    "id": "T05",
+    "requirement": "Créneau du jour vide : **« + Choisir un repas »** doré",
+    "acceptance": "Sélection et enregistrement du repas corrects"
+  },
+  {
+    "id": "T06",
+    "requirement": "**Menus de la semaine** : supprimer tous boutons « Commencer à cuisiner »",
+    "acceptance": "Planning hebdo organise sans déclencher mode cuisine"
+  },
+  {
+    "id": "T07",
+    "requirement": "Menus de semaine : voir recette / déplacer / annuler / **modifier convives**",
+    "acceptance": "+/- convives met à jour portions et ingrédients du créneau, recette originale intacte"
+  },
+  {
+    "id": "T08",
+    "requirement": "Dessert cuisiné **facultatif** par midi/soir, distinct du plat",
+    "acceptance": "Ajouter, sélectionner, remplacer, déplacer, retirer dessert sans altérer plat"
+  },
+  {
+    "id": "T09",
+    "requirement": "Dessert : recette, portions, état de préparation et éventuels restes indépendants",
+    "acceptance": "Préparer plat n'achève pas dessert ; un dessert peut être cuisiné avant et servir à plusieurs repas"
+  },
+  {
+    "id": "T10",
+    "requirement": "**Grimoire → catégorie/filtre Desserts**, combinable recherche/autres filtres",
+    "acceptance": "Création de recette classable dessert, ajout depuis repas ouvre grimoire filtré Desserts"
+  },
+  {
+    "id": "T11",
+    "requirement": "Recettes/ingrédients dessert → liste de courses familiale unique",
+    "acceptance": "Quantités compatibles regroupées, pas de duplication abusive, origine conservée"
+  },
+  {
+    "id": "T12",
+    "requirement": "« Vos envies » → **« Des envies particulières ? »** dans un accordéon replié par défaut",
+    "acceptance": "Filtres conservés au repli, compteur de critères actifs visible, recettes proposées accessibles"
+  },
+  {
+    "id": "T13",
+    "requirement": "À la fin du mode Cuisine : « Bon appétit ! » puis **retour automatique Traverse**",
+    "acceptance": "Message bref, retour immédiat possible, pas de boucle, état préparé du seul élément concerné"
+  },
+  {
+    "id": "C01",
+    "requirement": "**Supprimer modes Préparation et Mode magasin** (la décision plus ancienne est annulée)",
+    "acceptance": "Liste unique ; aucune commande de bascule restante"
+  },
+  {
+    "id": "C02",
+    "requirement": "Compteur **X/Y achetés**, barre de progression, restants **visibles dans la liste unique**",
+    "acceptance": "Mise à jour au cochage ; déclaration « maison » non comptée comme achat"
+  },
+  {
+    "id": "C03",
+    "requirement": "Garder modifier/ajouter/supprimer/cocher directement, terminer courses, synchronisation",
+    "acceptance": "État acheté, non acheté, données locales et synchronisées conservés"
+  },
+  {
+    "id": "C04",
+    "requirement": "« Déjà à la maison » en **modale superposée** et non bloc inséré dans la page",
+    "acceptance": "Fond assombri, scroll liste stable, clavier et fermeture X fonctionnels"
+  },
+  {
+    "id": "C05",
+    "requirement": "Modale simplifiée : **Tout est disponible** ou **J'en ai une partie** (quantité unique)",
+    "acceptance": "Reste recalculé, pas d'achat fictif, correction ultérieure permise"
+  },
+  {
+    "id": "C06",
+    "requirement": "« Options de la liste » déplacé vers **Menu → Paramètres**",
+    "acceptance": "Sync manuelle / copie articles locaux récupérables si besoin, non affichées dans liste"
+  },
+  {
+    "id": "C07",
+    "requirement": "Disponibilité partagée `at_home_quantity` : préparation manuelle si mise à jour DB requise",
+    "acceptance": "État d'erreur réel non masqué ; SQL/vérif/rollback préparés, jamais exécutés"
+  },
+  {
+    "id": "F01",
+    "requirement": "**Deux** accordéons seulement : **Membres du foyer** et **Événements & Préparatifs** ; un ouvert à la fois",
+    "acceptance": "Vue compacte, sections fermées avec résumés, pas de grande carte vide"
+  },
+  {
+    "id": "F02",
+    "requirement": "Retirer « Contacts du foyer » de Famille, garder dans Menu général",
+    "acceptance": "Pas de bouton doublon, accès Menu fonctionne"
+  },
+  {
+    "id": "F03",
+    "requirement": "**Fusionner Événements et Préparatifs** dans la même section",
+    "acceptance": "Agenda, événements, modèles PREP-01 et listes liées réutilisés sans nouvel annuaire"
+  },
+  {
+    "id": "F04",
+    "requirement": "« Mémos du foyer » → **« Notes du foyer » dans Menu**, ne figure plus dans Famille",
+    "acceptance": "Accès, création et données existantes préservés"
+  },
+  {
+    "id": "F05",
+    "requirement": "Scinder « Ajouter un enfant ou un animal » en **Ajouter un enfant** / **Ajouter un animal gardien**",
+    "acceptance": "Deux parcours/formulaires distincts et clairement nommés"
+  },
+  {
+    "id": "F06",
+    "requirement": "Enfant : identité, surnom, naissance, avatar, infos, Maison/Patronus test ou choix manuel",
+    "acceptance": "Profil familial enfant sans compte Auth, vrais moteurs E06, parent peut l'accompagner"
+  },
+  {
+    "id": "F07",
+    "requirement": "Animal : nom, espèce, race, naissance facultative, image/avatar, notes",
+    "acceptance": "Aucun compte, Maison/Patronus, ni Runes pour un animal"
+  },
+  {
+    "id": "F08",
+    "requirement": "Enfant grandi : **Donner accès à DOBBY**, rattachement tardif à son profil EXISTANT",
+    "acceptance": "Même member_id, historique/runes/magie conservés, aucune promotion automatique par âge"
+  },
+  {
+    "id": "F09",
+    "requirement": "**Parent : accès complet à SON foyer**. **Enfant : lecture seule**, sauf validation d'une mission autorisée et modification de SA Maison / SON Patronus",
+    "acceptance": "Frontend ET contrôles backend, refus des écritures externes/autres données, tests d'accès croisé"
+  },
+  {
+    "id": "F10",
+    "requirement": "Invitations, recherche membres, anniversaires et relations existantes préservés",
+    "acceptance": "Aucun membre fictif, aucun profil perdu, erreurs d'auth signalées honnêtement"
+  }
+]

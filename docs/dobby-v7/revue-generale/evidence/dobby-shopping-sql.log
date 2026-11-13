@@ -1,0 +1,1 @@
+PASS exact shopping SQL: repeat install/verify, .001 precision, no fictitious purchase, stale revision, legacy quantity-only patch, bounds/NaN/Infinity, non-destructive rollback and incompatible-schema refusal. Local fixture only, no live RLS certification.

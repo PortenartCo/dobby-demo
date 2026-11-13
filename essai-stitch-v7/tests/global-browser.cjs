@@ -49,6 +49,7 @@ async function destinationReady(page, destination) {
     { file: 'traverse.html', screen: 'traverse', selector: '[data-e01-slot]' },
     { file: 'missions.html', screen: 'missions', selector: '[data-e03-status]' },
     { file: 'index.html', screen: 'taverne', kind: 'cuisine', view: 'taverne', selector: '[data-e07-dinner]' },
+    { file: 'index.html', screen: 'taverne', kind: 'cuisine', view: 'shop', selector: '[data-e072-list]' },
     { file: 'famille.html', screen: 'famille', kind: 'family', view: 'salon', selector: '[data-e09-intro]' },
     { file: 'famille.html', screen: 'famille', kind: 'family', view: 'menu', selector: '#global-module-search' }
   ][destination];
@@ -173,7 +174,7 @@ async function homeAmount(page, name, amount) {
   const row = page.locator('[data-e072-item]').filter({ hasText: name });
   assert.equal(await row.count(), 1, 'One grocery row for ' + name);
   await row.locator('[data-cu-action=e072-home]').click();
-  await page.locator('#e072-home-qty').fill(String(amount));
+  await page.locator('[data-cu-action=e072-home-partial]').click();await page.locator('#e072-home-qty').fill(String(amount));
   await page.locator('[data-cu-action=e072-home-save]').click();
   await page.locator('[data-e072-dialog]').waitFor({ state: 'detached' });
 }
@@ -230,7 +231,7 @@ async function runJourney(browser, width) {
       await shot(page, '01-home', width, report);
     });
     await step('E09 create a fictive member through its visible form', async () => {
-      await page.locator('[data-e01-destination="3"]').click();
+      await page.locator('[data-e01-destination="4"]').click();
       await ready(page, 'family');
       await page.getByRole('button', { name: 'Gérer les membres', exact: true }).click();
       await page.locator('#add-member-btn').click();
@@ -374,7 +375,7 @@ async function runJourney(browser, width) {
       await shot(page, '07-courses-availability', width, report);
     });
     await step('E09 create and retrieve an ordinary family event', async () => {
-      await page.locator('[data-e01-destination="3"]').click();
+      await page.locator('[data-e01-destination="4"]').click();
       await ready(page, 'family');
       await page.getByRole('button', { name: 'Ajouter un événement', exact: true }).click();
       await page.locator('#fa-native-form [name=title]').fill('DÉMO — Événement global ' + width);
@@ -391,7 +392,7 @@ async function runJourney(browser, width) {
       assert.match(await page.locator('main').innerText(), new RegExp('Événement global ' + width));
     });
     await step('E09 create and retrieve a shared family memo', async () => {
-      await page.locator('[data-e01-destination="3"]').click();
+      await page.locator('[data-e01-destination="4"]').click();
       await ready(page, 'family');
       await newMemo(page, 'DÉMO — Mémo global ' + width, 'Contenu fictif de la recette globale.');
       await sync(page);
@@ -529,13 +530,13 @@ async function runJourney(browser, width) {
       await shot(page, '15-ritual', width, report, false);
       await open(page, 'traverse.html');
       const destinations = [];
-      for (const destination of [1, 2, 3, 4, 0]) {
+      for (const destination of [1, 2, 3, 4, 5, 0]) {
         await dock(page, destination);
         destinations.push(page.url());
       }
       await page.goBack();
-      await page.waitForURL(destinations[3]);
-      await destinationReady(page, 4);
+      await page.waitForURL(destinations[4]);
+      await destinationReady(page, 5);
       await page.goForward();
       await page.waitForURL(destinations[4]);
       await destinationReady(page, 0);

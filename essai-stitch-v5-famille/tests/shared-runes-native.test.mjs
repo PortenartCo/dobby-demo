@@ -12,12 +12,12 @@ assert.notEqual(source,original);
 const date='2026-11-11T12:00:00.000Z',clone=x=>structuredClone(x);
 const mission=extra=>({id:'native-one',title:'TEST — Mission',category:'Famille',due:'',note:'',status:'open',assigneeId:'member-a',effort:'light',rewardVersion:1,createdAt:date,completedAt:'',...extra});
 async function native({v2=true,shared=true,initial=mission()}={}){
- const listeners=new Map(),alerts=[],elements=new Map(),st={page:'family',manualMissions:[initial],runeCredits:[],runeRequests:[],familyMembers:[{id:'member-a',name:'TEST A'},{id:'member-b',name:'TEST B'}],runeSyncRequired:shared};let submit;
+ const listeners=new Map(),alerts=[],elements=new Map(),st={page:'family',manualMissions:[initial],runeCredits:[],runeRequests:[],familyMembers:[{id:'member-a',name:'TEST A',memberCategory:'parent'},{id:'member-b',name:'TEST B'}],runeSyncRequired:shared};let submit;
  const input=()=>({value:'',addEventListener(){},focus(){}}),form={elements:new Proxy({}, {get:(obj,key)=>obj[key]||(obj[key]=input())}),querySelector:()=>input(),addEventListener:(type,fn)=>{if(type==='submit')submit=fn;}};
- const context={st,crypto:webcrypto,window:{DobbyMissionTestCore:core,DobbySharedRunesV2:{available:()=>v2},DobbyFamilyUI:{esc:String,isModuleConfigured:()=>shared,getContext:()=>shared?{}:null,getModuleStatus:()=>''},addEventListener(){}},
+ const context={st,crypto:webcrypto,window:{DobbyMissionTestCore:core,DobbySharedRunesV2:{available:()=>v2},DobbyFamilyUI:{esc:String,isModuleConfigured:()=>shared,getContext:()=>shared?{identityVerified:true,memberId:'member-a'}:null,getModuleStatus:()=>''},addEventListener(){}},
   document:{hidden:false,getElementById:id=>elements.get(id)||null,createElement:()=>({hidden:true,querySelector:()=>form}),body:{append:el=>elements.set(el.id,el)},addEventListener:(type,fn)=>listeners.set(type,fn)},save(){},render(){},console,alert:msg=>alerts.push(msg),confirm:()=>true,setInterval:()=>1,clearInterval(){},FormData:class{constructor(form){this.form=form;}get(key){return this.form.values[key]??'';}}};
  await vm.runInNewContext(source,context,{filename:'family-missions.js'});
- return{st,alerts,click(action,id='native-one'){const button={dataset:{fmsAction:action,id}};listeners.get('click')({target:{closest:()=>button},preventDefault(){},stopImmediatePropagation(){}});},save(values){form.values={missionKey:'native-one',title:st.manualMissions[0].title,category:'Famille',due:'',note:'',assigneeId:st.manualMissions[0].assigneeId,effort:st.manualMissions[0].effort,recurrenceFrequency:'unique',...values};submit({target:{getAttribute:()=> 'fmsForm',values:form.values},preventDefault(){},stopImmediatePropagation(){}});},layer:()=>elements.get('fmsLayer')};
+ return{st,alerts,complete:ids=>context.window.DobbyFamilyMissions.complete(initial.id,ids),reopen:()=>context.window.DobbyFamilyMissions.reopen(initial.id),click(action,id='native-one'){const button={dataset:{fmsAction:action,id}};listeners.get('click')({target:{closest:()=>button},preventDefault(){},stopImmediatePropagation(){}});},save(values){form.values={missionKey:'native-one',title:st.manualMissions[0].title,category:'Famille',due:'',note:'',assigneeId:st.manualMissions[0].assigneeId,effort:st.manualMissions[0].effort,recurrenceFrequency:'unique',...values};submit({target:{getAttribute:()=> 'fmsForm',values:form.values},preventDefault(){},stopImmediatePropagation(){}});},layer:()=>elements.get('fmsLayer')};
 }
 
 test('verified V2 native shared writer queues +10/0/10 and preserves sticky sync instead of confirming offline',async()=>{
@@ -48,4 +48,36 @@ test('a queued reversal blocks deletion before mutation while a confirmed ordina
 
 test('shared verified completion rejects an unknown responsible member before creating a poisoned pending status',async()=>{
  const c=await native({initial:mission({assigneeId:'missing-member'})}),before=clone(c.st);c.click('toggle');assert.deepEqual(clone(c.st),before);assert.match(c.alerts.at(-1),/Choisissez un responsable présent dans le foyer/);
+});
+
+
+test('M08 shared canonical child is blocked from arbitrary mission and rune writes',async()=>{
+ const c=await native();c.st.familyMembers[0].memberCategory='child';const before=clone(c.st);c.click('toggle');c.click('delete');assert.deepEqual(clone(c.st),before);assert.match(c.alerts.at(-1),/identité parentale/);
+});
+test('M08 shared multi-participant completion is gated and does not mutate status or credits',async()=>{
+ const c=await native({initial:mission({participantVersion:1,assigneeIds:['member-a','member-b']})});
+ const before=clone(c.st);assert.throws(()=>c.complete(['member-a']),/validation serveur/);assert.deepEqual(clone(c.st),before);
+});
+
+
+test('M07 local completion credits one total, repeated completion is inert, explicit reopening reverses all participants',async()=>{
+ const c=await native({shared:false,initial:mission({participantVersion:1,assigneeIds:['member-a','member-b'],effort:'regular'})});
+ c.complete(['member-b','member-a']);assert.equal(core.runes.memberSummary('member-a',c.st.runeCredits).total,13);assert.equal(core.runes.memberSummary('member-b',c.st.runeCredits).total,12);
+ const before=clone(c.st);c.complete(['member-a']);assert.deepEqual(clone(c.st),before);
+ c.reopen();assert.equal(c.st.manualMissions[0].status,'open');assert.equal(core.runes.memberSummary('member-a',c.st.runeCredits).total,0);assert.equal(core.runes.memberSummary('member-b',c.st.runeCredits).total,0);
+ c.complete(['member-a']);assert.equal(core.runes.memberSummary('member-a',c.st.runeCredits).total,25);assert.equal(core.runes.memberSummary('member-b',c.st.runeCredits).total,0);
+});
+
+test('M05 native recurrence writer keeps attribution schedule separate from an absent deadline',async()=>{
+ const c=await native({shared:false});c.click('edit');c.save({participantVersion:'1',assigneeIds:'["member-a","member-b"]',allFamily:'false',recurrenceFrequency:'daily',recurrenceStart:'2026-12-01',recurrenceWeekdays:'2',recurrenceMonthDay:'1',recurrenceState:'active',due:''});
+ assert.equal(c.alerts.length,0);const root=c.st.manualMissions[0];assert.equal(root.due,'');assert.equal(root.deadlineOffsetDays,null);assert.equal(root.recurrence.rules[0].start,'2026-12-01');const rows=core.projectRecurringMissions(c.st.manualMissions,'2026-12-02');assert.equal(rows.length,2);assert.equal(rows[1].due,'');assert.equal(rows[1].occurrenceDate,'2026-12-02');assert.deepEqual(rows[1].assigneeIds,['member-a','member-b']);
+});
+
+test('unassigned new native mission can credit selected actual participants without assignment',async()=>{
+ const c=await native({shared:false,initial:mission({participantVersion:1,assigneeId:'',assigneeIds:[],allFamily:false,effort:'regular'})});
+ c.complete(['member-b']);assert.equal(c.st.manualMissions[0].status,'done');assert.equal(core.runes.memberSummary('member-b',c.st.runeCredits).total,25);assert.equal(core.runes.memberSummary('member-a',c.st.runeCredits).total,0);assert.deepEqual(c.st.manualMissions[0].assigneeIds,[]);
+});
+test('unassigned empty native household completion records no reward; stale assignment remains blocked',async()=>{
+ const c=await native({shared:false,initial:mission({participantVersion:1,assigneeId:'',assigneeIds:[],allFamily:false})});c.st.familyMembers=[];c.complete([]);assert.equal(c.st.manualMissions[0].status,'done');assert.deepEqual(clone(c.st.runeCredits),[]);assert.deepEqual(clone(c.st.runeRequests),[]);
+ const stale=await native({shared:false,initial:mission({participantVersion:1,assigneeId:'removed',assigneeIds:['removed'],allFamily:false})}),before=clone(stale.st);assert.throws(()=>stale.complete(['member-a']),/attribu/i);assert.deepEqual(clone(stale.st),before);
 });

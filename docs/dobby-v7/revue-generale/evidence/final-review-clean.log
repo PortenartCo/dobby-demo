@@ -1,0 +1,34 @@
+REVIEW60_START missions-review.cjs
+MISSIONS_REVIEW_PASS 320
+MISSIONS_REVIEW_PASS 390
+MISSIONS_REVIEW_PASS 768
+MISSIONS_REVIEW_PASS 1024
+MISSIONS_REVIEW_PASS 1440
+MISSIONS_REVIEW_PASS 1920
+REVIEW60_START missions-unassigned-review.cjs
+MISSIONS_UNASSIGNED_REVIEW_PASS 320 wizard/unassigned actual participants/empty no-credit/stale-assignment blocked
+REVIEW60_START v7-meals-model.cjs
+V7_MEALS_MODEL_PASS independent dessert, quantities, stale refusal, preparation, move, reload; local fixture only
+REVIEW60_START v7-meals-ui.cjs
+V7_MEALS_UI_PASS tabs, day/week actions, portions, dessert selection, accordion filters, isolated finish, auto return and six widths
+REVIEW60_START v7-meals-child.cjs
+V7_MEALS_CHILD_PASS canonical child reads recipes; UI and adapter reject shared writes; local fixture only
+REVIEW60_START review-shopping.cjs
+SHOPPING_REVIEW_PASS 320
+SHOPPING_REVIEW_PASS 390
+SHOPPING_REVIEW_PASS 768
+SHOPPING_REVIEW_PASS 1024
+SHOPPING_REVIEW_PASS 1440
+SHOPPING_REVIEW_PASS 1920
+REVIEW60_START review-shopping-settings.cjs
+SHOPPING_SETTINGS_SCOPE_PASS
+SHOPPING_MENU_SETTINGS_ROUTE_PASS
+REVIEW60_START review-shopping-role.cjs
+SHOPPING_EXPLICIT_CHILD_READONLY_PASS
+REVIEW60_START v7-family-review.cjs
+V7 F01-F08/F10 local browser contract passed
+REVIEW60_START v7-transversal.cjs
+V7_TRANSVERSAL_PASS six routes/dock, hold/cancel/blur/leave/late callback, keyboard, halo OFF, draft/send, six widths
+REVIEW60_START v7-home-review.cjs
+V7_HOME_REVIEW_PASS banner/title, empty event action, native save and return, today filter, shared effects, badge and six widths
+REVIEW60_PASS 11 native campaigns; immutable source; fixture/backend distinction retained

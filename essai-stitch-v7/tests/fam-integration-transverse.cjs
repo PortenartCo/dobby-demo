@@ -56,7 +56,7 @@ async function shot(page, name) {
 }
 async function homeAmount(page, id, quantity) {
   await page.locator('[data-e072-item="' + id + '"] [data-cu-action=e072-home]').click();
-  await page.locator('#e072-home-qty').fill(String(quantity));
+  await page.locator('[data-cu-action=e072-home-partial]').click();await page.locator('#e072-home-qty').fill(String(quantity));
   await page.locator('[data-cu-action=e072-home-save]').click();
   await page.locator('[data-e072-dialog]').waitFor({ state: 'detached' });
 }
@@ -89,7 +89,7 @@ async function newMemo(page, title, body) {
   try {
     const A = await context.newPage(), B = await context.newPage();
     let ingredient, confirmed, memo;
-    await step('new Family bundle preserves latest chat/Courses bytes and global transport after namespace substitution', async () => {
+    await step('new Family bundle preserves chat/transport bytes; shopping native behavior is verified below', async () => {
       const response = await A.goto(new URL('review-manifest.json', base).href);
       assert.ok(response?.ok(), 'Build the new Family preview before this recipe');
       const manifest = await response.json();
@@ -98,7 +98,6 @@ async function newMemo(page, title, body) {
       assert.equal(manifest.migrationsApplied, false);
       const expected = {
         'essai-stitch-v7/chat-engine.js': 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd',
-        'essai-stitch-v7/cuisine-list.js': '369c031dd2a69a8d53aaaf9f1b181b43cddd80bf80116f8b071ee1e51505520d',
         'global-demo.js': '914fe8109f1505a27dc449b99dbc59c80d6e800b08f400c01aa38dbe7d783303'
       };
       for (const [file, hash] of Object.entries(expected)) {

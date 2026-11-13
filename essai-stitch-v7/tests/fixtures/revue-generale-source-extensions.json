@@ -1,0 +1,38 @@
+{
+  "essai-stitch-v7/chat-engine.js": {
+    "sha256": "b3f7e988ca5aaa8aa0ae978f06b3ccd2ed00baebe464dc2f752bd16d2026c01d",
+    "reason": "D01-D04/F09: child mutation gate"
+  },
+  "essai-stitch-v7/chat.js": {
+    "sha256": "a866ff516b711a548db908235daefac8b8390a2c531821adaf54fc441eb56527",
+    "reason": "D01-D04: maintained voice lifecycle"
+  },
+  "essai-stitch-v7/cuisine-engine.js": {
+    "sha256": "5d76a0ba615fbbdcc2c811484e52e903ad0f4255860be4b04d880d6291ff1c9e",
+    "reason": "T01-T13: independent components and portions; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
+  },
+  "essai-stitch-v7/cuisine-e07.js": {
+    "sha256": "57e819f519786e17e8e0730043096451b0606f43d97e473b9623b6f0a38443a5",
+    "reason": "T01-T13/C01-C07: tabs/day actions/shopping adapter; T09 advance/shared preparations, frozen culinary snapshots and stable ingredient origins (reviewed456a091)"
+  },
+  "essai-stitch-v5-famille/family-v2.js": {
+    "sha256": "a1604d2430eefef52de6dedf7f0e506ca8f5dbb37094285ca50b04fa8376c089",
+    "reason": "F09: canonical child REST/storage transport guard"
+  },
+  "essai-stitch-v5-famille/family-core.mjs": {
+    "sha256": "572239e897011d972fffd0dd83ea0488f4d251794a278df96f2dfc876c345d94",
+    "reason": "F09: pure shared write policy"
+  },
+  "essai-stitch-v5-famille/family-missions.js": {
+    "sha256": "38d8c5d06a5ab0c74bd52f5af711d3bf977e820d0b59dd13e040a81e4648a218",
+    "reason": "M01-M09: participants and occurrence completion"
+  },
+  "essai-stitch-v5-famille/family-runes-core.mjs": {
+    "sha256": "4f63519da41c9f1ba9c49aa923093e92c5e96e058292c66d5d7b712803cbf2ec",
+    "reason": "M07-M08: unique integer reward allocations"
+  },
+  "memoWriter": {
+    "sha256": "3339ebc0e184313c21877dcb702fcfd3af48e9d73a37e32b826ceececfd969b0",
+    "reason": "F09: preserve stale/identity guards and additionally reject canonical child shared memo writes"
+  }
+}

@@ -25,7 +25,7 @@ const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
   }
   assert.deepEqual(await page.evaluate(()=>DobbyFamilyStitchEngine.read().members[0].future),{keep:true});
   // Generic links and Back must never infer a profile from the local persona.
-  await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.locator('[data-e01-destination="4"]').click();await page.waitForFunction(()=>DobbyFamilyStitch.view==='menu');
+  await page.evaluate(()=>DobbyFamilyStitch.open('salon'));await page.locator('[data-e01-destination="5"]').click();await page.waitForFunction(()=>DobbyFamilyStitch.view==='menu');
   await page.evaluate(()=>DobbyFamilyStitch.open('personal'));await page.waitForFunction(()=>DobbyFamilyStitch.view==='personal');assert.equal(await page.locator('[data-profile-member]').count(),0,'Generic entry requires an explicit choice');
   await page.locator('[data-magic-choose="qa-member"]').click();await page.locator('[data-profile-member]').waitFor();await page.goBack();await page.waitForFunction(()=>DobbyFamilyStitch.view==='personal');assert.equal(await page.locator('[data-profile-member]').count(),0,'Back restores the chooser');
   await page.evaluate(()=>DobbyFamilyStitch.open('personal',{person:'qa-member'}));
@@ -54,8 +54,8 @@ const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
   assert.equal(await page.locator('[data-magic-profile] input[type=file]').count(),0);assert.equal(await page.locator('[data-profile-member]').getAttribute('data-profile-member'),'qa-member');
   await page.locator('[data-e01-account]').click();await page.waitForFunction(()=>!!document.querySelector('[data-magic-profile]')&&!document.querySelector('[data-profile-member]'));assert.equal(await page.locator('[data-profile-member]').count(),0,'Gold account control never reattributes the consulted member');
   for(const file of ['traverse.html','missions.html','index.html','famille.html','famille.html#menu']){
-   await page.goto(origin+'/essai-stitch-v7/'+file);await page.waitForFunction(()=>DobbyStitchV7?.ready);await page.locator('[data-e01-account]').click();await page.waitForURL(/famille.html#personal/);await page.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal(await page.locator('[data-profile-member]').count(),0);assert.equal(await page.locator('body > nav a').count(),5);
+   await page.goto(origin+'/essai-stitch-v7/'+file);await page.waitForFunction(()=>DobbyStitchV7?.ready);await page.locator('[data-e01-account]').click();await page.waitForURL(/famille.html#personal/);await page.waitForFunction(()=>DobbyFamilyStitch?.ready);assert.equal(await page.locator('[data-profile-member]').count(),0);assert.equal(await page.locator('body > nav a').count(),6);
   }
-  await context.close();console.log('E05_EDGE_PASS 12 native Patronus confirmations, 24 portraits, extensions, stale identity protection, unbound-context denial, modal keyboard, five gold destinations, no inferred account');
+  await context.close();console.log('E05_EDGE_PASS 12 native Patronus confirmations, 24 portraits, extensions, stale identity protection, unbound-context denial, modal keyboard, six gold destinations, no inferred account');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -128,7 +128,15 @@ async function token() {
   if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken();
   return f.session.access_token;
 }
+function assertNativeSharedWrite(method,query,body={}) {
+  const state=accessController?.state?.()||f.accessContext;
+  const category=(st.familyMembers||[]).find(member=>member.id===state?.memberId)?.memberCategory||state?.profile?.memberCategory;
+  if(!category||category==='parent')return;
+  if(!f.core?.assertSharedWrite)throw Error('Permissions serveur indisponibles : écriture partagée bloquée.');
+  f.core.assertSharedWrite({method,query,body,access:{...state,profile:{...state?.profile,memberCategory:category}}});
+}
 async function authorized(method, query, body, headers = {}) {
+  assertNativeSharedWrite(method,query,body);
   let bearer = await token();
   try { return await raw('/rest/v1/' + query, method, body, headers, bearer); }
   catch (e) {
@@ -145,6 +153,7 @@ function validStoragePath(path){
     /^[a-f0-9-]{36}\.(pdf|jpg|png|webp)$/i.test(sections[1]);
 }
 async function storageFetch(method,path,file){
+  assertNativeSharedWrite(method,'storage');
   if(!validStoragePath(path))throw Error('Fichier hors du foyer');
   if(method==='POST' && (!file || !['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)
       || file.size>10485760 || file.size<=0))throw Error('PDF ou image de 10 Mo maximum');

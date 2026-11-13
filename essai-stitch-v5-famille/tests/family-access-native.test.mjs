@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {webcrypto} from 'node:crypto';
 import * as accessModule from '../family-access.mjs';
+import * as familyCore from '../family-core.mjs';
 const USER='00000000-0000-4000-8000-000000000001',HH='00000000-0000-4000-8000-000000000010';
 function database(){const rows=new Map();return{rows,transaction(){const tx={};tx.objectStore=()=>{const request=produce=>{const req={};queueMicrotask(()=>{try{req.result=produce();req.onsuccess?.();tx.oncomplete?.();}catch(error){tx.error=error;tx.onerror?.();}});return req;};return{get:key=>request(()=>rows.get(key)),put:row=>request(()=>rows.set(row.id,row)),delete:key=>request(()=>rows.delete(key)),getAll:()=>request(()=>[])};};return tx;}};}
 function native({httpFailures={}}={}){
@@ -16,7 +17,7 @@ function native({httpFailures={}}={}){
  sandbox.document.createElement=tag=>tag==='form'?{children:[],append(child){this.children.push(child);}}:node();
  const source=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,logout,...(typeof loadPublicKey===\"function\"?{loadPublicKey}:{})};})();');vm.runInNewContext(source,sandbox);
  const f=sandbox.window.__native.f;f.db=db;f.ready=true;f.key='sb_publishable_native_fixture_only';f.provider={start:async()=>{},reset(){},adoptVerifiedFamily:async value=>{assert.equal(value.memberId,'local-person');},html:()=>'',sync:async()=>{}};
- return{api:sandbox.window.DobbyFamilyUI,f,db,requests,window:sandbox.window,loadPublicKey:sandbox.window.__native.loadPublicKey,setMembers:rows=>{members=rows;},setContext:value=>{context=value;},holdAuth:()=>{releaseAuth={resolve:null};return releaseAuth;},logout:()=>sandbox.window.__native.logout()};
+ return{state:sandbox.st,api:sandbox.window.DobbyFamilyUI,f,db,requests,window:sandbox.window,loadPublicKey:sandbox.window.__native.loadPublicKey,setMembers:rows=>{members=rows;},setContext:value=>{context=value;},holdAuth:()=>{releaseAuth={resolve:null};return releaseAuth;},logout:()=>sandbox.window.__native.logout()};
 }
 test('native access keeps an unassigned authenticated session while legacy login still refuses it',async()=>{
  const f=native();assert.ok(f.api.access,'Native facade exposes access');await f.api.access.ready;await f.api.access.signIn('fixture@example.test','fixture-password');assert.equal(f.f.session.user_id,USER);assert.equal(f.api.access.state().phase,'profile');assert.equal(f.api.getContext(),null);assert.ok(f.db.rows.get('session'));
@@ -65,4 +66,17 @@ test('native context refusals retain SQLSTATE and leave the accepted Auth sessio
   assert.doesNotMatch(error.message+JSON.stringify(error),/PRIVATE_RESPONSE|fixture@example/);return true;
  });
  assert.equal(f.f.session.user_id,USER);assert.equal(f.api.access.state().authenticated,false);assert.equal(f.api.access.state().verified,false);assert.equal(f.api.access.state().phase,'rejected');
+});
+
+test('native REST guard uses canonical child category even when client grants claim parent editing',async()=>{
+ const fixture=native();fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
+ fixture.setContext({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:'local-person',profile:{id:'local-person',name:'TEST Child'},permissions:{canEdit:true,canMagic:true}});
+ await fixture.api.access.ready;await fixture.api.access.signIn('fixture@example.test','fixture-password');
+ fixture.state.familyMembers=[{id:'local-person',memberCategory:'child'}];
+ const before=fixture.requests.length;
+ await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_modules?module=eq.recipes',{payload:{}}),/lecture seule/);
+ await assert.rejects(fixture.api.authorized('POST','dobby_v2_grocery',{title:'TEST Forbidden'}),/lecture seule/);
+ assert.equal(fixture.requests.length,before,'Forbidden writes never reach transport');
+ await fixture.api.authorized('GET','dobby_v2_modules');
+ assert.equal(fixture.requests.length,before+1,'Child shared read remains available');
 });

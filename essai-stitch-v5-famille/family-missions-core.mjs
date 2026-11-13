@@ -15,6 +15,12 @@ export function addCalendarDays(day,count){
   const date=new Date(day+'T12:00:00Z');date.setUTCDate(date.getUTCDate()+count);return iso(date);
 }
 export const occurrenceId=(seriesId,date)=>seriesId+'-r'+date.replaceAll('-','');
+export const humanMembers=members=>(Array.isArray(members)?members:[]).filter(m=>m&&typeof m.id==='string'&&runes.isHumanMember(m));
+export function assignmentIds(mission,members){
+  const people=humanMembers(members),ids=mission.allFamily?people.map(m=>m.id):(mission.assigneeIds||[mission.assigneeId].filter(Boolean));
+  return [...new Set(ids.filter(id=>people.some(m=>m.id===id)))].sort();
+}
+export const isOverdue=(mission,today=brusselsDate())=>mission.status!=='done'&&validDate(mission.due)&&mission.due<today;
 export function recurrenceMatches(day,rule){
   if(!validDate(day))throw Error('Date de récurrence invalide');
   const date=new Date(day+'T12:00:00Z'),monthEnd=new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth()+1,0)).getUTCDate();
@@ -46,19 +52,26 @@ export function normalizeMission(raw){
   if(due&&!validDate(due))throw Error('Date d’échéance invalide');
   if(!MISSION_CATEGORIES.includes(category))throw Error('Catégorie non autorisée');
   if(!['open','done'].includes(status))throw Error('État de mission invalide');
+  if(raw.assigneeIds!==undefined&&(!Array.isArray(raw.assigneeIds)||raw.assigneeIds.length>200||raw.assigneeIds.some(id=>typeof id!=='string'||!id.trim()||id.length>100)))throw Error('Attribution de mission invalide');
+  if(raw.allFamily!==undefined&&typeof raw.allFamily!=='boolean')throw Error('Attribution familiale invalide');
+  if(raw.participantVersion!==undefined&&raw.participantVersion!==1)throw Error('Version de participation invalide');
+  if(raw.priority!==undefined&&!['normal','urgent'].includes(raw.priority))throw Error('Priorité de mission invalide');
+  if(raw.deadlineOffsetDays!==undefined&&raw.deadlineOffsetDays!==null&&(!Number.isSafeInteger(raw.deadlineOffsetDays)||raw.deadlineOffsetDays<0||raw.deadlineOffsetDays>36600))throw Error('Délai de mission invalide');
   const completedAt=raw.completedAt?short(raw.completedAt,40):'';
   if(raw.effort!==undefined||raw.rewardVersion===1||raw.customRunes!==undefined)runes.rewardFor(raw);
   if(raw.rewardVersion!==undefined&&raw.rewardVersion!==1)throw Error('Version de récompense non prise en charge');
   if(raw.recurrence!==undefined&&(raw.seriesId!==undefined||raw.occurrenceDate!==undefined))throw Error('Identité de série invalide');
   const recurrence=raw.recurrence===undefined?undefined:normalizeRecurrence(raw.recurrence,id);
   if(raw.seriesId!==undefined||raw.occurrenceDate!==undefined){
-    if(typeof raw.seriesId!=='string'||!validDate(raw.occurrenceDate)||occurrenceId(raw.seriesId,raw.occurrenceDate)!==id||raw.due!==raw.occurrenceDate)throw Error('Identité d’occurrence invalide');
+    const expectedDue=raw.deadlineOffsetDays===null?'':raw.deadlineOffsetDays===undefined?raw.occurrenceDate:addCalendarDays(raw.occurrenceDate,raw.deadlineOffsetDays);
+    if(typeof raw.seriesId!=='string'||!validDate(raw.occurrenceDate)||occurrenceId(raw.seriesId,raw.occurrenceDate)!==id||raw.due!==expectedDue)throw Error('Identité d’occurrence invalide');
   }
   return {...raw,id,title,due,category,status,
     ...(recurrence?{recurrence}:{}),
     ...(raw.effort!==undefined?{effort:raw.effort}:{}),
     ...(raw.rewardVersion===1?{rewardVersion:1}:{}),
     assigneeId:short(raw.assigneeId,100),
+    ...(raw.assigneeIds!==undefined?{assigneeIds:[...new Set(raw.assigneeIds)].sort()}:{}),
     note:short(raw.note,400),
     createdAt:short(raw.createdAt,40),
     completedAt:status==='done'?completedAt:''};
@@ -73,11 +86,12 @@ export function projectRecurringMissions(rows,today=brusselsDate()){
     const root=normalizeMission(raw),rules=root.recurrence.rules;
     for(let day=addCalendarDays(today,-RECURRENCE_LOOKBACK_DAYS);day<=today;day=addCalendarDays(day,1)){
       const rule=rules.findLast(r=>r.from<=day);
-      if(!rule||rule.state!=='active'||day<rule.start||day===root.due)continue;
+      if(!rule||rule.state!=='active'||day<rule.start||day===(root.deadlineOffsetDays===undefined?root.due:rules[0].start))continue;
       if(!recurrenceMatches(day,rule))continue;
       const id=occurrenceId(root.id,day),existing=known.get(id);
       if(existing){if(existing.seriesId!==root.id||existing.occurrenceDate!==day)throw Error('Identifiant d’occurrence déjà utilisé');continue;}
-      const row=normalizeMission({...rule.template,id,due:day,status:'open',seriesId:root.id,occurrenceDate:day,createdAt:day+'T12:00:00.000Z',completedAt:''});
+      const due=rule.template.deadlineOffsetDays===null?'':rule.template.deadlineOffsetDays===undefined?day:addCalendarDays(day,rule.template.deadlineOffsetDays);
+      const row=normalizeMission({...rule.template,id,due,status:'open',seriesId:root.id,occurrenceDate:day,createdAt:day+'T12:00:00.000Z',completedAt:''});
       known.set(id,row);result.push(row);
     }
   }

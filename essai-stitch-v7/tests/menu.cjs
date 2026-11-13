@@ -7,8 +7,8 @@ const {chromium} = require('playwright');
 
 const origin = process.env.DOBBY_TEST_ORIGIN || 'http://127.0.0.1:8765';
 const evidence = path.resolve(__dirname, '../../docs/dobby-v7/evidence/menu-01-08');
-const labels = ['Maison & Équipements', 'Archives documentaires', 'Contrats & Assurances', 'Contacts', 'Paramètres'];
-const destinations = ['house', 'documents', 'contracts', 'contacts', 'settings'];
+const labels = ['Maison & Équipements', 'Archives documentaires', 'Contrats & Assurances', 'Contacts', 'Notes du foyer', 'Paramètres'];
+const destinations = ['house', 'documents', 'contracts', 'contacts', 'memos', 'settings'];
 const widths = (process.env.DOBBY_MENU_WIDTHS || '320,390,1440').split(',').map(Number);
 assert.ok(widths.length && widths.every(width => [320,390,1440].includes(width)) && new Set(widths).size === widths.length, 'Requested Menu widths must be a nonempty subset of 320/390/1440');
 const fixtureBytes = '%PDF-1.4\nTEST — Menu attachment, ephemeral profile only.\n%%EOF';
@@ -118,8 +118,8 @@ async function visibleLabels(page) {
         assert.equal((await page.locator('main h1').innerText()).trim(), 'Menu', 'Menu starts with its compact title');
         assert.equal(await page.locator('main h1').count(), 1);
         assert.equal(await page.locator('#global-module-search').getAttribute('placeholder'), 'Rechercher dans le menu…');
-        assert.equal(await page.locator('main .module-item').count(), 5, 'Exactly five cards, with no hidden former entries');
-        assert.equal(await page.locator('main a.module-item').count(), 5, 'Every card is a real link');
+        assert.equal(await page.locator('main .module-item').count(), 6, 'Exactly six cards, with no hidden former entries');
+        assert.equal(await page.locator('main a.module-item').count(), 6, 'Every card is a real link');
         assert.deepEqual(await visibleLabels(page), labels, 'Five final categories in order');
         assert.equal(await page.locator('main img').count(), 0, 'No decorative hero illustration');
         assert.equal(await page.locator('main input').count(), 1, 'Only the Menu filter');
@@ -127,7 +127,7 @@ async function visibleLabels(page) {
         assert.ok(!/Index & Clés|Grand Sommaire|Tous les Outils|Note d.intendant|Autres accès|OMNISCIENT|Entrer en Audience|Revenir à l.Accueil/.test(await page.locator('main').innerText()), 'Removed Menu ornaments stay absent');
         for (const [index, destination] of destinations.entries()) {
           const card = page.locator('main a.module-item').nth(index);
-          assert.equal(new URL(await card.getAttribute('href'), page.url()).href, origin + '/essai-stitch-v7/famille.html#' + destination, 'Deep link for ' + labels[index]);
+          assert.equal(new URL(await card.getAttribute('href'), page.url()).href, origin + '/essai-stitch-v7/famille.html#' + destination+(destination==='memos'?'?origin=menu':''), 'Deep link for ' + labels[index]);
           assert.equal(await card.getAttribute('data-fa-action'), destination, 'Existing route binding for ' + labels[index]);
           assert.equal(await card.getAttribute('role'), null, 'Links retain link semantics');
           const box = await card.boundingBox();
@@ -167,7 +167,7 @@ async function visibleLabels(page) {
         const search = page.locator('#global-module-search');
         const searchCases = [
           ['mais', [labels[0]]], ['ÉQUIPE', [labels[0]]], ['eQuIpE', [labels[0]]], ['  ARCHIVES  ', [labels[1]]],
-          ['ASSUR', [labels[2]]], ['contact', [labels[3]]], ['PARAMETRES', [labels[4]]], ['paramètres', [labels[4]]],
+          ['ASSUR', [labels[2]]], ['contact', [labels[3]]], ['PARAMETRES', [labels[5]]], ['paramètres', [labels[5]]],
           ['   ', labels], ['', labels], ['zzzz-menu-absent', []], ['santé', []],
         ];
         for (const [query, expected] of searchCases) {
@@ -190,7 +190,7 @@ async function visibleLabels(page) {
           assert.equal(await page.locator('#dv7-panel').isVisible(), false, labels[index] + ' opens the source module');
           if (destination === 'settings') {
             assert.equal((await page.locator('main h1').innerText()).trim(), 'Paramètres');
-            assert.equal(await page.locator('body > nav [data-e01-destination="4"]').getAttribute('aria-current'), 'page', 'Settings belongs to the Menu dock destination');
+            assert.equal(await page.locator('body > nav [data-e01-destination="5"]').getAttribute('aria-current'), 'page', 'Settings belongs to the Menu dock destination');
             assert.equal(await page.locator('main [data-e01-toggle]').count(), 0);
             assert.equal(new URL(await page.getByRole('link', {name: 'Retour au Menu', exact: true}).getAttribute('href'), page.url()).hash, '#menu');
           } else {
@@ -207,11 +207,11 @@ async function visibleLabels(page) {
           await open(page, 'menu');
         }
 
-        await page.locator('main a.module-item').nth(4).click();
+        await page.locator('main a.module-item').nth(5).click();
         await familyView(page, 'settings');
         await page.getByRole('link', {name: 'Retour au Menu', exact: true}).click();
         await familyView(page, 'menu');
-        await page.locator('main a.module-item').nth(4).click();
+        await page.locator('main a.module-item').nth(5).click();
         await familyView(page, 'settings');
         const backup = page.locator('main a[data-fa-action=backup]');
         assert.equal(await backup.count(), 1, 'Settings provides the existing native backup entry');
@@ -286,7 +286,7 @@ async function visibleLabels(page) {
         await familyView(page, 'settings');
         assert.deepEqual(errors, [], 'No uncaught browser errors');
         receipt.widths.push({width, height: 844, cards: labels, searchCases: searchCases.length, fiveDestinations: 'pass', backForwardReload: 'pass', nativeDataPreserved: stateKeys, removedRoutes: removedRoutes.map(([route]) => route), nativeQueryUnchanged: true, attachmentBytesPreserved: true, backup: backupReceipt, headerAndDock: 'unique, fixed and visible', horizontalOverflow: false, lastCardDockOverlap: false, shortViewportHeight: 480, shortViewports, settingsMenuDockActive: true, backupContextualBack: 'settings', screenshot: path.relative(path.resolve(__dirname, '../..'), screenshot), layout: {first: firstLayout, scrolled: scrollLayout}, blockedExternalOrigins: [...new Set(blockedExternal)], errors});
-        console.log('MENU_PASS', width, 'five links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved');
+        console.log('MENU_PASS', width, 'six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved');
       } finally {
         await context.close();
       }

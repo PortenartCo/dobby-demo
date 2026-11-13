@@ -1,0 +1,24 @@
+{
+  "sourceSha": "1896a94c587219ecb2de641b1a3cece74c5d6fb1",
+  "pullRequest": 8,
+  "results": [
+    {
+      "file": "index.html",
+      "http": 200,
+      "sha256": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+      "matches": true
+    },
+    {
+      "file": "essai-stitch-v7/access.js",
+      "http": 200,
+      "sha256": "dd0fefae02e58ab73846960979b8dded3562adb5067301b6bc25f00b2e619d59",
+      "matches": true
+    },
+    {
+      "file": "essai-stitch-v7/magic-profile.js",
+      "http": 200,
+      "sha256": "64c2e45a394f390b6caf0e9e5715f5010e93eaa89332136c09183adae1df5fac",
+      "matches": true
+    }
+  ]
+}

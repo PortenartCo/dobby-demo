@@ -123,7 +123,7 @@ async function amounts(page, atHome, toBuy) {
 
     const rowA = A.locator('[data-e072-item]').filter({ hasText: 'Carottes' });
     await rowA.locator('[data-cu-action=e072-home]').click();
-    await A.locator('#e072-home-qty').fill('300');
+    await A.locator('[data-cu-action=e072-home-partial]').click();await A.locator('#e072-home-qty').fill('300');
     await A.locator('[data-cu-action=e072-home-save]').click();
     await A.locator('[data-e072-dialog]').waitFor({ state: 'detached' });
     await sync(A);

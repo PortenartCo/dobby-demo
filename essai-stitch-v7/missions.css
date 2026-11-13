@@ -34,3 +34,7 @@
 body[data-dv7-screen=missions] main :is(a,button,summary):focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}
 body[data-dv7-screen=missions] main :is(a,button,summary){touch-action:manipulation}
 .e03-card:hover{border-color:#d49b4288}
+.e03-card[data-priority=urgent]{border:1px solid #eac34d;animation:none}
+.e03-meta .e03-overdue{color:#ffd3bf;border-color:#d78760}
+.e03-entry{display:flex;flex-direction:column;gap:6px;min-width:0}.e03-entry .e03-card{flex:1}
+.e03-complete{align-self:flex-end;min-height:44px;padding:8px 16px;border:1px solid #d49b42;border-radius:10px;background:#372622;color:#f9bb5f;cursor:pointer}

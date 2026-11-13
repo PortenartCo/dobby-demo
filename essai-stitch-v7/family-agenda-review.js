@@ -8,7 +8,7 @@ window.DobbyFamilyAgendaReview=(()=>{
  const node=(tag,value,className)=>{const el=document.createElement(tag);if(value!==undefined)el.textContent=value;if(className)el.className=className;return el;};
  const row=(c,...children)=>{const el=node('div',undefined,'fam-review-actions');el.append(...children);return el;};
  const primary=button=>{button.classList.add('fam-review-primary');return button;};
- const origin=(ui,fallback='agenda')=>['salon','agenda'].includes(ui.origin)?ui.origin:fallback;
+ const origin=(ui,fallback='agenda')=>['salon','agenda','home'].includes(ui.origin)?ui.origin:fallback;
  const viewOrigin=c=>c.ui.view==='salon'?'salon':'agenda';
  function shiftMonth(day,delta){const [year,month,date]=day.split('-').map(Number),target=new Date(Date.UTC(year,month-1+delta,1)),lastDay=new Date(Date.UTC(target.getUTCFullYear(),target.getUTCMonth()+1,0)).getUTCDate();return target.getUTCFullYear()+'-'+String(target.getUTCMonth()+1).padStart(2,'0')+'-'+String(Math.min(date,lastDay)).padStart(2,'0');}
  const setDialog=(c,value)=>c.dialog?.(value);
@@ -26,9 +26,11 @@ window.DobbyFamilyAgendaReview=(()=>{
   panel.append(details);if(event.note)panel.append(node('p',event.note,'fam-review-body'));
   try{if(window.DobbyPreparations?.read().eventPreparations.some(row=>row.eventId===id))panel.append(primary(c.button('prep-event-open','Préparatifs de cet événement',{record:id})));}catch(error){panel.append(node('p','Préparatifs indisponibles : '+error.message));}
   panel.append(row(c,primary(c.button('event-edit','Modifier',{record:id})),c.button('event-delete','Supprimer',{record:id}),c.button('event-export','Exporter (.ics)',{record:id})),c.button('dialog-close','Retour'));
+  c.gateSharedUI?.();
   panel.querySelector('button')?.focus();
  }
  function beginEvent(c,id,values){
+  if(c.sharedReadOnly){c.notice('Agenda en lecture seule pour un enfant.');return;}
   const event=id?find(id):null;
   // Keep the consultation snapshot when moving into edit mode, so an update
   // received in between cannot silently become the base of an old detail view.
@@ -49,22 +51,24 @@ window.DobbyFamilyAgendaReview=(()=>{
   const save=node('button',id?'Enregistrer les modifications':'Enregistrer l’événement','fa-button fam-review-primary');save.type='submit';
   form.append(row(c,save,c.button('dialog-close','Annuler')));panel.append(form);form.querySelector('input:not([type="hidden"])')?.focus();
  }
- function closeEvent(c){
-  const destination=session?.origin||origin(c.ui,viewOrigin(c));session=null;setDialog(c,null);document.getElementById('fa-dialog')?.remove();return c.open(destination,{origin:destination,record:null});
+ function closeEvent(c,savedEvent){
+  const destination=session?.origin||origin(c.ui,viewOrigin(c));session=null;setDialog(c,null);document.getElementById('fa-dialog')?.remove();
+  if(destination==='home'){c.ui.origin='salon';const home=window.DobbyHome;if(savedEvent&&home?.eventSaved)return home.eventSaved(savedEvent);if(!savedEvent&&home?.eventCancelled)return home.eventCancelled();location.href='./traverse.html';return;}
+  return c.open(destination,{origin:destination,record:null});
  }
  function saveEvent(c,form){
   if(!form.reportValidity())return;
   const id=form.dataset.record||null;if(id)fresh(id);const values=Object.fromEntries(new FormData(form));
   // E.saveEvent invokes the original fpEventForm submit listener, including
   // its native validation, stable identifier and family synchronization.
-  E.saveEvent(id,values);c.ui.day=values.date;return closeEvent(c);
+  const before=new Set(E.read().events.map(row=>row.id));E.saveEvent(id,values);c.ui.day=values.date;const saved=E.read().events.find(row=>id?row.id===id:!before.has(row.id));if(!saved)throw Error('L’événement n’a pas été confirmé dans l’agenda.');return closeEvent(c,saved);
  }
  function renderAgenda(c){
   const {data,ui,main}=c;ui.day ||= E.evaluate('return todayISO();');
   // The original agenda template nests a second fixed dock and a header in
   // main. Only content is replaced; the common permanent DOBBY bars stay put.
   main.replaceChildren();main.classList.add('fam-review-main');document.getElementById('fa-supplement')?.replaceChildren();
-  const intro=node('section',undefined,'fam-review-heading');intro.append(node('h1','Agenda familial'),primary(c.button('event-new','Ajouter un événement')));main.append(intro);
+  const intro=node('section',undefined,'fam-review-heading');intro.append(node(c.embedded?'h3':'h1','Agenda familial'),primary(c.button('event-new','Ajouter un événement')));main.append(intro);
   const controls=node('section',undefined,'fam-review-calendar');controls.setAttribute('aria-label','Calendrier familial');
   const month=ui.calendarMode==='month',week=c.button('agenda-mode','Semaine',{mode:'week'}),monthButton=c.button('agenda-mode','Mois',{mode:'month'});week.id='btn-view-week';monthButton.id='btn-view-month';week.setAttribute('aria-pressed',String(!month));monthButton.setAttribute('aria-pressed',String(month));
   controls.append(row(c,week,monthButton),node('h2',new Date(ui.day+'T12:00:00').toLocaleDateString('fr-BE',{month:'long',year:'numeric'})));
@@ -78,17 +82,17 @@ window.DobbyFamilyAgendaReview=(()=>{
   const filters=node('div',undefined,'fam-review-filters');filters.setAttribute('aria-label','Filtrer par membre');for(const member of [{id:'',name:'Tout le foyer'},...data.members]){const b=c.button('agenda-person',member.name,{person:member.id});b.setAttribute('aria-pressed',String((ui.agendaPerson||'')===member.id));filters.append(b);}main.append(filters);
   const filter=data.members.find(member=>member.id===ui.agendaPerson),events=data.events.filter(event=>event.date===ui.day&&(!filter||event.personId===filter.id||event.person===filter.name)).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const list=node('section',undefined,'fam-review-event-list');list.setAttribute('aria-label','Événements du jour');list.append(node('h2',labelDate(ui.day)));
-  for(const event of events){const card=node('article',undefined,'fam-review-record');c.bind(card,'event-open',{record:event.id,origin:'agenda'});card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Consulter '+event.title);card.append(node('h3',event.title),c.paragraph([event.time||'Toute la journée',event.person,event.location].filter(Boolean).join(' · ')));list.append(card);}
+  for(const event of events){const card=node('article',undefined,'fam-review-record');c.bind(card,'event-open',{record:event.id,origin:viewOrigin(c)});card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Consulter '+event.title);card.append(node('h3',event.title),c.paragraph([event.time||'Toute la journée',event.person,event.location].filter(Boolean).join(' · ')));list.append(card);}
   if(!events.length)list.append(c.paragraph('Aucun événement à cette date.'));
   const shared=data.shared.filter(visit=>visit.date===ui.day&&(!filter||(visit.personId?visit.personId===filter.id:visit.person===filter.name&&data.members.filter(member=>member.name===visit.person).length===1)));
   for(const visit of shared){const card=node('article',undefined,'fam-review-record');card.append(node('h3',visit.title||visit.name),c.paragraph([visit.time,visit.person,visit.provider].filter(Boolean).join(' · ')),c.button('medical-edit','Consulter le rendez-vous partagé',{record:visit.id,scope:'shared',person:visit.personId||''}));list.append(card);}main.append(list);
   const deadlines=data.upcoming.filter(item=>!['event','medical'].includes(item.kind));if(deadlines.length){const details=node('details',undefined,'fam-review-deadlines');details.append(node('summary','Échéances des autres modules'));for(const item of deadlines)details.append(c.paragraph(labelDate(item.date)+' · '+item.title));main.append(details);}
-  const footer=node('div',undefined,'fam-review-status');footer.append(c.paragraph(data.status),c.button('salon','Revenir au Salon'));main.append(footer);
+  const footer=node('div',undefined,'fam-review-status');footer.append(c.paragraph(data.status));if(!c.embedded)footer.append(c.button('salon','Revenir au Salon'));main.append(footer);
  }
  function action(c,action,el){
   const handled=value=>({handled:true,value});
   if(action==='agenda-month-shift'){c.ui.day=shiftMonth(c.ui.day,Number(el.dataset.delta));return handled(c.render());}
-  if(action==='event-new'){c.ui.origin=viewOrigin(c);session=null;if(c.ui.view!=='agenda')return handled(c.open('agenda',{eventNew:true,origin:c.ui.origin}));return handled(beginEvent(c));}
+  if(action==='event-new'){c.ui.origin=viewOrigin(c);session=null;return handled(beginEvent(c));}
   if(action==='event-open'){c.ui.origin=el.dataset.origin==='salon'?'salon':viewOrigin(c);return handled(showEvent(c,el.dataset.record));}
   if(action==='event-edit')return handled(beginEvent(c,el.dataset.record));
   if(action==='event-delete'){const id=el.dataset.record;fresh(id);E.deleteEvent(id);if(!E.read().events.some(event=>event.id===id))return handled(closeEvent(c));return handled(undefined);}

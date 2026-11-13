@@ -10,7 +10,6 @@ const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const preserved = {
   'essai-stitch-v7/chat-engine.js': 'ba84ce331c50e308dd57fe00155dd0fdff881d247bc1bbacac8ff518d2bab2bd',
   'essai-stitch-v7/chat.js': 'ada18c51fbf9c03327269aafd767c79463545562fc7514b608f3eb7814360485',
-  'essai-stitch-v7/cuisine-list.js': '369c031dd2a69a8d53aaaf9f1b181b43cddd80bf80116f8b071ee1e51505520d',
   'essai-stitch-v7/cuisine-engine.js': '4eb0ec960701457c64fe26d4f802a195619af99bc6be827723a4fb639b2b5044',
   'essai-stitch-v7/cuisine-e07.js': 'f99698719062154405d2bb03528c65b76cf73ddb4bb2b5ddeecc7c31684cab9b',
   'essai-stitch-v5-famille/family-v2.js': '72367aeb8b763502538e590de442d1d1271869dee2c632574f35a074f7cfff63',
@@ -23,10 +22,11 @@ const preserved = {
   'essai-stitch-v7/tests/helpers/e02-shared-groceries.cjs': '4c599d0a9f09ac72c4cb04777091dd3559ede85498a858226a03774317bda4ef'
 };
 
-test('Family integration preserves E02, existing Courses APIs, native Runes and runtime outside explicit PREP and verified access additions', () => {
+test('Family source boundaries preserve history plus explicitly reviewed 60-point amendments', () => {
   for (const [file, expected] of Object.entries(preserved)) {
     let source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
-    if(file.endsWith('/cuisine-list.js'))source=source.replace(/  \/\/ A preparation's stable source token[\s\S]*?(?=  function assertExpected)/,'').replace('snapshot,add,addOnce,edit','snapshot,add,edit');
+    const review=require('./fixtures/revue-generale-source-extensions.json')[file];
+    if(review){assert.ok(review.reason);assert.equal(digest(source),review.sha256,file+' reviewed amendment changed');continue;}
     if(file.endsWith('/family-v2.js')){
       const amendment=JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures/stitch19-20-access-extensions.json'),'utf8'));
       assert.equal(amendment.file,file);
@@ -38,6 +38,13 @@ test('Family integration preserves E02, existing Courses APIs, native Runes and 
     }
     assert.equal(digest(source), expected, file + ' differs from latest global review 6a6fcd9');
   }
+});
+
+// Courses intentionally evolves for C01-C07 and independent dessert imports.
+// Verify native quantity/home/import/idempotence behavior, rather than freezing old UI bytes.
+test('Courses retains the native shopping contract including independent dessert import', () => {
+  const result=require('node:child_process').spawnSync(process.execPath,['--test','essai-stitch-v7/tests/e07-p02-model.test.cjs','essai-stitch-v7/tests/e07-p02-home-core.test.mjs'],{cwd:repo,encoding:'utf8'});
+  assert.equal(result.status,0,result.stdout+'\n'+result.stderr);
 });
 
 test('all four functional roots still load the native shared Courses adapter before E02', () => {
@@ -52,12 +59,12 @@ test('all four functional roots still load the native shared Courses adapter bef
   }
 });
 
-test('E09 shared memo identity, stale-write guard, import and rollback writer remain byte-identical', () => {
+test('E09 memo writer retains identity/stale/import tests with the explicit child-write amendment', () => {
   const source = fs.readFileSync(path.join(repo, 'essai-stitch-v7/family-engine.js'), 'utf8').replace(/\r\n/g,'\n');
   const start = source.indexOf(' // Shared memos use the native state/save pipeline');
   const end = source.indexOf(' return Object.freeze(', start);
   assert.ok(start > -1 && end > start, 'Shared native memo writer remains identifiable');
-  assert.equal(digest(source.slice(start, end)), '56f0b224b0fcc0a764b398a7bf205ee5fd7da395b1f938d3316ec087ee7f08c8');
+  assert.equal(digest(source.slice(start, end)), require('./fixtures/revue-generale-source-extensions.json').memoWriter.sha256);
 });
 
 module.exports = { preserved };
