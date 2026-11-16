@@ -1,0 +1,1 @@
+window.DobbyPublicConfig=Object.freeze({});

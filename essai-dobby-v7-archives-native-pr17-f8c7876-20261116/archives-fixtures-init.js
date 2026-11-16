@@ -1,0 +1,9 @@
+/* Preview-only binary fixtures. The native engine starts after their first installation. */
+(()=>{'use strict';if(window.DobbyArchiveFixtureReady)return;const root=new URL('.',document.currentScript.src),marker='archives-binary-fixtures-v1';
+window.DobbyArchiveFixtureReady=(async()=>{if(localStorage.getItem(marker))return;
+const response=await fetch(new URL('fixtures/original-fictif.pdf',root));if(!response.ok)throw Error('PDF fictif indisponible.');const pdf=await response.blob();
+const image=await fetch(new URL('essai-stitch-v7/assets/cuisine/e07-taverne.png',root));if(!image.ok)throw Error('Photo fictive indisponible.');const photo=await image.blob();
+await new Promise((resolve,reject)=>{const request=indexedDB.open('dobby-v5-familial-files-20261108',1);request.onupgradeneeded=()=>request.result.createObjectStore('docs');request.onerror=()=>reject(request.error);request.onsuccess=()=>{const db=request.result,tx=db.transaction('docs','readwrite'),store=tx.objectStore('docs');
+for(const key of ['family-contract-final-contract-final-original','family-contract-final-contract-final-amendment','family-final-document','final-house-pdf'])store.put(pdf,key);store.put(photo,"recipe-media-0c9e6100d63284219fe025e523b82624508a7a9bb48504367c10720045ed44dc");tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};};});localStorage.setItem(marker,'complete');})();
+document.addEventListener('DOMContentLoaded',()=>void window.DobbyArchiveFixtureReady.then(()=>{const frame=document.querySelector('#dv7-engine[data-archive-engine-src]');if(frame){frame.src=frame.dataset.archiveEngineSrc;frame.removeAttribute('data-archive-engine-src');}}).catch(error=>{const p=document.createElement('p');p.setAttribute('role','alert');p.textContent=error.message;document.body.prepend(p);}));
+})();
