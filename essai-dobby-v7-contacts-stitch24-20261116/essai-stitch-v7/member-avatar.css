@@ -1,0 +1,21 @@
+/* Compact vector badges; no continuous animation and no photo persistence. */
+.dobby-member-avatar{position:relative;display:inline-flex;align-items:center;justify-content:center;overflow:visible!important;isolation:isolate;vertical-align:middle}
+.dobby-avatar-face{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:inherit;overflow:hidden;font-size:inherit}
+.dobby-rune-badge{position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;padding:1px;border-radius:50%;background:#180b07;box-shadow:0 1px 3px #0009;z-index:2;pointer-events:none}
+.dobby-rune-badge svg{display:block;width:100%;height:100%;overflow:visible}
+.dobby-member-avatar[data-rune-shape="point"] .dobby-rune-badge{width:12px;height:12px}
+.dobby-member-avatar[data-rune-shape="star8"] .dobby-rune-badge{width:18px;height:18px}
+.dobby-member-avatar[data-rune-material="diamond"] .dobby-rune-badge{box-shadow:0 0 4px #d7ebf366,0 1px 3px #0009}
+.rune-profile-avatar{width:64px;height:64px;border-radius:50%}
+.dobby-rune-profile{display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid #d49b4244;border-radius:12px;background:#271814;min-width:0;color:#fadcd5}
+.dobby-rune-total{font:600 24px/1.3 'Playfair Display',Georgia,serif;color:#f9bb5f}
+.dobby-rune-profile p,.dobby-rune-profile h2{margin:0}
+.dobby-rune-profile small{color:#d4c4b1;font-size:12px}
+.dobby-rune-profile progress{accent-color:#f9bb5f;width:100%;height:10px;border-radius:8px}
+.dobby-rune-profile progress::-webkit-progress-bar{background:#43302c;border-radius:8px}
+.dobby-rune-profile progress::-webkit-progress-value{background:linear-gradient(90deg,#b66c3c,#f9bb5f);border-radius:8px}
+.dobby-rune-profile li{padding-block:8px;border-bottom:1px solid #d49b4222;overflow-wrap:anywhere}
+.dobby-rune-profile li span{display:block;color:#d4c4b1;font-size:13px}
+.dobby-rune-profile summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#f9bb5f}
+body[data-family-view="mission-edit"] .e04-member-avatar-slot{overflow:visible!important}
+body[data-family-view="mission-edit"] [data-e04-member-card]>.member-check{top:4px;right:4px;bottom:auto}

@@ -1,0 +1,37 @@
+[
+  {
+    "view": "members",
+    "source": "design/stitch-53/dobby_membres_de_la_maisonn_e/code.html",
+    "sha256": "9e373a940f9ee5299a30a5332535838701a0de7933e14344aa1fd1c0a3f22d1e"
+  },
+  {
+    "view": "member-edit",
+    "source": "design/stitch-53/dobby_ajouter_ou_modifier_un_membre/code.html",
+    "sha256": "4b3fb9f4bd1a0a92cf5ce6c4dcb5a5db211801bac6b65afb34fd8cb9e1700bbb"
+  },
+  {
+    "view": "agenda",
+    "source": "design/stitch-53/dobby_agenda_almanach_du_foyer/code.html",
+    "sha256": "267c9fcc69e3c0162cf4a21a9fd08cd31e666b36a2aca0a9910dd787a795a1b1"
+  },
+  {
+    "view": "medical-edit",
+    "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_rendez_vous_m_dical/code.html",
+    "sha256": "223280e55e097004c2812ac88a40a3b5d2cc7d88721f395c9f032ecd9cbc8eea"
+  },
+  {
+    "view": "health",
+    "source": "design/stitch-53/dobby_carnet_de_sant_familial/code.html",
+    "sha256": "4c8a160004f96aad5363efe6fa9a91eaabb6efd4cd5f7b6b6c6b0734dd64209b"
+  },
+  {
+    "view": "health-person",
+    "source": "design/stitch-53/dobby_carnet_de_sant_individuel/code.html",
+    "sha256": "fced8f0870130a967a8d820d25b6c1bd7226b917c8becd18129d0f45e86b9cec"
+  },
+  {
+    "view": "health-history",
+    "source": "design/stitch-53/dobby_historique_contacts_m_dicaux/code.html",
+    "sha256": "9a832966d291592cd2e6e181cba230b456d338c7f0598570fe742caf62b0a28a"
+  }
+]
