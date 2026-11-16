@@ -2,6 +2,8 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{chromium}=require('playwright'),{records,cases}=require('./helpers/archives-final-fixture.cjs'),{pdf}=require('./contracts-fixtures.cjs');
 const repo=path.resolve(__dirname,'../..'),origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765',out=path.resolve(process.env.DOBBY_ARCHIVE_FINAL_EVIDENCE||path.join(repo,'docs/dobby-v7/archives/final-review/evidence')),phase=process.env.DOBBY_ARCHIVE_FINAL_PHASE||'after',only=process.env.DOBBY_ARCHIVE_FINAL_CASE;
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex'),photo=fs.readFileSync(path.join(repo,'essai-stitch-v7/assets/cuisine/e07-taverne.png')),photoHash=hash(photo),seed=records(photoHash),report={phase,origin,fictional:true,checks:[]};fs.mkdirSync(out,{recursive:true});
+// The reference can use a different local server port; keep image paths and every other HTML byte exact.
+const normalizeDocumentImageOrigin=(html,from)=>html.replaceAll(' src="'+new URL(from).origin+'/',' src="{{TEST_ORIGIN}}/');
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{for(const width of (process.env.DOBBY_ARCHIVE_FINAL_WIDTHS||'320,390,768,1440').split(',').map(Number)){
  const context=await browser.newContext({viewport:{width,height:950},locale:'fr-BE',timezoneId:'Europe/Paris',reducedMotion:'reduce',serviceWorkers:'block'});await context.route('**/*',r=>!/^https?:/.test(r.request().url())||r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await context.newPage(),errors=[];p.setDefaultTimeout(15000);p.on('pageerror',e=>errors.push(e.message));p.on('dialog',d=>d.accept());
  const ready=()=>p.waitForFunction(()=>window.DobbyStitchV7?.ready&&window.DobbyFamilyStitch?.ready&&document.readyState==='complete'),native=(code,data={})=>p.evaluate(({code,data})=>DobbyFamilyStitchEngine.evaluate(code,data),{code,data}),state=()=>p.evaluate(()=>DobbyFamilyStitchEngine.read().state);
@@ -13,7 +15,7 @@ const hash=b=>crypto.createHash('sha256').update(b).digest('hex'),photo=fs.readF
  if(only==='hero')continue;
  for(const [source,view,id,key]of cases.filter(row=>!only||only==='details'||only===row[2])){
   console.log('ARCHIVE_NATIVE_CASE',phase,width,id);await open(view,id,source);if(id==='final-typed-contract'&&phase==='before')continue;await snap(id+'-active');const before=(await state())[key].find(x=>x.id===id),activeDocument=id==='final-document'?await p.locator('main').innerHTML():null;
-  if(activeDocument){const file=path.join(out,'document-library-active-'+width+'.html');if(phase==='before')fs.writeFileSync(file,activeDocument);else assert.equal(activeDocument,fs.readFileSync(file,'utf8'),'Normal Documents registry presentation stays byte-exact');}
+  if(activeDocument){const file=path.join(out,'document-library-active-'+width+'.html');if(phase==='before')fs.writeFileSync(file,activeDocument);else {const baselineOrigin=JSON.parse(fs.readFileSync(path.join(out,'before.json'))).origin;assert.equal(normalizeDocumentImageOrigin(activeDocument,origin),normalizeDocumentImageOrigin(fs.readFileSync(file,'utf8'),baselineOrigin),'Normal Documents registry presentation stays byte-exact except its test-server image origin');}}
   const request=p.locator(source==='recipes'?'[data-cu-action=archive-source]':'[data-fa-action=archive-request]');await request.click();await p.getByRole('button',{name:'Confirmer l’archivage',exact:true}).click();await p.waitForURL(/famille.html#documents/);await ready();await p.locator('[data-archive-row][data-record='+id+']').waitFor();await p.locator('[data-archive-row][data-record='+id+'] [data-fa-action=archive-open]').click();if(source==='recipes')await p.waitForFunction(()=>window.DobbyCuisine?.ready&&window.DobbyCuisine.view==='recipe');else await p.locator('[data-archive-status]').waitFor();await snap(id+'-archived');
   if(phase==='before'){await native('const a=window.DobbyArchiveSources;a.change(p.source,p.id,false,{confirmed:true,expected:a.snapshot(p.source,p.id)});',{source,id});continue;}
   if(view==='contract')assert.equal(await p.locator('.contracts-heading h1').count(),1,'Consulter uses the canonical Contracts renderer, including structured legacy records');
@@ -38,7 +40,7 @@ const hash=b=>crypto.createHash('sha256').update(b).digest('hex'),photo=fs.readF
   }else{
    const list=source==='equipment'?'house':source==='contacts'?'contacts':source.includes('Notes')?'memos':view==='contract'?'contracts':'document-library';
    await p.evaluate(list=>DobbyFamilyStitch.open(list),list);
-   if(source==='localNotes')await p.locator('[data-e09-legacy] summary').click();
+   if(source==='localNotes'&&await p.locator('[data-e09-legacy] summary').count())await p.locator('[data-e09-legacy] summary').click();
    await p.locator('main [data-record='+id+']').first().waitFor();
   }
   report.checks.push({width,source,id,native:true,readOnly:true,archiveReturn:true,confirmedRestore:true,conserved:true,nativeList:true,reloaded:true});
