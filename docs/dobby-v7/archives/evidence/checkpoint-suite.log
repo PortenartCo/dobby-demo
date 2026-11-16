@@ -1,0 +1,97 @@
+
+> test
+> node ci.cjs
+
+✔ a fresh register generation keeps the six-card canonical Menu and all other sources (267.377672ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 284.321326
+MENU_BROWSER 154.0.8037.57
+MENU_SHORT_VIEWPORT {"width":320,"height":480,"last":{"x":16,"y":304,"width":288,"height":68,"top":304,"right":304,"bottom":372,"left":16},"scrollY":312,"maximumScroll":312,"scrollHeight":792,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":320,"height":81,"top":399,"right":320,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":320,"height":420,"last":{"x":16,"y":244,"width":288,"height":68,"top":244,"right":304,"bottom":312,"left":16},"scrollY":372,"maximumScroll":372,"scrollHeight":792,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":320,"height":81,"top":339,"right":320,"bottom":420,"left":0}}
+MENU_PASS 320 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":390,"height":480,"last":{"x":16,"y":304,"width":358,"height":68,"top":304,"right":374,"bottom":372,"left":16},"scrollY":282,"maximumScroll":282,"scrollHeight":762,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":390,"height":81,"top":399,"right":390,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":390,"height":420,"last":{"x":16,"y":244,"width":358,"height":68,"top":244,"right":374,"bottom":312,"left":16},"scrollY":342,"maximumScroll":342,"scrollHeight":762,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":390,"height":81,"top":339,"right":390,"bottom":420,"left":0}}
+MENU_PASS 390 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":1440,"height":480,"last":{"x":934.65625,"y":274,"width":409.34375,"height":68,"top":274,"right":1344,"bottom":342,"left":934.65625},"scrollY":0,"maximumScroll":0,"scrollHeight":480,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":399,"width":1280,"height":81,"top":399,"right":1360,"bottom":480,"left":80}}
+MENU_SHORT_VIEWPORT {"width":1440,"height":420,"last":{"x":934.65625,"y":244,"width":409.34375,"height":68,"top":244,"right":1344,"bottom":312,"left":934.65625},"scrollY":30,"maximumScroll":30,"scrollHeight":450,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":339,"width":1280,"height":81,"top":339,"right":1360,"bottom":420,"left":80}}
+MENU_PASS 1440 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+E07_P01_CI_START e07-p01.cjs
+E07_P01_CI_PASS e07-p01.cjs
+E07_P01_CI_START e07-p01-visual.cjs
+E07_P01_CI_PASS e07-p01-visual.cjs
+E07_P01_CI_START e07-3-taverne.cjs
+E07_P01_CI_PASS e07-3-taverne.cjs
+E07_P01_CI_START e07-3-catalogue.cjs
+E07_P01_CI_PASS e07-3-catalogue.cjs
+E07_P01_CI_START e07-4-b-ui.cjs
+E07_P01_CI_PASS e07-4-b-ui.cjs
+E07_P01_CI_START e07-4-engine.cjs
+E07_P01_CI_PASS e07-4-engine.cjs
+E07_P01_CI_START e07-4-render-race.cjs
+E07_P01_CI_PASS e07-4-render-race.cjs
+E07_P01_CI_START v7-meals-model.cjs
+E07_P01_CI_PASS v7-meals-model.cjs
+E07_P01_CI_START v7-meals-ui.cjs
+E07_P01_CI_PASS v7-meals-ui.cjs
+E07_P01_CI_START v7-meals-child.cjs
+E07_P01_CI_PASS v7-meals-child.cjs
+E07_P01_CI_START v7-dessert-preparations.cjs
+E07_P01_CI_PASS v7-dessert-preparations.cjs
+E07_P01_CI_START v7-dessert-batch-edges.cjs
+E07_P01_CI_PASS v7-dessert-batch-edges.cjs
+E07_P01_TARGETED_CI_PASS 12 browser scripts; source fingerprints unchanged
+✔ regroupe les apports compatibles et conserve leurs repas, réimport idempotent (26.726812ms)
+✔ article manuel couvre le besoin sans doubler la quantité (2.414723ms)
+✔ maison partiel/total/annulation reste distinct des achats et de la clôture (3.484563ms)
+✔ noms ambigus et unités incompatibles restent distincts (1.493072ms)
+✔ un aperçu devenu périmé ne modifie pas les articles (1.779495ms)
+✔ disponibilité conserve son unité quand un apport compatible est ajouté (2.307679ms)
+✔ plusieurs articles manuels compatibles sont tous conservés sans surajout (2.096471ms)
+✔ historique E07.2 en kg conserve son reçu et ne se réimporte pas (1.316558ms)
+✔ modifier une unité compatible convertit aussi la disponibilité (1.771899ms)
+✔ supprimer une préparation libère sa couverture manuelle (2.330621ms)
+✔ supprimer un article familial retire son annotation maison (2.453557ms)
+✔ réimport familial avec période restreinte ne réalloue pas la couverture (3.012939ms)
+✔ un formulaire partagé périmé ne remplace pas une modification reçue (1.049245ms)
+✔ une confirmation de suppression périmée ne retire pas la nouvelle version (1.091262ms)
+✔ une clôture périmée n’archive pas une disponibilité reçue après confirmation (1.085603ms)
+✔ dessert reste une origine indépendante dans la liste familiale unique et son reçu est idempotent (2.001696ms)
+✔ backend indisponible reste un gate explicite et conserve les articles partagés (1.260601ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65.216283
+✔ availability is persisted, compared and acknowledged by the native core (1.552892ms)
+✔ competing availability declarations require conflict resolution (4.503831ms)
+✔ an edit in flight is not lost on acknowledgement (0.182789ms)
+✔ legacy rows omit availability from payloads and compare as zero (0.280066ms)
+✔ kg availability retains gram-level fractional precision (0.172138ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13.440401
+E07_P02_BROWSER_PASS 390
+E07_P02_BROWSER_PASS 320
+E07_P02_BROWSER_PASS 1440
+E07_P02_LOADING_RESUME_PASS
+CANONICAL_GROCERY_SNAPSHOT_PASS 8 cases
+page.evaluate: Error: L’article a changé. Ouvrez un nouveau récapitulatif.
+    at req.onsuccess (http://127.0.0.1:8765/essai-stitch-v5-famille/family-v2.js?v=20261110-e06-1:649:150)
+    at call (/workspace/dobby-demo/essai-stitch-v7/tests/e07-p02-family.cjs:81:39)
+    at /workspace/dobby-demo/essai-stitch-v7/tests/e07-p02-family.cjs:84:191 {
+  log: []
+}

@@ -12,16 +12,42 @@ const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
 test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const settingsPreview=source('../index.html').replaceAll('\r\n','\n');
-  const settings=JSON.parse(source('./fixtures/settings-backup-native-extensions.json'));
-  const settingsSha=value=>createHash('sha256').update(value).digest('hex');
-  assert.equal(settingsSha(settingsPreview),settings.afterSha256,'Exact Settings native restoration guard artifact');
-  let preview=settingsPreview;
+  const combinedNative=source('../index.html').replaceAll('\r\n','\n');
+  const settingsSource=source('./fixtures/settings-backup-native-extensions.json');
+  const settings=JSON.parse(settingsSource),settingsSha=value=>createHash('sha256').update(value).digest('hex');
+  const combinedProof=JSON.parse(source('./fixtures/settings-archives-native-composition.json'));
+  assert.equal(settingsSha(settingsSource),combinedProof.settingsFixtureSha256,'Settings immutable parent amendment preserved');
+  assert.equal(settingsSha(combinedNative),combinedProof.composedSha256,'Complete Settings + Archives native artifact pinned');
+  let archivePreview=combinedNative;
   for(const patch of [...settings.patches].reverse()){
-    assert.equal(preview.split(patch.after).length-1,1,'Exact Settings native amendment: '+patch.label);
-    preview=preview.replace(patch.after,patch.before);
+    assert.equal(archivePreview.split(patch.after).length-1,1,'Exact Settings amendment: '+patch.label);
+    archivePreview=archivePreview.replace(patch.after,patch.before);
   }
-  assert.equal(settingsSha(preview),settings.beforeSha256,'Removing Settings restores every byte of the frozen Maison/Role/Contracts artifact');
+  const finalArchive=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/archives-final-source-extensions.json'));
+  const finalProof=finalArchive.files['essai-stitch-v5-famille/index.html'];
+  assert.equal(createHash('sha256').update(archivePreview).digest('hex'),finalProof.afterSha256,'Final binary writer is pinned in full');
+  for(const patch of [...finalProof.patches].reverse()){
+    assert.equal(archivePreview.split(patch.after).length-1,1,'Exact final native callback extension');
+    archivePreview=archivePreview.replace(patch.after,patch.before);
+  }
+  assert.equal(createHash('sha256').update(archivePreview).digest('hex'),finalProof.beforeSha256,'Only final binary callbacks reversed to PR17 parent');
+  const archiveAmendments=JSON.parse(source('./fixtures/archives-main16-native-extensions.json'));
+  const sha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(archiveAmendments.baseCommit,'a4190bb3b1b2fd95995e33dbce09ffb31c77614c');
+  assert.equal(sha(source('./fixtures/archives-native-extensions.json')),archiveAmendments.frozenParentFixture.sha256,'Frozen Archives pre-Maison proof remains byte-exact');
+  assert.equal(sha(archivePreview),archiveAmendments.afterSha256,'Complete Archives native artifact is pinned');
+  let preview=archivePreview;
+  for(const amendment of [...archiveAmendments.patches].reverse()){
+    assert.notEqual(amendment.after,amendment.before);
+    assert.equal(preview.split(amendment.after).length-1,1,'Exact Archives amendment occurs once: '+amendment.label);
+    preview=preview.replace(amendment.after,amendment.before);
+  }
+  assert.equal(sha(preview),archiveAmendments.beforeSha256,'Reversing only eight Archives literals restores the complete immutable main');
+  assert.equal(settingsSha(preview),settings.beforeSha256,'Both amendments recover the frozen Settings parent');
+  let settingsOnly=preview;
+  for(const patch of settings.patches){assert.equal(settingsOnly.split(patch.before).length-1,1);settingsOnly=settingsOnly.replace(patch.before,patch.after);}
+  assert.equal(settingsSha(settingsOnly),settings.afterSha256,'Reapplying only Settings recovers its complete reviewed artifact');
+
   const preparationScript='<script src="./family-preparations.js"></script>';
   assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs

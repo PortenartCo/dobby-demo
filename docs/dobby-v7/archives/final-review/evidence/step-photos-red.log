@@ -1,0 +1,13 @@
+ARCHIVE_NATIVE_CASE after 390 final-recipe
+AssertionError [ERR_ASSERTION]: Step photograph remains readable in the native archived recipe
+
+0 !== 1
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-native-consultation.cjs:25:308 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

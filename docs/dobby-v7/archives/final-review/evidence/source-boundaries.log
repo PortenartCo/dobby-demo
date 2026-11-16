@@ -1,0 +1,30 @@
+✔ preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions (1449.100624ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (3.790044ms)
+✔ module adapter fails closed when Supabase modules table is missing (3.450778ms)
+✔ module schema enforces household isolation and excludes health and attachments (0.226601ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (0.181687ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (0.226888ms)
+✔ manual missions remain separate from automatic tasks (0.107193ms)
+✔ binary file uploads do not use the JSON modules API (0.602222ms)
+✔ shared health visits do not automatically upload previous local health records (0.428367ms)
+✔ a health document remains local until the user chooses household sharing (1.431314ms)
+✔ Family source boundaries preserve history plus reviewed general and family-core amendments (166.817984ms)
+✔ every reviewed whole-file amendment retains its exact source fingerprint (201.353912ms)
+✔ published-main reconciliation preserves both parent manifests and every full current source (41.716383ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (2.80479ms)
+✔ Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits (581.532195ms)
+✔ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (162.297806ms)
+✔ a readiness extension cannot fall back to valid frozen-parent bytes (0.685248ms)
+✔ Courses retains the native shopping contract including independent dessert import (89.071417ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (2.694289ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.697314ms)
+✔ Archives amendments reverse exactly to current main and reject altered bytes or parent hashes (14.654295ms)
+✔ final native archive guards preserve every byte of the reviewed PR17 parent (22.014481ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1792.641098

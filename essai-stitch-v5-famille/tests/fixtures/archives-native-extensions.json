@@ -1,0 +1,37 @@
+{
+  "baseCommit": "25dd637c1b827bd09a46d8a55be63d9c14966f19",
+  "beforeSha256": "6ab491966d025d9beb427b2b8d77ba27fa4216ec09bf286687e691bf5153b56d",
+  "afterSha256": "dcb7260b7e489d904639fa76b996c27d86361aefae685bd7e606f5a238d4135c",
+  "patches": [
+    {
+      "label": "1",
+      "before": "else st.houseItems[idx]=obj;",
+      "after": "else st.houseItems[idx]={...st.houseItems[idx],...obj};"
+    },
+    {
+      "label": "2",
+      "before": "else st.familyNotes[i]=d;",
+      "after": "else st.familyNotes[i]={...st.familyNotes[i],...d};"
+    },
+    {
+      "label": "3",
+      "before": "st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);",
+      "after": "r={...st.famContacts.find(v=>v.id===r.id),...r};st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);"
+    },
+    {
+      "label": "4",
+      "before": "</body></html>",
+      "after": "<script src=\"./family-archives.js\"></script></body></html>"
+    },
+    {
+      "label": "partial-backup-1",
+      "before": "data.items.forEach(x=>existing.set(x.id,x));",
+      "after": "data.items.forEach(x=>existing.set(x.id,{...existing.get(x.id),...x}));"
+    },
+    {
+      "label": "partial-backup-2",
+      "before": "p.notes.forEach(x=>notes.set(x.id,x));",
+      "after": "p.notes.forEach(x=>notes.set(x.id,{...notes.get(x.id),...x}));"
+    }
+  ]
+}

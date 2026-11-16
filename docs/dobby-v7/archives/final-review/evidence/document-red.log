@@ -1,0 +1,20 @@
+ARCHIVE_NATIVE_CASE after 320 final-document
+AssertionError [ERR_ASSERTION]: Archives document reading has no generic storage scaffold
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-native-consultation.cjs:20:35 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'arrow_back\n' +
+    'menu_book\n' +
+    'DOBBY\n' +
+    'ARCHIVES & GRIMOIRE • DOCUMENTS\n' +
+    '\n' +
+    'Archivé · fiche conservée dans son module d’origine.\n' +
+    '\n' +
+    '✦ PARCHEMIN SCELLÉ ✦\n' +
+    'description\n' +
+    '📄 FORMAT NUMÉRIQUE\n' +
+    '...',
+  expected: /Registre des Métadonnées|Consignes du Foyer|Parchemin & Pièces jointes|Enregistrement et partage/,
+  operator: 'doesNotMatch',
+  diff: 'simple'
+}

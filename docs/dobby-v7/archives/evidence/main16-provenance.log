@@ -1,0 +1,29 @@
+✔ preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions (480.624284ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (8.133866ms)
+✔ module adapter fails closed when Supabase modules table is missing (7.064979ms)
+✔ module schema enforces household isolation and excludes health and attachments (0.50532ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (0.977454ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (0.580158ms)
+✔ manual missions remain separate from automatic tasks (1.691972ms)
+✔ binary file uploads do not use the JSON modules API (0.951649ms)
+✔ shared health visits do not automatically upload previous local health records (1.909404ms)
+✔ a health document remains local until the user chooses household sharing (3.138806ms)
+✔ Family source boundaries preserve history plus reviewed general and family-core amendments (15.046119ms)
+✔ every reviewed whole-file amendment retains its exact source fingerprint (21.947143ms)
+✔ published-main reconciliation preserves both parent manifests and every full current source (25.490818ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (4.457546ms)
+✔ Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits (35.868459ms)
+✔ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (30.000947ms)
+✔ a readiness extension cannot fall back to valid frozen-parent bytes (0.811999ms)
+✔ Courses retains the native shopping contract including independent dessert import (69.06703ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (3.247438ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.740453ms)
+✔ Archives amendments reverse exactly to current main and reject altered bytes or parent hashes (29.566217ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 712.713403

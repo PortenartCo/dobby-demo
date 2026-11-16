@@ -70,7 +70,7 @@ async function fixture(browser, width = 390) {
       if (evidence) { fs.mkdirSync(evidence, { recursive: true }); await page.screenshot({ path: path.join(evidence, 'backup-' + width + '.png'), fullPage: true }); }
       const before = await snapshot(), originalHash = hash(Buffer.from(await attachment()));
       await page.getByRole('button', { name: 'Ouvrir les documents enregistrés', exact: true }).click();
-      await page.waitForFunction(() => DobbyFamilyStitch.view === 'documents' && document.body.dataset.familyView === 'documents' && !document.documentElement.classList.contains('dv7-loading') && document.querySelector('main')?.textContent.includes('TEST — Ancien document autonome'));
+      await page.waitForFunction(() => DobbyFamilyStitch.view === 'document-library' && document.body.dataset.familyView === 'document-library' && !document.documentElement.classList.contains('dv7-loading') && document.querySelector('main')?.textContent.includes('TEST — Ancien document autonome'));
       assert.match(await page.locator('main').innerText(), /TEST — Ancien document autonome/);
       assert.deepEqual(await snapshot(), before); assert.equal(hash(Buffer.from(await attachment())), originalHash);
       await page.evaluate(() => DobbyFamilyStitch.open('backup', { origin: 'settings' }));

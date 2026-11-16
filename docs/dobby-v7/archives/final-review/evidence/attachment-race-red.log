@@ -1,0 +1,37 @@
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (23.328917ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (14.447469ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (2.7995ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (23.763352ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (5.219772ms)
+✔ failed native archive save rolls back derived task side effects as well as its source row (2.145983ms)
+✔ partial restores retain lifecycle, reject reactivation and refuse another household (6.066132ms)
+✖ archived contracts reject metadata and attachment mutations through their native writer (5.838399ms)
+✔ a contract archived during a pending binary write retains its original pieces and discards the staged file (2.324286ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 301.246443
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/archives-writer.test.cjs:62:1
+✖ archived contracts reject metadata and attachment mutations through their native writer (5.838399ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-writer.test.cjs:65:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /archivée/,
+    operator: 'throws',
+    diff: 'simple'
+  }

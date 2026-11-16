@@ -1,0 +1,41 @@
+✖ preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions (26.730552ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (2.873232ms)
+✔ module adapter fails closed when Supabase modules table is missing (128.093617ms)
+✔ module schema enforces household isolation and excludes health and attachments (11.316432ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (5.43985ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (2.401213ms)
+✔ manual missions remain separate from automatic tasks (2.636526ms)
+✔ binary file uploads do not use the JSON modules API (13.739172ms)
+✔ shared health visits do not automatically upload previous local health records (1.906279ms)
+✔ a health document remains local until the user chooses household sharing (11.758048ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 504.895106
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/integration.test.mjs:13:1
+✖ preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions (26.730552ms)
+  AssertionError [ERR_ASSERTION]: Complete Archives native artifact is pinned
+  + actual - expected
+
+  + '82041430ce49ed5ed9eb8c0b81954c236c0b3f4a8f61a32c4c523299c43e4606'
+  - 'ca22699e050b8df55247cb326fc86625211b70a2834608f10a1c6b4584d2bea1'
+
+      at TestContext.<anonymous> (file:///workspace/dobby-demo/essai-stitch-v5-famille/tests/integration.test.mjs:20:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '82041430ce49ed5ed9eb8c0b81954c236c0b3f4a8f61a32c4c523299c43e4606',
+    expected: 'ca22699e050b8df55247cb326fc86625211b70a2834608f10a1c6b4584d2bea1',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

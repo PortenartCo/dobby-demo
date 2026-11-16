@@ -1,0 +1,33 @@
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (17.241889ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (12.143895ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (4.215934ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (3.359631ms)
+✖ native retired recipes cannot produce a false archive activation or erase their retirement (2.754012ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.100368
+
+✖ failing tests:
+
+test at essai-stitch-v5-famille/tests/archives-writer.test.cjs:43:1
+✖ native retired recipes cannot produce a false archive activation or erase their retirement (2.754012ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v5-famille/tests/archives-writer.test.cjs:45:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /retirée|restaur/i,
+    operator: 'throws',
+    diff: 'simple'
+  }

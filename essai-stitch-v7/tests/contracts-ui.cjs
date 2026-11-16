@@ -49,7 +49,7 @@ function realPdf(){const stream='BT /F1 18 Tf 36 120 Td (DOBBY - Contrat de test
    assert.equal(await page.locator('[name=note]').inputValue(),'Saisie non enregistrée');await page.getByRole('button',{name:'Enregistrer',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#fa-notice')?.textContent.includes('modifié'));
    assert.equal(await native('return st.familyDocs.find(d=>d.id===p.id).note;',{id:row.id}),'Modification concurrente');
   }
-  await open('documents');assert.ok(await page.locator('#rg-doc-json').count());
+  await open('document-library');assert.ok(await page.locator('#rg-doc-json').count());
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);
   console.log('CONTRACTS_UI_PASS',width);await context.close();
  }

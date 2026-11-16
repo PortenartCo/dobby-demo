@@ -1,0 +1,31 @@
+✔ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (29.337641ms)
+✔ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (9.166995ms)
+✔ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (7.531683ms)
+✔ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (12.32879ms)
+✔ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (8.30615ms)
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (30.515899ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (13.182988ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (5.513416ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (2.414571ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (3.208009ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1705.237458
+ARCHIVES_UI_PASS 320
+ARCHIVES_UI_PASS 390
+ARCHIVES_UI_PASS 768
+ARCHIVES_UI_PASS 1440
+ARCHIVES_SOURCES_PASS contacts local/shared-memos documents recipe planned references stale-confirmation and native backup/restore bytes
+ARCHIVES_REVIEW_PASS planned
+ARCHIVES_REVIEW_PASS instructions
+ARCHIVES_REVIEW_PASS isolation
+ARCHIVES_REVIEW_PASS selection
+ARCHIVES_REVIEW_PASS retired
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+ARCHIVES_ACCEPTANCE_PASS — local and HTTP fixtures; real family A/B deferred
