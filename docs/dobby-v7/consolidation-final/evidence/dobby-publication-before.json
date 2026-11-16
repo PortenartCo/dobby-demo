@@ -1,0 +1,122 @@
+{
+  "observedUTC": "2026-11-16T23:38:06.140046+00:00",
+  "expectedCommit": "c40f4a8df544fe7ae36a0b6b5f829fd8c8c74a76",
+  "base": "https://portenartco.github.io/dobby-demo/",
+  "readOnlyStaticRequests": true,
+  "realAccountRequests": false,
+  "records": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 2003,
+      "sha256": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+      "expectedSha256": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/traverse.html",
+      "status": 200,
+      "bytes": 26613,
+      "sha256": "3f013ea3bd7bc8ecb2e81a27bac2b34b36e8a954eb37a4721380a5582d0c213b",
+      "expectedSha256": "3f013ea3bd7bc8ecb2e81a27bac2b34b36e8a954eb37a4721380a5582d0c213b",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/famille.html",
+      "status": 200,
+      "bytes": 44215,
+      "sha256": "2c5ec4d9611ec181353fe3496a740899181415ab12e742fa4b73815d456761c6",
+      "expectedSha256": "2c5ec4d9611ec181353fe3496a740899181415ab12e742fa4b73815d456761c6",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/missions.html",
+      "status": 200,
+      "bytes": 12244,
+      "sha256": "5d19db4d756435b0e1c0efc64e603d3939e026fbfe536643ab11f98d7c7b7a92",
+      "expectedSha256": "5d19db4d756435b0e1c0efc64e603d3939e026fbfe536643ab11f98d7c7b7a92",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/index.html",
+      "status": 200,
+      "bytes": 28260,
+      "sha256": "f5b937ccdb157606d44858c9889757ccfcfa2eef8b99b6f8a2fb5b4f69c474ef",
+      "expectedSha256": "f5b937ccdb157606d44858c9889757ccfcfa2eef8b99b6f8a2fb5b4f69c474ef",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/tools-register.js",
+      "status": 200,
+      "bytes": 30545,
+      "sha256": "29d00a355ff4bdcf361afadc7f6f832a176c11f085625cf4fff55a02254bab6b",
+      "expectedSha256": "29d00a355ff4bdcf361afadc7f6f832a176c11f085625cf4fff55a02254bab6b",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/house-register.js",
+      "status": 200,
+      "bytes": 39674,
+      "sha256": "d40f0340e172a5524fd930842cccb16d6af32fc1da7e1839fd9461e57db3e103",
+      "expectedSha256": "d40f0340e172a5524fd930842cccb16d6af32fc1da7e1839fd9461e57db3e103",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/family-register.js",
+      "status": 200,
+      "bytes": 21366,
+      "sha256": "5d7f6767b544afa5bbc171eaf1be7fa615e6c3260abe206c7e78fdaf5f5c4390",
+      "expectedSha256": "5d7f6767b544afa5bbc171eaf1be7fa615e6c3260abe206c7e78fdaf5f5c4390",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "status": 200,
+      "bytes": 11972,
+      "sha256": "c8565b639c981aaac7fc753562027853f4823925a5d1a9bb0d18d079261fdd13",
+      "expectedSha256": "c8565b639c981aaac7fc753562027853f4823925a5d1a9bb0d18d079261fdd13",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/chrome.js",
+      "status": 200,
+      "bytes": 15974,
+      "sha256": "04357dda26ad26cbcc90bbc6f95c0012fcb25496504e3187dfb2474572e7e849",
+      "expectedSha256": "04357dda26ad26cbcc90bbc6f95c0012fcb25496504e3187dfb2474572e7e849",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/register-route-data.js",
+      "status": 200,
+      "bytes": 9664,
+      "sha256": "05d3061ea9f1ff6dd9e937fc4e3c6e69fc050062412141efc58c1c5cf86df6a0",
+      "expectedSha256": "05d3061ea9f1ff6dd9e937fc4e3c6e69fc050062412141efc58c1c5cf86df6a0",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "status": 200,
+      "bytes": 1232031,
+      "sha256": "1c74df97488565a83b14fc71a26c8b582fd9de85849fd678e48f4fdde9594a5a",
+      "expectedSha256": "1c74df97488565a83b14fc71a26c8b582fd9de85849fd678e48f4fdde9594a5a",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "status": 200,
+      "bytes": 55184,
+      "sha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+      "expectedSha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "status": 200,
+      "bytes": 107856,
+      "sha256": "af435d7fb77926e2df18bedd0cadc31bac7515b1d6be9163ab6d17e40856a0cf",
+      "expectedSha256": "af435d7fb77926e2df18bedd0cadc31bac7515b1d6be9163ab6d17e40856a0cf",
+      "matches": true
+    }
+  ],
+  "allMatch": true
+}

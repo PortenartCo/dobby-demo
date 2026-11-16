@@ -1,0 +1,31 @@
+✔ preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings/Archives/Contacts native extensions (425.605368ms)
+✔ Stitch V5 integration adds shared panier without removing original preparation UI (3.724106ms)
+✔ module adapter fails closed when Supabase modules table is missing (4.50705ms)
+✔ module schema enforces household isolation and excludes health and attachments (0.231627ms)
+✔ preview denies cross-household browser reuse and drops unauthorized session (0.328417ms)
+✔ family events and selected medical visits share the household without uploading private famHealth (0.20608ms)
+✔ manual missions remain separate from automatic tasks (0.129099ms)
+✔ binary file uploads do not use the JSON modules API (0.486808ms)
+✔ shared health visits do not automatically upload previous local health records (0.550294ms)
+✔ a health document remains local until the user chooses household sharing (5.272092ms)
+✔ Family source boundaries preserve history plus reviewed general and family-core amendments (10.380788ms)
+✔ every reviewed whole-file amendment retains its exact source fingerprint (31.54893ms)
+✔ published-main reconciliation preserves both parent manifests and every full current source (15.245872ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (1.928138ms)
+✔ Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits (23.619126ms)
+✔ Contacts controller amendments recover the exact parent and reject unrelated source changes (7.05705ms)
+✔ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (17.301098ms)
+✔ a readiness extension cannot fall back to valid frozen-parent bytes (0.473431ms)
+✔ Courses retains the native shopping contract including independent dessert import (99.648804ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (1.515337ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.796174ms)
+✔ Archives amendments reverse exactly to current main and reject altered bytes or parent hashes (18.144799ms)
+✔ final native archive guards preserve every byte of the reviewed PR17 parent (79.261149ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 547.066049

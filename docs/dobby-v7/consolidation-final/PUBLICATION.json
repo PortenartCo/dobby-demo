@@ -1,0 +1,13 @@
+{
+  "applicationDeployed": false,
+  "publicationStage": "verified-isolated-preview; general application promotion pending",
+  "sourceProductCommit": "af015f8c334b67112ee197293611bdecc88d7905",
+  "previewSourceCommit": "56cbaf5825dcb9c5a7b65eb956d37a3364b20435",
+  "previewPagesCommit": "42e5e6c6a989559c18dc2751f4e202507e3cf2f1",
+  "previewUrl": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-consolidated-final-review-20261116/index.html",
+  "previewManifestSha256": "16275f4886e7e85602af5d7ba4954f823c027c7ac0e12f33bcd84720a4f52c1a",
+  "previewLocalAndHostedVerified": true,
+  "rollbackCommit": "42e5e6c6a989559c18dc2751f4e202507e3cf2f1",
+  "realAccountRecipeCompleted": false,
+  "remoteMigrationsApplied": false
+}
