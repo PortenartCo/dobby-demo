@@ -1,0 +1,10 @@
+{
+  "base": "http://127.0.0.1:8873/",
+  "nativeFormAndWriter": true,
+  "reloadPersists": true,
+  "localNotesRetained": true,
+  "otherPreviewUntouched": true,
+  "realAccountsTested": false,
+  "externalRequests": [],
+  "errors": []
+}

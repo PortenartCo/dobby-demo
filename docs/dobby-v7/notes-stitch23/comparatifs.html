@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DOBBY — Notes du foyer : avant / après</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:24px;background:#180b07;color:#fcf7ee;font:16px/1.5 Georgia,serif}h1{font-size:26px;margin-top:0}p{max-width:78ch;color:#d4c4b1}label{display:inline-flex;align-items:center;gap:10px;margin:0 20px 20px 0}select,a{font:inherit;color:#f9bb5f}select{background:#2c1c18;border:1px solid #d49b42;border-radius:8px;padding:9px}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}figure{margin:0;min-width:0}figcaption{font-size:20px;margin-bottom:12px}img{display:block;max-width:100%;height:auto;border:1px solid #d49b4266;border-radius:10px;margin:auto}figure a{display:block;text-align:center;margin-top:10px}@media(max-width:700px){body{padding:16px}.comparison{grid-template-columns:1fr}}:focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}
+</style></head><body>
+<h1>Notes du foyer — Stitch 23</h1>
+<p>Comparaison du même jeu de données fictives avant et après la finalisation. Les longs textes et mots-clés servent à contrôler les retours à la ligne. Chaque image s’ouvre à sa taille d’origine.</p>
+<label>Largeur <select id="width"><option>320</option><option selected>390</option><option>768</option><option>1440</option></select> px</label>
+<label>Écran <select id="screen"><option value="list">Liste et illustration</option><option value="create">Création</option><option value="read">Consultation</option><option value="edit">Modification</option><option value="empty">Recherche sans résultat</option><option value="local-read">Consultation d’un mémo local</option></select></label>
+<div class="comparison"><figure><figcaption>Avant — main 521c919</figcaption><img id="before" alt="Module Notes avant modification"><a id="before-link">Ouvrir la capture originale</a></figure><figure><figcaption>Après — Stitch 23</figcaption><img id="after" alt="Module Notes après modification"><a id="after-link">Ouvrir la capture originale</a></figure></div>
+<p><a href="./RAPPORT.md">Rapport de livraison et limites des tests</a></p>
+<script>
+const width=document.getElementById('width'),screen=document.getElementById('screen');function update(){for(const phase of ['before','after']){const src='./evidence/'+phase+'/'+screen.value+'-'+width.value+'.png';document.getElementById(phase).src=src;document.getElementById(phase+'-link').href=src;}}width.onchange=screen.onchange=update;update();
+</script></body></html>

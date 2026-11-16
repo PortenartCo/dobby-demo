@@ -1,0 +1,17 @@
+/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/fam-agenda-memos-sync.cjs:10
+ if(!u.pathname.includes('dobby_v2_modules'))throw Error('Unexpected fixture endpoint '+u.pathname);const module=(u.searchParams.get('module')||'').replace(/^eq\./,'');if(req.method()==='GET')return reply(module?(rows.has(module)?[rows.get(module)]:[]):[...rows.values()].map(x=>({module:x.module})));
+                                                   ^
+
+Error: Unexpected fixture endpoint /rest/v1/rpc/dobby_v7_context
+    at /workspace/dobby-notes-stitch23/essai-stitch-v7/tests/fam-agenda-memos-sync.cjs:10:52
+    at RouteHandler._handleInternal (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:59786:11)
+    at RouteHandler._handleImpl (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:59753:29)
+    at /workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:59747:59
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_context_frame:63:14)
+    at _Zone.run (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:10149:40)
+    at RouteHandler.handle (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:59747:38)
+    at _BrowserContext._onRoute (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:61965:46)
+    at Proxy.<anonymous> (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:61833:63)
+    at Proxy._callHandler (/workspace/dobby-notes-stitch23/essai-stitch-v7/tests/node_modules/playwright-core/lib/coreBundle.js:10746:33)
+
+Node.js v24.19.0

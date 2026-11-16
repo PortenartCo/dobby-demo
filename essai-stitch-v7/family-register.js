@@ -11,7 +11,9 @@
  const memoReturn=()=>context.open(memoOrigin(),{record:null,origin:memoOrigin()});
  const memoNode=(tag,value,className)=>{const el=document.createElement(tag);if(value!==undefined)el.textContent=value;if(className)el.className=className;return el;};
  const memoPrimary=el=>{el.classList.add('fam-review-primary');return el;};
- function memoStatus(data,local=false){const status=memoNode('div',undefined,'fam-review-status');status.dataset.rgState='true';status.append(note(local?'Ancien mémo local · conservé sur cet appareil.':data.status));if(!local){const actions=memoNode('div',undefined,'fam-review-actions');actions.append(button('family-sync','Synchroniser'));if(/conflit/i.test(data.status))actions.append(button('family-server','Conserver la version du foyer'),button('family-local','Conserver mes modifications'));status.append(actions);}context.main.append(status);}
+ // Routine connection state stays in native household management. Only an actual
+ // problem needs a notice here; retry/online/save hooks remain owned by the engine.
+ function memoStatus(data,local=false){if(local||!/conflit|erreur|échec|incompatible|bloqué/i.test(data.status))return;const status=memoNode('div',undefined,'fam-review-status');status.dataset.rgState='true';status.setAttribute('role','alert');status.append(note(data.status));if(/conflit/i.test(data.status)){const actions=memoNode('div',undefined,'fam-review-actions');actions.append(button('family-server','Conserver la version du foyer'),button('family-local','Conserver mes modifications'));status.append(actions);}context.main.append(status);}
  function nativeNotes(id){E.evaluate('go("documents");docEdit=null;docDetail=null;docNoteEdit=null;render();');E.action('doc',id?'editnote':'newnote',id?{id}:{});}
  function nativeList(id){E.requireRecord(E.read().state.famLists,id);E.page('lists');if(id)E.action('extra','listopen',{id});}
  const requireRow=(rows,id)=>{const row=rows.find(x=>x.id===id);if(id&&!row)throw Error('Cette fiche n’existe plus. Revenez au registre.');return row;};
@@ -27,7 +29,8 @@
  function contactEdit(data){const row=requireRow(data.state.famContacts,context.ui.record)||{};R.mountForm('contact-form');field('#contact-name',row.name,'name',{required:true,max:140});field('#contact-role',row.role,'role');field('#contact-phone',row.phone,'phone');field('#contact-email',row.email,'email');field('#contact-notes',row.note,'note',{max:500});formButtons();meta('Nom, rôle, téléphone, courriel et note sont enregistrés dans le répertoire natif. Photos, blasons et disponibilités structurées : non disponibles.');R.guardFields(q('#rg-form'),row,E.contactForm(row.id));}
  function memos(data){
   memoSnapshots.clear();context.main.replaceChildren();context.main.classList.add('fam-review-main');q('#fa-supplement')?.replaceChildren();
-  const header=memoNode('section',undefined,'fam-review-heading');header.append(memoNode('h1','Notes du foyer'),memoPrimary(button('rg-memo-new','Ajouter un mémo')));context.main.append(header);
+  const header=memoNode('section',undefined,'fam-review-heading');header.append(memoNode('h1','Notes du foyer'));context.main.append(header);
+  const illustration=memoNode('figure',undefined,'fam-notes-illustration'),image=memoNode('img');image.src=new URL('./assets/notes-stitch23.png',location.href).href;image.alt='Dobby dans un bureau familial magique, entouré de parchemins et de carnets.';image.width=1376;image.height=768;illustration.append(image);context.main.append(illustration,memoPrimary(button('rg-memo-new','Ajouter un mémo')));
   const query=memoNode('label',undefined,'fam-review-query');query.append(document.createTextNode('Rechercher un mémo'));const search=memoNode('input');search.id='memoSearchInput';search.type='search';search.value=filter.memos;search.placeholder='Titre, texte ou mots-clés';query.append(search);context.main.append(query);
   if(filter.memos)context.main.append(button('rg-memo-query-clear','Effacer la recherche'));
   search.oninput=()=>{filter.memos=search.value;const start=search.selectionStart;memos(E.read());const next=q('#memoSearchInput');next.focus();if(start!==null)next.setSelectionRange(start,start);};
@@ -35,9 +38,10 @@
   const matches=row=>[row.title,row.tags,row.body].join(' ').toLocaleLowerCase('fr').includes(filter.memos.toLocaleLowerCase('fr'));
   function preview(row,scope='shared'){const card=memoNode('article',undefined,'fam-review-record');bind(card,scope==='local'?'rg-memo-local-open':'rg-memo-open',{record:row.id});card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Consulter '+row.title);card.append(memoNode('h3',row.title),note(row.body?.length>180?row.body.slice(0,180)+'…':row.body));if(row.tags)card.append(memoNode('p',row.tags,'fam-review-tag-line'));return card;}
   const rows=(data.state.sharedFamilyNotes||[]).filter(matches);for(const row of rows){memoSnapshots.set(row.id,JSON.parse(JSON.stringify(row)));container.append(preview(row));}
-  if(!rows.length)container.append(note('Aucun mémo familial correspondant.'));
-  const legacy=memoNode('details',undefined,'fam-review-legacy');legacy.dataset.e09Legacy='';legacy.append(memoNode('summary','Anciens mémos locaux ('+(data.state.familyNotes||[]).length+')'),note('L’import volontaire crée une copie familiale et conserve l’original sur cet appareil.'));
-  for(const row of (data.state.familyNotes||[]).filter(matches))legacy.append(preview(row,'local'),button('rg-memo-import','Importer dans les mémos familiaux',{record:row.id}));if(!(data.state.familyNotes||[]).length)legacy.append(note('Aucun ancien mémo local.'));context.main.append(legacy);memoStatus(data);context.main.append(button('menu','Revenir au Menu'));
+  const localRows=(data.state.familyNotes||[]).filter(matches);
+  for(const row of localRows){const entry=memoNode('div',undefined,'fam-review-local-entry');entry.append(preview(row,'local'),button('rg-memo-import','Partager une copie avec le foyer',{record:row.id}));container.append(entry);}
+  if(!rows.length&&!localRows.length)container.append(note('Aucun mémo correspondant.'));
+  memoStatus(data);context.main.append(button('menu','Revenir au Menu'));
  }
  function memoEdit(data){
   if(!context.ui.record)context.ui.scope='shared';const local=memoLocal(data),row=requireRow(memoRows(data),context.ui.record)||{};memoSnapshot=row.id?JSON.parse(JSON.stringify(row)):null;
