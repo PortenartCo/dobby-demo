@@ -20,6 +20,8 @@ La revue en lecture seule a reproduit puis retesté ces défauts :
 | Flèche recette déclenchant « Archiver » après réactivation concurrente | Action `archive-return` séparée du cycle métier | `recipe-return-red.log` → `consultation-races-green.log` |
 | Photos d'étapes inaccessibles dans la fiche native | Réutilisation des images hydratées par mode/index et du style natif existant | `step-photos-red.log` → `step-photos-green.log` |
 
+Les attentes de test attendent le contenu natif rendu. La CI a aussi révélé une fixture de dîner en UTC, alors que la Taverne utilise la date de Bruxelles : le test utilise désormais explicitement ce fuseau et le jour planifié. Les sept cas de revue passent avec un processeur navigateur ralenti ×4 (`ci-slow-renderer-green.log`). Ces ajustements concernent uniquement les tests.
+
 Les sept parcours automatisés de concurrence couvrent aussi confirmation de réactivation périmée et refus enfant, y compris dispatch direct. Le retest indépendant a confirmé en plus la restauration mémoire/sauvegarde/octets après quota local et annulation IndexedDB après commit des métadonnées. Aucun défaut concret ne reste dans cette revue ciblée.
 
 Les callbacks optionnels de `houseStore` étendent le writer binaire existant : même base, même store et même clé, sans nouveau registre ni schéma. Les preuves `archives-final-source-extensions.json` inversent exactement les deux amendements natifs vers `aeed16e`, puis les preuves historiques vers main. Les anciens manifests restent inchangés et les octets supplémentaires sont refusés.
