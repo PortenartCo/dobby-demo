@@ -4,45 +4,47 @@ const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8765';
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{
  const c=await browser.newContext({viewport:{width:390,height:900}});await c.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());const p=await c.newPage();p.setDefaultTimeout(15000);p.on('dialog',d=>d.accept());
  const ready=()=>p.waitForFunction(()=>DobbyFamilyStitch?.ready&&document.readyState==='complete');
+ const clearNotice=async()=>{await p.waitForFunction(()=>!DobbyRegister.busy);const dismiss=p.locator('#fa-notice:not([hidden]) [data-fa-action=dismiss]');if(await dismiss.count())await dismiss.click();};
+ const rejected=async pattern=>{await p.locator('#fa-notice').filter({hasText:pattern}).waitFor();await p.waitForFunction(()=>!DobbyRegister.busy);};
  const native=(code,data={})=>p.evaluate(({code,data})=>DobbyFamilyStitchEngine.evaluate(code,data),{code,data});
  await p.goto(origin+'/essai-stitch-v7/famille.html#documents');await ready();await native('Object.assign(st,p.seed);custom=st.customRecipes;save();',{seed:records('0'.repeat(64))});
  // A pending file chooser is a live callback created while the record was active.
  await p.evaluate(()=>DobbyFamilyStitch.open('contract',{record:'final-contract'}));
- const [chooser]=await Promise.all([p.waitForEvent('filechooser'),p.locator('[data-fa-action=rg-contract-file-replace]').first().click()]);
+ await clearNotice();const [chooser]=await Promise.all([p.waitForEvent('filechooser'),p.locator('[data-fa-action=rg-contract-file-replace]').first().click()]);
  await native('const A=window.DobbyArchiveSources;A.change("documents","final-contract",true,{confirmed:true,expected:A.snapshot("documents","final-contract")});');
  await chooser.setFiles({name:'replacement-fictif.pdf',mimeType:'application/pdf',buffer:Buffer.from(pdf())});
- await p.locator('#fa-notice').filter({hasText:/lecture seule|archivée/}).waitFor();
+ await rejected(/lecture seule|archivée/);
  assert.equal((await p.evaluate(()=>DobbyFamilyStitchEngine.read().state.familyDocs[0])).attachments.length,2,'A stale picker cannot append a replacement');
  console.log('ARCHIVES_CONSULTATION_RACE_PASS pending-file-chooser');
  // An archived autonomous document must retain the existing binary, too.
  await native('return houseStore(new Blob(["ORIGINAL FICTIF"],{type:"application/pdf"}),"family-final-document");');
  await p.evaluate(()=>DobbyFamilyStitch.open('document',{record:'final-document'}));
- const [documentPicker]=await Promise.all([p.waitForEvent('filechooser'),p.locator('label[for=rg-doc-file]').click()]);
+ await clearNotice();const [documentPicker]=await Promise.all([p.waitForEvent('filechooser'),p.locator('label[for=rg-doc-file]').click()]);
  await native('const A=window.DobbyArchiveSources;A.change("documents","final-document",true,{confirmed:true,expected:A.snapshot("documents","final-document")});');
  await documentPicker.setFiles({name:'changed-fictif.pdf',mimeType:'application/pdf',buffer:Buffer.from(pdf())});
- await p.waitForFunction(()=>document.querySelector('#fa-notice')?.textContent||DobbyFamilyStitchEngine.read().state.familyDocs.find(r=>r.id==='final-document').attachmentName==='changed-fictif.pdf');
+ await rejected(/lecture seule|archivée/);
  assert.equal(await native('return st.familyDocs.find(r=>r.id==="final-document").attachmentName;'),'document-fictif.pdf');
  assert.equal(await native('return houseRead("family-final-document").then(b=>b.text());'),'ORIGINAL FICTIF');
  console.log('ARCHIVES_CONSULTATION_RACE_PASS document-pending-file-chooser');
  // Recheck after an asynchronous binary store and roll back only its replacement.
  await native('const A=window.DobbyArchiveSources;A.change("documents","final-document",false,{confirmed:true,expected:A.snapshot("documents","final-document")});const original=houseStore;houseStore=async function(...args){if(args[0].name==="inflight-fictif.pdf")await new Promise(resolve=>window.__archiveWriteRelease=resolve);return original(...args);};');
  await p.evaluate(()=>DobbyFamilyStitch.open('document',{record:'final-document'}));
- const [inflightPicker]=await Promise.all([p.waitForEvent('filechooser'),p.locator('label[for=rg-doc-file]').click()]);
+ await clearNotice();const [inflightPicker]=await Promise.all([p.waitForEvent('filechooser'),p.locator('label[for=rg-doc-file]').click()]);
  await inflightPicker.setFiles({name:'inflight-fictif.pdf',mimeType:'application/pdf',buffer:Buffer.from(pdf())});
  await p.waitForFunction(()=>typeof DobbyFamilyStitchEngine.win().__archiveWriteRelease==='function');
  await native('const A=window.DobbyArchiveSources;A.change("documents","final-document",true,{confirmed:true,expected:A.snapshot("documents","final-document")});window.__archiveWriteRelease();');
- await p.locator('#fa-notice').filter({hasText:/lecture seule|archivée/}).waitFor();
+ await rejected(/lecture seule|archivée/);
  assert.equal(await native('return st.familyDocs.find(r=>r.id==="final-document").attachmentName;'),'document-fictif.pdf');
  assert.equal(await native('return houseRead("family-final-document").then(b=>b.text());'),'ORIGINAL FICTIF');
  console.log('ARCHIVES_CONSULTATION_RACE_PASS document-archive-during-binary-write');
  // A different accepted writer must never be overwritten by a stale rollback.
  await native('const A=window.DobbyArchiveSources;A.change("documents","final-document",false,{confirmed:true,expected:A.snapshot("documents","final-document")});const raw=houseStore;window.__concurrentStore=raw;houseStore=async function(...args){if(args[0].name==="concurrent-slow.pdf")await new Promise(resolve=>window.__concurrentRelease=resolve);return raw(...args);};');
  await p.evaluate(()=>DobbyFamilyStitch.open('document',{record:'final-document'}));
- const [slowPicker]=await Promise.all([p.waitForEvent('filechooser'),p.locator('label[for=rg-doc-file]').click()]);
+ await clearNotice();const [slowPicker]=await Promise.all([p.waitForEvent('filechooser'),p.locator('label[for=rg-doc-file]').click()]);
  await slowPicker.setFiles({name:'concurrent-slow.pdf',mimeType:'application/pdf',buffer:Buffer.from(pdf())});
  await p.waitForFunction(()=>typeof DobbyFamilyStitchEngine.win().__concurrentRelease==='function');
  await native('return window.__concurrentStore(new Blob(["CONCURRENT B"],{type:"application/pdf"}),"family-final-document").then(()=>{st.familyDocs.find(r=>r.id==="final-document").attachmentName="concurrent.pdf";save();window.__concurrentRelease();});');
- await p.locator('#fa-notice').filter({hasText:/changé|modifi/}).waitFor();
+ await rejected(/changé|modifi/);
  assert.equal(await native('return st.familyDocs.find(r=>r.id==="final-document").attachmentName;'),'concurrent.pdf');
  assert.equal(await native('return houseRead("family-final-document").then(b=>b.text());'),'CONCURRENT B');
  console.log('ARCHIVES_CONSULTATION_RACE_PASS concurrent-binary-writer-retained');

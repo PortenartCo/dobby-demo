@@ -1,0 +1,31 @@
+{
+  "stage": "after",
+  "at": "2026-11-16T23:11:00.522Z",
+  "readOnly": true,
+  "checks": [
+    {
+      "width": 390,
+      "url": "/dobby-demo/essai-stitch-v7/famille.html",
+      "source": "famille",
+      "heading": [
+        "Bienvenue dans DOBBY"
+      ],
+      "dock": 6,
+      "overflow": false,
+      "pageErrors": [],
+      "missingResources": []
+    },
+    {
+      "width": 1440,
+      "url": "/dobby-demo/essai-stitch-v7/famille.html",
+      "source": "famille",
+      "heading": [
+        "Bienvenue dans DOBBY"
+      ],
+      "dock": 6,
+      "overflow": false,
+      "pageErrors": [],
+      "missingResources": []
+    }
+  ]
+}
