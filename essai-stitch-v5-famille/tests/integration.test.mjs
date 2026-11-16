@@ -10,9 +10,30 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings/Archives/Contacts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const combinedNative=source('../index.html').replaceAll('\r\n','\n');
+  const composedNative=source('../index.html').replaceAll('\r\n','\n');
+  const contactComposition=JSON.parse(source('./fixtures/settings-archives-contacts-native-composition.json'));
+  const contacts=JSON.parse(source('./fixtures/contacts-native-extensions.json'));
+  const compositionSha=value=>createHash('sha256').update(value).digest('hex');
+  const reverseContactComposition=(text,patches)=>{
+    for(const patch of [...patches].reverse()){
+      assert.notEqual(patch.before,patch.after);
+      assert.equal(text.split(patch.after).length-1,1,'Exact three-source composition amendment: '+patch.label);
+      text=text.replace(patch.after,patch.before);
+    }
+    return text;
+  };
+  for(const [name,sha]of Object.entries(contactComposition.frozenFixturesSha256))assert.equal(compositionSha(source('./fixtures/'+name)),sha,'Frozen three-source fixture remains exact: '+name);
+  assert.equal(compositionSha(composedNative),contactComposition.composedSha256,'Entire Settings + Archives + Contacts native artifact pinned');
+  const combinedNative=reverseContactComposition(composedNative,contactComposition.contactsOntoSettingsArchives);
+  assert.equal(compositionSha(combinedNative),contactComposition.settingsArchivesParentSha256,'Contacts inversion recovers the entire Settings + Archives merge parent');
+  const contactsOnly=reverseContactComposition(composedNative,contactComposition.settingsArchivesOntoContacts);
+  assert.equal(compositionSha(contactsOnly),contactComposition.contactsParentSha256,'Settings + Archives inversion recovers the entire Contacts merge parent');
+  assert.equal(compositionSha(contactsOnly),contacts.afterSha256,'Published Contacts artifact remains byte-exact');
+  const contactsBase=reverseContactComposition(contactsOnly,contacts.patches);
+  assert.equal(compositionSha(contactsBase),contacts.beforeSha256,'Contacts native inversions recover every byte of its frozen parent');
+  assert.equal(compositionSha(contactsBase),contactComposition.baseSha256,'All three extensions share the same complete historical base');
   const settingsSource=source('./fixtures/settings-backup-native-extensions.json');
   const settings=JSON.parse(settingsSource),settingsSha=value=>createHash('sha256').update(value).digest('hex');
   const combinedProof=JSON.parse(source('./fixtures/settings-archives-native-composition.json'));
@@ -74,6 +95,7 @@ test('preview V5 source matches original except isolated storage and approved E0
     return text;
   };
   assert.equal(outerSha(maisonSource),outer.maisonFixtureSha256,'Frozen Maison fixture unchanged');
+  assert.equal(contacts.beforeSha256,outer.composedSha256,'Frozen Maison/Role/Contracts parent remains unchanged');
   assert.equal(outerSha(preview),outer.composedSha256,'Complete Maison/Role/Contracts native artifact pinned');
   assert.equal(outerSha(reverseNative(preview,nativeRole)),maison.afterSha256,'Removing Role restores the exact Maison parent artifact');
   familyNormalized=reverseNative(preview,maison);

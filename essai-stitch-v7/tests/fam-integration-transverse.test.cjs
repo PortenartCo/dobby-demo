@@ -25,7 +25,26 @@ function beforeArchives(file,source,extension=archives.files[file]){
   assert.equal(digest(source),extension.beforeSha256,file+' Archives reversal restores its complete parent');
   return source;
 }
-function readReviewed(file){return beforeArchives(file,beforeFinal(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n')));}
+function readReviewed(file){return beforeArchives(file,beforeFinal(file,beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),'Archives')));}
+const contacts = require('./fixtures/contacts-source-extensions.json');
+function beforeContacts(file,source){
+  const extension=contacts.files[file];if(!extension)return source;
+  source=beforeConsolidation(file,source,'Contacts');
+  assert.equal(digest(source),extension.afterSha256,file+' complete Contacts source changed: current reviewed source changed');
+  source=reverseLiterals(file,source,extension.patches);
+  assert.equal(digest(source),extension.beforeSha256,file+' Contacts reversal retains the full published parent');
+  return source;
+}
+const consolidation=require('./fixtures/consolidation-source-composition.json');
+function beforeConsolidation(file,source,parent){
+  const entry=consolidation.files[file];if(!entry)return source;
+  assert.equal(digest(source),entry.currentSha256,file+' complete consolidation source changed: current reviewed source changed');
+  source=reverseLiterals(file,source,entry['from'+parent]);
+  assert.equal(digest(source),entry[parent.toLowerCase()+'Sha256'],file+' exact '+parent+' parent recovered');
+  return source;
+}
+for(const[file,hash]of Object.entries(consolidation.frozenFixtures))assert.equal(digest(fs.readFileSync(path.join(__dirname,'fixtures',file))),hash,'Frozen independent source proof retained: '+file);
+
 function reverseLiterals(file,source,patches){
   for(const patch of [...patches].reverse()){
     assert.notEqual(patch.after,patch.before,patch.label+' is an exact source amendment');
@@ -197,10 +216,23 @@ test('Maison source amendments preserve every frozen published-main fingerprint 
     for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
     const source=readReviewed(file);
     assert.equal(digest(beforeMaison(file,source)),expected,file+' exact literals recover the full immutable parent');
-    assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete Maison source changed/);
+    assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete (Maison|Contacts) source changed/);
     assert.throws(()=>currentFingerprint(file,source,reviews[file],{mergedSha256:'0'.repeat(64)}),/current reviewed source changed|preserves its exact parent/,'Maison normalization never bypasses a failed parent fingerprint');
     const parents=compositionParents(file,source);
     if(parents)for(const parent of [parents.withoutMaison,parents.withoutReadiness])assert.throws(()=>currentFingerprint(file,parent,reviews[file],reconciliation.files[file]),/current reviewed source changed/,'Neither valid earlier branch artifact can replace the current composed source');
+  }
+});
+
+test('Contacts controller amendments recover the exact parent and reject unrelated source changes',()=>{
+  assert.equal(contacts.baseCommit,'521c9199ac18cb71b2fbbd2717ded2f7781aa4db');
+  assert.deepEqual(Object.keys(contacts.files),['essai-stitch-v7/family.js']);
+  for(const[file,extension]of Object.entries(contacts.files)){
+    assert.equal(extension.beforeSha256,maison.files[file].afterSha256,'Existing Maison source fingerprint stays frozen');
+    for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check);
+    const current=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),parent=beforeContacts(file,current);
+    assert.equal(digest(parent),extension.beforeSha256);
+    assert.throws(()=>beforeContacts(file,current+'\n// unrelated byte'),/current reviewed source changed/);
+    assert.throws(()=>beforeContacts(file,parent),/current reviewed source changed/,'An earlier valid source cannot replace the current Contacts implementation');
   }
 });
 
@@ -265,7 +297,7 @@ test('Archives amendments reverse exactly to current main and reject altered byt
   assert.equal(Object.keys(archives.files).length,7);
   for(const[file,expected]of Object.entries(archives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen earlier Archives proof');
   for(const [file,extension]of Object.entries(archives.files)){
-    const source=beforeFinal(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'));
+    const source=beforeFinal(file,beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),'Archives'));
     const previous=beforeArchives(file,source);
     assert.equal(digest(previous),extension.beforeSha256);
     assert.throws(()=>beforeArchives(file,source+'\n/* unreviewed byte */'),/current reviewed source changed/);
@@ -278,5 +310,5 @@ module.exports = { preserved };
 
 test('final native archive guards preserve every byte of the reviewed PR17 parent',()=>{
  for(const [file,expected]of Object.entries(finalArchives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected);
- for(const [file,extension]of Object.entries(finalArchives.files)){const source=fs.readFileSync(path.join(repo,file),'utf8');assert.equal(digest(beforeFinal(file,source)),extension.beforeSha256);assert.throws(()=>beforeFinal(file,source+'/* changed */'),/current reviewed source changed/);}
+ for(const [file,extension]of Object.entries(finalArchives.files)){const source=beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8'),'Archives');assert.equal(digest(beforeFinal(file,source)),extension.beforeSha256);assert.throws(()=>beforeFinal(file,source+'/* changed */'),/current reviewed source changed/);}
 });

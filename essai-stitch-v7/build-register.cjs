@@ -11,6 +11,10 @@ for(const route of routes){
  if(route.view==='menu'){
   html=fs.readFileSync(path.join(__dirname,'menu-layout.html'),'utf8');
   entry.layout={source:'essai-stitch-v7/menu-layout.html',sha256:crypto.createHash('sha256').update(html).digest('hex'),decisions:'MENU-01–08'};
+ }else if(['contacts','contact-edit'].includes(route.view)){
+  const layout='essai-stitch-v7/'+route.view+'-layout.html';
+  html=fs.readFileSync(path.resolve(__dirname,'..',layout),'utf8');
+  entry.layout={source:layout,sha256:crypto.createHash('sha256').update(html).digest('hex'),decisions:'Contacts review 2026-11-16 / Stitch 24'};
  }else html=html.replace(/<body\b/,`<body data-stitch-source="${route.id}"`);
  fs.writeFileSync(path.join(target,route.view+'.html'),html);provenance.push(entry);
 }

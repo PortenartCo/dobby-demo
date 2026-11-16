@@ -2,6 +2,7 @@
   "name": "dobby-stitch-v7-smoke",
   "private": true,
   "scripts": {
+    "test:contacts": "node --test contacts-sync.test.mjs && node contacts-v7.cjs && node contacts-errors.cjs",
     "test": "node ci.cjs",
     "test:family": "node family.cjs && node family-edge.cjs && node family-review.cjs && node family-shared.cjs && node family-visual.cjs",
     "test:checkpoint": "node ci.cjs",

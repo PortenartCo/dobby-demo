@@ -5,16 +5,16 @@
     "status": "verified-functional",
     "lot": "2b",
     "unsupported": [
-      "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+      "Portrait et blason hors périmètre. Archivage natif en attente de la PR #17."
     ]
   },
   {
     "view": "contact-edit",
     "id": "dobby_cr_er_ou_modifier_un_contact",
-    "status": "verified-partial",
+    "status": "verified-functional",
     "lot": "2b",
     "unsupported": [
-      "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+      "Portrait et blason hors périmètre. Archivage natif en attente de la PR #17."
     ]
   },
   {
