@@ -1701,6 +1701,24 @@
         "document": "docs/dobby-v7/MENU-01-08-IMPLEMENTATION.md",
         "layout": "essai-stitch-v7/menu-layout.html",
         "settings": "famille.html#settings",
+        "settingsSections": [
+          {
+            "label": "Ambiance magique",
+            "route": "famille.html#settings-magic",
+            "storage": "native st.stitchPreferences"
+          },
+          {
+            "label": "Gestion du foyer",
+            "route": "famille.html#members?origin=settings",
+            "permissions": "native member and invitation policies unchanged"
+          },
+          {
+            "label": "Données et sauvegardes",
+            "route": "famille.html#backup?origin=settings",
+            "format": "dobby-complete-backup version 1; JSON non chiffré",
+            "documents": "famille.html#documents; anciens documents autonomes distincts des fiches archivées"
+          }
+        ],
         "backup": "famille.html#backup"
       }
     },

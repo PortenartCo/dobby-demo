@@ -88,6 +88,25 @@ body:is([data-family-view="menu"],[data-family-view="settings"]) main.rg-menu-pa
 .rg-menu-page .rg-menu-chevron{flex:none;font-size:20px;color:#9d8e7e}
 .rg-menu-page .rg-menu-back{align-self:flex-start;display:flex;align-items:center;min-height:44px;color:#f9bb5f;font:14px/20px Literata,Georgia,serif;text-decoration:underline}
 .rg-menu-page #no-module-found{margin:0;padding:16px 0}
+/* Paramètres: existing DOBBY palette and native controls, no decorative hero. */
+body:is([data-family-view="settings"],[data-family-view="settings-magic"],[data-family-view="backup"]){padding-bottom:0}
+body.fa-active main.rg-settings-page{display:flex;flex-direction:column;gap:16px;box-sizing:border-box;width:100%;max-width:760px;margin-inline:auto;padding:calc(var(--e01-header-height,88px) + 20px) 16px calc(var(--e01-nav-height,80px) + 24px);min-height:100dvh;font-size:16px;line-height:1.5;overflow-wrap:anywhere}
+.rg-settings-page>h1,.rg-settings-page p{margin:0}
+.rg-settings-page :is(p,label){font-size:16px;line-height:1.5}
+.rg-settings-copy{display:flex;flex-direction:column;flex:1;min-width:0;gap:4px}
+.rg-settings-description{font:400 16px/1.5 Literata,Georgia,serif;color:#d4c4b1}
+.rg-settings-page .rg-menu-card{padding:16px;min-height:100px}
+.rg-settings-page .rg-menu-cards{display:flex;flex-direction:column}
+.rg-settings-panel{display:flex;flex-direction:column;gap:16px;padding:20px;background:#2c1c18;border:1px solid #504537;border-radius:12px;min-width:0}
+.rg-settings-panel h2{margin:0;color:#f9bb5f;font:600 20px/1.4 "Playfair Display",Georgia,serif}
+.rg-settings-page :is(button,a,label[role="button"]){font-size:16px;min-height:44px;white-space:normal;max-width:100%;box-sizing:border-box}
+.rg-settings-page :is(a,button,label[role="button"]):focus-visible{outline:3px solid #f9bb5f;outline-offset:3px}
+.rg-settings-switch{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;border:0;background:transparent;color:#fadcd5;font:400 16px/1.5 Literata,Georgia,serif;text-align:left;cursor:pointer;padding:8px 0}
+.rg-settings-track{flex:none;width:48px;height:28px;border-radius:20px;background:#504537;padding:3px;box-sizing:border-box;border:1px solid #9d8e7e}
+.rg-settings-track:after{content:'';display:block;width:20px;height:20px;border-radius:50%;background:#fadcd5;transform:translateX(0)}
+.rg-settings-switch[aria-checked="true"] .rg-settings-track{background:#f9bb5f;border-color:#f9bb5f}
+.rg-settings-switch[aria-checked="true"] .rg-settings-track:after{background:#442b00;transform:translateX(20px)}
+.rg-settings-sync{font-size:16px;color:#d4c4b1}
 /* Review M01: one wizard step visible; browser draft fields remain mounted. */
 body[data-family-view="mission-edit"] #rg-form [hidden],body[data-family-view="mission-edit"] [data-fa-action="rg-save"][hidden]{display:none!important}
 body[data-family-view="mission-edit"] .e04-wizard-navigation{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}

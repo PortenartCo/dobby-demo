@@ -10,9 +10,18 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const preview=source('../index.html').replaceAll('\r\n','\n');
+  const settingsPreview=source('../index.html').replaceAll('\r\n','\n');
+  const settings=JSON.parse(source('./fixtures/settings-backup-native-extensions.json'));
+  const settingsSha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(settingsSha(settingsPreview),settings.afterSha256,'Exact Settings native restoration guard artifact');
+  let preview=settingsPreview;
+  for(const patch of [...settings.patches].reverse()){
+    assert.equal(preview.split(patch.after).length-1,1,'Exact Settings native amendment: '+patch.label);
+    preview=preview.replace(patch.after,patch.before);
+  }
+  assert.equal(settingsSha(preview),settings.beforeSha256,'Removing Settings restores every byte of the frozen Maison/Role/Contracts artifact');
   const preparationScript='<script src="./family-preparations.js"></script>';
   assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs

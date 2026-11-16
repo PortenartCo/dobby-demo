@@ -34,6 +34,11 @@ test('a fresh register generation keeps the six-card canonical Menu and all othe
     assert.equal(menu.layout?.source, 'essai-stitch-v7/menu-layout.html', 'The canonical override must be discoverable in provenance');
     assert.equal(menu.layout.sha256, sha(layout));
     const manifest = JSON.parse(fs.readFileSync(path.join(root, 'route-manifest.json')));
+    const before = JSON.parse(fs.readFileSync(path.join(repo, 'essai-stitch-v7/route-manifest.json')));
+    for (const view of ['chat','chat-2']) {
+      const source=before.screens.find(row=>row.route==='famille.html#'+view);
+      assert.deepEqual(manifest.screens.find(row=>row.id===source.id).verification.e02,source.verification.e02,'Rebuilding preserves E02 history and permission evidence');
+    }
     assert.equal(manifest.screens.length, 53, 'No invented original screen');
     assert.equal(provenance.length, routes.length, 'Settings reuses the Menu source');
   } finally {

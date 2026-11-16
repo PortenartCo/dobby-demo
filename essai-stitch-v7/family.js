@@ -66,7 +66,7 @@ window.DobbyFamilyStitch=(()=>{
   const nav=$('body > nav');if(nav)nav.hidden=ui.view!=='salon';
   if(!$('main h1')){const h=$('main h2');if(h){const h1=document.createElement('h1');h1.className=h.className;h1.append(...h.childNodes);h.replaceWith(h1);}else{$('main').prepend(Object.assign(document.createElement('h1'),{textContent:({'member-edit':'Fiche du membre','medical-edit':'Consultation & soins'})[ui.view]||'Famille',className:'fa-title'}));}}
   const visibleMain=$('body > main'),headerHeight=$('body > header')?.getBoundingClientRect().height||0;if(visibleMain&&parseFloat(getComputedStyle(visibleMain).paddingTop)<headerHeight)visibleMain.style.paddingTop=headerHeight+'px';
-  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','menu','settings','house','house-1','equipment','equipment-edit','equipment-ai','maintenance'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}
+  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','menu','settings','settings-magic','backup','house','house-1','equipment','equipment-edit','equipment-ai','maintenance'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}
   for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl&&!b.closest('.prep-main'))unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');
  }
  function gateMedicalUI(){
@@ -92,7 +92,7 @@ window.DobbyFamilyStitch=(()=>{
    const content=document.createElement('div');content.className='fam-panel-content';details.append(content);main.append(details);return content;
   }
   const members=panel('members','Membres du foyer',data.members.length+' membre'+(data.members.length>1?'s':'')+' · fiches, invitations et anniversaires');
-  members.append(button('members','Gérer les membres'));
+  members.append(button('members','Gérer les membres',{origin:'salon'}));
   if(data.members.length){const gallery=document.createElement('div');gallery.className='fam-salon-gallery';for(const member of data.members)gallery.append(window.DobbyFamilyMembersReview.createCard(familyContext(data),member,{origin:'salon',compact:true}));members.append(gallery);}else members.append(paragraph('Aucun membre enregistré. Ajoutez un enfant ou un animal, ou invitez une personne.'));
   let prep;try{prep=window.DobbyPreparations?.read();}catch{}
   const events=panel('events','Événements & Préparatifs',data.events.length+' événement'+(data.events.length>1?'s':'')+' · '+(prep?.templates?.length||0)+' modèle'+((prep?.templates?.length||0)>1?'s':''));
@@ -102,7 +102,7 @@ window.DobbyFamilyStitch=(()=>{
   events.append(preparations);
  }
 
- function renderMembers(data){return window.DobbyFamilyMembersReview.renderMembers(familyContext(data));}
+ function renderMembers(data){window.DobbyFamilyMembersReview.renderMembers(familyContext(data));if(ui.origin==='settings'){const back=$('.fam-members-back');if(back){back.textContent='Retour aux paramètres';bind(back,'settings');}}}
  function renderMemberEdit(data){const saved=formDrafts.get(draftKey('member-edit')),baseline=saved?.memberBaseline||ui.memberBaseline||JSON.stringify(data.members.find(row=>row.id===ui.person)||null);ui.memberBaseline=baseline;window.DobbyFamilyMembersReview.renderMemberEdit(familyContext(data));const form=$('#member-form');if(form)form.dataset.memberBaseline=baseline;}
  function sourceCard(section){return section?.querySelector('article,.rounded-xl,.rounded-lg')?.cloneNode(true)||Object.assign(document.createElement('article'),{className:'fa-context'});}
  function recordCard(sample,record,data,scope='local'){

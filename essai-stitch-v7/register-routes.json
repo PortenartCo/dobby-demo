@@ -261,7 +261,28 @@
     "status": "verified-functional",
     "unsupported": [
       "Navigation vers les outils existants et filtre du menu ; aucun nouveau module inventé."
-    ]
+    ],
+    "settingsWorkflow": {
+      "route": "famille.html#settings",
+      "sections": [
+        {
+          "label": "Ambiance magique",
+          "route": "famille.html#settings-magic",
+          "storage": "native st.stitchPreferences"
+        },
+        {
+          "label": "Gestion du foyer",
+          "route": "famille.html#members?origin=settings",
+          "permissions": "native member and invitation policies unchanged"
+        },
+        {
+          "label": "Données et sauvegardes",
+          "route": "famille.html#backup?origin=settings",
+          "format": "dobby-complete-backup version 1; JSON non chiffré",
+          "documents": "famille.html#documents; anciens documents autonomes distincts des fiches archivées"
+        }
+      ]
+    }
   },
   {
     "view": "personal",

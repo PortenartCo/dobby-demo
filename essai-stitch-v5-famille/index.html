@@ -1445,7 +1445,7 @@ reconcile();existingSave();
  const saveBlob=(filename,blob)=>{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000)};
  function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('dobby-v5-familial-files-20261108',1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('docs'))req.result.createObjectStore('docs')};req.onerror=()=>reject(req.error||Error('Stockage indisponible'));req.onsuccess=()=>resolve(req.result)})}
  async function listAttachments(){const db=await openDB();return new Promise((resolve,reject)=>{const items=[];try{const tx=db.transaction('docs','readonly');const cursor=tx.objectStore('docs').openCursor();cursor.onsuccess=e=>{const c=e.target.result;if(c){items.push({id:String(c.key),blob:c.value});c.continue()}};tx.oncomplete=()=>{db.close();resolve(items)};tx.onerror=()=>{db.close();reject(tx.error||Error('Lecture des documents impossible'))};tx.onabort=()=>{db.close();reject(tx.error||Error('Lecture interrompue'))}}catch(e){db.close();reject(e)}})}
- async function replaceAttachments(items){const db=await openDB();return new Promise((resolve,reject)=>{try{const tx=db.transaction('docs','readwrite'),store=tx.objectStore('docs');store.clear();for(const item of items)store.put(item.blob,item.id);tx.oncomplete=()=>{db.close();resolve()};tx.onabort=()=>{db.close();reject(tx.error||Error('Écriture annulée'))};tx.onerror=()=>{db.close();reject(tx.error||Error('Écriture impossible'))}}catch(err){db.close();reject(err)}})}
+ async function replaceAttachments(items,guard){const db=await openDB();return new Promise((resolve,reject)=>{try{guard?.();const tx=db.transaction('docs','readwrite'),store=tx.objectStore('docs');store.clear();for(const item of items)store.put(item.blob,item.id);tx.oncomplete=()=>{db.close();resolve()};tx.onabort=()=>{db.close();reject(tx.error||Error('Écriture annulée'))};tx.onerror=()=>{db.close();reject(tx.error||Error('Écriture impossible'))}}catch(err){db.close();reject(err)}})}
  const toB64=blob=>new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(reader.error);reader.readAsDataURL(blob)});
  const fromB64=(base64,type)=>{const binary=atob(base64),bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);return new Blob([bytes],{type:type||'application/octet-stream'})};
  function validateState(s){
@@ -1493,17 +1493,20 @@ reconcile();existingSave();
  });
  document.addEventListener('change',async e=>{
   if(e.target.id!=='dobbyFullRestore')return;const input=e.target,file=input.files?.[0];if(!file)return;input.disabled=true;
-  let oldSt=st,oldCustom=custom,rawBefore,oldFiles=null,replaced=false;
+  let oldSt=st,oldCustom=custom,rawBefore,oldFiles=null,replaced=false,stateReplaced=false;
   const restoreScope=window.DobbyFamilyHouse?.contextSnapshot?.();
+  // Include all local business modules, not only the Maison registry. A sync
+  // arriving during file/IndexedDB reads must survive a refused restoration.
+  const restoreData=JSON.stringify({state:st,custom});
   const sameRestoreScope=()=>restoreScope===window.DobbyFamilyHouse?.contextSnapshot?.();
-  const assertRestoreScope=()=>{window.DobbyFamilyHouse?.assertWritable?.();if(!sameRestoreScope())throw Error('Le foyer ou le compte a changé pendant la restauration.');};
+  const assertRestoreScope=()=>{window.DobbyFamilyHouse?.assertWritable?.();if(!sameRestoreScope())throw Error('Le foyer ou le compte a changé pendant la restauration.');if(restoreData!==JSON.stringify({state:st,custom}))throw Error('Les données locales ont changé pendant la restauration. Choisissez à nouveau la sauvegarde.');};
   try{
    assertRestoreScope();if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const data=JSON.parse(await file.text()),incoming=validatePayload(data);assertRestoreScope();
    if(!confirm('Remplacer toutes les données locales par cette sauvegarde ? Les données actuelles seront perdues si tu n’en as pas conservé une copie.'))return;
    assertRestoreScope();rawBefore=localStorage.getItem(key);oldFiles=await listAttachments();assertRestoreScope();
    // Replacement of all documents is one IndexedDB transaction. Keep prior blobs for rollback.
-   await replaceAttachments(incoming);replaced=true;assertRestoreScope();
-   st=data.state;custom=st.customRecipes;
+   await replaceAttachments(incoming,assertRestoreScope);replaced=true;assertRestoreScope();
+   stateReplaced=true;st=data.state;custom=st.customRecipes;
    st.page='family';st.extraPage='';st.detail=null;st.houseView=null;houseEdit=null;docEdit=null;docDetail=null;docNoteEdit=null;batchCandidate=null;smartReset();
    localStorage.setItem(key,JSON.stringify(st));
    render();
@@ -1511,8 +1514,8 @@ reconcile();existingSave();
    alert('Sauvegarde restaurée : recettes, fiches et pièces jointes disponibles sur cet appareil.');
   }catch(err){
    let rollbackError='';if(replaced&&oldFiles){try{await replaceAttachments(oldFiles)}catch(e){rollbackError=' Restauration des anciens fichiers impossible : ne ferme pas Dobby et conserve tes sauvegardes.'}}
-   if(sameRestoreScope()){st=oldSt;custom=oldCustom;}
-   try{if(sameRestoreScope()&&rawBefore!==undefined){if(rawBefore===null)localStorage.removeItem(key);else localStorage.setItem(key,rawBefore)}render()}catch(e){rollbackError+=' État précédent non rétabli.'}
+   if(stateReplaced&&sameRestoreScope()){st=oldSt;custom=oldCustom;}
+   try{if(stateReplaced&&sameRestoreScope()&&rawBefore!==undefined){if(rawBefore===null)localStorage.removeItem(key);else localStorage.setItem(key,rawBefore)}render()}catch(e){rollbackError+=' État précédent non rétabli.'}
    alert('Restauration refusée ou interrompue : '+(err?.message||'fichier invalide')+rollbackError);
   }finally{input.disabled=false}
  });
