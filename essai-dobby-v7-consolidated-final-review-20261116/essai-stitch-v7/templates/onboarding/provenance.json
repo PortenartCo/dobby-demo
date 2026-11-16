@@ -1,0 +1,42 @@
+[
+  {
+    "view": "onboarding-foyer",
+    "source": "design/e06/references/stitch/dobby_mon_foyer_magique/code.html",
+    "sha256": "39c6a79bd3b89b9aed5353d1276ea5feaccf6c5a95a70aa44933b121c8ff4ed5"
+  },
+  {
+    "view": "onboarding-identity",
+    "source": "design/e06/references/stitch/dobby_mon_identit/code.html",
+    "sha256": "a114ca55bc390997bd510108b73f7b718c867c423ff96b708cae9e7a8146d8a5"
+  },
+  {
+    "view": "onboarding-house",
+    "source": "design/e06/references/stitch/dobby_le_myst_re_des_quatre_maisons/code.html",
+    "sha256": "2dd3c906ddffcf2e8d2b78b7796a246c25d7ca477b104071471c03445c3ba7cc"
+  },
+  {
+    "view": "onboarding-house-result",
+    "source": "design/e06/references/stitch/dobby_la_r_v_lation_de_la_maison/code.html",
+    "sha256": "10a78709e77a743e6944f5f4cfb2b9ead285c8bb8e77d016e0618fbc2e50c083"
+  },
+  {
+    "view": "onboarding-patronus",
+    "source": "design/e06/references/stitch/dobby_le_miroir_des_mes/code.html",
+    "sha256": "e1ba3b214ff57a779d5af80c6b347050096d611d8e2019456c54e17820af32da"
+  },
+  {
+    "view": "onboarding-patronus-result",
+    "source": "design/e06/references/stitch/dobby_l_apparition_du_patronus/code.html",
+    "sha256": "b48a7ed0ce7b307ab13ab0ac6840695976f37164183a59a9ff44bf0a5c987db2"
+  },
+  {
+    "view": "onboarding-final",
+    "source": "design/e06/references/stitch/dobby_mon_identit_magique_consacr_e/code.html",
+    "sha256": "46ee832bd3a94cfb8624d13e0c6fd3d3f32bf334f3a02b4fa1af4f2b7e67b0b5"
+  },
+  {
+    "view": "onboarding-ritual",
+    "source": "design/e06/references/stitch/dobby_le_rituel_de_la_chemin_e/code.html",
+    "sha256": "4e49be83d86f00d0ea267f58332d73012373807b4e65964b549e7797249f4054"
+  }
+]

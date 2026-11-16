@@ -1,0 +1,13 @@
+# DOBBY V7 — Candidat intégré Archives + Contacts + Notes + Paramètres
+
+Candidat intégré Archives + Contacts + Notes + Paramètres ; quatre sources présentes, aucune promotion générale ni déploiement applicatif. Deux clients fictifs A/B partagent uniquement la simulation de cet aperçu dans le même navigateur ; aucun compte réel, serveur distant, invitation réelle, migration SQL ou appel IA payant. Le contexte canonique fictif utilise le contrat natif dobby_v7_context ; ses permissions restent contrôlées par les modules natifs et ne prouvent aucune autorisation serveur réelle. La recette familiale réelle reste différée.
+
+Entrée : `essai-stitch-v7/famille.html?client=A#settings`. Sources natives actuelles, enveloppe Notes → Famille → Global réutilisée ; aucun moteur modifié par ce constructeur. Menu, Maison, Contrats, Famille, Courses et Repas restent présents dans cette composition. Leur présence ne constitue aucune nouvelle validation générale. Les quatre sources sont incluses ; la promotion générale et tout déploiement applicatif restent désactivés dans le manifeste.
+
+Les illustrations Stitch 22, 23 et 24 sont copiées sans modification artistique. Le manifeste contient les empreintes SHA-256 de toutes les ressources, les sources et les transformations. Le namespace de stockage, les clients A/B, le backend fictif, les clés, le canal de réinitialisation et le verrou sont propres au SHA source de cette consolidation. Les anciens aperçus restent indépendants. `--allow-dirty` est réservé aux preuves locales, identifiées par `sourceState: working-tree`.
+
+La seule extension de la fixture HTTP héritée répond au RPC natif dobby_v7_context pour les deux parents fictifs déjà présents. Le contrat est celui des tests natifs family-access-bootstrap et family-access-native ; le moteur, les contrôles de permissions et les capacités publiées restent inchangés. Les invitations simulées sont interdites ; les rôles étendus et rattachements enfant restent fermés. Cette réponse fictive ne prouve aucune liaison de compte réelle.
+
+Aucun compte réel, accès Supabase, migration SQL, activation de droit réel, invitation réelle, nouveau service ou appel IA payant. La CSP et le runtime bloquent les connexions externes ; le backend HTTP est une fixture dans le navigateur. HTTPS ou localhost, IndexedDB et Web Locks sont nécessaires. La simulation A/B entre onglets d’un même navigateur ne valide pas deux comptes réels ni deux appareils. La recette familiale réelle, les limites natives de chaque module et la validation physique iPhone restent différées.
+
+La réinitialisation A/B ne vise que le namespace de cet aperçu. Ce constructeur crée un nouveau répertoire et refuse tout remplacement.
