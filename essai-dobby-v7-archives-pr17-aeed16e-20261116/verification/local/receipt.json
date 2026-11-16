@@ -1,0 +1,48 @@
+{
+  "base": "http://127.0.0.1:8797/essai-dobby-v7-archives-pr17-aeed16e-20261116/",
+  "sourceSha": "aeed16e108fa7f3c7323eec244a9b4079c21160f",
+  "at": "2026-11-16T20:36:16.968Z",
+  "fixturesOnly": true,
+  "checks": [
+    {
+      "width": 390,
+      "archivesSearch": true,
+      "consult": true,
+      "sourceArchiveAndRestore": [
+        "document",
+        "contract",
+        "equipment",
+        "recipe"
+      ],
+      "cancelBeforeMutation": true,
+      "idsDatesPlansHistoryPreserved": true,
+      "reload": true,
+      "resetIsolated": true,
+      "realAndOldStorageSentinelsPreserved": true,
+      "horizontalOverflow": false,
+      "pageErrors": [],
+      "missingResources": [],
+      "externalRequests": []
+    },
+    {
+      "width": 1440,
+      "archivesSearch": true,
+      "consult": true,
+      "sourceArchiveAndRestore": [
+        "document",
+        "contract",
+        "equipment",
+        "recipe"
+      ],
+      "cancelBeforeMutation": true,
+      "idsDatesPlansHistoryPreserved": true,
+      "reload": true,
+      "resetIsolated": true,
+      "realAndOldStorageSentinelsPreserved": true,
+      "horizontalOverflow": false,
+      "pageErrors": [],
+      "missingResources": [],
+      "externalRequests": []
+    }
+  ]
+}

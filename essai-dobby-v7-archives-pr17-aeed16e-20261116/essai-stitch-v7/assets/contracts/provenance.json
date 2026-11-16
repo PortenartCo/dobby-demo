@@ -1,0 +1,21 @@
+{
+  "archive": "DOBBY-E08-ILLUSTRATION-CONTRATS.zip",
+  "upload": "sediment://file_0000000049dc8243bfced0eadc4081b0",
+  "files": [
+    {
+      "file": "screen.png",
+      "sha256": "118991cd5a26f5454813c679f533c0f61b32c9f2b46d3f2aa81e08794b7222e2",
+      "bytes": 1471855
+    },
+    {
+      "file": "DESIGN.md",
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db",
+      "bytes": 12042
+    }
+  ],
+  "image": {
+    "width": 1376,
+    "height": 768,
+    "transformation": "none; original PNG bytes retained"
+  }
+}
