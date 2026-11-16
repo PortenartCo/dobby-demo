@@ -1,0 +1,7 @@
+ARCHIVES_CONSULTATION_RACE_PASS pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-archive-during-binary-write
+ARCHIVES_CONSULTATION_RACE_PASS concurrent-binary-writer-retained
+ARCHIVES_CONSULTATION_RACE_PASS stale-restore-confirmation
+ARCHIVES_CONSULTATION_RACE_PASS denied-detail-restore
+ARCHIVES_CONSULTATION_RACE_PASS recipe-return-after-concurrent-restore

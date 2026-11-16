@@ -1,0 +1,43 @@
+{
+  "phase": "before",
+  "origin": "http://127.0.0.1:8765",
+  "fictional": true,
+  "checks": [
+    {
+      "width": 320,
+      "baselineHero": {
+        "x": 16,
+        "y": 92,
+        "width": 288,
+        "height": 161.625
+      }
+    },
+    {
+      "width": 390,
+      "baselineHero": {
+        "x": 16,
+        "y": 92,
+        "width": 358,
+        "height": 200.6875
+      }
+    },
+    {
+      "width": 768,
+      "baselineHero": {
+        "x": 24,
+        "y": 92,
+        "width": 720,
+        "height": 402.734375
+      }
+    },
+    {
+      "width": 1440,
+      "baselineHero": {
+        "x": 200,
+        "y": 92,
+        "width": 1040,
+        "height": 581.34375
+      }
+    }
+  ]
+}

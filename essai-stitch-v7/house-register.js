@@ -9,7 +9,7 @@
  const clone=value=>JSON.parse(JSON.stringify(value));
  const state=()=>{const data=E.read().state;return {...data,houseItems:data.houseItems.filter(row=>window.DobbyArchivesUI?.readable('equipment',row)!==false)};},api=()=>{const value=E.win().DobbyFamilyHouse;if(!value)throw Error('Le registre des équipements se charge. Rechargez la page.');return value;};
  const current=()=>state().houseItems.find(x=>x.id===c.ui.record);
- const readonly=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.())return true;try{api().assertWritable();return false;}catch{return true;}};
+ const readonly=()=>{if(c?.ui?.record&&['equipment','equipment-edit','maintenance'].includes(c.ui.view)&&window.DobbyArchivesUI?.isArchived(current()))return true;if(window.DobbyFamilyStitch?.sharedReadOnly?.())return true;try{api().assertWritable();return false;}catch{return true;}};
  const guard=()=>{if(readonly())throw Error('Les équipements du foyer sont en lecture seule pour ce compte.');};
  function page(id,edit=false){E.requireRecord(state().houseItems,id);E.evaluate('go("house");houseEdit=null;st.houseView=null;houseRender();');if(edit)E.action('houseAction',id?'edit':'new',id?{id}:{});else if(id)E.action('houseAction','view',{id});}
  function dispose(){for(const url of urls)URL.revokeObjectURL(url);urls=[];}

@@ -40,9 +40,10 @@ function assertWrite(){
  let readOnly=false;try{readOnly=window.parent?.DobbyFamilyStitch?.sharedReadOnly?.()===true;}catch{}
  if(readOnly||category&&category!=='parent'||(live?.identityVerified===true||bound?.verified===true)&&(live?.permissions?.canEdit===false||bound?.permissions?.canEdit===false))throw Error('Les contrats du foyer sont en lecture seule pour ce compte. Seul un parent autorisé peut les modifier.');
 }
-function current(id,expected,required=true){
+function current(id,expected,required=true,archiveChange=false){
  assertWrite();const token=typeof expected==='string'?expected:expected?.snapshot;
  if((required||token!==undefined)&&token!==snapshot(id))throw Error('La fiche ou le foyer a été modifié depuis son ouverture. Votre saisie est conservée.');
+ if(id&&!archiveChange)window.DobbyArchiveSources?.assertMutable('documents',id);
  return id?find(id):null;
 }
 function validDate(value){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;const year=Number(value.slice(0,4));if(year<1)return false;const d=new Date(value+'T12:00:00Z');return!isNaN(d)&&d.toISOString().slice(0,10)===value;}
@@ -100,7 +101,7 @@ function mergeImported(prior,input){
  return record;
 }
 function saveContract(id,values,expected){
- const prior=current(id,expected,Boolean(id));if(!object(values))throw Error('Contrat invalide.');
+ const prior=current(id,expected,Boolean(id),object(values)&&Object.keys(values).length===1&&own(values,'archive'));if(!object(values))throw Error('Contrat invalide.');
  if(own(values,'id')&&values.id!==id)throw Error('Identité du contrat invalide.');
  const savedId=id||'fd-'+crypto.randomUUID(),record=merge(prior,values);record.id=savedId;
  if(prior?.retainedLocalOnly===true)record.retainedLocalOnly=true;
@@ -125,7 +126,7 @@ function piece(id,attachmentId){const item=attachments(id).find(row=>row.id===at
 function localKey(id,item){const allowed=item.id==='legacy'?'family-'+id:'family-contract-'+id+'-'+item.id;if(item.key!==allowed)throw Error('Référence de fichier local invalide.');return allowed;}
 function checkFile(file){if(!file||!TYPES[file.type]||!Number.isFinite(file.size)||file.size<=0||file.size>10485760)throw Error('Choisissez un PDF ou une image de 10 Mo maximum.');}
 async function addAttachment(id,file,kind='contract',supersedes=null){
- assertWrite();find(id);checkFile(file);if(typeof kind!=='string'||!kind.trim()||kind.length>80)throw Error('Type de pièce invalide.');
+ assertWrite();window.DobbyArchiveSources?.assertMutable('documents',id);find(id);checkFile(file);if(typeof kind!=='string'||!kind.trim()||kind.length>80)throw Error('Type de pièce invalide.');
  const expected=snapshot(id),attachmentId='piece-'+crypto.randomUUID(),key='family-contract-'+id+'-'+attachmentId;
  const descriptor={id:attachmentId,name:safeDownloadName(file.name,file.type),type:file.type,size:file.size,kind,key,...(supersedes?{supersedes}:{})};
  try{await houseStore(file,key);const row=current(id,expected);commit(id,{...row,attachments:[...(row.attachments||[]),descriptor]});}
@@ -139,7 +140,7 @@ async function openAttachment(id,attachmentId){
  const blob=await api.storageFetch('GET',item.cloudPath);if(token!==JSON.stringify(context()))throw Error('Le foyer a changé pendant la lecture.');return blob;
 }
 async function shareAttachment(id,attachmentId){
- assertWrite();const row=find(id),item=piece(id,attachmentId),api=window.DobbyFamilyUI,live=api?.getContext?.();
+ assertWrite();window.DobbyArchiveSources?.assertMutable('documents',id);const row=find(id),item=piece(id,attachmentId),api=window.DobbyFamilyUI,live=api?.getContext?.();
  if(!live||!api.isModuleActive?.('contracts'))throw Error('Activez le partage Documents dans les paramètres du foyer.');
  if(row.retainedLocalOnly===true)throw Error('Cette copie locale a été retirée du foyer. Son partage demande une nouvelle action explicite.');
  if(!['Contrats','Assurances'].includes(row.category)&&row.sharedToHousehold!==true)throw Error('Cette fiche doit être partagée avant son fichier.');
@@ -158,7 +159,7 @@ async function shareAttachment(id,attachmentId){
   return piece(id,sharedId);
  }catch(error){if(expected===snapshot(id))await api.storageFetch('DELETE',path).catch(()=>{});throw error;}
 }
-async function replaceAttachment(id,attachmentId,file){assertWrite();const old=piece(id,attachmentId);return addAttachment(id,file,old.kind||'contract',attachmentId);}
+async function replaceAttachment(id,attachmentId,file){assertWrite();window.DobbyArchiveSources?.assertMutable('documents',id);const old=piece(id,attachmentId);return addAttachment(id,file,old.kind||'contract',attachmentId);}
 async function cleanupRemovedLocal(keys,shared){
  // Household snapshots have no transactional acknowledgement covering every
  // peer. Retain shared bytes so stale peers cannot reference deleted objects.
@@ -169,7 +170,7 @@ async function cleanupRemovedLocal(keys,shared){
  return result;
 }
 async function removeAttachment(id,attachmentId){
- assertWrite();const item=piece(id,attachmentId),expected=snapshot(id),keys=item.key?[localKey(id,item)]:[];
+ assertWrite();window.DobbyArchiveSources?.assertMutable('documents',id);const item=piece(id,attachmentId),expected=snapshot(id),keys=item.key?[localKey(id,item)]:[];
  const row=current(id,expected),record={...row};
  if(attachmentId==='legacy'){record.attachmentName='';record.attachmentType='';}
  else if(attachmentId==='legacy-cloud'){for(const key of CLOUD_FIELDS)delete record[key];}

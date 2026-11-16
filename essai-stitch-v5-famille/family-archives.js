@@ -75,6 +75,7 @@
    if(formId==='xContactForm'){source='contacts';id=new FormData(form).get('id');}
    if(source&&id&&id!=='new')refuse(event,()=>assertMutable(source,id));
   },true);
+  document.addEventListener('change',event=>{if(event.target.id==='familyDocFile'&&docDetail)refuse(event,()=>assertMutable('documents',docDetail));},true);
   document.addEventListener('click',event=>{
    const node=event.target.closest('[data-house-action],[data-doc],[data-extra]');if(!node)return;
    const id=node.dataset.id;if(!id)return;let source,mutating=false;

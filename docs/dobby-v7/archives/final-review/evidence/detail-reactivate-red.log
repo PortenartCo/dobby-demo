@@ -1,0 +1,13 @@
+ARCHIVE_NATIVE_CASE after 320 final-contract
+AssertionError [ERR_ASSERTION]: Archived native detail has one toolbar
+
+0 !== 1
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-native-consultation.cjs:21:65 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

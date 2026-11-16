@@ -335,7 +335,7 @@ jobs:
 
   archives-acceptance:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -360,7 +360,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dobby-v7-archives-native-evidence
-          path: docs/dobby-v7/archives/evidence/
+          path: |
+            docs/dobby-v7/archives/evidence/
+            docs/dobby-v7/archives/final-review/evidence/
           retention-days: 14
 
   reserves-sql-local:

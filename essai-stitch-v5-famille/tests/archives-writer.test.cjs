@@ -58,3 +58,19 @@ test('partial restores retain lifecycle, reject reactivation and refuse another 
  assert.throws(()=>A.mergeRestored('equipment',prior,{id:'same',archive:{...prior.archive,archivedAt:null}}),/uniquement depuis Archives/);assert.deepEqual(json(st.houseItems[0]),prior);
  st.houseItems[0].archive.householdId='fixture-home';connection.householdId='other';assert.throws(()=>A.mergeRestored('equipment',st.houseItems[0],{id:'same',name:'Forged'}),/introuvable|accès/);
 });
+
+test('archived contracts reject metadata and attachment mutations through their native writer',async()=>{
+ const {A,st,env}=setup(),C=env.window.DobbyFamilyContracts;env.Blob=Blob;const files=new Map([['private-key',new Blob(['original'])]]);env.houseStore=async(b,k)=>files.set(k,b);env.houseRead=async(k,remove)=>remove?files.delete(k):files.get(k);
+ A.change('documents','same',true,{confirmed:true,expected:A.snapshot('documents','same')});const before=json(st),file=Object.assign(new Blob(['%PDF-1.4'],{type:'application/pdf'}),{name:'replacement.pdf'});
+ assert.throws(()=>C.save('same',{title:'Forged'},C.snapshot('same')),/archivée/);
+ for(const mutation of [()=>C.addAttachment('same',file),()=>C.replaceAttachment('same','pdf',file),()=>C.removeAttachment('same','pdf'),()=>C.shareAttachment('same','pdf'),()=>C.delete('same',C.snapshot('same'))])await assert.rejects(mutation,/archivée/);
+ assert.deepEqual(json(st),before);assert.deepEqual([...files.keys()],['private-key']);
+});
+
+test('a contract archived during a pending binary write retains its original pieces and discards the staged file',async()=>{
+ const {A,st,env}=setup(),C=env.window.DobbyFamilyContracts,files=new Map();let release;
+ env.houseStore=async(b,k)=>{files.set(k,b);await new Promise(resolve=>release=resolve);};env.houseRead=async(k,remove)=>remove?files.delete(k):files.get(k);
+ const file=Object.assign(new Blob(['%PDF-1.4'],{type:'application/pdf'}),{name:'replacement.pdf'}),pending=C.addAttachment('same',file);
+ await Promise.resolve();A.change('documents','same',true,{confirmed:true,expected:A.snapshot('documents','same')});const archived=json(st);release();
+ await assert.rejects(pending,/archivée|modifié/);assert.deepEqual(json(st),archived);assert.equal(files.size,0);assert.equal(st.familyDocs[0].attachments.length,1);
+});

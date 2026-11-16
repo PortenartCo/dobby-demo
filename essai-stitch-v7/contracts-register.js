@@ -8,8 +8,8 @@
  const el=(tag,text='',className='')=>{const node=document.createElement(tag);node.textContent=text;node.className=className;return node;};
  const rows=()=>(E.read().state.familyDocs||[]).filter(row=>window.DobbyArchivesUI?.readable('documents',row)!==false),equipment=()=>(E.read().state.houseItems||[]).filter(row=>window.DobbyArchivesUI?.readable('equipment',row)!==false);
  const api=()=>{const writer=E.win().DobbyFamilyContracts;if(!writer)throw Error('Le registre des contrats est indisponible. Rechargez la page.');return writer;};
- const record=id=>rows().find(row=>row.id===id),isContract=row=>['Contrats','Assurances'].includes(row.category);
- const readOnly=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.()===true)return true;try{E.win().DobbyFamilyContracts?.assertWritable?.();return false;}catch{return true;}};
+ const record=id=>rows().find(row=>row.id===id),isContract=row=>row.contract?.version===1||['Contrats','Assurances'].includes(row.category);
+ const readOnly=()=>{if(c?.ui?.record&&['contract','contract-1','contract-edit'].includes(c.ui.view)&&window.DobbyArchivesUI?.isArchived(record(c.ui.record)))return true;if(window.DobbyFamilyStitch?.sharedReadOnly?.()===true)return true;try{E.win().DobbyFamilyContracts?.assertWritable?.();return false;}catch{return true;}};
  const guard=()=>{if(readOnly())throw Error('Les contrats du foyer sont en lecture seule pour un enfant.');};
  const kinds=[['contract','Contrat original'],['amendment','Avenant'],['terms','Conditions générales'],['correspondence','Courrier'],['other','Autre pièce']];
  const kindName=value=>kinds.find(([key])=>key===({conditions:'terms',letter:'correspondence'}[value]||value))?.[1]||'Pièce associée';
@@ -118,7 +118,7 @@
   const patch={...values,contract:Object.fromEntries(Object.entries(values.contract).filter(([key,value])=>!equal(value,session.row.contract?.[key])))};
   let id,fileError;await R.lock(async()=>{id=api().save(c.ui.record||null,patch,session.expected);sessions.delete(session.key);try{for(const file of files)await api().addAttachment(id,file,kind);}catch(error){fileError=error;}});window.DobbyFamilyStitch.discardDraft();await R.target('contract',id);if(fileError)throw Error('La fiche est enregistrée ; une pièce n’a pas été ajoutée : '+fileError.message);
  }
- function replace(id,attachmentId){guard();const file=el('input');file.type='file';file.accept='.pdf,application/pdf,image/jpeg,image/png,image/webp';file.addEventListener('change',()=>R.run(async()=>{const selected=file.files?.[0];if(!selected)return;if(!window.confirm('Remplacer cette pièce par « '+selected.name+' » ? La version antérieure sera conservée.'))return;await R.lock(()=>api().replaceAttachment(id,attachmentId,selected));return R.target('contract',id);}));file.click();}
+ function replace(id,attachmentId){guard();const expected=api().snapshot(id),file=el('input');file.type='file';file.accept='.pdf,application/pdf,image/jpeg,image/png,image/webp';file.addEventListener('change',()=>R.run(async()=>{const selected=file.files?.[0];if(!selected)return;guard();if(expected!==api().snapshot(id))throw Error('La fiche ou le foyer a changé. Rouvrez la pièce avant de la remplacer.');if(!window.confirm('Remplacer cette pièce par « '+selected.name+' » ? La version antérieure sera conservée.'))return;await R.lock(()=>api().replaceAttachment(id,attachmentId,selected));return R.target('contract',id);}));file.click();}
  function act(name,button,ctx){c=ctx;const id=button.dataset.record||c.ui.record,attachment=button.dataset.attachment;
   if(name==='rg-contract-new'){guard();sessions.delete(sessionKey(null));return R.target('contract-edit');}
   if(name==='rg-doc-edit'){guard();sessions.delete(sessionKey(id));return R.target('contract-edit',id);}

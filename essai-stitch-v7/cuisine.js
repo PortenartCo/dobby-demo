@@ -357,6 +357,8 @@ window.DobbyCuisine = (() => {
   function gateSharedControls(){if(!readOnly())return;for(const el of $$('[data-cu-action]'))if(sharedMutation(el.dataset.cuAction)){el.disabled=true;el.setAttribute('aria-disabled','true');el.title='Les données partagées sont en lecture seule pour ce profil.';}const info=document.createElement('p');info.dataset.mealsReadonly='';info.setAttribute('role','status');info.textContent='Les repas et recettes du foyer sont en lecture seule pour ce profil.';$('main').append(info);}
   async function act(action, el) {
     if(action==='archive-source')return window.DobbyArchivesUI.recipeAction(ui.recipe);
+    if(action==='archive-reactivate')return window.DobbyArchivesUI.recipeReactivate(ui.recipe);
+    if(action==='archive-return'){location.href='./famille.html#documents';return;}
     if(sharedMutation(action)&&readOnly())throw Error('Les données partagées sont en lecture seule pour ce profil.');
     if(ui.recipeSaving&&action!=='dismiss')return;
     const data=E.read();

@@ -12,7 +12,15 @@ const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
 test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const archivePreview=source('../index.html').replaceAll('\r\n','\n');
+  const finalArchive=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/archives-final-source-extensions.json'));
+  const finalProof=finalArchive.files['essai-stitch-v5-famille/index.html'];
+  let archivePreview=source('../index.html').replaceAll('\r\n','\n');
+  assert.equal(createHash('sha256').update(archivePreview).digest('hex'),finalProof.afterSha256,'Final binary writer is pinned in full');
+  for(const patch of [...finalProof.patches].reverse()){
+    assert.equal(archivePreview.split(patch.after).length-1,1,'Exact final native callback extension');
+    archivePreview=archivePreview.replace(patch.after,patch.before);
+  }
+  assert.equal(createHash('sha256').update(archivePreview).digest('hex'),finalProof.beforeSha256,'Only final binary callbacks reversed to PR17 parent');
   const archiveAmendments=JSON.parse(source('./fixtures/archives-main16-native-extensions.json'));
   const sha=value=>createHash('sha256').update(value).digest('hex');
   assert.equal(archiveAmendments.baseCommit,'a4190bb3b1b2fd95995e33dbce09ffb31c77614c');

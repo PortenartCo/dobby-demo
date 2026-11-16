@@ -12,6 +12,8 @@ const maison = require('./fixtures/maison-source-extensions.json');
 const readiness = require('./fixtures/pr15-native-readiness-source-extensions.json');
 const composition = require('./fixtures/maison-pr15-source-composition.json');
 const archives = require('./fixtures/archives-main16-source-extensions.json');
+const finalArchives = require('./fixtures/archives-final-source-extensions.json');
+const beforeFinal=(file,source)=>beforeArchives(file,source,finalArchives.files[file]||null);
 function beforeArchives(file,source,extension=archives.files[file]){
   if(!extension)return source;
   assert.equal(digest(source),extension.afterSha256,file+' current reviewed source changed');
@@ -23,7 +25,7 @@ function beforeArchives(file,source,extension=archives.files[file]){
   assert.equal(digest(source),extension.beforeSha256,file+' Archives reversal restores its complete parent');
   return source;
 }
-function readReviewed(file){return beforeArchives(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'));}
+function readReviewed(file){return beforeArchives(file,beforeFinal(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n')));}
 function reverseLiterals(file,source,patches){
   for(const patch of [...patches].reverse()){
     assert.notEqual(patch.after,patch.before,patch.label+' is an exact source amendment');
@@ -263,7 +265,7 @@ test('Archives amendments reverse exactly to current main and reject altered byt
   assert.equal(Object.keys(archives.files).length,7);
   for(const[file,expected]of Object.entries(archives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen earlier Archives proof');
   for(const [file,extension]of Object.entries(archives.files)){
-    const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+    const source=beforeFinal(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'));
     const previous=beforeArchives(file,source);
     assert.equal(digest(previous),extension.beforeSha256);
     assert.throws(()=>beforeArchives(file,source+'\n/* unreviewed byte */'),/current reviewed source changed/);
@@ -273,3 +275,8 @@ test('Archives amendments reverse exactly to current main and reject altered byt
 });
 
 module.exports = { preserved };
+
+test('final native archive guards preserve every byte of the reviewed PR17 parent',()=>{
+ for(const [file,expected]of Object.entries(finalArchives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected);
+ for(const [file,extension]of Object.entries(finalArchives.files)){const source=fs.readFileSync(path.join(repo,file),'utf8');assert.equal(digest(beforeFinal(file,source)),extension.beforeSha256);assert.throws(()=>beforeFinal(file,source+'/* changed */'),/current reviewed source changed/);}
+});

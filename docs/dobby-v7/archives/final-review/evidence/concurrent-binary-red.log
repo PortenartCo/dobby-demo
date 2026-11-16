@@ -1,0 +1,17 @@
+ARCHIVES_CONSULTATION_RACE_PASS pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-archive-during-binary-write
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'ORIGINAL FICTIF'
+- 'CONCURRENT B'
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-consultation-races.cjs:47:9 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'ORIGINAL FICTIF',
+  expected: 'CONCURRENT B',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
