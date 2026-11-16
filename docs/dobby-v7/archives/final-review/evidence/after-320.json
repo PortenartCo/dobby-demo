@@ -1,0 +1,115 @@
+{
+  "phase": "after",
+  "origin": "http://127.0.0.1:8876",
+  "fictional": true,
+  "checks": [
+    {
+      "width": 320,
+      "source": "documents",
+      "id": "final-contract",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "documents",
+      "id": "final-insurance",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "documents",
+      "id": "final-document",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "documents",
+      "id": "final-typed-contract",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "equipment",
+      "id": "final-equipment",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "recipes",
+      "id": "final-recipe",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "contacts",
+      "id": "final-contact",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "localNotes",
+      "id": "final-local-note",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    },
+    {
+      "width": 320,
+      "source": "sharedNotes",
+      "id": "final-shared-note",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    }
+  ]
+}

@@ -4,8 +4,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const base=process.env.PREVIEW_BASE,out=process.env.PREVIEW_EVIDENCE;
 if(!base?.endsWith('/')||!out)throw Error('PREVIEW_BASE (new directory URL) and PREVIEW_EVIDENCE required.');
 fs.mkdirSync(out,{recursive:true});const receipt={base,at:new Date().toISOString(),fixturesOnly:true,checks:[]},hash=b=>crypto.createHash('sha256').update(b).digest('hex');
-(async()=>{const manifest=await (await fetch(base+'review-manifest.json')).json();receipt.sourceSha=manifest.sourceSha;assert.equal(manifest.realBackend,false);
-const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{for(const width of [320,390,768,1440]){
+(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});try{const metadata=await browser.newPage(),response=await metadata.goto(base+'review-manifest.json');assert.equal(response.status(),200);const manifest=await response.json();await metadata.close();receipt.sourceSha=manifest.sourceSha;assert.equal(manifest.realBackend,false);for(const width of [320,390,768,1440]){
  const c=await browser.newContext({viewport:{width,height:950},locale:'fr-BE',timezoneId:'Europe/Paris',reducedMotion:'reduce',serviceWorkers:'block'}),external=[],missing=[],errors=[];
  await c.route('**/*',r=>{const url=r.request().url();if(!/^https?:/.test(url)||url.startsWith(base))return r.continue();external.push(url);return r.abort();});const p=await c.newPage();p.setDefaultTimeout(20000);
  p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push([r.status(),r.url()]);});
