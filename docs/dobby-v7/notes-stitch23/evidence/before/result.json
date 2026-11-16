@@ -1,0 +1,54 @@
+{
+  "baseline": true,
+  "realAccountsTested": false,
+  "results": [
+    {
+      "width": 320,
+      "nativeCrud": true,
+      "stableId": true,
+      "longText": true,
+      "searchTitleBodyTagsAndLocal": true,
+      "localRetained": true,
+      "noAutomaticImport": true,
+      "explicitIdempotentImport": true,
+      "oneHeaderDock": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "nativeCrud": true,
+      "stableId": true,
+      "longText": true,
+      "searchTitleBodyTagsAndLocal": true,
+      "localRetained": true,
+      "noAutomaticImport": true,
+      "explicitIdempotentImport": true,
+      "oneHeaderDock": true,
+      "errors": []
+    },
+    {
+      "width": 768,
+      "nativeCrud": true,
+      "stableId": true,
+      "longText": true,
+      "searchTitleBodyTagsAndLocal": true,
+      "localRetained": true,
+      "noAutomaticImport": true,
+      "explicitIdempotentImport": true,
+      "oneHeaderDock": true,
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "nativeCrud": true,
+      "stableId": true,
+      "longText": true,
+      "searchTitleBodyTagsAndLocal": true,
+      "localRetained": true,
+      "noAutomaticImport": true,
+      "explicitIdempotentImport": true,
+      "oneHeaderDock": true,
+      "errors": []
+    }
+  ]
+}

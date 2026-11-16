@@ -1,0 +1,10 @@
+locator.waitFor: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('main .fam-notes-illustration img') to be visible[22m
+
+    at /workspace/dobby-notes-stitch23/essai-stitch-v7/tests/notes-stitch23.cjs:46:14 {
+  log: [
+    "  - waiting for locator('main .fam-notes-illustration img') to be visible"
+  ],
+  name: 'TimeoutError'
+}
