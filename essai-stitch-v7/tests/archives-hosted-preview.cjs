@@ -9,7 +9,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
  const c=await browser.newContext({viewport:{width,height:950},locale:'fr-BE',timezoneId:'Europe/Paris',reducedMotion:'reduce',serviceWorkers:'block'}),external=[],missing=[],errors=[];
  await c.route('**/*',r=>{const url=r.request().url();if(!/^https?:/.test(url)||url.startsWith(base))return r.continue();external.push(url);return r.abort();});const p=await c.newPage();p.setDefaultTimeout(20000);
  p.on('pageerror',e=>errors.push(e.message));p.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push([r.status(),r.url()]);});
- const ready=()=>p.waitForFunction(()=>DobbyStitchV7?.ready&&DobbyFamilyStitch?.ready&&document.readyState==='complete'&&document.querySelector('[data-review-banner]'));
+ const ready=()=>p.waitForFunction(()=>window.DobbyStitchV7?.ready&&window.DobbyFamilyStitch?.ready&&document.readyState==='complete'&&document.querySelector('[data-review-banner]'));
  const state=()=>p.evaluate(()=>DobbyFamilyStitchEngine.read().state),native=(code,data={})=>p.evaluate(({code,data})=>DobbyFamilyStitchEngine.evaluate(code,data),{code,data});
  const shot=async name=>{await p.evaluate(()=>document.fonts.ready);await p.evaluate(async()=>{await Promise.all([...document.querySelectorAll('main img')].filter(i=>i.src).map(i=>i.decode().catch(()=>{})));scrollTo(0,0);});assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await p.screenshot({path:path.join(out,name+'-'+width+'.png'),fullPage:!name.includes('confirm')});};
  // Sentinels live in the unwrapped real/old-preview namespace of this fresh test browser.

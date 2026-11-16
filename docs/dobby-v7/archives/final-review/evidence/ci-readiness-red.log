@@ -1,0 +1,77 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TEST historique conservé/. Input:
+2026-11-16T22:56:34.8964533Z
+2026-11-16T22:56:34.8964710Z '←\n' +
+2026-11-16T22:56:34.8964926Z   'Retour aux Archives\n' +
+2026-11-16T22:56:34.8965178Z   'Archivé\n' +
+2026-11-16T22:56:34.8965490Z   'Réactiver\n' +
+2026-11-16T22:56:34.8965711Z   'TEST Maison composée\n' +
+2026-11-16T22:56:34.8965929Z   'Informations\n' +
+2026-11-16T22:56:34.8966117Z   'Marque\n' +
+2026-11-16T22:56:34.8966325Z   'À renseigner\n' +
+2026-11-16T22:56:34.8966525Z   'Modèle\n' +
+2026-11-16T22:56:34.8966716Z   'À renseigner\n' +
+2026-11-16T22:56:34.8966972Z   'N° de série / Réf. constructeur\n' +
+2026-11-16T22:56:34.8967224Z   'À renseigner\n' +
+2026-11-16T22:56:34.8967973Z   'Référence constructeur\n' +
+2026-11-16T22:56:34.8968216Z   'À renseigner\n' +
+2026-11-16T22:56:34.8968398Z   'Emplacement\n' +
+2026-11-16T22:56:34.8968599Z   'À renseigner\n' +
+2026-11-16T22:56:34.8968843Z   'Date d’achat\n' +
+2026-11-16T22:56:34.8969045Z   'À renseigner\n' +
+2026-11-16T22:56:34.8969233Z   'Fin de garantie\n' +
+2026-11-16T22:56:34.8969451Z   'À renseigner\n' +
+2026-11-16T22:56:34.8969670Z   'Prestataire / fournisseur\n' +
+2026-11-16T22:56:34.8969907Z   'À renseigner\n' +
+2026-11-16T22:56:34.8970086Z   '\n' +
+2026-11-16T22:56:34.8970793Z   'Les programmes d’entretien et les nouvelles références sont enregistrés sur cet appareil. Leur synchronisation entre deux comptes reste à valider.\n' +
+2026-11-16T22:56:34.8971335Z   '\n' +
+2026-11-16T22:56:34.8971509Z   'Entretiens\n' +
+2026-11-16T22:56:34.8971712Z   'Révision\n' +
+2026-11-16T22:56:34.8971881Z   '\n' +
+2026-11-16T22:56:34.8972155Z   'Révision · 01/01/2027 · Entretien à venir\n' +
+2026-11-16T22:56:34.8972411Z   '\n' +
+2026-11-16T22:56:34.8972660Z   'Dernière date de référence : 01/01/2026\n' +
+2026-11-16T22:56:34.8972899Z   '\n' +
+2026-11-16T22:56:34.8973117Z   'Fréquence : 12 mois\n' +
+2026-11-16T22:56:34.8973317Z   '\n' +
+2026-11-16T22:56:34.8973536Z   'Contrôle\n' +
+2026-11-16T22:56:34.8973703Z   '\n' +
+2026-11-16T22:56:34.8973941Z   'Contrôle · À renseigner\n' +
+2026-11-16T22:56:34.8974172Z   '\n' +
+2026-11-16T22:56:34.8974451Z   'Dernière date de référence : À renseigner\n' +
+2026-11-16T22:56:34.8974697Z   '\n' +
+2026-11-16T22:56:34.8974939Z   'Fréquence : 2 année(s)\n' +
+2026-11-16T22:56:34.8975160Z   '\n' +
+2026-11-16T22:56:34.8975340Z   'Historique et interventions\n' +
+2026-11-16T22:56:34.8975512Z   'Documents\n' +
+2026-11-16T22:56:34.8975623Z   '\n' +
+2026-11-16T22:56:34.8975916Z   'Pièces locales sur cet appareil. Leur partage au foyer n’est pas installé ni validé.\n' +
+2026-11-16T22:56:34.8976148Z   '\n' +
+2026-11-16T22:56:34.8976270Z   'TEST.pdf\n' +
+2026-11-16T22:56:34.8976382Z   '\n' +
+2026-11-16T22:56:34.8976510Z   'Contrôle\n' +
+2026-11-16T22:56:34.8976638Z   '\n' +
+2026-11-16T22:56:34.8976779Z   'Consulter / télécharger\n' +
+2026-11-16T22:56:34.8976943Z   'Contrats liés\n' +
+2026-11-16T22:56:34.8977092Z   'TEST contrat lié\n' +
+2026-11-16T22:56:34.8977238Z   'Revenir aux équipements'
+2026-11-16T22:56:34.8977327Z
+2026-11-16T22:56:34.8977705Z     at /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/archives-review.cjs:24:135 {
+2026-11-16T22:56:34.8977975Z   generatedMessage: true,
+2026-11-16T22:56:34.8978113Z   code: 'ERR_ASSERTION',
+2026-11-16T22:56:34.8978251Z   actual: '←\n' +
+2026-11-16T22:56:34.8978391Z     'Retour aux Archives\n' +
+2026-11-16T22:56:34.8978538Z     'Archivé\n' +
+2026-11-16T22:56:34.8978690Z     'Réactiver\n' +
+2026-11-16T22:56:34.8978842Z     'TEST Maison composée\n' +
+2026-11-16T22:56:34.8978979Z     'Informations\n' +
+2026-11-16T22:56:34.8979129Z     'Marque\n' +
+2026-11-16T22:56:34.8979327Z     'À renseigner\n' +
+2026-11-16T22:56:34.8979465Z     'Modèle\n' +
+2026-11-16T22:56:34.8979619Z     'À renseigner\n' +
+2026-11-16T22:56:34.8979736Z     '...',
+2026-11-16T22:56:34.8979906Z   expected: /TEST historique conservé/,
+2026-11-16T22:56:34.8980064Z   operator: 'match',
+2026-11-16T22:56:34.8980334Z   diff: 'simple'
+2026-11-16T22:56:34.8980458Z }
+2026-11-16T22:56:34.9195402Z
