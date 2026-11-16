@@ -10,9 +10,19 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Contacts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const preview=source('../index.html').replaceAll('\r\n','\n');
+  let preview=source('../index.html').replaceAll('\r\n','\n');
+  const contacts=JSON.parse(source('./fixtures/contacts-native-extensions.json'));
+  const contactsSha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(contacts.baseCommit,'521c9199ac18cb71b2fbbd2717ded2f7781aa4db');
+  assert.equal(contacts.file,'essai-stitch-v5-famille/index.html');
+  assert.equal(contactsSha(preview),contacts.afterSha256,'Complete current Contacts native artifact pinned');
+  for(const patch of [...contacts.patches].reverse()){
+    assert.equal(preview.split(patch.after).length-1,1,'Exact Contacts native amendment: '+patch.label);
+    preview=preview.replace(patch.after,patch.before);
+  }
+  assert.equal(contactsSha(preview),contacts.beforeSha256,'Contacts reversal restores every byte of its published parent');
   const preparationScript='<script src="./family-preparations.js"></script>';
   assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs
@@ -39,6 +49,7 @@ test('preview V5 source matches original except isolated storage and approved E0
     return text;
   };
   assert.equal(outerSha(maisonSource),outer.maisonFixtureSha256,'Frozen Maison fixture unchanged');
+  assert.equal(contacts.beforeSha256,outer.composedSha256,'Frozen Maison/Role/Contracts parent remains unchanged');
   assert.equal(outerSha(preview),outer.composedSha256,'Complete Maison/Role/Contracts native artifact pinned');
   assert.equal(outerSha(reverseNative(preview,nativeRole)),maison.afterSha256,'Removing Role restores the exact Maison parent artifact');
   familyNormalized=reverseNative(preview,maison);
