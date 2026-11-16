@@ -19,7 +19,7 @@ test('a fresh register generation keeps the six-card canonical Menu and all othe
     fs.copyFileSync(path.join(repo, relative), destination);
   }
   try {
-    for (const file of ['build-register.cjs', 'register-routes.json', 'menu-layout.html', 'route-manifest.json', 'assets/remaining/provenance.json']) copy('essai-stitch-v7/' + file);
+    for (const file of ['build-register.cjs', 'register-routes.json', 'menu-layout.html', 'contacts-layout.html', 'contact-edit-layout.html', 'route-manifest.json', 'assets/remaining/provenance.json']) copy('essai-stitch-v7/' + file);
     for (const route of routes) copy(`design/stitch-53/${route.id}/code.html`);
     execFileSync(process.execPath, [path.join(root, 'build-register.cjs')]);
     const layout = fs.readFileSync(path.join(root, 'menu-layout.html'));

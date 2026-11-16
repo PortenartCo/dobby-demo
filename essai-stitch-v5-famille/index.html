@@ -1211,7 +1211,7 @@ function xback(){st.extraPage='';render()}
 function xformField(label,name,value='',type='text',required=false){return `<label>${label}</label><input name="${name}" type="${type}" maxlength="240" value="${xesc(value)}" ${required?'required':''}>`}
 function xformClose(){return `<div class="actions"><button class="btn" type="submit">Enregistrer</button><button class="btn secondary" type="button" data-extra="back">Annuler</button></div></form></div>`}
 function xcontacts(){let arr=st.famContacts,part=st.extraPage.split(':'),action=part[1],id=part[2],r=xfind(arr,id)||{};
- if(action==='edit')return `<button class="btn secondary small" data-extra="contacts">← Répertoire</button><h1>${r.id?'Modifier le contact':'Nouveau contact'}</h1><div class="card"><form id="xContactForm"><input type="hidden" name="id" value="${xesc(r.id)}">${xformField('Nom *','name',r.name,'text',true)}${xformField('Rôle / relation','role',r.role)}${xformField('Téléphone','phone',r.phone,'tel')}${xformField('Courriel','email',r.email,'email')}${xformField('Notes','note',r.note)}${xformClose()}`;
+ if(action==='edit')return `<button class="btn secondary small" data-extra="contacts">← Répertoire</button><h1>${r.id?'Modifier le contact':'Nouveau contact'}</h1><div class="card"><form id="xContactForm"><input type="hidden" name="id" value="${xesc(r.id)}">${xformField('Nom *','name',r.name,'text',true)}${xformField('Catégorie','category',r.category)}${xformField('Fonction ou spécialité','role',r.role)}${xformField('Téléphone','phone',r.phone,'tel')}${xformField('Courriel','email',r.email,'email')}<label>Adresse postale</label><textarea name="address" maxlength="500">${xesc(r.address)}</textarea><label>Notes libres</label><textarea name="note" maxlength="500">${xesc(r.note)}</textarea>${xformClose()}`;
  return `<button class="btn secondary small" data-extra="back">← Famille</button><h1>Répertoire familial</h1><button class="btn full" data-extra="contactnew">＋ Ajouter un contact</button><div class="card">${arr.length?arr.map(r=>`<div class="doc-row"><div><strong>${xesc(r.name)}</strong><div class="muted">${xesc(r.role)}</div>${r.phone?`<a href="tel:${encodeURIComponent(r.phone.replace(/[^+\d]/g,''))}">☎ ${xesc(r.phone)}</a>`:''} ${r.email?`<a href="mailto:${encodeURIComponent(r.email)}">${xesc(r.email)}</a>`:''}<div class="muted">${xesc(r.note)}</div></div><div><button class="btn small secondary" data-extra="contactedit" data-id="${xesc(r.id)}">Modifier</button><button class="btn small outline" data-extra="contactdelete" data-id="${xesc(r.id)}">×</button></div></div>`).join(''):'<p class="muted">Aucun contact enregistré.</p>'}</div>`}
 function xlists(){let arr=st.famLists,part=st.extraPage.split(':'),action=part[1],id=part[2],r=xfind(arr,id);
  if(action==='view'&&r)return `<button class="btn secondary small" data-extra="lists">← Mes listes</button><h1>${xesc(r.name)}</h1><p class="muted">Liste de démonstration locale. Elle ne se synchronise pas encore entre iPhone.</p><div class="card"><div class="row"><input id="xListInput" maxlength="160" placeholder="Nouvel élément"><button class="btn" data-extra="listadd" data-id="${xesc(r.id)}">＋</button></div>${r.items.map((v,i)=>`<div class="tick"><input type="checkbox" data-list-check="${xesc(r.id)}" data-i="${i}" ${v.done?'checked':''}><span style="flex:1;${v.done?'text-decoration:line-through;opacity:.6':''}">${xesc(v.name)}</span><button class="btn small outline" data-extra="listremove" data-id="${xesc(r.id)}" data-i="${i}">×</button></div>`).join('')||'<p class="muted">Liste vide.</p>'}</div>`;
@@ -1248,7 +1248,12 @@ document.addEventListener('click',e=>{let b=e.target.closest('[data-extra]');if(
  if(['contacts','lists','health','contracts','search'].includes(a)){st.extraPage=a;render();return}
  if(a==='contactnew')st.extraPage='contacts:edit';
  if(a==='contactedit')st.extraPage='contacts:edit:'+id;
- if(a==='contactdelete'&&confirm('Supprimer ce contact ?'))st.famContacts=st.famContacts.filter(r=>r.id!==id);
+ if(a==='contactdelete'){
+  if(!confirm('Supprimer ce contact ?'))return;
+  const before=st.famContacts;st.famContacts=before.filter(r=>r.id!==id);
+  try{save();}catch(error){st.famContacts=before;return;}
+  render();return;
+ }
  if(a==='listopen')st.extraPage='lists:view:'+id;
  if(a==='listdelete'&&confirm('Supprimer cette liste ?'))st.famLists=st.famLists.filter(r=>r.id!==id);
  if(a==='listadd'){let r=xfind(st.famLists,id),input=document.getElementById('xListInput'),v=input?.value.trim();if(r&&v)r.items.push({name:v.slice(0,160),done:false})}
@@ -1265,7 +1270,14 @@ document.addEventListener('click',e=>{let b=e.target.closest('[data-extra]');if(
  save();render()
 });
 document.addEventListener('submit',e=>{let form=e.target,id=form.getAttribute('id');if(!['xContactForm','xListForm','xHealthForm'].includes(id))return;e.preventDefault();let d=new FormData(form);
- if(id==='xContactForm'){let r={id:xval(d,'id')||xuid(),name:xval(d,'name',140),role:xval(d,'role'),phone:xval(d,'phone'),email:xval(d,'email'),note:xval(d,'note',500)};if(!r.name)return;st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);st.extraPage='contacts'}
+ if(id==='xContactForm'){
+  const before=st.famContacts,previousPage=st.extraPage,contactId=xval(d,'id')||xuid(),existing=before.find(row=>row.id===contactId);
+  const r={...existing,id:contactId,name:xval(d,'name',140),category:xval(d,'category'),role:xval(d,'role'),phone:xval(d,'phone',100),email:xval(d,'email'),address:xval(d,'address',500),note:xval(d,'note',500)};
+  if(!r.name)return;
+  st.famContacts=existing?before.map(row=>row.id===contactId?r:row):[...before,r];st.extraPage='contacts';
+  try{save();}catch(error){st.famContacts=before;st.extraPage=previousPage;return;}
+  render();return;
+ }
  if(id==='xListForm'){let name=xval(d,'name',140);if(!name)return;st.famLists.push({id:xuid(),name,items:[]});st.extraPage='lists'}
  if(id==='xHealthForm'){let r={id:xval(d,'id')||xuid(),person:xval(d,'person')||st.v21HealthPerson||'Enfant 1',name:xval(d,'name',140),date:xval(d,'date'),provider:xval(d,'provider'),reference:xval(d,'reference'),note:xval(d,'note',500)};if(!r.name)return;if(!v23GuardLocalHealth(r.id,{personId:xval(d,'personId'),person:r.person}))return;if(xval(d,'personId')){r.personId=xval(d,'personId');r.person=v23MemberById(r.personId).name;}st.famHealth=st.famHealth.filter(v=>v.id!==r.id).concat(r);st.extraPage='health'}
  save();render();

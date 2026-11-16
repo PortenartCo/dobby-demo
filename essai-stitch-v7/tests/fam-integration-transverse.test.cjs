@@ -11,6 +11,14 @@ const reconciliation = require('./fixtures/reconciliation-main-43eef-source-exte
 const maison = require('./fixtures/maison-source-extensions.json');
 const readiness = require('./fixtures/pr15-native-readiness-source-extensions.json');
 const composition = require('./fixtures/maison-pr15-source-composition.json');
+const contacts = require('./fixtures/contacts-source-extensions.json');
+function beforeContacts(file,source){
+  const extension=contacts.files[file];if(!extension)return source;
+  assert.equal(digest(source),extension.afterSha256,file+' complete Contacts source changed: current reviewed source changed');
+  source=reverseLiterals(file,source,extension.patches);
+  assert.equal(digest(source),extension.beforeSha256,file+' Contacts reversal retains the full published parent');
+  return source;
+}
 function reverseLiterals(file,source,patches){
   for(const patch of [...patches].reverse()){
     assert.notEqual(patch.after,patch.before,patch.label+' is an exact source amendment');
@@ -37,6 +45,7 @@ function compositionParents(file,source){
   return{withoutMaison,withoutReadiness};
 }
 function beforeMaison(file,source){
+  source=beforeContacts(file,source);
   const amendment=maison.files[file];if(!amendment)return source;
   const parents=compositionParents(file,source);if(parents)source=parents.withoutReadiness;
   assert.equal(digest(source),amendment.afterSha256,file+' complete Maison source changed');
@@ -182,10 +191,23 @@ test('Maison source amendments preserve every frozen published-main fingerprint 
     for(const check of amendment.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
     const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
     assert.equal(digest(beforeMaison(file,source)),expected,file+' exact literals recover the full immutable parent');
-    assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete Maison source changed/);
+    assert.throws(()=>beforeMaison(file,source+'\n// Unreviewed byte change\n'),/complete (Maison|Contacts) source changed/);
     assert.throws(()=>currentFingerprint(file,source,reviews[file],{mergedSha256:'0'.repeat(64)}),/current reviewed source changed|preserves its exact parent/,'Maison normalization never bypasses a failed parent fingerprint');
     const parents=compositionParents(file,source);
     if(parents)for(const parent of [parents.withoutMaison,parents.withoutReadiness])assert.throws(()=>currentFingerprint(file,parent,reviews[file],reconciliation.files[file]),/current reviewed source changed/,'Neither valid earlier branch artifact can replace the current composed source');
+  }
+});
+
+test('Contacts controller amendments recover the exact parent and reject unrelated source changes',()=>{
+  assert.equal(contacts.baseCommit,'521c9199ac18cb71b2fbbd2717ded2f7781aa4db');
+  assert.deepEqual(Object.keys(contacts.files),['essai-stitch-v7/family.js']);
+  for(const[file,extension]of Object.entries(contacts.files)){
+    assert.equal(extension.beforeSha256,maison.files[file].afterSha256,'Existing Maison source fingerprint stays frozen');
+    for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check);
+    const current=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),parent=beforeContacts(file,current);
+    assert.equal(digest(parent),extension.beforeSha256);
+    assert.throws(()=>beforeContacts(file,current+'\n// unrelated byte'),/current reviewed source changed/);
+    assert.throws(()=>beforeContacts(file,parent),/current reviewed source changed/,'An earlier valid source cannot replace the current Contacts implementation');
   }
 });
 

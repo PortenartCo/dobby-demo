@@ -75,8 +75,13 @@ window.DobbyFamilyStitchEngine=(()=>{
  function deleteEvent(id){guardSharedWrite();requireRecord(read().events,id);page();action('fpAction','delete',{id});}
  function exportEvent(id){page();action('fpAction','ics',{id});}
  function contactForm(id){requireRecord(read().contacts,id);page('contacts');action('extra',id?'contactedit':'contactnew',id?{id}:{});return win().document.getElementById('xContactForm');}
- function saveContact(id,values){guardSharedWrite();const row=read().contacts.find(r=>r.id===id);const form=contactForm(id);ensureEditable(row,form);submit('xContactForm',values);if(read().state.extraPage!=='contacts')throw Error('Indiquez un nom pour enregistrer ce contact.');}
- function deleteContact(id){guardSharedWrite();requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});}
+ function saveContact(id,values,expected){
+  guardSharedWrite();const row=read().contacts.find(r=>r.id===id);
+  if(id&&expected!==undefined&&JSON.stringify(row)!==JSON.stringify(expected))throw Error('Ce contact a été modifié depuis son ouverture. Votre saisie est conservée. Revenez au répertoire pour comparer les versions.');
+  contactForm(id);submit('xContactForm',values);
+  if(read().state.extraPage!=='contacts')throw Error('Le contact n’a pas été enregistré. Vérifiez le nom et le stockage disponible.');
+ }
+ function deleteContact(id){guardSharedWrite();requireRecord(read().contacts,id);page('contacts');action('extra','contactdelete',{id});return !read().contacts.some(row=>row.id===id);}
  // Shared memos use the native state/save pipeline and its family module.
  function changeSharedMemo(p){
   const before=st.sharedFamilyNotes,rows=before||[];

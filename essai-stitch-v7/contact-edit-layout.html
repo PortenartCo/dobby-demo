@@ -1,0 +1,14 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body data-stitch-source="dobby_cr_er_ou_modifier_un_contact"><main class="contacts-main">
+<button type="button" class="fa-button contacts-back" data-fa-action="rg-back">← Répertoire familial</button>
+<h1>Nouveau contact</h1>
+<form id="contact-form" class="contacts-form">
+<label for="contact-name"><span>Nom / prénom ou organisme <span aria-hidden="true">*</span></span><input id="contact-name" name="name" required maxlength="140" autocomplete="name"></label>
+<label for="contact-category">Catégorie<select id="contact-category" name="category"><option value="">Sans catégorie</option><option>Famille</option><option>Proches</option><option>Santé</option><option>École</option><option>Artisan</option><option>Services</option><option>Autre</option></select></label>
+<label for="contact-role">Fonction ou spécialité<input id="contact-role" name="role" maxlength="250" autocomplete="organization-title"></label>
+<label for="contact-phone">Téléphone<input id="contact-phone" name="phone" type="tel" maxlength="100" autocomplete="tel"></label>
+<label for="contact-email">Adresse e-mail<input id="contact-email" name="email" type="email" maxlength="250" autocomplete="email"></label>
+<label for="contact-address">Adresse postale<textarea id="contact-address" name="address" maxlength="500" autocomplete="street-address" rows="2"></textarea></label>
+<label for="contact-notes">Notes libres<textarea id="contact-notes" name="note" maxlength="500" rows="4"></textarea></label>
+<div class="contacts-actions"><button type="submit" class="fa-button contacts-primary" data-fa-action="rg-save">Enregistrer</button><button type="button" class="fa-button" data-fa-action="rg-contact-cancel">Annuler</button></div>
+</form></main></body></html>
