@@ -1,0 +1,38 @@
+/* Shared native viewport. BODY must not become an unbounded scroll container:
+   overflow-x:hidden computed overflow-y:auto and trapped wheel/touch on Family. */
+:root{--dobby-shell-width:1280px}
+html:has(body[data-dv7-screen].dv7-panel-visible),html:has(body[data-dv7-screen] #fa-dialog),html:has(body[data-dv7-screen] dialog[open]){overflow-y:hidden!important}
+body[data-dv7-screen]{width:100%!important;max-width:var(--dobby-shell-width)!important;margin-inline:auto;box-sizing:border-box}
+body[data-dv7-screen]:not(.dv7-panel-visible){overflow-x:clip!important;overflow-y:visible!important;overscroll-behavior-y:auto}
+body[data-dv7-screen].dv7-panel-visible{overflow:hidden!important;overscroll-behavior-y:none}
+body[data-dv7-screen]:has(#fa-dialog){overflow:hidden!important;overscroll-behavior-y:none}
+body[data-dv7-screen]:has(#dobby-ceremonies[open]){overflow:hidden!important;overscroll-behavior-y:none}
+body[data-dv7-screen]>main{min-width:0;max-width:100%;box-sizing:border-box}
+body[data-dv7-screen] :is(main,form,section,article,fieldset){min-width:0}
+body[data-dv7-screen] :is(input,select,textarea){scroll-margin-block:100px 120px}
+body[data-dv7-screen] :is(button,a,input,select,textarea){touch-action:manipulation}
+body[data-dv7-screen] main img[alt*="Dobby"]{object-fit:contain!important;object-position:center!important}
+body[data-dv7-screen]>header[data-e01-chrome],body[data-dv7-screen]>nav[data-e01-chrome],
+body.e06-active>header,#dv7-panel:not([hidden]),body.dv7-panel-visible #dv7-engine,
+body[data-dv7-screen] :is(main,#fa-supplement,#cu-supplement) .fixed.bottom-0,
+body[data-dv7-screen] .e02-composer,#e013-ambience{width:min(var(--dobby-shell-width),100%)!important}
+body[data-dv7-screen]>nav[data-e01-chrome] a{max-width:180px}
+body.cu-active main.e074-recipe{max-width:100%;padding-bottom:calc(108px + var(--e01-footer-height,0px) + env(safe-area-inset-bottom,0px))!important}
+#fa-dialog{overscroll-behavior-y:contain;scroll-padding-block:16px;touch-action:pan-y pinch-zoom}
+#fa-dialog>section{max-width:680px}
+body[data-dv7-screen] :is(dialog,.e074-modal,.prep-dialog,.e07p01-meal-dialog){max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y pinch-zoom}
+@media(min-width:768px){
+ body[data-dv7-screen]>main{padding-inline:24px}
+ body[data-dv7-screen] main .relative:has(>img[alt*="Dobby"]){height:clamp(240px,30vw,420px)!important}
+ body[data-dv7-screen=traverse]>main>div:first-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+ body[data-dv7-screen=traverse]>main>div:first-child>:first-child,
+ body[data-dv7-screen=traverse] [data-e01-days]{grid-column:1/-1}
+ .rg-menu-cards,.fam-member-list,.fam-salon-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+ body[data-cuisine-view=recipes] #recipes-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+ body[data-family-view=personal] main.mp-page{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+ body[data-family-view=personal] main.mp-page>h1,body[data-family-view=personal] main.mp-page>.mp-hero{grid-column:1/-1}
+ body[data-family-view=mission-edit] main #rg-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+ body[data-family-view=mission-edit] main #rg-form>section:last-of-type{grid-column:1/-1}
+ body.e06-active>.e06-main{max-width:760px}
+}
+@media(min-width:1440px){.rg-menu-cards,.fam-member-list{grid-template-columns:repeat(3,minmax(0,1fr))}}

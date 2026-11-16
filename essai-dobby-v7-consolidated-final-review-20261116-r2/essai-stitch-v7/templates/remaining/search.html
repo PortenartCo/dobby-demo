@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; form-action 'none'; base-uri 'self'"><script src="../../../review-config.js"></script><script src="../../../family-config.js"></script><script src="../../../review-runtime.js"></script><script src="../../../global-demo.js"></script><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/>
+<style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body data-stitch-source="dobby_rechercher_dans_dobby_recherche_transversale" class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_4px_20px_rgba(12,7,5,0.4)]"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs"><button aria-label="Retour" class="min-w-[44px] min-h-[44px] flex items-center gap-1 px-space-xs py-space-xs text-primary hover:text-primary-fixed transition-colors active:scale-95" type="button"><span class="material-symbols-outlined text-[20px]">arrow_back_ios_new</span><span class="font-label-md text-label-md tracking-wider uppercase hidden sm:inline">Retour</span></button></div><div class="flex items-center gap-space-xs truncate text-center px-space-xs flex-1 justify-center"><span class="material-symbols-outlined text-primary text-[20px] select-none">auto_stories</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate tracking-tight">Recherche Magique</h1></div><div class="flex items-center justify-end min-w-[44px]"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_2px_8px_rgba(249,187,95,0.25)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full px-gutter-mobile py-space-sm space-y-space-md">
+<!-- 1. Bandeau de rassurance locale -->
+<div class="rounded-xl bg-surface-container-low p-space-sm shadow-md flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-primary text-[18px]">lock</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-headline-sm text-label-md text-primary font-semibold tracking-wider uppercase mb-0.5">
+        Indexation Locale du Logis · Sans Nuage
+      </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+        Vos recherches explorent exclusivement la mémoire chiffrée de cet appareil. Aucun mot-clé n'est expédié vers l'extérieur.
+      </p>
+</div>
+</div>
+<!-- 2. Sélecteur de démonstration interactive des 3 états -->
+<div class="rounded-xl bg-surface-container-highest/60 p-space-xs shadow-sm flex items-center justify-between gap-1">
+<button class="flex-1 py-1.5 px-2 rounded-lg font-label-sm text-label-sm text-center transition-all bg-primary text-on-primary font-medium shadow-sm" id="btn-state-results">
+      1. Résultats (8)
+    </button>
+<button class="flex-1 py-1.5 px-2 rounded-lg font-label-sm text-label-sm text-center transition-all bg-transparent text-on-surface-variant hover:text-on-surface" id="btn-state-empty">
+      2. Suggestions
+    </button>
+<button class="flex-1 py-1.5 px-2 rounded-lg font-label-sm text-label-sm text-center transition-all bg-transparent text-on-surface-variant hover:text-on-surface" id="btn-state-zero">
+      3. Sans Écho
+    </button>
+</div>
+<!-- 3. Champ de recherche central tactile & filtres -->
+<div class="space-y-space-sm">
+<div class="relative flex items-center rounded-xl bg-surface-container-lowest px-space-sm py-2 shadow-inner">
+<span class="material-symbols-outlined text-primary text-[22px] mr-2 shrink-0 select-none">manage_search</span>
+<input class="w-full bg-transparent font-headline-sm text-body-md text-on-surface focus:outline-none placeholder:text-outline" id="search-input" placeholder="Consulter les parchemins et registres..." type="text" value="Chauffage &amp; Poêle"/>
+<button aria-label="Effacer la requête" class="p-1 rounded-lg text-outline hover:text-on-surface active:scale-95 shrink-0 transition-colors" id="clear-search">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+<div class="w-[1px] h-5 bg-surface-container-high mx-1 shrink-0"></div>
+<button aria-label="Affiner les filtres" class="p-1 rounded-lg text-primary hover:text-primary-fixed active:scale-95 shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<!-- Puces de filtrage rapide défilantes -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-1 text-nowrap">
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-primary text-on-primary font-medium shadow-sm transition-all">
+        Tout (8)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Contrats (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Documents (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Contacts (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Équipements (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Famille (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Recettes (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Listes (1)
+      </button>
+<button class="cat-pill px-3 py-1 rounded-full font-label-sm text-label-sm uppercase tracking-wider bg-surface-container text-on-surface-variant hover:text-primary transition-all">
+        Notes (1)
+      </button>
+</div>
+</div>
+<!-- CONTENEUR DES 3 ÉTATS -->
+<!-- ÉTAT 1 : Résultats groupés (8 items) -->
+<div class="space-y-space-md" id="state-results-view">
+<div class="flex items-center justify-between px-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">Registres découverts</span>
+<span class="font-label-md text-label-md text-primary font-medium tracking-wide">8 correspondances</span>
+</div>
+<!-- GROUPE CONTRATS -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="contrats">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Contrats &amp; Assurances
+            </span>
+<span class="text-error font-label-sm text-label-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">alarm</span> Échéance 14j
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Contrat Entretien Chaudière &amp; Ramonage</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Artisan Fumisterie &amp; Poêle Meunier · Échéance dans 14 jours (15 Mai 2025)
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE DOCUMENTS -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="documents">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Documents &amp; Archives
+            </span>
+<span class="text-outline font-label-sm text-label-sm">PDF · 1.4 Mo</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Facture_Chauffage_Novembre_2024.pdf</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Cie des Eaux &amp; Énergies · 142,50 € TTC · Classé dans Baux &amp; Énergie
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE CONTACTS -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="contacts">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Contacts Familiaux
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Maître Jérôme Meunier</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Artisan Fumiste &amp; Ramonage du Logis · 06 42 18 90 XX
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE ÉQUIPEMENTS -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="equipements">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Équipements du Foyer
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Poêle à bois scandinave &amp; Conduit</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Pièce à vivre / Salon · Dernier ramonage certifié Nov. 2024
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE FAMILLE & REPARES -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="famille">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Membres de la Maisonnée
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Thomas (Référent Chauffage &amp; Bois)</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Rôle : Responsable intendance énergétique &amp; stock bûches
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE NOTES & MÉMOS -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="notes">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Mémos du Foyer
+            </span>
+<span class="text-primary font-label-sm text-label-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">push_pin</span> Épinglé
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Consignes d'Entretien du Poêle &amp; Cheminée</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Allumage Top-Down · Bûches de hêtre en bas · Épinglé par Thomas
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE RECETTES -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="recettes">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Recettes &amp; Taverne
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Soupe réconfortante au coin du feu</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Potimarron &amp; châtaignes · Temps : 35 min · 4 portions
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- GROUPE LISTES -->
+<div class="result-card group rounded-xl bg-surface-container p-space-md shadow-md hover:bg-surface-container-high transition-colors" data-type="listes">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0 space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold tracking-wider uppercase">
+              Listes de Courses
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Sac de granulés et allume-feux naturels</h2>
+<p class="font-body-md text-body-sm text-on-surface-variant line-clamp-2">
+            Liste Quincaillerie &amp; Foyer · 2 articles à récupérer
+          </p>
+</div>
+<button class="shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ÉTAT 2 : Recherche vide (Suggestions & Historique) -->
+<div class="hidden space-y-space-md" id="state-empty-view">
+<!-- Recherches récentes -->
+<div class="rounded-xl bg-surface-container p-space-md shadow-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Recherches Récentes</span>
+<button class="font-label-sm text-label-sm text-outline hover:text-error transition-colors uppercase tracking-wider">
+          Effacer
+        </button>
+</div>
+<div class="space-y-1" id="recent-list">
+<div class="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-[18px]">history</span>
+<span class="font-body-md text-body-md text-on-surface">Pédiatre des enfants</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px]">north_west</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-[18px]">history</span>
+<span class="font-body-md text-body-md text-on-surface">Assurance habitation</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px]">north_west</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-[18px]">history</span>
+<span class="font-body-md text-body-md text-on-surface">Clé du compteur d'eau</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[16px]">north_west</span>
+</div>
+</div>
+</div>
+<!-- Suggestions d'inspiration thématiques -->
+<div class="space-y-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface px-1">Registres &amp; Suggestions</h3>
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="rounded-xl bg-surface-container p-space-sm text-left shadow-md hover:bg-surface-container-high active:scale-98 transition-all flex flex-col justify-between h-28">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">notification_important</span>
+</div>
+<div>
+<p class="font-headline-sm text-body-md text-on-surface leading-tight font-semibold">Échéances</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Contrats à renouveler</p>
+</div>
+</button>
+<button class="rounded-xl bg-surface-container p-space-sm text-left shadow-md hover:bg-surface-container-high active:scale-98 transition-all flex flex-col justify-between h-28">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div>
+<p class="font-headline-sm text-body-md text-on-surface leading-tight font-semibold">Taverne</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Menu &amp; idées recettes</p>
+</div>
+</button>
+<button class="rounded-xl bg-surface-container p-space-sm text-left shadow-md hover:bg-surface-container-high active:scale-98 transition-all flex flex-col justify-between h-28">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">engineering</span>
+</div>
+<div>
+<p class="font-headline-sm text-body-md text-on-surface leading-tight font-semibold">Artisans</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Plombier, fumiste...</p>
+</div>
+</button>
+<button class="rounded-xl bg-surface-container p-space-sm text-left shadow-md hover:bg-surface-container-high active:scale-98 transition-all flex flex-col justify-between h-28">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+<div>
+<p class="font-headline-sm text-body-md text-on-surface leading-tight font-semibold">Atelier</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Notices &amp; garanties</p>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- ÉTAT 3 : Aucun résultat ('Sortilège sans écho') -->
+<div class="hidden space-y-space-md" id="state-zero-view">
+<div class="rounded-xl bg-surface-container p-space-lg text-center shadow-lg space-y-space-md">
+<!-- Illustration vectorielle miroir sans reflet / parchemin vierge -->
+<div class="w-20 h-20 mx-auto rounded-full bg-surface-container-lowest flex items-center justify-center shadow-inner relative">
+<svg class="w-10 h-10 text-outline" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+<span class="material-symbols-outlined text-primary text-[18px] absolute top-2 right-2">auto_fix_normal</span>
+</div>
+<div class="space-y-1">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sortilège sans écho</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Aucune trace décelée dans les registres pour cette incantation.
+        </p>
+</div>
+<!-- Conseils bienveillants de reformulation -->
+<div class="rounded-lg bg-surface-container-lowest p-space-sm text-left space-y-space-xs shadow-inner">
+<p class="font-label-md text-label-md text-primary font-medium tracking-wide uppercase">Pistes de recherche :</p>
+<ul class="font-body-sm text-body-sm text-on-surface-variant space-y-1">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[14px]">check_circle</span>
+            Vérifiez l'orthographe du vocable utilisé.
+          </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[14px]">check_circle</span>
+            Essayez le prénom d'un membre de la maisonnée (ex: Thomas, Élodie).
+          </li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[14px]">check_circle</span>
+            Élargissez votre requête en retirant des filtres de catégorie.
+          </li>
+</ul>
+</div>
+<button class="w-full py-2.5 px-4 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-semibold shadow-md active:scale-98 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+        Rétablir la requête « Chauffage &amp; Poêle »
+      </button>
+</div>
+</div>
+<!-- 7. Pied de page sécurisé souverain -->
+<div class="pt-space-sm pb-space-md text-center space-y-1">
+<div class="flex items-center justify-center gap-1.5 text-outline">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+<p class="font-label-sm text-label-sm uppercase tracking-widest font-semibold text-outline">
+        Recherche Universelle et Souveraine
+      </p>
+</div>
+<p class="font-body-sm text-label-sm text-outline-variant max-w-xs mx-auto leading-relaxed">
+      DOBBY · Les données de votre maisonnée demeurent strictement confinées dans l'enceinte de votre logis.
+    </p>
+</div>
+</div>
+</main></body></html>
