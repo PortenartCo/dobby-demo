@@ -1716,7 +1716,7 @@
             "label": "Données et sauvegardes",
             "route": "famille.html#backup?origin=settings",
             "format": "dobby-complete-backup version 1; JSON non chiffré",
-            "documents": "famille.html#documents; anciens documents autonomes distincts des fiches archivées"
+            "documents": "famille.html#document-library; anciens documents autonomes distincts des fiches archivées"
           }
         ],
         "backup": "famille.html#backup"
