@@ -124,7 +124,7 @@ body.fa-active main.rg-settings-page{display:flex;flex-direction:column;gap:16px
 .rg-settings-copy{display:flex;flex-direction:column;flex:1;min-width:0;gap:4px}
 .rg-settings-description{font:400 16px/1.5 Literata,Georgia,serif;color:#d4c4b1}
 .rg-settings-page .rg-menu-card{padding:16px;min-height:100px}
-.rg-settings-page .rg-menu-cards{display:flex;flex-direction:column}
+.rg-settings-page .rg-menu-cards{display:flex;flex-direction:column;align-items:stretch}
 .rg-settings-panel{display:flex;flex-direction:column;gap:16px;padding:20px;background:#2c1c18;border:1px solid #504537;border-radius:12px;min-width:0}
 .rg-settings-panel h2{margin:0;color:#f9bb5f;font:600 20px/1.4 "Playfair Display",Georgia,serif}
 .rg-settings-page :is(button,a,label[role="button"]){font-size:16px;min-height:44px;white-space:normal;max-width:100%;box-sizing:border-box}
