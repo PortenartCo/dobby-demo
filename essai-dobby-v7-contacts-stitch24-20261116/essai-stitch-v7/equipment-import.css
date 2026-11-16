@@ -1,0 +1,32 @@
+body.fa-active main.equipment-import{max-width:1100px;margin-inline:auto;padding-bottom:120px;overflow-wrap:anywhere;font:17px/1.5 "EB Garamond",Georgia,serif}
+.equipment-import>h1{font:600 clamp(1.6rem,5vw,2.6rem)/1.15 "Playfair Display",Georgia,serif;margin-block:20px;color:#f9bb5f}
+.equipment-import p{line-height:1.6;margin-block:10px}
+.equipment-import :is(h2,h3,h4,legend){font-weight:600;color:#f0d7b4}
+.equipment-import h2{font-size:1.4rem;margin-block:18px 12px}
+.equipment-import h3{font-size:1.15rem;margin-block:16px 10px}
+.equipment-import h4{margin-block:14px 8px}
+.equipment-import>details{margin-block:18px}
+.equipment-import summary{cursor:pointer;padding:12px 0}
+.equipment-import #equipment-ai-prompt{width:100%;max-width:100%;min-height:300px;padding:14px;border:1px solid #d49b4266;border-radius:12px;background:#271814;color:#fadcd5;font:inherit;font-size:15px}
+.equipment-import-privacy{padding:14px;border-left:3px solid #d49b42;background:#301e18;border-radius:0 10px 10px 0}
+.equipment-import-card{margin-block:22px;padding:clamp(12px,3vw,24px);border:1px solid #d49b4255;background:#251a16;border-radius:18px;min-width:0}
+.equipment-import-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px;margin-block:16px}
+.equipment-import-field{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:15px}
+.equipment-import-field textarea{min-height:90px;resize:vertical}
+.equipment-import :is(input,select,textarea,button,a){max-width:100%}
+.equipment-import :is(.fa-button,button){white-space:normal;min-height:44px}
+.equipment-import .equipment-import-plan{min-width:0;margin-block:18px;padding:14px;border:1px solid #d49b4255;border-radius:12px}
+.equipment-import-plan legend{padding-inline:6px}
+.equipment-import-source{padding:12px;margin-block:10px;border:1px solid #d49b4238;border-radius:10px}
+.equipment-import a{color:#eec084;text-decoration:underline;display:inline-block;overflow-wrap:anywhere}
+.equipment-import ul{list-style:disc;padding-left:22px}
+.equipment-import li{margin-block:8px}
+.equipment-import-hint{color:#d3bbb0;font-size:14px}
+.equipment-import-warning,.equipment-import-status{border-left:3px solid #dda854;padding:12px;background:#3b291b;border-radius:0 10px 10px 0}
+.equipment-import-actions{margin-top:24px;padding-top:20px;border-top:1px solid #d49b4240;display:grid;gap:16px}
+.equipment-import-diff{padding:16px;margin-top:16px;background:#36291c;border-radius:12px}
+.equipment-import-agree{display:flex;gap:10px;align-items:flex-start;margin:24px 0;line-height:1.6}
+.equipment-import-agree input{flex:0 0 24px;width:24px;height:24px;min-height:24px;margin-top:2px;accent-color:#d49b42}
+.equipment-import [hidden]{display:none!important}
+.equipment-import>:is(button,.fa-button){margin:10px 8px 10px 0}
+@media(max-width:620px){.equipment-import-grid{grid-template-columns:minmax(0,1fr)}.equipment-import-card{border-radius:12px}.equipment-import>h1{font-size:1.75rem}.equipment-import :is(.fa-button,button){width:100%}}
