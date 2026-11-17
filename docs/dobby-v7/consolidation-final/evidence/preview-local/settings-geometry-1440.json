@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "width": 1440,
+  "cards": [
+    {
+      "view": "settings-magic",
+      "width": 728,
+      "align": "stretch"
+    },
+    {
+      "view": "members",
+      "width": 728,
+      "align": "stretch"
+    },
+    {
+      "view": "backup",
+      "width": 728,
+      "align": "stretch"
+    }
+  ]
+}

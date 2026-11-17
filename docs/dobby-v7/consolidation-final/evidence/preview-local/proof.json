@@ -1,8 +1,8 @@
 {
-  "base": "http://127.0.0.1:8765/essai-dobby-v7-consolidated-final-review-20261116/",
-  "at": "2026-11-16T23:36:41.965Z",
-  "manifestSha256": "16275f4886e7e85602af5d7ba4954f823c027c7ac0e12f33bcd84720a4f52c1a",
-  "sourceSha": "56cbaf5825dcb9c5a7b65eb956d37a3364b20435",
+  "base": "http://127.0.0.1:8765/essai-dobby-v7-consolidated-final-review-20261116-r2/",
+  "at": "2026-11-16T23:58:44.064Z",
+  "manifestSha256": "0cce2d07ab50cbc4f434a15a2b4f66fba589be2c2244b0903a34fc2b36950165",
+  "sourceSha": "fb0a5a360d3dca87d5f26b4f90d0b1d616182648",
   "sourceState": "committed",
   "composition": {
     "status": "candidate",
@@ -46,8 +46,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-269467c8-42b1-444a-bf0d-d0e41cbe4d90",
-      "contactId": "local-1794872121167-nswehvs",
+      "memoId": "memo-16d4b98f-ef8e-4f68-80bd-de9a4559f51a",
+      "contactId": "local-1794873449736-77wms3d",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -122,8 +122,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-478a6a17-ecc6-4927-bcc0-0071a16473a2",
-      "contactId": "local-1794872145903-4cqzq9r",
+      "memoId": "memo-5918a535-252c-490e-8eb4-15a1d21d23a3",
+      "contactId": "local-1794873469314-7my97e0",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -198,8 +198,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-68f380d4-e7fa-4c3a-898e-4f7c3f6d4310",
-      "contactId": "local-1794872168407-p8upu6o",
+      "memoId": "memo-70834926-310c-45be-a59b-7b7af69eab83",
+      "contactId": "local-1794873485841-8fusdrz",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -274,8 +274,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-2c4d3d30-f009-41e5-b6c3-9cc74288721a",
-      "contactId": "local-1794872191909-wowix4a",
+      "memoId": "memo-894574aa-4382-4603-a7ac-ff9136231fea",
+      "contactId": "local-1794873502990-5yrlf4z",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -1585,7 +1585,7 @@
     {
       "path": "essai-stitch-v7/register.css",
       "status": 200,
-      "sha256": "1e36f1a20bfbf9decaf96f2c29f5b6808d15eb6b78d4d83fb1ce18af831bdee4"
+      "sha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72"
     },
     {
       "path": "essai-stitch-v7/register.js",
@@ -2055,12 +2055,12 @@
     {
       "path": "family-config.js",
       "status": 200,
-      "sha256": "5d689d107471f7d43f286aeefbe6fd388aa3d81c813056082f6f8501636520be"
+      "sha256": "9213432c79dbe8dc025b6ef67f8a98b8b54464ace09e06085b2d21b45a195388"
     },
     {
       "path": "global-demo.js",
       "status": 200,
-      "sha256": "d243dd91ba08f56f0a53fc2b2b091417e944e0fd0fca2bb31f54b64841e539e0"
+      "sha256": "61b857e95c38632edec1f844428b92f71d78361d6a18da19bf02629b373a6c78"
     },
     {
       "path": "index.html",
@@ -2075,7 +2075,7 @@
     {
       "path": "review-config.js",
       "status": 200,
-      "sha256": "7444026511b88a43df8ab3f62191f90f21d10b12e7d20b554d5522ac7e28d36f"
+      "sha256": "55626ab1be78b97ee2350e507ec32a602eb8a0c39a41f75fb8ef21d6c64dc68f"
     },
     {
       "path": "review-runtime.js",

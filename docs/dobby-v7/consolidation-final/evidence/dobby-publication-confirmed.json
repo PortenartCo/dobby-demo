@@ -1,0 +1,178 @@
+{
+  "observedUTC": "2026-11-17T00:11:11.870228+00:00",
+  "expectedCommit": "2f2f38b197a96ee2ae3593545f822002a452e859",
+  "base": "https://portenartco.github.io/dobby-demo/",
+  "readOnlyStaticRequests": true,
+  "realAccountRequests": false,
+  "records": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 2003,
+      "sha256": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+      "expectedSha256": "2a9e82bfe162fc264c14eca7149820ba5d43f25320a5abdac118b4b9a147318b",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/traverse.html",
+      "status": 200,
+      "bytes": 26704,
+      "sha256": "69a3444a226c08bfedc67f089a7f539204e5843d264d1ba29f37549760b1a9ac",
+      "expectedSha256": "69a3444a226c08bfedc67f089a7f539204e5843d264d1ba29f37549760b1a9ac",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/famille.html",
+      "status": 200,
+      "bytes": 44306,
+      "sha256": "0f7cc796c8c3c82a135fff5a006c2a5226af8af7543ea5da63ab89b8ec0c3675",
+      "expectedSha256": "0f7cc796c8c3c82a135fff5a006c2a5226af8af7543ea5da63ab89b8ec0c3675",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/missions.html",
+      "status": 200,
+      "bytes": 12335,
+      "sha256": "d4b95b7ec3e7db97e3d7306a721b50c9fd5bd45782d4d4f785b330ec333f7db9",
+      "expectedSha256": "d4b95b7ec3e7db97e3d7306a721b50c9fd5bd45782d4d4f785b330ec333f7db9",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/index.html",
+      "status": 200,
+      "bytes": 28351,
+      "sha256": "aed9f2717735ce824aa0ea50284ec3131c5d4bea9276a315f85f33e7298b0e93",
+      "expectedSha256": "aed9f2717735ce824aa0ea50284ec3131c5d4bea9276a315f85f33e7298b0e93",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/tools-register.js",
+      "status": 200,
+      "bytes": 33068,
+      "sha256": "17cb102d4756ea86db400a1ba082720644a2462f3d57b87030ec8e062fe21dd3",
+      "expectedSha256": "17cb102d4756ea86db400a1ba082720644a2462f3d57b87030ec8e062fe21dd3",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/house-register.js",
+      "status": 200,
+      "bytes": 46410,
+      "sha256": "8ddcd82436650b35036391fe480cba5caaee2547850f7207abe6aed30b4a6602",
+      "expectedSha256": "8ddcd82436650b35036391fe480cba5caaee2547850f7207abe6aed30b4a6602",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/family-register.js",
+      "status": 200,
+      "bytes": 23018,
+      "sha256": "fd6d66fe2909011c2aa46ac47644534225612220e0f4dbdded12f15a7a3b405e",
+      "expectedSha256": "fd6d66fe2909011c2aa46ac47644534225612220e0f4dbdded12f15a7a3b405e",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/family-engine.js",
+      "status": 200,
+      "bytes": 12432,
+      "sha256": "8e16805f3007647ef78fde3b21283ce8b81f8e34b61f8c0b0b34511347a93151",
+      "expectedSha256": "8e16805f3007647ef78fde3b21283ce8b81f8e34b61f8c0b0b34511347a93151",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/chrome.js",
+      "status": 200,
+      "bytes": 16124,
+      "sha256": "a5c4b5e6ffcae88890898a5d2ae7f384b28aa8fc1a8d6fc2310d9476b9524782",
+      "expectedSha256": "a5c4b5e6ffcae88890898a5d2ae7f384b28aa8fc1a8d6fc2310d9476b9524782",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/register-route-data.js",
+      "status": 200,
+      "bytes": 10195,
+      "sha256": "2a82165922bceb4d969e5daf39cd4d31d15a89b246ae9c818ebad549db4b40a0",
+      "expectedSha256": "2a82165922bceb4d969e5daf39cd4d31d15a89b246ae9c818ebad549db4b40a0",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/index.html",
+      "status": 200,
+      "bytes": 1235238,
+      "sha256": "9dad3e9c580bc5a885975b0eab9ee62ae19f54775cd589e6828563829d5bbde5",
+      "expectedSha256": "9dad3e9c580bc5a885975b0eab9ee62ae19f54775cd589e6828563829d5bbde5",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-v2.js",
+      "status": 200,
+      "bytes": 55184,
+      "sha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+      "expectedSha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v5-famille/family-modules.js",
+      "status": 200,
+      "bytes": 109102,
+      "sha256": "3ee24db4f9e9ed3afd889aae64df6e32438026353a5d4c5c5c586cb3d181df14",
+      "expectedSha256": "3ee24db4f9e9ed3afd889aae64df6e32438026353a5d4c5c5c586cb3d181df14",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/register.css",
+      "status": 200,
+      "bytes": 18317,
+      "sha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72",
+      "expectedSha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/register.js",
+      "status": 200,
+      "bytes": 9899,
+      "sha256": "475822ab3dbe1fa4dc06849af74bcb0987c14a59a88d740aaacb8c3a0187b042",
+      "expectedSha256": "475822ab3dbe1fa4dc06849af74bcb0987c14a59a88d740aaacb8c3a0187b042",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/register-routes.json",
+      "status": 200,
+      "bytes": 11837,
+      "sha256": "679dd1ea14a9262b7a682fe41bbfe1ba930e90ec2bdba5fa94ca5ac039cfd3a2",
+      "expectedSha256": "679dd1ea14a9262b7a682fe41bbfe1ba930e90ec2bdba5fa94ca5ac039cfd3a2",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/family.js",
+      "status": 200,
+      "bytes": 60850,
+      "sha256": "b5ae977bc97bab8b8a03a4013f4727a73a7207a2559a22c20e9f5d2f26861bce",
+      "expectedSha256": "b5ae977bc97bab8b8a03a4013f4727a73a7207a2559a22c20e9f5d2f26861bce",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/assets/archives/stitch22.png",
+      "status": 200,
+      "bytes": 1606674,
+      "sha256": "b85417c240b1fb4f02b2e20cddf589a747af596d63cb28ca6ddccec48a40f5b8",
+      "expectedSha256": "b85417c240b1fb4f02b2e20cddf589a747af596d63cb28ca6ddccec48a40f5b8",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/assets/notes-stitch23.png",
+      "status": 200,
+      "bytes": 1530898,
+      "sha256": "51372431f4b460278e9f287de40f4079dcfd26cd5e6a7fb53ee968548abc149d",
+      "expectedSha256": "51372431f4b460278e9f287de40f4079dcfd26cd5e6a7fb53ee968548abc149d",
+      "matches": true
+    },
+    {
+      "path": "essai-stitch-v7/assets/contacts/stitch24.png",
+      "status": 200,
+      "bytes": 1635715,
+      "sha256": "b6dcdc9a7765036fcb9ff38089032c4aac832165d0907fc883b8082f6d507cac",
+      "expectedSha256": "b6dcdc9a7765036fcb9ff38089032c4aac832165d0907fc883b8082f6d507cac",
+      "matches": true
+    }
+  ],
+  "allMatch": true
+}

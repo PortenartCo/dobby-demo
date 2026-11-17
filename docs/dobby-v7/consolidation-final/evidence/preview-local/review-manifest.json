@@ -2,13 +2,13 @@
   "sourceState": "committed",
   "sourceDirtyPaths": [],
   "version": "V7-CONSOLIDATED-CANDIDATE",
-  "sourceSha": "56cbaf5825dcb9c5a7b65eb956d37a3364b20435",
+  "sourceSha": "fb0a5a360d3dca87d5f26b4f90d0b1d616182648",
   "base": "6a6fcd9bcee522da7342de391e5c3d7bfe1955b3",
   "entry": "essai-stitch-v7/famille.html?client=A#settings",
-  "storagePrefix": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|client-{A|B}|",
+  "storagePrefix": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|client-{A|B}|",
   "realBackend": false,
   "demoMemberAssociation": "explicit-fictional-persona-only",
-  "configSha256": "7444026511b88a43df8ab3f62191f90f21d10b12e7d20b554d5522ac7e28d36f",
+  "configSha256": "55626ab1be78b97ee2350e507ec32a602eb8a0c39a41f75fb8ef21d6c64dc68f",
   "files": [
     {
       "path": ".nojekyll",
@@ -1561,8 +1561,8 @@
     },
     {
       "path": "essai-stitch-v7/register.css",
-      "sourceSha256": "1e36f1a20bfbf9decaf96f2c29f5b6808d15eb6b78d4d83fb1ce18af831bdee4",
-      "sha256": "1e36f1a20bfbf9decaf96f2c29f5b6808d15eb6b78d4d83fb1ce18af831bdee4",
+      "sourceSha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72",
+      "sha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72",
       "transformed": false
     },
     {
@@ -2599,7 +2599,7 @@
       "path": "family-config.js",
       "sourcePath": "scripts/review/family-config.js",
       "sourceSha256": "177ffd52e8aa35c70d907ec72e7509c597e2d7246d8572396a30a0d662375f96",
-      "sha256": "5d689d107471f7d43f286aeefbe6fd388aa3d81c813056082f6f8501636520be",
+      "sha256": "9213432c79dbe8dc025b6ef67f8a98b8b54464ace09e06085b2d21b45a195388",
       "transformed": true,
       "transforms": [
         {
@@ -2635,7 +2635,7 @@
         {
           "type": "namespace-substitution",
           "from": "dobby-review-v7-notes-stitch23-20261116|",
-          "to": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|",
+          "to": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|",
           "occurrences": 1
         },
         {
@@ -2662,7 +2662,7 @@
       "path": "global-demo.js",
       "sourcePath": "scripts/review/global-demo.js",
       "sourceSha256": "914fe8109f1505a27dc449b99dbc59c80d6e800b08f400c01aa38dbe7d783303",
-      "sha256": "d243dd91ba08f56f0a53fc2b2b091417e944e0fd0fca2bb31f54b64841e539e0",
+      "sha256": "61b857e95c38632edec1f844428b92f71d78361d6a18da19bf02629b373a6c78",
       "transformed": true,
       "transforms": [
         {
@@ -2680,7 +2680,7 @@
         {
           "type": "namespace-substitution",
           "from": "dobby-review-v7-notes-stitch23-20261116|",
-          "to": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|",
+          "to": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|",
           "occurrences": 1
         },
         {
@@ -2728,7 +2728,7 @@
       "path": "review-config.js",
       "sourcePath": "scripts/review/global-config.js",
       "sourceSha256": "082f0feff1f36159d00e85aaede40aab76aef62afa28b2703d3205950ebd38c3",
-      "sha256": "7444026511b88a43df8ab3f62191f90f21d10b12e7d20b554d5522ac7e28d36f",
+      "sha256": "55626ab1be78b97ee2350e507ec32a602eb8a0c39a41f75fb8ef21d6c64dc68f",
       "transformed": true,
       "transforms": [
         {
@@ -2746,7 +2746,7 @@
         {
           "type": "namespace-substitution",
           "from": "dobby-review-v7-notes-stitch23-20261116|",
-          "to": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|",
+          "to": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|",
           "occurrences": 2
         }
       ]
@@ -2761,12 +2761,12 @@
   ],
   "runtimeSha256": "ecef2aa48f35a98bcc44ae4af6413e06bd701e7874e5f84c21b42a1b4aa13748",
   "externalStitchMedia": "generic-inert-fallback-in-generated-copy-only",
-  "sharedFixtureKey": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|backend-v1",
+  "sharedFixtureKey": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|backend-v1",
   "simulatedOrigin": "https://dobby-global-demo.invalid",
   "simulation": "native-family-client/core/writers; browser-only HTTP fixture; same-browser A/B clients",
   "simulationRequires": "HTTPS or localhost; Web Locks, IndexedDB, localStorage",
   "schemaStatus": "simulated-only; grocery migration proposed-not-applied",
-  "fixtureSha256": "d243dd91ba08f56f0a53fc2b2b091417e944e0fd0fca2bb31f54b64841e539e0",
+  "fixtureSha256": "61b857e95c38632edec1f844428b92f71d78361d6a18da19bf02629b373a6c78",
   "builderSource": {
     "path": "scripts/build-dobby-consolidated-review.cjs",
     "sha256": "e83c98f9b04735c07490fdfc1d9bb4445df5e8c6c5d8c98a91c0b863ed2ce3f4"
@@ -2774,13 +2774,13 @@
   "publication": "new-directory-only; immutable-source-SHA URL required for hosted review",
   "readmeSha256": "61a3447ad0fa22ea0de160b3c9cffea1836e2e45148152d07b12834e127cadce",
   "familySource": "a28a1e74e6fd6fcb0db8b154002ce032ae10f130",
-  "selectedClientKey": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|selected-client",
-  "resetKey": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|reset-in-progress",
-  "resetChannel": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|reset",
-  "backendLock": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|backend-v1",
+  "selectedClientKey": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|selected-client",
+  "resetKey": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|reset-in-progress",
+  "resetChannel": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|reset",
+  "backendLock": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|backend-v1",
   "realAuth": false,
   "migrationsApplied": false,
-  "familyConfigSha256": "5d689d107471f7d43f286aeefbe6fd388aa3d81c813056082f6f8501636520be",
+  "familyConfigSha256": "9213432c79dbe8dc025b6ef67f8a98b8b54464ace09e06085b2d21b45a195388",
   "inheritedBuilders": [
     {
       "path": "scripts/build-dobby-notes-review.cjs",
@@ -2823,7 +2823,7 @@
   "status": "candidate",
   "completeSources": true,
   "deployment": false,
-  "storageNamespace": "dobby-review-v7-consolidated-candidate-56cbaf5825dcb9c5a7b65eb956d37a3364b20435|",
+  "storageNamespace": "dobby-review-v7-consolidated-candidate-fb0a5a360d3dca87d5f26b4f90d0b1d616182648|",
   "composition": {
     "status": "candidate",
     "completeSources": true,

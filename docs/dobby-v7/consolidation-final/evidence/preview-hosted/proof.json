@@ -1,8 +1,8 @@
 {
-  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-consolidated-final-review-20261116/",
-  "at": "2026-11-16T23:47:48.491Z",
-  "manifestSha256": "16275f4886e7e85602af5d7ba4954f823c027c7ac0e12f33bcd84720a4f52c1a",
-  "sourceSha": "56cbaf5825dcb9c5a7b65eb956d37a3364b20435",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-consolidated-final-review-20261116-r2/",
+  "at": "2026-11-17T00:06:28.127Z",
+  "manifestSha256": "0cce2d07ab50cbc4f434a15a2b4f66fba589be2c2244b0903a34fc2b36950165",
+  "sourceSha": "fb0a5a360d3dca87d5f26b4f90d0b1d616182648",
   "sourceState": "committed",
   "composition": {
     "status": "candidate",
@@ -46,8 +46,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-af9d3ae2-9ccf-4f17-8b06-4367a4e5399c",
-      "contactId": "local-1794872703046-2h72dnv",
+      "memoId": "memo-c816f9a6-b9c3-4bfc-ad0f-f765d735911e",
+      "contactId": "local-1794873823146-2gsb3mr",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -122,8 +122,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-3c597d17-1c6d-4301-8b88-332b01a8655b",
-      "contactId": "local-1794872752471-l86hh9l",
+      "memoId": "memo-7e45985c-1f54-41fb-b159-7e02115361d1",
+      "contactId": "local-1794873872642-hiwin20",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -198,8 +198,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-a435667d-f507-4035-a9b5-b94ffa9b068a",
-      "contactId": "local-1794872795771-qg5kpit",
+      "memoId": "memo-a17f70f6-409a-4c0c-8c21-cb3f10c50307",
+      "contactId": "local-1794873919191-ehb94xu",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -274,8 +274,8 @@
         "Courses",
         "Repas"
       ],
-      "memoId": "memo-465b00db-f9e2-40f5-81fd-ef702065f1c3",
-      "contactId": "local-1794872849167-tcujv3k",
+      "memoId": "memo-109ccbf1-dec5-45ec-bc96-b0233f129ee8",
+      "contactId": "local-1794873968638-s8hr3xg",
       "simulatedAB": true,
       "nativePermissions": {
         "canEdit": true,
@@ -1585,7 +1585,7 @@
     {
       "path": "essai-stitch-v7/register.css",
       "status": 200,
-      "sha256": "1e36f1a20bfbf9decaf96f2c29f5b6808d15eb6b78d4d83fb1ce18af831bdee4"
+      "sha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72"
     },
     {
       "path": "essai-stitch-v7/register.js",
@@ -2055,12 +2055,12 @@
     {
       "path": "family-config.js",
       "status": 200,
-      "sha256": "5d689d107471f7d43f286aeefbe6fd388aa3d81c813056082f6f8501636520be"
+      "sha256": "9213432c79dbe8dc025b6ef67f8a98b8b54464ace09e06085b2d21b45a195388"
     },
     {
       "path": "global-demo.js",
       "status": 200,
-      "sha256": "d243dd91ba08f56f0a53fc2b2b091417e944e0fd0fca2bb31f54b64841e539e0"
+      "sha256": "61b857e95c38632edec1f844428b92f71d78361d6a18da19bf02629b373a6c78"
     },
     {
       "path": "index.html",
@@ -2075,7 +2075,7 @@
     {
       "path": "review-config.js",
       "status": 200,
-      "sha256": "7444026511b88a43df8ab3f62191f90f21d10b12e7d20b554d5522ac7e28d36f"
+      "sha256": "55626ab1be78b97ee2350e507ec32a602eb8a0c39a41f75fb8ef21d6c64dc68f"
     },
     {
       "path": "review-runtime.js",

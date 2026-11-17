@@ -1,0 +1,84 @@
+✔ house/houseItems: status reaches second fixture and old peer omission cannot reactivate (15.858452ms)
+✔ recipes/customRecipes: status reaches second fixture and old peer omission cannot reactivate (6.857987ms)
+✔ family/famContacts: status reaches second fixture and old peer omission cannot reactivate (6.861051ms)
+✔ family/sharedFamilyNotes: status reaches second fixture and old peer omission cannot reactivate (5.629324ms)
+✔ contracts/contracts: status reaches second fixture and old peer omission cannot reactivate (17.076942ms)
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (18.659472ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (9.762297ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (3.433385ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (2.541882ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (13.276452ms)
+✔ failed native archive save rolls back derived task side effects as well as its source row (2.891405ms)
+✔ partial restores retain lifecycle, reject reactivation and refuse another household (3.958044ms)
+✔ archived contracts reject metadata and attachment mutations through their native writer (3.590227ms)
+✔ a contract archived during a pending binary write retains its original pieces and discards the staged file (3.007327ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1662.818874
+ARCHIVES_UI_PASS 320
+ARCHIVES_UI_PASS 390
+ARCHIVES_UI_PASS 768
+ARCHIVES_UI_PASS 1440
+ARCHIVES_SOURCES_PASS contacts local/shared-memos documents recipe planned references stale-confirmation and native backup/restore bytes
+ARCHIVES_REVIEW_PASS planned
+ARCHIVES_REVIEW_PASS instructions
+ARCHIVES_REVIEW_PASS isolation
+ARCHIVES_REVIEW_PASS selection
+ARCHIVES_REVIEW_PASS retired
+ARCHIVES_REVIEW_PASS maison
+ARCHIVES_REVIEW_PASS reactivated-isolation
+REGISTER_DOCUMENTS_SYNC_PASS 320
+REGISTER_DOCUMENTS_SYNC_PASS 390
+ARCHIVE_NATIVE_CASE after 320 final-contract
+ARCHIVE_NATIVE_CASE after 320 final-insurance
+ARCHIVE_NATIVE_CASE after 320 final-document
+ARCHIVE_NATIVE_CASE after 320 final-typed-contract
+ARCHIVE_NATIVE_CASE after 320 final-equipment
+ARCHIVE_NATIVE_CASE after 320 final-recipe
+ARCHIVE_NATIVE_CASE after 320 final-contact
+ARCHIVE_NATIVE_CASE after 320 final-local-note
+ARCHIVE_NATIVE_CASE after 320 final-shared-note
+ARCHIVES_NATIVE_CONSULTATION_PASS after 320
+ARCHIVE_NATIVE_CASE after 390 final-contract
+ARCHIVE_NATIVE_CASE after 390 final-insurance
+ARCHIVE_NATIVE_CASE after 390 final-document
+ARCHIVE_NATIVE_CASE after 390 final-typed-contract
+ARCHIVE_NATIVE_CASE after 390 final-equipment
+ARCHIVE_NATIVE_CASE after 390 final-recipe
+ARCHIVE_NATIVE_CASE after 390 final-contact
+ARCHIVE_NATIVE_CASE after 390 final-local-note
+ARCHIVE_NATIVE_CASE after 390 final-shared-note
+ARCHIVES_NATIVE_CONSULTATION_PASS after 390
+ARCHIVE_NATIVE_CASE after 768 final-contract
+ARCHIVE_NATIVE_CASE after 768 final-insurance
+ARCHIVE_NATIVE_CASE after 768 final-document
+ARCHIVE_NATIVE_CASE after 768 final-typed-contract
+ARCHIVE_NATIVE_CASE after 768 final-equipment
+ARCHIVE_NATIVE_CASE after 768 final-recipe
+ARCHIVE_NATIVE_CASE after 768 final-contact
+ARCHIVE_NATIVE_CASE after 768 final-local-note
+ARCHIVE_NATIVE_CASE after 768 final-shared-note
+ARCHIVES_NATIVE_CONSULTATION_PASS after 768
+ARCHIVE_NATIVE_CASE after 1440 final-contract
+ARCHIVE_NATIVE_CASE after 1440 final-insurance
+ARCHIVE_NATIVE_CASE after 1440 final-document
+ARCHIVE_NATIVE_CASE after 1440 final-typed-contract
+ARCHIVE_NATIVE_CASE after 1440 final-equipment
+ARCHIVE_NATIVE_CASE after 1440 final-recipe
+ARCHIVE_NATIVE_CASE after 1440 final-contact
+ARCHIVE_NATIVE_CASE after 1440 final-local-note
+ARCHIVE_NATIVE_CASE after 1440 final-shared-note
+ARCHIVES_NATIVE_CONSULTATION_PASS after 1440
+ARCHIVES_CONSULTATION_RACE_PASS pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-archive-during-binary-write
+ARCHIVES_CONSULTATION_RACE_PASS concurrent-binary-writer-retained
+ARCHIVES_CONSULTATION_RACE_PASS stale-restore-confirmation
+ARCHIVES_CONSULTATION_RACE_PASS denied-detail-restore
+ARCHIVES_CONSULTATION_RACE_PASS recipe-return-after-concurrent-restore
+ARCHIVES_ACCEPTANCE_PASS — local and HTTP fixtures; real family A/B deferred

@@ -1,0 +1,29 @@
+{
+  "oldSource": "56cbaf5825dcb9c5a7b65eb956d37a3364b20435",
+  "newSource": "fb0a5a360d3dca87d5f26b4f90d0b1d616182648",
+  "oldCount": 349,
+  "newCount": 349,
+  "identical": 345,
+  "changed": [
+    "essai-stitch-v7/register.css",
+    "family-config.js",
+    "global-demo.js",
+    "review-config.js"
+  ],
+  "added": [],
+  "removed": [],
+  "rebase": [
+    {
+      "path": "review-config.js",
+      "identicalAfterNamespaceSubstitution": true
+    },
+    {
+      "path": "family-config.js",
+      "identicalAfterNamespaceSubstitution": true
+    },
+    {
+      "path": "global-demo.js",
+      "identicalAfterNamespaceSubstitution": true
+    }
+  ]
+}

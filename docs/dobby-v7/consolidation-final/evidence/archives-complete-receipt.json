@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-16T23:58:34.057659+00:00",
+  "headAtCompletion": "fb0a5a360d3dca87d5f26b4f90d0b1d616182648",
+  "branch": "integration/dobby-v7-consolidated-20261116",
+  "applicationBaseline": "af015f8c334b67112ee197293611bdecc88d7905",
+  "runtimeChangesSinceBaseline": [
+    "essai-stitch-v7/register.css"
+  ],
+  "nonCssRuntimeChangesSinceBaseline": [],
+  "documentedCssOnlyChange": ".rg-settings-page .rg-menu-cards adds align-items:stretch; no JavaScript/native change",
+  "cssSha256": "7626fcbee33237a73d94cf03fcb48e65e21e91030974f64bad9ae0d26c7f3a72",
+  "testOnlyFixCommit": "fb0a5a36",
+  "fixedFile": "essai-stitch-v7/tests/archives-ui.cjs",
+  "fix": "settings -> backup card -> backup route -> Ouvrir les documents enregistrés; document-library assertions retained",
+  "redProof": "/workspace/scratch/archives-ui-settings-red.log",
+  "fourWidthGreenProof": "/workspace/scratch/archives-ui-settings-green.log",
+  "redExit": 1,
+  "fourWidthGreenExit": 0,
+  "orchestrator": "essai-stitch-v7/tests/archives-ci.cjs",
+  "orchestratorExit": 0,
+  "finalAcceptanceMarker": true,
+  "testOrigin": "http://127.0.0.1:8876",
+  "counts": {
+    "writerTests": 14,
+    "writerPass": 14,
+    "writerFail": 0,
+    "uiWidths": 4,
+    "sourcesPass": 1,
+    "reviewCases": 7,
+    "documentSyncWidths": 2,
+    "nativeCases": 36,
+    "nativeWidths": 4,
+    "raceCases": 7
+  },
+  "nativeAllDataConserved": true,
+  "testAssertionsRewrittenByPreload": false,
+  "preloadOnlyEvidenceDestinations": true,
+  "realFamilyAccountsTested": false,
+  "remoteMutationsByThisAgent": false,
+  "fullLogSha256": "02d19f5826cc8b37ccaa100f6ccf49d47f8ee311e7c1fc03dd5373727d11b573"
+}

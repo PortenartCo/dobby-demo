@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "base": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-consolidated-final-review-20261116-r2/",
+  "width": 1440,
+  "cards": [
+    {
+      "view": "settings-magic",
+      "width": 728,
+      "align": "stretch"
+    },
+    {
+      "view": "members",
+      "width": 728,
+      "align": "stretch"
+    },
+    {
+      "view": "backup",
+      "width": 728,
+      "align": "stretch"
+    }
+  ]
+}
