@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process';
+import { spawnSync, spawn } from 'node:child_process';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
@@ -64,8 +64,8 @@ export function clientDenied(sql) {
  assert.notEqual(result.status,0);
  assert.match(result.stderr,/ERROR:  42501\b/);
 }
-export function businessSnapshot() {
- return run(`SELECT jsonb_build_object(
+export function businessSnapshotSQL() {
+ return `SELECT jsonb_build_object(
  'rows',(SELECT jsonb_object_agg(name,rows) FROM (
  SELECT 'users' name,jsonb_agg(to_jsonb(t) ORDER BY id) rows FROM auth.users t UNION ALL
  SELECT 'sessions',jsonb_agg(to_jsonb(t) ORDER BY id) FROM auth.sessions t UNION ALL
@@ -77,7 +77,18 @@ export function businessSnapshot() {
  'acl',(SELECT jsonb_agg(jsonb_build_array(c.relname,c.relowner,c.relacl,c.relrowsecurity,c.relforcerowsecurity) ORDER BY c.relname)
  FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname IN ('auth','public','dobby_v7_private') AND c.relkind='r'),
  'functions',(SELECT jsonb_agg(jsonb_build_array(p.oid::regprocedure::text,pg_get_functiondef(p.oid),p.proacl) ORDER BY p.oid)
- FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN ('auth','public','dobby_v7_private') AND p.proname NOT LIKE 'dobby_access_%'));`);
+ FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN ('auth','public','dobby_v7_private') AND p.proname NOT LIKE 'dobby_access_%'));`;
+}
+export function businessSnapshot() { return run(businessSnapshotSQL()); }
+export function interactive() {
+ const child=spawn('docker',['--host','unix:///var/run/docker.sock','exec','-i',container,'psql','-X','-qAt','-v','ON_ERROR_STOP=1','-U','dobby_local_root','-d','dobby_access_lot1'],{env:dockerEnv});
+ let output='',errors='';
+ child.stdout.on('data',x=>{output+=x;});child.stderr.on('data',x=>{errors+=x;});
+ const finished=new Promise((resolve,reject)=>{child.once('error',reject);child.once('close',code=>resolve({code,output,errors}));});
+ return {send(sql){child.stdin.write(sql+'\n');},async waitFor(marker){
+  const deadline=Date.now()+10000;
+  while(!output.includes(marker)){assert.equal(child.exitCode,null,errors);assert.ok(Date.now()<deadline,'SQL marker timeout');await new Promise(r=>setTimeout(r,20));}
+ },async finish(sql='ROLLBACK;'){if(!child.stdin.destroyed){child.stdin.end(sql+'\n');}return finished;}};
 }
 export function start() {
  must(docker(['run', '--pull=never', '--rm', '-d', '--name', container, '--label', 'dobby.private-access-test=lot1',
@@ -110,6 +121,8 @@ export function start() {
  household_id uuid NOT NULL, member_id text NOT NULL, UNIQUE(household_id,member_id),
  FOREIGN KEY(household_id,user_id) REFERENCES public.dobby_v2_memberships(household_id,user_id));
  ALTER TABLE dobby_v7_private.account_links ENABLE ROW LEVEL SECURITY;
+ ALTER TABLE dobby_v7_private.account_links FORCE ROW LEVEL SECURITY;
+ CREATE POLICY v7_writer ON dobby_v7_private.account_links TO dobby_v7_writer USING(true) WITH CHECK(true);
  CREATE FUNCTION public.dobby_lot1_fixture_sentinel() RETURNS text LANGUAGE sql SET search_path='' AS $$ SELECT 'unchanged'::text $$;
  RESET ROLE;
  INSERT INTO auth.users SELECT (${q(id(1).slice(0,-1))}||i::text)::uuid, 'fixture-'||i||'@example.invalid', now() FROM generate_series(1,6) i;

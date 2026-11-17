@@ -1,6 +1,6 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { start, stop, run, scalar, exercise, denied, clientDenied, as, q, id, json, manifest, businessSnapshot } from './local-db.mjs';
+import { start, stop, run, scalar, exercise, denied, clientDenied, as, q, id, json, manifest, businessSnapshot, businessSnapshotSQL } from './local-db.mjs';
 
 let db;
 before(() => { db = start(); });
@@ -25,7 +25,7 @@ test('T10: controlled bootstrap preserves the two canonical identities and all b
  assert.equal(output[0],'2');
  assert.deepEqual(JSON.parse(output.at(-1)),{protocol:1,status:'active',isOwner:true,canCreateHousehold:false,revision:1});
  assert.deepEqual(JSON.parse(scalar(context(2))),{protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1});
- assert.equal(businessSnapshot(),db.baseline);
+ assert.equal(scalar(`RESET ROLE; ${businessSnapshotSQL()}`),db.baseline,'Business state must be unchanged while bootstrap is still in effect');
 });
 test('T02: every other existing Auth account stays unapproved', () => {
  for(const n of [3,4,5,6]) assert.equal(JSON.parse(scalar(context(n))).status,'unapproved');
@@ -49,8 +49,14 @@ test('T12: browser roles cannot select/insert/update/delete private metadata or 
  denied(`${as(2)} SELECT dobby_access_private.enable_session_guard();`);
 });
 test('T12: bootstrap apply and session maintenance cannot be called by a direct non-superuser client', () => {
- clientDenied(`BEGIN; SELECT dobby_access_private.bootstrap_apply(${json(manifest)},${q(id(902))}); ROLLBACK;`);
+ clientDenied(`BEGIN; SELECT dobby_access_private.bootstrap(${json(manifest)},${q(id(902))}); ROLLBACK;`);
  clientDenied('SELECT dobby_access_private.enable_session_guard();');
+});
+test('T10: no installer-callable apply path can omit canonical validation', () => {
+ denied(`SET LOCAL ROLE postgres; SELECT dobby_access_private.bootstrap_apply(${json({ownerUserId:id(1),preservedAccounts:[]})},${q(id(902))});`,'42883',{seed:false});
+});
+test('T10: FORCE RLS blocks bootstrap when the installer lacks pre-existing canonical visibility', () => {
+ denied(`ALTER ROLE postgres NOBYPASSRLS; SET LOCAL ROLE postgres; SELECT dobby_access_private.bootstrap(${json(manifest)},${q(id(902))});`,'22023',{seed:false});
 });
 test('T01/T12: application owner never receives other household payload privileges', () => {
  assert.equal(scalar(`${as(1)} SELECT count(*) FROM public.dobby_v2_modules WHERE household_id=${q(id(102))};`),'0');
@@ -66,6 +72,7 @@ test('T12: owner suspension and owner registry deletion/reassignment are forbidd
  for(const sql of [`UPDATE dobby_access_private.settings SET owner_user_id=${q(id(2))}`,'DELETE FROM dobby_access_private.settings',
   `UPDATE dobby_access_private.authorizations SET status='suspended' WHERE user_id=${q(id(1))}`,
   `DELETE FROM dobby_access_private.authorizations WHERE user_id=${q(id(1))}`,'TRUNCATE dobby_access_private.settings','TRUNCATE dobby_access_private.authorizations CASCADE']) denied(sql+';');
+ denied(`UPDATE dobby_access_private.authorizations SET sessions_valid_after=now()+interval '100 years' WHERE user_id=${q(id(1))};`);
 });
 test('suspension needs confirmation and the current revision', () => {
  denied(`${as(1)} ${change(2,'suspended',1,910,false)}`,'22023');
@@ -88,14 +95,14 @@ test('suspension revokes only pending admissions of the affected generation and 
  (SELECT state FROM dobby_access_private.admissions WHERE id=${q(id(802))}));`);
  assert.deepEqual(JSON.parse(output),[1,false,'revoked','accepted']);
 });
-test('reactivation rejects pre-suspension and during-suspension sessions, accepts only a new one', () => {
+test('reactivation remains closed until a separately committed session boundary', () => {
  const output=exercise(`${as(1)} ${change(2,'suspended')} RESET ROLE;
  INSERT INTO auth.sessions(id,user_id,created_at) VALUES(${q(id(2002))},${q(id(2))},clock_timestamp());
  ${as(1)} ${change(2,'active',2,911)} ${as(2)} SELECT dobby_access_private.is_active();
  ${as(2,2002)} SELECT dobby_access_private.is_active(); RESET ROLE;
  INSERT INTO auth.sessions(id,user_id,created_at) VALUES(${q(id(3002))},${q(id(2))},clock_timestamp()+interval '1 microsecond');
  ${as(2,3002)} SELECT dobby_access_private.is_active();`);
- assert.deepEqual(output.slice(-3),['f','f','t']);
+ assert.deepEqual(output.slice(-3),['f','f','f']);
 });
 test('refresh claims cannot rescue an old or deleted session', () => {
  assert.equal(scalar(`${as(1)} ${change(2,'suspended')} ${change(2,'active',2,911)} ${as(2,1002,{iat:9999999999})} SELECT dobby_access_private.is_active();`),'f');
@@ -115,6 +122,19 @@ test('decision history is append-only even through a direct privileged write', (
 test('session permission activation fails closed without exact managed-schema column grants', () => {
  denied('SET LOCAL ROLE postgres; SELECT dobby_access_private.enable_session_guard();','42501',{sessions:false});
  assert.equal(scalar(`${as(1)} SELECT dobby_access_private.is_active();`,{sessions:false}),'f');
+});
+test('session readiness rejects excessive Auth columns, table privileges and writes', () => {
+ for(const grant of ['GRANT SELECT ON auth.sessions','GRANT SELECT(refresh_token_hash) ON auth.sessions',
+  'GRANT UPDATE(user_id) ON auth.sessions','GRANT SELECT(email) ON auth.users','GRANT INSERT ON auth.sessions']) {
+  denied(`SET LOCAL ROLE supabase_auth_admin; ${grant} TO dobby_access_session_reader; RESET ROLE;
+  SET LOCAL ROLE postgres; SELECT dobby_access_private.enable_session_guard();`);
+ }
+});
+test('a suspended context reveals no status or revision for an invalid session', () => {
+ for(const sid of [1001,9999]) {
+  const value=JSON.parse(scalar(`${as(1)} ${change(2,'suspended')} ${as(2,sid)} SELECT public.dobby_access_context();`));
+  assert.equal(value.status,'unapproved');assert.equal(value.revision,0);
+ }
 });
 test('session reader can read no refresh token or Auth email and cannot write Auth', () => {
  assert.equal(scalar(`SELECT has_column_privilege('dobby_access_session_reader','auth.sessions','refresh_token_hash','SELECT')

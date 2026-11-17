@@ -20,6 +20,12 @@ export interface DobbyAccessStatusResult {
  status: 'active' | 'suspended';
  revision: number;
  replayed: boolean;
+ /** True after phase 1: commit, then call finalize in a separate transaction. */
+ sessionBoundaryPending: boolean;
+}
+export interface DobbyFinalizeReactivationRequest {
+ p_user_id: string;
+ p_expected_revision: number;
 }
 /** Privileged bootstrap input. Supply privately, never save a real instance in Git. */
 export interface DobbyBootstrapManifest {

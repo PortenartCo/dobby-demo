@@ -1,11 +1,14 @@
 -- Entirely fictional LOCAL model. No live Auth rows or private function sources.
-CREATE ROLE postgres LOGIN NOSUPERUSER NOCREATEDB CREATEROLE NOBYPASSRLS;
+-- Existing public family test models the hosted installer as NOSUPERUSER with
+-- BYPASSRLS. This is a fixture assumption, NEVER a role change in the migration.
+CREATE ROLE postgres LOGIN NOSUPERUSER NOCREATEDB CREATEROLE BYPASSRLS;
 CREATE ROLE anon NOLOGIN;
 CREATE ROLE authenticated NOLOGIN;
 CREATE ROLE dobby_fixture_client LOGIN NOINHERIT NOSUPERUSER NOCREATEROLE NOBYPASSRLS;
 GRANT authenticated TO dobby_fixture_client WITH INHERIT FALSE, SET TRUE;
 CREATE ROLE service_role NOLOGIN BYPASSRLS;
 CREATE ROLE supabase_auth_admin NOLOGIN;
+CREATE ROLE dobby_v7_writer NOLOGIN NOINHERIT NOBYPASSRLS;
 GRANT CREATE ON DATABASE dobby_access_lot1 TO postgres;
 ALTER DATABASE dobby_access_lot1 OWNER TO postgres;
 GRANT USAGE, CREATE ON SCHEMA public TO postgres;

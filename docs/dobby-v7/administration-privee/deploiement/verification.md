@@ -12,7 +12,7 @@ git diff --check
 
 Le téléchargement d’image ne contacte aucun service DOBBY. Le runner utilise ensuite `--pull=never`, un conteneur neuf isolé, et refuse ports et bind mounts. Il ne réutilise ni ne réinitialise de base existante. Il détruit uniquement le conteneur qu’il a créé. Toutes les cases de test sont annulées ; les grants du propriétaire Auth fictif font partie de la préparation locale, jamais de la migration candidate.
 
-Résultats de référence de cette mission : **23 tests DB et 444 tests natifs réussis**, zéro échec/omission. La vérification de syntaxe du contrat est locale. Voir les [limites exactes](../lot-1/RAPPORT.md) : pas d’Auth HTTP, de JWT cryptographique, de Storage physique, de fonctions privées réelles ou de comptes réels certifiés.
+Résultats de référence de cette mission : **28 tests DB et 444 tests natifs réussis**, zéro échec/omission. La suite DB inclut une réactivation avec deux connexions et une session créée avant le commit. La vérification de syntaxe du contrat est locale. Voir les [limites exactes](../lot-1/RAPPORT.md) : pas d’Auth HTTP, de JWT cryptographique, de Storage physique, de fonctions privées réelles ou de comptes réels certifiés.
 
 À contrôler après toute modification :
 
@@ -20,7 +20,7 @@ Résultats de référence de cette mission : **23 tests DB et 444 tests natifs r
 - `assert_owner()` ne dépend que du registre et d’une session autorisée ; aucun e-mail, profil familial ou `user_metadata` ne peut accorder ce droit.
 - Les fonctions privées d’amorçage/activation ne sont pas exécutables par le client non superuser ; les tables ne lui sont pas accessibles et les rôles techniques restent fermés.
 - Les deux identités fictives conservent leurs liens TEXT, foyers, profils, révisions, crédits et droits métier précédents. Le propriétaire applicatif ne gagne aucun contenu H2.
-- Suspension/réactivation et historique sont atomiques ; ancienne session refusée même après refresh simulé, nouvelle session requise après réactivation ; admission révoquée non restaurée.
+- Suspension et historique sont atomiques ; ancienne session refusée même après refresh simulé. Réactivation en deux phases : après le commit de `dobby_access_set_status`, `sessionBoundaryPending=true` interdit l’usage. `dobby_access_finalize_reactivation(user,revision)` dans une autre transaction pose la borne, journalise et ferme ce drapeau. Nouvelle session requise après cette borne ; finalisation rejouable sans la déplacer, admission révoquée non restaurée.
 - Le diff n’ajoute que la migration candidate, le contrat, les tests et la documentation du Lot 1. Aucune migration n’est exécutée sur un service distant.
 
 Les vérifications futures de catalogue/API réelles devront être autorisées, documentées séparément et exécutées sur le seul environnement personnel désigné. Ne pas transformer les PASS locaux de ce lot en PASS globaux T01/T02/T10/T12.

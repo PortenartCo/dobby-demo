@@ -46,6 +46,9 @@ CREATE TABLE dobby_access_private.authorizations(
  generation bigint NOT NULL DEFAULT 0 CHECK(generation BETWEEN 0 AND 9007199254740990),
  revision bigint NOT NULL DEFAULT 1 CHECK(revision BETWEEN 1 AND 9007199254740990),
  sessions_valid_after timestamptz,
+ session_boundary_pending boolean NOT NULL DEFAULT false,
+ reactivation_xid xid8,
+ CHECK(NOT session_boundary_pending OR (status='active' AND reactivation_xid IS NOT NULL)),
  updated_at timestamptz NOT NULL DEFAULT clock_timestamp()
 );
 CREATE TABLE dobby_access_private.admissions(
@@ -75,7 +78,7 @@ CREATE TABLE dobby_access_private.decisions(
  actor_user_id uuid NOT NULL REFERENCES auth.users(id),
  target_user_id uuid REFERENCES auth.users(id),
  admission_id uuid REFERENCES dobby_access_private.admissions(id),
- action text NOT NULL CHECK(action IN ('bootstrap','suspend','reactivate','approve','reject','revoke','accept')),
+ action text NOT NULL CHECK(action IN ('bootstrap','suspend','reactivate','session-boundary','approve','reject','revoke','accept')),
  before_status text CHECK(before_status IN ('active','suspended')),
  after_status text CHECK(after_status IN ('active','suspended')),
  authorization_revision bigint,
@@ -133,7 +136,7 @@ DECLARE who jsonb:=dobby_access_private.request_identity(); a dobby_access_priva
 BEGIN
  IF who IS NULL OR NOT EXISTS(SELECT 1 FROM dobby_access_private.settings WHERE singleton AND session_guard_ready) THEN RETURN false; END IF;
  SELECT * INTO a FROM dobby_access_private.authorizations WHERE user_id=(who->>'userId')::uuid;
- IF NOT FOUND OR a.status<>'active' THEN RETURN false; END IF;
+ IF NOT FOUND OR a.status<>'active' OR a.session_boundary_pending THEN RETURN false; END IF;
  RETURN dobby_access_private.session_is_live(a.user_id,(who->>'sessionId')::uuid,a.sessions_valid_after);
 EXCEPTION WHEN insufficient_privilege OR undefined_column OR undefined_table THEN RETURN false;
 END $$;
@@ -164,6 +167,10 @@ DECLARE who jsonb:=dobby_access_private.request_identity(); a dobby_access_priva
 BEGIN
  IF who IS NOT NULL THEN SELECT * INTO a FROM dobby_access_private.authorizations WHERE user_id=(who->>'userId')::uuid; END IF;
  IF a.user_id IS NOT NULL THEN
+  IF NOT EXISTS(SELECT 1 FROM dobby_access_private.settings WHERE singleton AND session_guard_ready)
+   OR NOT dobby_access_private.session_is_live(a.user_id,(who->>'sessionId')::uuid,a.sessions_valid_after) THEN
+   RETURN jsonb_build_object('protocol',1,'status','unapproved','isOwner',false,'canCreateHousehold',false,'revision',0);
+  END IF;
   IF a.status='suspended' THEN state:='suspended';
   ELSIF dobby_access_private.is_active() THEN
    active:=true; state:='active';
@@ -173,6 +180,8 @@ BEGIN
  RETURN jsonb_build_object('protocol',1,'status',state,'isOwner',coalesce(owner,false),
   'canCreateHousehold',active AND coalesce(a.can_create_household,false),
   'revision',CASE WHEN active OR state='suspended' THEN a.revision ELSE 0 END);
+EXCEPTION WHEN insufficient_privilege OR undefined_column OR undefined_table THEN
+ RETURN jsonb_build_object('protocol',1,'status','unapproved','isOwner',false,'canCreateHousehold',false,'revision',0);
 END $$;
 
 CREATE FUNCTION dobby_access_private.protect_owner() RETURNS trigger
@@ -192,7 +201,8 @@ BEGIN
   IF TG_OP='UPDATE' AND NEW.user_id IS DISTINCT FROM OLD.user_id THEN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Authorization identity is immutable';
   END IF;
-  IF OLD.user_id=owner_id AND (TG_OP='DELETE' OR NEW.status<>'active') THEN
+  IF OLD.user_id=owner_id AND (TG_OP='DELETE' OR NEW.status<>'active'
+   OR NEW.sessions_valid_after IS NOT NULL OR NEW.session_boundary_pending OR NEW.reactivation_xid IS NOT NULL) THEN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Owner cannot be removed or suspended';
   END IF;
  END IF;
@@ -232,14 +242,15 @@ BEGIN
  SELECT * INTO prior FROM dobby_access_private.decisions WHERE actor_user_id=actor AND operation_id=p_operation_id;
  IF FOUND THEN
   IF prior.request_digest IS DISTINCT FROM digest THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Operation reused with different request'; END IF;
-  RETURN jsonb_build_object('status',a.status,'revision',a.revision,'replayed',true);
+  RETURN jsonb_build_object('status',a.status,'revision',a.revision,'replayed',true,'sessionBoundaryPending',a.session_boundary_pending);
  END IF;
  IF a.revision<>p_expected_revision THEN RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='Access revision conflict'; END IF;
  IF a.status=p_status THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Actual status transition required'; END IF;
  UPDATE dobby_access_private.authorizations SET status=p_status,revision=revision+1,
   generation=generation+CASE WHEN p_status='suspended' THEN 1 ELSE 0 END,
   can_create_household=false,
-  sessions_valid_after=CASE WHEN p_status='active' THEN clock_timestamp() ELSE sessions_valid_after END,
+  session_boundary_pending=(p_status='active'),
+  reactivation_xid=CASE WHEN p_status='active' THEN pg_current_xact_id() ELSE NULL END,
   updated_at=clock_timestamp() WHERE user_id=p_user_id;
  IF p_status='suspended' THEN
   UPDATE dobby_access_private.admissions SET state='revoked',updated_at=clock_timestamp()
@@ -249,36 +260,46 @@ BEGIN
   authorization_revision,operation_id,request_digest)
  VALUES(actor,p_user_id,CASE WHEN p_status='suspended' THEN 'suspend' ELSE 'reactivate' END,
   a.status,p_status,a.revision+1,p_operation_id,digest);
- RETURN jsonb_build_object('status',p_status,'revision',a.revision+1,'replayed',false);
+ RETURN jsonb_build_object('status',p_status,'revision',a.revision+1,'replayed',false,'sessionBoundaryPending',p_status='active');
+END $$;
+
+-- Phase 1 commits status=active but remains closed. Phase 2 must run after that
+-- transaction: the row lock waits for its commit and the xid check rejects a
+-- same-transaction shortcut. This cutoff cannot predate reactivation's commit.
+CREATE FUNCTION public.dobby_access_finalize_reactivation(p_user_id uuid,p_expected_revision bigint)
+RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
+DECLARE actor uuid:=dobby_access_private.assert_owner(); a dobby_access_private.authorizations%ROWTYPE;
+BEGIN
+ IF p_user_id IS NULL OR p_expected_revision IS NULL THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Target and revision required'; END IF;
+ IF EXISTS(SELECT 1 FROM dobby_access_private.settings WHERE owner_user_id=p_user_id) THEN
+  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Owner cannot be a reactivation target';
+ END IF;
+ SELECT * INTO a FROM dobby_access_private.authorizations WHERE user_id=p_user_id FOR UPDATE;
+ IF NOT FOUND OR a.status<>'active' THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Active reactivation target required'; END IF;
+ IF a.revision<>p_expected_revision THEN RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='Access revision conflict'; END IF;
+ IF NOT a.session_boundary_pending THEN
+  RETURN jsonb_build_object('status',a.status,'revision',a.revision,'replayed',true,'sessionBoundaryPending',false);
+ END IF;
+ IF a.reactivation_xid=pg_current_xact_id() THEN
+  RAISE EXCEPTION USING ERRCODE='55000',MESSAGE='Reactivation must commit before the session boundary';
+ END IF;
+ UPDATE dobby_access_private.authorizations SET sessions_valid_after=clock_timestamp(),
+  session_boundary_pending=false,reactivation_xid=NULL,updated_at=clock_timestamp() WHERE user_id=p_user_id;
+ INSERT INTO dobby_access_private.decisions(actor_user_id,target_user_id,action,before_status,after_status,
+  authorization_revision,operation_id,request_digest)
+ VALUES(actor,p_user_id,'session-boundary','active','active',a.revision,gen_random_uuid(),
+  sha256(convert_to(jsonb_build_object('target',p_user_id,'revision',a.revision,'action','session-boundary')::text,'UTF8')));
+ RETURN jsonb_build_object('status','active','revision',a.revision,'replayed',false,'sessionBoundaryPending',false);
 END $$;
 
 -- Only the verified installer may invoke these maintenance functions. The
 -- INVOKER validator reads canonical metadata with its pre-existing privileges;
 -- the runtime writer receives no family, Storage or auth.users SELECT grant.
-CREATE FUNCTION dobby_access_private.bootstrap_apply(p_manifest jsonb,p_operation_id uuid) RETURNS void
-LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
-DECLARE owner_id uuid:=(p_manifest->>'ownerUserId')::uuid; item jsonb;
-BEGIN
- PERFORM pg_advisory_xact_lock(hashtextextended('dobby-access-bootstrap',0));
- IF EXISTS(SELECT 1 FROM dobby_access_private.settings) OR EXISTS(SELECT 1 FROM dobby_access_private.authorizations)
-  OR EXISTS(SELECT 1 FROM dobby_access_private.decisions) OR EXISTS(SELECT 1 FROM dobby_access_private.admissions) THEN
-  RAISE EXCEPTION USING ERRCODE='55000',MESSAGE='Bootstrap already performed or registry not empty';
- END IF;
- FOR item IN SELECT value FROM jsonb_array_elements(p_manifest->'preservedAccounts') LOOP
-  INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by)
-   VALUES((item->>'userId')::uuid,'active',owner_id);
- END LOOP;
- IF NOT EXISTS(SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=owner_id) THEN
-  INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by) VALUES(owner_id,'active',owner_id);
- END IF;
- INSERT INTO dobby_access_private.settings(owner_user_id) VALUES(owner_id);
- INSERT INTO dobby_access_private.decisions(actor_user_id,target_user_id,action,after_status,authorization_revision,operation_id,request_digest)
- VALUES(owner_id,owner_id,'bootstrap','active',1,p_operation_id,sha256(convert_to(p_manifest::text,'UTF8')));
-END $$;
 CREATE FUNCTION dobby_access_private.bootstrap(p_manifest jsonb,p_operation_id uuid) RETURNS void
 LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
 DECLARE item jsonb; owner_id uuid; u uuid; h uuid; m text;
 BEGIN
+ PERFORM pg_advisory_xact_lock(hashtextextended('dobby-access-bootstrap',0));
  IF p_operation_id IS NULL OR jsonb_typeof(p_manifest) IS DISTINCT FROM 'object'
   OR (SELECT count(*) FROM jsonb_object_keys(p_manifest))<>2
   OR jsonb_typeof(p_manifest->'ownerUserId') IS DISTINCT FROM 'string'
@@ -308,13 +329,26 @@ BEGIN
    RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Ambiguous or changed canonical mapping';
   END IF;
  END LOOP;
- PERFORM dobby_access_private.bootstrap_apply(p_manifest,p_operation_id);
+ IF EXISTS(SELECT 1 FROM dobby_access_private.settings) OR EXISTS(SELECT 1 FROM dobby_access_private.authorizations)
+  OR EXISTS(SELECT 1 FROM dobby_access_private.decisions) OR EXISTS(SELECT 1 FROM dobby_access_private.admissions) THEN
+  RAISE EXCEPTION USING ERRCODE='55000',MESSAGE='Bootstrap already performed or registry not empty';
+ END IF;
+ FOR item IN SELECT value FROM jsonb_array_elements(p_manifest->'preservedAccounts') LOOP
+  INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by)
+   VALUES((item->>'userId')::uuid,'active',owner_id);
+ END LOOP;
+ IF NOT EXISTS(SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=owner_id) THEN
+  INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by) VALUES(owner_id,'active',owner_id);
+ END IF;
+ INSERT INTO dobby_access_private.settings(owner_user_id) VALUES(owner_id);
+ INSERT INTO dobby_access_private.decisions(actor_user_id,target_user_id,action,after_status,authorization_revision,operation_id,request_digest)
+ VALUES(owner_id,owner_id,'bootstrap','active',1,p_operation_id,sha256(convert_to(p_manifest::text,'UTF8')));
 EXCEPTION WHEN invalid_text_representation THEN
  RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Malformed bootstrap identity';
 END $$;
 CREATE FUNCTION dobby_access_private.enable_session_guard() RETURNS void
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
-DECLARE col text; sessions_oid oid;
+DECLARE col text; sessions_oid oid; rel record; attr record;
 BEGIN
  IF NOT has_schema_privilege('dobby_access_session_reader','auth','USAGE') THEN
   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Managed-schema USAGE not available; remain closed';
@@ -322,6 +356,24 @@ BEGIN
  SELECT c.oid INTO sessions_oid FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
   WHERE n.nspname='auth' AND c.relname='sessions' AND c.relkind='r';
  IF sessions_oid IS NULL THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Session relation unavailable; remain closed'; END IF;
+ IF EXISTS(SELECT 1 FROM pg_roles WHERE rolname='dobby_access_session_reader'
+  AND (rolcanlogin OR rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication))
+  OR has_schema_privilege('dobby_access_session_reader','auth','CREATE') THEN
+  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Session reader role is too privileged';
+ END IF;
+ FOR rel IN SELECT c.oid FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+  WHERE n.nspname='auth' AND c.relkind IN ('r','p','v','m','f') LOOP
+  IF has_table_privilege('dobby_access_session_reader',rel.oid,'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') THEN
+   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Excess table privileges on managed Auth relation';
+  END IF;
+  FOR attr IN SELECT attname FROM pg_attribute WHERE attrelid=rel.oid AND attnum>0 AND NOT attisdropped LOOP
+   IF has_column_privilege('dobby_access_session_reader',rel.oid,attr.attname,'INSERT,UPDATE,REFERENCES')
+    OR (has_column_privilege('dobby_access_session_reader',rel.oid,attr.attname,'SELECT')
+     AND (rel.oid<>sessions_oid OR attr.attname NOT IN ('id','user_id','created_at','not_after'))) THEN
+    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Excess column privileges on managed Auth relation';
+   END IF;
+  END LOOP;
+ END LOOP;
  FOREACH col IN ARRAY ARRAY['id','user_id','created_at','not_after'] LOOP
   IF NOT has_column_privilege('dobby_access_session_reader',sessions_oid,col,'SELECT') THEN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Narrow session column grants not available; remain closed';
@@ -348,12 +400,13 @@ BEGIN
 END $functions$;
 ALTER FUNCTION public.dobby_access_context() OWNER TO dobby_access_writer;
 ALTER FUNCTION public.dobby_access_set_status(uuid,text,bigint,uuid,boolean) OWNER TO dobby_access_writer;
-REVOKE ALL ON FUNCTION public.dobby_access_context(),public.dobby_access_set_status(uuid,text,bigint,uuid,boolean) FROM PUBLIC,anon,authenticated,service_role;
+ALTER FUNCTION public.dobby_access_finalize_reactivation(uuid,bigint) OWNER TO dobby_access_writer;
+REVOKE ALL ON FUNCTION public.dobby_access_context(),public.dobby_access_set_status(uuid,text,bigint,uuid,boolean),public.dobby_access_finalize_reactivation(uuid,bigint) FROM PUBLIC,anon,authenticated,service_role;
 GRANT EXECUTE ON FUNCTION public.dobby_access_context() TO anon,authenticated;
-GRANT EXECUTE ON FUNCTION public.dobby_access_set_status(uuid,text,bigint,uuid,boolean) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.dobby_access_set_status(uuid,text,bigint,uuid,boolean),public.dobby_access_finalize_reactivation(uuid,bigint) TO authenticated;
 GRANT USAGE ON SCHEMA dobby_access_private TO anon,authenticated;
 GRANT EXECUTE ON FUNCTION dobby_access_private.is_active(),dobby_access_private.assert_active(),dobby_access_private.assert_owner() TO authenticated;
-GRANT EXECUTE ON FUNCTION dobby_access_private.bootstrap_apply(jsonb,uuid),dobby_access_private.enable_session_guard() TO postgres;
+GRANT EXECUTE ON FUNCTION dobby_access_private.enable_session_guard() TO postgres;
 REVOKE CREATE ON SCHEMA public,dobby_access_private FROM dobby_access_writer;
 REVOKE CREATE ON SCHEMA dobby_access_private FROM dobby_access_session_reader;
 -- Keep only ADMIN maintenance, never runtime inheritance or SET ROLE.

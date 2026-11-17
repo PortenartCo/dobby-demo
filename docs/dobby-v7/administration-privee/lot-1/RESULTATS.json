@@ -4,7 +4,7 @@
   "node": "v24.19.0",
   "supabaseCli": "3.2.0 (migration generation only)",
   "foundationTests": {
-    "pass": 23,
+    "pass": 28,
     "fail": 0,
     "skipped": 0
   },
@@ -17,6 +17,13 @@
   "mutationOfRemoteSupabase": false,
   "businessFilesChanged": false,
   "fixturesContainRealIdentities": false,
-  "permissionLimitation": "Managed Auth column grants demonstrated only under synthetic schema owner; hosted availability unverified",
-  "migrationSha256": "62208af31bc8e8d7592625df6b2ba16109d9ec24947e2a6db0b1131daececa50"
+  "permissionLimitation": "Hosted canonical visibility and managed Auth column grants unverified; no BYPASSRLS or managed Auth grant added by migration",
+  "migrationSha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a",
+  "reviewCorrections": [
+    "Post-commit two-phase reactivation, tested with two concurrent connections",
+    "Canonical FORCE RLS and installer visibility modeled explicitly",
+    "Single manifest-validated bootstrap path",
+    "Session privilege ceiling, owner cutoff protection and neutral invalid-session context",
+    "Preservation checked before rollback"
+  ]
 }
