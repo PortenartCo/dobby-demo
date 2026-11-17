@@ -1,0 +1,13 @@
+# Préflight — candidat Lot 1, local uniquement
+
+Référence : [rapport et limites](../lot-1/RAPPORT.md). Cette mission n’a accédé à aucun projet Supabase ; ne pas traiter ce document comme une autorisation de migration distante.
+
+1. Vérifier une branche propre, le SHA de base, les AGENTS.md applicables et la portée du diff. Ne pas modifier les PR #26/#27 ou des fichiers saisonniers.
+2. Utiliser exclusivement le runner [local-db.mjs](../../../../tests/private-access/local-db.mjs) : socket Docker Linux fixe, conteneur créé par le test, image épinglée, réseau `none`, pas de port ni bind mount. Aucun paramètre de connexion à un serveur PostgreSQL distant ; les variables DOCKER_* héritées ne sélectionnent pas un autre daemon.
+3. Exécuter les tests avec les seuls identifiants `00000000-0000-4000-8000-…` et adresses `example.invalid` de la fixture. Ne fournir aucun token, compte réel ou manifeste privé aux tests.
+4. Lors d’une **future mission distante distinctement autorisée**, identifier certainement le seul projet personnel DOBBY, puis vérifier le delta de catalogue, les types de `auth.sessions`, les ACL effectives, la capacité de l’installateur et les liaisons canoniques. Aucun projet professionnel ne sert de substitution. Les droits de lecture de sessions restent une condition bloquante, pas une permission supposée.
+5. Le manifeste d’amorçage futur comporte `ownerUserId` et exactement deux entrées `preservedAccounts` avec `userId`, `householdId`, `memberId`. Il doit provenir d’identités serveur vérifiées, jamais du premier connecté, d’un nom, d’un e-mail client ou de métadonnées modifiables. Le transmettre hors Git et hors journaux CI ; aucun exemplaire réel dans une migration. La fixture fournit son propre manifeste fictif automatiquement.
+6. Le validateur `dobby_access_private.bootstrap(jsonb,uuid)` reste privé/INVOKER, réservé à l’installateur. Il vérifie les liaisons avec les privilèges préexistants de celui-ci ; aucune ouverture des tables métier au writer d’accès. Un manque de droits arrête l’opération. Un registre déjà initialisé ne se réinitialise pas.
+7. Avant toute future activation du lecteur, un mécanisme autorisé doit fournir les seuls droits `USAGE(auth)` et `SELECT(id,user_id,created_at,not_after)` sur `auth.sessions`. La migration ne les donne pas et les tests n’attestent pas leur disponibilité dans Supabase hébergé. Sans ces droits, `is_active()` refuse et `enable_session_guard()` échoue. Aucun contournement par superuser/BYPASSRLS/prise de rôle géré.
+
+Ne pas exécuter `db push`, `db reset` distant, `link`, une Edge Function, un ancien installateur/reset V7, une modification des inscriptions ou une invitation réelle pendant la reprise locale de ce lot.

@@ -1,0 +1,22 @@
+{
+  "status": "PASS_LOCAL_ONLY",
+  "postgres": "17.7",
+  "node": "v24.19.0",
+  "supabaseCli": "3.2.0 (migration generation only)",
+  "foundationTests": {
+    "pass": 23,
+    "fail": 0,
+    "skipped": 0
+  },
+  "nativeTests": {
+    "pass": 444,
+    "fail": 0,
+    "skipped": 0
+  },
+  "scope": "Fictional SQL claims and local PostgreSQL only; no hosted Auth/API/Storage proof",
+  "mutationOfRemoteSupabase": false,
+  "businessFilesChanged": false,
+  "fixturesContainRealIdentities": false,
+  "permissionLimitation": "Managed Auth column grants demonstrated only under synthetic schema owner; hosted availability unverified",
+  "migrationSha256": "62208af31bc8e8d7592625df6b2ba16109d9ec24947e2a6db0b1131daececa50"
+}
