@@ -23,3 +23,11 @@ Le journal local montre la réussite des tests saisonniers, visuels, Menu, Param
 La publication préparée `c1962f63b2e82fb124074c1770decbddbe198476` ajoute uniquement les 354 fichiers de `essai-dobby-v7-seasonal-visual-37a83f687826/` à `main`. Aucun fichier applicatif antérieur n’est modifié. Les nouvelles ressources de décor sont intégralement dans les deux fichiers JS/CSS existants, environ 9,5 Kio compressés ensemble.
 
 Reprise ciblée : `CHROMIUM_PATH=/usr/bin/chromium node essai-stitch-v7/tests/e07-p02-shared-home.cjs` — code de sortie 0, `CUISINE_SHARED_HOME_PASS`. [Journal](logs/resumed-shared-home.log).
+
+## Vérification publique et reproductibilité
+
+Le nouvel aperçu est déployé et le parcours de revue a réussi sur son URL publique : sélection des dates, changements d’année, séquence magique, navigation, persistance et retour à la date réelle. Ses 353 ressources sont vérifiées ; le manifeste public est identique au manifeste local, SHA-256 `73e6c231d4522dcc90756081e006d59c5008fbd0ee9cc54cbad10f80418edb61`. [Journal public](logs/hosted-preview.log).
+
+La première CI du HEAD de documentation a relevé une différence de génération Tailwind : le mot anglais `inline` dans le commentaire de la bibliothèque SVG déclenchait une classe inutilisée `.inline { display: inline }`. Seul ce commentaire a été reformulé. La régénération exacte du workflow (`build-source.cjs`, `npm run build:css`, puis comparaison Git stricte de tous les fichiers générés) réussit désormais sans aucun écart. La feuille compilée attendue et les sources protégées restent intactes. [Journal de génération](logs/derivation.log). Les 14 tests transversaux ont également été relancés avec succès.
+
+La différence JavaScript entre le source de l’aperçu `37a83f6` et la correction CI est exclusivement ce commentaire ; aucune instruction, illustration ou règle CSS du rendu publié n’a changé. Les résultats finaux des workflows du nouveau HEAD sont liés dans la description de la PR.

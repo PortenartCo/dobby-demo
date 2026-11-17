@@ -4,7 +4,7 @@ window.DobbySeasonal=(()=>{
  const C=window.DobbySeasonalCalendar,root=document.documentElement;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const motifs=Object.freeze({winter:'❄',spring:'✿',summer:'☀',autumn:'❧',magic:'🪄',valentine:'♥',carnival:'🎭',easter:'🥚',belgium:'🇧🇪',halloween:'🎃',thanksgiving:'🍁','saint-nicholas':'🎁',christmas:'❄','new-year':'✦'});
- // One inline vector library, shared by all ornaments. No image replacement,
+ // One shared vector library for all ornaments. No image replacement,
  // asset request, filter animation or second particle emitter.
  const eventMotifs=Object.freeze({christmas:['fir','holly','gift'],'halloween':['bat','pumpkin','lantern'],'new-year':['ribbon','star','ribbon'],magic:['wand','star','wand'],valentine:['rose','letter','rose'],easter:['blossom','egg','egg'],carnival:['mask','star','mask'],'saint-nicholas':['mitre','gift','mitre'],thanksgiving:['wheat','leaf','wheat'],belgium:['flag','star','flag']});
  const major=new Set(['christmas','halloween','new-year','magic']);
