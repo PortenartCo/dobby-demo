@@ -48,3 +48,7 @@ Déploiement Pages terminé avec succès : run `44161272144`, commit publié `a6
 Le parcours Chromium a également réussi sur l’URL publique : choix Noël, date libre, chevauchement Saint-Valentin, bascule entre deux années magiques et nettoyage, navigation, persistance, retour à la date réelle, horloges métier inchangées et aucune erreur JavaScript. [Journal public](evidence/logs/live-preview.log).
 
 Le code applicatif demeure sur la branche dédiée, avec PR en brouillon, jusqu’à revue de cet aperçu. Aucun fichier de l’application principale n’a été promu.
+
+## Raccordement CI
+
+Le premier run GitHub [44162931531](https://github.com/PortenartCo/dobby-demo/actions/runs/44162931531) a reproduit un défaut de configuration : checkout limité à un commit, puis échec `unknown revision aafdded` lorsque le constructeur consolidé vérifie ses composants historiques. Le job existant utilise désormais `fetch-depth: 0`, sans modifier ni contourner ces contrôles de provenance. Aucun service ou job supplémentaire n’est créé. Les tests locaux disposent de cet historique et ont déjà validé le même constructeur ; les nouveaux checks GitHub suivent la correction sur la PR.
