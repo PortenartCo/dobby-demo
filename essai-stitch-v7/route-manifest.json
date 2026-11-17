@@ -1,7 +1,7 @@
 {
   "screenSources": 53,
   "templatesUsedInActiveUI": 53,
-  "activeFunctionalScreens": 24,
+  "activeFunctionalScreens": 25,
   "roots": [
     {
       "screen": "taverne",
@@ -707,13 +707,13 @@
       "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
       "hasScreenshot": true,
       "linked": true,
-      "mode": "partial-adapter",
+      "mode": "functional-adapter",
       "domain": "lot-2b",
-      "integration": "verified-partial",
+      "integration": "verified-functional",
       "route": "famille.html#contact-edit",
       "template": "templates/remaining/contact-edit.html",
       "unsupported": [
-        "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+        "Portrait et blason hors périmètre. Archivage natif en attente de la PR #17."
       ],
       "verification": {
         "tests": [
@@ -1701,6 +1701,24 @@
         "document": "docs/dobby-v7/MENU-01-08-IMPLEMENTATION.md",
         "layout": "essai-stitch-v7/menu-layout.html",
         "settings": "famille.html#settings",
+        "settingsSections": [
+          {
+            "label": "Ambiance magique",
+            "route": "famille.html#settings-magic",
+            "storage": "native st.stitchPreferences"
+          },
+          {
+            "label": "Gestion du foyer",
+            "route": "famille.html#members?origin=settings",
+            "permissions": "native member and invitation policies unchanged"
+          },
+          {
+            "label": "Données et sauvegardes",
+            "route": "famille.html#backup?origin=settings",
+            "format": "dobby-complete-backup version 1; JSON non chiffré",
+            "documents": "famille.html#document-library; anciens documents autonomes distincts des fiches archivées"
+          }
+        ],
         "backup": "famille.html#backup"
       }
     },
@@ -1894,7 +1912,7 @@
       "route": "famille.html#contacts",
       "template": "templates/remaining/contacts.html",
       "unsupported": [
-        "Portrait, blason et catégories structurées non enregistrés. Le rôle textuel est conservé."
+        "Portrait et blason hors périmètre. Archivage natif en attente de la PR #17."
       ],
       "verification": {
         "tests": [
@@ -1986,7 +2004,7 @@
     "functional": 2,
     "partial": 5
   },
-  "partialSources": 29,
+  "partialSources": 28,
   "sourceOnly": 0,
   "sequentialLots": {
     "3": {
@@ -2006,8 +2024,8 @@
     },
     "2b": {
       "sources": 6,
-      "functional": 1,
-      "partial": 5
+      "functional": 2,
+      "partial": 4
     }
   },
   "homeContract": {

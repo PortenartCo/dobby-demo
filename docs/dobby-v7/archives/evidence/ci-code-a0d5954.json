@@ -1,0 +1,37 @@
+{
+  "scope": "Code acceptance before documentation-only receipt",
+  "codeCommit": "a0d59549d8ac1fd66d3b42898ebd47d047f119c8",
+  "run": {
+    "id": 43437263496,
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43437263496",
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "jobs": [
+    {
+      "id": 131925482160,
+      "name": "source-backed-browser",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43437263496/job/131925482160"
+    },
+    {
+      "id": 131925482518,
+      "name": "reserves-sql-local",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43437263496/job/131925482518"
+    },
+    {
+      "id": 131925482789,
+      "name": "archives-acceptance",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43437263496/job/131925482789"
+    }
+  ],
+  "sync": {
+    "id": 43437263486,
+    "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/43437263486",
+    "conclusion": "success"
+  },
+  "recordedAt": "2026-11-13T14:05:58.074185+00:00",
+  "finalHeadChecks": "https://github.com/PortenartCo/dobby-demo/pull/17/checks"
+}

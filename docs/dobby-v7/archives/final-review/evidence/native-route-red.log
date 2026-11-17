@@ -1,0 +1,13 @@
+ARCHIVE_NATIVE_CASE after 320 final-typed-contract
+AssertionError [ERR_ASSERTION]: Consulter uses the canonical Contracts renderer, including structured legacy records
+
+0 !== 1
+
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-native-consultation.cjs:19:31 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: 1,
+  operator: 'strictEqual',
+  diff: 'simple'
+}

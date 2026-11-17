@@ -1,0 +1,13 @@
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+2026-11-16T23:00:08.8727816Z
+2026-11-16T23:00:08.8728475Z   assert.ok((await p.locator('[data-e07-dinner]').innerText()).includes('TEST recette conservée'))
+2026-11-16T23:00:08.8729333Z
+2026-11-16T23:00:08.8729956Z     at /home/runner/work/dobby-demo/dobby-demo/essai-stitch-v7/tests/archives-review.cjs:9:86 {
+2026-11-16T23:00:08.8730993Z   generatedMessage: true,
+2026-11-16T23:00:08.8731393Z   code: 'ERR_ASSERTION',
+2026-11-16T23:00:08.8731762Z   actual: false,
+2026-11-16T23:00:08.8732157Z   expected: true,
+2026-11-16T23:00:08.8732535Z   operator: '==',
+2026-11-16T23:00:08.8732930Z   diff: 'simple'
+2026-11-16T23:00:08.8733275Z }
+2026-11-16T23:00:08.8911045Z

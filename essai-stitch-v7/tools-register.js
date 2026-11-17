@@ -1,6 +1,6 @@
 /* Remaining original sources; all persistent operations belong to native DOBBY. */
 (()=>{
- 'use strict';const R=window.DobbyRegister,E=window.DobbyFamilyStitchEngine,{q,all,button,bind,note,target,box}=R;const views=['mission-edit','chat','chat-2','search','menu','settings','personal'];let c,menuQuery='';
+ 'use strict';const R=window.DobbyRegister,E=window.DobbyFamilyStitchEngine,{q,all,button,bind,note,target,box}=R;const views=['mission-edit','chat','chat-2','search','menu','settings','settings-magic','personal'];let c,menuQuery='';
  const rootUrl=(view,record)=>'./famille.html#'+view+(record?'?record='+encodeURIComponent(record):'');
  const goMissions=()=>{location.href='./missions.html';};
  function el(tag,text,cls=''){const n=document.createElement(tag);n.className=cls;n.textContent=text;return n;}
@@ -87,16 +87,38 @@
  function menu(){const search=q('#global-module-search');search.placeholder='Rechercher dans le menu…';search.value=menuQuery;search.oninput=()=>{menuQuery=search.value;filterMenu();};bind(q('#clear-search-btn'),'rg-menu-clear');filterMenu();}
  function filterMenu(){const clear=q('#clear-search-btn');if(clear)clear.hidden=!menuQuery;const needle=menuQuery.trim().toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'');let count=0;for(const card of all('#menu-sections .module-item')){const label=q('.rg-menu-label',card).textContent.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'');card.hidden=!label.includes(needle);if(!card.hidden)count++;}q('#no-module-found').hidden=count>0;}
  function settings(){
-  const title=el('h1','Paramètres','font-headline-lg-mobile text-headline-lg-mobile text-primary');
-  const back=el('a','Retour au Menu','rg-menu-back');back.href=rootUrl('menu');bind(back,'menu');
-  const backup=el('a','','rg-menu-card');backup.href=rootUrl('backup')+'?origin=settings';bind(backup,'backup',{origin:'settings'});
-  const icon=el('span','save','rg-menu-icon material-symbols-outlined'),chevron=el('span','chevron_right','rg-menu-chevron material-symbols-outlined');icon.setAttribute('aria-hidden','true');chevron.setAttribute('aria-hidden','true');
-  backup.append(icon,el('span','Sauvegarde et restauration','rg-menu-label'),chevron);c.main.replaceChildren(title,back,backup);
-  const shopping=el('section','','rg-shopping-settings');c.main.append(shopping);window.DobbyShoppingUI?.mountSettings(shopping,{E:window.DobbyCuisineEngine});
+  c.main.classList.add('rg-settings-page');
+  const title=el('h1','Paramètres','font-headline-lg-mobile text-headline-lg-mobile text-primary'),description=el('p','Personnalisez DOBBY et prenez soin des données du foyer.','rg-settings-description'),cards=el('div','','rg-menu-cards');
+  for(const [view,glyph,label,subtitle]of [['settings-magic','auto_awesome','Ambiance magique','Effets visuels et sons de DOBBY'],['members','family_restroom','Gestion du foyer','Membres, invitations et accès familiaux'],['backup','save','Données et sauvegardes','Sauvegarder, restaurer et retrouver les anciens documents']]){
+   const card=el('a','','rg-menu-card');card.href=rootUrl(view)+'?origin=settings';card.dataset.settingsCard=view;bind(card,view,{origin:'settings'});
+   const icon=el('span',glyph,'rg-menu-icon material-symbols-outlined'),chevron=el('span','chevron_right','rg-menu-chevron material-symbols-outlined'),copy=el('span','','rg-settings-copy');icon.setAttribute('aria-hidden','true');chevron.setAttribute('aria-hidden','true');copy.append(el('span',label,'rg-menu-label'),el('span',subtitle,'rg-settings-description'));card.append(icon,copy,chevron);cards.append(card);
+  }
+  c.main.replaceChildren(title,description,cards);settingsSync();
  }
+ function settingsSync(){
+  if(document.body.dataset.familyView!=='settings')return;
+  const api=E.win().DobbyFamilyUI,context=api?.getContext?.();
+  if(navigator.onLine&&!context){q('[data-settings-sync]')?.remove();return;}
+  const error=api?.grocery?.read?.().error;
+  const status=!navigator.onLine?'Hors ligne — les données locales restent disponibles.':error?'Connexion du foyer à vérifier.':api.getModuleStatus('family');
+  const existing=q('[data-settings-sync]');if(existing?.dataset.status===status)return;existing?.remove();
+  const row=el('div','','rg-settings-sync');row.dataset.settingsSync='true';row.dataset.status=status;row.setAttribute('role','status');row.append(el('p',status));
+  if(navigator.onLine&&context&&/erreur|échec|conflit|à vérifier|non synchronisées|incompatible/i.test(status))row.append(button('rg-settings-sync','Réessayer la connexion'));
+  c.main.append(row);
+ }
+ function magicSettings(){
+  c.main.classList.add('rg-settings-page');c.main.replaceChildren(button('settings','Retour aux paramètres'),el('h1','Ambiance magique','font-headline-lg-mobile text-headline-lg-mobile text-primary'));
+  const panel=el('section','','rg-settings-panel');panel.setAttribute('aria-label','Effets visuels et sons de DOBBY');
+  for(const [name,label]of [['effects','Effets magiques'],['sound','Sons']]){
+   const control=el('button','','rg-settings-switch');control.type='button';control.dataset.e01Toggle=name;control.dataset.settingsPreference=name;control.dataset.magicControl='true';control.setAttribute('role','switch');control.setAttribute('aria-label',label);
+   const track=el('span','','rg-settings-track');track.setAttribute('aria-hidden','true');control.append(el('span',label),track);panel.append(control);
+  }
+  c.main.append(panel);
+ }
+ window.addEventListener('online',settingsSync);window.addEventListener('offline',settingsSync);setInterval(settingsSync,2000);
  function personal(){window.DobbyMagicProfile.render(c);}
 
- R.register({views,prepare(view){if(view==='chat-2')return window.DobbyChat.prepare();if(view==='mission-edit')return R.until(()=>!!E.win().DobbyFamilyMissions?.available);},back(view){return view==='mission-edit'?goMissions():target(view==='settings'?'menu':view==='chat-2'?'chat':'salon');},render(view,ctx){c=ctx;if(view==='mission-edit')mission();else if(view==='chat'||view==='chat-2')chat(view==='chat-2');else if(view==='search')search();else if(view==='menu')menu();else if(view==='settings')settings();else personal();},act(action,b,ctx){c={...c,...ctx};const id=b.dataset.record||c.ui.record;if(action==='rg-mission-back')return q('#rg-form')._missionBack();if(action==='rg-mission-next')return q('#rg-form')._missionNext();if(action==='rg-mission-frequency')return b._missionFrequency();if(action==='rg-mission-date')return missionDates(b.dataset.value);if(action==='rg-mission-unique')return;if(action==='rg-missions')return goMissions();if(action==='rg-home'){location.href='./traverse.html';return;}if(['rg-taverne','rg-recipes','rg-shop'].includes(action)){location.href='./index.html#'+({'rg-taverne':'taverne','rg-recipes':'recipes','rg-shop':'shop'})[action];return;}if(action==='rg-mission-edit')return target('mission-edit',id);if(action.startsWith('rg-chat-'))return window.DobbyChat.act(action,b);if(action==='rg-search-clear'){E.evaluate('st.globalQuery="";');return search();}if(action==='rg-search-open')return result(b.dataset.kind,id);if(action==='rg-menu-clear'){menuQuery='';q('#global-module-search').value='';filterMenu();q('#global-module-search').focus();return;}},submit(form,ctx){return saveMissionForm(form,ctx);}});
+ R.register({views,prepare(view){if(view==='chat-2')return window.DobbyChat.prepare();if(view==='mission-edit')return R.until(()=>!!E.win().DobbyFamilyMissions?.available);},back(view){return view==='mission-edit'?goMissions():target(view==='settings-magic'?'settings':view==='settings'?'menu':view==='chat-2'?'chat':'salon');},render(view,ctx){c=ctx;if(view==='mission-edit')mission();else if(view==='chat'||view==='chat-2')chat(view==='chat-2');else if(view==='search')search();else if(view==='menu')menu();else if(view==='settings')settings();else if(view==='settings-magic')magicSettings();else personal();},act(action,b,ctx){c={...c,...ctx};const id=b.dataset.record||c.ui.record;if(action==='rg-settings-sync')return R.lock(async()=>{await E.win().DobbyFamilyUI.grocery.sync();settingsSync();});if(action==='rg-mission-back')return q('#rg-form')._missionBack();if(action==='rg-mission-next')return q('#rg-form')._missionNext();if(action==='rg-mission-frequency')return b._missionFrequency();if(action==='rg-mission-date')return missionDates(b.dataset.value);if(action==='rg-mission-unique')return;if(action==='rg-missions')return goMissions();if(action==='rg-home'){location.href='./traverse.html';return;}if(['rg-taverne','rg-recipes','rg-shop'].includes(action)){location.href='./index.html#'+({'rg-taverne':'taverne','rg-recipes':'recipes','rg-shop':'shop'})[action];return;}if(action==='rg-mission-edit')return target('mission-edit',id);if(action.startsWith('rg-chat-'))return window.DobbyChat.act(action,b);if(action==='rg-search-clear'){E.evaluate('st.globalQuery="";');return search();}if(action==='rg-search-open')return result(b.dataset.kind,id);if(action==='rg-menu-clear'){menuQuery='';q('#global-module-search').value='';filterMenu();q('#global-module-search').focus();return;}},submit(form,ctx){return saveMissionForm(form,ctx);}});
  function missionParticipants(id){
   const state=E.read().state,row=state.manualMissions.find(m=>m.id===id);if(!row)throw Error('Mission introuvable');
   const native=E.win().DobbyFamilyMissions,ids=native.completionCandidateIds(row),members=ids.map(id=>state.familyMembers.find(m=>m.id===id)).filter(Boolean),dialog=el('dialog','','dv7-participant-dialog'),form=el('form',''),heading=el('h2','Qui a réellement participé ?'),description=el('p','Une seule récompense totale, répartie uniquement entre les participants choisis.'),problem=el('p','');problem.setAttribute('role','alert');dialog.setAttribute('aria-labelledby','dv7-participant-title');heading.id='dv7-participant-title';form.append(heading,description);

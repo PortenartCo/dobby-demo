@@ -1,0 +1,21 @@
+/* Additive preview, same isolation runtime as existing reviews. No deployment. */
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{execFileSync}=require('node:child_process');
+const repo=path.resolve(__dirname,'..'),index=process.argv.indexOf('--output');
+if(index<0||!process.argv[index+1]||process.argv[index+1].startsWith('--'))throw Error('--output must name a new preview directory.');
+const out=path.resolve(process.argv[index+1]);if(fs.existsSync(out))throw Error('Output must be a new directory: '+out);
+const sourcePaths=['essai-stitch-v7','essai-stitch-v5-famille','scripts/review','scripts/build-dobby-contacts-review.cjs','scripts/build-dobby-review.cjs'];
+const dirty=execFileSync('git',['status','--porcelain','--untracked-files=all','--',...sourcePaths],{cwd:repo,encoding:'utf8'}).split('\n').filter(Boolean).map(line=>line.slice(3)).filter(file=>!file.includes('/tests/'));
+if(dirty.length&&!process.argv.includes('--allow-dirty'))throw Error('Commit application sources before building a publishable preview.');
+execFileSync(process.execPath,[path.join(__dirname,'build-dobby-review.cjs'),'--profile','e09','--output',out],{cwd:repo,stdio:'inherit'});
+const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex'),manifestFile=path.join(out,'review-manifest.json'),manifest=JSON.parse(fs.readFileSync(manifestFile));
+manifest.runtimeProfileBase=manifest.base;
+manifest.base=execFileSync('git',['merge-base','origin/main','HEAD'],{cwd:repo,encoding:'utf8'}).trim();
+const config=fs.readFileSync(path.join(__dirname,'review/contacts-config.js'));fs.writeFileSync(path.join(out,'review-config.js'),config);
+const entry='essai-stitch-v7/famille.html#contacts';
+fs.writeFileSync(path.join(out,'index.html'),'<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=./'+entry+'"><title>DOBBY — Contacts Stitch 24</title></head><body><a href="./'+entry+'">Ouvrir le répertoire familial de démonstration</a></body></html>\n');
+const readme='# DOBBY — Contacts / Stitch 24\n\nDonnées fictives, espace de stockage propre à cet aperçu et connexions externes bloquées par le runtime de revue existant et la CSP. Aucun compte réel, transport Supabase ou migration SQL. Les writers, permissions et sauvegardes restent natifs.\n\nTester : créer un contact, ouvrir sa carte, modifier, recharger, supprimer avec confirmation ou annuler. Catégories et adresses restent dans `famContacts`. Le PNG fourni dans Stitch 24 est conservé octet pour octet.\n\nArchivage : le mécanisme natif dépend de la PR #17 encore ouverte ; aucune commande fictive ni archive concurrente dans cette branche.\n\nPublication additive de ce seul dossier ; application principale et aperçus précédents préservés. Retour arrière : retirer exclusivement ce dossier de la branche de publication.\n';
+fs.writeFileSync(path.join(out,'README.md'),readme);
+Object.assign(manifest,{version:'CONTACTS-STITCH24',entry,sourceState:dirty.length?'working-tree':'committed',sourceDirtyPaths:dirty,storagePrefix:'dobby-review-v7-contacts-stitch24-20261116|',realBackend:false,realAuth:false,migrationsApplied:false,configSha256:sha(config),configSource:'scripts/review/contacts-config.js',builderSource:{path:'scripts/build-dobby-contacts-review.cjs',sha256:sha(fs.readFileSync(__filename))},illustration:{path:'essai-stitch-v7/assets/contacts/stitch24.png',sha256:sha(fs.readFileSync(path.join(out,'essai-stitch-v7/assets/contacts/stitch24.png'))),artworkModified:false},archiveDependency:{pr:17,status:'not-merged',commandVisible:false},readmeSha256:sha(Buffer.from(readme))});
+manifest.files.push({path:'review-config.js',sourcePath:'scripts/review/contacts-config.js',sha256:sha(config),sourceSha256:sha(config),transformed:false});
+fs.writeFileSync(manifestFile,JSON.stringify(manifest,null,2)+'\n');console.log('CONTACTS_REVIEW_BUILD',manifest.sourceSha,manifest.sourceState,out);

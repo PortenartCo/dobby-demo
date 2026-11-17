@@ -1,0 +1,75 @@
+{
+  "suite": "DOBBY V7 — Données et sauvegardes",
+  "date": "2026-11-16",
+  "result": "passed",
+  "settingsBackupScenarios": 16,
+  "commands": [
+    {
+      "command": "DOBBY_SETTINGS_EVIDENCE=docs/dobby-v7/settings/evidence node essai-stitch-v7/tests/settings-backup.cjs",
+      "result": "16 isolated scenarios passed"
+    },
+    {
+      "command": "node essai-stitch-v7/tests/register-house.cjs",
+      "result": "passed at 320 and 390 px"
+    },
+    {
+      "command": "node essai-stitch-v7/tests/maison-review-regressions.cjs",
+      "result": "7 scenarios passed"
+    },
+    {
+      "command": "node --check essai-stitch-v7/house-register.js && node --check essai-stitch-v7/tests/settings-backup.cjs",
+      "result": "passed"
+    },
+    {
+      "command": "git diff --check -- essai-stitch-v7/house-register.js essai-stitch-v7/tests/settings-backup.cjs",
+      "result": "passed"
+    }
+  ],
+  "screenshots": [
+    "backup-320.png",
+    "backup-390.png",
+    "backup-768.png",
+    "backup-1440.png"
+  ],
+  "verified": [
+    "simple settings presentation and return navigation",
+    "registered documents remain accessible and untouched",
+    "real native complete JSON download, including offline",
+    "native export errors do not report success",
+    "download canceled when account context changes during export",
+    "native confirmation cancellation leaves data and bytes untouched",
+    "malformed, unsupported-version and incomplete archives refused",
+    "native restore preserves record metadata and attachment SHA256 after reload",
+    "injected storage quota failure restores prior records and bytes",
+    "registry expected snapshot checked after preview and after asynchronous transfer read",
+    "child profile cannot export or restore complete backup",
+    "no page errors or horizontal overflow at tested widths",
+    "registry expected snapshot checked before and after native confirmation",
+    "document/settings navigation assertions await completed DOM rendering",
+    "same-household note update after native confirmation preserved in memory and storage; archive restore refused"
+  ],
+  "fixtureAttachmentSha256": "8be0896e11e4e406a8e0693b8decefc6fce94553075b3ced1be381a10f47b2a2",
+  "testIsolation": {
+    "browserContexts": "fresh Playwright profiles with fictional data only",
+    "externalRequests": "blocked",
+    "realAccountsUsed": false
+  },
+  "nativeEngineModified": true,
+  "tddEvidence": [
+    "initial missing settings presentation failed before implementation",
+    "account-switch export test failed with one real download before cancellation guard",
+    "transfer-read race failed with concurrent state overwritten before final expected-snapshot guard",
+    "native File.text race failed with concurrently replaced st object overwritten; false native confirmation after expected validation now preserves it",
+    "post-confirmation native concurrent familyNotes update was lost before minimal native guard; now preserved after refusal and reload"
+  ],
+  "limits": [
+    "No live family backend, production account, or HTTP two-account authorization check performed.",
+    "Success reports that the native JSON download was launched; browser destination selection and eventual user save are controlled by the browser.",
+    "Standard npm test run coordinated by root agent."
+  ],
+  "nativeEngineChange": {
+    "file": "essai-stitch-v5-famille/index.html",
+    "reason": "Confirmed overwrite of concurrent same-household business state during native asynchronous restore after confirmation.",
+    "scope": "Fingerprint all native state/custom at entry; extend existing guards across asynchronous boundaries; guard replacement after IndexedDB open; roll back st/custom/raw only after incoming state assignment."
+  }
+}

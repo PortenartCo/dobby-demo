@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-16T23:40:34.749279+00:00",
+  "applicationSourceSha": "af015f8c334b67112ee197293611bdecc88d7905",
+  "currentHead": "8fe5af4d08ace4481f62c9639504545aa8ec3412",
+  "runtimeChangesSinceSource": [],
+  "nativeCases": 36,
+  "nativeWidths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "nativeWidthPasses": 4,
+  "nativeAllConserved": true,
+  "reviewPasses": 7,
+  "racePasses": 7,
+  "sourcesPass": true,
+  "writersTests": 14,
+  "writersFail": 0,
+  "allCommandExitCodes": {
+    "native": 0,
+    "review": 0,
+    "races": 0,
+    "sources": 0,
+    "writers": 0
+  },
+  "allLogsNoErrors": true,
+  "testFileOnlyChangeByAudit": "essai-stitch-v7/tests/archives-native-consultation.cjs",
+  "realFamilyAccountsTested": false,
+  "remoteMutationsByAudit": false
+}

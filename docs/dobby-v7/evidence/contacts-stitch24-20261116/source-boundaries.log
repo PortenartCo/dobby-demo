@@ -1,0 +1,19 @@
+✔ Family source boundaries preserve history plus reviewed general and family-core amendments (7.318202ms)
+✔ every reviewed whole-file amendment retains its exact source fingerprint (16.614559ms)
+✔ published-main reconciliation preserves both parent manifests and every full current source (10.058399ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (1.793733ms)
+✔ Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits (26.40558ms)
+✔ Contacts controller amendments recover the exact parent and reject unrelated source changes (4.577867ms)
+✔ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (12.574463ms)
+✔ a readiness extension cannot fall back to valid frozen-parent bytes (0.337857ms)
+✔ Courses retains the native shopping contract including independent dessert import (81.07535ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (1.178352ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.263922ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 258.755126

@@ -1,0 +1,33 @@
+✔ confirmed archive/restore preserves source identities, extensions, pieces, logs and plans (23.876962ms)
+✔ stale row/context, denied child, missing source and failed local save cannot report success (12.088393ms)
+✔ old objects are active; derived list searches accents/types/source and sorts stably without duplicates (2.888956ms)
+✔ unverified identity, duplicate identities and another household are refused without exposing archive metadata (1.732224ms)
+✔ native retired recipes cannot produce a false archive activation or erase their retirement (3.759558ms)
+✔ failed native archive save rolls back derived task side effects as well as its source row (1.918298ms)
+✔ partial restores retain lifecycle, reject reactivation and refuse another household (2.465181ms)
+✔ archived contracts reject metadata and attachment mutations through their native writer (3.560174ms)
+✔ a contract archived during a pending binary write retains its original pieces and discards the staged file (2.94771ms)
+✔ native save/reload keeps deep extensions, stable ids and legacy invalid dates (6.218701ms)
+✔ edits require current row/context; denied children and failed saves cannot mutate state (2.936991ms)
+✔ multiple local attachments use native store without uploads and leave legacy blob untouched (2.854108ms)
+✔ explicit upload uses existing storage API, confirms cloud metadata only after success, and retains local piece (2.572209ms)
+✔ async writes reject household, row and role changes and discard only staged files (6.939993ms)
+✔ legacy import handler delegates metadata merge and native form preserves extensions (6.620475ms)
+✔ whole fiche deletion covers every piece and leaves unrelated files intact (2.426043ms)
+✔ file validation, forged references and child mutation calls cannot touch native stores (2.058955ms)
+✔ legacy local and shared slots remain independently readable/removable when they contain different files (1.353749ms)
+✔ a genuinely shared modern piece remains readable when its old local store is unavailable (2.152123ms)
+✔ download names remove paths/control characters and match the permitted binary MIME type (3.114778ms)
+✔ quota rejection never deletes shared bytes for a single piece or a whole fiche (3.51367ms)
+✔ shared removal persists metadata first, preserves cloud bytes and truthfully reports distinct physical cleanup (2.769025ms)
+✔ native Archives delete of a shared piece-free fiche is guarded before confirmation for a child (2.064195ms)
+✔ raw legacy shared metadata submit/detach/local picker reject children while private Archives stays writable (1.755483ms)
+✔ retained local-only flag survives edits/imports and rejects file sharing without uploading (1.675212ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.647885

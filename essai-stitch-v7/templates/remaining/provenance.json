@@ -2,12 +2,22 @@
   {
     "view": "contacts",
     "source": "design/stitch-53/dobby_r_pertoire_des_contacts_familiaux/code.html",
-    "sha256": "d056421d022e4b679991e32963a866b760497bfef9d6feb5cab0381a3fd1e169"
+    "sha256": "d056421d022e4b679991e32963a866b760497bfef9d6feb5cab0381a3fd1e169",
+    "layout": {
+      "source": "essai-stitch-v7/contacts-layout.html",
+      "sha256": "c98565e1767fd9fd299ceaf1b41832972f3d310eec0ef45b5e21b6b80225ec5c",
+      "decisions": "Contacts review 2026-11-16 / Stitch 24"
+    }
   },
   {
     "view": "contact-edit",
     "source": "design/stitch-53/dobby_cr_er_ou_modifier_un_contact/code.html",
-    "sha256": "741479b6e8a2a920dcfd3194e32b0e429d138d74051636a7da08266e348ba643"
+    "sha256": "741479b6e8a2a920dcfd3194e32b0e429d138d74051636a7da08266e348ba643",
+    "layout": {
+      "source": "essai-stitch-v7/contact-edit-layout.html",
+      "sha256": "dab932007835febc3b7c1726f7a9429e37763281eed41fc29ac9e48c30aa8c82",
+      "decisions": "Contacts review 2026-11-16 / Stitch 24"
+    }
   },
   {
     "view": "memos",

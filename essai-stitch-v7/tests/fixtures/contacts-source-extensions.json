@@ -1,0 +1,42 @@
+{
+  "baseCommit": "521c9199ac18cb71b2fbbd2717ded2f7781aa4db",
+  "files": {
+    "essai-stitch-v7/family.js": {
+      "beforeSha256": "6984dbc486d1c4bab08ab6443dd5520c0a4b7d7eaf59cd4c67af444fb8af76ba",
+      "afterSha256": "4f801009e31b85d4edc0c921d750b7f09f45fe7566a96de88d30fc5ff44146f5",
+      "reason": "Authorized Contacts simplification, detail route and retained concurrency baseline for history drafts. All previous modules retain their exact bytes outside these substitutions.",
+      "tests": [
+        "essai-stitch-v7/tests/contacts-v7.cjs",
+        "essai-stitch-v7/tests/contacts-errors.cjs",
+        "essai-stitch-v7/tests/register-review.cjs"
+      ],
+      "patches": [
+        {
+          "label": "Contacts controller amendment 1",
+          "before": "",
+          "after": "-edit','contacts','contact"
+        },
+        {
+          "label": "Contacts controller amendment 2",
+          "before": "",
+          "after": "contactSnapshot:form.dataset.contactSnapshot,"
+        },
+        {
+          "label": "Contacts controller amendment 3",
+          "before": "",
+          "after": ";if(view==='contact-edit'&&saved.contactSnapshot)form.dataset.contactSnapshot=saved.contactSnapshot"
+        },
+        {
+          "label": "Contacts controller amendment 4",
+          "before": "",
+          "after": "iew==='contact-edit')ui.contactMode=values.mode==='read'?'read':'edit';if(v"
+        },
+        {
+          "label": "Contacts controller amendment 5",
+          "before": "",
+          "after": "Mode);if(view==='contact-edit')routeParams.set('mode',ui.contact"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,135 @@
+✖ Family source boundaries preserve history plus reviewed general and family-core amendments (7.185015ms)
+✖ every reviewed whole-file amendment retains its exact source fingerprint (1.382209ms)
+✖ published-main reconciliation preserves both parent manifests and every full current source (5.944252ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (1.245803ms)
+✖ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (2.986688ms)
+✔ a readiness extension cannot fall back to valid frozen-parent bytes (0.536423ms)
+✔ Courses retains the native shopping contract including independent dessert import (49.764295ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (2.312266ms)
+✖ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.777454ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 4
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 199.865747
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:37:1
+✖ Family source boundaries preserve history plus reviewed general and family-core amendments (7.185015ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v7/cuisine-engine.js reviewed amendment changed
+  + actual - expected
+
+  + 'bef27304829046b02e4a98af76176906ff7d8d7f86f86fbf0074bedbba75e3da'
+  - 'c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f'
+
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:56:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'bef27304829046b02e4a98af76176906ff7d8d7f86f86fbf0074bedbba75e3da',
+    expected: 'c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:70:1
+✖ every reviewed whole-file amendment retains its exact source fingerprint (1.382209ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v7/cuisine-engine.js current reviewed source changed
+  + actual - expected
+
+  + 'bef27304829046b02e4a98af76176906ff7d8d7f86f86fbf0074bedbba75e3da'
+  - 'c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f'
+
+      at currentFingerprint (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:20:10)
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:76:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'bef27304829046b02e4a98af76176906ff7d8d7f86f86fbf0074bedbba75e3da',
+    expected: 'c8a8123ecec3e39b42ba8a618d4dc16953842f257e17880ededa5ad8cb1d311f',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:80:1
+✖ published-main reconciliation preserves both parent manifests and every full current source (5.944252ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v5-famille/family-modules.js current reviewed source changed
+  + actual - expected
+
+  + '5bb6d9e00fdeb13dbb19dc4402240ba6c1ac4bc6cbe910541192052c0308abc6'
+  - '4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc'
+
+      at currentFingerprint (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:20:10)
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:114:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '5bb6d9e00fdeb13dbb19dc4402240ba6c1ac4bc6cbe910541192052c0308abc6',
+    expected: '4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:126:1
+✖ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (2.986688ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v5-famille/family-modules.js current reviewed source changed
+  + actual - expected
+
+  + '5bb6d9e00fdeb13dbb19dc4402240ba6c1ac4bc6cbe910541192052c0308abc6'
+  - '4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc'
+
+      at currentFingerprint (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:20:10)
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:141:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '5bb6d9e00fdeb13dbb19dc4402240ba6c1ac4bc6cbe910541192052c0308abc6',
+    expected: '4ce72f50680fe15b8b66bd781d97354fc5c993682c82565eda8eedee3596cddc',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:174:1
+✖ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (0.777454ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'bdb7d05c480c1c2781578a6009de273a4e571f6c041a4563c76b8df04b99ac63'
+  - '3339ebc0e184313c21877dcb702fcfd3af48e9d73a37e32b826ceececfd969b0'
+
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:179:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'bdb7d05c480c1c2781578a6009de273a4e571f6c041a4563c76b8df04b99ac63',
+    expected: '3339ebc0e184313c21877dcb702fcfd3af48e9d73a37e32b826ceececfd969b0',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

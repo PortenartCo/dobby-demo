@@ -1,0 +1,19 @@
+{
+  "phase": "after",
+  "origin": "http://127.0.0.1:8765",
+  "fictional": true,
+  "checks": [
+    {
+      "width": 390,
+      "source": "recipes",
+      "id": "final-recipe",
+      "native": true,
+      "readOnly": true,
+      "archiveReturn": true,
+      "confirmedRestore": true,
+      "conserved": true,
+      "nativeList": true,
+      "reloaded": true
+    }
+  ]
+}

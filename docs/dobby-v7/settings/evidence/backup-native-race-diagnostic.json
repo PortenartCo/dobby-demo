@@ -1,0 +1,21 @@
+{
+  "diagnostic": "native-post-confirmation-registry-race",
+  "result": "reproduced before patch; corrected and verified by permanent regression test",
+  "nativeEngineModified": true,
+  "isolated": true,
+  "externalRequests": "blocked",
+  "reproduction": [
+    "Export fictional fixture and validate archive preview.",
+    "Suspend IDBFactory.open success callback for the native oldFiles=listAttachments call after accepting restore confirmation.",
+    "Replace same-household st with a new object whose first equipment ID is fixture-post-confirm; save.",
+    "Release IndexedDB callback and await native restoration completion."
+  ],
+  "expectedFirstEquipmentId": "fixture-post-confirm",
+  "actualFirstEquipmentId": "fixture-equipment",
+  "actualNotice": "Sauvegarde restaurée : recettes, fiches et pièces jointes disponibles sur cet appareil.",
+  "analysis": "Native assertRestoreScope checks account/household scope and write permission after awaits; no expected registry snapshot is checked after accepted confirmation.",
+  "minimalCandidate": "Optional per-operation expected-snapshot callback at native async checkpoints; preserve current st on errors before the incoming state has been assigned. Requires native-source authorization.",
+  "correctiveAuthorization": "Root explicitly authorized minimal native patch after demonstrated concurrent data loss.",
+  "permanentRegression": "changed-business-state-after-native-confirmation-is-preserved in essai-stitch-v7/tests/settings-backup.cjs",
+  "postFix": "Concurrent familyNotes fixture survives native refusal and reload; original attachment SHA256 preserved."
+}

@@ -10,9 +10,65 @@ const bridge = source('../family-v2.js');
 const modules = source('../family-modules.js');
 const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
-test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison native extensions', () => {
+test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings/Archives/Contacts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const preview=source('../index.html').replaceAll('\r\n','\n');
+  const composedNative=source('../index.html').replaceAll('\r\n','\n');
+  const contactComposition=JSON.parse(source('./fixtures/settings-archives-contacts-native-composition.json'));
+  const contacts=JSON.parse(source('./fixtures/contacts-native-extensions.json'));
+  const compositionSha=value=>createHash('sha256').update(value).digest('hex');
+  const reverseContactComposition=(text,patches)=>{
+    for(const patch of [...patches].reverse()){
+      assert.notEqual(patch.before,patch.after);
+      assert.equal(text.split(patch.after).length-1,1,'Exact three-source composition amendment: '+patch.label);
+      text=text.replace(patch.after,patch.before);
+    }
+    return text;
+  };
+  for(const [name,sha]of Object.entries(contactComposition.frozenFixturesSha256))assert.equal(compositionSha(source('./fixtures/'+name)),sha,'Frozen three-source fixture remains exact: '+name);
+  assert.equal(compositionSha(composedNative),contactComposition.composedSha256,'Entire Settings + Archives + Contacts native artifact pinned');
+  const combinedNative=reverseContactComposition(composedNative,contactComposition.contactsOntoSettingsArchives);
+  assert.equal(compositionSha(combinedNative),contactComposition.settingsArchivesParentSha256,'Contacts inversion recovers the entire Settings + Archives merge parent');
+  const contactsOnly=reverseContactComposition(composedNative,contactComposition.settingsArchivesOntoContacts);
+  assert.equal(compositionSha(contactsOnly),contactComposition.contactsParentSha256,'Settings + Archives inversion recovers the entire Contacts merge parent');
+  assert.equal(compositionSha(contactsOnly),contacts.afterSha256,'Published Contacts artifact remains byte-exact');
+  const contactsBase=reverseContactComposition(contactsOnly,contacts.patches);
+  assert.equal(compositionSha(contactsBase),contacts.beforeSha256,'Contacts native inversions recover every byte of its frozen parent');
+  assert.equal(compositionSha(contactsBase),contactComposition.baseSha256,'All three extensions share the same complete historical base');
+  const settingsSource=source('./fixtures/settings-backup-native-extensions.json');
+  const settings=JSON.parse(settingsSource),settingsSha=value=>createHash('sha256').update(value).digest('hex');
+  const combinedProof=JSON.parse(source('./fixtures/settings-archives-native-composition.json'));
+  assert.equal(settingsSha(settingsSource),combinedProof.settingsFixtureSha256,'Settings immutable parent amendment preserved');
+  assert.equal(settingsSha(combinedNative),combinedProof.composedSha256,'Complete Settings + Archives native artifact pinned');
+  let archivePreview=combinedNative;
+  for(const patch of [...settings.patches].reverse()){
+    assert.equal(archivePreview.split(patch.after).length-1,1,'Exact Settings amendment: '+patch.label);
+    archivePreview=archivePreview.replace(patch.after,patch.before);
+  }
+  const finalArchive=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/archives-final-source-extensions.json'));
+  const finalProof=finalArchive.files['essai-stitch-v5-famille/index.html'];
+  assert.equal(createHash('sha256').update(archivePreview).digest('hex'),finalProof.afterSha256,'Final binary writer is pinned in full');
+  for(const patch of [...finalProof.patches].reverse()){
+    assert.equal(archivePreview.split(patch.after).length-1,1,'Exact final native callback extension');
+    archivePreview=archivePreview.replace(patch.after,patch.before);
+  }
+  assert.equal(createHash('sha256').update(archivePreview).digest('hex'),finalProof.beforeSha256,'Only final binary callbacks reversed to PR17 parent');
+  const archiveAmendments=JSON.parse(source('./fixtures/archives-main16-native-extensions.json'));
+  const sha=value=>createHash('sha256').update(value).digest('hex');
+  assert.equal(archiveAmendments.baseCommit,'a4190bb3b1b2fd95995e33dbce09ffb31c77614c');
+  assert.equal(sha(source('./fixtures/archives-native-extensions.json')),archiveAmendments.frozenParentFixture.sha256,'Frozen Archives pre-Maison proof remains byte-exact');
+  assert.equal(sha(archivePreview),archiveAmendments.afterSha256,'Complete Archives native artifact is pinned');
+  let preview=archivePreview;
+  for(const amendment of [...archiveAmendments.patches].reverse()){
+    assert.notEqual(amendment.after,amendment.before);
+    assert.equal(preview.split(amendment.after).length-1,1,'Exact Archives amendment occurs once: '+amendment.label);
+    preview=preview.replace(amendment.after,amendment.before);
+  }
+  assert.equal(sha(preview),archiveAmendments.beforeSha256,'Reversing only eight Archives literals restores the complete immutable main');
+  assert.equal(settingsSha(preview),settings.beforeSha256,'Both amendments recover the frozen Settings parent');
+  let settingsOnly=preview;
+  for(const patch of settings.patches){assert.equal(settingsOnly.split(patch.before).length-1,1);settingsOnly=settingsOnly.replace(patch.before,patch.after);}
+  assert.equal(settingsSha(settingsOnly),settings.afterSha256,'Reapplying only Settings recovers its complete reviewed artifact');
+
   const preparationScript='<script src="./family-preparations.js"></script>';
   assert.equal(preview.split(preparationScript).length-1,1,'Preparation native writer has one exact script inclusion');
   // E05 deliberately extends this one existing writer. Browser e05-native.cjs
@@ -39,6 +95,7 @@ test('preview V5 source matches original except isolated storage and approved E0
     return text;
   };
   assert.equal(outerSha(maisonSource),outer.maisonFixtureSha256,'Frozen Maison fixture unchanged');
+  assert.equal(contacts.beforeSha256,outer.composedSha256,'Frozen Maison/Role/Contracts parent remains unchanged');
   assert.equal(outerSha(preview),outer.composedSha256,'Complete Maison/Role/Contracts native artifact pinned');
   assert.equal(outerSha(reverseNative(preview,nativeRole)),maison.afterSha256,'Removing Role restores the exact Maison parent artifact');
   familyNormalized=reverseNative(preview,maison);

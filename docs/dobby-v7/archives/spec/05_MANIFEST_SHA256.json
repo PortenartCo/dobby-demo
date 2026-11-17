@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "file": "00_LIRE_AVANT_LANCEMENT.md",
+      "bytes": 2948,
+      "sha256": "ca6f05d46869a1faedfd2f559793d1047e6cd07f82593e2db341493d7cb39fb7"
+    },
+    {
+      "file": "01_PROMPT_CODEX.md",
+      "bytes": 9768,
+      "sha256": "b6ff052c2f54e6704db8633e7bacc120e8608723a09274d3c4017edf04c923cd"
+    },
+    {
+      "file": "02_CAHIER_DES_CHARGES.md",
+      "bytes": 10480,
+      "sha256": "ffe9f23aa50454595ac4d40caac1640a84aba9d57f1087b0f8cb7170c1ece1bd"
+    },
+    {
+      "file": "03_TESTS_RECETTE.md",
+      "bytes": 6943,
+      "sha256": "36ac0faaa2bc221e500750ba9627f60d75304c80499c86276717c8f3bbe7ff36"
+    },
+    {
+      "file": "04_REFERENCES_TECHNIQUES.md",
+      "bytes": 4446,
+      "sha256": "b4ce007b35cec931501dec65b584e70237992e337419d61a867c87f592de7a02"
+    },
+    {
+      "file": "assets/Source-Stitch-22-original.zip",
+      "bytes": 1601305,
+      "sha256": "55a88c1869895745a3b889143b82966fdf333e789315c8084b157795b3f7a890"
+    },
+    {
+      "file": "assets/Stitch22-DESIGN.md",
+      "bytes": 12042,
+      "sha256": "6db2e022f83a3f57c0e1249a9a0aa73e9213a1939ceda9172267a727b304e4db"
+    },
+    {
+      "file": "assets/Stitch22-screen.png",
+      "bytes": 1606674,
+      "sha256": "b85417c240b1fb4f02b2e20cddf589a747af596d63cb28ca6ddccec48a40f5b8"
+    },
+    {
+      "file": "captures_revue/01_ancien_bandeau_horloge.png",
+      "bytes": 274395,
+      "sha256": "4225469fb042a099b8374acf1cbe32f2b9504554977d5669f29be53b09365ef6"
+    },
+    {
+      "file": "captures_revue/02_cartouche_a_deplacer.png",
+      "bytes": 6175,
+      "sha256": "169a392c75bebda30780e0b87c4e858155928c661c3c4121065848fd20caa036"
+    },
+    {
+      "file": "captures_revue/03_recherche_chevauchement.png",
+      "bytes": 14427,
+      "sha256": "dbaa6c703aacaf420fa2fcb30ca22638c2a5edcdfd2274ab1a569d11bc914a68"
+    },
+    {
+      "file": "captures_revue/04_filtres_a_supprimer.png",
+      "bytes": 8296,
+      "sha256": "6ac8dfc380f006a08f586f990328f71e9ac10bbb5e64f66e27c481825485e1d3"
+    },
+    {
+      "file": "captures_revue/05_bloc_actions_archives_a_supprimer.png",
+      "bytes": 56870,
+      "sha256": "a2bb02b6ba64c60b0d8c41a7817c6cc9407694a9bdb9bb020d6cb80197a4e0d6"
+    },
+    {
+      "file": "captures_revue/06_sauvegarde_et_partage_a_supprimer.png",
+      "bytes": 48571,
+      "sha256": "62f2e926faa628eb3b46eb08fd09d1f0732e66d504dbc4b4ec0394bf901c91f5"
+    }
+  ],
+  "checks": 56,
+  "baseline": "54d74b9448a1c518d8a3c483cd4deaea1e493748"
+}

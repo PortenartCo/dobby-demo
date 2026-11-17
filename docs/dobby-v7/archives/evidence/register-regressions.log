@@ -1,0 +1,25 @@
+
+COMMAND: node essai-stitch-v7/tests/register-documents.cjs
+REGISTER_DOCUMENTS_PASS 320
+REGISTER_DOCUMENTS_PASS 390
+EXIT: 0
+
+COMMAND: node essai-stitch-v7/tests/register-house.cjs
+REGISTER_HOUSE_PASS 320 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+REGISTER_HOUSE_PASS 390 native equipment/log/files, persistence, variants, backup bytes, preview and cancellation; destructive restore never executed
+EXIT: 0
+
+COMMAND: node essai-stitch-v7/tests/register-family.cjs
+REGISTER_FAMILY_PASS 320 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+REGISTER_FAMILY_PASS 390 native contact/memo/list CRUD, cancel, reload, search, empty and stale routes
+EXIT: 0
+
+COMMAND: node essai-stitch-v7/tests/register-preservation.cjs
+REGISTER_PRESERVATION_PASS 320 opaque fields protected, existing category retained through native save
+REGISTER_PRESERVATION_PASS 390 opaque fields protected, existing category retained through native save
+EXIT: 0
+
+COMMAND: node essai-stitch-v7/tests/register-navigation.cjs
+REGISTER_NAVIGATION_PASS 320 four roots, five menu destinations, preserved removed routes, source back/forward/reload and no record contamination
+REGISTER_NAVIGATION_PASS 390 four roots, five menu destinations, preserved removed routes, source back/forward/reload and no record contamination
+EXIT: 0

@@ -1,0 +1,51 @@
+{
+  "baseCommit": "a4190bb3b1b2fd95995e33dbce09ffb31c77614c",
+  "beforeSha256": "1c74df97488565a83b14fc71a26c8b582fd9de85849fd678e48f4fdde9594a5a",
+  "afterSha256": "ca22699e050b8df55247cb326fc86625211b70a2834608f10a1c6b4584d2bea1",
+  "patches": [
+    {
+      "label": "1",
+      "before": "else st.houseItems[idx]=obj;",
+      "after": "else st.houseItems[idx]={...st.houseItems[idx],...obj};"
+    },
+    {
+      "label": "2",
+      "before": "else st.familyNotes[i]=d;",
+      "after": "else st.familyNotes[i]={...st.familyNotes[i],...d};"
+    },
+    {
+      "label": "3",
+      "before": "st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);",
+      "after": "r={...st.famContacts.find(v=>v.id===r.id),...r};st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);"
+    },
+    {
+      "label": "4",
+      "before": "</body></html>",
+      "after": "<script src=\"./family-archives.js\"></script></body></html>"
+    },
+    {
+      "label": "partial-backup-1",
+      "before": "data.items.forEach(x=>existing.set(x.id,x));",
+      "after": "data.items.forEach(x=>existing.set(x.id,window.DobbyArchiveSources.mergeRestored('equipment',existing.get(x.id),x)));"
+    },
+    {
+      "label": "partial-backup-2",
+      "before": "p.notes.forEach(x=>notes.set(x.id,x));",
+      "after": "p.notes.forEach(x=>notes.set(x.id,window.DobbyArchiveSources.mergeRestored('localNotes',notes.get(x.id),x)));"
+    },
+    {
+      "label": "partial-house-access-preflight",
+      "before": "if(!confirm('Fusionner les fiches de cette sauvegarde avec les données locales ?'))return;",
+      "after": "for(const row of data.items)window.DobbyArchiveSources.mergeRestored('equipment',st.houseItems.find(x=>x.id===row.id),row);for(const log of data.logs)if(st.houseItems.some(x=>x.id===log?.itemId))window.DobbyArchiveSources.get('equipment',log.itemId);if(!confirm('Fusionner les fiches de cette sauvegarde avec les données locales ?'))return;"
+    },
+    {
+      "label": "partial-documents-access-preflight",
+      "before": "if(!confirm('Fusionner les fiches et mémos de la sauvegarde ? Les fichiers joints ne sont pas restaurés.'))return;",
+      "after": "for(const [source,rows,key]of [['documents',p.documents,'familyDocs'],['localNotes',p.notes,'familyNotes']])for(const row of rows)window.DobbyArchiveSources.mergeRestored(source,st[key].find(x=>x.id===row.id),row);if(!confirm('Fusionner les fiches et mémos de la sauvegarde ? Les fichiers joints ne sont pas restaurés.'))return;"
+    }
+  ],
+  "frozenParentFixture": {
+    "path": "essai-stitch-v5-famille/tests/fixtures/archives-native-extensions.json",
+    "sha256": "6d2ee4ef7f90b4cc0b71aa06b42cfccf7af0e2ee28e4b8c81b0c107814380b32"
+  }
+}

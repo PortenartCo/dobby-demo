@@ -1,0 +1,20 @@
+
+> test:contacts
+> node --test contacts-sync.test.mjs && node contacts-v7.cjs && node contacts-errors.cjs
+
+✔ native family payload transfers all seven contact fields and metadata between clients (21.018266ms)
+✔ native pending contacts survive offline reload, then sync without duplicate IDs (7.078445ms)
+✔ conflicting contact edits retain both versions until the native resolution action (5.999012ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 118.804524
+CONTACTS_V7_PASS 320 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_V7_PASS 390 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_V7_PASS 768 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_V7_PASS 1440 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_ERRORS_PASS stale edit, quota rollback/retry, legacy category, detail reload, dependent read-only gate

@@ -192,7 +192,7 @@ async function visibleLabels(page) {
             assert.equal((await page.locator('main h1').innerText()).trim(), 'Paramètres');
             assert.equal(await page.locator('body > nav [data-e01-destination="5"]').getAttribute('aria-current'), 'page', 'Settings belongs to the Menu dock destination');
             assert.equal(await page.locator('main [data-e01-toggle]').count(), 0);
-            assert.equal(new URL(await page.getByRole('link', {name: 'Retour au Menu', exact: true}).getAttribute('href'), page.url()).hash, '#menu');
+            assert.equal(await page.locator('[data-settings-card]').count(), 3, 'Settings exposes exactly three rubrics');
           } else {
             assert.ok((await page.locator('main h1').innerText()).trim().length > 0, 'Destination has a real heading');
           }
@@ -209,7 +209,7 @@ async function visibleLabels(page) {
 
         await page.locator('main a.module-item').nth(5).click();
         await familyView(page, 'settings');
-        await page.getByRole('link', {name: 'Retour au Menu', exact: true}).click();
+        await page.locator('body > nav [data-e01-destination="5"]').click();
         await familyView(page, 'menu');
         await page.locator('main a.module-item').nth(5).click();
         await familyView(page, 'settings');

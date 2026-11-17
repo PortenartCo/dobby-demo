@@ -1,0 +1,29 @@
+{
+  "baseCommit": "521c9199ac18cb71b2fbbd2717ded2f7781aa4db",
+  "file": "essai-stitch-v5-famille/index.html",
+  "beforeSha256": "1c74df97488565a83b14fc71a26c8b582fd9de85849fd678e48f4fdde9594a5a",
+  "afterSha256": "b4231dc1a3c6dff78108aafc9690b111e782c672d33d9e74d97cae0ff91866e3",
+  "reason": "Seven-field native contact form; stable metadata-preserving save and atomic rollback on save/delete storage failure. All historical source proofs remain unchanged.",
+  "tests": [
+    "essai-stitch-v7/tests/contacts-v7.cjs",
+    "essai-stitch-v7/tests/contacts-errors.cjs",
+    "essai-stitch-v7/tests/contacts-sync.test.mjs"
+  ],
+  "patches": [
+    {
+      "label": "Native Contacts amendment 1",
+      "before": " if(action==='edit')return `<button class=\"btn secondary small\" data-extra=\"contacts\">← Répertoire</button><h1>${r.id?'Modifier le contact':'Nouveau contact'}</h1><div class=\"card\"><form id=\"xContactForm\"><input type=\"hidden\" name=\"id\" value=\"${xesc(r.id)}\">${xformField('Nom *','name',r.name,'text',true)}${xformField('Rôle / relation','role',r.role)}${xformField('Téléphone','phone',r.phone,'tel')}${xformField('Courriel','email',r.email,'email')}${xformField('Notes','note',r.note)}${xformClose()}`;\n",
+      "after": " if(action==='edit')return `<button class=\"btn secondary small\" data-extra=\"contacts\">← Répertoire</button><h1>${r.id?'Modifier le contact':'Nouveau contact'}</h1><div class=\"card\"><form id=\"xContactForm\"><input type=\"hidden\" name=\"id\" value=\"${xesc(r.id)}\">${xformField('Nom *','name',r.name,'text',true)}${xformField('Catégorie','category',r.category)}${xformField('Fonction ou spécialité','role',r.role)}${xformField('Téléphone','phone',r.phone,'tel')}${xformField('Courriel','email',r.email,'email')}<label>Adresse postale</label><textarea name=\"address\" maxlength=\"500\">${xesc(r.address)}</textarea><label>Notes libres</label><textarea name=\"note\" maxlength=\"500\">${xesc(r.note)}</textarea>${xformClose()}`;\n"
+    },
+    {
+      "label": "Native Contacts amendment 2",
+      "before": " if(a==='contactdelete'&&confirm('Supprimer ce contact ?'))st.famContacts=st.famContacts.filter(r=>r.id!==id);\n",
+      "after": " if(a==='contactdelete'){\n  if(!confirm('Supprimer ce contact ?'))return;\n  const before=st.famContacts;st.famContacts=before.filter(r=>r.id!==id);\n  try{save();}catch(error){st.famContacts=before;return;}\n  render();return;\n }\n"
+    },
+    {
+      "label": "Native Contacts amendment 3",
+      "before": " if(id==='xContactForm'){let r={id:xval(d,'id')||xuid(),name:xval(d,'name',140),role:xval(d,'role'),phone:xval(d,'phone'),email:xval(d,'email'),note:xval(d,'note',500)};if(!r.name)return;st.famContacts=st.famContacts.filter(v=>v.id!==r.id).concat(r);st.extraPage='contacts'}\n",
+      "after": " if(id==='xContactForm'){\n  const before=st.famContacts,previousPage=st.extraPage,contactId=xval(d,'id')||xuid(),existing=before.find(row=>row.id===contactId);\n  const r={...existing,id:contactId,name:xval(d,'name',140),category:xval(d,'category'),role:xval(d,'role'),phone:xval(d,'phone',100),email:xval(d,'email'),address:xval(d,'address',500),note:xval(d,'note',500)};\n  if(!r.name)return;\n  st.famContacts=existing?before.map(row=>row.id===contactId?r:row):[...before,r];st.extraPage='contacts';\n  try{save();}catch(error){st.famContacts=before;st.extraPage=previousPage;return;}\n  render();return;\n }\n"
+    }
+  ]
+}

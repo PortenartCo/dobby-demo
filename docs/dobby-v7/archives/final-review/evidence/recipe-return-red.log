@@ -1,0 +1,12 @@
+ARCHIVES_CONSULTATION_RACE_PASS pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS document-pending-file-chooser
+ARCHIVES_CONSULTATION_RACE_PASS stale-restore-confirmation
+ARCHIVES_CONSULTATION_RACE_PASS denied-detail-restore
+page.waitForURL: Timeout 15000ms exceeded.
+=========================== logs ===========================
+waiting for navigation until "load"
+============================================================
+    at /workspace/dobby-demo/essai-stitch-v7/tests/archives-consultation-races.cjs:46:10 {
+  log: [],
+  name: 'TimeoutError'
+}

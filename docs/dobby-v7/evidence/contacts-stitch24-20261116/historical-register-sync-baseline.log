@@ -1,0 +1,5 @@
+page.waitForFunction: Timeout 12000ms exceeded.
+    at /workspace/dobby-contacts-baseline/essai-stitch-v7/tests/register-sync.cjs:25:464 {
+  log: [],
+  name: 'TimeoutError'
+}
