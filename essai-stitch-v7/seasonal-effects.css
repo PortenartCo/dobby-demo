@@ -76,6 +76,23 @@
 [data-seasonal-welcome]>.seasonal-caption,[data-seasonal-welcome]>.seasonal-motif { display:none; }
 [data-seasonal-welcome] .seasonal-art-left,[data-seasonal-welcome] .seasonal-art-right { width:76px; max-width:20%; opacity:.65; }
 [data-seasonal-welcome] .seasonal-garland { top:-9px; left:20%; width:60%; height:30px; opacity:.7; }
+/* Page titles carry a compact pair of event emblems. Existing illustrations get
+   edge accents; the complete home frame stays exclusive to the welcome screen. */
+[data-seasonal-page-host] { position:relative; isolation:isolate; box-sizing:border-box; border:1px solid var(--seasonal-accent)!important; border-radius:14px; background:linear-gradient(115deg,var(--seasonal-deep),#251b17 52%,var(--seasonal-deep))!important; color:var(--seasonal-soft)!important; box-shadow:inset 0 0 0 4px #d4b47710; }
+[data-seasonal-page-host="heading"] { width:100%; min-width:0; max-width:100%; min-height:78px; padding:12px 64px; margin-inline:0; display:flex; align-items:center; justify-content:center; text-align:center; }
+[data-seasonal-page-host="ledger"] { padding-bottom:54px!important; }
+[data-seasonal-page] { position:absolute; inset:0; z-index:-1; overflow:hidden; border-radius:inherit; }
+[data-seasonal-page]>.seasonal-motif,[data-seasonal-page]>.seasonal-caption,[data-seasonal-section]>.seasonal-motif,[data-seasonal-section]>.seasonal-caption { display:none; }
+[data-seasonal-page] .seasonal-art-left,[data-seasonal-page] .seasonal-art-right { top:50%; width:62px; max-width:none; height:62px; transform:translateY(-50%); }
+[data-seasonal-page] .seasonal-art-left { left:2px; }
+[data-seasonal-page] .seasonal-art-right { right:2px; }
+[data-seasonal-page-host="ledger"] [data-seasonal-page] .seasonal-art-left,[data-seasonal-page-host="ledger"] [data-seasonal-page] .seasonal-art-right { top:auto; bottom:3px; width:46px; height:46px; transform:none; }
+[data-seasonal-page-host="ledger"] [data-seasonal-page]::after { content:''; position:absolute; bottom:20px; left:58px; right:58px; height:8px; border-block:1px solid var(--seasonal-accent); background:radial-gradient(circle,var(--seasonal-accent) 1px,transparent 2px) center/18px 8px; opacity:.8; }
+[data-seasonal-section-host] { position:relative; isolation:isolate; }
+[data-seasonal-section] { position:absolute; inset:0; z-index:3; border-radius:inherit; background:linear-gradient(90deg,var(--seasonal-deep),transparent 22% 78%,var(--seasonal-deep)); box-shadow:inset 0 -2px var(--seasonal-accent); }
+[data-seasonal-section-host]>:not(img):not([data-seasonal-section]) { z-index:4; }
+[data-seasonal-section] .seasonal-art-left,[data-seasonal-section] .seasonal-art-right { top:auto; bottom:-6px; width:24%; max-width:98px; height:auto; }
+@media(min-width:768px) { [data-seasonal-page-host="heading"] { min-height:88px; padding-inline:94px; } [data-seasonal-page] .seasonal-art-left,[data-seasonal-page] .seasonal-art-right { width:80px; height:80px; } [data-seasonal-section] .seasonal-art-left,[data-seasonal-section] .seasonal-art-right { max-width:132px; } }
 /* Secondary motion touches opacity/transform only. Native effects and OS motion
    preference gate it; the illustrated event remains complete when static. */
 .e01-effects-on:not(.seasonal-paused) [data-seasonal-header] .seasonal-bulb { animation:seasonal-lights 4s ease-in-out infinite alternate; }

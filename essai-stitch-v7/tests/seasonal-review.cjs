@@ -23,6 +23,16 @@ const out=process.env.DOBBY_SEASONAL_EVIDENCE||path.resolve(__dirname,'../../doc
  await preset.selectOption('2026-12-25');await p.waitForFunction(()=>document.documentElement.dataset.seasonalTheme==='christmas');
  assert.equal((await date()).now,actual.now);assert.ok(Math.abs((await date()).engine-actual.engine)<10000,'engine business clock remains real');
  fs.mkdirSync(out,{recursive:true});await p.screenshot({path:path.join(out,'review-controls-390.png')});
+ await details.locator('summary').click();
+ for(const index of [0,1,2,3,4,5]){
+  await p.locator('body>nav [data-e01-destination="'+index+'"]').click();
+  await p.waitForFunction(index=>{if(!window.DobbyStitchV7?.ready||document.documentElement.classList.contains('dv7-loading'))return false;const d=document.body.dataset;return [()=>d.dv7Screen==='traverse'&&!d.familyView,()=>d.dv7Screen==='missions'&&!d.familyView,()=>d.cuisineView==='taverne',()=>d.cuisineView==='shop',()=>d.familyView==='salon',()=>d.familyView==='menu'][index]();},index);
+  await p.waitForFunction(()=>document.documentElement.dataset.seasonalTheme==='christmas');
+  assert.ok(await p.locator('main [data-seasonal-decoration] svg use').count()>=2,'The same preview event dresses dock destination '+index);
+  assert.equal((await date()).now,actual.now,'Cross-page preview navigation leaves the actual clock unchanged');
+ }
+ await p.locator('body>nav [data-e01-destination="0"]').click();await p.waitForFunction(()=>window.DobbyStitchV7?.ready&&document.body.dataset.dv7Screen==='traverse'&&!document.body.dataset.familyView);
+ await details.locator('summary').click();
  await input.fill('2021-02-14');await input.dispatchEvent('change');await p.waitForFunction(()=>document.documentElement.dataset.seasonalTheme==='valentine');
  for(const year of [2026,2027]){await input.fill(year+'-01-31');await input.dispatchEvent('change');await p.waitForFunction(expected=>document.documentElement.dataset.seasonalDate===expected,year+'-01-31');assert.equal(await p.locator('[data-seasonal-burst]').count(),1,'one burst when changing the preview year');}
  await p.waitForTimeout(5200);assert.equal(await p.locator('[data-seasonal-burst]').count(),0,'all rune nodes are reclaimed');

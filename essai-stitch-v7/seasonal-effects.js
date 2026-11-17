@@ -43,6 +43,13 @@ window.DobbySeasonal=(()=>{
  }
  const svg=(content,cls,box='0 0 180 260')=>`<svg class="${cls}" viewBox="${box}" aria-hidden="true" focusable="false">${content}</svg>`;
  function artwork(theme,place){
+  if(place==='heading'||place==='ledger'){
+   const emblem={christmas:'tree',halloween:'pumpkin','new-year':'ribbon'}[theme]||eventMotifs[theme][1];
+   const companion={christmas:'holly',halloween:'bat','new-year':'star'}[theme]||eventMotifs[theme][0];
+   const node=document.createElement('span');node.className='seasonal-art';node.setAttribute('aria-hidden','true');node.inert=true;
+   node.innerHTML=svg(use(emblem,8,8,84,84),'seasonal-art-left','0 0 100 100')+svg(use(companion,8,8,84,84),'seasonal-art-right','0 0 100 100');
+   return node;
+  }
   let lowerLeft='',lowerRight='';
   const [branch,centre,foot]=eventMotifs[theme];
   let left=use(branch,0,0,108,108,place==='header'?-38:0),right=use(branch,65,0,108,108,place==='header'?38:0);
@@ -77,18 +84,45 @@ window.DobbySeasonal=(()=>{
  function clearBurst(){clearTimeout(burstTimer);burstTimer=null;burst?.remove();burst=null;}
  function removeDecorations(){
   clearBurst();document.querySelectorAll('[data-seasonal-decoration]').forEach(node=>node.remove());
-  document.querySelectorAll('[data-seasonal-panel-host]').forEach(node=>delete node.dataset.seasonalPanelHost);
+  for(const attribute of ['data-seasonal-panel-host','data-seasonal-page-host','data-seasonal-section-host'])document.querySelectorAll('['+attribute+']').forEach(node=>node.removeAttribute(attribute));
   delete root.dataset.seasonalLevel;delete root.dataset.seasonalTheme;delete root.dataset.seasonalSeason;delete root.dataset.seasonalDate;
   root.style.removeProperty('--seasonal-glyph');
  }
  function ornament(parent,attribute,result){
   let node=parent.querySelector(':scope > ['+attribute+']');
   if(node?.dataset.theme===result.theme)return node;
-  node?.remove();node=document.createElement('div');node.setAttribute(attribute,'');node.dataset.seasonalDecoration='';node.dataset.theme=result.theme;
-  const glyph=document.createElement('span');glyph.className='seasonal-motif';glyph.textContent=motifs[result.theme];glyph.setAttribute('aria-hidden','true');
-  const label=document.createElement('span');label.className='seasonal-caption';label.textContent=result.label;
-  node.append(glyph,label);if(eventMotifs[result.theme]){library();node.append(artwork(result.theme,attribute==='data-seasonal-header'?'header':attribute==='data-seasonal-welcome'?'welcome':'scene'));}
+  node?.remove();node=document.createElement(attribute==='data-seasonal-page'?'span':'div');node.setAttribute(attribute,'');node.dataset.seasonalDecoration='';node.dataset.theme=result.theme;
+  const vectorOnly=['data-seasonal-page','data-seasonal-section'].includes(attribute);
+  if(vectorOnly)node.setAttribute('aria-hidden','true');
+  else{
+   const glyph=document.createElement('span');glyph.className='seasonal-motif';glyph.textContent=motifs[result.theme];glyph.setAttribute('aria-hidden','true');
+   const label=document.createElement('span');label.className='seasonal-caption';label.textContent=result.label;node.append(glyph,label);
+  }
+  if(eventMotifs[result.theme]){library();node.append(artwork(result.theme,attribute==='data-seasonal-header'?'header':attribute==='data-seasonal-welcome'?'welcome':attribute==='data-seasonal-page'?parent.dataset.seasonalPageHost:attribute==='data-seasonal-section'?'section':'scene'));}
   parent.append(node);return node;
+ }
+ const familyPages=new Set(['salon','menu','members','agenda','health','memos','contacts','house','house-1','documents','documents-1','document-library','contracts','contracts-1','lists','settings','chat']);
+ const cuisinePages=new Set(['taverne','recipes','shop','shop-1']);
+ function hosts(){
+  const main=document.querySelector('body>main'),body=document.body.dataset;
+  // Route attributes can outlive a template. The current main owns the view.
+  const cuisine=main?.classList.contains('cu-enter')?body.cuisineView:null;
+  // Members replace main's presentation classes; native Family mode persists.
+  const family=!cuisine&&(main?.classList.contains('fa-enter')||document.body.classList.contains('fa-active'))?body.familyView:null;
+  const home=body.dv7Screen==='traverse'&&!family&&!cuisine;
+  const primary=family?familyPages.has(family):cuisine?cuisinePages.has(cuisine):body.dv7Screen==='missions';
+  const image=main?.querySelector('img[alt*="Dobby"],img[alt="La Taverne Gourmande"]');
+  const heading=primary?main?.querySelector('h1'):null;
+  const ledger=cuisine?.startsWith('shop')?heading?.closest('.bg-surface-container'):null;
+  return {home,scene:home?image?.parentElement:null,title:ledger||heading,section:!home&&primary?image?.parentElement:null,composition:ledger?'ledger':'heading'};
+ }
+ function reconcile(attribute,parent,result){
+  for(const node of document.querySelectorAll('['+attribute+']'))if(node.parentElement!==parent)node.remove();
+  if(parent)ornament(parent,attribute,result);
+ }
+ function reconcileHost(attribute,parent,value=''){
+  for(const node of document.querySelectorAll('['+attribute+']'))if(node!==parent)node.removeAttribute(attribute);
+  if(parent)parent.setAttribute(attribute,value);
  }
  function celebrate(scene,result,paused){
   if(!scene||result.theme!=='magic'||!preferences.effects||reduced.matches||paused){clearBurst();return;}
@@ -123,19 +157,20 @@ window.DobbySeasonal=(()=>{
   const paused=document.hidden||pageAway||root.classList.contains('dv7-loading')||!!(panel&&!panel.hidden);
   root.classList.toggle('seasonal-paused',paused);
   const header=document.querySelector('body > header[data-e01-chrome]');if(header)ornament(header,'data-seasonal-header',result);
-  const home=document.body.dataset.dv7Screen==='traverse'&&!document.body.dataset.familyView;
-  const scene=home?document.querySelector('main img[alt*="Dobby"]')?.parentElement:null;
-  if(scene)ornament(scene,'data-seasonal-scene',result);
-  else document.querySelectorAll('[data-seasonal-scene]').forEach(node=>node.remove());
+  const {scene,title,section,composition}=hosts();
+  reconcile('data-seasonal-scene',scene,result);
   const welcome=scene&&major.has(result.theme)?document.querySelector('main h1')?.parentElement.parentElement:null;
   document.querySelectorAll('[data-seasonal-panel-host]').forEach(node=>{if(node!==welcome){delete node.dataset.seasonalPanelHost;node.querySelector('[data-seasonal-welcome]')?.remove();}});
   if(welcome){welcome.dataset.seasonalPanelHost='';ornament(welcome,'data-seasonal-welcome',result);}
+  const event=!!eventMotifs[result.theme],page=event?title:null,edge=event?section:null;
+  reconcileHost('data-seasonal-page-host',page,composition);reconcileHost('data-seasonal-section-host',edge);
+  reconcile('data-seasonal-page',page,result);reconcile('data-seasonal-section',edge,result);
   celebrate(scene,result,paused);arm();
  }
  function schedule(){if(queued!==null||disposed)return;queued=requestAnimationFrame(()=>{queued=null;refresh();});}
  const observer=new MutationObserver(schedule);
  // Reconcile only when templates/chrome change, never poll or add an emitter.
- observer.observe(document.body,{childList:true,attributes:true,attributeFilter:['data-family-view']});
+ observer.observe(document.body,{childList:true,attributes:true,attributeFilter:['data-family-view','data-cuisine-view','data-dv7-screen']});
  const loadingObserver=new MutationObserver(schedule);
  loadingObserver.observe(root,{attributes:true,attributeFilter:['class']});
  const panelObserver=new MutationObserver(schedule),panel=document.getElementById('dv7-panel');
