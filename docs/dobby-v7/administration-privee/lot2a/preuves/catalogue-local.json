@@ -1,0 +1,5018 @@
+{
+  "scope": "LOCAL FICTIONAL SQL; no hosted catalog, HTTP/JWT or physical Storage verification",
+  "sources": [
+    {
+      "path": "essai-sync-v1/schema-review.sql",
+      "sha256": "dbb19832c5a6706a9820843715fb54cb5c90641665ee2ec2b31ab856e545b2f8"
+    },
+    {
+      "path": "sql-proposals/dobby-v2-grocery-shared-home.sql",
+      "sha256": "24eff9cf04b4405402a19fd5b5a2b7d9949440a423aea753948f8213f7ffa0e9"
+    },
+    {
+      "path": "sql-proposals/dobby-v2-modules.sql",
+      "sha256": "7feb02f2b0053eaf89bc9ba5fbc092deebb75fed225f224b78a282175b70a9c5"
+    },
+    {
+      "path": "docs/dobby-v7/stitch19-20/supabase/tests/catalog-fixture.sql",
+      "sha256": "6e7816ef74700e0904f577ec38e55b9ae3dc445d1d4600f04a75352cebe06b61"
+    },
+    {
+      "path": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "sha256": "96f2845158fdcc66621c3bdc69f0d5f227b5427e181e9afad6f15f87f1d0ea3d"
+    },
+    {
+      "path": "docs/dobby-v7/stitch19-20/supabase/11-apply-auth-schema-fallback.sql",
+      "sha256": "89ad617b164b6b94a6751da7ba6e6ee2d9a7eaf6a03206ad50b9083324692cc6"
+    },
+    {
+      "path": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "sha256": "f74c6913484d2c5914b8923058f268ab9edfb2579d92f49bc12723a7e43af5d7"
+    },
+    {
+      "path": "docs/dobby-v7/finalisation-socle/supabase/missions/01-apply.sql",
+      "sha256": "5f8cca31d1e79a0fa6bb8e4134470bdc483b53da4683feb672d544e4d5bd2b3a"
+    }
+  ],
+  "manifest": [
+    {
+      "signature": "public.dobby_v7_context()",
+      "kind": "read"
+    },
+    {
+      "signature": "public.dobby_v7_update_profile(jsonb,bigint)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_create_household(text,uuid)",
+      "kind": "create"
+    },
+    {
+      "signature": "public.dobby_v7_create_invitation(integer,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_preview_invitation(text)",
+      "kind": "preview"
+    },
+    {
+      "signature": "public.dobby_v7_accept_invitation(text,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_revoke_invitation(uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_bind_existing_member(uuid,text,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_update_magic(text,jsonb,bigint,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_update_member(text,jsonb,bigint,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_create_child_invitation(text,integer,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_preview_child_invitation(text)",
+      "kind": "preview"
+    },
+    {
+      "signature": "public.dobby_v7_accept_child_invitation(text,uuid)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_v7_family_capabilities()",
+      "kind": "public-flags"
+    },
+    {
+      "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)",
+      "kind": "closed"
+    },
+    {
+      "signature": "public.dobby_missions_v2_capabilities(uuid)",
+      "kind": "read"
+    },
+    {
+      "signature": "public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)",
+      "kind": "write"
+    },
+    {
+      "signature": "public.dobby_missions_v3_capabilities(uuid)",
+      "kind": "read"
+    },
+    {
+      "signature": "public.dobby_sync_stamper()",
+      "kind": "trigger"
+    },
+    {
+      "signature": "public.dobby_v2_grocery_stamp()",
+      "kind": "trigger"
+    },
+    {
+      "signature": "public.dobby_v2_modules_stamp()",
+      "kind": "trigger"
+    },
+    {
+      "signature": "dobby_socle_private.actor_context(uuid,boolean)",
+      "kind": "context"
+    },
+    {
+      "signature": "dobby_socle_private.is_parent(uuid)",
+      "kind": "predicate"
+    },
+    {
+      "signature": "dobby_socle_private.can_read(uuid)",
+      "kind": "predicate"
+    },
+    {
+      "signature": "dobby_socle_private.legacy_unlinked()",
+      "kind": "predicate"
+    },
+    {
+      "signature": "dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)",
+      "kind": "write"
+    }
+  ],
+  "missingDefinitions": [
+    "dobby_runes_private.assert_event(jsonb,boolean)",
+    "dobby_runes_private.assert_ledger(jsonb)",
+    "dobby_runes_private.assert_mission(jsonb)",
+    "dobby_runes_private.assert_payload(jsonb)",
+    "dobby_runes_private.event_key(jsonb)",
+    "dobby_runes_private.has_native_text(text)",
+    "dobby_runes_private.lock_active_membership(uuid)",
+    "dobby_runes_private.request_user_id()",
+    "dobby_runes_private.safe_integer(jsonb,text)",
+    "dobby_runes_private.same_award(jsonb,jsonb)",
+    "dobby_runes_private.utf16_length(text)",
+    "dobby_runes_private.valid_date(text)"
+  ],
+  "before": {
+    "routines": [
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "assert_active",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "2eaa20aa8eae459be384c60d34062147",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.assert_active()",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "df08bfe28dd492d3159455a8ee42780e",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "assert_owner",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "0370a05591dff831ee2a34dd497ab602",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.assert_owner()",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a3eed42cbe7920353f01d77d0dda8bf5",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "bootstrap",
+        "owner": "postgres",
+        "schema": "dobby_access_private",
+        "bodyMD5": "63973431ec9c3b7e7e59874dd064382d",
+        "language": "plpgsql",
+        "arguments": "p_manifest jsonb, p_operation_id uuid",
+        "signature": "dobby_access_private.bootstrap(jsonb,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "c4494c7a60719f2f4b499f6107d6cc42",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,postgres=X/dobby_access_writer}",
+        "anon": false,
+        "name": "enable_session_guard",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "406cbb2f87d7dea591e0f6c4d90f087a",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.enable_session_guard()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b6d99712ccd393bdbf77a8f5e7f5313d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "is_active",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "7f3830f9d660d937f6cc0b3442d81f54",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.is_active()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6a5d7dade092ce414bc063c75c8818ea",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "protect_owner",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "be8c289f8f6c7bde357e12361a67ff1d",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.protect_owner()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "3375e9617372601eac68c5bf8014581d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "reject_history_mutation",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "1730a1b62d91af3cbac35defb9d38312",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.reject_history_mutation()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cbf8d184d2a2dad96f41b4f7dbd900ea",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "request_identity",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "45ab5b25e8db10fbb2badfd5dccff947",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.request_identity()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "4a0bf888bd55393db043dd7b1c059bbc",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_session_reader=X/dobby_access_session_reader,dobby_access_writer=X/dobby_access_session_reader}",
+        "anon": false,
+        "name": "session_is_live",
+        "owner": "dobby_access_session_reader",
+        "schema": "dobby_access_private",
+        "bodyMD5": "50c8a15b049d77355f9a81c930dc937c",
+        "language": "plpgsql",
+        "arguments": "p_user uuid, p_session uuid, p_after timestamp with time zone",
+        "signature": "dobby_access_private.session_is_live(uuid,uuid,timestamp with time zone)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "dabb22db1b900207e73f86dd52f24477",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "guard_missions",
+        "owner": "postgres",
+        "schema": "dobby_runes_private",
+        "bodyMD5": "09794b0f8e37a5c5579eb06b6c6fbd3e",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_runes_private.guard_missions()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "00ed58056fc424c3da666e21afdd427c",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "accept_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "ca2d468a1b8ec7c4401290f0c0bac3f3",
+        "language": "plpgsql",
+        "arguments": "p_token text, p_operation_id uuid, p_kind text",
+        "signature": "dobby_socle_private.accept_invitation(text,uuid,text)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "18506b7f0ec65545afbc4d9b3cbd87a1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "actor",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "c64bf32aeb683175f5ebb9b433284bfc",
+        "language": "sql",
+        "arguments": "",
+        "signature": "dobby_socle_private.actor()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "06e84f12812114dcfb50b03e0cd1857b",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,dobby_missions_v2_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "actor_context",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "d48e72bb46e5864d2bb39bde451da3dc",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_lock boolean",
+        "signature": "dobby_socle_private.actor_context(uuid,boolean)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b5c7bdbecee13d0ec7151de89597be25",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "add_pending_member",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "52b9ed6e79041b6860d6a5d614ed98f1",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_household uuid",
+        "signature": "dobby_socle_private.add_pending_member(uuid,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6cb6282105d286dcb97d84a618c05741",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "assert_child_api_enabled",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "7e0fb1bfd3421ebe1e1fca988126897a",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_socle_private.assert_child_api_enabled()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d9114cef1344f3d79aaa42a489ceb34d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "can_read",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "05141408bf4ae637b333a2e6a5aafcd2",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_socle_private.can_read(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "ae09d747b76ca165bbcc0df039b18d4a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "create_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "8d86dfd05690f3cd5a695245a0bb405e",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "dobby_socle_private.create_invitation(text,integer,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0dac9014418ca6c21111b3b21644cdac",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "digest",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "71077961532fcc08260ff4a61ac3e172",
+        "language": "sql",
+        "arguments": "p_value jsonb",
+        "signature": "dobby_socle_private.digest(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "485c0728598d8e67c7170204f13e8bd6",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "invitation_token",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "1c9106d624456610bc0f25a72f2c6b34",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid",
+        "signature": "dobby_socle_private.invitation_token(uuid,uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "39de5d8de8983c972f0ae01369f7b67a",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "is_parent",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "38dc1537cf6c738321f205db9e27f571",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_socle_private.is_parent(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b5e0f3bd223b15925c66cd2bc7f8bb25",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "legacy_unlinked",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "0ba1cda9f3427d826d9673eec01605c8",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_socle_private.legacy_unlinked()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "14b41f1547e2e110b932797ac720e3c3",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "lock_actor",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "03dc705b3fa29d4d04b43bb72db0c8c5",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_socle_private.lock_actor()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d8c9da2d41c76af87cb3be8ec5d0a563",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "members",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "6fe586e71b025127c67acfe8fae2f04f",
+        "language": "plpgsql",
+        "arguments": "p_payload jsonb",
+        "signature": "dobby_socle_private.members(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e470111c05e60ee25f4a40903025cf9d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_allocations",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "4497ec610f091706612a5a1c303bbf4b",
+        "language": "plpgsql",
+        "arguments": "p_total numeric, p_ids jsonb",
+        "signature": "dobby_socle_private.missions_allocations(numeric,jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0d0074e090baf651c7e069d3babeae2a",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_event",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "58ee6ad82058961cafc732b88dc5e5c5",
+        "language": "plpgsql",
+        "arguments": "p_event jsonb",
+        "signature": "dobby_socle_private.missions_assert_event(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b9fd4b597b956093189832d0ebe83959",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_ledger",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "81d013b4c476dc0fef9fcde935077944",
+        "language": "plpgsql",
+        "arguments": "p_rows jsonb",
+        "signature": "dobby_socle_private.missions_assert_ledger(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "1088d45c8ed73f2522f95aca4b62f7fa",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_mission",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "64a636293875714bcd6c706136fabaf1",
+        "language": "plpgsql",
+        "arguments": "p_mission jsonb",
+        "signature": "dobby_socle_private.missions_assert_mission(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "96f1976370987398ac4d3d2ff224d107",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_payload",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "b1fbac52cd72e7b8d237a0d7325a21c9",
+        "language": "plpgsql",
+        "arguments": "p_payload jsonb",
+        "signature": "dobby_socle_private.missions_assert_payload(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e4ff04159cd4c644d297b04eb3b24a32",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_id_key",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "052f015c4c81719f6859bcbdc117942e",
+        "language": "sql",
+        "arguments": "p_value text",
+        "signature": "dobby_socle_private.missions_id_key(text)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "5e3f167cad1338c881cf0a7b37650550",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_occurrence_valid",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "08662de59cd14232c521d8561e76b798",
+        "language": "plpgsql",
+        "arguments": "p_mission jsonb, p_missions jsonb",
+        "signature": "dobby_socle_private.missions_occurrence_valid(jsonb,jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "2e1127737283b7b45ccf5eab5ebf67e9",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,dobby_missions_v2_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_reject_v3_operation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "7c248678e6230c0a6c76cdc2cefd30ff",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_operation uuid",
+        "signature": "dobby_socle_private.missions_reject_v3_operation(uuid,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "796df9162b60e842ae6e63ba9793bde1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "operation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "90ef473f47076bfdbf5486dbe68e2f9b",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb",
+        "signature": "dobby_socle_private.operation(uuid,uuid,text,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "bd05a813aedef16a0cd9306ef713e620",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "parent_context",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "26115b6b62d35e8cdd5f94ca8e69a209",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_socle_private.parent_context(uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "7f2e0e52495a2f8fb9c6200f82880b8a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "patch_profile",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "0c7a6219944eb2d5c1de35334ed7f496",
+        "language": "plpgsql",
+        "arguments": "p_member jsonb, p_profile jsonb",
+        "signature": "dobby_socle_private.patch_profile(jsonb,jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "818a3d1b5590f26cad664bfae152e9eb",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "preview_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "ab75b223e47ee2b4201fa5f3fb444c14",
+        "language": "plpgsql",
+        "arguments": "p_token text, p_kind text",
+        "signature": "dobby_socle_private.preview_invitation(text,text)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d4d0e966aa7f41a05efc3b6cbfab8a89",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "receipt",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "2f37ef66b63957b9fff005e3f4e00b8e",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb, p_result jsonb",
+        "signature": "dobby_socle_private.receipt(uuid,uuid,text,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "629ed1582d02863c06eb37846888c487",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "validate_profile",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "adae563a4a43e133acea28f0cfaf017c",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb",
+        "signature": "dobby_socle_private.validate_profile(jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "05fd818e1521663db31c980c8330a432",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{postgres=X/postgres,dobby_v7_writer=X/postgres,dobby_socle_writer=X/postgres}",
+        "anon": false,
+        "name": "actor",
+        "owner": "postgres",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "92c2a30ecdaf16d2ab6836630949773f",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.actor()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b19c0f95e647ece37c0c03b39a3a9f82",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "add_pending_member",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6db9e63b8fd5e4c410809b8ded33f83a",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_household uuid",
+        "signature": "dobby_v7_private.add_pending_member(uuid,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "eec5c490f0031afabb4ac1148f3f8b94",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "assert_snapshot",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "c28920c783b07efe39287d6c6fefabfd",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_old jsonb, p_new jsonb",
+        "signature": "dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "62eb41b65d31d4df2e1a35f3c310277d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "digest",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "71077961532fcc08260ff4a61ac3e172",
+        "language": "sql",
+        "arguments": "p_value jsonb",
+        "signature": "dobby_v7_private.digest(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "fa932440411ef667fe1fba9bfa62cc6a",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "guard_family",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "7fb234d5d9b36a8fa6472f6197fa8726",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.guard_family()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "2f620118fc36999fb0328cff1e189848",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "invitation_token",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "1c9106d624456610bc0f25a72f2c6b34",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid",
+        "signature": "dobby_v7_private.invitation_token(uuid,uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a926133752cf65923bad4ab5a09ca114",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "link_existing_owner",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "80d5192ffdf05e3a9ad8484ef5d88e8f",
+        "language": "plpgsql",
+        "arguments": "selected_user uuid, selected_household uuid, selected_member text",
+        "signature": "dobby_v7_private.link_existing_owner(uuid,uuid,text)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "9dce39c65c1dd196d151a297a69d66c1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "lock_actor",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "03dc705b3fa29d4d04b43bb72db0c8c5",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.lock_actor()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6be0ecd11cfd247d87c30882573e4a07",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "members",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6fe586e71b025127c67acfe8fae2f04f",
+        "language": "plpgsql",
+        "arguments": "p_payload jsonb",
+        "signature": "dobby_v7_private.members(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a7e4f52b85c7efb88869451f62268a4d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "operation",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "104275dc3eea5d6e3e4b35d2fa3e5aba",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb",
+        "signature": "dobby_v7_private.operation(uuid,uuid,text,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e0b575faf571103a2e4ca79ffba55dd4",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "owner_context",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6f868b3d6a3db7aad1eeab3c724be04f",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.owner_context()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a796c2bfc364acb1ee228e02579fd010",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "patch_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6ca91d84734c771f548d88e3c351bcb9",
+        "language": "plpgsql",
+        "arguments": "p_member jsonb, p_profile jsonb",
+        "signature": "dobby_v7_private.patch_profile(jsonb,jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "24af7b6930bef7c4f94cdd5a61edc0cf",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "receipt",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "1b2a4a3bbe76d9be9ba23bbe5284df3c",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb, p_result jsonb",
+        "signature": "dobby_v7_private.receipt(uuid,uuid,text,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cae83b84975caae073a9c9308a9cfd49",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "validate_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "adae563a4a43e133acea28f0cfaf017c",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb",
+        "signature": "dobby_v7_private.validate_profile(jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "014ccb80c4bcaaaa89b472011598aa7c",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "verification_counts",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6b13ff6ae43c97ddcc00af1d22754f95",
+        "language": "sql",
+        "arguments": "",
+        "signature": "dobby_v7_private.verification_counts()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "f7a419bf893af634caf1f5d0e85a6ee6",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,anon=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": true,
+        "name": "dobby_access_context",
+        "owner": "dobby_access_writer",
+        "schema": "public",
+        "bodyMD5": "e6119109c8b334699b39734e3e90eacb",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_access_context()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cfd3e686ffc3b58a0bcff47ea78c3848",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "dobby_access_finalize_reactivation",
+        "owner": "dobby_access_writer",
+        "schema": "public",
+        "bodyMD5": "1db715e74f75825af63001abd437f587",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_expected_revision bigint",
+        "signature": "public.dobby_access_finalize_reactivation(uuid,bigint)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "34820d77724538220a0bfe1f5a0edc54",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "dobby_access_set_status",
+        "owner": "dobby_access_writer",
+        "schema": "public",
+        "bodyMD5": "bfefddc8d653e97d25288fdf612240e4",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_status text, p_expected_revision bigint, p_operation_id uuid, p_confirmed boolean",
+        "signature": "public.dobby_access_set_status(uuid,text,bigint,uuid,boolean)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "4b8972b7424573766d0149c33b60127b",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer,authenticated=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "dobby_missions_v2_capabilities",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "public",
+        "bodyMD5": "7319035ed773aad8af54eb6c2d7f7a9a",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid",
+        "signature": "public.dobby_missions_v2_capabilities(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0cb2938afc1c3f6784332ac1a2b23f94",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer,authenticated=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "dobby_missions_v2_write",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "public",
+        "bodyMD5": "8be638a0e9119929db3ea34545d8880a",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_payload jsonb",
+        "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "f6c1a566f7f6a66079d25cf9f4186143",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "dobby_missions_v2_write_legacy_socle",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "public",
+        "bodyMD5": "1e12a5646770f5f04ffcaa8eeb9f5b35",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_payload jsonb",
+        "signature": "public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "648199d70c9174d67e5f4c9354a44698",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_missions_v3_capabilities",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "c6d9fc0c0b62c8963ac35758a93bba6d",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid",
+        "signature": "public.dobby_missions_v3_capabilities(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d5884eb7f93a96c3895883ddb59a040e",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_missions_v3_write",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "e60f95219aabe2f2ca2ed4346922d6ec",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_intent jsonb",
+        "signature": "public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "72856125c45f273065a4c8ca075c8a94",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "dobby_sync_stamper",
+        "owner": "postgres",
+        "schema": "public",
+        "bodyMD5": "327272bd4b60d1c869558b1f4bd584fd",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_sync_stamper()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "5004be1ada63c4fcb101dde1d24cbb2c",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "dobby_v2_grocery_stamp",
+        "owner": "postgres",
+        "schema": "public",
+        "bodyMD5": "612358e1c4bd661055818c36fb1479bd",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v2_grocery_stamp()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b9769355fea53bd2ca1ed195c13d0d3d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "dobby_v2_modules_stamp",
+        "owner": "postgres",
+        "schema": "public",
+        "bodyMD5": "5b486d3c6cdef63a32074abb1ceb9e75",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v2_modules_stamp()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "943a6b127b61a0bb5e6eedfdbeb34368",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_accept_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "dc4a507ef23545435fb1f565e362b984",
+        "language": "sql",
+        "arguments": "p_token text, p_operation_id uuid",
+        "signature": "public.dobby_v7_accept_child_invitation(text,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "be4debb3177c59dd21999d154a458b6a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_accept_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "6048f22e8ddf0bf9bb504f10330f269d",
+        "language": "sql",
+        "arguments": "p_token text, p_operation_id uuid",
+        "signature": "public.dobby_v7_accept_invitation(text,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "568ed7faef5833eeb9f801010c8e1d16",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_bind_existing_member",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "a7cfc3b4f1f8f90d15fa68beccb4194c",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_member_id text, p_operation_id uuid",
+        "signature": "public.dobby_v7_bind_existing_member(uuid,text,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "31ea09b15c4f0ae1a93b8579113d1785",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,dobby_v7_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_context",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "ba0c44890d06743a2331c885a9739265",
+        "language": "sql",
+        "arguments": "",
+        "signature": "public.dobby_v7_context()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "730d99915570bb5a465a2d1c8be104d1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_create_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "3caf902bd54a142dc2d9e7694bd013b0",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "public.dobby_v7_create_child_invitation(text,integer,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "c9a4db8c82a3fff9d95a344e0045da4f",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer,authenticated=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "dobby_v7_create_household",
+        "owner": "dobby_v7_writer",
+        "schema": "public",
+        "bodyMD5": "05c28a810c14312cd1e85cf308ad9991",
+        "language": "plpgsql",
+        "arguments": "p_name text, p_operation_id uuid",
+        "signature": "public.dobby_v7_create_household(text,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "5b08f985d641c264395d212fdeefb08b",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_create_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "7284d04d29735fc60b64593001729cc7",
+        "language": "sql",
+        "arguments": "p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "public.dobby_v7_create_invitation(integer,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "188c6d1e83caf7095251b7f3ce63862d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer,anon=X/dobby_socle_writer}",
+        "anon": true,
+        "name": "dobby_v7_family_capabilities",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "00ffdfdc9ec3b1babb6b0914ab09a188",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v7_family_capabilities()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "01c4af6066e492aac71191b967fdf77a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer,anon=X/dobby_socle_writer}",
+        "anon": true,
+        "name": "dobby_v7_preview_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "1ffbe92562691d9d79411a94220fe70d",
+        "language": "sql",
+        "arguments": "p_token text",
+        "signature": "public.dobby_v7_preview_child_invitation(text)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e6476a4d52b95a56bec4864cd046088e",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer,anon=X/dobby_socle_writer}",
+        "anon": true,
+        "name": "dobby_v7_preview_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "3bec3bf1ddfde81709d7df7c56dad70a",
+        "language": "sql",
+        "arguments": "p_token text",
+        "signature": "public.dobby_v7_preview_invitation(text)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d6ffdf95fa8c949a4e1ad7df178578cb",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_revoke_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "aafacb8a5114e64a764aa2008025c6b9",
+        "language": "plpgsql",
+        "arguments": "p_invitation_id uuid",
+        "signature": "public.dobby_v7_revoke_invitation(uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "00a81a7c1b96420b6bcebd5cb41e5d05",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_update_magic",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "c16ddf78c573ffda347191c26ceb988c",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid",
+        "signature": "public.dobby_v7_update_magic(text,jsonb,bigint,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "455ccb6fb1a1cdce2262376aa3fe2abe",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_update_member",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "319689a81c90aa39a7c78cec26d1c3ec",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid",
+        "signature": "public.dobby_v7_update_member(text,jsonb,bigint,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "43a7ecf25704c60cd3a7c6abdc8f7e25",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer,authenticated=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "dobby_v7_update_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "public",
+        "bodyMD5": "c4915597121f2b1ea01bf2058987481a",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb, p_expected_revision bigint",
+        "signature": "public.dobby_v7_update_profile(jsonb,bigint)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "478f617c98f746586465faa0a57caf99",
+        "securityDefiner": true
+      }
+    ],
+    "tables": [
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_socle_writer=r/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_runes_private.operations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_socle_private.family_function_backups",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_socle_writer=r/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_socle_private.install_state",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_socle_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_socle_private.mission_operations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.account_links",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=r/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.install_secret",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=arw/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.invitations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.operations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=rd/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.pending_profiles",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=arw/postgres,service_role=Dxt/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_sync_grocery_items",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=r/postgres,service_role=Dxt/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_sync_members",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=arw/postgres,service_role=Dxt/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_grocery",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=r/postgres,service_role=Dxt/postgres,dobby_socle_writer=r/postgres,dobby_v7_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_households",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=r/postgres,service_role=Dxt/postgres,dobby_socle_writer=ar/postgres,dobby_v7_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_memberships",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=arw/postgres,service_role=Dxt/postgres,dobby_socle_writer=arw/postgres,dobby_v7_writer=arw/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_modules",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      }
+    ],
+    "policies": [
+      {
+        "cmd": "SELECT",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_socle_old_mission_receipts_read",
+        "schemaname": "dobby_runes_private",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "install_state",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer_read",
+        "schemaname": "dobby_socle_private",
+        "with_check": "(protocol = 1)"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "mission_operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "mission_operations_closed_writer",
+        "schemaname": "dobby_socle_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "account_links",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "account_links",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "account_links",
+        "permissive": "PERMISSIVE",
+        "policyname": "v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "install_secret",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "install_secret",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "invitations",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "invitations",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "pending_profiles",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "pending_profiles",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.legacy_unlinked()",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.legacy_unlinked()"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.legacy_unlinked()",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.legacy_unlinked()",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.legacy_unlinked()"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_grocery_members_insert",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_grocery_members_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_grocery_members_update",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(user_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_members",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_members_self_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.can_read(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_canonical_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_grocery_add",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_grocery_edit",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_grocery_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.can_read(id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_canonical_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(id)"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_households.id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_households_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v7_household_writer",
+        "schemaname": "public",
+        "with_check": "true"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_household_writer_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(user_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_memberships_self",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v7_membership_writer",
+        "schemaname": "public",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_membership_writer",
+        "schemaname": "public",
+        "with_check": "true"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.can_read(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_canonical_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_modules_insert",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_modules_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_modules_update",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "(module = 'family'::text)",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v7_family_writer",
+        "schemaname": "public",
+        "with_check": "(module = 'family'::text)"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "(module = ANY (ARRAY['family'::text, 'missions'::text]))",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_module_writer",
+        "schemaname": "public",
+        "with_check": "(module = ANY (ARRAY['family'::text, 'missions'::text]))"
+      }
+    ]
+  },
+  "after": {
+    "routines": [
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_socle_private__actor_context",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "d48e72bb46e5864d2bb39bde451da3dc",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_lock boolean",
+        "signature": "dobby_access_legacy.dobby_socle_private__actor_context(uuid,boolean)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "716aa1c35fa0650ef00cfa87be7c7731",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_socle_private__can_read",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "05141408bf4ae637b333a2e6a5aafcd2",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_access_legacy.dobby_socle_private__can_read(uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cb863a3979dc7e1590ab826829c9291d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_socle_private__is_parent",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "38dc1537cf6c738321f205db9e27f571",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_access_legacy.dobby_socle_private__is_parent(uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "1a5fba4197426a828cee85ed94817292",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_socle_private__legacy_unlinked",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "0ba1cda9f3427d826d9673eec01605c8",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_legacy.dobby_socle_private__legacy_unlinked()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "7057bd9b08a45cfba0a059fc2c7d20c5",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_private__assert_snapshot",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "c28920c783b07efe39287d6c6fefabfd",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_old jsonb, p_new jsonb",
+        "signature": "dobby_access_legacy.dobby_v7_private__assert_snapshot(uuid,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "8887aa659cac148046183d9da395eb81",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "public__dobby_missions_v2_capabilities",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "7319035ed773aad8af54eb6c2d7f7a9a",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_missions_v2_capabilities(uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e3c54514d9411f691f2ef98d9a4e8347",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "public__dobby_missions_v2_write",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "8be638a0e9119929db3ea34545d8880a",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_payload jsonb",
+        "signature": "dobby_access_legacy.public__dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "617f5c47cee857ccef89fa3dfeb4b1b3",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_missions_v3_capabilities",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "c6d9fc0c0b62c8963ac35758a93bba6d",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_missions_v3_capabilities(uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "11832911e22051db37d97931d9602024",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_missions_v3_write",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "e60f95219aabe2f2ca2ed4346922d6ec",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_intent jsonb",
+        "signature": "dobby_access_legacy.public__dobby_missions_v3_write(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e315dc198e81fa0f956f0c94f72c439a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_accept_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "dc4a507ef23545435fb1f565e362b984",
+        "language": "sql",
+        "arguments": "p_token text, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_accept_child_invitation(text,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "258d4594a2ea07b9f21414e64fccfc24",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_accept_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "6048f22e8ddf0bf9bb504f10330f269d",
+        "language": "sql",
+        "arguments": "p_token text, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_accept_invitation(text,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "09dc9c37c03f6c8411f44ab6f355e7d8",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_bind_existing_member",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "a7cfc3b4f1f8f90d15fa68beccb4194c",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_member_id text, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_bind_existing_member(uuid,text,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d26496f994879a83cb3f7f0923c42882",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_context",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "ba0c44890d06743a2331c885a9739265",
+        "language": "sql",
+        "arguments": "",
+        "signature": "dobby_access_legacy.public__dobby_v7_context()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "76f22802152c24a6ba63bb29876a7766",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_create_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "3caf902bd54a142dc2d9e7694bd013b0",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_create_child_invitation(text,integer,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "1ee00b7fb29759dc5d8c02fdd596feee",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_create_household",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "05c28a810c14312cd1e85cf308ad9991",
+        "language": "plpgsql",
+        "arguments": "p_name text, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_create_household(text,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "ec6d54efe85ef5c86f826b13e7ab4989",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_create_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "7284d04d29735fc60b64593001729cc7",
+        "language": "sql",
+        "arguments": "p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_create_invitation(integer,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "02a2300033551fbb3c4a918276cc68a9",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_preview_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "1ffbe92562691d9d79411a94220fe70d",
+        "language": "sql",
+        "arguments": "p_token text",
+        "signature": "dobby_access_legacy.public__dobby_v7_preview_child_invitation(text)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e17548f3d5b7318d60c5db120269b11b",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_preview_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "3bec3bf1ddfde81709d7df7c56dad70a",
+        "language": "sql",
+        "arguments": "p_token text",
+        "signature": "dobby_access_legacy.public__dobby_v7_preview_invitation(text)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0507032ef81912d8de52e8190837a019",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_revoke_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "aafacb8a5114e64a764aa2008025c6b9",
+        "language": "plpgsql",
+        "arguments": "p_invitation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_revoke_invitation(uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "9772d6893eca04b46f917b40708d8562",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_update_magic",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "c16ddf78c573ffda347191c26ceb988c",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_update_magic(text,jsonb,bigint,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "1193e077cc20dfbfed87482452876a0e",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_update_member",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "319689a81c90aa39a7c78cec26d1c3ec",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid",
+        "signature": "dobby_access_legacy.public__dobby_v7_update_member(text,jsonb,bigint,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "26125bcf181dba224138a06ad0b2d36e",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "public__dobby_v7_update_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_access_legacy",
+        "bodyMD5": "c4915597121f2b1ea01bf2058987481a",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb, p_expected_revision bigint",
+        "signature": "dobby_access_legacy.public__dobby_v7_update_profile(jsonb,bigint)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "7e34924c865831a4fe75d0016d52f363",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer,dobby_v7_writer=X/dobby_access_writer,dobby_socle_writer=X/dobby_access_writer,dobby_missions_v2_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "assert_active",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "2eaa20aa8eae459be384c60d34062147",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.assert_active()",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "df08bfe28dd492d3159455a8ee42780e",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "assert_owner",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "0370a05591dff831ee2a34dd497ab602",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.assert_owner()",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a3eed42cbe7920353f01d77d0dda8bf5",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "bootstrap",
+        "owner": "postgres",
+        "schema": "dobby_access_private",
+        "bodyMD5": "63973431ec9c3b7e7e59874dd064382d",
+        "language": "plpgsql",
+        "arguments": "p_manifest jsonb, p_operation_id uuid",
+        "signature": "dobby_access_private.bootstrap(jsonb,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "c4494c7a60719f2f4b499f6107d6cc42",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,dobby_v7_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "consume_household_creation",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "ee8025870a4af695d4d3e761d7ea706a",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.consume_household_creation()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "32c44c7e2dc793951c73d491a6c7b46f",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,postgres=X/dobby_access_writer}",
+        "anon": false,
+        "name": "enable_session_guard",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "406cbb2f87d7dea591e0f6c4d90f087a",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.enable_session_guard()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b6d99712ccd393bdbf77a8f5e7f5313d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "guard_business_statement",
+        "owner": "postgres",
+        "schema": "dobby_access_private",
+        "bodyMD5": "60dc92b54dd806ebff3aa14fef9ec776",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.guard_business_statement()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a9939b6506530d2c8957c69a0749ead2",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer,dobby_v7_writer=X/dobby_access_writer,dobby_socle_writer=X/dobby_access_writer,dobby_missions_v2_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "is_active",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "7f3830f9d660d937f6cc0b3442d81f54",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.is_active()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6a5d7dade092ce414bc063c75c8818ea",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,dobby_v7_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "lock_household_creation",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "34bf5db13550d9a92a89a32d6c7683d1",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.lock_household_creation()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "fdbbebd6339b8e7b8b06b4cc9cb11f47",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "protect_owner",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "be8c289f8f6c7bde357e12361a67ff1d",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.protect_owner()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "3375e9617372601eac68c5bf8014581d",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "reject_history_mutation",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "1730a1b62d91af3cbac35defb9d38312",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.reject_history_mutation()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cbf8d184d2a2dad96f41b4f7dbd900ea",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer}",
+        "anon": false,
+        "name": "request_identity",
+        "owner": "dobby_access_writer",
+        "schema": "dobby_access_private",
+        "bodyMD5": "45ab5b25e8db10fbb2badfd5dccff947",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_access_private.request_identity()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "4a0bf888bd55393db043dd7b1c059bbc",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_access_session_reader=X/dobby_access_session_reader,dobby_access_writer=X/dobby_access_session_reader}",
+        "anon": false,
+        "name": "session_is_live",
+        "owner": "dobby_access_session_reader",
+        "schema": "dobby_access_private",
+        "bodyMD5": "50c8a15b049d77355f9a81c930dc937c",
+        "language": "plpgsql",
+        "arguments": "p_user uuid, p_session uuid, p_after timestamp with time zone",
+        "signature": "dobby_access_private.session_is_live(uuid,uuid,timestamp with time zone)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "dabb22db1b900207e73f86dd52f24477",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "guard_missions",
+        "owner": "postgres",
+        "schema": "dobby_runes_private",
+        "bodyMD5": "09794b0f8e37a5c5579eb06b6c6fbd3e",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_runes_private.guard_missions()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "00ed58056fc424c3da666e21afdd427c",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "accept_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "ca2d468a1b8ec7c4401290f0c0bac3f3",
+        "language": "plpgsql",
+        "arguments": "p_token text, p_operation_id uuid, p_kind text",
+        "signature": "dobby_socle_private.accept_invitation(text,uuid,text)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "18506b7f0ec65545afbc4d9b3cbd87a1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "actor",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "c64bf32aeb683175f5ebb9b433284bfc",
+        "language": "sql",
+        "arguments": "",
+        "signature": "dobby_socle_private.actor()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "06e84f12812114dcfb50b03e0cd1857b",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,dobby_missions_v2_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "actor_context",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "fbc6a5ae19869669809bcb4a65eeec02",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_lock boolean",
+        "signature": "dobby_socle_private.actor_context(uuid,boolean)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "7f81587d35683ca9ec73b3593f8b4992",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "add_pending_member",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "52b9ed6e79041b6860d6a5d614ed98f1",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_household uuid",
+        "signature": "dobby_socle_private.add_pending_member(uuid,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6cb6282105d286dcb97d84a618c05741",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "assert_child_api_enabled",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "7e0fb1bfd3421ebe1e1fca988126897a",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_socle_private.assert_child_api_enabled()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d9114cef1344f3d79aaa42a489ceb34d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "can_read",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "41639062e2d0e094665240c7f7ccc2db",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_socle_private.can_read(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "62df03ead7c261387c68c24154a2d089",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "create_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "8d86dfd05690f3cd5a695245a0bb405e",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "dobby_socle_private.create_invitation(text,integer,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0dac9014418ca6c21111b3b21644cdac",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "digest",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "71077961532fcc08260ff4a61ac3e172",
+        "language": "sql",
+        "arguments": "p_value jsonb",
+        "signature": "dobby_socle_private.digest(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "485c0728598d8e67c7170204f13e8bd6",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "invitation_token",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "1c9106d624456610bc0f25a72f2c6b34",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid",
+        "signature": "dobby_socle_private.invitation_token(uuid,uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "39de5d8de8983c972f0ae01369f7b67a",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "is_parent",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "e208a01d61f3fa8f35e9e899586644b3",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_socle_private.is_parent(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "158d4fb45c9ca5a2e91845549a037396",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "legacy_unlinked",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "6d7560e1dfa874fccf5a9bbad5fcdeed",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_socle_private.legacy_unlinked()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0410a4ebbe9c6d82cecb4bfb7bde493c",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "lock_actor",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "03dc705b3fa29d4d04b43bb72db0c8c5",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_socle_private.lock_actor()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d8c9da2d41c76af87cb3be8ec5d0a563",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "members",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "6fe586e71b025127c67acfe8fae2f04f",
+        "language": "plpgsql",
+        "arguments": "p_payload jsonb",
+        "signature": "dobby_socle_private.members(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e470111c05e60ee25f4a40903025cf9d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_allocations",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "4497ec610f091706612a5a1c303bbf4b",
+        "language": "plpgsql",
+        "arguments": "p_total numeric, p_ids jsonb",
+        "signature": "dobby_socle_private.missions_allocations(numeric,jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "0d0074e090baf651c7e069d3babeae2a",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_event",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "58ee6ad82058961cafc732b88dc5e5c5",
+        "language": "plpgsql",
+        "arguments": "p_event jsonb",
+        "signature": "dobby_socle_private.missions_assert_event(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b9fd4b597b956093189832d0ebe83959",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_ledger",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "81d013b4c476dc0fef9fcde935077944",
+        "language": "plpgsql",
+        "arguments": "p_rows jsonb",
+        "signature": "dobby_socle_private.missions_assert_ledger(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "1088d45c8ed73f2522f95aca4b62f7fa",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_mission",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "64a636293875714bcd6c706136fabaf1",
+        "language": "plpgsql",
+        "arguments": "p_mission jsonb",
+        "signature": "dobby_socle_private.missions_assert_mission(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "96f1976370987398ac4d3d2ff224d107",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_assert_payload",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "b1fbac52cd72e7b8d237a0d7325a21c9",
+        "language": "plpgsql",
+        "arguments": "p_payload jsonb",
+        "signature": "dobby_socle_private.missions_assert_payload(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e4ff04159cd4c644d297b04eb3b24a32",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_id_key",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "052f015c4c81719f6859bcbdc117942e",
+        "language": "sql",
+        "arguments": "p_value text",
+        "signature": "dobby_socle_private.missions_id_key(text)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "5e3f167cad1338c881cf0a7b37650550",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_occurrence_valid",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "08662de59cd14232c521d8561e76b798",
+        "language": "plpgsql",
+        "arguments": "p_mission jsonb, p_missions jsonb",
+        "signature": "dobby_socle_private.missions_occurrence_valid(jsonb,jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "2e1127737283b7b45ccf5eab5ebf67e9",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,dobby_missions_v2_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "missions_reject_v3_operation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "7c248678e6230c0a6c76cdc2cefd30ff",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_operation uuid",
+        "signature": "dobby_socle_private.missions_reject_v3_operation(uuid,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "796df9162b60e842ae6e63ba9793bde1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "operation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "90ef473f47076bfdbf5486dbe68e2f9b",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb",
+        "signature": "dobby_socle_private.operation(uuid,uuid,text,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "bd05a813aedef16a0cd9306ef713e620",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "parent_context",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "26115b6b62d35e8cdd5f94ca8e69a209",
+        "language": "plpgsql",
+        "arguments": "p_household uuid",
+        "signature": "dobby_socle_private.parent_context(uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "7f2e0e52495a2f8fb9c6200f82880b8a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "patch_profile",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "0c7a6219944eb2d5c1de35334ed7f496",
+        "language": "plpgsql",
+        "arguments": "p_member jsonb, p_profile jsonb",
+        "signature": "dobby_socle_private.patch_profile(jsonb,jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "818a3d1b5590f26cad664bfae152e9eb",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "preview_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "ab75b223e47ee2b4201fa5f3fb444c14",
+        "language": "plpgsql",
+        "arguments": "p_token text, p_kind text",
+        "signature": "dobby_socle_private.preview_invitation(text,text)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d4d0e966aa7f41a05efc3b6cbfab8a89",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "receipt",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "2f37ef66b63957b9fff005e3f4e00b8e",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb, p_result jsonb",
+        "signature": "dobby_socle_private.receipt(uuid,uuid,text,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "629ed1582d02863c06eb37846888c487",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "validate_profile",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_socle_private",
+        "bodyMD5": "adae563a4a43e133acea28f0cfaf017c",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb",
+        "signature": "dobby_socle_private.validate_profile(jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "05fd818e1521663db31c980c8330a432",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{postgres=X/postgres,dobby_v7_writer=X/postgres,dobby_socle_writer=X/postgres}",
+        "anon": false,
+        "name": "actor",
+        "owner": "postgres",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "92c2a30ecdaf16d2ab6836630949773f",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.actor()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b19c0f95e647ece37c0c03b39a3a9f82",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "add_pending_member",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6db9e63b8fd5e4c410809b8ded33f83a",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_household uuid",
+        "signature": "dobby_v7_private.add_pending_member(uuid,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "eec5c490f0031afabb4ac1148f3f8b94",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "assert_snapshot",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "90501357c7ff6b6aef5064822e2e687c",
+        "language": "plpgsql",
+        "arguments": "p_household uuid, p_old jsonb, p_new jsonb",
+        "signature": "dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d8e5f6eb04ad812b9d16c48e3f5bd1ad",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "digest",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "71077961532fcc08260ff4a61ac3e172",
+        "language": "sql",
+        "arguments": "p_value jsonb",
+        "signature": "dobby_v7_private.digest(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "fa932440411ef667fe1fba9bfa62cc6a",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "guard_family",
+        "owner": "dobby_socle_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "7fb234d5d9b36a8fa6472f6197fa8726",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.guard_family()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "2f620118fc36999fb0328cff1e189848",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "invitation_token",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "1c9106d624456610bc0f25a72f2c6b34",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid",
+        "signature": "dobby_v7_private.invitation_token(uuid,uuid)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a926133752cf65923bad4ab5a09ca114",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "link_existing_owner",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "80d5192ffdf05e3a9ad8484ef5d88e8f",
+        "language": "plpgsql",
+        "arguments": "selected_user uuid, selected_household uuid, selected_member text",
+        "signature": "dobby_v7_private.link_existing_owner(uuid,uuid,text)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "9dce39c65c1dd196d151a297a69d66c1",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "lock_actor",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "03dc705b3fa29d4d04b43bb72db0c8c5",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.lock_actor()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6be0ecd11cfd247d87c30882573e4a07",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "members",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6fe586e71b025127c67acfe8fae2f04f",
+        "language": "plpgsql",
+        "arguments": "p_payload jsonb",
+        "signature": "dobby_v7_private.members(jsonb)",
+        "volatility": "i",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a7e4f52b85c7efb88869451f62268a4d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "operation",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "104275dc3eea5d6e3e4b35d2fa3e5aba",
+        "language": "plpgsql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb",
+        "signature": "dobby_v7_private.operation(uuid,uuid,text,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "e0b575faf571103a2e4ca79ffba55dd4",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "owner_context",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6f868b3d6a3db7aad1eeab3c724be04f",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "dobby_v7_private.owner_context()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "a796c2bfc364acb1ee228e02579fd010",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "patch_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6ca91d84734c771f548d88e3c351bcb9",
+        "language": "plpgsql",
+        "arguments": "p_member jsonb, p_profile jsonb",
+        "signature": "dobby_v7_private.patch_profile(jsonb,jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "24af7b6930bef7c4f94cdd5a61edc0cf",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "receipt",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "1b2a4a3bbe76d9be9ba23bbe5284df3c",
+        "language": "sql",
+        "arguments": "p_actor uuid, p_id uuid, p_kind text, p_request jsonb, p_result jsonb",
+        "signature": "dobby_v7_private.receipt(uuid,uuid,text,jsonb,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cae83b84975caae073a9c9308a9cfd49",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "validate_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "adae563a4a43e133acea28f0cfaf017c",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb",
+        "signature": "dobby_v7_private.validate_profile(jsonb)",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "014ccb80c4bcaaaa89b472011598aa7c",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "verification_counts",
+        "owner": "dobby_v7_writer",
+        "schema": "dobby_v7_private",
+        "bodyMD5": "6b13ff6ae43c97ddcc00af1d22754f95",
+        "language": "sql",
+        "arguments": "",
+        "signature": "dobby_v7_private.verification_counts()",
+        "volatility": "s",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "f7a419bf893af634caf1f5d0e85a6ee6",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,anon=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": true,
+        "name": "dobby_access_context",
+        "owner": "dobby_access_writer",
+        "schema": "public",
+        "bodyMD5": "e6119109c8b334699b39734e3e90eacb",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_access_context()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "cfd3e686ffc3b58a0bcff47ea78c3848",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "dobby_access_finalize_reactivation",
+        "owner": "dobby_access_writer",
+        "schema": "public",
+        "bodyMD5": "1db715e74f75825af63001abd437f587",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_expected_revision bigint",
+        "signature": "public.dobby_access_finalize_reactivation(uuid,bigint)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "34820d77724538220a0bfe1f5a0edc54",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_access_writer=X/dobby_access_writer,authenticated=X/dobby_access_writer}",
+        "anon": false,
+        "name": "dobby_access_set_status",
+        "owner": "dobby_access_writer",
+        "schema": "public",
+        "bodyMD5": "bfefddc8d653e97d25288fdf612240e4",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_status text, p_expected_revision bigint, p_operation_id uuid, p_confirmed boolean",
+        "signature": "public.dobby_access_set_status(uuid,text,bigint,uuid,boolean)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "4b8972b7424573766d0149c33b60127b",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer,authenticated=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "dobby_missions_v2_capabilities",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "public",
+        "bodyMD5": "c54f17c8d08bd43dd1047d18d67c63e3",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid",
+        "signature": "public.dobby_missions_v2_capabilities(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b0772d97a90112b8704d42474c02e4b8",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer,authenticated=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "dobby_missions_v2_write",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "public",
+        "bodyMD5": "c6b7b72e293a94140298be94578f6a6b",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_payload jsonb",
+        "signature": "public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "eb5f9e51f4ef98b21acd30116bc6ca68",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_missions_v2_writer=X/dobby_missions_v2_writer}",
+        "anon": false,
+        "name": "dobby_missions_v2_write_legacy_socle",
+        "owner": "dobby_missions_v2_writer",
+        "schema": "public",
+        "bodyMD5": "1e12a5646770f5f04ffcaa8eeb9f5b35",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_payload jsonb",
+        "signature": "public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "648199d70c9174d67e5f4c9354a44698",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_missions_v3_capabilities",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "bd5692a6ae13387725a422d024ab7e7f",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid",
+        "signature": "public.dobby_missions_v3_capabilities(uuid)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "aa72630c5614c313489357ef96600abb",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_missions_v3_write",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "e943add030ca8ece714540ba1b6f946f",
+        "language": "plpgsql",
+        "arguments": "p_household_id uuid, p_expected_revision bigint, p_operation_id uuid, p_intent jsonb",
+        "signature": "public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "6895e399fbcd2cf3695ec78addc91cb9",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "dobby_sync_stamper",
+        "owner": "postgres",
+        "schema": "public",
+        "bodyMD5": "327272bd4b60d1c869558b1f4bd584fd",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_sync_stamper()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "5004be1ada63c4fcb101dde1d24cbb2c",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "dobby_v2_grocery_stamp",
+        "owner": "postgres",
+        "schema": "public",
+        "bodyMD5": "612358e1c4bd661055818c36fb1479bd",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v2_grocery_stamp()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b9769355fea53bd2ca1ed195c13d0d3d",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{postgres=X/postgres}",
+        "anon": false,
+        "name": "dobby_v2_modules_stamp",
+        "owner": "postgres",
+        "schema": "public",
+        "bodyMD5": "5b486d3c6cdef63a32074abb1ceb9e75",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v2_modules_stamp()",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "943a6b127b61a0bb5e6eedfdbeb34368",
+        "securityDefiner": false
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_accept_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "4b3bf2ebf612fc450cc2ffd803ff2a97",
+        "language": "plpgsql",
+        "arguments": "p_token text, p_operation_id uuid",
+        "signature": "public.dobby_v7_accept_child_invitation(text,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "ae41df6f9d1ed584956a922ac9c7b50a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_accept_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "d7ea8e50060b319d89951101d587723c",
+        "language": "plpgsql",
+        "arguments": "p_token text, p_operation_id uuid",
+        "signature": "public.dobby_v7_accept_invitation(text,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "fc3ade8792987c818e0bca3ee4b743d6",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_bind_existing_member",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "188670c4db8546312bf1cb8d66bbd372",
+        "language": "plpgsql",
+        "arguments": "p_user_id uuid, p_member_id text, p_operation_id uuid",
+        "signature": "public.dobby_v7_bind_existing_member(uuid,text,uuid)",
+        "volatility": "v",
+        "authenticated": false,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "c19534050258fd2554c56193323045f8",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,dobby_v7_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_context",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "ac4f96a5b4011013013dd50537df13f8",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v7_context()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "8f8da70bca91530b98dfd88ded8d39ad",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_create_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "cdd6b36198fdb1dc3fcac651965912a7",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "public.dobby_v7_create_child_invitation(text,integer,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "94cf786d15aa84882fe9574924f08a13",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer,authenticated=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "dobby_v7_create_household",
+        "owner": "dobby_v7_writer",
+        "schema": "public",
+        "bodyMD5": "fc739fcea8675cf2ed86e1b2376e75e7",
+        "language": "plpgsql",
+        "arguments": "p_name text, p_operation_id uuid",
+        "signature": "public.dobby_v7_create_household(text,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "d58d904ab0344e2a5bd68b62f897dc6f",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_create_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "80bcb89ea72b4b0f7f6b09420d3be5c8",
+        "language": "plpgsql",
+        "arguments": "p_expires_in_hours integer, p_operation_id uuid",
+        "signature": "public.dobby_v7_create_invitation(integer,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b373007324b7355ec61561354e313ecd",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer,anon=X/dobby_socle_writer}",
+        "anon": true,
+        "name": "dobby_v7_family_capabilities",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "00ffdfdc9ec3b1babb6b0914ab09a188",
+        "language": "plpgsql",
+        "arguments": "",
+        "signature": "public.dobby_v7_family_capabilities()",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "01c4af6066e492aac71191b967fdf77a",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer,anon=X/dobby_socle_writer}",
+        "anon": true,
+        "name": "dobby_v7_preview_child_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "1dc1f1607cf6262533eb7c1df19250bd",
+        "language": "plpgsql",
+        "arguments": "p_token text",
+        "signature": "public.dobby_v7_preview_child_invitation(text)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "ed90f7f71af82dbe917a291737cd7504",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer,anon=X/dobby_socle_writer}",
+        "anon": true,
+        "name": "dobby_v7_preview_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "5c9bdea935b8823422d84f568db99bd6",
+        "language": "plpgsql",
+        "arguments": "p_token text",
+        "signature": "public.dobby_v7_preview_invitation(text)",
+        "volatility": "s",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "c91ceff7fb8d536083fdfb39981c1448",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_revoke_invitation",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "e928b75830afd8a69c6ba593fa96d9ba",
+        "language": "plpgsql",
+        "arguments": "p_invitation_id uuid",
+        "signature": "public.dobby_v7_revoke_invitation(uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "aa60f63d7550cfb9aacd21aee901d6cd",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_update_magic",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "34f1176e6821aed331ed8b2ac638fdf2",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid",
+        "signature": "public.dobby_v7_update_magic(text,jsonb,bigint,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "91a0c5bb1f88ce28583b37b0fc1aef5c",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_socle_writer=X/dobby_socle_writer,authenticated=X/dobby_socle_writer}",
+        "anon": false,
+        "name": "dobby_v7_update_member",
+        "owner": "dobby_socle_writer",
+        "schema": "public",
+        "bodyMD5": "ff568c2df81f3b2ebc898ac9194ad2a4",
+        "language": "plpgsql",
+        "arguments": "p_member_id text, p_values jsonb, p_expected_revision bigint, p_operation_id uuid",
+        "signature": "public.dobby_v7_update_member(text,jsonb,bigint,uuid)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "b5755fdd235ad0ddffdd668fc19bfc59",
+        "securityDefiner": true
+      },
+      {
+        "acl": "{dobby_v7_writer=X/dobby_v7_writer,authenticated=X/dobby_v7_writer}",
+        "anon": false,
+        "name": "dobby_v7_update_profile",
+        "owner": "dobby_v7_writer",
+        "schema": "public",
+        "bodyMD5": "7b990c5ab05235a93f20b2fba9b0fff9",
+        "language": "plpgsql",
+        "arguments": "p_profile jsonb, p_expected_revision bigint",
+        "signature": "public.dobby_v7_update_profile(jsonb,bigint)",
+        "volatility": "v",
+        "authenticated": true,
+        "configuration": [
+          "search_path=\"\""
+        ],
+        "definitionMD5": "8fed05c1f9873ae226804551b1ad1519",
+        "securityDefiner": true
+      }
+    ],
+    "tables": [
+      {
+        "acl": "{postgres=arwdDxtm/postgres}",
+        "rls": false,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "dobby_access_legacy.function_backups",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres}",
+        "rls": false,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "dobby_access_legacy.v1_acl_backups",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_socle_writer=r/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_runes_private.operations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_socle_private.family_function_backups",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_socle_writer=r/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_socle_private.install_state",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_socle_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_socle_private.mission_operations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.account_links",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=r/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.install_secret",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=arw/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.invitations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.operations",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,dobby_v7_writer=arwd/postgres,dobby_socle_writer=rd/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": true,
+        "relation": "dobby_v7_private.pending_profiles",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,service_role=Dxt/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_sync_grocery_items",
+        "anonSelect": false,
+        "authenticatedSelect": false
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=r/postgres,service_role=Dxt/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_sync_members",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=arw/postgres,service_role=Dxt/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_grocery",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=r/postgres,service_role=Dxt/postgres,dobby_socle_writer=r/postgres,dobby_v7_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_households",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=r/postgres,service_role=Dxt/postgres,dobby_socle_writer=ar/postgres,dobby_v7_writer=ar/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_memberships",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      },
+      {
+        "acl": "{postgres=arwdDxtm/postgres,authenticated=arw/postgres,service_role=Dxt/postgres,dobby_socle_writer=arw/postgres,dobby_v7_writer=arw/postgres}",
+        "rls": true,
+        "kind": "r",
+        "owner": "postgres",
+        "forceRls": false,
+        "relation": "public.dobby_v2_modules",
+        "anonSelect": false,
+        "authenticatedSelect": true
+      }
+    ],
+    "policies": [
+      {
+        "cmd": "SELECT",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_socle_old_mission_receipts_read",
+        "schemaname": "dobby_runes_private",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "install_state",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer_read",
+        "schemaname": "dobby_socle_private",
+        "with_check": "(protocol = 1)"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "mission_operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "mission_operations_closed_writer",
+        "schemaname": "dobby_socle_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "account_links",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "account_links",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "account_links",
+        "permissive": "PERMISSIVE",
+        "policyname": "v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "install_secret",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "install_secret",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "invitations",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "invitations",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "operations",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "pending_profiles",
+        "permissive": "PERMISSIVE",
+        "policyname": "fixture_v7_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "pending_profiles",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_writer",
+        "schemaname": "dobby_v7_private",
+        "with_check": "true"
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.legacy_unlinked()",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.legacy_unlinked()"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.legacy_unlinked()",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.legacy_unlinked()",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_legacy_unlinked_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.legacy_unlinked()"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_grocery_members_insert",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_grocery_members_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_grocery_items",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_grocery_members_update",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_sync_members m\n  WHERE ((m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "dobby_access_private.is_active()",
+        "roles": [
+          "authenticated",
+          "dobby_missions_v2_writer",
+          "dobby_socle_writer",
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_sync_members",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_access_active",
+        "schemaname": "public",
+        "with_check": "dobby_access_private.is_active()"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(user_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_sync_members",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_sync_members_self_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "dobby_access_private.is_active()",
+        "roles": [
+          "authenticated",
+          "dobby_missions_v2_writer",
+          "dobby_socle_writer",
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_access_active",
+        "schemaname": "public",
+        "with_check": "dobby_access_private.is_active()"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.can_read(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_canonical_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_grocery_add",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_grocery_edit",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_grocery.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_grocery",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_grocery_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "dobby_access_private.is_active()",
+        "roles": [
+          "authenticated",
+          "dobby_missions_v2_writer",
+          "dobby_socle_writer",
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_access_active",
+        "schemaname": "public",
+        "with_check": "dobby_access_private.is_active()"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.can_read(id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_canonical_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(id)"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_households.id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_households_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v7_household_writer",
+        "schemaname": "public",
+        "with_check": "true"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "dobby_v2_households",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_household_writer_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "dobby_access_private.is_active()",
+        "roles": [
+          "authenticated",
+          "dobby_missions_v2_writer",
+          "dobby_socle_writer",
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_access_active",
+        "schemaname": "public",
+        "with_check": "dobby_access_private.is_active()"
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(user_id = ( SELECT auth.uid() AS uid))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_memberships_self",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v7_membership_writer",
+        "schemaname": "public",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "true",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "dobby_v2_memberships",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_membership_writer",
+        "schemaname": "public",
+        "with_check": "true"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "dobby_access_private.is_active()",
+        "roles": [
+          "authenticated",
+          "dobby_missions_v2_writer",
+          "dobby_socle_writer",
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_access_active",
+        "schemaname": "public",
+        "with_check": "dobby_access_private.is_active()"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "dobby_socle_private.can_read(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_canonical_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "DELETE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_delete",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_insert",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "dobby_socle_private.is_parent(household_id)",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "RESTRICTIVE",
+        "policyname": "dobby_socle_parent_update",
+        "schemaname": "public",
+        "with_check": "dobby_socle_private.is_parent(household_id)"
+      },
+      {
+        "cmd": "INSERT",
+        "qual": null,
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_modules_insert",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "SELECT",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_modules_read",
+        "schemaname": "public",
+        "with_check": null
+      },
+      {
+        "cmd": "UPDATE",
+        "qual": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))",
+        "roles": [
+          "authenticated"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v2_modules_update",
+        "schemaname": "public",
+        "with_check": "(EXISTS ( SELECT 1\n   FROM dobby_v2_memberships m\n  WHERE ((m.household_id = dobby_v2_modules.household_id) AND (m.user_id = ( SELECT auth.uid() AS uid)) AND m.active)))"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "(module = 'family'::text)",
+        "roles": [
+          "dobby_v7_writer"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "dobby_v7_family_writer",
+        "schemaname": "public",
+        "with_check": "(module = 'family'::text)"
+      },
+      {
+        "cmd": "ALL",
+        "qual": "(module = ANY (ARRAY['family'::text, 'missions'::text]))",
+        "roles": [
+          "dobby_socle_writer"
+        ],
+        "tablename": "dobby_v2_modules",
+        "permissive": "PERMISSIVE",
+        "policyname": "socle_module_writer",
+        "schemaname": "public",
+        "with_check": "(module = ANY (ARRAY['family'::text, 'missions'::text]))"
+      }
+    ]
+  }
+}

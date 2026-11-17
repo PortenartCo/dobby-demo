@@ -1,0 +1,38 @@
+LOCAL ONLY — PostgreSQL 17.7 / Node 24.19.0
+Command: node --test tests/private-access/admission.test.mjs tests/private-access/reactivation-boundary.test.mjs
+✔ T02: no bootstrap means no authorization and no owner (114.049969ms)
+✔ T10: a missing/ambiguous bootstrap manifest aborts, never enrolls all Auth accounts (747.663597ms)
+✔ T10: controlled bootstrap preserves the two canonical identities and all business state (352.256188ms)
+✔ T02: every other existing Auth account stays unapproved (481.79875ms)
+✔ T12: user_metadata, forged email and claimed admin role do not grant owner rights (156.625459ms)
+✔ T12: anonymous/no session/malformed or mismatched identity fail closed (886.518021ms)
+✔ T12: browser roles cannot select/insert/update/delete private metadata or assume technical roles (685.309384ms)
+✔ T12: bootstrap apply and session maintenance cannot be called by a direct non-superuser client (177.342515ms)
+✔ T10: no installer-callable apply path can omit canonical validation (92.675017ms)
+✔ T10: FORCE RLS blocks bootstrap when the installer lacks pre-existing canonical visibility (90.70466ms)
+✔ T01/T12: application owner never receives other household payload privileges (305.174829ms)
+✔ T12: another household parent cannot control statuses or elect itself owner (91.756616ms)
+✔ T12: owner suspension and owner registry deletion/reassignment are forbidden (986.586287ms)
+✔ suspension needs confirmation and the current revision (211.338552ms)
+✔ suspension refuses still-valid SQL JWT claims immediately without deleting family data (211.392602ms)
+✔ suspension revokes only pending admissions of the affected generation and unused creation grants (101.607078ms)
+✔ reactivation remains closed until a separately committed session boundary (115.352646ms)
+✔ refresh claims cannot rescue an old or deleted session (326.163361ms)
+✔ idempotent decision replay never returns an obsolete active state or reapplies a suspension (221.234037ms)
+✔ decision history is append-only even through a direct privileged write (351.824343ms)
+✔ session permission activation fails closed without exact managed-schema column grants (423.486253ms)
+✔ session readiness rejects excessive Auth columns, table privileges and writes (545.774376ms)
+✔ a suspended context reveals no status or revision for an invalid session (229.834796ms)
+✔ session reader can read no refresh token or Auth email and cannot write Auth (105.975419ms)
+✔ session checks fail closed if a previously granted column is revoked (118.072985ms)
+✔ technical roles are closed after installation and service_role has no metadata API (311.09761ms)
+✔ T10: bootstrap is a single explicit operation, not a rerunnable reset (109.461544ms)
+✔ reactivation boundary is established after commit, never during the suspended interval (1655.207005ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20314.304222
