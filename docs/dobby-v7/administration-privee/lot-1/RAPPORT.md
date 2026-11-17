@@ -40,7 +40,7 @@ Le test démontre ces ACL dans un modèle où le propriétaire fictif du schéma
 | T10 | **PARTIEL PASS** : amorçage des deux identités fictives et conservation vérifiés. Vraies connexions/refresh/récupération et comptes réels : **EN ATTENTE**. |
 | T12 | **PARTIEL PASS** : propriétaire exclusif, anti-auto-blocage, ACL, absence d’accès métier supplémentaire et journal vérifiés. Console/API Edge : **EN ATTENTE Lots 3–4**. |
 | Suspension/réactivation | **PASS du contrat SQL local** décrit ci-dessus ; application aux anciennes RPC, REST et fichiers : **EN ATTENTE Lot 2**. |
-| T03/T04/T06/T07/T08/T09/T11/T13 | **EN ATTENTE**. Admissions stockées et invalidées, mais ni approbation/envoi/consommation, ni rattachement, Storage, concurrence multi-session ou UI nouveaux ne sont livrés. |
+| T03/T04/T06/T07/T08/T09/T11/T13 | **EN ATTENTE**. Admissions stockées et invalidées, mais ni approbation/envoi/consommation, ni rattachement, Storage, concurrence des writers métier ou UI nouveaux ne sont livrés. Le test à deux connexions de ce lot couvre uniquement la frontière de réactivation. |
 
 **Les nouvelles autorisations ne ferment pas encore les anciennes API.** Aucun helper existant n’est remplacé et aucune policy métier/Storage n’est modifiée. Le Lot 2 doit brancher les guards sur toutes les entrées, y compris les writers privilégiés, les replays, V1 et Storage ; le Lot 3 doit contrôler approbations, UUID/génération, expiration et consommation des admissions. Les flags familiaux/V3 et les inscriptions publiques restent inchangés.
 
