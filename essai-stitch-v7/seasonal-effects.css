@@ -49,7 +49,7 @@
 [data-seasonal-theme="saint-nicholas"] { --seasonal-accent:#d8b67a; --seasonal-deep:#49252b; }
 [data-seasonal-theme=thanksgiving] { --seasonal-accent:#cfab70; --seasonal-deep:#483124; }
 [data-seasonal-theme=belgium] { --seasonal-accent:#dec576; --seasonal-deep:#30251f; }
-:is([data-seasonal-level="2"],[data-seasonal-level="3"]) body>header[data-e01-chrome] { background:linear-gradient(115deg,var(--seasonal-deep),#251b17 52%,var(--seasonal-deep))!important; border-bottom:1px solid var(--seasonal-accent); }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) body>header[data-e01-chrome] { background:linear-gradient(115deg,var(--seasonal-deep),#251b17 52%,var(--seasonal-deep))!important; border-bottom:0; }
 :is([data-seasonal-level="2"],[data-seasonal-level="3"]) body>header[data-e01-chrome]>:not([data-seasonal-header]) { position:relative; z-index:1; }
 :is([data-seasonal-level="2"],[data-seasonal-level="3"]) [data-seasonal-header] { inset:0; height:auto; border:0; opacity:1; background:none; z-index:0; }
 :is([data-seasonal-level="2"],[data-seasonal-level="3"]) :is([data-seasonal-header],[data-seasonal-scene])>.seasonal-motif { display:none; }
