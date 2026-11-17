@@ -1,0 +1,87 @@
+/* Local, pointer-transparent ornaments. Reuse E01/FAM's 22 compositor particles. */
+[data-seasonal-decoration], [data-seasonal-decoration] * { pointer-events:none!important; user-select:none; }
+:root[data-seasonal-theme] { --seasonal-color:#e3bc71; --seasonal-soft:#f6dca4; }
+:root[data-seasonal-theme=winter], :root[data-seasonal-theme=christmas] { --seasonal-color:#d2eefa; --seasonal-soft:#fff; }
+:root[data-seasonal-theme=spring] { --seasonal-color:#e3a9bd; --seasonal-soft:#e8eed0; }
+:root[data-seasonal-theme=summer] { --seasonal-color:#f7cf6f; --seasonal-soft:#f6e7aa; }
+:root[data-seasonal-theme=autumn], :root[data-seasonal-theme=thanksgiving], :root[data-seasonal-theme=halloween] { --seasonal-color:#edac67; --seasonal-soft:#f4cf8b; }
+:root[data-seasonal-theme=magic] { --seasonal-color:#c8b6f8; --seasonal-soft:#e6e1ff; }
+:root[data-seasonal-theme=valentine] { --seasonal-color:#e6a6b4; --seasonal-soft:#f8d7e0; }
+:root[data-seasonal-theme=carnival] { --seasonal-color:#d3a4ef; --seasonal-soft:#bde3ce; }
+:root[data-seasonal-theme=easter] { --seasonal-color:#c6dfa2; --seasonal-soft:#f0d5ab; }
+:root[data-seasonal-theme] :is(#e013-ambience,#fam01-ambience) { --e013-gold:var(--seasonal-color); --e013-soft:var(--seasonal-soft); }
+:root[data-seasonal-theme] .e013-particle:nth-child(3n) { background:none; box-shadow:none; border-radius:0; }
+:root[data-seasonal-theme] .e013-particle:nth-child(3n)::after { content:var(--seasonal-glyph); position:absolute; color:var(--seasonal-color); font:13px/1 Georgia,serif; text-shadow:0 0 5px #241314; }
+[data-seasonal-header] { position:absolute; bottom:0; left:8px; right:8px; height:5px; border-top:1px solid var(--seasonal-color); opacity:.8; background:radial-gradient(circle,var(--seasonal-color) 1px,transparent 2px) 0 0/26px 5px; }
+[data-seasonal-header] .seasonal-motif { position:absolute; right:4px; bottom:-6px; font-size:13px; text-shadow:0 1px 3px #160f12; }
+[data-seasonal-header] .seasonal-caption { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+[data-seasonal-scene] { position:absolute; inset:10px; z-index:3; border-radius:inherit; box-shadow:inset 0 0 22px -12px var(--seasonal-color); }
+[data-seasonal-scene] .seasonal-caption { position:absolute; top:0; right:0; max-width:80%; padding:4px 9px; border:1px solid #d4b77a70; border-radius:12px; color:#fff2da; background:#211713e8; font:11px/1.4 Georgia,serif; letter-spacing:.04em; }
+[data-seasonal-scene] .seasonal-motif { position:absolute; left:4px; top:4px; color:var(--seasonal-color); font:24px/1 Georgia,serif; text-shadow:0 2px 5px #180c12; }
+/* Evergreen strands and warm, static bulbs identify Christmas beyond snow. */
+[data-seasonal-theme=christmas] [data-seasonal-header], [data-seasonal-theme=saint-nicholas] [data-seasonal-header] { height:8px; border-color:#789b6f; background:radial-gradient(circle,#efc370 2px,transparent 3px) 3px 1px/26px 7px,radial-gradient(ellipse at top,#416d4e 45%,transparent 50%) 0 0/18px 8px; }
+[data-seasonal-theme=christmas] [data-seasonal-scene]::before { content:'✦ ─ ❦ ─ ✦'; position:absolute; left:15%; right:15%; top:28px; text-align:center; color:#ead08a; font:19px/1 Georgia,serif; text-shadow:0 1px 4px #21130d; }
+[data-seasonal-theme=belgium] [data-seasonal-header] { height:4px; border:0; background:linear-gradient(90deg,#171717 0 33.33%,#efcc4d 33.33% 66.66%,#be4d4c 66.66%); }
+[data-seasonal-theme=magic] [data-seasonal-scene]::before { content:'ᚱ   ✧   ᛟ   ✧   ᚨ'; position:absolute; inset:15% 5% auto; color:#e0ceff; text-align:center; font:23px Georgia,serif; text-shadow:0 0 8px #8062ae; }
+[data-seasonal-burst] { position:absolute; inset:5%; z-index:4; overflow:hidden; }
+[data-seasonal-burst] span { position:absolute; left:50%; top:50%; color:#eee6ff; font:27px/1 Georgia,serif; opacity:0; animation:seasonal-runes 4.8s ease-out 1 both; text-shadow:0 0 10px #b992ee; }
+@keyframes seasonal-runes { 0% { opacity:0; transform:rotate(var(--rune-angle)) translateY(-5px) rotate(calc(-1 * var(--rune-angle))) scale(.5); } 18%,55% { opacity:.9; } 100% { opacity:0; transform:rotate(var(--rune-angle)) translateY(-95px) rotate(calc(-1 * var(--rune-angle))) scale(1.15); } }
+.seasonal-paused [data-seasonal-burst] span { animation-play-state:paused!important; }
+.e01-effects-off [data-seasonal-burst] { display:none!important; }
+@media(prefers-reduced-motion:reduce) { [data-seasonal-burst] { display:none!important; } }
+
+[data-seasonal-theme=winter] .e013-particle, [data-seasonal-theme=christmas] .e013-particle { animation-direction:reverse; }
+[data-seasonal-theme=valentine] [data-seasonal-scene]::before { content:'♥  ·  ✉  ·  ♥'; position:absolute; left:20%; right:20%; top:28px; text-align:center; color:#f3c9d4; font:17px Georgia,serif; text-shadow:0 1px 4px #21130d; }
+[data-seasonal-theme=carnival] .e013-particle:nth-child(4n) { --e013-gold:#a7d3bd; }
+
+/* Event dressing uses vector ornaments around the original art, never over its
+   central portrait. Seasons keep the original, deliberately quiet treatment. */
+#seasonal-symbol-library { position:absolute; width:0; height:0; overflow:hidden; }
+[data-seasonal-level="2"] { --seasonal-accent:#d0a585; --seasonal-deep:#39272e; }
+[data-seasonal-level="3"] { --seasonal-accent:#dfbd72; --seasonal-deep:#27201c; }
+[data-seasonal-theme=christmas] { --seasonal-color:#e9cd8b!important; --seasonal-soft:#fff1c7!important; --seasonal-accent:#cbaa62; --seasonal-deep:#173a2b; }
+[data-seasonal-theme=halloween] { --seasonal-color:#d89a58!important; --seasonal-soft:#d5bfdf!important; --seasonal-accent:#bf8957; --seasonal-deep:#30213f; }
+[data-seasonal-theme="new-year"] { --seasonal-color:#edcf88; --seasonal-soft:#fff1c4; --seasonal-accent:#d2b575; --seasonal-deep:#17191c; }
+[data-seasonal-theme=magic] { --seasonal-accent:#b79bcc; --seasonal-deep:#34273e; }
+[data-seasonal-theme=valentine] { --seasonal-accent:#d6a2a4; --seasonal-deep:#452a35; }
+[data-seasonal-theme=easter] { --seasonal-accent:#b3c29a; --seasonal-deep:#27382c; }
+[data-seasonal-theme=carnival] { --seasonal-accent:#b79ace; --seasonal-deep:#392949; }
+[data-seasonal-theme="saint-nicholas"] { --seasonal-accent:#d8b67a; --seasonal-deep:#49252b; }
+[data-seasonal-theme=thanksgiving] { --seasonal-accent:#cfab70; --seasonal-deep:#483124; }
+[data-seasonal-theme=belgium] { --seasonal-accent:#dec576; --seasonal-deep:#30251f; }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) body>header[data-e01-chrome] { background:linear-gradient(115deg,var(--seasonal-deep),#251b17 52%,var(--seasonal-deep))!important; border-bottom:0; }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) body>header[data-e01-chrome]>:not([data-seasonal-header]) { position:relative; z-index:1; }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) [data-seasonal-header] { inset:0; height:auto; border:0; opacity:1; background:none; z-index:0; }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) :is([data-seasonal-header],[data-seasonal-scene])>.seasonal-motif { display:none; }
+.seasonal-art { position:absolute; inset:0; color:var(--seasonal-accent); overflow:hidden; border-radius:inherit; }
+.seasonal-art svg { position:absolute; display:block; overflow:visible; }
+.seasonal-art-left { left:0; top:0; width:26%; max-width:230px; height:auto; }
+.seasonal-art-right { right:0; top:0; width:26%; max-width:230px; height:auto; }
+.seasonal-art-bottom-left { left:0; bottom:0; width:26%; max-width:230px; height:auto; }
+.seasonal-art-bottom-right { right:0; bottom:27px; width:26%; max-width:230px; height:auto; }
+[data-seasonal-header] .seasonal-art { inset:-5px 0 -14px; overflow:visible; }
+[data-seasonal-header] .seasonal-art-left, [data-seasonal-header] .seasonal-art-right { width:112px; max-width:28%; top:16px; opacity:.95; }
+[data-seasonal-header] .seasonal-garland { left:5%; right:5%; bottom:0; width:90%; height:29px; }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) [data-seasonal-scene] { inset:0; border:1px solid var(--seasonal-accent); box-shadow:inset 0 0 0 5px #16120c80,inset 0 0 30px #c1a16935; }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) [data-seasonal-scene]>.seasonal-caption { left:50%; right:auto; top:9px; transform:translateX(-50%); z-index:2; max-width:58%; white-space:nowrap; font-size:10px; background:#201711d9; border-color:var(--seasonal-accent); }
+:is([data-seasonal-level="2"],[data-seasonal-level="3"]) [data-seasonal-scene]::before { content:none; }
+[data-seasonal-level="3"] [data-seasonal-scene] { border-width:2px; background:linear-gradient(90deg,var(--seasonal-deep),transparent 26% 74%,var(--seasonal-deep)); }
+[data-seasonal-level="3"] [data-e01-home-scene] { box-shadow:0 12px 32px #0006,0 0 18px #c6a26a20; }
+[data-seasonal-theme=halloween] [data-seasonal-scene] { background:radial-gradient(ellipse at 6% 100%,#9b788c69,transparent 32%),radial-gradient(ellipse at 96% 90%,#967b9c59,transparent 30%),linear-gradient(90deg,#21162ee8,transparent 27% 73%,#24182fe8); }
+[data-seasonal-theme=magic] [data-seasonal-scene] { background:radial-gradient(ellipse at 50% 100%,#b99ae730,transparent 65%),linear-gradient(90deg,#3e295a80,transparent 27% 73%,#3e295a80); }
+[data-seasonal-theme=magic] [data-seasonal-scene]::after { content:'ᚱ  ✧  ᛟ  ✧  ᚨ'; position:absolute; left:29%; right:29%; bottom:36px; color:#dec9f0; text-align:center; font:18px Georgia,serif; text-shadow:0 0 8px #bea0da; }
+[data-seasonal-panel-host] { position:relative; isolation:isolate; background:linear-gradient(125deg,var(--seasonal-deep),#2c201c 60%,var(--seasonal-deep))!important; border-color:var(--seasonal-accent)!important; box-shadow:inset 0 0 0 4px #c9a76612,0 8px 26px #0005!important; }
+[data-seasonal-panel-host]>:not([data-seasonal-welcome]) { position:relative; z-index:1; }
+[data-seasonal-welcome] { position:absolute; inset:0; border-radius:inherit; overflow:hidden; z-index:0; }
+[data-seasonal-welcome]>.seasonal-caption,[data-seasonal-welcome]>.seasonal-motif { display:none; }
+[data-seasonal-welcome] .seasonal-art-left,[data-seasonal-welcome] .seasonal-art-right { width:76px; max-width:20%; opacity:.65; }
+[data-seasonal-welcome] .seasonal-garland { top:-9px; left:20%; width:60%; height:30px; opacity:.7; }
+/* Secondary motion touches opacity/transform only. Native effects and OS motion
+   preference gate it; the illustrated event remains complete when static. */
+.e01-effects-on:not(.seasonal-paused) [data-seasonal-header] .seasonal-bulb { animation:seasonal-lights 4s ease-in-out infinite alternate; }
+.e01-effects-on:not(.seasonal-paused) [data-seasonal-header] .seasonal-bulb:nth-child(3n) { animation-delay:-2s; }
+@keyframes seasonal-lights { from { opacity:.5; } to { opacity:1; } }
+.seasonal-paused [data-seasonal-header] .seasonal-bulb { animation-play-state:paused!important; }
+.e01-effects-off [data-seasonal-header] .seasonal-bulb { animation:none!important; }
+@media(prefers-reduced-motion:reduce) { [data-seasonal-header] .seasonal-bulb { animation:none!important; } }
+@media(min-width:768px) { [data-seasonal-level="3"] .seasonal-art-bottom-left,[data-seasonal-level="3"] .seasonal-art-bottom-right { width:24%; max-width:230px; } :is([data-seasonal-level="2"],[data-seasonal-level="3"]) [data-seasonal-scene]>.seasonal-caption { font-size:12px!important; } }
