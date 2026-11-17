@@ -1,0 +1,159 @@
+
+> test
+> node ci.cjs
+
+✔ all inclusive fixed windows and season boundaries (8.487412ms)
+✔ Gregorian mobile feasts are recomputed, inclusive and cross months (6.912571ms)
+✔ Valentine wins Carnival overlap, including February 14 (0.300919ms)
+✔ Brussels date ignores host timezone and handles summer/winter midnight (0.609015ms)
+✔ invalid civil dates are rejected instead of overflowing or using host parsing (0.807174ms)
+✔ every day 2000–2100 has one stable theme; February 14 always Valentine (1008.438435ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1033.199884
+SEASONAL_BROWSER_PASS 320
+SEASONAL_BROWSER_PASS 390
+SEASONAL_BROWSER_PASS 768
+SEASONAL_BROWSER_PASS 1440
+SEASONAL_MIDNIGHT_AND_LIFECYCLE_PASS
+✔ a fresh register generation keeps the six-card canonical Menu and all other sources (86.024048ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.942635
+MENU_BROWSER 154.0.8037.57
+MENU_SHORT_VIEWPORT {"width":320,"height":480,"last":{"x":16,"y":304,"width":288,"height":68,"top":304,"right":304,"bottom":372,"left":16},"scrollY":312,"maximumScroll":312,"scrollHeight":792,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":320,"height":81,"top":399,"right":320,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":320,"height":420,"last":{"x":16,"y":244,"width":288,"height":68,"top":244,"right":304,"bottom":312,"left":16},"scrollY":372,"maximumScroll":372,"scrollHeight":792,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":320,"height":81,"top":339,"right":320,"bottom":420,"left":0}}
+MENU_PASS 320 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":390,"height":480,"last":{"x":16,"y":304,"width":358,"height":68,"top":304,"right":374,"bottom":372,"left":16},"scrollY":282,"maximumScroll":282,"scrollHeight":762,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":390,"height":81,"top":399,"right":390,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":390,"height":420,"last":{"x":16,"y":244,"width":358,"height":68,"top":244,"right":374,"bottom":312,"left":16},"scrollY":342,"maximumScroll":342,"scrollHeight":762,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":390,"height":81,"top":339,"right":390,"bottom":420,"left":0}}
+MENU_PASS 390 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":1440,"height":480,"last":{"x":934.65625,"y":274,"width":409.34375,"height":68,"top":274,"right":1344,"bottom":342,"left":934.65625},"scrollY":0,"maximumScroll":0,"scrollHeight":480,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":399,"width":1280,"height":81,"top":399,"right":1360,"bottom":480,"left":80}}
+MENU_SHORT_VIEWPORT {"width":1440,"height":420,"last":{"x":934.65625,"y":244,"width":409.34375,"height":68,"top":244,"right":1344,"bottom":312,"left":934.65625},"scrollY":30,"maximumScroll":30,"scrollHeight":450,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":339,"width":1280,"height":81,"top":339,"right":1360,"bottom":420,"left":80}}
+MENU_PASS 1440 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+SETTINGS_PASS 320
+SETTINGS_PASS 390
+SETTINGS_PASS 768
+SETTINGS_PASS 1440
+SETTINGS_BACKUP_PASS presentation-documents-back-320
+SETTINGS_BACKUP_PASS presentation-documents-back-390
+SETTINGS_BACKUP_PASS presentation-documents-back-768
+SETTINGS_BACKUP_PASS presentation-documents-back-1440
+SETTINGS_BACKUP_PASS real-native-export-and-offline-download
+SETTINGS_BACKUP_PASS native-export-failure-has-no-false-success
+SETTINGS_BACKUP_PASS account-change-during-export-blocks-download
+SETTINGS_BACKUP_PASS restore-validation-cancellation-and-file-picker
+SETTINGS_BACKUP_PASS malformed-and-incomplete-archives-never-enable-restore
+SETTINGS_BACKUP_PASS native-restore-preserves-records-and-attachment-hash-after-reload
+SETTINGS_BACKUP_PASS native-restore-write-failure-rolls-back-records-and-attachment-bytes
+SETTINGS_BACKUP_PASS changed-registry-rejects-preview-confirmation
+SETTINGS_BACKUP_PASS changed-registry-during-transfer-read-rejects-restore
+SETTINGS_BACKUP_PASS changed-registry-during-native-read-cancels-before-confirmation
+SETTINGS_BACKUP_PASS changed-business-state-after-native-confirmation-is-preserved
+SETTINGS_BACKUP_PASS readonly-profile-blocks-complete-export-and-restore
+SETTINGS_BACKUP_RESULT 16 isolated scenarios passed; external requests blocked
+CONTACTS_V7_PASS 320 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_V7_PASS 390 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_V7_PASS 768 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_V7_PASS 1440 CRUD, reload, search, full card, legacy, cancel, permissions, dock, responsive
+CONTACTS_ERRORS_PASS stale edit, quota rollback/retry, legacy category, detail reload, dependent read-only gate
+CONTACTS_ARCHIVES_INTEGRATION_PASS 320 filter, cancel, native archive, read-only detail, reactivation, metadata, reload
+CONTACTS_ARCHIVES_INTEGRATION_PASS 390 filter, cancel, native archive, read-only detail, reactivation, metadata, reload
+CONTACTS_ARCHIVES_INTEGRATION_PASS 768 filter, cancel, native archive, read-only detail, reactivation, metadata, reload
+CONTACTS_ARCHIVES_INTEGRATION_PASS 1440 filter, cancel, native archive, read-only detail, reactivation, metadata, reload
+NOTES_STITCH23_PASS 320
+NOTES_STITCH23_PASS 390
+NOTES_STITCH23_PASS 768
+NOTES_STITCH23_PASS 1440
+E07_P01_CI_START e07-p01.cjs
+E07_P01_CI_PASS e07-p01.cjs
+E07_P01_CI_START e07-p01-visual.cjs
+E07_P01_CI_PASS e07-p01-visual.cjs
+E07_P01_CI_START e07-3-taverne.cjs
+E07_P01_CI_PASS e07-3-taverne.cjs
+E07_P01_CI_START e07-3-catalogue.cjs
+E07_P01_CI_PASS e07-3-catalogue.cjs
+E07_P01_CI_START e07-4-b-ui.cjs
+E07_P01_CI_PASS e07-4-b-ui.cjs
+E07_P01_CI_START e07-4-engine.cjs
+E07_P01_CI_PASS e07-4-engine.cjs
+E07_P01_CI_START e07-4-render-race.cjs
+E07_P01_CI_PASS e07-4-render-race.cjs
+E07_P01_CI_START v7-meals-model.cjs
+E07_P01_CI_PASS v7-meals-model.cjs
+E07_P01_CI_START v7-meals-ui.cjs
+E07_P01_CI_PASS v7-meals-ui.cjs
+E07_P01_CI_START v7-meals-child.cjs
+E07_P01_CI_PASS v7-meals-child.cjs
+E07_P01_CI_START v7-dessert-preparations.cjs
+E07_P01_CI_PASS v7-dessert-preparations.cjs
+E07_P01_CI_START v7-dessert-batch-edges.cjs
+E07_P01_CI_PASS v7-dessert-batch-edges.cjs
+E07_P01_TARGETED_CI_PASS 12 browser scripts; source fingerprints unchanged
+✔ regroupe les apports compatibles et conserve leurs repas, réimport idempotent (103.060071ms)
+✔ article manuel couvre le besoin sans doubler la quantité (2.952656ms)
+✔ maison partiel/total/annulation reste distinct des achats et de la clôture (4.85926ms)
+✔ noms ambigus et unités incompatibles restent distincts (1.436886ms)
+✔ un aperçu devenu périmé ne modifie pas les articles (2.36791ms)
+✔ disponibilité conserve son unité quand un apport compatible est ajouté (5.654424ms)
+✔ plusieurs articles manuels compatibles sont tous conservés sans surajout (2.365807ms)
+✔ historique E07.2 en kg conserve son reçu et ne se réimporte pas (1.286477ms)
+✔ modifier une unité compatible convertit aussi la disponibilité (1.693888ms)
+✔ supprimer une préparation libère sa couverture manuelle (2.734795ms)
+✔ supprimer un article familial retire son annotation maison (3.419454ms)
+✔ réimport familial avec période restreinte ne réalloue pas la couverture (3.484778ms)
+✔ un formulaire partagé périmé ne remplace pas une modification reçue (1.249299ms)
+✔ une confirmation de suppression périmée ne retire pas la nouvelle version (1.275634ms)
+✔ une clôture périmée n’archive pas une disponibilité reçue après confirmation (1.348473ms)
+✔ dessert reste une origine indépendante dans la liste familiale unique et son reçu est idempotent (1.838978ms)
+✔ backend indisponible reste un gate explicite et conserve les articles partagés (1.435121ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.005901
+✔ availability is persisted, compared and acknowledged by the native core (20.258706ms)
+✔ competing availability declarations require conflict resolution (8.244ms)
+✔ an edit in flight is not lost on acknowledgement (0.314346ms)
+✔ legacy rows omit availability from payloads and compare as zero (0.320677ms)
+✔ kg availability retains gram-level fractional precision (0.313436ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.875006
+E07_P02_BROWSER_PASS 390
+E07_P02_BROWSER_PASS 320
+E07_P02_BROWSER_PASS 1440
+E07_P02_LOADING_RESUME_PASS
+CANONICAL_GROCERY_SNAPSHOT_PASS 8 cases
+CUISINE_FAMILY_PASS 390px unique verified-family list, native CRUD, fractional qty, offline/reload, conflicts, explicit menu/local imports, deduplication and partial archive (HTTP fixture only)
+CUISINE_SHARED_HOME_RACE_PASS queued group edit survives concurrent pull, CAS and reload
+SHARED_HOME_OK A declares 200 g of 500 g; B reads 200 g available and 300 g to buy
+SHARED_HOME_OK B modifies and cancels the shared declaration
+SHARED_HOME_OK Offline availability can be changed again after reload, stays pending, and reaches B with its latest value
+SHARED_HOME_OK An incompatible name/unit edit after offline reload resets availability in the durable queue and on B
+SHARED_HOME_OK Concurrent revision CAS rejects the stale PATCH; explicit server and local resolutions converge
+SHARED_HOME_OK Legacy homeByScope stays intact, ignored by shared snapshots, and never auto-published
+SHARED_HOME_OK Grouped edits roll back atomically on a stale row; g/kg availability retains gram precision and survives compatible editing
+SHARED_HOME_OK Simple native edits share availability; delete/archive and re-add leave no residual declaration
+SHARED_HOME_OK Repeated import/reload remains idempotent and checking/unchecking preserves availability
+SHARED_HOME_OK Old schema supports ordinary CRUD and fails availability with migration guidance and no false local success
+SHARED_HOME_OK Authenticated membership without canonical V7 context stays read-only and never sends a grocery write
+CUISINE_SHARED_HOME_PASS two clients, shared availability, offline/reload, actual CAS conflicts, grouped units, legacy schema and import/check regression (HTTP fixture only)
+E07_P01_P02_TARGETED_CI_PASS
