@@ -109,7 +109,7 @@
  function magicSettings(){
   c.main.classList.add('rg-settings-page');c.main.replaceChildren(button('settings','Retour aux paramètres'),el('h1','Ambiance magique','font-headline-lg-mobile text-headline-lg-mobile text-primary'));
   const panel=el('section','','rg-settings-panel');panel.setAttribute('aria-label','Effets visuels et sons de DOBBY');
-  for(const [name,label]of [['effects','Effets magiques'],['sound','Sons']]){
+  for(const [name,label]of [['effects','Effets magiques'],['seasonalDecorations','Décorations saisonnières'],['sound','Sons']]){
    const control=el('button','','rg-settings-switch');control.type='button';control.dataset.e01Toggle=name;control.dataset.settingsPreference=name;control.dataset.magicControl='true';control.setAttribute('role','switch');control.setAttribute('aria-label',label);
    const track=el('span','','rg-settings-track');track.setAttribute('aria-hidden','true');control.append(el('span',label),track);panel.append(control);
   }
