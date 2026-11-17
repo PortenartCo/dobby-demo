@@ -31,7 +31,7 @@ INSERT INTO access_2a_manifest VALUES
  ('dobby_socle_private.is_parent(uuid)','predicate'),
  ('dobby_socle_private.can_read(uuid)','predicate'),
  ('dobby_socle_private.legacy_unlinked()','predicate'),
- ('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)','read');
+ ('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)','write');
 
 -- Body/owner fingerprints of definitions reconstructed from the published sources.
 -- Any hosted drift requires review, never a best-effort patch.
@@ -211,7 +211,7 @@ BEGIN
    body:=body||format(' result:=%s(%s); IF result->>''replayed'' IS DISTINCT FROM ''true'' THEN PERFORM dobby_access_private.consume_household_creation(); END IF; RETURN result;',legacy,args);
   ELSIF m.kind='preview' THEN
    decl:='DECLARE result jsonb; c jsonb;';
-   body:=body||format(' result:=%s(%s); c:=public.dobby_v7_context(); IF c->>''phase''=''active'' AND result->''household''->>''id'' IS DISTINCT FROM c->>''householdId'' THEN RETURN jsonb_build_object(''status'',''invalid''); END IF; RETURN result;',legacy,args);
+   body:=body||format(' c:=public.dobby_v7_context(); IF c->>''phase'' IS NULL OR c->>''phase'' NOT IN (''profile'',''household'',''active'') THEN RETURN jsonb_build_object(''status'',''invalid''); END IF; result:=%s(%s); IF c->>''phase''=''active'' AND result->''household''->>''id'' IS DISTINCT FROM c->>''householdId'' THEN RETURN jsonb_build_object(''status'',''invalid''); END IF; RETURN result;',legacy,args);
   ELSIF f.prorettype='void'::regtype THEN body:=body||format(' PERFORM %s(%s); RETURN;',legacy,args);
   ELSE body:=body||format(' RETURN %s(%s);',legacy,args); END IF;
   head:=left(f.definition,strpos(f.definition,'AS $function$')-1);
@@ -234,6 +234,12 @@ BEGIN
  REVOKE ALL ON public.dobby_sync_grocery_items FROM PUBLIC,anon,authenticated;
  FOR r IN SELECT attname FROM pg_attribute WHERE attrelid='public.dobby_sync_grocery_items'::regclass AND attnum>0 AND NOT attisdropped LOOP
   EXECUTE format('REVOKE SELECT(%I),INSERT(%I),UPDATE(%I),REFERENCES(%I) ON public.dobby_sync_grocery_items FROM PUBLIC,anon,authenticated',r,r,r,r);
+ END LOOP;
+ FOREACH r IN ARRAY ARRAY['anon','authenticated'] LOOP
+  IF has_any_column_privilege(r,'public.dobby_sync_grocery_items','SELECT,INSERT,UPDATE,REFERENCES')
+   OR has_table_privilege(r,'public.dobby_sync_grocery_items','DELETE,TRUNCATE,TRIGGER') THEN
+   RAISE EXCEPTION 'Unexpected inherited privileges on V1 grocery; explicit ACL review required';
+  END IF;
  END LOOP;
 END $tables$;
 

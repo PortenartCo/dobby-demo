@@ -141,7 +141,7 @@
     },
     {
       "signature": "dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)",
-      "kind": "read"
+      "kind": "write"
     }
   ],
   "missingDefinitions": [
@@ -3474,7 +3474,7 @@
         "name": "assert_snapshot",
         "owner": "dobby_socle_writer",
         "schema": "dobby_v7_private",
-        "bodyMD5": "8830f908334a4fbf54ce0a372143d876",
+        "bodyMD5": "90501357c7ff6b6aef5064822e2e687c",
         "language": "plpgsql",
         "arguments": "p_household uuid, p_old jsonb, p_new jsonb",
         "signature": "dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)",
@@ -3483,7 +3483,7 @@
         "configuration": [
           "search_path=\"\""
         ],
-        "definitionMD5": "7b6fb7609af6b2bc2c23b0b4b763bb48",
+        "definitionMD5": "d8e5f6eb04ad812b9d16c48e3f5bd1ad",
         "securityDefiner": true
       },
       {
@@ -4050,7 +4050,7 @@
         "name": "dobby_v7_preview_child_invitation",
         "owner": "dobby_socle_writer",
         "schema": "public",
-        "bodyMD5": "44c453c8c6b911e95c5d0cd6a46c6cc0",
+        "bodyMD5": "1dc1f1607cf6262533eb7c1df19250bd",
         "language": "plpgsql",
         "arguments": "p_token text",
         "signature": "public.dobby_v7_preview_child_invitation(text)",
@@ -4059,7 +4059,7 @@
         "configuration": [
           "search_path=\"\""
         ],
-        "definitionMD5": "7ff2df1c52459e98be6cbafe7cc9149e",
+        "definitionMD5": "ed90f7f71af82dbe917a291737cd7504",
         "securityDefiner": true
       },
       {
@@ -4068,7 +4068,7 @@
         "name": "dobby_v7_preview_invitation",
         "owner": "dobby_socle_writer",
         "schema": "public",
-        "bodyMD5": "2bb79a0a32b1e6bf733ecf85eb2868d3",
+        "bodyMD5": "5c9bdea935b8823422d84f568db99bd6",
         "language": "plpgsql",
         "arguments": "p_token text",
         "signature": "public.dobby_v7_preview_invitation(text)",
@@ -4077,7 +4077,7 @@
         "configuration": [
           "search_path=\"\""
         ],
-        "definitionMD5": "1abe58b2ab51d77eaca401bde268cf5d",
+        "definitionMD5": "c91ceff7fb8d536083fdfb39981c1448",
         "securityDefiner": true
       },
       {

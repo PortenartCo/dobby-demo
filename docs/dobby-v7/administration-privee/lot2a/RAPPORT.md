@@ -20,14 +20,14 @@ Le [catalogue exact avant/après](preuves/catalogue-local.json) conserve signatu
 | --- | --- |
 | 4 tables V2 : households, memberships, grocery, modules | Policy restrictive `dobby_access_active`, intersectée avec toutes les policies natives. Couvre aussi menus, recettes, maison et contrats. |
 | `dobby_sync_members` V1 | Lecture de son propre enregistrement seulement si compte actif ; pas de droit d'écriture navigateur ajouté. |
-| `dobby_sync_grocery_items` V1 | Privilèges navigateur révoqués, y compris privilèges de colonnes ; lignes conservées. |
+| `dobby_sync_grocery_items` V1 | Privilèges navigateur révoqués, y compris privilèges de colonnes ; contrôle des droits effectifs hérités et refus atomique s’ils subsistent ; lignes conservées. |
 | RPC V7 contexte, profil, création, modifications et invitations | Garde avant entrée dans le corps natif ; contexte conservé pour les actifs. Création : droit explicite consommé une fois, rejeu conservé. |
 | Writers/capacités Missions V2/V3 | Garde avant validation, verrou métier ou retour de reçu. Chemin réel du rejeu V3 et capacités V3 testés. Graphe complet V2/V3 non certifié. |
 | Alias `dobby_missions_v2_write_legacy_socle` | Déjà fermé ; migration refuse un catalogue qui l'exposerait. Aucun EXECUTE navigateur ajouté. |
 | Ancien `dobby_v7_bind_existing_member` | Reste fermé au navigateur et conserve son refus natif ; garde supplémentaire avant son corps. |
 | `actor_context`, prédicats familiaux, `assert_snapshot` | Vérification de l'accès actif ; prédicats retournent false en cas de suspension. Verrou d'autorisation pris avant le contexte verrouillant. |
 | `dobby_v7_family_capabilities` | Liste publique de drapeaux, aucun payload familial ; identité canonique false pour un anonyme. |
-| Prévisualisations d'invitation | Réponse neutre `status: invalid` sans accès actif. Refus de dévoiler un autre foyer à un compte déjà lié. L'admission nominative relève du Lot 3. |
+| Prévisualisations d'invitation | Réponse neutre `status: invalid` sans accès actif. Seules les phases profile/household ou active du même foyer sont éligibles ; contexte rejeté ou inconnu neutralisé pour les deux previews. L'admission nominative relève du Lot 3. |
 | 3 API publiques du Lot 1 | Contexte d'accès borné et décisions propriétaire existantes conservés. |
 | Vues / surcharges supplémentaires | Aucune vue exposée dans les sources reproduites. Une entrée publique, surcharge, vue accessible ou table inconnue fait échouer le préflight atomiquement. |
 
@@ -39,7 +39,7 @@ Les corps natifs sont copiés dans `dobby_access_legacy`, sans USAGE/EXECUTE nav
 
 Ordre ajouté : autorisation → verrous de compte/appartenance/foyer → lignes et reçus métier. Les écritures SQL directes passent par un trigger **BEFORE STATEMENT**, avant les verrous de lignes de l'exécuteur. Une policy ou un trigger de ligne seuls ne suffisent pas à garantir cet ordre. La création prend d'emblée le verrou exclusif d'autorisation, avant tout verrou métier, pour éviter une promotion SHARE→UPDATE concurrente lors de la consommation du droit.
 
-Deux connexions réelles testent RPC et UPDATE direct dans les deux ordres, avec observation de `pg_stat_activity.wait_event_type='Lock'`. Si l'écriture détient déjà l'autorisation, sa transaction peut terminer avant la confirmation de suspension. Si la suspension détient le verrou, l'écriture attend puis échoue sans effet. Les requêtes de lecture déjà en cours restent soumises à leur instantané MVCC ; aucune annulation rétroactive d'une réponse en vol n'est revendiquée.
+Deux connexions réelles testent RPC et UPDATE direct dans les deux ordres, avec observation de `pg_stat_activity.wait_event_type='Lock'`. Si l'écriture détient déjà l'autorisation, sa transaction peut terminer avant la confirmation de suspension. Si la suspension détient le verrou, l'écriture attend puis échoue sans effet. Le validateur `assert_snapshot` appelé directement est aussi testé face à une suspension : celle-ci attend son verrou d’autorisation. Les valeurs et révisions de la mutation passée avant suspension sont contrôlées après commit. Les requêtes de lecture déjà en cours restent soumises à leur instantané MVCC ; aucune annulation rétroactive d'une réponse en vol n'est revendiquée.
 
 Après réactivation en deux transactions selon le Lot 1, les anciennes sessions restent refusées ; une nouvelle session fictive passe avant une nouvelle suspension. Les claims SQL simulés servent uniquement aux tests de base de données, jamais de preuve de validation cryptographique d'un JWT ou d'une requête HTTP.
 
@@ -49,7 +49,7 @@ Les droits Auth étroits du lecteur de sessions restent ceux du Lot 1. Ils sont 
 
 ## Résultats exécutés et écarts
 
-**23/23 contrôles Lot 2A, 28/28 tests PostgreSQL Lot 1, 444/444 tests natifs ciblés passent.** Le diagnostic 42883 confirme une dépendance absente ; il ne constitue pas un succès des fonctionnalités Missions non vérifiées. Les [journaux](preuves/) contiennent les commandes de référence et leurs résultats réels. Les 28 tests PostgreSQL du Lot 1 ont été rejoués dans leur harnais livré, séparément des tests d'intégration Lot 2A. Les 444 tests natifs ciblés ont été rejoués. Les 83 tests cités par l'ancien audit ne sont pas présentés comme une exécution de cette mission.
+**26/26 contrôles Lot 2A, 28/28 tests PostgreSQL Lot 1, 444/444 tests natifs ciblés passent.** Le diagnostic 42883 confirme une dépendance absente ; il ne constitue pas un succès des fonctionnalités Missions non vérifiées. Les [journaux](preuves/) contiennent les commandes de référence et leurs résultats réels. Les 28 tests PostgreSQL du Lot 1 ont été rejoués dans leur harnais livré, séparément des tests d'intégration Lot 2A. Les 444 tests natifs ciblés ont été rejoués. Les 83 tests cités par l'ancien audit ne sont pas présentés comme une exécution de cette mission.
 
 | Scénario | Résultat local exécuté | Écart restant |
 | --- | --- | --- |
@@ -61,6 +61,10 @@ Les droits Auth étroits du lecteur de sessions restent ceux du Lot 1. Ils sont 
 | T08 | PASS : V1 figée même pour un compte actif, lectures de membre suspendu fermées, lignes préservées ; aucune admission dérivée de V1. | Vérification du catalogue hébergé EN ATTENTE. |
 
 Contre-tests avant correction : lecture du foyer par Auth non approuvé = 1 ligne ; contexte d'un suspendu = `active` ; relecture du reçu V3 d'un suspendu = true ; V1 non approuvé = 1 membre et 1 article. Ils montrent les accès antérieurs dans le modèle local, pas des requêtes réalisées en production. La première exécution des attentes de fermeture a échoué avant ajout de la migration ; son journal RED est conservé séparément du résultat final.
+
+## Revue indépendante et contre-épreuves
+
+Une revue indépendante du commit `13f9eacb65ea37358bde0afe4064481e20a91c2a` a relevé quatre points importants, corrigés dans une seule passe : droits V1 hérités survivant aux REVOKE directs ; absence de verrou d’autorisation avant le verrou métier du snapshot direct ; preview pour un contexte canonique rejeté ; absence d’assertion de l’effet réel du writer passé avant suspension. Les [contre-épreuves de revue](preuves/revue-red.log) échouent avant correction ; la suite finale passe à 26/26. Le test du writer détecte aussi un pilote volontairement remplacé par un UPDATE sans ligne. Aucun point mineur reporté. Les limites hors preuve locale énumérées ci-dessus restent ouvertes ; aucune seconde revue indépendante des correctifs n’est revendiquée.
 
 ## Reprise, rollback et validations distinctes
 

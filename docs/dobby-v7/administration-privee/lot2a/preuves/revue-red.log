@@ -1,0 +1,148 @@
+LOCAL ONLY — Expected failing regressions before the consolidated review fix.
+Blank-line indentation normalized for git diff --check; results unchanged.
+
+Command: node --test tests/private-access/lot2a/catalog.test.mjs tests/private-access/lot2a/concurrency.test.mjs
+INVENTORY: 27 classified signatures; 20 authenticated public routines; 12 missing private Missions definitions (no stubs)
+✔ T06 closed inventory rejects an unreviewed overload atomically (425.752298ms)
+✔ Closed inventory rejects exposed definer views and unreviewed body drift (1442.551035ms)
+✔ No implicit role repair: absent maintenance ADMIN blocks the whole migration (468.84619ms)
+✖ T08 inherited V1 table/column/TRUNCATE privileges force atomic refusal (842.097698ms)
+✔ Candidate preserves every native policy, owner and business body; inventory is closed (1121.778305ms)
+✔ Rollback drill restores native definitions, ACLs, policies and exact business rows; reapply succeeds (983.574072ms)
+T07 RPC: observed Lock waits in both orders; post-suspension rows/revisions unchanged
+✔ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (2204.120752ms)
+T07 DIRECT UPDATE: observed Lock waits in both orders; post-suspension rows/revisions unchanged
+✔ T07 DIRECT UPDATE: writer-first commits before suspension; suspension-first prevents mutation (2796.500946ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26220.909637
+
+✖ failing tests:
+
+test at tests/private-access/lot2a/catalog.test.mjs:49:1
+✖ T08 inherited V1 table/column/TRUNCATE privileges force atomic refusal (842.097698ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to: 0
+      at preflightFails (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/catalog.test.mjs:18:9)
+      at TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/catalog.test.mjs:54:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+Command: node --test tests/private-access/lot2a/authorization.test.mjs tests/private-access/lot2a/concurrency.test.mjs
+COUNTER-CONTROLS: unapproved own-family read=1; suspended context=active; suspended V3 replay=true; V1 member=1/article=1
+NON VERIFIED: full authorized Missions V2/V3 graph; real V2 capability call fails 42883 on absent request_user_id(), no stub
+✔ T02 unapproved Auth account sees zero business rows and cannot invoke context (637.473642ms)
+✔ T01 active two-household reads retain canonical isolation and owner has no extra visibility (587.366271ms)
+✔ T05 suspension closes reads, context and direct mutations with old session (313.779761ms)
+✔ T08 V1 grocery API is closed, own membership is gated, existing rows retained (992.969703ms)
+✔ T06 original default-argument RPC and explicit arity both reject suspension (307.601395ms)
+✔ Minimal privileges: browser cannot adopt writer roles or read private receipts (619.927696ms)
+✔ T01 cross-household direct UPDATE affects zero rows; cross-household INSERT is rejected (239.523213ms)
+✔ Active profile CAS, native family identity and direct grocery stamps remain functional (374.01877ms)
+✔ Household creation consumes explicit quota once, replay retains the same identity (233.924281ms)
+✔ T06 every reproduced public RPC signature refuses suspended direct calls before native code (5378.238122ms)
+✔ T06 authentic V3 receipt path replays for active account, stops before payload on suspension (519.133626ms)
+✔ Native invitations preserve receipts; public and foreign-household previews disclose no family (225.957192ms)
+✔ Anonymous capability output consists only of public flags; admission context remains neutral (120.692794ms)
+✔ Native parent/child, bound identity and snapshot invariants still reject forbidden edits (355.372149ms)
+✔ T01 the generic module policy covers menus, recipes, house and contracts in both households (302.790628ms)
+✔ Missions gap is material: authorized V2 capabilities reaches the absent private dependency (242.164231ms)
+✖ Invitation previews reject an approved account whose canonical family context is rejected (125.245814ms)
+T07 RPC: observed Lock waits in both orders; post-suspension rows/revisions unchanged
+✔ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (2158.086613ms)
+T07 DIRECT UPDATE: observed Lock waits in both orders; post-suspension rows/revisions unchanged
+✔ T07 DIRECT UPDATE: writer-first commits before suspension; suspension-first prevents mutation (2749.543894ms)
+✖ T07 direct snapshot validator locks authorization before its native membership lock (9160.305281ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 18
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33921.664195
+
+✖ failing tests:
+
+test at tests/private-access/lot2a/authorization.test.mjs:164:1
+✖ Invitation previews reject an approved account whose canonical family context is rejected (125.245814ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'rejected\nvalid\nvalid'
+  - 'rejected\ninvalid\ninvalid'
+               ^
+
+      at TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/authorization.test.mjs:170:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'rejected\nvalid\nvalid',
+    expected: 'rejected\ninvalid\ninvalid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot2a/concurrency.test.mjs:76:1
+✖ T07 direct snapshot validator locks authorization before its native membership lock (9160.305281ms)
+  AssertionError [ERR_ASSERTION]: Expected a PostgreSQL lock wait for lot2a-validator-suspender
+      at waiting (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/concurrency.test.mjs:14:9)
+      at async TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/concurrency.test.mjs:87:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
+
+Command: node --test --test-name-pattern='T07 RPC:' /workspace/scratch/dobby-lot2a/noop-mutant.test.mjs
+✖ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (567.575506ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17752.638609
+
+✖ failing tests:
+
+test at ../scratch/dobby-lot2a/noop-mutant.test.mjs:35:44
+✖ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (567.575506ms)
+  AssertionError [ERR_ASSERTION]: Writer-first must really mutate its target and increment the native revision
+  + actual - expected
+
+  + '|7'
+  - 'TEST BEFORE|8'
+
+      at TestContext.<anonymous> (file:///workspace/scratch/dobby-lot2a/noop-mutant.test.mjs:47:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '|7',
+    expected: 'TEST BEFORE|8',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+No-op mutant: temporary copy of concurrency.test.mjs; its write(kind,session,label) returned as(2,session) + "UPDATE public.dobby_v2_grocery SET title=title WHERE false;". Imports pointed to the unchanged local harness. The real writer test passed after restoring the original driver; this mutant was never an application change.

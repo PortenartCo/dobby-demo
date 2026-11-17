@@ -36,6 +36,8 @@ function write(kind,session,label) {
 }
 for(const kind of ['RPC','DIRECT UPDATE']) test(`T07 ${kind}: writer-first commits before suspension; suspension-first prevents mutation`,async()=>{
  let session=kind==='RPC'?1002:renew();
+ const profile=()=>run(`SELECT e->>'firstName',m.revision FROM public.dobby_v2_modules m CROSS JOIN LATERAL jsonb_array_elements(m.payload->'familyMembers') e WHERE household_id=${q(id(101))} AND module='family' AND e->>'id'='TEST_PARENT_B';`);
+ const initial=kind==='RPC'?profile():value();
  const writer=interactive(),suspender=interactive();
  try {
   writer.send(`SET application_name='lot2a-writer'; BEGIN;`+write(kind,session,'TEST BEFORE')+`\n\\echo WRITER_LOCKED`);
@@ -43,6 +45,8 @@ for(const kind of ['RPC','DIRECT UPDATE']) test(`T07 ${kind}: writer-first commi
   suspender.send(`SET application_name='lot2a-suspender'; BEGIN;`+status('suspended')+`\n\\echo SUSPENDED`);
   await waiting('lot2a-suspender');
   assert.equal((await writer.finish('COMMIT;')).code,0);
+  const committed=kind==='RPC'?profile():value();
+  assert.equal(committed,`TEST BEFORE|${Number(initial.split('|')[1])+1}`,'Writer-first must really mutate its target and increment the native revision');
   await suspender.waitFor('SUSPENDED');
   assert.equal((await suspender.finish('COMMIT;')).code,0);
  } finally {await writer.finish();await suspender.finish();}
@@ -68,4 +72,22 @@ for(const kind of ['RPC','DIRECT UPDATE']) test(`T07 ${kind}: writer-first commi
  assert.equal(value(),before);
  assert.equal(run(`SELECT payload,revision FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='family';`),familyBefore);
  console.log(`T07 ${kind}: observed Lock waits in both orders; post-suspension rows/revisions unchanged`);
+});
+test('T07 direct snapshot validator locks authorization before its native membership lock',async()=>{
+ const session=renew();
+ const validator=interactive(),suspender=interactive();
+ try {
+  validator.send(`SET application_name='lot2a-validator'; BEGIN;`+as(2,session)+`
+  SELECT dobby_v7_private.assert_snapshot(${q(id(101))},
+   (SELECT payload FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='family'),
+   (SELECT payload FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='family'));
+  \\echo VALIDATOR_LOCKED`);
+  await validator.waitFor('VALIDATOR_LOCKED');
+  suspender.send(`SET application_name='lot2a-validator-suspender'; BEGIN;`+status('suspended')+`\n\\echo SUSPENDED`);
+  await waiting('lot2a-validator-suspender');
+  assert.equal((await validator.finish('COMMIT;')).code,0);
+  await suspender.waitFor('SUSPENDED');
+  assert.equal((await suspender.finish('COMMIT;')).code,0);
+ } finally {await validator.finish();await suspender.finish();}
+ console.log('T07 direct assert_snapshot: suspension observed waiting for authorization before native membership lock release');
 });

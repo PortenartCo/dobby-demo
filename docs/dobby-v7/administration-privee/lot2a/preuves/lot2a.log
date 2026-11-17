@@ -2,37 +2,41 @@ LOCAL ONLY — PostgreSQL 17.7 / Node 24.19.0
 Command: DOBBY_EVIDENCE_DIR=/workspace/scratch/dobby-lot2a/evidence node --test tests/private-access/lot2a/*.test.mjs
 COUNTER-CONTROLS: unapproved own-family read=1; suspended context=active; suspended V3 replay=true; V1 member=1/article=1
 NON VERIFIED: full authorized Missions V2/V3 graph; real V2 capability call fails 42883 on absent request_user_id(), no stub
-✔ T02 unapproved Auth account sees zero business rows and cannot invoke context (1070.956778ms)
-✔ T01 active two-household reads retain canonical isolation and owner has no extra visibility (875.118756ms)
-✔ T05 suspension closes reads, context and direct mutations with old session (409.488582ms)
-✔ T08 V1 grocery API is closed, own membership is gated, existing rows retained (1177.353269ms)
-✔ T06 original default-argument RPC and explicit arity both reject suspension (238.822382ms)
-✔ Minimal privileges: browser cannot adopt writer roles or read private receipts (794.827566ms)
-✔ T01 cross-household direct UPDATE affects zero rows; cross-household INSERT is rejected (365.756879ms)
-✔ Active profile CAS, native family identity and direct grocery stamps remain functional (450.240428ms)
-✔ Household creation consumes explicit quota once, replay retains the same identity (281.288516ms)
-✔ T06 every reproduced public RPC signature refuses suspended direct calls before native code (4212.417663ms)
-✔ T06 authentic V3 receipt path replays for active account, stops before payload on suspension (774.45591ms)
-✔ Native invitations preserve receipts; public and foreign-household previews disclose no family (252.505209ms)
-✔ Anonymous capability output consists only of public flags; admission context remains neutral (106.533324ms)
-✔ Native parent/child, bound identity and snapshot invariants still reject forbidden edits (534.67747ms)
-✔ T01 the generic module policy covers menus, recipes, house and contracts in both households (295.210241ms)
-✔ Missions gap is material: authorized V2 capabilities reaches the absent private dependency (313.075825ms)
+✔ T02 unapproved Auth account sees zero business rows and cannot invoke context (844.404777ms)
+✔ T01 active two-household reads retain canonical isolation and owner has no extra visibility (713.319779ms)
+✔ T05 suspension closes reads, context and direct mutations with old session (390.465938ms)
+✔ T08 V1 grocery API is closed, own membership is gated, existing rows retained (1097.363999ms)
+✔ T06 original default-argument RPC and explicit arity both reject suspension (302.740195ms)
+✔ Minimal privileges: browser cannot adopt writer roles or read private receipts (740.482333ms)
+✔ T01 cross-household direct UPDATE affects zero rows; cross-household INSERT is rejected (306.249173ms)
+✔ Active profile CAS, native family identity and direct grocery stamps remain functional (379.095585ms)
+✔ Household creation consumes explicit quota once, replay retains the same identity (271.268341ms)
+✔ T06 every reproduced public RPC signature refuses suspended direct calls before native code (4230.312445ms)
+✔ T06 authentic V3 receipt path replays for active account, stops before payload on suspension (440.398973ms)
+✔ Native invitations preserve receipts; public and foreign-household previews disclose no family (228.715532ms)
+✔ Anonymous capability output consists only of public flags; admission context remains neutral (99.886061ms)
+✔ Native parent/child, bound identity and snapshot invariants still reject forbidden edits (324.849703ms)
+✔ T01 the generic module policy covers menus, recipes, house and contracts in both households (222.957414ms)
+✔ Missions gap is material: authorized V2 capabilities reaches the absent private dependency (210.383734ms)
+✔ Invitation previews reject an approved account whose canonical family context is rejected (99.448746ms)
 INVENTORY: 27 classified signatures; 20 authenticated public routines; 12 missing private Missions definitions (no stubs)
-✔ T06 closed inventory rejects an unreviewed overload atomically (743.011939ms)
-✔ Closed inventory rejects exposed definer views and unreviewed body drift (1616.757622ms)
-✔ No implicit role repair: absent maintenance ADMIN blocks the whole migration (492.325946ms)
-✔ Candidate preserves every native policy, owner and business body; inventory is closed (1163.485556ms)
-✔ Rollback drill restores native definitions, ACLs, policies and exact business rows; reapply succeeds (1183.334917ms)
+✔ T06 closed inventory rejects an unreviewed overload atomically (457.348183ms)
+✔ Closed inventory rejects exposed definer views and unreviewed body drift (1554.018494ms)
+✔ No implicit role repair: absent maintenance ADMIN blocks the whole migration (484.938863ms)
+✔ T08 inherited V1 table/column/TRUNCATE privileges force atomic refusal (2182.673589ms)
+✔ Candidate preserves every native policy, owner and business body; inventory is closed (1200.909398ms)
+✔ Rollback drill restores native definitions, ACLs, policies and exact business rows; reapply succeeds (978.188854ms)
 T07 RPC: observed Lock waits in both orders; post-suspension rows/revisions unchanged
-✔ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (2774.740696ms)
+✔ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (2380.28989ms)
 T07 DIRECT UPDATE: observed Lock waits in both orders; post-suspension rows/revisions unchanged
-✔ T07 DIRECT UPDATE: writer-first commits before suspension; suspension-first prevents mutation (2888.855477ms)
-ℹ tests 23
+✔ T07 DIRECT UPDATE: writer-first commits before suspension; suspension-first prevents mutation (2996.710717ms)
+T07 direct assert_snapshot: suspension observed waiting for authorization before native membership lock release
+✔ T07 direct snapshot validator locks authorization before its native membership lock (1046.063592ms)
+ℹ tests 26
 ℹ suites 0
-ℹ pass 23
+ℹ pass 26
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 39171.47804
+ℹ duration_ms 32494.757407

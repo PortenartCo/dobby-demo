@@ -161,3 +161,13 @@ test('Missions gap is material: authorized V2 capabilities reaches the absent pr
  assert.equal(scalar(`SELECT to_regprocedure('dobby_runes_private.request_user_id()') IS NULL;`),'t');
  console.log('NON VERIFIED: full authorized Missions V2/V3 graph; real V2 capability call fails 42883 on absent request_user_id(), no stub');
 });
+test('Invitation previews reject an approved account whose canonical family context is rejected',()=>{
+ const seed=`UPDATE public.dobby_v2_modules SET payload=jsonb_set(payload,'{familyMembers}',payload->'familyMembers'||'[{"id":"TEST_PENDING_CHILD","memberCategory":"child"}]'::jsonb) WHERE household_id=${q(id(101))} AND module='family';
+ INSERT INTO dobby_v7_private.invitations(id,household_id,created_by,token_hash,expires_at,invitation_kind,target_member_id) VALUES
+ (${q(id(880))},${q(id(101))},${q(id(1))},sha256(convert_to(repeat('a',64),'UTF8')),now()+interval '1 day','member',NULL),
+ (${q(id(881))},${q(id(101))},${q(id(1))},sha256(convert_to(repeat('b',64),'UTF8')),now()+interval '1 day','child-account','TEST_PENDING_CHILD');
+ UPDATE public.dobby_v2_memberships SET active=false WHERE user_id=${q(id(3))};`;
+ assert.equal(run(setup()+seed+as(3)+`SELECT public.dobby_v7_context()->>'phase';
+ SELECT public.dobby_v7_preview_invitation(repeat('a',64))->>'status';
+ SELECT public.dobby_v7_preview_child_invitation(repeat('b',64))->>'status'; ROLLBACK;`),'rejected\ninvalid\ninvalid');
+});

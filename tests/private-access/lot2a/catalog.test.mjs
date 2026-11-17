@@ -46,6 +46,19 @@ test('No implicit role repair: absent maintenance ADMIN blocks the whole migrati
  preflightFails(/maintenance ADMIN/);
  run('GRANT dobby_v7_writer TO postgres WITH ADMIN TRUE, INHERIT FALSE, SET FALSE;');
 });
+test('T08 inherited V1 table/column/TRUNCATE privileges force atomic refusal',()=>{
+ run('CREATE ROLE lot2a_inherited_v1 NOLOGIN; GRANT lot2a_inherited_v1 TO authenticated;');
+ try {
+  for(const privilege of ['SELECT','SELECT(title)','TRUNCATE']) {
+   run(`GRANT ${privilege} ON public.dobby_sync_grocery_items TO lot2a_inherited_v1;`);
+   try {preflightFails(/inherited.*V1|V1.*inherited/);}
+   finally {
+    if(run(`SELECT to_regnamespace('dobby_access_legacy') IS NOT NULL;`)==='t') rollback();
+    run('REVOKE ALL ON public.dobby_sync_grocery_items FROM lot2a_inherited_v1; REVOKE SELECT(title) ON public.dobby_sync_grocery_items FROM lot2a_inherited_v1;');
+   }
+  }
+ } finally {run('REVOKE lot2a_inherited_v1 FROM authenticated; DROP ROLE lot2a_inherited_v1;');}
+});
 test('Candidate preserves every native policy, owner and business body; inventory is closed',()=>{
  apply();
  assert.deepEqual(policies().filter(p=>p.policyname!=='dobby_access_active'),baseline.policies);
