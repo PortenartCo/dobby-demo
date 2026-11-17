@@ -1,0 +1,55 @@
+/* Dobby V5 — isolated family integration. The original Stitch skin is not modified. */
+.fv2-view{padding-bottom:18px}
+.fv2-panel{margin:15px 0 20px;padding:20px 17px;background:linear-gradient(155deg,#fff8e9,#f8ecdb);border:1px solid #d2b991;border-radius:20px;box-shadow:0 8px 22px rgba(71,42,25,.09);color:#36241c}
+.fv2-panel h2{font-family:Georgia,'Times New Roman',serif;color:#432819;margin:7px 0 13px;font-size:25px}
+.fv2-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.fv2-mark{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7b5d37;font-weight:750}
+.fv2-status{display:inline-block;font-size:11px;line-height:1.35;background:#e8dcc9;color:#563e27;border-radius:999px;padding:6px 10px}
+.fv2-actions,.fv2-controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.fv2-panel button,.fv2-modal button{background:#3f4937;color:#fff;border:0;border-radius:11px;padding:10px 13px;min-height:42px;font:inherit;font-size:13px;cursor:pointer}
+.fv2-panel button:hover,.fv2-modal button:hover{filter:brightness(1.08)}
+.fv2-controls button,.fv2-actions button+button{background:#eee0c9;color:#50371e;border:1px solid #d8c3a4}
+.fv2-muted,.fv2-minor{color:#765c48;font-size:12px;line-height:1.5}
+.fv2-error{font-size:12px;color:#803326;background:#fae7de;border-radius:8px;padding:10px 12px}
+.fv2-pending{color:#8c5c1e;font-size:11px}
+.fv2-add{display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin:15px 0}
+.fv2-add label,.fv2-modal label,.fv2-item label{font-size:12px;font-weight:650;display:block;color:#654c32}
+.fv2-add input,.fv2-modal input,.fv2-item input:not([type="checkbox"]){display:block;width:100%;min-width:0;min-height:40px;padding:9px 10px;margin-top:5px;border:1px solid #c5b394;border-radius:9px;background:#fffefa;font:inherit;font-size:14px;color:#32251c}
+.fv2-add button{grid-column:1 / -1;justify-self:stretch}
+.fv2-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.fv2-item{display:flex;gap:12px;align-items:flex-start;border:1px solid #e3d4b9;background:#fffdfa;padding:12px;border-radius:13px}
+.fv2-item>input[type="checkbox"]{width:22px;height:22px;flex:0 0 22px;accent-color:#426342;cursor:pointer;margin-top:4px}
+.fv2-itembody{min-width:0;flex:1}
+.fv2-itemname{font-weight:750;font-size:15px;overflow-wrap:anywhere}
+.fv2-done{text-decoration:line-through;color:#818476}
+.fv2-item .fv2-controls{margin-top:8px}
+.fv2-item .fv2-controls button{font-size:12px;min-height:33px;padding:6px 10px}
+.fv2-item form{display:flex;flex-wrap:wrap;gap:10px;align-items:end;width:100%}
+.fv2-item form label{min-width:90px;flex:1}
+.fv2-item form label:first-child{flex:3}
+.fv2-conflict{margin-top:9px;background:#fff4dd;padding:10px;border-radius:10px;color:#694e23;font-size:12px}
+.fv2-conflict button{margin:6px 6px 0 0;font-size:12px;padding:7px 9px}
+.fv2-empty{font-size:13px;color:#786d5a;padding:14px}
+.fv2-import{margin-top:15px;padding:12px;border:1px dashed #c0a780;border-radius:13px}
+.fv2-import p{font-size:12px;color:#765c48;margin:0 0 8px}
+.fv2-import button{width:100%}
+.fv2-recipeprep{margin:14px 0 25px;border:1px solid #d9c7a5;background:#fffdf7;border-radius:14px;padding:13px;color:#513e2d}
+.fv2-recipeprep>summary{cursor:pointer;font-weight:750;padding:8px 2px}
+.fv2-recipeprep[open]>summary{border-bottom:1px solid #e5d6be;padding-bottom:12px;margin-bottom:12px}
+.fv2-recipeprep>p{margin:10px 0}
+.fv2-strip{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border:1px solid #dbc9ae;background:#fcf4e8;color:#745435;border-radius:12px;margin:5px 0 10px;padding:9px 12px;font-size:11px}
+.fv2-strip button{background:none;border:1px solid #c9b293;color:#745435;border-radius:8px;padding:5px 8px;font:inherit;cursor:pointer;font-weight:700;min-height:32px}
+#fv2Overlay[hidden]{display:none!important}
+#fv2Overlay{position:fixed;z-index:9000;inset:0;background:rgba(24,17,13,.74);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 12px}
+.fv2-modal{position:relative;max-width:560px;width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;margin:auto;background:#fff8eb;color:#35251a;border:1px solid #d4bc96;border-radius:22px;padding:26px 21px;box-shadow:0 25px 90px #170d0a5e}
+.fv2-modal h2{font-size:24px;font-family:Georgia,serif;margin:0 0 12px}
+.fv2-modal h3{font-family:Georgia,serif;font-size:18px;margin:25px 0 8px}
+.fv2-modal form{display:grid;gap:13px;margin-top:14px}
+.fv2-modal form button{width:100%}
+.fv2-modal .fv2-close{position:absolute;right:13px;top:13px;background:#f3e5d1;color:#634a2f;border:1px solid #d8c7ab;font-size:23px;width:42px;height:42px;padding:0}
+.fv2-modal .fv2-module{border:1px solid #e0caaa;border-radius:11px;padding:10px 12px;margin:10px 0;background:#fffcf7}
+.fv2-modal .fv2-module strong{display:block;font-size:14px;margin-bottom:3px}
+.fv2-modal .fv2-module p{color:#7e654d;font-size:12px;margin:3px 0 8px}
+.fv2-modal .fv2-module button{margin-top:7px;margin-right:5px;padding:7px 10px;min-height:37px;font-size:12px}
+.fv2-modal .fv2-module .fv2-flag{display:inline-block;font-size:11px;border-radius:12px;padding:4px 9px;background:#efe1c7;color:#5d4b2e}
+@media(max-width:420px){.fv2-add{grid-template-columns:1fr 1fr}.fv2-add label:first-child{grid-column:1 / -1}.fv2-panel{padding:16px 12px}.fv2-modal{padding:24px 15px}.fv2-item form label:first-child{min-width:100%}}
