@@ -1,6 +1,6 @@
 # DOBBY — Habillage des fêtes, revue visuelle
 
-Base : `fa37fd2967b84b2e3caf50198f75391d41370afd`. Source visuelle : `37a83f687826899c1d635b15392cbd9757f582f5`. Même PR #26, sans fusion applicative. Décision produit : issue #21, mise à jour UX du 17 novembre 2026.
+Base : `fa37fd2967b84b2e3caf50198f75391d41370afd`. Source visuelle : `73fbdc90cf8ad921878f0487be836209fc887631`. Même PR #26, sans fusion applicative. Décision produit : issue #21, mise à jour UX du 17 novembre 2026.
 
 Les grandes fêtes ont maintenant un encadrement illustré, un header composé et un panneau d’accueil coordonné. Les ornements SVG sont dessinés localement et placés dans les coins et les espaces latéraux, avec le centre du portrait libre. Noël utilise sapin, houx, boules et cadeaux ; Halloween des citrouilles sculptées, lanternes, chauves-souris et une brume statique ; le Nouvel An des rubans métalliques, étoiles et confettis noir-or. Les fêtes intermédiaires ont leurs motifs propres ; le 31 janvier conserve sa séquence native et ajoute baguette et aura statiques.
 
