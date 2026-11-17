@@ -1,0 +1,99 @@
+LOCAL ONLY — PostgreSQL 17.7 / Node 24.19.0
+Blank-line indentation normalized for git diff --check; results unchanged.
+Command: node --test tests/private-access/lot2a/authorization.test.mjs (initial expectations, before implementing candidate)
+COUNTER-CONTROLS: unapproved own-family read=1; suspended context=active; V1 own row=1
+✖ T02 unapproved Auth account sees zero business rows and cannot invoke context (101.774069ms)
+✔ T01 active two-household reads retain canonical isolation and owner has no extra visibility (505.602999ms)
+✖ T05 suspension closes reads, context and direct mutations with old session (112.1492ms)
+✖ T08 V1 grocery API is closed, own membership is gated, existing rows retained (91.151851ms)
+✖ T06 original default-argument RPC and explicit arity both reject suspension (96.886314ms)
+✔ Minimal privileges: browser cannot adopt writer roles or read private receipts (598.421035ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 2
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19131.020755
+
+✖ failing tests:
+
+test at tests/private-access/lot2a/authorization.test.mjs:30:1
+✖ T02 unapproved Auth account sees zero business rows and cannot invoke context (101.774069ms)
+  AssertionError [ERR_ASSERTION]: dobby_v2_households
+
+  '1' !== '0'
+
+      at TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/authorization.test.mjs:32:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '1',
+    expected: '0',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot2a/authorization.test.mjs:42:1
+✖ T05 suspension closes reads, context and direct mutations with old session (112.1492ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  '2' !== '0'
+
+      at TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/authorization.test.mjs:43:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2',
+    expected: '0',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot2a/authorization.test.mjs:47:1
+✖ T08 V1 grocery API is closed, own membership is gated, existing rows retained (91.151851ms)
+  AssertionError [ERR_ASSERTION]: Expected SQL refusal, but operation succeeded
+      at denied (file:///workspace/dobby-access-lot2a/tests/private-access/local-db.mjs:59:9)
+      at TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/authorization.test.mjs:48:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot2a/authorization.test.mjs:52:1
+✖ T06 original default-argument RPC and explicit arity both reject suspension (96.886314ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  22023: Prénom et nom requis, maximum 80 caractères
+  CONTEXT:  PL/pgSQL function dobby_v7_private.validate_profile(jsonb) line 16 at RAISE
+  PL/pgSQL function public.dobby_v7_update_profile(jsonb,bigint) line 2 during statement block local variable initialization
+  SQL statement "SELECT public.dobby_v7_update_profile('{}'::jsonb);"
+  PL/pgSQL function inline_code_block line 2 at EXECUTE
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+
+
+  3 !== 0
+
+      at must (file:///workspace/dobby-access-lot2a/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-access-lot2a/tests/private-access/local-db.mjs:35:35)
+      at reject (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/authorization.test.mjs:11:12)
+      at TestContext.<anonymous> (file:///workspace/dobby-access-lot2a/tests/private-access/lot2a/authorization.test.mjs:53:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
