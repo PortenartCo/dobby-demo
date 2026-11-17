@@ -1,0 +1,29 @@
+{
+  "baseline": "364056cf0270464e9abfd6299a3dd67e832cd5b2",
+  "runtimeFilesByteIdentical": 358,
+  "historicalFixturesByteIdentical": 11,
+  "transverseBefore": {
+    "pass": 10,
+    "fail": 3
+  },
+  "transverseAfter": {
+    "pass": 14,
+    "fail": 0
+  },
+  "seasonalCalendarTests": 7,
+  "browserWidths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "isolatedReviewVerifiedResources": 353,
+  "runtimeSha256": {
+    "essai-stitch-v7/build-source.cjs": "8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6",
+    "essai-stitch-v7/seasonal-calendar.js": "624aed6a590a2cdb3fda498c7b99eb2dc7fc8e8959cf2c60637c33775461fb6f",
+    "essai-stitch-v7/seasonal-effects.js": "080f8849bad7738e81965eb6d7974e17c0b528e4ee5045f82c268df4a82fe261",
+    "essai-stitch-v7/seasonal-effects.css": "19f975e6c5431d6511666f13ed7cb16824647195141382d38edfe569bf99ccbf",
+    "essai-stitch-v7/chrome.js": "2cd2fa58b3f664b4747178d01526ccc299da7d923dfdb5547d8934686ff13cfb",
+    "essai-stitch-v7/tools-register.js": "3e29e919ed9599b3aa013a1d430186345cba8a9db1b5fc2dcbf2d7a76d4a16d9"
+  }
+}

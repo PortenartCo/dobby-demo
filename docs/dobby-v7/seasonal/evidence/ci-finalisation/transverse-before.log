@@ -1,0 +1,97 @@
+✔ Family source boundaries preserve history plus reviewed general and family-core amendments (139.518597ms)
+✖ every reviewed whole-file amendment retains its exact source fingerprint (24.330949ms)
+✔ published-main reconciliation preserves both parent manifests and every full current source (27.309366ms)
+✔ a tampered reconciliation fingerprint cannot fall back to a valid older review (5.089747ms)
+✖ Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits (31.51556ms)
+✔ Contacts controller amendments recover the exact parent and reject unrelated source changes (3.895156ms)
+✔ native readiness amendments preserve the frozen reconciliation and pin exactly two complete sources (23.827761ms)
+✔ a readiness extension cannot fall back to valid frozen-parent bytes (0.430186ms)
+✔ Courses retains the native shopping contract including independent dessert import (99.535485ms)
+✔ all four functional roots still load the native shared Courses adapter before E02 (3.823731ms)
+✔ E09 memo writer retains identity/stale/import tests with the explicit child-write amendment (1.513167ms)
+✖ Archives amendments reverse exactly to current main and reject altered bytes or parent hashes (29.593753ms)
+✔ final native archive guards preserve every byte of the reviewed PR17 parent (114.03975ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 10
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 654.051732
+
+✖ failing tests:
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:140:1
+✖ every reviewed whole-file amendment retains its exact source fingerprint (24.330949ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v7/build-source.cjs current reviewed source changed
+  + actual - expected
+
+  + '8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6'
+  - '73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2'
+
+      at beforeArchives (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:19:10)
+      at readReviewed (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:28:36)
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:146:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6',
+    expected: '73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:196:1
+✖ Maison source amendments preserve every frozen published-main fingerprint and reject unrelated byte edits (31.51556ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v7/build-source.cjs current reviewed source changed
+  + actual - expected
+
+  + '8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6'
+  - '73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2'
+
+      at beforeArchives (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:19:10)
+      at readReviewed (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:28:36)
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:217:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6',
+    expected: '73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at essai-stitch-v7/tests/fam-integration-transverse.test.cjs:295:1
+✖ Archives amendments reverse exactly to current main and reject altered bytes or parent hashes (29.593753ms)
+  AssertionError [ERR_ASSERTION]: essai-stitch-v7/build-source.cjs current reviewed source changed
+  + actual - expected
+
+  + '8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6'
+  - '73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2'
+
+      at beforeArchives (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:19:10)
+      at TestContext.<anonymous> (/workspace/dobby-demo/essai-stitch-v7/tests/fam-integration-transverse.test.cjs:301:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6',
+    expected: '73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

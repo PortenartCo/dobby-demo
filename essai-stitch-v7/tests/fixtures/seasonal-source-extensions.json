@@ -1,0 +1,38 @@
+{
+  "baseCommit": "2f2f38b197a96ee2ae3593545f822002a452e859",
+  "seasonalCommit": "a81f8a6cb29a0876486ced626bb7966c6eeb0831",
+  "reason": "Issue #21: load the three seasonal resources after native DobbyChrome and before native Family effects. Exact inversion preserves every byte of the consolidated main builder and its Archives/Maison ancestry. No runtime change in this proof-only CI repair.",
+  "frozenParentFixtures": {
+    "essai-stitch-v7/tests/fixtures/reconciliation-main-43eef-source-extensions.json": "faa208f102e406cb51666e0cfa42726d555cb3e3bad825e44856d070c61df567",
+    "essai-stitch-v7/tests/fixtures/maison-source-extensions.json": "30ab63e353eb8733cf49216f34ad714d1bac4de915dfb5dd6ee15cebe46a972b",
+    "essai-stitch-v7/tests/fixtures/pr15-native-readiness-source-extensions.json": "b58787a1462820e15e55dd01433e3f72063d85c59f8ce357b2853fa9d04dc24d",
+    "essai-stitch-v7/tests/fixtures/maison-pr15-source-composition.json": "5447e27d2ae212cb3cfdc85b770c57c29227de046600d62836ac81e9a431f428",
+    "essai-stitch-v7/tests/fixtures/archives-source-extensions.json": "6d575b8fda9058facb868105788a5abdcedc6b177aedc6f08cec8f36f1f90bf5",
+    "essai-stitch-v7/tests/fixtures/archives-main16-source-extensions.json": "facd2c57fe4b7561639b8d458a63fd5c9a69771e2a12d4782630b9a0e4766518",
+    "essai-stitch-v7/tests/fixtures/archives-final-source-extensions.json": "6e738e53e2cd25bd2ef9ce6366486b128ec3da30b2d98f556c9d5d313becc444",
+    "essai-stitch-v7/tests/fixtures/contacts-source-extensions.json": "ea1008b7c3b85fc285d3fa13af66e46439fb3781490a6723c27b7eeb31a21814",
+    "essai-stitch-v7/tests/fixtures/consolidation-source-composition.json": "a0e6785e51feb955430107125e2d00bdc02e9f1f5a968130d0ebccd14db75487",
+    "essai-stitch-v7/tests/fixtures/revue-generale-source-extensions.json": "37aa458bb4df7ace967f4fd88f90714a9a205afcf3cc489d347584aed710b8f7",
+    "essai-stitch-v7/tests/fixtures/family-socle-source-extensions.json": "54dcfaa35a11623de698560c8df47556b51c8aa5e0b3c5d5d982ebc6ccff5bba"
+  },
+  "files": {
+    "essai-stitch-v7/build-source.cjs": {
+      "beforeSha256": "73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2",
+      "afterSha256": "8d91e652a62dba7112f452bda23d02238dc27915e70c227709763cdfd8f31fc6",
+      "reason": "One exact insertion of seasonal-calendar.js, seasonal-effects.css and seasonal-effects.js before the retained Family effects stylesheet.",
+      "tests": [
+        "essai-stitch-v7/tests/fam-integration-transverse.test.cjs",
+        "essai-stitch-v7/tests/seasonal-calendar.test.cjs",
+        "essai-stitch-v7/tests/seasonal-browser.cjs",
+        "essai-stitch-v7/tests/seasonal-preview-ci.cjs"
+      ],
+      "patches": [
+        {
+          "label": "seasonal resources before native Family effects",
+          "before": "<link rel=\"stylesheet\" href=\"./family-review-effects.css\">",
+          "after": "<script src=\"./seasonal-calendar.js\"></script><link rel=\"stylesheet\" href=\"./seasonal-effects.css\"><script src=\"./seasonal-effects.js\"></script><link rel=\"stylesheet\" href=\"./family-review-effects.css\">"
+        }
+      ]
+    }
+  }
+}

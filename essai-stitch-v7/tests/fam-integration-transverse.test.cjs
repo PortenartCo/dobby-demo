@@ -13,6 +13,15 @@ const readiness = require('./fixtures/pr15-native-readiness-source-extensions.js
 const composition = require('./fixtures/maison-pr15-source-composition.json');
 const archives = require('./fixtures/archives-main16-source-extensions.json');
 const finalArchives = require('./fixtures/archives-final-source-extensions.json');
+const seasonal = require('./fixtures/seasonal-source-extensions.json');
+function beforeSeasonal(file,source,extension=seasonal.files[file]){
+  if(!extension)return source;
+  assert.equal(digest(source),extension.afterSha256,file+' complete seasonal source changed: current reviewed source changed');
+  source=reverseLiterals(file,source,extension.patches);
+  assert.equal(digest(source),extension.beforeSha256,file+' Seasonal reversal restores its complete parent');
+  return source;
+}
+for(const[file,expected]of Object.entries(seasonal.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen pre-seasonal proof remains byte-exact');
 const beforeFinal=(file,source)=>beforeArchives(file,source,finalArchives.files[file]||null);
 function beforeArchives(file,source,extension=archives.files[file]){
   if(!extension)return source;
@@ -37,6 +46,7 @@ function beforeContacts(file,source){
 }
 const consolidation=require('./fixtures/consolidation-source-composition.json');
 function beforeConsolidation(file,source,parent){
+  source=beforeSeasonal(file,source);
   const entry=consolidation.files[file];if(!entry)return source;
   assert.equal(digest(source),entry.currentSha256,file+' complete consolidation source changed: current reviewed source changed');
   source=reverseLiterals(file,source,entry['from'+parent]);
@@ -311,4 +321,28 @@ module.exports = { preserved };
 test('final native archive guards preserve every byte of the reviewed PR17 parent',()=>{
  for(const [file,expected]of Object.entries(finalArchives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected);
  for(const [file,extension]of Object.entries(finalArchives.files)){const source=beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8'),'Archives');assert.equal(digest(beforeFinal(file,source)),extension.beforeSha256);assert.throws(()=>beforeFinal(file,source+'/* changed */'),/current reviewed source changed/);}
+});
+
+
+test('seasonal resource composition restores the complete frozen builder and rejects source or parent tampering',()=>{
+  const file='essai-stitch-v7/build-source.cjs',extension=seasonal.files[file];
+  assert.equal(seasonal.baseCommit,'2f2f38b197a96ee2ae3593545f822002a452e859');
+  assert.equal(seasonal.seasonalCommit,'a81f8a6cb29a0876486ced626bb7966c6eeb0831');
+  assert.deepEqual(Object.keys(seasonal.files),[file],'Only the seasonal resource insertion is normalized');
+  assert.equal(extension.beforeSha256,archives.files[file].afterSha256,'The complete Archives parent fingerprint stays frozen');
+  assert.equal(extension.patches.length,1,'One resource insertion, no broad normalization');
+  for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' remains available');
+  const source=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+  const parent=beforeSeasonal(file,source);
+  assert.equal(digest(parent),extension.beforeSha256);
+  const reviews=require('./fixtures/revue-generale-source-extensions.json');
+  assert.equal(digest(beforeMaison(file,readReviewed(file))),reviews[file].sha256,'The entire historical builder remains reconstructible');
+  assert.throws(()=>beforeSeasonal(file,source+'/* unrelated byte */'),/current reviewed source changed/);
+  assert.throws(()=>beforeSeasonal(file,parent),/current reviewed source changed/,'A valid older source cannot replace the seasonal builder');
+  assert.throws(()=>beforeSeasonal(file,source,{...extension,beforeSha256:'0'.repeat(64)}),/restores its complete parent/);
+  assert.throws(()=>beforeSeasonal(file,source,{...extension,afterSha256:'0'.repeat(64)}),/current reviewed source changed/);
+  const altered=source+'/* unrelated byte */';
+  assert.throws(()=>beforeSeasonal(file,altered,{...extension,afterSha256:digest(altered)}),/restores its complete parent/,'Updating only the current fingerprint cannot approve unrelated source changes');
+  const patch=extension.patches[0],duplicate=source.replace(patch.after,patch.after+patch.after);
+  assert.throws(()=>beforeSeasonal(file,duplicate,{...extension,afterSha256:digest(duplicate)}),/occurs exactly once/,'Duplicate resource insertions remain invalid');
 });
