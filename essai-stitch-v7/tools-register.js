@@ -83,8 +83,13 @@
  function search(){const query=E.read().state.globalQuery||'',input=q('#search-input');input.value=query;input.placeholder='Rechercher dans les fiches locales';input.setAttribute('aria-label','Recherche locale DOBBY');const result=q('#state-results-view'),empty=q('#state-empty-view'),zero=q('#state-zero-view');result.hidden=false;result.classList.remove('hidden');result.replaceChildren();empty?.remove();zero?.remove();for(const id of ['btn-state-results','btn-state-empty','btn-state-zero'])q('#'+id)?.remove();
  const dom=new DOMParser().parseFromString(E.evaluate('return xsearch();'),'text/html'),nativeRows=[...dom.querySelectorAll('[data-extra]')].filter(b=>b.dataset.id);for(const b of nativeRows){const original=b.closest('.doc-row'),title=original.querySelector('strong')?.textContent||'',meta=original.querySelector('.muted')?.textContent||'',proto=q('#state-results-view h2',c.pristine)?.closest('[class*=rounded]'),card=proto?document.importNode(proto,false):box();card.classList.add('rg-search-card');card.append(el('h2',title,'font-headline-sm text-primary'),note(meta),button('rg-search-open','Ouvrir',{kind:b.dataset.extra,record:b.dataset.id}));result.append(card);}result.prepend(note(query.trim()?nativeRows.length+' résultat(s) affiché(s)':'Saisissez un mot pour rechercher.'));if(query.trim()&&!nativeRows.length)result.append(note('Aucun résultat.'));result.append(note('Recherche locale native : contacts, listes, santé locale, documents, mémos, équipements et recettes. Les fichiers joints, membres, missions, événements et services Apple ne sont pas indexés.'));input.oninput=()=>{E.evaluate('st.globalQuery=p.value;',{value:input.value});const pos=input.selectionStart;search();q('#search-input').focus();q('#search-input').setSelectionRange(pos,pos);};const clear=q('#clear-search');bind(clear,'rg-search-clear');if(clear){clear.classList.remove('hidden');clear.hidden=!query;}}
  function result(kind,id){const view={contactedit:'contact-edit',listopen:'list-detail',docopen:'document',noteopen:'memo-edit',houseopen:'equipment'}[kind];if(view)return target(view,id);if(kind==='recipeopen'){location.href='./index.html#recipe?id='+encodeURIComponent(id);return;}if(kind==='healthedit'){const record=E.read().local.find(x=>x.id===id);if(!record)throw Error('Rendez-vous introuvable.');return c.open('medical-edit',{record:id,scope:'local',person:record.personId||null});}}
- // This filter reads only the five Menu labels; it never queries native records.
- function menu(){const search=q('#global-module-search');search.placeholder='Rechercher dans le menu…';search.value=menuQuery;search.oninput=()=>{menuQuery=search.value;filterMenu();};bind(q('#clear-search-btn'),'rg-menu-clear');filterMenu();}
+ // This filter reads only Menu labels; it never queries native records.
+ function menu(){const search=q('#global-module-search');search.placeholder='Rechercher dans le menu…';search.value=menuQuery;search.oninput=()=>{menuQuery=search.value;filterMenu();};bind(q('#clear-search-btn'),'rg-menu-clear');filterMenu();
+  const menuContext={...c,filterMenu},main=c.main;
+  // The optional entry is installed only after a fresh owner check. A refused
+  // or unavailable administration service must leave the ordinary Menu usable.
+  Promise.resolve().then(()=>window.DobbyAdminAccess?.decorateMenu(menuContext)).then(()=>{if(main.isConnected&&document.body.dataset.familyView==='menu')filterMenu();}).catch(()=>{});
+ }
  function filterMenu(){const clear=q('#clear-search-btn');if(clear)clear.hidden=!menuQuery;const needle=menuQuery.trim().toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'');let count=0;for(const card of all('#menu-sections .module-item')){const label=q('.rg-menu-label',card).textContent.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'');card.hidden=!label.includes(needle);if(!card.hidden)count++;}q('#no-module-found').hidden=count>0;}
  function settings(){
   c.main.classList.add('rg-settings-page');
@@ -97,13 +102,16 @@
  }
  function settingsSync(){
   if(document.body.dataset.familyView!=='settings')return;
-  const api=E.win().DobbyFamilyUI,context=api?.getContext?.();
-  if(navigator.onLine&&!context){q('[data-settings-sync]')?.remove();return;}
+  const api=E.win().DobbyFamilyUI,context=api?.getContext?.(),connection=api?.connectionState?.(),held=connection?.transmissionHold===true;
+  const verified=context?.identityVerified===true&&connection?.identityVerified===true&&connection.userId===context.userId&&connection.householdId===context.householdId&&connection.memberId===context.memberId;
+  if(navigator.onLine&&!context&&!held){q('[data-settings-sync]')?.remove();return;}
   const error=api?.grocery?.read?.().error;
-  const status=!navigator.onLine?'Hors ligne — les données locales restent disponibles.':error?'Connexion du foyer à vérifier.':api.getModuleStatus('family');
+  const holdStatus='Envois en attente suspendus — vos modifications locales sont conservées. Une nouvelle connexion vérifiée est requise pour les reprendre.';
+  const status=held?holdStatus+' '+(!verified?'Reconnectez-vous à DOBBY pour faire vérifier une nouvelle session avant toute reprise.':!navigator.onLine?'Vous êtes hors ligne. Retrouvez une connexion réseau avant de reprendre les envois.':'Votre session est vérifiée. Vous pouvez reprendre explicitement les envois en attente.'):!navigator.onLine?'Hors ligne — les données locales restent disponibles.':error?'Connexion du foyer à vérifier.':api.getModuleStatus('family');
   const existing=q('[data-settings-sync]');if(existing?.dataset.status===status)return;existing?.remove();
   const row=el('div','','rg-settings-sync');row.dataset.settingsSync='true';row.dataset.status=status;row.setAttribute('role','status');row.append(el('p',status));
-  if(navigator.onLine&&context&&/erreur|échec|conflit|à vérifier|non synchronisées|incompatible/i.test(status))row.append(button('rg-settings-sync','Réessayer la connexion'));
+  if(held){row.dataset.transmissionHold='true';if(navigator.onLine&&verified)row.append(button('rg-settings-sync','Reprendre les envois en attente'));}
+  else if(navigator.onLine&&context&&/erreur|échec|conflit|à vérifier|non synchronisées|incompatible/i.test(status))row.append(button('rg-settings-sync','Réessayer la connexion'));
   c.main.append(row);
  }
  function magicSettings(){

@@ -32,12 +32,13 @@ function fixture(t){
    const hold=httpGates.find(g=>!g.used&&g.match(request));if(hold){hold.used=true;hold.started();await hold.pending;}
    let body=[];
    if(u.pathname.endsWith('/token'))body={access_token:'TEST-other-access',refresh_token:'TEST-other-refresh',expires_in:3600,user:{id:OTHER_USER}};
+   else if(u.pathname.endsWith('/dobby_access_context'))body={protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null};
    else if(u.pathname.endsWith('/dobby_v7_context')){const other=options.headers?.Authorization==='Bearer TEST-other-access',member=payload.familyMembers[other?1:0];body={protocol:1,phase:'active',userId:other?OTHER_USER:USER,householdId:HH,memberId:member.id,profile:clone(member),permissions:{canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true},familyRevision:4,pendingCeremony:false};}
    else if(u.pathname.endsWith('/dobby_missions_v2_capabilities'))body={protocol:2,directWritesBlocked:true,maxPayloadBytes:262144};
    else if(u.pathname.endsWith('/dobby_v2_memberships'))body=[{household_id:HH}];
    else if(u.pathname.endsWith('/dobby_v2_households'))body=[{id:HH}];
    else if(u.pathname.endsWith('/dobby_v2_modules'))body=u.searchParams.has('module')?[clone(row)]:[{module:'family'}];
-   if(options.method!=='GET'&&!u.pathname.endsWith('/dobby_v7_context')&&!u.pathname.endsWith('/token'))throw Error('Unexpected business write in bootstrap fixture');
+   if(options.method!=='GET'&&!u.pathname.endsWith('/dobby_access_context')&&!u.pathname.endsWith('/dobby_v7_context')&&!u.pathname.endsWith('/token'))throw Error('Unexpected business write in bootstrap fixture');
    return{ok:true,status:200,text:async()=>JSON.stringify(body)};
   }};
  const nativeSource=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace("await import('./family-core.mjs')",'await Promise.resolve(__familyCore)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,boot,sync,requireHousehold,restoreCachedHousehold};})();');

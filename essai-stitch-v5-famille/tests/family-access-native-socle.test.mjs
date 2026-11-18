@@ -16,7 +16,7 @@ function database(){
   tx.objectStore=()=>{const request=produce=>{const req={};tx.pending++;queueMicrotask(()=>{if(tx.aborted)return;try{req.result=produce();req.onsuccess?.();}catch(error){tx.error=error;tx.onerror?.();}finally{tx.pending--;if(tx.pending===0&&!tx.aborted)queueMicrotask(()=>tx.oncomplete?.());}});return req;};return{get:key=>request(()=>rows.get(key)),put:row=>request(()=>rows.set(row.id,row)),delete:key=>request(()=>rows.delete(key)),getAll:()=>request(()=>[])};};return tx;}};
 }
 function native({futureFeatures=false}={}){
- const db=database(),requests=[];let context=active(),capabilities=caps(),interceptor=null;
+ const db=database(),requests=[];let context=active(),capabilities=caps(),interceptor=null,privateContext={protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null};
  const node=()=>({dataset:{},append(){},remove(){},addEventListener(){},querySelector:()=>null,querySelectorAll:()=>[],style:{},elements:[],hidden:true});
  const module={...accessModule,createFamilyAccess:driver=>accessModule.createFamilyAccess(driver,futureFeatures?{release:{familyRoles:true,childAccountLink:true}}:{})};
  const sandbox={__accessModule:module,st:{page:'home',familyMembers:[{id:MEMBER,name:'TEST Parent',memberCategory:'parent'},{id:CHILD,name:'TEST Child',memberCategory:'child'}]},save(){},render(){},drawShop:()=>'',queueMicrotask,setInterval:()=>0,setTimeout,clearTimeout,crypto:webcrypto,TextEncoder,URL,URLSearchParams,btoa,
@@ -25,6 +25,7 @@ function native({futureFeatures=false}={}){
   fetch:async(url,options={})=>{const u=new URL(url),request={path:u.pathname,query:u.search,options};requests.push(request);if(interceptor){const response=await interceptor(request);if(response)return response;}
    let body=[];if(u.pathname==='/auth/v1/token')body={access_token:'TEST-access-refreshed',refresh_token:'TEST-refresh-refreshed',expires_in:3600,user:{id:USER}};
    else if(u.pathname.endsWith('/dobby_v7_context'))body=context;
+   else if(u.pathname.endsWith('/dobby_access_context'))body=privateContext;
    else if(u.pathname.endsWith('/dobby_v7_family_capabilities'))body=capabilities;
    else if(u.pathname.endsWith('/dobby_v2_memberships'))body=[{household_id:HH}];
    else if(u.pathname.endsWith('/dobby_v2_households'))body=[{id:HH}];
@@ -44,7 +45,7 @@ function native({futureFeatures=false}={}){
   requests.length=0;
  };
  const switchAccount=({userId=OTHER,householdId=HH2,epoch=true}={})=>{f.session=session(userId);f.householdId=householdId;f.context=householdId+':'+userId;f.verifiedContext=f.context;if(epoch)f.epoch++;db.rows.set('session',{id:'session',value:structuredClone(f.session)});};
- return{f,db,requests,sandbox,api:sandbox.window.DobbyFamilyUI,transport:sandbox.window.__native,establish,switchAccount,intercept:fn=>interceptor=fn,setCapabilities:value=>capabilities=value,setContext:value=>context=value,
+ return{f,db,requests,sandbox,api:sandbox.window.DobbyFamilyUI,transport:sandbox.window.__native,establish,switchAccount,intercept:fn=>interceptor=fn,setCapabilities:value=>capabilities=value,setContext:value=>context=value,setPrivateContext:value=>privateContext=value,
   readNativeMemberPermissions(id){vm.runInNewContext(fs.readFileSync(new URL('../family-member-policy.js',import.meta.url),'utf8'),sandbox);const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8'),start=html.indexOf('const v23Members='),end=html.indexOf('function v23HealthPermissions',start);vm.runInNewContext(html.slice(start,end)+'\nwindow.__memberPermissions=v23MemberPermissions;',sandbox);return sandbox.window.__memberPermissions(id);}};
 }
 function replaceWhenTokenReturns(f,replacement){let armed=true;Object.defineProperty(f.f.session,'access_token',{configurable:true,get(){if(armed){armed=false;queueMicrotask(()=>f.switchAccount(replacement));}return'TEST-access-original';}});}
@@ -145,4 +146,58 @@ test('a native binding for another TEXT member cannot borrow the current control
  f.f.accessContext={...f.f.accessContext,memberId:'local-other-member'};
  assert.equal(f.api.connectionState().identityVerified,false);assert.equal(Object.keys(f.api.connectionState().permissions).length,0);
  assert.equal(f.api.getContext().identityVerified,undefined);assert.equal(f.api.getContext().permissions,undefined);
+});
+
+test('admin transport verifies through Edge with the private user bearer and rejects internal commands before HTTP',async()=>{
+ const f=native();await f.establish();
+ f.intercept(request=>request.path==='/functions/v1/dobby-access-admin'?{ok:true,status:200,text:async()=>JSON.stringify({ok:true,result:{protocol:1,items:[],requests:[],nextCursor:null,nextRequestsCursor:null}})}:null);
+ const result=await f.api.access.admin('listAccess',{limit:1});assert.equal(result.protocol,1);
+ const sent=f.requests.find(request=>request.path==='/functions/v1/dobby-access-admin');assert.equal(sent.options.headers.Authorization,'Bearer TEST-access-'+USER);assert.deepEqual(JSON.parse(sent.options.body),{command:'listAccess',payload:{limit:1}});
+ const before=f.requests.length;for(const command of ['claimDelivery','recordDelivery','finalizeReactivation','https://example.invalid'])await assert.rejects(f.api.access.admin(command,{}),/commande/i);assert.equal(f.requests.length,before);
+ assert.doesNotMatch(JSON.stringify(f.api.access.state()),/TEST-access|TEST-refresh/);
+});
+
+test('an active parent denied owner administration keeps canonical family rights',async()=>{
+ const f=native();await f.establish();const epoch=f.f.epoch;
+ f.intercept(request=>request.path==='/functions/v1/dobby-access-admin'?{ok:false,status:403,text:async()=>JSON.stringify({ok:false,error:{code:'owner_required',message:'PRIVATE provider details'}})}:null);
+ await assert.rejects(f.api.access.admin('listAccess',{limit:1}),error=>{assert.equal(error.status,403);assert.equal(error.code,'owner_required');assert.doesNotMatch(error.message,/PRIVATE/);return true;});
+ assert.equal(f.f.epoch,epoch);assert.equal(f.api.access.state().verified,true);assert.equal(f.api.connectionState().identityVerified,true);
+ await f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER});assert.equal(mutationRequests(f).length,1);
+});
+
+test('admin mutation uncertainty has no automatic retry and late results cannot cross an account boundary',async()=>{
+ const f=native();await f.establish();let finish;f.intercept(request=>request.path==='/functions/v1/dobby-access-admin'?new Promise(resolve=>{finish=()=>resolve({ok:true,status:200,text:async()=>JSON.stringify({ok:true,result:{status:'suspended',revision:2}})});}):null);
+ const pending=f.api.access.admin('setStatus',{userId:OTHER,status:'suspended',expectedRevision:1,operationId:'00000000-0000-4000-8000-000000000099',confirmed:true});while(!finish)await Promise.resolve();f.switchAccount();finish();await assert.rejects(pending,/compte|foyer/i);assert.equal(f.requests.filter(request=>request.path==='/functions/v1/dobby-access-admin').length,1);
+ const offline=native();await offline.establish();offline.intercept(request=>{if(request.path==='/functions/v1/dobby-access-admin')throw TypeError('network lost');return null;});
+ await assert.rejects(offline.api.access.admin('invite',{email:'test@example.invalid',purpose:'new-household',operationId:'00000000-0000-4000-8000-000000000099'}),error=>{assert.equal(error.stage,'admin');assert.match(error.message,/réseau|confirm/i);return true;});assert.equal(offline.requests.filter(request=>request.path==='/functions/v1/dobby-access-admin').length,1);
+});
+
+test('a fresh suspended own context cancels late binding and preserves durable unsynchronized data',async()=>{
+ const f=native();await f.establish();const before=f.f.epoch;f.db.rows.set('TEST-local-pending',{id:'TEST-local-pending',value:{pending:true,notes:'TEST draft'}});
+ let release;f.intercept(request=>request.path.endsWith('/dobby_v7_context')?new Promise(resolve=>{release=()=>resolve({ok:true,status:200,text:async()=>JSON.stringify(active())});}):null);
+ const old=f.api.access.refresh();while(!release)await Promise.resolve();
+ f.intercept(request=>request.path==='/functions/v1/dobby-access-admin'?{ok:false,status:403,text:async()=>JSON.stringify({ok:false,error:{code:'owner_required'}})}:null);f.setPrivateContext({protocol:1,status:'suspended',isOwner:false,canCreateHousehold:false,revision:2,admission:null});
+ await assert.rejects(f.api.access.admin('listAccess',{limit:1}),/administration|confirm/i);const closed=f.api.access.state();assert.equal(closed.phase,'rejected');assert.equal(closed.reason,'suspended');assert.equal(closed.privateAccess.status,'suspended');assert.ok(f.f.epoch>before);release();await assert.rejects(old,/compte|contexte|chang|indisponible/i);
+ assert.equal(f.api.connectionState().identityVerified,false);assert.equal(f.api.access.state().verified,false);assert.equal(f.db.rows.get('TEST-local-pending').value.notes,'TEST draft');
+ const sent=f.requests.length;await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/lecture seule|session|vérifi/i);assert.equal(f.requests.length,sent);
+ f.setPrivateContext({protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:3,admission:null});await f.api.access.refresh();assert.equal(f.api.access.state().verified,false,'Manual refresh cannot reopen the denied session');
+ await f.api.access.signIn('fixture@example.invalid','TEST-new-password');assert.equal(f.api.access.state().verified,true,'Only a new verified login reopens this client');assert.equal(f.db.rows.get('v7-access-revoked'),undefined);assert.equal(f.api.connectionState().transmissionHold,true);
+ const blocked=f.requests.length;await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/envois|attente/i);assert.equal(f.requests.length,blocked,'New login never silently sends old local intent');
+ await f.api.grocery.sync();assert.equal(f.api.connectionState().transmissionHold,false,'A separate explicit resume clears the pending transmission hold');
+ await f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER});assert.equal(mutationRequests(f).length,1);
+});
+
+test('a mutation 401 refresh checks own live status before any retry and a suspension prevents its drain',async()=>{
+ const f=native();await f.establish();let attempts=0;f.intercept(request=>request.path.endsWith('/dobby_v7_update_member')&&attempts++===0?{ok:false,status:401,text:async()=>'{}'}:null);
+ f.setPrivateContext({protocol:1,status:'suspended',isOwner:false,canCreateHousehold:false,revision:2,admission:null});
+ await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/active|session|confirm/i);assert.equal(mutationRequests(f).length,1);assert.equal(f.api.access.state().privateAccess.status,'suspended');assert.equal(f.api.access.state().verified,false);
+});
+
+test('nominative family requests keep exact canonical targets without opening child link release gates',async()=>{
+ const f=native();await f.establish();
+ const op='00000000-0000-4000-8000-000000000099',admission='00000000-0000-4000-8000-000000000098';
+ f.intercept(request=>{if(!request.path.endsWith('/dobby_access_request_family_account'))return null;const body=JSON.parse(request.options.body);return{ok:true,status:200,text:async()=>JSON.stringify({admission:{id:admission,purpose:body.p_kind,householdId:HH,memberId:body.p_member_id,state:'requested'},replayed:false})};});
+ await f.api.access.requestFamilyAccount({email:' fictional@example.invalid ',kind:'family-child',memberId:CHILD,operationId:op});
+ const call=f.requests.find(request=>request.path.endsWith('/dobby_access_request_family_account'));assert.deepEqual(JSON.parse(call.options.body),{p_email:'fictional@example.invalid',p_kind:'family-child',p_member_id:CHILD,p_operation_id:op});assert.equal(f.api.access.state().capabilities.childAccountLinkReady,false);
+ const before=f.requests.length;await assert.rejects(f.api.access.requestFamilyAccount({email:'fictional@example.invalid',kind:'family-parent',memberId:CHILD,operationId:op}),/cible/i);assert.equal(f.requests.length,before);
 });

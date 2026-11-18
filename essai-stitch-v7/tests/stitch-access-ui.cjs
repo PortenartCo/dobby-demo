@@ -53,7 +53,7 @@ async function capture(page,name,width){
     const listeners=new Set(),emit=()=>{for(const listener of listeners)listener({...state});return {...state};};
     const access={ready:Promise.resolve(),state:()=>({...state}),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},refresh:async()=>({...state}),
      signUp:async(email,password,options)=>{window.__accessCalls.push({kind:'signup',email,passwordLength:password.length,redirectTo:options?.redirectTo});state={phase:'profile',configured:true,authenticated:true,userId:'TEST-ACCOUNT',verified:false};return emit();},
-     signIn:async()=>{state={phase:'household',configured:true,authenticated:true,userId:'TEST-ACCOUNT',profile:{firstName:'TEST',lastName:'UI',avatarId:'portrait-9'}};return emit();},
+     signIn:async()=>{window.__accessCalls.push({kind:'login'});state={phase:'profile',configured:true,authenticated:true,userId:'TEST-ACCOUNT',profile:{firstName:'TEST',lastName:'UI',avatarId:'portrait-9'}};return emit();},
      saveProfile:async profile=>{window.__accessCalls.push({kind:'profile',profile});state={...state,phase:'household',profile};return emit();},
      previewInvitation:async token=>token==='TEST-EXPIRED'?{status:'expired'}:token==='TEST-VALID'?{status:'valid',household:{id:'TEST-HH',name:'Foyer <img src=x onerror=alert(1)>'},inviter:{name:'TEST — Invitant'},expiresAt:'2099-11-12T12:00:00Z'}:{status:'invalid'},
      recover:async(email,options)=>{window.__accessCalls.push({kind:'recover',redirectTo:options?.redirectTo});return{...state};}
@@ -75,17 +75,20 @@ async function capture(page,name,width){
    await page.getByRole('heading',{name:'Consultez votre messagerie',exact:true}).waitFor();
    assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.win().__accessCalls.find(c=>c.kind==='recover').redirectTo),exactReturn,'Recovery uses the exact official root return without a query or fragment');
    await page.getByRole('button',{name:'Revenir à la connexion',exact:true}).click();await page.waitForFunction(()=>!window.DobbyAccess?.busy);
-   await page.getByRole('tab',{name:'Inscription',exact:true}).click();await page.waitForFunction(()=>!window.DobbyAccess?.busy);
+   assert.equal(await page.getByRole('tab',{name:'Inscription',exact:true}).count(),0,'The production UI has no public signup tab');
+   assert.equal(await page.getByRole('button',{name:'Créer mon compte',exact:true}).count(),0);
+   await page.evaluate(()=>DobbyFamilyStitch.open('access-auth',{mode:'signup'}));
+   await page.getByRole('button',{name:'Se connecter',exact:true}).waitFor();
+   assert.equal(await page.getByLabel('Confirmer le mot de passe',{exact:true}).count(),0,'A forged old signup route renders login only');
    await page.getByLabel('Adresse e-mail',{exact:true}).fill('test-ui@example.test');
    await page.getByLabel('Mot de passe',{exact:true}).fill('TEST-ONLY-PASSWORD');
-   await page.getByLabel('Confirmer le mot de passe',{exact:true}).fill('TEST-ONLY-PASSWORD');
    await page.setViewportSize({width,height:420});await page.getByLabel('Mot de passe',{exact:true}).focus();
-   const signupShortMotion=await motion(page),signupShortAction=await reachable(page,page.getByRole('button',{name:'Créer mon compte',exact:true}));
-   await page.screenshot({path:path.join(out,'signup-short-'+width+'.png'),animations:'disabled'});
+   const loginShortMotion=await motion(page),loginShortAction=await reachable(page,page.getByRole('button',{name:'Se connecter',exact:true}));
+   await page.screenshot({path:path.join(out,'login-short-'+width+'.png'),animations:'disabled'});
    await page.setViewportSize({width,height:900});
-   await page.getByRole('button',{name:'Créer mon compte',exact:true}).click();await page.waitForFunction(()=>!window.DobbyAccess?.busy);
+   await page.getByRole('button',{name:'Se connecter',exact:true}).click();await page.waitForFunction(()=>!window.DobbyAccess?.busy);
    await page.getByRole('heading',{name:'Mon profil',exact:true}).waitFor();
-   assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.win().__accessCalls.find(c=>c.kind==='signup').redirectTo),exactReturn,'Signup confirmation uses the exact official root return without a query or fragment');
+   assert.equal(await page.evaluate(()=>DobbyFamilyStitchEngine.win().__accessCalls.filter(c=>c.kind==='signup').length),0,'The forged route cannot invoke public signUp');
    assert.equal(await page.locator('[data-access-avatar]').count(),24);
    await page.getByLabel('Prénom',{exact:true}).fill('TEST');
    await page.getByLabel('Nom de famille',{exact:true}).fill('UI');
@@ -128,7 +131,7 @@ async function capture(page,name,width){
    await page.screenshot({path:path.join(out,'account-logout-short-'+width+'.png'),animations:'disabled'});
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    assert.deepEqual(errors,[]);
-   results.push({width,welcomeMotion,loginMotion,signupShortMotion,signupShortAction,profileMotion,profileShortMotion,profileShortAction,createMotion,joinMotion,joinShortMotion,joinShortAction,invitationResumeAction,logoutAction});
+   results.push({width,welcomeMotion,loginMotion,loginShortMotion,loginShortAction,profileMotion,profileShortMotion,profileShortAction,createMotion,joinMotion,joinShortMotion,joinShortAction,invitationResumeAction,logoutAction});
    await context.close();console.log('STITCH_ACCESS_UI_PASS',width);
   }
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',widths,authOutcomes:'local fixtures',backendVerified:false,physicalKeyboard:false,shortViewportHeight:420,exactReturn,results},null,2)+'\n');

@@ -11,7 +11,7 @@ window.DobbyAccess = (() => {
   const api = () => E.win().DobbyFamilyUI;
   const account = () => api().access;
   const state = () => account().state();
-  const actorToken = (value=state()) => JSON.stringify([value.userId||null,value.householdId||null,value.memberId||null]);
+  const actorToken = (value=state()) => JSON.stringify([value.userId||null,value.householdId||null,value.memberId||null,api().connectionState?.().epoch??null]);
   function assertActor(expected) {if(actorToken()!==expected)throw Error('Le compte ou le foyer a changé. Rechargez le formulaire avant de continuer.');}
   const el = (tag, text = '', className = '') => Object.assign(document.createElement(tag), {textContent:text,className});
   function button(text, action, secondary = false) {
@@ -53,7 +53,7 @@ window.DobbyAccess = (() => {
       status('Vérification en cours…',false,main);
       try { await action(); if((main||document).querySelector('[data-access-status]')?.textContent==='Vérification en cours…')status('',false,main); }
       catch(error) { status(publicError(error),true,main); }
-      finally { if(main?.isConnected){main.removeAttribute('aria-busy');for(const[control,disabled]of controls)if(control.isConnected)control.disabled=disabled;} }
+      finally { if(main?.isConnected){main.removeAttribute('aria-busy');for(const[control,disabled]of controls)if(control.isConnected)control.disabled=control.dataset.accessCommitted==='true'||disabled;} }
     }).finally(()=>operation=null);
     return operation;
   }
@@ -137,6 +137,8 @@ window.DobbyAccess = (() => {
       incoming=null;
       lastUser=state().userId;
       unsubscribe=account().subscribe?.(next=>{
+        const dialog=document.getElementById('access-invite-dialog');
+        if(dialog&&dialog.dataset.accessOwner!==actorToken(next)){dialog.close();dialog.remove();creatingInvitation=null;}
         if(lastUser&&next.userId!==lastUser){
           const previous={token:invitationToken,type:invitationType,userId:lastUser};
           invitationToken='';invitationType='generic';invitation=null;
@@ -172,33 +174,40 @@ window.DobbyAccess = (() => {
     if(resumableAdmission)copy.append(button('Reprendre mon admission',()=>go('access-auth',{mode:'admission'}),true));
   }
   function authentication() {
-    const mode=context.ui.accessMode||'login';
-    const copy=shell('Entrer dans DOBBY','Retrouvez votre foyer ou commencez une nouvelle aventure.');
+    // Signup is deliberately absent from the published UI. A forged old hash
+    // can only render ordinary login, never invoke the retained Auth SDK API.
+    const mode=['login','recover','admission'].includes(context.ui.accessMode)?context.ui.accessMode:'login';
+    const copy=shell('Entrer dans DOBBY','Connectez-vous avec votre compte ou ouvrez votre invitation personnelle.');
     const tabs=el('div','','access-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Accès à DOBBY');
-    for(const [id,label]of [['login','Connexion'],['signup','Inscription'],['invite','Invitation']]){
+    for(const [id,label]of [['login','Connexion'],['invite','Invitation']]){
       const tab=button(label,()=>id==='invite'?go('access-join'):go('access-auth',{mode:id}),true);
       tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(mode===id));tabs.append(tab);
     }copy.append(tabs);
     const form=el('form','','access-form');form.noValidate=false;
     const email=field(form,'Adresse e-mail','email',{type:'email',required:true,maxLength:254,autocomplete:'email'});
-    const reset=mode==='recover',signup=mode==='signup';
-    let password,confirmation;
+    const reset=mode==='recover';let password;
     if(!reset){
-      password=field(form,'Mot de passe','password',{type:'password',required:true,maxLength:4096,autocomplete:signup?'new-password':'current-password'});
-      if(signup)confirmation=field(form,'Confirmer le mot de passe','confirmation',{type:'password',required:true,maxLength:4096,autocomplete:'new-password'});
-      const show=button('Afficher le mot de passe',()=>{const reveal=password.type==='password';password.type=reveal?'text':'password';if(confirmation)confirmation.type=password.type;show.textContent=reveal?'Masquer le mot de passe':'Afficher le mot de passe';},true);form.append(show);
+      password=field(form,'Mot de passe','password',{type:'password',required:true,maxLength:4096,autocomplete:'current-password'});
+      const show=button('Afficher le mot de passe',()=>{const reveal=password.type==='password';password.type=reveal?'text':'password';show.textContent=reveal?'Masquer le mot de passe':'Afficher le mot de passe';},true);form.append(show);
     }
-    const action=submit(form,reset?'Envoyer le lien de récupération':signup?'Créer mon compte':'Se connecter',async()=>{
-      if(signup&&password.value!==confirmation.value){confirmation.setCustomValidity('Les mots de passe doivent être identiques.');status('Les mots de passe doivent être identiques.',true);return;}
+    const action=submit(form,reset?'Envoyer le lien de récupération':'Se connecter',async()=>{
       const {authReturnURL}=await model;const redirectTo=authReturnURL(location.href);
       if(reset){await account().recover(email.value,{redirectTo});await go('access-confirmation');}
-      else {if(mode==='admission'&&!resumableAdmission)throw Error('Une admission à reprendre est requise.');await account()[signup?'signUp':'signIn'](email.value,password.value,mode==='admission'?{admissionId:resumableAdmission.admissionId,expectedUserId:resumableAdmission.userId}:{redirectTo});await next();}
+      else {if(mode==='admission'&&!resumableAdmission)throw Error('Une admission à reprendre est requise.');await account().signIn(email.value,password.value,mode==='admission'?{admissionId:resumableAdmission.admissionId,expectedUserId:resumableAdmission.userId}:{});await next();}
     });
-    if(confirmation){const clearMismatch=()=>confirmation.setCustomValidity('');confirmation.addEventListener('input',clearMismatch);password.addEventListener('input',clearMismatch);}
     if(!state().configured){action.disabled=true;action.dataset.unavailable='';status('La connexion est momentanément indisponible. Réessayez plus tard.',true);}
     copy.append(form);
-    if(!signup&&!reset)copy.append(button('Mot de passe oublié',()=>go('access-auth',{mode:'recover'}),true));
-    copy.append(button('Retour à l’accueil',()=>go('access-welcome'),true));
+    if(!reset)copy.append(button('Mot de passe oublié',()=>go('access-auth',{mode:'recover'}),true));
+    copy.append(el('p','L’ouverture d’un compte nécessite une invitation nominative approuvée.','access-note'),button('Retour à l’accueil',()=>go('access-welcome'),true));
+  }
+  function portraits(form,chosen='portrait-1') {
+    const group=el('fieldset','','access-portraits'),legend=el('legend','Choisir mon portrait');group.append(legend);
+    const grid=el('div','','access-avatar-grid');
+    for(const portrait of window.DobbyMagicIdentity.avatars.filter(row=>row.available!==false)){
+      const label=el('label','','access-avatar'),input=el('input');input.type='radio';input.name='avatarId';input.value=portrait.id;input.required=true;input.checked=portrait.id===chosen;input.dataset.accessAvatar=portrait.id;input.setAttribute('aria-label',portrait.name);
+      const art=window.DobbyMemberAvatar.create({name:'',magicProfile:{avatarId:portrait.id}},{className:'access-avatar-image'});
+      label.append(input,art,el('span',portrait.name,'access-avatar-name'));grid.append(label);
+    }group.append(grid);form.append(group);
   }
   function profile() {
     const current=state();if(!current.authenticated){void go('access-auth',{mode:'login'});return;}
@@ -211,14 +220,7 @@ window.DobbyAccess = (() => {
     const first=field(form,'Prénom','firstName',{required:true,maxLength:80,value:data.firstName||'',autocomplete:'given-name'});
     const last=field(form,'Nom de famille','lastName',{maxLength:80,value:data.lastName||'',autocomplete:'family-name'});
     const date=field(form,'Date de naissance (facultative)','birthdate',{type:'date',value:data.birthdate||'',autocomplete:'bday'});
-    const group=el('fieldset','','access-portraits'),legend=el('legend','Choisir mon portrait');group.append(legend);
-    const chosen=data.avatarId||data.magicProfile?.avatarId||'portrait-1';
-    const grid=el('div','','access-avatar-grid');
-    for(const portrait of window.DobbyMagicIdentity.avatars.filter(row=>row.available!==false)){
-      const label=el('label','','access-avatar'),input=el('input');input.type='radio';input.name='avatarId';input.value=portrait.id;input.required=true;input.checked=portrait.id===chosen;input.dataset.accessAvatar=portrait.id;input.setAttribute('aria-label',portrait.name);
-      const art=window.DobbyMemberAvatar.create({name:'',magicProfile:{avatarId:portrait.id}},{className:'access-avatar-image'});
-      label.append(input,art,el('span',portrait.name,'access-avatar-name'));grid.append(label);
-    }group.append(grid);form.append(group);
+    portraits(form,data.avatarId||data.magicProfile?.avatarId||'portrait-1');
     submit(form,'Enregistrer mon profil',async()=>{
       assertActor(owner);
       const selected=form.querySelector('[name=avatarId]:checked');
@@ -261,7 +263,7 @@ window.DobbyAccess = (() => {
     }
     token.addEventListener('input',()=>{invitation=null;show();});
     submit(form,'Vérifier l’invitation',async()=>{await rememberInvitation(invitationInput(token.value));invitation=await account()[invitationType==='child-account'?'previewChildInvitation':'previewInvitation'](invitationToken);status('');show();});
-    copy.append(form,result,button('Créer un nouveau foyer',async()=>{await clearInvitation();await go(state().authenticated?'access-create':'access-auth',{mode:'signup'});},true));show();
+    copy.append(form,result,el('p','Les nouveaux accès sont nominatifs et nécessitent l’approbation du propriétaire de DOBBY.','access-note'));show();
   }
   function confirmation() {
     const current=state();
@@ -276,7 +278,8 @@ window.DobbyAccess = (() => {
       if(admission.requiresProfile){
         const form=el('form','','access-form');
         const firstName=field(form,'Prénom','firstName',{required:true,maxLength:80,autocomplete:'given-name'}),lastName=field(form,'Nom','lastName',{maxLength:80,autocomplete:'family-name'}),birthdate=field(form,'Date de naissance (facultatif)','birthdate',{type:'date',maxLength:10,autocomplete:'bday'});
-        submit(form,'Confirmer mon admission',async()=>{await account().admit({admissionId:admission.id,profile:{firstName:firstName.value,lastName:lastName.value,birthdate:birthdate.value}});resumableAdmission=null;await next();});copy.append(form);
+        portraits(form);const owner=actorToken(current);
+        submit(form,'Confirmer mon admission',async()=>{assertActor(owner);const selected=form.querySelector('[name=avatarId]:checked');await account().admit({admissionId:admission.id,profile:{firstName:firstName.value,lastName:lastName.value,birthdate:birthdate.value,avatarId:selected?.value||''}});if(state().userId!==current.userId)throw Error('Le compte a changé pendant cette opération.');resumableAdmission=null;await next();});copy.append(form);
       }else{
         copy.append(el('p','Votre profil enfant existant sera conservé.'),button('Confirmer mon admission',async()=>{await account().admit({admissionId:admission.id});resumableAdmission=null;await next();}));
       }
@@ -291,8 +294,32 @@ window.DobbyAccess = (() => {
     submit(form,'Enregistrer mon mot de passe',async()=>{if(password.value!==confirm.value){confirm.setCustomValidity('Les mots de passe doivent être identiques.');status('Les mots de passe doivent être identiques.',true);return;}await account().updatePassword(password.value);recovery=false;await api().putMeta(recoveryKey,null);await next();});const clearMismatch=()=>confirm.setCustomValidity('');confirm.addEventListener('input',clearMismatch);password.addEventListener('input',clearMismatch);copy.append(form);
   }
   function unavailable() {
-    const copy=shell('Le foyer n’est pas encore accessible','Votre accès n’a pas pu être confirmé. Vos données existantes sont conservées.');
-    copy.append(button('Réessayer',async()=>{await account().refresh();await next();}),button('Revenir à la connexion',()=>go('access-auth',{mode:'login'}),true));
+    const current=state(),own=current.privateAccess,admission=own?.admission;
+    let label='Accès indisponible',description='Votre accès n’a pas pu être confirmé. Vos données existantes sont conservées.',code='unavailable';
+    if(own?.status==='suspended'||current.reason==='suspended'){
+      label='Accès suspendu';code='suspended';description='L’accès partagé est suspendu. Les modifications locales sont conservées et ne seront pas transmises avec cette session. Une réactivation devra être suivie d’une nouvelle connexion vérifiée.';
+    }else if(current.verified&&own?.status==='active'){
+      label='Accès actif';code='active';description='Le compte et son lien familial ont été vérifiés par le serveur.';
+    }else if(own?.status==='unapproved'&&!admission){
+      label='Vous n’êtes pas encore invité';code='non-invite';description='Ce compte n’a pas encore d’admission approuvée. Demandez une invitation nominative au propriétaire de DOBBY.';
+    }else if(admission?.state==='requested'){
+      label='Invitation en attente';code='pending';description='La demande nominative attend une décision du propriétaire. Aucun accès familial n’est accordé à cette étape.';
+    }else if(admission?.state==='approved'){
+      label='Admission approuvée';code='approved';description='La décision est enregistrée. L’envoi d’un message n’est pas encore confirmé et l’admission n’a pas été consommée.';
+    }else if(admission?.state==='delivering'){
+      label='Livraison en cours ou incertaine';code='delivery';description='La décision est enregistrée, mais cette projection ne confirme pas la remise du message. Demandez au propriétaire de vérifier la livraison avant une reprise explicite.';
+    }else if(admission?.state==='sent'){
+      label='Invitation envoyée';code='approved';description='L’envoi est confirmé par le serveur. Ouvrez le lien personnel reçu pour compléter et confirmer l’admission ; l’accès familial n’est pas encore actif.';
+    }else if(admission?.state==='accepted'){
+      label='Admission consommée';code='approved';description='L’admission est confirmée. Le contexte familial doit encore être vérifié avant d’ouvrir les données partagées.';
+    }else if(admission&&['rejected','revoked','expired'].includes(admission.state)){
+      description='Cette admission n’est plus utilisable. Une nouvelle demande nominative approuvée est nécessaire.';
+    }
+    const copy=shell(label,description),summary=el('p',label,'access-own-state');summary.dataset.accessState=code;copy.append(summary);
+    if(code!=='suspended')copy.append(button('Réessayer',async()=>{await account().refresh();await next();}));
+    if(resumableAdmission&&code!=='suspended')copy.append(button('Reprendre mon admission',()=>go('access-auth',{mode:'admission'}),true));
+    if(current.userId){const disconnect=el('button','Se déconnecter','access-button access-secondary');disconnect.type='button';disconnect.onclick=()=>void logout();copy.append(disconnect);}
+    else copy.append(button('Revenir à la connexion',()=>go('access-auth',{mode:'login'}),true));
   }
   function render(value) {
     context=value;
@@ -315,20 +342,22 @@ window.DobbyAccess = (() => {
   }
   async function invitationDialog(memberId=null) {
     await initialize();const current=state(),child=memberId!==null;
-    if(!current.verified||current.permissions.canInvite!==true)throw Error('Invitation non autorisée.');
+    if(!current.verified||current.profile?.memberCategory!=='parent'||current.permissions.canInvite!==true)throw Error('Demande d’accès réservée aux parents vérifiés du foyer.');
     let target;
-    if(child){target=E.read().members.find(member=>member.id===memberId);if(!target||target.memberCategory!=='child'||current.permissions.canLinkExistingChild!==true||E.memberPermissions(memberId).canLinkExistingChild!==true)throw Error('Le rattachement sécurisé d’un compte enfant n’est pas encore disponible.');}
-    const owner=actorToken(current);
-    const title=child?'Donner accès à DOBBY':'Inviter un proche',dialog=el('dialog','','access-invite-dialog');dialog.id='access-invite-dialog';dialog.setAttribute('aria-label',title);
-    const close=button('Fermer',()=>{dialog.close();dialog.remove();},true),info=el('p',child?'Ce lien ouvrira l’accès au profil existant de '+(target.name||target.firstName||'cet enfant')+'. Son avatar, ses choix magiques et son histoire seront conservés.':'Ce lien personnel donnera accès à votre foyer après confirmation.');
-    const output=el('textarea');output.readOnly=true;output.setAttribute('aria-label','Lien personnel d’invitation');output.hidden=true;
-    const generate=button('Créer un lien d’invitation',async()=>{
-      assertActor(owner);const scope=child?'child:'+memberId:'generic';if(creatingInvitation?.scope!==scope)creatingInvitation={scope,id:crypto.randomUUID()};
-      const created=await account()[child?'createChildInvitation':'createInvitation']({...(child?{memberId}:{}),operationId:creatingInvitation.id});assertActor(owner);creatingInvitation=null;
-      const {childInvitationReference}=await model;const link=new URL('../',location.href);link.searchParams.set('invite',child?childInvitationReference(created.token):created.token);output.value=link.href;output.hidden=false;info.textContent='Lien créé pour '+created.household.name+'. Partagez-le uniquement avec la personne invitée.';
-    });
+    if(child){target=E.read().members.find(member=>member.id===memberId);if(!target||target.memberCategory!=='child'||current.permissions.canManageDependents!==true&&current.permissions.canManageHousehold!==true)throw Error('Un profil enfant canonique du foyer est requis.');}
+    const owner=actorToken(current);document.getElementById('access-invite-dialog')?.remove();
+    const title='Demander un accès familial',dialog=el('dialog','','access-invite-dialog');dialog.id='access-invite-dialog';dialog.dataset.accessOwner=owner;dialog.setAttribute('aria-label',title);
+    const info=el('p',child?'Demande pour le profil existant de '+(target.name||target.firstName||'cet enfant')+'. Son avatar, ses choix magiques et son histoire seront conservés. La livraison et le rattachement enfant restent bloqués tant que les validations serveur ne sont pas ouvertes.':'Un adulte pourra rejoindre votre foyer après une décision du propriétaire de DOBBY et la confirmation de son admission. Cette demande ne crée pas encore de compte ni de lien utilisable.');
+    const form=el('form','','access-form'),email=field(form,'Adresse e-mail','email',{type:'email',required:true,maxLength:254,autocomplete:'email'}),request=el('button','Enregistrer la demande','access-button');request.type='submit';form.append(request);
     const message=el('p','','access-status');message.dataset.accessStatus='';message.setAttribute('role','status');message.setAttribute('aria-live','polite');message.hidden=true;
-    dialog.append(el('h2',title),info,message,generate,output,button('Copier le lien',async()=>{if(!output.hidden){await navigator.clipboard.writeText(output.value);status('Lien copié.',false,dialog);}},true),close);
+    form.onsubmit=event=>{event.preventDefault();event.stopImmediatePropagation();if(!form.reportValidity())return;void run(async()=>{
+      assertActor(owner);const normalized=email.value.trim().toLowerCase(),scope=JSON.stringify([owner,child?'family-child':'family-parent',memberId,normalized]);if(creatingInvitation?.scope!==scope)creatingInvitation={scope,id:crypto.randomUUID()};
+      const result=await account().requestFamilyAccount({email:normalized,kind:child?'family-child':'family-parent',memberId,operationId:creatingInvitation.id});assertActor(owner);
+      if(!result?.admission||result.admission.purpose!==(child?'family-child':'family-parent')||result.admission.state!=='requested')throw Error('La demande n’a pas été confirmée par le serveur.');
+      email.disabled=true;email.dataset.accessCommitted='true';request.disabled=true;request.dataset.accessCommitted='true';
+      status('Demande enregistrée : décision du propriétaire en attente. Aucun envoi ni accès n’est confirmé.',false,dialog);
+    },dialog);};
+    dialog.append(el('h2',title),info,form,message,button('Fermer',()=>{dialog.close();dialog.remove();},true));
     dialog.addEventListener('cancel',event=>{if(operation)event.preventDefault();else dialog.remove();});document.body.append(dialog);dialog.showModal();
   }
   function logout(scope) {

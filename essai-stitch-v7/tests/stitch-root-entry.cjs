@@ -81,17 +81,15 @@ async function check(name,{suffix='',session=false}={},verify){
     await page.getByRole('heading',{name:'Entrer dans DOBBY',exact:true}).waitFor();assert.match(await page.locator('[data-access-status]').innerText(),/lien.*valide/i);assert.equal((await native('return window.__rootEntry.calls;')).length,0);
    });
   }
-  await check('signup mismatch can be corrected by editing only the first password',{},async({page,native})=>{
+  await check('public root has no free signup and a forged legacy signup mode remains login',{},async({page,native})=>{
    await page.getByRole('heading',{name:'Bienvenue dans DOBBY',exact:true}).waitFor();
    await page.getByRole('button',{name:'Continuer',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
-   await page.getByRole('tab',{name:'Inscription',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
-   await page.getByLabel('Adresse e-mail',{exact:true}).fill('fixture@example.test');
-   await page.getByLabel('Mot de passe',{exact:true}).fill('TEST-OLD');await page.getByLabel('Confirmer le mot de passe',{exact:true}).fill('TEST-NEW');
-   await page.getByRole('button',{name:'Créer mon compte',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
-   assert.equal(await page.getByLabel('Confirmer le mot de passe',{exact:true}).evaluate(input=>input.validity.customError),true);
-   await page.getByLabel('Mot de passe',{exact:true}).fill('TEST-NEW');
-   await page.getByRole('button',{name:'Créer mon compte',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
-   assert.equal((await native('return window.__rootEntry.calls;')).filter(call=>call.kind==='signup').length,1,'The corrected first password must permit one signup request');
+   assert.equal(await page.getByRole('tab',{name:'Inscription',exact:true}).count(),0);
+   await page.evaluate(()=>DobbyFamilyStitch.open('access-auth',{mode:'signup'}));
+   await page.getByRole('button',{name:'Se connecter',exact:true}).waitFor();
+   assert.equal(await page.getByRole('button',{name:'Créer mon compte',exact:true}).count(),0);
+   assert.equal(await page.getByLabel('Confirmer le mot de passe',{exact:true}).count(),0);
+   assert.equal((await native('return window.__rootEntry.calls;')).filter(call=>call.kind==='signup').length,0,'The legacy mode never calls public signUp');
   });
   await check('recovery mismatch can be corrected by editing only the first password',{suffix:'?code=TEST-RECOVERY&type=recovery'},async({page,native})=>{
    await page.getByRole('heading',{name:'Choisir un nouveau mot de passe',exact:true}).waitFor();

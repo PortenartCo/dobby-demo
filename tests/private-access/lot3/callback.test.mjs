@@ -218,7 +218,7 @@ function nativeFixture(){
   document:{getElementById:()=>null,addEventListener(){},createElement:node,body:{append(){}}},window:{addEventListener(){},dispatchEvent(){}},CustomEvent:class{},navigator:{onLine:true},localStorage:{getItem:()=>null,setItem(){}},
   fetch:async(url,options)=>{const path=new URL(url).pathname;requests.push({path,options});let body=[];
    if(path==='/auth/v1/verify')body={access_token:'TEST-admission-JWT',refresh_token:'TEST-admission-refresh',expires_in:3600,user:{id:USER}};
-   if(path.endsWith('/dobby_access_context'))body=metadata();
+   if(path.endsWith('/dobby_access_context'))body=accepted?{...metadata(),status:'active',revision:1,admission:{...metadata().admission,state:'accepted'}}:metadata();
    if(path.endsWith('/dobby_access_accept')){accepted=true;body={protocol:1,accepted:true,admissionId:ADMISSION};}
    if(path.endsWith('/dobby_v7_context')){assert.equal(accepted,true);body=active();}
    if(path.endsWith('/dobby_v2_memberships'))body=[{household_id:HH}];if(path.endsWith('/dobby_v2_households'))body=[{id:HH}];
