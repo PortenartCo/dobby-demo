@@ -7,7 +7,7 @@
 
 ## Contraintes globales
 
-- Aucun accès à Supabase distant ni aux comptes réels ; secrets locaux générés en mémoire, jamais publiés.
+- Aucun accès à Supabase distant ni aux comptes réels ; secrets locaux générés pour le test, jamais publiés.
 - Aucun ancien chemin exploré ; aucun écrasement de branche existante.
 - Migrations Lots 1/2A et fichiers applicatifs inchangés.
 - Aucun mock HTTP utilisé comme preuve physique, aucune nouvelle tentative sans hypothèse documentée.
