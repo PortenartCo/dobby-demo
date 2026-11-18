@@ -12,6 +12,10 @@ const out=process.env.DOBBY_FAMILY_SHARED_EVIDENCE||path.resolve(__dirname,'../.
   const reply=(body,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
   if(url.pathname.includes('/auth/v1/token'))return reply({access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:UID,email:'fixture@example.test'}});
   if(url.pathname.includes('dobby_v2_memberships'))return reply([{household_id:HH,active:true,user_id:UID}]);if(url.pathname.includes('dobby_v2_households'))return reply([{id:HH}]);if(url.pathname.includes('dobby_v2_grocery'))return reply([]);
+  if(url.pathname==='/rest/v1/rpc/dobby_access_context'){
+   assert.equal(req.headers().authorization,'Bearer fixture-access','Own access is fetched under the named ordinary parent session');
+   return reply({protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null});
+  }
   if(url.pathname==='/rest/v1/rpc/dobby_v7_context'){
    assert.equal(req.headers().authorization,'Bearer fixture-access','Canonical identity is fetched with the native authenticated session');
    const row=modules.get('family'),member=row?.payload.familyMembers.find(member=>member.id==='f2');

@@ -258,7 +258,7 @@ test('reserves: visible legacy login refreshes the same canonical V7 parent cont
 test('reserves: missing V7 remains readonly while a server refusal revokes the existing session locally',async()=>{
  for(const status of [404,403]){
  const fixture=native({httpFailures:{'/rest/v1/rpc/dobby_v7_context':{status,body:{code:status===404?'PGRST202':'42501',message:'TEST unavailable V7'}}}});fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
- await fixture.api.signIn('fixture@example.test','fixture-password');
+ if(status===403)await assert.rejects(fixture.api.signIn('fixture@example.test','fixture-password'),/compte|session|chang/i);else await fixture.api.signIn('fixture@example.test','fixture-password');
  assert.equal(fixture.f.session.user_id,USER);assert.equal(fixture.api.getContext().householdId,HH);assert.equal(fixture.api.access.state().verified,false);
  assert.equal(fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,1,'Legacy login attempts the canonical read even when unavailable');
  assert.match(fixture.api.grocery.read().status,/lecture seule|droits.*vérifi/i,'Unavailable canonical rights are reported honestly');

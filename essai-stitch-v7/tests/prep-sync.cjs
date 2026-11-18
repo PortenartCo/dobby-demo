@@ -34,6 +34,7 @@ async function expectRegistry(page,key,expected){await page.waitForFunction(({ke
     if(url.pathname==='/rest/v1/rpc/dobby_missions_v2_capabilities')return reply({});
     // Shared PREP writes require the real native client to verify a canonical
     // parent and adopt the existing family registry from the HTTP boundary.
+    if(url.pathname==='/rest/v1/rpc/dobby_access_context')return reply(canonical.privateAccess(actor(index)));
     if(url.pathname==='/rest/v1/rpc/dobby_v7_context'){
      const verified=canonical.context(actor(index)),row=modules.get('family');
      return reply({...verified,profile:row.payload.familyMembers.find(member=>member.id===verified.memberId),familyRevision:row.revision});

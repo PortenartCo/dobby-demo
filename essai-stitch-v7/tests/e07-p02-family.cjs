@@ -29,6 +29,7 @@ async function shoppingSettings(page,copy=false){if(copy){await page.waitForFunc
       if(url.pathname.includes('/auth/v1/token'))return fulfill({access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:uid,email:'fixture@example.test'}});
       if(url.pathname.includes('dobby_v2_memberships'))return fulfill([{household_id:hh,active:true,user_id:uid,role:'owner'}]);
       if(url.pathname.includes('dobby_v2_households'))return fulfill([{id:hh}]);
+      if(url.pathname.endsWith('/rpc/dobby_access_context'))return fulfill(canonical.privateAccess('A'));
       if(url.pathname.endsWith('/rpc/dobby_v7_context'))return fulfill(canonical.context('A'));
       if(url.pathname.endsWith('/dobby_v2_modules')){assert.equal(req.method(),'GET','Grocery fixture does not mutate the canonical family registry');return fulfill(url.searchParams.get('module')==='eq.family'?[canonical.familyRow]:url.searchParams.has('module')?[]:[{module:'family'}]);}
       if(!url.pathname.includes('dobby_v2_grocery'))return fulfill({code:'PGRST205',message:'Optional modules absent in this grocery fixture'},404);

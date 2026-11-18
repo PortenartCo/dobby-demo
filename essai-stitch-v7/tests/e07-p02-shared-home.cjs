@@ -46,6 +46,9 @@ function fixture({supportsHome=true,supportsContext=true}={}){
         if(url.pathname.includes('/auth/v1/token'))return fulfill({access_token:'fixture-access-'+label,refresh_token:'fixture-refresh-'+label,expires_in:3600,user:{id:users[label],email:label.toLowerCase()+'@fixture.example.test'}});
         if(url.pathname.includes('dobby_v2_memberships'))return fulfill([{household_id:hh,active:true,user_id:users[label],role:'owner'}]);
         if(url.pathname.includes('dobby_v2_households'))return fulfill([{id:hh}]);
+        // This negative case is DOBBY-approved but lacks a canonical V7 identity.
+        // The independent missing-context denial below remains unchanged.
+        if(url.pathname.endsWith('/rpc/dobby_access_context'))return fulfill(canonical.privateAccess(label));
         if(url.pathname.endsWith('/rpc/dobby_v7_context'))return supportsContext?fulfill(canonical.context(label)):fulfill({code:'PGRST205',message:'Canonical identity context absent in negative grocery fixture'},404);
         if(url.pathname.endsWith('/dobby_v2_modules')){assert.equal(method,'GET','Grocery fixture does not mutate the canonical family registry');return fulfill(url.searchParams.get('module')==='eq.family'?[canonical.familyRow]:url.searchParams.has('module')?[]:[{module:'family'}]);}
         if(!url.pathname.includes('dobby_v2_grocery'))return fulfill({code:'PGRST205',message:'Optional modules absent in this grocery fixture'},404);

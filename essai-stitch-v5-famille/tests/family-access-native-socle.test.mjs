@@ -222,3 +222,10 @@ test('a delayed local session installation cannot replace a newer native account
   f.switchAccount();write.release();await assert.rejects(pending,/compte|foyer|chang/i);assert.equal(f.f.session.user_id,OTHER);assert.equal(f.db.rows.get('session').value.user_id,OTHER);
  }
 });
+
+test('a refused late legacy household read cannot clear a newer account',async()=>{
+ const f=native();await f.establish();let release;
+ f.intercept(request=>request.path.endsWith('/dobby_v2_memberships')?new Promise(resolve=>{release=()=>resolve({ok:false,status:403,text:async()=>JSON.stringify({code:'42501',message:'TEST refused former account'})});}):null);
+ const pending=f.api.signIn('fixture@example.invalid','TEST-password');while(!release)await Promise.resolve();f.switchAccount();release();
+ await assert.rejects(pending,/compte|foyer|chang|refus/i);assert.equal(f.f.session?.user_id,OTHER);assert.equal(f.db.rows.get('session')?.value?.user_id,OTHER);
+});

@@ -12,7 +12,13 @@ function canonicalGroceryFixture(householdId,users){
   familyMembers:Object.values(profiles),famContacts:[],famLists:[],familyEvents:[],sharedHealthVisits:[],
   sharedFamilyNotes:[],familyNotesVersion:1,familyPreparationTemplates:[],familyEventPreparations:[],familyPreparationsVersion:1
  }};
- return {familyRow,profiles,context(label){
+ // These named HTTP-fixture users are approved ordinary parents. This DTO
+ // represents only their own private access, never administrator authority.
+ const privateAccess=label=>{
+  if(!users[label])throw Error('Unknown synthetic private-access actor: '+label);
+  return {protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null};
+ };
+ return {familyRow,profiles,privateAccess,context(label){
   if(!users[label])throw Error('Unknown synthetic canonical actor: '+label);
   return {protocol:1,phase:'active',userId:users[label],householdId,memberId:profiles[label].id,
    profile:profiles[label],permissions,pendingCeremony:false,familyRevision:familyRow.revision};

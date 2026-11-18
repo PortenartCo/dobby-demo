@@ -692,15 +692,20 @@ async function login(form) {
   const installing=requestActor();await keepSession(result,installing,{fresh:true});const installed={...installing,userId:result.user?.id||null};assertRequestActor(installed);
   const hold=await meta('v7-transmission-hold:'+installed.userId);assertRequestActor(installed);f.transmissionHold=hold;broadcastAccountChange(installed.userId);
   f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
+  const guardLogin=()=>{if(f.epoch!==installed.epoch||f.session?.user_id!==installed.userId)throw Error('Le compte a changé pendant la connexion au foyer.');};
   try {
-    await requireHousehold();
-    await loadItems();
-    await sync();
+    await requireHousehold();guardLogin();
+    await loadItems();guardLogin();
+    await sync();guardLogin();
   } catch (e) {
+    // A failed read belongs to the session installed by this form. It must
+    // never clean up a newer account which arrived while that read was open.
+    if(f.epoch!==installed.epoch||f.session?.user_id!==installed.userId)throw e;
     // Never retain a new session after a refused household switch.
+    const refused=f.session;
     f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
     f.cache.clear();
-    await delMeta('session');
+    const cleanup=requestActor();await updateMeta('session',saved=>{assertRequestActor(cleanup);return saved?.user_id===refused?.user_id&&saved?.localSessionId===refused?.localSessionId?DELETE_META:saved;});assertRequestActor(cleanup);
     throw e;
   }
   refreshModal(); repaint();
