@@ -13,6 +13,8 @@ window.DobbyAdminAccess = (() => {
   const admissionStates = {requested:'Invitation en attente',approved:'Admission approuvée',delivering:'Livraison en cours ou incertaine',sent:'Envoi confirmé',accepted:'Admission consommée',rejected:'Demande refusée',revoked:'Admission révoquée'};
   const purposes = {'new-household':'Nouveau foyer','family-parent':'Parent d’un foyer existant','family-child':'Enfant existant'};
   const statuses = {active:'Actif',suspended:'Suspendu',unapproved:'Non approuvé'};
+  const canManageStatus = account => !(account.status==='unapproved' && account.revision===0 && !(account.admissions || []).some(admission=>admission.targetUserId===account.userId));
+  const unapprovedWithoutAdmission = 'Aucune admission liée à ce compte n’est confirmée dans ce registre. Il reste non approuvé. Une invitation approuvée et liée à ce compte est nécessaire pour gérer son autorisation.';
   let context = null, epoch = 0, sequence = 0, proof = null, prepared = null, busy = false, initialized = null;
   let cache = {items:[],requests:[],decisions:[],nextCursor:null,nextRequestsCursor:null,nextDecisionCursor:null};
   let lastActor = null, lastVerified = false, lastPrivateStatus = null, selectedUser = '', selectedCursor = null, inviteEmail = '', notice = null;
@@ -170,7 +172,8 @@ window.DobbyAdminAccess = (() => {
       const details=el('dl');detail(details,'E-mail confirmé',account.confirmed===true?'Oui':'Non');detail(details,'Création d’un foyer autorisée',account.canCreateHousehold===true?'Oui':'Non');card.append(details);
       if(!account.admissions?.length)card.append(el('p','Aucune admission récente.','admin-note'));
       else {const admissions=el('details','','admin-disclosure');admissions.append(el('summary',`Admissions récentes (${account.admissions.length})`));for(const admission of account.admissions)admissions.append(admissionCard(admission));card.append(admissions);}
-      if(!account.isOwner){const action=button('Gérer le statut',async()=>{selectedUser=account.userId;selectedCursor=accountCursors.get(account.userId) || null;await context.open('admin-status');},{secondary:true});action.dataset.adminSelect=account.userId;card.append(action);}
+      if(!account.isOwner && canManageStatus(account)){const action=button('Gérer le statut',async()=>{selectedUser=account.userId;selectedCursor=accountCursors.get(account.userId) || null;await context.open('admin-status');},{secondary:true});action.dataset.adminSelect=account.userId;card.append(action);}
+      else if(!account.isOwner)card.append(el('p',unapprovedWithoutAdmission,'admin-note'));
       parent.append(card);
     }
     more(parent,'accounts');
@@ -198,7 +201,7 @@ window.DobbyAdminAccess = (() => {
     parent.append(el('p','Les demandes déjà liées à un compte apparaissent aussi dans ses admissions récentes.','admin-note'));
   }
   function statusView() {
-    const parent=section('Suspendre / Réactiver','Le statut sera confirmé par le serveur avec la révision actuellement affichée.');
+    const parent=section('Suspendre / Réactiver','Le statut sera confirmé par le serveur à partir du dernier état vérifié.');
     const candidates=cache.items.filter(item=>!item.isOwner);
     if(selectedUser && !candidates.some(item=>item.userId===selectedUser)){
       empty(parent,'Le compte sélectionné n’est plus présent dans la page vérifiée. Aucune action ne sera appliquée à un autre compte.');
@@ -212,6 +215,7 @@ window.DobbyAdminAccess = (() => {
     const selected=el('div','','admin-status-target');parent.append(selected);
     const draw=()=>{selectedUser=select.value;selectedCursor=accountCursors.get(selectedUser) || null;const target=candidates.find(item=>item.userId===selectedUser);selected.replaceChildren();if(!target)return;
       selected.append(badge(statuses[target.status] || 'Indisponible'));
+      if(!canManageStatus(target)){selected.append(el('p',unapprovedWithoutAdmission,'admin-note'));return;}
       const active=target.status==='suspended';
       selected.append(el('p',active?'La réactivation ne restaure aucun ancien lien. Une nouvelle session vérifiée est obligatoire ; une nouvelle admission peut être nécessaire.':'La suspension coupe les accès authentifiés et révoque les admissions ouvertes. Des liens Storage déjà signés peuvent rester utilisables jusqu’à leur expiration.','admin-warning'));
       const action=button(active?'Réactiver ce compte':'Suspendre ce compte',()=>changeStatus(target,active?'active':'suspended'),{danger:!active});action.dataset.adminStatusAction=active?'active':'suspended';selected.append(action);

@@ -205,3 +205,16 @@ test('a selected status target that disappears cannot fall back to another accou
  assert.match(await page.locator('[data-admin-empty]').innerText(),/Aucune action ne sera appliquée à un autre compte/);
  assert.equal(await page.locator('[data-admin-status-action]').count(),0);assert.equal((await page.evaluate(()=>__fixture.calls)).some(call=>call.command==='setStatus'),false);
 });
+
+test('unapproved revision-zero status controls require an admission bound to the exact account',async t=>{
+ for(const binding of ['none','other-account','exact-account']){
+  const admissions=binding==='none'?[]:[{id:admission,email:'parent@example.invalid',purpose:'new-household',state:'sent',revision:3,targetUserId:binding==='exact-account'?target:owner}];
+  const page=await fixture(t,{items:[{userId:target,email:'parent@example.invalid',status:'unapproved',revision:0,isOwner:false,admissions}]});
+  await view(page,'admin-access');assert.equal(await page.locator('[data-admin-select]').count(),binding==='exact-account'?1:0,binding+' account card eligibility');
+  await view(page,'admin-status');assert.equal(await page.locator('[data-admin-status-action]').count(),binding==='exact-account'?1:0,binding+' status action eligibility');
+  if(binding==='exact-account'){
+   await page.locator('[data-admin-status-action=suspended]').click();await page.evaluate(()=>{__fixture.result={status:'suspended',revision:1,sessionBoundaryPending:false};});await confirm(page);
+   const call=(await page.evaluate(()=>__fixture.calls)).find(call=>call.command==='setStatus');assert.equal(call.payload.userId,target);assert.equal(call.payload.expectedRevision,0);
+  }else assert.match(await page.locator('main').innerText(),/reste non approuvé/);
+ }
+});
