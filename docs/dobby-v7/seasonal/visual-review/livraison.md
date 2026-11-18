@@ -20,7 +20,7 @@ L’exécuteur a perdu sa liaison pendant le dernier parcours de la campagne sta
 
 Le journal local montre la réussite des tests saisonniers, visuels, Menu, Paramètres, Contacts/Archives, Notes et des parcours Cuisine/Courses jusqu’au test de course partagé. Le dernier script interrompu est repris séparément ; la campagne complète est ensuite vérifiée par les workflows du nouveau HEAD. Le journal interrompu n’est pas présenté comme une commande ayant terminé avec un code de sortie 0.
 
-La publication préparée `c1962f63b2e82fb124074c1770decbddbe198476` ajoute uniquement les 354 fichiers de `essai-dobby-v7-seasonal-visual-73fbdc90cf8a/` à `main`. Aucun fichier applicatif antérieur n’est modifié. Les nouvelles ressources de décor sont intégralement dans les deux fichiers JS/CSS existants, environ 9,5 Kio compressés ensemble.
+La publication préparée `c1962f63b2e82fb124074c1770decbddbe198476` ajoute uniquement les 354 fichiers de `essai-dobby-v7-seasonal-visual-37a83f687826/` à `main`. Aucun fichier applicatif antérieur n’est modifié. Les nouvelles ressources de décor sont intégralement dans les deux fichiers JS/CSS existants, environ 9,5 Kio compressés ensemble.
 
 Reprise ciblée : `CHROMIUM_PATH=/usr/bin/chromium node essai-stitch-v7/tests/e07-p02-shared-home.cjs` — code de sortie 0, `CUISINE_SHARED_HOME_PASS`. [Journal](logs/resumed-shared-home.log).
 

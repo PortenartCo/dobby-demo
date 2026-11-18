@@ -1,0 +1,89 @@
+
+> test
+> node ci.cjs
+
+✔ all inclusive fixed windows and season boundaries (8.127832ms)
+✔ Gregorian mobile feasts are recomputed, inclusive and cross months (5.412043ms)
+✔ Valentine wins Carnival overlap, including February 14 (0.35965ms)
+✔ Saint-Nicolas wins the December 1 overlap with late Thanksgiving (0.203614ms)
+✔ Brussels date ignores host timezone and handles summer/winter midnight (0.765608ms)
+✔ invalid civil dates are rejected instead of overflowing or using host parsing (0.798112ms)
+✔ every day 2000–2100 has one stable theme; February 14 always Valentine (911.452747ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 933.995198
+SEASONAL_BROWSER_PASS 320
+SEASONAL_BROWSER_PASS 390
+SEASONAL_BROWSER_PASS 768
+SEASONAL_BROWSER_PASS 1440
+SEASONAL_MIDNIGHT_AND_LIFECYCLE_PASS
+SEASONAL_VISUAL_AFTER_PASS 320
+SEASONAL_VISUAL_AFTER_PASS 390
+SEASONAL_VISUAL_AFTER_PASS 768
+SEASONAL_VISUAL_AFTER_PASS 1440
+SEASONAL_PAGES_PASS 320 six pages, three events
+SEASONAL_PAGES_PASS 390 six pages, three events
+SEASONAL_PAGES_PASS 768 six pages, three events
+SEASONAL_PAGES_PASS 1440 six pages, three events
+REVIEW_BUILD 6c7cf97ca197f3f7ab237254923222ff723d1589 345 files /workspace/dobby-seasonal-pages/.dobby-ci-integrated-2bTK7S/bundle
+GLOBAL_REVIEW_BUILD 6c7cf97ca197f3f7ab237254923222ff723d1589 working-tree /workspace/dobby-seasonal-pages/.dobby-ci-integrated-2bTK7S/bundle
+FAMILY_REVIEW_BUILD 6c7cf97ca197f3f7ab237254923222ff723d1589 working-tree /workspace/dobby-seasonal-pages/.dobby-ci-integrated-2bTK7S/bundle
+NOTES_REVIEW_BUILD 6c7cf97ca197f3f7ab237254923222ff723d1589 working-tree /workspace/dobby-seasonal-pages/.dobby-ci-integrated-2bTK7S/bundle
+CONSOLIDATED_CANDIDATE_REVIEW_BUILD 6c7cf97ca197f3f7ab237254923222ff723d1589 working-tree /workspace/dobby-seasonal-pages/.dobby-ci-integrated-2bTK7S/bundle
+SEASONAL_REVIEW_BUILD 6c7cf97ca197f3f7ab237254923222ff723d1589 working-tree /workspace/dobby-seasonal-pages/.dobby-ci-integrated-2bTK7S/bundle
+SEASONAL_REVIEW_PASS 6c7cf97ca197f3f7ab237254923222ff723d1589 353 verified files
+✔ a fresh register generation keeps the six-card canonical Menu and all other sources (76.969423ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.152356
+MENU_BROWSER 154.0.8037.57
+MENU_SHORT_VIEWPORT {"width":320,"height":480,"last":{"x":16,"y":304,"width":288,"height":68,"top":304,"right":304,"bottom":372,"left":16},"scrollY":312,"maximumScroll":312,"scrollHeight":792,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":320,"height":81,"top":399,"right":320,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":320,"height":420,"last":{"x":16,"y":244,"width":288,"height":68,"top":244,"right":304,"bottom":312,"left":16},"scrollY":372,"maximumScroll":372,"scrollHeight":792,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":320,"height":68,"top":0,"right":320,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":320,"height":81,"top":339,"right":320,"bottom":420,"left":0}}
+MENU_PASS 320 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":390,"height":480,"last":{"x":16,"y":304,"width":358,"height":68,"top":304,"right":374,"bottom":372,"left":16},"scrollY":282,"maximumScroll":282,"scrollHeight":762,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":399,"width":390,"height":81,"top":399,"right":390,"bottom":480,"left":0}}
+MENU_SHORT_VIEWPORT {"width":390,"height":420,"last":{"x":16,"y":244,"width":358,"height":68,"top":244,"right":374,"bottom":312,"left":16},"scrollY":342,"maximumScroll":342,"scrollHeight":762,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":0,"y":0,"width":390,"height":68,"top":0,"right":390,"bottom":68,"left":0},"dock":{"x":0,"y":339,"width":390,"height":81,"top":339,"right":390,"bottom":420,"left":0}}
+MENU_PASS 390 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+MENU_SHORT_VIEWPORT {"width":1440,"height":480,"last":{"x":934.65625,"y":274,"width":409.34375,"height":68,"top":274,"right":1344,"bottom":342,"left":934.65625},"scrollY":0,"maximumScroll":0,"scrollHeight":480,"viewportHeight":480,"bodyMinHeight":"480px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":399,"width":1280,"height":81,"top":399,"right":1360,"bottom":480,"left":80}}
+MENU_SHORT_VIEWPORT {"width":1440,"height":420,"last":{"x":934.65625,"y":244,"width":409.34375,"height":68,"top":244,"right":1344,"bottom":312,"left":934.65625},"scrollY":30,"maximumScroll":30,"scrollHeight":450,"viewportHeight":420,"bodyMinHeight":"420px","hit":true,"header":{"x":80,"y":0,"width":1280,"height":68,"top":0,"right":1360,"bottom":68,"left":80},"dock":{"x":80,"y":339,"width":1280,"height":81,"top":339,"right":1360,"bottom":420,"left":80}}
+MENU_PASS 1440 six links, 12 filters, settings/native backup, back/forward/reload, 15 removed routes and native records/attachment preserved
+SETTINGS_PASS 320
+SETTINGS_PASS 390
+SETTINGS_PASS 768
+SETTINGS_PASS 1440
+SETTINGS_BACKUP_PASS presentation-documents-back-320
+SETTINGS_BACKUP_PASS presentation-documents-back-390
+SETTINGS_BACKUP_PASS presentation-documents-back-768
+SETTINGS_BACKUP_PASS presentation-documents-back-1440
+SETTINGS_BACKUP_PASS real-native-export-and-offline-download
+SETTINGS_BACKUP_PASS native-export-failure-has-no-false-success
+SETTINGS_BACKUP_PASS account-change-during-export-blocks-download
+SETTINGS_BACKUP_PASS restore-validation-cancellation-and-file-picker
+SETTINGS_BACKUP_PASS malformed-and-incomplete-archives-never-enable-restore
+SETTINGS_BACKUP_PASS native-restore-preserves-records-and-attachment-hash-after-reload
+SETTINGS_BACKUP_PASS native-restore-write-failure-rolls-back-records-and-attachment-bytes
+SETTINGS_BACKUP_PASS changed-registry-rejects-preview-confirmation
+SETTINGS_BACKUP_PASS changed-registry-during-transfer-read-rejects-restore
+SETTINGS_BACKUP_PASS changed-registry-during-native-read-cancels-before-confirmation
+SETTINGS_BACKUP_PASS changed-business-state-after-native-confirmation-is-preserved
+SETTINGS_BACKUP_PASS readonly-profile-blocks-complete-export-and-restore
+SETTINGS_BACKUP_RESULT 16 isolated scenarios passed; external requests blocked
+page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:8765/essai-stitch-v7/famille.html#contacts
+Call log:
+[2m  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/famille.html#contacts", waiting until "load"[22m
+
+    at /workspace/dobby-seasonal-pages/essai-stitch-v7/tests/contacts-v7.cjs:17:10 {
+  log: [
+    '  - navigating to "http://127.0.0.1:8765/essai-stitch-v7/famille.html#contacts", waiting until "load"'
+  ],
+  name: 'Error'
+}

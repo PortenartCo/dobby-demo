@@ -1,0 +1,9 @@
+AssertionError [ERR_ASSERTION]: christmas has recognisable vector motifs in missions content, beyond the global header
+    at /workspace/dobby-seasonal-pages/essai-stitch-v7/tests/seasonal-pages.cjs:34:13 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}

@@ -1,0 +1,96 @@
+[
+  {
+    "theme": "christmas",
+    "width": 390,
+    "byteIdentical": true,
+    "differenceBounds": null,
+    "decorationRegion": [
+      0,
+      0,
+      390,
+      600
+    ],
+    "decorationRegionByteIdentical": true,
+    "sha256": "b2c150213182417a8a136a73ef51d0a70a685709fea003ec610aeea8742a2d46"
+  },
+  {
+    "theme": "halloween",
+    "width": 390,
+    "byteIdentical": false,
+    "differenceBounds": [
+      12,
+      619,
+      378,
+      624
+    ],
+    "decorationRegion": [
+      0,
+      0,
+      390,
+      600
+    ],
+    "decorationRegionByteIdentical": true,
+    "sha256": "0137c2226e6843f4fd02bef8572942d6e4aa6dfe7a73c7ecab80ed339ea7a590"
+  },
+  {
+    "theme": "new-year",
+    "width": 390,
+    "byteIdentical": false,
+    "differenceBounds": [
+      12,
+      619,
+      378,
+      624
+    ],
+    "decorationRegion": [
+      0,
+      0,
+      390,
+      600
+    ],
+    "decorationRegionByteIdentical": true,
+    "sha256": "df9a985d66ba3426b933e47bff2cfbffefc4cfafe3ce834a818a0e27aece3d7d"
+  },
+  {
+    "theme": "christmas",
+    "width": 1440,
+    "byteIdentical": true,
+    "differenceBounds": null,
+    "decorationRegion": [
+      0,
+      0,
+      1440,
+      960
+    ],
+    "decorationRegionByteIdentical": true,
+    "sha256": "8db0451ae381ab5191b33260f633b69ac9633ffe6994ccca165ea6811e2430fd"
+  },
+  {
+    "theme": "halloween",
+    "width": 1440,
+    "byteIdentical": true,
+    "differenceBounds": null,
+    "decorationRegion": [
+      0,
+      0,
+      1440,
+      960
+    ],
+    "decorationRegionByteIdentical": true,
+    "sha256": "5b6fb196d58f1b2d17980b34e685f2e8c51f65feb396c9c99d91a2b252d42ca8"
+  },
+  {
+    "theme": "new-year",
+    "width": 1440,
+    "byteIdentical": true,
+    "differenceBounds": null,
+    "decorationRegion": [
+      0,
+      0,
+      1440,
+      960
+    ],
+    "decorationRegionByteIdentical": true,
+    "sha256": "8a09d14d3bcf747915d9d74007ec213e60a053fc4167966debc55338215dbeda"
+  }
+]

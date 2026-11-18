@@ -43,7 +43,7 @@ Interface: internal host resolver returns `{home,scene,title,section,composition
 Files: new comparative capture/report folder, optionally the existing seasonal review acceptance test to assert preserved event across all six destinations. Preview controls and builder are reused unchanged unless a demonstrated gap requires a focused fix.
 
 - [x] Obtain an independent review of the complete change and captures; fix any material defect with a reproducing assertion.
-- [ ] Build a committed-source preview, test its real six-page navigation and review-date isolation, add screenshots/report, and publish only its new folder via the existing publication worktree.
+- [x] Build a committed-source preview, test its real six-page navigation and review-date isolation, add screenshots/report, and publish only its new folder via the existing publication worktree.
 - [ ] Push the same PR branch, retain draft status, follow every applicable workflow on the final SHA to success, and verify the public preview and manifest.
 
 ## Execution ledger
@@ -60,3 +60,5 @@ Files: new comparative capture/report folder, optionally the existing seasonal r
 - Standard campaign first attempt reached Contacts after passing seasonal, Menu and Settings. `contacts-v7.cjs` uses `DOBBY_CONTACTS_BASE`/8765 separately from `DOBBY_TEST_ORIGIN`; the isolated checkout was only served on 8766. Observed `ERR_CONNECTION_REFUSED`, then provided the canonical 8765 localhost server for this same checkout and restarted the unchanged standard command. No application/test assertion modified.
 
 - Task 1 complete: final route suite passed all four widths and regressions; standard `npm test --prefix essai-stitch-v7/tests` completed with exit 0 on canonical origin 8765, ending in `E07_P01_P02_TARGETED_CI_PASS`. Strict build-source/Tailwind outputs unchanged; 14 transverse tests passed.
+
+- Task 2 delivery artifacts: committed-source preview `06798cb7f09ed048045e5a180ad93babf0bf9618`, 353 resources and six-page local review passed. 72 comparison PNGs and proof logs added. Publication is exclusively 354 new files in `essai-dobby-v7-seasonal-pages-06798cb7f09e/`, main commit `424ae01815b7392dff1b3e5da9c51f4a734b4140`. Final HEAD workflows/public URL are followed in PR metadata without another documentation-only CI cycle.
