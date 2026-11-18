@@ -1,0 +1,14 @@
+T07 RPC: observed Lock waits in both orders; post-suspension rows/revisions unchanged
+✔ T07 RPC: writer-first commits before suspension; suspension-first prevents mutation (1879.606939ms)
+T07 DIRECT UPDATE: observed Lock waits in both orders; post-suspension rows/revisions unchanged
+✔ T07 DIRECT UPDATE: writer-first commits before suspension; suspension-first prevents mutation (2304.602941ms)
+T07 direct assert_snapshot: suspension observed waiting for authorization before native membership lock release
+✔ T07 direct snapshot validator locks authorization before its native membership lock (779.820699ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22367.422848

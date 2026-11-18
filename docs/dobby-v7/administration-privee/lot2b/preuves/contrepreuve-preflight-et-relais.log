@@ -1,0 +1,76 @@
+✔ new signed capabilities are denied even to an active Parent (5369.528634ms)
+✖ real Storage keeps normal Parent upload, upsert, copy, move, GET, list and deletion functional (2437.314803ms)
+✔ family and Parent/Enfant restrictions remain effective, including for the DOBBY owner (2862.010446ms)
+✔ an unapproved Auth user with a canonical family link still cannot read its own family files (794.271249ms)
+✔ private public routes, unsigned direct SQL operations and invalid session JWTs fail closed (1720.915903ms)
+✔ committed suspension refuses old-JWT operations while other buckets remain governed by their own policy (3980.522145ms)
+✔ pre-issued download and upload capabilities survive suspension: measured residual, never a revocation success (1557.298052ms)
+✖ candidate preflight rejects public bucket, altered policies and broad permissive additions atomically (2252.428165ms)
+✖ rollback refuses tampering, restores exact policies and preserves actual bytes; candidate reapplies (416.32123ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 6
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105553.312059
+
+✖ failing tests:
+
+test at tests/private-access/lot2b/storage.test.mjs:100:1
+✖ real Storage keeps normal Parent upload, upsert, copy, move, GET, list and deletion functional (2437.314803ms)
+  AssertionError [ERR_ASSERTION]: Delete object batch: HTTP 400
+      at ok (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:25:42)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:113:2)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot2b/storage.test.mjs:205:1
+✖ candidate preflight rejects public bucket, altered policies and broad permissive additions atomically (2252.428165ms)
+  AssertionError [ERR_ASSERTION]: Expected atomic candidate refusal
+      at preflightRefused (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:53:9)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:218:8)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot2b/storage.test.mjs:229:1
+✖ rollback refuses tampering, restores exact policies and preserves actual bytes; candidate reapplies (416.32123ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42704: policy "dobby_access_storage_native" for table "objects" does not exist
+  LOCATION:  AlterPolicy, policy.c:885
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/local-db.mjs:27:9)
+      at Object.run [as sql] (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/local-db.mjs:35:35)
+      at sql (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:24:34)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:231:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

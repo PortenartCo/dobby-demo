@@ -1,0 +1,167 @@
+{
+  "phase": "green",
+  "runtime": {
+    "postgres": {
+      "version": "17.7 (Debian 17.7-3.pgdg13+1)",
+      "image": "postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4"
+    },
+    "storage": {
+      "version": "v1.89.12",
+      "image": "supabase/storage-api:v1.89.12@sha256:8526956cb462e9f7d392e9848ec77133b2769982ed614e9753cc687e8e4339a6",
+      "imageId": "sha256:016f00e2304d1bf7988498ab36abb67639c65feffaf7bb562e23ec3870f266e4",
+      "backend": "file",
+      "schemaCreatedBy": "unmodified Storage API migrations",
+      "migrations": [
+        "create-migrations-table",
+        "initialmigration",
+        "storage-schema",
+        "pathtoken-column",
+        "add-migrations-rls",
+        "add-size-functions",
+        "change-column-name-in-get-size",
+        "add-rls-to-buckets",
+        "add-public-to-buckets",
+        "fix-search-function",
+        "search-files-search-function",
+        "add-trigger-to-auto-update-updated_at-column",
+        "add-automatic-avif-detection-flag",
+        "add-bucket-custom-limits",
+        "use-bytes-for-max-size",
+        "add-can-insert-object-function",
+        "add-version",
+        "drop-owner-foreign-key",
+        "add_owner_id_column_deprecate_owner",
+        "alter-default-value-objects-id",
+        "list-objects-with-delimiter",
+        "s3-multipart-uploads",
+        "s3-multipart-uploads-big-ints",
+        "optimize-search-function",
+        "operation-function",
+        "custom-metadata",
+        "objects-prefixes",
+        "search-v2",
+        "object-bucket-name-sorting",
+        "create-prefixes",
+        "update-object-levels",
+        "objects-level-index",
+        "backward-compatible-index-on-objects",
+        "backward-compatible-index-on-prefixes",
+        "optimize-search-function-v1",
+        "add-insert-trigger-prefixes",
+        "optimise-existing-functions",
+        "add-bucket-name-length-trigger",
+        "iceberg-catalog-flag-on-buckets",
+        "add-search-v2-sort-support",
+        "fix-prefix-race-conditions-optimized",
+        "add-object-level-update-trigger",
+        "rollback-prefix-triggers",
+        "fix-object-level",
+        "vector-bucket-type",
+        "vector-buckets",
+        "buckets-objects-grants",
+        "iceberg-table-metadata",
+        "iceberg-catalog-ids",
+        "buckets-objects-grants-postgres",
+        "search-v2-optimised",
+        "index-backward-compatible-search",
+        "drop-not-used-indexes-and-functions",
+        "drop-index-lower-name",
+        "drop-index-object-level",
+        "prevent-direct-deletes",
+        "fix-optimized-search-function",
+        "s3-multipart-uploads-metadata",
+        "operation-ergonomics",
+        "drop-unused-functions",
+        "optimize-existing-functions-again",
+        "mark-filename-immutable",
+        "object-versioning-core",
+        "fix-search-name-relative-to-prefix",
+        "fix-search-by-timestamp-sqli",
+        "objects-key-version-index",
+        "objects-current-version-index",
+        "objects-null-version-index",
+        "bucket-lifecycle-configuration",
+        "validate-bucket-lifecycle-constraints",
+        "list-objects-with-versions",
+        "objects-delete-marker-index",
+        "drop-bucketid-objname-index",
+        "revoke-grants-to-unused-operations",
+        "unlock-object-versioning",
+        "enforce-bucket-lifecycle-update-role",
+        "noncurrent-lifecycle",
+        "noncurrent-lifecycle-archived-order-index",
+        "noncurrent-lifecycle-archived-due-index",
+        "lifecycle-writer-coordination"
+      ]
+    },
+    "isolation": {
+      "internalNetwork": true,
+      "publishAddress": "127.0.0.1",
+      "bindMounts": false,
+      "databaseData": "tmpfs",
+      "objectBytes": "tmpfs",
+      "ownedNetwork": "dobby-lot2b-net-86881-acf319ead8e5",
+      "transport": "loopback HTTP relay via docker exec to real container HTTP; internal network port publication unavailable"
+    },
+    "auth": {
+      "synthetic": true,
+      "verification": "HS256 verified by real Storage API; random run-only signing key; process memory and ephemeral container environment until teardown",
+      "gotrueRunning": false,
+      "realAccounts": false,
+      "sessionRlsEnabled": true,
+      "narrowGrantsWithRls": false,
+      "fixtureOwnerPolicy": true,
+      "limitation": "Synthetic auth.sessions and locally signed JWTs do not establish hosted GoTrue/Auth compatibility. Narrow session column grants alone return false under RLS. The fixture Auth owner explicitly adds dobby_lot2b_fixture_session_reader; no candidate Auth policy, owner, grant or managed role change is implied."
+    }
+  },
+  "proofs": [
+    {
+      "scenario": "active-signing",
+      "result": "single/batch/upload minting refused; batch payload inspected"
+    },
+    {
+      "scenario": "normal-native-operations",
+      "result": "actual bytes read back after update/copy/move; deleted path inaccessible"
+    },
+    {
+      "scenario": "family-roles",
+      "result": "two-household isolation and child read-only preserved; administrative identity adds no content access"
+    },
+    {
+      "scenario": "unapproved-linked-account",
+      "result": "canonical own-family membership and a valid JWT alone confer no file access"
+    },
+    {
+      "scenario": "identity-and-direct-paths",
+      "result": "private public route, missing/wrong/expired sessions, invalid/expired JWT, missing SQL operation all refused"
+    },
+    {
+      "scenario": "committed-suspension-reactivation",
+      "result": "old JWT refused for all normal family operations; no metadata change; old session stays denied after two-phase reactivation; unrelated bucket policy preserved"
+    },
+    {
+      "scenario": "pre-issued-bearers",
+      "result": "download URL AND unused signed upload token still work after suspension; deployment blocked until old capabilities expire or are extinguished separately",
+      "revocationAchieved": false
+    },
+    {
+      "scenario": "maintenance-serialization",
+      "result": "second SQL connection cannot replace the policy while rollback is paused before fingerprint verification"
+    },
+    {
+      "scenario": "preflight",
+      "result": "public bucket, native-policy drift, broad extra policy and managed-table DDL denial all abort atomically"
+    },
+    {
+      "scenario": "rollback-reapply",
+      "result": "tampered policy rejected; original policies, Auth, rows and file bytes preserved; rollback reopens signing; reapply closes it"
+    }
+  ],
+  "notEstablished": [
+    "hosted Auth/session permissions",
+    "real GoTrue login/refresh",
+    "in-flight cancellation",
+    "hosted Storage inventory and old capability extinction",
+    "S3/TUS/rendering protocols"
+  ]
+}

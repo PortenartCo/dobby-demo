@@ -20,12 +20,14 @@ Capacités signées antérieures ; RLS auth.sessions ; opérations et chemins St
 ## Étapes et interfaces
 
 - [x] 1. Vérifier PR #29, isoler la branche, publier ce checkpoint sans données sensibles.
-- [ ] 2. Reconstituer `tests/private-access/lot2b/local-storage.mjs` : démarrage/arrêt des seuls services locaux de la mission et exécution SQL ; réutiliser le catalogue publié sans ancien installateur.
-- [ ] 3. Écrire `storage.test.mjs` avec contre-épreuves avant migration ; `native-transport.mjs` envoie exclusivement des requêtes HTTP au service local avec JWT fictifs.
-- [ ] 4. Ajouter la candidate et le rollback selon les conventions `supabase/migrations` et `supabase/rollbacks`, avec préflight fermé et maintien des règles familiales. Vérifier les refus après suspension et les jetons déjà signés, sans prétendre les invalider par RLS.
-- [ ] 5. Exécuter Storage réel et rollback ; rejouer Lot 2A et les tests natifs pertinents pour le point de composition modifié ; consigner commandes, versions, limites et preuves expurgées.
-- [ ] 6. Revue indépendante, corrections justifiées, contrôle de confidentialité, push final et PR brouillon ciblant la branche de #29.
+- [x] 2. Reconstituer `tests/private-access/lot2b/local-storage.mjs` : démarrage/arrêt des seuls services locaux de la mission et exécution SQL ; réutiliser le catalogue publié sans ancien installateur.
+- [x] 3. Écrire `storage.test.mjs` avec contre-épreuves avant migration ; `native-transport.mjs` envoie exclusivement des requêtes HTTP au service local avec JWT fictifs.
+- [x] 4. Ajouter la candidate et le rollback selon les conventions `supabase/migrations` et `supabase/rollbacks`, avec préflight fermé et maintien des règles familiales. Vérifier les refus après suspension et les jetons déjà signés, sans prétendre les invalider par RLS.
+- [x] 5. Exécuter Storage réel et rollback ; rejouer Lot 2A et les tests natifs pertinents pour le point de composition modifié ; consigner commandes, versions, limites et preuves expurgées.
+- [x] 6. Revue indépendante, corrections justifiées, contrôle de confidentialité, push final et PR brouillon ciblant la branche de #29.
 
 ## Reprise
 
 Chaque étape stable est sauvegardée par commit. Les journaux publiés ne contiennent ni JWT, liens signés, clés éphémères, contenus réels ni données personnelles. Consulter le rapport final pour les résultats réellement observés et les conditions bloquantes de déploiement.
+
+Livraison : PR brouillon [#30](https://github.com/PortenartCo/dobby-demo/pull/30). Voir RAPPORT.md et RESULTATS.json pour les résultats actuels et les prérequis non vérifiés.

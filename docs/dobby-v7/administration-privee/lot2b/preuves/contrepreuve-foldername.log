@@ -1,0 +1,28 @@
+✖ candidate preflight rejects public bucket, altered policies and broad permissive additions atomically (5407.40154ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83955.218839
+
+✖ failing tests:
+
+test at tests/private-access/lot2b/storage.test.mjs:211:1
+✖ candidate preflight rejects public bucket, altered policies and broad permissive additions atomically (5407.40154ms)
+  AssertionError [ERR_ASSERTION]: Expected atomic candidate refusal
+      at preflightRefused (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:58:9)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:224:8)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
