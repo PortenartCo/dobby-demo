@@ -10,6 +10,7 @@ let playwright;
 try {playwright=require('playwright');}
 catch {playwright=require(process.env.PLAYWRIGHT_MODULE || '/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');}
 const source=await readFile(new URL('../../essai-stitch-v7/admin-access.js',import.meta.url),'utf8');
+const nativeAccessSource=await readFile(new URL('../../essai-stitch-v5-famille/family-access.mjs',import.meta.url),'utf8');
 const owner='00000000-0000-4000-8000-000000000001',target='00000000-0000-4000-8000-000000000003';
 const admission='10000000-0000-4000-8000-000000000001',admission2='10000000-0000-4000-8000-000000000002';
 let browser,server,origin;
@@ -217,4 +218,35 @@ test('unapproved revision-zero status controls require an admission bound to the
    const call=(await page.evaluate(()=>__fixture.calls)).find(call=>call.command==='setStatus');assert.equal(call.payload.userId,target);assert.equal(call.payload.expectedRevision,0);
   }else assert.match(await page.locator('main').innerText(),/reste non approuvé/);
  }
+});
+
+test('direct owner boot survives real native controller adoption and a queued same-session refresh',async t=>{
+ const page=await fixture(t);
+ await page.evaluate(async({nativeAccessSource,owner})=>{
+  const moduleURL=URL.createObjectURL(new Blob([nativeAccessSource],{type:'text/javascript'}));
+  const {createFamilyAccess}=await import(moduleURL);URL.revokeObjectURL(moduleURL);
+  const f=__fixture,native={ready:true,configured:true,userId:owner,householdId:null,epoch:7,verified:false,rejected:false},listeners=new Set();
+  let controller;
+  const driver={snapshot:()=>({...native}),now:Date.now,crypto,meta:async()=>null,clearBinding:()=>{native.verified=false;},
+   privateContext:async()=>({protocol:1,status:'active',isOwner:true,canCreateHousehold:false,revision:1,admission:null}),
+   rpc:async name=>{if(name!=='dobby_v7_context')throw Error('unexpected bootstrap RPC');return{protocol:1,userId:owner,phase:'active',householdId:'fixture-household',memberId:'fixture-parent',profile:{id:'fixture-parent',firstName:'Fictif',memberCategory:'parent'},permissions:{canEdit:true}};},
+   bind:async next=>{native.householdId=next.householdId;native.verified=true;},
+   admin:async(command,payload)=>{f.calls.push({command,payload});return structuredClone(f.list);},
+   notify:()=>{const next=controller.state();f.bootstrapStates.push({phase:next.phase,verified:next.verified,memberId:next.memberId});for(const listener of listeners)listener(next);}
+  };
+  controller=createFamilyAccess(driver);f.bootstrapStates=[];window.__native={controller,native};
+  window.DobbyFamilyUI={access:{ready:Promise.resolve(),state:controller.state,refresh:controller.refresh,admin:controller.admin,subscribe:listener=>{listeners.add(listener);return()=>listeners.delete(listener);}},connectionState:()=>({...native})};
+ },{nativeAccessSource,owner});
+ await view(page,'admin-access');assert.equal(await page.locator('[data-admin-account]').count(),2,'Fresh Edge verification opens the owner route');
+ await page.evaluate(async()=>{await __native.controller.refresh();await __native.controller.refresh();});
+ const states=await page.evaluate(()=>__fixture.bootstrapStates);assert.ok(states.some(state=>state.phase==='unavailable' && state.verified===false));assert.ok(states.some(state=>state.phase==='active' && state.verified===true));
+ assert.equal(await page.locator('[data-admin-account]').count(),2,'Legitimate same-session business refresh cannot withdraw global owner metadata');
+ assert.equal(await page.getByRole('heading',{name:'Administration indisponible'}).count(),0);
+});
+
+test('a new native epoch for the same user rejects an older owner verification response',async t=>{
+ const page=await fixture(t);await page.evaluate(()=>{__fixture.nativeEpoch=1;DobbyFamilyUI.connectionState=()=>({ready:true,userId:__fixture.state.userId,epoch:__fixture.nativeEpoch});__fixture.defer='listAccess';window.pending=DobbyAdminAccess.decorateMenu(__context);});
+ await page.waitForFunction(()=>!!__fixture.deferred);
+ await page.evaluate(()=>{__fixture.nativeEpoch=2;__fixture.emit({verified:true});__fixture.release(__fixture.list);});await page.evaluate(()=>window.pending);
+ assert.equal(await page.locator('[data-admin-entry]').count(),0,'A receipt from an older session epoch cannot grant the same user a new session');
 });

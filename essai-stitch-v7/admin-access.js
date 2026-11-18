@@ -7,7 +7,13 @@ window.DobbyAdminAccess = (() => {
   const api = () => E.win().DobbyFamilyUI;
   const access = () => api()?.access;
   const state = () => access()?.state() || {};
-  const actor = (value = state()) => JSON.stringify([value.userId || null,value.householdId || null,value.memberId || null]);
+  // Owner administration belongs to the Auth session, not to a household
+  // binding being adopted/rechecked. This fingerprint only cancels stale
+  // work; a fresh Edge owner check remains the sole authorization proof.
+  const actor = (value = state()) => {
+    const native=api()?.connectionState?.();
+    return JSON.stringify([native && Object.hasOwn(native,'userId') ? native.userId || null : value.userId || null,Number.isSafeInteger(native?.epoch) ? native.epoch : null]);
+  };
   const el = (tag,text = '',className = '') => Object.assign(document.createElement(tag),{textContent:text,className});
   const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
   const admissionStates = {requested:'Invitation en attente',approved:'Admission approuvée',delivering:'Livraison en cours ou incertaine',sent:'Envoi confirmé',accepted:'Admission consommée',rejected:'Demande refusée',revoked:'Admission révoquée'};
@@ -17,7 +23,7 @@ window.DobbyAdminAccess = (() => {
   const unapprovedWithoutAdmission = 'Aucune admission liée à ce compte n’est confirmée dans ce registre. Il reste non approuvé. Une invitation approuvée et liée à ce compte est nécessaire pour gérer son autorisation.';
   let context = null, epoch = 0, sequence = 0, proof = null, prepared = null, busy = false, initialized = null;
   let cache = {items:[],requests:[],decisions:[],nextCursor:null,nextRequestsCursor:null,nextDecisionCursor:null};
-  let lastActor = null, lastVerified = false, lastPrivateStatus = null, selectedUser = '', selectedCursor = null, inviteEmail = '', notice = null;
+  let lastActor = null, lastPrivateStatus = null, selectedUser = '', selectedCursor = null, inviteEmail = '', notice = null;
   const entries = new Set(), dialogs = new Set(), menuReads = new WeakMap(), accountCursors = new Map();
 
   function ticket() { return {epoch,actor:actor(),sequence}; }
@@ -38,15 +44,11 @@ window.DobbyAdminAccess = (() => {
     initialized = (async () => {
       await window.DobbyRegister.until(() => !!api()?.connectionState?.().ready);
       await access().ready;
-      // Native bootstrap may still be adopting the verified household after
-      // ready resolves. Finish that read before capturing the first actor;
-      // otherwise its legitimate adoption would invalidate a direct URL.
-      await access().refresh?.();
-      lastActor = actor(); lastVerified = state().verified === true; lastPrivateStatus = state().privateAccess?.status || null;
+      lastActor = actor(); lastPrivateStatus = state().privateAccess?.status || null;
       access().subscribe?.(next => {
         const nextActor = actor(next),nextStatus = next.privateAccess?.status || null;
-        if(nextActor !== lastActor || (lastVerified && next.verified !== true) || (nextStatus && nextStatus !== 'active' && nextStatus !== lastPrivateStatus))invalidate();
-        lastActor = nextActor; lastVerified = next.verified === true; lastPrivateStatus = nextStatus;
+        if(nextActor !== lastActor || next.phase==='rejected' || (nextStatus && nextStatus !== 'active' && nextStatus !== lastPrivateStatus))invalidate();
+        lastActor = nextActor; lastPrivateStatus = nextStatus;
       });
     })().catch(error => {initialized=null;throw error;});
     return initialized;

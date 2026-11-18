@@ -110,9 +110,13 @@ async function raw(path, method, body, headers = {}, bearer = null) {
   return data;
 }
 function requestActor(){return{epoch:f.epoch,userId:f.session?.user_id||null,householdId:f.householdId||null};}
+const AUTH_ACTOR_SCOPE=Symbol('auth-actor');
+// Owner administration is bound to the Auth session, independently of the
+// household which the ordinary V7 bootstrap may still be adopting.
+function authRequestActor(){const actor=requestActor();return{epoch:actor.epoch,userId:actor.userId,[AUTH_ACTOR_SCOPE]:true};}
 function assertRequestActor(expected){
   const actual=requestActor();
-  if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
+  if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||expected[AUTH_ACTOR_SCOPE]!==true&&actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
 }
 async function keepSession(result,expected=null,{persist=true,fresh=false}={}) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
@@ -192,7 +196,7 @@ const ADMIN_COMMANDS=new Set(['listAccess','listDecisions','invite','decide','re
 async function adminCommand(command,payload={}){
  if(!ADMIN_COMMANDS.has(command)||!payload||typeof payload!=='object'||Array.isArray(payload))throw Error('Commande d’administration invalide.');
  if(f.admission)throw Error('Confirmez votre admission avant tout accès à l’administration.');
- const expected=requestActor(),bearer=await token(expected);assertRequestActor(expected);
+ const expected=authRequestActor(),bearer=await token(expected);assertRequestActor(expected);
  try{
   const response=await raw('/functions/v1/dobby-access-admin','POST',{command,payload},{},bearer);assertRequestActor(expected);
   if(response?.ok!==true||!Object.hasOwn(response,'result'))throw Object.assign(Error('La réponse d’administration n’a pas été confirmée.'),{stage:'admin',code:'invalid_response'});

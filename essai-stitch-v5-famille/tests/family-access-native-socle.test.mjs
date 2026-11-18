@@ -229,3 +229,24 @@ test('a refused late legacy household read cannot clear a newer account',async()
  const pending=f.api.signIn('fixture@example.invalid','TEST-password');while(!release)await Promise.resolve();f.switchAccount();release();
  await assert.rejects(pending,/compte|foyer|chang|refus/i);assert.equal(f.f.session?.user_id,OTHER);assert.equal(f.db.rows.get('session')?.value?.user_id,OTHER);
 });
+
+test('admin verification survives same-session household adoption while refusing Auth actor replacements',async()=>{
+ for(const boundary of ['household','refresh-household','epoch','user']){
+  const f=native();await f.establish();f.f.context=null;f.f.householdId=null;f.f.accessContext=null;f.f.verifiedContext=null;
+  const epoch=f.f.epoch,result={protocol:1,items:[],requests:[],nextCursor:null,nextRequestsCursor:null};let release;
+  if(boundary==='refresh-household')f.f.session.expires_at=0;
+  f.intercept(request=>{
+   if(boundary==='refresh-household'&&request.path==='/auth/v1/token')return new Promise(resolve=>{release=()=>resolve({ok:true,status:200,text:async()=>JSON.stringify({access_token:'TEST-refreshed-admin',refresh_token:'TEST-refreshed-admin-refresh',expires_in:3600,user:{id:USER}})});});
+   if(request.path==='/functions/v1/dobby-access-admin'){
+    const response={ok:true,status:200,text:async()=>JSON.stringify({ok:true,result})};
+    return boundary==='refresh-household'?response:new Promise(resolve=>{release=()=>resolve(response);});
+   }
+   return null;
+  });
+  const pending=f.api.access.admin('listAccess',{limit:1});while(!release)await Promise.resolve();
+  if(boundary==='epoch')f.f.epoch++;else if(boundary==='user')f.f.session={...f.f.session,user_id:OTHER};else{f.f.householdId=HH;f.f.context=USER+'|'+HH;f.f.verifiedContext=f.f.context;}
+  release();
+  if(boundary==='epoch'||boundary==='user')await assert.rejects(pending,/compte|foyer|chang|indisponible/i,boundary);
+  else{assert.deepEqual(await pending,result,boundary);assert.equal(f.f.epoch,epoch);assert.equal(f.f.session.user_id,USER);}
+ }
+});
