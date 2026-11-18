@@ -8,10 +8,10 @@
   "sources": {
     "unchangedDuringRun": true,
     "sha256": {
-      "essai-stitch-v5-famille/family-v2.js": "6e70dea5994c5790da64f0425976ed8bd290d6328b1674e9a7e36e2800c7459e",
+      "essai-stitch-v5-famille/family-v2.js": "d8fcdaaa94506b3a4f987a6c20f10a996b745ac454a4a13396365eca95cced16",
       "essai-stitch-v5-famille/family-access.mjs": "1a1852b261540f22bb1ff80ccaf7ef46fbf293d3d594564524d3b163de9f3add",
       "essai-stitch-v5-famille/family-core.mjs": "0d925569dac23ee94338dcc735bad0201b30b19cad7383ea57d8a19389d4ea64",
-      "essai-stitch-v7/admin-access.js": "f49fc196b585324b24e56f956bde8cf7266a691b80fd3d2b7d3ee2bdd1bacd5f",
+      "essai-stitch-v7/admin-access.js": "d4b82e1209b2ec03f84eb4d67e7df1d739dd4b732a073405d95fe5725c04c11a",
       "essai-stitch-v7/admin-access.css": "22a3444e071e29577f4024da0df01f9b7e3f585c8523f7910fb66d7766fb1ad3",
       "essai-stitch-v7/access.js": "6260f5d4cd7e5ae9a29d3f9ffa1188ef80feec44beb7e4e34d041d93440161bd",
       "essai-stitch-v7/access.css": "98da64071bf2bacb42044c41380d3183f596b68f0a3b007bf9e7c78f98364ece",
@@ -27,7 +27,7 @@
       "supabase/functions/_shared/dobby-admin-handler.ts": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190",
       "supabase/functions/_shared/dobby-auth-admin.ts": "7dfd4e1ea7c45a0695afb798d3ec1f7ebb1269c929051ed0edd0241f5c698867",
       "supabase/functions/_shared/dobby-admin-validation.ts": "185c16779cf0cb6484ba487ba68ea38ae9a4de56e4ec8cef3378e611c0d32b56",
-      "essai-stitch-v7/tests/admin-access.cjs": "52330552c4531747c5a027ffed2ec6da2096ad81b190c5d795e347fb434e7d51",
+      "essai-stitch-v7/tests/admin-access.cjs": "b995cb667d095d8352c63ab1fc071bba31eaa076d7372088f7d8e6acf928ec4f",
       "tests/private-access/lot4/preview-server.mjs": "6eba6df3ec043da1b256fe92d1c154f5dde95cc7fe6728894a67bac9f460b711",
       "tests/private-access/lot4/preview-bootstrap.js": "8c3e29a528ef7dfa1ac5666d075c60d61cefbfae09c3c0428b385dc5803e2f67",
       "tests/private-access/lot4/browser-proof.cjs": "c9bd22d66e253345dc7b196fd856f370a7fa7a70fb9d2f80108e6a353a06b018"
@@ -152,7 +152,7 @@
       "publishedContainerPorts": false,
       "databaseData": "tmpfs",
       "inboxData": "tmpfs",
-      "ownedNetwork": "dobby-lot3-auth-net-162956-8e5bdbf06921",
+      "ownedNetwork": "dobby-lot3-auth-net-245064-2ba0bac3fc49",
       "transport": "loopback HTTP relay via docker exec and fixed internal TCP services",
       "realAccounts": false,
       "hostedChanges": false
@@ -179,6 +179,9 @@
       "scenario": "complete-v7-five-views",
       "width": 320,
       "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
       "header": true,
       "dockDestinations": 6,
       "externalRequests": 0
@@ -187,6 +190,9 @@
       "scenario": "complete-v7-five-views",
       "width": 390,
       "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
       "header": true,
       "dockDestinations": 6,
       "externalRequests": 0
@@ -195,6 +201,9 @@
       "scenario": "complete-v7-five-views",
       "width": 768,
       "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
       "header": true,
       "dockDestinations": 6,
       "externalRequests": 0
@@ -203,6 +212,9 @@
       "scenario": "complete-v7-five-views",
       "width": 1440,
       "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
       "header": true,
       "dockDestinations": 6,
       "externalRequests": 0
@@ -210,6 +222,7 @@
     {
       "scenario": "T12-owner-only-and-forged-url",
       "status": "PASS",
+      "freshDirectNonOwnerDenied": true,
       "realEdgeDenialHTTP": 403,
       "normalParentPreserved": true
     },
@@ -480,7 +493,7 @@
           "left": 0
         }
       },
-      "sha256": "a70b9e99186db87c4cf9fb6ec6b64f8544402834b64f1b1461464f5bba891c9a"
+      "sha256": "3c8179f995862772626981928a9cda6ccf0c2e51bc217784696982de00607293"
     },
     {
       "file": "owner-menu-390.png",
@@ -683,7 +696,7 @@
           "left": 0
         }
       },
-      "sha256": "0691c490d10ed6ec7ec055bac35c9cf89fc55780532f8488606641ab7e79406d"
+      "sha256": "ffbd5e12858160ea843a8152a3c6940551140601fa9f90b8ee9373b7b789b1f7"
     },
     {
       "file": "network-error-390.png",
@@ -746,7 +759,7 @@
   ],
   "network": {
     "hostedRequests": 0,
-    "journalEntries": 2454,
+    "journalEntries": 2439,
     "paths": [
       "/__fixture/bootstrap.js",
       "/__fixture/login",

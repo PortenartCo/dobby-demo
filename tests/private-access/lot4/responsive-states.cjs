@@ -41,7 +41,7 @@ async function matrix(current,state,verify,{scrollBottom=false}={}){
 
 (async()=>{
  const {startLot4Preview}=await import(pathToFileURL(path.join(root,'tests/private-access/lot4/preview-server.mjs')).href);
- const before=fingerprints(),captures=[],results=[];
+ const before=fingerprints(),captures=[],results=[],revalidations=[];
  let fixture,browser,browserServer,current;
  fs.mkdirSync(out,{recursive:true});
  try{
@@ -112,17 +112,26 @@ async function matrix(current,state,verify,{scrollBottom=false}={}){
   if(!new URL(current.page.url()).pathname.endsWith('/famille.html')){
    await current.page.goto(fixture.origin+'/fixture-1/essai-stitch-v7/famille.html#salon');await proof.ready(current.page);
   }
+  const switchedEpoch=await current.page.evaluate(()=>DobbyFamilyStitchEngine.win().DobbyFamilyUI.connectionState().epoch);
   await proof.view(current,'admin-access');
-  captures.push(...await matrix(current,'account-switch-owner-denied',async page=>{
+  captures.push(...await matrix(current,'account-switch-owner-denied',async(page,width)=>{
    assert.equal(await page.locator('[data-admin-account],[data-admin-entry]').count(),0);
    assert.match(await page.locator('main').innerText(),/propriétaire.*pas.*confirmé|propriétaire.*confirm|indisponible/i);
-   const state=await proof.native(page,'state');assert.equal(state.userId,id(2));assert.equal(state.verified,true,'Normal Parent identity survives owner denial');
+   const observed=await page.evaluate(()=>{const api=DobbyFamilyStitchEngine.win().DobbyFamilyUI,state=api.access.state(),native=api.connectionState();return{userId:state.userId,phase:state.phase,verified:state.verified,status:state.privateAccess?.status||null,epoch:native.epoch,verifying:native.verifying};});
+   assert.equal(observed.userId,id(2));
+   assert.equal(observed.epoch,switchedEpoch,'Owner refusal does not revoke the ordinary Auth session');
+   assert.notEqual(observed.phase,'rejected');assert.notEqual(observed.status,'suspended');
+   if(!observed.verified){revalidations.push({width,observed});console.log('LOT4_RESPONSIVE_REVALIDATION '+JSON.stringify({width,...observed}));}
+   // Periodic family verification may temporarily withdraw the binding. It
+   // must settle without another login; a real denial cannot satisfy this.
+   await page.waitForFunction(expected=>{const api=DobbyFamilyStitchEngine.win().DobbyFamilyUI,state=api.access.state(),native=api.connectionState();return state.userId===expected.userId&&native.epoch===expected.epoch&&state.phase==='active'&&state.privateAccess?.status==='active'&&state.verified===true&&!native.verifying;},{userId:id(2),epoch:switchedEpoch});
+   const state=await proof.native(page,'state');assert.equal(state.userId,id(2));assert.equal(state.privateAccess.status,'active');assert.equal(state.verified,true,'Normal Parent identity survives owner denial');
   }));
   results.push({state:'account-switch-owner-denied',widths,status:'PASS',realPasswordUiLogin:true,formerOwnerRows:0,normalParentIdentityPreserved:true});
 
   proof.assertClean(current);
   const after=fingerprints();assert.deepEqual(after,before,'Responsive proof requires immutable product and fixture sources');
-  const artifact={scope:'responsive states on actual full V7 with real local Auth/PostgREST/Edge; no hosted contact',runtime:{node:process.version,chromium:browser.version(),playwrightInterception:false},widths,results,sources:{unchangedDuringRun:true,sha256:after},captures:captures.map(item=>({...item,sha256:createHash('sha256').update(fs.readFileSync(path.join(out,item.file))).digest('hex')})),network:{hostedRequests:0},notRepeated:['SMTP/admission consumption','deep two-tab security proof','suspension/reactivation campaign','Storage campaign']};
+  const artifact={scope:'responsive states on actual full V7 with real local Auth/PostgREST/Edge; no hosted contact',runtime:{node:process.version,chromium:browser.version(),playwrightInterception:false},widths,results,revalidations,sources:{unchangedDuringRun:true,sha256:after},captures:captures.map(item=>({...item,sha256:createHash('sha256').update(fs.readFileSync(path.join(out,item.file))).digest('hex')})),network:{hostedRequests:0},notRepeated:['SMTP/admission consumption','deep two-tab security proof','suspension/reactivation campaign','Storage campaign']};
   fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(artifact,null,2)+'\n');
   console.log(JSON.stringify({status:'PASS',states:results.length,widths,captures:captures.length,hostedRequests:0}));
  }finally{

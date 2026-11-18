@@ -21,5 +21,6 @@ LOT4_RESPONSIVE_PASS network-error 1440
 LOT4_RESPONSIVE_PASS account-switch-owner-denied 320
 LOT4_RESPONSIVE_PASS account-switch-owner-denied 390
 LOT4_RESPONSIVE_PASS account-switch-owner-denied 768
+LOT4_RESPONSIVE_REVALIDATION {"width":1440,"userId":"00000000-0000-4000-8000-000000000002","phase":"unavailable","verified":false,"status":null,"epoch":0,"verifying":false}
 LOT4_RESPONSIVE_PASS account-switch-owner-denied 1440
 {"status":"PASS","states":5,"widths":[320,390,768,1440],"captures":24,"hostedRequests":0}

@@ -55,10 +55,18 @@ async function durableItems(page){return page.evaluate(()=>new Promise((resolve,
   for(const width of (process.env.DOBBY_LOT4_WIDTHS||'320,390,768,1440').split(',').map(Number)){
    const current=await proof.createPage(browser,fixture.origin,width);
    try{
-    await proof.open(current);
+    // The very first page is a direct owner URL. A preceding Salon/Menu visit
+    // would hide the overlap between native boot and the first owner response.
+    await proof.open(current,'admin-access');
     const state=await proof.native(current.page,'state');assert.equal(state.privateAccess.isOwner,true);assert.equal(state.userId,id(1));
+    await current.page.locator(`[data-admin-account="${id(1)}"]`).waitFor();
+    const actorBefore=await current.page.evaluate(()=>{const value=DobbyFamilyStitchEngine.win().DobbyFamilyUI.connectionState();return{userId:value.userId,epoch:value.epoch};});
+    const familyRevalidation=await current.page.evaluate(async()=>{try{await DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.refresh();return'completed';}catch{return'local-family-guard-preserved';}});
+    const actorAfter=await current.page.evaluate(()=>{const value=DobbyFamilyStitchEngine.win().DobbyFamilyUI.connectionState();return{userId:value.userId,epoch:value.epoch};});
+    assert.deepEqual(actorAfter,actorBefore,'Ordinary family revalidation keeps the same authenticated session');
+    assert.equal(await current.page.locator(`[data-admin-account="${id(1)}"]`).count(),1,'A same-session family revalidation must not invalidate the owner console');
     for(const name of views){
-     await proof.view(current,name);
+     if(name!=='admin-access')await proof.view(current,name);
      assert.equal(await current.page.locator('[data-admin-tab]').count(),5,'Five console views');
      assert.equal(await current.page.locator('[data-e01-destination]').count(),6);
      if(name==='admin-access'||width===390)captures.push(await proof.capture(current,out,name));
@@ -87,13 +95,18 @@ async function durableItems(page){return page.evaluate(()=>new Promise((resolve,
     await proof.view(current,'admin-requests');
     assert.equal(await current.page.locator('[data-admin-request]').count(),0,'Empty request list is real, before fixture requests');
     if(width===390)captures.push(await proof.capture(current,out,'empty-requests'));
-    proof.assertClean(current);results.push({scenario:'complete-v7-five-views',width,status:'PASS',header:true,dockDestinations:6,externalRequests:0});
+    proof.assertClean(current);results.push({scenario:'complete-v7-five-views',width,status:'PASS',freshDirectOwner:true,sameAuthReverificationRetainsConsole:true,familyRevalidation,header:true,dockDestinations:6,externalRequests:0});
     console.log('LOT4_BROWSER_WIDTH_PASS',width);
    }finally{await closeContext(current.context);}
   }
   const owner=await proof.createPage(browser,fixture.origin,390),parent=await proof.createPage(browser,fixture.origin,390);
   try{
-   await proof.open(owner);await proof.open(parent,'salon',3);
+   await proof.open(owner);await proof.open(parent,'admin-access',3);
+   await parent.page.locator('main[data-admin-view=admin-access]').waitFor();
+   await parent.page.locator('[data-admin-status][data-error=true]').waitFor();
+   assert.equal(await parent.page.locator('[data-admin-account]').count(),0,'A fresh direct non-owner URL exposes no account projections');
+   assert.equal(await parent.page.locator('[data-admin-entry]').count(),0);
+   assert.equal((await proof.native(parent.page,'state')).verified,true,'A fresh refused admin entry preserves ordinary family access');
    // A normal Parent uses the actual nominative Famille dialog and real RPC.
    await parent.page.evaluate(()=>DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.refresh());
    await parent.page.evaluate(()=>DobbyFamilyStitch.open('members'));
@@ -113,7 +126,7 @@ async function durableItems(page){return page.evaluate(()=>new Promise((resolve,
    const parentSession=await fixture.auth.getLogin(3);
    const denied=await parent.page.evaluate(async token=>{const response=await fetch('/functions/v1/dobby-access-admin',{method:'POST',headers:{'content-type':'application/json',authorization:'Bearer '+token},body:JSON.stringify({command:'listAccess',payload:{}})});return response.status;},parentSession.access_token);
    assert.equal(denied,403);assert.equal((await proof.native(parent.page,'state')).verified,true,'Refused admin probe preserves normal family identity');
-   results.push({scenario:'T12-owner-only-and-forged-url',status:'PASS',realEdgeDenialHTTP:403,normalParentPreserved:true});
+   results.push({scenario:'T12-owner-only-and-forged-url',status:'PASS',freshDirectNonOwnerDenied:true,realEdgeDenialHTTP:403,normalParentPreserved:true});
 
    // Approval uses the genuine handler; the recipient consumes the genuine SMTP
    // callback in a separate full V7 page and completes required profile fields.

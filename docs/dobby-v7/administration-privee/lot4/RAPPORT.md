@@ -18,29 +18,32 @@ L'inscription publique libre disparaît de l'interface de production. Connexion,
 
 ## Autorisations, sessions et données locales
 
-Le transport natif est borné aux sept commandes publiques existantes du Lot 3, sans jeton exporté à la console ni clé serveur navigateur. Chaque appel Edge vérifie Auth et le propriétaire côté serveur ; un rôle familial ou une identité locale ne suffit pas. Un refus d'administration d'un Parent ordinaire ne retire pas ses droits familiaux valides.
+Le transport natif est borné aux sept commandes publiques existantes du Lot 3, sans jeton exporté à la console ni clé serveur navigateur. Chaque appel Edge vérifie Auth et le propriétaire côté serveur ; un rôle familial ou une identité locale ne suffit pas. La console suit l’utilisateur Auth et la génération de session, indépendamment de l’adoption initiale ou de la revalidation de son foyer. Les gardes métier, Storage et admission restent liées au foyer. Un changement de compte ou de génération retire la preuve propriétaire ; une revalidation familiale de la même session ne masque plus la console. Un refus d'administration d'un Parent ordinaire ne retire pas ses droits familiaux valides.
 
 Une suspension/refus de session ferme l'autorisation volatile et invalide les réponses en vol. Les données et intentions locales durables ne sont pas supprimées. Les envois sont retenus après révocation, y compris après une réactivation et une nouvelle connexion ; seule la reprise explicite sous session active vérifiée peut vider la file. Les signaux entre onglets ne transportent aucun bearer et ne permettent pas d'adopter automatiquement un autre compte.
 
 ## Preuves
 
-Le code applicatif est sauvegardé au commit `a45773536f84f2d9f0cf8464b6cc1bd1777cf339`. Les empreintes et commandes de recette sont consignées dans `RESULTATS.json`. Les essais avec réponses de composants fictives sont distingués de ceux utilisant réellement GoTrue, PostgreSQL, PostgREST, Mailpit et le handler Edge locaux.
+Le code applicatif est sauvegardé au commit `2b2d849d8982b66a123d00655d828c3a2a5f9342`. Les empreintes et commandes de recette sont consignées dans `RESULTATS.json`. Les essais avec réponses de composants fictives sont distingués de ceux utilisant réellement GoTrue, PostgreSQL, PostgREST, Mailpit et le handler Edge locaux.
 
 | Vérification | Résultat observé | Portée |
 | --- | --- | --- |
-| Vraie V7, GoTrue/PostgREST/Mailpit et handler Edge | **14 groupes PASS**, **16 captures**, 4 largeurs | [Résultats HTTP/navigateur](../../evidence/lot-4/browser/results.json) ; 23 empreintes identiques avant/après, aucune interception Playwright, zéro requête hébergée |
+| Vraie V7, GoTrue/PostgREST/Mailpit et handler Edge | **14 groupes PASS**, **16 captures**, 4 largeurs | [Résultats HTTP/navigateur](../../evidence/lot-4/browser/results.json) et [entrées directes](../../evidence/lot-4/browser/direct-entry-run.log) ; 23 empreintes identiques avant/après, aucune interception Playwright, zéro requête hébergée |
 | États responsive complets | **5 états × 4 largeurs PASS**, **24 captures** | [Matrice](../../evidence/lot-4/responsive-states/INDEX.md) : vide, 27 demandes/pagination, confirmation, réseau et changement Auth réel ; 17 empreintes inchangées |
-| Clients et transports natifs | **215/215 PASS**, aucun ignoré | [Journal](preuves/native-client.log), contrôleurs, VM du véritable driver et callbacks causaux |
-| Console | **21/21 PASS**, puis **2/2 ciblés** sur la source finale | [Composants](preuves/admin-ui.log) et [contrôle final](preuves/admin-ui-focus.log), Chromium avec réponses explicites de composants fictives |
+| Clients et transports natifs | **216/216 PASS**, aucun ignoré | [Journal](preuves/native-client.log), contrôleurs, VM du véritable driver et callbacks causaux |
+| Console | **23/23 PASS**, avec **5 cas ciblés** de session/démarrage | [Composants](preuves/admin-ui.log) et [régression du démarrage direct](preuves/admin-ui-focus.log), Chromium avec réponses explicites de composants fictives |
 | Contrats d’intégration affectés | **10/10 PASS** | [Journal](preuves/integration-causal.log), garde de foyer et séparation native des données |
 | Parcours d’accès V7 | **4 largeurs PASS** ; **32 scénarios de courses PASS**, puis **2 ciblés** après correction d’une nouvelle intention | [Présentation](preuves/access-ui.log), [courses](preuves/access-races.log) et [observation des deux cas ciblés](preuves/member-request-observation.json), demandes/connexion/récupération sous fixtures UI |
 | Profils et membres | **320/390/1440 PASS** | [Journal](preuves/members.log), profils locaux, catégories, portraits, permissions, anniversaires |
 | Entrée publique et récupération | **2 cas ciblés PASS** | [Journal](preuves/root-entry.log), absence d’inscription libre et récupération conservée |
 | Documents partagés | **320/390 PASS** | [Journal](preuves/documents-sync.log), HTTP fictif, refus puis nouvelle connexion et reprise explicite |
 | Header, dock et préférences | **390/1440 PASS** | [E01 existant](preuves/e01.log), six destinations, navigation et mouvement réduit |
+| Provenance des sources protégées | **15/15 PASS**, aucun ignoré | [Journal](preuves/provenance.log), inversions exactes et refus des octets/parents non revus ; anciens manifests gelés conservés |
 | Reproductibilité des sources | **73 artefacts identiques** | [Journal](preuves/source-derivation.log), génération dans une copie temporaire ; aucune différence |
 
-Les deux workflows GitHub existants passent au SHA applicatif `a45773536f84f2d9f0cf8464b6cc1bd1777cf339` : [Sync](https://github.com/PortenartCo/dobby-demo/actions/runs/44386010476) et [V7](https://github.com/PortenartCo/dobby-demo/actions/runs/44386010553). Les vérifications V7 comprennent aussi les archives et réserves locales existantes.
+Les workflows du commit de validation `b84718f41fbdf64e9c7857629047a79b794fd9f8`, dont les sources applicatives sont identiques à `2b2d849d8982b66a123d00655d828c3a2a5f9342`, sont reliés dans [le relevé CI](preuves/ci-source.json) : [Sync](https://github.com/PortenartCo/dobby-demo/actions/runs/44395206183) et [V7](https://github.com/PortenartCo/dobby-demo/actions/runs/44395206145). Tous ces workflows sont terminés avec succès, dont PREP-01 sur la PR. Les vérifications V7 comprennent aussi les archives et réserves locales existantes.
+
+La provenance ajoute seulement une couche de test réversible : quatre amendements Lot 4 et la dépendance Core déjà présente dans la base PR #31 sont ramenés à leurs empreintes historiques exactes. Les huit manifests antérieurs et le code Core de la base ne sont pas modifiés.
 
 Aucun résultat des lots précédents n'est présenté comme un nouveau résultat Lot 4. Les campagnes complètes PostgreSQL/Auth/Storage n'ont pas été rejouées ; aucun SQL serveur de ces lots n'est modifié.
 
@@ -68,7 +71,7 @@ node tests/private-access/lot4/preview-server.mjs
 
 Ouvrir `http://127.0.0.1:3214/__fixture`. Les liens permettent de choisir le propriétaire H1, un Parent H2 ou un compte non approuvé, avec stockages distincts. Les adresses des demandes/invitations doivent être fictives en `.invalid` ; les messages restent dans Mailpit local. L'aperçu ne représente pas une application de production. Il dure tant que son processus local et ses conteneurs de test restent actifs.
 
-Les [40 captures](../../evidence/lot-4/INDEX.md) réunissent le passage principal et la matrice complémentaire. Les [16 captures du passage principal](../../evidence/lot-4/browser/INDEX.md) couvrent les largeurs 320, 390, 768 et 1440 px, les cinq vues, l’entrée propriétaire, la confirmation, les listes, les erreurs et la conservation des envois après suspension. Les [contrôles de l’aperçu](../../evidence/lot-4/browser/preview-checks.json) incluent les changements de profil, les refus HTTP et l’isolation réseau.
+Les [40 captures](../../evidence/lot-4/INDEX.md) réunissent le passage principal et la matrice complémentaire. Les [16 captures du passage principal](../../evidence/lot-4/browser/INDEX.md) couvrent les largeurs 320, 390, 768 et 1440 px, les cinq vues dès une URL directe, l’entrée propriétaire, la confirmation, les listes, les erreurs et la conservation des envois après suspension. Les [contrôles de l’aperçu](../../evidence/lot-4/browser/preview-checks.json) incluent les changements de profil, les refus HTTP et l’isolation réseau.
 
 ## Limites et conditions avant déploiement
 

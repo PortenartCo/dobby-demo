@@ -1,6 +1,6 @@
 {
   "scope": "all changed/new task files against mandatory base, no secret contents printed",
-  "files": 105,
+  "files": 110,
   "binaryFilesRequiringVisualReview": 40,
   "findings": [],
   "reviewedNonSecretFixtureLiteral": "sb_secret_forbidden_fixture, unchanged at mandatory base, tests rejection of server keys",
