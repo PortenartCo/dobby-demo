@@ -75,7 +75,7 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
    // inspect only its private-access projection, never a business snapshot.
    if(driver.privateContext){access=privateContext(await driver.privateContext());guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');
     if(access.status==='suspended'){driver.revokeAuthorization?.(native,access);return publish({phase:'rejected',userId:native.userId,authenticated:true,privateAccess:access,reason:'suspended'});}
-    if(access.status==='unapproved')return publish({phase:'unavailable',userId:native.userId,authenticated:true,privateAccess:access,reason:'unapproved'});
+    if(access.status==='unapproved'){if(native.verified)driver.revokeAuthorization?.(native,access);return publish({phase:'unavailable',userId:native.userId,authenticated:true,privateAccess:access,reason:'unapproved'});}
    }
    const raw=await rpc('dobby_v7_context'),caps=await capabilities(native),next={...context(raw,native,caps),privateAccess:access};guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');
    if(expected.householdId&&(next.phase!=='active'||next.householdId!==expected.householdId||expected.memberId&&next.memberId!==expected.memberId||next.profile?.memberCategory!==expected.category))throw Error('Le profil existant n’a pas été confirmé. Aucun profil local n’a été remplacé.');

@@ -12,15 +12,15 @@ const MEMBER='local-same-TEXT-member',CHILD='local-existing-child',TOKEN='c'.rep
 const caps=()=>({protocol:2,installed:true,familyRolesAvailable:true,childAccountLinkAvailable:true,familyRolesVerified:true,childAccountLinkVerified:true,storagePoliciesVerified:true});
 const active=()=>({protocol:1,phase:'active',userId:USER,householdId:HH,memberId:MEMBER,profile:{id:MEMBER,name:'TEST Parent',memberCategory:'parent'},permissions:{canEdit:true,canMagic:true,canCreate:true,canInvite:true,canManageDependents:false,canManageHousehold:true},familyRevision:3});
 function database(){
- const rows=new Map();return{rows,transaction(){const tx={pending:0,aborted:false,abort(){tx.aborted=true;queueMicrotask(()=>tx.onabort?.());}};
-  tx.objectStore=()=>{const request=produce=>{const req={};tx.pending++;queueMicrotask(()=>{if(tx.aborted)return;try{req.result=produce();req.onsuccess?.();}catch(error){tx.error=error;tx.onerror?.();}finally{tx.pending--;if(tx.pending===0&&!tx.aborted)queueMicrotask(()=>tx.oncomplete?.());}});return req;};return{get:key=>request(()=>rows.get(key)),put:row=>request(()=>rows.set(row.id,row)),delete:key=>request(()=>rows.delete(key)),getAll:()=>request(()=>[])};};return tx;}};
+ const rows=new Map();let hold=null;return{rows,holdCompletion(key){let begin,release;const began=new Promise(resolve=>begin=resolve),pending=new Promise(resolve=>release=resolve);hold={key,begin,pending};return{began,release};},transaction(){const tx={pending:0,aborted:false,gate:null,abort(){tx.aborted=true;queueMicrotask(()=>tx.onabort?.());}};
+  tx.objectStore=()=>{const request=(produce,key)=>{const req={};if(hold?.key===key){tx.gate=hold;hold=null;}tx.pending++;queueMicrotask(()=>{if(tx.aborted)return;try{req.result=produce();req.onsuccess?.();}catch(error){tx.error=error;tx.onerror?.();}finally{tx.pending--;if(tx.pending===0&&!tx.aborted)queueMicrotask(()=>{if(tx.gate){tx.gate.begin();void tx.gate.pending.then(()=>tx.oncomplete?.());}else tx.oncomplete?.();});}});return req;};return{get:key=>request(()=>rows.get(key),key),put:row=>request(()=>rows.set(row.id,row),row.id),delete:key=>request(()=>rows.delete(key),key),getAll:()=>request(()=>[])};};return tx;}};
 }
 function native({futureFeatures=false}={}){
- const db=database(),requests=[];let context=active(),capabilities=caps(),interceptor=null,privateContext={protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null};
+ const db=database(),requests=[],browserListeners=new Map();let context=active(),capabilities=caps(),interceptor=null,privateContext={protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null};
  const node=()=>({dataset:{},append(){},remove(){},addEventListener(){},querySelector:()=>null,querySelectorAll:()=>[],style:{},elements:[],hidden:true});
  const module={...accessModule,createFamilyAccess:driver=>accessModule.createFamilyAccess(driver,futureFeatures?{release:{familyRoles:true,childAccountLink:true}}:{})};
  const sandbox={__accessModule:module,st:{page:'home',familyMembers:[{id:MEMBER,name:'TEST Parent',memberCategory:'parent'},{id:CHILD,name:'TEST Child',memberCategory:'child'}]},save(){},render(){},drawShop:()=>'',queueMicrotask,setInterval:()=>0,setTimeout,clearTimeout,crypto:webcrypto,TextEncoder,URL,URLSearchParams,btoa,
-  document:{getElementById:()=>null,addEventListener(){},createElement:node,body:{append(){}}},window:{addEventListener(){},dispatchEvent(){}},CustomEvent:class{},navigator:{onLine:true},localStorage:{getItem:()=>null,setItem(){}},
+  document:{getElementById:()=>null,addEventListener(){},createElement:node,body:{append(){}}},window:{addEventListener(name,callback){if(!browserListeners.has(name))browserListeners.set(name,[]);browserListeners.get(name).push(callback);},dispatchEvent(){}},CustomEvent:class{},navigator:{onLine:true},localStorage:{getItem:()=>null,setItem(){}},
   FormData:class{constructor(form){this.values=new Map(form.children.map(x=>[x.name,x.value]));}get(key){return this.values.get(key);}},
   fetch:async(url,options={})=>{const u=new URL(url),request={path:u.pathname,query:u.search,options};requests.push(request);if(interceptor){const response=await interceptor(request);if(response)return response;}
    let body=[];if(u.pathname==='/auth/v1/token')body={access_token:'TEST-access-refreshed',refresh_token:'TEST-refresh-refreshed',expires_in:3600,user:{id:USER}};
@@ -45,7 +45,7 @@ function native({futureFeatures=false}={}){
   requests.length=0;
  };
  const switchAccount=({userId=OTHER,householdId=HH2,epoch=true}={})=>{f.session=session(userId);f.householdId=householdId;f.context=householdId+':'+userId;f.verifiedContext=f.context;if(epoch)f.epoch++;db.rows.set('session',{id:'session',value:structuredClone(f.session)});};
- return{f,db,requests,sandbox,api:sandbox.window.DobbyFamilyUI,transport:sandbox.window.__native,establish,switchAccount,intercept:fn=>interceptor=fn,setCapabilities:value=>capabilities=value,setContext:value=>context=value,setPrivateContext:value=>privateContext=value,
+ return{f,db,requests,sandbox,api:sandbox.window.DobbyFamilyUI,transport:sandbox.window.__native,establish,switchAccount,intercept:fn=>interceptor=fn,setCapabilities:value=>capabilities=value,setContext:value=>context=value,setPrivateContext:value=>privateContext=value,storage:event=>{for(const listener of browserListeners.get('storage')||[])listener(event);},
   readNativeMemberPermissions(id){vm.runInNewContext(fs.readFileSync(new URL('../family-member-policy.js',import.meta.url),'utf8'),sandbox);const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8'),start=html.indexOf('const v23Members='),end=html.indexOf('function v23HealthPermissions',start);vm.runInNewContext(html.slice(start,end)+'\nwindow.__memberPermissions=v23MemberPermissions;',sandbox);return sandbox.window.__memberPermissions(id);}};
 }
 function replaceWhenTokenReturns(f,replacement){let armed=true;Object.defineProperty(f.f.session,'access_token',{configurable:true,get(){if(armed){armed=false;queueMicrotask(()=>f.switchAccount(replacement));}return'TEST-access-original';}});}
@@ -181,7 +181,7 @@ test('a fresh suspended own context cancels late binding and preserves durable u
  assert.equal(f.api.connectionState().identityVerified,false);assert.equal(f.api.access.state().verified,false);assert.equal(f.db.rows.get('TEST-local-pending').value.notes,'TEST draft');
  const sent=f.requests.length;await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/lecture seule|session|vérifi/i);assert.equal(f.requests.length,sent);
  f.setPrivateContext({protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:3,admission:null});await f.api.access.refresh();assert.equal(f.api.access.state().verified,false,'Manual refresh cannot reopen the denied session');
- await f.api.access.signIn('fixture@example.invalid','TEST-new-password');assert.equal(f.api.access.state().verified,true,'Only a new verified login reopens this client');assert.equal(f.db.rows.get('v7-access-revoked'),undefined);assert.equal(f.api.connectionState().transmissionHold,true);
+ await f.api.access.signIn('fixture@example.invalid','TEST-new-password');assert.equal(f.api.access.state().verified,true,'Only a new verified login reopens this client');assert.notEqual(f.db.rows.get('v7-access-revoked')?.value?.localSessionId,f.f.session.localSessionId,'An old denial is scoped to its old session');assert.equal(f.api.connectionState().transmissionHold,true);
  const blocked=f.requests.length;await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}),/envois|attente/i);assert.equal(f.requests.length,blocked,'New login never silently sends old local intent');
  await f.api.grocery.sync();assert.equal(f.api.connectionState().transmissionHold,false,'A separate explicit resume clears the pending transmission hold');
  await f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER});assert.equal(mutationRequests(f).length,1);
@@ -200,4 +200,25 @@ test('nominative family requests keep exact canonical targets without opening ch
  await f.api.access.requestFamilyAccount({email:' fictional@example.invalid ',kind:'family-child',memberId:CHILD,operationId:op});
  const call=f.requests.find(request=>request.path.endsWith('/dobby_access_request_family_account'));assert.deepEqual(JSON.parse(call.options.body),{p_email:'fictional@example.invalid',p_kind:'family-child',p_member_id:CHILD,p_operation_id:op});assert.equal(f.api.access.state().capabilities.childAccountLinkReady,false);
  const before=f.requests.length;await assert.rejects(f.api.access.requestFamilyAccount({email:'fictional@example.invalid',kind:'family-parent',memberId:CHILD,operationId:op}),/cible/i);assert.equal(f.requests.length,before);
+});
+
+test('another tab account switch withdraws old authorization and cannot restore a late response',async()=>{
+ const f=native();await f.establish();const epoch=f.f.epoch;f.db.rows.set('TEST-local-pending',{id:'TEST-local-pending',value:{pending:true}});
+ let done;f.intercept(request=>request.path.endsWith('/dobby_v7_context')?new Promise(resolve=>{done=()=>resolve({ok:true,status:200,text:async()=>JSON.stringify(active())});}):null);
+ const old=f.api.access.refresh();while(!done)await Promise.resolve();f.storage({key:'dobby-v7-account-change',newValue:JSON.stringify({userId:OTHER,id:'TEST-tab-switch'})});
+ assert.ok(f.f.epoch>epoch);assert.equal(f.api.connectionState().identityVerified,false);assert.equal(f.api.access.state().reason,'session-revoked');assert.equal(f.api.connectionState().transmissionHold,true);done();await assert.rejects(old);
+ assert.equal(f.db.rows.get('TEST-local-pending').value.pending,true);const sent=f.requests.length;await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}));assert.equal(f.requests.length,sent);
+});
+
+test('a terminal refresh-token denial revokes before a pending business mutation is sent',async()=>{
+ const f=native();await f.establish();f.f.session.expires_at=0;f.intercept(request=>request.path==='/auth/v1/token'?{ok:false,status:401,text:async()=>'{}'}:null);
+ await assert.rejects(f.api.authorized('POST','rpc/dobby_v7_update_member',{p_member_id:MEMBER}));assert.equal(mutationRequests(f).length,0);assert.equal(f.api.access.state().verified,false);assert.equal(f.api.connectionState().transmissionHold,true);
+});
+
+test('a delayed local session installation cannot replace a newer native account',async()=>{
+ for(const legacy of [false,true]){
+  const f=native();await f.establish();const write=f.db.holdCompletion('session');
+  const pending=legacy?f.api.signIn('fixture@example.invalid','TEST-password'):f.api.access.signIn('fixture@example.invalid','TEST-password');await write.began;
+  f.switchAccount();write.release();await assert.rejects(pending,/compte|foyer|chang/i);assert.equal(f.f.session.user_id,OTHER);assert.equal(f.db.rows.get('session').value.user_id,OTHER);
+ }
 });

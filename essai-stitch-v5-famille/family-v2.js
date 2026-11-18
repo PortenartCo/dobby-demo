@@ -53,11 +53,12 @@ function dbCall(db, store, operation, arg) {
 const meta = async id => (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;
 const putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });
 const delMeta = id => dbCall(f.db, 'meta', 'delete', id);
+const DELETE_META=Symbol('delete-meta');
 // Atomic metadata mutation on the existing IndexedDB store. E06 draft updates
 // from different tabs must read the latest value inside the same transaction.
 function updateMeta(id,change){return new Promise((resolve,reject)=>{
  const tx=f.db.transaction('meta','readwrite'),store=tx.objectStore('meta'),request=store.get(id);let result,error;
- request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');store.put({id,value:result});}catch(e){error=e;tx.abort();}};
+ request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(result===DELETE_META)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};
  tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Métadonnées non enregistrées.'));tx.onerror=()=>reject(error||tx.error);
 });}
 
@@ -113,7 +114,7 @@ function assertRequestActor(expected){
   const actual=requestActor();
   if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
 }
-async function keepSession(result,expected=null,{persist=true}={}) {
+async function keepSession(result,expected=null,{persist=true,fresh=false}={}) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
   if(expected)assertRequestActor(expected);
   const old = f.session || {};
@@ -121,19 +122,20 @@ async function keepSession(result,expected=null,{persist=true}={}) {
     access_token: result.access_token, refresh_token: result.refresh_token,
     expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
     user_id: result.user?.id || old.user_id,
+    localSessionId: !fresh&&old.localSessionId||crypto.randomUUID(),
     email: result.user?.email || old.email || ''
   };
   if(expected){
-    await updateMeta('session',()=>{assertRequestActor(expected);return next;});
+    if(persist)await updateMeta('session',()=>{assertRequestActor(expected);return next;});
     assertRequestActor(expected);f.session=next;
   }else{f.session=next;if(persist)await putMeta('session',f.session);}
 }
 async function refreshToken(expected=requestActor()) {
   assertRequestActor(expected);
   if (!f.session?.refresh_token) throw Error('Session expirée');
-  const result = await raw('/auth/v1/token?grant_type=refresh_token', 'POST', {
-    refresh_token: f.session.refresh_token
-  });
+  let result;
+  try{result=await raw('/auth/v1/token?grant_type=refresh_token','POST',{refresh_token:f.session.refresh_token});}
+  catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
   assertRequestActor(expected);
   if(result?.user?.id!==undefined&&result.user.id!==expected.userId)throw Error('Le compte retourné par la connexion ne correspond pas à la session.');
   await keepSession(result,expected);assertRequestActor(expected);
@@ -163,7 +165,7 @@ function revokeAuthorization(expected,privateAccess=null,{broadcast=true,status}
  if(f.revoked)return;
  const userId=f.session?.user_id||null;
  const marker={userId,id:crypto.randomUUID(),createdAt:Date.now()};
- f.epoch++;f.revoked={userId,status:privateAccess?.status==='suspended'||status==='suspended'?'suspended':'unavailable',privateAccess};f.transmissionHold=marker;
+ f.epoch++;f.revoked={userId,localSessionId:f.session?.localSessionId||null,status:privateAccess?.status==='suspended'||status==='suspended'?'suspended':'unavailable',privateAccess};f.transmissionHold=marker;
  f.accessContext=null;f.admission=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=true;f.again=false;f.provider?.reset?.();
  // A reload cannot turn the same denied session into a fresh one. This marker
  // denies locally only; it never grants authorization and contains no bearer.
@@ -172,6 +174,7 @@ function revokeAuthorization(expected,privateAccess=null,{broadcast=true,status}
  if(broadcast)try{localStorage.setItem('dobby-v7-access-revoked',JSON.stringify({userId,id:marker.id,status:f.revoked.status}));}catch{}
  repaint();
 }
+function broadcastAccountChange(userId){try{localStorage.setItem('dobby-v7-account-change',JSON.stringify({userId,id:crypto.randomUUID()}));}catch{}}
 async function privateAccessContext(expected=requestActor()){
  assertRequestActor(expected);const jwt=await token(expected);assertRequestActor(expected);
  try{const result=await raw('/rest/v1/rpc/dobby_access_context','POST',{}, {},jwt);assertRequestActor(expected);return boundedPrivateAccess(result);}
@@ -674,6 +677,7 @@ async function usePilotPublicKey() {
   finally { if (pilot) pilot.close(); }
 }
 async function login(form) {
+  const expected=requestActor();
   f.error = '';
   f.key = validateKey(new FormData(form).get('key'));
   const data = new FormData(form);
@@ -682,9 +686,11 @@ async function login(form) {
     email: String(data.get('email') || '').trim(),
     password: String(data.get('password') || '')
   });
+  assertRequestActor(expected);
   f.epoch += 1;
-  f.accessContext = null;
-  await keepSession(result);
+  f.accessContext = null;f.revoked=null;
+  const installing=requestActor();await keepSession(result,installing,{fresh:true});const installed={...installing,userId:result.user?.id||null};assertRequestActor(installed);
+  const hold=await meta('v7-transmission-hold:'+installed.userId);assertRequestActor(installed);f.transmissionHold=hold;broadcastAccountChange(installed.userId);
   f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   try {
     await requireHousehold();
@@ -705,8 +711,10 @@ async function logout() {
   f.accessContext = null; f.admission = null; f.revoked = null;
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
-  await delMeta('session');
-  await delMeta('v7-access-revoked');
+  const expected=requestActor();
+  await updateMeta('session',saved=>{assertRequestActor(expected);return saved?.access_token===old?.access_token?DELETE_META:saved;});assertRequestActor(expected);
+  await updateMeta('v7-access-revoked',saved=>{assertRequestActor(expected);return saved?.userId===old?.user_id&&(!saved?.localSessionId||saved.localSessionId===old?.localSessionId)?DELETE_META:saved;});assertRequestActor(expected);
+  broadcastAccountChange(null);
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
   if (old?.access_token) void raw('/auth/v1/logout', 'POST', undefined, {}, old.access_token).catch(() => {});
@@ -896,7 +904,8 @@ function ensureAccess(){
    auth:async(path,method,body,options={})=>{
     if(!options.authenticated)return raw(path,method,body);
     const expected=requestActor(),jwt=await token(expected);assertRequestActor(expected);
-    const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;
+    try{const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;}
+    catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
    },
    rpc:(name,body,options={})=>{if(options.admission)return admissionRPC(name,body);if(f.admission)throw Error('Confirmez votre admission avant tout accès familial.');return options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body);},
    privateContext:privateAccessContext,admin:adminCommand,revokeAuthorization,
@@ -905,7 +914,8 @@ function ensureAccess(){
     if(f.epoch!==before.epoch||(f.session?.user_id||null)!==before.userId)throw Error('Le compte a changé pendant la connexion.');
     f.epoch++;f.revoked=null;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
     f.admission=admissionId?{id:admissionId,userId:result.user.id,epoch:f.epoch,expiresAt:Date.now()+Math.min(600000,Math.max(0,Number(result.expires_in||3600)*1000))}:null;
-    await delMeta('v7-access-revoked');await keepSession(result,null,{persist:!admissionId});f.transmissionHold=await meta('v7-transmission-hold:'+result.user.id);repaint();refreshModal();
+    const installing=requestActor();await keepSession(result,installing,{persist:!admissionId,fresh:true});const installed={...installing,userId:result.user.id};assertRequestActor(installed);
+    const hold=await meta('v7-transmission-hold:'+installed.userId);assertRequestActor(installed);f.transmissionHold=hold;broadcastAccountChange(installed.userId);repaint();refreshModal();
    },
    beginAdmission(admissionId,before){
     if(f.epoch!==before.epoch||f.session?.user_id!==before.userId)throw Error('Le compte a changé pendant la vérification.');
@@ -1048,8 +1058,9 @@ async function boot() {
     f.db = await openDb(DB_NAME, 1, true);
     f.key = await loadPublicKey();
     f.session = await meta('session');
+    if(f.session&&!f.session.localSessionId){const restored=f.session;f.session=await updateMeta('session',saved=>{if(saved?.user_id!==restored.user_id||saved?.access_token!==restored.access_token)throw Error('Le compte a changé pendant la reprise locale.');return saved.localSessionId?saved:{...saved,localSessionId:crypto.randomUUID()};});}
     if(f.session?.user_id)f.transmissionHold=await meta('v7-transmission-hold:'+f.session.user_id);
-    const revoked=await meta('v7-access-revoked');if(f.session?.user_id&&revoked?.userId===f.session.user_id){f.revoked={userId:revoked.userId,status:revoked.status==='suspended'?'suspended':'unavailable',privateAccess:revoked.privateAccess||null};f.membershipRejected=true;}
+    const revoked=await meta('v7-access-revoked');if(f.session?.user_id&&revoked?.userId===f.session.user_id&&(!revoked.localSessionId||revoked.localSessionId===f.session.localSessionId)){f.revoked={userId:revoked.userId,localSessionId:revoked.localSessionId||null,status:revoked.status==='suspended'?'suspended':'unavailable',privateAccess:revoked.privateAccess||null};f.membershipRejected=true;}
     // Access initialization observes ready. Restore the cached household first,
     // so its first authenticated request starts with the final native context.
     if (f.session) await restoreCachedHousehold();
@@ -1060,6 +1071,7 @@ async function boot() {
 }
 window.addEventListener('online', () => void sync());
 window.addEventListener('storage',event=>{
+ if(event.key==='dobby-v7-account-change'&&event.newValue&&f.session?.user_id){try{JSON.parse(event.newValue);revokeAuthorization(requestActor(),null,{broadcast:false});}catch{}return;}
  if(event.key!=='dobby-v7-access-revoked'||!event.newValue||!f.session?.user_id)return;
  try{const message=JSON.parse(event.newValue);if(message.userId===f.session.user_id)revokeAuthorization(requestActor(),null,{broadcast:false,status:message.status});}catch{}
 });

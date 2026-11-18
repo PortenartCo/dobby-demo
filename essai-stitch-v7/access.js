@@ -354,6 +354,9 @@ window.DobbyAccess = (() => {
       assertActor(owner);const normalized=email.value.trim().toLowerCase(),scope=JSON.stringify([owner,child?'family-child':'family-parent',memberId,normalized]);if(creatingInvitation?.scope!==scope)creatingInvitation={scope,id:crypto.randomUUID()};
       const result=await account().requestFamilyAccount({email:normalized,kind:child?'family-child':'family-parent',memberId,operationId:creatingInvitation.id});assertActor(owner);
       if(!result?.admission||result.admission.purpose!==(child?'family-child':'family-parent')||result.admission.state!=='requested')throw Error('La demande n’a pas été confirmée par le serveur.');
+      // This intent has a confirmed receipt. A later form starts a new
+      // request; only an uncertain failure retains the same operation id.
+      creatingInvitation=null;
       email.disabled=true;email.dataset.accessCommitted='true';request.disabled=true;request.dataset.accessCommitted='true';
       status('Demande enregistrée : décision du propriétaire en attente. Aucun envoi ni accès n’est confirmé.',false,dialog);
     },dialog);};

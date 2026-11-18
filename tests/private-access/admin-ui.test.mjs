@@ -46,7 +46,7 @@ async function fixture(t,{items,requests}={}){
  await page.addScriptTag({content:source});return page;
 }
 async function view(page,name){await page.evaluate(name=>window.__context.open(name),name);}
-async function confirm(page){await page.locator('[data-admin-confirmation] input[name=confirmed]').check();await page.locator('[data-admin-confirm]').click();await page.waitForFunction(()=>!window.DobbyAdminAccess.busy);}
+async function confirm(page){await page.locator('[data-admin-confirmation] input[name=confirmed]').check();await page.locator('[data-admin-confirm]').click();await page.waitForFunction(()=>!window.DobbyAdminAccess.busy);await page.waitForFunction(()=>!document.querySelector('dialog:not([open])'));}
 async function invite(page){await view(page,'admin-invite');await page.getByLabel('Adresse e-mail',{exact:true}).fill('new@example.invalid');await page.getByRole('button',{name:'Préparer le récapitulatif',exact:true}).click();}
 
 test('local owner identity and a direct route do not grant administration without a fresh server result',async t=>{
@@ -179,4 +179,29 @@ test('account switch clears a pending operation and its late receipt cannot rest
  assert.equal(await page.evaluate(()=>DobbyAdminAccess.busy),false);assert.equal(await page.locator('dialog').count(),0);
  await page.evaluate(({admission})=>__fixture.release({admission:{id:admission,state:'sent'},delivery:{outcome:'sent'}}),{admission});
  await page.waitForTimeout(50);assert.equal(await page.getByRole('heading',{name:'Administration indisponible'}).count(),1);assert.equal((await page.locator('main').innerText()).includes('Envoi confirmé'),false);
+});
+
+test('a target chosen on a later account page is freshly reloaded and never silently replaced',async t=>{
+ const page=await fixture(t),later='00000000-0000-4000-8000-000000000004';
+ await page.evaluate(({target})=>{__fixture.first=structuredClone(__fixture.list.items);__fixture.list.nextCursor=target;},{target});
+ await view(page,'admin-access');
+ await page.evaluate(({later})=>{__fixture.later={userId:later,email:'later-page@example.invalid',confirmed:true,status:'active',revision:9,isOwner:false,canCreateHousehold:false,admissions:[]};__fixture.list.items=[__fixture.later];__fixture.list.nextCursor=null;},{later});
+ await page.locator('[data-admin-more=accounts]').click();await page.waitForFunction(()=>!DobbyAdminAccess.busy);
+ // A normal fresh list without its later-page cursor would return page 1.
+ await page.evaluate(()=>{const native=DobbyFamilyUI.access.admin;DobbyFamilyUI.access.admin=async(command,payload)=>{if(command==='listAccess')__fixture.list.items=payload.cursor?[__fixture.later]:__fixture.first;return native(command,payload);};});
+ await page.locator('[data-admin-select="'+later+'"]').click();
+ await page.waitForFunction(()=>__context.ui.view==='admin-status' && !!document.querySelector('[data-admin-target]'));
+ assert.equal(await page.locator('[data-admin-target]').inputValue(),later);
+ await page.locator('[data-admin-status-action=suspended]').click();assert.match(await page.locator('dialog').innerText(),/later-page@example.invalid/);
+ await page.evaluate(()=>{__fixture.result={status:'suspended',revision:10,sessionBoundaryPending:false};});await confirm(page);
+ const call=(await page.evaluate(()=>__fixture.calls)).find(call=>call.command==='setStatus');assert.equal(call.payload.userId,later);assert.equal(call.payload.expectedRevision,9);
+});
+
+test('a selected status target that disappears cannot fall back to another account',async t=>{
+ const page=await fixture(t);await view(page,'admin-access');
+ await page.evaluate(()=>{__fixture.list.items=__fixture.list.items.filter(item=>item.isOwner);});
+ await page.locator('[data-admin-select="'+target+'"]').click();
+ await page.waitForFunction(()=>__context.ui.view==='admin-status' && !!document.querySelector('[data-admin-empty]'));
+ assert.match(await page.locator('[data-admin-empty]').innerText(),/Aucune action ne sera appliquée à un autre compte/);
+ assert.equal(await page.locator('[data-admin-status-action]').count(),0);assert.equal((await page.evaluate(()=>__fixture.calls)).some(call=>call.command==='setStatus'),false);
 });

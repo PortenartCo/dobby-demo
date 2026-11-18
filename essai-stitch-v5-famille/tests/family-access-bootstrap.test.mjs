@@ -118,3 +118,13 @@ test('bootstrap still refuses a device marker belonging to another household',as
  assert.equal(f.rows.get('deviceHouseholdId').value,marker);assert.deepEqual(clone(f.st.familyMembers),before);
  assert.equal(f.api.access.state().verified,false);assert.equal(f.requests.some(r=>r.path.endsWith('/dobby_v2_modules')),false);
 });
+
+test('a persisted local denial applies only to the exact denied native session',async t=>{
+ for(const sameSession of [true,false]){
+  const f=fixture(t);f.rows.get('session').value.localSessionId='TEST-new-native-session';
+  f.rows.set('v7-access-revoked',{id:'v7-access-revoked',value:{userId:USER,localSessionId:sameSession?'TEST-new-native-session':'TEST-old-native-session',status:'unavailable',privateAccess:null}});
+  await f.native.boot();await f.api.access.refresh();
+  assert.equal(f.api.access.state().verified,!sameSession);
+  if(sameSession)assert.equal(f.api.access.state().reason,'session-revoked');
+ }
+});

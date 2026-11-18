@@ -15,14 +15,14 @@ window.DobbyAdminAccess = (() => {
   const statuses = {active:'Actif',suspended:'Suspendu',unapproved:'Non approuvé'};
   let context = null, epoch = 0, sequence = 0, proof = null, prepared = null, busy = false, initialized = null;
   let cache = {items:[],requests:[],decisions:[],nextCursor:null,nextRequestsCursor:null,nextDecisionCursor:null};
-  let lastActor = null, lastVerified = false, lastPrivateStatus = null, selectedUser = '', inviteEmail = '', notice = null;
-  const entries = new Set(), dialogs = new Set(), menuReads = new WeakMap();
+  let lastActor = null, lastVerified = false, lastPrivateStatus = null, selectedUser = '', selectedCursor = null, inviteEmail = '', notice = null;
+  const entries = new Set(), dialogs = new Set(), menuReads = new WeakMap(), accountCursors = new Map();
 
   function ticket() { return {epoch,actor:actor(),sequence}; }
   function current(t) { return !!t && t.epoch === epoch && t.actor === actor(); }
   function assertCurrent(t) { if(!current(t))throw Object.assign(Error('stale_actor'),{code:'stale_actor'}); }
   function clear() {
-    epoch++; sequence++; proof = null; prepared = null; notice = null; selectedUser = ''; inviteEmail = ''; busy = false;
+    epoch++; sequence++; proof = null; prepared = null; notice = null; selectedUser = ''; selectedCursor = null; inviteEmail = ''; busy = false;accountCursors.clear();
     cache = {items:[],requests:[],decisions:[],nextCursor:null,nextRequestsCursor:null,nextDecisionCursor:null};
     for(const entry of entries)entry.remove(); entries.clear();
     for(const dialog of dialogs){if(dialog.open)dialog.close();dialog.remove();} dialogs.clear();
@@ -79,10 +79,14 @@ window.DobbyAdminAccess = (() => {
       await initialize();
       if(id !== sequence)return;
       const t = ticket(),kind = view === 'admin-history' ? 'history' : 'access';
-      const result = listProjection(await command(kind === 'history' ? 'listDecisions' : 'listAccess',{limit:25},t),kind);
+      const payload={limit:25};
+      // A status target selected on a later page must be reloaded from that
+      // same server page, rather than silently replaced by its first account.
+      if(view==='admin-status' && selectedUser && selectedCursor)payload.cursor=selectedCursor;
+      const result = listProjection(await command(kind === 'history' ? 'listDecisions' : 'listAccess',payload,t),kind);
       if(id !== sequence || !current(t))return;
       if(kind === 'history'){cache.decisions=result.items;cache.nextDecisionCursor=result.nextCursor || null;}
-      else {cache.items=result.items;cache.requests=result.requests;cache.nextCursor=result.nextCursor || null;cache.nextRequestsCursor=result.nextRequestsCursor || null;}
+      else {cache.items=result.items;cache.requests=result.requests;cache.nextCursor=result.nextCursor || null;cache.nextRequestsCursor=result.nextRequestsCursor || null;accountCursors.clear();for(const item of result.items)accountCursors.set(item.userId,payload.cursor || null);}
       proof = t; prepared = {view,actor:t.actor};
     } catch(error) {
       if(id !== sequence)return;
@@ -166,7 +170,7 @@ window.DobbyAdminAccess = (() => {
       const details=el('dl');detail(details,'E-mail confirmé',account.confirmed===true?'Oui':'Non');detail(details,'Création d’un foyer autorisée',account.canCreateHousehold===true?'Oui':'Non');card.append(details);
       if(!account.admissions?.length)card.append(el('p','Aucune admission récente.','admin-note'));
       else {const admissions=el('details','','admin-disclosure');admissions.append(el('summary',`Admissions récentes (${account.admissions.length})`));for(const admission of account.admissions)admissions.append(admissionCard(admission));card.append(admissions);}
-      if(!account.isOwner){const action=button('Gérer le statut',async()=>{selectedUser=account.userId;await context.open('admin-status');},{secondary:true});action.dataset.adminSelect=account.userId;card.append(action);}
+      if(!account.isOwner){const action=button('Gérer le statut',async()=>{selectedUser=account.userId;selectedCursor=accountCursors.get(account.userId) || null;await context.open('admin-status');},{secondary:true});action.dataset.adminSelect=account.userId;card.append(action);}
       parent.append(card);
     }
     more(parent,'accounts');
@@ -196,13 +200,17 @@ window.DobbyAdminAccess = (() => {
   function statusView() {
     const parent=section('Suspendre / Réactiver','Le statut sera confirmé par le serveur avec la révision actuellement affichée.');
     const candidates=cache.items.filter(item=>!item.isOwner);
+    if(selectedUser && !candidates.some(item=>item.userId===selectedUser)){
+      empty(parent,'Le compte sélectionné n’est plus présent dans la page vérifiée. Aucune action ne sera appliquée à un autre compte.');
+      parent.append(button('Choisir un autre compte',()=>{selectedUser='';selectedCursor=null;render(context.ui.view,context);},{secondary:true}));return;
+    }
     if(!candidates.length){empty(parent,'Aucun compte modifiable dans cette page.');more(parent,'accounts');return;}
-    if(!candidates.some(item=>item.userId===selectedUser))selectedUser=candidates[0].userId;
+    if(!selectedUser){selectedUser=candidates[0].userId;selectedCursor=accountCursors.get(selectedUser) || null;}
     const wrapper=el('label','','admin-field'),select=el('select');select.name='userId';select.dataset.adminTarget='';
     for(const item of candidates){const option=el('option',`${item.email || item.userId} — ${statuses[item.status] || 'Indisponible'}`);option.value=item.userId;select.append(option);}select.value=selectedUser;
     wrapper.append(el('span','Compte concerné'),select);parent.append(wrapper);
     const selected=el('div','','admin-status-target');parent.append(selected);
-    const draw=()=>{selectedUser=select.value;const target=candidates.find(item=>item.userId===selectedUser);selected.replaceChildren();if(!target)return;
+    const draw=()=>{selectedUser=select.value;selectedCursor=accountCursors.get(selectedUser) || null;const target=candidates.find(item=>item.userId===selectedUser);selected.replaceChildren();if(!target)return;
       selected.append(badge(statuses[target.status] || 'Indisponible'));
       const active=target.status==='suspended';
       selected.append(el('p',active?'La réactivation ne restaure aucun ancien lien. Une nouvelle session vérifiée est obligatoire ; une nouvelle admission peut être nécessaire.':'La suspension coupe les accès authentifiés et révoque les admissions ouvertes. Des liens Storage déjà signés peuvent rester utilisables jusqu’à leur expiration.','admin-warning'));
@@ -248,7 +256,7 @@ window.DobbyAdminAccess = (() => {
       else payload.requestsCursor=cache.nextRequestsCursor;
       const result=listProjection(await command(kind==='history'?'listDecisions':'listAccess',payload,t),kind==='history'?'history':'access');
       if(kind==='history'){cache.decisions.push(...result.items);cache.nextDecisionCursor=result.nextCursor || null;}
-      else if(kind==='accounts'){cache.items.push(...result.items);cache.nextCursor=result.nextCursor || null;}
+      else if(kind==='accounts'){cache.items.push(...result.items);cache.nextCursor=result.nextCursor || null;for(const item of result.items)accountCursors.set(item.userId,payload.cursor || null);}
       else {cache.requests.push(...result.requests);cache.nextRequestsCursor=result.nextRequestsCursor || null;}
       if(context?.main===main && main.isConnected)render(context.ui.view,context);
     } catch(error) {if(current(t))message(problem(error),true,main);}
