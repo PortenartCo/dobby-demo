@@ -133,7 +133,7 @@
   },
   "evidenceSHA256": {
     "preuves/contrepreuve-foldername.log": "99845c424fb51fe9eccb15c671978401104ece3d1598dc7e807d56047631780c",
-    "preuves/contrepreuve-preflight-et-relais.log": "c79170b56da0a6342b861a332a0825354cea08a6b0543e50b0776660222e55de",
+    "preuves/contrepreuve-preflight-et-relais.log": "78e43b1b7679bdcff5fb5b28d5c8460bc741b4b740366042d40d038a15cca996",
     "preuves/contrepreuve-role-rls.log": "cdbd38a0b174589deb1f94af73936294f6a3fdd54fefe7f8bc3c8330335f23a2",
     "preuves/contrepreuve-signature.log": "0c4341eace0f4c41dbc4d500e380f73fb1c2e0212b6813c08b635d22db4a4992",
     "preuves/contrepreuve-verrou.log": "d451918cb632c7a0c354f98e6a29a53ed1f7036c7057cb926079d0443d0618b4",
@@ -143,5 +143,6 @@
     "preuves/natifs-cibles.log": "3811d96047735e80282b2f4ed508c75ab74dde9ede03190be257b8877206a9a6",
     "preuves/storage-http.log": "fff97bcd1ec1ff19fc23b0a0748cd583bd8064142576e05343a1266598e18d8e",
     "preuves/storage-local.json": "7686d28b1e94386f19e1416923b688730d51df68e3b13e0f5db390ba3f913f7d"
-  }
+  },
+  "evidenceNormalization": "Trailing whitespace removed from contrepreuve-preflight-et-relais.log for Git hygiene; semantic content unchanged. Original execution logs retained in local scratch."
 }

@@ -55,10 +55,10 @@ test at tests/private-access/lot2b/storage.test.mjs:229:1
 ✖ rollback refuses tampering, restores exact policies and preserves actual bytes; candidate reapplies (416.32123ms)
   AssertionError [ERR_ASSERTION]: ERROR:  42704: policy "dobby_access_storage_native" for table "objects" does not exist
   LOCATION:  AlterPolicy, policy.c:885
-  
-  
+
+
   3 !== 0
-  
+
       at must (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/local-db.mjs:27:9)
       at Object.run [as sql] (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/local-db.mjs:35:35)
       at sql (file:///workspace/dobby-lot2b-rebuild-20261118-w2m20p9r/tests/private-access/lot2b/storage.test.mjs:24:34)
