@@ -108,6 +108,13 @@ export function start() {
  assert.ok(!info.HostConfig.PortBindings || Object.keys(info.HostConfig.PortBindings).length === 0);
  assert.ok(!info.Mounts.some(x => x.Type === 'bind'));
  run(readFileSync(new URL('./fixtures.sql', import.meta.url), 'utf8'));
+ return { ...initializeBusinessCatalog(), version: run('SHOW server_version;'), image };
+}
+
+// Compose the published business fixture against actual local GoTrue tables.
+// Defaults preserve the original isolated synthetic fixture unchanged.
+export function initializeBusinessCatalog({ executeSQL = run, seedAuth = true, captureSnapshot = true } = {}) {
+ const run = executeSQL;
  // Reuse exact, public legacy table/RLS definitions; do not install the old
  // scripts or their explicitly documented private Missions stub.
  const catalog = readFileSync(resolve(root, 'docs/dobby-v7/stitch19-20/supabase/tests/catalog-fixture.sql'), 'utf8');
@@ -125,9 +132,10 @@ export function start() {
  CREATE POLICY v7_writer ON dobby_v7_private.account_links TO dobby_v7_writer USING(true) WITH CHECK(true);
  CREATE FUNCTION public.dobby_lot1_fixture_sentinel() RETURNS text LANGUAGE sql SET search_path='' AS $$ SELECT 'unchanged'::text $$;
  RESET ROLE;
- INSERT INTO auth.users SELECT (${q(id(1).slice(0,-1))}||i::text)::uuid, 'fixture-'||i||'@example.invalid', now() FROM generate_series(1,6) i;
+ ${seedAuth ? ` INSERT INTO auth.users SELECT (${q(id(1).slice(0,-1))}||i::text)::uuid, 'fixture-'||i||'@example.invalid', now() FROM generate_series(1,6) i;
  INSERT INTO auth.sessions(id,user_id,created_at) SELECT
  ('00000000-0000-4000-8000-'||lpad((1000+i)::text,12,'0'))::uuid,id,clock_timestamp()-interval '1 day' FROM auth.users u CROSS JOIN LATERAL (SELECT right(u.id::text,1)::int i) x;
+` : ''}
  INSERT INTO public.dobby_v2_households(id,name) VALUES(${q(id(101))},'TEST H1'),(${q(id(102))},'TEST H2');
  INSERT INTO public.dobby_v2_memberships(household_id,user_id,role) VALUES
  (${q(id(101))},${q(id(1))},'owner'),(${q(id(101))},${q(id(2))},'member'),
@@ -139,11 +147,11 @@ export function start() {
  INSERT INTO dobby_v7_private.account_links(user_id,household_id,member_id) VALUES
  (${q(id(1))},${q(id(101))},'TEST_PARENT_A'),(${q(id(2))},${q(id(101))},'TEST_PARENT_B'),
  (${q(id(3))},${q(id(102))},'TEST_PARENT_C'),(${q(id(4))},${q(id(102))},'TEST_CHILD');`);
- const baseline = businessSnapshot();
+ const baseline = captureSnapshot ? run(businessSnapshotSQL()) : null;
  const migrationsDir = resolve(root, 'supabase/migrations');
  const migrations = existsSync(migrationsDir) ? readdirSync(migrationsDir).filter(n => n.endsWith('_dobby_private_access_foundation.sql')) : [];
  for (const path of migrations) run('SET ROLE postgres;'+ readFileSync(resolve(migrationsDir,path),'utf8'));
- return { baseline, migrations, version: run('SHOW server_version;'), image };
+ return { baseline, migrations };
 }
 export function stop() {
  if (created) { must(docker(['rm', '-f', container])); created = false; }
