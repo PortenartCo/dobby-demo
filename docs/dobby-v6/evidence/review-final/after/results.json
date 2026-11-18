@@ -1,0 +1,212 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "results": [
+    {
+      "name": "family-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Les membres du foyer",
+        "Agenda du foyer",
+        "Rendez-vous médicaux du foyer",
+        "Les outils du foyer"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "missions-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "À faire ensemble",
+        "Missions automatiques"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "document-offline-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Pièce jointe",
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-offline-local-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Pièce jointe",
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-shared-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-backup-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Partage avec le foyer",
+        "Pièce jointe"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-uploaded-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Partage avec le foyer",
+        "Pièce jointe"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-private-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Pièce jointe",
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "family-empty-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "Les membres du foyer",
+        "Agenda du foyer",
+        "Rendez-vous médicaux du foyer",
+        "Les outils du foyer"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "missions-empty-320",
+      "width": 320,
+      "scrollWidth": 320,
+      "headings": [
+        "À faire ensemble",
+        "Missions automatiques"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "family-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Les membres du foyer",
+        "Agenda du foyer",
+        "Rendez-vous médicaux du foyer",
+        "Les outils du foyer"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "missions-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "À faire ensemble",
+        "Missions automatiques"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "document-offline-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Pièce jointe",
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-offline-local-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Pièce jointe",
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-shared-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-backup-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Partage avec le foyer",
+        "Pièce jointe"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-uploaded-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Partage avec le foyer",
+        "Pièce jointe"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "document-online-private-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Pièce jointe",
+        "Partage avec le foyer"
+      ],
+      "visiblePickers": 1
+    },
+    {
+      "name": "family-empty-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "Les membres du foyer",
+        "Agenda du foyer",
+        "Rendez-vous médicaux du foyer",
+        "Les outils du foyer"
+      ],
+      "visiblePickers": 0
+    },
+    {
+      "name": "missions-empty-390",
+      "width": 390,
+      "scrollWidth": 390,
+      "headings": [
+        "À faire ensemble",
+        "Missions automatiques"
+      ],
+      "visiblePickers": 0
+    }
+  ]
+}

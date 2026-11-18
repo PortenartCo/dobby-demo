@@ -1,0 +1,20 @@
+[
+  {
+    "name": "browser-smoke",
+    "status": "PASS",
+    "message": "PASS - courses, agenda, missions, documents volontaires et stockage isolé",
+    "errors": []
+  },
+  {
+    "name": "bootstrap-smoke",
+    "status": "PASS",
+    "message": "PASS - Documents et Missions recharges sans effacer les fiches",
+    "errors": []
+  },
+  {
+    "name": "presentation-smoke",
+    "status": "PASS",
+    "message": "PASS — navigation, compte, données inchangées, documents, équipements et missions",
+    "errors": []
+  }
+]
