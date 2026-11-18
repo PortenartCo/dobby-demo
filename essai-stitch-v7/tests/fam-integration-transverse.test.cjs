@@ -13,6 +13,9 @@ const readiness = require('./fixtures/pr15-native-readiness-source-extensions.js
 const composition = require('./fixtures/maison-pr15-source-composition.json');
 const archives = require('./fixtures/archives-main16-source-extensions.json');
 const finalArchives = require('./fixtures/archives-final-source-extensions.json');
+const privateAccess = require('./fixtures/private-access-source-extensions.json');
+const {beforePrivateAccess,reviewedFiles:privateAccessFiles,lot4Files:privateAccessLot4Files,dependencyOnlyFiles:privateAccessDependencies}=require('./helpers/private-access-source-proof.cjs');
+const readCurrent=file=>beforePrivateAccess(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'));
 const beforeFinal=(file,source)=>beforeArchives(file,source,finalArchives.files[file]||null);
 function beforeArchives(file,source,extension=archives.files[file]){
   if(!extension)return source;
@@ -25,7 +28,7 @@ function beforeArchives(file,source,extension=archives.files[file]){
   assert.equal(digest(source),extension.beforeSha256,file+' Archives reversal restores its complete parent');
   return source;
 }
-function readReviewed(file){return beforeArchives(file,beforeFinal(file,beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),'Archives')));}
+function readReviewed(file){return beforeArchives(file,beforeFinal(file,beforeConsolidation(file,readCurrent(file),'Archives')));}
 const contacts = require('./fixtures/contacts-source-extensions.json');
 function beforeContacts(file,source){
   const extension=contacts.files[file];if(!extension)return source;
@@ -229,7 +232,7 @@ test('Contacts controller amendments recover the exact parent and reject unrelat
   for(const[file,extension]of Object.entries(contacts.files)){
     assert.equal(extension.beforeSha256,maison.files[file].afterSha256,'Existing Maison source fingerprint stays frozen');
     for(const check of extension.tests)assert.ok(fs.existsSync(path.join(repo,check)),check);
-    const current=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),parent=beforeContacts(file,current);
+    const current=readCurrent(file),parent=beforeContacts(file,current);
     assert.equal(digest(parent),extension.beforeSha256);
     assert.throws(()=>beforeContacts(file,current+'\n// unrelated byte'),/current reviewed source changed/);
     assert.throws(()=>beforeContacts(file,parent),/current reviewed source changed/,'An earlier valid source cannot replace the current Contacts implementation');
@@ -297,7 +300,7 @@ test('Archives amendments reverse exactly to current main and reject altered byt
   assert.equal(Object.keys(archives.files).length,7);
   for(const[file,expected]of Object.entries(archives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' frozen earlier Archives proof');
   for(const [file,extension]of Object.entries(archives.files)){
-    const source=beforeFinal(file,beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n'),'Archives'));
+    const source=beforeFinal(file,beforeConsolidation(file,readCurrent(file),'Archives'));
     const previous=beforeArchives(file,source);
     assert.equal(digest(previous),extension.beforeSha256);
     assert.throws(()=>beforeArchives(file,source+'\n/* unreviewed byte */'),/current reviewed source changed/);
@@ -310,5 +313,63 @@ module.exports = { preserved };
 
 test('final native archive guards preserve every byte of the reviewed PR17 parent',()=>{
  for(const [file,expected]of Object.entries(finalArchives.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected);
- for(const [file,extension]of Object.entries(finalArchives.files)){const source=beforeConsolidation(file,fs.readFileSync(path.join(repo,file),'utf8'),'Archives');assert.equal(digest(beforeFinal(file,source)),extension.beforeSha256);assert.throws(()=>beforeFinal(file,source+'/* changed */'),/current reviewed source changed/);}
+ for(const [file,extension]of Object.entries(finalArchives.files)){const source=beforeConsolidation(file,readCurrent(file),'Archives');assert.equal(digest(beforeFinal(file,source)),extension.beforeSha256);assert.throws(()=>beforeFinal(file,source+'/* changed */'),/current reviewed source changed/);}
+});
+
+test('private-access source amendments retain the exact PR31 and independent published V7 parents',()=>{
+ assert.equal(privateAccess.schema,1);
+ assert.equal(privateAccess.publishedParentCommit,'2f2f38b197a96ee2ae3593545f822002a452e859');
+ assert.equal(privateAccess.mandatoryLot3BaseCommit,'3c850d5e2235aedbafbbdc0d1e4fb9e9f358956c');
+ assert.equal(privateAccess.lot4ApplicationCommit,'2b2d849d8982b66a123d00655d828c3a2a5f9342');
+ assert.deepEqual(Object.keys(privateAccess.files).sort(),[...privateAccessFiles].sort());
+ assert.deepEqual(privateAccess.lot4Files,[...privateAccessLot4Files]);
+ assert.deepEqual(privateAccess.dependencyOnlyFiles,[...privateAccessDependencies]);
+ for(const[file,expected]of Object.entries(privateAccess.frozenParentFixtures))assert.equal(digest(fs.readFileSync(path.join(repo,file))),expected,file+' independent historical proof remains frozen');
+ const published={
+  'essai-stitch-v5-famille/family-v2.js':readiness.files['essai-stitch-v5-famille/family-v2.js'].afterSha256,
+  'essai-stitch-v5-famille/family-access.mjs':reconciliation.files['essai-stitch-v5-famille/family-access.mjs'].mergedSha256,
+  'essai-stitch-v5-famille/family-core.mjs':reconciliation.files['essai-stitch-v5-famille/family-core.mjs'].mergedSha256,
+  'essai-stitch-v7/build-source.cjs':archives.files['essai-stitch-v7/build-source.cjs'].afterSha256,
+  'essai-stitch-v7/family.js':consolidation.files['essai-stitch-v7/family.js'].currentSha256
+ };
+ const mandatoryLot3={
+  'essai-stitch-v5-famille/family-v2.js':'b71a748ea606c412637b7bee1cf46918359d3aabfb0174605b8da96d79aad4e0',
+  'essai-stitch-v5-famille/family-access.mjs':'3368b77652ab9bb090d98bc75624c085a58e11479f24ce06e4f912a00ddcedf4',
+  'essai-stitch-v5-famille/family-core.mjs':'0d925569dac23ee94338dcc735bad0201b30b19cad7383ea57d8a19389d4ea64',
+  'essai-stitch-v7/build-source.cjs':'73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2',
+  'essai-stitch-v7/family.js':'b5ae977bc97bab8b8a03a4013f4727a73a7207a2559a22c20e9f5d2f26861bce'
+ };
+ for(const[file,entry]of Object.entries(privateAccess.files)){
+  assert.equal(entry.publishedSha256,published[file],file+' exact existing historical leaf retained');
+  assert.equal(entry.lot3Sha256,mandatoryLot3[file],file+' exact immutable PR31 Git object retained');
+  assert.ok(entry.reason);assert.ok(entry.tests.length);
+  const dependencyOnly=privateAccessDependencies.includes(file);
+  assert.equal(entry.lot4Patches.length===0,dependencyOnly,file+' only the core dependency has no Lot4 patch');
+  if(dependencyOnly)assert.equal(entry.currentSha256,entry.lot3Sha256,file+' complete mandatory PR31 core bytes stay unchanged in Lot4');
+  else assert.notEqual(entry.currentSha256,entry.lot3Sha256,file+' records a real Lot4 amendment rather than an older fallback');
+  for(const check of entry.tests)assert.ok(fs.existsSync(path.join(repo,check)),check+' semantic verification remains available');
+  assert.equal(entry.dependencyPatches.length===0,file.startsWith('essai-stitch-v7/'),file+' only the native access dependencies changed before PR31');
+  const current=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+  assert.equal(digest(beforePrivateAccess(file,current)),entry.publishedSha256);
+ }
+});
+
+test('private-access normalization rejects unrelated bytes, previous parents and altered proof stages',()=>{
+ const file='essai-stitch-v5-famille/family-v2.js',entry=privateAccess.files[file];
+ const current=fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+ assert.throws(()=>beforePrivateAccess(file,current+'\n/* unrelated byte */'),/current reviewed source changed/);
+ let lot3=current;for(const patch of [...entry.lot4Patches].reverse())lot3=lot3.replace(patch.after,()=>patch.before);
+ assert.equal(digest(lot3),entry.lot3Sha256);
+ assert.throws(()=>beforePrivateAccess(file,lot3),/current reviewed source changed/,'The valid PR31 parent is never a fallback for the current source');
+ const changed=edit=>{const proof=structuredClone(privateAccess);edit(proof.files[file]);return proof;};
+ assert.throws(()=>beforePrivateAccess(file,current,changed(record=>record.currentSha256='0'.repeat(64))),/current reviewed source changed/);
+ assert.throws(()=>beforePrivateAccess(file,current,changed(record=>record.lot3Sha256='0'.repeat(64))),/complete mandatory PR31 source/);
+ assert.throws(()=>beforePrivateAccess(file,current,changed(record=>record.publishedSha256='0'.repeat(64))),/complete published V7 parent/);
+ assert.throws(()=>beforePrivateAccess(file,current,changed(record=>record.lot4Patches[0].after+='/* altered patch */')),/exact amendment occurs once/);
+ for(const absent of [null,undefined]){
+  const missing=structuredClone(privateAccess);missing.files[file]=absent;
+  assert.throws(()=>beforePrivateAccess(file,current,missing),/reviewed entry is required/,'An allowlisted entry cannot silently disappear');
+ }
+ const extra=structuredClone(privateAccess);extra.files['unreviewed.js']=structuredClone(entry);
+ assert.throws(()=>beforePrivateAccess('unreviewed.js',current,extra),/closed reviewed-file allowlist/);
 });
