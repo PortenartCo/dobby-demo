@@ -1,0 +1,35 @@
+{
+  "browser": "154.0.8037.57",
+  "playwright": "1.62.1",
+  "auth": "v2.197.0",
+  "rest": "v14.18",
+  "smtp": "v1.34.0",
+  "proofs": [
+    {
+      "scenario": "new-auth-family-parent",
+      "secondBrowser": true,
+      "explicitVerify": true,
+      "boundedAdmission": true,
+      "ordinaryPasswordResume": true,
+      "atomicAcceptBeforeContext": true,
+      "finalPhase": "active"
+    },
+    {
+      "scenario": "existing-auth-magiclink",
+      "secondBrowser": true,
+      "explicitVerify": true,
+      "boundedAdmission": true,
+      "ordinaryPasswordResume": false,
+      "atomicAcceptBeforeContext": true,
+      "finalPhase": "household"
+    },
+    {
+      "scenario": "signed-in-other-account",
+      "existingAccountPreserved": true,
+      "rejectedBeforeVerify": true,
+      "localCachePreserved": true,
+      "sameEmailHashUsableInFreshContext": true,
+      "freshContextPhase": "admission"
+    }
+  ]
+}

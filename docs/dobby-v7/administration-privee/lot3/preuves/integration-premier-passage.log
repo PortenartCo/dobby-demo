@@ -1,0 +1,82 @@
+✔ T02/T12 real signup open gives no business access; closed signup preserves old logins (18149.361623ms)
+✔ T12 owner checks apply at Edge and direct SQL RPC and expose no family content (850.178191ms)
+✔ T03 new nominative invitation is not active before accept; concurrent double-click and replay create one household (1828.547454ms)
+✔ T04 rejection causes no Auth delivery; existing adult joins only the requested family without duplicate account (1876.588934ms)
+✔ T04 child remains blocked by production gates; fixture-only release links existing canonical profile unchanged (2272.848077ms)
+✖ T13 interruption after Auth before DB confirmation leaves no access and requires explicit recovery (2028.885913ms)
+✖ T13 committed DB result loss and orphan delivery are recoverable without silent resend (2694.339955ms)
+✔ T03 revoked, expired and email-changed admissions refuse current actual sessions (3741.604707ms)
+✔ T05 pending target suspension and reactivation never restore its old admission or session (2012.272969ms)
+✔ T04 requester suspension after approval prevents acceptance and remains revoked after explicit reactivation (2356.576008ms)
+✔ T03 real short GoTrue OTP expiry is observed, not simulated by a mocked response (5502.133251ms)
+✔ T10/T13 existing account PKCE recovery and password login work while signup is closed (941.648495ms)
+✖ rollback disables new administration while retaining guards, decisions and old member access (197.08918ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 10
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54117.109648
+
+✖ failing tests:
+
+test at tests/private-access/lot3/invite-delivery.test.mjs:157:1
+✖ T13 interruption after Auth before DB confirmation leaves no access and requires explicit recovery (2028.885913ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'approved' !== 'sent'
+
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/invite-delivery.test.mjs:166:9)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'approved',
+    expected: 'sent',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/invite-delivery.test.mjs:170:1
+✖ T13 committed DB result loss and orphan delivery are recoverable without silent resend (2694.339955ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  'approved' !== 'sent'
+
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/invite-delivery.test.mjs:181:139)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'approved',
+    expected: 'sent',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/invite-delivery.test.mjs:240:1
+✖ rollback disables new administration while retaining guards, decisions and old member access (197.08918ms)
+  AssertionError [ERR_ASSERTION]: Local PostgreSQL query: ERROR:  42501: permission denied for function dobby_access_admin
+  LOCATION:  aclcheck_error, aclchk.c:2843
+
+
+  3 !== 0
+
+      at must (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/local-auth.mjs:50:9)
+      at Object.sql (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/local-auth.mjs:59:34)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/invite-delivery.test.mjs:243:7)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

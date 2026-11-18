@@ -103,6 +103,16 @@ const readRPCs=new Set(['dobby_v7_context','dobby_v7_preview_invitation','dobby_
 const setupRPCs={profile:new Set(['dobby_v7_update_profile']),household:new Set(['dobby_v7_update_profile','dobby_v7_create_household','dobby_v7_accept_invitation'])};
 const ownMagicFields=new Set(['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony']);
 const canonicalActiveIdentity=access=>typeof access?.userId==='string'&&access.userId.length>0&&access.authenticated===true&&access.verified===true&&access.phase==='active'&&typeof access.householdId==='string'&&access.householdId.length>0&&typeof access.memberId==='string'&&access.memberId.length>0&&access.profile?.id===access.memberId;
+// This is a separate transport, never a permission to perform generic writes
+// from an unverified identity. The native driver also binds it to one session.
+export function assertAdmissionRPC({name,body,admissionId}={}){
+ const uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+ if(!uuid(admissionId)||!body||typeof body!=='object'||Array.isArray(body)||body.p_admission_id!==admissionId)throw Error('Transport d’admission invalide.');
+ const keys=Object.keys(body).sort().join(',');
+ if(name==='dobby_access_context'&&keys==='p_admission_id')return;
+ if(name==='dobby_access_accept'&&keys==='p_admission_id,p_operation_id,p_profile'&&uuid(body.p_operation_id)&&(body.p_profile===null||body.p_profile&&typeof body.p_profile==='object'&&!Array.isArray(body.p_profile)))return;
+ throw Error('Seuls le contexte et la confirmation d’admission sont autorisés.');
+}
 export function isCanonicalChildMissionCompletion({query='',body={},access=null}={}){
  if(!canonicalActiveIdentity(access)||access.profile.memberCategory!=='child'||access.permissions?.canCompleteMissionsV3!==true||typeof query!=='string'||!body||typeof body!=='object'||Array.isArray(body)||
   query.split('?')[0].replace(/^rpc\//,'')!=='dobby_missions_v3_write'||Object.keys(body).some(key=>!['p_household_id','p_expected_revision','p_operation_id','p_intent'].includes(key))||

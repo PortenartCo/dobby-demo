@@ -1,5 +1,6 @@
 /* Routes reflect the native server-backed access state; they never create identity. */
 export function destination(state = {}, { invitationPending = false, invitationType = 'generic' } = {}) {
+  if (state.phase === 'admission-confirmation' || state.phase === 'admission') return 'access-confirmation';
   if (state.phase === 'active') {
     if (!state.verified || !state.userId || !state.householdId || !state.memberId) return 'access-unavailable';
     if (invitationPending) return 'access-join';

@@ -7,7 +7,7 @@ window.DobbyAccess = (() => {
   const model = import('./access-flow.mjs');
   const pendingKey = 'v7-incoming-invitation', recoveryKey='v7-access-recovery';
   let context, initialized, operation, unsubscribe, invitationToken = '', invitationType='generic', invitation = null;
-  let callbackError = '', recovery = false, lastUser = null, creatingInvitation = null, loggingOut = false;
+  let callbackError = '', recovery = false, lastUser = null, creatingInvitation = null, loggingOut = false, resumableAdmission = null;
   const api = () => E.win().DobbyFamilyUI;
   const account = () => api().access;
   const state = () => account().state();
@@ -27,6 +27,7 @@ window.DobbyAccess = (() => {
     // contain account details and must never become a support diagnostic.
     const stage=error?.stage,code=error?.code;
     const http=Number.isInteger(error?.status)&&error.status>=100&&error.status<=599?String(error.status):'INDISPONIBLE';
+    if(stage==='admission'&&code==='ADMISSION_SIGNED_IN')return 'Un compte est déjà connecté dans ce navigateur. Ouvrez le lien reçu par e-mail dans un autre profil de navigateur, ou déconnectez-vous puis rouvrez ce lien.';
     if(stage==='auth'){
       if(code==='invalid_credentials')return 'L’adresse e-mail ou le mot de passe n’a pas été reconnu. Référence : CONNEXION-'+http+'-IDENTIFIANTS.';
       if(code==='email_not_confirmed')return 'Votre adresse e-mail doit être confirmée avant la connexion. Référence : CONNEXION-'+http+'-EMAIL.';
@@ -118,10 +119,10 @@ window.DobbyAccess = (() => {
       await account().ready;
       if(incoming?.providerError){
         callbackError='Ce lien n’est plus valide. Connectez-vous ou demandez un nouveau lien.';
-        try {await account().refresh();}catch {}
+        if(!incoming.admissionCallback)try {await account().refresh();}catch {}
       } else if(incoming?.callbackURL){
         try {const {canonicalAuthCallback}=await model;const result=await account().confirmFromURL(canonicalAuthCallback(incoming.callbackURL,location.href));recovery=!!(result.recovery||incoming.recovery);}
-        catch {callbackError='Ce lien de confirmation ne peut plus être utilisé ici. Connectez-vous ou demandez un nouveau lien.';try {await account().refresh();}catch {}}
+        catch {callbackError='Ce lien de confirmation ne peut plus être utilisé ici. Connectez-vous ou demandez un nouveau lien.';if(!incoming.admissionCallback)try {await account().refresh();}catch {}}
       } else {try {await account().refresh();}catch {callbackError='La connexion au foyer n’a pas pu être vérifiée. Réessayez.';}}
       // Restore only after Auth/context refresh: the initial facade may still be blank.
       const saved=await api().meta(pendingKey),owner=state().userId;
@@ -131,6 +132,8 @@ window.DobbyAccess = (() => {
       const recoveryRecord=await api().meta(recoveryKey);
       if(recovery&&owner)await api().putMeta(recoveryKey,{userId:owner});
       else recovery=!!(owner&&recoveryRecord?.userId===owner);
+      const resume=await api().meta('v7-admission-resume'),uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+      if(uuid(resume?.admissionId)&&uuid(resume?.userId))resumableAdmission={admissionId:resume.admissionId,userId:resume.userId};
       incoming=null;
       lastUser=state().userId;
       unsubscribe=account().subscribe?.(next=>{
@@ -166,6 +169,7 @@ window.DobbyAccess = (() => {
     const copy=shell('Bienvenue dans DOBBY','Une maisonnée organisée, un peu de magie au quotidien.');
     context.main.classList.add('access-welcome');
     copy.append(el('p','Missions, repas, courses, événements, contrats et assurances : retrouvez les informations de votre foyer dans un même grimoire.','access-description'),button('Continuer',()=>go('access-auth',{mode:'login'})));
+    if(resumableAdmission)copy.append(button('Reprendre mon admission',()=>go('access-auth',{mode:'admission'}),true));
   }
   function authentication() {
     const mode=context.ui.accessMode||'login';
@@ -188,7 +192,7 @@ window.DobbyAccess = (() => {
       if(signup&&password.value!==confirmation.value){confirmation.setCustomValidity('Les mots de passe doivent être identiques.');status('Les mots de passe doivent être identiques.',true);return;}
       const {authReturnURL}=await model;const redirectTo=authReturnURL(location.href);
       if(reset){await account().recover(email.value,{redirectTo});await go('access-confirmation');}
-      else {await account()[signup?'signUp':'signIn'](email.value,password.value,{redirectTo});await next();}
+      else {if(mode==='admission'&&!resumableAdmission)throw Error('Une admission à reprendre est requise.');await account()[signup?'signUp':'signIn'](email.value,password.value,mode==='admission'?{admissionId:resumableAdmission.admissionId,expectedUserId:resumableAdmission.userId}:{redirectTo});await next();}
     });
     if(confirmation){const clearMismatch=()=>confirmation.setCustomValidity('');confirmation.addEventListener('input',clearMismatch);password.addEventListener('input',clearMismatch);}
     if(!state().configured){action.disabled=true;action.dataset.unavailable='';status('La connexion est momentanément indisponible. Réessayez plus tard.',true);}
@@ -260,6 +264,24 @@ window.DobbyAccess = (() => {
     copy.append(form,result,button('Créer un nouveau foyer',async()=>{await clearInvitation();await go(state().authenticated?'access-create':'access-auth',{mode:'signup'});},true));show();
   }
   function confirmation() {
+    const current=state();
+    if(current.phase==='admission-confirmation'){
+      const copy=shell('Confirmer votre accès à DOBBY','Ce lien personnel permet de confirmer votre identité. Votre accès au foyer sera vérifié ensuite.');
+      copy.append(button('Accepter et continuer',async()=>{await account().confirmAdmission();await next();}));return;
+    }
+    if(current.phase==='admission'){
+      const admission=current.admission,copy=shell('Confirmer votre admission','L’accès familial s’ouvre après la confirmation de votre admission.');
+      if(!admission){copy.append(el('p','La confirmation serveur de votre invitation n’est pas encore disponible.'),button('Vérifier mon admission',async()=>{await account().inspectAdmission();await next();}));return;}
+      if(!['approved','delivering','sent','accepted'].includes(admission.state)){copy.append(el('p','Cette admission n’est pas disponible. Demandez un nouveau lien à la personne qui vous invite.'));return;}
+      if(admission.requiresProfile){
+        const form=el('form','','access-form');
+        const firstName=field(form,'Prénom','firstName',{required:true,maxLength:80,autocomplete:'given-name'}),lastName=field(form,'Nom','lastName',{maxLength:80,autocomplete:'family-name'}),birthdate=field(form,'Date de naissance (facultatif)','birthdate',{type:'date',maxLength:10,autocomplete:'bday'});
+        submit(form,'Confirmer mon admission',async()=>{await account().admit({admissionId:admission.id,profile:{firstName:firstName.value,lastName:lastName.value,birthdate:birthdate.value}});resumableAdmission=null;await next();});copy.append(form);
+      }else{
+        copy.append(el('p','Votre profil enfant existant sera conservé.'),button('Confirmer mon admission',async()=>{await account().admit({admissionId:admission.id});resumableAdmission=null;await next();}));
+      }
+      return;
+    }
     const copy=shell('Consultez votre messagerie','Si votre adresse permet cette opération, un message contient le lien pour continuer.');
     copy.append(el('p','Ouvrez le lien dans ce navigateur pour reprendre le parcours. Vous pourrez aussi confirmer votre adresse puis revenir vous connecter.','access-description'),button('Revenir à la connexion',()=>go('access-auth',{mode:'login'})));
   }

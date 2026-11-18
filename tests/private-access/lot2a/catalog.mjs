@@ -26,9 +26,10 @@ const block = (s,tag) => {
  assert.ok(start>=0&&end>start,tag);return s.slice(start,end+('END $'+tag+'$;').length);
 };
 export const candidate = () => readFileSync(resolve(root,'supabase/migrations',readdirSync(resolve(root,'supabase/migrations')).find(x=>x.endsWith('_dobby_private_access_tables_rpc.sql'))),'utf8');
-export function apply() { return run('SET ROLE postgres;'+candidate()); }
-export function catalog() {
- const info=start();
+export function apply(executeSQL = run) { return executeSQL('SET ROLE postgres;'+candidate()); }
+export function catalog({ startDatabase = start, executeSQL = run } = {}) {
+ const run = executeSQL;
+ const info=startDatabase();
  run(`CREATE ROLE dobby_socle_writer NOLOGIN NOINHERIT NOBYPASSRLS;
  CREATE ROLE dobby_missions_v2_writer NOLOGIN NOINHERIT NOBYPASSRLS;
  -- Synthetic maintenance capability, not a runtime grant or a hosted assertion.

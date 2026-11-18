@@ -7,7 +7,7 @@ const DB_NAME = 'dobby-v5-household-preview-v2';
 const KEY_PREFIX = 'sb_publishable_';
 const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
-  db: null, core: null, key: null, session: null, context: null, householdId: null,
+  db: null, core: null, key: null, session: null, admission: null, context: null, householdId: null,
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
   homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null
 };
@@ -113,7 +113,7 @@ function assertRequestActor(expected){
   const actual=requestActor();
   if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
 }
-async function keepSession(result,expected=null) {
+async function keepSession(result,expected=null,{persist=true}={}) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
   if(expected)assertRequestActor(expected);
   const old = f.session || {};
@@ -126,7 +126,7 @@ async function keepSession(result,expected=null) {
   if(expected){
     await updateMeta('session',()=>{assertRequestActor(expected);return next;});
     assertRequestActor(expected);f.session=next;
-  }else{f.session=next;await putMeta('session',f.session);}
+  }else{f.session=next;if(persist)await putMeta('session',f.session);}
 }
 async function refreshToken(expected=requestActor()) {
   assertRequestActor(expected);
@@ -146,6 +146,7 @@ async function token(expected=requestActor()) {
   return f.session.access_token;
 }
 function assertNativeSharedWrite(method,query,body={}) {
+  if(f.admission)throw Error('Confirmez votre admission avant tout accès familial.');
   let state=accessController?.state?.()||f.accessContext;
   // A new native Auth session can precede the next V7 context refresh. Its
   // blank/stale V7 state is authenticated but unverified, never local-only.
@@ -172,6 +173,19 @@ async function authorized(method, query, body, headers = {}) {
     assertNativeSharedWrite(method,query,body);
     const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result;
   }
+}
+async function admissionRPC(name,body){
+ const expected=requestActor(),admission=f.admission;
+ const guard=()=>{
+  assertRequestActor(expected);
+  if(!admission||f.admission!==admission||admission.userId!==expected.userId||admission.epoch!==expected.epoch||f.householdId||f.context||Date.now()>admission.expiresAt)throw Error('Cette session d’admission a expiré ou changé.');
+  if(!f.core?.assertAdmissionRPC)throw Error('Le transport d’admission est indisponible.');
+  f.core.assertAdmissionRPC({name,body,admissionId:admission.id});
+ };
+ guard();const bearer=f.session?.access_token;if(!bearer)throw Error('Connexion d’admission requise.');
+ // Admission never invokes ordinary refresh/sync or automatically retries a
+ // one-shot action. The caller may repeat the same idempotent DB operation.
+ const result=await raw('/rest/v1/rpc/'+name,'POST',body,{},bearer);guard();return result;
 }
 const SHARED_BUCKET='dobby-family-files';
 function validStoragePath(path){
@@ -321,7 +335,7 @@ async function push(snapshot, epoch) {
   await updateItem(snapshot.id,current=>current?{...f.core.afterPush(current,snapshot,server),import_source_id:server.import_source_id||current.import_source_id||null}:null,epoch);
 }
 async function sync() {
-  if (!f.ready || !f.session || !f.key) return;
+  if (!f.ready || !f.session || !f.key || f.admission) return;
   if (f.syncing) { f.again = true; return; }
   f.syncing = true;
   const epoch = f.epoch;
@@ -597,7 +611,7 @@ async function login(form) {
 async function logout() {
   const old = f.session;
   f.epoch += 1;
-  f.accessContext = null;
+  f.accessContext = null; f.admission = null;
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
   await delMeta('session');
@@ -792,12 +806,23 @@ function ensureAccess(){
     const expected=requestActor(),jwt=await token(expected);assertRequestActor(expected);
     const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;
    },
-   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),
+   rpc:(name,body,options={})=>{if(options.admission)return admissionRPC(name,body);if(f.admission)throw Error('Confirmez votre admission avant tout accès familial.');return options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body);},
    clearBinding:()=>{f.accessContext=null;},
-   async installSession(result,before){
+   async installSession(result,before,{admissionId}={}){
     if(f.epoch!==before.epoch||(f.session?.user_id||null)!==before.userId)throw Error('Le compte a changé pendant la connexion.');
     f.epoch++;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
-    await keepSession(result);repaint();refreshModal();
+    f.admission=admissionId?{id:admissionId,userId:result.user.id,epoch:f.epoch,expiresAt:Date.now()+Math.min(600000,Math.max(0,Number(result.expires_in||3600)*1000))}:null;
+    await keepSession(result,null,{persist:!admissionId});repaint();refreshModal();
+   },
+   beginAdmission(admissionId,before){
+    if(f.epoch!==before.epoch||f.session?.user_id!==before.userId)throw Error('Le compte a changé pendant la vérification.');
+    f.epoch++;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.cache.clear();f.provider?.reset?.();
+    f.admission={id:admissionId,userId:before.userId,epoch:f.epoch,expiresAt:Date.now()+600000};
+   },
+   async completeAdmission(before,admissionId){
+    const expected=requestActor(),admission=f.admission;
+    const guard=()=>{assertRequestActor(expected);if(expected.epoch!==before.epoch||expected.userId!==before.userId||!admission||f.admission!==admission||admission.id!==admissionId)throw Error('La session d’admission a changé.');};
+    guard();await updateMeta('session',()=>{guard();return f.session;});guard();f.admission=null;
    },
    async bind(context,before){
     const guard=()=>{if(f.epoch!==before.epoch||f.session?.user_id!==context.userId)throw Error('Le compte a changé pendant la vérification.');};
@@ -837,7 +862,7 @@ const accessFacade=Object.freeze({
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
  refresh:refreshPublicAccess,
- ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','confirmAdmission','inspectAdmission','admit','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;

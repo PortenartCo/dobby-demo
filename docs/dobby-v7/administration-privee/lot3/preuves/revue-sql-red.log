@@ -1,0 +1,114 @@
+✖ request pagination reaches older pending requests behind recent terminal requests (104.58341ms)
+✖ approval before a target reactivation cutoff cannot bind the new generation (112.634166ms)
+✖ live child invitation blocks a competing approval before any delivery claim (124.654272ms)
+✖ expired child invitation is retained as revoked history and a new canonical link succeeds (156.31997ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18707.460019
+
+✖ failing tests:
+
+test at tests/private-access/lot3/admin-sql.test.mjs:113:1
+✖ request pagination reaches older pending requests behind recent terminal requests (104.58341ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  22023: Invalid closed command payload
+  CONTEXT:  PL/pgSQL function dobby_access_private.payload_keys(jsonb,text[],text[]) line 6 at RAISE
+  SQL statement "SELECT dobby_access_private.payload_keys(p_payload,'{}',ARRAY['cursor','limit'])"
+  PL/pgSQL function public.dobby_access_admin(text,jsonb) line 13 at PERFORM
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+
+
+  3 !== 0
+
+      at must (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/local-db.mjs:35:35)
+      at exercise (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:20:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:122:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/admin-sql.test.mjs:127:1
+✖ approval before a target reactivation cutoff cannot bind the new generation (112.634166ms)
+  AssertionError [ERR_ASSERTION]:
+  CASE_READY
+  {"delivery": {"id": "731c15ee-0f6b-4820-80cf-243148db6746", "state": "uncertain", "attemptId": "731c15ee-0f6b-4820-80cf-243148db6746", "requiresResume": true}, "replayed": false, "admission": {"id": "46054d0d-afd4-4ecc-8919-b2a3e6b35eea", "email": "fixture-5@example.invalid", "state": "approved", "purpose": "new-household", "memberId": null, "revision": 3, "expiresAt": "2026-11-19T12:30:24.908798+00:00", "householdId": null, "requestedBy": "00000000-0000-4000-8000-000000000001", "targetUserId": null, "requiresProfile": true}}
+  {"delivery": {"id": "8bb6dafe-5e29-490d-bfa5-15e53d30adcc", "state": "sent", "attemptId": "8bb6dafe-5e29-490d-bfa5-15e53d30adcc", "requiresResume": false}, "replayed": false, "admission": {"id": "46054d0d-afd4-4ecc-8919-b2a3e6b35eea", "email": "fixture-5@example.invalid", "state": "sent", "purpose": "new-household", "memberId": null, "revision": 5, "expiresAt": "2026-11-19T12:30:24.908798+00:00", "householdId": null, "requestedBy": "00000000-0000-4000-8000-000000000001", "targetUserId": "00000000-0000-4000-8000-000000000005", "requiresProfile": true}}
+
+      at denied (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:23:45)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:138:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/admin-sql.test.mjs:157:1
+✖ live child invitation blocks a competing approval before any delivery claim (124.654272ms)
+  AssertionError [ERR_ASSERTION]:
+  CASE_READY
+  {"replayed": false, "admission": {"id": "cc0f492b-e586-416f-b864-af68c4ef3fb8", "email": "fixture-6@example.invalid", "state": "approved", "purpose": "family-child", "memberId": "TEST_EXTRA_CHILD", "revision": 2, "expiresAt": "2026-11-19T12:30:25.040642+00:00", "householdId": "00000000-0000-4000-8000-000000000101", "requestedBy": "00000000-0000-4000-8000-000000000001", "targetUserId": null, "requiresProfile": false}}
+  {"delivery": {"id": "07a3b8fc-1477-46d3-a001-5a0786ebba3f", "state": "sent", "attemptId": "07a3b8fc-1477-46d3-a001-5a0786ebba3f", "requiresResume": false}, "replayed": false, "admission": {"id": "cc0f492b-e586-416f-b864-af68c4ef3fb8", "email": "fixture-6@example.invalid", "state": "sent", "purpose": "family-child", "memberId": "TEST_EXTRA_CHILD", "revision": 4, "expiresAt": "2026-11-19T12:30:25.040642+00:00", "householdId": "00000000-0000-4000-8000-000000000101", "requestedBy": "00000000-0000-4000-8000-000000000001", "targetUserId": "00000000-0000-4000-8000-000000000006", "requiresProfile": false}}
+  {"replayed": false, "admission": {"id": "b7ce83a5-dbc3-4a56-b32b-38522d00a984", "email": "fixture-5@example.invalid", "state": "approved", "purpose": "family-child", "memberId": "TEST_EXTRA_CHILD", "revision": 2, "expiresAt": "2026-11-19T12:30:25.049577+00:00", "householdId": "00000000-0000-4000-8000-000000000101", "requestedBy": "00000000-0000-4000-8000-000000000001", "targetUserId": null, "requiresProfile": false}}
+
+      at denied (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:23:45)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:158:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/admin-sql.test.mjs:160:1
+✖ expired child invitation is retained as revoked history and a new canonical link succeeds (156.31997ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  23505: duplicate key value violates unique constraint "socle_one_pending_child_invitation"
+  CONTEXT:  SQL statement "INSERT INTO dobby_v7_private.invitations(id,household_id,created_by,token_hash,expires_at,target_member_id,invitation_kind,admission_id,target_user_id)
+   VALUES(inv,p_household,p_requester,sha256(convert_to(token,'UTF8')),p_expires,p_member,CASE WHEN p_member IS NULL THEN 'member' ELSE 'child-account' END,p_admission,p_target)
+   ON CONFLICT(id) DO UPDATE SET expires_at=excluded.expires_at
+   WHERE dobby_v7_private.invitations.admission_id=p_admission AND dobby_v7_private.invitations.target_user_id=p_target
+    AND dobby_v7_private.invitations.accepted_by IS NULL AND dobby_v7_private.invitations.revoked_at IS NULL"
+  PL/pgSQL function dobby_socle_private.access_issue_invitation(uuid,uuid,uuid,uuid,text,timestamp with time zone) line 6 at SQL statement
+  PL/pgSQL function public.dobby_access_admin(text,jsonb) line 151 at assignment
+  SCHEMA NAME:  dobby_v7_private
+  TABLE NAME:  invitations
+  CONSTRAINT NAME:  socle_one_pending_child_invitation
+  LOCATION:  _bt_check_unique, nbtinsert.c:666
+
+
+  3 !== 0
+
+      at must (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/local-db.mjs:35:35)
+      at exercise (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:20:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/admin-sql.test.mjs:161:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

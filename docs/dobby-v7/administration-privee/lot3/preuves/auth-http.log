@@ -1,0 +1,24 @@
+✔ T02/T12 real signup open gives no business access; closed signup preserves old logins (17023.909089ms)
+✔ T12 owner checks apply at Edge and direct SQL RPC and expose no family content (763.484532ms)
+✔ native Deno handler serves the same owner-only API against real local Auth and PostgreSQL (1203.74384ms)
+✔ T03 new nominative invitation is not active before accept; concurrent double-click and replay create one household (1761.656647ms)
+✔ T04 rejection causes no Auth delivery; existing adult joins only the requested family without duplicate account (1882.084446ms)
+✔ T04 child remains blocked by production gates; fixture-only release links existing canonical profile unchanged (2165.802027ms)
+✔ T04 live child invitation blocks another delivery; expired invitation is closed before replacement (3437.533426ms)
+✔ T13 interruption after Auth before DB confirmation leaves no access and requires explicit recovery (2108.497662ms)
+✔ T13 committed DB result loss and orphan delivery are recoverable without silent resend (2521.19735ms)
+✔ T05/T13 an unbound old approval cannot cross target suspension and reactivation (3812.541884ms)
+✔ T03 revoked, expired and email-changed admissions refuse current actual sessions (3782.630941ms)
+✔ T05 pending target suspension and reactivation never restore its old admission or session (3213.929854ms)
+✔ T04 requester suspension after approval prevents acceptance and remains revoked after explicit reactivation (2270.600667ms)
+✔ T03 real short GoTrue OTP expiry is observed, not simulated by a mocked response (5028.18003ms)
+✔ T10/T13 existing account PKCE recovery and password login work while signup is closed (1125.890676ms)
+✔ rollback disables new administration while retaining guards, decisions and old member access (699.559188ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62684.881092

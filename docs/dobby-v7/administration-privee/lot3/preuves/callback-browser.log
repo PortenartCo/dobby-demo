@@ -1,0 +1,10 @@
+✔ actual GoTrue links require explicit confirmation in a separate isolated Chromium context (36024.584517ms)
+ℹ {"browser":"154.0.8037.57","playwright":"1.62.1","auth":"v2.197.0","rest":"v14.18","smtp":"v1.34.0","proofs":[{"scenario":"new-auth-family-parent","secondBrowser":true,"explicitVerify":true,"boundedAdmission":true,"ordinaryPasswordResume":true,"atomicAcceptBeforeContext":true,"finalPhase":"active"},{"scenario":"existing-auth-magiclink","secondBrowser":true,"explicitVerify":true,"boundedAdmission":true,"ordinaryPasswordResume":false,"atomicAcceptBeforeContext":true,"finalPhase":"household"},{"scenario":"signed-in-other-account","existingAccountPreserved":true,"rejectedBeforeVerify":true,"localCachePreserved":true,"sameEmailHashUsableInFreshContext":true,"freshContextPhase":"admission"}]}
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36891.699602

@@ -1,0 +1,26 @@
+✔ verifies JWT and active owner before exposing Auth Admin capability (54.993028ms)
+✔ strict commands reject invalid UUID, extra fields, purpose and pagination (8.784669ms)
+✔ CORS is exact, POST JSON only, bounded streamed input and no reflected origin (1.940605ms)
+✔ new recipient persists delivery before Auth invite, uses trusted redirect and binds exact UUID (22.274761ms)
+✔ existing recipient uses OTP create_user false and never invokes invite (2.847899ms)
+✔ bounded incomplete Auth listing cannot be mistaken for recipient absence (5.196712ms)
+✔ persisted attempt replay returns uncertain without automatic Auth request (5.170507ms)
+✔ replayed admission decision never reclaims a changed revision with an old child operation (1.368631ms)
+✔ Auth timeout and DB confirmation failure preserve uncertain status without disclosing diagnostics (8.316628ms)
+✔ explicit confirmed resume records new attempt and reconciles existing Auth user (2.671114ms)
+✔ explicit resume reinvites the same unconfirmed invited Auth UUID without OTP signup (1.845652ms)
+✔ explicit reinvitation refuses any unexpected change of Auth UUID (1.762371ms)
+✔ an initial admission does not automatically reinvite an existing unconfirmed account (1.725606ms)
+✔ an approved pending target can be suspended at revision zero without Auth mutation (1.039233ms)
+✔ replaying a completed resume reports sent without another Auth request (0.893752ms)
+✔ reactivation finalizes session boundary in a second caller JWT transaction (1.457887ms)
+✔ failure to finalize reactivation reports failure while the DB remains fail closed (1.205809ms)
+✔ pending requests have their own validated cursor independent of account pagination (2.334982ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 369.472841
