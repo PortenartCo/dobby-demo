@@ -17,13 +17,13 @@
     const parameters = new URLSearchParams(split >= 0 ? hash.slice(split + 1) : hash);
     const invitation = url.searchParams.get('invite') || url.searchParams.get('invitation') ||
       (split >= 0 ? parameters.get('invite') || parameters.get('invitation') : null);
-    const callback = url.searchParams.has('code') || parameters.has('access_token') || parameters.has('refresh_token');
+    const callback = url.searchParams.has('code') || url.searchParams.has('token_hash') || parameters.has('token_hash') || parameters.has('access_token') || parameters.has('refresh_token');
     const providerError = ['error','error_description','error_code'].some(key=>url.searchParams.has(key)||parameters.has(key));
     const recovery = url.searchParams.get('type') === 'recovery' || parameters.get('type') === 'recovery';
-    const sensitive = ['invite', 'invitation', 'code', 'dobby_flow', 'token', 'token_hash', 'access_token', 'refresh_token', 'expires_in', 'expires_at', 'token_type', 'type', 'error', 'error_description', 'error_code'];
+    const sensitive = ['invite', 'invitation', 'admission_id', 'code', 'dobby_flow', 'token', 'token_hash', 'access_token', 'refresh_token', 'expires_in', 'expires_at', 'token_type', 'type', 'error', 'error_description', 'error_code'];
     for (const name of sensitive) clean.searchParams.delete(name);
-    if (callback || providerError || invitation && split >= 0) clean.hash = 'access';
-    return { cleanURL: clean.href, callbackURL: callback && !providerError ? url.href : null, invitation, recovery, providerError };
+    if (callback || providerError || sensitive.some(name=>parameters.has(name))) clean.hash = 'access';
+    return { cleanURL: clean.href, callbackURL: callback && !providerError ? url.href : null, admissionCallback:url.searchParams.has('token_hash')||parameters.has('token_hash'), invitation, recovery, providerError };
   }
   return Object.freeze({ capture });
 });

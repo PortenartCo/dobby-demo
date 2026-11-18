@@ -43,6 +43,8 @@ Un compte existant est retrouvé par Auth Admin puis reçoit une connexion avec 
 
 Activation, profil personnel, écritures canoniques V7, admission et reçus sont une seule transaction. Aucun droit actif provisoire n'est commité. L'enfant conserve son identifiant, JSON familial, crédits/magie et révision. Un ancien compte lié n'est pas déplacé. Les replays revérifient suspension, génération et demandeur avant tout reçu. L'ancien créateur libre V7 refuse ; les anciennes invitations non consommées sont révoquées, les consommées restent conservées.
 
+Après une suspension d'un compte encore en attente puis une réactivation explicite, seule **une nouvelle admission approuvée** dans la génération courante peut accorder un premier droit de foyer. Le bridge familial exige l'absence de tout lien canonique, de toute appartenance (même inactive) et de tout reçu historique `create_household`. La consommation verrouille l'autorisation et compare sa révision avant d'accorder l'unique quota booléen. La réactivation et les replays n'accordent jamais ce droit ; un foyer déjà créé ne peut produire un second quota.
+
 ## Privilèges, gates et reprise
 
 `dobby_access_writer` n'a aucun grant de lecture/écriture sur les payloads familiaux ni Storage. Les bridges `access_*` des writers familiaux vérifient le Parent enregistré et ne retournent que des identifiants opaques. Aucun JWT de demandeur n'est fabriqué. Les verrous d'autorisation précèdent les admissions et verrous métier ; l'acceptation stabilise aussi l'autorisation du demandeur contre sa suspension.

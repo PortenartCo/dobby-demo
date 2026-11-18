@@ -31,7 +31,8 @@ function fixture(options={}) {
   if(target.pathname==='/auth/v1/admin/users'){
    if(options.lookupFailure)return json({message:'sensitive Auth payload'},500);
    if(options.truncated)return json({users:Array.from({length:100},(_,n)=>({id:uuid(n+100),email:`other${n}@example.invalid`}))});
-   return json({users:options.existing?[{id:uuid(40),email,email_confirmed_at:options.invitedUnconfirmed?null:'2026-01-01T00:00:00Z',invited_at:options.invitedUnconfirmed?'2026-01-01T00:00:00Z':null}]:[]});
+   // GoTrue v2.197.0 omits email_confirmed_at for an unconfirmed invitation.
+   return json({users:options.existing?[{id:uuid(40),email,...(options.invitedUnconfirmed?{invited_at:'2026-01-01T00:00:00Z'}:{email_confirmed_at:'2026-01-01T00:00:00Z'})}]:[]});
   }
   if(target.pathname==='/auth/v1/invite'){
    if(options.sendFailure)throw new Error('secret transport diagnostic');

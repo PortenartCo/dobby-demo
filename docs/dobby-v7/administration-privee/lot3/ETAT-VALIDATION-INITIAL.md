@@ -11,3 +11,9 @@ Point de sauvegarde intermédiaire du 18 novembre 2026, pas une déclaration de 
 Le checkpoint conserve les contrats et tests avant publication de l'implémentation serveur complète. Les tests qui importent les modules nouveaux doivent être lus avec le commit d'implémentation suivant. Les résultats définitifs, étapes de reprise, réserves et preuves expurgées seront dans RAPPORT.md/RESULTATS.json.
 
 Aucun compte, e-mail ou projet réel utilisé. Aucun changement Supabase hébergé ni migration historique modifiée. Les limites du Lot 2B et la fermeture des gates de production restent inchangées.
+
+## Checkpoint d'implémentation avant corrections de revue
+
+Les 13 scénarios métier HTTP réels passent après correction des reprises GoTrue et du rollback ; 17 tests Edge et 10 tests SQL ciblés passent. Le code passe aussi `deno check` en Deno 2.9.6.
+
+La revue indépendante signale quatre cas complémentaires à corriger avant livraison : approbation non liée traversant une suspension/réactivation, pagination des demandes sans UUID, ancienne invitation enfant expirée et callback ouvert depuis un autre compte déjà connecté. Leur sauvegarde à ce checkpoint ne vaut ni validation finale ni autorisation de déploiement.

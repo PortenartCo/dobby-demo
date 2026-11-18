@@ -203,6 +203,11 @@ test('T05 pending target suspension and reactivation never restore its old admis
  assert.equal(active.sessionBoundaryPending,false);assert.equal(currentAdmission(flow.admissionId).state,'revoked');
  await accept(flow,session,profile,uid(),true);
  assert.equal(auth.sql(`SELECT can_create_household FROM dobby_access_private.authorizations WHERE user_id=${q(target)};`),'f');
+ const fresh=await invite('pending-suspend@example.invalid');
+ const newSession=await verify(fresh.link);assert.equal(newSession.user.id,target);
+ await accept(fresh,newSession);
+ assert.equal(auth.sql(`SELECT can_create_household FROM dobby_access_private.authorizations WHERE user_id=${q(target)};`),'t','Only a fresh explicit approval can grant the first household quota');
+ assert.equal(currentAdmission(flow.admissionId).state,'revoked');
  proofs.push({scenario:'pending-suspension-reactivation',result:'pending bound target suspended with closed row, admission revoked atomically; explicit two-transaction reactivation restores no old admission/quota/session'});
 });
 

@@ -5,11 +5,11 @@
 // survive forwarding; a legacy route hash must not bypass account verification.
 const input=new URL(location.href);
 const destination=new URL('./essai-stitch-v7/famille.html#access',input);
-const fields=['invite','invitation','code','dobby_flow','token','token_hash','access_token','refresh_token','expires_in','expires_at','token_type','type','error','error_description','error_code'];
+const fields=['invite','invitation','code','dobby_flow','token','token_hash','admission_id','access_token','refresh_token','expires_in','expires_at','token_type','type','error','error_description','error_code'];
 for(const name of fields)for(const value of input.searchParams.getAll(name))destination.searchParams.append(name,value);
 const fragment=input.hash.slice(1),separator=fragment.indexOf('?');
 const fragmentFields=new URLSearchParams(separator<0?fragment:fragment.slice(separator+1));
-if(['access_token','refresh_token','error','error_description','error_code'].some(name=>fragmentFields.has(name))){
+if(['token_hash','access_token','refresh_token','error','error_description','error_code'].some(name=>fragmentFields.has(name))){
   const callbackFragment=new URLSearchParams();
   for(const name of fields)for(const value of fragmentFields.getAll(name))callbackFragment.append(name,value);
   destination.hash=callbackFragment.toString();
