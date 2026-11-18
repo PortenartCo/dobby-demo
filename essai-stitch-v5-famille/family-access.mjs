@@ -106,7 +106,7 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
    // The bearer is kept only in this one-shot closure. Merely opening a page
    // must never consume an Admin invitation or a login link.
    pendingAdmission={tokenHash:tokens[0],type:types[0],id:ids[0],owner:signature(before),createdAt:driver.now()};
-   clear();return{...publish({phase:'admission-confirmation',userId:before.userId||null,admissionId:ids[0]}),cleanURL};
+   if(!before.userId)clear();return{...publish({phase:'admission-confirmation',userId:before.userId||null,admissionId:ids[0]}),cleanURL};
   }
   const code=url.searchParams.get('code');if(!code)return{...state(),cleanURL};
   const pending=await driver.meta('v7-auth-pending');guard(before);
@@ -132,6 +132,10 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
  }
  async function confirmAdmission(){
   if(confirmationFlight)return confirmationFlight;
+  // Replacing an existing native account here would trigger the account-change
+  // redirect and discard the memory-only admission session. Keep its binding
+  // and the unconsumed email link; an explicit password resume is separate.
+  if(pendingAdmission&&current().userId)throw Object.assign(Error('Un compte est déjà connecté dans ce navigateur. Ouvrez le lien reçu par e-mail dans un autre profil de navigateur, ou déconnectez-vous puis rouvrez ce lien.'),{code:'ADMISSION_SIGNED_IN',stage:'admission'});
   const pending=pendingAdmission;pendingAdmission=null;
   if(!pending||pending.owner!==signature(current())||driver.now()-pending.createdAt<0||driver.now()-pending.createdAt>600000)throw Error('Ce lien de confirmation n’est plus disponible. Demandez un nouveau lien.');
   confirmationFlight=(async()=>{

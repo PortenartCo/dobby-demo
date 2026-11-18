@@ -110,6 +110,62 @@ test('conservative rollback closes administration and keeps existing family cont
  RESET ROLE; ${as(1)} SELECT public.dobby_v7_context();`);
  assert.equal(out.at(-3),'f');assert.equal(out.at(-2),'f');assert.equal(JSON.parse(out.at(-1)).phase,'active');
 });
+test('request pagination reaches older pending requests behind recent terminal requests',()=>{
+ const sql=`${as(1)}
+ SELECT public.dobby_access_request_family_account('oldest-pending@example.invalid','family-parent',NULL,${q(id(4001))});
+ SELECT public.dobby_access_request_family_account('recent-rejected-a@example.invalid','family-parent',NULL,${q(id(4002))}) AS req \\gset
+ SELECT public.dobby_access_admin('decide',jsonb_build_object('admissionId',:'req'::jsonb->'admission'->>'id','decision','reject','expectedRevision',1,'operationId',${q(id(4003))}));
+ SELECT public.dobby_access_request_family_account('recent-rejected-b@example.invalid','family-parent',NULL,${q(id(4004))}) AS req \\gset
+ SELECT public.dobby_access_admin('decide',jsonb_build_object('admissionId',:'req'::jsonb->'admission'->>'id','decision','reject','expectedRevision',1,'operationId',${q(id(4005))}));
+ SELECT ${command('listAccess',{limit:2})} AS page \\gset
+ SELECT jsonb_build_object('first',:'page'::jsonb,'second',public.dobby_access_admin('listAccess',jsonb_build_object('limit',2,'requestsCursor',:'page'::jsonb->>'nextRequestsCursor')));`;
+ const pages=JSON.parse(exercise(sql).at(-1));
+ assert.equal(pages.first.requests.length,2);assert.ok(pages.first.nextRequestsCursor);
+ assert.equal(pages.second.requests.length,1);assert.equal(pages.second.requests[0].email,'oldest-pending@example.invalid');
+ assert.equal(pages.second.requests[0].state,'requested');assert.equal(pages.second.nextRequestsCursor,null);
+});
+test('approval before a target reactivation cutoff cannot bind the new generation',()=>{
+ const sql=`${as(1)} SELECT ${command('invite',{email:'fixture-5@example.invalid',purpose:'new-household',operationId:id(4101)})} AS invite \\gset
+ SELECT :'invite'::jsonb->'admission'->>'id' AS aid \\gset
+ SELECT public.dobby_access_admin('claimDelivery',jsonb_build_object('admissionId',:'aid','expectedRevision',1,'operationId',${q(id(4102))})) AS claim \\gset
+ SELECT :'claim'::jsonb->'delivery'->>'id' AS did \\gset
+ SELECT public.dobby_access_admin('failDelivery',jsonb_build_object('admissionId',:'aid','deliveryId',:'did','operationId',${q(id(4103))},'uncertain',true));
+ RESET ROLE; SET LOCAL ROLE postgres;
+ INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by,generation,sessions_valid_after) VALUES(${q(id(5))},'active',${q(id(1))},1,clock_timestamp());
+ RESET ROLE; ${as(1)}
+ SELECT public.dobby_access_admin('resumeDelivery',jsonb_build_object('admissionId',:'aid','expectedRevision',3,'operationId',${q(id(4104))},'confirmed',true)) AS resumed \\gset
+ SELECT public.dobby_access_admin('recordDelivery',jsonb_build_object('admissionId',:'aid','deliveryId',:'resumed'::jsonb->'delivery'->>'id','targetUserId',${q(id(5))},'operationId',${q(id(4105))}));`;
+ denied(sql);
+});
+function pendingChildLink({expired=false}={}) {
+ return `${as(1)} RESET ROLE;
+ UPDATE public.dobby_v2_modules SET payload=jsonb_set(payload,'{familyMembers}',payload->'familyMembers'||jsonb_build_array(jsonb_build_object('id','TEST_EXTRA_CHILD','memberCategory','child','name','Fictional child')))
+ WHERE household_id=${q(id(101))} AND module='family';
+ UPDATE dobby_access_private.settings SET child_delivery_enabled=true;
+ UPDATE dobby_socle_private.install_state SET family_api_enabled=true,family_client_verified=true,storage_client_verified=true,child_link_client_verified=true;
+ RESET ROLE; ${as(1)}
+ SELECT public.dobby_access_request_family_account('fixture-6@example.invalid','family-child','TEST_EXTRA_CHILD',${q(id(4201))}) AS old_request \\gset
+ SELECT :'old_request'::jsonb->'admission'->>'id' AS old_aid \\gset
+ SELECT public.dobby_access_admin('decide',jsonb_build_object('admissionId',:'old_aid','decision','approve','expectedRevision',1,'operationId',${q(id(4202))}));
+ SELECT public.dobby_access_admin('claimDelivery',jsonb_build_object('admissionId',:'old_aid','expectedRevision',2,'operationId',${q(id(4203))})) AS old_claim \\gset
+ SELECT public.dobby_access_admin('recordDelivery',jsonb_build_object('admissionId',:'old_aid','deliveryId',:'old_claim'::jsonb->'delivery'->>'id','targetUserId',${q(id(6))},'operationId',${q(id(4204))}));
+ ${expired?`RESET ROLE; SET LOCAL ROLE postgres; UPDATE dobby_v7_private.invitations SET expires_at=clock_timestamp()-interval '1 second' WHERE admission_id=:'old_aid'::uuid; RESET ROLE; ${as(1)}`:''}
+ SELECT public.dobby_access_request_family_account('fixture-5@example.invalid','family-child','TEST_EXTRA_CHILD',${q(id(4210))}) AS new_request \\gset
+ SELECT :'new_request'::jsonb->'admission'->>'id' AS aid \\gset
+ SELECT public.dobby_access_admin('decide',jsonb_build_object('admissionId',:'aid','decision','approve','expectedRevision',1,'operationId',${q(id(4211))}));`;
+}
+test('live child invitation blocks a competing approval before any delivery claim',()=>{
+ denied(pendingChildLink());
+});
+test('expired child invitation is retained as revoked history and a new canonical link succeeds',()=>{
+ const out=exercise(pendingChildLink({expired:true})+`
+ SELECT public.dobby_access_admin('claimDelivery',jsonb_build_object('admissionId',:'aid','expectedRevision',2,'operationId',${q(id(4212))})) AS claim \\gset
+ SELECT public.dobby_access_admin('recordDelivery',jsonb_build_object('admissionId',:'aid','deliveryId',:'claim'::jsonb->'delivery'->>'id','targetUserId',${q(id(5))},'operationId',${q(id(4213))}));
+ ${as(5)} SELECT public.dobby_access_accept(:'aid'::uuid,NULL,${q(id(4214))});
+ RESET ROLE; SELECT jsonb_build_object('oldRevoked',revoked_at IS NOT NULL,'oldAccepted',accepted_by IS NOT NULL) FROM dobby_v7_private.invitations WHERE admission_id=:'old_aid'::uuid;`);
+ assert.equal(JSON.parse(out.at(-2)).accepted,true);
+ assert.deepEqual(JSON.parse(out.at(-1)),{oldRevoked:true,oldAccepted:false});
+});
 test('fresh owner approval grants one first-household quota after pending suspension/reactivation',()=>{
  // Separate transactions exercise the real Lot 1 reactivation boundary.
  run(setup()+delivered()+`${as(1)}

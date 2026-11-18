@@ -58,6 +58,31 @@ test('explicit password login can resume its known admission without a business 
  assert.deepEqual(f.meta.get('v7-admission-resume'),{admissionId:ADMISSION,userId:USER});
  const before=f.calls.length;await assert.rejects(f.api.signIn('fictional@example.invalid','TEST-password',{admissionId:'bad'}));assert.equal(f.calls.length,before);
 });
+test('the signed-in hash refusal preserves the explicit password admission resume path',async()=>{
+ const f=fixture();Object.assign(f.native,{userId:USER,epoch:4,verified:false});f.setAuth({access_token:'TEST-B',refresh_token:'TEST-B-refresh',user:{id:OTHER}});
+ await f.api.confirmFromURL(callback());await assert.rejects(f.api.confirmAdmission(),error=>error.code==='ADMISSION_SIGNED_IN');
+ await f.api.signIn('fictional-b@example.invalid','TEST-password',{admissionId:ADMISSION,expectedUserId:OTHER});
+ assert.equal(f.native.userId,OTHER);assert.equal(f.api.state().phase,'admission');assert.equal(f.calls.some(x=>x.path==='/auth/v1/verify'),false);
+ assert.deepEqual(f.calls.filter(x=>x.name).map(x=>x.name),['dobby_access_context']);
+});
+test('an existing verified or unverified Auth user cannot consume another admission link',async t=>{
+ for(const verified of [true,false])await t.test(verified?'verified account':'unverified account',async()=>{
+  const f=fixture();Object.assign(f.native,{userId:USER,epoch:3,verified,householdId:verified?HH:null});
+  f.meta.set('session',{access_token:'TEST-existing-A',user_id:USER});f.meta.set('unrelated-local-note',{keep:'TEST-local'});
+  let clears=0;f.driver.clearBinding=()=>{clears++;};f.setAuth({access_token:'TEST-B',refresh_token:'TEST-B-refresh',user:{id:OTHER}});
+  const nativeBefore=structuredClone(f.native),metadataBefore=JSON.stringify([...f.meta]);
+  await f.api.confirmFromURL(callback());
+  assert.equal(clears,0,'Staging must preserve the existing native binding');
+  for(let attempt=0;attempt<2;attempt++)await assert.rejects(f.api.confirmAdmission(),error=>{
+   assert.equal(error.code,'ADMISSION_SIGNED_IN');assert.equal(error.stage,'admission');assert.match(error.message,/déconnect|profil.*navigateur/i);assert.match(error.message,/lien.*reçu|e.mail/i);return true;
+  });
+  assert.deepEqual(f.native,nativeBefore);assert.equal(JSON.stringify([...f.meta]),metadataBefore);assert.equal(f.calls.length,0);
+  // The local refusal never used the server's one-shot bearer: reopening the
+  // original email in a signed-out profile can still verify the same link.
+  f.native.userId=null;f.native.householdId=null;f.native.verified=false;f.native.epoch++;
+  await f.api.confirmFromURL(callback());await f.api.confirmAdmission();assert.equal(f.calls.filter(x=>x.path==='/auth/v1/verify').length,1);
+ });
+});
 test('a saved admission resume record cannot switch an unrelated authenticated user into that admission',async()=>{
  const f=fixture();f.setAuth({access_token:'TEST-other',refresh_token:'TEST-other-refresh',user:{id:OTHER}});
  await assert.rejects(f.api.signIn('other@example.invalid','TEST-password',{admissionId:ADMISSION,expectedUserId:USER}),/compte|admission/i);
@@ -153,6 +178,20 @@ test('access initialization stages a hash callback without verify or ordinary co
  const sandbox={__flow:flow,location:{href:'https://example.test/dobby/essai-stitch-v7/famille.html#access'},URL,URLSearchParams,document:{body:{dataset:{}}},window:{DobbyFamilyStitchEngine:{win:()=>({DobbyFamilyUI:api})},DobbyAccessEntry:{consume:()=>entry.capture(callback())},DobbyRegister:{until:async predicate=>assert.equal(predicate(),true)},addEventListener(){}}};
  vm.runInNewContext(source,sandbox);await sandbox.window.DobbyAccess.prepare('access');
  assert.equal(f.api.state().phase,'admission-confirmation');assert.equal(f.calls.length,0);
+});
+test('the callback view explains the existing-account refusal and never redirects or verifies',async()=>{
+ const f=fixture();Object.assign(f.native,{userId:USER,epoch:2,verified:true,householdId:HH});let listener;
+ const nodes=[],navigation=[];
+ const statusNode=()=>nodes.find(n=>Object.hasOwn(n.dataset,'accessStatus'));
+ function node(tag){const value={tagName:tag.toUpperCase(),children:[],dataset:{},style:{},isConnected:true,classList:{add(){}},append(...children){this.children.push(...children);},replaceChildren(...children){this.children=children;},setAttribute(){},removeAttribute(){},addEventListener(){},closest:()=>null,querySelector:()=>statusNode(),querySelectorAll:()=>[]};nodes.push(value);return value;}
+ const account={...f.api,subscribe(fn){listener=fn;return()=>{};}};f.driver.notify=()=>listener?.(f.api.state());
+ const api={access:account,connectionState:()=>({ready:true}),meta:f.driver.meta,putMeta:f.driver.putMeta,updateMeta:f.driver.updateMeta};
+ const sandbox={__flow:flow,location:{href:'https://example.test/dobby/essai-stitch-v7/famille.html#access',replace:value=>navigation.push(value)},URL,URLSearchParams,document:{createElement:node,body:{dataset:{}}},window:{DobbyFamilyStitchEngine:{win:()=>({DobbyFamilyUI:api})},DobbyAccessEntry:{consume:()=>entry.capture(callback())},DobbyRegister:{until:async()=>{}},addEventListener(){}}};
+ const source=fs.readFileSync(new URL('../../../essai-stitch-v7/access.js',import.meta.url),'utf8').replace("import('./access-flow.mjs')",'Promise.resolve(__flow)');vm.runInNewContext(source,sandbox);
+ await sandbox.window.DobbyAccess.prepare('access-confirmation');sandbox.window.DobbyAccess.render({main:node('main'),ui:{view:'access-confirmation'}});
+ const confirm=nodes.find(n=>n.tagName==='BUTTON'&&n.textContent==='Accepter et continuer');assert.ok(confirm);confirm.onclick({preventDefault(){},currentTarget:confirm});while(sandbox.window.DobbyAccess.busy)await new Promise(resolve=>setImmediate(resolve));
+ assert.match(statusNode().textContent,/déconnect|profil.*navigateur/i);assert.match(statusNode().textContent,/lien.*reçu|e.mail/i);
+ assert.equal(statusNode().dataset.error,'true');assert.equal(f.calls.length,0);assert.deepEqual(navigation,[]);assert.equal(f.native.userId,USER);assert.equal(f.native.epoch,2);
 });
 test('the explicit resume form passes its verified account-bound admission UUID to password login',async()=>{
  const f=fixture();f.meta.set('v7-admission-resume',{admissionId:ADMISSION,userId:USER});

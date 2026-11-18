@@ -5,13 +5,16 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { root } from '../local-db.mjs';
 
-export async function businessCatalog(auth, { unlinkedChild = true, approvedSecondParent = true } = {}) {
+export async function businessCatalog(auth, { unlinkedChild = true, approvedSecondParent = true, extraChildren = ['TEST_EXPIRING_CHILD'] } = {}) {
  auth.sql(`SET ROLE supabase_auth_admin;
  GRANT SELECT(id),REFERENCES(id) ON auth.users TO postgres;
  RESET ROLE;`);
  catalog({executeSQL:auth.sql,startDatabase:()=>{
   const info=initializeBusinessCatalog({executeSQL:auth.sql,seedAuth:false,captureSnapshot:false});
   if(unlinkedChild)auth.sql(`DELETE FROM dobby_v7_private.account_links WHERE user_id=${q(id(4))}; DELETE FROM public.dobby_v2_memberships WHERE user_id=${q(id(4))};`);
+  auth.sql(`UPDATE public.dobby_v2_modules SET payload=jsonb_set(payload,'{familyMembers,1,magicProfile}','{"version":1,"houseId":"ravenclaw","patronusId":"otter"}'::jsonb) WHERE household_id=${q(id(102))} AND module='family';
+   INSERT INTO public.dobby_v2_modules(household_id,module,payload,revision) VALUES(${q(id(102))},'missions','{"runeCredits":[{"id":"TEST_CHILD_CREDIT","memberId":"TEST_CHILD","amount":37}]}',12);`);
+  if(extraChildren.length)auth.sql(`UPDATE public.dobby_v2_modules SET payload=jsonb_set(payload,'{familyMembers}',(payload->'familyMembers')||${json(extraChildren.map(memberId=>({id:memberId,memberCategory:'child'})))}) WHERE household_id=${q(id(102))} AND module='family';`);
   return info;
  }});
  apply(auth.sql);

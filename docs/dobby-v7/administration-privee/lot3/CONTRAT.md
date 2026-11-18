@@ -10,7 +10,8 @@ RPC propriétaire `dobby_access_admin(p_command text,p_payload jsonb)` : session
 
 | Commande | Payload JSON exact |
 | --- | --- |
-| `listAccess`, `listDecisions` | `{cursor?:uuid|null,limit?:1..100}` |
+| `listAccess` | `{cursor?:uuid|null,requestsCursor?:uuid|null,limit?:1..100}` |
+| `listDecisions` | `{cursor?:uuid|null,limit?:1..100}` |
 | `invite` | `{email,purpose:"new-household",operationId}` |
 | `decide` | `{admissionId,decision:"approve"|"reject",expectedRevision,operationId}` |
 | `revokeAdmission` | `{admissionId,expectedRevision,operationId}` |
@@ -25,13 +26,15 @@ Pour un UUID Auth déjà lié à une admission mais sans autorisation, `setStatu
 
 Le statut conserve le résultat du Lot 1 : `{status,revision,replayed,sessionBoundaryPending}`. Après réactivation, l'Edge appelle `finalizeReactivation` dans **une seconde requête/transaction**, avec la révision retournée. Ce second appel ne change pas la révision. Aucun ancien droit ou lien n'est restauré.
 
-Les mutations d'admission retournent `{admission,replayed}` ; `admission` est une projection `{id,email,purpose,revision,state,targetUserId,expiresAt,householdId,memberId,requestedBy,requiresProfile}`. États exacts : `requested|approved|delivering|sent|accepted|rejected|revoked`. Les listes retournent `{protocol:1,items,nextCursor}` ; `listAccess` ajoute `requests` pour les demandes sans cible Auth. Les pages sont bornées à 100 comptes et 25 admissions récentes par compte. Aucune liste ne contient de jeton V7, lien Auth, mot de passe ou `user_metadata`.
+Les mutations d'admission retournent `{admission,replayed}` ; `admission` est une projection `{id,email,purpose,revision,state,targetUserId,expiresAt,approvedAt,householdId,memberId,requestedBy,requiresProfile}`. États exacts : `requested|approved|delivering|sent|accepted|rejected|revoked`. Les listes retournent `{protocol:1,items,nextCursor}` ; `listAccess` ajoute `requests` pour les demandes sans cible Auth et `nextRequestsCursor` pour leur pagination indépendante. Les demandes suivent l'ordre stable `(created_at DESC,id DESC)` : le curseur UUID désigne le dernier élément de la page, y compris parmi les demandes terminales. Les pages sont bornées à 100 comptes et 25 admissions récentes par compte. Aucune liste ne contient de jeton V7, lien Auth, mot de passe ou `user_metadata`.
 
 Les commandes de livraison retournent `{admission,delivery:{id,attemptId,state,requiresResume},replayed}`. `id` et `attemptId` désignent le même UUID durable. Le premier claim retourne `requiresResume:false` et commit `attempting` **avant** l'action Auth. Tout rejeu de claim impose `requiresResume:true`, sans nouvel envoi. L'Edge doit employer des `operationId` distincts pour décision, claim, résultat et échec. Un rejeu de décision peut retourner la révision courante : ne pas recalculer un claim déjà commencé avec le même identifiant et une révision différente.
 
 Une réponse Auth perdue ou un échec d'enregistrement produit `uncertain`. Seul `resumeDelivery`, confirmé et protégé par CAS, ouvre une nouvelle tentative. Une tentative `attempting` interrompue devient reprenable après **180 secondes**, au-delà du budget réseau maximal du worker. La reprise explicite est aussi possible si la décision a été enregistrée mais aucun claim n'a commencé. Aucun rejeu automatique n'envoie de message. Une ancienne tentative ne peut finaliser une tentative plus récente. Une invitation familiale déjà liée requiert une nouvelle demande approuvée pour une nouvelle livraison ; aucun lien révoqué n'est ressuscité.
 
 Un compte existant est retrouvé par Auth Admin puis reçoit une connexion avec `create_user:false`, ou utilise sa connexion ordinaire. Un nouveau compte passe par `inviteUserByEmail` après décision. Le SQL vérifie que l'UUID retourné par Auth appartient à l'e-mail courant de l'admission ; il ne se fie pas aux revendications e-mail ou aux métadonnées client. L'envoi confirmé reste distinct de l'admission consommée.
+
+`approvedAt` est fixé uniquement par la décision effective `invite`/`approve`, puis protégé contre toute modification. Claim, résultat, échec et reprise ne le déplacent jamais. L'enregistrement Auth et la consommation refusent une approbation antérieure ou égale à la borne de sessions fixée lors de la réactivation de la cible, même si l'UUID n'était pas encore enregistré au moment de la suspension. Une génération déjà liée ne peut être remplacée par la génération courante lors d'une reprise. Seule une décision réellement nouvelle après réactivation permet un nouvel accès.
 
 ## Utilisateur et callback
 
@@ -52,5 +55,7 @@ Après une suspension d'un compte encore en attente puis une réactivation expli
 Le nouveau rôle fermé `dobby_access_identity_reader` n'obtient **aucun grant Auth** dans la migration. Le propriétaire autorisé du schéma géré doit séparément accorder seulement USAGE(auth) et SELECT(id,email,email_confirmed_at), puis l'installateur vérifié appelle `dobby_access_private.enable_identity_guard()`. Tout manque de permission est un blocage à signaler. Le gardien de session du Lot 1 reste requis. Les fixtures locales peuvent accorder ces seuls droits sur leurs comptes fictifs.
 
 L'enfant nécessite en plus `settings.child_delivery_enabled=true` et les vérifications serveur famille/Storage/enfant ; le nouveau gate reste **false par défaut**. Les constantes publiées `FAMILY_FEATURE_RELEASE` restent fermées. Une fixture locale isolée peut ouvrir ses propres flags pour la recette, jamais ceux de production.
+
+Sous le verrou familial, l'approbation et le claim enfant refusent toute autre invitation ciblée encore valide avant l'envoi Auth. L'invitation propre à la même admission n'est pas un conflit. La fabrication du nouveau lien marque les anciennes invitations enfant expirées et non consommées comme révoquées, sans supprimer leur historique ; l'index historique reste inchangé.
 
 Le rollback fourni ferme les commandes et livraisons, conserve autorisations, suspensions, générations, décisions et gardes, et ne rouvre ni inscriptions ni invitations libres. La reprise nécessite une inspection locale de l'admission et de la dernière tentative, puis une reprise propriétaire explicite. Les réserves du Lot 2B (anciens liens signés et visibilité RLS des sessions Auth) restent applicables.

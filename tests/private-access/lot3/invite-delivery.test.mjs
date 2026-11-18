@@ -3,8 +3,11 @@ import { before, after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { randomUUID, randomBytes, createHash } from 'node:crypto';
-import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { spawn } from 'node:child_process';
+import { readFileSync, readdirSync, mkdirSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { tmpdir } from 'node:os';
+import { pathToFileURL } from 'node:url';
 import { startAuth, stopAuth } from './local-auth.mjs';
 import { businessCatalog, installAdministration } from './business-catalog.mjs';
 import { createAdminHandler } from '../../../supabase/functions/dobby-access-admin/index.ts';
@@ -18,12 +21,12 @@ const uid=()=>randomUUID();
 const success=(response,label)=>{assert.ok(response.ok,`${label}: HTTP ${response.status}`);return response;};
 async function rpc(name,args,token,{deny=false}={}){
  const r=await auth.requestRpc(name,args,token);
- if(deny){assert.ok(!r.ok,`${name}: expected refusal, HTTP ${r.status}`);return r;}
+ if(deny){assert.ok([400,401,403,404,409].includes(r.status),`${name}: expected authorization/state refusal, HTTP ${r.status}`);return r;}
  success(r,name);return r.json();
 }
 async function command(command,payload,token=owner.access_token,{deny=false}={}){
  const r=await fetch(edgeUrl,{method:'POST',headers:{...jsonHeaders,origin:auth.url,authorization:`Bearer ${token}`},body:JSON.stringify({command,payload})});
- if(deny){assert.ok(!r.ok,`${command}: expected refusal, HTTP ${r.status}`);return r;}
+ if(deny){assert.ok([400,401,403,404,409].includes(r.status),`${command}: expected authorization/state refusal, HTTP ${r.status}`);return r;}
  success(r,command);const data=await r.json();assert.equal(data.ok,true);return data.result;
 }
 const currentAdmission=admissionId=>JSON.parse(auth.sql(`SELECT json_build_object('id',id,'revision',revision,'state',state,'targetUserId',target_user_id) FROM dobby_access_private.admissions WHERE id=${q(admissionId)};`));
@@ -94,7 +97,9 @@ test('T02/T12 real signup open gives no business access; closed signup preserves
  const closed=await auth.requestAuth('/signup',{method:'POST',headers:jsonHeaders,body:JSON.stringify({email:'public-closed@example.invalid',password})});
  assert.equal(closed.status,422);assert.equal(userCount('public-closed@example.invalid'),0);
  assert.equal((await auth.getLogin(1)).user.id,id(1));assert.equal((await auth.getLogin(2)).user.id,id(2));
- proofs.push({scenario:'signup-open-closed',result:'open Auth signup remains unapproved; closed signup 422; original fictional account UUIDs and login preserved'});
+ const refreshed=await auth.requestAuth('/token?grant_type=refresh_token',{method:'POST',headers:jsonHeaders,body:JSON.stringify({refresh_token:owner.refresh_token})});
+ success(refreshed,'Existing account real refresh with signup closed');owner=await refreshed.json();assert.equal(owner.user.id,id(1));
+ proofs.push({scenario:'signup-open-closed',refreshHTTPStatus:200,result:'open Auth signup remains unapproved; closed signup 422; original fictional account UUIDs, login and real refresh preserved'});
 });
 
 test('T12 owner checks apply at Edge and direct SQL RPC and expose no family content',async()=>{
@@ -107,6 +112,28 @@ test('T12 owner checks apply at Edge and direct SQL RPC and expose no family con
  const foreign=await fetch(auth.restUrl+`/dobby_v2_modules?household_id=eq.${id(102)}&module=eq.family&select=payload`,{headers:{authorization:`Bearer ${owner.access_token}`}});
  success(foreign,'Owner foreign-family RLS');assert.deepEqual(await foreign.json(),[]);
  proofs.push({scenario:'owner-isolation',result:'non-owner/anonymous denied; direct RPC denied; admin projections exclude payloads; global owner sees no H2 business rows'});
+});
+
+test('native Deno handler serves the same owner-only API against real local Auth and PostgreSQL',async()=>{
+ const directory=mkdtempSync(resolve(tmpdir(),'dobby-lot3-deno-')),entry=resolve(directory,'edge.ts');
+ writeFileSync(entry,`import { createAdminHandler } from ${JSON.stringify(pathToFileURL(resolve(root,'supabase/functions/dobby-access-admin/index.ts')).href)};\nconst config=JSON.parse(Deno.env.get('DOBBY_LOCAL_TEST_EDGE_CONFIG')!);\nDeno.serve({hostname:'127.0.0.1',port:0,onListen:({port})=>console.log('DOBBY_DENO_PORT='+port)},createAdminHandler(config));\n`);
+ const child=spawn('npx',['--yes','deno@2.9.6','run','--no-remote','--allow-env=DOBBY_LOCAL_TEST_EDGE_CONFIG','--allow-net=127.0.0.1',entry],{detached:true,env:{...process.env,DOBBY_LOCAL_TEST_EDGE_CONFIG:JSON.stringify({supabaseUrl:auth.url,anonKey:auth.anonToken,serviceRoleKey:auth.serviceToken,allowedOrigins:[auth.url],redirectTo:auth.url+'/callback'})},stdio:['ignore','pipe','pipe']});
+ let output='';child.stdout.on('data',part=>{output+=part;});child.stderr.on('data',()=>{});
+ const closed=new Promise(resolve=>child.once('close',resolve));
+ try{
+  const deadline=Date.now()+30000;let port;
+  while(Date.now()<deadline){port=/DOBBY_DENO_PORT=(\d+)/.exec(output)?.[1];if(port)break;assert.equal(child.exitCode,null,'Local Deno worker must remain alive');await new Promise(r=>setTimeout(r,25));}
+  assert.ok(port,'Local Deno handler readiness');
+  for(const [session,expected] of [[owner,200],[parent,403]]){
+   const response=await fetch(`http://127.0.0.1:${port}`,{method:'POST',headers:{...jsonHeaders,origin:auth.url,authorization:`Bearer ${session.access_token}`},body:JSON.stringify({command:'listAccess',payload:{}})});
+   assert.equal(response.status,expected);
+   if(expected===200)assert.equal((await response.json()).ok,true);
+  }
+  proofs.push({scenario:'native-deno-api',result:'Deno2.9.6 executes shipped TypeScript handler factory over local HTTP with real GoTrue and PostgREST; owner200/non-owner403; no hosted Edge deployment or worker certification claimed'});
+ }finally{
+  try{process.kill(-child.pid,'SIGTERM');}catch(error){if(error.code!=='ESRCH')throw error;}
+  await closed;rmSync(directory,{recursive:true});
+ }
 });
 
 test('T03 new nominative invitation is not active before accept; concurrent double-click and replay create one household',async()=>{
@@ -141,17 +168,38 @@ test('T04 child remains blocked by production gates; fixture-only release links 
  const request=await requestFamily('child-new@example.invalid','family-child','TEST_CHILD');
  await approve(request).then(()=>{},()=>{});assert.equal(userCount('child-new@example.invalid'),0);
  auth.sql('UPDATE dobby_access_private.settings SET child_delivery_enabled=true; UPDATE dobby_socle_private.install_state SET family_api_enabled=true,family_client_verified=true,storage_client_verified=true,child_link_client_verified=true;');
- const before=auth.sql(`SELECT payload::text||'|'||revision FROM public.dobby_v2_modules WHERE household_id=${q(id(102))} AND module='family';`);
+ const snapshot=()=>auth.sql(`SELECT jsonb_agg(jsonb_build_object('module',module,'payload',payload,'revision',revision) ORDER BY module) FROM public.dobby_v2_modules WHERE household_id=${q(id(102))};`);
+ const before=snapshot();assert.ok(before.includes('TEST_CHILD_CREDIT')&&before.includes('otter'),'Fixture includes meaningful child credit and magic data');
  await auth.inbox.clear();const row=currentAdmission(request.admission.id);
  if(row.state==='requested')await command('decide',{admissionId:row.id,expectedRevision:row.revision,decision:'approve',operationId:uid()});
  else await command('resumeDelivery',{admissionId:row.id,expectedRevision:row.revision,operationId:uid(),confirmed:true});
  const child=await verify(await emailLink('child-new@example.invalid'));
  await accept({admissionId:row.id},child,null);
- const after=auth.sql(`SELECT payload::text||'|'||revision FROM public.dobby_v2_modules WHERE household_id=${q(id(102))} AND module='family';`);assert.equal(after,before);
+ const after=snapshot();assert.equal(after,before);
  const context=await rpc('dobby_v7_context',{},child.access_token);assert.equal(context.memberId,'TEST_CHILD');assert.equal(context.profile.memberCategory,'child');
  await rpc('dobby_access_request_family_account',{p_email:'child-forbidden@example.invalid',p_kind:'family-parent',p_member_id:null,p_operation_id:uid()},child.access_token,{deny:true});
  auth.sql('UPDATE dobby_access_private.settings SET child_delivery_enabled=false; UPDATE dobby_socle_private.install_state SET family_client_verified=false,storage_client_verified=false,child_link_client_verified=false;');
  proofs.push({scenario:'canonical-child',result:'default production gates block delivery; only fictional test gates opened; existing TEXT member id/payload/revision unchanged after real Auth invitation and transaction; no pending replacement profile'});
+});
+
+test('T04 live child invitation blocks another delivery; expired invitation is closed before replacement',async()=>{
+ auth.sql('UPDATE dobby_access_private.settings SET child_delivery_enabled=true; UPDATE dobby_socle_private.install_state SET family_api_enabled=true,family_client_verified=true,storage_client_verified=true,child_link_client_verified=true;');
+ try{
+  const first=await requestFamily('child-expiring-first@example.invalid','family-child','TEST_EXPIRING_CHILD');await approve(first);
+  const oldInvitation=auth.sql(`SELECT id FROM dobby_v7_private.invitations WHERE admission_id=${q(first.admission.id)};`);assert.ok(oldInvitation);
+  const blocked=await requestFamily('child-live-blocked@example.invalid','family-child','TEST_EXPIRING_CHILD');await auth.inbox.clear();
+  await command('decide',{admissionId:blocked.admission.id,expectedRevision:blocked.admission.revision,decision:'approve',operationId:uid()},owner.access_token,{deny:true});
+  assert.equal(userCount('child-live-blocked@example.invalid'),0);assert.equal((await auth.inbox.list()).total,0,'Live target conflict must be rejected before any Auth email');
+  const b=currentAdmission(blocked.admission.id);await command('revokeAdmission',{admissionId:b.id,expectedRevision:b.revision,operationId:uid()});
+  // Explicit local expiry-clock fixture; no claim of an elapsed 24-hour wait.
+  auth.sql(`UPDATE dobby_v7_private.invitations SET expires_at=clock_timestamp()-interval '1 second' WHERE id=${q(oldInvitation)}; UPDATE dobby_access_private.admissions SET expires_at=clock_timestamp()-interval '1 second' WHERE id=${q(first.admission.id)};`);
+  const before=auth.sql(`SELECT payload::text||'|'||revision FROM public.dobby_v2_modules WHERE household_id=${q(id(102))} AND module='family';`);
+  const second=await requestFamily('child-expiring-second@example.invalid','family-child','TEST_EXPIRING_CHILD');await approve(second);
+  assert.equal(auth.sql(`SELECT revoked_at IS NOT NULL FROM dobby_v7_private.invitations WHERE id=${q(oldInvitation)};`),'t');
+  const session=await verify(await emailLink('child-expiring-second@example.invalid'));await accept({admissionId:second.admission.id},session,null);
+  assert.equal(auth.sql(`SELECT payload::text||'|'||revision FROM public.dobby_v2_modules WHERE household_id=${q(id(102))} AND module='family';`),before);
+  proofs.push({scenario:'child-expiry-and-live-target',result:'live pending child invitation prevents a second Auth send; only expiry clock injected locally; expired row revoked preserving history; replacement SMTP/Auth/canonical accept succeeds without profile mutation'});
+ }finally{auth.sql('UPDATE dobby_access_private.settings SET child_delivery_enabled=false; UPDATE dobby_socle_private.install_state SET family_client_verified=false,storage_client_verified=false,child_link_client_verified=false;');}
 });
 
 test('T13 interruption after Auth before DB confirmation leaves no access and requires explicit recovery',async()=>{
@@ -182,6 +230,23 @@ test('T13 committed DB result loss and orphan delivery are recoverable without s
  proofs.push({scenario:'lost-results-and-crash',result:'committed record replay sends nothing; orphan attempting lease aged only in local clock fixture; explicit confirmed owner recovery completes without duplicate Auth'});
 });
 
+test('T05/T13 an unbound old approval cannot cross target suspension and reactivation',async()=>{
+ auth.sql(`INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by) VALUES(${q(id(5))},'active',${q(id(1))});`);
+ await auth.inbox.clear();fault='before-record';let pending;
+ try{pending=await command('invite',{email:'fixture-5@example.invalid',purpose:'new-household',operationId:uid()});}finally{fault=null;}
+ assert.equal(currentAdmission(pending.admission.id).targetUserId,null);
+ await command('setStatus',{userId:id(5),status:'suspended',expectedRevision:1,operationId:uid(),confirmed:true});
+ await command('setStatus',{userId:id(5),status:'active',expectedRevision:2,operationId:uid(),confirmed:true});
+ const row=currentAdmission(pending.admission.id);
+ const resumed=await command('resumeDelivery',{admissionId:row.id,expectedRevision:row.revision,operationId:uid(),confirmed:true});
+ assert.equal(resumed.delivery.requiresResume,true,'Old approval must never become sent/accepted in the new generation');
+ assert.notEqual(currentAdmission(row.id).state,'sent');assert.equal(auth.sql(`SELECT can_create_household FROM dobby_access_private.authorizations WHERE user_id=${q(id(5))};`),'f');
+ const blocked=currentAdmission(row.id);await command('revokeAdmission',{admissionId:row.id,expectedRevision:blocked.revision,operationId:uid()});
+ const fresh=await invite('fixture-5@example.invalid'),session=await verify(fresh.link);await accept(fresh,session);
+ assert.equal(auth.sql(`SELECT can_create_household FROM dobby_access_private.authorizations WHERE user_id=${q(id(5))};`),'t');
+ proofs.push({scenario:'unbound-approval-generation',result:'actual delivery interrupted before UUID binding; target suspended/reactivated; old explicit recovery grants nothing; only new owner approval with newer immutable timestamp can be consumed'});
+});
+
 test('T03 revoked, expired and email-changed admissions refuse current actual sessions',async()=>{
  for(const mode of ['revoked','expired','email-changed']){
   const flow=await invite(`${mode}@example.invalid`),session=await verify(flow.link);
@@ -202,13 +267,16 @@ test('T05 pending target suspension and reactivation never restore its old admis
  const active=await command('setStatus',{userId:target,status:'active',expectedRevision:row.revision,operationId:uid(),confirmed:true});
  assert.equal(active.sessionBoundaryPending,false);assert.equal(currentAdmission(flow.admissionId).state,'revoked');
  await accept(flow,session,profile,uid(),true);
+ const refreshed=await auth.requestAuth('/token?grant_type=refresh_token',{method:'POST',headers:jsonHeaders,body:JSON.stringify({refresh_token:session.refresh_token})});
+ assert.ok([200,400,401,403].includes(refreshed.status),'Old refresh must not encounter an unrelated server failure');
+ if(refreshed.ok){const stale=await refreshed.json();const blocked=await rpc('dobby_v7_context',{},stale.access_token,{deny:true});assert.equal(blocked.status,403);}
  assert.equal(auth.sql(`SELECT can_create_household FROM dobby_access_private.authorizations WHERE user_id=${q(target)};`),'f');
  const fresh=await invite('pending-suspend@example.invalid');
  const newSession=await verify(fresh.link);assert.equal(newSession.user.id,target);
  await accept(fresh,newSession);
  assert.equal(auth.sql(`SELECT can_create_household FROM dobby_access_private.authorizations WHERE user_id=${q(target)};`),'t','Only a fresh explicit approval can grant the first household quota');
  assert.equal(currentAdmission(flow.admissionId).state,'revoked');
- proofs.push({scenario:'pending-suspension-reactivation',result:'pending bound target suspended with closed row, admission revoked atomically; explicit two-transaction reactivation restores no old admission/quota/session'});
+ proofs.push({scenario:'pending-suspension-reactivation',oldRefreshHTTPStatus:refreshed.status,result:'pending bound target suspended with closed row, admission revoked atomically; explicit two-transaction reactivation restores no old admission/quota/session; a real refresh of the old session still cannot access business RPCs; only a new explicit approval grants first quota'});
 });
 
 test('T04 requester suspension after approval prevents acceptance and remains revoked after explicit reactivation',async()=>{

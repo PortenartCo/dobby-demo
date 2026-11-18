@@ -28,8 +28,9 @@ export function validateAdminRequest(value:unknown):AdminRequest {
  const p={...value.payload};
  switch(value.command){
   case 'listAccess':case 'listDecisions':
-   keys(p,[],['cursor','limit']);
-   if(p.cursor!==undefined)uuid(p.cursor);
+   keys(p,[],value.command==='listAccess'?['cursor','requestsCursor','limit']:['cursor','limit']);
+   if(p.cursor!==undefined&&p.cursor!==null)uuid(p.cursor);
+   if(p.requestsCursor!==undefined&&p.requestsCursor!==null)uuid(p.requestsCursor);
    if(p.limit!==undefined&&(!Number.isInteger(p.limit)||Number(p.limit)<1||Number(p.limit)>100))throw new AdminError(400,'invalid_request');
    p.limit??=25;break;
   case 'invite':

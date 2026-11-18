@@ -47,10 +47,10 @@ const driver={crypto:window.crypto,now:Date.now,snapshot:()=>({...native}),meta:
  logout:async()=>{session=null;bounded=null;native.userId=null;native.epoch++;},notify:()=>{},
 };
 window.access=createFamilyAccess(driver);
-window.harnessInfo=()=>({state:access.state(),metadataKeys:[...metadata.keys()],bounded:Boolean(bounded),hasSession:Boolean(session)});
+window.harnessInfo=()=>({state:access.state(),nativeIdentity:{...native},adoptedIdentity:window.adoptedIdentity??null,metadataKeys:[...metadata.keys()],bounded:Boolean(bounded),hasSession:Boolean(session)});
 const status=document.querySelector('#status'),confirm=document.querySelector('#confirm'),accept=document.querySelector('#accept');
 const show=()=>{status.textContent=access.state().phase;confirm.disabled=access.state().phase!=='admission-confirmation';accept.disabled=access.state().phase!=='admission';};
-confirm.onclick=async()=>{confirm.disabled=true;try{await access.confirmAdmission();show();}catch(error){window.lastControllerFailure={stage:'confirmation',message:error.message};status.textContent='confirmation-error';}};
+confirm.onclick=async()=>{confirm.disabled=true;try{await access.confirmAdmission();show();}catch(error){window.lastControllerFailure={stage:error.stage??'confirmation',code:error.code??null,message:error.message};status.textContent='confirmation-error';}};
 accept.onclick=async()=>{accept.disabled=true;try{await access.admit({profile:{firstName:'TEST Browser',lastName:'Recipient',avatarId:'portrait-1'}});show();}catch(error){window.lastControllerFailure={stage:'acceptance',message:error.message};status.textContent='acceptance-error';}};
 try{if(incoming?.callbackURL)await access.confirmFromURL(incoming.callbackURL);show();window.harnessReady=true;}catch{status.textContent='callback-error';window.harnessReady=true;}
 </script></body></html>`;
@@ -117,7 +117,7 @@ test('actual GoTrue links require explicit confirmation in a separate isolated C
  const delivered=await browserJson(ownerPage,'/admin',{command:'decide',payload:{admissionId:requested.body.admission.id,decision:'approve',expectedRevision:requested.body.admission.revision,operationId:randomUUID()}},owner.access_token);
  assert.equal(delivered.status,200,'Real owner approval and Auth delivery must succeed');assert.equal(delivered.body.result.delivery.outcome,'sent');
  const firstLink=mailCallback(await auth.inbox.waitFor(newEmail),harness.origin);
- const proofs=[];
+ const proofs=[];let existingAccount;
  for(const[scenario,email,link,expectedPhase]of [['new-auth-family-parent',newEmail,firstLink,'active'],['existing-auth-magiclink',auth.seedUsers[4].email,null,'household']]){
   let callback=link;
   if(!callback){
@@ -156,6 +156,7 @@ test('actual GoTrue links require explicit confirmation in a separate isolated C
    assert.equal(resumed.phase,'admission');assert.equal(resumed.verified,false);
    assert.deepEqual(await page.evaluate(()=>window.callbackCalls),['/auth/v1/token?grant_type=password','/rest/v1/rpc/dobby_access_context']);
    ordinaryPasswordResume=true;
+   existingAccount={email,password};
   }
   await page.locator('#accept').click();await page.waitForFunction(phase=>[phase,'acceptance-error'].includes(document.querySelector('#status').textContent),expectedPhase);
   assert.equal(await page.locator('#status').textContent(),expectedPhase,JSON.stringify(await page.evaluate(()=>({service:window.lastServiceFailure,controller:window.lastControllerFailure}))));
@@ -170,6 +171,48 @@ test('actual GoTrue links require explicit confirmation in a separate isolated C
   proofs.push({scenario,secondBrowser:true,explicitVerify:true,boundedAdmission:true,ordinaryPasswordResume,atomicAcceptBeforeContext:true,finalPhase:expectedPhase});
   await recipient.close();
  }
+ // A pre-existing account must never be replaced by a bearer callback. The
+ // same email link must still be usable from a fresh, signed-out context.
+ const differentEmail=`browser-other-${randomUUID()}@example.invalid`;
+ const differentDelivery=await browserJson(ownerPage,'/admin',{command:'invite',payload:{email:differentEmail,purpose:'new-household',operationId:randomUUID()}},owner.access_token);
+ assert.equal(differentDelivery.status,200);assert.equal(differentDelivery.body.result.delivery.outcome,'sent');
+ const differentCallback=mailCallback(await auth.inbox.waitFor(differentEmail),harness.origin);
+ const signedInContext=await browser.newContext(),signedInPage=await signedInContext.newPage();
+ await signedInPage.goto(harness.origin+'/owner');await signedInPage.waitForFunction(()=>window.harnessReady);
+ const signedIn=await signedInPage.evaluate(async credentials=>{
+  const state=await window.access.signIn(credentials.email,credentials.password);
+  localStorage.setItem('fictional-existing-cache',JSON.stringify({userId:state.userId,householdId:state.householdId,note:'TEST existing local cache'}));
+  return window.harnessInfo();
+ },existingAccount);
+ assert.equal(signedIn.state.phase,'active');assert.equal(signedIn.state.verified,true);assert.equal(signedIn.hasSession,true);
+ const baseline=await signedInPage.evaluate(()=>({info:window.harnessInfo(),calls:[...window.callbackCalls],storage:JSON.stringify({...localStorage,...sessionStorage})}));
+ const stagedDifferent=await signedInPage.evaluate(async callback=>{
+  const state=await window.access.confirmFromURL(callback);
+  document.querySelector('#status').textContent=state.phase;document.querySelector('#confirm').disabled=false;
+  return window.harnessInfo();
+ },differentCallback);
+ assert.equal(stagedDifferent.state.phase,'admission-confirmation');
+ assert.deepEqual(stagedDifferent.nativeIdentity,baseline.info.nativeIdentity,'Staging another invitation preserves existing native binding');
+ assert.deepEqual(stagedDifferent.adoptedIdentity,baseline.info.adoptedIdentity);
+ await signedInPage.locator('#confirm').click();await signedInPage.waitForFunction(()=>document.querySelector('#status').textContent==='confirmation-error');
+ const refused=await signedInPage.evaluate(()=>({failure:window.lastControllerFailure,info:window.harnessInfo(),calls:window.callbackCalls,storage:JSON.stringify({...localStorage,...sessionStorage})}));
+ assert.equal(refused.failure.code,'ADMISSION_SIGNED_IN');assert.equal(refused.failure.stage,'admission');
+ assert.match(refused.failure.message,/navigateur|profil|déconnect/i);
+ assert.deepEqual(refused.calls,baseline.calls,'Signed-in callback must fail before /verify or any context request');
+ assert.deepEqual(refused.info.nativeIdentity,baseline.info.nativeIdentity);assert.deepEqual(refused.info.adoptedIdentity,baseline.info.adoptedIdentity);
+ assert.equal(refused.info.hasSession,true);assert.equal(refused.info.bounded,false);assert.equal(refused.storage,baseline.storage,'Existing local cache remains intact');
+ assert.equal(auth.sql(`SELECT count(*) FROM dobby_access_private.admissions WHERE id='${differentDelivery.body.result.admission.id}' AND state='sent';`),'1');
+ const freshContext=await browser.newContext(),freshPage=await freshContext.newPage();
+ try{await freshPage.goto(differentCallback);await freshPage.waitForFunction(()=>window.harnessReady);}catch{throw Error('Fresh callback browser did not initialize');}
+ assert.equal(await freshPage.locator('#status').textContent(),'admission-confirmation');
+ assert.deepEqual(await freshPage.evaluate(()=>window.callbackCalls),[]);
+ await freshPage.locator('#confirm').click();await freshPage.waitForFunction(()=>['admission','confirmation-error'].includes(document.querySelector('#status').textContent));
+ assert.equal(await freshPage.locator('#status').textContent(),'admission',JSON.stringify(await freshPage.evaluate(()=>({service:window.lastServiceFailure,controller:window.lastControllerFailure}))));
+ const fresh=await freshPage.evaluate(()=>window.harnessInfo());
+ assert.notEqual(fresh.state.userId,baseline.info.state.userId);assert.equal(fresh.state.admission.id,differentDelivery.body.result.admission.id);assert.equal(fresh.bounded,true);
+ assert.deepEqual(await freshPage.evaluate(()=>window.callbackCalls),['/auth/v1/verify','/rest/v1/rpc/dobby_access_context'],'Rejected signed-in attempt did not consume the original Auth email link');
+ proofs.push({scenario:'signed-in-other-account',existingAccountPreserved:true,rejectedBeforeVerify:true,localCachePreserved:true,sameEmailHashUsableInFreshContext:true,freshContextPhase:'admission'});
+ await signedInContext.close();await freshContext.close();
  t.diagnostic(JSON.stringify({browser:browser.version(),playwright:'1.62.1',auth:auth.info.auth.version,rest:auth.info.rest.version,smtp:auth.info.smtp.version,proofs}));
  await originator.close();
 });

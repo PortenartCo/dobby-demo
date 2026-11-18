@@ -37,6 +37,22 @@ ALTER TABLE dobby_access_private.settings ADD COLUMN administration_enabled bool
 ALTER TABLE dobby_access_private.admissions ADD COLUMN revision bigint NOT NULL DEFAULT 1 CHECK(revision BETWEEN 1 AND 9007199254740990);
 ALTER TABLE dobby_access_private.admissions ADD COLUMN requester_generation bigint NOT NULL DEFAULT 0;
 ALTER TABLE dobby_access_private.admissions ADD COLUMN invitation_id uuid;
+-- Decision epoch is immutable once assigned. Delivery/recovery never advances
+-- it across a suspension/reactivation boundary before an Auth UUID was bound.
+ALTER TABLE dobby_access_private.admissions ADD COLUMN approved_at timestamptz;
+ALTER TABLE dobby_access_private.admissions ADD CONSTRAINT access_approval_epoch_required
+ CHECK(state NOT IN ('approved','delivering','sent','accepted') OR approved_at IS NOT NULL) NOT VALID;
+CREATE FUNCTION dobby_access_private.guard_approval_epoch() RETURNS trigger
+LANGUAGE plpgsql SET search_path='' AS $$
+BEGIN
+ IF OLD.approved_at IS NOT NULL AND NEW.approved_at IS DISTINCT FROM OLD.approved_at THEN
+  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Approval decision epoch is immutable'; END IF;
+ IF OLD.approved_at IS NULL AND NEW.approved_at IS NOT NULL AND NOT (OLD.state='requested' AND NEW.state='approved') THEN
+  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Approval epoch requires an actual approval transition'; END IF;
+ RETURN NEW;
+END $$;
+CREATE TRIGGER access_approval_epoch_immutable BEFORE UPDATE OF approved_at ON dobby_access_private.admissions
+ FOR EACH ROW EXECUTE FUNCTION dobby_access_private.guard_approval_epoch();
 ALTER TABLE dobby_v7_private.invitations ADD COLUMN admission_id uuid REFERENCES dobby_access_private.admissions(id);
 ALTER TABLE dobby_v7_private.invitations ADD COLUMN target_user_id uuid REFERENCES auth.users(id);
 -- Existing consumed links are preserved. Only outstanding free bearer links close.
@@ -155,7 +171,7 @@ $$;
 CREATE FUNCTION dobby_access_private.admission_json(p_id uuid) RETURNS jsonb
 LANGUAGE sql STABLE SET search_path='' AS $$
  SELECT jsonb_build_object('id',id,'email',email,'purpose',purpose,'revision',revision,'state',state,
- 'targetUserId',target_user_id,'expiresAt',expires_at,'householdId',household_id,'memberId',member_id,
+ 'targetUserId',target_user_id,'expiresAt',expires_at,'approvedAt',approved_at,'householdId',household_id,'memberId',member_id,
  'requestedBy',requested_by,'requiresProfile',purpose<>'family-child') FROM dobby_access_private.admissions WHERE id=p_id
 $$;
 CREATE FUNCTION dobby_access_private.payload_keys(p_value jsonb,p_required text[],p_optional text[] DEFAULT '{}') RETURNS void
@@ -184,7 +200,7 @@ BEGIN
 END $$;
 
 -- These family-owned bridges reveal no family contents to metadata writers.
-CREATE FUNCTION dobby_socle_private.access_request_target(p_requester uuid,p_household uuid,p_member text,p_require_child_gate boolean DEFAULT false) RETURNS jsonb
+CREATE FUNCTION dobby_socle_private.access_request_target(p_requester uuid,p_household uuid,p_member text,p_require_child_gate boolean DEFAULT false,p_admission uuid DEFAULT NULL) RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
 DECLARE l dobby_v7_private.account_links%ROWTYPE; row public.dobby_v2_modules%ROWTYPE; parent jsonb; target jsonb;
 BEGIN
@@ -204,6 +220,11 @@ BEGIN
   IF p_require_child_gate AND (NOT dobby_access_private.child_delivery_ready() OR NOT EXISTS(SELECT 1 FROM dobby_socle_private.install_state
    WHERE singleton AND family_api_enabled AND family_client_verified AND storage_client_verified AND child_link_client_verified)) THEN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Child delivery release remains closed'; END IF;
+  IF p_require_child_gate AND EXISTS(SELECT 1 FROM dobby_v7_private.invitations
+   WHERE household_id=p_household AND target_member_id=p_member AND invitation_kind='child-account'
+    AND accepted_by IS NULL AND revoked_at IS NULL AND expires_at>clock_timestamp()
+    AND (p_admission IS NULL OR admission_id IS DISTINCT FROM p_admission)) THEN
+   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Another live child invitation already reserves this target'; END IF;
  END IF;
  RETURN jsonb_build_object('householdId',p_household,'memberId',p_member);
 END $$;
@@ -220,7 +241,14 @@ CREATE FUNCTION dobby_socle_private.access_issue_invitation(p_admission uuid,p_r
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
 DECLARE token text; inv uuid:=p_admission;
 BEGIN
- PERFORM dobby_socle_private.access_request_target(p_requester,p_household,p_member,true);
+ PERFORM dobby_socle_private.access_request_target(p_requester,p_household,p_member,true,p_admission);
+ IF p_member IS NOT NULL THEN
+  -- Retain expired child invitations as revoked history. The existing unique
+  -- partial index intentionally includes expired links until they are revoked.
+  UPDATE dobby_v7_private.invitations SET revoked_at=clock_timestamp()
+  WHERE household_id=p_household AND target_member_id=p_member AND invitation_kind='child-account'
+   AND accepted_by IS NULL AND revoked_at IS NULL AND expires_at<=clock_timestamp();
+ END IF;
  token:=dobby_socle_private.invitation_token(p_requester,inv);
  INSERT INTO dobby_v7_private.invitations(id,household_id,created_by,token_hash,expires_at,target_member_id,invitation_kind,admission_id,target_user_id)
  VALUES(inv,p_household,p_requester,sha256(convert_to(token,'UTF8')),p_expires,p_member,CASE WHEN p_member IS NULL THEN 'member' ELSE 'child-account' END,p_admission,p_target)
@@ -372,7 +400,8 @@ BEGIN
  -- Authorization locks precede admission and all business locks.
  PERFORM dobby_access_private.lock_admission_actors(u,a.requested_by);
  SELECT * INTO authrow FROM dobby_access_private.authorizations WHERE user_id=u;
- IF authrow.status='suspended' OR authrow.session_boundary_pending OR coalesce(authrow.generation,0)<>a.target_generation THEN
+ IF authrow.status='suspended' OR authrow.session_boundary_pending OR coalesce(authrow.generation,0)<>a.target_generation
+  OR a.approved_at IS NULL OR (authrow.sessions_valid_after IS NOT NULL AND a.approved_at<=authrow.sessions_valid_after) THEN
   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Admission generation unavailable'; END IF;
  IF a.purpose<>'new-household' THEN PERFORM dobby_access_private.assert_requester(a.requested_by,a.requester_generation); END IF;
  SELECT * INTO a FROM dobby_access_private.admissions WHERE id=p_admission_id FOR UPDATE;
@@ -395,7 +424,7 @@ BEGIN
  VALUES(u,'active',a.approved_by,a.target_generation,a.purpose='new-household')
  ON CONFLICT(user_id) DO NOTHING;
  IF a.purpose<>'new-household' THEN
-  PERFORM dobby_socle_private.access_request_target(a.requested_by,a.household_id,a.member_id,true);
+  PERFORM dobby_socle_private.access_request_target(a.requested_by,a.household_id,a.member_id,true,a.id);
  ELSE
   PERFORM dobby_socle_private.access_assert_first_household();
  END IF;
@@ -475,6 +504,7 @@ DECLARE actor uuid:=dobby_access_private.assert_owner(); op uuid; aid uuid; uid 
  a dobby_access_private.admissions%ROWTYPE; d dobby_access_private.deliveries%ROWTYPE;
  ar dobby_access_private.authorizations%ROWTYPE; prior dobby_access_private.operation_receipts%ROWTYPE;
  digest bytea; result jsonb; mail text; decision text; cursor_id uuid; limit_n integer:=25; arr jsonb; identity jsonb;
+ requests_cursor uuid; requests_after timestamptz; request_arr jsonb;
  requester uuid; requester_gen bigint; key text;
 BEGIN
  IF NOT EXISTS(SELECT 1 FROM dobby_access_private.settings WHERE singleton AND administration_enabled AND identity_guard_ready) THEN
@@ -482,7 +512,7 @@ BEGIN
  IF p_command NOT IN ('listAccess','listDecisions','invite','decide','revokeAdmission','setStatus','claimDelivery','recordDelivery','failDelivery','resumeDelivery','finalizeReactivation') OR p_command IS NULL THEN
   RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Unknown closed administration command'; END IF;
  IF p_command IN ('listAccess','listDecisions') THEN
-  PERFORM dobby_access_private.payload_keys(p_payload,'{}',ARRAY['cursor','limit']);
+  PERFORM dobby_access_private.payload_keys(p_payload,'{}',CASE WHEN p_command='listAccess' THEN ARRAY['cursor','requestsCursor','limit'] ELSE ARRAY['cursor','limit'] END);
   IF p_payload?'cursor' AND p_payload->'cursor'<>'null'::jsonb THEN cursor_id:=dobby_access_private.uuid_value(p_payload,'cursor'); END IF;
   IF p_payload?'limit' THEN
    IF jsonb_typeof(p_payload->'limit') IS DISTINCT FROM 'number' OR (p_payload->>'limit')::numeric<>trunc((p_payload->>'limit')::numeric)
@@ -490,13 +520,21 @@ BEGIN
    limit_n:=(p_payload->>'limit')::integer;
   END IF;
   IF p_command='listAccess' THEN
+   IF p_payload?'requestsCursor' AND p_payload->'requestsCursor'<>'null'::jsonb THEN
+    requests_cursor:=dobby_access_private.uuid_value(p_payload,'requestsCursor');
+    SELECT created_at INTO requests_after FROM dobby_access_private.admissions WHERE id=requests_cursor;
+    IF NOT FOUND THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Request cursor unavailable'; END IF;
+   END IF;
    arr:=dobby_access_private.auth_identity_page(cursor_id,limit_n);
    SELECT coalesce(jsonb_agg(e||jsonb_build_object('status',coalesce(au.status,'unapproved'),'revision',coalesce(au.revision,0),
     'isOwner',(e->>'userId')::uuid=actor,'canCreateHousehold',coalesce(au.can_create_household,false),
     'admissions',coalesce((SELECT jsonb_agg(dobby_access_private.admission_json(ad.id) ORDER BY ad.created_at DESC) FROM (SELECT id,created_at FROM dobby_access_private.admissions WHERE target_user_id=(e->>'userId')::uuid ORDER BY created_at DESC LIMIT 25) ad),'[]'::jsonb)) ORDER BY e->>'userId'),'[]'::jsonb)
    INTO arr FROM jsonb_array_elements(arr) e LEFT JOIN dobby_access_private.authorizations au ON au.user_id=(e->>'userId')::uuid;
-   RETURN jsonb_build_object('protocol',1,'items',arr,'requests',(SELECT coalesce(jsonb_agg(dobby_access_private.admission_json(id) ORDER BY created_at DESC),'[]'::jsonb)
-    FROM (SELECT id,created_at FROM dobby_access_private.admissions WHERE target_user_id IS NULL ORDER BY created_at DESC LIMIT limit_n) requests),
+   SELECT coalesce(jsonb_agg(dobby_access_private.admission_json(id) ORDER BY created_at DESC,id DESC),'[]'::jsonb) INTO request_arr
+    FROM (SELECT id,created_at FROM dobby_access_private.admissions WHERE target_user_id IS NULL
+     AND (requests_cursor IS NULL OR (created_at,id)<(requests_after,requests_cursor)) ORDER BY created_at DESC,id DESC LIMIT limit_n) requests;
+   RETURN jsonb_build_object('protocol',1,'items',arr,'requests',request_arr,
+    'nextRequestsCursor',CASE WHEN jsonb_array_length(request_arr)=limit_n THEN request_arr->(limit_n-1)->>'id' ELSE NULL END,
     'nextCursor',CASE WHEN jsonb_array_length(arr)=limit_n THEN arr->(limit_n-1)->>'userId' ELSE NULL END);
   END IF;
   SELECT coalesce(jsonb_agg(jsonb_build_object('id',id,'actorUserId',actor_user_id,'targetUserId',target_user_id,'admissionId',admission_id,
@@ -544,8 +582,8 @@ BEGIN
    RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Family invitation requires a stored Parent request'; END IF;
   mail:=lower(btrim(p_payload->>'email'));
   IF length(mail)>254 OR mail!~'^[^[:space:]@]+@[^[:space:]@]+\.[^[:space:]@]+$' THEN RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Nominative email required'; END IF;
-  INSERT INTO dobby_access_private.admissions(email,purpose,requested_by,approved_by,state,expires_at,operation_id)
-  VALUES(mail,'new-household',actor,actor,'approved',clock_timestamp()+interval '24 hours',op) RETURNING * INTO a;
+  INSERT INTO dobby_access_private.admissions(email,purpose,requested_by,approved_by,approved_at,state,expires_at,operation_id)
+  VALUES(mail,'new-household',actor,actor,clock_timestamp(),'approved',clock_timestamp()+interval '24 hours',op) RETURNING * INTO a;
   INSERT INTO dobby_access_private.decisions(actor_user_id,admission_id,action,operation_id,request_digest)
   VALUES(actor,a.id,'approve',op,digest);
  ELSE
@@ -568,9 +606,9 @@ BEGIN
    IF decision='approve' THEN
     IF a.purpose<>'new-household' THEN
      PERFORM dobby_access_private.assert_requester(a.requested_by,a.requester_generation);
-     PERFORM dobby_socle_private.access_request_target(a.requested_by,a.household_id,a.member_id,true);
+     PERFORM dobby_socle_private.access_request_target(a.requested_by,a.household_id,a.member_id,true,a.id);
     END IF;
-    UPDATE dobby_access_private.admissions SET state='approved',approved_by=actor,expires_at=clock_timestamp()+interval '24 hours',revision=revision+1,updated_at=clock_timestamp() WHERE id=a.id RETURNING * INTO a;
+    UPDATE dobby_access_private.admissions SET state='approved',approved_by=actor,approved_at=clock_timestamp(),expires_at=clock_timestamp()+interval '24 hours',revision=revision+1,updated_at=clock_timestamp() WHERE id=a.id RETURNING * INTO a;
    ELSE
     UPDATE dobby_access_private.admissions SET state='rejected',revision=revision+1,updated_at=clock_timestamp() WHERE id=a.id RETURNING * INTO a;
    END IF;
@@ -584,7 +622,7 @@ BEGIN
    IF a.state NOT IN ('approved','delivering','sent') OR a.expires_at<=clock_timestamp() THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Approved unexpired admission required'; END IF;
    IF a.purpose<>'new-household' THEN
     PERFORM dobby_access_private.assert_requester(a.requested_by,a.requester_generation);
-    PERFORM dobby_socle_private.access_request_target(a.requested_by,a.household_id,a.member_id,true);
+    PERFORM dobby_socle_private.access_request_target(a.requested_by,a.household_id,a.member_id,true,a.id);
    END IF;
    SELECT * INTO d FROM dobby_access_private.deliveries WHERE admission_id=a.id ORDER BY created_at DESC,id DESC LIMIT 1;
    IF p_command='claimDelivery' AND d.id IS NOT NULL THEN
@@ -617,7 +655,9 @@ BEGIN
     identity:=dobby_access_private.auth_identity(uid);
     SELECT * INTO ar FROM dobby_access_private.authorizations WHERE user_id=uid;
     IF identity IS NULL OR identity->>'email' IS DISTINCT FROM a.email OR ar.status='suspended' OR ar.session_boundary_pending
-     OR (a.target_user_id IS NOT NULL AND a.target_user_id<>uid) THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Auth UUID and current email binding required'; END IF;
+     OR a.approved_at IS NULL OR (ar.sessions_valid_after IS NOT NULL AND a.approved_at<=ar.sessions_valid_after)
+     OR (a.target_user_id IS NOT NULL AND (a.target_user_id<>uid OR a.target_generation<>coalesce(ar.generation,0))) THEN
+     RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Current-generation Auth UUID, email and approval epoch required'; END IF;
     IF a.purpose<>'new-household' THEN
      PERFORM dobby_access_private.assert_requester(a.requested_by,a.requester_generation);
      a.invitation_id:=dobby_socle_private.access_issue_invitation(a.id,a.requested_by,uid,a.household_id,a.member_id,a.expires_at);
@@ -642,7 +682,7 @@ DO $functions$
 DECLARE f record;
 BEGIN
  FOR f IN SELECT p.oid::regprocedure sig,p.proname,n.nspname FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
- WHERE (n.nspname='dobby_access_private' AND p.proname IN ('enable_identity_guard','scoped_subject','assert_requester','lock_admission_actors','child_delivery_ready','admission_json','payload_keys','uuid_value','revision_value','assert_invitation_admission'))
+ WHERE (n.nspname='dobby_access_private' AND p.proname IN ('enable_identity_guard','scoped_subject','assert_requester','lock_admission_actors','child_delivery_ready','admission_json','payload_keys','uuid_value','revision_value','assert_invitation_admission','guard_approval_epoch'))
   OR (n.nspname='dobby_socle_private' AND p.proname LIKE 'access_%')
   OR (n.nspname='public' AND p.proname IN ('dobby_access_admin','dobby_access_accept','dobby_access_request_family_account','dobby_access_context')) LOOP
   EXECUTE format('ALTER FUNCTION %s OWNER TO %I',f.sig,CASE WHEN f.nspname='dobby_socle_private' THEN 'dobby_socle_writer' ELSE 'dobby_access_writer' END);
@@ -651,7 +691,7 @@ BEGIN
 END $functions$;
 GRANT EXECUTE ON FUNCTION dobby_access_private.enable_identity_guard() TO postgres;
 GRANT EXECUTE ON FUNCTION dobby_access_private.child_delivery_ready(),dobby_access_private.assert_invitation_admission(text,text) TO dobby_socle_writer;
-GRANT EXECUTE ON FUNCTION dobby_socle_private.access_request_household(uuid,text),dobby_socle_private.access_request_target(uuid,uuid,text,boolean),
+GRANT EXECUTE ON FUNCTION dobby_socle_private.access_request_household(uuid,text),dobby_socle_private.access_request_target(uuid,uuid,text,boolean,uuid),
  dobby_socle_private.access_issue_invitation(uuid,uuid,uuid,uuid,text,timestamptz),dobby_socle_private.access_revoke_invitations(uuid,uuid),
  dobby_socle_private.access_prepare_profile(jsonb),dobby_socle_private.access_accept_invitation(uuid,uuid,text),dobby_socle_private.access_invitation_admission(text,text,uuid) TO dobby_access_writer;
 GRANT EXECUTE ON FUNCTION dobby_socle_private.access_assert_first_household() TO dobby_access_writer;

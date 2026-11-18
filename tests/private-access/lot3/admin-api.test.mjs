@@ -184,3 +184,14 @@ test('failure to finalize reactivation reports failure while the DB remains fail
  const response=await request({command:'setStatus',payload:{userId:uuid(2),status:'active',expectedRevision:4,operationId:uuid(56),confirmed:true}});
  assert.equal(response.status,503);assert.deepEqual(await response.json(),{ok:false,error:{code:'database_unavailable'}});
 });
+
+test('pending requests have their own validated cursor independent of account pagination',async()=>{
+ const {request,calls}=fixture();
+ const response=await request({command:'listAccess',payload:{cursor:uuid(100),requestsCursor:uuid(200),limit:2}});
+ assert.equal(response.status,200);
+ const sent=calls.find(call=>call.body?.p_command==='listAccess');
+ assert.deepEqual(sent.body.p_payload,{cursor:uuid(100),requestsCursor:uuid(200),limit:2});
+ assert.equal((await request({command:'listAccess',payload:{requestsCursor:'invalid'}})).status,400);
+ assert.equal((await request({command:'listDecisions',payload:{requestsCursor:uuid(200)}})).status,400);
+ assert.equal((await request({command:'listAccess',payload:{cursor:null,requestsCursor:null}})).status,200);
+});

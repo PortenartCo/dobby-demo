@@ -27,6 +27,7 @@ window.DobbyAccess = (() => {
     // contain account details and must never become a support diagnostic.
     const stage=error?.stage,code=error?.code;
     const http=Number.isInteger(error?.status)&&error.status>=100&&error.status<=599?String(error.status):'INDISPONIBLE';
+    if(stage==='admission'&&code==='ADMISSION_SIGNED_IN')return 'Un compte est déjà connecté dans ce navigateur. Ouvrez le lien reçu par e-mail dans un autre profil de navigateur, ou déconnectez-vous puis rouvrez ce lien.';
     if(stage==='auth'){
       if(code==='invalid_credentials')return 'L’adresse e-mail ou le mot de passe n’a pas été reconnu. Référence : CONNEXION-'+http+'-IDENTIFIANTS.';
       if(code==='email_not_confirmed')return 'Votre adresse e-mail doit être confirmée avant la connexion. Référence : CONNEXION-'+http+'-EMAIL.';
