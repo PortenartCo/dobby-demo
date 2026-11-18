@@ -1,0 +1,22 @@
+✔ owner-only commands, closed payloads and no content grants (398.819566ms)
+✔ delivery CAS and replay never silently authorizes or resends (243.829877ms)
+✔ acceptance creates one pending profile atomically then consumes one household right (131.991892ms)
+✔ different UUID, wrong current email, expired admission and changed operation rejected (555.449299ms)
+✔ free invitation creators close; family request has no Auth or access side effects (365.534587ms)
+✔ uncertain delivery requires explicit resume; old attempt cannot finalize new attempt (338.252955ms)
+✔ pending known Auth account can be suspended before acceptance without provisional active rights (454.18191ms)
+✔ approved parent request uses canonical family writers and preserves requester identity (353.940147ms)
+✔ conservative rollback closes administration and keeps existing family context (119.571592ms)
+✔ request pagination reaches older pending requests behind recent terminal requests (191.01795ms)
+✔ approval before a target reactivation cutoff cannot bind the new generation (123.882022ms)
+✔ live child invitation blocks a competing approval before any delivery claim (172.422693ms)
+✔ expired child invitation is retained as revoked history and a new canonical link succeeds (149.054522ms)
+✔ fresh owner approval grants one first-household quota after pending suspension/reactivation (450.17694ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22022.054207

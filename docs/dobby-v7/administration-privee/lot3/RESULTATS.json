@@ -1,0 +1,231 @@
+{
+  "recordedAt": "2026-11-18T13:49:09.385369+01:00",
+  "repository": "PortenartCo/dobby-demo",
+  "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/31",
+  "baseCommit": "24ab5b7944c34c9f29ede5867f4715111b5c2f47",
+  "testedCodeCommit": "4ce4890d1266aa5d21568d47729038054b2aa368",
+  "checkpoints": {
+    "preparation": "725a306a99db3d979bb55b6bb5ddff6f132bd272",
+    "contractsTests": "f1ada653c27034091c8f1058f9c4ceaf191eb3de",
+    "implementation": "ec3c2fb3069b248a63d33a2045c4019b29b0f98e",
+    "reviewFixes": "4ce4890d1266aa5d21568d47729038054b2aa368"
+  },
+  "suites": [
+    {
+      "name": "Auth/API réels",
+      "command": "DOBBY_EVIDENCE_DIR=/tmp/dobby-lot3-evidence/validated-auth node --test tests/private-access/lot3/invite-delivery.test.mjs",
+      "exitCode": 0,
+      "proofLevel": "real GoTrue/PostgREST/SMTP/Deno HTTP",
+      "evidence": "preuves/auth-http.log",
+      "tests": 16,
+      "pass": 16,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 62684.881092
+    },
+    {
+      "name": "Navigateur réel",
+      "command": "node --test tests/private-access/lot3/callback-browser.test.mjs",
+      "exitCode": 0,
+      "proofLevel": "three scenarios in isolated real Chromium contexts; minimal module harness",
+      "evidence": "preuves/callback-browser.log",
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 36891.699602
+    },
+    {
+      "name": "PostgreSQL ciblé",
+      "command": "node --test tests/private-access/lot3/admin-sql.test.mjs",
+      "exitCode": 0,
+      "proofLevel": "synthetic SQL claims, real PostgreSQL",
+      "evidence": "preuves/admin-sql.log",
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 22022.054207
+    },
+    {
+      "name": "Edge unitaire",
+      "command": "node --test tests/private-access/lot3/admin-api.test.mjs",
+      "exitCode": 0,
+      "proofLevel": "injected HTTP fixtures; not real Auth proof",
+      "evidence": "preuves/admin-edge.log",
+      "tests": 18,
+      "pass": 18,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 369.472841
+    },
+    {
+      "name": "Clients/transports ciblés",
+      "command": "node --test essai-stitch-v5-famille/tests/family-access*.test.mjs essai-stitch-v5-famille/tests/family-core.test.mjs essai-stitch-v7/tests/access-flow*.test.mjs tests/private-access/lot3/callback.test.mjs",
+      "exitCode": 0,
+      "proofLevel": "fictional transport fixtures and native driver VM",
+      "evidence": "preuves/callback-client.log",
+      "tests": 191,
+      "pass": 191,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 1008.072603
+    },
+    {
+      "name": "Régression de composition",
+      "command": "node --test tests/private-access/lot2a/catalog.test.mjs",
+      "exitCode": 0,
+      "proofLevel": "causal to shared test composition; no Storage campaign",
+      "evidence": "preuves/catalogue-composition.log",
+      "tests": 6,
+      "pass": 6,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 27361.578078
+    }
+  ],
+  "deno": {
+    "version": "2.9.6",
+    "typeCheckExitCode": 0,
+    "factoryRealHttp": true,
+    "hostedSupabaseEdgeWorker": false
+  },
+  "scenarioMatrix": {
+    "T03": {
+      "local": "PASS",
+      "evidence": "nominative UUID, confirmed current email, wrong subject/changed email, expiry, revoke, concurrent accept and same-operation replay"
+    },
+    "T04": {
+      "local": "PASS",
+      "productionChildDelivery": "BLOCKED_BY_UNCHANGED_GATES",
+      "evidence": "real parent request/owner decision, existing adult, canonical child with nonempty magic/credits unchanged; valid target conflict before Auth send and expired link history"
+    },
+    "T12": {
+      "local": "PASS",
+      "evidence": "owner checked by Edge and direct RPC; no foreign family rows or admin content projection"
+    },
+    "T13": {
+      "local": "PASS",
+      "evidence": "real Auth/send plus injected record interruption/response loss/process interruption; no duplicate account or silent resend; explicit recovery; real second-browser callback and PKCE"
+    },
+    "T05_T10": {
+      "local": "PASS",
+      "evidence": "signup closed preserves login/refresh/recovery; refresh can still succeed at Auth after reactivation but actual business RPC remains403; only new owner decision can grant first household right"
+    }
+  },
+  "review": {
+    "independent": "read-only, no test execution by reviewer",
+    "importantFindings": 4,
+    "fixed": [
+      "immutable approval epoch across reactivation",
+      "independent pending-request pagination",
+      "live/expired child invitation handling",
+      "signed-in-other-account callback blocked before verify"
+    ],
+    "deferredMinors": []
+  },
+  "initialPhysicalAttempt": {
+    "tests": 13,
+    "pass": 10,
+    "fail": 3,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 54117.109648
+  },
+  "clockScope": {
+    "authOtp": "actual GoTrue OTP2s plus elapsed3100ms; verify403 otp_expired",
+    "admissionAndFamilyLinkExpiry": "SQL fixture clock injection only",
+    "orphanDeliveryLease": "SQL fixture clock advanced past180s; not wall-clock180s evidence"
+  },
+  "limits": [
+    "hosted Auth privilege/visibility compatibility unverified",
+    "hosted Edge worker and Kong untested",
+    "production child release remains closed",
+    "full family page/provider browser flow not certified; module harness and VM scopes explicit",
+    "Lot4 console not built",
+    "pre-existing signed Storage URLs/upload tokens still unresolved",
+    "forwarded Auth bearer can impersonate the invited UUID",
+    "no hosted deployment or real email/account operation"
+  ],
+  "changedFilesAtTestCommit": [
+    "docs/dobby-v7/administration-privee/lot3/CHECKPOINT-REPRISE.md",
+    "docs/dobby-v7/administration-privee/lot3/CONTRAT.md",
+    "docs/dobby-v7/administration-privee/lot3/ETAT-VALIDATION-INITIAL.md",
+    "docs/dobby-v7/administration-privee/lot3/PLAN.md",
+    "essai-stitch-v5-famille/family-access.mjs",
+    "essai-stitch-v5-famille/family-core.mjs",
+    "essai-stitch-v5-famille/family-v2.js",
+    "essai-stitch-v7/access-entry.js",
+    "essai-stitch-v7/access-flow.mjs",
+    "essai-stitch-v7/access.js",
+    "index.html",
+    "supabase/functions/_shared/dobby-admin-handler.ts",
+    "supabase/functions/_shared/dobby-admin-validation.ts",
+    "supabase/functions/_shared/dobby-auth-admin.ts",
+    "supabase/functions/dobby-access-admin/index.ts",
+    "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+    "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql",
+    "tests/private-access/local-db.mjs",
+    "tests/private-access/lot2a/catalog.mjs",
+    "tests/private-access/lot3/admin-api.test.mjs",
+    "tests/private-access/lot3/admin-sql.test.mjs",
+    "tests/private-access/lot3/auth-fixtures.sql",
+    "tests/private-access/lot3/business-catalog.mjs",
+    "tests/private-access/lot3/callback-browser.test.mjs",
+    "tests/private-access/lot3/callback.test.mjs",
+    "tests/private-access/lot3/invite-delivery.test.mjs",
+    "tests/private-access/lot3/local-auth.mjs"
+  ],
+  "sourceSHA256": {
+    "essai-stitch-v5-famille/family-access.mjs": "3368b77652ab9bb090d98bc75624c085a58e11479f24ce06e4f912a00ddcedf4",
+    "essai-stitch-v5-famille/family-core.mjs": "0d925569dac23ee94338dcc735bad0201b30b19cad7383ea57d8a19389d4ea64",
+    "essai-stitch-v5-famille/family-v2.js": "b71a748ea606c412637b7bee1cf46918359d3aabfb0174605b8da96d79aad4e0",
+    "essai-stitch-v7/access-entry.js": "3f4ae1deea6f9862d4f466ec8bb45bf38065d57168bf5bc302d5683433909329",
+    "essai-stitch-v7/access-flow.mjs": "1cc06cc0f4e9a22c7f0d76640653bfd5db791084d0151f09f140b1910ad3c3f3",
+    "essai-stitch-v7/access.js": "feaeb1a7cd07114a09f1d78cf8b3c718ae1159bef6f7434182d1e408420d6a36",
+    "index.html": "6862bfde3bf59f234e44358e45bae8d46a0003596560b1e3a0de5ae51d78f899",
+    "supabase/functions/_shared/dobby-admin-handler.ts": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190",
+    "supabase/functions/_shared/dobby-admin-validation.ts": "185c16779cf0cb6484ba487ba68ea38ae9a4de56e4ec8cef3378e611c0d32b56",
+    "supabase/functions/_shared/dobby-auth-admin.ts": "7dfd4e1ea7c45a0695afb798d3ec1f7ebb1269c929051ed0edd0241f5c698867",
+    "supabase/functions/dobby-access-admin/index.ts": "987da249e10ec237c3d71be41826bd6872658ed2177a046951498d314f5a9917",
+    "supabase/migrations/20261118120207_dobby_private_access_administration.sql": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5",
+    "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql": "32b4c5350aea34e32930456b2da2bae70b562262db3cc0a9e6b45449fc7899b9",
+    "tests/private-access/local-db.mjs": "57de205c6bcfa87ea66628f3e41f687d6bd2f6a4e38368ee88ffa358f952e239",
+    "tests/private-access/lot2a/catalog.mjs": "c9d57d095d0e372a636ece45c173c3ecf0a7db2de45a100e19f3a4912f1004f9",
+    "tests/private-access/lot3/admin-api.test.mjs": "a64b3e0f884c6943705a265086cd21d6c4aaaea2fb76940428cad549acbb29a7",
+    "tests/private-access/lot3/admin-sql.test.mjs": "3f622fd3586d7402802a87896fd5c7f34aed6f0d54211f3604c9ab9877d253b4",
+    "tests/private-access/lot3/auth-fixtures.sql": "c13ad9ce09102a16d86fdf638003c2608368ae2041cb8038e79983b867db5233",
+    "tests/private-access/lot3/business-catalog.mjs": "cd4433f0d5873f9529fbf8f239c44ba70de162250f6c7e98e8a46faeddc04432",
+    "tests/private-access/lot3/callback-browser.test.mjs": "141616bec0d6feec309f5a13888900145a8ada062419ff51ad308a7606ff02b5",
+    "tests/private-access/lot3/callback.test.mjs": "8f9493f2605c6bf39eaacabce7a0b78edc848a6f8bedb253c9a0ba1b960c4fac",
+    "tests/private-access/lot3/invite-delivery.test.mjs": "6215be51a01404906744995e4677af34895b2ab387616eb10b5bc3ab014518ce",
+    "tests/private-access/lot3/local-auth.mjs": "5e58e03574fcc7afd19e6329699ec5e56348be29726a836a2d152d784f62fd83"
+  },
+  "evidenceSHA256": {
+    "preuves/admin-edge.log": "786ff98ac1ec4f95dfcef56f8556403cb73a2e4a7601f7bc34e574ebfa32e5e6",
+    "preuves/admin-sql.log": "92b05ce441df9aa38f5b14f61f1e877c582c85e18b11dbfbc6fdbb6838bb2884",
+    "preuves/auth-http.log": "63c305867154ec0326ebbc19240cd6add10d8ad2e47b9e7fda85f47e4da94f60",
+    "preuves/auth-local.json": "5be476e4b6ce5eda5781b033307a8309b206d3271454e98d7292c89927c99851",
+    "preuves/browser-meta.json": "c7cb7dff4d7fd589642fb8ddb458a47f37527f34eceae5ca08af5c86bb4ddbbd",
+    "preuves/callback-browser.log": "a34078aac552ece225bc10d806b16c44898588ce6ea219c315d6619944089b84",
+    "preuves/callback-client.log": "da361ce0a25100b5cfc3b7d9323e4f18577194fe6638d9f529d099e3a7156f05",
+    "preuves/callback-compte-connecte-red.log": "b3ec4fd490a802b97b0bb0da5e615af574f6765fc68a4f4f16f0970df9d54990",
+    "preuves/catalogue-composition.log": "3490e2745191f6f9074e05b2541d5806e0f2a67ab5794e313bf5505ace7283c4",
+    "preuves/deno-check.log": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "preuves/integration-premier-passage.log": "d15bbbe68d42510666a1be73e2fe59c80fb9ab214545c0fa136a31fd17bf2ee5",
+    "preuves/pagination-edge-red.log": "7ff996c1a16194e6c404966e6d37cdb4c4fd52394d655d10cd3bddf48e8202c1",
+    "preuves/revue-sql-red.log": "645b680fab21de27126d1d4917fcf462f44eccbfb5edc92b90a5b8c818ff28eb"
+  },
+  "evidenceNormalization": "Trailing whitespace normalized; no raw JWT, OTP/hash link, mailbox body, credential or real personal data exported.",
+  "cleanup": {
+    "ownedAuthContainersRemoved": true,
+    "ownedAuthNetworksRemoved": true,
+    "ownedLocalServersStopped": true
+  }
+}

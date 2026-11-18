@@ -12,12 +12,14 @@ Aucun Supabase hébergé, e-mail réel, compte réel, ancienne migration modifi�
 ## Étapes
 
 - [x] Vérifier base/instructions, créer l'isolation, lire les références et sauvegarder ce checkpoint.
-- [ ] Contrats fermés, tests initiaux en échec, composition des fixtures avec les vrais schémas Auth locaux.
-- [ ] API Edge et helpers, migration additive/rollback conservateur, demande/approbation/livraison/consommation transactionnelle, suspension/réactivation et refus des anciens créateurs libres.
-- [ ] Callbacks token_hash et chemin admission borné, conservation PKCE/connexion/récupération ; tests ciblés des modules affectés.
-- [ ] Preuves réelles GoTrue/SMTP/PostgREST : signup ouvert/fermé, invitation et compte existant, autre navigateur, scénarios T03/T04/T12/T13 et défaillances de saga.
-- [ ] Revue indépendante, contrôle confidentialité, résultats PASS/FAIL/BLOCKED, sauvegarde et PR brouillon empilée sur #30.
+- [x] Contrats fermés, tests initiaux en échec, composition des fixtures avec les vrais schémas Auth locaux.
+- [x] API Edge et helpers, migration additive/rollback conservateur, demande/approbation/livraison/consommation transactionnelle, suspension/réactivation et refus des anciens créateurs libres.
+- [x] Callbacks token_hash et chemin admission borné, conservation PKCE/connexion/récupération ; tests ciblés des modules affectés.
+- [x] Preuves réelles GoTrue/SMTP/PostgREST : signup ouvert/fermé, invitation et compte existant, autre navigateur, scénarios T03/T04/T12/T13 et défaillances de saga.
+- [x] Revue indépendante, contrôle confidentialité, résultats PASS/FAIL/BLOCKED, sauvegarde et PR brouillon empilée sur #30.
 
 ## Interfaces et revue
 
 La définition détaillée et versionnée est dans CONTRAT.md. Commandes fermées du propriétaire et RPC utilisateur séparées ; jamais un UUID d'acteur fourni par le client. Vérifier les replays après suspension, les générations, la confirmation d'adresse actuelle, le demandeur devenu inactif, l'ordre des verrous et l'absence d'autorisation provisoire commitée. Les gates enfant restent fermées en production ; une ouverture exclusivement dans la fixture ne vaut pas recette hébergée.
+
+Livraison locale : PR brouillon [#31](https://github.com/PortenartCo/dobby-demo/pull/31). Les résultats actuels et limites sont dans RAPPORT.md/RESULTATS.json ; le checkpoint initial reste un historique.

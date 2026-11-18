@@ -1,0 +1,103 @@
+✔ entry captures token_hash and admission UUID, strips every bearer before assets, and consumes once (4.304765ms)
+✔ URL cleaner removes callbacks nested in a native route fragment (0.556096ms)
+✔ token_hash capture needs no PKCE verifier and is inert until explicit confirmation (5.081871ms)
+✔ explicit password login can resume its known admission without a business refresh (0.838018ms)
+▶ an existing verified or unverified Auth user cannot consume another admission link
+  ✖ verified account (1.746749ms)
+  ✖ unverified account (0.599702ms)
+✖ an existing verified or unverified Auth user cannot consume another admission link (2.813036ms)
+✔ a saved admission resume record cannot switch an unrelated authenticated user into that admission (0.573901ms)
+▶ magiclink is accepted explicitly; unsupported or ambiguous Auth callbacks never reach verify
+  ✔ https://example.test/dobby/?token_hash=HASH&type=recovery&admission_id=00000000-0000-4000-8000-000000000020 (0.750085ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=signup&admission_id=00000000-0000-4000-8000-000000000020 (0.592594ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=email&admission_id=00000000-0000-4000-8000-000000000020 (0.494787ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=sms&admission_id=00000000-0000-4000-8000-000000000020 (0.38822ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=invite&admission_id=not-a-uuid (0.277287ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=invite (0.278905ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=invite&admission_id=00000000-0000-4000-8000-000000000020&type=magiclink (0.339576ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=invite&admission_id=00000000-0000-4000-8000-000000000020&code=ambiguous (0.425043ms)
+  ✔ https://example.test/dobby/?token_hash=HASH&type=invite&admission_id=00000000-0000-4000-8000-000000000020#access_token=PRIVATE (0.320607ms)
+✔ magiclink is accepted explicitly; unsupported or ambiguous Auth callbacks never reach verify (6.506408ms)
+✔ bounded admission refresh uses only access context and disallows premature family mutation (1.837638ms)
+✔ admission transport allowlist rejects every generic read/write and malformed packet (0.784887ms)
+✔ adult acceptance validates profile then atomically accepts before family refresh and adoption (1.951327ms)
+✔ child admission sends no replacement profile and leaves production child gates closed (1.133889ms)
+✔ fresh context after child admission must still identify the same canonical child and household (2.130683ms)
+✔ a child admission without a precise existing target never proceeds to acceptance (0.823047ms)
+✔ adult admission adoption is restricted to the approved household (0.876518ms)
+✔ an invalid transaction acknowledgement cannot unlock the family transport (0.938962ms)
+✔ replacement immediately after session installation cannot become the admission owner (0.613023ms)
+✔ failed accept stays bounded and reuses one operation UUID without a family read (1.546445ms)
+▶ late Auth and access-context responses cannot claim a replacement native session
+  ✔ auth (0.352388ms)
+  ✔ context (20.716678ms)
+✔ late Auth and access-context responses cannot claim a replacement native session (21.483995ms)
+✔ access initialization stages a hash callback without verify or ordinary context refresh (2.976415ms)
+✖ the callback view explains the existing-account refusal and never redirects or verifies (4.732347ms)
+✔ the explicit resume form passes its verified account-bound admission UUID to password login (3.614733ms)
+✔ actual native driver has a session-bound admission-only path despite shared-write guard (8.338756ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 31
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 203.489054
+
+✖ failing tests:
+
+test at tests/private-access/lot3/callback.test.mjs:62:45
+✖ verified account (1.746749ms)
+  AssertionError [ERR_ASSERTION]: Staging must preserve the existing native binding
+
+  1 !== 0
+
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/callback.test.mjs:68:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/callback.test.mjs:62:37)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/callback.test.mjs:62:45
+✖ unverified account (0.599702ms)
+  AssertionError [ERR_ASSERTION]: Staging must preserve the existing native binding
+
+  1 !== 0
+
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/callback.test.mjs:68:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/callback.test.mjs:62:37)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot3/callback.test.mjs:175:1
+✖ the callback view explains the existing-account refusal and never redirects or verifies (4.732347ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /déconnect|profil.*navigateur/i. Input:
+
+  ''
+
+      at TestContext.<anonymous> (file:///workspace/dobby-lot3-20261118-18kuxi7q/tests/private-access/lot3/callback.test.mjs:186:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: /déconnect|profil.*navigateur/i,
+    operator: 'match',
+    diff: 'simple'
+  }

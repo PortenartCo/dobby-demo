@@ -1,0 +1,201 @@
+{
+  "runtime": {
+    "postgres": {
+      "version": "17.7 (Debian 17.7-3.pgdg13+1)",
+      "image": "postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4"
+    },
+    "auth": {
+      "version": "v2.197.0",
+      "image": "supabase/gotrue:v2.197.0@sha256:839f529492d116b4e8b7777c953a27c381d34c15a744b1bcefde5eefaa1f9f9f",
+      "imageId": "sha256:1181bff5ba4ce440013a63cef9f4cf13024c432d705c9b1fbc9e5b949e852f48",
+      "synthetic": false,
+      "schemaCreatedBy": "unmodified GoTrue migrations",
+      "migrations": [
+        "00",
+        "20210710035447",
+        "20210722035447",
+        "20210730183235",
+        "20210909172000",
+        "20210927181326",
+        "20211122151130",
+        "20211124214934",
+        "20211202183645",
+        "20220114185221",
+        "20220114185340",
+        "20220224000811",
+        "20220323170000",
+        "20220429102000",
+        "20220531120530",
+        "20220614074223",
+        "20220811173540",
+        "20221003041349",
+        "20221003041400",
+        "20221011041400",
+        "20221020193600",
+        "20221021073300",
+        "20221021082433",
+        "20221027105023",
+        "20221114143122",
+        "20221114143410",
+        "20221125140132",
+        "20221208132122",
+        "20221215195500",
+        "20221215195800",
+        "20221215195900",
+        "20230116124310",
+        "20230116124412",
+        "20230131181311",
+        "20230322519590",
+        "20230402418590",
+        "20230411005111",
+        "20230508135423",
+        "20230523124323",
+        "20230818113222",
+        "20230914180801",
+        "20231027141322",
+        "20231114161723",
+        "20231117164230",
+        "20240115144230",
+        "20240214120130",
+        "20240306115329",
+        "20240314092811",
+        "20240427152123",
+        "20240612123726",
+        "20240729123726",
+        "20240802193726",
+        "20240806073726",
+        "20241009103726",
+        "20250717082212",
+        "20250731150234",
+        "20250804100000",
+        "20250901200500",
+        "20250903112500",
+        "20250904133000",
+        "20250925093508",
+        "20251007112900",
+        "20251104100000",
+        "20251111201300",
+        "20251201000000",
+        "20260115000000",
+        "20260121000000",
+        "20260219120000",
+        "20260302000000",
+        "20260625000000",
+        "20260821000000",
+        "20260821010000",
+        "20260824000000",
+        "20260824000001",
+        "20260831180000"
+      ],
+      "usersOwner": "supabase_auth_admin",
+      "sessionsOwner": "supabase_auth_admin",
+      "sessionRls": true,
+      "configuredOtpExpirySeconds": 3600,
+      "localOwnerCapabilities": [
+        "enable Auth table RLS",
+        "grant postgres SELECT(id), REFERENCES(id)",
+        "existing fixture auth.uid() fallback for real PostgREST JSON claims"
+      ]
+    },
+    "smtp": {
+      "version": "v1.34.0",
+      "image": "axllent/mailpit:v1.34.0@sha256:5040a9c533087d25dcb8f2ac748f45c9be5f7bc1d9fe5b860afb9597a2471d57",
+      "recipientPolicy": "only recipient domains ending .invalid",
+      "delivery": "owned internal Mailpit sink; no external route or SMTP relay",
+      "admissionTemplates": "real GoTrue template rendering of RedirectTo (trusted callback with admission_id) + TokenHash + invite/magiclink type; fixed internal fixture template server; recovery/signup defaults preserved"
+    },
+    "rest": {
+      "version": "v14.18",
+      "image": "postgrest/postgrest:v14.18@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0",
+      "exposedSchemas": [
+        "public"
+      ]
+    },
+    "isolation": {
+      "internalNetwork": true,
+      "publishAddress": "127.0.0.1 relay only",
+      "bindMounts": false,
+      "publishedContainerPorts": false,
+      "databaseData": "tmpfs",
+      "inboxData": "tmpfs",
+      "ownedNetwork": "dobby-lot3-auth-net-264611-cafd2bf3a228",
+      "transport": "loopback HTTP relay via docker exec and fixed internal TCP services",
+      "realAccounts": false,
+      "hostedChanges": false
+    }
+  },
+  "proofs": [
+    {
+      "scenario": "signup-open-closed",
+      "refreshHTTPStatus": 200,
+      "result": "open Auth signup remains unapproved; closed signup 422; original fictional account UUIDs, login and real refresh preserved"
+    },
+    {
+      "scenario": "owner-isolation",
+      "result": "non-owner/anonymous denied; direct RPC denied; admin projections exclude payloads; global owner sees no H2 business rows"
+    },
+    {
+      "scenario": "native-deno-api",
+      "result": "Deno2.9.6 executes shipped TypeScript handler factory over local HTTP with real GoTrue and PostgREST; owner200/non-owner403; no hosted Edge deployment or worker certification claimed"
+    },
+    {
+      "scenario": "nominative-new-household",
+      "result": "real invite and one-use Auth hash; wrong UUID rejected; no access before transaction; two simultaneous accepts yield one commit plus replay; one canonical household"
+    },
+    {
+      "scenario": "parent-request-and-existing-adult",
+      "result": "parent creates only request; rejected request sends nothing; approved existing Auth UUID joins sole requested family; no duplicate account"
+    },
+    {
+      "scenario": "canonical-child",
+      "result": "default production gates block delivery; only fictional test gates opened; existing TEXT member id/payload/revision unchanged after real Auth invitation and transaction; no pending replacement profile"
+    },
+    {
+      "scenario": "child-expiry-and-live-target",
+      "result": "live pending child invitation prevents a second Auth send; only expiry clock injected locally; expired row revoked preserving history; replacement SMTP/Auth/canonical accept succeeds without profile mutation"
+    },
+    {
+      "scenario": "auth-db-saga",
+      "result": "actual Auth creation/mail before injected DB interruption; no provisional active row; replay sends no duplicate; explicit owner resume reuses one Auth UUID"
+    },
+    {
+      "scenario": "lost-results-and-crash",
+      "result": "committed record replay sends nothing; orphan attempting lease aged only in local clock fixture; explicit confirmed owner recovery completes without duplicate Auth"
+    },
+    {
+      "scenario": "unbound-approval-generation",
+      "result": "actual delivery interrupted before UUID binding; target suspended/reactivated; old explicit recovery grants nothing; only new owner approval with newer immutable timestamp can be consumed"
+    },
+    {
+      "scenario": "admission-identity-expiry-revocation",
+      "result": "real JWT sessions cannot consume revoked/clock-expired admissions or an admission for a different current Auth email; DB expiry uses explicit fixture clock injection"
+    },
+    {
+      "scenario": "pending-suspension-reactivation",
+      "oldRefreshHTTPStatus": 200,
+      "result": "pending bound target suspended with closed row, admission revoked atomically; explicit two-transaction reactivation restores no old admission/quota/session; a real refresh of the old session still cannot access business RPCs; only a new explicit approval grants first quota"
+    },
+    {
+      "scenario": "inactive-requester",
+      "result": "approval never survives requester suspension; old requester session stays refused after real re-login; admission remains revoked"
+    },
+    {
+      "scenario": "real-otp-expiry",
+      "result": "configured actual GoTrue OTP2s; elapsed wait3100ms; physical verify403 otp_expired; default restored"
+    },
+    {
+      "scenario": "legacy-account-recovery",
+      "result": "real SMTP recovery, GoTrue verify redirect, PKCE verifier exchange, password reset and login preserve existing fictitious UUID with signup disabled"
+    },
+    {
+      "scenario": "conservative-rollback",
+      "result": "new admin disabled; decisions retained; old fictional owner family remains accessible; free invitation creators remain closed"
+    }
+  ],
+  "notEstablished": [
+    "hosted Auth permissions",
+    "real emails/accounts",
+    "hosted deployment",
+    "extinction of pre-issued Storage bearers"
+  ]
+}

@@ -1,0 +1,15 @@
+INVENTORY: 27 classified signatures; 20 authenticated public routines; 12 missing private Missions definitions (no stubs)
+✔ T06 closed inventory rejects an unreviewed overload atomically (407.645914ms)
+✔ Closed inventory rejects exposed definer views and unreviewed body drift (1147.170798ms)
+✔ No implicit role repair: absent maintenance ADMIN blocks the whole migration (390.013255ms)
+✔ T08 inherited V1 table/column/TRUNCATE privileges force atomic refusal (1720.383836ms)
+✔ Candidate preserves every native policy, owner and business body; inventory is closed (921.640834ms)
+✔ Rollback drill restores native definitions, ACLs, policies and exact business rows; reapply succeeds (815.697509ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27361.578078
