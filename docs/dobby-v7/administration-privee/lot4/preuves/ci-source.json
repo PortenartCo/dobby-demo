@@ -1,0 +1,16 @@
+{
+  "applicationCommit": "a45773536f84f2d9f0cf8464b6cc1bd1777cf339",
+  "checks": [
+    {
+      "name": "Dobby Sync regression (local)",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44386010476"
+    },
+    {
+      "name": "Dobby V7 - Stitch functional UI",
+      "conclusion": "success",
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44386010553"
+    }
+  ],
+  "source": "GitHub Actions API queried by gh; no hosted Supabase action"
+}

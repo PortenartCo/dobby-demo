@@ -1,0 +1,8 @@
+{
+  "scope": "all changed/new task files against mandatory base, no secret contents printed",
+  "files": 105,
+  "binaryFilesRequiringVisualReview": 40,
+  "findings": [],
+  "reviewedNonSecretFixtureLiteral": "sb_secret_forbidden_fixture, unchanged at mandatory base, tests rejection of server keys",
+  "review": "Known rejected-key fixture is not a secret; only synthetic .invalid/.test records used. Representative final screenshots inspected by primary and browser agents; geometry and hashes checked for all 40 captures."
+}

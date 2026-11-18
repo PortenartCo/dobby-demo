@@ -1,0 +1,10 @@
+✔ status changes carry displayed CAS revision, confirmation and a new operation ID (1855.234447ms)
+✔ unapproved revision-zero status controls require an admission bound to the exact account (2741.63594ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6064.930079

@@ -1,0 +1,17 @@
+Command: node essai-stitch-v7/build-source.cjs
+Scope: isolated temporary copy of design/ and essai-stitch-v7/; source workspace untouched.
+STITCH_ROOT_BUILD=taverne SOURCE=dobby_la_taverne_gourmande_repas_menus
+STITCH_ROOT_BUILD=traverse SOURCE=dobby_l_choppe_du_chemin_de_traverse
+STITCH_ROOT_BUILD=missions SOURCE=dobby_la_biblioth_que_des_missions_t_ches_magiques
+STITCH_ROOT_BUILD=famille SOURCE=dobby_le_salon_des_curiosit_s_famille_organisation
+CUISINE_TEMPLATES=13
+FAMILY_TEMPLATES=7
+REGISTER_TEMPLATES 30
+E06_TEMPLATES 8
+ADMIN_ASSETS_PASS essai-stitch-v7/famille.html 2997786dff44fec4b8c8b0743aa1330445d622dea4ec6490427ebb159fe12086
+ADMIN_ASSETS_PASS essai-stitch-v7/index.html 061ff9442946b4852bcc6654ce91fad9ba76d08f9269740e0e3bd689e1dac778
+ADMIN_ASSETS_PASS essai-stitch-v7/missions.html b7cfabeca5619bef7c1ab5f83ed4fdeaf016d0ca8b6310a342764c2df2d3ff1f
+ADMIN_ASSETS_PASS essai-stitch-v7/traverse.html a65479c863ea79f5e7f7cee31c34aceba43bcc30841b7fe07abcf0d57f4f48f0
+Compared 73 CI-scoped generated artifacts byte-for-byte.
+Differences: []
+Tailwind was not regenerated: the change adds script/link tags only and generated HTML matches committed bytes.

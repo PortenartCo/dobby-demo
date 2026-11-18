@@ -1,0 +1,18 @@
+LOT4_BROWSER_WIDTH_PASS 320
+LOT4_BROWSER_WIDTH_PASS 390
+LOT4_BROWSER_WIDTH_PASS 768
+LOT4_BROWSER_WIDTH_PASS 1440
+LOT4_BROWSER_PHASE_PASS normal Parent request
+LOT4_BROWSER_PHASE_PASS owner UI approval and confirmed delivery
+LOT4_BROWSER_PHASE_PASS recipient explicit Auth confirmation
+LOT4_BROWSER_PHASE_PASS recipient profile submitted
+LOT4_BROWSER_PHASE_PASS T03 adult admission
+LOT4_BROWSER_PHASE_PASS closed child gates and refusal history
+LOT4_BROWSER_PHASE_PASS long lists and metadata
+{
+  "status": "PASS",
+  "scenarios": 14,
+  "captures": 16,
+  "evidence": "docs/dobby-v7/evidence/lot-4/browser",
+  "hostedRequests": 0
+}

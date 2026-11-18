@@ -1,0 +1,17 @@
+BROWSER 154.0.8037.57 AUTH_FIXTURES_ONLY no live certification
+PASS public root has no free signup and a forged legacy signup mode remains login
+PASS recovery mismatch can be corrected by editing only the first password
+{
+  "liveBackend": false,
+  "canonical": "https://portenartco.github.io/dobby-demo/",
+  "results": [
+    {
+      "name": "public root has no free signup and a forged legacy signup mode remains login",
+      "status": "PASS"
+    },
+    {
+      "name": "recovery mismatch can be corrected by editing only the first password",
+      "status": "PASS"
+    }
+  ]
+}

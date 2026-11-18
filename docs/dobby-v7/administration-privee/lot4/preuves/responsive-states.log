@@ -1,0 +1,25 @@
+LOT4_RESPONSIVE_PASS empty-requests 320
+LOT4_RESPONSIVE_PASS empty-requests 390
+LOT4_RESPONSIVE_PASS empty-requests 768
+LOT4_RESPONSIVE_PASS empty-requests 1440
+LOT4_RESPONSIVE_PASS long-requests 320
+LOT4_RESPONSIVE_PASS long-requests 390
+LOT4_RESPONSIVE_PASS long-requests 768
+LOT4_RESPONSIVE_PASS long-requests 1440
+LOT4_RESPONSIVE_PASS long-requests-bottom 320
+LOT4_RESPONSIVE_PASS long-requests-bottom 390
+LOT4_RESPONSIVE_PASS long-requests-bottom 768
+LOT4_RESPONSIVE_PASS long-requests-bottom 1440
+LOT4_RESPONSIVE_PASS confirmation 320
+LOT4_RESPONSIVE_PASS confirmation 390
+LOT4_RESPONSIVE_PASS confirmation 768
+LOT4_RESPONSIVE_PASS confirmation 1440
+LOT4_RESPONSIVE_PASS network-error 320
+LOT4_RESPONSIVE_PASS network-error 390
+LOT4_RESPONSIVE_PASS network-error 768
+LOT4_RESPONSIVE_PASS network-error 1440
+LOT4_RESPONSIVE_PASS account-switch-owner-denied 320
+LOT4_RESPONSIVE_PASS account-switch-owner-denied 390
+LOT4_RESPONSIVE_PASS account-switch-owner-denied 768
+LOT4_RESPONSIVE_PASS account-switch-owner-denied 1440
+{"status":"PASS","states":5,"widths":[320,390,768,1440],"captures":24,"hostedRequests":0}

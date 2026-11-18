@@ -1,0 +1,29 @@
+✔ local owner identity and a direct route do not grant administration without a fresh server result (1336.549003ms)
+✔ menu entry follows a fresh server verification and disappears immediately on account change (430.407498ms)
+✔ late owner verification cannot restore entry or metadata after an account switch (728.130096ms)
+✔ suspension clears visible metadata and closes a confirmation before a late response (488.00429ms)
+✔ invitation requires explicit confirmation and transmits one operation ID with exact closed payload (986.561057ms)
+✔ an uncertain delivery is never reported as confirmed and is not automatically retried (488.413656ms)
+✔ an explicit failed delivery is distinct from an uncertain or sent delivery (2402.385683ms)
+✔ a lost mutation response preserves the form, prevents a second submit and asks to inspect state (1230.312396ms)
+✔ status changes carry displayed CAS revision, confirmation and a new operation ID (1210.818157ms)
+✔ reactivation is not declared confirmed while the server session boundary is pending (1349.492998ms)
+✔ CAS refusal does not retry or display a successful status (741.506754ms)
+✔ existing child request preserves its identifier and cannot open the production child delivery gate (574.876473ms)
+✔ family decisions carry admission CAS without family payloads (601.445259ms)
+✔ request and account cursors advance independently without duplicate hidden first pages (716.541048ms)
+✔ history projects dates, actor, target, decision IDs and has no mutation action (694.669296ms)
+✔ projected labels are text, never injected HTML or private family content (879.461502ms)
+✔ late metadata cannot remount an admin form after its route was left (334.579098ms)
+✔ account switch clears a pending operation and its late receipt cannot restore the old view (537.847771ms)
+✔ a target chosen on a later account page is freshly reloaded and never silently replaced (534.15172ms)
+✔ a selected status target that disappears cannot fall back to another account (424.578013ms)
+✔ unapproved revision-zero status controls require an admission bound to the exact account (1214.452701ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18679.7728

@@ -1,0 +1,11 @@
+Command (repository /workspace/dobby-lot4-20261118-5n_jy1ba):
+DOBBY_TEST_ORIGIN=http://127.0.0.1:8834 DOBBY_E01_EVIDENCE_DIR=/workspace/scratch/lot4-navigation/e01 node essai-stitch-v7/tests/e01.cjs
+
+Captured successful output, combined from yielded tool chunks:
+E01_PASS 390 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/six tabs/preferences preserved
+E01_PASS 1440 E01.1 centered J0..J6/limits/today/reset/no date writes/empty metadata/real section names; E01 missions/routes/six tabs/preferences preserved
+E01_MOTION_PASS source animation outside home; reduced motion covered in both responsive journeys
+
+Exit code: 0
+Network: isolated Chromium route allowlist, localhost origin only.
+This is the existing genuine V7 E01 regression; no real account or external service.
