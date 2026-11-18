@@ -1,0 +1,18 @@
+✔ new signed capabilities are denied even to an active Parent (5254.871581ms)
+✔ real Storage keeps normal Parent upload, upsert, copy, move, GET, list and deletion functional (2518.487752ms)
+✔ family and Parent/Enfant restrictions remain effective, including for the DOBBY owner (3408.14266ms)
+✔ an unapproved Auth user with a canonical family link still cannot read its own family files (695.662696ms)
+✔ private public routes, unsigned direct SQL operations and invalid session JWTs fail closed (1839.814939ms)
+✔ committed suspension refuses old-JWT operations while other buckets remain governed by their own policy (3926.015518ms)
+✔ pre-issued download and upload capabilities survive suspension: measured residual, never a revocation success (1373.259052ms)
+✔ maintenance lock excludes policy replacement before rollback fingerprint verification (364.035617ms)
+✔ candidate preflight rejects public bucket, altered policies and broad permissive additions atomically (3962.144051ms)
+✔ rollback refuses tampering, restores exact policies and preserves actual bytes; candidate reapplies (2389.655317ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107482.315171

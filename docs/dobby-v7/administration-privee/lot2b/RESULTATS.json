@@ -1,0 +1,148 @@
+{
+  "recordedAt": "2026-11-18T12:46:01.817151+01:00",
+  "repository": "PortenartCo/dobby-demo",
+  "pullRequest": "https://github.com/PortenartCo/dobby-demo/pull/30",
+  "baseCommit": "1012d90537305fd66c3a5cf2f6d8e4ca7b1fe95a",
+  "checkpointCommit": "2d14a90f85027246c4b4732d2ca9aafa9447e8d9",
+  "testedCodeCommit": "df440f30f1cf630013c544e0fb93e04a3f74039c",
+  "reconstruction": true,
+  "recoveredOldFiles": false,
+  "nodeVersion": "v24.19.0",
+  "suites": [
+    {
+      "name": "Storage real HTTP",
+      "command": "DOBBY_EVIDENCE_DIR=/tmp/dobby-lot2b-rebuild-evidence/validated-storage node --test tests/private-access/lot2b/storage.test.mjs",
+      "exitCode": 0,
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 107482.315171
+    },
+    {
+      "name": "Lot 2A PostgreSQL",
+      "command": "node --test --test-concurrency=1 tests/private-access/lot2a/*.test.mjs",
+      "exitCode": 0,
+      "tests": 26,
+      "pass": 26,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 88339.789908
+    },
+    {
+      "name": "Targeted native family access",
+      "command": "node --test essai-stitch-v5-famille/tests/family-access*.test.mjs",
+      "exitCode": 0,
+      "tests": 136,
+      "pass": 136,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 1122.046079
+    }
+  ],
+  "priorLot2aAttempt": {
+    "summary": {
+      "tests": 26,
+      "pass": 25,
+      "fail": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 31996.034578
+    },
+    "failure": "EPIPE in existing interactive connection cleanup; source unchanged",
+    "isolatedConcurrencyRetry": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "durationMs": 22367.422848
+    },
+    "finalFullSerialRetryPassed": true
+  },
+  "counterControls": [
+    {
+      "case": "signing before candidate",
+      "expectedFailure": true,
+      "evidence": "preuves/contrepreuve-signature.log"
+    },
+    {
+      "case": "one-sided permissive policy and DELETE relay framing",
+      "observedFailuresThenFixed": true,
+      "evidence": "preuves/contrepreuve-preflight-et-relais.log"
+    },
+    {
+      "case": "modified foldername helper",
+      "expectedFailure": true,
+      "evidence": "preuves/contrepreuve-foldername.log"
+    },
+    {
+      "case": "browser BYPASSRLS",
+      "expectedFailure": true,
+      "evidence": "preuves/contrepreuve-role-rls.log"
+    },
+    {
+      "case": "concurrent policy replacement",
+      "expectedFailure": true,
+      "evidence": "preuves/contrepreuve-verrou.log"
+    }
+  ],
+  "residualRisks": [
+    {
+      "name": "pre-issued signed download URL remains usable after suspension",
+      "observed": true,
+      "deploymentBlocker": true
+    },
+    {
+      "name": "pre-issued unused signed upload token writes physical bytes after suspension",
+      "observed": true,
+      "deploymentBlocker": true
+    },
+    {
+      "name": "narrow Auth session column grants do not overcome RLS",
+      "observedInSyntheticLocalAuth": true,
+      "hostedVisibilityUnverified": true,
+      "deploymentBlocker": true
+    }
+  ],
+  "notExecuted": [
+    "hosted Supabase access or change",
+    "real GoTrue login/refresh",
+    "real accounts or files",
+    "hosted catalogue and capability inventory",
+    "S3/TUS/image transformation",
+    "in-flight cancellation or write-commit ordering",
+    "full application UI suite"
+  ],
+  "cleanup": {
+    "ownedStorageContainersRemoved": true,
+    "ownedStorageNetworksRemoved": true
+  },
+  "sourceSHA256": {
+    "supabase/migrations/20261118112535_dobby_private_access_storage.sql": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466",
+    "supabase/rollbacks/20261118112535_dobby_private_access_storage.sql": "950d91c37718a3ea8608ead181a509f38065c4166f99491be3966e8d82940f2f",
+    "tests/private-access/fixtures.sql": "e9b3678bff631f269bc2496682b47abd4294f8c8df77d8c221e6deec8ba570df",
+    "tests/private-access/local-db.mjs": "17134dcb8bae5fa29ddd1930bdd876058acb1a26e205587d6e137cbd31258f32",
+    "tests/private-access/lot2a/catalog.mjs": "a9becef59bb2c6059ffb408eea4bcd17f35710904b2d0f3feb45c77f1fad4878",
+    "tests/private-access/lot2b/local-storage.mjs": "22fb166b1746ec6df2d7bab0c730b7a427827427b8bfd7a35caa204e2368f337",
+    "tests/private-access/lot2b/native-transport.mjs": "f6d8a58d6e19fa9603afc3b5d09bd42d3c8e76cc3064752028c81d1dcb0a15ed",
+    "tests/private-access/lot2b/storage.test.mjs": "e541fae052f318876753a575b22779f887cdf5857cb6c6b8f058d5704d02c97c"
+  },
+  "evidenceSHA256": {
+    "preuves/contrepreuve-foldername.log": "99845c424fb51fe9eccb15c671978401104ece3d1598dc7e807d56047631780c",
+    "preuves/contrepreuve-preflight-et-relais.log": "78e43b1b7679bdcff5fb5b28d5c8460bc741b4b740366042d40d038a15cca996",
+    "preuves/contrepreuve-role-rls.log": "cdbd38a0b174589deb1f94af73936294f6a3fdd54fefe7f8bc3c8330335f23a2",
+    "preuves/contrepreuve-signature.log": "0c4341eace0f4c41dbc4d500e380f73fb1c2e0212b6813c08b635d22db4a4992",
+    "preuves/contrepreuve-verrou.log": "d451918cb632c7a0c354f98e6a29a53ed1f7036c7057cb926079d0443d0618b4",
+    "preuves/lot2a-concurrence-isolee.log": "4dc0946d3d0381cdffbc1f31281aef62dd1df732f5991d2d0d749c051772c152",
+    "preuves/lot2a-final.log": "755236a8d91a54a6cc50dbbf325b4ccc6d476eb8c0bacaa42cd22b53b6b1c1c3",
+    "preuves/lot2a-premier-passage.log": "eeb90cbf5a57fc2ee6faaffa390c733fc50c0fb5d1cc2096898ac947708801fe",
+    "preuves/natifs-cibles.log": "3811d96047735e80282b2f4ed508c75ab74dde9ede03190be257b8877206a9a6",
+    "preuves/storage-http.log": "fff97bcd1ec1ff19fc23b0a0748cd583bd8064142576e05343a1266598e18d8e",
+    "preuves/storage-local.json": "7686d28b1e94386f19e1416923b688730d51df68e3b13e0f5db390ba3f913f7d"
+  },
+  "evidenceNormalization": "Trailing whitespace removed from contrepreuve-preflight-et-relais.log for Git hygiene; semantic content unchanged. Original execution logs retained in local scratch."
+}
