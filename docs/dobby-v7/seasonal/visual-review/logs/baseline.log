@@ -1,0 +1,31 @@
+
+> test:seasonal
+> node --test seasonal-calendar.test.cjs && node seasonal-browser.cjs && node seasonal-preview-ci.cjs
+
+✔ all inclusive fixed windows and season boundaries (6.315649ms)
+✔ Gregorian mobile feasts are recomputed, inclusive and cross months (7.119957ms)
+✔ Valentine wins Carnival overlap, including February 14 (0.722863ms)
+✔ Saint-Nicolas wins the December 1 overlap with late Thanksgiving (0.299175ms)
+✔ Brussels date ignores host timezone and handles summer/winter midnight (0.850256ms)
+✔ invalid civil dates are rejected instead of overflowing or using host parsing (0.777814ms)
+✔ every day 2000–2100 has one stable theme; February 14 always Valentine (1019.677761ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1247.566594
+SEASONAL_BROWSER_PASS 320
+SEASONAL_BROWSER_PASS 390
+SEASONAL_BROWSER_PASS 768
+SEASONAL_BROWSER_PASS 1440
+SEASONAL_MIDNIGHT_AND_LIFECYCLE_PASS
+REVIEW_BUILD fa37fd2967b84b2e3caf50198f75391d41370afd 345 files /workspace/dobby-demo/.dobby-ci-integrated-7n2eW9/bundle
+GLOBAL_REVIEW_BUILD fa37fd2967b84b2e3caf50198f75391d41370afd committed /workspace/dobby-demo/.dobby-ci-integrated-7n2eW9/bundle
+FAMILY_REVIEW_BUILD fa37fd2967b84b2e3caf50198f75391d41370afd committed /workspace/dobby-demo/.dobby-ci-integrated-7n2eW9/bundle
+NOTES_REVIEW_BUILD fa37fd2967b84b2e3caf50198f75391d41370afd committed /workspace/dobby-demo/.dobby-ci-integrated-7n2eW9/bundle
+CONSOLIDATED_CANDIDATE_REVIEW_BUILD fa37fd2967b84b2e3caf50198f75391d41370afd committed /workspace/dobby-demo/.dobby-ci-integrated-7n2eW9/bundle
+SEASONAL_REVIEW_BUILD fa37fd2967b84b2e3caf50198f75391d41370afd committed /workspace/dobby-demo/.dobby-ci-integrated-7n2eW9/bundle
+SEASONAL_REVIEW_PASS fa37fd2967b84b2e3caf50198f75391d41370afd 353 verified files

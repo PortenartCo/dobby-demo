@@ -1,0 +1,38 @@
+{
+  "sourceSha": "a81f8a6cb29a0876486ced626bb7966c6eeb0831",
+  "baseSha": "2f2f38b197a96ee2ae3593545f822002a452e859",
+  "publicationSha": "a637b8f9208a44479ccd87b82ba9d09d66cec75e",
+  "applicationPromoted": false,
+  "calendarTests": 7,
+  "viewportWidths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "standardCommand": "CHROMIUM_PATH=/usr/bin/chromium npm test --prefix essai-stitch-v7/tests",
+  "standardExitCode": 0,
+  "standardScope": "e07p01p02Only (repository default)",
+  "previewResourcesVerified": 353,
+  "reviewFindingsFixed": [
+    "Saint-Nicolas precedence on December 1",
+    "clear an active magic burst before changing year"
+  ],
+  "sourceSha256": {
+    "essai-stitch-v7/seasonal-calendar.js": "624aed6a590a2cdb3fda498c7b99eb2dc7fc8e8959cf2c60637c33775461fb6f",
+    "essai-stitch-v7/seasonal-effects.js": "080f8849bad7738e81965eb6d7974e17c0b528e4ee5045f82c268df4a82fe261",
+    "essai-stitch-v7/seasonal-effects.css": "19f975e6c5431d6511666f13ed7cb16824647195141382d38edfe569bf99ccbf",
+    "essai-stitch-v7/chrome.js": "2cd2fa58b3f664b4747178d01526ccc299da7d923dfdb5547d8934686ff13cfb",
+    "essai-stitch-v7/tools-register.js": "3e29e919ed9599b3aa013a1d430186345cba8a9db1b5fc2dcbf2d7a76d4a16d9",
+    "scripts/build-dobby-seasonal-review.cjs": "26a383421b1aee9e5406d8dcddae28e451a0e5453b594e7e15051f2bed85060a",
+    "scripts/review/seasonal-preview.js": "d078974b98acf105f47654062f4e15f88761a92707999d5c924a5a33ded6cad8"
+  },
+  "publicDeployment": {
+    "status": "success",
+    "runId": 44161272144,
+    "url": "https://portenartco.github.io/dobby-demo/essai-dobby-v7-seasonal-a81f8a6cb29a/",
+    "manifestSha256": "953697f01fa9ecad89c3359083ed0a650c700ae8fe9c1228597091b30c790ef0",
+    "manifestByteIdentical": true,
+    "publicBrowserTestExitCode": 0
+  }
+}

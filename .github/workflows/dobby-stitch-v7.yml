@@ -55,7 +55,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: ${{ github.event_name == 'workflow_dispatch' && inputs.historical_run != '' && '0' || '1' }}
+          # The consolidated seasonal preview verifies historical component ancestry.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

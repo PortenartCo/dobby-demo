@@ -1,0 +1,24 @@
+{
+  "stage": "before",
+  "base": "http://127.0.0.1:8765/essai-stitch-v7/",
+  "effects": false,
+  "originalIllustration": true,
+  "results": [
+    {
+      "width": 320,
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "status": "PASS"
+    }
+  ]
+}

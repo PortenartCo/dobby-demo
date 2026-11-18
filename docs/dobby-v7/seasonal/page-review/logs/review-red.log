@@ -1,0 +1,23 @@
+CAPTION_LAYERS [{"text":"✦ Panier enchanté du foyer ✦","z":0,"edge":3}]
+TITLE "Menu✦Nouvel An"
+DETAIL equipment 1
+DETAIL maintenance 1
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'Native captions are behind artwork',
++   'Decorative text changes heading textContent',
++   'equipment is dressed as a primary page',
++   'maintenance is dressed as a primary page'
++ ]
+- []
+
+    at /tmp/dobby-pages-review-regressions.cjs:9:8 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [Array],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}

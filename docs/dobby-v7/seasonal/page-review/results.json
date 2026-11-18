@@ -1,0 +1,453 @@
+{
+  "reference": false,
+  "base": "http://127.0.0.1:8765/essai-stitch-v7/",
+  "realAccounts": false,
+  "effects": false,
+  "events": {
+    "christmas": "2026-12-25",
+    "halloween": "2026-10-31",
+    "new-year": "2026-12-31"
+  },
+  "pages": [
+    "home",
+    "missions",
+    "meals",
+    "shopping",
+    "family",
+    "menu"
+  ],
+  "results": [
+    {
+      "width": 320,
+      "event": "christmas",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "christmas",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "christmas",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "christmas",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "christmas",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "christmas",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "halloween",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "halloween",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "halloween",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "halloween",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "halloween",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "halloween",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "new-year",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "new-year",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "new-year",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "new-year",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "new-year",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "event": "new-year",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "christmas",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "christmas",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "christmas",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "christmas",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "christmas",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "christmas",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "halloween",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "halloween",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "halloween",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "halloween",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "halloween",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "halloween",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "new-year",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "new-year",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "new-year",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "new-year",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "new-year",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "event": "new-year",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "christmas",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "christmas",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "christmas",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "christmas",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "christmas",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "christmas",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "halloween",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "halloween",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "halloween",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "halloween",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "halloween",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "halloween",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "new-year",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "new-year",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "new-year",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "new-year",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "new-year",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "event": "new-year",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "christmas",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "christmas",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "christmas",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "christmas",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "christmas",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "christmas",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "halloween",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "halloween",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "halloween",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "halloween",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "halloween",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "halloween",
+      "page": "menu",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "new-year",
+      "page": "home",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "new-year",
+      "page": "missions",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "new-year",
+      "page": "meals",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "new-year",
+      "page": "shopping",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "new-year",
+      "page": "family",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "event": "new-year",
+      "page": "menu",
+      "status": "PASS"
+    }
+  ]
+}
