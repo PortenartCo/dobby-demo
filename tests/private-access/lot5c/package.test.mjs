@@ -2,7 +2,7 @@ import {before,after,test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {catalog} from '../lot2a/catalog.mjs';
-import {start,stop,run,raw,as,id,q,json,manifest} from '../local-db.mjs';
+import {start,stop,run,raw,as,id,q,json,manifest,interactive} from '../local-db.mjs';
 import {buildArtifacts} from '../../../supabase/compatibility/lot5b/build-variants.mjs';
 import {stopGate,reviewAssembly} from '../../../supabase/integration/lot5c/build.mjs';
 import {prepareStorage} from './storage-fixture.mjs';
@@ -131,4 +131,144 @@ test('assembled valid adult and child previews preserve READ ONLY contracts',()=
  }finally{run(`DELETE FROM dobby_v7_private.invitations WHERE id IN (${q(id(9701))},${q(id(9702))}); DELETE FROM dobby_access_private.admissions WHERE id IN (${q(id(9701))},${q(id(9702))}); UPDATE dobby_access_private.settings SET child_delivery_enabled=false;`);}
  console.log('LOT5C_VALID_READONLY_RESULTS '+JSON.stringify(results));
  for(const r of results){assert.equal(r.status,0,r.stderr);assert.equal(r.stdout.trim(),'valid');}
+});
+
+const cases=[
+ {kind:'member',purpose:'family-parent',user:5,admission:9801,rpc:'dobby_v7_preview_invitation',accept:'dobby_v7_accept_invitation',member:null},
+ {kind:'child-account',purpose:'family-child',user:6,admission:9802,rpc:'dobby_v7_preview_child_invitation',accept:'dobby_v7_accept_child_invitation',member:'TEST_PENDING_CHILD'}
+];
+const tokenSQL=c=>`dobby_socle_private.invitation_token(${q(id(2))},${q(id(c.admission))})`;
+const tokenVar=c=>`SELECT ${tokenSQL(c)} AS local_invitation_token \\gset\n`;
+const profileValue={firstName:'Fictional',lastName:'Acceptance',avatarId:'portrait-1'};
+const acceptSQL=(c,op=9901)=>`SELECT public.dobby_access_accept(${q(id(c.admission))},${c.member?'NULL':json(profileValue)},${q(id(op))});`;
+function seedBoundInvitations(){
+ run(`INSERT INTO dobby_access_private.authorizations(user_id,status,approved_by) VALUES(${q(id(5))},'active',${q(id(1))}),(${q(id(6))},'active',${q(id(1))});
+ UPDATE dobby_access_private.settings SET child_delivery_enabled=true;
+ UPDATE dobby_socle_private.install_state SET family_api_enabled=true,family_client_verified=true,storage_client_verified=true,child_link_client_verified=true;
+ ${cases.map(c=>`
+ INSERT INTO dobby_access_private.admissions(id,email,purpose,household_id,member_id,requested_by,target_user_id,approved_by,state,expires_at,approved_at,invitation_id)
+ VALUES(${q(id(c.admission))},${q('fixture-'+c.user+'@example.invalid')},${q(c.purpose)},${q(id(101))},${c.member?q(c.member):'NULL'},${q(id(2))},${q(id(c.user))},${q(id(1))},'sent',now()+interval '1 hour',now(),${q(id(c.admission))});
+ INSERT INTO dobby_v7_private.invitations(id,household_id,created_by,token_hash,expires_at,target_member_id,invitation_kind,admission_id,target_user_id)
+ VALUES(${q(id(c.admission))},${q(id(101))},${q(id(2))},sha256(convert_to(${tokenSQL(c)},'UTF8')),now()+interval '1 hour',${c.member?q(c.member):'NULL'},${q(c.kind)},${q(id(c.admission))},${q(id(c.user))});`).join('\n')}`);
+}
+test('bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks',()=>{
+ seedBoundInvitations();let checked=0,legacyDenied=0,admissionDenied=0;
+ for(const c of cases){
+  const rows=[
+   ['valid','','','valid'],
+   ['invalid token','','','invalid',false],
+   ['wrong recipient','','','invalid',true,2],
+   ['expired admission',`UPDATE dobby_access_private.admissions SET expires_at=now()-interval '1 hour' WHERE id=${q(id(c.admission))};`,`UPDATE dobby_access_private.admissions SET expires_at=now()+interval '1 hour' WHERE id=${q(id(c.admission))};`,'invalid'],
+   ['expired invitation',`UPDATE dobby_v7_private.invitations SET expires_at=now()-interval '1 hour' WHERE id=${q(id(c.admission))};`,`UPDATE dobby_v7_private.invitations SET expires_at=now()+interval '1 hour' WHERE id=${q(id(c.admission))};`,'expired'],
+   ['revoked invitation',`UPDATE dobby_v7_private.invitations SET revoked_at=now() WHERE id=${q(id(c.admission))};`,`UPDATE dobby_v7_private.invitations SET revoked_at=NULL WHERE id=${q(id(c.admission))};`,'invalid'],
+   ['revoked admission',`UPDATE dobby_access_private.admissions SET state='revoked' WHERE id=${q(id(c.admission))};`,`UPDATE dobby_access_private.admissions SET state='sent' WHERE id=${q(id(c.admission))};`,'invalid'],
+   ['requester suspended',`UPDATE dobby_access_private.authorizations SET status='suspended' WHERE user_id=${q(id(2))};`,`UPDATE dobby_access_private.authorizations SET status='active' WHERE user_id=${q(id(2))};`,'invalid'],
+   ['requester generation',`UPDATE dobby_access_private.authorizations SET generation=1 WHERE user_id=${q(id(2))};`,`UPDATE dobby_access_private.authorizations SET generation=0 WHERE user_id=${q(id(2))};`,'invalid'],
+   ['recipient generation',`UPDATE dobby_access_private.authorizations SET generation=1 WHERE user_id=${q(id(c.user))};`,`UPDATE dobby_access_private.authorizations SET generation=0 WHERE user_id=${q(id(c.user))};`,'invalid'],
+   ['recipient session',`UPDATE auth.sessions SET not_after=now()-interval '1 minute' WHERE id=${q(id(1000+c.user))};`,`UPDATE auth.sessions SET not_after=NULL WHERE id=${q(id(1000+c.user))};`,'invalid'],
+   ['identity email',`UPDATE dobby_access_private.admissions SET email='wrong@example.invalid' WHERE id=${q(id(c.admission))};`,`UPDATE dobby_access_private.admissions SET email=${q('fixture-'+c.user+'@example.invalid')} WHERE id=${q(id(c.admission))};`,'invalid']
+  ];
+  if(c.member)rows.push(['child gates','UPDATE dobby_access_private.settings SET child_delivery_enabled=false;','UPDATE dobby_access_private.settings SET child_delivery_enabled=true;','invalid']);
+  const confirmed=run(`SELECT email_confirmed_at::text FROM auth.users WHERE id=${q(id(c.user))};`);
+  rows.push(['identity confirmation',`UPDATE auth.users SET email_confirmed_at=NULL WHERE id=${q(id(c.user))};`,`UPDATE auth.users SET email_confirmed_at=${q(confirmed)}::timestamptz WHERE id=${q(id(c.user))};`,'invalid']);
+  for(const[label,mutation,restore,status,validToken=true,user=c.user]of rows){
+   try{
+    if(mutation)run(mutation);
+    const r=raw(tokenVar(c)+'BEGIN READ ONLY;'+as(user)+`SELECT public.${c.rpc}(${validToken?":'local_invitation_token'":q('invalid')})->>'status'; ROLLBACK;`);
+    assert.equal(r.status,0,label+': '+r.stderr);assert.equal(r.stdout.trim(),status,label);checked++;
+    if(status!=='valid'){
+     const pending=c.member||user!==c.user?'':`INSERT INTO dobby_v7_private.pending_profiles(user_id,profile) VALUES(${q(id(c.user))},${json(profileValue)});`;
+     const legacy=raw(tokenVar(c)+'BEGIN;'+pending+as(user)+`SELECT public.${c.accept}(${validToken?":'local_invitation_token'":q('invalid')},${q(id(9910))}); ROLLBACK;`);
+     assert.notEqual(legacy.status,0,label+' legacy acceptance');assert.match(legacy.stderr,/ERROR:  (42501|22023)\b/);legacyDenied++;
+     if(validToken){
+      const admission=raw('BEGIN;'+as(user)+acceptSQL(c,9911)+'ROLLBACK;');
+      assert.notEqual(admission.status,0,label+' admission acceptance');assert.match(admission.stderr,/ERROR:  (42501|22023)\b/);admissionDenied++;
+     }
+    }
+   }finally{if(restore)run(restore);}
+  }
+ }
+ console.log('LOT5C_INVITATION_READ_MATRIX '+checked+' READ ONLY; '+legacyDenied+' legacy and '+admissionDenied+' admission refusals');
+});
+test('read validator remains private and acceptance keeps the original requester locking guard',()=>{
+ const metadata=run("SELECT pg_get_userbyid(proowner),provolatile,prosecdef,proconfig::text FROM pg_proc WHERE oid=to_regprocedure('dobby_access_private.assert_invitation_admission_read(text,text)');");
+ assert.equal(metadata,'dobby_access_writer|s|t|{\"search_path=\\\"\\\"\"}');
+ for(const role of ['anon','authenticated','service_role','dobby_v7_writer'])assert.equal(run(`SELECT has_function_privilege(${q(role)},'dobby_access_private.assert_invitation_admission_read(text,text)','EXECUTE');`),'f');
+ assert.equal(run("SELECT has_function_privilege('dobby_socle_writer','dobby_access_private.assert_invitation_admission_read(text,text)','EXECUTE'),has_function_privilege('dobby_socle_writer','dobby_access_private.assert_invitation_admission_read(text,text)','EXECUTE WITH GRANT OPTION');"),'t|f');
+ const existing=readFileSync(new URL('../../../supabase/migrations/20261118120207_dobby_private_access_administration.sql',import.meta.url),'utf8');
+ const requester=existing.match(/CREATE FUNCTION dobby_access_private\.assert_requester[\s\S]*?AS \$\$([\s\S]*?)\$\$;/)[1];
+ assert.equal(run(`SELECT md5(prosrc)=md5(${q(requester)}) FROM pg_proc WHERE oid='dobby_access_private.assert_requester(uuid,bigint)'::regprocedure;`),'t');
+ assert.equal(owned(),baselineV7);
+});
+test('adult and child acceptances preserve revisions replay receipts and household separation',()=>{
+ for(const c of cases){
+  const before=rows();
+  const r=run(`BEGIN;
+ SELECT revision AS rev_before FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='family' \\gset
+ SELECT md5(payload::text) AS missions_before FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='missions' \\gset
+ SELECT md5(jsonb_agg(to_jsonb(t) ORDER BY module)::text) AS other_before FROM public.dobby_v2_modules t WHERE household_id=${q(id(102))} \\gset
+ `+as(c.user)+acceptSQL(c)+`RESET ROLE;
+ SELECT revision AS rev_first FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='family' \\gset
+ `+as(c.user)+acceptSQL(c)+`RESET ROLE;
+ SELECT revision FROM dobby_access_private.admissions WHERE id=${q(id(c.admission))};
+ SELECT (SELECT count(*) FROM dobby_v7_private.account_links WHERE user_id=${q(id(c.user))} AND household_id=${q(id(101))})=1;
+ SELECT (SELECT count(*) FROM public.dobby_v2_memberships WHERE user_id=${q(id(c.user))} AND household_id=${q(id(102))})=0;
+ SELECT revision-:'rev_before'::bigint=${c.member?0:1} AND revision=:'rev_first'::bigint FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='family';
+ SELECT md5(payload::text)=:'missions_before' FROM public.dobby_v2_modules WHERE household_id=${q(id(101))} AND module='missions';
+ SELECT md5(jsonb_agg(to_jsonb(t) ORDER BY module)::text)=:'other_before' FROM public.dobby_v2_modules t WHERE household_id=${q(id(102))};
+ ROLLBACK;`).split('\n');
+  const first=JSON.parse(r[0]),replay=JSON.parse(r[1]);
+  assert.equal(first.accepted,true);assert.equal(first.replayed,false);assert.equal(replay.replayed,true);assert.equal(first.memberId,replay.memberId);
+  assert.deepEqual(r.slice(2),['2','t','t','t','t','t']);assert.equal(rows(),before);
+  const legacy=run('BEGIN;'+tokenVar(c)+(c.member?'':`INSERT INTO dobby_v7_private.pending_profiles(user_id,profile) VALUES(${q(id(c.user))},${json(profileValue)});`)+as(c.user)+
+   `SELECT public.${c.accept}(:'local_invitation_token',${q(id(9902))})->>'replayed'; SELECT public.${c.accept}(:'local_invitation_token',${q(id(9902))})->>'replayed'; ROLLBACK;`);
+  assert.equal(legacy,'false\ntrue');assert.equal(rows(),before);
+ }
+});
+async function waitForLock(name){
+ const end=Date.now()+10000;
+ while(Date.now()<end){if(run(`SELECT count(*) FROM pg_stat_activity WHERE application_name=${q(name)} AND wait_event_type='Lock';`)==='1')return;await new Promise(r=>setTimeout(r,20));}
+ assert.fail('Acceptance did not wait on its physical authorization lock');
+}
+function session(){
+ const actor=interactive();let finished;
+ // Expected SQL refusals keep psql alive for an explicit rollback and cleanup.
+ actor.send('\\set ON_ERROR_STOP 0\n\\set VERBOSITY verbose');
+ return {...actor,finish(sql){return finished??=actor.finish(sql);}};
+}
+test('concurrent requester suspension waits for acceptance and wins when committed first',async()=>{
+ const c=cases[0],before=rows();let a=session();
+ try{
+  a.send('BEGIN;'+as(c.user)+acceptSQL(c)+"SELECT 'ACCEPT_READY';");await a.waitFor('ACCEPT_READY');
+  const blocked=raw(`BEGIN; SET LOCAL lock_timeout='100ms'; UPDATE dobby_access_private.authorizations SET status='suspended' WHERE user_id=${q(id(2))}; ROLLBACK;`);
+  assert.notEqual(blocked.status,0);assert.match(blocked.stderr,/55P03/);
+ }finally{await a.finish();}
+ const blocker=session();a=session();
+ try{
+  blocker.send(`BEGIN; UPDATE dobby_access_private.authorizations SET status='suspended',generation=1 WHERE user_id=${q(id(2))}; SELECT 'SUSPEND_READY';`);await blocker.waitFor('SUSPEND_READY');
+  a.send("BEGIN; SET LOCAL lock_timeout='5s'; SET LOCAL application_name='lot5c_accept_suspension';"+as(c.user)+acceptSQL(c));
+  await waitForLock('lot5c_accept_suspension');await blocker.finish('COMMIT;');
+  const refused=await a.finish();assert.match(refused.errors,/ERROR:\s+42501/);assert.equal(rows(),before);
+ }finally{
+  await blocker.finish();await a.finish();
+  run(`UPDATE dobby_access_private.authorizations SET status='active',generation=0 WHERE user_id=${q(id(2))};`);
+ }
+});
+test('historical acceptance revalidates admission identity and session after waiting for authorization locks',async()=>{
+ const c=cases[0];
+ const confirmed=run(`SELECT email_confirmed_at::text FROM auth.users WHERE id=${q(id(c.user))};`);
+ for(const[mutation,restore]of [
+  [`UPDATE dobby_access_private.admissions SET state='revoked' WHERE id=${q(id(c.admission))};`,`UPDATE dobby_access_private.admissions SET state='sent' WHERE id=${q(id(c.admission))};`],
+  [`UPDATE auth.users SET email_confirmed_at=NULL WHERE id=${q(id(c.user))};`,`UPDATE auth.users SET email_confirmed_at=${q(confirmed)}::timestamptz WHERE id=${q(id(c.user))};`],
+  [`UPDATE auth.sessions SET not_after=now()-interval '1 minute' WHERE id=${q(id(1000+c.user))};`,`UPDATE auth.sessions SET not_after=NULL WHERE id=${q(id(1000+c.user))};`]
+ ]){
+  const before=rows(),blocker=session(),a=session();
+  try{
+   blocker.send(`BEGIN; SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=${q(id(2))} FOR UPDATE; SELECT 'REQUESTER_LOCKED';`);await blocker.waitFor('REQUESTER_LOCKED');
+   a.send("BEGIN; SET LOCAL lock_timeout='5s'; SET LOCAL application_name='lot5c_accept_recheck';"+tokenVar(c)+`INSERT INTO dobby_v7_private.pending_profiles(user_id,profile) VALUES(${q(id(c.user))},${json(profileValue)});`+as(c.user)+`SELECT public.${c.accept}(:'local_invitation_token',${q(id(9903))});`);
+   await waitForLock('lot5c_accept_recheck');blocker.send(mutation);await blocker.finish('COMMIT;');
+   const denied=await a.finish();assert.match(denied.errors,/ERROR:\s+42501/,'A stale pre-lock validation authorized acceptance');
+  }finally{await blocker.finish();await a.finish();run(restore);}
+  assert.equal(rows(),before);
+ }
 });
