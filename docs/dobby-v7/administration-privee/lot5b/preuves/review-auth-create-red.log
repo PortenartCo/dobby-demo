@@ -1,0 +1,28 @@
+LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ review: an existing Auth CREATE grant without USAGE refuses installation (97.069508ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9540.948595
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:113:1
+✖ review: an existing Auth CREATE grant without USAGE refuses installation (97.069508ms)
+  AssertionError [ERR_ASSERTION]: Expected a closed boundary
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:23:46)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:115:3)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

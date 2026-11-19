@@ -1,0 +1,45 @@
+LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ bridge gives the closed session reader a narrow decision without direct Auth rights (130.940447ms)
+✔ session lookup preserves subject, session id, time boundary, future-date and expiry checks (130.868521ms)
+✔ RLS with no applicable policy remains closed even through the bridge (113.597003ms)
+✔ loss of installer Auth usage gives no positive session or identity (108.96698ms)
+✔ identity reader gets only the three reviewed fields and has no Auth SELECT (129.82809ms)
+✔ identity pagination is bounded and retains the reviewed projection (212.446193ms)
+✔ both readers remain separate and cannot call each others projections (218.897687ms)
+✔ anon cannot execute private Auth helpers (109.422406ms)
+✔ authenticated cannot execute private Auth helpers (97.368376ms)
+✔ service_role cannot execute private Auth helpers (110.818964ms)
+✔ authenticator cannot execute private Auth helpers (108.5499ms)
+✔ an exposed bridge schema or inherited browser reader refuses installation atomically (403.554045ms)
+✔ unexpected default function grants are refused rather than published (107.021405ms)
+✔ review: inherited membership between the two readers refuses installation (579.283652ms)
+✔ review: schema default CREATE for a reader refuses installation (221.958826ms)
+✔ review: an existing Auth CREATE grant without USAGE refuses installation (214.984269ms)
+✔ candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes (308.765005ms)
+✔ rollback refuses a modified helper and preserves the schema on failure (109.069066ms)
+✔ rollback uses RESTRICT and does not remove a dependent consumer (108.322121ms)
+LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (283.507169ms)
+✔ missing closed ADMIN on the V7 writer refuses before any grant changes (313.590951ms)
+✔ a second active grant made by postgres can be closed without losing managed ADMIN (106.627542ms)
+✔ a different grantor with active INHERIT and SET is refused before maintenance (103.784045ms)
+✔ residual inherited privileges alone are refused (121.884907ms)
+✔ residual SET authority alone is refused (110.837732ms)
+✔ an indirect membership cannot survive the projected closing unnoticed (89.678032ms)
+✔ review: SET to an intermediate role followed by inherited writer rights is refused (101.971511ms)
+✔ a browser membership in a closed writer is refused (93.568131ms)
+✔ a writer that can log in is refused (108.864832ms)
+✔ the normal closing statements do not close a grant made by another grantor (102.12099ms)
+✔ a refusal rolls back all fictional setup and leaves the original catalogue intact (277.467101ms)
+LOT5B_STORAGE_AUTHORITY_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ DML grants allow the candidate locks but no schema CREATE or table ownership is implied (413.711692ms)
+✔ granting schema CREATE alone does not authorize policy creation on an existing table (289.878309ms)
+✔ the table owner can create a restrictive policy without schema CREATE, then rollback preserves all sentinels (333.593002ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31315.426198

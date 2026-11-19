@@ -1,0 +1,35 @@
+LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ bridge gives the closed session reader a narrow decision without direct Auth rights (107.610334ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10898.310275
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:49:1
+✖ bridge gives the closed session reader a narrow decision without direct Auth rights (107.610334ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  3F000: schema "dobby_access_auth_bridge" does not exist
+  LINE 1: SELECT dobby_access_auth_bridge.session_is_live('00000000-00...
+                 ^
+  LOCATION:  get_namespace_oid, namespace.c:3545
+  
+  
+  3 !== 0
+  
+      at passes (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:19:32)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:50:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

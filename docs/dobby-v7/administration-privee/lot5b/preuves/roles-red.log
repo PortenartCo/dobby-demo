@@ -1,0 +1,102 @@
+LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (353.014432ms)
+✔ missing closed ADMIN on the V7 writer refuses before any grant changes (339.592627ms)
+✔ a second active grant made by postgres can be closed without losing managed ADMIN (104.970855ms)
+✖ a different grantor with active INHERIT and SET is refused before maintenance (99.800797ms)
+✖ residual inherited privileges alone are refused (97.39227ms)
+✖ residual SET authority alone is refused (99.204092ms)
+✖ an indirect membership cannot survive the projected closing unnoticed (109.114428ms)
+✔ a browser membership in a closed writer is refused (106.143045ms)
+✔ a writer that can log in is refused (102.054247ms)
+✔ the normal closing statements do not close a grant made by another grantor (102.406569ms)
+✖ a refusal rolls back all fictional setup and leaves the original catalogue intact (200.059658ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 6
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12114.76249
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/maintenance.test.mjs:35:1
+✖ a different grantor with active INHERIT and SET is refused before maintenance (99.800797ms)
+  AssertionError [ERR_ASSERTION]: An unsafe residual membership was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:18:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:35:90)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/maintenance.test.mjs:36:1
+✖ residual inherited privileges alone are refused (97.39227ms)
+  AssertionError [ERR_ASSERTION]: An unsafe residual membership was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:18:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:36:60)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/maintenance.test.mjs:37:1
+✖ residual SET authority alone is refused (99.204092ms)
+  AssertionError [ERR_ASSERTION]: An unsafe residual membership was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:18:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:37:52)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/maintenance.test.mjs:38:1
+✖ an indirect membership cannot survive the projected closing unnoticed (109.114428ms)
+  AssertionError [ERR_ASSERTION]: An unsafe residual membership was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:18:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:39:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/maintenance.test.mjs:48:1
+✖ a refusal rolls back all fictional setup and leaves the original catalogue intact (200.059658ms)
+  AssertionError [ERR_ASSERTION]: An unsafe residual membership was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:18:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:49:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

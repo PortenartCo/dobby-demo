@@ -1,0 +1,417 @@
+{
+  "status": "PARTIAL_PREPARED_HOSTED_RECONCILIATION_BLOCKED",
+  "recordedAtUTC": "2026-11-19T13:29:48.886653+00:00",
+  "base": "f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764",
+  "codeTestedCommit": "be11bbaa1536b28e65fe95ea2814b5699554a60d",
+  "checkpoints": {
+    "initial": "3b2717718523ad89eea63b514acedeea31e08fe7",
+    "rolePreflight": "e39da1c29bc42b83d6062aaf23a93d4d6a7a2bf5",
+    "initialBridge": "cc39af0cf8a747fe0f6abeaa72e34ac8dbb47bf8",
+    "reviewFixes": "be11bbaa1536b28e65fe95ea2814b5699554a60d"
+  },
+  "hostedEvidence": {
+    "provenance": "User Lot 5B request; ChatGPT dedicated read-only connection, not independently queried by CODEX",
+    "projectName": "dobby-family-sync",
+    "projectRef": "pqcdkrwljgvgagzwrcmg",
+    "postgresReported": "17.11",
+    "functionsPresent": 27,
+    "ownersMatch": 27,
+    "securityDefinerMatch": 27,
+    "bodyDivergencesReported": 21,
+    "divergentSignatureListAvailable": false,
+    "privateMissionsPresentReported": 12,
+    "hostedDefinitionsObtained": 0,
+    "auth": {
+      "sessionsRls": true,
+      "usersRls": true,
+      "owner": "supabase_auth_admin",
+      "policyCountReported": 0,
+      "newReadersInstalled": false,
+      "newReaderVisibilityProven": false
+    },
+    "roles": {
+      "socleClosedAdminReported": true,
+      "v7ClosedAdminReported": false,
+      "missionsGrantRowsReported": 2,
+      "oneMissionsGrantActiveReported": true,
+      "actualGrantorsAndPathsAvailable": false
+    },
+    "storage": {
+      "bucketPrivateReported": true,
+      "bucketCountReported": 1,
+      "limitBytesReported": 10485760,
+      "mimeTypesReported": [
+        "application/pdf",
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ],
+      "nativePoliciesPresentReported": 8,
+      "helperFingerprintsMatchReported": 3,
+      "owner": "supabase_storage_admin",
+      "postgresStorageCreateReported": false,
+      "postgresOwnerMembershipReported": false,
+      "supautilsDelegationObserved": false
+    },
+    "installation": {
+      "accessSchemaPresentReported": false,
+      "edgeFunctionsReported": 0,
+      "migrationHistoryRowsReported": 0,
+      "newMechanismsActivatedReported": false
+    }
+  },
+  "codexHostedAccess": {
+    "availableDedicatedDobbyTools": 0,
+    "projectTool": "supabase_get_project",
+    "projectCalls": 1,
+    "message": "MCP error -32600: You do not have permission to perform this action",
+    "structuredErrorCode": "INVALID_ARGUMENT",
+    "furtherProjectCalls": 0,
+    "hostedSqlQueries": 0,
+    "hostedWrites": 0,
+    "personalUserRowsRead": 0,
+    "privateHostedBodiesRead": 0,
+    "credentialsSearched": false,
+    "substituteProjectsUsed": false
+  },
+  "localTests": {
+    "command": "node --test --test-concurrency=1 tests/private-access/lot5b/*.test.mjs",
+    "tests": 34,
+    "pass": 34,
+    "fail": 0,
+    "skipped": 0,
+    "authBridgeGroups": 19,
+    "maintenanceGroups": 12,
+    "storageAuthorityGroups": 3,
+    "postgres": "17.7 (Debian 17.7-3.pgdg13+1)",
+    "node": "v24.19.0",
+    "durationMs": 31315.426198,
+    "runtime": "owned Docker containers, network none, tmpfs, no ports or bind mounts",
+    "image": "postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4",
+    "authPositiveFixture": "Fictional SELECT policies for installer; NOT a model of hosted zero-policy state and NOT proposed hosted changes. All non-superuser roles NOBYPASSRLS.",
+    "storageFixture": "Eight fictional sentinel policies; stock PG only, no supautils emulation or Storage HTTP.",
+    "remainingOwnedContainers": [],
+    "log": "preuves/final-green.log"
+  },
+  "redEvidence": [
+    {
+      "file": "preuves/roles-red.log",
+      "phase": "historical role check",
+      "pass": 6,
+      "fail": 5,
+      "expected": true
+    },
+    {
+      "file": "preuves/auth-red.log",
+      "phase": "missing new selector/schema",
+      "pass": 0,
+      "fail": 1,
+      "expected": true
+    },
+    {
+      "file": "preuves/auth-green.log",
+      "phase": "first implemented Auth fixture; assertion/setup issues documented in REVUE.md",
+      "pass": 13,
+      "fail": 3,
+      "expected": false
+    },
+    {
+      "file": "preuves/all-green.log",
+      "phase": "pre-review full suite",
+      "pass": 30,
+      "fail": 0
+    },
+    {
+      "file": "preuves/review-red.log",
+      "phase": "three review counterexamples before fixes",
+      "pass": 0,
+      "fail": 3,
+      "expected": true
+    },
+    {
+      "file": "preuves/review-auth-create-red.log",
+      "phase": "additional Auth CREATE counterexample",
+      "pass": 0,
+      "fail": 1,
+      "expected": true
+    }
+  ],
+  "metadataQueries": {
+    "hostedExecution": false,
+    "localSyntaxChecks": [
+      "LECTURE-CATALOGUE.sql",
+      "LECTURES-COMPLEMENTAIRES.sql"
+    ],
+    "localSyntaxFixture": "role-only fixture without hosted business catalogue",
+    "localSyntaxResults": [
+      {
+        "file": "LECTURE-CATALOGUE.sql",
+        "status": "PASS_LOCAL_SYNTAX",
+        "postgres": "17.7 (Debian 17.7-3.pgdg13+1)",
+        "hostedExecution": false,
+        "fixture": "role-only; no business catalogue"
+      },
+      {
+        "file": "LECTURES-COMPLEMENTAIRES.sql",
+        "status": "PASS_LOCAL_SYNTAX",
+        "postgres": "17.7 (Debian 17.7-3.pgdg13+1)",
+        "hostedExecution": false,
+        "fixture": "role-only; no business catalogue"
+      }
+    ]
+  },
+  "review": {
+    "method": "independent read-only code review",
+    "importantFindings": 3,
+    "additionalAclFinding": 1,
+    "allAddressed": true,
+    "followupBlockingFindings": 0,
+    "runtimeIndependentlyRepeated": false,
+    "limits": [
+      "21 unidentified hosted bodies",
+      "managed Auth visibility",
+      "supautils runtime",
+      "end-to-end activation",
+      "full definition comparison and uncatalogued dependency detection in rollback"
+    ]
+  },
+  "codeInputs": [
+    {
+      "path": ".github/workflows/dobby-private-access-compatibility.yml",
+      "sha256": "fc0be2efded6b8ed53935fe28e9320afb3ee45eb9e1a3a8b3f1bdf770b4f1362"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+      "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    },
+    {
+      "path": "tests/private-access/lot5b/auth-bridge.test.mjs",
+      "sha256": "eaad03a73c000da8eb3360ef758ff9c0572d18b3224d6e6d83a7b74492438ca4"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-db.mjs",
+      "sha256": "61556275f6cd019ea0b382b7463a51c514f9f938c7b2bc44c0f6a614aec47487"
+    },
+    {
+      "path": "tests/private-access/lot5b/maintenance.test.mjs",
+      "sha256": "72e9ae9b911099a5c0f8cd4c69a81c8b45fff57d4e4848c60adf170a31d852c8"
+    },
+    {
+      "path": "tests/private-access/lot5b/storage-authority.test.mjs",
+      "sha256": "a68bdf82af0b3509d45526d756f9bf2b5f08ca461cc51cfbef8bc513d51803ce"
+    }
+  ],
+  "unchangedHistoricalSql": [
+    {
+      "path": "supabase/migrations/20261117203208_dobby_private_access_foundation.sql",
+      "sha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a"
+    },
+    {
+      "path": "supabase/migrations/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "b491737bbb9c45fb7be5b1677b19f1dda4c7488980f8636d7d076635376f5c81"
+    },
+    {
+      "path": "supabase/migrations/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466"
+    },
+    {
+      "path": "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5"
+    },
+    {
+      "path": "supabase/rollbacks/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "4cba8f95402b15f811008c641f9d0b10ca6664bfcdc28f0f4d8ce81ef4c27cd2"
+    },
+    {
+      "path": "supabase/rollbacks/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "950d91c37718a3ea8608ead181a509f38065c4166f99491be3966e8d82940f2f"
+    },
+    {
+      "path": "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "32b4c5350aea34e32930456b2da2bae70b562262db3cc0a9e6b45449fc7899b9"
+    }
+  ],
+  "proofFiles": [
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/all-green.log",
+      "sha256": "84fe6652429220f6d9f24d7c191dc88bd430b9eb88589d0e70a1d13703c088b4"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/auth-green.log",
+      "sha256": "4ed82be8a419eff12c515aeab4f413aeb575d5d148d6de8a63abdd1c0bfd827d"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/auth-red.log",
+      "sha256": "e85dd05de683d858958d8842b3ef1de5d8d5be9ce1f3e203a1711498bfc852f7"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/final-green.log",
+      "sha256": "72958924037cd8f087ce07b92816ebfc752dd56b16fdf2c4653692e6511b69ba"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/review-auth-create-red.log",
+      "sha256": "6166799827f4f37b692f405e61a7ed3bb417334e5f03c644b5d42e00be1d43d2"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/review-red.log",
+      "sha256": "290f27cf407b815eb30bd75395ce85bfa817f0fba455b5ae96d1552a81cb204a"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/roles-green.log",
+      "sha256": "7ae318c3f8b474fda5ecbde530d530e0603759187cb73359492ead6d2a0ae018"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/roles-red.log",
+      "sha256": "66a28d1eb8b7c02de0a40ec0e4befd2091cfa164f5faa3933bdb4708984192a6"
+    }
+  ],
+  "ci": {
+    "ciRuns": [
+      {
+        "conclusion": "success",
+        "databaseId": 44532957773,
+        "headSha": "be11bbaa1536b28e65fe95ea2814b5699554a60d",
+        "name": "Dobby private-access compatibility (local)",
+        "status": "completed",
+        "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44532957773"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 44531137476,
+        "headSha": "cc39af0cf8a747fe0f6abeaa72e34ac8dbb47bf8",
+        "name": "Dobby private-access compatibility (local)",
+        "status": "completed",
+        "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44531137476"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 44528865502,
+        "headSha": "e39da1c29bc42b83d6062aaf23a93d4d6a7a2bf5",
+        "name": "Dobby private-access compatibility (local)",
+        "status": "completed",
+        "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44528865502"
+      }
+    ],
+    "finalCiJobs": {
+      "jobs": [
+        {
+          "id": 135590818570,
+          "name": "permissions-local",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44532957773,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Pinned PostgreSQL fixture image only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Causal permission and rollback checks, no hosted connection",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ]
+    },
+    "ciLogExcerpts": [
+      "2026-11-19T13:24:18.4794095Z LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T13:24:22.3428419Z LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T13:24:25.0744351Z LOT5B_STORAGE_AUTHORITY_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T13:24:25.9990511Z ℹ tests 34",
+      "2026-11-19T13:24:25.9991829Z ℹ pass 34",
+      "2026-11-19T13:24:25.9992277Z ℹ fail 0",
+      "2026-11-19T13:24:25.9994358Z ℹ duration_ms 17557.663699"
+    ]
+  },
+  "notExecuted": [
+    "hosted metadata SQL requests",
+    "private hosted function reconciliation",
+    "GoTrue/SMTP campaign",
+    "Storage HTTP campaign",
+    "native client/UI historical campaigns",
+    "new activation wiring",
+    "migration or rollout",
+    "signed URL rotation/invalidation",
+    "real Parent A/B test"
+  ],
+  "futurePackage": {
+    "rolePreflight": "independent additive read-only candidate",
+    "authBridge": "independent private selector candidate with rollback",
+    "oldHelpersOrActivatorsChanged": false,
+    "historicalFingerprintExpectationsChanged": false,
+    "fullCompatibleMigrationPackageReady": false,
+    "blockers": [
+      "21 signatures and definitions not supplied",
+      "12 private Missions definitions not supplied",
+      "V7 maintenance ADMIN path unavailable",
+      "actual membership grantors/paths unavailable",
+      "actual Auth installer visibility unavailable",
+      "active managed Storage policy delegation/other prerequisites not observed",
+      "coordinated bridge helper/activation/Storage fingerprint integration not prepared"
+    ]
+  },
+  "officialSources": [
+    "https://supabase.com/kb/troubleshooting/permission-errors-when-granting-custom-roles-access-to-the-auth-schema-9e32e7",
+    "https://supabase.com/kb/troubleshooting/cant-revoke-a-role-membership-granted-by-supabase_admin-d08922",
+    "https://supabase.com/kb/troubleshooting/revoking-privileges-on-storage-pg_cron-vault-and-extension-objects-has-no-effect-916576",
+    "https://github.com/supabase/supautils#manage-policies",
+    "https://www.postgresql.org/docs/17/sql-createpolicy.html",
+    "https://www.postgresql.org/docs/17/sql-lock.html"
+  ],
+  "documentValidation": {
+    "jsonAndRelativeLinks": "PASS",
+    "all27PublishedReferences": "PASS",
+    "existingFilesModified": 0,
+    "sourceWhitespaceCheck": "PASS excluding raw proof logs; original test output whitespace retained unchanged",
+    "docCommitCi": "[skip ci]; code inputs identical to codeTestedCommit; no new CI result claimed"
+  }
+}

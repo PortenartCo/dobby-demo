@@ -1,0 +1,63 @@
+LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ review: inherited membership between the two readers refuses installation (126.881281ms)
+✖ review: schema default CREATE for a reader refuses installation (102.674557ms)
+LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ review: SET to an intermediate role followed by inherited writer rights is refused (95.653748ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15723.894688
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:101:1
+✖ review: inherited membership between the two readers refuses installation (126.881281ms)
+  AssertionError [ERR_ASSERTION]: Expected a closed boundary
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:23:46)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:102:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:104:1
+✖ review: schema default CREATE for a reader refuses installation (102.674557ms)
+  AssertionError [ERR_ASSERTION]: Expected a closed boundary
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:23:46)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:105:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/maintenance.test.mjs:41:1
+✖ review: SET to an intermediate role followed by inherited writer rights is refused (95.653748ms)
+  AssertionError [ERR_ASSERTION]: An unsafe residual membership was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:18:33)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/maintenance.test.mjs:42:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
