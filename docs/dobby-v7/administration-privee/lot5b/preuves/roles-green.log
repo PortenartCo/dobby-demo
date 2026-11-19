@@ -1,0 +1,20 @@
+LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (295.606149ms)
+✔ missing closed ADMIN on the V7 writer refuses before any grant changes (418.227439ms)
+✔ a second active grant made by postgres can be closed without losing managed ADMIN (152.888867ms)
+✔ a different grantor with active INHERIT and SET is refused before maintenance (116.672275ms)
+✔ residual inherited privileges alone are refused (111.987415ms)
+✔ residual SET authority alone is refused (105.38343ms)
+✔ an indirect membership cannot survive the projected closing unnoticed (93.556956ms)
+✔ a browser membership in a closed writer is refused (99.347203ms)
+✔ a writer that can log in is refused (93.866006ms)
+✔ the normal closing statements do not close a grant made by another grantor (106.211696ms)
+✔ a refusal rolls back all fictional setup and leaves the original catalogue intact (330.614659ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11681.789554

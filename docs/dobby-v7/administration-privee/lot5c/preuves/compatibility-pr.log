@@ -1,0 +1,92 @@
+2026-11-19T20:00:38.7994745Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check
+2026-11-19T20:00:38.7995191Z [36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check[0m
+2026-11-19T20:00:38.7995564Z [36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check[0m
+2026-11-19T20:00:38.7995963Z [36;1mnode --test --test-concurrency=1 tests/private-access/lot5b/*.test.mjs[0m
+2026-11-19T20:00:47.9467634Z LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+2026-11-19T20:00:50.5568786Z ✔ bridge gives the closed session reader a narrow decision without direct Auth rights (76.915229ms)
+2026-11-19T20:00:50.5570248Z ✔ session lookup preserves subject, session id, time boundary, future-date and expiry checks (73.495922ms)
+2026-11-19T20:00:50.5571580Z ✔ RLS with no applicable policy remains closed even through the bridge (72.974442ms)
+2026-11-19T20:00:50.5580705Z ✔ loss of installer Auth usage gives no positive session or identity (75.218287ms)
+2026-11-19T20:00:50.5582059Z ✔ identity reader gets only the three reviewed fields and has no Auth SELECT (77.594342ms)
+2026-11-19T20:00:50.5582998Z ✔ identity pagination is bounded and retains the reviewed projection (152.229634ms)
+2026-11-19T20:00:50.5586556Z ✔ both readers remain separate and cannot call each others projections (148.218041ms)
+2026-11-19T20:00:50.5587321Z ✔ anon cannot execute private Auth helpers (74.071213ms)
+2026-11-19T20:00:50.5588880Z ✔ authenticated cannot execute private Auth helpers (74.966523ms)
+2026-11-19T20:00:50.5590470Z ✔ service_role cannot execute private Auth helpers (74.11861ms)
+2026-11-19T20:00:50.5592103Z ✔ authenticator cannot execute private Auth helpers (73.619552ms)
+2026-11-19T20:00:50.5593532Z ✔ an exposed bridge schema or inherited browser reader refuses installation atomically (284.831279ms)
+2026-11-19T20:00:50.5596467Z ✔ unexpected default function grants are refused rather than published (74.65949ms)
+2026-11-19T20:00:50.5597768Z ✔ review: inherited membership between the two readers refuses installation (286.904758ms)
+2026-11-19T20:00:50.5599176Z ✔ review: schema default CREATE for a reader refuses installation (147.844393ms)
+2026-11-19T20:00:50.5600452Z ✔ review: an existing Auth CREATE grant without USAGE refuses installation (143.704601ms)
+2026-11-19T20:00:50.5601927Z ✔ candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes (214.073693ms)
+2026-11-19T20:00:50.5603290Z ✔ rollback refuses a modified helper and preserves the schema on failure (75.152557ms)
+2026-11-19T20:00:50.5611384Z ✔ rollback uses RESTRICT and does not remove a dependent consumer (76.585326ms)
+2026-11-19T20:00:57.4173885Z LOT5B_CATALOGUE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+2026-11-19T20:01:02.9322501Z ✔ published catalogue passes without modifying business functions or data (227.260534ms)
+2026-11-19T20:01:02.9324106Z ✔ an unapproved browser EXECUTE grant is refused without any business write (221.219229ms)
+2026-11-19T20:01:02.9327310Z ✔ an unapproved grant option is refused even when effective EXECUTE was already allowed (72.308759ms)
+2026-11-19T20:01:02.9329600Z ✔ the narrowly reported stamper ACL is accepted without changing the trigger or its body (76.721276ms)
+2026-11-19T20:01:02.9332595Z ✔ a modified SQL literal is refused rather than normalized into approval (72.188773ms)
+2026-11-19T20:01:02.9336685Z ✔ a changed owner is refused even though pg_get_functiondef excludes ownership (74.026887ms)
+2026-11-19T20:01:02.9340805Z ✔ SECURITY DEFINER and configuration drift are refused independently (215.29328ms)
+2026-11-19T20:01:02.9342785Z ✔ PUBLIC or delegated browser rights on the stamper are outside its two approved ACL profiles (227.253645ms)
+2026-11-19T20:01:02.9345008Z ✔ the stamper exception requires its existing active trigger attachment (74.677842ms)
+2026-11-19T20:01:02.9353087Z ✔ real PostgreSQL matching accepts both fictional canary pairs and refuses mixed or unknown pairs (1048.707755ms)
+2026-11-19T20:01:02.9354941Z ✔ revoking optional stamper EXECUTE preserves existing trigger writes and blocks direct calls (141.244131ms)
+2026-11-19T20:01:02.9356597Z ✔ the complete candidate refuses absent private dependencies before business changes (298.749102ms)
+2026-11-19T20:01:02.9357859Z ✔ partial wrapping core preserves native bodies/data and rollback refuses forged backups (2571.069901ms)
+2026-11-19T20:01:04.1362256Z LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+2026-11-19T20:01:05.5077591Z ✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (211.198205ms)
+2026-11-19T20:01:05.5079220Z ✔ missing closed ADMIN on the V7 writer refuses before any grant changes (209.423669ms)
+2026-11-19T20:01:05.5080496Z ✔ a second active grant made by postgres can be closed without losing managed ADMIN (75.52665ms)
+2026-11-19T20:01:05.5081984Z ✔ a different grantor with active INHERIT and SET is refused before maintenance (75.287785ms)
+2026-11-19T20:01:05.5083154Z ✔ residual inherited privileges alone are refused (74.208895ms)
+2026-11-19T20:01:05.5084088Z ✔ residual SET authority alone is refused (73.987562ms)
+2026-11-19T20:01:05.5085175Z ✔ an indirect membership cannot survive the projected closing unnoticed (73.327148ms)
+2026-11-19T20:01:05.5086483Z ✔ review: SET to an intermediate role followed by inherited writer rights is refused (72.811456ms)
+2026-11-19T20:01:05.5087643Z ✔ a browser membership in a closed writer is refused (72.412184ms)
+2026-11-19T20:01:05.5088553Z ✔ a writer that can log in is refused (73.698702ms)
+2026-11-19T20:01:05.5089599Z ✔ the normal closing statements do not close a grant made by another grantor (69.121815ms)
+2026-11-19T20:01:05.5090892Z ✔ a refusal rolls back all fictional setup and leaves the original catalogue intact (213.654488ms)
+2026-11-19T20:01:06.8328747Z LOT5B_STORAGE_AUTHORITY_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+2026-11-19T20:01:07.7689333Z ✔ DML grants allow the candidate locks but no schema CREATE or table ownership is implied (284.871825ms)
+2026-11-19T20:01:07.7702659Z ✔ granting schema CREATE alone does not authorize policy creation on an existing table (212.846833ms)
+2026-11-19T20:01:07.7703695Z ✔ the table owner can create a restrictive policy without schema CREATE, then rollback preserves all sentinels (212.995538ms)
+2026-11-19T20:01:15.0128171Z LOT5B_V7_DIRECT_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+2026-11-19T20:01:24.8797220Z ✔ missing Missions definitions or standalone fragment refuse atomically before installation (727.521942ms)
+2026-11-19T20:01:24.8798221Z ✔ owner-only creator defaults permit an atomic installation (272.847264ms)
+2026-11-19T20:01:24.8803340Z ✔ a temporarily opened administration writer must not inherit V7 (223.710694ms)
+2026-11-19T20:01:24.8812698Z ✔ direct guard installs with no V7 membership and exactly the two authorized new grants (763.877522ms)
+2026-11-19T20:01:24.8814629Z ✔ initial pending profile, household, quota and replay preserve native identities and idempotence (376.642755ms)
+2026-11-19T20:01:24.8816416Z ✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (1272.989424ms)
+2026-11-19T20:01:24.8818196Z ✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (423.552599ms)
+2026-11-19T20:01:24.8820926Z ✔ no household can be created without the explicit initial quota (219.148523ms)
+2026-11-19T20:01:24.8831691Z ✔ native profile CAS, parent/child and household separation remain enforced (506.897618ms)
+2026-11-19T20:01:24.8832802Z ✔ direct restrictive policies and role-conditioned triggers target only V7 (620.444047ms)
+2026-11-19T20:01:24.8833715Z ✔ unexpected global and per-schema creator defaults are refused before any write (2824.321834ms)
+2026-11-19T20:01:24.8836000Z ✔ anon authenticated and service_role gain no access to new functions or schemas (1130.722043ms)
+2026-11-19T20:01:24.8838253Z ✔ the one private guard has a closed search_path and a non-login non-bypass owner (209.432831ms)
+2026-11-19T20:01:24.8840681Z ✔ forged active metadata never overrides the registry suspension (213.492638ms)
+2026-11-19T20:01:25.6466242Z ✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (761.596482ms)
+2026-11-19T20:01:27.8287974Z LOT5B_V7_HTTP_BEFORE_ROLLBACK GET_POST_STABLE 10/10; private guard unexposed
+2026-11-19T20:01:27.8288552Z LOT5B_V7_HTTP_AUTHORIZED_PROFILE 1/1
+2026-11-19T20:01:28.3055606Z LOT5B_V7_HTTP_SESSION_DENIAL 4/4
+2026-11-19T20:01:28.9608995Z V7_ROLLBACK_DRIFT_RESULTS [{"name":"indirect-role-coupling","status":3,"output":""},{"name":"business-rls-disabled","status":3,"output":""},{"name":"journal-rls-disabled","status":3,"output":""},{"name":"journal-acl-opened","status":3,"output":""}]
+2026-11-19T20:01:32.8381078Z LOT5B_V7_HTTP_AFTER_ROLLBACK GET_POST_STABLE 10/10; writes remain denied
+2026-11-19T20:01:32.9609723Z ✔ quota upgrade contention is a retryable 40001 with no data or quota changes (248.357992ms)
+2026-11-19T20:01:32.9610801Z ✔ preservation preflight keeps every other writer ADMIN check (222.979115ms)
+2026-11-19T20:01:32.9614985Z ✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (73.125763ms)
+2026-11-19T20:01:32.9616169Z ✔ read-only invitation previews preserve valid, invalid and STABLE contracts (523.532286ms)
+2026-11-19T20:01:32.9622590Z ✔ real local PostgREST GET and POST preserve all three STABLE read contracts (1195.356412ms)
+2026-11-19T20:01:32.9623652Z ✔ real PostgREST retains denial after suspension or session invalidation (476.650684ms)
+2026-11-19T20:01:32.9624844Z ✔ rollback refuses role coupling disabled RLS or untrusted journal metadata before any change (1011.403929ms)
+2026-11-19T20:01:32.9626135Z ✔ full guard rollback restores previews, removes both grants and retains the V7 write fence (3520.960494ms)
+2026-11-19T20:01:32.9695345Z ℹ tests 70
+2026-11-19T20:01:32.9695621Z ℹ suites 0
+2026-11-19T20:01:32.9695869Z ℹ pass 70
+2026-11-19T20:01:32.9696118Z ℹ fail 0
+2026-11-19T20:01:32.9696382Z ℹ cancelled 0
+2026-11-19T20:01:32.9696638Z ℹ skipped 0
+2026-11-19T20:01:32.9696924Z ℹ todo 0
+2026-11-19T20:01:32.9697209Z ℹ duration_ms 54065.925129

@@ -1,0 +1,47 @@
+LOT5B_CATALOGUE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ published catalogue passes without modifying business functions or data (338.65608ms)
+✖ an unapproved browser EXECUTE grant is refused without any business write (299.503086ms)
+✖ an unapproved grant option is refused even when effective EXECUTE was already allowed (127.928503ms)
+✔ the narrowly reported stamper ACL is accepted without changing the trigger or its body (119.002641ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18519.981073
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/catalogue.test.mjs:20:1
+✖ an unapproved browser EXECUTE grant is refused without any business write (299.503086ms)
+  AssertionError [ERR_ASSERTION]: Unapproved catalogue change was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/catalogue.test.mjs:13:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/catalogue.test.mjs:22:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/catalogue.test.mjs:25:1
+✖ an unapproved grant option is refused even when effective EXECUTE was already allowed (127.928503ms)
+  AssertionError [ERR_ASSERTION]: Unapproved catalogue change was accepted
+      at refuses (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/catalogue.test.mjs:13:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/catalogue.test.mjs:26:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

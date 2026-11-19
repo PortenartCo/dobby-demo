@@ -1,0 +1,34 @@
+name: Dobby private-access compatibility (local)
+on:
+  push:
+    paths:
+      - 'supabase/compatibility/lot5b/**'
+      - 'tests/private-access/lot5b/**'
+      - '.github/workflows/dobby-private-access-compatibility.yml'
+  pull_request:
+    paths:
+      - 'supabase/compatibility/lot5b/**'
+      - 'tests/private-access/lot5b/**'
+      - '.github/workflows/dobby-private-access-compatibility.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  permissions-local:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Only pinned local PostgreSQL and PostgREST images
+        run: |
+          docker --host unix:///var/run/docker.sock pull postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4
+          docker --host unix:///var/run/docker.sock pull postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0
+      - name: Causal permission and rollback checks, no hosted connection
+        run: |
+          node supabase/compatibility/lot5b/build-variants.mjs --check
+          node supabase/compatibility/lot5b/build-v7-preserved.mjs --check
+          node --test --test-concurrency=1 tests/private-access/lot5b/*.test.mjs

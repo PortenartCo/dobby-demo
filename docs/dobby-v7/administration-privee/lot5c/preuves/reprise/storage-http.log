@@ -1,0 +1,10 @@
+LOT5C_STORAGE_RESTORE 2 objects across 2 private buckets; hash, size, path, owner and MIME matched; cross-household and anon denied
+✔ fixture object export and upload restore bytes and access through real Storage HTTP (124000.288716ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 124125.956303

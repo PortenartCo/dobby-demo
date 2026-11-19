@@ -1,0 +1,13 @@
+LOT5B_CATALOGUE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ published catalogue passes without modifying business functions or data (333.48526ms)
+✔ an unapproved browser EXECUTE grant is refused without any business write (332.467206ms)
+✔ an unapproved grant option is refused even when effective EXECUTE was already allowed (117.952576ms)
+✔ the narrowly reported stamper ACL is accepted without changing the trigger or its body (105.012912ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19439.262719

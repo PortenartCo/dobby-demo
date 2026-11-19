@@ -1,0 +1,33 @@
+name: Dobby Lot5C integration (local, rollout NO-GO)
+on:
+  push:
+    paths:
+      - 'supabase/integration/lot5c/**'
+      - 'tests/private-access/lot5c/**'
+      - 'tests/private-access/local-db.mjs'
+      - '.github/workflows/dobby-private-access-integration.yml'
+  pull_request:
+    paths:
+      - 'supabase/integration/lot5c/**'
+      - 'tests/private-access/lot5c/**'
+      - 'tests/private-access/local-db.mjs'
+      - '.github/workflows/dobby-private-access-integration.yml'
+permissions:
+  contents: read
+jobs:
+  assembly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Pinned local PostgreSQL only
+        run: docker --host unix:///var/run/docker.sock pull postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4
+      - name: Assembly freshness and targeted local contracts
+        run: |
+          node supabase/compatibility/lot5b/build-variants.mjs --check
+          node supabase/compatibility/lot5b/build-v7-preserved.mjs --check
+          node supabase/integration/lot5c/build.mjs --check
+          node --test --test-concurrency=1 tests/private-access/lot5c/package.test.mjs

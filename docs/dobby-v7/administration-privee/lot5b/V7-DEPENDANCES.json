@@ -1,0 +1,434 @@
+{
+  "scope": "Published local native dependencies only. No hosted SQL or private body retrieved. Static calls include conditional branches; RLS and trigger dependencies listed separately.",
+  "base": "44bfeac06c4d64acfda6e8ac233150fe02bd1df0",
+  "roots": [
+    "public.dobby_v7_update_profile",
+    "public.dobby_v7_create_household"
+  ],
+  "functionNodes": [
+    {
+      "name": "dobby_socle_private.actor",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "line": 222,
+      "calls": [
+        "dobby_v7_private.actor"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_socle_private.actor()",
+          "owner": "dobby_socle_writer",
+          "securityDefiner": false,
+          "language": "sql",
+          "volatility": "s",
+          "bodyMD5": "c64bf32aeb683175f5ebb9b433284bfc",
+          "definitionMD5": "06e84f12812114dcfb50b03e0cd1857b"
+        }
+      ]
+    },
+    {
+      "name": "dobby_socle_private.actor_context",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "line": 225,
+      "calls": [
+        "dobby_socle_private.actor",
+        "dobby_socle_private.lock_actor",
+        "dobby_socle_private.members"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_socle_private.actor_context(uuid,boolean)",
+          "owner": "dobby_socle_writer",
+          "securityDefiner": true,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "d48e72bb46e5864d2bb39bde451da3dc",
+          "definitionMD5": "b5c7bdbecee13d0ec7151de89597be25"
+        }
+      ]
+    },
+    {
+      "name": "dobby_socle_private.lock_actor",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "line": 189,
+      "calls": [
+        "dobby_v7_private.actor"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_socle_private.lock_actor()",
+          "owner": "dobby_socle_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "03dc705b3fa29d4d04b43bb72db0c8c5",
+          "definitionMD5": "d8c9da2d41c76af87cb3be8ec5d0a563"
+        }
+      ]
+    },
+    {
+      "name": "dobby_socle_private.members",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "line": 106,
+      "calls": [],
+      "localDefinitions": [
+        {
+          "signature": "dobby_socle_private.members(jsonb)",
+          "owner": "dobby_socle_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "i",
+          "bodyMD5": "6fe586e71b025127c67acfe8fae2f04f",
+          "definitionMD5": "e470111c05e60ee25f4a40903025cf9d"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.actor",
+      "source": "tests/private-access/lot2a/catalog.mjs",
+      "line": 84,
+      "calls": [],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.actor()",
+          "owner": "postgres",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "s",
+          "bodyMD5": "92c2a30ecdaf16d2ab6836630949773f",
+          "definitionMD5": "b19c0f95e647ece37c0c03b39a3a9f82"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.add_pending_member",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 259,
+      "calls": [
+        "dobby_v7_private.members",
+        "dobby_v7_private.patch_profile"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.add_pending_member(uuid,uuid)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "6db9e63b8fd5e4c410809b8ded33f83a",
+          "definitionMD5": "eec5c490f0031afabb4ac1148f3f8b94"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.digest",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 126,
+      "calls": [],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.digest(jsonb)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "sql",
+          "volatility": "i",
+          "bodyMD5": "71077961532fcc08260ff4a61ac3e172",
+          "definitionMD5": "fa932440411ef667fe1fba9bfa62cc6a"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.lock_actor",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 119,
+      "calls": [
+        "dobby_v7_private.actor"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.lock_actor()",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "03dc705b3fa29d4d04b43bb72db0c8c5",
+          "definitionMD5": "6be0ecd11cfd247d87c30882573e4a07"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.members",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 145,
+      "calls": [],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.members(jsonb)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "i",
+          "bodyMD5": "6fe586e71b025127c67acfe8fae2f04f",
+          "definitionMD5": "a7e4f52b85c7efb88869451f62268a4d"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.operation",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 128,
+      "calls": [
+        "dobby_v7_private.digest"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.operation(uuid,uuid,text,jsonb)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "104275dc3eea5d6e3e4b35d2fa3e5aba",
+          "definitionMD5": "e0b575faf571103a2e4ca79ffba55dd4"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.patch_profile",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 186,
+      "calls": [
+        "dobby_v7_private.validate_profile"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.patch_profile(jsonb,jsonb)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "s",
+          "bodyMD5": "6ca91d84734c771f548d88e3c351bcb9",
+          "definitionMD5": "24af7b6930bef7c4f94cdd5a61edc0cf"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.receipt",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 140,
+      "calls": [
+        "dobby_v7_private.digest"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.receipt(uuid,uuid,text,jsonb,jsonb)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "sql",
+          "volatility": "v",
+          "bodyMD5": "1b2a4a3bbe76d9be9ba23bbe5284df3c",
+          "definitionMD5": "cae83b84975caae073a9c9308a9cfd49"
+        }
+      ]
+    },
+    {
+      "name": "dobby_v7_private.validate_profile",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 157,
+      "calls": [],
+      "localDefinitions": [
+        {
+          "signature": "dobby_v7_private.validate_profile(jsonb)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": false,
+          "language": "plpgsql",
+          "volatility": "s",
+          "bodyMD5": "adae563a4a43e133acea28f0cfaf017c",
+          "definitionMD5": "014ccb80c4bcaaaa89b472011598aa7c"
+        }
+      ]
+    },
+    {
+      "name": "public.dobby_v7_context",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "line": 296,
+      "calls": [
+        "dobby_socle_private.actor_context"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "public.dobby_v7_context()",
+          "owner": "dobby_socle_writer",
+          "securityDefiner": true,
+          "language": "sql",
+          "volatility": "s",
+          "bodyMD5": "ba0c44890d06743a2331c885a9739265",
+          "definitionMD5": "730d99915570bb5a465a2d1c8be104d1"
+        }
+      ]
+    },
+    {
+      "name": "public.dobby_v7_create_household",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 277,
+      "calls": [
+        "dobby_v7_private.add_pending_member",
+        "dobby_v7_private.lock_actor",
+        "dobby_v7_private.operation",
+        "dobby_v7_private.receipt",
+        "public.dobby_v7_context"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "public.dobby_v7_create_household(text,uuid)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": true,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "05c28a810c14312cd1e85cf308ad9991",
+          "definitionMD5": "5b08f985d641c264395d212fdeefb08b"
+        }
+      ]
+    },
+    {
+      "name": "public.dobby_v7_update_profile",
+      "source": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "line": 234,
+      "calls": [
+        "dobby_v7_private.lock_actor",
+        "dobby_v7_private.members",
+        "dobby_v7_private.patch_profile",
+        "dobby_v7_private.validate_profile",
+        "public.dobby_v7_context"
+      ],
+      "localDefinitions": [
+        {
+          "signature": "public.dobby_v7_update_profile(jsonb,bigint)",
+          "owner": "dobby_v7_writer",
+          "securityDefiner": true,
+          "language": "plpgsql",
+          "volatility": "v",
+          "bodyMD5": "c4915597121f2b1ea01bf2058987481a",
+          "definitionMD5": "478f617c98f746586465faa0a57caf99"
+        }
+      ]
+    }
+  ],
+  "unresolvedStaticCalls": [],
+  "sourceHashes": [
+    {
+      "path": "docs/dobby-v7/stitch19-20/supabase/tests/catalog-fixture.sql",
+      "sha256": "6e7816ef74700e0904f577ec38e55b9ae3dc445d1d4600f04a75352cebe06b61"
+    },
+    {
+      "path": "docs/dobby-v7/stitch19-20/supabase/01-apply.sql",
+      "sha256": "96f2845158fdcc66621c3bdc69f0d5f227b5427e181e9afad6f15f87f1d0ea3d"
+    },
+    {
+      "path": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "sha256": "f74c6913484d2c5914b8923058f268ab9edfb2579d92f49bc12723a7e43af5d7"
+    },
+    {
+      "path": "docs/dobby-v7/finalisation-socle/supabase/missions/01-apply.sql",
+      "sha256": "5f8cca31d1e79a0fa6bb8e4134470bdc483b53da4683feb672d544e4d5bd2b3a"
+    }
+  ],
+  "conditionalBranches": [
+    "actor_context(...,false) does not execute p_lock=true branch",
+    "guard_family skips assert_snapshot for current_user V7/SOCLE",
+    "guard_missions returns immediately for module family; 12 private Missions validators are outside these V7 paths"
+  ],
+  "tableDependencies": [
+    {
+      "relation": "dobby_v7_private.pending_profiles",
+      "access": "V7 SELECT FOR UPDATE / INSERT ON CONFLICT UPDATE / DELETE; context reads as SOCLE",
+      "newPolicy": "TO dobby_v7_writer AS RESTRICTIVE"
+    },
+    {
+      "relation": "dobby_v7_private.account_links",
+      "access": "V7 INSERT; context and canonical identity read as SOCLE",
+      "newPolicy": "TO dobby_v7_writer AS RESTRICTIVE"
+    },
+    {
+      "relation": "dobby_v7_private.operations",
+      "access": "V7 SELECT cached result BEFORE explicit context call / INSERT receipt",
+      "newPolicy": "TO dobby_v7_writer AS RESTRICTIVE; critical replay guard"
+    },
+    {
+      "relation": "public.dobby_v2_households",
+      "access": "V7 INSERT; AFTER INSERT quota consumption; SOCLE context reads",
+      "newPolicy": "TO dobby_v7_writer AS RESTRICTIVE"
+    },
+    {
+      "relation": "public.dobby_v2_memberships",
+      "access": "V7 SELECT FOR SHARE / INSERT owner membership; SOCLE context reads",
+      "newPolicy": "TO dobby_v7_writer AS RESTRICTIVE"
+    },
+    {
+      "relation": "public.dobby_v2_modules",
+      "access": "V7 SELECT FOR UPDATE / INSERT family / UPDATE family; native family-only policy and guards retained",
+      "newPolicy": "TO dobby_v7_writer AS RESTRICTIVE"
+    },
+    {
+      "relation": "dobby_socle_private.install_state",
+      "access": "Read by SOCLE canonical context; existing gate flags retained",
+      "newPolicy": null
+    },
+    {
+      "relation": "dobby_access_private.settings / authorizations",
+      "access": "Read/locked only by existing access-writer guards; quota updated atomically by attached definer trigger",
+      "newPolicy": null
+    },
+    {
+      "relation": "auth.sessions",
+      "access": "Existing session-reader checks id/user/created_at/not_after in local fictional fixture; no hosted proof",
+      "newPolicy": null
+    },
+    {
+      "relation": "auth.users",
+      "access": "Existing foreign keys and identity references only; no hosted rows read",
+      "newPolicy": null
+    }
+  ],
+  "triggerDependencies": [
+    {
+      "function": "dobby_v7_private.guard_family",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/family/01-install-family.sql",
+      "behavior": "V7 branch preserves native profile write path; assert_snapshot branch tested for authenticated direct writes in prior unchanged lot"
+    },
+    {
+      "function": "public.dobby_v2_modules_stamp",
+      "source": "tests/private-access/lot2a/catalog.mjs",
+      "behavior": "Explicit published V7 writer actor repair; native revision and updated_by stamps retained"
+    },
+    {
+      "function": "dobby_runes_private.guard_missions",
+      "source": "docs/dobby-v7/finalisation-socle/supabase/missions/01-apply.sql",
+      "behavior": "Published family early-return, no private Missions validators reached"
+    }
+  ],
+  "administrationDependencies": [
+    "request_identity",
+    "is_active",
+    "assert_active",
+    "session_is_live",
+    "settings.session_guard_ready",
+    "authorizations.status/session_boundary_pending/sessions_valid_after/can_create_household"
+  ],
+  "knownUncoveredContract": {
+    "entrypoints": [
+      "public.dobby_v7_preview_invitation(text)",
+      "public.dobby_v7_preview_child_invitation(text)",
+      "public.dobby_v7_context() under GET/READ ONLY"
+    ],
+    "path": [
+      "STABLE invitation wrapper",
+      "public.dobby_v7_context made VOLATILE by experiment",
+      "assert_active_nowait",
+      "SELECT authorizations FOR SHARE NOWAIT"
+    ],
+    "observedSqlState": "25006",
+    "httpEvidence": "Official PostgREST transaction access-mode documentation only; no HTTP campaign run"
+  },
+  "hostedDependencyDefinitionsIndependentlyVerifiedByCodex": false,
+  "privateMissionsFixtureAvailable": false,
+  "verdict": "BLOCKED_CURRENT_EXPERIMENT_NOT_A_GENERAL_IMPOSSIBILITY_PROOF"
+}

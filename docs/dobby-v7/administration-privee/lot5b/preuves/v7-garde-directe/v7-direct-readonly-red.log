@@ -1,0 +1,38 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ explicit in-memory write prototype needs no V7 membership and retains all V7 functions and privileges in the clean fixture (741.190607ms)
+✖ read-only invitation previews preserve valid, invalid and STABLE contracts (244.206217ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18751.524268
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:124:1
+✖ read-only invitation previews preserve valid, invalid and STABLE contracts (244.206217ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+  CONTEXT:  SQL statement "SELECT *        FROM dobby_access_private.authorizations WHERE user_id=(who->>'userId')::uuid FOR SHARE NOWAIT"
+  PL/pgSQL function dobby_access_private.assert_active_nowait() line 5 at SQL statement
+  SQL statement "SELECT dobby_access_private.assert_active_nowait()"
+  PL/pgSQL function public.dobby_v7_context() line 1 at PERFORM
+  PL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment
+  LOCATION:  PreventCommandIfReadOnly, utility.c:407
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:134:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

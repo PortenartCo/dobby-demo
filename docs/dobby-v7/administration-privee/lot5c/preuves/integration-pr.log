@@ -1,0 +1,29 @@
+2026-11-19T20:00:38.0342494Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check
+2026-11-19T20:00:38.0343135Z [36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check[0m
+2026-11-19T20:00:38.0343830Z [36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check[0m
+2026-11-19T20:00:38.0344612Z [36;1mnode supabase/integration/lot5c/build.mjs --check[0m
+2026-11-19T20:00:38.0346216Z [36;1mnode --test --test-concurrency=1 tests/private-access/lot5c/package.test.mjs[0m
+2026-11-19T20:00:54.9879441Z LOT5C_VALID_READONLY_RESULTS [{"name":"dobby_v7_preview_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"},{"name":"dobby_v7_preview_child_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_child_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_child_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"}]
+2026-11-19T20:00:55.0731885Z ✔ ordered package exists with one closed installation and separate activation (1.799851ms)
+2026-11-19T20:00:55.0747015Z ✔ full preflight refuses missing private Missions without persistent DDL (351.810263ms)
+2026-11-19T20:00:55.0747977Z ✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1335.878354ms)
+2026-11-19T20:00:55.0748908Z ✔ partial local assembly refuses missing human prerequisites before creating the foundation (171.427348ms)
+2026-11-19T20:00:55.0749865Z ✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1230.032102ms)
+2026-11-19T20:00:55.0766253Z ✔ activation refuses absent or invisible session and identity without partially opening flags (938.962838ms)
+2026-11-19T20:00:55.0768691Z ✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (910.184904ms)
+2026-11-19T20:00:55.0781729Z ✔ distributed quarantine contains no mutable continuation after savepoint error recovery (249.505688ms)
+2026-11-19T20:00:55.0790758Z ✖ assembled valid adult and child previews preserve READ ONLY contracts (545.976241ms)
+2026-11-19T20:00:55.0913980Z ℹ tests 9
+2026-11-19T20:00:55.0914447Z ℹ suites 0
+2026-11-19T20:00:55.0915540Z ℹ pass 8
+2026-11-19T20:00:55.0915953Z ℹ fail 1
+2026-11-19T20:00:55.0916361Z ℹ cancelled 0
+2026-11-19T20:00:55.0917285Z ℹ skipped 0
+2026-11-19T20:00:55.0935806Z ℹ todo 0
+2026-11-19T20:00:55.0936256Z ℹ duration_ms 16659.201089
+2026-11-19T20:00:55.0936758Z ✖ failing tests:
+2026-11-19T20:00:55.0937846Z ✖ assembled valid adult and child previews preserve READ ONLY contracts (545.976241ms)
+2026-11-19T20:00:55.0938572Z   AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+2026-11-19T20:00:55.0940710Z   PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM
+2026-11-19T20:00:55.0941431Z   SQL statement "SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)"
+2026-11-19T20:00:55.0998250Z ##[error]Process completed with exit code 1.

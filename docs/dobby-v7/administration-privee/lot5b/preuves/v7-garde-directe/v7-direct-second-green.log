@@ -1,0 +1,24 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ missing Missions definitions or standalone fragment refuse atomically before installation (1143.502273ms)
+✔ owner-only creator defaults remain usable without adding any writer grant (462.510416ms)
+✔ direct guard installs with no V7 membership and exactly the two authorized new grants (13600.623491ms)
+✔ initial pending profile, household, quota and replay preserve native identities and idempotence (835.390931ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (20755.242066ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (3993.124553ms)
+✔ no household can be created without the explicit initial quota (568.456861ms)
+✔ native profile CAS, parent/child and household separation remain enforced (1719.499033ms)
+✔ direct restrictive policies and role-conditioned triggers target only V7 (1078.855285ms)
+✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (1081.128424ms)
+✔ quota upgrade contention is a retryable 40001 with no data or quota changes (340.341546ms)
+✔ preservation preflight keeps every other writer ADMIN check (322.346942ms)
+✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (133.827356ms)
+✔ read-only invitation previews preserve valid, invalid and STABLE contracts (614.574204ms)
+✔ full guard rollback restores previews, removes both grants and retains the V7 write fence (2270.687356ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68766.773122

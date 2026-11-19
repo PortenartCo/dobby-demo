@@ -1,0 +1,13 @@
+LOT5C_LOGICAL_RESTORE preinstallation 19 table digests and catalogue match
+✔ logical recovery before installation preserves canonical accounts and the preinstallation catalogue (12206.858821ms)
+LOT5C_OID_REFUSAL postflight and both review-source rollbacks rejected; original journal digests intact
+LOT5C_LOGICAL_RESTORE installed-closed 29 table digests and catalogue match
+✔ assembled logical recovery preserves both journals but new OIDs block postflight and rollback (12378.085525ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44329.760784

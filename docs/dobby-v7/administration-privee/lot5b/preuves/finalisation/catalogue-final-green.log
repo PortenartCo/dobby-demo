@@ -1,0 +1,22 @@
+LOT5B_CATALOGUE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ published catalogue passes without modifying business functions or data (366.466672ms)
+✔ an unapproved browser EXECUTE grant is refused without any business write (307.055217ms)
+✔ an unapproved grant option is refused even when effective EXECUTE was already allowed (111.282138ms)
+✔ the narrowly reported stamper ACL is accepted without changing the trigger or its body (111.8723ms)
+✔ a modified SQL literal is refused rather than normalized into approval (107.549936ms)
+✔ a changed owner is refused even though pg_get_functiondef excludes ownership (104.046759ms)
+✔ SECURITY DEFINER and configuration drift are refused independently (304.619972ms)
+✔ PUBLIC or delegated browser rights on the stamper are outside its two approved ACL profiles (298.194648ms)
+✔ the stamper exception requires its existing active trigger attachment (118.21945ms)
+✔ real PostgreSQL pair matching accepts each approved pair and refuses mixed or unknown pairs (1460.374393ms)
+✔ revoking optional stamper EXECUTE preserves existing trigger writes and blocks direct calls (197.839267ms)
+✔ the complete candidate refuses absent private dependencies before business changes (413.410269ms)
+✔ partial wrapping core preserves native bodies/data and rollback refuses forged backups (3725.306808ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25723.217111

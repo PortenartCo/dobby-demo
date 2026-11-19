@@ -1,0 +1,467 @@
+{
+  "status": "PASS_SCOPED_NO_GO_DELIVERY",
+  "reviewedAtUTC": "2026-11-19T20:09:02.129120+00:00",
+  "scope": "All current PR34 additions/modifications vs PR33 base, including historical and new proof logs",
+  "base": "f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764",
+  "phaseBase": "afb09873b39e533d433c72a436ab3cbcfc043bbc",
+  "codeCommit": "5dc57f270476955097806c7818e1ef3f5fc9db68",
+  "hostedProjectCalls": 0,
+  "hostedWrites": 0,
+  "realAccountRowsReadOrChanged": 0,
+  "privateHostedBodiesExported": 0,
+  "codeInputsByteIdentical": 14,
+  "historicalAndLot5BProtectedInputsByteIdentical": 31,
+  "patternsChecked": [
+    "private_key",
+    "jwt_literal",
+    "github_token",
+    "supabase_secret",
+    "credential_url",
+    "auth_link_token",
+    "nonfictional_email"
+  ],
+  "findings": [],
+  "relativeLinksChecked": 75,
+  "provenance": "Public SQL sources, user-reported hosted metadata, local fictional rows; no hosted body/user/file inventory retrieved",
+  "limits": "Scoped pattern/provenance review, no remote secret scan and no hosted readiness proof",
+  "verdict": "NO-GO, one actual functional 25006 retained as FAIL; writer entrypoints sentinel only",
+  "documentationCommit": "[skip ci]; fourteen code/test/workflow inputs unchanged from codeCommit, no new CI claim",
+  "artifactsExcludingThisSelfReferentialRecord": [
+    {
+      "path": ".github/workflows/dobby-private-access-compatibility.yml",
+      "sha256": "5bf8f0c6ca67cdd2660bd1b6501b734377284e368f67d6940aa8bd0fbc0197a3"
+    },
+    {
+      "path": ".github/workflows/dobby-private-access-integration.yml",
+      "sha256": "a7bd1efe253c02ed26f8be4df128cd856daa39d240f70cbfd8dd6856d32753bf"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/CHECKPOINT-REPRISE.md",
+      "sha256": "134bcce8d1ab0e76dc0077b15635131bcee171e8bad9da104da8e51c2ac4a7cb"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/CONFIDENTIALITE-FINALISATION.json",
+      "sha256": "3a2259829f8d55ad1395d247ba8e7b9c1b63cc17af5dcc2435217560adf555cd"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/CONFIDENTIALITE.json",
+      "sha256": "ef0cb71e7b5638f594850f376531474018583e2b11da552a7e49047de5b7189b"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURE-CATALOGUE.sql",
+      "sha256": "ace865477d43c8a0c15b9fc45fa51e525c5fd126511eb434ed4b37e127afc833"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURES-COMPLEMENTAIRES.sql",
+      "sha256": "27bc5b654d252de7ce9d68f97063d087f23694cf4d6a6273479f6396f8f00437"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURES-FINALISATION.md",
+      "sha256": "f08d44c385bf65783d01e7e9d6a803e150690e35ed76404f20412edb3decaf50"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURES-REQUISES.md",
+      "sha256": "12b3dbd0cca1f84448cfd9878e3cd97da78978bf15c722668c9da6d4e72b4296"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/MATRICE-FONCTIONS.md",
+      "sha256": "ea6f53d2e676c91964d66eebc19f73d82f4b64a713516cdb9a72ef2ff0d3499b"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RAPPORT-FINALISATION.md",
+      "sha256": "2516d12ea710808f9b6ae185ae967d67aa20c2517d728ac5802798e75492aa66"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RAPPORT.md",
+      "sha256": "4c48e67298799dd25de761b59c65113da7abec77fa44790d2c9a01df2bc648df"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RECONCILIATION.json",
+      "sha256": "abad8572616409da419f38bd35e122ee7b02ef13a82631871dbccad037c3c923"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RESULTATS-FINALISATION.json",
+      "sha256": "280222076780b4d0e388e5a63b0c99fde685d382009a04ff10a82572b2850643"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RESULTATS.json",
+      "sha256": "85cb01b3a7f09d87ae3efd8a10d90586dd2c5ec61fa4b243b20cf5d282369109"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/REVUE.md",
+      "sha256": "d57da70019d911e067110d901f625b0949a20785b8f81666b90c54c6700e50d0"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-CONFIDENTIALITE.json",
+      "sha256": "089cf9d34423d9a460a2e001fe31a40acbad852a50dda8a318948022a3e7f554"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-DEPENDANCES.json",
+      "sha256": "4816329ee189115d32d34d86ae7186a8b2678418132d3164aa8f9f96ad8dcbd4"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-GARDE-CONFIDENTIALITE.json",
+      "sha256": "0b3b27aea43fca2c36666a2e39297519679e7950ea0f0e96b285c16e1bf1bd8a"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-GARDE-DEPENDANCES.json",
+      "sha256": "a1cd711982106b4ef476982211f9d324a1b36d52ec5d88d0c0e9bd7cfb1beecd"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-GARDE-DIRECTE.md",
+      "sha256": "327b890265a4bf514af2682e7cb67c38986fc1d89352d5f4ac92650a4ba5931e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-GARDE-RESULTATS.json",
+      "sha256": "6569cb2f4b7d2cd2e642259d61ddcd9498fc257b99a5ed1d169a4526a86c160f"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-RESULTATS.json",
+      "sha256": "8b9c8a915fc36f466c4a8c0743d4753e1cd413ecaa2bded8979db5d06c1dbd53"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/V7-SANS-ADMIN.md",
+      "sha256": "a883c41317ae9ad3dd558ffa630c22d43760c0b48778f2693af1f9c22f4e53a8"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/all-green.log",
+      "sha256": "84fe6652429220f6d9f24d7c191dc88bd430b9eb88589d0e70a1d13703c088b4"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/auth-green.log",
+      "sha256": "4ed82be8a419eff12c515aeab4f413aeb575d5d148d6de8a63abdd1c0bfd827d"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/auth-red.log",
+      "sha256": "e85dd05de683d858958d8842b3ef1de5d8d5be9ce1f3e203a1711498bfc852f7"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/final-green.log",
+      "sha256": "72958924037cd8f087ce07b92816ebfc752dd56b16fdf2c4653692e6511b69ba"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/finalisation/catalogue-expanded.log",
+      "sha256": "ba40a0df8c5227784d4f85df3003cc67ad7df20a1d5f64a964185caec38a68e6"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/finalisation/catalogue-final-green.log",
+      "sha256": "682f0525cbb709d990802231ddeaa1803611450a1273a0fafd189c09d7edd1a7"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/finalisation/catalogue-first-green.log",
+      "sha256": "0312bfd685bb1b1e81fce742c8a37afa997145291a2f7a6941488db6a908bc33"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/finalisation/catalogue-red.log",
+      "sha256": "da52c3614ae2b39251740d9bf5472a25bb874bc7494612afd277da4ebbeba40a"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/finalisation/rollback-acl-red.log",
+      "sha256": "a433dd07321d3ad7500aa5ba8601e16cd6f0cccf2309c993d12fc7985116c50e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/finalisation/rollback-owner-red.log",
+      "sha256": "d6fd21636bc6d27edc71e2766248094851f3580dcd1e253b0a57fc6feea57963"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/review-auth-create-red.log",
+      "sha256": "6166799827f4f37b692f405e61a7ed3bb417334e5f03c644b5d42e00be1d43d2"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/review-red.log",
+      "sha256": "290f27cf407b815eb30bd75395ce85bfa817f0fba455b5ae96d1552a81cb204a"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/roles-green.log",
+      "sha256": "7ae318c3f8b474fda5ecbde530d530e0603759187cb73359492ead6d2a0ae018"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/roles-red.log",
+      "sha256": "66a28d1eb8b7c02de0a40ec0e4befd2091cfa164f5faa3933bdb4708984192a6"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/ci-pr.log",
+      "sha256": "4c72ea389f0f27729357e0e9e6beb2cb8aaf4f44ee1fb561656744687dac3546"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/postgrest-version.log",
+      "sha256": "6779ba472bd2c9e1645f150942536ad0515c3686a9959f47fcf5f766c300f11c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-after-review.log",
+      "sha256": "289a600970bf756541a566cda1efda7b88cc2b0b648e6e743912883fcfe017c0"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-expanded-http.log",
+      "sha256": "fdc4db5894fcd0235032b7c8d52117cc983845a8d8bf6e84ff800fb20f157ac7"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-final-local.log",
+      "sha256": "2fc6100e517c0d7714feeb656d62b2992c81ea34c79c950d8801471bfec43180"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-first-green.log",
+      "sha256": "c40292cf3fe0bf50dd26f8436234ad046580af93290fc85ebb6be8bc19b8bb2c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-readonly-red.log",
+      "sha256": "6b6aa01c73b2089e1fbd2ca9019ecdebe4f6bffd794d5c2bc0ebec5edd4c0e68"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-review-red.log",
+      "sha256": "9cbd4f84ab373b76093718501b242c5732bd8c36c5986546afdfe515371c0316"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-second-green.log",
+      "sha256": "5d7558d00ec8b71d43a6ddfe76859beaf286aae985876f5a4e396a0789fc111c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-blocked-diagnostic-first.log",
+      "sha256": "20dabc6608c06d444e0f46c111a3d221ee094f4a962d08ab83f017d93ba54d05"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-diagnostic-final.log",
+      "sha256": "68d69e6cd5c71fcac92035042a4127b42e95174200fc1bbbe6b9c748a4e1fd1b"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-expanded.log",
+      "sha256": "f564c43d7f9cc53a04e338e9a7330eae18065706d47864683863e8724be87b61"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-first-green.log",
+      "sha256": "ddf6b4f110920635fdc96ea2cafff6cd82cf97d9293278b5b76487846f685240"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-mixed-corrected-red.log",
+      "sha256": "6aa728bd4f1a9bd21d18c5d353b52bfa1b7356eeeccb10967dc92ae69bc3a47e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-mixed-red.log",
+      "sha256": "f75cec0bc699254ce87961906628b58895f706ee0936e6a624634a1319398872"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-red.log",
+      "sha256": "b142e726b71007db46636f2f38dab7bdda1f07253aae659ee1f9361b1c4221bf"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/DECISIONS.md",
+      "sha256": "3d8e9dc0aeed007d95f0d52de98089c72d939bd186bf8b431324433e4eaa7e13"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/PLAN.md",
+      "sha256": "1335c6a59b98a2d31557b0c37838f1f4eed62c3895893ff932636a671983c9d8"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/PROCEDURE.md",
+      "sha256": "13ed8b817e20988b351418d9853acde95c3a7cc852db13f097e6d1cb95f4de39"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/RAPPORT.md",
+      "sha256": "6e87fb42389780cd2e430e92372315a8d90b8ad4fcfaff89e60a5ca7a07572a6"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/RECETTE.md",
+      "sha256": "7c021f4f4618038495b8878837f9053996130011c742c743d78ac2436c93547e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/RESTAURATION.md",
+      "sha256": "d03415f9e91fe50682a45d817806c34f11e2bc35f1aa7d99b10bcd90a2cc6d52"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/RESULTATS.json",
+      "sha256": "79748e5b39b7f54ac0e925237cd2bfc07d50f23e04815b0ce403a2e9b55e99fd"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/REVUE.md",
+      "sha256": "bf24fe457b7a8441c5858a9a570f1adb13c7f324a580f0379c4e8c053b0ba549"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/compatibility-pr.log",
+      "sha256": "a559ad71452be44a66210e6cbf83eeda090e09037c93cfd8097c0d7654edcac1"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/freeze-review-red.log",
+      "sha256": "8666f2c1215715090c335d75aa352036e132ac9a8cb81213eb0ac19b645c4b09"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/integration-pr.log",
+      "sha256": "d256bbd1e89a8dea7f30f032740803f15d02c94a3c5b0d995352b16fcc250fc5"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-composition.log",
+      "sha256": "0ec5e856b6e42c4da415fc3fbc8fd6ea02401f295266a84c92ea7a80c5bd1c3c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-final-blocked.log",
+      "sha256": "983f90ceaaff69c5f2e7430b355b87289481d1de1f91345a00dca66476d7749e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-final-reviewed.log",
+      "sha256": "81f73f8fd1a69f430a860789df885d2abff3dd72a43314215d780ab1ecbe7f63"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-first.log",
+      "sha256": "1e4c1f17fa0600d5b51cb209ba1b4ea73085d972d10934ebba95a2a79c8b90ec"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-freeze-harness.log",
+      "sha256": "c6cd34130a2156e8dab42a3e4691380c54b9aa81ff490ce72bb72f874a78fe75"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-readonly-check.log",
+      "sha256": "4cde9a55929fb493f349d962e1115704300d639699f4b174ae1b1111aa2621e9"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-red.log",
+      "sha256": "e7a722938500604c744090e2a3465e03726ff4033a321634d5f58ef3f800c7e9"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/README.md",
+      "sha256": "1f818157d9f6763a78c4fe04405d52696deabf50d4bbc395e3ff1319b3498cb7"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+      "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+      "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-v7-preserved.mjs",
+      "sha256": "570d8681e8aead74ba1a782f7997ffd3756fcf02f4b8311bd238e42c2c6e05b3"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-variants.mjs",
+      "sha256": "5799ecad32aecfa64656d7b19705dccba047602f2cd99f60c31e5f89de7079cf"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/catalogue.preflight.sql",
+      "sha256": "c299518b6c7730c0e3963d633373232560e346838040af3538c20ed3e5685177"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.candidate.sql",
+      "sha256": "2eb172f7943b833b7f430373a580aa443bcd6bdec5c4ac55a83f168951b23ccb"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.rollback.sql",
+      "sha256": "e9e028892504835fe5b2a55e4316bbecd376bfb64bf31d865cfe316b64f54c76"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/missions.preflight.sql",
+      "sha256": "bdcf7bd37c3b68e471017c38346db5950b9ac2de517caf0557e56f4324bff244"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved-state.mjs",
+      "sha256": "0f45f31080aaa0c9c3f165eb1908482bd00cfe444c450c86d38595dc6bd1f15d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.candidate.sql",
+      "sha256": "22b52d282fb687f25183a306e74e93b3cc59f15185705c851103ea476e69152d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.guards.sql",
+      "sha256": "ddc49ad1c0b8f295089003bc36845827f74feef129f9302490c12132f80b9811"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.roles.preflight.sql",
+      "sha256": "bdf0a5994679cae6eeaecf308fa859c1352f634ccbb15aaf61422b8b19973ce7"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.rollback.sql",
+      "sha256": "051c35669f4c34d6f039850f900c243eb59701d4160c8a8424accddb9ea39850"
+    },
+    {
+      "path": "supabase/integration/lot5c/00-preflight.sql",
+      "sha256": "cd2fcaafe55eb47504a497906db7ee58941f88e44a8e4a52b827d17d86423c7e"
+    },
+    {
+      "path": "supabase/integration/lot5c/10-install.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/20-activate.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/30-postflight.sql",
+      "sha256": "69715284f0a3abf7055e3588ebf612aefff9f28a6e11682350f26e7602e532ea"
+    },
+    {
+      "path": "supabase/integration/lot5c/80-stop-admin.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/90-close.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/README.md",
+      "sha256": "c3bc1b8b53a0820c7cabd843718a01826ae0670b0cda244274e48fc2f0f59a4b"
+    },
+    {
+      "path": "supabase/integration/lot5c/auth-wiring.mjs",
+      "sha256": "815d565b3d70a444cf157f111a15cc69b780d6f6877763dcfc2430b5237b7300"
+    },
+    {
+      "path": "supabase/integration/lot5c/build.mjs",
+      "sha256": "c61fab79ff5b01c91222b5e494dce9fdb04af3ce96dae1d2bf812eef48aa5794"
+    },
+    {
+      "path": "supabase/integration/lot5c/manifest.json",
+      "sha256": "f1b610042481c0c3e3d2a9c901b344bd5f04c8084e154df59dc137f793df3560"
+    },
+    {
+      "path": "tests/private-access/local-db.mjs",
+      "sha256": "61c5262d234a399d889fc1da1a64d40bd62b030d05917d8408084edbf2119023"
+    },
+    {
+      "path": "tests/private-access/lot5b/auth-bridge.test.mjs",
+      "sha256": "eaad03a73c000da8eb3360ef758ff9c0572d18b3224d6e6d83a7b74492438ca4"
+    },
+    {
+      "path": "tests/private-access/lot5b/catalogue.test.mjs",
+      "sha256": "379f6597f511841a35bfef90810c9ed0ea778c5021cc7f25727fdec8eb1ba0de"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-db.mjs",
+      "sha256": "61556275f6cd019ea0b382b7463a51c514f9f938c7b2bc44c0f6a614aec47487"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-rest.mjs",
+      "sha256": "4b92331033e4894289ed66bec0f7d7f0b902d69c6eb0063ae0554df27b0877e7"
+    },
+    {
+      "path": "tests/private-access/lot5b/maintenance.test.mjs",
+      "sha256": "72e9ae9b911099a5c0f8cd4c69a81c8b45fff57d4e4848c60adf170a31d852c8"
+    },
+    {
+      "path": "tests/private-access/lot5b/storage-authority.test.mjs",
+      "sha256": "a68bdf82af0b3509d45526d756f9bf2b5f08ca461cc51cfbef8bc513d51803ce"
+    },
+    {
+      "path": "tests/private-access/lot5b/v7-preserved.test.mjs",
+      "sha256": "bd9f315a98c70cc32a7484e4e39f23c69eb175d8b25ce1b63bc627d6d4275d85"
+    },
+    {
+      "path": "tests/private-access/lot5c/package.test.mjs",
+      "sha256": "b9e94a5d5572e197e09be75a4866806a2eb6de053891e5bf2b0f004c3dff18bf"
+    },
+    {
+      "path": "tests/private-access/lot5c/storage-fixture.mjs",
+      "sha256": "dba94debf42c84b12ea25da22cb78849ab63d31b81ad41d66696b3628067fdb5"
+    },
+    {
+      "path": "tests/private-access/lot5c/storage-folder.sql",
+      "sha256": "17f5d4a9119160eeeac38f14a1294f029038baf665b0eddf91f5058ab79b4a78"
+    }
+  ]
+}

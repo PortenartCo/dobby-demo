@@ -1,0 +1,722 @@
+{
+  "verdict": "NO-GO: newly demonstrated Lot3 valid-invitation READ ONLY 25006; development stopped by user stop condition",
+  "date": "2026-11-19",
+  "phaseBase": "afb09873b39e533d433c72a436ab3cbcfc043bbc",
+  "codeCommit": "5dc57f270476955097806c7818e1ef3f5fc9db68",
+  "pr": {
+    "number": 34,
+    "draft": true,
+    "baseBranch": "docs/dobby-private-access-lot5a-20261119-i9vixeco"
+  },
+  "hostedFacts": {
+    "provenance": "User verified facts, reused without new CODEX project access",
+    "projectRef": "pqcdkrwljgvgagzwrcmg",
+    "postgres": "17.11",
+    "businessRelations": 6,
+    "owners": "postgres",
+    "rls": true,
+    "administrationInstalled": false,
+    "catalogueFunctions": 27,
+    "missionsDependencies": 12,
+    "reconciledTextPairs": 21
+  },
+  "assembly": {
+    "singleReviewSource": true,
+    "historicalMigrationsModified": false,
+    "v7SolutionModified": false,
+    "adminV7Required": false,
+    "order": [
+      "00-preflight.sql",
+      "10-install.sql",
+      "30-postflight.sql",
+      "20-activate.sql",
+      "30-postflight.sql"
+    ],
+    "phaseOrder": [
+      "foundation",
+      "private canonical bootstrap",
+      "catalogue/Missions/preserved V7 direct RLS",
+      "administration without unused V7 maintenance grants",
+      "Auth bridge",
+      "three readers and two activators wired",
+      "Storage helper fingerprint coordinated"
+    ],
+    "deliveredWritingFiles": "10/20/80/90 sentinel only, no mutable SQL following even after savepoint recovery",
+    "reviewSource": "build.mjs reviewAssembly() for offline review/local regression only; no installation CLI or unlock flag",
+    "fullLocalAssemblyVerified": false,
+    "fullHostedPackageReady": false
+  },
+  "local": {
+    "tests": 9,
+    "pass": 8,
+    "fail": 1,
+    "skipped": 0,
+    "durationMs": 26560.398325,
+    "command": "node --test tests/private-access/lot5c/package.test.mjs",
+    "postgres": "17.7 pinned image; NOT hosted 17.11",
+    "image": "postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4",
+    "network": "Owned disposable Docker PostgreSQL network none, tmpfs, no bind mount/port; fictional Auth/family rows",
+    "functionalFailure": "assembled valid adult and child previews preserve READ ONLY contracts",
+    "validReadWriteResults": [
+      "adult valid",
+      "child valid"
+    ],
+    "validReadOnlyResults": [
+      {
+        "name": "dobby_v7_preview_invitation",
+        "status": 3,
+        "stdout": "",
+        "stderr": "ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"
+      },
+      {
+        "name": "dobby_v7_preview_child_invitation",
+        "status": 3,
+        "stdout": "",
+        "stderr": "ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_child_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_child_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"
+      }
+    ],
+    "positiveChecks": [
+      "closed partial installation",
+      "bootstrap row preservation",
+      "V7-owned OID/definitions/owners/ACL unchanged",
+      "no usable postgres V7 membership",
+      "readers and V7 have no direct Auth schema/column access",
+      "only V7 private gate USAGE/EXECUTE without delegation",
+      "canary visibility denial does not partially enable flags",
+      "positive bridged session/identity activation",
+      "authorized profile and active context",
+      "invalid previews READ ONLY",
+      "four inert sentinels under continued psql",
+      "quarantine inert even after savepoint error recovery"
+    ],
+    "fixtureLimitations": [
+      "Only exact twelve-Missions metadata block removed in memory from review source, duplicated checks both omitted; no private stub and no delivered bypass flag",
+      "Installer BYPASSRLS is pre-existing fictional harness assumption, not a new production grant or proof of hosted visibility",
+      "Child gates enabled only in fictional fixture to reach valid child preview, never real configuration",
+      "No HTTP final integration or full private Missions evidence"
+    ],
+    "overall": "FAIL, not PASS diagnostic"
+  },
+  "blocker": {
+    "component": "Lot3 nomination preview",
+    "path": [
+      "public STABLE invitation previews",
+      "dobby_socle_private.preview_invitation",
+      "dobby_access_private.assert_invitation_admission",
+      "dobby_access_private.assert_requester",
+      "authorizations FOR SHARE"
+    ],
+    "sqlState": "25006",
+    "distinctFromResolvedV7ContextLock": true,
+    "minimalCorrectionProposedNotImplemented": "Pure read validation for preview; preserve live authorization/session/generation checks and locks on acceptance/mutations; do not change public volatility or V7 privileges"
+  },
+  "review": {
+    "independentStatic": true,
+    "runtimeByReviewer": false,
+    "initialDeliveryVerdict": "Unfavorable to files containing mutable SQL after RAISE",
+    "critical": "Savepoint recovery could resume mutable continuation",
+    "criticalReproduced": true,
+    "criticalDeliveryFix": "Four sentinel-only SQL files; source retained for review, local countertest passes",
+    "important": "Order omitted postflight before activation",
+    "importantFixed": "00 -> 10 -> 30 -> 20 -> 30 in manifest/test/docs",
+    "secondIndependentReviewClaimed": false,
+    "remainingReviewSourceReservations": [
+      "Validate all manifest/operation fields before first DDL, not only flags/cardinality",
+      "Pin installed journal package_id explicitly in future postflight"
+    ],
+    "businessDefectNotFixedByStopInstruction": true
+  },
+  "history": [
+    {
+      "log": "package-red.log",
+      "tests": 1,
+      "pass": 0,
+      "fail": 1,
+      "skipped": 0,
+      "meaning": "Missing generated package RED, not a business defect"
+    },
+    {
+      "log": "package-first.log",
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0,
+      "meaning": "Three early metadata/mandatory-input tests only"
+    },
+    {
+      "log": "package-composition.log",
+      "tests": 12,
+      "pass": 3,
+      "fail": 9,
+      "skipped": 0,
+      "meaning": "3/12 pass; installation failed on regprocedure display qualification caused by global search_path, remaining failures cascaded. Fixed assembly context, not business functions"
+    },
+    {
+      "log": "package-readonly-check.log",
+      "tests": 7,
+      "pass": 6,
+      "fail": 1,
+      "skipped": 0,
+      "meaning": "6/7 pass; first proved both valid invitation RO failures and RW successes"
+    },
+    {
+      "log": "package-freeze-harness.log",
+      "tests": 8,
+      "pass": 5,
+      "fail": 3,
+      "skipped": 0,
+      "meaning": "5/8 pass; tests accidentally called frozen activation sentinel, fixed diagnosis harness only; not three independent business failures"
+    },
+    {
+      "log": "package-final-blocked.log",
+      "tests": 8,
+      "pass": 7,
+      "fail": 1,
+      "skipped": 0,
+      "meaning": "7/8 pass before savepoint review; one functional read-only failure"
+    },
+    {
+      "log": "freeze-review-red.log",
+      "tests": 9,
+      "pass": 7,
+      "fail": 2,
+      "skipped": 0,
+      "meaning": "7/9 pass; reproduced mutable continuation after savepoint recovery plus invitation defect"
+    },
+    {
+      "log": "package-final-reviewed.log",
+      "tests": 9,
+      "pass": 8,
+      "fail": 1,
+      "skipped": 0,
+      "meaning": "8/9 pass; sentinel-only delivery verified, invitation defect remains FAIL"
+    }
+  ],
+  "ci": {
+    "integration": {
+      "name": "integration-pr.log",
+      "excerpts": [
+        "2026-11-19T20:00:38.0342494Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check",
+        "2026-11-19T20:00:38.0343135Z \u001b[36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check\u001b[0m",
+        "2026-11-19T20:00:38.0343830Z \u001b[36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check\u001b[0m",
+        "2026-11-19T20:00:38.0344612Z \u001b[36;1mnode supabase/integration/lot5c/build.mjs --check\u001b[0m",
+        "2026-11-19T20:00:38.0346216Z \u001b[36;1mnode --test --test-concurrency=1 tests/private-access/lot5c/package.test.mjs\u001b[0m",
+        "2026-11-19T20:00:54.9879441Z LOT5C_VALID_READONLY_RESULTS [{\"name\":\"dobby_v7_preview_invitation\",\"status\":3,\"stdout\":\"\",\"stderr\":\"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\\nCONTEXT:  SQL statement \\\"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\\\"\\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\\nSQL statement \\\"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\\\"\\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\\nSQL statement \\\"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\\\"\\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\\nSQL function \\\"public__dobby_v7_preview_invitation\\\" statement 1\\nPL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment\\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\\n\"},{\"name\":\"dobby_v7_preview_child_invitation\",\"status\":3,\"stdout\":\"\",\"stderr\":\"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\\nCONTEXT:  SQL statement \\\"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\\\"\\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\\nSQL statement \\\"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\\\"\\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\\nSQL statement \\\"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\\\"\\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\\nSQL function \\\"public__dobby_v7_preview_child_invitation\\\" statement 1\\nPL/pgSQL function public.dobby_v7_preview_child_invitation(text) line 1 at assignment\\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\\n\"}]",
+        "2026-11-19T20:00:55.0731885Z ✔ ordered package exists with one closed installation and separate activation (1.799851ms)",
+        "2026-11-19T20:00:55.0747015Z ✔ full preflight refuses missing private Missions without persistent DDL (351.810263ms)",
+        "2026-11-19T20:00:55.0747977Z ✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1335.878354ms)",
+        "2026-11-19T20:00:55.0748908Z ✔ partial local assembly refuses missing human prerequisites before creating the foundation (171.427348ms)",
+        "2026-11-19T20:00:55.0749865Z ✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1230.032102ms)",
+        "2026-11-19T20:00:55.0766253Z ✔ activation refuses absent or invisible session and identity without partially opening flags (938.962838ms)",
+        "2026-11-19T20:00:55.0768691Z ✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (910.184904ms)",
+        "2026-11-19T20:00:55.0781729Z ✔ distributed quarantine contains no mutable continuation after savepoint error recovery (249.505688ms)",
+        "2026-11-19T20:00:55.0790758Z ✖ assembled valid adult and child previews preserve READ ONLY contracts (545.976241ms)",
+        "2026-11-19T20:00:55.0913980Z ℹ tests 9",
+        "2026-11-19T20:00:55.0914447Z ℹ suites 0",
+        "2026-11-19T20:00:55.0915540Z ℹ pass 8",
+        "2026-11-19T20:00:55.0915953Z ℹ fail 1",
+        "2026-11-19T20:00:55.0916361Z ℹ cancelled 0",
+        "2026-11-19T20:00:55.0917285Z ℹ skipped 0",
+        "2026-11-19T20:00:55.0935806Z ℹ todo 0",
+        "2026-11-19T20:00:55.0936256Z ℹ duration_ms 16659.201089",
+        "2026-11-19T20:00:55.0936758Z ✖ failing tests:",
+        "2026-11-19T20:00:55.0937846Z ✖ assembled valid adult and child previews preserve READ ONLY contracts (545.976241ms)",
+        "2026-11-19T20:00:55.0938572Z   AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction",
+        "2026-11-19T20:00:55.0940710Z   PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM",
+        "2026-11-19T20:00:55.0941431Z   SQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"",
+        "2026-11-19T20:00:55.0998250Z ##[error]Process completed with exit code 1."
+      ],
+      "jobs": {
+        "jobs": [
+          {
+            "id": 135842997500,
+            "name": "assembly",
+            "status": "completed",
+            "conclusion": "failure",
+            "run_id": 44604077585,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Pinned local PostgreSQL only",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Assembly freshness and functional contract (must fail while 25006 persists)",
+                "status": "completed",
+                "conclusion": "failure",
+                "number": 5
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "skipped",
+                "number": 9
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 11
+              }
+            ]
+          }
+        ]
+      },
+      "runId": 44604077585,
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44604077585",
+      "codeCommit": "5dc57f270476955097806c7818e1ef3f5fc9db68",
+      "conclusion": "failure",
+      "tests": 9,
+      "pass": 8,
+      "fail": 1,
+      "skipped": 0
+    },
+    "compatibility": {
+      "name": "compatibility-pr.log",
+      "excerpts": [
+        "2026-11-19T20:00:38.7994745Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check",
+        "2026-11-19T20:00:38.7995191Z \u001b[36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check\u001b[0m",
+        "2026-11-19T20:00:38.7995564Z \u001b[36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check\u001b[0m",
+        "2026-11-19T20:00:38.7995963Z \u001b[36;1mnode --test --test-concurrency=1 tests/private-access/lot5b/*.test.mjs\u001b[0m",
+        "2026-11-19T20:00:47.9467634Z LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+        "2026-11-19T20:00:50.5568786Z ✔ bridge gives the closed session reader a narrow decision without direct Auth rights (76.915229ms)",
+        "2026-11-19T20:00:50.5570248Z ✔ session lookup preserves subject, session id, time boundary, future-date and expiry checks (73.495922ms)",
+        "2026-11-19T20:00:50.5571580Z ✔ RLS with no applicable policy remains closed even through the bridge (72.974442ms)",
+        "2026-11-19T20:00:50.5580705Z ✔ loss of installer Auth usage gives no positive session or identity (75.218287ms)",
+        "2026-11-19T20:00:50.5582059Z ✔ identity reader gets only the three reviewed fields and has no Auth SELECT (77.594342ms)",
+        "2026-11-19T20:00:50.5582998Z ✔ identity pagination is bounded and retains the reviewed projection (152.229634ms)",
+        "2026-11-19T20:00:50.5586556Z ✔ both readers remain separate and cannot call each others projections (148.218041ms)",
+        "2026-11-19T20:00:50.5587321Z ✔ anon cannot execute private Auth helpers (74.071213ms)",
+        "2026-11-19T20:00:50.5588880Z ✔ authenticated cannot execute private Auth helpers (74.966523ms)",
+        "2026-11-19T20:00:50.5590470Z ✔ service_role cannot execute private Auth helpers (74.11861ms)",
+        "2026-11-19T20:00:50.5592103Z ✔ authenticator cannot execute private Auth helpers (73.619552ms)",
+        "2026-11-19T20:00:50.5593532Z ✔ an exposed bridge schema or inherited browser reader refuses installation atomically (284.831279ms)",
+        "2026-11-19T20:00:50.5596467Z ✔ unexpected default function grants are refused rather than published (74.65949ms)",
+        "2026-11-19T20:00:50.5597768Z ✔ review: inherited membership between the two readers refuses installation (286.904758ms)",
+        "2026-11-19T20:00:50.5599176Z ✔ review: schema default CREATE for a reader refuses installation (147.844393ms)",
+        "2026-11-19T20:00:50.5600452Z ✔ review: an existing Auth CREATE grant without USAGE refuses installation (143.704601ms)",
+        "2026-11-19T20:00:50.5601927Z ✔ candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes (214.073693ms)",
+        "2026-11-19T20:00:50.5603290Z ✔ rollback refuses a modified helper and preserves the schema on failure (75.152557ms)",
+        "2026-11-19T20:00:50.5611384Z ✔ rollback uses RESTRICT and does not remove a dependent consumer (76.585326ms)",
+        "2026-11-19T20:00:57.4173885Z LOT5B_CATALOGUE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+        "2026-11-19T20:01:02.9322501Z ✔ published catalogue passes without modifying business functions or data (227.260534ms)",
+        "2026-11-19T20:01:02.9324106Z ✔ an unapproved browser EXECUTE grant is refused without any business write (221.219229ms)",
+        "2026-11-19T20:01:02.9327310Z ✔ an unapproved grant option is refused even when effective EXECUTE was already allowed (72.308759ms)",
+        "2026-11-19T20:01:02.9329600Z ✔ the narrowly reported stamper ACL is accepted without changing the trigger or its body (76.721276ms)",
+        "2026-11-19T20:01:02.9332595Z ✔ a modified SQL literal is refused rather than normalized into approval (72.188773ms)",
+        "2026-11-19T20:01:02.9336685Z ✔ a changed owner is refused even though pg_get_functiondef excludes ownership (74.026887ms)",
+        "2026-11-19T20:01:02.9340805Z ✔ SECURITY DEFINER and configuration drift are refused independently (215.29328ms)",
+        "2026-11-19T20:01:02.9342785Z ✔ PUBLIC or delegated browser rights on the stamper are outside its two approved ACL profiles (227.253645ms)",
+        "2026-11-19T20:01:02.9345008Z ✔ the stamper exception requires its existing active trigger attachment (74.677842ms)",
+        "2026-11-19T20:01:02.9353087Z ✔ real PostgreSQL matching accepts both fictional canary pairs and refuses mixed or unknown pairs (1048.707755ms)",
+        "2026-11-19T20:01:02.9354941Z ✔ revoking optional stamper EXECUTE preserves existing trigger writes and blocks direct calls (141.244131ms)",
+        "2026-11-19T20:01:02.9356597Z ✔ the complete candidate refuses absent private dependencies before business changes (298.749102ms)",
+        "2026-11-19T20:01:02.9357859Z ✔ partial wrapping core preserves native bodies/data and rollback refuses forged backups (2571.069901ms)",
+        "2026-11-19T20:01:04.1362256Z LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+        "2026-11-19T20:01:05.5077591Z ✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (211.198205ms)",
+        "2026-11-19T20:01:05.5079220Z ✔ missing closed ADMIN on the V7 writer refuses before any grant changes (209.423669ms)",
+        "2026-11-19T20:01:05.5080496Z ✔ a second active grant made by postgres can be closed without losing managed ADMIN (75.52665ms)",
+        "2026-11-19T20:01:05.5081984Z ✔ a different grantor with active INHERIT and SET is refused before maintenance (75.287785ms)",
+        "2026-11-19T20:01:05.5083154Z ✔ residual inherited privileges alone are refused (74.208895ms)",
+        "2026-11-19T20:01:05.5084088Z ✔ residual SET authority alone is refused (73.987562ms)",
+        "2026-11-19T20:01:05.5085175Z ✔ an indirect membership cannot survive the projected closing unnoticed (73.327148ms)",
+        "2026-11-19T20:01:05.5086483Z ✔ review: SET to an intermediate role followed by inherited writer rights is refused (72.811456ms)",
+        "2026-11-19T20:01:05.5087643Z ✔ a browser membership in a closed writer is refused (72.412184ms)",
+        "2026-11-19T20:01:05.5088553Z ✔ a writer that can log in is refused (73.698702ms)",
+        "2026-11-19T20:01:05.5089599Z ✔ the normal closing statements do not close a grant made by another grantor (69.121815ms)",
+        "2026-11-19T20:01:05.5090892Z ✔ a refusal rolls back all fictional setup and leaves the original catalogue intact (213.654488ms)",
+        "2026-11-19T20:01:06.8328747Z LOT5B_STORAGE_AUTHORITY_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+        "2026-11-19T20:01:07.7689333Z ✔ DML grants allow the candidate locks but no schema CREATE or table ownership is implied (284.871825ms)",
+        "2026-11-19T20:01:07.7702659Z ✔ granting schema CREATE alone does not authorize policy creation on an existing table (212.846833ms)",
+        "2026-11-19T20:01:07.7703695Z ✔ the table owner can create a restrictive policy without schema CREATE, then rollback preserves all sentinels (212.995538ms)",
+        "2026-11-19T20:01:15.0128171Z LOT5B_V7_DIRECT_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+        "2026-11-19T20:01:24.8797220Z ✔ missing Missions definitions or standalone fragment refuse atomically before installation (727.521942ms)",
+        "2026-11-19T20:01:24.8798221Z ✔ owner-only creator defaults permit an atomic installation (272.847264ms)",
+        "2026-11-19T20:01:24.8803340Z ✔ a temporarily opened administration writer must not inherit V7 (223.710694ms)",
+        "2026-11-19T20:01:24.8812698Z ✔ direct guard installs with no V7 membership and exactly the two authorized new grants (763.877522ms)",
+        "2026-11-19T20:01:24.8814629Z ✔ initial pending profile, household, quota and replay preserve native identities and idempotence (376.642755ms)",
+        "2026-11-19T20:01:24.8816416Z ✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (1272.989424ms)",
+        "2026-11-19T20:01:24.8818196Z ✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (423.552599ms)",
+        "2026-11-19T20:01:24.8820926Z ✔ no household can be created without the explicit initial quota (219.148523ms)",
+        "2026-11-19T20:01:24.8831691Z ✔ native profile CAS, parent/child and household separation remain enforced (506.897618ms)",
+        "2026-11-19T20:01:24.8832802Z ✔ direct restrictive policies and role-conditioned triggers target only V7 (620.444047ms)",
+        "2026-11-19T20:01:24.8833715Z ✔ unexpected global and per-schema creator defaults are refused before any write (2824.321834ms)",
+        "2026-11-19T20:01:24.8836000Z ✔ anon authenticated and service_role gain no access to new functions or schemas (1130.722043ms)",
+        "2026-11-19T20:01:24.8838253Z ✔ the one private guard has a closed search_path and a non-login non-bypass owner (209.432831ms)",
+        "2026-11-19T20:01:24.8840681Z ✔ forged active metadata never overrides the registry suspension (213.492638ms)",
+        "2026-11-19T20:01:25.6466242Z ✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (761.596482ms)",
+        "2026-11-19T20:01:27.8287974Z LOT5B_V7_HTTP_BEFORE_ROLLBACK GET_POST_STABLE 10/10; private guard unexposed",
+        "2026-11-19T20:01:27.8288552Z LOT5B_V7_HTTP_AUTHORIZED_PROFILE 1/1",
+        "2026-11-19T20:01:28.3055606Z LOT5B_V7_HTTP_SESSION_DENIAL 4/4",
+        "2026-11-19T20:01:28.9608995Z V7_ROLLBACK_DRIFT_RESULTS [{\"name\":\"indirect-role-coupling\",\"status\":3,\"output\":\"\"},{\"name\":\"business-rls-disabled\",\"status\":3,\"output\":\"\"},{\"name\":\"journal-rls-disabled\",\"status\":3,\"output\":\"\"},{\"name\":\"journal-acl-opened\",\"status\":3,\"output\":\"\"}]",
+        "2026-11-19T20:01:32.8381078Z LOT5B_V7_HTTP_AFTER_ROLLBACK GET_POST_STABLE 10/10; writes remain denied",
+        "2026-11-19T20:01:32.9609723Z ✔ quota upgrade contention is a retryable 40001 with no data or quota changes (248.357992ms)",
+        "2026-11-19T20:01:32.9610801Z ✔ preservation preflight keeps every other writer ADMIN check (222.979115ms)",
+        "2026-11-19T20:01:32.9614985Z ✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (73.125763ms)",
+        "2026-11-19T20:01:32.9616169Z ✔ read-only invitation previews preserve valid, invalid and STABLE contracts (523.532286ms)",
+        "2026-11-19T20:01:32.9622590Z ✔ real local PostgREST GET and POST preserve all three STABLE read contracts (1195.356412ms)",
+        "2026-11-19T20:01:32.9623652Z ✔ real PostgREST retains denial after suspension or session invalidation (476.650684ms)",
+        "2026-11-19T20:01:32.9624844Z ✔ rollback refuses role coupling disabled RLS or untrusted journal metadata before any change (1011.403929ms)",
+        "2026-11-19T20:01:32.9626135Z ✔ full guard rollback restores previews, removes both grants and retains the V7 write fence (3520.960494ms)",
+        "2026-11-19T20:01:32.9695345Z ℹ tests 70",
+        "2026-11-19T20:01:32.9695621Z ℹ suites 0",
+        "2026-11-19T20:01:32.9695869Z ℹ pass 70",
+        "2026-11-19T20:01:32.9696118Z ℹ fail 0",
+        "2026-11-19T20:01:32.9696382Z ℹ cancelled 0",
+        "2026-11-19T20:01:32.9696638Z ℹ skipped 0",
+        "2026-11-19T20:01:32.9696924Z ℹ todo 0",
+        "2026-11-19T20:01:32.9697209Z ℹ duration_ms 54065.925129"
+      ],
+      "jobs": {
+        "jobs": [
+          {
+            "id": 135842997820,
+            "name": "permissions-local",
+            "status": "completed",
+            "conclusion": "success",
+            "run_id": 44604077732,
+            "logs_url": null,
+            "steps": [
+              {
+                "name": "Set up job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 1
+              },
+              {
+                "name": "Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 2
+              },
+              {
+                "name": "Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 3
+              },
+              {
+                "name": "Only pinned local PostgreSQL and PostgREST images",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 4
+              },
+              {
+                "name": "Causal permission and rollback checks, no hosted connection",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 5
+              },
+              {
+                "name": "Post Run actions/setup-node@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 9
+              },
+              {
+                "name": "Post Run actions/checkout@v4",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 10
+              },
+              {
+                "name": "Complete job",
+                "status": "completed",
+                "conclusion": "success",
+                "number": 11
+              }
+            ]
+          }
+        ]
+      },
+      "runId": 44604077732,
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44604077732",
+      "codeCommit": "5dc57f270476955097806c7818e1ef3f5fc9db68",
+      "conclusion": "success",
+      "tests": 70,
+      "pass": 70,
+      "fail": 0,
+      "skipped": 0
+    },
+    "pushIntegration": {
+      "runId": 44604062472,
+      "conclusion": "failure",
+      "headSha": "5dc57f270476955097806c7818e1ef3f5fc9db68"
+    },
+    "automaticUI": {
+      "runId": 44604077682,
+      "conclusion": "cancelled",
+      "noUiPassClaimed": true
+    }
+  },
+  "notVerified": [
+    "Full Missions functions locally",
+    "Functional coordinated rollback",
+    "Validated full physical/logical restore",
+    "Post-install HTTP Storage/Auth/SMTP/Edge/client integration",
+    "Hosted identity/versions/permissions/positive Auth RLS",
+    "Old signed capability extinction and caches",
+    "Real Parent A/B conservation or any real account operation"
+  ],
+  "hostedProjectCalls": 0,
+  "hostedWrites": 0,
+  "realAccountsChanged": 0,
+  "merges": 0,
+  "deployments": 0,
+  "supportRequests": 0,
+  "codeInputs": [
+    {
+      "path": ".github/workflows/dobby-private-access-integration.yml",
+      "sha256": "a7bd1efe253c02ed26f8be4df128cd856daa39d240f70cbfd8dd6856d32753bf"
+    },
+    {
+      "path": "supabase/integration/lot5c/00-preflight.sql",
+      "sha256": "cd2fcaafe55eb47504a497906db7ee58941f88e44a8e4a52b827d17d86423c7e"
+    },
+    {
+      "path": "supabase/integration/lot5c/10-install.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/20-activate.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/30-postflight.sql",
+      "sha256": "69715284f0a3abf7055e3588ebf612aefff9f28a6e11682350f26e7602e532ea"
+    },
+    {
+      "path": "supabase/integration/lot5c/80-stop-admin.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/90-close.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "supabase/integration/lot5c/auth-wiring.mjs",
+      "sha256": "815d565b3d70a444cf157f111a15cc69b780d6f6877763dcfc2430b5237b7300"
+    },
+    {
+      "path": "supabase/integration/lot5c/build.mjs",
+      "sha256": "c61fab79ff5b01c91222b5e494dce9fdb04af3ce96dae1d2bf812eef48aa5794"
+    },
+    {
+      "path": "supabase/integration/lot5c/manifest.json",
+      "sha256": "f1b610042481c0c3e3d2a9c901b344bd5f04c8084e154df59dc137f793df3560"
+    },
+    {
+      "path": "tests/private-access/local-db.mjs",
+      "sha256": "61c5262d234a399d889fc1da1a64d40bd62b030d05917d8408084edbf2119023"
+    },
+    {
+      "path": "tests/private-access/lot5c/package.test.mjs",
+      "sha256": "b9e94a5d5572e197e09be75a4866806a2eb6de053891e5bf2b0f004c3dff18bf"
+    },
+    {
+      "path": "tests/private-access/lot5c/storage-fixture.mjs",
+      "sha256": "dba94debf42c84b12ea25da22cb78849ab63d31b81ad41d66696b3628067fdb5"
+    },
+    {
+      "path": "tests/private-access/lot5c/storage-folder.sql",
+      "sha256": "17f5d4a9119160eeeac38f14a1294f029038baf665b0eddf91f5058ab79b4a78"
+    }
+  ],
+  "protectedInputCount": 31,
+  "protectedInputsUnchanged": [
+    {
+      "path": ".github/workflows/dobby-private-access-compatibility.yml",
+      "sha256": "5bf8f0c6ca67cdd2660bd1b6501b734377284e368f67d6940aa8bd0fbc0197a3"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/README.md",
+      "sha256": "1f818157d9f6763a78c4fe04405d52696deabf50d4bbc395e3ff1319b3498cb7"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+      "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+      "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-v7-preserved.mjs",
+      "sha256": "570d8681e8aead74ba1a782f7997ffd3756fcf02f4b8311bd238e42c2c6e05b3"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-variants.mjs",
+      "sha256": "5799ecad32aecfa64656d7b19705dccba047602f2cd99f60c31e5f89de7079cf"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/catalogue.preflight.sql",
+      "sha256": "c299518b6c7730c0e3963d633373232560e346838040af3538c20ed3e5685177"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.candidate.sql",
+      "sha256": "2eb172f7943b833b7f430373a580aa443bcd6bdec5c4ac55a83f168951b23ccb"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.rollback.sql",
+      "sha256": "e9e028892504835fe5b2a55e4316bbecd376bfb64bf31d865cfe316b64f54c76"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/missions.preflight.sql",
+      "sha256": "bdcf7bd37c3b68e471017c38346db5950b9ac2de517caf0557e56f4324bff244"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved-state.mjs",
+      "sha256": "0f45f31080aaa0c9c3f165eb1908482bd00cfe444c450c86d38595dc6bd1f15d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.candidate.sql",
+      "sha256": "22b52d282fb687f25183a306e74e93b3cc59f15185705c851103ea476e69152d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.guards.sql",
+      "sha256": "ddc49ad1c0b8f295089003bc36845827f74feef129f9302490c12132f80b9811"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.roles.preflight.sql",
+      "sha256": "bdf0a5994679cae6eeaecf308fa859c1352f634ccbb15aaf61422b8b19973ce7"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.rollback.sql",
+      "sha256": "051c35669f4c34d6f039850f900c243eb59701d4160c8a8424accddb9ea39850"
+    },
+    {
+      "path": "supabase/migrations/20261117203208_dobby_private_access_foundation.sql",
+      "sha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a"
+    },
+    {
+      "path": "supabase/migrations/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "b491737bbb9c45fb7be5b1677b19f1dda4c7488980f8636d7d076635376f5c81"
+    },
+    {
+      "path": "supabase/migrations/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466"
+    },
+    {
+      "path": "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5"
+    },
+    {
+      "path": "supabase/rollbacks/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "4cba8f95402b15f811008c641f9d0b10ca6664bfcdc28f0f4d8ce81ef4c27cd2"
+    },
+    {
+      "path": "supabase/rollbacks/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "950d91c37718a3ea8608ead181a509f38065c4166f99491be3966e8d82940f2f"
+    },
+    {
+      "path": "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "32b4c5350aea34e32930456b2da2bae70b562262db3cc0a9e6b45449fc7899b9"
+    },
+    {
+      "path": "tests/private-access/lot5b/auth-bridge.test.mjs",
+      "sha256": "eaad03a73c000da8eb3360ef758ff9c0572d18b3224d6e6d83a7b74492438ca4"
+    },
+    {
+      "path": "tests/private-access/lot5b/catalogue.test.mjs",
+      "sha256": "379f6597f511841a35bfef90810c9ed0ea778c5021cc7f25727fdec8eb1ba0de"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-db.mjs",
+      "sha256": "61556275f6cd019ea0b382b7463a51c514f9f938c7b2bc44c0f6a614aec47487"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-rest.mjs",
+      "sha256": "4b92331033e4894289ed66bec0f7d7f0b902d69c6eb0063ae0554df27b0877e7"
+    },
+    {
+      "path": "tests/private-access/lot5b/maintenance.test.mjs",
+      "sha256": "72e9ae9b911099a5c0f8cd4c69a81c8b45fff57d4e4848c60adf170a31d852c8"
+    },
+    {
+      "path": "tests/private-access/lot5b/storage-authority.test.mjs",
+      "sha256": "a68bdf82af0b3509d45526d756f9bf2b5f08ca461cc51cfbef8bc513d51803ce"
+    },
+    {
+      "path": "tests/private-access/lot5b/v7-preserved.test.mjs",
+      "sha256": "bd9f315a98c70cc32a7484e4e39f23c69eb175d8b25ce1b63bc627d6d4275d85"
+    }
+  ],
+  "proofFiles": [
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/compatibility-pr.log",
+      "sha256": "a559ad71452be44a66210e6cbf83eeda090e09037c93cfd8097c0d7654edcac1"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/freeze-review-red.log",
+      "sha256": "8666f2c1215715090c335d75aa352036e132ac9a8cb81213eb0ac19b645c4b09"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/integration-pr.log",
+      "sha256": "d256bbd1e89a8dea7f30f032740803f15d02c94a3c5b0d995352b16fcc250fc5"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-composition.log",
+      "sha256": "0ec5e856b6e42c4da415fc3fbc8fd6ea02401f295266a84c92ea7a80c5bd1c3c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-final-blocked.log",
+      "sha256": "983f90ceaaff69c5f2e7430b355b87289481d1de1f91345a00dca66476d7749e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-final-reviewed.log",
+      "sha256": "81f73f8fd1a69f430a860789df885d2abff3dd72a43314215d780ab1ecbe7f63"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-first.log",
+      "sha256": "1e4c1f17fa0600d5b51cb209ba1b4ea73085d972d10934ebba95a2a79c8b90ec"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-freeze-harness.log",
+      "sha256": "c6cd34130a2156e8dab42a3e4691380c54b9aa81ff490ce72bb72f874a78fe75"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-readonly-check.log",
+      "sha256": "4cde9a55929fb493f349d962e1115704300d639699f4b174ae1b1111aa2621e9"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/package-red.log",
+      "sha256": "e7a722938500604c744090e2a3465e03726ff4033a321634d5f58ef3f800c7e9"
+    }
+  ],
+  "documentationCommit": "[skip ci]; fourteen code/test/workflow files byte-identical to codeCommit; no additional CI claimed on documentary SHA",
+  "stopReason": "User explicitly requires stopping development when a genuinely new demonstrated blocker prevents final assembly"
+}

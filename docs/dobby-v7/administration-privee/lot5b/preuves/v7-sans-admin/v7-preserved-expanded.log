@@ -1,0 +1,69 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ V7-preserved migration works without ADMIN or usable V7 membership and retains both RPCs (983.691026ms)
+✔ initial pending profile, household, quota and replay preserve native identities and idempotence (386.693052ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (2467.334384ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (778.317104ms)
+✔ no household can be created without the explicit initial quota (323.11911ms)
+✔ native profile CAS, parent/child and household separation remain enforced (744.994487ms)
+✔ V7 quarantine policies and guard attachments target only the preserved writer (623.330679ms)
+✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (1128.252127ms)
+✔ quota upgrade contention is a retryable 40001 with no data or quota changes (369.190824ms)
+✖ preservation preflight keeps every other writer ADMIN check (98.491102ms)
+✖ read-only invitation previews retain their existing stable RPC behavior (118.299993ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 9
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29190.596686
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:95:1
+✖ preservation preflight keeps every other writer ADMIN check (98.491102ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /closed ADMIN/. Input:
+  
+  'ERROR:  2BP01: dependent privileges exist\n' +
+    'HINT:  Use CASCADE to revoke them too.\n' +
+    'LOCATION:  plan_recursive_revoke, user.c:2489\n'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:100:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ERROR:  2BP01: dependent privileges exist\nHINT:  Use CASCADE to revoke them too.\nLOCATION:  plan_recursive_revoke, user.c:2489\n',
+    expected: /closed ADMIN/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:103:1
+✖ read-only invitation previews retain their existing stable RPC behavior (118.299993ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+  CONTEXT:  SQL statement "SELECT *        FROM dobby_access_private.authorizations WHERE user_id=(who->>'userId')::uuid FOR SHARE NOWAIT"
+  PL/pgSQL function dobby_access_private.assert_active_nowait() line 5 at SQL statement
+  SQL statement "SELECT dobby_access_private.assert_active_nowait()"
+  PL/pgSQL function public.dobby_v7_context() line 1 at PERFORM
+  PL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment
+  LOCATION:  PreventCommandIfReadOnly, utility.c:407
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:106:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

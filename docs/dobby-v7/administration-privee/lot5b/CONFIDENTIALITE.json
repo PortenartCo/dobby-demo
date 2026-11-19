@@ -1,0 +1,135 @@
+{
+  "status": "PASS_SCOPED_PUBLICATION_REVIEW",
+  "reviewedAtUTC": "2026-11-19T13:35:05.515964+00:00",
+  "scope": "All additions against PR33 base plus untracked delivery files; no pre-existing file modified or removed",
+  "base": "f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764",
+  "testedCodeCommit": "be11bbaa1536b28e65fe95ea2814b5699554a60d",
+  "testedCodeFilesByteIdentical": 8,
+  "historicalSqlFilesByteIdentical": 7,
+  "publishedReferenceSignaturesValidated": 27,
+  "privateMissionsNamesValidated": 12,
+  "patternsChecked": [
+    "private_key",
+    "jwt_literal",
+    "github_token",
+    "supabase_secret",
+    "credential_url",
+    "real_auth_link",
+    "nonfictional_email"
+  ],
+  "findings": [],
+  "fixtureEmailDomainsOnly": [
+    "example.invalid"
+  ],
+  "hostedDefinitionsObtainedOrPublished": 0,
+  "userRowsOrHostedFilePathsObtainedOrPublished": 0,
+  "projectReference": "Explicitly supplied non-secret project identifier; no credentials",
+  "candidateSqlProvenance": "New local SQL developed from already published contracts and official documentation; not retrieved private hosted bodies",
+  "limits": "Scoped artifact review, not a scan of remote secrets. Metadata queries remain unexecuted against hosted project. No private definition was obtained to review.",
+  "artifactsExcludingThisSelfReferentialRecord": [
+    {
+      "path": ".github/workflows/dobby-private-access-compatibility.yml",
+      "sha256": "fc0be2efded6b8ed53935fe28e9320afb3ee45eb9e1a3a8b3f1bdf770b4f1362"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/CHECKPOINT-REPRISE.md",
+      "sha256": "134bcce8d1ab0e76dc0077b15635131bcee171e8bad9da104da8e51c2ac4a7cb"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURE-CATALOGUE.sql",
+      "sha256": "ace865477d43c8a0c15b9fc45fa51e525c5fd126511eb434ed4b37e127afc833"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURES-COMPLEMENTAIRES.sql",
+      "sha256": "27bc5b654d252de7ce9d68f97063d087f23694cf4d6a6273479f6396f8f00437"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/LECTURES-REQUISES.md",
+      "sha256": "d9a5f0afaf87b58dae3b82299aa7ae9ff20a698c0bb56574bd9d179310a3f3d4"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/MATRICE-FONCTIONS.md",
+      "sha256": "2bf3c1480dde6c05fec73146545864648df26bcfa355c844d7b26126f1420779"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RAPPORT.md",
+      "sha256": "b44c79295566cb030e589f5ba26e111993804c8dbd7618a65a5077b82c14def1"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RECONCILIATION.json",
+      "sha256": "78c46c9bb9b090081a3844035f6eca067318a810c1e0e1a8f7450ba138d4b677"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/RESULTATS.json",
+      "sha256": "85cb01b3a7f09d87ae3efd8a10d90586dd2c5ec61fa4b243b20cf5d282369109"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/REVUE.md",
+      "sha256": "f016764f058a0614045b4b5aded00951f447579d5858d5988c50dc12c53de32e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/all-green.log",
+      "sha256": "84fe6652429220f6d9f24d7c191dc88bd430b9eb88589d0e70a1d13703c088b4"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/auth-green.log",
+      "sha256": "4ed82be8a419eff12c515aeab4f413aeb575d5d148d6de8a63abdd1c0bfd827d"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/auth-red.log",
+      "sha256": "e85dd05de683d858958d8842b3ef1de5d8d5be9ce1f3e203a1711498bfc852f7"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/final-green.log",
+      "sha256": "72958924037cd8f087ce07b92816ebfc752dd56b16fdf2c4653692e6511b69ba"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/review-auth-create-red.log",
+      "sha256": "6166799827f4f37b692f405e61a7ed3bb417334e5f03c644b5d42e00be1d43d2"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/review-red.log",
+      "sha256": "290f27cf407b815eb30bd75395ce85bfa817f0fba455b5ae96d1552a81cb204a"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/roles-green.log",
+      "sha256": "7ae318c3f8b474fda5ecbde530d530e0603759187cb73359492ead6d2a0ae018"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/roles-red.log",
+      "sha256": "66a28d1eb8b7c02de0a40ec0e4befd2091cfa164f5faa3933bdb4708984192a6"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/README.md",
+      "sha256": "3148eedb3aac75a8ed0c69e5d673babc9206d7449f60a171299677b279ee97fc"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+      "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    },
+    {
+      "path": "tests/private-access/lot5b/auth-bridge.test.mjs",
+      "sha256": "eaad03a73c000da8eb3360ef758ff9c0572d18b3224d6e6d83a7b74492438ca4"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-db.mjs",
+      "sha256": "61556275f6cd019ea0b382b7463a51c514f9f938c7b2bc44c0f6a614aec47487"
+    },
+    {
+      "path": "tests/private-access/lot5b/maintenance.test.mjs",
+      "sha256": "72e9ae9b911099a5c0f8cd4c69a81c8b45fff57d4e4848c60adf170a31d852c8"
+    },
+    {
+      "path": "tests/private-access/lot5b/storage-authority.test.mjs",
+      "sha256": "a68bdf82af0b3509d45526d756f9bf2b5f08ca461cc51cfbef8bc513d51803ce"
+    }
+  ]
+}

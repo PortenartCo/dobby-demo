@@ -1,0 +1,37 @@
+LOT5B_V7_DIRECT_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ missing Missions definitions or standalone fragment refuse atomically before installation (1138.088893ms)
+✔ owner-only creator defaults permit an atomic installation (371.022542ms)
+✔ a temporarily opened administration writer must not inherit V7 (299.019991ms)
+✔ direct guard installs with no V7 membership and exactly the two authorized new grants (1120.309161ms)
+✔ initial pending profile, household, quota and replay preserve native identities and idempotence (505.31931ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (2066.566022ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (598.041724ms)
+✔ no household can be created without the explicit initial quota (319.910029ms)
+✔ native profile CAS, parent/child and household separation remain enforced (699.745192ms)
+✔ direct restrictive policies and role-conditioned triggers target only V7 (854.825815ms)
+✔ unexpected global and per-schema creator defaults are refused before any write (4016.261463ms)
+✔ anon authenticated and service_role gain no access to new functions or schemas (1740.930259ms)
+✔ the one private guard has a closed search_path and a non-login non-bypass owner (303.45036ms)
+✔ forged active metadata never overrides the registry suspension (357.911652ms)
+✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (928.880933ms)
+LOT5B_V7_HTTP_BEFORE_ROLLBACK GET_POST_STABLE 10/10; private guard unexposed
+LOT5B_V7_HTTP_AUTHORIZED_PROFILE 1/1
+LOT5B_V7_HTTP_SESSION_DENIAL 4/4
+V7_ROLLBACK_DRIFT_RESULTS [{"name":"indirect-role-coupling","status":3,"output":""},{"name":"business-rls-disabled","status":3,"output":""},{"name":"journal-rls-disabled","status":3,"output":""},{"name":"journal-acl-opened","status":3,"output":""}]
+LOT5B_V7_HTTP_AFTER_ROLLBACK GET_POST_STABLE 10/10; writes remain denied
+✔ quota upgrade contention is a retryable 40001 with no data or quota changes (342.285088ms)
+✔ preservation preflight keeps every other writer ADMIN check (307.872291ms)
+✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (100.070015ms)
+✔ read-only invitation previews preserve valid, invalid and STABLE contracts (745.262356ms)
+✔ real local PostgREST GET and POST preserve all three STABLE read contracts (2695.14021ms)
+✔ real PostgREST retains denial after suspension or session invalidation (719.527629ms)
+✔ rollback refuses role coupling disabled RLS or untrusted journal metadata before any change (1444.951306ms)
+✔ full guard rollback restores previews, removes both grants and retains the V7 write fence (4984.144812ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43603.16056

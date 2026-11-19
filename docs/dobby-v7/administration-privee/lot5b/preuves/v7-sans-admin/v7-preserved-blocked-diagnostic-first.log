@@ -1,0 +1,44 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ shipped experiment aborts before DDL, including a client without ON_ERROR_STOP (1079.459351ms)
+✔ explicit in-memory write prototype needs no V7 membership and retains all V7 functions and privileges in the clean fixture (699.487186ms)
+✔ initial pending profile, household, quota and replay preserve native identities and idempotence (316.539027ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (2075.604821ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (680.952513ms)
+✔ no household can be created without the explicit initial quota (321.374268ms)
+✔ native profile CAS, parent/child and household separation remain enforced (781.743572ms)
+✔ V7 quarantine policies and guard attachments target only the preserved writer (524.640859ms)
+✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (1022.600926ms)
+✔ quota upgrade contention is a retryable 40001 with no data or quota changes (366.947902ms)
+✔ preservation preflight keeps every other writer ADMIN check (305.50098ms)
+✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (102.072138ms)
+✔ BLOCKED: both unchanged stable invitation previews fail 25006 through the locking context (183.749969ms)
+✖ conservative rollback quarantines V7 without losing rows or broadening any V7 privilege (1362.514223ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29483.993609
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:131:1
+✖ conservative rollback quarantines V7 without losing rows or broadening any V7 privilege (1362.514223ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '1' !== '2'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:138:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '1',
+    expected: '2',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,79 @@
+✔ ordered package exists with one closed installation and separate activation (2.250922ms)
+✔ full preflight refuses missing private Missions without persistent DDL (412.752109ms)
+✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1724.446501ms)
+✔ partial local assembly refuses missing human prerequisites before creating the foundation (201.639248ms)
+✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1306.81904ms)
+✖ activation refuses absent or invisible session and identity without partially opening flags (108.075966ms)
+✖ controlled positive activation uses bridged readers and preserves exactly two V7 rights (147.577049ms)
+✖ assembled valid adult and child previews preserve READ ONLY contracts (380.358443ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 5
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24536.550705
+
+✖ failing tests:
+
+test at tests/private-access/lot5c/package.test.mjs:77:1
+✖ activation refuses absent or invisible session and identity without partially opening flags (108.075966ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Controlled.*bridge probe required/. Input:
+  
+  'ERROR:  0A000: LOT5C NO-GO: Lot3 invitation requester lock fails READ ONLY with 25006\n' +
+    'CONTEXT:  PL/pgSQL function inline_code_block line 1 at RAISE\n' +
+    'LOCATION:  exec_stmt_raise, pl_exec.c:3911\n'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:84:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ERROR:  0A000: LOT5C NO-GO: Lot3 invitation requester lock fails READ ONLY with 25006\nCONTEXT:  PL/pgSQL function inline_code_block line 1 at RAISE\nLOCATION:  exec_stmt_raise, pl_exec.c:3911\n',
+    expected: /Controlled.*bridge probe required/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:88:1
+✖ controlled positive activation uses bridged readers and preserves exactly two V7 rights (147.577049ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  0A000: LOT5C NO-GO: Lot3 invitation requester lock fails READ ONLY with 25006
+  CONTEXT:  PL/pgSQL function inline_code_block line 1 at RAISE
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:89:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:99:1
+✖ assembled valid adult and child previews preserve READ ONLY contracts (380.358443ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'invalid' !== 'valid'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:114:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'invalid',
+    expected: 'valid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

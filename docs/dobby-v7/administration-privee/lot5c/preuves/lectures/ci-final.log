@@ -1,0 +1,29 @@
+2026-11-19T20:38:50.7396430Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check
+2026-11-19T20:38:50.7397564Z [36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check[0m
+2026-11-19T20:38:50.7398507Z [36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check[0m
+2026-11-19T20:38:50.7399391Z [36;1mnode supabase/integration/lot5c/build.mjs --check[0m
+2026-11-19T20:38:50.7399906Z [36;1mnode --test --test-concurrency=1 tests/private-access/lot5c/package.test.mjs[0m
+2026-11-19T20:39:07.6023734Z LOT5C_VALID_READONLY_RESULTS [{"name":"dobby_v7_preview_invitation","status":0,"stdout":"valid\n","stderr":""},{"name":"dobby_v7_preview_child_invitation","status":0,"stdout":"valid\n","stderr":""}]
+2026-11-19T20:39:18.2355704Z LOT5C_INVITATION_READ_MATRIX 27 READ ONLY; 25 legacy and 23 admission refusals
+2026-11-19T20:39:19.9503681Z ✔ ordered package exists with one closed installation and separate activation (1.795537ms)
+2026-11-19T20:39:19.9520310Z ✔ full preflight refuses missing private Missions without persistent DDL (363.029079ms)
+2026-11-19T20:39:19.9524753Z ✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1361.519362ms)
+2026-11-19T20:39:19.9530073Z ✔ partial local assembly refuses missing human prerequisites before creating the foundation (177.020795ms)
+2026-11-19T20:39:19.9531892Z ✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1252.098951ms)
+2026-11-19T20:39:19.9533897Z ✔ activation refuses absent or invisible session and identity without partially opening flags (951.254136ms)
+2026-11-19T20:39:19.9538710Z ✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (931.813368ms)
+2026-11-19T20:39:19.9566990Z ✔ distributed quarantine contains no mutable continuation after savepoint error recovery (252.446305ms)
+2026-11-19T20:39:19.9583395Z ✔ assembled valid adult and child previews preserve READ ONLY contracts (555.87365ms)
+2026-11-19T20:39:19.9585395Z ✔ bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks (10634.176462ms)
+2026-11-19T20:39:19.9587477Z ✔ read validator remains private and acceptance keeps the original requester locking guard (676.283617ms)
+2026-11-19T20:39:19.9589110Z ✔ adult and child acceptances preserve revisions replay receipts and household separation (942.429753ms)
+2026-11-19T20:39:20.8100213Z ✔ concurrent requester suspension waits for acceptance and wins when committed first (781.155281ms)
+2026-11-19T20:39:22.1810386Z ✔ historical acceptance revalidates admission identity and session after waiting for authorization locks (1457.411844ms)
+2026-11-19T20:39:22.1926216Z ℹ tests 14
+2026-11-19T20:39:22.1926632Z ℹ suites 0
+2026-11-19T20:39:22.1927022Z ℹ pass 14
+2026-11-19T20:39:22.1927586Z ℹ fail 0
+2026-11-19T20:39:22.1927962Z ℹ cancelled 0
+2026-11-19T20:39:22.1928345Z ℹ skipped 0
+2026-11-19T20:39:22.1928746Z ℹ todo 0
+2026-11-19T20:39:22.1929183Z ℹ duration_ms 31232.674718

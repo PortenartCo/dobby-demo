@@ -1,0 +1,88 @@
+LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ bridge gives the closed session reader a narrow decision without direct Auth rights (242.961268ms)
+✔ session lookup preserves subject, session id, time boundary, future-date and expiry checks (110.698768ms)
+✔ RLS with no applicable policy remains closed even through the bridge (110.809967ms)
+✔ loss of installer Auth usage gives no positive session or identity (104.174264ms)
+✖ identity reader gets only the three reviewed fields and has no Auth SELECT (98.279917ms)
+✔ identity pagination is bounded and retains the reviewed projection (233.541784ms)
+✔ both readers remain separate and cannot call each others projections (211.443495ms)
+✔ anon cannot execute private Auth helpers (141.806591ms)
+✔ authenticated cannot execute private Auth helpers (123.624607ms)
+✔ service_role cannot execute private Auth helpers (110.510466ms)
+✔ authenticator cannot execute private Auth helpers (113.858482ms)
+✔ an exposed bridge schema or inherited browser reader refuses installation atomically (410.203833ms)
+✔ unexpected default function grants are refused rather than published (217.140305ms)
+✔ candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes (490.176879ms)
+✔ rollback refuses a modified helper and preserves the schema on failure (114.917152ms)
+✖ rollback uses RESTRICT and does not remove a dependent consumer (135.088123ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 13
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13151.341238
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:52:1
+✖ bridge gives the closed session reader a narrow decision without direct Auth rights (242.961268ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42501: permission denied for schema auth
+  LOCATION:  aclcheck_error, aclchk.c:2843
+  
+  
+  3 !== 0
+  
+      at passes (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:22:32)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:53:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:73:1
+✖ identity reader gets only the three reviewed fields and has no Auth SELECT (98.279917ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42501: permission denied for schema auth
+  LOCATION:  aclcheck_error, aclchk.c:2843
+  
+  
+  3 !== 0
+  
+      at passes (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:22:32)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:74:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/auth-bridge.test.mjs:115:1
+✖ rollback uses RESTRICT and does not remove a dependent consumer (135.088123ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ERROR:  2BP01\b/. Input:
+  
+  'ERROR:  42501: permission denied for schema public\n' +
+    'LOCATION:  aclcheck_error, aclchk.c:2843\n'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/auth-bridge.test.mjs:123:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ERROR:  42501: permission denied for schema public\nLOCATION:  aclcheck_error, aclchk.c:2843\n',
+    expected: /ERROR:  2BP01\b/,
+    operator: 'match',
+    diff: 'simple'
+  }

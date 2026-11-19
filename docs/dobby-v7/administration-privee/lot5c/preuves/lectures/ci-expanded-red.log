@@ -1,0 +1,49 @@
+2026-11-19T20:32:08.2777794Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check
+2026-11-19T20:32:08.2778553Z [36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check[0m
+2026-11-19T20:32:08.2779366Z [36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check[0m
+2026-11-19T20:32:08.2780112Z [36;1mnode supabase/integration/lot5c/build.mjs --check[0m
+2026-11-19T20:32:08.2780839Z [36;1mnode --test --test-concurrency=1 tests/private-access/lot5c/package.test.mjs[0m
+2026-11-19T20:32:26.2963653Z LOT5C_VALID_READONLY_RESULTS [{"name":"dobby_v7_preview_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"},{"name":"dobby_v7_preview_child_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_child_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_child_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"}]
+2026-11-19T20:32:27.6724119Z ✔ ordered package exists with one closed installation and separate activation (1.804944ms)
+2026-11-19T20:32:27.6749531Z ✔ full preflight refuses missing private Missions without persistent DDL (377.837074ms)
+2026-11-19T20:32:27.6751519Z ✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1352.914144ms)
+2026-11-19T20:32:27.6753714Z ✔ partial local assembly refuses missing human prerequisites before creating the foundation (176.850408ms)
+2026-11-19T20:32:27.6755560Z ✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1231.66273ms)
+2026-11-19T20:32:27.6757288Z ✔ activation refuses absent or invisible session and identity without partially opening flags (942.810001ms)
+2026-11-19T20:32:27.6759232Z ✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (920.507194ms)
+2026-11-19T20:32:27.6761033Z ✔ distributed quarantine contains no mutable continuation after savepoint error recovery (252.507645ms)
+2026-11-19T20:32:27.6790645Z ✖ assembled valid adult and child previews preserve READ ONLY contracts (552.915078ms)
+2026-11-19T20:32:27.6810915Z ✖ bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks (263.990834ms)
+2026-11-19T20:32:27.6813655Z ✖ read validator remains private and acceptance keeps the original requester locking guard (84.492736ms)
+2026-11-19T20:32:27.6815861Z ✔ adult and child acceptances preserve revisions replay receipts and household separation (934.073422ms)
+2026-11-19T20:32:28.5286538Z ✔ concurrent requester suspension waits for acceptance and wins when committed first (777.229727ms)
+2026-11-19T20:32:28.9104137Z ✖ historical acceptance revalidates admission identity and session after waiting for authorization locks (463.727274ms)
+2026-11-19T20:32:28.9217119Z ℹ tests 14
+2026-11-19T20:32:28.9217644Z ℹ suites 0
+2026-11-19T20:32:28.9218129Z ℹ pass 10
+2026-11-19T20:32:28.9218589Z ℹ fail 4
+2026-11-19T20:32:28.9219064Z ℹ cancelled 0
+2026-11-19T20:32:28.9219379Z ℹ skipped 0
+2026-11-19T20:32:28.9219664Z ℹ todo 0
+2026-11-19T20:32:28.9223015Z ℹ duration_ms 20441.166512
+2026-11-19T20:32:28.9240833Z ✖ failing tests:
+2026-11-19T20:32:28.9243113Z ✖ assembled valid adult and child previews preserve READ ONLY contracts (552.915078ms)
+2026-11-19T20:32:28.9244451Z   AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+2026-11-19T20:32:28.9247514Z   PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM
+2026-11-19T20:32:28.9248542Z   SQL statement "SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)"
+2026-11-19T20:32:28.9258873Z     actual: 3,
+2026-11-19T20:32:28.9259104Z     expected: 0,
+2026-11-19T20:32:28.9261149Z ✖ bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks (263.990834ms)
+2026-11-19T20:32:28.9262373Z   AssertionError [ERR_ASSERTION]: valid: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+2026-11-19T20:32:28.9264941Z   PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM
+2026-11-19T20:32:28.9265756Z   SQL statement "SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)"
+2026-11-19T20:32:28.9275325Z     actual: 3,
+2026-11-19T20:32:28.9275524Z     expected: 0,
+2026-11-19T20:32:28.9277420Z ✖ read validator remains private and acceptance keeps the original requester locking guard (84.492736ms)
+2026-11-19T20:32:28.9282853Z     actual: '',
+2026-11-19T20:32:28.9283173Z     expected: 'dobby_access_writer|s|t|{"search_path=\\"\\""}',
+2026-11-19T20:32:28.9285127Z ✖ historical acceptance revalidates admission identity and session after waiting for authorization locks (463.727274ms)
+2026-11-19T20:32:28.9285866Z   AssertionError [ERR_ASSERTION]: A stale pre-lock validation authorized acceptance
+2026-11-19T20:32:28.9289636Z     actual: '',
+2026-11-19T20:32:28.9289886Z     expected: /ERROR:\s+42501/,
+2026-11-19T20:32:28.9314949Z ##[error]Process completed with exit code 1.

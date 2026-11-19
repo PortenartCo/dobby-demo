@@ -1,0 +1,27 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (113.354117ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20346.048857
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:104:1
+✖ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (113.354117ms)
+  AssertionError [ERR_ASSERTION]: Mixed V7 authority was accepted
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:111:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

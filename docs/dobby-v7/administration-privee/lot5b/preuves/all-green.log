@@ -1,0 +1,41 @@
+LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ bridge gives the closed session reader a narrow decision without direct Auth rights (122.665082ms)
+✔ session lookup preserves subject, session id, time boundary, future-date and expiry checks (111.9717ms)
+✔ RLS with no applicable policy remains closed even through the bridge (131.631384ms)
+✔ loss of installer Auth usage gives no positive session or identity (103.199918ms)
+✔ identity reader gets only the three reviewed fields and has no Auth SELECT (120.382709ms)
+✔ identity pagination is bounded and retains the reviewed projection (209.891592ms)
+✔ both readers remain separate and cannot call each others projections (229.318812ms)
+✔ anon cannot execute private Auth helpers (108.97354ms)
+✔ authenticated cannot execute private Auth helpers (124.032037ms)
+✔ service_role cannot execute private Auth helpers (111.609047ms)
+✔ authenticator cannot execute private Auth helpers (94.661326ms)
+✔ an exposed bridge schema or inherited browser reader refuses installation atomically (409.09125ms)
+✔ unexpected default function grants are refused rather than published (103.655908ms)
+✔ candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes (305.704853ms)
+✔ rollback refuses a modified helper and preserves the schema on failure (99.453488ms)
+✔ rollback uses RESTRICT and does not remove a dependent consumer (119.875732ms)
+LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (333.305694ms)
+✔ missing closed ADMIN on the V7 writer refuses before any grant changes (342.43701ms)
+✔ a second active grant made by postgres can be closed without losing managed ADMIN (123.490388ms)
+✔ a different grantor with active INHERIT and SET is refused before maintenance (114.893383ms)
+✔ residual inherited privileges alone are refused (109.401193ms)
+✔ residual SET authority alone is refused (102.719486ms)
+✔ an indirect membership cannot survive the projected closing unnoticed (94.986098ms)
+✔ a browser membership in a closed writer is refused (125.943691ms)
+✔ a writer that can log in is refused (108.158261ms)
+✔ the normal closing statements do not close a grant made by another grantor (90.993961ms)
+✔ a refusal rolls back all fictional setup and leaves the original catalogue intact (303.872835ms)
+LOT5B_STORAGE_AUTHORITY_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ DML grants allow the candidate locks but no schema CREATE or table ownership is implied (466.429116ms)
+✔ granting schema CREATE alone does not authorize policy creation on an existing table (342.388887ms)
+✔ the table owner can create a restrictive policy without schema CREATE, then rollback preserves all sentinels (354.177514ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29853.516719

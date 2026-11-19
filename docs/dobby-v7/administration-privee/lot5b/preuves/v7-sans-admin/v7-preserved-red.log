@@ -1,0 +1,33 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ V7-preserved migration works without ADMIN or usable V7 membership and retains both RPCs (159.498696ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19942.201009
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:15:1
+✖ V7-preserved migration works without ADMIN or usable V7 membership and retains both RPCs (159.498696ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42501: Existing closed ADMIN capability required for dobby_v7_writer
+  CONTEXT:  PL/pgSQL function inline_code_block line 28 at RAISE
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:17:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
