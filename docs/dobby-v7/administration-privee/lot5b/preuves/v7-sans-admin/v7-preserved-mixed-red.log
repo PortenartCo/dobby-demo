@@ -1,0 +1,35 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✖ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (114.819302ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21950.225647
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:104:1
+✖ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (114.819302ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /V7.*authority|V7 role/. Input:
+  
+  'ERROR:  42501: permission denied for table access_2a_manifest\n' +
+    `CONTEXT:  SQL expression "(SELECT count(*) FROM access_2a_manifest m JOIN pg_proc p ON p.oid=to_regprocedure(m.signature) WHERE p.proowner='dobby_v7_writer'::regrole)<>2\n` +
+    '  OR EXISTS(SELECT 1 FROM access_2a_manifest m JOIN pg_proc p ON p.oid=to_regprocedure(m.signature)\n' +
+    `   WHERE p.proowner='dobby_v7_writer'::regrole AND NOT(m.signature IN ('public.dobby_v7_update_profile(jsonb,bigint)','public.dobby_v7_create_household(text,uuid)') AND m.kind IN ('v7-preserved-profile','v7-preserved-create')))"\n` +
+    'PL/pgSQL function inline_code_block line 16 at IF\n' +
+    'LOCATION:  aclcheck_error, aclchk.c:2843\n'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:111:76)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `ERROR:  42501: permission denied for table access_2a_manifest\nCONTEXT:  SQL expression "(SELECT count(*) FROM access_2a_manifest m JOIN pg_proc p ON p.oid=to_regprocedure(m.signature) WHERE p.proowner='dobby_v7_writer'::regrole)<>2\n  OR EXISTS(SELECT 1 FROM access_2a_manifest m JOIN pg_proc p ON p.oid=to_regprocedure(m.signature)\n   WHERE p.proowner='dobby_v7_writer'::regrole AND NOT(m.signature IN ('public.dobby_v7_update_profile(jsonb,bigint)','public.dobby_v7_create_household(text,uuid)') AND m.kind IN ('v7-preserved-profile','v7-preserved-create')))"\nPL/pgSQL function inline_code_block line 16 at IF\nLOCATION:  aclcheck_error, aclchk.c:2843\n`,
+    expected: /V7.*authority|V7 role/,
+    operator: 'match',
+    diff: 'simple'
+  }

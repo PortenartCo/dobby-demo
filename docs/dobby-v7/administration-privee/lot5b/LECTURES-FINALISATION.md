@@ -1,5 +1,7 @@
 # Réserves après qualification du catalogue
 
+> La mission suivante a étudié une [alternative locale sans nouvelle délégation ADMIN V7](V7-SANS-ADMIN.md). Son verdict est BLOQUÉ ; la demande ADMIN ci-dessous reste historique et n’est pas exécutée ni relancée dans cette mission.
+
 Les 21 divergences textuelles sont désormais identifiées et qualifiées par la preuve rapportée de ChatGPT. Les 12 références Missions sont également validées selon cette preuve. Aucune nouvelle lecture distante n’a été effectuée par CODEX. Aucun corps privé n’est publié.
 
 ## Prochaine action exacte : autorité V7

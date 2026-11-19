@@ -1,5 +1,7 @@
 # Candidates indépendantes Lot 5B — aucune activation
 
+**Alternative sans ADMIN V7 : BLOQUÉE.** Voir [le diagnostic](../../../docs/dobby-v7/administration-privee/lot5b/V7-SANS-ADMIN.md). `v7-preserved.candidate.sql` et son fragment `v7-preserved.guards.sql` avortent inconditionnellement dans BEGIN avant toute DDL ; ils ne sont pas activables. Le préflight spécifique n’exclut ADMIN V7 que pour le plan exact préservant ses deux RPC ; le défaut strict reste intact. `v7-preserved.rollback.sql` est une quarantaine partielle, sans perte/élargissement dans la fixture, qui ne restaure pas les lectures READ ONLY. Génération/contrôle : `node supabase/compatibility/lot5b/build-v7-preserved.mjs [--check]`. Aucun flag de déblocage n’est fourni.
+
 Ces fichiers ne sont pas des migrations automatiquement applicables. Ils complètent les migrations historiques inchangées et restent soumis au [rapport de finalisation](../../../docs/dobby-v7/administration-privee/lot5b/RAPPORT-FINALISATION.md).
 
 Finalisation du catalogue : `approved-catalogue.json` conserve les 27 paires de référence et les 21 paires hébergées explicitement fournies après comparaison lexicale rapportée par ChatGPT. Aucun corps privé ni normaliseur permissif n’est utilisé. `catalogue.preflight.sql` contrôle ces paires indivisibles, owners/attributs/ACL et l’attache du stamper. `missions.preflight.sql` vérifie les douze MD5 de définition du manifeste public, sans stub.

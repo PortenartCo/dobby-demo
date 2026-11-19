@@ -1,0 +1,406 @@
+{
+  "verdict": "BLOCKED",
+  "verdictScope": "Current RLS route via shared context under unchanged writer privileges and existing READ ONLY contracts; not a universal impossibility claim",
+  "recordedAtUTC": "2026-11-19T15:49:14.172182+00:00",
+  "base": "44bfeac06c4d64acfda6e8ac233150fe02bd1df0",
+  "codeTestedCommit": "e36254f4d3f472c00fa8ead649ebcf4208acf5a6",
+  "hostedActions": {
+    "projectCalls": 0,
+    "sqlReads": 0,
+    "writes": 0,
+    "personalRowsRead": 0,
+    "privateFunctionBodiesRead": 0,
+    "adminDelegationRequested": false,
+    "realAccountTests": 0,
+    "mergeOrDeploy": false
+  },
+  "localDiagnostic": {
+    "command": "node --test --test-concurrency=1 tests/private-access/lot5b/v7-preserved.test.mjs",
+    "tests": 14,
+    "pass": 14,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 29220.495432,
+    "postgres": "17.7 (Debian 17.7-3.pgdg13+1)",
+    "runtime": "Owned isolated Docker; network none; tmpfs; no port or bind mount; pinned image from existing harness",
+    "fixtureInstallerBypassRls": "Existing historical fixture assumption; not a role change, managed Auth proof or V7 bypass",
+    "meaning": "Passing diagnostic checks include reproducing the functional regression and enforcing an unconditional deployment block",
+    "log": "preuves/v7-sans-admin/v7-preserved-diagnostic-final.log"
+  },
+  "observedWorkingInExperimentalReadWriteFixture": [
+    "all V7-owned functions/definition hashes/OIDs/owners/ACL unchanged",
+    "V7 role attributes, memberships and direct schema/table/column/function ACL unchanged",
+    "postgres not MEMBER, SET-able or inheriting V7",
+    "profile pending then initial household and canonical identity",
+    "explicit quota consumed atomically; replay does not consume again",
+    "unapproved/suspended users refused on old RPC arities with same old session claims",
+    "missing session and reactivation cutoff refuse old claims",
+    "profile CAS conflict 40001, child refusal, cross-household UPDATE 0",
+    "replay holds authorization SHARE; suspension contender gets55P03 until completion",
+    "quota SHARE/UPDATE conflict returns40001 without data or quota change",
+    "other writer ADMIN conditions retained; V7 mixed SET then INHERIT rejected"
+  ],
+  "observedFunctionalRegressions": [
+    {
+      "entrypoint": "public.dobby_v7_preview_invitation(text)",
+      "transaction": "READ ONLY",
+      "sqlstate": "25006",
+      "path": [
+        "STABLE invitation wrapper",
+        "public.dobby_v7_context now VOLATILE",
+        "assert_active_nowait",
+        "SELECT FOR SHARE NOWAIT"
+      ]
+    },
+    {
+      "entrypoint": "public.dobby_v7_preview_child_invitation(text)",
+      "transaction": "READ ONLY",
+      "sqlstate": "25006",
+      "samePath": true
+    }
+  ],
+  "httpInference": {
+    "documentation": "https://docs.postgrest.org/en/v13/references/transactions.html#access-mode-on-functions",
+    "stablePostIsReadOnly": true,
+    "getHeadAreReadOnly": true,
+    "actualHttpServerRun": false,
+    "contextGetCompatibilityPreserved": false
+  },
+  "deploymentGate": {
+    "candidate": "v7-preserved.candidate.sql",
+    "sourceFragment": "v7-preserved.guards.sql",
+    "error": "0A000",
+    "unconditional": true,
+    "position": "Immediately after BEGIN before DDL",
+    "clientWithoutOnErrorStopVerified": true,
+    "cliUnlockOption": false,
+    "testsRemoveInMemoryOnly": [
+      "exact blocking gate",
+      "Missions metadata gate for twelve private definitions absent locally"
+    ]
+  },
+  "quarantineRollback": {
+    "dataPreserved": true,
+    "v7FunctionsAndPrivilegesPreservedInCleanFixture": true,
+    "allSixPoliciesFalse": true,
+    "alteredPolicyRefusedBeforeMutation": true,
+    "writePathsRemainClosed": true,
+    "authenticatedMembershipReadSelfOnlyPreserved": true,
+    "sharedLockingContextAndHelperRetained": true,
+    "readOnlyRegressionStillPresent": true,
+    "fullFunctionalRestoration": false
+  },
+  "preflight": {
+    "strictDefaultChanged": false,
+    "experimentalWaiver": "Only exact two preserved V7 RPC plan, no V7 function wrapping/backups/privilege change; all other writer checks retained",
+    "mixedAuthorityClosure": "SET* then INHERIT*, no projected V7 grant closing"
+  },
+  "nativeDependencies": {
+    "staticFunctionNodes": 16,
+    "unresolvedStaticCalls": 0,
+    "artifact": "V7-DEPENDANCES.json",
+    "additionalRlsAndTriggerDependenciesExplicit": true,
+    "privateMissionsFamilyBranch": "Published early-return; no private validator reached on these paths",
+    "fullPrivateMissionsRecipe": false,
+    "hostedHelperDefinitionsCertifiedByCodex": false
+  },
+  "review": {
+    "mode": "Independent static read-only architecture and code review",
+    "activeDeliveryApproved": false,
+    "blockedDiagnosticDeliveryAccepted": true,
+    "mixedAuthorityIssueReproducedAndFixed": true,
+    "transactionGatePlacementReviewed": true,
+    "runtimeRunByReviewer": false,
+    "remainingLimits": [
+      "READ ONLY functional failure",
+      "quarantine is not functional rollback",
+      "unexpected default-privilege effects outside clean fixture unproved",
+      "hosted and full private Missions integration unproved"
+    ]
+  },
+  "intermediateRuns": [
+    {
+      "log": "v7-preserved-red.log",
+      "pass": 0,
+      "fail": 1,
+      "classification": "Expected RED: strict installer requires missing ADMIN V7"
+    },
+    {
+      "log": "v7-preserved-first-green.log",
+      "pass": 1,
+      "fail": 0,
+      "classification": "First write-path prototype only"
+    },
+    {
+      "log": "v7-preserved-expanded.log",
+      "pass": 9,
+      "fail": 2,
+      "classification": "One real25006 regression; one setupREVOKEADMIN2BP01 error, later corrected in fictional transaction"
+    },
+    {
+      "log": "v7-preserved-mixed-red.log",
+      "pass": 0,
+      "fail": 1,
+      "classification": "Invalid mixed-path setup: temp table owned by fixture root; corrected, not used as authority proof"
+    },
+    {
+      "log": "v7-preserved-mixed-corrected-red.log",
+      "pass": 0,
+      "fail": 1,
+      "classification": "Valid RED: mixed authority accepted before graph fix"
+    },
+    {
+      "log": "v7-preserved-blocked-diagnostic-first.log",
+      "pass": 13,
+      "fail": 1,
+      "classification": "Diagnostic gate/mixed fixes pass; remaining test expected2memberships but native self-only policy yields1; corrected assertion"
+    }
+  ],
+  "codeInputs": [
+    {
+      "path": ".github/workflows/dobby-private-access-compatibility.yml",
+      "sha256": "a5bcca399b3b493ce0c46ea800526394cf3798ef3a7eea4ddb05bd659cf11de0"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-v7-preserved.mjs",
+      "sha256": "735b08541993fad615af2d7eb1be08a78d2bd8dd85e6c0e228cb54fe85608300"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.candidate.sql",
+      "sha256": "56fcb75025f2a59d5b6bcc1967b17ebf6505cdedfe50d29d77a86aa1d59ddebf"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.guards.sql",
+      "sha256": "d01ad0bd5898af451f2556bf5e0da25f4fcec1b3c021af366594c7b66978ba10"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.roles.preflight.sql",
+      "sha256": "9780cbb7938c23b4af3814095238eacb6b14ce862e604a87cb1dfe3358111a66"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.rollback.sql",
+      "sha256": "bcc52514b5e5e046027e94d10d530af334535bc0a5712a44dfa5a10a086b9926"
+    },
+    {
+      "path": "tests/private-access/lot5b/v7-preserved.test.mjs",
+      "sha256": "ec98942c9e2d53dc3b771e3ae28636f2fd22692562ac6ff4e8a5443a288f7dfb"
+    }
+  ],
+  "unchangedSources": [
+    {
+      "path": "supabase/migrations/20261117203208_dobby_private_access_foundation.sql",
+      "sha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a"
+    },
+    {
+      "path": "supabase/migrations/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "b491737bbb9c45fb7be5b1677b19f1dda4c7488980f8636d7d076635376f5c81"
+    },
+    {
+      "path": "supabase/migrations/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466"
+    },
+    {
+      "path": "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5"
+    },
+    {
+      "path": "supabase/rollbacks/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "4cba8f95402b15f811008c641f9d0b10ca6664bfcdc28f0f4d8ce81ef4c27cd2"
+    },
+    {
+      "path": "supabase/rollbacks/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "950d91c37718a3ea8608ead181a509f38065c4166f99491be3966e8d82940f2f"
+    },
+    {
+      "path": "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "32b4c5350aea34e32930456b2da2bae70b562262db3cc0a9e6b45449fc7899b9"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-variants.mjs",
+      "sha256": "5799ecad32aecfa64656d7b19705dccba047602f2cd99f60c31e5f89de7079cf"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+      "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.candidate.sql",
+      "sha256": "2eb172f7943b833b7f430373a580aa443bcd6bdec5c4ac55a83f168951b23ccb"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.rollback.sql",
+      "sha256": "e9e028892504835fe5b2a55e4316bbecd376bfb64bf31d865cfe316b64f54c76"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+      "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+    }
+  ],
+  "proofFiles": [
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-red.log",
+      "sha256": "b142e726b71007db46636f2f38dab7bdda1f07253aae659ee1f9361b1c4221bf"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-first-green.log",
+      "sha256": "ddf6b4f110920635fdc96ea2cafff6cd82cf97d9293278b5b76487846f685240"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-expanded.log",
+      "sha256": "f564c43d7f9cc53a04e338e9a7330eae18065706d47864683863e8724be87b61"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-mixed-red.log",
+      "sha256": "f75cec0bc699254ce87961906628b58895f706ee0936e6a624634a1319398872"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-mixed-corrected-red.log",
+      "sha256": "6aa728bd4f1a9bd21d18c5d353b52bfa1b7356eeeccb10967dc92ae69bc3a47e"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-blocked-diagnostic-first.log",
+      "sha256": "20dabc6608c06d444e0f46c111a3d221ee094f4a962d08ab83f017d93ba54d05"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-sans-admin/v7-preserved-diagnostic-final.log",
+      "sha256": "68d69e6cd5c71fcac92035042a4127b42e95174200fc1bbbe6b9c748a4e1fd1b"
+    }
+  ],
+  "ci": {
+    "runs": [
+      {
+        "conclusion": "success",
+        "databaseId": 44558706169,
+        "event": "pull_request",
+        "headSha": "e36254f4d3f472c00fa8ead649ebcf4208acf5a6",
+        "name": "Dobby private-access compatibility (local)",
+        "status": "completed",
+        "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44558706169"
+      },
+      {
+        "conclusion": "cancelled",
+        "databaseId": 44558706301,
+        "event": "pull_request",
+        "headSha": "e36254f4d3f472c00fa8ead649ebcf4208acf5a6",
+        "name": "Dobby V7 - Stitch functional UI",
+        "status": "completed",
+        "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44558706301"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 44558697430,
+        "event": "push",
+        "headSha": "e36254f4d3f472c00fa8ead649ebcf4208acf5a6",
+        "name": "Dobby private-access compatibility (local)",
+        "status": "completed",
+        "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44558697430"
+      }
+    ],
+    "job": {
+      "jobs": [
+        {
+          "id": 135681696357,
+          "name": "permissions-local",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 44558697430,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Pinned PostgreSQL fixture image only",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Causal permission and rollback checks, no hosted connection",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            }
+          ]
+        }
+      ]
+    },
+    "logExcerpts": [
+      "2026-11-19T15:48:11.8615638Z LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T15:48:17.9269083Z ✔ BLOCKED: both unchanged stable invitation previews fail 25006 through the locking context (121.306376ms)",
+      "2026-11-19T15:48:17.9334083Z ℹ tests 61",
+      "2026-11-19T15:48:17.9334399Z ℹ pass 61",
+      "2026-11-19T15:48:17.9334602Z ℹ fail 0",
+      "2026-11-19T15:48:17.9335031Z ℹ skipped 0",
+      "2026-11-19T15:48:17.9340998Z ℹ duration_ms 38963.079827"
+    ],
+    "tests": 61,
+    "pass": 61,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 38963.079827,
+    "codeCommit": "e36254f4d3f472c00fa8ead649ebcf4208acf5a6",
+    "meaning": "Diagnostic success includes reproduced READ ONLY failure, NOT functional feasibility",
+    "ui": "Unrelated automatic PR UI workflow cancellation requested; actual conclusion in runs"
+  },
+  "minimalArchitecturalProposal": {
+    "implemented": false,
+    "newPrivateGateSchemaAndFunction": true,
+    "writerPrivilegeExceptionRequired": [
+      "USAGE only on new private gate schema",
+      "EXECUTE only on new narrowly scoped authorization/session gate"
+    ],
+    "v7AdminOrMembershipNeeded": false,
+    "existingV7FunctionsModified": false,
+    "whyNotApplied": "User explicitly forbids writer privilege modifications; proposed exception requires a separate authorized scope",
+    "benefit": "Policies call guard directly, including replay; public context and previews keep existing STABLE/read-only contract"
+  },
+  "notExecuted": [
+    "Any Supabase hosted operation",
+    "Real JWT cryptography, GoTrue/SMTP/Storage HTTP campaign",
+    "Full private Missions integration",
+    "New guarded EXECUTE or schema USAGE grant to V7",
+    "Deployment, merge, gate opening or real-account change"
+  ]
+}

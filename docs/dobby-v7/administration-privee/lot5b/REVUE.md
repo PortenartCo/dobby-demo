@@ -37,3 +37,15 @@ Les deux corrections ont été relues : aucun Critical/Important restant dans ce
 Les preuves sont conservées dans `preuves/finalisation/`. Le premier passage élargi était à 12/13 uniquement parce qu’une assertion de message ne reconnaissait pas « Approved » alors que le SQL refusait correctement ; l’assertion a été corrigée. Le passage après correction des deux Important réussit 13/13. Le retrait de la garde Missions est exclusivement dans le test partiel, après refus du candidat complet, sans stub ni revendication de recette intégrale.
 
 Hors preuve : comparaison lexicale hébergée rapportée, exécution des corps hébergés, recette Missions intégrale, autorité V7 distante, droits Auth/Storage réels, capacités signées et restauration hébergée. Le rollback ne détecte pas tout hotfix du corps courant et peut le remplacer par la sauvegarde approuvée : revue préalable, maintenance à ingress fermé et coordination des consommateurs obligatoires avant une future exécution validée. Avis favorable au brouillon, aucune autorisation de fusion ou mise en service.
+
+## Alternative sans ADMIN V7 — revue du diagnostic bloqué
+
+La revue a identifié la branche de replay sans DML, le besoin de router V7 hors de la garde statement invoker historique (sans nouveau grant V7), et l’impasse des appelants STABLE du contexte verrouillant. Les tests locaux ont confirmé cette dernière avec SQLSTATE 25006. Elle reste un défaut fonctionnel explicite du prototype, sans variante activable livrée.
+
+Le chemin SET*→INHERIT* manqué par des tests USAGE/SET séparés a été reproduit puis refusé dans le préflight expérimental. Le RAISE 0A000 est placé après BEGIN, avant DDL, dans les deux fichiers ouvrables : l’avortement a été testé même avec ON_ERROR_STOP désactivé. Aucun flag CLI de déblocage. Les snapshots du test couvrent toutes les fonctions et ACL/memberships V7 de la fixture propre.
+
+Les montages intermédiaires défectueux sont conservés et séparés des preuves : retrait ADMIN nécessitant CASCADE des seuls grants fictifs dépendants ; table temporaire créée par root sans droit pour postgres ; attente de deux memberships alors que le RLS natif n’en expose qu’un. Le contre-test du chemin mixte n’est probant qu’après correction du montage temporaire. Aucun droit de production n’a été élargi pour corriger ces montages.
+
+Réserves explicites : le retour est une quarantaine partielle conservant le défaut READ ONLY ; les droits induits par DEFAULT PRIVILEGES inattendus ne sont pas couverts par l’invariant de seules fonctions V7 ; aucune preuve hébergée/HTTP ou Missions intégrale ajoutée. La piste USAGE/EXECUTE sur une nouvelle garde privée exige une exception utilisateur au périmètre de privilèges V7 et n’est pas appliquée.
+
+La relecture finale n’identifie aucun Critical/Important empêchant **la livraison diagnostique BLOQUÉE uniquement**. L’en-tête généré a été précisé « BLOCKED EXPERIMENT / diagnostic only ». Aucun runtime ni appel externe exécuté par le reviewer, aucun avis d’activation, fusion ou déploiement.

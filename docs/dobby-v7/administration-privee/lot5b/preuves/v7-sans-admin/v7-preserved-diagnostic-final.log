@@ -1,0 +1,23 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ shipped experiment aborts before DDL, including a client without ON_ERROR_STOP (1101.795323ms)
+✔ explicit in-memory write prototype needs no V7 membership and retains all V7 functions and privileges in the clean fixture (732.759356ms)
+✔ initial pending profile, household, quota and replay preserve native identities and idempotence (322.152678ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (1908.505757ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (711.17814ms)
+✔ no household can be created without the explicit initial quota (337.860962ms)
+✔ native profile CAS, parent/child and household separation remain enforced (796.719825ms)
+✔ V7 quarantine policies and guard attachments target only the preserved writer (713.571181ms)
+✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (1027.122616ms)
+✔ quota upgrade contention is a retryable 40001 with no data or quota changes (341.285741ms)
+✔ preservation preflight keeps every other writer ADMIN check (304.76925ms)
+✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (114.050909ms)
+✔ BLOCKED: both unchanged stable invitation previews fail 25006 through the locking context (206.715987ms)
+✔ conservative rollback quarantines V7 without losing rows or broadening any V7 privilege (1701.145428ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29220.495432

@@ -1,5 +1,7 @@
 # Lot 5B — Catalogue qualifié, mise en service toujours bloquée
 
+> Suite au précontrôle : l’[alternative sans ADMIN V7](V7-SANS-ADMIN.md) a été testée et reste BLOQUÉE par le contrat READ ONLY des lectures. Aucune nouvelle délégation ADMIN n’est demandée ; la piste architecturale minimale est documentée séparément. Le présent rapport conserve l’état de la finalisation du catalogue.
+
 Finalisation du 19 novembre 2026 · PR #34, empilée sur #33.
 Base de cette finalisation : `8b7fd82d1bcad199535cdf1813ea6ee89b364952`.
 
