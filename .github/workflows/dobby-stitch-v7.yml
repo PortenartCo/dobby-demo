@@ -49,6 +49,44 @@ permissions:
   actions: read
 
 jobs:
+  release-01:
+    if: github.ref_name == 'prep/dobby-v7-release-01' || github.head_ref == 'prep/dobby-v7-release-01'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: RELEASE-01 canaris fictifs
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8899
+          DOBBY_E07_SHARED_HOME_EVIDENCE: ${{ runner.temp }}/dobby-release-01/grocery
+          DOBBY_FAM_EVIDENCE: ${{ runner.temp }}/dobby-release-01/family
+          DOBBY_MEALS_EVIDENCE: ${{ runner.temp }}/dobby-release-01/meals
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/dobby-release-01"
+          git rev-parse HEAD | tee "$RUNNER_TEMP/dobby-release-01/sha.txt"
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          python3 -m http.server 8899 --bind 127.0.0.1 > "$RUNNER_TEMP/dobby-release-01/http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          node --test essai-stitch-v5-famille/tests/{family-access-native,family-access-adoption,family-access-revalidation,family-missions,shared-runes-client,missions-v3-sharing-gate}.test.mjs | tee "$RUNNER_TEMP/dobby-release-01/native.log"
+          for test in release-01 e07-p02-shared-home fam-agenda-memos-sync v7-meals-model v7-meals-ui; do
+            node "essai-stitch-v7/tests/$test.cjs" | tee "$RUNNER_TEMP/dobby-release-01/$test.log"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dobby-release-01-fixtures
+          path: ${{ runner.temp }}/dobby-release-01/
+          retention-days: 14
+
   source-backed-browser:
     runs-on: ubuntu-latest
     timeout-minutes: 60

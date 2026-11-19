@@ -985,6 +985,7 @@ async function start() {
   }
   if (!stillCurrent()) return;
   checked = true;
+  if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));
   api.repaint();
 }
 // Access onboarding adopts only a server-confirmed canonical registry. This is

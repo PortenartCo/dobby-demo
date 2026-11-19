@@ -3,6 +3,7 @@ window.DobbyAccess = (() => {
   'use strict';
   const views = new Set(['access','access-welcome','access-auth','access-profile','access-create','access-join','access-confirmation','access-unavailable']);
   const E = window.DobbyFamilyStitchEngine;
+  const existingHouseholdOnly = window.DobbyPublicConfig?.existingHouseholdOnly === true;
   let incoming = window.DobbyAccessEntry?.consume();
   const model = import('./access-flow.mjs');
   const pendingKey = 'v7-incoming-invitation', recoveryKey='v7-access-recovery';
@@ -11,6 +12,9 @@ window.DobbyAccess = (() => {
   const api = () => E.win().DobbyFamilyUI;
   const account = () => api().access;
   const state = () => account().state();
+  const existingParent = current => current.authenticated && current.phase === 'active' &&
+    current.verified && current.userId && current.householdId && current.memberId &&
+    current.profile?.memberCategory === 'parent';
   const actorToken = (value=state()) => JSON.stringify([value.userId||null,value.householdId||null,value.memberId||null]);
   function assertActor(expected) {if(actorToken()!==expected)throw Error('Le compte ou le foyer a changé. Rechargez le formulaire avant de continuer.');}
   const el = (tag, text = '', className = '') => Object.assign(document.createElement(tag), {textContent:text,className});
@@ -124,10 +128,13 @@ window.DobbyAccess = (() => {
         catch {callbackError='Ce lien de confirmation ne peut plus être utilisé ici. Connectez-vous ou demandez un nouveau lien.';try {await account().refresh();}catch {}}
       } else {try {await account().refresh();}catch {callbackError='La connexion au foyer n’a pas pu être vérifiée. Réessayez.';}}
       // Restore only after Auth/context refresh: the initial facade may still be blank.
-      const saved=await api().meta(pendingKey),owner=state().userId;
-      if(saved?.token&&(!saved.userId||saved.userId===owner)){invitationToken=saved.token;invitationType=saved.type==='child-account'?'child-account':'generic';}
-      else if(saved?.userId&&saved.userId!==owner)await clearInvitation({token:saved.token,type:saved.type||'generic',userId:saved.userId});
-      if(incoming?.invitation)await rememberInvitation(incoming.invitation);
+      const owner=state().userId;
+      if(!existingHouseholdOnly){
+        const saved=await api().meta(pendingKey);
+        if(saved?.token&&(!saved.userId||saved.userId===owner)){invitationToken=saved.token;invitationType=saved.type==='child-account'?'child-account':'generic';}
+        else if(saved?.userId&&saved.userId!==owner)await clearInvitation({token:saved.token,type:saved.type||'generic',userId:saved.userId});
+        if(incoming?.invitation)await rememberInvitation(incoming.invitation);
+      }
       const recoveryRecord=await api().meta(recoveryKey);
       if(recovery&&owner)await api().putMeta(recoveryKey,{userId:owner});
       else recovery=!!(owner&&recoveryRecord?.userId===owner);
@@ -137,7 +144,8 @@ window.DobbyAccess = (() => {
         if(lastUser&&next.userId!==lastUser){
           const previous={token:invitationToken,type:invitationType,userId:lastUser};
           invitationToken='';invitationType='generic';invitation=null;
-          void clearInvitation(previous);recovery=false;void api().putMeta(recoveryKey,null);
+          if(!existingHouseholdOnly)void clearInvitation(previous);
+          recovery=false;void api().putMeta(recoveryKey,null);
           if(!loggingOut&&!(operation&&context?.ui.view==='access-auth'))location.replace('./famille.html#access');
         }
         lastUser=next.userId;
@@ -155,6 +163,9 @@ window.DobbyAccess = (() => {
   async function next() {
     const {destination}=await model;
     const current=state();
+    if(existingHouseholdOnly && current.authenticated && !existingParent(current)){
+      await go('access-unavailable');return;
+    }
     if(invitationToken&&current.userId)await api().putMeta(pendingKey,{token:invitationToken,...(invitationType==='child-account'?{type:invitationType}:{}),userId:current.userId});
     await go(destination(current,{invitationPending:!!invitationToken,invitationType}));
   }
@@ -168,13 +179,17 @@ window.DobbyAccess = (() => {
     copy.append(el('p','Missions, repas, courses, événements, contrats et assurances : retrouvez les informations de votre foyer dans un même grimoire.','access-description'),button('Continuer',()=>go('access-auth',{mode:'login'})));
   }
   function authentication() {
-    const mode=context.ui.accessMode||'login';
-    const copy=shell('Entrer dans DOBBY','Retrouvez votre foyer ou commencez une nouvelle aventure.');
-    const tabs=el('div','','access-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Accès à DOBBY');
-    for(const [id,label]of [['login','Connexion'],['signup','Inscription'],['invite','Invitation']]){
-      const tab=button(label,()=>id==='invite'?go('access-join'):go('access-auth',{mode:id}),true);
-      tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(mode===id));tabs.append(tab);
-    }copy.append(tabs);
+    const requested=context.ui.accessMode||'login';
+    const mode=existingHouseholdOnly&&requested!=='recover'?'login':requested;
+    const copy=shell('Entrer dans DOBBY',existingHouseholdOnly?'Connectez-vous avec votre compte pour retrouver votre foyer.':'Retrouvez votre foyer ou commencez une nouvelle aventure.');
+    if(!existingHouseholdOnly){
+      const tabs=el('div','','access-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Accès à DOBBY');
+      for(const [id,label]of [['login','Connexion'],['signup','Inscription'],['invite','Invitation']]){
+        const tab=button(label,()=>id==='invite'?go('access-join'):go('access-auth',{mode:id}),true);
+        tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(mode===id));tabs.append(tab);
+      }
+      copy.append(tabs);
+    }
     const form=el('form','','access-form');form.noValidate=false;
     const email=field(form,'Adresse e-mail','email',{type:'email',required:true,maxLength:254,autocomplete:'email'});
     const reset=mode==='recover',signup=mode==='signup';
@@ -280,6 +295,8 @@ window.DobbyAccess = (() => {
       setTimeout(()=>{if(recovery)passwordRecovery();else if(callbackError)void go('access-auth',{mode:'login'});else if(initial)void go(initial);else void next();},0);return;
     }
     if(recovery){passwordRecovery();return;}
+    if(existingHouseholdOnly && (['access-create','access-join'].includes(context.ui.view) ||
+      context.ui.view==='access-profile'&&!existingParent(state()))){unavailable();return;}
     const renderer={'access-welcome':welcome,'access-auth':authentication,'access-profile':profile,'access-create':createHousehold,'access-join':invitationView,'access-confirmation':confirmation,'access-unavailable':unavailable}[context.ui.view];
     renderer?.();if(callbackError){status(callbackError,true);callbackError='';}
   }
@@ -292,6 +309,7 @@ window.DobbyAccess = (() => {
     catch {if(context)status('La connexion au foyer n’a pas pu être vérifiée. Réessayez.',true);}
   }
   async function invitationDialog(memberId=null) {
+    if(existingHouseholdOnly)throw Error('Les invitations sont fermées pour ce pilote.');
     await initialize();const current=state(),child=memberId!==null;
     if(!current.verified||current.permissions.canInvite!==true)throw Error('Invitation non autorisée.');
     let target;
