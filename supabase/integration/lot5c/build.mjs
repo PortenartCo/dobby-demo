@@ -13,11 +13,37 @@ const read=p=>readFileSync(resolve(root,p),'utf8');
 const quote=v=>"'"+String(v).replaceAll("'","''")+"'";
 const hash=v=>createHash('sha256').update(v).digest('hex');
 const md5=v=>createHash('md5').update(v).digest('hex');
-// Assembly stopped on a newly reproduced Lot3 read contract defect.
+// Local read correction does not authorize rollout: hosted/Missions/restore pending.
 // No CLI/env switch. Every delivered writing entrypoint aborts before DDL/DML.
-export const stopGate=`DO $lot5c_blocked$ BEGIN RAISE EXCEPTION USING ERRCODE='0A000',MESSAGE='LOT5C NO-GO: Lot3 invitation requester lock fails READ ONLY with 25006'; END $lot5c_blocked$;`;
+export const stopGate=`DO $lot5c_blocked$ BEGIN RAISE EXCEPTION USING ERRCODE='0A000',MESSAGE='LOT5C NO-GO: hosted, Missions and restoration validations remain required'; END $lot5c_blocked$;`;
 const phase=sql=>sql.replace(/^BEGIN;$/m,'').replace(/^COMMIT;$/m,'');
-function once(s,a,b){assert.equal(s.split(a).length,2,'Unique assembly anchor: '+a.slice(0,80));return s.replace(a,b);}
+function once(s,a,b){assert.equal(s.split(a).length,2,'Unique assembly anchor: '+a.slice(0,80));return s.replace(a,()=>b);}
+function invitationReads(source){
+ const start=source.indexOf('CREATE FUNCTION dobby_access_private.assert_invitation_admission(');
+ const end=source.indexOf('-- Returns only the opaque invitation ID;',start);
+ assert.ok(start>=0&&end>start,'Published invitation guard boundaries required');
+ const original=source.slice(start,end);
+ const requester=' PERFORM dobby_access_private.assert_requester(a.requested_by,a.requester_generation);';
+ let read=once(original,'assert_invitation_admission(p_token','assert_invitation_admission_read(p_token');
+ read=once(read,'LANGUAGE plpgsql SECURITY DEFINER','LANGUAGE plpgsql STABLE SECURITY DEFINER');
+ read=once(read,requester,` -- Same requester predicate as assert_requester, without a row lock.
+ PERFORM 1 FROM dobby_access_private.authorizations WHERE user_id=a.requested_by AND status='active'
+  AND NOT session_boundary_pending AND generation=a.requester_generation;
+ IF NOT FOUND THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Family requester no longer authorized'; END IF;`);
+ const write=once(original,requester,requester+`
+ -- Keep the authorization lock, stabilize the bound admission, then re-read
+ -- session, identity and all admission predicates after any lock wait.
+ PERFORM 1 FROM dobby_access_private.admissions WHERE id=a.id FOR SHARE;
+ PERFORM dobby_access_private.assert_invitation_admission_read(p_token,p_kind);`);
+ source=once(source,original,read+write);
+ source=once(source,' BEGIN PERFORM dobby_access_private.assert_invitation_admission(p_token,p_kind);',
+  ' BEGIN PERFORM dobby_access_private.assert_invitation_admission_read(p_token,p_kind);');
+ source=once(source,"'assert_invitation_admission','guard_approval_epoch'",
+  "'assert_invitation_admission','assert_invitation_admission_read','guard_approval_epoch'");
+ source=once(source,'dobby_access_private.assert_invitation_admission(text,text) TO dobby_socle_writer;',
+  'dobby_access_private.assert_invitation_admission(text,text),dobby_access_private.assert_invitation_admission_read(text,text) TO dobby_socle_writer;');
+ return source;
+}
 const historical={
  foundation:['20261117203208_dobby_private_access_foundation.sql','94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a'],
  storage:['20261118112535_dobby_private_access_storage.sql','1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466'],
@@ -116,7 +142,7 @@ SELECT extname,extversion FROM pg_extension ORDER BY extname;
 -- managed policy delegation, or positive Auth RLS visibility: operator evidence required.
 COMMIT;
 `;
- let administration=src.administration.replaceAll('dobby_access_writer,dobby_socle_writer,dobby_v7_writer','dobby_access_writer,dobby_socle_writer');
+ let administration=invitationReads(src.administration).replaceAll('dobby_access_writer,dobby_socle_writer,dobby_v7_writer','dobby_access_writer,dobby_socle_writer');
  administration=administration.replaceAll('dobby_access_writer,dobby_socle_writer,dobby_v7_writer,dobby_access_identity_reader','dobby_access_writer,dobby_socle_writer,dobby_access_identity_reader');
  const storage=once(src.storage,"'50c8a15b049d77355f9a81c930dc937c'",quote(md5(sessionBody)));
  const install=`-- SINGLE atomic installation. Closed until separate controlled activation.
@@ -191,13 +217,13 @@ SELECT session_guard_ready,identity_guard_ready,administration_enabled,child_del
 COMMIT;
 `;
  const outputs={'00-preflight.sql':preflight,'10-install.sql':install,'20-activate.sql':activate,'30-postflight.sql':postflight,'80-stop-admin.sql':close(),'90-close.sql':close(true)};
- outputs['manifest.json']=JSON.stringify({status:'BLOCKED_LOT3_READONLY_25006',packageId,phaseBase:'afb09873b39e533d433c72a436ab3cbcfc043bbc',projectRef:'pqcdkrwljgvgagzwrcmg',reportedHostedPostgres:'17.11',adminV7Required:false,order:['00-preflight.sql','10-install.sql','30-postflight.sql','20-activate.sql','30-postflight.sql'],rollback:['80-stop-admin.sql (sentinel only, unvalidated plan)','90-close.sql (sentinel only, unvalidated plan)'],inputs,missionsReferences:12,catalogueReferences:27,fullLocalMissionsAvailable:false,storageHelperBodyMD5:md5(sessionBody)},null,2)+'\n';
+ outputs['manifest.json']=JSON.stringify({status:'NO_GO_HOSTED_MISSIONS_RESTORE_UNVERIFIED',packageId,phaseBase:'afb09873b39e533d433c72a436ab3cbcfc043bbc',readCorrectionBase:'69c69c7ff38466d5964383153956ce781b8025be',projectRef:'pqcdkrwljgvgagzwrcmg',reportedHostedPostgres:'17.11',adminV7Required:false,order:['00-preflight.sql','10-install.sql','30-postflight.sql','20-activate.sql','30-postflight.sql'],rollback:['80-stop-admin.sql (sentinel only, unvalidated plan)','90-close.sql (sentinel only, unvalidated plan)'],inputs,missionsReferences:12,catalogueReferences:27,fullLocalMissionsAvailable:false,storageHelperBodyMD5:md5(sessionBody)},null,2)+'\n';
  return outputs;
 }
 export function buildPackage(){
  const outputs=reviewAssembly();
  for(const name of ['10-install.sql','20-activate.sql','80-stop-admin.sql','90-close.sql']){
-  outputs[name]=`-- NO-GO SENTINEL ONLY. No mutable assembly follows this error.\n-- Review source and failed local contract: docs/dobby-v7/administration-privee/lot5c/RAPPORT.md\nBEGIN;\n${stopGate}\nCOMMIT;\n`;
+  outputs[name]=`-- NO-GO SENTINEL ONLY. No mutable assembly follows this error.\n-- Local validation and rollout reservations: docs/dobby-v7/administration-privee/lot5c/RAPPORT.md\nBEGIN;\n${stopGate}\nCOMMIT;\n`;
  }
  const manifest=JSON.parse(outputs['manifest.json']);
  manifest.writingEntrypointsContainOnlySentinel=true;

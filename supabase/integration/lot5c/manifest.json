@@ -1,7 +1,8 @@
 {
-  "status": "BLOCKED_LOT3_READONLY_25006",
-  "packageId": "dobby-lot5c-b6c4339eb21cef5bea7a4b8b5ae41eade45191748e2ef55ecd21295d4430f96f",
+  "status": "NO_GO_HOSTED_MISSIONS_RESTORE_UNVERIFIED",
+  "packageId": "dobby-lot5c-dedc6fa09d1d6a6e01074414b2a614e98ecd197fae532b72f142d21ef998cab0",
   "phaseBase": "afb09873b39e533d433c72a436ab3cbcfc043bbc",
+  "readCorrectionBase": "69c69c7ff38466d5964383153956ce781b8025be",
   "projectRef": "pqcdkrwljgvgagzwrcmg",
   "reportedHostedPostgres": "17.11",
   "adminV7Required": false,
@@ -31,7 +32,7 @@
     },
     {
       "path": "supabase/integration/lot5c/build.mjs",
-      "sha256": "c61fab79ff5b01c91222b5e494dce9fdb04af3ce96dae1d2bf812eef48aa5794"
+      "sha256": "d679f472d148a8e7b7dd2351b32d81e2aa2084cace207cb11816517583db4647"
     },
     {
       "path": "supabase/integration/lot5c/auth-wiring.mjs",
@@ -79,11 +80,11 @@
     },
     {
       "path": "10-install.sql",
-      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+      "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
     },
     {
       "path": "20-activate.sql",
-      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+      "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
     },
     {
       "path": "30-postflight.sql",
@@ -91,11 +92,11 @@
     },
     {
       "path": "80-stop-admin.sql",
-      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+      "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
     },
     {
       "path": "90-close.sql",
-      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+      "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
     }
   ]
 }
