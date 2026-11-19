@@ -1,0 +1,101 @@
+{
+  "status": "BLOCKED_LOT3_READONLY_25006",
+  "packageId": "dobby-lot5c-b6c4339eb21cef5bea7a4b8b5ae41eade45191748e2ef55ecd21295d4430f96f",
+  "phaseBase": "afb09873b39e533d433c72a436ab3cbcfc043bbc",
+  "projectRef": "pqcdkrwljgvgagzwrcmg",
+  "reportedHostedPostgres": "17.11",
+  "adminV7Required": false,
+  "order": [
+    "00-preflight.sql",
+    "10-install.sql",
+    "30-postflight.sql",
+    "20-activate.sql",
+    "30-postflight.sql"
+  ],
+  "rollback": [
+    "80-stop-admin.sql (sentinel only, unvalidated plan)",
+    "90-close.sql (sentinel only, unvalidated plan)"
+  ],
+  "inputs": [
+    {
+      "path": "supabase/migrations/20261117203208_dobby_private_access_foundation.sql",
+      "sha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a"
+    },
+    {
+      "path": "supabase/migrations/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466"
+    },
+    {
+      "path": "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5"
+    },
+    {
+      "path": "supabase/integration/lot5c/build.mjs",
+      "sha256": "c61fab79ff5b01c91222b5e494dce9fdb04af3ce96dae1d2bf812eef48aa5794"
+    },
+    {
+      "path": "supabase/integration/lot5c/auth-wiring.mjs",
+      "sha256": "815d565b3d70a444cf157f111a15cc69b780d6f6877763dcfc2430b5237b7300"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-variants.mjs",
+      "sha256": "5799ecad32aecfa64656d7b19705dccba047602f2cd99f60c31e5f89de7079cf"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-v7-preserved.mjs",
+      "sha256": "570d8681e8aead74ba1a782f7997ffd3756fcf02f4b8311bd238e42c2c6e05b3"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved-state.mjs",
+      "sha256": "0f45f31080aaa0c9c3f165eb1908482bd00cfe444c450c86d38595dc6bd1f15d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.guards.sql",
+      "sha256": "ddc49ad1c0b8f295089003bc36845827f74feef129f9302490c12132f80b9811"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+      "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    }
+  ],
+  "missionsReferences": 12,
+  "catalogueReferences": 27,
+  "fullLocalMissionsAvailable": false,
+  "storageHelperBodyMD5": "1f1adc79ca604c8de0aa0a7c095a90aa",
+  "writingEntrypointsContainOnlySentinel": true,
+  "reviewSourceOnly": "build.mjs reviewAssembly(), no CLI installer/unlock option",
+  "outputs": [
+    {
+      "path": "00-preflight.sql",
+      "sha256": "cd2fcaafe55eb47504a497906db7ee58941f88e44a8e4a52b827d17d86423c7e"
+    },
+    {
+      "path": "10-install.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "20-activate.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "30-postflight.sql",
+      "sha256": "69715284f0a3abf7055e3588ebf612aefff9f28a6e11682350f26e7602e532ea"
+    },
+    {
+      "path": "80-stop-admin.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    },
+    {
+      "path": "90-close.sql",
+      "sha256": "15dcf9b54dfe6039f6f58cad6f5a5d0e5caadc033f6ba8ed3c19dbe2cab5fc12"
+    }
+  ]
+}

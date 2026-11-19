@@ -90,7 +90,7 @@ export function interactive() {
   while(!output.includes(marker)){assert.equal(child.exitCode,null,errors);assert.ok(Date.now()<deadline,'SQL marker timeout');await new Promise(r=>setTimeout(r,20));}
  },async finish(sql='ROLLBACK;'){if(!child.stdin.destroyed){child.stdin.end(sql+'\n');}return finished;}};
 }
-export function start() {
+export function start({installFoundation=true} = {}) {
  must(docker(['run', '--pull=never', '--rm', '-d', '--name', container, '--label', 'dobby.private-access-test=lot1',
   '--network', 'none', '--tmpfs', '/var/lib/postgresql/data',
   '-e', 'POSTGRES_USER=dobby_local_root', '-e', 'POSTGRES_DB=dobby_access_lot1',
@@ -108,12 +108,12 @@ export function start() {
  assert.ok(!info.HostConfig.PortBindings || Object.keys(info.HostConfig.PortBindings).length === 0);
  assert.ok(!info.Mounts.some(x => x.Type === 'bind'));
  run(readFileSync(new URL('./fixtures.sql', import.meta.url), 'utf8'));
- return { ...initializeBusinessCatalog(), version: run('SHOW server_version;'), image };
+ return { ...initializeBusinessCatalog({installFoundation}), version: run('SHOW server_version;'), image };
 }
 
 // Compose the published business fixture against actual local GoTrue tables.
 // Defaults preserve the original isolated synthetic fixture unchanged.
-export function initializeBusinessCatalog({ executeSQL = run, seedAuth = true, captureSnapshot = true } = {}) {
+export function initializeBusinessCatalog({ executeSQL = run, seedAuth = true, captureSnapshot = true, installFoundation = true } = {}) {
  const run = executeSQL;
  // Reuse exact, public legacy table/RLS definitions; do not install the old
  // scripts or their explicitly documented private Missions stub.
@@ -150,7 +150,7 @@ export function initializeBusinessCatalog({ executeSQL = run, seedAuth = true, c
  const baseline = captureSnapshot ? run(businessSnapshotSQL()) : null;
  const migrationsDir = resolve(root, 'supabase/migrations');
  const migrations = existsSync(migrationsDir) ? readdirSync(migrationsDir).filter(n => n.endsWith('_dobby_private_access_foundation.sql')) : [];
- for (const path of migrations) run('SET ROLE postgres;'+ readFileSync(resolve(migrationsDir,path),'utf8'));
+ if(installFoundation)for (const path of migrations) run('SET ROLE postgres;'+ readFileSync(resolve(migrationsDir,path),'utf8'));
  return { baseline, migrations };
 }
 export function stop() {
