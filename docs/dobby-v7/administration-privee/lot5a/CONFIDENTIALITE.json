@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "scope": "all five new documentation files only",
+  "files": 5,
+  "findings": [],
+  "existingFilesChanged": 0,
+  "binaryFiles": 0,
+  "hostedUserRowsRead": 0,
+  "manualReview": "No real user identifiers, signed URLs, tokens, credential values, private bootstrap manifest, Auth rows or Storage paths included. Supplied project reference and public source/PR commit identifiers are intentionally retained.",
+  "checkedDocumentHashes": [
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5a/CONTROLES-LECTURE.md",
+      "sha256": "f9c6ac0595c960a6ac9598e855332b69562273b58b89ef7725fe3f31201f81f0"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5a/PLAN-BASCULE.md",
+      "sha256": "40eaf7dc88450db1427b01702e00e4fc4e3db1356bd437c9694d6bb8b18f4da6"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5a/PREUVES.json",
+      "sha256": "0fe73f71ca10a3fab52797f9539c51ba9364728b2b3b3ddf67e9f97a365a8c9d"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5a/RAPPORT.md",
+      "sha256": "48c46596ef46a7a0b935bb7f1aa728872723925a0800c6b9b37902885186de19"
+    }
+  ]
+}
