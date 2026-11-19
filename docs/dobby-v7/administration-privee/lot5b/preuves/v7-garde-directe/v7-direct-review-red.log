@@ -1,0 +1,45 @@
+LOT5B_V7_DIRECT_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+V7_ROLLBACK_DRIFT_RESULTS [{"name":"indirect-role-coupling","status":0,"output":""},{"name":"business-rls-disabled","status":0,"output":"household"},{"name":"journal-rls-disabled","status":0,"output":""},{"name":"journal-acl-opened","status":0,"output":""}]
+✖ a temporarily opened administration writer must not inherit V7 (185.416796ms)
+✔ direct guard installs with no V7 membership and exactly the two authorized new grants (1209.666374ms)
+✖ rollback refuses role coupling disabled RLS or untrusted journal metadata before any change (1076.474468ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20474.143357
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:58:1
+✖ a temporarily opened administration writer must not inherit V7 (185.416796ms)
+  AssertionError [ERR_ASSERTION]: Temporary access-writer opening unexpectedly conferred V7 authority
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:60:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:238:1
+✖ rollback refuses role coupling disabled RLS or untrusted journal metadata before any change (1076.474468ms)
+  AssertionError [ERR_ASSERTION]: Rollback accepted indirect-role-coupling
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:253:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0,
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

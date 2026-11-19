@@ -1,5 +1,7 @@
 # Alternative au privilège ADMIN V7 — BLOQUÉ
 
+> **Historique du prototype antérieur.** La mission suivante autorise deux droits sur une nouvelle garde privée. Le [rapport de correction 25006](V7-GARDE-DIRECTE.md) décrit le candidat local corrigé et ses nouvelles preuves ; les constats ci-dessous restent ceux du prototype au SHA `598b008a4e627c02354978d083890f8164f37405`.
+
 19 novembre 2026 · PR #34 · Base `44bfeac06c4d64acfda6e8ac233150fe02bd1df0`.
 
 **Verdict : BLOQUÉ pour le candidat testé.** Le passage par le contexte partagé permet les écritures et le replay sans modifier les fonctions ou les droits V7 dans la fixture propre, mais casse les prévisualisations d’invitation en lecture seule. Aucune variante activable ne remplace le préflight strict. Aucune demande de nouvelle délégation ADMIN V7 n’est effectuée.

@@ -1,0 +1,488 @@
+{
+  "verdict": "FAISABLE SANS ADMIN V7 — LOCAL ONLY; hosted and full Missions NOT VERIFIED",
+  "date": "2026-11-19",
+  "phaseBase": "598b008a4e627c02354978d083890f8164f37405",
+  "codeTestedCommit": "7345b8887595238a627fa2faa9acf5eb210b2dc8",
+  "pr": {
+    "number": 34,
+    "draft": true,
+    "baseBranch": "docs/dobby-private-access-lot5a-20261119-i9vixeco",
+    "baseCommit": "f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764"
+  },
+  "authorizationScope": "Only two grants on new private guard objects for V7, no grant option; local design/tests only",
+  "local": {
+    "command": "node --test --test-concurrency=1 tests/private-access/lot5b/v7-preserved.test.mjs",
+    "tests": 23,
+    "pass": 23,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 43603.16056,
+    "postgres": "17.7 (Debian 17.7-3.pgdg13+1)",
+    "postgrest": "14.18",
+    "postgresImage": "postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4",
+    "postgrestImage": "postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0",
+    "network": "Owned PostgreSQL network none; PostgREST shares its namespace, loopback only; no ports/bind mounts/remote URL",
+    "assertedHttpResponses": 27,
+    "httpCases": {
+      "stableReadsBeforeRollback": 10,
+      "privateFunctionNotExposed404": 1,
+      "authorizedProfile200": 1,
+      "sameJwtSuspensionOrSessionInvalidation403AndInvalidPreview200": 4,
+      "stableReadsAfterRollback": 10,
+      "writeDeniedAfterRollback403": 1
+    },
+    "httpMock": false,
+    "readinessRequestsExcludedFromCount": true,
+    "jwt": "Real local signature validation with ephemeral random fixture key; same cached token before/after denial; never logged or exported; no GoTrue/hosted proof"
+  },
+  "checks": {
+    "previewSql": "Both RPCs valid/invalid and context in BEGIN READ ONLY; before and after rollback; no 25006",
+    "stableContracts": "All three pg_proc.provolatile=s; real GET and POST results asserted",
+    "v7Preservation": "All owned functions OID/definition/owner/ACL identical; role attributes and memberships unchanged; no usable postgres V7 membership",
+    "v7AclDelta": "Exactly USAGE new schema and EXECUTE unique guard, without grant option; all other schema/table/column/function ACL unchanged",
+    "clientAcl": "No new schema or function access for anon/authenticated/service_role; no SET V7; no V7 direct Auth SELECT",
+    "defaultAcl": "Reject unexpected third-party creator defaults globally and per-schema, preserve owner-only defaults",
+    "initialFlow": "Pending profile then household/member/link; quota consumed once; same request replay; same UUID changed payload 22023",
+    "authorization": "Unapproved/suspended, missing/expired session, reactivation cutoff, forged active metadata and historical RPC variants denied",
+    "familyAndRevision": "Parent/child/other-household isolation and CAS40001 preserved",
+    "concurrency": "Separate physical sessions; replay retains SHARE lock through transaction, concurrent suspension55P03; quota lock upgrade40001 no data/quota change",
+    "rolePreflight": "Only exact two-RPC preservation exempts ADMIN V7; other writers ADMIN checks retained; mixed SET then INHERIT paths denied",
+    "recursion": "Direct guard does not read V7 relations/context; transitive V7 membership for client/other writers refused",
+    "catalogue": "Original 27 checks, 21 approved hosted pairs, 12 private Missions references unchanged; hosted provenance remains previously reported",
+    "generation": "Both build-variants.mjs --check and build-v7-preserved.mjs --check passed"
+  },
+  "rollback": {
+    "scope": "Complete removal of the new guard, NOT complete removal of base Lot2A",
+    "removed": [
+      "7 new triggers",
+      "2 administration-private trigger functions",
+      "unique private guard function",
+      "private 7-key state journal",
+      "new guard schema",
+      "both new V7 ACLs"
+    ],
+    "retained": [
+      "6 restrictive false policies (V7 write fence)",
+      "base Lot2A wrappers/guards",
+      "working STABLE context and previews",
+      "existing business/authorization rows"
+    ],
+    "refusesDrift": [
+      "indirect role coupling",
+      "business RLS disabled",
+      "journal RLS/ACL changed",
+      "policy modified",
+      "guard ACL broadened or grant option",
+      "guard body modified"
+    ],
+    "readOnlyAndRealHttpVerifiedAfterRollback": true,
+    "rowHashesUnchanged": true,
+    "v7FunctionsAndAclRestored": true
+  },
+  "testHistory": [
+    {
+      "log": "v7-direct-readonly-red.log",
+      "tests": 2,
+      "pass": 1,
+      "fail": 1,
+      "meaning": "Actual 25006 reproduction, not a final functional PASS"
+    },
+    {
+      "log": "v7-direct-first-green.log",
+      "tests": 15,
+      "pass": 7,
+      "fail": 8,
+      "meaning": "OID JSON text/number assertion interrupted preparation; fixed harness normalization, no SQL grant broadening"
+    },
+    {
+      "log": "v7-direct-second-green.log",
+      "tests": 15,
+      "pass": 15,
+      "fail": 0
+    },
+    {
+      "log": "v7-direct-expanded-http.log",
+      "tests": 21,
+      "pass": 21,
+      "fail": 0,
+      "meaning": "First actual HTTP, before review fixes"
+    },
+    {
+      "log": "v7-direct-review-red.log",
+      "tests": 3,
+      "pass": 1,
+      "fail": 2,
+      "meaning": "Reviewer counterexamples: temporary role inheritance and unsafe rollback; four drift variants accepted before fix"
+    },
+    {
+      "log": "v7-direct-after-review.log",
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "meaning": "All review fixes validated"
+    },
+    {
+      "log": "v7-direct-final-local.log",
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "meaning": "Final includes real authorized HTTP mutation and idempotency payload collision"
+    }
+  ],
+  "review": {
+    "independentReadOnly": true,
+    "importantFindings": 3,
+    "journalComplement": 1,
+    "allAddressed": true,
+    "remainingCriticalOrImportantInReviewedDeltas": 0,
+    "runtimeByReviewer": false,
+    "laterTestOnlyAdditions": [
+      "authorized HTTP profile",
+      "22023 idempotency collision"
+    ],
+    "scope": "Local candidate and complete guard removal preserving write fences; no hosted/deployment approval"
+  },
+  "ci": {
+    "runs": [
+      {
+        "id": 44577407372,
+        "event": "pull_request",
+        "conclusion": "success"
+      },
+      {
+        "id": 44577395219,
+        "event": "push",
+        "conclusion": "success"
+      }
+    ],
+    "codeCommit": "7345b8887595238a627fa2faa9acf5eb210b2dc8",
+    "jobs": [
+      {
+        "id": 135748527161,
+        "name": "permissions-local",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 44577407372,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Only pinned local PostgreSQL and PostgREST images",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Causal permission and rollback checks, no hosted connection",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          }
+        ]
+      }
+    ],
+    "tests": 70,
+    "pass": 70,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 57854.537329,
+    "existingTests": 47,
+    "newVariantTests": 23,
+    "uiRun": {
+      "id": 44577407390,
+      "conclusion": "cancelled",
+      "reason": "Unrelated automatic UI workflow; no UI PASS claimed"
+    },
+    "logExcerpts": [
+      "2026-11-19T17:28:09.5594702Z HEAD is now at 3ea34d2 Merge 7345b8887595238a627fa2faa9acf5eb210b2dc8 into f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764",
+      "2026-11-19T17:28:10.1966843Z \u001b[36;1mdocker --host unix:///var/run/docker.sock pull postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0\u001b[0m",
+      "2026-11-19T17:28:14.1219288Z docker.io/postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0: Pulling from postgrest/postgrest",
+      "2026-11-19T17:28:14.3641496Z Digest: sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0",
+      "2026-11-19T17:28:14.3643695Z Status: Downloaded newer image for postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0",
+      "2026-11-19T17:28:14.3648573Z docker.io/postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0",
+      "2026-11-19T17:28:14.3720791Z ##[group]Run node supabase/compatibility/lot5b/build-variants.mjs --check",
+      "2026-11-19T17:28:14.3721385Z \u001b[36;1mnode supabase/compatibility/lot5b/build-variants.mjs --check\u001b[0m",
+      "2026-11-19T17:28:14.3722071Z \u001b[36;1mnode supabase/compatibility/lot5b/build-v7-preserved.mjs --check\u001b[0m",
+      "2026-11-19T17:28:14.3722592Z \u001b[36;1mnode --test --test-concurrency=1 tests/private-access/lot5b/*.test.mjs\u001b[0m",
+      "2026-11-19T17:28:19.4324296Z LOT5B_AUTH_BRIDGE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T17:28:22.3023160Z ✔ bridge gives the closed session reader a narrow decision without direct Auth rights (93.940325ms)",
+      "2026-11-19T17:28:22.3027401Z ✔ session lookup preserves subject, session id, time boundary, future-date and expiry checks (88.143763ms)",
+      "2026-11-19T17:28:22.3041702Z ✔ RLS with no applicable policy remains closed even through the bridge (90.004564ms)",
+      "2026-11-19T17:28:22.3043453Z ✔ loss of installer Auth usage gives no positive session or identity (88.413589ms)",
+      "2026-11-19T17:28:22.3044778Z ✔ identity reader gets only the three reviewed fields and has no Auth SELECT (90.034342ms)",
+      "2026-11-19T17:28:22.3046095Z ✔ identity pagination is bounded and retains the reviewed projection (179.346526ms)",
+      "2026-11-19T17:28:22.3047567Z ✔ both readers remain separate and cannot call each others projections (174.466096ms)",
+      "2026-11-19T17:28:22.3049651Z ✔ anon cannot execute private Auth helpers (87.808968ms)",
+      "2026-11-19T17:28:22.3052573Z ✔ authenticated cannot execute private Auth helpers (88.47079ms)",
+      "2026-11-19T17:28:22.3059350Z ✔ service_role cannot execute private Auth helpers (88.447781ms)",
+      "2026-11-19T17:28:22.3060660Z ✔ authenticator cannot execute private Auth helpers (87.731517ms)",
+      "2026-11-19T17:28:22.3062642Z ✔ an exposed bridge schema or inherited browser reader refuses installation atomically (335.615282ms)",
+      "2026-11-19T17:28:22.3066144Z ✔ unexpected default function grants are refused rather than published (89.252172ms)",
+      "2026-11-19T17:28:22.3069879Z ✔ review: inherited membership between the two readers refuses installation (338.20033ms)",
+      "2026-11-19T17:28:22.3073439Z ✔ review: schema default CREATE for a reader refuses installation (172.685042ms)",
+      "2026-11-19T17:28:22.3080209Z ✔ review: an existing Auth CREATE grant without USAGE refuses installation (168.790163ms)",
+      "2026-11-19T17:28:22.3082775Z ✔ candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes (251.085478ms)",
+      "2026-11-19T17:28:22.3086950Z ✔ rollback refuses a modified helper and preserves the schema on failure (89.77678ms)",
+      "2026-11-19T17:28:22.3092564Z ✔ rollback uses RESTRICT and does not remove a dependent consumer (89.564198ms)",
+      "2026-11-19T17:28:30.5172694Z LOT5B_CATALOGUE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T17:28:36.9655126Z ✔ published catalogue passes without modifying business functions or data (270.695832ms)",
+      "2026-11-19T17:28:36.9661125Z ✔ an unapproved browser EXECUTE grant is refused without any business write (270.674597ms)",
+      "2026-11-19T17:28:36.9663858Z ✔ an unapproved grant option is refused even when effective EXECUTE was already allowed (88.756903ms)",
+      "2026-11-19T17:28:36.9666148Z ✔ the narrowly reported stamper ACL is accepted without changing the trigger or its body (90.505969ms)",
+      "2026-11-19T17:28:36.9671468Z ✔ a modified SQL literal is refused rather than normalized into approval (87.280182ms)",
+      "2026-11-19T17:28:36.9677730Z ✔ a changed owner is refused even though pg_get_functiondef excludes ownership (87.727212ms)",
+      "2026-11-19T17:28:36.9679254Z ✔ SECURITY DEFINER and configuration drift are refused independently (255.771767ms)",
+      "2026-11-19T17:28:36.9681005Z ✔ PUBLIC or delegated browser rights on the stamper are outside its two approved ACL profiles (270.434526ms)",
+      "2026-11-19T17:28:36.9684013Z ✔ the stamper exception requires its existing active trigger attachment (91.027664ms)",
+      "2026-11-19T17:28:36.9693518Z ✔ real PostgreSQL matching accepts both fictional canary pairs and refuses mixed or unknown pairs (1236.418115ms)",
+      "2026-11-19T17:28:36.9695722Z ✔ revoking optional stamper EXECUTE preserves existing trigger writes and blocks direct calls (169.937575ms)",
+      "2026-11-19T17:28:36.9700167Z ✔ the complete candidate refuses absent private dependencies before business changes (352.410705ms)",
+      "2026-11-19T17:28:36.9701821Z ✔ partial wrapping core preserves native bodies/data and rollback refuses forged backups (3086.035539ms)",
+      "2026-11-19T17:28:38.4511953Z LOT5B_ROLE_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T17:28:40.0743755Z ✔ closed existing ADMIN grants permit a read-only preflight without changing memberships (252.935516ms)",
+      "2026-11-19T17:28:40.0748108Z ✔ missing closed ADMIN on the V7 writer refuses before any grant changes (247.830898ms)",
+      "2026-11-19T17:28:40.0750337Z ✔ a second active grant made by postgres can be closed without losing managed ADMIN (86.457968ms)",
+      "2026-11-19T17:28:40.0752324Z ✔ a different grantor with active INHERIT and SET is refused before maintenance (85.597544ms)",
+      "2026-11-19T17:28:40.0761350Z ✔ residual inherited privileges alone are refused (85.286619ms)",
+      "2026-11-19T17:28:40.0765238Z ✔ residual SET authority alone is refused (85.659546ms)",
+      "2026-11-19T17:28:40.0767035Z ✔ an indirect membership cannot survive the projected closing unnoticed (85.437155ms)",
+      "2026-11-19T17:28:40.0770606Z ✔ review: SET to an intermediate role followed by inherited writer rights is refused (85.830817ms)",
+      "2026-11-19T17:28:40.0773541Z ✔ a browser membership in a closed writer is refused (85.550832ms)",
+      "2026-11-19T17:28:40.0791348Z ✔ a writer that can log in is refused (85.499198ms)",
+      "2026-11-19T17:28:40.0793009Z ✔ the normal closing statements do not close a grant made by another grantor (85.52761ms)",
+      "2026-11-19T17:28:40.0794810Z ✔ a refusal rolls back all fictional setup and leaves the original catalogue intact (252.238729ms)",
+      "2026-11-19T17:28:41.6297709Z LOT5B_STORAGE_AUTHORITY_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T17:28:42.6284221Z ✔ DML grants allow the candidate locks but no schema CREATE or table ownership is implied (327.776884ms)",
+      "2026-11-19T17:28:42.6298621Z ✔ granting schema CREATE alone does not authorize policy creation on an existing table (249.825601ms)",
+      "2026-11-19T17:28:42.6300891Z ✔ the table owner can create a restrictive policy without schema CREATE, then rollback preserves all sentinels (253.234505ms)",
+      "2026-11-19T17:28:51.2128468Z LOT5B_V7_DIRECT_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)",
+      "2026-11-19T17:29:02.9304447Z ✔ missing Missions definitions or standalone fragment refuse atomically before installation (864.697614ms)",
+      "2026-11-19T17:29:02.9309436Z ✔ owner-only creator defaults permit an atomic installation (326.365918ms)",
+      "2026-11-19T17:29:02.9317000Z ✔ a temporarily opened administration writer must not inherit V7 (265.557538ms)",
+      "2026-11-19T17:29:02.9319617Z ✔ direct guard installs with no V7 membership and exactly the two authorized new grants (917.687902ms)",
+      "2026-11-19T17:29:02.9323355Z ✔ initial pending profile, household, quota and replay preserve native identities and idempotence (450.140285ms)",
+      "2026-11-19T17:29:02.9325511Z ✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (1518.935068ms)",
+      "2026-11-19T17:29:02.9328783Z ✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (507.511609ms)",
+      "2026-11-19T17:29:02.9341708Z ✔ no household can be created without the explicit initial quota (260.375018ms)",
+      "2026-11-19T17:29:02.9343091Z ✔ native profile CAS, parent/child and household separation remain enforced (601.251985ms)",
+      "2026-11-19T17:29:02.9358780Z ✔ direct restrictive policies and role-conditioned triggers target only V7 (743.284013ms)",
+      "2026-11-19T17:29:02.9360353Z ✔ unexpected global and per-schema creator defaults are refused before any write (3319.711536ms)",
+      "2026-11-19T17:29:02.9361258Z ✔ anon authenticated and service_role gain no access to new functions or schemas (1343.24349ms)",
+      "2026-11-19T17:29:02.9362105Z ✔ the one private guard has a closed search_path and a non-login non-bypass owner (248.282418ms)",
+      "2026-11-19T17:29:02.9374913Z ✔ forged active metadata never overrides the registry suspension (251.985613ms)",
+      "2026-11-19T17:29:03.7927964Z ✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (861.774756ms)",
+      "2026-11-19T17:29:06.3062880Z LOT5B_V7_HTTP_BEFORE_ROLLBACK GET_POST_STABLE 10/10; private guard unexposed",
+      "2026-11-19T17:29:06.3064937Z LOT5B_V7_HTTP_AUTHORIZED_PROFILE 1/1",
+      "2026-11-19T17:29:06.8622832Z LOT5B_V7_HTTP_SESSION_DENIAL 4/4",
+      "2026-11-19T17:29:07.6337431Z V7_ROLLBACK_DRIFT_RESULTS [{\"name\":\"indirect-role-coupling\",\"status\":3,\"output\":\"\"},{\"name\":\"business-rls-disabled\",\"status\":3,\"output\":\"\"},{\"name\":\"journal-rls-disabled\",\"status\":3,\"output\":\"\"},{\"name\":\"journal-acl-opened\",\"status\":3,\"output\":\"\"}]",
+      "2026-11-19T17:29:12.1937327Z LOT5B_V7_HTTP_AFTER_ROLLBACK GET_POST_STABLE 10/10; writes remain denied",
+      "2026-11-19T17:29:12.3374865Z ✔ quota upgrade contention is a retryable 40001 with no data or quota changes (290.982735ms)",
+      "2026-11-19T17:29:12.3376622Z ✔ preservation preflight keeps every other writer ADMIN check (266.27999ms)",
+      "2026-11-19T17:29:12.3381986Z ✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (87.593567ms)",
+      "2026-11-19T17:29:12.3383791Z ✔ read-only invitation previews preserve valid, invalid and STABLE contracts (610.571822ms)",
+      "2026-11-19T17:29:12.3392170Z ✔ real local PostgREST GET and POST preserve all three STABLE read contracts (1350.515263ms)",
+      "2026-11-19T17:29:12.3395720Z ✔ real PostgREST retains denial after suspension or session invalidation (555.875598ms)",
+      "2026-11-19T17:29:12.3397777Z ✔ rollback refuses role coupling disabled RLS or untrusted journal metadata before any change (1182.894701ms)",
+      "2026-11-19T17:29:12.3400096Z ✔ full guard rollback restores previews, removes both grants and retains the V7 write fence (4148.309733ms)",
+      "2026-11-19T17:29:12.3481285Z ℹ tests 70",
+      "2026-11-19T17:29:12.3481692Z ℹ suites 0",
+      "2026-11-19T17:29:12.3481980Z ℹ pass 70",
+      "2026-11-19T17:29:12.3482195Z ℹ fail 0",
+      "2026-11-19T17:29:12.3482415Z ℹ cancelled 0",
+      "2026-11-19T17:29:12.3482646Z ℹ skipped 0",
+      "2026-11-19T17:29:12.3482886Z ℹ todo 0",
+      "2026-11-19T17:29:12.3488022Z ℹ duration_ms 57854.537329"
+    ]
+  },
+  "hostedProjectCalls": 0,
+  "hostedWrites": 0,
+  "realAccountRowsReadOrChanged": 0,
+  "limitations": [
+    "Full candidate retains all 12 private Missions metadata gates and refuses missing bodies; functional tests omit ONLY that gate in memory, no private stub or shipped bypass flag",
+    "16-node graph covers published local native code, not independently verified hosted definitions",
+    "Auth/session behavior uses fictional fixture; historical installer BYPASSRLS assumption proves no managed Auth visibility; V7 and guard owner NOBYPASSRLS",
+    "Existing coordinated Auth bridge/helper/activation/Storage fingerprint integration remains unprepared; full hosted package not declared ready",
+    "No hosted PostgreSQL/PostgREST/component version, permissions, restoration, real account or signed capability validated",
+    "No new GoTrue, SMTP, Storage HTTP or application/UI campaign",
+    "Rollback leaves writes closed and base Lot2A installed, not a pre-administration restoration",
+    "Two-grant exception is local only; hosted change needs separate human authorization and missing preflight/backup evidence"
+  ],
+  "codeInputs": [
+    {
+      "path": ".github/workflows/dobby-private-access-compatibility.yml",
+      "sha256": "5bf8f0c6ca67cdd2660bd1b6501b734377284e368f67d6940aa8bd0fbc0197a3"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-v7-preserved.mjs",
+      "sha256": "570d8681e8aead74ba1a782f7997ffd3756fcf02f4b8311bd238e42c2c6e05b3"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved-state.mjs",
+      "sha256": "0f45f31080aaa0c9c3f165eb1908482bd00cfe444c450c86d38595dc6bd1f15d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.candidate.sql",
+      "sha256": "22b52d282fb687f25183a306e74e93b3cc59f15185705c851103ea476e69152d"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.guards.sql",
+      "sha256": "ddc49ad1c0b8f295089003bc36845827f74feef129f9302490c12132f80b9811"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.roles.preflight.sql",
+      "sha256": "bdf0a5994679cae6eeaecf308fa859c1352f634ccbb15aaf61422b8b19973ce7"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/v7-preserved.rollback.sql",
+      "sha256": "051c35669f4c34d6f039850f900c243eb59701d4160c8a8424accddb9ea39850"
+    },
+    {
+      "path": "tests/private-access/lot5b/local-rest.mjs",
+      "sha256": "4b92331033e4894289ed66bec0f7d7f0b902d69c6eb0063ae0554df27b0877e7"
+    },
+    {
+      "path": "tests/private-access/lot5b/v7-preserved.test.mjs",
+      "sha256": "bd9f315a98c70cc32a7484e4e39f23c69eb175d8b25ce1b63bc627d6d4275d85"
+    }
+  ],
+  "protectedInputsUnchanged": [
+    {
+      "path": "supabase/migrations/20261117203208_dobby_private_access_foundation.sql",
+      "sha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a"
+    },
+    {
+      "path": "supabase/migrations/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "b491737bbb9c45fb7be5b1677b19f1dda4c7488980f8636d7d076635376f5c81"
+    },
+    {
+      "path": "supabase/migrations/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466"
+    },
+    {
+      "path": "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5"
+    },
+    {
+      "path": "supabase/rollbacks/20261117215619_dobby_private_access_tables_rpc.sql",
+      "sha256": "4cba8f95402b15f811008c641f9d0b10ca6664bfcdc28f0f4d8ce81ef4c27cd2"
+    },
+    {
+      "path": "supabase/rollbacks/20261118112535_dobby_private_access_storage.sql",
+      "sha256": "950d91c37718a3ea8608ead181a509f38065c4166f99491be3966e8d82940f2f"
+    },
+    {
+      "path": "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql",
+      "sha256": "32b4c5350aea34e32930456b2da2bae70b562262db3cc0a9e6b45449fc7899b9"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/build-variants.mjs",
+      "sha256": "5799ecad32aecfa64656d7b19705dccba047602f2cd99f60c31e5f89de7079cf"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+      "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+      "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/catalogue.preflight.sql",
+      "sha256": "c299518b6c7730c0e3963d633373232560e346838040af3538c20ed3e5685177"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/missions.preflight.sql",
+      "sha256": "bdcf7bd37c3b68e471017c38346db5950b9ac2de517caf0557e56f4324bff244"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.candidate.sql",
+      "sha256": "2eb172f7943b833b7f430373a580aa443bcd6bdec5c4ac55a83f168951b23ccb"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/lot2a-compatible.rollback.sql",
+      "sha256": "e9e028892504835fe5b2a55e4316bbecd376bfb64bf31d865cfe316b64f54c76"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+      "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+    },
+    {
+      "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+      "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+    }
+  ],
+  "proofFiles": [
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/ci-pr.log",
+      "sha256": "4c72ea389f0f27729357e0e9e6beb2cb8aaf4f44ee1fb561656744687dac3546"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/postgrest-version.log",
+      "sha256": "6779ba472bd2c9e1645f150942536ad0515c3686a9959f47fcf5f766c300f11c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-after-review.log",
+      "sha256": "289a600970bf756541a566cda1efda7b88cc2b0b648e6e743912883fcfe017c0"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-expanded-http.log",
+      "sha256": "fdc4db5894fcd0235032b7c8d52117cc983845a8d8bf6e84ff800fb20f157ac7"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-final-local.log",
+      "sha256": "2fc6100e517c0d7714feeb656d62b2992c81ea34c79c950d8801471bfec43180"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-first-green.log",
+      "sha256": "c40292cf3fe0bf50dd26f8436234ad046580af93290fc85ebb6be8bc19b8bb2c"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-readonly-red.log",
+      "sha256": "6b6aa01c73b2089e1fbd2ca9019ecdebe4f6bffd794d5c2bc0ebec5edd4c0e68"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-review-red.log",
+      "sha256": "9cbd4f84ab373b76093718501b242c5732bd8c36c5986546afdfe515371c0316"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5b/preuves/v7-garde-directe/v7-direct-second-green.log",
+      "sha256": "5d7558d00ec8b71d43a6ddfe76859beaf286aae985876f5a4e396a0789fc111c"
+    }
+  ],
+  "documentCommit": "[skip ci]; nine code/test/workflow inputs remain byte-identical to codeTestedCommit; no new CI claimed for documentation SHA"
+}

@@ -1,0 +1,33 @@
+LOT5B_V7_DIRECT_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ missing Missions definitions or standalone fragment refuse atomically before installation (1018.27971ms)
+✔ owner-only creator defaults remain usable without adding any writer grant (380.279252ms)
+✔ direct guard installs with no V7 membership and exactly the two authorized new grants (1204.417316ms)
+✔ initial pending profile, household, quota and replay preserve native identities and idempotence (338.995009ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (2204.321764ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (653.124704ms)
+✔ no household can be created without the explicit initial quota (476.663027ms)
+✔ native profile CAS, parent/child and household separation remain enforced (884.831332ms)
+✔ direct restrictive policies and role-conditioned triggers target only V7 (1076.439581ms)
+✔ unexpected global and per-schema creator defaults are refused before any write (4340.128648ms)
+✔ anon authenticated and service_role gain no access to new functions or schemas (1598.191273ms)
+✔ the one private guard has a closed search_path and a non-login non-bypass owner (336.894606ms)
+✔ forged active metadata never overrides the registry suspension (318.071659ms)
+✔ replay holds authorization SHARE until completion and rejects a subsequent suspension (971.237567ms)
+LOT5B_V7_HTTP_BEFORE_ROLLBACK GET_POST_STABLE 10/10; private guard unexposed
+LOT5B_V7_HTTP_SESSION_DENIAL 4/4
+LOT5B_V7_HTTP_AFTER_ROLLBACK GET_POST_STABLE 10/10; writes remain denied
+✔ quota upgrade contention is a retryable 40001 with no data or quota changes (347.13916ms)
+✔ preservation preflight keeps every other writer ADMIN check (330.082552ms)
+✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (119.025825ms)
+✔ read-only invitation previews preserve valid, invalid and STABLE contracts (834.774041ms)
+✔ real local PostgREST GET and POST preserve all three STABLE read contracts (1588.382082ms)
+✔ real PostgREST retains denial after suspension or session invalidation (730.120037ms)
+✔ full guard rollback restores previews, removes both grants and retains the V7 write fence (5468.686578ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44333.038849

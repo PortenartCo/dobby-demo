@@ -1,0 +1,206 @@
+LOT5B_V7_PRESERVED_RUNTIME 17.7 (Debian 17.7-3.pgdg13+1)
+✔ missing Missions definitions or standalone fragment refuse atomically before installation (1068.321373ms)
+✔ owner-only creator defaults remain usable without adding any writer grant (400.863711ms)
+✖ direct guard installs with no V7 membership and exactly the two authorized new grants (876.117623ms)
+✖ initial pending profile, household, quota and replay preserve native identities and idempotence (182.720121ms)
+✔ unapproved and suspended accounts cannot use either old RPC arity with the old session claims (1998.51689ms)
+✔ live-session existence and reactivation cutoff override the unchanged old JWT claims (582.078825ms)
+✔ no household can be created without the explicit initial quota (306.056563ms)
+✖ native profile CAS, parent/child and household separation remain enforced (204.249171ms)
+✖ direct restrictive policies and role-conditioned triggers target only V7 (871.292602ms)
+✖ replay holds authorization SHARE until completion and rejects a subsequent suspension (221.079285ms)
+✖ quota upgrade contention is a retryable 40001 with no data or quota changes (251.451804ms)
+✔ preservation preflight keeps every other writer ADMIN check (309.78492ms)
+✔ preservation preflight refuses a mixed SET then INHERIT path to untouched V7 (97.501703ms)
+✖ read-only invitation previews preserve valid, invalid and STABLE contracts (199.698037ms)
+✖ full guard rollback restores previews, removes both grants and retains the V7 write fence (1839.631949ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 7
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25066.188761
+
+✖ failing tests:
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:56:1
+✖ direct guard installs with no V7 membership and exactly the two authorized new grants (876.117623ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   [
+  -     17221,
+  -     16385,
+  -     'USAGE',
+  -     false
+  -   ]
+  - ]
+  
+      at onlyGateDelta (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:36:9)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:60:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ [ 17221, 16385, 'USAGE', false ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:66:1
+✖ initial pending profile, household, quota and replay preserve native identities and idempotence (182.720121ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42501: Active authorized session required
+  CONTEXT:  PL/pgSQL function public.dobby_v7_context() line 1 at RAISE
+  PL/pgSQL function public.dobby_v7_update_profile(jsonb,bigint) line 3 during statement block local variable initialization
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:68:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:90:1
+✖ native profile CAS, parent/child and household separation remain enforced (204.249171ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42501: Active authorized session required
+  CONTEXT:  PL/pgSQL function public.dobby_v7_context() line 1 at RAISE
+  PL/pgSQL function public.dobby_v7_update_profile(jsonb,bigint) line 3 during statement block local variable initialization
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+  
+      at reject (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:27:71)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:91:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'ERROR:  42501: Active authorized session required\nCONTEXT:  PL/pgSQL function public.dobby_v7_context() line 1 at RAISE\nPL/pgSQL function public.dobby_v7_update_profile(jsonb,bigint) line 3 during statement block local variable initialization\nLOCATION:  exec_stmt_raise, pl_exec.c:3911\n',
+    expected: /ERROR:  40001\b/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:95:1
+✖ direct restrictive policies and role-conditioned triggers target only V7 (871.292602ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   [
+  -     17221,
+  -     16385,
+  -     'USAGE',
+  -     false
+  -   ]
+  - ]
+  
+      at onlyGateDelta (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:36:9)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:99:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ [ 17221, 16385, 'USAGE', false ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:101:1
+✖ replay holds authorization SHARE until completion and rejects a subsequent suspension (221.079285ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  Active authorized session required
+  CONTEXT:  PL/pgSQL function dobby_access_v7_gate.check_access() line 7 at RAISE
+  SQL statement "SELECT *        FROM dobby_v7_private.operations WHERE actor_id=p_actor AND operation_id=p_id"
+  PL/pgSQL function dobby_v7_private.operation(uuid,uuid,text,jsonb) line 5 at SQL statement
+  PL/pgSQL function public.dobby_v7_create_household(text,uuid) line 6 at assignment
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:109:54)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:113:1
+✖ quota upgrade contention is a retryable 40001 with no data or quota changes (251.451804ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /ERROR:  40001\b/. Input:
+  
+  'ERROR:  42501: Active authorized session required\n' +
+    'CONTEXT:  PL/pgSQL function public.dobby_v7_context() line 1 at RAISE\n' +
+    'PL/pgSQL function public.dobby_v7_update_profile(jsonb,bigint) line 3 during statement block local variable initialization\n' +
+    'LOCATION:  exec_stmt_raise, pl_exec.c:3911\n'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:118:46)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ERROR:  42501: Active authorized session required\nCONTEXT:  PL/pgSQL function public.dobby_v7_context() line 1 at RAISE\nPL/pgSQL function public.dobby_v7_update_profile(jsonb,bigint) line 3 during statement block local variable initialization\nLOCATION:  exec_stmt_raise, pl_exec.c:3911\n',
+    expected: /ERROR:  40001\b/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:139:1
+✖ read-only invitation previews preserve valid, invalid and STABLE contracts (199.698037ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'invalid' !== 'valid'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:149:55)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'invalid',
+    expected: 'valid',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5b/v7-preserved.test.mjs:154:1
+✖ full guard rollback restores previews, removes both grants and retains the V7 write fence (1839.631949ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  '0' !== '1'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5b/v7-preserved.test.mjs:165:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '0',
+    expected: '1',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

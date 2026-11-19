@@ -49,3 +49,20 @@ Les montages intermédiaires défectueux sont conservés et séparés des preuve
 Réserves explicites : le retour est une quarantaine partielle conservant le défaut READ ONLY ; les droits induits par DEFAULT PRIVILEGES inattendus ne sont pas couverts par l’invariant de seules fonctions V7 ; aucune preuve hébergée/HTTP ou Missions intégrale ajoutée. La piste USAGE/EXECUTE sur une nouvelle garde privée exige une exception utilisateur au périmètre de privilèges V7 et n’est pas appliquée.
 
 La relecture finale n’identifie aucun Critical/Important empêchant **la livraison diagnostique BLOQUÉE uniquement**. L’en-tête généré a été précisé « BLOCKED EXPERIMENT / diagnostic only ». Aucun runtime ni appel externe exécuté par le reviewer, aucun avis d’activation, fusion ou déploiement.
+
+## Correction 25006 — garde privée directe
+
+Nouvelle revue indépendante en lecture seule du candidat/générateur, journal, préflight, rollback et tests. Le périmètre autorise désormais les deux nouveaux droits USAGE/EXECUTE sur la garde dédiée. Le reviewer n’a exécuté aucun runtime ni appel externe.
+
+Trois Important et un complément ont donné des contre-épreuves locales :
+
+- Le rollback ne vérifiait pas l’activation RLS/owner des six tables. RLS désactivée, il acceptait le retrait et un profil non autorisé retournait un foyer dans la transaction fictive. Contrôle owner/RLS/absence d’héritage ajouté avant mutation et après retrait ; état FORCE également photographié.
+- Le writer d’administration pouvait hériter de V7 pendant son ouverture temporaire. Le préflight l’acceptait. Le contrôle partagé d’isolation transitive le refuse désormais avant toute ouverture.
+- Un couplage SOCLE → intermédiaire → V7 ajouté après installation échappait au snapshot des seules attributions directes V7. Le rollback l’acceptait. Même contrôle MEMBER transitif à l’installation et au rollback, y compris pour les rôles clients et les autres writers.
+- Complément : journal privé sans réattestation RLS/ACL. Contrôle owner postgres, RLS activée, FORCE désactivé, ACL table/colonnes strictes avant confiance dans ses sept snapshots.
+
+[RED de revue](preuves/v7-garde-directe/v7-direct-review-red.log) : 3 groupes, 1 succès et 2 échecs réels avant correction ; quatre dérives acceptées dans le groupe rollback. [Après correction](preuves/v7-garde-directe/v7-direct-after-review.log) puis [final local](preuves/v7-garde-directe/v7-direct-final-local.log) : 23/23. Les quatre dérives sont refusées avant mutation, le quota/replay et les lectures restent fonctionnels. Le reviewer a relu les correctifs : aucun Critical/Important restant dans les deltas relus. Deux assertions supplémentaires (collision d’idempotence 22023 et profil autorisé HTTP) ont ensuite été ajoutées, sans changement SQL.
+
+Le premier RED de cette mission reproduit 25006 avec une attente de lecture réussie. Le premier passage implémenté avait 7/15 réussis et 8 échecs : les OID JSON revenaient en texte et l’assertion attendait des nombres ; l’assertion corrigée n’a élargi aucun droit SQL. Les échecs suivants de ce passage dépendaient de la préparation interrompue. Les journaux intermédiaires sont conservés, sans les attribuer au code final.
+
+L’avis concerne la faisabilité locale et le retrait complet **de la nouvelle garde**, avec fences false et socle Lot 2A conservés. Il ne vaut ni désinstallation totale du dispositif, ni preuve des définitions/permissions hébergées ou des douze corps privés Missions, ni autorisation de bascule.
