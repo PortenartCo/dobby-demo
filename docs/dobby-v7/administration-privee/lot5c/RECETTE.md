@@ -1,6 +1,6 @@
 # Recette après installation future — non exécutée intégralement
 
-Le paquet est **NO-GO** tant que les prévisualisations valides échouent. Les preuves des Lots 1–5B restent historiques ; les lignes ci-dessous sont des critères de recette au SHA/configuration final, sans campagne distante autorisée implicitement.
+Les [prévisualisations valides passent désormais localement](CORRECTION-LECTURES.md). Le paquet reste **NO-GO** pour les validations Missions, restauration et hébergement. Les preuves des Lots 1–5B restent historiques ; les lignes ci-dessous sont des critères de recette au SHA/configuration final, sans campagne distante autorisée implicitement.
 
 Utiliser owner et comptes canaris fictifs, deux foyers H1/H2 et fichiers factices, circuit SMTP privé. Les vrais Parents A/B font uniquement l’objet d’une attestation privée de conservation et d’un parcours explicitement autorisé ; aucune suspension/révocation de leurs comptes. L’ouverture de gates enfants réelles exige un accord distinct ; leur recette peut rester confinée à la copie fictive.
 
@@ -8,8 +8,8 @@ Utiliser owner et comptes canaris fictifs, deux foyers H1/H2 et fichiers factice
 | --- | --- |
 | Connexion/refresh/recovery | Compte admis actif : contexte canonique stable ; owner reconnu par UUID explicite. Mauvaise session, refresh invalide, expirée ou borne dépassée : refus malgré ancien JWT. Recovery/PKCE et refus d’un lien utilisé sur autre compte conformes au Lot 3. |
 | Parent A/B | Mêmes UUID, foyer, memberId, liaisons actives, révisions et contenus famille/Missions, crédits/magie et droits. Aucun nouveau profil/foyer, enrôlement global ou réinvitation B. Comparaison privée avant/après et après restauration. |
-| Invitations adultes | Nominative, approbation owner, cible confirmée, bonne génération et échéance. Prévisualisation valide/invalides GET et POST STABLE/READ ONLY. Acceptation atomique et replay ; autre compte/foyer ou ancienne admission refusés. **Chemin valide actuellement BLOQUÉ 25006.** |
-| Invitations enfants | Liaison nominative au profil enfant existant, gates fermées par défaut ; sous gates fictives autorisées, prévisualisation et acceptation valides sans changement de session/foyer indu. Autre cible, profil déjà lié, lien expiré ou gates fermées : refus. **Lecture valide actuellement BLOQUÉE 25006.** |
+| Invitations adultes | Nominative, approbation owner, cible confirmée, bonne génération et échéance. Prévisualisation valide/invalides GET et POST STABLE/READ ONLY. Acceptation atomique et replay ; autre compte/foyer ou ancienne admission refusés. **READ ONLY et acceptation PostgreSQL PASS local ; HTTP intégré encore à vérifier.** |
+| Invitations enfants | Liaison nominative au profil enfant existant, gates fermées par défaut ; sous gates fictives autorisées, prévisualisation et acceptation valides sans changement de session/foyer indu. Autre cible, profil déjà lié, lien expiré ou gates fermées : refus. **READ ONLY et acceptation PostgreSQL PASS local ; HTTP intégré encore à vérifier.** |
 | Livraison | Une opération/CAS, résultat incertain conservé sans renvoi automatique ; reprise explicite. Aucun e-mail externe avant autorisation et preuve de configuration SMTP. |
 | Autorisations | Owner admin seul ; non-approuvé/suspendu sans accès métier. Parent/enfant et H2 conservent leurs limites ; aucune lecture de contenus H2 par le writer admin. ACL/defaults et anciennes RPC contrôlés. |
 | Création/profil | Profil provisoire → foyer pour compte explicitement approuvé ; quota une fois, idempotence/replay, collision de payload, CAS des révisions et autorisations live. Aucun ancien RPC ne contourne la garde directe V7. |

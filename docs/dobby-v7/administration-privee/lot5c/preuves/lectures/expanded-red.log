@@ -1,0 +1,136 @@
+LOT5C_VALID_READONLY_RESULTS [{"name":"dobby_v7_preview_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"},{"name":"dobby_v7_preview_child_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_child_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_child_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"}]
+✔ ordered package exists with one closed installation and separate activation (2.153837ms)
+✔ full preflight refuses missing private Missions without persistent DDL (406.621434ms)
+✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1609.67596ms)
+✔ partial local assembly refuses missing human prerequisites before creating the foundation (220.368561ms)
+✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1401.572377ms)
+✔ activation refuses absent or invisible session and identity without partially opening flags (1125.799326ms)
+✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (1058.284949ms)
+✔ distributed quarantine contains no mutable continuation after savepoint error recovery (339.061855ms)
+✖ assembled valid adult and child previews preserve READ ONLY contracts (715.171288ms)
+✖ bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks (796.367619ms)
+✖ read validator remains private and acceptance keeps the original requester locking guard (126.129392ms)
+✔ adult and child acceptances preserve revisions replay receipts and household separation (1304.127296ms)
+✖ concurrent requester suspension waits for acceptance and wins when committed first (672.882696ms)
+✖ historical acceptance revalidates admission identity and session after waiting for authorization locks (113213.701888ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 9
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143102.017696
+
+✖ failing tests:
+
+test at tests/private-access/lot5c/package.test.mjs:112:1
+✖ assembled valid adult and child previews preserve READ ONLY contracts (715.171288ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+  CONTEXT:  SQL statement "SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'
+    AND NOT session_boundary_pending AND generation=p_generation FOR SHARE"
+  PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM
+  SQL statement "SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)"
+  PL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM
+  SQL statement "SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)"
+  PL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM
+  SQL function "public__dobby_v7_preview_invitation" statement 1
+  PL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment
+  LOCATION:  PreventCommandIfReadOnly, utility.c:407
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:133:33)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:154:1
+✖ bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks (796.367619ms)
+  AssertionError [ERR_ASSERTION]: valid: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+  CONTEXT:  SQL statement "SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'
+    AND NOT session_boundary_pending AND generation=p_generation FOR SHARE"
+  PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM
+  SQL statement "SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)"
+  PL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM
+  SQL statement "SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)"
+  PL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM
+  SQL function "public__dobby_v7_preview_invitation" statement 1
+  PL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment
+  LOCATION:  PreventCommandIfReadOnly, utility.c:407
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:178:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:184:1
+✖ read validator remains private and acceptance keeps the original requester locking guard (126.129392ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + ''
+  - 'dobby_access_writer|s|t|{"search_path=\\"\\""}'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:186:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '',
+    expected: 'dobby_access_writer|s|t|{"search_path=\\"\\""}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:215:1
+✖ concurrent requester suspension waits for acceptance and wins when committed first (672.882696ms)
+  Error: write EPIPE
+      at afterWriteDispatched (node:internal/stream_base_commons:159:15)
+      at writeGeneric (node:internal/stream_base_commons:150:3)
+      at Socket._writeGeneric (node:net:1171:11)
+      at Socket._write (node:net:1183:8)
+      at writeOrBuffer (node:internal/streams/writable:570:12)
+      at _write (node:internal/streams/writable:499:10)
+      at Writable.end (node:internal/streams/writable:821:17)
+      at Socket.end (node:net:942:31)
+      at Object.finish (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:91:73)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:227:25) {
+    errno: -32,
+    code: 'EPIPE',
+    syscall: 'write'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:233:1
+✖ historical acceptance revalidates admission identity and session after waiting for authorization locks (113213.701888ms)
+  AssertionError [ERR_ASSERTION]: SQL marker timeout
+      at Object.waitFor (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:90:83)
+      at async TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:243:142)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
