@@ -28,4 +28,5 @@ jobs:
       - name: Causal permission and rollback checks, no hosted connection
         run: |
           node supabase/compatibility/lot5b/build-variants.mjs --check
+          node supabase/compatibility/lot5b/build-v7-preserved.mjs --check
           node --test --test-concurrency=1 tests/private-access/lot5b/*.test.mjs
