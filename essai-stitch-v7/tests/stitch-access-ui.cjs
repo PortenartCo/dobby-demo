@@ -47,6 +47,7 @@ async function capture(page,name,width){
   for(const width of widths){
    const context=await browser.newContext({viewport:{width,height:900},hasTouch:true,isMobile:width<768,locale:'fr-BE',reducedMotion:'reduce'});
    await context.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());
+   await require('./helpers/full-access-fixture.cjs')(context,origin);
    await context.addInitScript(()=>{
     if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
     let state={phase:'signed-out',configured:true,authenticated:false,verified:false};

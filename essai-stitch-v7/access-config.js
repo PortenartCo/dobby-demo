@@ -5,5 +5,7 @@
  */
 window.DobbyPublicConfig = Object.freeze({
   projectRef: 'pqcdkrwljgvgagzwrcmg',
+  // Pilot navigation only. Hosted Auth and invitation permissions are checked separately.
+  existingHouseholdOnly: true,
   publicKey: 'sb_publishable_ZIJtdwIFQFFqC7kderuG1A_Itccatg4'
 });

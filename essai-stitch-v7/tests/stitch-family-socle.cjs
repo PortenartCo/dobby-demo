@@ -8,6 +8,7 @@ let browser;
 async function fixture(mode){
  const context=await browser.newContext({viewport:{width:390,height:844},locale:'fr-BE',reducedMotion:'reduce'}),external=[];
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():(external.push(new URL(route.request().url()).origin),route.abort()));
+ await require('./helpers/full-access-fixture.cjs')(context,origin);
  await context.addInitScript(({mode,CHILD,PARENT,TOKEN})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const accepted=sessionStorage.getItem('TEST-socle-child-accepted')==='true',isChild=mode==='active-child'||accepted;

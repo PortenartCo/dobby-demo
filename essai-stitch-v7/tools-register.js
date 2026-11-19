@@ -124,10 +124,20 @@
   const native=E.win().DobbyFamilyMissions,ids=native.completionCandidateIds(row),members=ids.map(id=>state.familyMembers.find(m=>m.id===id)).filter(Boolean),dialog=el('dialog','','dv7-participant-dialog'),form=el('form',''),heading=el('h2','Qui a réellement participé ?'),description=el('p','Une seule récompense totale, répartie uniquement entre les participants choisis.'),problem=el('p','');problem.setAttribute('role','alert');dialog.setAttribute('aria-labelledby','dv7-participant-title');heading.id='dv7-participant-title';form.append(heading,description);
   for(const member of members){const label=el('label',''),input=document.createElement('input');input.type='checkbox';input.name='participant';input.value=member.id;input.setAttribute('aria-label',member.name||member.firstName||'Membre');label.append(input,window.DobbyMemberAvatar.create(member,{className:'e04-avatar'}),document.createTextNode(member.name||member.firstName||'Membre'));form.append(label);}
   const confirm=el('button','Confirmer la mission'),cancel=el('button','Annuler');confirm.type='submit';cancel.type='button';cancel.onclick=()=>dialog.close();form.append(problem,confirm,cancel);dialog.append(form);document.body.append(dialog);const returnFocus=document.activeElement;dialog.addEventListener('close',()=>{dialog.remove();returnFocus?.focus?.();});
-  if(native.requiresSync()&&!E.win().DobbySharedRunesV3?.available?.()){problem.textContent='Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.';confirm.disabled=true;}
-  if(!members.length&&!native.canCompleteWithoutParticipants(row)){problem.textContent='Les personnes attribuées ne sont plus disponibles. Vérifiez l’attribution avant de terminer.';confirm.disabled=true;}
-  else if(!members.length&&!native.requiresSync()){description.textContent='Aucun membre pouvant recevoir des Runes. La mission sera terminée sans récompense.';}
-  form.addEventListener('submit',async event=>{event.preventDefault();if(confirm.disabled)return;confirm.disabled=true;try{const participants=[...new FormData(form).getAll('participant')];await native.complete(id,participants);dialog.close();window.DobbyStitchV7?.refresh();}catch(error){problem.textContent=error.message;confirm.disabled=false;}});dialog.showModal();
+  const engine=E.win(),listeners=new AbortController();
+  let submitting=false;
+  function updateEligibility(){
+   if(submitting)return;
+   const missing=!members.length&&!native.canCompleteWithoutParticipants(row);
+   const waiting=native.requiresSync()&&!engine.DobbySharedRunesV3?.available?.()&&!native.canCompleteSharedV2?.(row);
+   problem.textContent=missing?'Les personnes attribuées ne sont plus disponibles. Vérifiez l’attribution avant de terminer.':waiting?'Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.':'';
+   confirm.disabled=missing||waiting;
+  }
+  if(!members.length&&!native.requiresSync()&&native.canCompleteWithoutParticipants(row))description.textContent='Aucun membre pouvant recevoir des Runes. La mission sera terminée sans récompense.';
+  for(const event of ['dobby:access-change','dobby:missions-capability'])engine.addEventListener(event,updateEligibility,{signal:listeners.signal});
+  dialog.addEventListener('close',()=>listeners.abort(),{once:true});
+  updateEligibility();
+  form.addEventListener('submit',async event=>{event.preventDefault();if(confirm.disabled)return;submitting=true;confirm.disabled=true;try{const participants=[...new FormData(form).getAll('participant')];await native.complete(id,participants);dialog.close();window.DobbyStitchV7?.refresh();}catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}});dialog.showModal();
  }
  window.DobbyMissionParticipants=Object.freeze({open:missionParticipants});
  document.addEventListener('click',async event=>{const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(!b.dataset.dv7Complete&&b.disabled)return;try{if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);else{b.disabled=true;await E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen);window.DobbyStitchV7?.refresh();}}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}finally{if(b.isConnected)b.disabled=false;}},true);

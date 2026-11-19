@@ -13,6 +13,7 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
  const context=await browser.newContext({viewport:{width:390,height:844},locale:'fr-BE',reducedMotion:'reduce'});
  const external=[];
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():(external.push(new URL(route.request().url()).origin),route.abort()));
+ await require('./helpers/full-access-fixture.cjs')(context,origin);
  await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const grants={canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true};
