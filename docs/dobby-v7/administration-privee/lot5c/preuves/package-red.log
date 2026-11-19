@@ -1,0 +1,26 @@
+✖ ordered package exists with one closed installation and separate activation (1.43771ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.404659
+
+✖ failing tests:
+
+test at tests/private-access/lot5c/package.test.mjs:19:1
+✖ ordered package exists with one closed installation and separate activation (1.43771ms)
+  AssertionError [ERR_ASSERTION]: 00-preflight.sql missing
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:20:154)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,48 @@
+LOT5C_VALID_READONLY_RESULTS [{"name":"dobby_v7_preview_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"},{"name":"dobby_v7_preview_child_invitation","status":3,"stdout":"","stderr":"ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction\nCONTEXT:  SQL statement \"SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'\n  AND NOT session_boundary_pending AND generation=p_generation FOR SHARE\"\nPL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)\"\nPL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM\nSQL statement \"SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)\"\nPL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM\nSQL function \"public__dobby_v7_preview_child_invitation\" statement 1\nPL/pgSQL function public.dobby_v7_preview_child_invitation(text) line 1 at assignment\nLOCATION:  PreventCommandIfReadOnly, utility.c:407\n"}]
+✔ ordered package exists with one closed installation and separate activation (1.661738ms)
+✔ full preflight refuses missing private Missions without persistent DDL (483.686525ms)
+✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1654.142171ms)
+✔ partial local assembly refuses missing human prerequisites before creating the foundation (239.463849ms)
+✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1314.744012ms)
+✔ activation refuses absent or invisible session and identity without partially opening flags (1051.945091ms)
+✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (1002.599338ms)
+✖ assembled valid adult and child previews preserve READ ONLY contracts (628.842881ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27029.548701
+
+✖ failing tests:
+
+test at tests/private-access/lot5c/package.test.mjs:99:1
+✖ assembled valid adult and child previews preserve READ ONLY contracts (628.842881ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  25006: cannot execute SELECT FOR SHARE in a read-only transaction
+  CONTEXT:  SQL statement "SELECT 1 FROM dobby_access_private.authorizations WHERE user_id=p_user AND status='active'
+    AND NOT session_boundary_pending AND generation=p_generation FOR SHARE"
+  PL/pgSQL function dobby_access_private.assert_requester(uuid,bigint) line 3 at PERFORM
+  SQL statement "SELECT dobby_access_private.assert_requester(a.requested_by,a.requester_generation)"
+  PL/pgSQL function dobby_access_private.assert_invitation_admission(text,text) line 14 at PERFORM
+  SQL statement "SELECT dobby_access_private.assert_invitation_admission(p_token,p_kind)"
+  PL/pgSQL function dobby_socle_private.preview_invitation(text,text) line 3 at PERFORM
+  SQL function "public__dobby_v7_preview_invitation" statement 1
+  PL/pgSQL function public.dobby_v7_preview_invitation(text) line 1 at assignment
+  LOCATION:  PreventCommandIfReadOnly, utility.c:407
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:120:33)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,290 @@
+✔ ordered package exists with one closed installation and separate activation (2.932638ms)
+✔ full preflight and package refuse missing private Missions without persistent DDL (784.892496ms)
+✔ partial local assembly refuses missing human prerequisites before creating the foundation (187.295035ms)
+✖ partial assembly installs atomically with Auth bridge Storage and administration closed (270.944241ms)
+✖ activation refuses absent or invisible session and identity without partially opening flags (101.416208ms)
+✖ controlled positive activation uses bridged readers and preserves exactly two V7 rights (101.8736ms)
+✖ assembled session predicate drives Storage allow deny and preserves unrelated buckets (242.660204ms)
+✖ assembly preserves owner administration invitation delivery idempotence and V7 quota flow (97.868927ms)
+✖ actual assembled HTTP preserves STABLE reads and rejects the same JWT after suspension (1222.299318ms)
+✖ physical fictional backup restores OIDs roles data previews and package postflight (1957.3023ms)
+✖ functional administration stop retains active family reads and profile writes (222.57008ms)
+✖ complete quarantine retains all guards data and authorization history (336.389403ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 3
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27109.333703
+
+✖ failing tests:
+
+test at tests/private-access/lot5c/package.test.mjs:60:1
+✖ partial assembly installs atomically with Auth bridge Storage and administration closed (270.944241ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  P0001: Unreviewed public routine: public.dobby_access_context()
+  CONTEXT:  PL/pgSQL function inline_code_block line 29 at RAISE
+  LOCATION:  exec_stmt_raise, pl_exec.c:3911
+  
+  
+  3 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:63:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:70:1
+✖ activation refuses absent or invisible session and identity without partially opening flags (101.416208ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Controlled.*bridge probe required/. Input:
+  
+  'ERROR:  42P01: relation "dobby_access_legacy.lot5c_state" does not exist\n' +
+    "LINE 4:    WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass A...\n" +
+    '                       ^\n' +
+    "QUERY:  current_user<>'postgres' OR NOT EXISTS(SELECT 1 FROM pg_class WHERE oid=to_regclass('dobby_access_legacy.lot5c_state')\n" +
+    "  AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity)\n" +
+    "  OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a\n" +
+    "   WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass AND (a.grantee<>'postgres'::regrole OR a.is_grantable))\n" +
+    '  OR (SELECT count(*) FROM dobby_access_legacy.lot5c_state)<>1\n' +
+    '  OR (SELECT jsonb_agg(jsonb_build_array(p.oid,md5(pg_get_functiondef(p.oid)),p.proowner,p.proacl::text,p.provolatile,p.proconfig) ORDER BY p.oid)\n' +
+    ' FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN\n' +
+    " ('dobby_access_private','dobby_access_legacy','dobby_access_lot3_legacy','dobby_access_auth_bridge','dobby_access_v7_gate')\n" +
+    " OR n.nspname='public' AND p.proname LIKE 'dobby_access_%'\n" +
+    " OR p.oid IN (to_regprocedure('public.dobby_v7_context()'),to_regprocedure('public.dobby_v7_update_profile(jsonb,bigint)'),to_regprocedure('public.dobby_v7_create_household(text,uuid)'),to_regprocedure('public.dobby_v7_create_invitation(integer,uuid)'),to_regprocedure('public.dobby_v7_preview_invitation(text)'),to_regprocedure('public.dobby_v7_accept_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_revoke_invitation(uuid)'),to_regprocedure('public.dobby_v7_bind_existing_member(uuid,text,uuid)'),to_regprocedure('public.dobby_v7_update_magic(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_update_member(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_create_child_invitation(text,integer,uuid)'),to_regprocedure('public.dobby_v7_preview_child_invitation(text)'),to_regprocedure('public.dobby_v7_accept_child_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_family_capabilities()'),to_regprocedure('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_capabilities(uuid)'),to_regprocedure('public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v3_capabilities(uuid)'),to_regprocedure('public.dobby_sync_stamper()'),to_regprocedure('public.dobby_v2_grocery_stamp()'),to_regprocedure('public.dobby_v2_modules_stamp()'),to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)'),to_regprocedure('dobby_socle_private.is_parent(uuid)'),to_regprocedure('dobby_socle_private.can_read(uuid)'),to_regprocedure('dobby_socle_private.legacy_unlinked()'),to_regprocedure('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)'))\n" +
+    " OR n.nspname='dobby_socle_private' AND (p.proname LIKE 'access_%' OR p.proname IN ('accept_invitation','create_invitation','preview_invitation','add_pending_member'))) IS DISTINCT FROM (SELECT functions FROM dobby_access_legacy.lot5c_state WHERE singleton)\n" +
+    'CONTEXT:  PL/pgSQL function inline_code_block line 3 at IF\n' +
+    'LOCATION:  regclassin, regproc.c:911\n'
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:77:38)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `ERROR:  42P01: relation "dobby_access_legacy.lot5c_state" does not exist\nLINE 4:    WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass A...\n                       ^\nQUERY:  current_user<>'postgres' OR NOT EXISTS(SELECT 1 FROM pg_class WHERE oid=to_regclass('dobby_access_legacy.lot5c_state')\n  AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity)\n  OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a\n   WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass AND (a.grantee<>'postgres'::regrole OR a.is_grantable))\n  OR (SELECT count(*) FROM dobby_access_legacy.lot5c_state)<>1\n  OR (SELECT jsonb_agg(jsonb_build_array(p.oid,md5(pg_get_functiondef(p.oid)),p.proowner,p.proacl::text,p.provolatile,p.proconfig) ORDER BY p.oid)\n FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN\n ('dobby_access_private','dobby_access_legacy','dobby_access_lot3_legacy','dobby_access_auth_bridge','dobby_access_v7_gate')\n OR n.nspname='public' AND p.proname LIKE 'dobby_access_%'\n OR p.oid IN (to_regprocedure('public.dobby_v7_context()'),to_regprocedure('public.dobby_v7_update_profile(jsonb,bigint)'),to_regprocedure('public.dobby_v7_create_household(text,uuid)'),to_regprocedure('public.dobby_v7_create_invitation(integer,uuid)'),to_regprocedure('public.dobby_v7_preview_invitation(text)'),to_regprocedure('public.dobby_v7_accept_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_revoke_invitation(uuid)'),to_regprocedure('public.dobby_v7_bind_existing_member(uuid,text,uuid)'),to_regprocedure('public.dobby_v7_update_magic(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_update_member(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_create_child_invitation(text,integer,uuid)'),to_regprocedure('public.dobby_v7_preview_child_invitation(text)'),to_regprocedure('public.dobby_v7_accept_child_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_family_capabilities()'),to_regprocedure('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_capabilities(uuid)'),to_regprocedure('public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v3_capabilities(uuid)'),to_regprocedure('public.dobby_sync_stamper()'),to_regprocedure('public.dobby_v2_grocery_stamp()'),to_regprocedure('public.dobby_v2_modules_stamp()'),to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)'),to_regprocedure('dobby_socle_private.is_parent(uuid)'),to_regprocedure('dobby_socle_private.can_read(uuid)'),to_regprocedure('dobby_socle_private.legacy_unlinked()'),to_regprocedure('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)'))\n OR n.nspname='dobby_socle_private' AND (p.proname LIKE 'access_%' OR p.proname IN ('accept_invitation','create_invitation','preview_invitation','add_pending_member'))) IS DISTINCT FROM (SELECT functions FROM dobby_access_legacy.lot5c_state WHERE singleton)\nCONTEXT:  PL/pgSQL function inline_code_block line 3 at IF\nLOCATION:  regclassin, regproc.c:911\n`,
+    expected: /Controlled.*bridge probe required/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:81:1
+✖ controlled positive activation uses bridged readers and preserves exactly two V7 rights (101.8736ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42P01: relation "dobby_access_legacy.lot5c_state" does not exist
+  LINE 4:    WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass A...
+                         ^
+  QUERY:  current_user<>'postgres' OR NOT EXISTS(SELECT 1 FROM pg_class WHERE oid=to_regclass('dobby_access_legacy.lot5c_state')
+    AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity)
+    OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a
+     WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass AND (a.grantee<>'postgres'::regrole OR a.is_grantable))
+    OR (SELECT count(*) FROM dobby_access_legacy.lot5c_state)<>1
+    OR (SELECT jsonb_agg(jsonb_build_array(p.oid,md5(pg_get_functiondef(p.oid)),p.proowner,p.proacl::text,p.provolatile,p.proconfig) ORDER BY p.oid)
+   FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN
+   ('dobby_access_private','dobby_access_legacy','dobby_access_lot3_legacy','dobby_access_auth_bridge','dobby_access_v7_gate')
+   OR n.nspname='public' AND p.proname LIKE 'dobby_access_%'
+   OR p.oid IN (to_regprocedure('public.dobby_v7_context()'),to_regprocedure('public.dobby_v7_update_profile(jsonb,bigint)'),to_regprocedure('public.dobby_v7_create_household(text,uuid)'),to_regprocedure('public.dobby_v7_create_invitation(integer,uuid)'),to_regprocedure('public.dobby_v7_preview_invitation(text)'),to_regprocedure('public.dobby_v7_accept_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_revoke_invitation(uuid)'),to_regprocedure('public.dobby_v7_bind_existing_member(uuid,text,uuid)'),to_regprocedure('public.dobby_v7_update_magic(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_update_member(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_create_child_invitation(text,integer,uuid)'),to_regprocedure('public.dobby_v7_preview_child_invitation(text)'),to_regprocedure('public.dobby_v7_accept_child_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_family_capabilities()'),to_regprocedure('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_capabilities(uuid)'),to_regprocedure('public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v3_capabilities(uuid)'),to_regprocedure('public.dobby_sync_stamper()'),to_regprocedure('public.dobby_v2_grocery_stamp()'),to_regprocedure('public.dobby_v2_modules_stamp()'),to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)'),to_regprocedure('dobby_socle_private.is_parent(uuid)'),to_regprocedure('dobby_socle_private.can_read(uuid)'),to_regprocedure('dobby_socle_private.legacy_unlinked()'),to_regprocedure('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)'))
+   OR n.nspname='dobby_socle_private' AND (p.proname LIKE 'access_%' OR p.proname IN ('accept_invitation','create_invitation','preview_invitation','add_pending_member'))) IS DISTINCT FROM (SELECT functions FROM dobby_access_legacy.lot5c_state WHERE singleton)
+  CONTEXT:  PL/pgSQL function inline_code_block line 3 at IF
+  LOCATION:  regclassin, regproc.c:911
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:82:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:92:1
+✖ assembled session predicate drives Storage allow deny and preserves unrelated buckets (242.660204ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42P01: relation "dobby_access_private.authorizations" does not exist
+  LINE 1: UPDATE dobby_access_private.authorizations SET status='activ...
+                 ^
+  LOCATION:  parserOpenTable, parse_relation.c:1428
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:95:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:99:1
+✖ assembly preserves owner administration invitation delivery idempotence and V7 quota flow (97.868927ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42883: function public.dobby_access_admin(unknown, jsonb) does not exist
+  LINE 1: SELECT public.dobby_access_admin('invite',jsonb_build_object...
+                 ^
+  HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+  LOCATION:  ParseFuncOrColumn, parse_func.c:629
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:100:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:111:1
+✖ actual assembled HTTP preserves STABLE reads and rejects the same JWT after suspension (1222.299318ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42P01: relation "dobby_access_private.authorizations" does not exist
+  LINE 1: UPDATE dobby_access_private.authorizations SET status='suspe...
+                 ^
+  LOCATION:  parserOpenTable, parse_relation.c:1428
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:119:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:125:1
+✖ physical fictional backup restores OIDs roles data previews and package postflight (1957.3023ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  relation "dobby_access_legacy.lot5c_state" does not exist
+  LINE 4:    WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass A...
+                         ^
+  QUERY:  current_user<>'postgres' OR NOT EXISTS(SELECT 1 FROM pg_class WHERE oid=to_regclass('dobby_access_legacy.lot5c_state')
+    AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity)
+    OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a
+     WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass AND (a.grantee<>'postgres'::regrole OR a.is_grantable))
+    OR (SELECT count(*) FROM dobby_access_legacy.lot5c_state)<>1
+    OR (SELECT jsonb_agg(jsonb_build_array(p.oid,md5(pg_get_functiondef(p.oid)),p.proowner,p.proacl::text,p.provolatile,p.proconfig) ORDER BY p.oid)
+   FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN
+   ('dobby_access_private','dobby_access_legacy','dobby_access_lot3_legacy','dobby_access_auth_bridge','dobby_access_v7_gate')
+   OR n.nspname='public' AND p.proname LIKE 'dobby_access_%'
+   OR p.oid IN (to_regprocedure('public.dobby_v7_context()'),to_regprocedure('public.dobby_v7_update_profile(jsonb,bigint)'),to_regprocedure('public.dobby_v7_create_household(text,uuid)'),to_regprocedure('public.dobby_v7_create_invitation(integer,uuid)'),to_regprocedure('public.dobby_v7_preview_invitation(text)'),to_regprocedure('public.dobby_v7_accept_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_revoke_invitation(uuid)'),to_regprocedure('public.dobby_v7_bind_existing_member(uuid,text,uuid)'),to_regprocedure('public.dobby_v7_update_magic(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_update_member(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_create_child_invitation(text,integer,uuid)'),to_regprocedure('public.dobby_v7_preview_child_invitation(text)'),to_regprocedure('public.dobby_v7_accept_child_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_family_capabilities()'),to_regprocedure('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_capabilities(uuid)'),to_regprocedure('public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v3_capabilities(uuid)'),to_regprocedure('public.dobby_sync_stamper()'),to_regprocedure('public.dobby_v2_grocery_stamp()'),to_regprocedure('public.dobby_v2_modules_stamp()'),to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)'),to_regprocedure('dobby_socle_private.is_parent(uuid)'),to_regprocedure('dobby_socle_private.can_read(uuid)'),to_regprocedure('dobby_socle_private.legacy_unlinked()'),to_regprocedure('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)'))
+   OR n.nspname='dobby_socle_private' AND (p.proname LIKE 'access_%' OR p.proname IN ('accept_invitation','create_invitation','preview_invitation','add_pending_member'))) IS DISTINCT FROM (SELECT functions FROM dobby_access_legacy.lot5c_state WHERE singleton)
+  CONTEXT:  PL/pgSQL function inline_code_block line 3 at IF
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:132:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:138:1
+✖ functional administration stop retains active family reads and profile writes (222.57008ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42P01: relation "dobby_access_legacy.lot5c_state" does not exist
+  LINE 4:    WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass A...
+                         ^
+  QUERY:  current_user<>'postgres' OR NOT EXISTS(SELECT 1 FROM pg_class WHERE oid=to_regclass('dobby_access_legacy.lot5c_state')
+    AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity)
+    OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a
+     WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass AND (a.grantee<>'postgres'::regrole OR a.is_grantable))
+    OR (SELECT count(*) FROM dobby_access_legacy.lot5c_state)<>1
+    OR (SELECT jsonb_agg(jsonb_build_array(p.oid,md5(pg_get_functiondef(p.oid)),p.proowner,p.proacl::text,p.provolatile,p.proconfig) ORDER BY p.oid)
+   FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN
+   ('dobby_access_private','dobby_access_legacy','dobby_access_lot3_legacy','dobby_access_auth_bridge','dobby_access_v7_gate')
+   OR n.nspname='public' AND p.proname LIKE 'dobby_access_%'
+   OR p.oid IN (to_regprocedure('public.dobby_v7_context()'),to_regprocedure('public.dobby_v7_update_profile(jsonb,bigint)'),to_regprocedure('public.dobby_v7_create_household(text,uuid)'),to_regprocedure('public.dobby_v7_create_invitation(integer,uuid)'),to_regprocedure('public.dobby_v7_preview_invitation(text)'),to_regprocedure('public.dobby_v7_accept_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_revoke_invitation(uuid)'),to_regprocedure('public.dobby_v7_bind_existing_member(uuid,text,uuid)'),to_regprocedure('public.dobby_v7_update_magic(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_update_member(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_create_child_invitation(text,integer,uuid)'),to_regprocedure('public.dobby_v7_preview_child_invitation(text)'),to_regprocedure('public.dobby_v7_accept_child_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_family_capabilities()'),to_regprocedure('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_capabilities(uuid)'),to_regprocedure('public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v3_capabilities(uuid)'),to_regprocedure('public.dobby_sync_stamper()'),to_regprocedure('public.dobby_v2_grocery_stamp()'),to_regprocedure('public.dobby_v2_modules_stamp()'),to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)'),to_regprocedure('dobby_socle_private.is_parent(uuid)'),to_regprocedure('dobby_socle_private.can_read(uuid)'),to_regprocedure('dobby_socle_private.legacy_unlinked()'),to_regprocedure('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)'))
+   OR n.nspname='dobby_socle_private' AND (p.proname LIKE 'access_%' OR p.proname IN ('accept_invitation','create_invitation','preview_invitation','add_pending_member'))) IS DISTINCT FROM (SELECT functions FROM dobby_access_legacy.lot5c_state WHERE singleton)
+  CONTEXT:  PL/pgSQL function inline_code_block line 3 at IF
+  LOCATION:  regclassin, regproc.c:911
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:139:22)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/private-access/lot5c/package.test.mjs:143:1
+✖ complete quarantine retains all guards data and authorization history (336.389403ms)
+  AssertionError [ERR_ASSERTION]: ERROR:  42P01: relation "dobby_access_legacy.lot5c_state" does not exist
+  LINE 4:    WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass A...
+                         ^
+  QUERY:  current_user<>'postgres' OR NOT EXISTS(SELECT 1 FROM pg_class WHERE oid=to_regclass('dobby_access_legacy.lot5c_state')
+    AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity)
+    OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a
+     WHERE c.oid='dobby_access_legacy.lot5c_state'::regclass AND (a.grantee<>'postgres'::regrole OR a.is_grantable))
+    OR (SELECT count(*) FROM dobby_access_legacy.lot5c_state)<>1
+    OR (SELECT jsonb_agg(jsonb_build_array(p.oid,md5(pg_get_functiondef(p.oid)),p.proowner,p.proacl::text,p.provolatile,p.proconfig) ORDER BY p.oid)
+   FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname IN
+   ('dobby_access_private','dobby_access_legacy','dobby_access_lot3_legacy','dobby_access_auth_bridge','dobby_access_v7_gate')
+   OR n.nspname='public' AND p.proname LIKE 'dobby_access_%'
+   OR p.oid IN (to_regprocedure('public.dobby_v7_context()'),to_regprocedure('public.dobby_v7_update_profile(jsonb,bigint)'),to_regprocedure('public.dobby_v7_create_household(text,uuid)'),to_regprocedure('public.dobby_v7_create_invitation(integer,uuid)'),to_regprocedure('public.dobby_v7_preview_invitation(text)'),to_regprocedure('public.dobby_v7_accept_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_revoke_invitation(uuid)'),to_regprocedure('public.dobby_v7_bind_existing_member(uuid,text,uuid)'),to_regprocedure('public.dobby_v7_update_magic(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_update_member(text,jsonb,bigint,uuid)'),to_regprocedure('public.dobby_v7_create_child_invitation(text,integer,uuid)'),to_regprocedure('public.dobby_v7_preview_child_invitation(text)'),to_regprocedure('public.dobby_v7_accept_child_invitation(text,uuid)'),to_regprocedure('public.dobby_v7_family_capabilities()'),to_regprocedure('public.dobby_missions_v2_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_write_legacy_socle(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v2_capabilities(uuid)'),to_regprocedure('public.dobby_missions_v3_write(uuid,bigint,uuid,jsonb)'),to_regprocedure('public.dobby_missions_v3_capabilities(uuid)'),to_regprocedure('public.dobby_sync_stamper()'),to_regprocedure('public.dobby_v2_grocery_stamp()'),to_regprocedure('public.dobby_v2_modules_stamp()'),to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)'),to_regprocedure('dobby_socle_private.is_parent(uuid)'),to_regprocedure('dobby_socle_private.can_read(uuid)'),to_regprocedure('dobby_socle_private.legacy_unlinked()'),to_regprocedure('dobby_v7_private.assert_snapshot(uuid,jsonb,jsonb)'))
+   OR n.nspname='dobby_socle_private' AND (p.proname LIKE 'access_%' OR p.proname IN ('accept_invitation','create_invitation','preview_invitation','add_pending_member'))) IS DISTINCT FROM (SELECT functions FROM dobby_access_legacy.lot5c_state WHERE singleton)
+  CONTEXT:  PL/pgSQL function inline_code_block line 3 at IF
+  LOCATION:  regclassin, regproc.c:911
+  
+  
+  3 !== 0
+  
+      at must (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:27:9)
+      at run (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/local-db.mjs:35:35)
+      at TestContext.<anonymous> (file:///workspace/dobby-lot5b-reconcile-20261119-g6n3b6ln/tests/private-access/lot5c/package.test.mjs:144:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
