@@ -1,5 +1,7 @@
 # Lot 5B — Réconciliation et correctifs indépendants
 
+> Rapport de la première phase, conservé comme preuve historique. Les nouveaux résultats et la levée du blocage de qualification des 21 sont dans [RAPPORT-FINALISATION.md](RAPPORT-FINALISATION.md).
+
 19 novembre 2026 · Base PR #33 : `f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764`.
 
 **Paquet partiel préparé et testé ; migration/mise en service toujours BLOQUÉES.** Les nouveaux constats hébergés sont utilisés comme preuves **rapportées par l’utilisateur**, sans les attribuer à CODEX. Le connecteur DOBBY dédié n’est pas disponible dans cette session ; l’unique lecture du projet `pqcdkrwljgvgagzwrcmg` via `supabase_get_project` retourne encore `MCP error -32600: You do not have permission to perform this action`. Aucun autre appel au projet, SQL hébergé, ligne personnelle, credential ou projet de substitution n’a été utilisé.

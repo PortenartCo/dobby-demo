@@ -1,5 +1,5 @@
 {
-  "source": "User Lot 5B request plus published local catalogue; no hosted SQL executed by CODEX",
+  "source": "Published local reference plus user-supplied ChatGPT lexical comparison and exact hashes, 2026-11-19; no CODEX hosted SQL",
   "base": "f4d18eb532e8ab3a9aa6eb6b5f4feaaec41db764",
   "reportedCounts": {
     "present": 27,
@@ -8,8 +8,8 @@
     "bodyDivergences": 21,
     "bodyMatches": 6
   },
-  "divergentSignatureListAvailable": false,
-  "warning": "The aggregate count 21/27 does not identify the 21 rows. No individual row is assumed matching or divergent.",
+  "divergentSignatureListAvailable": true,
+  "warning": "21 textual differences qualified by ChatGPT-reported lexical review, not CODEX body inspection. No runtime normalization; only explicit complete hash pairs are recognized. Six other hosted definition hashes were not supplied.",
   "functions": [
     {
       "id": 1,
@@ -25,9 +25,11 @@
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
       "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "isOneOfThe21Divergences": false,
+      "classification": "REPORTED_UNCHANGED_BODY_CANONICAL_PAIR_ONLY",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": null,
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 2,
@@ -42,10 +44,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "34be4ec3886d86b4f50227c55f9c18d1",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "e9cd180c42b172de4bb6e3087d35d2e0",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 3,
@@ -60,10 +64,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "54228b41c9101243098de608e9c36fba",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "4b92f7429be05ecae44e03965793958c",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 4,
@@ -79,9 +85,11 @@
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
       "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "isOneOfThe21Divergences": false,
+      "classification": "REPORTED_UNCHANGED_BODY_CANONICAL_PAIR_ONLY",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": null,
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 5,
@@ -97,9 +105,11 @@
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
       "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "isOneOfThe21Divergences": false,
+      "classification": "REPORTED_UNCHANGED_BODY_CANONICAL_PAIR_ONLY",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": null,
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 6,
@@ -115,9 +125,11 @@
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
       "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "isOneOfThe21Divergences": false,
+      "classification": "REPORTED_UNCHANGED_BODY_CANONICAL_PAIR_ONLY",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": null,
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 7,
@@ -132,10 +144,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "6ef6ac479b3683ecc8e72effd9def686",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "176afdf0ffb1f495aa35712f1a79917b",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 8,
@@ -150,10 +164,12 @@
       "referenceAuthenticatedExecute": false,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "f4516255573304a3e845d267288c02e4",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "f5122d579f0e00142d3fa9aedb504467",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 9,
@@ -168,10 +184,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "4adbf459e416a3c237d94d7a3c97b998",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "5511f41b0a217af72a129b0bcbe406b3",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 10,
@@ -186,10 +204,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "bc5480cd38c04443320a044df2c40505",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "dcee241ca6a37d9342ccdde37534250a",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 11,
@@ -204,10 +224,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "f23e8a78d027398c648f5079c0b7e1d9",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "8e137a6adc0606f964b29922835e90f5",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 12,
@@ -223,9 +245,11 @@
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
       "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "isOneOfThe21Divergences": false,
+      "classification": "REPORTED_UNCHANGED_BODY_CANONICAL_PAIR_ONLY",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": null,
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 13,
@@ -241,9 +265,11 @@
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
       "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "isOneOfThe21Divergences": false,
+      "classification": "REPORTED_UNCHANGED_BODY_CANONICAL_PAIR_ONLY",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": null,
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 14,
@@ -258,10 +284,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "009915f94fb69d9eca749f76d6d798cc",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "c8946b6cc1cd45c79221fef852d18d67",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 15,
@@ -276,10 +304,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "c19d7250d6d1c0170746f190cc37a91f",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "183463fe1a9ed008d109495eb125fb00",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 16,
@@ -294,10 +324,12 @@
       "referenceAuthenticatedExecute": false,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "fc8629bb62607cda0d0e1fb70d76606e",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "b4d3770d04a83a20472497cbc54d6d0b",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 17,
@@ -312,10 +344,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "dcc7672defff4a40edaa41d345bff93b",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "7ae3285e2ad55c7b6fe6274600fc4964",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 18,
@@ -330,10 +364,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "e08b19bb97d0b56dece38ccb45f13e4a",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "b08e3e6608c570db021dea360413e793",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 19,
@@ -348,10 +384,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "02c7e27105c537f69479c71b452b9e8c",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "aabcc749a98abc42b7edd0b4e68b18b7",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 20,
@@ -366,10 +404,20 @@
       "referenceAuthenticatedExecute": false,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "fa45e3e11adc285d0aea62d8d8ece43b",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "e26ca6808eb54035f23c083ca87b53b7",
+      "lexicalComparisonExecutedByCodex": false,
+      "aclException": {
+        "reportedAnonExecute": true,
+        "reportedAuthenticatedExecute": true,
+        "returnTypeReported": "trigger",
+        "attachedTriggerReported": true,
+        "policy": "Only exact closed/reference and exact owner-granted anon+authenticated EXECUTE profiles recognized; no PUBLIC/grant option/other role",
+        "mutationApplied": false
+      }
     },
     {
       "id": 21,
@@ -384,10 +432,12 @@
       "referenceAuthenticatedExecute": false,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "ed50edec2a5405ffc2695b80ddd676f4",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "ee36503542de1162beba0eed99ac4874",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 22,
@@ -402,10 +452,13 @@
       "referenceAuthenticatedExecute": false,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "797d1c401fd7794e9b11346b583a00e0",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "af31219b7511ffc379184c68d5b4744a",
+      "lexicalComparisonExecutedByCodex": false,
+      "lexicalReference": "Published Lot2A catalog.mjs explicit current_user writer stamping repair; correspondence reported by ChatGPT"
     },
     {
       "id": 23,
@@ -420,10 +473,12 @@
       "referenceAuthenticatedExecute": false,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "61404767b69ee7d011abca3b12b6a33c",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "637e061b764e9dce6b692bb646870c36",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 24,
@@ -438,10 +493,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "c8ffd486d81385ea26bc087b53602c95",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "62e96e71a893d394948bac85c11ca35a",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 25,
@@ -456,10 +513,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "b281e880ccfabd6c6a9d8e2ceb442202",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "1ce26b3479aea7e992d2047cecb0006b",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 26,
@@ -474,10 +533,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "93e44c5b1ec3ace5a6fa4cb0be835d6c",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "e6228c783c43d534aae7df7406f210aa",
+      "lexicalComparisonExecutedByCodex": false
     },
     {
       "id": 27,
@@ -492,10 +553,12 @@
       "referenceAuthenticatedExecute": true,
       "hostedPresence": "REPORTED_PRESENT_BY_USER",
       "hostedOwnerAndDefiner": "REPORTED_MATCH_BY_USER",
-      "hostedBodyMD5": null,
-      "isOneOfThe21Divergences": null,
-      "classification": "BLOCKED_MISSING_INDIVIDUAL_METADATA_AND_DEFINITION",
-      "minimalAction": "Read exact metadata, then review divergent definition privately; keep existing fingerprints unchanged"
+      "hostedBodyMD5": "02f2de08010befdde4d85ce88e13b689",
+      "isOneOfThe21Divergences": true,
+      "classification": "REPORTED_LEXICAL_EQUIVALENCE_EXPLICIT_PAIR",
+      "minimalAction": "Exact approved pair and attributes/ACL check; preserve native body and business behavior",
+      "hostedDefinitionMD5": "16d06586efdbfe90e4b61986c37468a4",
+      "lexicalComparisonExecutedByCodex": false
     }
   ],
   "privateMissions": [
@@ -503,73 +566,98 @@
       "signature": "dobby_runes_private.assert_event(jsonb,boolean)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "143d7eee03b39cd641adc44d5463c98b",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.assert_ledger(jsonb)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "97ca8fc4f7a90da7ab9424d8061eb9c7",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.assert_mission(jsonb)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "a1a81757d2fa0083204a79ecd9f50388",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.assert_payload(jsonb)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "fd72b697c15961425a22da79c4495d1a",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.event_key(jsonb)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "546b184d13d15d74814a2e4a1eee09c1",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.has_native_text(text)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "339a898b0c8c47fcb6f2ef0fd168dbb6",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.lock_active_membership(uuid)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "fbf50ad8e900c6ca1f360038a8abce37",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.request_user_id()",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "d6c6cd4743fa2d32d6994d2bf382679c",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.safe_integer(jsonb,text)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "0b7cf60ae2d30086d30bf036eae0e8f5",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.same_award(jsonb,jsonb)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "e43e606d434d8b1e15fe330d83741f42",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.utf16_length(text)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "e2570931d23e3fdbffe397c971df9a31",
+      "localFullFixtureAvailable": false
     },
     {
       "signature": "dobby_runes_private.valid_date(text)",
       "presence": "REPORTED_PRESENT_BY_USER",
       "definitionAvailableToCodex": false,
-      "classification": "BLOCKED_MISSING_PRIVATE_DEFINITION"
+      "classification": "REPORTED_MATCH_TO_PUBLISHED_MISSIONS_DEFINITION_HASH",
+      "referenceDefinitionMD5": "1b25324883b40c6d4e62c15c7a565a58",
+      "localFullFixtureAvailable": false
     }
-  ]
+  ],
+  "hostedCompatibilityProven": false
 }

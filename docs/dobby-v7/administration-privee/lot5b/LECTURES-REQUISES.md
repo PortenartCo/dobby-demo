@@ -1,5 +1,7 @@
 # Éléments manquants — accès au seul projet DOBBY
 
+> État de la première phase conservé. Les 21 différences sont désormais qualifiées par preuve rapportée ; les seules réserves actuelles et l’action V7 sont dans [LECTURES-FINALISATION.md](LECTURES-FINALISATION.md).
+
 Le connecteur dédié disponible dans ChatGPT n’est pas exposé à CODEX. Son connecteur général refuse `get_project`. Aucun autre appel hébergé n’est effectué. Les opérations ci-dessous sont des **demandes préparées, non exécutées** ; aucun credential ou autre projet ne doit être recherché pour les réaliser.
 
 ## 1. Métadonnées nécessaires

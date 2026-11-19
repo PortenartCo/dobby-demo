@@ -22,3 +22,18 @@ La revue ne juge pas les 21 corps inconnus, les droits gérés réels, supautils
 - Premier passage Auth implémenté : 13/16. Deux assertions d’introspection tentaient de résoudre Auth sous le reader qui n’a précisément pas USAGE ; la vérification est passée au rôle de contrôle fictif. Le consommateur du test de dépendance a été placé dans un schéma fictif autorisé plutôt que `public`. Aucun droit de production n’a été élargi pour corriger le test.
 - Premier paquet complet : **30/30**. La revue a ensuite produit les contre-épreuves ci-dessus ; seul le passage final **34/34** est revendiqué pour le code livré après revue.
 - Le premier prototype d’investigation a rencontré un démarrage transitoire du conteneur. Le harnais attend désormais PID 1 PostgreSQL et une vraie requête, avant les contrôles ; seules ses ressources possédées ont été retirées.
+
+## Finalisation du catalogue — seconde revue indépendante
+
+Revue en lecture seule du générateur, de sa liste fermée, des quatre artefacts et des tests. Le reviewer a comparé statiquement les 21 paires fournies, les 27 paires historiques et les 12 références Missions : aucune divergence de transcription relevée. Aucun runtime ni appel externe exécuté par ce reviewer.
+
+Deux Important ont été reproduits puis corrigés :
+
+- Le rollback historique conserve le propriétaire courant lors du CREATE OR REPLACE. Un transfert socle→V7 pouvait survivre à la restauration. Le contre-test échoue avant correction ; existence et propriétaire courant sont désormais contrôlés avant tout GRANT.
+- Le rollback conservait aussi un EXECUTE ajouté après wrapping sur une fonction auparavant fermée. Le contre-test échoue avant correction ; le même contrôle des ACL décomposées, permissions effectives et exception du stamper est désormais réutilisé avant restauration.
+
+Les deux corrections ont été relues : aucun Critical/Important restant dans ces deltas. Le nom du test précise désormais que ses deux paires sont celles d’un canari fictif. L’en-tête du rollback dit correctement qu’il **exige** un ingress fermé, sans prétendre le fermer lui-même.
+
+Les preuves sont conservées dans `preuves/finalisation/`. Le premier passage élargi était à 12/13 uniquement parce qu’une assertion de message ne reconnaissait pas « Approved » alors que le SQL refusait correctement ; l’assertion a été corrigée. Le passage après correction des deux Important réussit 13/13. Le retrait de la garde Missions est exclusivement dans le test partiel, après refus du candidat complet, sans stub ni revendication de recette intégrale.
+
+Hors preuve : comparaison lexicale hébergée rapportée, exécution des corps hébergés, recette Missions intégrale, autorité V7 distante, droits Auth/Storage réels, capacités signées et restauration hébergée. Le rollback ne détecte pas tout hotfix du corps courant et peut le remplacer par la sauvegarde approuvée : revue préalable, maintenance à ingress fermé et coordination des consommateurs obligatoires avant une future exécution validée. Avis favorable au brouillon, aucune autorisation de fusion ou mise en service.
