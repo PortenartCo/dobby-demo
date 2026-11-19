@@ -23,8 +23,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Pinned PostgreSQL fixture image only
-        run: docker --host unix:///var/run/docker.sock pull postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4
+      - name: Only pinned local PostgreSQL and PostgREST images
+        run: |
+          docker --host unix:///var/run/docker.sock pull postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4
+          docker --host unix:///var/run/docker.sock pull postgrest/postgrest@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0
       - name: Causal permission and rollback checks, no hosted connection
         run: |
           node supabase/compatibility/lot5b/build-variants.mjs --check

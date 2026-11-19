@@ -1,11 +1,16 @@
--- BLOCKED EXPERIMENT / diagnostic only. Not an activable migration.
+-- LOCAL CANDIDATE: direct private V7 guard; no ADMIN V7. Separate hosted approval required.
 -- LOCAL CANDIDATE: exclusive maintenance and separate approval required.
 -- Lot 2A candidate. Apply ONLY after a separately approved hosted-catalog review.
 -- No old installer is replayed. No Auth, role attribute, or Storage mutation.
 BEGIN;
-DO $v7_blocked$ BEGIN
- RAISE EXCEPTION USING ERRCODE='0A000',MESSAGE='BLOCKED: shared locking context breaks existing READ ONLY invitation previews; experimental diagnosis only';
-END $v7_blocked$;
+DO $v7_defaults$ BEGIN
+ IF EXISTS(SELECT 1 FROM pg_default_acl d CROSS JOIN LATERAL aclexplode(d.defaclacl) a
+  WHERE d.defaclrole='postgres'::regrole AND d.defaclobjtype IN ('f','n','r','S','T')
+   AND a.grantee<>d.defaclrole
+   AND NOT(a.grantee=0 AND NOT a.is_grantable AND (d.defaclobjtype='f' AND a.privilege_type='EXECUTE' OR d.defaclobjtype='T' AND a.privilege_type='USAGE'))) THEN
+  RAISE EXCEPTION 'Unexpected creator default ACL; review before V7 installation or rollback';
+ END IF;
+END $v7_defaults$;
 SET LOCAL lock_timeout='3s';
 SET LOCAL statement_timeout='30s';
 CREATE TEMP TABLE access_2a_manifest(signature text PRIMARY KEY,kind text NOT NULL) ON COMMIT DROP;
@@ -158,9 +163,12 @@ BEGIN
    WHERE p.proowner='dobby_v7_writer'::regrole AND NOT(m.signature IN ('public.dobby_v7_update_profile(jsonb,bigint)','public.dobby_v7_create_household(text,uuid)') AND m.kind IN ('v7-preserved-profile','v7-preserved-create'))) THEN
   RAISE EXCEPTION 'V7-owned function modification still requires ADMIN';
  END IF;
- IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='dobby_v7_writer' AND NOT(rolcanlogin OR rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication))
-  OR pg_has_role('anon','dobby_v7_writer','MEMBER') OR pg_has_role('authenticated','dobby_v7_writer','MEMBER')
-  OR pg_has_role('dobby_socle_writer','dobby_v7_writer','MEMBER') OR pg_has_role('dobby_missions_v2_writer','dobby_v7_writer','MEMBER') THEN
+ IF EXISTS(SELECT 1 FROM (VALUES
+ ('anon'),('authenticated'),('service_role'),('dobby_socle_writer'),('dobby_missions_v2_writer'),('dobby_access_writer')) principal(name)
+ WHERE pg_has_role(principal.name,'dobby_v7_writer','MEMBER')) THEN
+ RAISE EXCEPTION 'V7 role isolation required for readers and temporary maintenance writers';
+END IF;
+ IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='dobby_v7_writer' AND NOT(rolcanlogin OR rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication)) THEN
   RAISE EXCEPTION 'Closed untouched V7 role required';
  END IF;
  -- No V7 membership is changed: reject all SET* then INHERIT* authority now.
@@ -210,6 +218,14 @@ BEGIN
 END $lot5b_roles$;
 
 CREATE TEMP TABLE access_v7_unchanged ON COMMIT DROP AS SELECT oid,md5(pg_get_functiondef(oid)) definition_md5,proowner,proacl FROM pg_proc WHERE proowner='dobby_v7_writer'::regrole;
+CREATE TEMP TABLE access_v7_privileges ON COMMIT DROP AS SELECT (SELECT jsonb_build_object(
+ 'role',(SELECT jsonb_build_array(rolcanlogin,rolsuper,rolbypassrls,rolcreaterole,rolcreatedb,rolinherit,rolreplication) FROM pg_roles WHERE rolname='dobby_v7_writer'),
+ 'memberships',(SELECT jsonb_agg(to_jsonb(m) ORDER BY roleid,member,grantor) FROM pg_auth_members m WHERE roleid='dobby_v7_writer'::regrole OR member='dobby_v7_writer'::regrole),
+ 'schemas',(SELECT jsonb_agg(jsonb_build_array(n.oid,a.grantor,a.privilege_type,a.is_grantable) ORDER BY n.oid,a.grantor,a.privilege_type) FROM pg_namespace n CROSS JOIN LATERAL aclexplode(n.nspacl) a WHERE a.grantee='dobby_v7_writer'::regrole AND n.nspname<>'dobby_access_v7_gate'),
+ 'tables',(SELECT jsonb_agg(jsonb_build_array(c.oid,a.grantor,a.privilege_type,a.is_grantable) ORDER BY c.oid,a.grantor,a.privilege_type) FROM pg_class c CROSS JOIN LATERAL aclexplode(c.relacl) a WHERE a.grantee='dobby_v7_writer'::regrole),
+ 'columns',(SELECT jsonb_agg(jsonb_build_array(c.attrelid,c.attnum,a.grantor,a.privilege_type,a.is_grantable) ORDER BY c.attrelid,c.attnum,a.grantor,a.privilege_type) FROM pg_attribute c CROSS JOIN LATERAL aclexplode(c.attacl) a WHERE a.grantee='dobby_v7_writer'::regrole),
+ 'functions',(SELECT jsonb_agg(jsonb_build_array(p.oid,a.grantor,a.privilege_type,a.is_grantable) ORDER BY p.oid,a.grantor,a.privilege_type) FROM pg_proc p CROSS JOIN LATERAL aclexplode(p.proacl) a JOIN pg_namespace n ON n.oid=p.pronamespace WHERE a.grantee='dobby_v7_writer'::regrole AND n.nspname<>'dobby_access_v7_gate'))) snapshot;
+CREATE TEMP TABLE access_v7_owned_before ON COMMIT DROP AS SELECT (SELECT jsonb_agg(jsonb_build_array(oid,md5(pg_get_functiondef(oid)),proowner,proacl::text) ORDER BY oid) FROM pg_proc WHERE proowner='dobby_v7_writer'::regrole) snapshot;
 DO $preflight$
 DECLARE f record; r text;
 BEGIN
@@ -327,7 +343,7 @@ END $$;
 ALTER FUNCTION dobby_access_private.lock_household_creation() OWNER TO dobby_access_writer;
 ALTER FUNCTION dobby_access_private.consume_household_creation() OWNER TO dobby_access_writer;
 REVOKE ALL ON FUNCTION dobby_access_private.lock_household_creation(),dobby_access_private.consume_household_creation() FROM PUBLIC,anon,authenticated,service_role;
--- No new V7 function/schema privileges. Quota is consumed by an attached trigger.
+-- V7 receives only the dedicated new guard; quota uses attached triggers.
 REVOKE CREATE ON SCHEMA dobby_access_private FROM dobby_access_writer;
 
 -- Keep original OIDs, ACLs, owners, defaults and RLS dependencies. Copy bodies
@@ -366,10 +382,6 @@ BEGIN
   head:=left(f.definition,strpos(f.definition,'AS $function$')-1);
   IF head='' THEN RAISE EXCEPTION 'Unexpected function serialization'; END IF;
   head:=replace(head,'LANGUAGE sql','LANGUAGE plpgsql');
-  IF m.signature='public.dobby_v7_context()' THEN
-   head:=replace(head,'STABLE','VOLATILE');
-   body:='PERFORM dobby_access_private.assert_active_nowait();'||format(' RETURN %s(%s);',legacy,args);
-  END IF;
   EXECUTE head||'AS '||quote_literal(decl||' BEGIN '||body||' END')||';';
  END LOOP;
 END $wrap$;
@@ -426,13 +438,25 @@ BEGIN
   RAISE EXCEPTION 'Unexpected inherited/default privileges expose native copies';
  END IF;
 END $closure$;
--- Package fragment. No V7 function, membership, grant or owner is changed.
--- BLOCKED DIAGNOSIS. Standalone execution aborts the whole transaction.
--- Block is retained in the enclosing experimental candidate.
--- Public context already has EXECUTE for V7; its guarded SOCLE wrapper is the
--- only existing callable bridge used by these policies.
+-- Package fragment; the two explicit grants are on new guard objects only.
+-- Standalone use without its core preservation transaction is refused.
+DO $v7_fragment$ BEGIN
+ IF current_user<>'postgres' OR to_regclass('pg_temp.access_v7_unchanged') IS NULL
+  OR to_regclass('dobby_access_legacy.function_backups') IS NULL THEN
+  RAISE EXCEPTION USING ERRCODE='0A000',MESSAGE='Use the complete V7 preservation package';
+ END IF;
+ IF to_regnamespace('dobby_access_v7_gate') IS NOT NULL THEN RAISE EXCEPTION 'V7 gate schema already exists'; END IF;
+END $v7_fragment$;
+CREATE SCHEMA dobby_access_v7_gate;
+REVOKE ALL ON SCHEMA dobby_access_v7_gate FROM PUBLIC,anon,authenticated,service_role;
+GRANT USAGE,CREATE ON SCHEMA dobby_access_v7_gate TO dobby_access_writer;
+CREATE TABLE dobby_access_legacy.v7_gate_state(key text PRIMARY KEY,snapshot jsonb NOT NULL);
+ALTER TABLE dobby_access_legacy.v7_gate_state ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON dobby_access_legacy.v7_gate_state FROM PUBLIC,anon,authenticated,service_role;
+
+-- The guard is called directly by V7 policies. Public readers keep STABLE.
 GRANT CREATE ON SCHEMA dobby_access_private TO dobby_access_writer;
-CREATE FUNCTION dobby_access_private.assert_active_nowait() RETURNS uuid
+CREATE FUNCTION dobby_access_v7_gate.check_access() RETURNS boolean
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $v7_active$
 DECLARE who jsonb:=dobby_access_private.request_identity(); a dobby_access_private.authorizations%ROWTYPE;
 BEGIN
@@ -441,7 +465,8 @@ BEGIN
  IF NOT FOUND OR a.status<>'active' OR a.session_boundary_pending THEN
   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Active authorized session required';
  END IF;
- RETURN dobby_access_private.assert_active();
+ PERFORM dobby_access_private.assert_active();
+ RETURN true;
 EXCEPTION WHEN lock_not_available THEN
  RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='Authorization is changing; retry transaction';
 END $v7_active$;
@@ -460,7 +485,7 @@ BEGIN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Owner-approved household creation required';
   END IF;
  END IF;
- PERFORM dobby_access_private.assert_active_nowait();
+ PERFORM dobby_access_v7_gate.check_access();
  RETURN NULL;
 EXCEPTION WHEN lock_not_available THEN
  RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='Authorization is changing; retry transaction';
@@ -474,11 +499,13 @@ BEGIN
  PERFORM dobby_access_private.consume_household_creation();
  RETURN NEW;
 END $v7_consume$;
-ALTER FUNCTION dobby_access_private.assert_active_nowait() OWNER TO dobby_access_writer;
+ALTER FUNCTION dobby_access_v7_gate.check_access() OWNER TO dobby_access_writer;
 ALTER FUNCTION dobby_access_private.guard_v7_preserved() OWNER TO dobby_access_writer;
 ALTER FUNCTION dobby_access_private.consume_v7_preserved_creation() OWNER TO dobby_access_writer;
-REVOKE ALL ON FUNCTION dobby_access_private.assert_active_nowait(),dobby_access_private.guard_v7_preserved(),dobby_access_private.consume_v7_preserved_creation() FROM PUBLIC,anon,authenticated,service_role;
-GRANT EXECUTE ON FUNCTION dobby_access_private.assert_active_nowait() TO dobby_socle_writer;
+REVOKE ALL ON FUNCTION dobby_access_v7_gate.check_access(),dobby_access_private.guard_v7_preserved(),dobby_access_private.consume_v7_preserved_creation() FROM PUBLIC,anon,authenticated,service_role;
+GRANT USAGE ON SCHEMA dobby_access_v7_gate TO dobby_v7_writer;
+GRANT EXECUTE ON FUNCTION dobby_access_v7_gate.check_access() TO dobby_v7_writer;
+REVOKE CREATE ON SCHEMA dobby_access_v7_gate FROM dobby_access_writer;
 REVOKE CREATE ON SCHEMA dobby_access_private FROM dobby_access_writer;
 
 DO $v7_policies$
@@ -491,7 +518,7 @@ BEGIN
    OR pg_has_role('dobby_v7_writer',(SELECT relowner FROM pg_class WHERE oid=object),'USAGE') THEN
    RAISE EXCEPTION 'Owned RLS table required for V7 preservation: %',relation;
   END IF;
-  EXECUTE format('CREATE POLICY dobby_access_v7_preserved ON %s AS RESTRICTIVE FOR ALL TO dobby_v7_writer USING(public.dobby_v7_context() IS NOT NULL) WITH CHECK(public.dobby_v7_context() IS NOT NULL)',object);
+  EXECUTE format('CREATE POLICY dobby_access_v7_preserved ON %s AS RESTRICTIVE FOR ALL TO dobby_v7_writer USING(dobby_access_v7_gate.check_access()) WITH CHECK(dobby_access_v7_gate.check_access())',object);
   EXECUTE format('CREATE TRIGGER dobby_access_00_v7_guard BEFORE INSERT OR UPDATE OR DELETE ON %s FOR EACH STATEMENT WHEN(current_user=''dobby_v7_writer'') EXECUTE FUNCTION dobby_access_private.guard_v7_preserved()',object);
  END LOOP;
 END $v7_policies$;
@@ -506,5 +533,82 @@ DO $v7_unchanged$ BEGIN
   RAISE EXCEPTION 'V7 function changed during preservation package';
  END IF;
 END $v7_unchanged$;
+
+SET LOCAL search_path='';
+DO $v7_gate_acl$
+DECLARE f record; n record; role_name text;
+BEGIN
+ IF EXISTS(SELECT 1 FROM (VALUES
+ ('anon'),('authenticated'),('service_role'),('dobby_socle_writer'),('dobby_missions_v2_writer'),('dobby_access_writer')) principal(name)
+ WHERE pg_has_role(principal.name,'dobby_v7_writer','MEMBER')) THEN
+ RAISE EXCEPTION 'V7 role isolation required for readers and temporary maintenance writers';
+END IF;
+ IF (SELECT count(*) FROM pg_class WHERE oid IN('dobby_v7_private.pending_profiles'::regclass,'dobby_v7_private.account_links'::regclass,'dobby_v7_private.operations'::regclass,'public.dobby_v2_households'::regclass,'public.dobby_v2_memberships'::regclass,'public.dobby_v2_modules'::regclass))<>6
+ OR EXISTS(SELECT 1 FROM pg_class WHERE oid IN('dobby_v7_private.pending_profiles'::regclass,'dobby_v7_private.account_links'::regclass,'dobby_v7_private.operations'::regclass,'public.dobby_v2_households'::regclass,'public.dobby_v2_memberships'::regclass,'public.dobby_v2_modules'::regclass) AND
+  (relowner<>'postgres'::regrole OR NOT relrowsecurity OR pg_has_role('dobby_v7_writer',relowner,'USAGE'))) THEN
+ RAISE EXCEPTION 'V7 relation owner and enabled RLS required for the write fence';
+END IF;
+ IF NOT EXISTS(SELECT 1 FROM pg_class WHERE oid='dobby_access_legacy.v7_gate_state'::regclass
+  AND relowner='postgres'::regrole AND relrowsecurity AND NOT relforcerowsecurity AND relkind='r')
+  OR EXISTS(SELECT 1 FROM pg_class c CROSS JOIN LATERAL aclexplode(coalesce(c.relacl,acldefault('r',c.relowner))) a
+   WHERE c.oid='dobby_access_legacy.v7_gate_state'::regclass AND(a.grantee<>'postgres'::regrole OR a.grantor<>'postgres'::regrole OR a.is_grantable))
+  OR EXISTS(SELECT 1 FROM pg_attribute c CROSS JOIN LATERAL aclexplode(c.attacl) a
+   WHERE c.attrelid='dobby_access_legacy.v7_gate_state'::regclass AND(a.grantee<>'postgres'::regrole OR a.grantor<>'postgres'::regrole OR a.is_grantable)) THEN
+  RAISE EXCEPTION 'V7 journal must retain its private owner RLS and ACL';
+ END IF;
+ SELECT * INTO n FROM pg_namespace WHERE nspname='dobby_access_v7_gate';
+ SELECT * INTO f FROM pg_proc WHERE oid='dobby_access_v7_gate.check_access()'::regprocedure;
+ IF n.nspowner<>'postgres'::regrole OR f.proowner<>'dobby_access_writer'::regrole
+  OR NOT f.prosecdef OR f.provolatile<>'v' OR f.prorettype<>'boolean'::regtype OR f.pronargs<>0 OR f.proretset
+  OR f.proconfig IS DISTINCT FROM ARRAY['search_path=""']::text[]
+  OR (SELECT count(*) FROM pg_proc WHERE pronamespace=n.oid)<>1
+  OR EXISTS(SELECT 1 FROM pg_roles WHERE oid=f.proowner AND(rolcanlogin OR rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication)) THEN
+  RAISE EXCEPTION 'Unexpected V7 private guard owner/definition';
+ END IF;
+ IF EXISTS(SELECT 1 FROM aclexplode(n.nspacl) a WHERE a.grantor<>'postgres'::regrole OR a.is_grantable
+  OR NOT(a.grantee='postgres'::regrole AND a.privilege_type IN('USAGE','CREATE')
+   OR a.grantee IN('dobby_access_writer'::regrole,'dobby_v7_writer'::regrole) AND a.privilege_type='USAGE'))
+  OR EXISTS(SELECT 1 FROM aclexplode(f.proacl) a WHERE a.grantor<>'dobby_access_writer'::regrole OR a.is_grantable
+   OR a.grantee NOT IN('dobby_access_writer'::regrole,'dobby_v7_writer'::regrole) OR a.privilege_type<>'EXECUTE')
+  OR NOT has_schema_privilege('dobby_v7_writer',n.oid,'USAGE')
+  OR has_schema_privilege('dobby_v7_writer',n.oid,'CREATE,USAGE WITH GRANT OPTION')
+  OR NOT has_function_privilege('dobby_v7_writer',f.oid,'EXECUTE')
+  OR has_function_privilege('dobby_v7_writer',f.oid,'EXECUTE WITH GRANT OPTION')
+  OR has_schema_privilege('dobby_access_writer',n.oid,'CREATE') THEN
+  RAISE EXCEPTION 'Unexpected V7 guard ACL; only USAGE and one EXECUTE allowed';
+ END IF;
+ FOREACH role_name IN ARRAY ARRAY['anon','authenticated','service_role'] LOOP
+  IF has_schema_privilege(role_name,n.oid,'USAGE,CREATE') OR has_function_privilege(role_name,f.oid,'EXECUTE') THEN
+   RAISE EXCEPTION 'Unexpected browser/service access to V7 guard';
+  END IF;
+ END LOOP;
+ IF EXISTS(SELECT 1 FROM pg_class WHERE relnamespace=n.oid AND
+  (has_any_column_privilege('dobby_v7_writer',oid,'SELECT,INSERT,UPDATE,REFERENCES') OR has_table_privilege('dobby_v7_writer',oid,'DELETE,TRUNCATE,TRIGGER'))) THEN
+  RAISE EXCEPTION 'No V7 table rights allowed in private guard schema';
+ END IF;
+ IF (SELECT count(*) FROM pg_proc WHERE oid IN('public.dobby_v7_context()'::regprocedure,'public.dobby_v7_preview_invitation(text)'::regprocedure,'public.dobby_v7_preview_child_invitation(text)'::regprocedure) AND provolatile='s')<>3 THEN
+  RAISE EXCEPTION 'All three public readers must remain STABLE';
+ END IF;
+END $v7_gate_acl$;
+INSERT INTO dobby_access_legacy.v7_gate_state(key,snapshot)
+ SELECT 'privileges_before',snapshot FROM access_v7_privileges UNION ALL
+ SELECT 'owned_before',snapshot FROM access_v7_owned_before UNION ALL
+ SELECT 'readers',(SELECT jsonb_agg(jsonb_build_array(oid,md5(pg_get_functiondef(oid)),proowner,proacl::text,provolatile) ORDER BY oid) FROM pg_proc WHERE oid IN ('public.dobby_v7_context()'::regprocedure,'public.dobby_v7_preview_invitation(text)'::regprocedure,'public.dobby_v7_preview_child_invitation(text)'::regprocedure)) UNION ALL
+ SELECT 'objects',(SELECT jsonb_agg(jsonb_build_array(oid,md5(pg_get_functiondef(oid)),proowner,proacl::text) ORDER BY oid) FROM pg_proc WHERE oid IN ('dobby_access_v7_gate.check_access()'::regprocedure,'dobby_access_private.guard_v7_preserved()'::regprocedure,'dobby_access_private.consume_v7_preserved_creation()'::regprocedure)) UNION ALL
+ SELECT 'policies',(SELECT jsonb_agg(jsonb_build_array(polrelid,polname,polpermissive,polcmd,polroles,pg_get_expr(polqual,polrelid),pg_get_expr(polwithcheck,polrelid)) ORDER BY polrelid) FROM pg_policy WHERE polname='dobby_access_v7_preserved') UNION ALL
+ SELECT 'triggers',(SELECT jsonb_agg(jsonb_build_array(tgrelid,tgname,tgenabled,tgtype,tgfoid,pg_get_triggerdef(oid)) ORDER BY tgrelid,tgname) FROM pg_trigger WHERE tgname IN ('dobby_access_00_v7_guard','dobby_access_v7_consume')) UNION ALL
+ SELECT 'relations',(SELECT jsonb_agg(jsonb_build_array(oid,relowner,relrowsecurity,relforcerowsecurity) ORDER BY oid) FROM pg_class WHERE oid IN('dobby_v7_private.pending_profiles'::regclass,'dobby_v7_private.account_links'::regclass,'dobby_v7_private.operations'::regclass,'public.dobby_v2_households'::regclass,'public.dobby_v2_memberships'::regclass,'public.dobby_v2_modules'::regclass));
+DO $v7_install_verify$ BEGIN
+ IF (SELECT jsonb_build_object(
+ 'role',(SELECT jsonb_build_array(rolcanlogin,rolsuper,rolbypassrls,rolcreaterole,rolcreatedb,rolinherit,rolreplication) FROM pg_roles WHERE rolname='dobby_v7_writer'),
+ 'memberships',(SELECT jsonb_agg(to_jsonb(m) ORDER BY roleid,member,grantor) FROM pg_auth_members m WHERE roleid='dobby_v7_writer'::regrole OR member='dobby_v7_writer'::regrole),
+ 'schemas',(SELECT jsonb_agg(jsonb_build_array(n.oid,a.grantor,a.privilege_type,a.is_grantable) ORDER BY n.oid,a.grantor,a.privilege_type) FROM pg_namespace n CROSS JOIN LATERAL aclexplode(n.nspacl) a WHERE a.grantee='dobby_v7_writer'::regrole AND n.nspname<>'dobby_access_v7_gate'),
+ 'tables',(SELECT jsonb_agg(jsonb_build_array(c.oid,a.grantor,a.privilege_type,a.is_grantable) ORDER BY c.oid,a.grantor,a.privilege_type) FROM pg_class c CROSS JOIN LATERAL aclexplode(c.relacl) a WHERE a.grantee='dobby_v7_writer'::regrole),
+ 'columns',(SELECT jsonb_agg(jsonb_build_array(c.attrelid,c.attnum,a.grantor,a.privilege_type,a.is_grantable) ORDER BY c.attrelid,c.attnum,a.grantor,a.privilege_type) FROM pg_attribute c CROSS JOIN LATERAL aclexplode(c.attacl) a WHERE a.grantee='dobby_v7_writer'::regrole),
+ 'functions',(SELECT jsonb_agg(jsonb_build_array(p.oid,a.grantor,a.privilege_type,a.is_grantable) ORDER BY p.oid,a.grantor,a.privilege_type) FROM pg_proc p CROSS JOIN LATERAL aclexplode(p.proacl) a JOIN pg_namespace n ON n.oid=p.pronamespace WHERE a.grantee='dobby_v7_writer'::regrole AND n.nspname<>'dobby_access_v7_gate'))) IS DISTINCT FROM (SELECT snapshot FROM dobby_access_legacy.v7_gate_state WHERE key='privileges_before')
+  OR (SELECT jsonb_agg(jsonb_build_array(oid,md5(pg_get_functiondef(oid)),proowner,proacl::text) ORDER BY oid) FROM pg_proc WHERE proowner='dobby_v7_writer'::regrole) IS DISTINCT FROM (SELECT snapshot FROM dobby_access_legacy.v7_gate_state WHERE key='owned_before') THEN
+  RAISE EXCEPTION 'V7 functions or privileges changed outside the two authorized grants';
+ END IF;
+END $v7_install_verify$;
 NOTIFY pgrst,'reload schema';
 COMMIT;

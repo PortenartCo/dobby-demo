@@ -1,13 +1,23 @@
--- Package fragment. No V7 function, membership, grant or owner is changed.
--- BLOCKED DIAGNOSIS. Standalone execution aborts the whole transaction.
+-- Package fragment; the two explicit grants are on new guard objects only.
+-- Standalone use without its core preservation transaction is refused.
 BEGIN;
-DO $v7_blocked$ BEGIN
- RAISE EXCEPTION USING ERRCODE='0A000',MESSAGE='BLOCKED: shared locking context breaks existing READ ONLY invitation previews; experimental diagnosis only';
-END $v7_blocked$;
--- Public context already has EXECUTE for V7; its guarded SOCLE wrapper is the
--- only existing callable bridge used by these policies.
+DO $v7_fragment$ BEGIN
+ IF current_user<>'postgres' OR to_regclass('pg_temp.access_v7_unchanged') IS NULL
+  OR to_regclass('dobby_access_legacy.function_backups') IS NULL THEN
+  RAISE EXCEPTION USING ERRCODE='0A000',MESSAGE='Use the complete V7 preservation package';
+ END IF;
+ IF to_regnamespace('dobby_access_v7_gate') IS NOT NULL THEN RAISE EXCEPTION 'V7 gate schema already exists'; END IF;
+END $v7_fragment$;
+CREATE SCHEMA dobby_access_v7_gate;
+REVOKE ALL ON SCHEMA dobby_access_v7_gate FROM PUBLIC,anon,authenticated,service_role;
+GRANT USAGE,CREATE ON SCHEMA dobby_access_v7_gate TO dobby_access_writer;
+CREATE TABLE dobby_access_legacy.v7_gate_state(key text PRIMARY KEY,snapshot jsonb NOT NULL);
+ALTER TABLE dobby_access_legacy.v7_gate_state ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON dobby_access_legacy.v7_gate_state FROM PUBLIC,anon,authenticated,service_role;
+
+-- The guard is called directly by V7 policies. Public readers keep STABLE.
 GRANT CREATE ON SCHEMA dobby_access_private TO dobby_access_writer;
-CREATE FUNCTION dobby_access_private.assert_active_nowait() RETURNS uuid
+CREATE FUNCTION dobby_access_v7_gate.check_access() RETURNS boolean
 LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $v7_active$
 DECLARE who jsonb:=dobby_access_private.request_identity(); a dobby_access_private.authorizations%ROWTYPE;
 BEGIN
@@ -16,7 +26,8 @@ BEGIN
  IF NOT FOUND OR a.status<>'active' OR a.session_boundary_pending THEN
   RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Active authorized session required';
  END IF;
- RETURN dobby_access_private.assert_active();
+ PERFORM dobby_access_private.assert_active();
+ RETURN true;
 EXCEPTION WHEN lock_not_available THEN
  RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='Authorization is changing; retry transaction';
 END $v7_active$;
@@ -35,7 +46,7 @@ BEGIN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Owner-approved household creation required';
   END IF;
  END IF;
- PERFORM dobby_access_private.assert_active_nowait();
+ PERFORM dobby_access_v7_gate.check_access();
  RETURN NULL;
 EXCEPTION WHEN lock_not_available THEN
  RAISE EXCEPTION USING ERRCODE='40001',MESSAGE='Authorization is changing; retry transaction';
@@ -49,11 +60,13 @@ BEGIN
  PERFORM dobby_access_private.consume_household_creation();
  RETURN NEW;
 END $v7_consume$;
-ALTER FUNCTION dobby_access_private.assert_active_nowait() OWNER TO dobby_access_writer;
+ALTER FUNCTION dobby_access_v7_gate.check_access() OWNER TO dobby_access_writer;
 ALTER FUNCTION dobby_access_private.guard_v7_preserved() OWNER TO dobby_access_writer;
 ALTER FUNCTION dobby_access_private.consume_v7_preserved_creation() OWNER TO dobby_access_writer;
-REVOKE ALL ON FUNCTION dobby_access_private.assert_active_nowait(),dobby_access_private.guard_v7_preserved(),dobby_access_private.consume_v7_preserved_creation() FROM PUBLIC,anon,authenticated,service_role;
-GRANT EXECUTE ON FUNCTION dobby_access_private.assert_active_nowait() TO dobby_socle_writer;
+REVOKE ALL ON FUNCTION dobby_access_v7_gate.check_access(),dobby_access_private.guard_v7_preserved(),dobby_access_private.consume_v7_preserved_creation() FROM PUBLIC,anon,authenticated,service_role;
+GRANT USAGE ON SCHEMA dobby_access_v7_gate TO dobby_v7_writer;
+GRANT EXECUTE ON FUNCTION dobby_access_v7_gate.check_access() TO dobby_v7_writer;
+REVOKE CREATE ON SCHEMA dobby_access_v7_gate FROM dobby_access_writer;
 REVOKE CREATE ON SCHEMA dobby_access_private FROM dobby_access_writer;
 
 DO $v7_policies$
@@ -66,7 +79,7 @@ BEGIN
    OR pg_has_role('dobby_v7_writer',(SELECT relowner FROM pg_class WHERE oid=object),'USAGE') THEN
    RAISE EXCEPTION 'Owned RLS table required for V7 preservation: %',relation;
   END IF;
-  EXECUTE format('CREATE POLICY dobby_access_v7_preserved ON %s AS RESTRICTIVE FOR ALL TO dobby_v7_writer USING(public.dobby_v7_context() IS NOT NULL) WITH CHECK(public.dobby_v7_context() IS NOT NULL)',object);
+  EXECUTE format('CREATE POLICY dobby_access_v7_preserved ON %s AS RESTRICTIVE FOR ALL TO dobby_v7_writer USING(dobby_access_v7_gate.check_access()) WITH CHECK(dobby_access_v7_gate.check_access())',object);
   EXECUTE format('CREATE TRIGGER dobby_access_00_v7_guard BEFORE INSERT OR UPDATE OR DELETE ON %s FOR EACH STATEMENT WHEN(current_user=''dobby_v7_writer'') EXECUTE FUNCTION dobby_access_private.guard_v7_preserved()',object);
  END LOOP;
 END $v7_policies$;

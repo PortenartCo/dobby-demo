@@ -23,9 +23,12 @@ BEGIN
    WHERE p.proowner='dobby_v7_writer'::regrole AND NOT(m.signature IN ('public.dobby_v7_update_profile(jsonb,bigint)','public.dobby_v7_create_household(text,uuid)') AND m.kind IN ('v7-preserved-profile','v7-preserved-create'))) THEN
   RAISE EXCEPTION 'V7-owned function modification still requires ADMIN';
  END IF;
- IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='dobby_v7_writer' AND NOT(rolcanlogin OR rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication))
-  OR pg_has_role('anon','dobby_v7_writer','MEMBER') OR pg_has_role('authenticated','dobby_v7_writer','MEMBER')
-  OR pg_has_role('dobby_socle_writer','dobby_v7_writer','MEMBER') OR pg_has_role('dobby_missions_v2_writer','dobby_v7_writer','MEMBER') THEN
+ IF EXISTS(SELECT 1 FROM (VALUES
+ ('anon'),('authenticated'),('service_role'),('dobby_socle_writer'),('dobby_missions_v2_writer'),('dobby_access_writer')) principal(name)
+ WHERE pg_has_role(principal.name,'dobby_v7_writer','MEMBER')) THEN
+ RAISE EXCEPTION 'V7 role isolation required for readers and temporary maintenance writers';
+END IF;
+ IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='dobby_v7_writer' AND NOT(rolcanlogin OR rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication)) THEN
   RAISE EXCEPTION 'Closed untouched V7 role required';
  END IF;
  -- No V7 membership is changed: reject all SET* then INHERIT* authority now.
