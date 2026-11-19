@@ -8,7 +8,7 @@ const KEY_PREFIX = 'sb_publishable_';
 const OLD_V5_KEY = 'dobby-stitch-preview-20261105';
 const f = {
   db: null, core: null, key: null, session: null, admission: null, context: null, householdId: null,
-  cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
+  cache: new Map(), syncing: false, again: false, epoch: 0, editing: null, revoked: null, transmissionHold: null,
   homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null
 };
 let syncCycle=null,publicContextRead=null;
@@ -53,11 +53,12 @@ function dbCall(db, store, operation, arg) {
 const meta = async id => (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;
 const putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });
 const delMeta = id => dbCall(f.db, 'meta', 'delete', id);
+const DELETE_META=Symbol('delete-meta');
 // Atomic metadata mutation on the existing IndexedDB store. E06 draft updates
 // from different tabs must read the latest value inside the same transaction.
 function updateMeta(id,change){return new Promise((resolve,reject)=>{
  const tx=f.db.transaction('meta','readwrite'),store=tx.objectStore('meta'),request=store.get(id);let result,error;
- request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');store.put({id,value:result});}catch(e){error=e;tx.abort();}};
+ request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(result===DELETE_META)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};
  tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Métadonnées non enregistrées.'));tx.onerror=()=>reject(error||tx.error);
 });}
 
@@ -103,17 +104,21 @@ async function raw(path, method, body, headers = {}, bearer = null) {
   if (!response.ok) {
     const error = Error(data?.msg || data?.error_description || data?.message || ('HTTP ' + response.status));
     error.status = response.status;
-    error.code = typeof data?.code === 'string' ? data.code : data?.error_code;
+    error.code = typeof data?.code === 'string' ? data.code : data?.error_code||data?.error?.code;
     throw error;
   }
   return data;
 }
 function requestActor(){return{epoch:f.epoch,userId:f.session?.user_id||null,householdId:f.householdId||null};}
+const AUTH_ACTOR_SCOPE=Symbol('auth-actor');
+// Owner administration is bound to the Auth session, independently of the
+// household which the ordinary V7 bootstrap may still be adopting.
+function authRequestActor(){const actor=requestActor();return{epoch:actor.epoch,userId:actor.userId,[AUTH_ACTOR_SCOPE]:true};}
 function assertRequestActor(expected){
   const actual=requestActor();
-  if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
+  if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||expected[AUTH_ACTOR_SCOPE]!==true&&actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
 }
-async function keepSession(result,expected=null,{persist=true}={}) {
+async function keepSession(result,expected=null,{persist=true,fresh=false}={}) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
   if(expected)assertRequestActor(expected);
   const old = f.session || {};
@@ -121,29 +126,102 @@ async function keepSession(result,expected=null,{persist=true}={}) {
     access_token: result.access_token, refresh_token: result.refresh_token,
     expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
     user_id: result.user?.id || old.user_id,
+    localSessionId: !fresh&&old.localSessionId||crypto.randomUUID(),
     email: result.user?.email || old.email || ''
   };
   if(expected){
-    await updateMeta('session',()=>{assertRequestActor(expected);return next;});
+    if(persist)await updateMeta('session',()=>{assertRequestActor(expected);return next;});
     assertRequestActor(expected);f.session=next;
   }else{f.session=next;if(persist)await putMeta('session',f.session);}
 }
 async function refreshToken(expected=requestActor()) {
   assertRequestActor(expected);
   if (!f.session?.refresh_token) throw Error('Session expirée');
-  const result = await raw('/auth/v1/token?grant_type=refresh_token', 'POST', {
-    refresh_token: f.session.refresh_token
-  });
+  let result;
+  try{result=await raw('/auth/v1/token?grant_type=refresh_token','POST',{refresh_token:f.session.refresh_token});}
+  catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
   assertRequestActor(expected);
   if(result?.user?.id!==undefined&&result.user.id!==expected.userId)throw Error('Le compte retourné par la connexion ne correspond pas à la session.');
   await keepSession(result,expected);assertRequestActor(expected);
 }
+function boundedPrivateAccess(raw){
+ if(!raw||raw.protocol!==1||!['unapproved','active','suspended'].includes(raw.status)||typeof raw.isOwner!=='boolean'||typeof raw.canCreateHousehold!=='boolean'||!Number.isSafeInteger(raw.revision)||raw.revision<0)throw Error('Le contexte privé n’a pas été confirmé.');
+ const result={protocol:1,status:raw.status,isOwner:raw.isOwner,canCreateHousehold:raw.canCreateHousehold,revision:raw.revision,admission:null};
+ if(raw.admission!==null){
+  const a=raw.admission,uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+  if(!a||!uuid(a.id)||!['new-household','family-parent','family-child'].includes(a.purpose)||!['requested','approved','delivering','sent','accepted','rejected','revoked','expired'].includes(a.state)||typeof a.expiresAt!=='string'||!Number.isFinite(Date.parse(a.expiresAt))||typeof a.requiresProfile!=='boolean'||a.householdId!==null&&!uuid(a.householdId)||a.memberId!==null&&(typeof a.memberId!=='string'||!a.memberId||a.memberId.length>120))throw Error('L’admission privée n’a pas été confirmée.');
+  result.admission=Object.fromEntries(['id','purpose','state','expiresAt','householdId','memberId','requiresProfile'].map(key=>[key,a[key]]));
+ }
+ return result;
+}
 async function token(expected=requestActor()) {
   assertRequestActor(expected);
+  if(f.revoked)throw Object.assign(Error('Cette session ne peut plus ouvrir le foyer. Reconnectez-vous.'),{status:403,code:'session_revoked'});
   if (!f.session) throw Error('Connexion requise');
   if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken(expected);
   assertRequestActor(expected);
   return f.session.access_token;
+}
+// Revocation withdraws only volatile bindings and cancels the drain generation.
+// IndexedDB business rows and the household's local drafts remain untouched.
+function revokeAuthorization(expected,privateAccess=null,{broadcast=true,status}={}){
+ assertRequestActor(expected);
+ if(f.revoked)return;
+ const userId=f.session?.user_id||null;
+ const marker={userId,id:crypto.randomUUID(),createdAt:Date.now()};
+ f.epoch++;f.revoked={userId,localSessionId:f.session?.localSessionId||null,status:privateAccess?.status==='suspended'||status==='suspended'?'suspended':'unavailable',privateAccess};f.transmissionHold=marker;
+ f.accessContext=null;f.admission=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=true;f.again=false;f.provider?.reset?.();
+ // A reload cannot turn the same denied session into a fresh one. This marker
+ // denies locally only; it never grants authorization and contains no bearer.
+ void updateMeta('v7-access-revoked',prior=>f.revoked?.userId===userId?f.revoked:prior).catch(()=>{});
+ void putMeta('v7-transmission-hold:'+userId,marker).catch(()=>{});
+ if(broadcast)try{localStorage.setItem('dobby-v7-access-revoked',JSON.stringify({userId,id:marker.id,status:f.revoked.status}));}catch{}
+ repaint();
+}
+function broadcastAccountChange(userId){try{localStorage.setItem('dobby-v7-account-change',JSON.stringify({userId,id:crypto.randomUUID()}));}catch{}}
+async function privateAccessContext(expected=requestActor()){
+ assertRequestActor(expected);const jwt=await token(expected);assertRequestActor(expected);
+ try{const result=await raw('/rest/v1/rpc/dobby_access_context','POST',{}, {},jwt);assertRequestActor(expected);return boundedPrivateAccess(result);}
+ catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
+}
+async function confirmRetryAccess(expected){
+ const own=await privateAccessContext(expected);assertRequestActor(expected);
+ if(own?.protocol!==1||own.status!=='active'){
+  revokeAuthorization(expected,own?.protocol===1&&own.status==='suspended'?own:null);
+  throw Object.assign(Error('Le serveur n’a pas confirmé une session active.'),{status:403,code:'session_revoked'});
+ }
+ assertNativeSharedWrite('GET','');
+}
+const ADMIN_COMMANDS=new Set(['listAccess','listDecisions','invite','decide','revokeAdmission','setStatus','resumeDelivery']);
+async function adminCommand(command,payload={}){
+ if(!ADMIN_COMMANDS.has(command)||!payload||typeof payload!=='object'||Array.isArray(payload))throw Error('Commande d’administration invalide.');
+ if(f.admission)throw Error('Confirmez votre admission avant tout accès à l’administration.');
+ const expected=authRequestActor(),bearer=await token(expected);assertRequestActor(expected);
+ try{
+  const response=await raw('/functions/v1/dobby-access-admin','POST',{command,payload},{},bearer);assertRequestActor(expected);
+  if(response?.ok!==true||!Object.hasOwn(response,'result'))throw Object.assign(Error('La réponse d’administration n’a pas été confirmée.'),{stage:'admin',code:'invalid_response'});
+  return response.result;
+ }catch(error){
+  assertRequestActor(expected);
+  // A normal active parent also receives owner_required. Reject its console
+  // operation without withdrawing unrelated family rights. A fresh own scope
+  // distinguishes an actual suspension; no mutation is automatically retried.
+  if(error.status===401)revokeAuthorization(expected);
+  else if(error.status===403){
+   try{const own=await privateAccessContext(expected);assertRequestActor(expected);if(own?.protocol===1&&own.status==='suspended')revokeAuthorization(expected,own);}
+   catch(probe){if(!f.revoked&&[401,403].includes(probe.status))revokeAuthorization(expected);}
+  }
+  const safe=Object.assign(Error(error instanceof TypeError?'Réseau indisponible. L’opération n’a pas été confirmée.':'L’administration n’a pas confirmé cette opération.'),{stage:'admin'});
+  if(Number.isInteger(error.status))safe.status=error.status;
+  if(typeof error.code==='string'&&/^[A-Za-z0-9_]{1,80}$/.test(error.code))safe.code=error.code;
+  throw safe;
+ }
+}
+const readOnlyRPCs=new Set(['dobby_access_context','dobby_v7_context','dobby_v7_preview_invitation','dobby_v7_family_capabilities','dobby_v7_preview_child_invitation','dobby_missions_v2_capabilities','dobby_missions_v3_capabilities']);
+async function assertTransmissionAllowed(method,query,expected){
+ if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||readOnlyRPCs.has(query.split('?')[0].replace(/^rpc\//,'')))return;
+ const hold=await meta('v7-transmission-hold:'+expected.userId);assertRequestActor(expected);f.transmissionHold=hold;
+ if(hold)throw Error('Envois en attente conservés. Reprenez-les explicitement après une nouvelle connexion vérifiée.');
 }
 function assertNativeSharedWrite(method,query,body={}) {
   if(f.admission)throw Error('Confirmez votre admission avant tout accès familial.');
@@ -162,16 +240,19 @@ function assertNativeSharedWrite(method,query,body={}) {
 async function authorized(method, query, body, headers = {}) {
   const expected=requestActor();
   assertNativeSharedWrite(method,query,body);
+  await assertTransmissionAllowed(method,query,expected);assertRequestActor(expected);
   let bearer = await token(expected);assertRequestActor(expected);
   assertNativeSharedWrite(method,query,body);
   try { const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result; }
   catch (e) {
     assertRequestActor(expected);
+    if(e.status===403){revokeAuthorization(expected);throw e;}
     if (e.status !== 401) throw e;
     assertNativeSharedWrite(method,query,body);
-    await refreshToken(expected);assertRequestActor(expected);bearer=f.session.access_token;
+    await refreshToken(expected);assertRequestActor(expected);await confirmRetryAccess(expected);assertRequestActor(expected);bearer=f.session.access_token;
     assertNativeSharedWrite(method,query,body);
-    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result;
+    try{const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result;}
+    catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
   }
 }
 async function admissionRPC(name,body){
@@ -185,7 +266,8 @@ async function admissionRPC(name,body){
  guard();const bearer=f.session?.access_token;if(!bearer)throw Error('Connexion d’admission requise.');
  // Admission never invokes ordinary refresh/sync or automatically retries a
  // one-shot action. The caller may repeat the same idempotent DB operation.
- const result=await raw('/rest/v1/rpc/'+name,'POST',body,{},bearer);guard();return result;
+ try{const result=await raw('/rest/v1/rpc/'+name,'POST',body,{},bearer);guard();return result;}
+ catch(error){guard();if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
 }
 const SHARED_BUCKET='dobby-family-files';
 function validStoragePath(path){
@@ -197,6 +279,7 @@ function validStoragePath(path){
 async function storageFetch(method,path,file){
   const expected=requestActor();
   assertNativeSharedWrite(method,'storage');
+  await assertTransmissionAllowed(method,'storage',expected);assertRequestActor(expected);
   if(!validStoragePath(path))throw Error('Fichier hors du foyer');
   if(method==='POST' && (!file || !['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)
       || file.size>10485760 || file.size<=0))throw Error('PDF ou image de 10 Mo maximum');
@@ -221,9 +304,11 @@ async function storageFetch(method,path,file){
   };
   try{return await send()}catch(e){
     assertRequestActor(expected);
+    if(e.status===403){revokeAuthorization(expected);throw e;}
     if(e.status!==401)throw e;
     assertNativeSharedWrite(method,'storage');
-    await refreshToken(expected);assertRequestActor(expected);return send();
+    await refreshToken(expected);assertRequestActor(expected);await confirmRetryAccess(expected);assertRequestActor(expected);
+    try{return await send();}catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
   }
 }
 async function requireHousehold() {
@@ -357,6 +442,9 @@ async function sync() {
       try {await (await ensureAccess()).refresh();}catch {}
       if(epoch!==f.epoch)return;
     }
+    f.transmissionHold=await meta('v7-transmission-hold:'+f.session.user_id);
+    if(epoch!==f.epoch)return;
+    if(f.transmissionHold){f.notice='Les modifications locales sont conservées. Reprenez explicitement les envois en attente.';return;}
     await pull(epoch);
     const queue = [...f.cache.values()].filter(x => x.syncState === 'pending')
       .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
@@ -382,6 +470,16 @@ async function sync() {
       if (!f.error || epoch !== f.epoch) queueMicrotask(() => void sync());
     }
   }
+}
+async function resumeSync(){
+ const expected=requestActor(),hold=await meta('v7-transmission-hold:'+expected.userId);assertRequestActor(expected);
+ if(hold){
+  if(f.revoked||!verifiedBinding())throw Error('Une nouvelle connexion vérifiée est requise avant de reprendre les envois en attente.');
+  await confirmRetryAccess(expected);assertRequestActor(expected);
+  await updateMeta('v7-transmission-hold:'+expected.userId,current=>{assertRequestActor(expected);if(current?.id!==hold.id)throw Error('L’état des envois a changé. Vérifiez votre accès avant de reprendre.');return null;});assertRequestActor(expected);
+  f.transmissionHold=null;f.notice='Reprise explicite des envois en attente.';
+ }
+ return sync();
 }
 function status() {
   if (!f.session) return 'Non connecté';
@@ -428,7 +526,7 @@ function shopPanel() {
   const rows = conn ? visible() : [];
   const syncStatus = status();
   const actions = conn
-    ? '<button type="button" data-fv-action="sync">Synchroniser</button>' +
+    ? '<button type="button" data-fv-action="sync">'+(f.transmissionHold?'Reprendre les envois en attente':'Synchroniser')+'</button>' +
       '<button type="button" data-fv-action="open">Gérer mon foyer</button>'
     : '<button type="button" data-fv-action="open">Connecter mon foyer</button>';
   const form = conn ? '<form id="fv2AddForm" class="fv2-add">' +
@@ -517,7 +615,7 @@ function refreshModal() {
   target.innerHTML = '<h2>Mon foyer Dobby</h2><p>Compte : <strong>' + esc(f.session.email) + '</strong></p>' +
     '<p class="fv2-muted">Panier familial partagé : ' + visible().length + ' article(s). Les fichiers médicaux et pièces jointes restent locaux.</p>' +
     '<p class="fv2-minor">' + esc(status()) + '</p>' +
-    '<div class="fv2-actions"><button type="button" data-fv-action="sync">Synchroniser</button>' +
+    '<div class="fv2-actions"><button type="button" data-fv-action="sync">'+(f.transmissionHold?'Reprendre les envois en attente':'Synchroniser')+'</button>' +
     '<button type="button" data-fv-action="logout">Se déconnecter</button></div>' + copyOld +
     '<h3>Modules du foyer</h3>' + modules;
 }
@@ -583,6 +681,7 @@ async function usePilotPublicKey() {
   finally { if (pilot) pilot.close(); }
 }
 async function login(form) {
+  const expected=requestActor();
   f.error = '';
   f.key = validateKey(new FormData(form).get('key'));
   const data = new FormData(form);
@@ -591,19 +690,26 @@ async function login(form) {
     email: String(data.get('email') || '').trim(),
     password: String(data.get('password') || '')
   });
+  assertRequestActor(expected);
   f.epoch += 1;
-  f.accessContext = null;
-  await keepSession(result);
+  f.accessContext = null;f.revoked=null;
+  const installing=requestActor();await keepSession(result,installing,{fresh:true});const installed={...installing,userId:result.user?.id||null};assertRequestActor(installed);
+  const hold=await meta('v7-transmission-hold:'+installed.userId);assertRequestActor(installed);f.transmissionHold=hold;broadcastAccountChange(installed.userId);
   f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
+  const guardLogin=()=>{if(f.epoch!==installed.epoch||f.session?.user_id!==installed.userId)throw Error('Le compte a changé pendant la connexion au foyer.');};
   try {
-    await requireHousehold();
-    await loadItems();
-    await sync();
+    await requireHousehold();guardLogin();
+    await loadItems();guardLogin();
+    await sync();guardLogin();
   } catch (e) {
+    // A failed read belongs to the session installed by this form. It must
+    // never clean up a newer account which arrived while that read was open.
+    if(f.epoch!==installed.epoch||f.session?.user_id!==installed.userId)throw e;
     // Never retain a new session after a refused household switch.
+    const refused=f.session;
     f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
     f.cache.clear();
-    await delMeta('session');
+    const cleanup=requestActor();await updateMeta('session',saved=>{assertRequestActor(cleanup);return saved?.user_id===refused?.user_id&&saved?.localSessionId===refused?.localSessionId?DELETE_META:saved;});assertRequestActor(cleanup);
     throw e;
   }
   refreshModal(); repaint();
@@ -611,10 +717,13 @@ async function login(form) {
 async function logout() {
   const old = f.session;
   f.epoch += 1;
-  f.accessContext = null; f.admission = null;
+  f.accessContext = null; f.admission = null; f.revoked = null;
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
-  await delMeta('session');
+  const expected=requestActor();
+  await updateMeta('session',saved=>{assertRequestActor(expected);return saved?.access_token===old?.access_token?DELETE_META:saved;});assertRequestActor(expected);
+  await updateMeta('v7-access-revoked',saved=>{assertRequestActor(expected);return saved?.userId===old?.user_id&&(!saved?.localSessionId||saved.localSessionId===old?.localSessionId)?DELETE_META:saved;});assertRequestActor(expected);
+  broadcastAccountChange(null);
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
   if (old?.access_token) void raw('/auth/v1/logout', 'POST', undefined, {}, old.access_token).catch(() => {});
@@ -729,7 +838,7 @@ document.addEventListener('click', async e => {
     if (action === 'pilot-key') return await usePilotPublicKey();
     if (action === 'import-original') return importOriginalLocal();
     if (action === 'logout') return await logout();
-    if (action === 'sync') return await sync();
+    if (action === 'sync') return await resumeSync();
     if (action === 'import') return await importIngredients();
     if (action === 'edit') { f.editing = id; return repaint(); }
     if (action === 'cancel-edit') { f.editing = null; return repaint(); }
@@ -782,7 +891,7 @@ function verifiedBinding(){
  if(live?.verified!==true||live.phase!=='active'||live.userId!==binding.userId||live.householdId!==binding.householdId||live.memberId!==binding.memberId)return null;
  return{...binding,permissions:{...live.permissions}};
 }
-function connectionState(){const binding=verifiedBinding();return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),identityVerified:Boolean(binding),memberId:binding?.memberId||null,permissions:binding?{...binding.permissions}:{}};}
+function connectionState(){const binding=verifiedBinding();return {verifying:f.checkingEpoch!==null,access:f.membershipRejected?'rejected':f.context&&f.verifiedContext===f.context?'verified':f.context?'cached':'local',userId:f.session?.user_id||null,householdId:f.householdId||null,epoch:f.epoch,transmissionHold:Boolean(f.transmissionHold),ready:f.ready,configured:Boolean(f.key),connected:Boolean(f.context&&f.session),verified:Boolean(f.context&&f.verifiedContext===f.context),identityVerified:Boolean(binding),memberId:binding?.memberId||null,permissions:binding?{...binding.permissions}:{}};}
 async function signIn(email,password){
  if(!f.ready)throw Error('Connexion en cours d’initialisation.');
  if(!f.key)throw Error('Configuration publique absente : connexion indisponible sur cet appareil.');
@@ -799,20 +908,23 @@ function notifyAccess(){
 function ensureAccess(){
  if(!accessPromise)accessPromise=import('./family-access.mjs').then(({createFamilyAccess})=>{
   accessController=createFamilyAccess({crypto:window.crypto||globalThis.crypto,now:Date.now,
-   snapshot:()=>({ready:f.ready,configured:Boolean(f.key),userId:f.session?.user_id||null,householdId:f.householdId,epoch:f.epoch,verified:Boolean(structuralNativeBinding()),rejected:f.membershipRejected}),
+   snapshot:()=>({ready:f.ready,configured:Boolean(f.key),userId:f.session?.user_id||null,householdId:f.householdId,epoch:f.epoch,verified:Boolean(structuralNativeBinding()),rejected:f.membershipRejected,revoked:f.revoked}),
    meta,putMeta,delMeta,updateMeta,
    auth:async(path,method,body,options={})=>{
     if(!options.authenticated)return raw(path,method,body);
     const expected=requestActor(),jwt=await token(expected);assertRequestActor(expected);
-    const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;
+    try{const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;}
+    catch(error){assertRequestActor(expected);if([401,403].includes(error.status))revokeAuthorization(expected);throw error;}
    },
    rpc:(name,body,options={})=>{if(options.admission)return admissionRPC(name,body);if(f.admission)throw Error('Confirmez votre admission avant tout accès familial.');return options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body);},
+   privateContext:privateAccessContext,admin:adminCommand,revokeAuthorization,
    clearBinding:()=>{f.accessContext=null;},
    async installSession(result,before,{admissionId}={}){
     if(f.epoch!==before.epoch||(f.session?.user_id||null)!==before.userId)throw Error('Le compte a changé pendant la connexion.');
-    f.epoch++;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
+    f.epoch++;f.revoked=null;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
     f.admission=admissionId?{id:admissionId,userId:result.user.id,epoch:f.epoch,expiresAt:Date.now()+Math.min(600000,Math.max(0,Number(result.expires_in||3600)*1000))}:null;
-    await keepSession(result,null,{persist:!admissionId});repaint();refreshModal();
+    const installing=requestActor();await keepSession(result,installing,{persist:!admissionId,fresh:true});const installed={...installing,userId:result.user.id};assertRequestActor(installed);
+    const hold=await meta('v7-transmission-hold:'+installed.userId);assertRequestActor(installed);f.transmissionHold=hold;broadcastAccountChange(installed.userId);repaint();refreshModal();
    },
    beginAdmission(admissionId,before){
     if(f.epoch!==before.epoch||f.session?.user_id!==before.userId)throw Error('Le compte a changé pendant la vérification.');
@@ -862,7 +974,7 @@ const accessFacade=Object.freeze({
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
  refresh:refreshPublicAccess,
- ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','confirmAdmission','inspectAdmission','admit','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','confirmAdmission','inspectAdmission','admit','admin','requestFamilyAccount','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;
@@ -925,7 +1037,7 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade
       if(added){repaint();void sync();}
       return options.receipt?{scope:context,added,receipts}:added;
     },
-    resolve: choose, sync
+    resolve: choose, sync:resumeSync
   }),
   getContext: () => {const binding=verifiedBinding();return f.context ? { householdId: f.householdId, userId: f.session?.user_id,...(binding?{memberId:binding.memberId,permissions:{...binding.permissions},identityVerified:true,familyRevision:binding.familyRevision||null}:{} ) } : null;},
   authorized, meta, putMeta, updateMeta, esc, showMessage, repaint, openModal,
@@ -955,6 +1067,9 @@ async function boot() {
     f.db = await openDb(DB_NAME, 1, true);
     f.key = await loadPublicKey();
     f.session = await meta('session');
+    if(f.session&&!f.session.localSessionId){const restored=f.session;f.session=await updateMeta('session',saved=>{if(saved?.user_id!==restored.user_id||saved?.access_token!==restored.access_token)throw Error('Le compte a changé pendant la reprise locale.');return saved.localSessionId?saved:{...saved,localSessionId:crypto.randomUUID()};});}
+    if(f.session?.user_id)f.transmissionHold=await meta('v7-transmission-hold:'+f.session.user_id);
+    const revoked=await meta('v7-access-revoked');if(f.session?.user_id&&revoked?.userId===f.session.user_id&&(!revoked.localSessionId||revoked.localSessionId===f.session.localSessionId)){f.revoked={userId:revoked.userId,localSessionId:revoked.localSessionId||null,status:revoked.status==='suspended'?'suspended':'unavailable',privateAccess:revoked.privateAccess||null};f.membershipRejected=true;}
     // Access initialization observes ready. Restore the cached household first,
     // so its first authenticated request starts with the final native context.
     if (f.session) await restoreCachedHousehold();
@@ -964,6 +1079,11 @@ async function boot() {
   } catch (e) { showMessage('Initialisation familiale impossible : ' + fail(e)); }
 }
 window.addEventListener('online', () => void sync());
+window.addEventListener('storage',event=>{
+ if(event.key==='dobby-v7-account-change'&&event.newValue&&f.session?.user_id){try{JSON.parse(event.newValue);revokeAuthorization(requestActor(),null,{broadcast:false});}catch{}return;}
+ if(event.key!=='dobby-v7-access-revoked'||!event.newValue||!f.session?.user_id)return;
+ try{const message=JSON.parse(event.newValue);if(message.userId===f.session.user_id)revokeAuthorization(requestActor(),null,{broadcast:false,status:message.status});}catch{}
+});
 document.addEventListener('visibilitychange', () => { if (!document.hidden) void sync(); });
 setInterval(() => { if (!document.hidden && f.session) void sync(); }, 45000);
 createOverlay();

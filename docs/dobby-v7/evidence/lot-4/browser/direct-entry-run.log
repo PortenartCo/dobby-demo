@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "existingLocalFixtureOnly": true,
+  "results": [
+    {
+      "width": 320,
+      "freshDirectOwner": true,
+      "ordinaryFamilyRefreshRetainsConsole": true
+    },
+    {
+      "width": 390,
+      "freshDirectOwner": true,
+      "ordinaryFamilyRefreshRetainsConsole": true
+    },
+    {
+      "width": 768,
+      "freshDirectOwner": true,
+      "ordinaryFamilyRefreshRetainsConsole": true
+    },
+    {
+      "width": 1440,
+      "freshDirectOwner": true,
+      "ordinaryFamilyRefreshRetainsConsole": true
+    },
+    {
+      "freshDirectParentDenied": true,
+      "familyIdentityPreserved": true
+    }
+  ]
+}

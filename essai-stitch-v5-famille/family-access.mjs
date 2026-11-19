@@ -25,7 +25,7 @@ export function cleanAuthURL(value){const url=new URL(value);for(const key of se
 export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
  const crypto=driver.crypto||globalThis.crypto;
  const features=Object.freeze({familyRoles:release.familyRoles===true,childAccountLink:release.childAccountLink===true});
- const blank=()=>({phase:'signed-out',userId:null,householdId:null,memberId:null,profile:null,permissions:{},capabilities:verifiedFamilyCapabilities(null,features),configured:Boolean(driver.snapshot().configured),authenticated:false,verified:false,pendingCeremony:false,familyRevision:null});
+ const blank=()=>({phase:'signed-out',userId:null,householdId:null,memberId:null,profile:null,permissions:{},capabilities:verifiedFamilyCapabilities(null,features),configured:Boolean(driver.snapshot().configured),authenticated:false,verified:false,pendingCeremony:false,familyRevision:null,privateAccess:null});
  let value=blank(),owner=null,generation=0,childPreview=null,pendingAdmission=null,admissionSession=null,confirmationFlight=null,admissionFlight=null;
  const signature=s=>JSON.stringify([s.userId||null,s.epoch]);
  const current=()=>driver.snapshot();
@@ -33,11 +33,11 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
  const guardMutation=s=>{guard(s);if((current().householdId||null)!==(s.householdId||null))throw Error('Le foyer a changé pendant cette opération.');};
  const publish=next=>{value={...blank(),...next};owner=signature(current());driver.notify?.();return state();};
  const clear=()=>driver.clearBinding();
- function state(){const native=current();if(owner!==null&&owner!==signature(native))return blank();const live={...value,permissions:{...value.permissions},configured:Boolean(native.configured)};if(live.verified&&!native.verified)Object.assign(live,{phase:native.rejected?'rejected':'unavailable',verified:false,memberId:null,permissions:{},pendingCeremony:false,familyRevision:null});if(Object.hasOwn(live.permissions,'familyRolesVerified')){live.permissions.familyRolesVerified=live.capabilities.familyRolesReady;live.permissions.canManageHousehold=live.permissions.canManageHousehold===true&&live.capabilities.familyRolesReady;live.permissions.canLinkExistingChild=live.permissions.canLinkExistingChild===true&&live.permissions.canManageHousehold&&live.capabilities.childAccountLinkReady;}return clone(live);}
+ function state(){const native=current();if(native.revoked)return clone({...blank(),phase:'rejected',userId:native.userId,authenticated:Boolean(native.userId),reason:native.revoked.status==='suspended'?'suspended':'session-revoked',privateAccess:native.revoked.privateAccess||null});if(owner!==null&&owner!==signature(native))return blank();const live={...value,permissions:{...value.permissions},configured:Boolean(native.configured)};if(live.verified&&!native.verified)Object.assign(live,{phase:native.rejected?'rejected':'unavailable',verified:false,memberId:null,permissions:{},pendingCeremony:false,familyRevision:null});if(Object.hasOwn(live.permissions,'familyRolesVerified')){live.permissions.familyRolesVerified=live.capabilities.familyRolesReady;live.permissions.canManageHousehold=live.permissions.canManageHousehold===true&&live.capabilities.familyRolesReady;live.permissions.canLinkExistingChild=live.permissions.canLinkExistingChild===true&&live.permissions.canManageHousehold&&live.capabilities.childAccountLinkReady;}return clone(live);}
  function requireConfigured(){const native=current();if(!native.ready)throw Error('La connexion native est en cours d’initialisation.');if(!native.configured)throw Error('Configuration publique indisponible pour la connexion.');return native;}
  function requireSession(allowAdmission=false){const native=requireConfigured();if(!native.userId)throw Error('Connexion requise.');if(!allowAdmission&&(pendingAdmission||admissionSession&&admissionSession.owner===signature(native)))throw Error('Confirmez votre admission avant toute opération familiale.');return native;}
  function failure(error,stage='service'){const result=Error(error?.status===401||error?.status===403?'Accès refusé par le serveur familial.':error instanceof TypeError?'Réseau indisponible. Réessayez sans recréer votre compte.':'Service familial indisponible. Les capacités serveur doivent être vérifiées.');result.status=error?.status;result.code=error?.code;result.stage=stage;return result;}
- async function rpc(name,body={},options={}){if(admissionSession?.owner===signature(current())&&options.admission!==true)throw Error('Confirmez votre admission avant tout accès familial.');try{return await driver.rpc(name,body,options);}catch(error){throw failure(error,name==='dobby_v7_context'?'context':'service');}}
+ async function rpc(name,body={},options={}){if(admissionSession?.owner===signature(current())&&options.admission!==true)throw Error('Confirmez votre admission avant tout accès familial.');try{return await driver.rpc(name,body,options);}catch(error){throw failure(error,['dobby_v7_context','dobby_access_context'].includes(name)?'context':'service');}}
  function profile(raw){if(raw===null||raw===undefined)return null;if(!object(raw))throw Error('Profil serveur invalide.');const result={};for(const key of ['id','name','firstName','lastName','birthdate','avatar','avatarId'])if(raw[key]!==undefined){if(typeof raw[key]!=='string'||raw[key].length>200)throw Error('Profil serveur invalide.');result[key]=raw[key];}if(raw.memberCategory!==undefined){if(!['parent','child','baby','pet'].includes(raw.memberCategory))throw Error('Catégorie du profil serveur invalide.');result.memberCategory=raw.memberCategory;}if(raw.magicProfile!==undefined){if(!object(raw.magicProfile))throw Error('Profil magique serveur invalide.');result.magicProfile=clone(raw.magicProfile);}return result;}
  async function capabilities(native){
   if(!features.familyRoles&&!features.childAccountLink)return verifiedFamilyCapabilities(null,features);
@@ -63,13 +63,21 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
   return next;
  }
  async function refresh(expected={}){
+  if(current().revoked)return state();
   if(pendingAdmission)return state();
   if(admissionSession?.owner===signature(current()))return inspectAdmission(admissionSession.id);
   const ticket=++generation,native=current();clear();
   if(!native.ready)return publish({phase:'unavailable'});
   if(!native.userId){const pending=await driver.meta('v7-auth-pending');guard(native);return publish({phase:pending&&driver.now()-pending.createdAt<86400000?'email-confirmation':'signed-out'});}
   publish({phase:'unavailable',userId:native.userId});
-  try{const raw=await rpc('dobby_v7_context'),caps=await capabilities(native),next=context(raw,native,caps);guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');
+  try{let access=null;
+   // This read has its own narrow native path: an unapproved Auth account may
+   // inspect only its private-access projection, never a business snapshot.
+   if(driver.privateContext){access=privateContext(await driver.privateContext());guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');
+    if(access.status==='suspended'){driver.revokeAuthorization?.(native,access);return publish({phase:'rejected',userId:native.userId,authenticated:true,privateAccess:access,reason:'suspended'});}
+    if(access.status==='unapproved'){if(native.verified)driver.revokeAuthorization?.(native,access);return publish({phase:'unavailable',userId:native.userId,authenticated:true,privateAccess:access,reason:'unapproved'});}
+   }
+   const raw=await rpc('dobby_v7_context'),caps=await capabilities(native),next={...context(raw,native,caps),privateAccess:access};guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');
    if(expected.householdId&&(next.phase!=='active'||next.householdId!==expected.householdId||expected.memberId&&next.memberId!==expected.memberId||next.profile?.memberCategory!==expected.category))throw Error('Le profil existant n’a pas été confirmé. Aucun profil local n’a été remplacé.');
    if(next.phase==='active'){await driver.bind(next,native);guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');next.verified=true;}
    return publish(next);
@@ -150,6 +158,27 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
   if(!object(raw)||raw.id!==id||!['new-household','family-parent','family-child'].includes(raw.purpose)||!['requested','approved','delivering','sent','accepted','rejected','revoked','expired'].includes(raw.state)||typeof raw.expiresAt!=='string'||!Number.isFinite(Date.parse(raw.expiresAt))||raw.requiresProfile!==(raw.purpose!=='family-child')||raw.householdId!==null&&!uuid(raw.householdId)||raw.memberId!==null&&(typeof raw.memberId!=='string'||!raw.memberId||raw.memberId.length>120))throw Error('Admission serveur incohérente.');
   if(raw.purpose==='new-household'?(raw.householdId!==null||raw.memberId!==null):!uuid(raw.householdId)||raw.purpose==='family-child'&&!raw.memberId)throw Error('La cible de l’admission est incohérente.');
   return{id:raw.id,purpose:raw.purpose,state:raw.state,expiresAt:raw.expiresAt,requiresProfile:raw.requiresProfile,householdId:raw.householdId,memberId:raw.memberId};
+ }
+ function privateContext(raw){
+  if(!object(raw)||raw.protocol!==1||!['unapproved','active','suspended'].includes(raw.status)||typeof raw.isOwner!=='boolean'||typeof raw.canCreateHousehold!=='boolean'||!Number.isSafeInteger(raw.revision)||raw.revision<0)throw Error('Contexte d’accès privé incohérent.');
+  const admission=raw.admission===null?null:uuid(raw.admission?.id)?admissionDescriptor(raw.admission,raw.admission.id):null;
+  if(raw.admission!==null&&!admission)throw Error('Admission serveur incohérente.');
+  return{status:raw.status,isOwner:raw.isOwner,canCreateHousehold:raw.canCreateHousehold,revision:raw.revision,admission};
+ }
+ async function admin(command,payload={}){
+  const before=requireSession();if(!driver.admin)throw Error('Le transport d’administration est indisponible.');
+  // An Edge result grants no family identity and is never adopted as one.
+  const result=await driver.admin(command,payload);guard(before);return clone(result);
+ }
+ async function requestFamilyAccount({email,kind='family-parent',memberId=null,operationId}={}){
+  const before=requireSession(),live=state();
+  if(!live.verified||live.phase!=='active'||live.profile?.memberCategory!=='parent'||live.permissions.canInvite!==true)throw Error('Seul un parent vérifié peut demander un accès familial.');
+  if(typeof email!=='string'||!/^\S+@\S+\.\S+$/.test(email.trim())||email.length>254)throw Error('Indiquez une adresse e-mail valide.');
+  if(!['family-parent','family-child'].includes(kind)||kind==='family-parent'&&memberId!==null||kind==='family-child'&&(typeof memberId!=='string'||!memberId||memberId.length>120))throw Error('Cible familiale invalide.');
+  const id=operationId||crypto.randomUUID();if(!uuid(id))throw Error('Identifiant d’opération invalide.');
+  guardMutation(before);const result=await rpc('dobby_access_request_family_account',{p_email:email.trim(),p_kind:kind,p_member_id:memberId,p_operation_id:id});guard(before);
+  if(!object(result)||!object(result.admission)||!uuid(result.admission.id)||result.admission.purpose!==kind||result.admission.householdId!==live.householdId||result.admission.memberId!==memberId||typeof result.replayed!=='boolean')throw Error('La demande d’accès familial n’a pas été confirmée.');
+  return clone(result);
  }
  async function inspectAdmission(input=admissionSession?.id){
   const id=object(input)?input.admissionId:input;if(!uuid(id))throw Error('Identifiant d’admission invalide.');
@@ -235,5 +264,5 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
  async function updateMagic({memberId,values,expectedRevision,operationId}={}){const before=requireSession(),live=state();if(!live.verified||live.permissions.canMagic!==true||memberId!==live.memberId&&(live.profile?.memberCategory==='child'||live.permissions.canManageDependents!==true&&live.permissions.canManageHousehold!==true))throw Error('Modification de ce membre non autorisée.');if(!object(values)||!Object.keys(values).length||Object.keys(values).some(key=>!['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony'].includes(key)))throw Error('Valeurs du profil magique invalides.');if(!Number.isSafeInteger(expectedRevision)||expectedRevision<1)throw Error('Révision familiale à vérifier avant de modifier le profil.');const id=operationId||await operation('update-magic',JSON.stringify([memberId,expectedRevision,values]));guardMutation(before);return mutate('dobby_v7_update_magic',{p_member_id:memberId,p_values:clone(values),p_expected_revision:expectedRevision,p_operation_id:id},before);}
  async function updateMember({memberId,values,expectedRevision,operationId}={}){const before=requireSession(),live=state();if(!live.verified||live.profile?.memberCategory==='child'||live.permissions.canEdit!==true||memberId!==live.memberId&&live.permissions.canManageDependents!==true&&live.permissions.canManageHousehold!==true)throw Error('Modification de ce membre non autorisée.');const fields=['name','firstName','lastName','profileFirstName','profileLastName','birthdate','avatar','magicAvatarId','nickname','notes','species','memberCategory','clearBirthdate'];if(!object(values)||!Object.keys(values).length||Object.keys(values).some(key=>!fields.includes(key)||typeof values[key]!=='string'))throw Error('Champ du profil non autorisé.');if(!Number.isSafeInteger(expectedRevision)||expectedRevision<1)throw Error('Révision familiale à vérifier avant de modifier le profil.');const id=operationId||await operation('update-member',JSON.stringify([memberId,expectedRevision,values]));guardMutation(before);await mutate('dobby_v7_update_member',{p_member_id:memberId,p_values:clone(values),p_expected_revision:expectedRevision,p_operation_id:id},before);return memberId;}
  async function logout(){++generation;childPreview=null;pendingAdmission=null;admissionSession=null;const pending=await driver.meta('v7-auth-pending');await driver.logout();await forgetAuthFlow(pending?.id);clear();return publish(blank());}
- return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,confirmAdmission,inspectAdmission,admit,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,logout,cleanURL:cleanAuthURL});
+ return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,confirmAdmission,inspectAdmission,admit,admin,requestFamilyAccount,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,logout,cleanURL:cleanAuthURL});
 }

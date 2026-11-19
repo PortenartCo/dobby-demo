@@ -9,19 +9,19 @@ const executablePath=process.env.CHROMIUM_PATH||'/workspace/scratch/chrome-ci156
 const results=[];
 let browser;
 
-async function fixture({phase='active',deferPreview=false,signInError=null,previewInvalid=false,acceptCommittedFailure=false,deferLogout=false}={}){
+async function fixture({phase='active',deferPreview=false,signInError=null,previewInvalid=false,acceptCommittedFailure=false,deferLogout=false,deferFamilyRequest=false,familyRequestSuccess=false,privateAccess=null}={}){
  const context=await browser.newContext({viewport:{width:390,height:844},locale:'fr-BE',reducedMotion:'reduce'});
  const external=[];
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():(external.push(new URL(route.request().url()).origin),route.abort()));
- await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout})=>{
+ await context.addInitScript(({phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout,deferFamilyRequest,familyRequestSuccess,privateAccess})=>{
   if(!location.pathname.endsWith('/essai-stitch-v5-famille/index.html'))return;
   const grants={canEdit:true,canMagic:true,canCreate:true,canManageDependents:true,canInvite:true};
   const active=()=>({phase:'active',configured:true,authenticated:true,verified:true,userId:'TEST-ACCESS-OWNER',householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1,profile:{id:'TEST-CANONICAL-MEMBER',memberCategory:'parent',firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},pendingCeremony:true,permissions:grants});
-  let restored=JSON.parse(sessionStorage.getItem('dobby-test-restored-access')||'null')||{phase,configured:true,authenticated:phase!=='unavailable',userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',...(phase==='active'?{memberCategory:'parent'}:{}),firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
+  let restored=JSON.parse(sessionStorage.getItem('dobby-test-restored-access')||'null')||{phase,privateAccess,configured:true,authenticated:phase!=='unavailable',userId:'TEST-ACCESS-OWNER',profile:{id:'TEST-CANONICAL-MEMBER',...(phase==='active'?{memberCategory:'parent'}:{}),firstName:'TEST',lastName:'Access',avatarId:'portrait-9'},verified:phase==='active',pendingCeremony:false,permissions:grants,...(phase==='active'?{householdId:'TEST-ACCESS-HOUSEHOLD',memberId:'TEST-CANONICAL-MEMBER',familyRevision:1}:{})};
   // Mirror native access: synchronous state starts blank until refresh resolves.
   let state={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null};
   const listeners=new Set(),emit=()=>{for(const listener of listeners)listener({...state});return {...state};};
-  window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0,recoveryArmed:false,recoveryPending:false,releaseRecovery:null,pauseCas:false,casPending:false,releaseCas:null,consumed:false,metadataReadReplacements:0,logoutPending:false,releaseLogout:null};
+  window.__accessRace={calls:[],previewPending:false,releasePreview:null,refreshes:0,recoveryArmed:false,recoveryPending:false,releaseRecovery:null,pauseCas:false,casPending:false,releaseCas:null,consumed:false,metadataReadReplacements:0,logoutPending:false,releaseLogout:null,familyRequestPending:false,releaseFamilyRequest:null};
   const record=call=>{window.__accessRace.calls.push(call);const history=JSON.parse(sessionStorage.getItem('dobby-test-access-calls')||'[]');history.push(call);sessionStorage.setItem('dobby-test-access-calls',JSON.stringify(history));};
   window.__accessRace.armRecovery=({phase='active',verified=phase==='active',defer=false,pendingCeremony=true}={})=>{window.__accessRace.recoveryArmed={phase,verified,defer,pendingCeremony,userId:state.userId};};
   window.__accessRace.switchAccount=(overrides={})=>{restored={...restored,userId:'TEST-ACCESS-OTHER',householdId:'TEST-OTHER-HOUSEHOLD',memberId:'TEST-OTHER-MEMBER',familyRevision:1,profile:{id:'TEST-OTHER-MEMBER',memberCategory:'parent',firstName:'TEST OTHER',lastName:'Other',avatarId:'portrait-2'},...overrides};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();};
@@ -34,7 +34,7 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
    previewInvitation:async token=>{record({kind:'preview',token});if(deferPreview){window.__accessRace.previewPending=true;await new Promise(resolve=>window.__accessRace.releasePreview=resolve);window.__accessRace.previewPending=false;}return previewInvalid||window.__accessRace.consumed?{status:'invalid'}:invitation(token);},
    acceptInvitation:async token=>{record({kind:'accept',token});if(acceptCommittedFailure){window.__accessRace.consumed=true;restored=active();state={phase:'unavailable',configured:true,userId:'TEST-ACCESS-OWNER',authenticated:false,verified:false};emit();throw Error('TEST server accepted; first native adoption failed');}throw Error('TEST acceptance deliberately stops before navigation');},
    logout:async()=>{record({kind:'logout'});if(deferLogout){window.__accessRace.logoutPending=true;await new Promise(resolve=>window.__accessRace.releaseLogout=resolve);window.__accessRace.logoutPending=false;}restored={phase:'signed-out',configured:true,authenticated:false,verified:false,userId:null,householdId:null,memberId:null,profile:null,permissions:{},pendingCeremony:false};sessionStorage.setItem('dobby-test-restored-access',JSON.stringify(restored));state={...restored};return emit();},
-   createInvitation:async()=>{record({kind:'create'});throw new TypeError('TEST network unavailable');}
+   requestFamilyAccount:async input=>{record({...input,requestKind:input.kind,kind:'familyRequest'});if(deferFamilyRequest){window.__accessRace.familyRequestPending=true;await new Promise(resolve=>window.__accessRace.releaseFamilyRequest=resolve);window.__accessRace.familyRequestPending=false;}if(deferFamilyRequest||familyRequestSuccess)return{admission:{id:'00000000-0000-4000-8000-000000000099',purpose:input.kind,state:'requested'},replayed:false};throw new TypeError('TEST network unavailable');}
   };
   let native;
   Object.defineProperty(window,'DobbyFamilyUI',{configurable:true,get:()=>native,set:api=>{native={...api,access,
@@ -43,7 +43,7 @@ async function fixture({phase='active',deferPreview=false,signInError=null,previ
    meta:async key=>{const saved=await api.meta(key),replacement=sessionStorage.getItem('dobby-test-replace-invitation-after-read');if(key==='v7-incoming-invitation'&&replacement){sessionStorage.removeItem('dobby-test-replace-invitation-after-read');await api.putMeta(key,JSON.parse(replacement));window.__accessRace.metadataReadReplacements++;}return saved;},
    updateMeta:async(key,change)=>{if(key==='v7-incoming-invitation'&&window.__accessRace.pauseCas){window.__accessRace.pauseCas=false;window.__accessRace.casPending=true;await new Promise(resolve=>window.__accessRace.releaseCas=resolve);window.__accessRace.casPending=false;}return api.updateMeta(key,change);}
   };}});
- },{phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout});
+ },{phase,deferPreview,signInError,previewInvalid,acceptCommittedFailure,deferLogout,deferFamilyRequest,familyRequestSuccess,privateAccess});
  const page=await context.newPage();page.setDefaultTimeout(6000);
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const load=async route=>{await page.goto(origin+'/essai-stitch-v7/famille.html#'+route);await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.state().userId==='TEST-ACCESS-OWNER');};
@@ -100,21 +100,68 @@ async function check(name,options,action){
    else assert.equal(await input.isEnabled(),true,'The token unlocks after verification');
    assert.equal(await native('return window.__accessRace.calls.filter(row=>row.kind==="accept").length;'),0);
   });
-  await check('actual Members invitation action opens native invitation creation',{},async({page,load,seedMember})=>{
+  await check('actual Members action opens nominative access request',{},async({page,load,seedMember})=>{
    await load('members');await seedMember();await page.evaluate(()=>DobbyFamilyStitch.open('members'));
    await page.locator('#invite-member-btn').click();
-   await page.getByRole('dialog',{name:'Inviter un proche',exact:true}).waitFor();
-   await page.getByRole('button',{name:'Créer un lien d’invitation',exact:true}).waitFor();
+   await page.getByRole('dialog',{name:'Demander un accès familial',exact:true}).waitFor();
+   await page.getByRole('button',{name:'Enregistrer la demande',exact:true}).waitFor();
   });
-  await check('failed invitation creation has visible inline error outside access screen',{},async({page,load,native})=>{
+  await check('failed nominative request keeps email and operation id for explicit retry',{},async({page,load,native})=>{
    await load('members');await page.evaluate(()=>DobbyAccess.invite());
-   const dialog=page.getByRole('dialog',{name:'Inviter un proche',exact:true});
-   await dialog.getByRole('button',{name:'Créer un lien d’invitation',exact:true}).click();
+   const dialog=page.getByRole('dialog',{name:'Demander un accès familial',exact:true});
+   await dialog.getByLabel('Adresse e-mail',{exact:true}).fill('fixture-request@example.invalid');
+   await dialog.getByRole('button',{name:'Enregistrer la demande',exact:true}).click();
    await page.waitForFunction(()=>!DobbyAccess.busy);
-   assert.equal(await native('return window.__accessRace.calls.filter(row=>row.kind==="create").length;'),1);
+   assert.equal(await native('return window.__accessRace.calls.filter(row=>row.kind==="familyRequest").length;'),1);
    const error=dialog.locator('[role="status"],[role="alert"],[data-access-status]');
    assert.ok(await error.count(),'The modal needs its own visible error/status target');
    assert.ok(await error.first().isVisible());assert.match(await error.first().innerText(),/interrompue|connexion|réseau|réessay|confirmée/i);
+   const first=(await native('return window.__accessRace.calls.filter(row=>row.kind==="familyRequest");'))[0];
+   assert.equal(first.requestKind,'family-parent');assert.equal(first.memberId,null);assert.equal(first.email,'fixture-request@example.invalid');
+   assert.equal(await dialog.getByLabel('Adresse e-mail',{exact:true}).inputValue(),'fixture-request@example.invalid');
+   await dialog.getByRole('button',{name:'Enregistrer la demande',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   const retry=await native('return window.__accessRace.calls.filter(row=>row.kind==="familyRequest");');assert.equal(retry[1].operationId,first.operationId,'An explicit uncertain retry preserves the original idempotency id');
+   assert.equal(await dialog.locator('textarea').count(),0,'The nominative request never reveals a bearer link');
+  });
+  await check('new nominative request after confirmed success uses a new operation id',{familyRequestSuccess:true},async({page,load,native})=>{
+   await load('members');await page.evaluate(()=>DobbyAccess.invite());
+   let dialog=page.getByRole('dialog',{name:'Demander un accès familial',exact:true});
+   await dialog.getByLabel('Adresse e-mail',{exact:true}).fill('fixture-new-request@example.invalid');
+   await dialog.getByRole('button',{name:'Enregistrer la demande',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   assert.match(await dialog.locator('[data-access-status]').innerText(),/Demande enregistrée/);
+   await dialog.getByRole('button',{name:'Fermer',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   // After a recorded success, a later request is a new user intent (e.g. the
+   // owner rejected the first admission). It must not replay the old receipt.
+   await page.evaluate(()=>DobbyAccess.invite());dialog=page.getByRole('dialog',{name:'Demander un accès familial',exact:true});
+   await dialog.getByLabel('Adresse e-mail',{exact:true}).fill('fixture-new-request@example.invalid');
+   await dialog.getByRole('button',{name:'Enregistrer la demande',exact:true}).click();await page.waitForFunction(()=>!DobbyAccess.busy);
+   const requests=await native('return window.__accessRace.calls.filter(row=>row.kind==="familyRequest");');
+   assert.equal(requests.length,2);assert.notEqual(requests[1].operationId,requests[0].operationId,'A confirmed request must not pin a later request to its old idempotent receipt');
+  });
+  await check('late nominative request cannot restore a modal after account switch',{deferFamilyRequest:true},async({page,load,native,calls})=>{
+   await load('members');await page.evaluate(()=>DobbyAccess.invite());
+   const dialog=page.getByRole('dialog',{name:'Demander un accès familial',exact:true});
+   await dialog.getByLabel('Adresse e-mail',{exact:true}).fill('fixture-delay@example.invalid');
+   await dialog.getByRole('button',{name:'Enregistrer la demande',exact:true}).click();
+   await page.waitForFunction(()=>DobbyFamilyStitchEngine.win().__accessRace.familyRequestPending);
+   await native('window.__accessRace.switchAccount();');
+   assert.equal(await page.locator('#access-invite-dialog').count(),0,'Account switch immediately removes the old request dialog');
+   await native('window.__accessRace.releaseFamilyRequest();');await page.waitForFunction(()=>!DobbyAccess.busy);
+   assert.equal(await page.locator('#access-invite-dialog').count(),0,'Late response cannot recreate account A request UI');
+   assert.equal((await calls()).filter(row=>row.kind==='familyRequest').length,1,'No deferred replay is issued under account B');
+  });
+  for(const [name,privateAccess,expected]of [
+   ['non-invite',{status:'unapproved',admission:null},'Vous n’êtes pas encore invité'],
+   ['pending',{status:'unapproved',admission:{state:'requested'}},'Invitation en attente'],
+   ['approved',{status:'unapproved',admission:{state:'approved'}},'Admission approuvée'],
+   ['delivery',{status:'unapproved',admission:{state:'delivering'}},'Livraison en cours ou incertaine'],
+   ['suspended',{status:'suspended',admission:null},'Accès suspendu']
+  ])await check('own access projection displays '+name,{phase:'unavailable',privateAccess},async({page,load})=>{
+   await load('access-unavailable');await page.getByRole('heading',{name:expected,exact:true}).waitFor();
+   assert.equal(await page.locator('[data-access-state]').getAttribute('data-access-state'),name);
+   assert.equal(await page.getByRole('button',{name:'Créer mon compte',exact:true}).count(),0);
+   if(name==='suspended'){assert.equal(await page.getByRole('button',{name:'Réessayer',exact:true}).count(),0);assert.match(await page.locator('.access-intro').innerText(),/nouvelle connexion vérifiée/);}
+   if(name==='delivery')assert.match(await page.locator('.access-intro').innerText(),/ne confirme pas/);
   });
   await check('owner-bound invitation survives full reload and restored Auth refresh',{phase:'household'},async({page,load,native})=>{
    await load('access-join');await native('return DobbyFamilyUI.putMeta("v7-incoming-invitation",{token:"TEST-OWNER-INVITATION",userId:"TEST-ACCESS-OWNER"});');

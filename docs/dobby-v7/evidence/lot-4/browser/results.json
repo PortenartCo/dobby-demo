@@ -1,0 +1,929 @@
+{
+  "scope": "local fictional full V7 only",
+  "runtime": {
+    "node": "v24.19.0",
+    "chromium": "154.0.8037.57",
+    "playwrightInterception": false
+  },
+  "sources": {
+    "unchangedDuringRun": true,
+    "sha256": {
+      "essai-stitch-v5-famille/family-v2.js": "d8fcdaaa94506b3a4f987a6c20f10a996b745ac454a4a13396365eca95cced16",
+      "essai-stitch-v5-famille/family-access.mjs": "1a1852b261540f22bb1ff80ccaf7ef46fbf293d3d594564524d3b163de9f3add",
+      "essai-stitch-v5-famille/family-core.mjs": "0d925569dac23ee94338dcc735bad0201b30b19cad7383ea57d8a19389d4ea64",
+      "essai-stitch-v7/admin-access.js": "d4b82e1209b2ec03f84eb4d67e7df1d739dd4b732a073405d95fe5725c04c11a",
+      "essai-stitch-v7/admin-access.css": "22a3444e071e29577f4024da0df01f9b7e3f585c8523f7910fb66d7766fb1ad3",
+      "essai-stitch-v7/access.js": "6260f5d4cd7e5ae9a29d3f9ffa1188ef80feec44beb7e4e34d041d93440161bd",
+      "essai-stitch-v7/access.css": "98da64071bf2bacb42044c41380d3183f596b68f0a3b007bf9e7c78f98364ece",
+      "essai-stitch-v7/family.js": "ca62255694396c48c685333900e7f11567eb0300d216cf1914cdc1a46ba55c0d",
+      "essai-stitch-v7/chrome.js": "6dd38d67020b46a7efdd6e2d6a9544102252ece6a6f5e40da912cf8e95b18269",
+      "essai-stitch-v7/tools-register.js": "592c2157f726e7c360f5aabccd4cacf3d1c0e26fb6dc944a6f201c71ea2528b4",
+      "essai-stitch-v7/family-members-review.js": "debe71b1fd4f97bd062c61aea63d0c5018ab67af822ab7e8e28b7da6d76200eb",
+      "essai-stitch-v7/family-member-detail.js": "1f3f2ca8b3e4fee6356d65de14523f6ef372ebaf988084261e93377a9586ca0a",
+      "essai-stitch-v7/famille.html": "2997786dff44fec4b8c8b0743aa1330445d622dea4ec6490427ebb159fe12086",
+      "essai-stitch-v7/traverse.html": "a65479c863ea79f5e7f7cee31c34aceba43bcc30841b7fe07abcf0d57f4f48f0",
+      "essai-stitch-v7/missions.html": "b7cfabeca5619bef7c1ab5f83ed4fdeaf016d0ca8b6310a342764c2df2d3ff1f",
+      "essai-stitch-v7/index.html": "061ff9442946b4852bcc6654ce91fad9ba76d08f9269740e0e3bd689e1dac778",
+      "supabase/functions/_shared/dobby-admin-handler.ts": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190",
+      "supabase/functions/_shared/dobby-auth-admin.ts": "7dfd4e1ea7c45a0695afb798d3ec1f7ebb1269c929051ed0edd0241f5c698867",
+      "supabase/functions/_shared/dobby-admin-validation.ts": "185c16779cf0cb6484ba487ba68ea38ae9a4de56e4ec8cef3378e611c0d32b56",
+      "essai-stitch-v7/tests/admin-access.cjs": "b995cb667d095d8352c63ab1fc071bba31eaa076d7372088f7d8e6acf928ec4f",
+      "tests/private-access/lot4/preview-server.mjs": "6eba6df3ec043da1b256fe92d1c154f5dde95cc7fe6728894a67bac9f460b711",
+      "tests/private-access/lot4/preview-bootstrap.js": "8c3e29a528ef7dfa1ac5666d075c60d61cefbfae09c3c0428b385dc5803e2f67",
+      "tests/private-access/lot4/browser-proof.cjs": "c9bd22d66e253345dc7b196fd856f370a7fa7a70fb9d2f80108e6a353a06b018"
+    }
+  },
+  "fixture": {
+    "postgres": {
+      "version": "17.7 (Debian 17.7-3.pgdg13+1)",
+      "image": "postgres:17.7@sha256:2006493727bd5277eece187319af1ef82b4cf82cf4fc1ed00da0775b646ac2a4"
+    },
+    "auth": {
+      "version": "v2.197.0",
+      "image": "supabase/gotrue:v2.197.0@sha256:839f529492d116b4e8b7777c953a27c381d34c15a744b1bcefde5eefaa1f9f9f",
+      "imageId": "sha256:1181bff5ba4ce440013a63cef9f4cf13024c432d705c9b1fbc9e5b949e852f48",
+      "synthetic": false,
+      "schemaCreatedBy": "unmodified GoTrue migrations",
+      "migrations": [
+        "00",
+        "20210710035447",
+        "20210722035447",
+        "20210730183235",
+        "20210909172000",
+        "20210927181326",
+        "20211122151130",
+        "20211124214934",
+        "20211202183645",
+        "20220114185221",
+        "20220114185340",
+        "20220224000811",
+        "20220323170000",
+        "20220429102000",
+        "20220531120530",
+        "20220614074223",
+        "20220811173540",
+        "20221003041349",
+        "20221003041400",
+        "20221011041400",
+        "20221020193600",
+        "20221021073300",
+        "20221021082433",
+        "20221027105023",
+        "20221114143122",
+        "20221114143410",
+        "20221125140132",
+        "20221208132122",
+        "20221215195500",
+        "20221215195800",
+        "20221215195900",
+        "20230116124310",
+        "20230116124412",
+        "20230131181311",
+        "20230322519590",
+        "20230402418590",
+        "20230411005111",
+        "20230508135423",
+        "20230523124323",
+        "20230818113222",
+        "20230914180801",
+        "20231027141322",
+        "20231114161723",
+        "20231117164230",
+        "20240115144230",
+        "20240214120130",
+        "20240306115329",
+        "20240314092811",
+        "20240427152123",
+        "20240612123726",
+        "20240729123726",
+        "20240802193726",
+        "20240806073726",
+        "20241009103726",
+        "20250717082212",
+        "20250731150234",
+        "20250804100000",
+        "20250901200500",
+        "20250903112500",
+        "20250904133000",
+        "20250925093508",
+        "20251007112900",
+        "20251104100000",
+        "20251111201300",
+        "20251201000000",
+        "20260115000000",
+        "20260121000000",
+        "20260219120000",
+        "20260302000000",
+        "20260625000000",
+        "20260821000000",
+        "20260821010000",
+        "20260824000000",
+        "20260824000001",
+        "20260831180000"
+      ],
+      "usersOwner": "supabase_auth_admin",
+      "sessionsOwner": "supabase_auth_admin",
+      "sessionRls": true,
+      "configuredOtpExpirySeconds": 3600,
+      "localOwnerCapabilities": [
+        "enable Auth table RLS",
+        "grant postgres SELECT(id), REFERENCES(id)",
+        "existing fixture auth.uid() fallback for real PostgREST JSON claims"
+      ]
+    },
+    "smtp": {
+      "version": "v1.34.0",
+      "image": "axllent/mailpit:v1.34.0@sha256:5040a9c533087d25dcb8f2ac748f45c9be5f7bc1d9fe5b860afb9597a2471d57",
+      "recipientPolicy": "only recipient domains ending .invalid",
+      "delivery": "owned internal Mailpit sink; no external route or SMTP relay",
+      "admissionTemplates": "real GoTrue template rendering of RedirectTo (trusted callback with admission_id) + TokenHash + invite/magiclink type; fixed internal fixture template server; recovery/signup defaults preserved"
+    },
+    "rest": {
+      "version": "v14.18",
+      "image": "postgrest/postgrest:v14.18@sha256:c847127074bd26e1b8d3f7c0e6e01e5346f4b85dd34f5d699fd230af960827c0",
+      "exposedSchemas": [
+        "public"
+      ]
+    },
+    "isolation": {
+      "internalNetwork": true,
+      "publishAddress": "127.0.0.1 relay only",
+      "bindMounts": false,
+      "publishedContainerPorts": false,
+      "databaseData": "tmpfs",
+      "inboxData": "tmpfs",
+      "ownedNetwork": "dobby-lot3-auth-net-245064-2ba0bac3fc49",
+      "transport": "loopback HTTP relay via docker exec and fixed internal TCP services",
+      "realAccounts": false,
+      "hostedChanges": false
+    },
+    "preview": {
+      "fullV7": true,
+      "responseOnlyNativeBinding": true,
+      "externalConnections": "CSP connect-src self + test-only loopback PROJECT binding",
+      "productionSourceModified": false,
+      "fictionalProfiles": [
+        1,
+        3,
+        4
+      ]
+    }
+  },
+  "results": [
+    {
+      "scenario": "preview-private-source-traversal-denied",
+      "status": "PASS",
+      "encodedSeparatorsDenied": true
+    },
+    {
+      "scenario": "complete-v7-five-views",
+      "width": 320,
+      "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
+      "header": true,
+      "dockDestinations": 6,
+      "externalRequests": 0
+    },
+    {
+      "scenario": "complete-v7-five-views",
+      "width": 390,
+      "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
+      "header": true,
+      "dockDestinations": 6,
+      "externalRequests": 0
+    },
+    {
+      "scenario": "complete-v7-five-views",
+      "width": 768,
+      "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
+      "header": true,
+      "dockDestinations": 6,
+      "externalRequests": 0
+    },
+    {
+      "scenario": "complete-v7-five-views",
+      "width": 1440,
+      "status": "PASS",
+      "freshDirectOwner": true,
+      "sameAuthReverificationRetainsConsole": true,
+      "familyRevalidation": "completed",
+      "header": true,
+      "dockDestinations": 6,
+      "externalRequests": 0
+    },
+    {
+      "scenario": "T12-owner-only-and-forged-url",
+      "status": "PASS",
+      "freshDirectNonOwnerDenied": true,
+      "realEdgeDenialHTTP": 403,
+      "normalParentPreserved": true
+    },
+    {
+      "scenario": "T03-actual-v7-adult-admission",
+      "status": "PASS",
+      "separateBrowser": true,
+      "explicitAuthConfirmation": true,
+      "profileBeforeAtomicAccept": true,
+      "household": "fictional-H2"
+    },
+    {
+      "scenario": "closed-child-gates-canonical-preservation",
+      "status": "PASS",
+      "existingChild": "TEST_CHILD",
+      "canonicalPayloadsAndRevisionsPreserved": true,
+      "childDeliveryEnabled": false
+    },
+    {
+      "scenario": "actual-console-invite-approval-delivery",
+      "status": "PASS",
+      "checkboxConfirmationRequired": true,
+      "deliveryConfirmed": true,
+      "admissionConsumed": false
+    },
+    {
+      "scenario": "actual-smtp-delivery-confirmation-lost",
+      "status": "PASS",
+      "realLocalSmtpAttempt": true,
+      "uncertaintyDisplayed": true,
+      "falseSuccess": false
+    },
+    {
+      "scenario": "real-long-list-and-metadata-only-projection",
+      "status": "PASS",
+      "extraFictionalRequests": 27,
+      "paginationGrowsList": true,
+      "projectionContainsFamilyPayload": false
+    },
+    {
+      "scenario": "T10-T11-account-switch-inflight-cache",
+      "status": "PASS",
+      "preservedExistingUUIDs": [
+        "00000000-0000-4000-8000-000000000001",
+        "00000000-0000-4000-8000-000000000002"
+      ],
+      "actualSharedStorageTabs": 2,
+      "naturalStorageEvent": true,
+      "oldOwnerResultsRejected": true,
+      "unsyncedDurableDataPreserved": true
+    },
+    {
+      "scenario": "T05-T11-suspend-reactivate-new-real-session",
+      "status": "PASS",
+      "oldSessionRemainsDenied": true,
+      "newSessionVerified": true,
+      "durableDataPreserved": true,
+      "noAutomaticQueuedTransmission": true,
+      "explicitVerifiedResumeConfirmed": true
+    },
+    {
+      "scenario": "T12-unapproved-local-owner-forgery-public-signup-removed",
+      "status": "PASS",
+      "forgedSignupNormalizedToLogin": true,
+      "localOwnerButtonGrantsNoAccess": true,
+      "anonymousEdgeHTTP": 401
+    }
+  ],
+  "captures": [
+    {
+      "file": "admin-access-320.png",
+      "width": 320,
+      "geometry": {
+        "width": 320,
+        "scrollWidth": 320,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "1e89809039e4b6ba684ec9acb99ae7acd13b14832fcd0e766ca561b65b2261c9"
+    },
+    {
+      "file": "invite-confirmation-320.png",
+      "width": 320,
+      "geometry": {
+        "width": 320,
+        "scrollWidth": 320,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "32f13b7a5ea45edc0d00b01aa565dac11b13a84478f808c2b6f55649fe96d723"
+    },
+    {
+      "file": "admin-access-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "49f3d1be21f243129e9e8d9412e8c51b6573f34b53a5ab5da9c4d02163639e53"
+    },
+    {
+      "file": "admin-invite-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "3043baddaab09b34d03500971c4a0fa45dd0cf4b4acaf14802f3464fb926c441"
+    },
+    {
+      "file": "admin-requests-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "5e8423119b216993e2ed0bf3e9ac3f243d5b5ea446995c7bdd33c1aa1e53d43a"
+    },
+    {
+      "file": "admin-status-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "1f1ba10057dfffd9b350d7395ae9e850e3ed5cdcfb2ed7d22dbfec28fdda378c"
+    },
+    {
+      "file": "admin-history-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "3c8179f995862772626981928a9cda6ccf0c2e51bc217784696982de00607293"
+    },
+    {
+      "file": "owner-menu-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "ecad4d092d5779cdb34d6044e6b76f40916f3637177a1a354143720500f4caf7"
+    },
+    {
+      "file": "empty-requests-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "5e8423119b216993e2ed0bf3e9ac3f243d5b5ea446995c7bdd33c1aa1e53d43a"
+    },
+    {
+      "file": "admin-access-768.png",
+      "width": 768,
+      "geometry": {
+        "width": 768,
+        "scrollWidth": 768,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "58fd5d735e6293b1d6422d12205aa81e9db9075a6737ebcd30d5a6db941f40de"
+    },
+    {
+      "file": "admin-access-1440.png",
+      "width": 1440,
+      "geometry": {
+        "width": 1440,
+        "scrollWidth": 1440,
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "590663934ea1cbcc6017dd04d3e531fdf801ca539bf655986e64801b95cb8c0a"
+    },
+    {
+      "file": "adult-admitted-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "f95b9fe75bc4e0cc9a2add74c546991b8ff97b8c68e627a15fd3df4d28550aed"
+    },
+    {
+      "file": "delivery-uncertain-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "fe9afdbe8a65a80cddc1a1f0cdac399221c024670bdb04acdbbc0842148b459f"
+    },
+    {
+      "file": "long-requests-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "ffbd5e12858160ea843a8152a3c6940551140601fa9f90b8ee9373b7b789b1f7"
+    },
+    {
+      "file": "network-error-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "ab137abf8520c5041ecab24ad67e560632eab65d6ae1df15d3439e1dcacec1a1"
+    },
+    {
+      "file": "suspended-queue-preserved-390.png",
+      "width": 390,
+      "geometry": {
+        "width": 390,
+        "scrollWidth": 390,
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        }
+      },
+      "sha256": "c98397f2faee3e83fc4d13af55f89936f4deeef7c69da25ea35b4ff05b445ba0"
+    }
+  ],
+  "network": {
+    "hostedRequests": 0,
+    "journalEntries": 2439,
+    "paths": [
+      "/__fixture/bootstrap.js",
+      "/__fixture/login",
+      "/auth/v1/logout",
+      "/auth/v1/token",
+      "/auth/v1/verify",
+      "/essai-stitch-v5-famille/family-access.mjs",
+      "/essai-stitch-v5-famille/family-agenda-core.mjs",
+      "/essai-stitch-v5-famille/family-agenda.css",
+      "/essai-stitch-v5-famille/family-agenda.js",
+      "/essai-stitch-v5-famille/family-archives.js",
+      "/essai-stitch-v5-famille/family-contracts.js",
+      "/essai-stitch-v5-famille/family-core.mjs",
+      "/essai-stitch-v5-famille/family-files.css",
+      "/essai-stitch-v5-famille/family-files.js",
+      "/essai-stitch-v5-famille/family-health-core.mjs",
+      "/essai-stitch-v5-famille/family-health.css",
+      "/essai-stitch-v5-famille/family-health.js",
+      "/essai-stitch-v5-famille/family-house.js",
+      "/essai-stitch-v5-famille/family-member-policy.js",
+      "/essai-stitch-v5-famille/family-mission-intents.mjs",
+      "/essai-stitch-v5-famille/family-missions-core.mjs",
+      "/essai-stitch-v5-famille/family-missions.css",
+      "/essai-stitch-v5-famille/family-missions.js",
+      "/essai-stitch-v5-famille/family-modules.js",
+      "/essai-stitch-v5-famille/family-preparations.js",
+      "/essai-stitch-v5-famille/family-profile.js",
+      "/essai-stitch-v5-famille/family-runes-core.mjs",
+      "/essai-stitch-v5-famille/family-v2.css",
+      "/essai-stitch-v5-famille/family-v2.js",
+      "/essai-stitch-v5-famille/index.html",
+      "/essai-stitch-v5-famille/stitch-v5.css",
+      "/essai-stitch-v5-famille/stitch-v5.js",
+      "/essai-stitch-v7/access-config.js",
+      "/essai-stitch-v7/access-entry.js",
+      "/essai-stitch-v7/access-flow.mjs",
+      "/essai-stitch-v7/access.css",
+      "/essai-stitch-v7/access.js",
+      "/essai-stitch-v7/admin-access.css",
+      "/essai-stitch-v7/admin-access.js",
+      "/essai-stitch-v7/archives-register.js",
+      "/essai-stitch-v7/archives.css",
+      "/essai-stitch-v7/assets/family/0e50f1fb5b71b880.png",
+      "/essai-stitch-v7/assets/family/3c3243716c4164ba.png",
+      "/essai-stitch-v7/assets/family/401a3e654a78d6e5.png",
+      "/essai-stitch-v7/assets/family/5d99d9b06f2a8293.png",
+      "/essai-stitch-v7/assets/family/f716686f37af135b.png",
+      "/essai-stitch-v7/assets/magic/avatars.png",
+      "/essai-stitch-v7/assets/magic/portraits-09-24.png",
+      "/essai-stitch-v7/assets/material-symbols-full.ttf",
+      "/essai-stitch-v7/assets/onboarding/ritual-hearth-original.png",
+      "/essai-stitch-v7/bridge.js",
+      "/essai-stitch-v7/ceremonies.css",
+      "/essai-stitch-v7/ceremonies.js",
+      "/essai-stitch-v7/ceremony-art.css",
+      "/essai-stitch-v7/ceremony-art.js",
+      "/essai-stitch-v7/chat-engine.js",
+      "/essai-stitch-v7/chat.css",
+      "/essai-stitch-v7/chat.js",
+      "/essai-stitch-v7/chrome-source.html",
+      "/essai-stitch-v7/chrome.css",
+      "/essai-stitch-v7/chrome.js",
+      "/essai-stitch-v7/consolidation.css",
+      "/essai-stitch-v7/contracts-import-format.mjs",
+      "/essai-stitch-v7/contracts-import-zip.mjs",
+      "/essai-stitch-v7/contracts-import.js",
+      "/essai-stitch-v7/contracts-model.mjs",
+      "/essai-stitch-v7/contracts-register.js",
+      "/essai-stitch-v7/contracts.css",
+      "/essai-stitch-v7/cuisine-e073.css",
+      "/essai-stitch-v7/cuisine-e074.css",
+      "/essai-stitch-v7/cuisine-e074.js",
+      "/essai-stitch-v7/cuisine-engine.js",
+      "/essai-stitch-v7/cuisine-list.js",
+      "/essai-stitch-v7/cuisine-shopping.css",
+      "/essai-stitch-v7/cuisine-shopping.js",
+      "/essai-stitch-v7/cuisine-timers.js",
+      "/essai-stitch-v7/cuisine.css",
+      "/essai-stitch-v7/cuisine.js",
+      "/essai-stitch-v7/data/onboarding-scoring-v1.json",
+      "/essai-stitch-v7/documents-register.js",
+      "/essai-stitch-v7/engine-policy.js",
+      "/essai-stitch-v7/equipment-import-format.mjs",
+      "/essai-stitch-v7/equipment-import-prompt.txt",
+      "/essai-stitch-v7/equipment-import-zip.mjs",
+      "/essai-stitch-v7/equipment-import.css",
+      "/essai-stitch-v7/equipment-import.js",
+      "/essai-stitch-v7/famille.html",
+      "/essai-stitch-v7/family-agenda-review.css",
+      "/essai-stitch-v7/family-agenda-review.js",
+      "/essai-stitch-v7/family-engine.js",
+      "/essai-stitch-v7/family-member-detail.css",
+      "/essai-stitch-v7/family-member-detail.js",
+      "/essai-stitch-v7/family-members-review.css",
+      "/essai-stitch-v7/family-members-review.js",
+      "/essai-stitch-v7/family-register.js",
+      "/essai-stitch-v7/family-review-effects.css",
+      "/essai-stitch-v7/family-review-effects.js",
+      "/essai-stitch-v7/family.css",
+      "/essai-stitch-v7/family.js",
+      "/essai-stitch-v7/home-consolidation.css",
+      "/essai-stitch-v7/home.js",
+      "/essai-stitch-v7/house-model.mjs",
+      "/essai-stitch-v7/house-register.js",
+      "/essai-stitch-v7/house.css",
+      "/essai-stitch-v7/import-runtime.js",
+      "/essai-stitch-v7/magic-content.js",
+      "/essai-stitch-v7/magic-profile.css",
+      "/essai-stitch-v7/magic-profile.js",
+      "/essai-stitch-v7/member-avatar.css",
+      "/essai-stitch-v7/member-avatar.js",
+      "/essai-stitch-v7/onboarding-drafts.mjs",
+      "/essai-stitch-v7/onboarding-engine.js",
+      "/essai-stitch-v7/onboarding-route-data.js",
+      "/essai-stitch-v7/onboarding-scoring.mjs",
+      "/essai-stitch-v7/onboarding.css",
+      "/essai-stitch-v7/onboarding.js",
+      "/essai-stitch-v7/preparations.css",
+      "/essai-stitch-v7/preparations.js",
+      "/essai-stitch-v7/recipe-import-format.mjs",
+      "/essai-stitch-v7/recipe-import-zip.mjs",
+      "/essai-stitch-v7/recipe-import.css",
+      "/essai-stitch-v7/recipe-import.js",
+      "/essai-stitch-v7/register-route-data.js",
+      "/essai-stitch-v7/register.css",
+      "/essai-stitch-v7/register.js",
+      "/essai-stitch-v7/responsive.css",
+      "/essai-stitch-v7/ritual-effects.js",
+      "/essai-stitch-v7/ritual.css",
+      "/essai-stitch-v7/ritual.js",
+      "/essai-stitch-v7/root-adapters.js",
+      "/essai-stitch-v7/stitch-tailwind.css",
+      "/essai-stitch-v7/templates/family/members.html",
+      "/essai-stitch-v7/templates/remaining/menu.html",
+      "/essai-stitch-v7/tools-register.js",
+      "/essai-stitch-v7/traverse.html",
+      "/essai-v6-preview/assets/v6/famille.png",
+      "/essai-v6-preview/assets/v6/font-0.woff",
+      "/essai-v6-preview/assets/v6/font-1.woff",
+      "/essai-v6-preview/assets/v6/font-2.woff",
+      "/essai-v6-preview/assets/v6/font-3.woff",
+      "/essai-v6-preview/assets/v6/font-4.woff",
+      "/essai-v6-preview/assets/v6/font-5.woff",
+      "/essai-v6-preview/assets/v6/font-6.woff",
+      "/essai-v6-preview/assets/v6/fonts.css",
+      "/essai-v6-preview/assets/v6/traverse.png",
+      "/favicon.ico",
+      "/functions/v1/dobby-access-admin",
+      "/rest/v1/dobby_v2_grocery",
+      "/rest/v1/dobby_v2_households",
+      "/rest/v1/dobby_v2_memberships",
+      "/rest/v1/dobby_v2_modules",
+      "/rest/v1/rpc/dobby_access_accept",
+      "/rest/v1/rpc/dobby_access_context",
+      "/rest/v1/rpc/dobby_access_request_family_account",
+      "/rest/v1/rpc/dobby_missions_v2_capabilities",
+      "/rest/v1/rpc/dobby_v7_context",
+      "/tests/private-access/lot4/preview-server.mjs"
+    ]
+  },
+  "notEstablished": [
+    "hosted Auth/RLS session capability",
+    "pre-issued Storage signed bearer extinction",
+    "production child release",
+    "hosted deployment"
+  ]
+}

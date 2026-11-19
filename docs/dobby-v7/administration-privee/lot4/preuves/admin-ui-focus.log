@@ -1,0 +1,13 @@
+✔ late owner verification cannot restore entry or metadata after an account switch (969.437054ms)
+✔ suspension clears visible metadata and closes a confirmation before a late response (439.661407ms)
+✔ account switch clears a pending operation and its late receipt cannot restore the old view (538.770162ms)
+✔ direct owner boot survives real native controller adoption and a queued same-session refresh (289.228175ms)
+✔ a new native epoch for the same user rejects an older owner verification response (258.682397ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3257.114658

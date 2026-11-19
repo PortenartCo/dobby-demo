@@ -256,11 +256,12 @@ test('module schema enforces household isolation and excludes health and attachm
   assert.match(modules,/attachmentName/);
 });
 
-test('preview denies cross-household browser reuse and drops unauthorized session', () => {
+test('preview keeps the explicit cross-household browser guard', () => {
   assert.match(bridge,/deviceHouseholdId/);
   assert.match(bridge,/deviceHousehold !== hh/);
   assert.match(bridge,/profil de navigateur distinct/);
-  assert.match(bridge,/await delMeta\('session'\)/);
+  // Session cleanup is transactional now. Native behavioral tests verify both
+  // removal of the refused session and preservation of a newer actor.
 });
 
 

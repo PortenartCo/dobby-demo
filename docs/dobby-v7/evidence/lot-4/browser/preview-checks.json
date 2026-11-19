@@ -1,0 +1,24 @@
+{
+  "scope": "retained isolated local preview",
+  "preview": "http://127.0.0.1:3214/fixture-1/essai-stitch-v7/famille.html#salon",
+  "checks": {
+    "publicInfo": 200,
+    "cspSelfOnly": true,
+    "encodedTraversal": 403,
+    "privateResponseBytes": 26,
+    "privateSource": 404,
+    "untrustedHost": 421,
+    "fixtureLoginWithoutOrigin": 403,
+    "anonymousAdmin": 401,
+    "nonInvalidAddressRejected": 400,
+    "bootstrapInstanceBound": true
+  },
+  "interactive": {
+    "initialOwnerVerified": true,
+    "explicitParentSwitchVerified": true,
+    "parentCannotOpenAdmin": true,
+    "dockDestinations": 6,
+    "externalRequests": 0,
+    "pageErrors": 0
+  }
+}

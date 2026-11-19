@@ -1,0 +1,712 @@
+{
+  "status": "PASS",
+  "scope": "Targeted responsive finish; real full V7 and real owned local Auth/PostgREST/Edge; no hosted service",
+  "widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "viewportHeight": 900,
+  "runtime": {
+    "node": "v24.19.0",
+    "chromium": "154.0.8037.57"
+  },
+  "before": {
+    "file": "before.json",
+    "sources": {
+      "essai-stitch-v7/admin-access.css": "22a3444e071e29577f4024da0df01f9b7e3f585c8523f7910fb66d7766fb1ad3",
+      "essai-stitch-v7/admin-access.js": "d4b82e1209b2ec03f84eb4d67e7df1d739dd4b732a073405d95fe5725c04c11a",
+      "essai-stitch-v7/chrome.css": "904e6554ee557409c1185b587cab9e5c2df6676c8db7ed25eff1b90483d4ab5d",
+      "essai-stitch-v7/chrome.js": "6dd38d67020b46a7efdd6e2d6a9544102252ece6a6f5e40da912cf8e95b18269",
+      "essai-stitch-v7/consolidation.css": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "essai-stitch-v7/responsive.css": "1b448d9fb5208dca0334443650664beef4a4a371ea8e73afe52f5b7c3a85c888",
+      "essai-stitch-v7/famille.html": "2997786dff44fec4b8c8b0743aa1330445d622dea4ec6490427ebb159fe12086",
+      "tests/private-access/lot4/responsive-finish.cjs": "ec426d9e0c320bcdd58a887eca9bd224961d264bff5378f0e48ea4a58a04f2ba",
+      "tests/private-access/lot4/browser-proof.cjs": "c9bd22d66e253345dc7b196fd856f370a7fa7a70fb9d2f80108e6a353a06b018",
+      "tests/private-access/lot4/preview-server.mjs": "6eba6df3ec043da1b256fe92d1c154f5dde95cc7fe6728894a67bac9f460b711",
+      "tests/private-access/lot4/preview-bootstrap.js": "8c3e29a528ef7dfa1ac5666d075c60d61cefbfae09c3c0428b385dc5803e2f67",
+      "essai-stitch-v5-famille/family-v2.js": "d8fcdaaa94506b3a4f987a6c20f10a996b745ac454a4a13396365eca95cced16",
+      "essai-stitch-v5-famille/family-access.mjs": "1a1852b261540f22bb1ff80ccaf7ef46fbf293d3d594564524d3b163de9f3add",
+      "supabase/functions/_shared/dobby-admin-handler.ts": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190"
+    }
+  },
+  "after": {
+    "file": "after.json",
+    "sources": {
+      "essai-stitch-v7/admin-access.css": "68ab44eab49c69451e4dbbdaf8ba0d089dd8cb935259e1c645d7ad418aa75f90",
+      "essai-stitch-v7/admin-access.js": "d4b82e1209b2ec03f84eb4d67e7df1d739dd4b732a073405d95fe5725c04c11a",
+      "essai-stitch-v7/chrome.css": "904e6554ee557409c1185b587cab9e5c2df6676c8db7ed25eff1b90483d4ab5d",
+      "essai-stitch-v7/chrome.js": "6dd38d67020b46a7efdd6e2d6a9544102252ece6a6f5e40da912cf8e95b18269",
+      "essai-stitch-v7/consolidation.css": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+      "essai-stitch-v7/responsive.css": "1b448d9fb5208dca0334443650664beef4a4a371ea8e73afe52f5b7c3a85c888",
+      "essai-stitch-v7/famille.html": "2997786dff44fec4b8c8b0743aa1330445d622dea4ec6490427ebb159fe12086",
+      "tests/private-access/lot4/responsive-finish.cjs": "ec426d9e0c320bcdd58a887eca9bd224961d264bff5378f0e48ea4a58a04f2ba",
+      "tests/private-access/lot4/browser-proof.cjs": "c9bd22d66e253345dc7b196fd856f370a7fa7a70fb9d2f80108e6a353a06b018",
+      "tests/private-access/lot4/preview-server.mjs": "6eba6df3ec043da1b256fe92d1c154f5dde95cc7fe6728894a67bac9f460b711",
+      "tests/private-access/lot4/preview-bootstrap.js": "8c3e29a528ef7dfa1ac5666d075c60d61cefbfae09c3c0428b385dc5803e2f67",
+      "essai-stitch-v5-famille/family-v2.js": "d8fcdaaa94506b3a4f987a6c20f10a996b745ac454a4a13396365eca95cced16",
+      "essai-stitch-v5-famille/family-access.mjs": "1a1852b261540f22bb1ff80ccaf7ef46fbf293d3d594564524d3b163de9f3add",
+      "supabase/functions/_shared/dobby-admin-handler.ts": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190"
+    }
+  },
+  "comparisons": [
+    {
+      "state": "access",
+      "width": 320,
+      "before": "before/access-320.png",
+      "after": "after/access-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 98.890625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 771.625,
+        "after": 492.15625
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "access",
+      "width": 390,
+      "before": "before/access-390.png",
+      "after": "after/access-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 101.296875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 718.234375,
+        "after": 497.0625
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "access",
+      "width": 768,
+      "before": "before/access-768.png",
+      "after": "after/access-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 119.328125
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 479.046875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "access",
+      "width": 1440,
+      "before": "before/access-1440.png",
+      "after": "after/access-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 119.328125
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 473.859375
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "invite",
+      "width": 320,
+      "before": "before/invite-320.png",
+      "after": "after/invite-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 52.390625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 779.625,
+        "after": 447.65625
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "invite",
+      "width": 390,
+      "before": "before/invite-390.png",
+      "after": "after/invite-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 54.796875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 702.234375,
+        "after": 430.171875
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "invite",
+      "width": 768,
+      "before": "before/invite-768.png",
+      "after": "after/invite-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": 710.640625,
+        "after": 426.71875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "invite",
+      "width": 1440,
+      "before": "before/invite-1440.png",
+      "after": "after/invite-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": 710.640625,
+        "after": 421.53125
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "requests",
+      "width": 320,
+      "before": "before/requests-320.png",
+      "after": "after/requests-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 52.390625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 771.625,
+        "after": 445.65625
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "requests",
+      "width": 390,
+      "before": "before/requests-390.png",
+      "after": "after/requests-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 54.796875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 694.234375,
+        "after": 428.171875
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "requests",
+      "width": 768,
+      "before": "before/requests-768.png",
+      "after": "after/requests-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 428.71875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "requests",
+      "width": 1440,
+      "before": "before/requests-1440.png",
+      "after": "after/requests-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 423.53125
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests",
+      "width": 320,
+      "before": "before/long-requests-320.png",
+      "after": "after/long-requests-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 52.390625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 771.625,
+        "after": 445.65625
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests",
+      "width": 390,
+      "before": "before/long-requests-390.png",
+      "after": "after/long-requests-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 54.796875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 694.234375,
+        "after": 428.171875
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests",
+      "width": 768,
+      "before": "before/long-requests-768.png",
+      "after": "after/long-requests-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 428.71875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests",
+      "width": 1440,
+      "before": "before/long-requests-1440.png",
+      "after": "after/long-requests-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 423.53125
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests-bottom",
+      "width": 320,
+      "before": "before/long-requests-bottom-320.png",
+      "after": "after/long-requests-bottom-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 52.390625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": -10237.375,
+        "after": -10230.34375
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests-bottom",
+      "width": 390,
+      "before": "before/long-requests-bottom-390.png",
+      "after": "after/long-requests-bottom-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 54.796875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": -8383.765625,
+        "after": -8376.828125
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests-bottom",
+      "width": 768,
+      "before": "before/long-requests-bottom-768.png",
+      "after": "after/long-requests-bottom-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": -8384.359375,
+        "after": -4065.28125
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "long-requests-bottom",
+      "width": 1440,
+      "before": "before/long-requests-bottom-1440.png",
+      "after": "after/long-requests-bottom-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": -8384.359375,
+        "after": -3515.46875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "confirmation",
+      "width": 320,
+      "before": "before/confirmation-320.png",
+      "after": "after/confirmation-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 52.390625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 295.625,
+        "after": 445.65625
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "confirmation",
+      "width": 390,
+      "before": "before/confirmation-390.png",
+      "after": "after/confirmation-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 54.796875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 218.234375,
+        "after": 428.171875
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "confirmation",
+      "width": 768,
+      "before": "before/confirmation-768.png",
+      "after": "after/confirmation-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": 226.640625,
+        "after": 428.71875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "confirmation",
+      "width": 1440,
+      "before": "before/confirmation-1440.png",
+      "after": "after/confirmation-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": 226.640625,
+        "after": 423.53125
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "history",
+      "width": 320,
+      "before": "before/history-320.png",
+      "after": "after/history-320.png",
+      "heroHeight": {
+        "before": 282.875,
+        "after": 52.390625
+      },
+      "navHeight": {
+        "before": 150,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 771.625,
+        "after": 445.65625
+      },
+      "consoleWidth": {
+        "before": 320,
+        "after": 320
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "history",
+      "width": 390,
+      "before": "before/history-390.png",
+      "after": "after/history-390.png",
+      "heroHeight": {
+        "before": 224.984375,
+        "after": 54.796875
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 94.59375
+      },
+      "businessTop": {
+        "before": 694.234375,
+        "after": 428.171875
+      },
+      "consoleWidth": {
+        "before": 390,
+        "after": 390
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "history",
+      "width": 768,
+      "before": "before/history-768.png",
+      "after": "after/history-768.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 51.1875
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 428.71875
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 768
+      },
+      "dockTop": 819
+    },
+    {
+      "state": "history",
+      "width": 1440,
+      "before": "before/history-1440.png",
+      "after": "after/history-1440.png",
+      "heroHeight": {
+        "before": 233.390625,
+        "after": 91.390625
+      },
+      "navHeight": {
+        "before": 152,
+        "after": 46
+      },
+      "businessTop": {
+        "before": 702.640625,
+        "after": 423.53125
+      },
+      "consoleWidth": {
+        "before": 480,
+        "after": 1180
+      },
+      "dockTop": 819
+    }
+  ],
+  "captures": 56,
+  "hostedRequests": 0,
+  "mutationSubmitted": false,
+  "fixture": {
+    "fictitiousRequests": 27,
+    "fictitiousJournalRowsAdded": 3
+  },
+  "notRepeated": [
+    "Auth security campaign",
+    "Storage campaign",
+    "SMTP/admission campaign",
+    "SQL migration/rollback campaign"
+  ]
+}

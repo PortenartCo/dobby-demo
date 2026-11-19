@@ -1,0 +1,31 @@
+✔ local owner identity and a direct route do not grant administration without a fresh server result (613.401599ms)
+✔ menu entry follows a fresh server verification and disappears immediately on account change (596.604241ms)
+✔ late owner verification cannot restore entry or metadata after an account switch (393.208025ms)
+✔ suspension clears visible metadata and closes a confirmation before a late response (407.002687ms)
+✔ invitation requires explicit confirmation and transmits one operation ID with exact closed payload (536.257557ms)
+✔ an uncertain delivery is never reported as confirmed and is not automatically retried (493.746235ms)
+✔ an explicit failed delivery is distinct from an uncertain or sent delivery (628.972878ms)
+✔ a lost mutation response preserves the form, prevents a second submit and asks to inspect state (475.102669ms)
+✔ status changes carry displayed CAS revision, confirmation and a new operation ID (419.311365ms)
+✔ reactivation is not declared confirmed while the server session boundary is pending (429.11034ms)
+✔ CAS refusal does not retry or display a successful status (561.320963ms)
+✔ existing child request preserves its identifier and cannot open the production child delivery gate (308.927503ms)
+✔ family decisions carry admission CAS without family payloads (418.636922ms)
+✔ request and account cursors advance independently without duplicate hidden first pages (360.776514ms)
+✔ history projects dates, actor, target, decision IDs and has no mutation action (322.274891ms)
+✔ projected labels are text, never injected HTML or private family content (267.229771ms)
+✔ late metadata cannot remount an admin form after its route was left (599.10916ms)
+✔ account switch clears a pending operation and its late receipt cannot restore the old view (954.57588ms)
+✔ a target chosen on a later account page is freshly reloaded and never silently replaced (880.177405ms)
+✔ a selected status target that disappears cannot fall back to another account (1021.886497ms)
+✔ unapproved revision-zero status controls require an admission bound to the exact account (1479.639455ms)
+✔ direct owner boot survives real native controller adoption and a queued same-session refresh (534.289029ms)
+✔ a new native epoch for the same user rejects an older owner verification response (322.831217ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13514.520443

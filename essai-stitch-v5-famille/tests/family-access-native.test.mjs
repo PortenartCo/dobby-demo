@@ -14,7 +14,7 @@ function native({httpFailures={},respond,controllerModule=accessModule}={}){
  const sandbox={__accessModule:controllerModule,st:{page:'home'},save(){},render(){},drawShop:()=>'',queueMicrotask,setInterval:()=>0,setTimeout,clearTimeout,crypto:webcrypto,TextEncoder,URL,URLSearchParams,btoa,
   document:{getElementById:()=>null,addEventListener(){},createElement:node,body:{append(){}}},window:{addEventListener(){},dispatchEvent(){}},CustomEvent:class{},navigator:{onLine:true},localStorage:{getItem:()=>null,setItem(){}},
   FormData:class{constructor(form){this.values=new Map(form.children.map(x=>[x.name,x.value]));}get(key){return this.values.get(key);}},
-  fetch:async(url,options={})=>{const u=new URL(url);requests.push({path:u.pathname,query:u.search,options});const failure=httpFailures[u.pathname];if(failure)return{ok:false,status:failure.status,text:async()=>JSON.stringify(failure.body)};let body=[];if(u.pathname==='/auth/v1/token'){if(releaseAuth)await new Promise(resolve=>{releaseAuth.resolve=resolve;});body={access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:USER,email:'fixture@example.test'}};}else if(u.pathname.endsWith('/dobby_v7_context')){const response=context;if(releaseContext)await new Promise(resolve=>releaseContext.releases.push(resolve));body=response;}else if(u.pathname.endsWith('/dobby_v2_memberships'))body=members;else if(u.pathname.endsWith('/dobby_v2_households'))body=[{id:HH}];if(respond){const custom=await respond(u,options);if(custom!==undefined)body=custom;}return{ok:true,status:200,text:async()=>JSON.stringify(body)};}};
+  fetch:async(url,options={})=>{const u=new URL(url);requests.push({path:u.pathname,query:u.search,options});const failure=httpFailures[u.pathname];if(failure)return{ok:false,status:failure.status,text:async()=>JSON.stringify(failure.body)};let body=[];if(u.pathname==='/auth/v1/token'){if(releaseAuth)await new Promise(resolve=>{releaseAuth.resolve=resolve;});body={access_token:'fixture-access',refresh_token:'fixture-refresh',expires_in:3600,user:{id:USER,email:'fixture@example.test'}};}else if(u.pathname.endsWith('/dobby_access_context'))body={protocol:1,status:'active',isOwner:false,canCreateHousehold:false,revision:1,admission:null};else if(u.pathname.endsWith('/dobby_v7_context')){const response=context;if(releaseContext)await new Promise(resolve=>releaseContext.releases.push(resolve));body=response;}else if(u.pathname.endsWith('/dobby_v2_memberships'))body=members;else if(u.pathname.endsWith('/dobby_v2_households'))body=[{id:HH}];if(respond){const custom=await respond(u,options);if(custom!==undefined)body=custom;}return{ok:true,status:200,text:async()=>JSON.stringify(body)};}};
  sandbox.document.createElement=tag=>tag==='form'?{children:[],append(child){this.children.push(child);}}:node();
  const source=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,logout,...(typeof loadPublicKey===\"function\"?{loadPublicKey}:{})};})();');vm.runInNewContext(source,sandbox);
  const f=sandbox.window.__native.f;f.db=db;f.ready=true;f.key='sb_publishable_native_fixture_only';f.provider={start:async()=>{},reset(){},adoptVerifiedFamily:async value=>{assert.equal(value.memberId,'local-person');},html:()=>'',sync:async()=>{}};
@@ -123,7 +123,7 @@ test('native context refusals retain SQLSTATE and leave the accepted Auth sessio
   assert.equal(error.stage,'context');assert.equal(error.status,403);assert.equal(error.code,'42501');
   assert.doesNotMatch(error.message+JSON.stringify(error),/PRIVATE_RESPONSE|fixture@example/);return true;
  });
- assert.equal(f.f.session.user_id,USER);assert.equal(f.api.access.state().authenticated,false);assert.equal(f.api.access.state().verified,false);assert.equal(f.api.access.state().phase,'rejected');
+ assert.equal(f.f.session.user_id,USER);assert.equal(f.api.access.state().authenticated,true);assert.equal(f.api.access.state().verified,false);assert.equal(f.api.access.state().phase,'rejected');
 });
 
 test('native REST guard uses canonical child category even when client grants claim parent editing',async()=>{
@@ -252,17 +252,18 @@ test('reserves: visible legacy login refreshes the same canonical V7 parent cont
  await fixture.api.signIn('fixture@example.test','fixture-password');
  assert.equal(fixture.api.access.state().verified,true,'The existing legacy form must adopt the confirmed V7 identity');assert.equal(fixture.api.getContext().memberId,'local-person');
  assert.equal(fixture.requests.filter(r=>r.path==='/auth/v1/token').length,1,'Canonical refresh does not repeat credential Auth');
- assert.equal(fixture.requests.filter(r=>r.options.method!=='GET'&&!['/auth/v1/token','/rest/v1/rpc/dobby_v7_context'].includes(r.path)).length,0,'Bridge only reads context and family; no new business mutation');
+ assert.equal(fixture.requests.filter(r=>r.options.method!=='GET'&&!['/auth/v1/token','/rest/v1/rpc/dobby_access_context','/rest/v1/rpc/dobby_v7_context'].includes(r.path)).length,0,'Bridge only reads contexts and family; no new business mutation');
  const before=fixture.requests.length;await fixture.api.authorized('PATCH','dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST authorized'});assert.equal(fixture.requests.length,before+1);
 });
-test('reserves: legacy login keeps its session and reads when V7 is absent or refused, but remains readonly',async()=>{
+test('reserves: missing V7 remains readonly while a server refusal revokes the existing session locally',async()=>{
  for(const status of [404,403]){
  const fixture=native({httpFailures:{'/rest/v1/rpc/dobby_v7_context':{status,body:{code:status===404?'PGRST202':'42501',message:'TEST unavailable V7'}}}});fixture.f.core=familyCore;fixture.setMembers([{household_id:HH}]);
- await fixture.api.signIn('fixture@example.test','fixture-password');
+ if(status===403)await assert.rejects(fixture.api.signIn('fixture@example.test','fixture-password'),/compte|session|chang/i);else await fixture.api.signIn('fixture@example.test','fixture-password');
  assert.equal(fixture.f.session.user_id,USER);assert.equal(fixture.api.getContext().householdId,HH);assert.equal(fixture.api.access.state().verified,false);
  assert.equal(fixture.requests.filter(r=>r.path==='/rest/v1/rpc/dobby_v7_context').length,1,'Legacy login attempts the canonical read even when unavailable');
  assert.match(fixture.api.grocery.read().status,/lecture seule|droits.*vérifi/i,'Unavailable canonical rights are reported honestly');
- await fixture.api.authorized('GET','dobby_v2_grocery?household_id=eq.'+HH);const before=fixture.requests.length;
+ if(status===403)await assert.rejects(fixture.api.authorized('GET','dobby_v2_grocery?household_id=eq.'+HH),/session|reconnect/i);
+ else await fixture.api.authorized('GET','dobby_v2_grocery?household_id=eq.'+HH);const before=fixture.requests.length;
  await assert.rejects(fixture.api.authorized('PATCH','dobby_v2_grocery?household_id=eq.'+HH,{title:'TEST forbidden'}),/lecture seule|vérifi/);assert.equal(fixture.requests.length,before);
  }
 });

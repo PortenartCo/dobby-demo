@@ -1,0 +1,86 @@
+{
+  "applicationCommit": "2b2d849d8982b66a123d00655d828c3a2a5f9342",
+  "validationCommit": "b84718f41fbdf64e9c7857629047a79b794fd9f8",
+  "queriedAtUTC": "2026-11-18T21:06:29.129212+00:00",
+  "allCompleted": true,
+  "allWorkflowsSuccessful": true,
+  "prepProvenanceExplicitlySuccessfulOnPullRequest": true,
+  "checks": [
+    {
+      "runId": 44395206183,
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44395206183",
+      "event": "pull_request",
+      "headSha": "b84718f41fbdf64e9c7857629047a79b794fd9f8",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "sync-core",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "runId": 44395206145,
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44395206145",
+      "event": "pull_request",
+      "headSha": "b84718f41fbdf64e9c7857629047a79b794fd9f8",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "source-backed-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "prepProvenanceStep": {
+            "name": "PREP-01 native writers and isolated browser journeys",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        },
+        {
+          "name": "archives-acceptance",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "reserves-sql-local",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "runId": 44395186082,
+      "url": "https://github.com/PortenartCo/dobby-demo/actions/runs/44395186082",
+      "event": "push",
+      "headSha": "b84718f41fbdf64e9c7857629047a79b794fd9f8",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "name": "reserves-sql-local",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "archives-acceptance",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "source-backed-browser",
+          "status": "completed",
+          "conclusion": "success",
+          "prepProvenanceStep": {
+            "name": "PREP-01 native writers and isolated browser journeys",
+            "status": "completed",
+            "conclusion": "skipped"
+          }
+        }
+      ]
+    }
+  ],
+  "actionsTaken": "Read-only GitHub status monitoring; no rerun, trigger, cancel, merge, deployment, repository edit or local test campaign."
+}

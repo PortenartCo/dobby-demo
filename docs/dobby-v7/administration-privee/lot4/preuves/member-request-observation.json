@@ -1,0 +1,20 @@
+{
+  "kind": "observed-run summary, not raw stdout",
+  "observer": "member UI implementation agent, execution reported to primary agent",
+  "browser": "Chromium 154.0.8037.57",
+  "liveBackend": false,
+  "scope": "two causal UI fixture cases after the acknowledged-request operation ID correction",
+  "cases": [
+    {
+      "name": "failed nominative request keeps email and operation id for explicit retry",
+      "status": "PASS"
+    },
+    {
+      "name": "new nominative request after confirmed success uses a new operation id",
+      "status": "PASS"
+    }
+  ],
+  "productionSource": "essai-stitch-v7/access.js",
+  "test": "essai-stitch-v7/tests/stitch-access-races.cjs",
+  "rerunForArtifact": false
+}

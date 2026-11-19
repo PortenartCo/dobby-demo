@@ -39,7 +39,7 @@ const records=[
  assert.equal(await page.locator('#add-member-btn').isDisabled(),true);
  assert.equal(await page.locator('#fam-upcoming-birthdays li').count(),3);
  assert.ok(!/Grimoire & reliques complètes|Consulter la fiche|Grimoire personnel|Coffre des Documents|Contacts d’urgence/.test(await page.locator('body > main').textContent()));
- await page.locator('#invite-member-btn').click();assert.equal(await page.locator('#fam-invite-panel').isVisible(),true);assert.equal(await page.getByRole('button',{name:'Envoyer l’invitation',exact:true}).isDisabled(),true);assert.equal(await page.locator('#fam-invite-panel input').isDisabled(),true);await page.locator('#invite-member-btn').click();
+ await page.locator('#invite-member-btn').click();assert.equal(await page.locator('#fam-invite-panel').isVisible(),true);assert.equal(await page.getByRole('button',{name:'Demander un accès',exact:true}).isDisabled(),true);assert.equal(await page.locator('#fam-invite-panel input').isDisabled(),true);await page.locator('#invite-member-btn').click();
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'List has no horizontal overflow');
  await page.screenshot({path:path.join(output,'members-'+width+'.png'),fullPage:true});
  // Isolated view fixture permits input only to test form semantics. No save is invoked.
