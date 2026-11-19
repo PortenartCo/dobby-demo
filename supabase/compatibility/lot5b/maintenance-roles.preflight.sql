@@ -9,8 +9,7 @@ DECLARE
  role_name text;
  target oid;
  targets oid[];
- inherited_after_close boolean;
- set_after_close boolean;
+ authority_after_close boolean;
 BEGIN
  IF current_setting('server_version_num')::integer<160000 OR current_user<>'postgres'
   OR EXISTS(SELECT 1 FROM pg_roles WHERE rolname=current_user AND rolsuper) THEN
@@ -35,19 +34,20 @@ BEGIN
   END IF;
   -- Project the exact post-state: only the installer's own direct grants to
   -- these writers will be closed. Other grantors and indirect paths survive.
-  WITH RECURSIVE reachable(roleid) AS (
+  WITH RECURSIVE can_set(roleid) AS (
    SELECT installer
    UNION
-   SELECT m.roleid FROM pg_auth_members m JOIN reachable p ON p.roleid=m.member
-   WHERE m.inherit_option AND NOT(m.member=installer AND m.grantor=installer AND m.roleid=ANY(targets))
-  ) SELECT EXISTS(SELECT 1 FROM reachable WHERE roleid=target) INTO inherited_after_close;
-  WITH RECURSIVE reachable(roleid) AS (
-   SELECT installer
-   UNION
-   SELECT m.roleid FROM pg_auth_members m JOIN reachable p ON p.roleid=m.member
+   SELECT m.roleid FROM pg_auth_members m JOIN can_set p ON p.roleid=m.member
    WHERE m.set_option AND NOT(m.member=installer AND m.grantor=installer AND m.roleid=ANY(targets))
-  ) SELECT EXISTS(SELECT 1 FROM reachable WHERE roleid=target) INTO set_after_close;
-  IF inherited_after_close OR set_after_close THEN
+  ), can_use(roleid) AS (
+   -- A SET-able intermediate role may inherit a writer even when the
+   -- installer cannot directly inherit or SET that writer itself.
+   SELECT roleid FROM can_set
+   UNION
+   SELECT m.roleid FROM pg_auth_members m JOIN can_use p ON p.roleid=m.member
+   WHERE m.inherit_option AND NOT(m.member=installer AND m.grantor=installer AND m.roleid=ANY(targets))
+  ) SELECT EXISTS(SELECT 1 FROM can_use WHERE roleid=target) INTO authority_after_close;
+  IF authority_after_close THEN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE=format('Maintenance would leave active membership for %s',role_name);
   END IF;
  END LOOP;

@@ -98,6 +98,22 @@ test('an exposed bridge schema or inherited browser reader refuses installation 
 test('unexpected default function grants are refused rather than published',()=>{
  refuses(exercise('',{setup:'ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT EXECUTE ON FUNCTIONS TO fixture_grantor;'}));
 });
+test('review: inherited membership between the two readers refuses installation',()=>{
+ for(const setup of [
+  'GRANT dobby_access_identity_reader TO dobby_access_session_reader WITH INHERIT TRUE,SET FALSE;',
+  'GRANT dobby_access_session_reader TO dobby_access_identity_reader WITH INHERIT TRUE,SET FALSE;',
+  'CREATE ROLE fixture_reader_group NOLOGIN; GRANT dobby_access_identity_reader TO fixture_reader_group; GRANT fixture_reader_group TO dobby_access_session_reader;',
+  'CREATE ROLE fixture_reader_group NOLOGIN; GRANT dobby_access_session_reader TO fixture_reader_group; GRANT fixture_reader_group TO dobby_access_identity_reader;'
+ ])refuses(exercise('',{setup}));
+});
+test('review: schema default CREATE for a reader refuses installation',()=>{
+ for(const reader of ['dobby_access_session_reader','dobby_access_identity_reader'])
+  refuses(exercise('',{setup:'ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT CREATE ON SCHEMAS TO '+reader+';'}));
+});
+test('review: an existing Auth CREATE grant without USAGE refuses installation',()=>{
+ for(const reader of ['dobby_access_session_reader','dobby_access_identity_reader'])
+  refuses(exercise('',{setup:'GRANT CREATE ON SCHEMA auth TO '+reader+';'}));
+});
 test('candidate and rollback preserve Auth rows, owners, RLS, ACLs and role attributes',()=>{
  const before=snapshot();
  assert.equal(passes(exercise(`${undo()} SELECT to_regnamespace('dobby_access_auth_bridge') IS NULL;`)),'t');

@@ -38,6 +38,11 @@ test('residual SET authority alone is refused',()=>refuses(check(foreign(false,t
 test('an indirect membership cannot survive the projected closing unnoticed',()=>{
  refuses(check(`CREATE ROLE fixture_bridge NOLOGIN; GRANT dobby_missions_v2_writer TO fixture_bridge WITH INHERIT TRUE,SET TRUE; GRANT fixture_bridge TO postgres WITH INHERIT TRUE,SET TRUE;`));
 });
+test('review: SET to an intermediate role followed by inherited writer rights is refused',()=>{
+ refuses(check(`CREATE ROLE fixture_mixed NOLOGIN;
+ GRANT dobby_missions_v2_writer TO fixture_mixed WITH INHERIT TRUE,SET FALSE;
+ GRANT fixture_mixed TO postgres WITH INHERIT FALSE,SET TRUE;`));
+});
 test('a browser membership in a closed writer is refused',()=>refuses(check('GRANT dobby_socle_writer TO authenticated;')));
 test('a writer that can log in is refused',()=>refuses(check('ALTER ROLE dobby_v7_writer LOGIN;')));
 test('the normal closing statements do not close a grant made by another grantor',()=>{

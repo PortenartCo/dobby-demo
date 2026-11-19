@@ -26,7 +26,7 @@ BEGIN
    OR EXISTS(SELECT 1 FROM pg_roles WHERE rolname='authenticator' AND pg_has_role(oid,reader,'MEMBER')) THEN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Closed, separate Auth readers required';
   END IF;
-  IF has_schema_privilege(reader,'auth','USAGE')
+  IF has_schema_privilege(reader,'auth','USAGE,CREATE')
    OR has_any_column_privilege(reader,'auth.sessions','SELECT,INSERT,UPDATE,REFERENCES')
    OR has_any_column_privilege(reader,'auth.users','SELECT,INSERT,UPDATE,REFERENCES')
    OR has_table_privilege(reader,'auth.sessions','DELETE,TRUNCATE,TRIGGER')
@@ -34,6 +34,10 @@ BEGIN
    RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Bridge readers must not have direct Auth privileges';
   END IF;
  END LOOP;
+ IF pg_has_role('dobby_access_session_reader','dobby_access_identity_reader','MEMBER')
+  OR pg_has_role('dobby_access_identity_reader','dobby_access_session_reader','MEMBER') THEN
+  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Auth readers must not be members of each other';
+ END IF;
 END $preflight$;
 CREATE SCHEMA dobby_access_auth_bridge AUTHORIZATION postgres;
 REVOKE ALL ON SCHEMA dobby_access_auth_bridge FROM PUBLIC,anon,authenticated,service_role;
@@ -85,6 +89,13 @@ GRANT EXECUTE ON FUNCTION dobby_access_auth_bridge.auth_identity(uuid),
  dobby_access_auth_bridge.auth_identity_page(uuid,integer) TO dobby_access_identity_reader;
 DO $acl$
 BEGIN
+ IF EXISTS(SELECT 1 FROM pg_namespace n CROSS JOIN LATERAL aclexplode(coalesce(n.nspacl,acldefault('n',n.nspowner))) a
+  WHERE n.oid='dobby_access_auth_bridge'::regnamespace AND
+   (n.nspowner<>'postgres'::regrole OR a.grantee NOT IN ('postgres'::regrole,
+    'dobby_access_session_reader'::regrole,'dobby_access_identity_reader'::regrole)
+    OR (a.grantee<>'postgres'::regrole AND (a.privilege_type<>'USAGE' OR a.is_grantable)))) THEN
+  RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Unexpected Auth bridge schema privileges';
+ END IF;
  IF EXISTS(SELECT 1 FROM pg_proc p CROSS JOIN LATERAL aclexplode(coalesce(p.proacl,acldefault('f',p.proowner))) a
   WHERE p.pronamespace='dobby_access_auth_bridge'::regnamespace
    AND (p.proowner<>'postgres'::regrole OR a.grantee NOT IN ('postgres'::regrole,
