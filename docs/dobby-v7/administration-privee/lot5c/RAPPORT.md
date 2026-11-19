@@ -1,5 +1,7 @@
 # Lot 5C — NO-GO : assemblage arrêté sur un nouveau chemin 25006
 
+> **Reprise et Missions.** Le [rapport de validation de la reprise](VALIDATION-REPRISE.md) consigne les exercices de restauration locale, les métadonnées hébergées communiquées et les conditions restantes.
+
 > **Mise à jour locale du 19 novembre :** le [correctif ciblé des lectures](CORRECTION-LECTURES.md) résout ce chemin, avec 14/14 contrôles réussis dont les neuf initiaux. Le corps ci-dessous conserve le diagnostic au SHA `69c69c7`. La mise en service reste NO-GO pour les validations Missions, restauration et hébergement ; les scripts restent neutralisés.
 
 19 novembre 2026 · PR #34 en brouillon · base `afb09873b39e533d433c72a436ab3cbcfc043bbc`.

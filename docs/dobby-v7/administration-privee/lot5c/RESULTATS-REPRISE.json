@@ -1,0 +1,97 @@
+{
+  "base": "9a815b4734316312938a9bd28a0e329b5a7ecb6f",
+  "rollout": "NO_GO",
+  "local": {
+    "database": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "skipped": 0,
+      "postgres": "17.7",
+      "method": "pg_dumpall --roles-only --no-role-passwords, pg_dump -Fc, pg_restore single transaction",
+      "sourceStates": [
+        "before installation",
+        "Lot5C assembled and closed"
+      ],
+      "newClusters": 2,
+      "normalizedCatalogueCompared": true,
+      "oidJournalsPreserved": true,
+      "oidAttestationRefusedAfterLogicalRestore": true
+    },
+    "storage": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "image": "Supabase Storage API v1.89.12",
+      "objects": 2,
+      "buckets": 2,
+      "method": "download + local hash manifest + upload into empty local Storage + download and verify",
+      "joinedToLot5CClone": false,
+      "ownershipAndAccessVerified": true
+    },
+    "assembly": {
+      "tests": 14,
+      "pass": 14,
+      "source": "package.test.mjs unchanged, observed in joint run with an intermediate restore-test error, corrected separately"
+    }
+  },
+  "hostedReadOnly": {
+    "provenance": "User-supplied metadata evidence; no Codex project calls",
+    "project": "pqcdkrwljgvgagzwrcmg",
+    "postgres": "17.11",
+    "missions": {
+      "present": 12,
+      "exactFingerprints": 12,
+      "owner": "postgres",
+      "directExecuteAnonAuthenticated": false,
+      "approvedReference": {
+        "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+        "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+      }
+    },
+    "authInstallerProjectionAndRls": true,
+    "storagePrivateBucketAndEightPoliciesPresent": true,
+    "storageHelpersPresent": true,
+    "adminSchemasInstalled": false,
+    "edgeDeployed": false
+  },
+  "notEstablished": [
+    "Hosted restore capability and managed role grants",
+    "OID compatible production recovery for a post-install logical backup",
+    "Hosted Auth bridge positive visibility",
+    "Full private Missions behavior",
+    "Integrated DB + Auth + Storage production recovery"
+  ],
+  "testInputs": [
+    {
+      "path": "tests/private-access/lot5c/package.test.mjs",
+      "sha256": "a38055cbb5058f79c4c06c279209cf6e35a1970bec053e8e6ce9dd2bbd42d464"
+    },
+    {
+      "path": "tests/private-access/lot5c/restore-db.test.mjs",
+      "sha256": "9860de541e7ae206404b901deaae69620b0e95fb8869a20abe059e640753533d"
+    },
+    {
+      "path": "tests/private-access/lot5c/restore-storage.test.mjs",
+      "sha256": "b4402b110bbc604fef773a3f700f2ef4621403ddb49e34ff4fb972f7fdaa5b55"
+    }
+  ],
+  "proofs": [
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/reprise/assemblage.log",
+      "sha256": "79601c315cc018d0cd6a931f4eb07faf6c3633640b9bb37036347c90013df3a5"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/reprise/postgresql.log",
+      "sha256": "af6a4d5d09db91bcd69cfd3634473d1550e308268e7ff37dc4153ffc066d1766"
+    },
+    {
+      "path": "docs/dobby-v7/administration-privee/lot5c/preuves/reprise/storage-http.log",
+      "sha256": "1f1fa89bc9b52dd256323b6acd61e50098b8d6c7b4ffede18dea9b1a81999dbd"
+    }
+  ],
+  "protectedFilesCompared": 46,
+  "packageId": "dobby-lot5c-dedc6fa09d1d6a6e01074414b2a614e98ecd197fae532b72f142d21ef998cab0",
+  "hostedCalls": 0
+}

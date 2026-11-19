@@ -1,0 +1,16 @@
+LOT5C_VALID_READONLY_RESULTS [{"name":"dobby_v7_preview_invitation","status":0,"stdout":"valid\n","stderr":""},{"name":"dobby_v7_preview_child_invitation","status":0,"stdout":"valid\n","stderr":""}]
+LOT5C_INVITATION_READ_MATRIX 27 READ ONLY; 25 legacy and 23 admission refusals
+✔ ordered package exists with one closed installation and separate activation (1.76321ms)
+✔ full preflight refuses missing private Missions without persistent DDL (412.593452ms)
+✔ every delivered writing entrypoint unconditionally aborts even if psql continues (1791.968248ms)
+✔ partial local assembly refuses missing human prerequisites before creating the foundation (320.983676ms)
+✔ partial assembly installs atomically with Auth bridge Storage and administration closed (1709.746579ms)
+✔ activation refuses absent or invisible session and identity without partially opening flags (1852.56046ms)
+✔ controlled positive activation uses bridged readers and preserves exactly two V7 rights (1149.560491ms)
+✔ distributed quarantine contains no mutable continuation after savepoint error recovery (328.022092ms)
+✔ assembled valid adult and child previews preserve READ ONLY contracts (637.102514ms)
+✔ bound invitation reads deny invalid expired revoked mismatched or stale authorization without locks (13256.391022ms)
+✔ read validator remains private and acceptance keeps the original requester locking guard (860.814637ms)
+✔ adult and child acceptances preserve revisions replay receipts and household separation (1122.260084ms)
+✔ concurrent requester suspension waits for acceptance and wins when committed first (837.611914ms)
+✔ historical acceptance revalidates admission identity and session after waiting for authorization locks (1765.83125ms)
