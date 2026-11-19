@@ -1,0 +1,14 @@
+{
+  "scope": "all changed/new task files against mandatory base, no secret contents printed",
+  "files": 67,
+  "binaryFilesRequiringVisualReview": 56,
+  "findings": [],
+  "base": "2efb3c8d5417a1bca750993838520019b2ff82eb",
+  "imageReview": "56 PNG generated exclusively from the owned fictional loopback fixture; source lineage and SHA-256 verified, main mobile/tablet/desktop pairs visually reviewed",
+  "historicalEvidencePreserved": {
+    "files": 146,
+    "referencedScreenshots": 40,
+    "totalPng": 116,
+    "byteIdenticalToBase": true
+  }
+}

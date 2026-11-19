@@ -1,0 +1,7159 @@
+{
+  "phase": "after",
+  "sources": {
+    "essai-stitch-v7/admin-access.css": "68ab44eab49c69451e4dbbdaf8ba0d089dd8cb935259e1c645d7ad418aa75f90",
+    "essai-stitch-v7/admin-access.js": "d4b82e1209b2ec03f84eb4d67e7df1d739dd4b732a073405d95fe5725c04c11a",
+    "essai-stitch-v7/chrome.css": "904e6554ee557409c1185b587cab9e5c2df6676c8db7ed25eff1b90483d4ab5d",
+    "essai-stitch-v7/chrome.js": "6dd38d67020b46a7efdd6e2d6a9544102252ece6a6f5e40da912cf8e95b18269",
+    "essai-stitch-v7/consolidation.css": "fdde96378c70f6c99e1f225f99bb0f270b43bd72c11d91175df7cc8f1414c1df",
+    "essai-stitch-v7/responsive.css": "1b448d9fb5208dca0334443650664beef4a4a371ea8e73afe52f5b7c3a85c888",
+    "essai-stitch-v7/famille.html": "2997786dff44fec4b8c8b0743aa1330445d622dea4ec6490427ebb159fe12086",
+    "tests/private-access/lot4/responsive-finish.cjs": "ec426d9e0c320bcdd58a887eca9bd224961d264bff5378f0e48ea4a58a04f2ba",
+    "tests/private-access/lot4/browser-proof.cjs": "c9bd22d66e253345dc7b196fd856f370a7fa7a70fb9d2f80108e6a353a06b018",
+    "tests/private-access/lot4/preview-server.mjs": "6eba6df3ec043da1b256fe92d1c154f5dde95cc7fe6728894a67bac9f460b711",
+    "tests/private-access/lot4/preview-bootstrap.js": "8c3e29a528ef7dfa1ac5666d075c60d61cefbfae09c3c0428b385dc5803e2f67",
+    "essai-stitch-v5-famille/family-v2.js": "d8fcdaaa94506b3a4f987a6c20f10a996b745ac454a4a13396365eca95cced16",
+    "essai-stitch-v5-famille/family-access.mjs": "1a1852b261540f22bb1ff80ccaf7ef46fbf293d3d594564524d3b163de9f3add",
+    "supabase/functions/_shared/dobby-admin-handler.ts": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190"
+  },
+  "captures": [
+    {
+      "file": "after/access-320.png",
+      "state": "access",
+      "width": 320,
+      "sha256": "a16eed0d3c4f84c6374854ffc2de74777a26456be14bae83242a4ac9b05c2b30",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 0,
+        "bodyView": "admin-access",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 12859.3125,
+          "top": 0,
+          "right": 320,
+          "bottom": 12859.3125,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 12727.3125,
+          "top": 44,
+          "right": 320,
+          "bottom": 12771.3125,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 292,
+          "height": 98.890625,
+          "top": 154,
+          "right": 306,
+          "bottom": 252.890625,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 262.890625,
+          "width": 292,
+          "height": 94.59375,
+          "top": 262.890625,
+          "right": 306,
+          "bottom": 357.484375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 262.890625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 262.890625,
+              "right": 107.328125,
+              "bottom": 307.484375,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": 262.890625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 262.890625,
+              "right": 206.65625,
+              "bottom": 307.484375,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": 262.890625,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": 262.890625,
+              "right": 306,
+              "bottom": 307.484375,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 313.484375,
+              "width": 143,
+              "height": 44,
+              "top": 313.484375,
+              "right": 157,
+              "bottom": 357.484375,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": 313.484375,
+              "width": 143,
+              "height": 44,
+              "top": 313.484375,
+              "right": 306,
+              "bottom": 357.484375,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 492.15625,
+          "width": 292,
+          "height": 255.734375,
+          "top": 492.15625,
+          "right": 306,
+          "bottom": 747.890625,
+          "left": 14
+        },
+        "businessSelector": "account",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 6,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 492.15625,
+            "width": 292,
+            "height": 255.734375,
+            "top": 492.15625,
+            "right": 306,
+            "bottom": 747.890625,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 761.890625,
+            "width": 292,
+            "height": 261.734375,
+            "top": 761.890625,
+            "right": 306,
+            "bottom": 1023.625,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1037.625,
+            "width": 292,
+            "height": 261.734375,
+            "top": 1037.625,
+            "right": 306,
+            "bottom": 1299.359375,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 12146.578125,
+          "width": 292,
+          "height": 386.734375,
+          "top": 12146.578125,
+          "right": 306,
+          "bottom": 12533.3125,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 28,
+          "y": 12473.3125,
+          "width": 264,
+          "height": 46,
+          "top": 12473.3125,
+          "right": 292,
+          "bottom": 12519.3125,
+          "left": 28
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/access-390.png",
+      "state": "access",
+      "width": 390,
+      "sha256": "2c495b272a9a0eb38fa5c38ed20bae4de1f474a1e8a7a75522ba6be24e9b74ab",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyView": "admin-access",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 11043.484375,
+          "top": 0,
+          "right": 390,
+          "bottom": 11043.484375,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 10911.484375,
+          "top": 44,
+          "right": 390,
+          "bottom": 10955.484375,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 362,
+          "height": 101.296875,
+          "top": 154,
+          "right": 376,
+          "bottom": 255.296875,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 265.296875,
+          "width": 362,
+          "height": 94.59375,
+          "top": 265.296875,
+          "right": 376,
+          "bottom": 359.890625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 265.296875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 265.296875,
+              "right": 130.65625,
+              "bottom": 309.890625,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": 265.296875,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": 265.296875,
+              "right": 253.328125,
+              "bottom": 309.890625,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": 265.296875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 265.296875,
+              "right": 375.984375,
+              "bottom": 309.890625,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 315.890625,
+              "width": 177.984375,
+              "height": 44,
+              "top": 315.890625,
+              "right": 191.984375,
+              "bottom": 359.890625,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": 315.890625,
+              "width": 178,
+              "height": 44,
+              "top": 315.890625,
+              "right": 375.984375,
+              "bottom": 359.890625,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 497.0625,
+          "width": 362,
+          "height": 257.78125,
+          "top": 497.0625,
+          "right": 376,
+          "bottom": 754.84375,
+          "left": 14
+        },
+        "businessSelector": "account",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 6,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 497.0625,
+            "width": 362,
+            "height": 257.78125,
+            "top": 497.0625,
+            "right": 376,
+            "bottom": 754.84375,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 768.84375,
+            "width": 362,
+            "height": 263.78125,
+            "top": 768.84375,
+            "right": 376,
+            "bottom": 1032.625,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1046.625,
+            "width": 362,
+            "height": 263.78125,
+            "top": 1046.625,
+            "right": 376,
+            "bottom": 1310.40625,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 10399.40625,
+          "width": 362,
+          "height": 318.078125,
+          "top": 10399.40625,
+          "right": 376,
+          "bottom": 10717.484375,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 31,
+          "y": 10654.484375,
+          "width": 328,
+          "height": 46,
+          "top": 10654.484375,
+          "right": 359,
+          "bottom": 10700.484375,
+          "left": 31
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/access-768.png",
+      "state": "access",
+      "width": 768,
+      "sha256": "0ae6e58cb515d8db06bbbcbca50d340adc4dfc02eca8b1ac92e041f5300e82fc",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 0,
+        "bodyView": "admin-access",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 6176.34375,
+          "top": 0,
+          "right": 768,
+          "bottom": 6176.34375,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 6044.34375,
+          "top": 44,
+          "right": 768,
+          "bottom": 6088.34375,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": 158,
+          "width": 721.9375,
+          "height": 119.328125,
+          "top": 158,
+          "right": 744.96875,
+          "bottom": 277.328125,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": 293.328125,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": 293.328125,
+          "right": 744.96875,
+          "bottom": 344.515625,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": 293.328125,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 293.328125,
+              "right": 161.015625,
+              "bottom": 344.515625,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": 293.328125,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 293.328125,
+              "right": 307,
+              "bottom": 344.515625,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": 293.328125,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 293.328125,
+              "right": 452.984375,
+              "bottom": 344.515625,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": 293.328125,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 293.328125,
+              "right": 598.96875,
+              "bottom": 344.515625,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": 293.328125,
+              "width": 138,
+              "height": 51.1875,
+              "top": 293.328125,
+              "right": 744.96875,
+              "bottom": 344.515625,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": 479.046875,
+          "width": 352.96875,
+          "height": 257.78125,
+          "top": 479.046875,
+          "right": 376,
+          "bottom": 736.828125,
+          "left": 23.03125
+        },
+        "businessSelector": "account",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 6,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 23.03125,
+            "y": 479.046875,
+            "width": 352.96875,
+            "height": 257.78125,
+            "top": 479.046875,
+            "right": 376,
+            "bottom": 736.828125,
+            "left": 23.03125
+          },
+          {
+            "x": 392,
+            "y": 479.046875,
+            "width": 352.96875,
+            "height": 263.78125,
+            "top": 479.046875,
+            "right": 744.96875,
+            "bottom": 742.828125,
+            "left": 392
+          },
+          {
+            "x": 23.03125,
+            "y": 758.828125,
+            "width": 352.96875,
+            "height": 263.78125,
+            "top": 758.828125,
+            "right": 376,
+            "bottom": 1022.609375,
+            "left": 23.03125
+          }
+        ],
+        "lastRequest": {
+          "x": 23.03125,
+          "y": 5530.265625,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 5530.265625,
+          "right": 376,
+          "bottom": 5848.34375,
+          "left": 23.03125
+        },
+        "lastRequestControl": {
+          "x": 40.03125,
+          "y": 5785.34375,
+          "width": 318.96875,
+          "height": 46,
+          "top": 5785.34375,
+          "right": 359,
+          "bottom": 5831.34375,
+          "left": 40.03125
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/access-1440.png",
+      "state": "access",
+      "width": 1440,
+      "sha256": "dfdac3b5e49ce7891de44d88644648b3f7c34dc3136c9a687c2cdc1c09b87771",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyView": "admin-access",
+        "body": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 5539.125,
+          "top": 0,
+          "right": 1360,
+          "bottom": 5539.125,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": 44,
+          "width": 1180,
+          "height": 5407.125,
+          "top": 44,
+          "right": 1310,
+          "bottom": 5451.125,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": 158,
+          "width": 1116,
+          "height": 119.328125,
+          "top": 158,
+          "right": 1278,
+          "bottom": 277.328125,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": 293.328125,
+          "width": 1116,
+          "height": 46,
+          "top": 293.328125,
+          "right": 1278,
+          "bottom": 339.328125,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": 293.328125,
+              "width": 216.796875,
+              "height": 46,
+              "top": 293.328125,
+              "right": 378.796875,
+              "bottom": 339.328125,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": 293.328125,
+              "width": 216.796875,
+              "height": 46,
+              "top": 293.328125,
+              "right": 603.59375,
+              "bottom": 339.328125,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": 293.328125,
+              "width": 216.796875,
+              "height": 46,
+              "top": 293.328125,
+              "right": 828.390625,
+              "bottom": 339.328125,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": 293.328125,
+              "width": 216.796875,
+              "height": 46,
+              "top": 293.328125,
+              "right": 1053.1875,
+              "bottom": 339.328125,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": 293.328125,
+              "width": 216.8125,
+              "height": 46,
+              "top": 293.328125,
+              "right": 1278,
+              "bottom": 339.328125,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 162,
+          "y": 473.859375,
+          "width": 550,
+          "height": 239.1875,
+          "top": 473.859375,
+          "right": 712,
+          "bottom": 713.046875,
+          "left": 162
+        },
+        "businessSelector": "account",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 6,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 162,
+            "y": 473.859375,
+            "width": 550,
+            "height": 239.1875,
+            "top": 473.859375,
+            "right": 712,
+            "bottom": 713.046875,
+            "left": 162
+          },
+          {
+            "x": 728,
+            "y": 473.859375,
+            "width": 550,
+            "height": 245.1875,
+            "top": 473.859375,
+            "right": 1278,
+            "bottom": 719.046875,
+            "left": 728
+          },
+          {
+            "x": 162,
+            "y": 735.046875,
+            "width": 550,
+            "height": 245.1875,
+            "top": 735.046875,
+            "right": 712,
+            "bottom": 980.234375,
+            "left": 162
+          }
+        ],
+        "lastRequest": {
+          "x": 162,
+          "y": 4932.359375,
+          "width": 550,
+          "height": 278.765625,
+          "top": 4932.359375,
+          "right": 712,
+          "bottom": 5211.125,
+          "left": 162
+        },
+        "lastRequestControl": {
+          "x": 529,
+          "y": 5132.4375,
+          "width": 166,
+          "height": 61.6875,
+          "top": 5132.4375,
+          "right": 695,
+          "bottom": 5194.125,
+          "left": 529
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/invite-320.png",
+      "state": "invite",
+      "width": 320,
+      "sha256": "e9ce676f4e04eef761fa912dcaf892343001a32e7f21fcaffe5f323318076959",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 0,
+        "bodyView": "admin-invite",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 1049.65625,
+          "top": 0,
+          "right": 320,
+          "bottom": 1049.65625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 917.65625,
+          "top": 44,
+          "right": 320,
+          "bottom": 961.65625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 292,
+          "height": 52.390625,
+          "top": 154,
+          "right": 306,
+          "bottom": 206.390625,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 216.390625,
+          "width": 292,
+          "height": 94.59375,
+          "top": 216.390625,
+          "right": 306,
+          "bottom": 310.984375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 107.328125,
+              "bottom": 260.984375,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 206.65625,
+              "bottom": 260.984375,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": 216.390625,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 306,
+              "bottom": 260.984375,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 157,
+              "bottom": 310.984375,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 306,
+              "bottom": 310.984375,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 447.65625,
+          "width": 292,
+          "height": 76.5,
+          "top": 447.65625,
+          "right": 306,
+          "bottom": 524.15625,
+          "left": 14
+        },
+        "businessSelector": "field",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 0,
+        "firstCards": [],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/invite-390.png",
+      "state": "invite",
+      "width": 390,
+      "sha256": "546432b087e89cc1dbb519a6ec60763628c5a07d89aacbdf6d1a49c48c95fedc",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyView": "admin-invite",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 1008.171875,
+          "top": 0,
+          "right": 390,
+          "bottom": 1008.171875,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 876.171875,
+          "top": 44,
+          "right": 390,
+          "bottom": 920.171875,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 362,
+          "height": 54.796875,
+          "top": 154,
+          "right": 376,
+          "bottom": 208.796875,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 218.796875,
+          "width": 362,
+          "height": 94.59375,
+          "top": 218.796875,
+          "right": 376,
+          "bottom": 313.390625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 130.65625,
+              "bottom": 263.390625,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": 218.796875,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 253.328125,
+              "bottom": 263.390625,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 375.984375,
+              "bottom": 263.390625,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 269.390625,
+              "width": 177.984375,
+              "height": 44,
+              "top": 269.390625,
+              "right": 191.984375,
+              "bottom": 313.390625,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": 269.390625,
+              "width": 178,
+              "height": 44,
+              "top": 269.390625,
+              "right": 375.984375,
+              "bottom": 313.390625,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 430.171875,
+          "width": 362,
+          "height": 76.5,
+          "top": 430.171875,
+          "right": 376,
+          "bottom": 506.671875,
+          "left": 14
+        },
+        "businessSelector": "field",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 0,
+        "firstCards": [],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/invite-768.png",
+      "state": "invite",
+      "width": 768,
+      "sha256": "44fa519b4ad348f7e548c833a30d8a84c2a7b5253f62c1b41ed794a3216d09f4",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 0,
+        "bodyView": "admin-invite",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 902.21875,
+          "top": 0,
+          "right": 768,
+          "bottom": 902.21875,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 770.21875,
+          "top": 44,
+          "right": 768,
+          "bottom": 814.21875,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": 158,
+          "width": 721.9375,
+          "height": 91.390625,
+          "top": 158,
+          "right": 744.96875,
+          "bottom": 249.390625,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": 265.390625,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": 265.390625,
+          "right": 744.96875,
+          "bottom": 316.578125,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 161.015625,
+              "bottom": 316.578125,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 307,
+              "bottom": 316.578125,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 452.984375,
+              "bottom": 316.578125,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 598.96875,
+              "bottom": 316.578125,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": 265.390625,
+              "width": 138,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 744.96875,
+              "bottom": 316.578125,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": 426.71875,
+          "width": 348.96875,
+          "height": 77.5,
+          "top": 426.71875,
+          "right": 372,
+          "bottom": 504.21875,
+          "left": 23.03125
+        },
+        "businessSelector": "field",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 0,
+        "firstCards": [],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/invite-1440.png",
+      "state": "invite",
+      "width": 1440,
+      "sha256": "11c3c2559ee0b44032a454a5f150ae3d62b81a28bdba52e6715d04121dd4bbd7",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyView": "admin-invite",
+        "body": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 900,
+          "top": 0,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": 44,
+          "width": 1180,
+          "height": 765.03125,
+          "top": 44,
+          "right": 1310,
+          "bottom": 809.03125,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": 158,
+          "width": 1116,
+          "height": 91.390625,
+          "top": 158,
+          "right": 1278,
+          "bottom": 249.390625,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": 265.390625,
+          "width": 1116,
+          "height": 46,
+          "top": 265.390625,
+          "right": 1278,
+          "bottom": 311.390625,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 378.796875,
+              "bottom": 311.390625,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 603.59375,
+              "bottom": 311.390625,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 828.390625,
+              "bottom": 311.390625,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1053.1875,
+              "bottom": 311.390625,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": 265.390625,
+              "width": 216.8125,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1278,
+              "bottom": 311.390625,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 260,
+          "y": 421.53125,
+          "width": 448,
+          "height": 77.5,
+          "top": 421.53125,
+          "right": 708,
+          "bottom": 499.03125,
+          "left": 260
+        },
+        "businessSelector": "field",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 0,
+        "firstCards": [],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/requests-320.png",
+      "state": "requests",
+      "width": 320,
+      "sha256": "a801d773adbb89e3fe1870c0394b0ff281e6878cbc08ce75c742b7b59d81c326",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 10826.796875,
+          "top": 0,
+          "right": 320,
+          "bottom": 10826.796875,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 10694.796875,
+          "top": 44,
+          "right": 320,
+          "bottom": 10738.796875,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 292,
+          "height": 52.390625,
+          "top": 154,
+          "right": 306,
+          "bottom": 206.390625,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 216.390625,
+          "width": 292,
+          "height": 94.59375,
+          "top": 216.390625,
+          "right": 306,
+          "bottom": 310.984375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 107.328125,
+              "bottom": 260.984375,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 206.65625,
+              "bottom": 260.984375,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": 216.390625,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 306,
+              "bottom": 260.984375,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 157,
+              "bottom": 310.984375,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 306,
+              "bottom": 310.984375,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 445.65625,
+          "width": 292,
+          "height": 386.734375,
+          "top": 445.65625,
+          "right": 306,
+          "bottom": 832.390625,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 0,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 445.65625,
+            "width": 292,
+            "height": 386.734375,
+            "top": 445.65625,
+            "right": 306,
+            "bottom": 832.390625,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 846.390625,
+            "width": 292,
+            "height": 386.734375,
+            "top": 846.390625,
+            "right": 306,
+            "bottom": 1233.125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1247.125,
+            "width": 292,
+            "height": 386.734375,
+            "top": 1247.125,
+            "right": 306,
+            "bottom": 1633.859375,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 10063.28125,
+          "width": 292,
+          "height": 386.734375,
+          "top": 10063.28125,
+          "right": 306,
+          "bottom": 10450.015625,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 28,
+          "y": 10390.015625,
+          "width": 264,
+          "height": 46,
+          "top": 10390.015625,
+          "right": 292,
+          "bottom": 10436.015625,
+          "left": 28
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/requests-390.png",
+      "state": "requests",
+      "width": 390,
+      "sha256": "235326f59f6c43e9883c546d4c77602444060668f63cc55881842db3518f4a90",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 9092.90625,
+          "top": 0,
+          "right": 390,
+          "bottom": 9092.90625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 8960.90625,
+          "top": 44,
+          "right": 390,
+          "bottom": 9004.90625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 362,
+          "height": 54.796875,
+          "top": 154,
+          "right": 376,
+          "bottom": 208.796875,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 218.796875,
+          "width": 362,
+          "height": 94.59375,
+          "top": 218.796875,
+          "right": 376,
+          "bottom": 313.390625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 130.65625,
+              "bottom": 263.390625,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": 218.796875,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 253.328125,
+              "bottom": 263.390625,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 375.984375,
+              "bottom": 263.390625,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 269.390625,
+              "width": 177.984375,
+              "height": 44,
+              "top": 269.390625,
+              "right": 191.984375,
+              "bottom": 313.390625,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": 269.390625,
+              "width": 178,
+              "height": 44,
+              "top": 269.390625,
+              "right": 375.984375,
+              "bottom": 313.390625,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 428.171875,
+          "width": 362,
+          "height": 318.078125,
+          "top": 428.171875,
+          "right": 376,
+          "bottom": 746.25,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 428.171875,
+            "width": 362,
+            "height": 318.078125,
+            "top": 428.171875,
+            "right": 376,
+            "bottom": 746.25,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 760.25,
+            "width": 362,
+            "height": 318.078125,
+            "top": 760.25,
+            "right": 376,
+            "bottom": 1078.328125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1092.328125,
+            "width": 362,
+            "height": 318.078125,
+            "top": 1092.328125,
+            "right": 376,
+            "bottom": 1410.40625,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 8398.046875,
+          "width": 362,
+          "height": 318.078125,
+          "top": 8398.046875,
+          "right": 376,
+          "bottom": 8716.125,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 31,
+          "y": 8653.125,
+          "width": 328,
+          "height": 46,
+          "top": 8653.125,
+          "right": 359,
+          "bottom": 8699.125,
+          "left": 31
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/requests-768.png",
+      "state": "requests",
+      "width": 768,
+      "sha256": "ddb6b38e1e3776e262ec80797d84bcc7456bb89380edf50c9c77dcd69135d2ee",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 5122.125,
+          "top": 0,
+          "right": 768,
+          "bottom": 5122.125,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 4990.125,
+          "top": 44,
+          "right": 768,
+          "bottom": 5034.125,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": 158,
+          "width": 721.9375,
+          "height": 91.390625,
+          "top": 158,
+          "right": 744.96875,
+          "bottom": 249.390625,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": 265.390625,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": 265.390625,
+          "right": 744.96875,
+          "bottom": 316.578125,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 161.015625,
+              "bottom": 316.578125,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 307,
+              "bottom": 316.578125,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 452.984375,
+              "bottom": 316.578125,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 598.96875,
+              "bottom": 316.578125,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": 265.390625,
+              "width": 138,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 744.96875,
+              "bottom": 316.578125,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": 428.71875,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 428.71875,
+          "right": 376,
+          "bottom": 746.796875,
+          "left": 23.03125
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 23.03125,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 428.71875,
+            "right": 376,
+            "bottom": 746.796875,
+            "left": 23.03125
+          },
+          {
+            "x": 392,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 428.71875,
+            "right": 744.96875,
+            "bottom": 746.796875,
+            "left": 392
+          },
+          {
+            "x": 23.03125,
+            "y": 762.796875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 762.796875,
+            "right": 376,
+            "bottom": 1080.875,
+            "left": 23.03125
+          }
+        ],
+        "lastRequest": {
+          "x": 23.03125,
+          "y": 4437.65625,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 4437.65625,
+          "right": 376,
+          "bottom": 4755.734375,
+          "left": 23.03125
+        },
+        "lastRequestControl": {
+          "x": 40.03125,
+          "y": 4692.734375,
+          "width": 318.96875,
+          "height": 46,
+          "top": 4692.734375,
+          "right": 359,
+          "bottom": 4738.734375,
+          "left": 40.03125
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/requests-1440.png",
+      "state": "requests",
+      "width": 1440,
+      "sha256": "9bc83107d0f0bf77638a2ee3ab5271bb116af0d74b683dafae081f9e89ba0d5b",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 4605.875,
+          "top": 0,
+          "right": 1360,
+          "bottom": 4605.875,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": 44,
+          "width": 1180,
+          "height": 4473.875,
+          "top": 44,
+          "right": 1310,
+          "bottom": 4517.875,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": 158,
+          "width": 1116,
+          "height": 91.390625,
+          "top": 158,
+          "right": 1278,
+          "bottom": 249.390625,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": 265.390625,
+          "width": 1116,
+          "height": 46,
+          "top": 265.390625,
+          "right": 1278,
+          "bottom": 311.390625,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 378.796875,
+              "bottom": 311.390625,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 603.59375,
+              "bottom": 311.390625,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 828.390625,
+              "bottom": 311.390625,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1053.1875,
+              "bottom": 311.390625,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": 265.390625,
+              "width": 216.8125,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1278,
+              "bottom": 311.390625,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 162,
+          "y": 423.53125,
+          "width": 550,
+          "height": 278.765625,
+          "top": 423.53125,
+          "right": 712,
+          "bottom": 702.296875,
+          "left": 162
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 25,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 162,
+            "y": 423.53125,
+            "width": 550,
+            "height": 278.765625,
+            "top": 423.53125,
+            "right": 712,
+            "bottom": 702.296875,
+            "left": 162
+          },
+          {
+            "x": 728,
+            "y": 423.53125,
+            "width": 550,
+            "height": 278.765625,
+            "top": 423.53125,
+            "right": 1278,
+            "bottom": 702.296875,
+            "left": 728
+          },
+          {
+            "x": 162,
+            "y": 718.296875,
+            "width": 550,
+            "height": 278.765625,
+            "top": 718.296875,
+            "right": 712,
+            "bottom": 997.0625,
+            "left": 162
+          }
+        ],
+        "lastRequest": {
+          "x": 162,
+          "y": 3960.71875,
+          "width": 550,
+          "height": 278.765625,
+          "top": 3960.71875,
+          "right": 712,
+          "bottom": 4239.484375,
+          "left": 162
+        },
+        "lastRequestControl": {
+          "x": 529,
+          "y": 4160.796875,
+          "width": 166,
+          "height": 61.6875,
+          "top": 4160.796875,
+          "right": 695,
+          "bottom": 4222.484375,
+          "left": 529
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-320.png",
+      "state": "long-requests",
+      "width": 320,
+      "sha256": "a801d773adbb89e3fe1870c0394b0ff281e6878cbc08ce75c742b7b59d81c326",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 11576.265625,
+          "top": 0,
+          "right": 320,
+          "bottom": 11576.265625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 11444.265625,
+          "top": 44,
+          "right": 320,
+          "bottom": 11488.265625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 292,
+          "height": 52.390625,
+          "top": 154,
+          "right": 306,
+          "bottom": 206.390625,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 216.390625,
+          "width": 292,
+          "height": 94.59375,
+          "top": 216.390625,
+          "right": 306,
+          "bottom": 310.984375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 107.328125,
+              "bottom": 260.984375,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 206.65625,
+              "bottom": 260.984375,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": 216.390625,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 306,
+              "bottom": 260.984375,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 157,
+              "bottom": 310.984375,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 306,
+              "bottom": 310.984375,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 445.65625,
+          "width": 292,
+          "height": 386.734375,
+          "top": 445.65625,
+          "right": 306,
+          "bottom": 832.390625,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 445.65625,
+            "width": 292,
+            "height": 386.734375,
+            "top": 445.65625,
+            "right": 306,
+            "bottom": 832.390625,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 846.390625,
+            "width": 292,
+            "height": 386.734375,
+            "top": 846.390625,
+            "right": 306,
+            "bottom": 1233.125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1247.125,
+            "width": 292,
+            "height": 386.734375,
+            "top": 1247.125,
+            "right": 306,
+            "bottom": 1633.859375,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 10864.75,
+          "width": 292,
+          "height": 386.734375,
+          "top": 10864.75,
+          "right": 306,
+          "bottom": 11251.484375,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 28,
+          "y": 11191.484375,
+          "width": 264,
+          "height": 46,
+          "top": 11191.484375,
+          "right": 292,
+          "bottom": 11237.484375,
+          "left": 28
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-390.png",
+      "state": "long-requests",
+      "width": 390,
+      "sha256": "235326f59f6c43e9883c546d4c77602444060668f63cc55881842db3518f4a90",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 9705.0625,
+          "top": 0,
+          "right": 390,
+          "bottom": 9705.0625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 9573.0625,
+          "top": 44,
+          "right": 390,
+          "bottom": 9617.0625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 362,
+          "height": 54.796875,
+          "top": 154,
+          "right": 376,
+          "bottom": 208.796875,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 218.796875,
+          "width": 362,
+          "height": 94.59375,
+          "top": 218.796875,
+          "right": 376,
+          "bottom": 313.390625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 130.65625,
+              "bottom": 263.390625,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": 218.796875,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 253.328125,
+              "bottom": 263.390625,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 375.984375,
+              "bottom": 263.390625,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 269.390625,
+              "width": 177.984375,
+              "height": 44,
+              "top": 269.390625,
+              "right": 191.984375,
+              "bottom": 313.390625,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": 269.390625,
+              "width": 178,
+              "height": 44,
+              "top": 269.390625,
+              "right": 375.984375,
+              "bottom": 313.390625,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 428.171875,
+          "width": 362,
+          "height": 318.078125,
+          "top": 428.171875,
+          "right": 376,
+          "bottom": 746.25,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 428.171875,
+            "width": 362,
+            "height": 318.078125,
+            "top": 428.171875,
+            "right": 376,
+            "bottom": 746.25,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 760.25,
+            "width": 362,
+            "height": 318.078125,
+            "top": 760.25,
+            "right": 376,
+            "bottom": 1078.328125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1092.328125,
+            "width": 362,
+            "height": 318.078125,
+            "top": 1092.328125,
+            "right": 376,
+            "bottom": 1410.40625,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 9062.203125,
+          "width": 362,
+          "height": 318.078125,
+          "top": 9062.203125,
+          "right": 376,
+          "bottom": 9380.28125,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 31,
+          "y": 9317.28125,
+          "width": 328,
+          "height": 46,
+          "top": 9317.28125,
+          "right": 359,
+          "bottom": 9363.28125,
+          "left": 31
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-768.png",
+      "state": "long-requests",
+      "width": 768,
+      "sha256": "ddb6b38e1e3776e262ec80797d84bcc7456bb89380edf50c9c77dcd69135d2ee",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 5394.203125,
+          "top": 0,
+          "right": 768,
+          "bottom": 5394.203125,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 5262.203125,
+          "top": 44,
+          "right": 768,
+          "bottom": 5306.203125,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": 158,
+          "width": 721.9375,
+          "height": 91.390625,
+          "top": 158,
+          "right": 744.96875,
+          "bottom": 249.390625,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": 265.390625,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": 265.390625,
+          "right": 744.96875,
+          "bottom": 316.578125,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 161.015625,
+              "bottom": 316.578125,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 307,
+              "bottom": 316.578125,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 452.984375,
+              "bottom": 316.578125,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 598.96875,
+              "bottom": 316.578125,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": 265.390625,
+              "width": 138,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 744.96875,
+              "bottom": 316.578125,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": 428.71875,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 428.71875,
+          "right": 376,
+          "bottom": 746.796875,
+          "left": 23.03125
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 23.03125,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 428.71875,
+            "right": 376,
+            "bottom": 746.796875,
+            "left": 23.03125
+          },
+          {
+            "x": 392,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 428.71875,
+            "right": 744.96875,
+            "bottom": 746.796875,
+            "left": 392
+          },
+          {
+            "x": 23.03125,
+            "y": 762.796875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 762.796875,
+            "right": 376,
+            "bottom": 1080.875,
+            "left": 23.03125
+          }
+        ],
+        "lastRequest": {
+          "x": 23.03125,
+          "y": 4771.734375,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 4771.734375,
+          "right": 376,
+          "bottom": 5089.8125,
+          "left": 23.03125
+        },
+        "lastRequestControl": {
+          "x": 40.03125,
+          "y": 5026.8125,
+          "width": 318.96875,
+          "height": 46,
+          "top": 5026.8125,
+          "right": 359,
+          "bottom": 5072.8125,
+          "left": 40.03125
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-1440.png",
+      "state": "long-requests",
+      "width": 1440,
+      "sha256": "9bc83107d0f0bf77638a2ee3ab5271bb116af0d74b683dafae081f9e89ba0d5b",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 4838.640625,
+          "top": 0,
+          "right": 1360,
+          "bottom": 4838.640625,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": 44,
+          "width": 1180,
+          "height": 4706.640625,
+          "top": 44,
+          "right": 1310,
+          "bottom": 4750.640625,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": 158,
+          "width": 1116,
+          "height": 91.390625,
+          "top": 158,
+          "right": 1278,
+          "bottom": 249.390625,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": 265.390625,
+          "width": 1116,
+          "height": 46,
+          "top": 265.390625,
+          "right": 1278,
+          "bottom": 311.390625,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 378.796875,
+              "bottom": 311.390625,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 603.59375,
+              "bottom": 311.390625,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 828.390625,
+              "bottom": 311.390625,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1053.1875,
+              "bottom": 311.390625,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": 265.390625,
+              "width": 216.8125,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1278,
+              "bottom": 311.390625,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 162,
+          "y": 423.53125,
+          "width": 550,
+          "height": 278.765625,
+          "top": 423.53125,
+          "right": 712,
+          "bottom": 702.296875,
+          "left": 162
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 162,
+            "y": 423.53125,
+            "width": 550,
+            "height": 278.765625,
+            "top": 423.53125,
+            "right": 712,
+            "bottom": 702.296875,
+            "left": 162
+          },
+          {
+            "x": 728,
+            "y": 423.53125,
+            "width": 550,
+            "height": 278.765625,
+            "top": 423.53125,
+            "right": 1278,
+            "bottom": 702.296875,
+            "left": 728
+          },
+          {
+            "x": 162,
+            "y": 718.296875,
+            "width": 550,
+            "height": 278.765625,
+            "top": 718.296875,
+            "right": 712,
+            "bottom": 997.0625,
+            "left": 162
+          }
+        ],
+        "lastRequest": {
+          "x": 162,
+          "y": 4255.484375,
+          "width": 550,
+          "height": 278.765625,
+          "top": 4255.484375,
+          "right": 712,
+          "bottom": 4534.25,
+          "left": 162
+        },
+        "lastRequestControl": {
+          "x": 529,
+          "y": 4455.5625,
+          "width": 166,
+          "height": 61.6875,
+          "top": 4455.5625,
+          "right": 695,
+          "bottom": 4517.25,
+          "left": 529
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-bottom-320.png",
+      "state": "long-requests-bottom",
+      "width": 320,
+      "sha256": "7509cc1a679d333079ab98095da23931732264995e56b39fb1e963fc9b16f351",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 10676,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": -10676,
+          "width": 320,
+          "height": 11576.265625,
+          "top": -10676,
+          "right": 320,
+          "bottom": 900.265625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": -10632,
+          "width": 320,
+          "height": 11444.265625,
+          "top": -10632,
+          "right": 320,
+          "bottom": 812.265625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": -10522,
+          "width": 292,
+          "height": 52.390625,
+          "top": -10522,
+          "right": 306,
+          "bottom": -10469.609375,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": -10459.609375,
+          "width": 292,
+          "height": 94.59375,
+          "top": -10459.609375,
+          "right": 306,
+          "bottom": -10365.015625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": -10459.609375,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": -10459.609375,
+              "right": 107.328125,
+              "bottom": -10415.015625,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": -10459.609375,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": -10459.609375,
+              "right": 206.65625,
+              "bottom": -10415.015625,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": -10459.609375,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": -10459.609375,
+              "right": 306,
+              "bottom": -10415.015625,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": -10409.015625,
+              "width": 143,
+              "height": 44,
+              "top": -10409.015625,
+              "right": 157,
+              "bottom": -10365.015625,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": -10409.015625,
+              "width": 143,
+              "height": 44,
+              "top": -10409.015625,
+              "right": 306,
+              "bottom": -10365.015625,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": -10230.34375,
+          "width": 292,
+          "height": 386.734375,
+          "top": -10230.34375,
+          "right": 306,
+          "bottom": -9843.609375,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": -10230.34375,
+            "width": 292,
+            "height": 386.734375,
+            "top": -10230.34375,
+            "right": 306,
+            "bottom": -9843.609375,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": -9829.609375,
+            "width": 292,
+            "height": 386.734375,
+            "top": -9829.609375,
+            "right": 306,
+            "bottom": -9442.875,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": -9428.875,
+            "width": 292,
+            "height": 386.734375,
+            "top": -9428.875,
+            "right": 306,
+            "bottom": -9042.140625,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 188.75,
+          "width": 292,
+          "height": 386.734375,
+          "top": 188.75,
+          "right": 306,
+          "bottom": 575.484375,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 28,
+          "y": 515.484375,
+          "width": 264,
+          "height": 46,
+          "top": 515.484375,
+          "right": 292,
+          "bottom": 561.484375,
+          "left": 28
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-bottom-390.png",
+      "state": "long-requests-bottom",
+      "width": 390,
+      "sha256": "d416feaa73476a46a2dc07b1be8b926e68fb8fa949e37a26859ffb6ef5268864",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 8805,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": -8805,
+          "width": 390,
+          "height": 9705.0625,
+          "top": -8805,
+          "right": 390,
+          "bottom": 900.0625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": -8761,
+          "width": 390,
+          "height": 9573.0625,
+          "top": -8761,
+          "right": 390,
+          "bottom": 812.0625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": -8651,
+          "width": 362,
+          "height": 54.796875,
+          "top": -8651,
+          "right": 376,
+          "bottom": -8596.203125,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": -8586.203125,
+          "width": 362,
+          "height": 94.59375,
+          "top": -8586.203125,
+          "right": 376,
+          "bottom": -8491.609375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": -8586.203125,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": -8586.203125,
+              "right": 130.65625,
+              "bottom": -8541.609375,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": -8586.203125,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": -8586.203125,
+              "right": 253.328125,
+              "bottom": -8541.609375,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": -8586.203125,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": -8586.203125,
+              "right": 375.984375,
+              "bottom": -8541.609375,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": -8535.609375,
+              "width": 177.984375,
+              "height": 44,
+              "top": -8535.609375,
+              "right": 191.984375,
+              "bottom": -8491.609375,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": -8535.609375,
+              "width": 178,
+              "height": 44,
+              "top": -8535.609375,
+              "right": 375.984375,
+              "bottom": -8491.609375,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": -8376.828125,
+          "width": 362,
+          "height": 318.078125,
+          "top": -8376.828125,
+          "right": 376,
+          "bottom": -8058.75,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": -8376.828125,
+            "width": 362,
+            "height": 318.078125,
+            "top": -8376.828125,
+            "right": 376,
+            "bottom": -8058.75,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": -8044.75,
+            "width": 362,
+            "height": 318.078125,
+            "top": -8044.75,
+            "right": 376,
+            "bottom": -7726.671875,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": -7712.671875,
+            "width": 362,
+            "height": 318.078125,
+            "top": -7712.671875,
+            "right": 376,
+            "bottom": -7394.59375,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 257.203125,
+          "width": 362,
+          "height": 318.078125,
+          "top": 257.203125,
+          "right": 376,
+          "bottom": 575.28125,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 31,
+          "y": 512.28125,
+          "width": 328,
+          "height": 46,
+          "top": 512.28125,
+          "right": 359,
+          "bottom": 558.28125,
+          "left": 31
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-bottom-768.png",
+      "state": "long-requests-bottom",
+      "width": 768,
+      "sha256": "563d95c107c42948291abdfdfe6ec55f0746c481d0b979c69a2efe8ca9f5a55e",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 4494,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": -4494,
+          "width": 768,
+          "height": 5394.203125,
+          "top": -4494,
+          "right": 768,
+          "bottom": 900.203125,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": -4450,
+          "width": 768,
+          "height": 5262.203125,
+          "top": -4450,
+          "right": 768,
+          "bottom": 812.203125,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": -4336,
+          "width": 721.9375,
+          "height": 91.390625,
+          "top": -4336,
+          "right": 744.96875,
+          "bottom": -4244.609375,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": -4228.609375,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": -4228.609375,
+          "right": 744.96875,
+          "bottom": -4177.421875,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": -4228.609375,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": -4228.609375,
+              "right": 161.015625,
+              "bottom": -4177.421875,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": -4228.609375,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": -4228.609375,
+              "right": 307,
+              "bottom": -4177.421875,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": -4228.609375,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": -4228.609375,
+              "right": 452.984375,
+              "bottom": -4177.421875,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": -4228.609375,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": -4228.609375,
+              "right": 598.96875,
+              "bottom": -4177.421875,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": -4228.609375,
+              "width": 138,
+              "height": 51.1875,
+              "top": -4228.609375,
+              "right": 744.96875,
+              "bottom": -4177.421875,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": -4065.28125,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": -4065.28125,
+          "right": 376,
+          "bottom": -3747.203125,
+          "left": 23.03125
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 23.03125,
+            "y": -4065.28125,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": -4065.28125,
+            "right": 376,
+            "bottom": -3747.203125,
+            "left": 23.03125
+          },
+          {
+            "x": 392,
+            "y": -4065.28125,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": -4065.28125,
+            "right": 744.96875,
+            "bottom": -3747.203125,
+            "left": 392
+          },
+          {
+            "x": 23.03125,
+            "y": -3731.203125,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": -3731.203125,
+            "right": 376,
+            "bottom": -3413.125,
+            "left": 23.03125
+          }
+        ],
+        "lastRequest": {
+          "x": 23.03125,
+          "y": 277.734375,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 277.734375,
+          "right": 376,
+          "bottom": 595.8125,
+          "left": 23.03125
+        },
+        "lastRequestControl": {
+          "x": 40.03125,
+          "y": 532.8125,
+          "width": 318.96875,
+          "height": 46,
+          "top": 532.8125,
+          "right": 359,
+          "bottom": 578.8125,
+          "left": 40.03125
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/long-requests-bottom-1440.png",
+      "state": "long-requests-bottom",
+      "width": 1440,
+      "sha256": "50fa1e1aed7c20feab4acaef11832b5544a112414bdd89da9909d527a13d998b",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 3939,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 80,
+          "y": -3939,
+          "width": 1280,
+          "height": 4838.640625,
+          "top": -3939,
+          "right": 1360,
+          "bottom": 899.640625,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": -3895,
+          "width": 1180,
+          "height": 4706.640625,
+          "top": -3895,
+          "right": 1310,
+          "bottom": 811.640625,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": -3781,
+          "width": 1116,
+          "height": 91.390625,
+          "top": -3781,
+          "right": 1278,
+          "bottom": -3689.609375,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": -3673.609375,
+          "width": 1116,
+          "height": 46,
+          "top": -3673.609375,
+          "right": 1278,
+          "bottom": -3627.609375,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": -3673.609375,
+              "width": 216.796875,
+              "height": 46,
+              "top": -3673.609375,
+              "right": 378.796875,
+              "bottom": -3627.609375,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": -3673.609375,
+              "width": 216.796875,
+              "height": 46,
+              "top": -3673.609375,
+              "right": 603.59375,
+              "bottom": -3627.609375,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": -3673.609375,
+              "width": 216.796875,
+              "height": 46,
+              "top": -3673.609375,
+              "right": 828.390625,
+              "bottom": -3627.609375,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": -3673.609375,
+              "width": 216.796875,
+              "height": 46,
+              "top": -3673.609375,
+              "right": 1053.1875,
+              "bottom": -3627.609375,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": -3673.609375,
+              "width": 216.8125,
+              "height": 46,
+              "top": -3673.609375,
+              "right": 1278,
+              "bottom": -3627.609375,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 162,
+          "y": -3515.46875,
+          "width": 550,
+          "height": 278.765625,
+          "top": -3515.46875,
+          "right": 712,
+          "bottom": -3236.703125,
+          "left": 162
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 162,
+            "y": -3515.46875,
+            "width": 550,
+            "height": 278.765625,
+            "top": -3515.46875,
+            "right": 712,
+            "bottom": -3236.703125,
+            "left": 162
+          },
+          {
+            "x": 728,
+            "y": -3515.46875,
+            "width": 550,
+            "height": 278.765625,
+            "top": -3515.46875,
+            "right": 1278,
+            "bottom": -3236.703125,
+            "left": 728
+          },
+          {
+            "x": 162,
+            "y": -3220.703125,
+            "width": 550,
+            "height": 278.765625,
+            "top": -3220.703125,
+            "right": 712,
+            "bottom": -2941.9375,
+            "left": 162
+          }
+        ],
+        "lastRequest": {
+          "x": 162,
+          "y": 316.484375,
+          "width": 550,
+          "height": 278.765625,
+          "top": 316.484375,
+          "right": 712,
+          "bottom": 595.25,
+          "left": 162
+        },
+        "lastRequestControl": {
+          "x": 529,
+          "y": 516.5625,
+          "width": 166,
+          "height": 61.6875,
+          "top": 516.5625,
+          "right": 695,
+          "bottom": 578.25,
+          "left": 529
+        },
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/confirmation-320.png",
+      "state": "confirmation",
+      "width": 320,
+      "sha256": "a12bb8d5783c799bc6bb5571767631e012883d0ee8b1ae3c1f89865b509f8282",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 11576.265625,
+          "top": 0,
+          "right": 320,
+          "bottom": 11576.265625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 11444.265625,
+          "top": 44,
+          "right": 320,
+          "bottom": 11488.265625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 292,
+          "height": 52.390625,
+          "top": 154,
+          "right": 306,
+          "bottom": 206.390625,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 216.390625,
+          "width": 292,
+          "height": 94.59375,
+          "top": 216.390625,
+          "right": 306,
+          "bottom": 310.984375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 107.328125,
+              "bottom": 260.984375,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 206.65625,
+              "bottom": 260.984375,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": 216.390625,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 306,
+              "bottom": 260.984375,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 157,
+              "bottom": 310.984375,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 306,
+              "bottom": 310.984375,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 445.65625,
+          "width": 292,
+          "height": 386.734375,
+          "top": 445.65625,
+          "right": 306,
+          "bottom": 832.390625,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 445.65625,
+            "width": 292,
+            "height": 386.734375,
+            "top": 445.65625,
+            "right": 306,
+            "bottom": 832.390625,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 846.390625,
+            "width": 292,
+            "height": 386.734375,
+            "top": 846.390625,
+            "right": 306,
+            "bottom": 1233.125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1247.125,
+            "width": 292,
+            "height": 386.734375,
+            "top": 1247.125,
+            "right": 306,
+            "bottom": 1633.859375,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 10864.75,
+          "width": 292,
+          "height": 386.734375,
+          "top": 10864.75,
+          "right": 306,
+          "bottom": 11251.484375,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 28,
+          "y": 11191.484375,
+          "width": 264,
+          "height": 46,
+          "top": 11191.484375,
+          "right": 292,
+          "bottom": 11237.484375,
+          "left": 28
+        },
+        "dialog": {
+          "x": 14,
+          "y": 192.625,
+          "width": 292,
+          "height": 514.734375,
+          "top": 192.625,
+          "right": 306,
+          "bottom": 707.359375,
+          "left": 14
+        }
+      }
+    },
+    {
+      "file": "after/confirmation-390.png",
+      "state": "confirmation",
+      "width": 390,
+      "sha256": "da57ed29d110f2eab1bfd2daebca7b06a97afe9898c610d9efe5a419511d03b1",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 9705.0625,
+          "top": 0,
+          "right": 390,
+          "bottom": 9705.0625,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 9573.0625,
+          "top": 44,
+          "right": 390,
+          "bottom": 9617.0625,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 362,
+          "height": 54.796875,
+          "top": 154,
+          "right": 376,
+          "bottom": 208.796875,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 218.796875,
+          "width": 362,
+          "height": 94.59375,
+          "top": 218.796875,
+          "right": 376,
+          "bottom": 313.390625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 130.65625,
+              "bottom": 263.390625,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": 218.796875,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 253.328125,
+              "bottom": 263.390625,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 375.984375,
+              "bottom": 263.390625,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 269.390625,
+              "width": 177.984375,
+              "height": 44,
+              "top": 269.390625,
+              "right": 191.984375,
+              "bottom": 313.390625,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": 269.390625,
+              "width": 178,
+              "height": 44,
+              "top": 269.390625,
+              "right": 375.984375,
+              "bottom": 313.390625,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 428.171875,
+          "width": 362,
+          "height": 318.078125,
+          "top": 428.171875,
+          "right": 376,
+          "bottom": 746.25,
+          "left": 14
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 428.171875,
+            "width": 362,
+            "height": 318.078125,
+            "top": 428.171875,
+            "right": 376,
+            "bottom": 746.25,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 760.25,
+            "width": 362,
+            "height": 318.078125,
+            "top": 760.25,
+            "right": 376,
+            "bottom": 1078.328125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 1092.328125,
+            "width": 362,
+            "height": 318.078125,
+            "top": 1092.328125,
+            "right": 376,
+            "bottom": 1410.40625,
+            "left": 14
+          }
+        ],
+        "lastRequest": {
+          "x": 14,
+          "y": 9062.203125,
+          "width": 362,
+          "height": 318.078125,
+          "top": 9062.203125,
+          "right": 376,
+          "bottom": 9380.28125,
+          "left": 14
+        },
+        "lastRequestControl": {
+          "x": 31,
+          "y": 9317.28125,
+          "width": 328,
+          "height": 46,
+          "top": 9317.28125,
+          "right": 359,
+          "bottom": 9363.28125,
+          "left": 31
+        },
+        "dialog": {
+          "x": 14,
+          "y": 226.609375,
+          "width": 362,
+          "height": 446.78125,
+          "top": 226.609375,
+          "right": 376,
+          "bottom": 673.390625,
+          "left": 14
+        }
+      }
+    },
+    {
+      "file": "after/confirmation-768.png",
+      "state": "confirmation",
+      "width": 768,
+      "sha256": "a4deaf16810ad67ef273ae2656cc2cb0a8bdc70f636ff611d031f34cc2406db4",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 5394.203125,
+          "top": 0,
+          "right": 768,
+          "bottom": 5394.203125,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 5262.203125,
+          "top": 44,
+          "right": 768,
+          "bottom": 5306.203125,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": 158,
+          "width": 721.9375,
+          "height": 91.390625,
+          "top": 158,
+          "right": 744.96875,
+          "bottom": 249.390625,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": 265.390625,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": 265.390625,
+          "right": 744.96875,
+          "bottom": 316.578125,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 161.015625,
+              "bottom": 316.578125,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 307,
+              "bottom": 316.578125,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 452.984375,
+              "bottom": 316.578125,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 598.96875,
+              "bottom": 316.578125,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": 265.390625,
+              "width": 138,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 744.96875,
+              "bottom": 316.578125,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": 428.71875,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 428.71875,
+          "right": 376,
+          "bottom": 746.796875,
+          "left": 23.03125
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 23.03125,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 428.71875,
+            "right": 376,
+            "bottom": 746.796875,
+            "left": 23.03125
+          },
+          {
+            "x": 392,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 428.71875,
+            "right": 744.96875,
+            "bottom": 746.796875,
+            "left": 392
+          },
+          {
+            "x": 23.03125,
+            "y": 762.796875,
+            "width": 352.96875,
+            "height": 318.078125,
+            "top": 762.796875,
+            "right": 376,
+            "bottom": 1080.875,
+            "left": 23.03125
+          }
+        ],
+        "lastRequest": {
+          "x": 23.03125,
+          "y": 4771.734375,
+          "width": 352.96875,
+          "height": 318.078125,
+          "top": 4771.734375,
+          "right": 376,
+          "bottom": 5089.8125,
+          "left": 23.03125
+        },
+        "lastRequestControl": {
+          "x": 40.03125,
+          "y": 5026.8125,
+          "width": 318.96875,
+          "height": 46,
+          "top": 5026.8125,
+          "right": 359,
+          "bottom": 5072.8125,
+          "left": 40.03125
+        },
+        "dialog": {
+          "x": 164,
+          "y": 236.40625,
+          "width": 440,
+          "height": 427.1875,
+          "top": 236.40625,
+          "right": 604,
+          "bottom": 663.59375,
+          "left": 164
+        }
+      }
+    },
+    {
+      "file": "after/confirmation-1440.png",
+      "state": "confirmation",
+      "width": 1440,
+      "sha256": "6baaef49e51e0af38048d8eb63ee40408e2cd7b22489a65b61dae2de481e9d60",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyView": "admin-requests",
+        "body": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 4838.640625,
+          "top": 0,
+          "right": 1360,
+          "bottom": 4838.640625,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": 44,
+          "width": 1180,
+          "height": 4706.640625,
+          "top": 44,
+          "right": 1310,
+          "bottom": 4750.640625,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": 158,
+          "width": 1116,
+          "height": 91.390625,
+          "top": 158,
+          "right": 1278,
+          "bottom": 249.390625,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": 265.390625,
+          "width": 1116,
+          "height": 46,
+          "top": 265.390625,
+          "right": 1278,
+          "bottom": 311.390625,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 378.796875,
+              "bottom": 311.390625,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 603.59375,
+              "bottom": 311.390625,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 828.390625,
+              "bottom": 311.390625,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1053.1875,
+              "bottom": 311.390625,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": 265.390625,
+              "width": 216.8125,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1278,
+              "bottom": 311.390625,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 162,
+          "y": 423.53125,
+          "width": 550,
+          "height": 278.765625,
+          "top": 423.53125,
+          "right": 712,
+          "bottom": 702.296875,
+          "left": 162
+        },
+        "businessSelector": "request",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 27,
+        "decisionCount": 0,
+        "firstCards": [
+          {
+            "x": 162,
+            "y": 423.53125,
+            "width": 550,
+            "height": 278.765625,
+            "top": 423.53125,
+            "right": 712,
+            "bottom": 702.296875,
+            "left": 162
+          },
+          {
+            "x": 728,
+            "y": 423.53125,
+            "width": 550,
+            "height": 278.765625,
+            "top": 423.53125,
+            "right": 1278,
+            "bottom": 702.296875,
+            "left": 728
+          },
+          {
+            "x": 162,
+            "y": 718.296875,
+            "width": 550,
+            "height": 278.765625,
+            "top": 718.296875,
+            "right": 712,
+            "bottom": 997.0625,
+            "left": 162
+          }
+        ],
+        "lastRequest": {
+          "x": 162,
+          "y": 4255.484375,
+          "width": 550,
+          "height": 278.765625,
+          "top": 4255.484375,
+          "right": 712,
+          "bottom": 4534.25,
+          "left": 162
+        },
+        "lastRequestControl": {
+          "x": 529,
+          "y": 4455.5625,
+          "width": 166,
+          "height": 61.6875,
+          "top": 4455.5625,
+          "right": 695,
+          "bottom": 4517.25,
+          "left": 529
+        },
+        "dialog": {
+          "x": 500,
+          "y": 236.40625,
+          "width": 440,
+          "height": 427.1875,
+          "top": 236.40625,
+          "right": 940,
+          "bottom": 663.59375,
+          "left": 500
+        }
+      }
+    },
+    {
+      "file": "after/history-320.png",
+      "state": "history",
+      "width": 320,
+      "sha256": "c6359f9d47dc96c292c089a974fa3a9939b49bb796283dfcc9c275d28febe521",
+      "geometry": {
+        "width": 320,
+        "layoutWidth": 320,
+        "visualWidth": 320,
+        "height": 900,
+        "scrollWidth": 320,
+        "scrollY": 0,
+        "bodyView": "admin-history",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 1811.875,
+          "top": 0,
+          "right": 320,
+          "bottom": 1811.875,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 1679.875,
+          "top": 44,
+          "right": 320,
+          "bottom": 1723.875,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 292,
+          "height": 52.390625,
+          "top": 154,
+          "right": 306,
+          "bottom": 206.390625,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 216.390625,
+          "width": 292,
+          "height": 94.59375,
+          "top": 216.390625,
+          "right": 306,
+          "bottom": 310.984375,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 107.328125,
+              "bottom": 260.984375,
+              "left": 14
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 113.328125,
+              "y": 216.390625,
+              "width": 93.328125,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 206.65625,
+              "bottom": 260.984375,
+              "left": 113.328125
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 212.65625,
+              "y": 216.390625,
+              "width": 93.34375,
+              "height": 44.59375,
+              "top": 216.390625,
+              "right": 306,
+              "bottom": 260.984375,
+              "left": 212.65625
+            },
+            "scrollWidth": 91,
+            "clientWidth": 91
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 157,
+              "bottom": 310.984375,
+              "left": 14
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 163,
+              "y": 266.984375,
+              "width": 143,
+              "height": 44,
+              "top": 266.984375,
+              "right": 306,
+              "bottom": 310.984375,
+              "left": 163
+            },
+            "scrollWidth": 141,
+            "clientWidth": 141
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 445.65625,
+          "width": 292,
+          "height": 249.53125,
+          "top": 445.65625,
+          "right": 306,
+          "bottom": 695.1875,
+          "left": 14
+        },
+        "businessSelector": "decision",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 320,
+          "height": 68,
+          "top": 44,
+          "right": 320,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 44,
+          "top": 0,
+          "right": 320,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 320,
+          "height": 81,
+          "top": 819,
+          "right": 320,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "clientWidth": 94,
+          "scrollWidth": 94,
+          "clientHeight": 24,
+          "scrollHeight": 24,
+          "section": {
+            "x": 85,
+            "y": 79,
+            "width": 94,
+            "height": 24,
+            "top": 79,
+            "right": 179,
+            "bottom": 103,
+            "left": 85
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 94,
+          "sectionScrollWidth": 94,
+          "sectionClientHeight": 24,
+          "sectionScrollHeight": 24
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 4,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 445.65625,
+            "width": 292,
+            "height": 249.53125,
+            "top": 445.65625,
+            "right": 306,
+            "bottom": 695.1875,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 709.1875,
+            "width": 292,
+            "height": 249.53125,
+            "top": 709.1875,
+            "right": 306,
+            "bottom": 958.71875,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 972.71875,
+            "width": 292,
+            "height": 249.53125,
+            "top": 972.71875,
+            "right": 306,
+            "bottom": 1222.25,
+            "left": 14
+          }
+        ],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/history-390.png",
+      "state": "history",
+      "width": 390,
+      "sha256": "493c9e2f71b43fa56523c5c1505da736ca2d5f36892d2bfa037f4f7f49be06ee",
+      "geometry": {
+        "width": 390,
+        "layoutWidth": 390,
+        "visualWidth": 390,
+        "height": 900,
+        "scrollWidth": 390,
+        "scrollY": 0,
+        "bodyView": "admin-history",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 1852.421875,
+          "top": 0,
+          "right": 390,
+          "bottom": 1852.421875,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 1720.421875,
+          "top": 44,
+          "right": 390,
+          "bottom": 1764.421875,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 14,
+          "y": 154,
+          "width": 362,
+          "height": 54.796875,
+          "top": 154,
+          "right": 376,
+          "bottom": 208.796875,
+          "left": 14
+        },
+        "nav": {
+          "x": 14,
+          "y": 218.796875,
+          "width": 362,
+          "height": 94.59375,
+          "top": 218.796875,
+          "right": 376,
+          "bottom": 313.390625,
+          "left": 14
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 14,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 130.65625,
+              "bottom": 263.390625,
+              "left": 14
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 136.65625,
+              "y": 218.796875,
+              "width": 116.671875,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 253.328125,
+              "bottom": 263.390625,
+              "left": 136.65625
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 259.328125,
+              "y": 218.796875,
+              "width": 116.65625,
+              "height": 44.59375,
+              "top": 218.796875,
+              "right": 375.984375,
+              "bottom": 263.390625,
+              "left": 259.328125
+            },
+            "scrollWidth": 115,
+            "clientWidth": 115
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 14,
+              "y": 269.390625,
+              "width": 177.984375,
+              "height": 44,
+              "top": 269.390625,
+              "right": 191.984375,
+              "bottom": 313.390625,
+              "left": 14
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 197.984375,
+              "y": 269.390625,
+              "width": 178,
+              "height": 44,
+              "top": 269.390625,
+              "right": 375.984375,
+              "bottom": 313.390625,
+              "left": 197.984375
+            },
+            "scrollWidth": 176,
+            "clientWidth": 176
+          }
+        ],
+        "business": {
+          "x": 14,
+          "y": 428.171875,
+          "width": 362,
+          "height": 263.265625,
+          "top": 428.171875,
+          "right": 376,
+          "bottom": 691.4375,
+          "left": 14
+        },
+        "businessSelector": "decision",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 390,
+          "height": 68,
+          "top": 44,
+          "right": 390,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 44,
+          "top": 0,
+          "right": 390,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 390,
+          "height": 81,
+          "top": 819,
+          "right": 390,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 102.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 102.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 231.59375,
+            "bottom": 102,
+            "left": 102.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 4,
+        "firstCards": [
+          {
+            "x": 14,
+            "y": 428.171875,
+            "width": 362,
+            "height": 263.265625,
+            "top": 428.171875,
+            "right": 376,
+            "bottom": 691.4375,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 705.4375,
+            "width": 362,
+            "height": 263.265625,
+            "top": 705.4375,
+            "right": 376,
+            "bottom": 968.703125,
+            "left": 14
+          },
+          {
+            "x": 14,
+            "y": 982.703125,
+            "width": 362,
+            "height": 263.265625,
+            "top": 982.703125,
+            "right": 376,
+            "bottom": 1245.96875,
+            "left": 14
+          }
+        ],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/history-768.png",
+      "state": "history",
+      "width": 768,
+      "sha256": "f5beea96d74c2db108b33c40bd2f850ee11cad42efd1b527b6c97edb1a4e7a06",
+      "geometry": {
+        "width": 768,
+        "layoutWidth": 768,
+        "visualWidth": 768,
+        "height": 900,
+        "scrollWidth": 768,
+        "scrollY": 0,
+        "bodyView": "admin-history",
+        "body": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 1300.4375,
+          "top": 0,
+          "right": 768,
+          "bottom": 1300.4375,
+          "left": 0
+        },
+        "main": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 1168.4375,
+          "top": 44,
+          "right": 768,
+          "bottom": 1212.4375,
+          "left": 0
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 23.03125,
+          "y": 158,
+          "width": 721.9375,
+          "height": 91.390625,
+          "top": 158,
+          "right": 744.96875,
+          "bottom": 249.390625,
+          "left": 23.03125
+        },
+        "nav": {
+          "x": 23.03125,
+          "y": 265.390625,
+          "width": 721.9375,
+          "height": 51.1875,
+          "top": 265.390625,
+          "right": 744.96875,
+          "bottom": 316.578125,
+          "left": 23.03125
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 23.03125,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 161.015625,
+              "bottom": 316.578125,
+              "left": 23.03125
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 169.015625,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 307,
+              "bottom": 316.578125,
+              "left": 169.015625
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 315,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 452.984375,
+              "bottom": 316.578125,
+              "left": 315
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 460.984375,
+              "y": 265.390625,
+              "width": 137.984375,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 598.96875,
+              "bottom": 316.578125,
+              "left": 460.984375
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 606.96875,
+              "y": 265.390625,
+              "width": 138,
+              "height": 51.1875,
+              "top": 265.390625,
+              "right": 744.96875,
+              "bottom": 316.578125,
+              "left": 606.96875
+            },
+            "scrollWidth": 136,
+            "clientWidth": 136
+          }
+        ],
+        "business": {
+          "x": 23.03125,
+          "y": 428.71875,
+          "width": 352.96875,
+          "height": 263.265625,
+          "top": 428.71875,
+          "right": 376,
+          "bottom": 691.984375,
+          "left": 23.03125
+        },
+        "businessSelector": "decision",
+        "header": {
+          "x": 0,
+          "y": 44,
+          "width": 768,
+          "height": 68,
+          "top": 44,
+          "right": 768,
+          "bottom": 112,
+          "left": 0
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 768,
+          "height": 44,
+          "top": 0,
+          "right": 768,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 0,
+          "y": 819,
+          "width": 768,
+          "height": 81,
+          "top": 819,
+          "right": 768,
+          "bottom": 900,
+          "left": 0
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 291.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 291.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 420.59375,
+            "bottom": 102,
+            "left": 291.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 4,
+        "firstCards": [
+          {
+            "x": 23.03125,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 263.265625,
+            "top": 428.71875,
+            "right": 376,
+            "bottom": 691.984375,
+            "left": 23.03125
+          },
+          {
+            "x": 392,
+            "y": 428.71875,
+            "width": 352.96875,
+            "height": 263.265625,
+            "top": 428.71875,
+            "right": 744.96875,
+            "bottom": 691.984375,
+            "left": 392
+          },
+          {
+            "x": 23.03125,
+            "y": 707.984375,
+            "width": 352.96875,
+            "height": 263.265625,
+            "top": 707.984375,
+            "right": 376,
+            "bottom": 971.25,
+            "left": 23.03125
+          }
+        ],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    },
+    {
+      "file": "after/history-1440.png",
+      "state": "history",
+      "width": 1440,
+      "sha256": "6603b9d38b0c8fa3452d86746eb7cb2b4a0d3741a25a7fbf5b03b43dddcdcbd1",
+      "geometry": {
+        "width": 1440,
+        "layoutWidth": 1440,
+        "visualWidth": 1440,
+        "height": 900,
+        "scrollWidth": 1440,
+        "scrollY": 0,
+        "bodyView": "admin-history",
+        "body": {
+          "x": 80,
+          "y": 0,
+          "width": 1280,
+          "height": 1258.0625,
+          "top": 0,
+          "right": 1360,
+          "bottom": 1258.0625,
+          "left": 80
+        },
+        "main": {
+          "x": 130,
+          "y": 44,
+          "width": 1180,
+          "height": 1126.0625,
+          "top": 44,
+          "right": 1310,
+          "bottom": 1170.0625,
+          "left": 130
+        },
+        "mainMaxWidth": "1180px",
+        "mainGrid": "none",
+        "hero": {
+          "x": 162,
+          "y": 158,
+          "width": 1116,
+          "height": 91.390625,
+          "top": 158,
+          "right": 1278,
+          "bottom": 249.390625,
+          "left": 162
+        },
+        "nav": {
+          "x": 162,
+          "y": 265.390625,
+          "width": 1116,
+          "height": 46,
+          "top": 265.390625,
+          "right": 1278,
+          "bottom": 311.390625,
+          "left": 162
+        },
+        "tabs": [
+          {
+            "label": "Accès",
+            "bounds": {
+              "x": 162,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 378.796875,
+              "bottom": 311.390625,
+              "left": 162
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Inviter",
+            "bounds": {
+              "x": 386.796875,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 603.59375,
+              "bottom": 311.390625,
+              "left": 386.796875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Demandes familiales",
+            "bounds": {
+              "x": 611.59375,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 828.390625,
+              "bottom": 311.390625,
+              "left": 611.59375
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Suspendre / Réactiver",
+            "bounds": {
+              "x": 836.390625,
+              "y": 265.390625,
+              "width": 216.796875,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1053.1875,
+              "bottom": 311.390625,
+              "left": 836.390625
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          },
+          {
+            "label": "Historique",
+            "bounds": {
+              "x": 1061.1875,
+              "y": 265.390625,
+              "width": 216.8125,
+              "height": 46,
+              "top": 265.390625,
+              "right": 1278,
+              "bottom": 311.390625,
+              "left": 1061.1875
+            },
+            "scrollWidth": 215,
+            "clientWidth": 215
+          }
+        ],
+        "business": {
+          "x": 162,
+          "y": 423.53125,
+          "width": 550,
+          "height": 244.671875,
+          "top": 423.53125,
+          "right": 712,
+          "bottom": 668.203125,
+          "left": 162
+        },
+        "businessSelector": "decision",
+        "header": {
+          "x": 80,
+          "y": 44,
+          "width": 1280,
+          "height": 68,
+          "top": 44,
+          "right": 1360,
+          "bottom": 112,
+          "left": 80
+        },
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 44,
+          "top": 0,
+          "right": 1440,
+          "bottom": 44,
+          "left": 0
+        },
+        "dock": {
+          "x": 80,
+          "y": 819,
+          "width": 1280,
+          "height": 81,
+          "top": 819,
+          "right": 1360,
+          "bottom": 900,
+          "left": 80
+        },
+        "subtitle": {
+          "text": "MAISON & QUOTIDIEN · ADMINISTRATION DOBBY",
+          "bounds": {
+            "x": 627.40625,
+            "y": 80,
+            "width": 129.1875,
+            "height": 22,
+            "top": 80,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "clientWidth": 129,
+          "scrollWidth": 129,
+          "clientHeight": 22,
+          "scrollHeight": 22,
+          "section": {
+            "x": 627.40625,
+            "y": 90,
+            "width": 129.1875,
+            "height": 12,
+            "top": 90,
+            "right": 756.59375,
+            "bottom": 102,
+            "left": 627.40625
+          },
+          "sectionText": "ADMINISTRATION DOBBY",
+          "sectionClientWidth": 129,
+          "sectionScrollWidth": 129,
+          "sectionClientHeight": 12,
+          "sectionScrollHeight": 12
+        },
+        "accountCount": 0,
+        "requestCount": 0,
+        "decisionCount": 4,
+        "firstCards": [
+          {
+            "x": 162,
+            "y": 423.53125,
+            "width": 550,
+            "height": 244.671875,
+            "top": 423.53125,
+            "right": 712,
+            "bottom": 668.203125,
+            "left": 162
+          },
+          {
+            "x": 728,
+            "y": 423.53125,
+            "width": 550,
+            "height": 244.671875,
+            "top": 423.53125,
+            "right": 1278,
+            "bottom": 668.203125,
+            "left": 728
+          },
+          {
+            "x": 162,
+            "y": 684.203125,
+            "width": 550,
+            "height": 244.671875,
+            "top": 684.203125,
+            "right": 712,
+            "bottom": 928.875,
+            "left": 162
+          }
+        ],
+        "lastRequest": null,
+        "lastRequestControl": null,
+        "dialog": null
+      }
+    }
+  ],
+  "hostedRequests": 0,
+  "pageErrors": [],
+  "requests": 162,
+  "actualLocalHttp": true,
+  "apiInterception": false,
+  "staticAssetReplay": null
+}
