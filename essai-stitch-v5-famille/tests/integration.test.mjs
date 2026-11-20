@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {createHash} from 'node:crypto';
 import * as runes from '../family-runes-core.mjs';
+import {beforeReviewedAmendment} from '../../essai-stitch-v7/tests/helpers/reviewed-source.cjs';
 
 const source = path => fs.readFileSync(new URL(path, import.meta.url), 'utf8');
 const bridge = source('../family-v2.js');
@@ -12,7 +13,9 @@ const sql = source('../../sql-proposals/dobby-v2-modules.sql');
 
 test('preview V5 source matches original except isolated storage and approved E05/E07.3/E07.4/FAM/PREP/T09/Role/Contracts/Maison/Settings/Archives/Contacts native extensions', () => {
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
-  const composedNative=source('../index.html').replaceAll('\r\n','\n');
+  const nativeFile='essai-stitch-v5-famille/index.html';
+  const catalogue=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/catalogue-lot3-source-extensions.json'));
+  const composedNative=beforeReviewedAmendment(nativeFile,source('../index.html').replaceAll('\r\n','\n'),catalogue.files[nativeFile],'Catalogue lot 3');
   const contactComposition=JSON.parse(source('./fixtures/settings-archives-contacts-native-composition.json'));
   const contacts=JSON.parse(source('./fixtures/contacts-native-extensions.json'));
   const compositionSha=value=>createHash('sha256').update(value).digest('hex');

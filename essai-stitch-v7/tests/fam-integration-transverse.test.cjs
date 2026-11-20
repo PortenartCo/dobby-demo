@@ -15,25 +15,23 @@ const archives = require('./fixtures/archives-main16-source-extensions.json');
 const finalArchives = require('./fixtures/archives-final-source-extensions.json');
 const runesLot1 = require('./fixtures/runes-lot1-source-extensions.json');
 const runesLot2 = require('./fixtures/runes-lot2-source-extensions.json');
-function beforeRuneAmendment(file,source,extension,lot){
-  if(!extension)return source;
-  assert.equal(digest(source),extension.afterSha256,file+' complete Runes lot '+lot+' source changed');
-  const lines=source.match(/[^\n]*\n|[^\n]+$/g)||[];
-  for(const patch of [...extension.patches].reverse()){
-    const expected=patch.after.match(/[^\n]*\n|[^\n]+$/g)||[];
-    const old=patch.before.match(/[^\n]*\n|[^\n]+$/g)||[];
-    assert.notEqual(patch.before,patch.after,file+' records a real amendment');
-    assert.deepEqual(lines.slice(patch.line,patch.line+expected.length),expected,file+' exact Runes lot '+lot+' amendment');
-    lines.splice(patch.line,expected.length,...old);
-  }
-  const parent=lines.join('');
-  assert.equal(digest(parent),extension.beforeSha256,file+' exact pre-Runes parent recovered');
-  return parent;
-}
-const beforeRunesLot1=(file,source)=>beforeRuneAmendment(file,source,runesLot1.files[file],1);
-const beforeRunesLot2=(file,source)=>beforeRuneAmendment(file,source,runesLot2.files[file],2);
-const rawReviewedSource=file=>fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+const catalogueLot3 = require('./fixtures/catalogue-lot3-source-extensions.json');
+const {beforeReviewedAmendment}=require('./helpers/reviewed-source.cjs');
+const beforeRunesLot1=(file,source)=>beforeReviewedAmendment(file,source,runesLot1.files[file],'Runes lot 1');
+const beforeRunesLot2=(file,source)=>beforeReviewedAmendment(file,source,runesLot2.files[file],'Runes lot 2');
+const beforeCatalogueLot3=(file,source)=>beforeReviewedAmendment(file,source,catalogueLot3.files[file],'Catalogue lot 3');
+const rawContextSource=file=>fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+const rawReviewedSource=file=>beforeCatalogueLot3(file,rawContextSource(file));
 function reviewedSource(file){return beforeRunesLot1(file,beforeRunesLot2(file,rawReviewedSource(file)));}
+test('Catalogue amendments retain all three exact historical sources',()=>{
+  assert.equal(catalogueLot3.baseCommit,'bf3936e9301a8cf25bc76ba781b691b87f341457');
+  assert.deepEqual(Object.keys(catalogueLot3.files),['essai-stitch-v5-famille/family-modules.js','essai-stitch-v5-famille/index.html','essai-stitch-v7/cuisine-engine.js']);
+  for(const file of Object.keys(catalogueLot3.files)){
+    const current=rawContextSource(file);
+    assert.throws(()=>beforeCatalogueLot3(file,current+'/* changed */'),/complete Catalogue lot 3 source changed/);
+    assert.notEqual(beforeCatalogueLot3(file,current),current);
+  }
+});
 test('the four Lot 2 amendments preserve the exact Lot 1 source history',()=>{
   assert.equal(runesLot2.baseCommit,'c4005809680d8533e1496ff08bef1747400fa741');
   assert.deepEqual(Object.keys(runesLot2.files).sort(),[

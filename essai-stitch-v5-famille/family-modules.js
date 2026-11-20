@@ -1,4 +1,4 @@
-/* Supabase household modules. Files remain in Storage (never JSON), and medical
+/* Supabase household modules. Documents remain in Storage (never JSON), and medical
    records stay outside the shared document payload. */
 (function(){
 'use strict';
@@ -1196,6 +1196,7 @@ async function activate(id) {
     revision = Number(remote.revision);acknowledged=remote.payload;
   } else {
     const original = initialPayload(id);
+    if (id === 'recipes') await stageRecipeImages(original);
     const result = await api.authorized('POST', 'dobby_v2_modules', {
       household_id:ctx.householdId,module:id,payload:original
     }, { Prefer:'return=representation' });
@@ -1253,6 +1254,7 @@ async function activateRemaining() {
         revision = Number(remote.revision);acknowledged=remote.payload;
       } else {
         const original = initialPayload(id);
+        if (id === 'recipes') await stageRecipeImages(original);
         const result = await api.authorized('POST','dobby_v2_modules',{
           household_id:ctx.householdId,module:id,payload:original
         },{Prefer:'return=representation'});
@@ -1315,6 +1317,82 @@ async function joinFamily() {
   if(states.missions?.active)markMissionsShared('missions');
   api.repaint(); api.openModal();onSave();
 }
+const recipeImageTypes = new Set(['image/jpeg','image/png','image/webp']);
+let stagedRecipeImages = {token:'', hashes:new Set()};
+function recipeImageRefs(payload) {
+  const refs = new Map();
+  function visit(node) {
+    if (!node || typeof node !== 'object') return;
+    if (/^[a-f0-9]{64}$/.test(node.sha256) && node.key === 'recipe-media-'+node.sha256 && recipeImageTypes.has(node.type)) {
+      refs.set(node.sha256, node);
+      return;
+    }
+    for (const value of Object.values(node)) visit(value);
+  }
+  visit(payload);
+  return refs;
+}
+async function stageRecipeImages(payload) {
+  const allRefs = recipeImageRefs(payload);
+  if (!allRefs.size || api.access?.state?.()?.permissions?.canEdit !== true) return;
+  const token = liveContextToken();
+  if (!token) throw Error('Foyer Recettes à revérifier.');
+  if (stagedRecipeImages.token !== token) stagedRecipeImages = {token, hashes:new Set()};
+  // Historic files remain on their device. Only newly optimized WebP travels.
+  const refs = [...allRefs].filter(([hash,ref]) => ref.type==='image/webp' && !stagedRecipeImages.hashes.has(hash));
+  const household = ctx.householdId;
+  const guard = () => {
+    if (token !== liveContextToken()) throw Error('Le foyer a changé. Photos locales conservées.');
+  };
+  for (let i=0; i<refs.length; i+=40) {
+    const batch = refs.slice(i,i+40);
+    const query = new URLSearchParams({p_household:household,p_hashes:'{'+batch.map(([hash])=>hash).join(',')+'}'});
+    let missing;
+    try {
+      missing = await api.authorized('GET','rpc/dobby_recipe_media_missing?'+query);
+    } catch (error) {
+      guard();
+      // The earlier server can still share recipe text. A future sync retries media.
+      if (error.status === 404) return;
+      throw error;
+    }
+    guard();
+    if (!Array.isArray(missing) || missing.some(hash => !batch.some(([expected]) => expected === hash))) throw Error('État de partage des photos inconnu.');
+    for (const [hash,ref] of batch) {
+      if (missing.includes(hash)) {
+        const blob = await houseRead(ref.key);
+        guard();
+        if (!blob) continue; // Legacy reference from another device.
+        // Match the size and format enforced by the media RPC.
+        if (blob.type !== ref.type || blob.size > 128*1024) throw Error('Image WebP locale invalide ou trop volumineuse.');
+        const base64 = await new Promise((resolve,reject) => {
+          const reader = new FileReader();
+          reader.onerror = () => reject(Error('Lecture de la photographie impossible.'));
+          reader.onload = () => resolve(String(reader.result).split(',')[1]);
+          reader.readAsDataURL(blob);
+        });
+        guard();
+        const accepted = await api.authorized('POST','rpc/dobby_recipe_media_stage',{
+          p_household:household,p_sha256:hash,p_mime:ref.type,p_base64:base64
+        });
+        guard();
+        if (accepted !== true) throw Error('Envoi de la photographie à confirmer.');
+      }
+      stagedRecipeImages.hashes.add(hash);
+    }
+  }
+}
+async function readSharedRecipeImage(ref) {
+  const token = liveContextToken();
+  if (!token || !api.getContext()?.identityVerified || !backendReady || !states.recipes?.active || states.recipes.conflict ||
+      ref.key !== 'recipe-media-'+ref.sha256 || !/^[a-f0-9]{64}$/.test(ref.sha256)) return null;
+  const query = new URLSearchParams({p_household:ctx.householdId,p_sha256:ref.sha256});
+  const media = await api.authorized('GET','rpc/dobby_recipe_media_read?'+query).catch(() => null);
+  if (token !== liveContextToken() || !states.recipes?.active || states.recipes.conflict ||
+      media?.type !== ref.type || !recipeImageTypes.has(media.type) || typeof media.base64 !== 'string') return null;
+  return new Blob([Uint8Array.from(atob(media.base64), value => value.charCodeAt(0))],{type:media.type});
+}
+window.DobbySharedRecipeImages = Object.freeze({read:readSharedRecipeImage});
 async function syncOne(id) {
   if(id==='missions')assertParticipantSharing();
   const state = states[id];
@@ -1345,6 +1423,7 @@ async function syncOne(id) {
     await persist();
     return;
   }
+  if (id === 'recipes') await stageRecipeImages(local);
   if (localJson === state.synced) return;
   const result = await api.authorized('PATCH', rowQuery(id) +
     '&revision=eq.' + encodeURIComponent(state.revision),
@@ -1367,10 +1446,24 @@ async function sync() {
   if (!ctx || !checked || !backendReady || inFlight) return;
   inFlight = true;let success=false;
   try {
-    for (const def of DEFINITIONS) if (states[def.id]?.active) await syncOne(def.id);
-    lastError = '';success=true;
+    let recipesError=null;
+    for (const def of DEFINITIONS) {
+      if (!states[def.id]?.active) continue;
+      try { await syncOne(def.id); }
+      catch (error) {
+        if (def.id!=='recipes') throw error;
+        // A failed upload leaves Recettes pending while other native modules sync.
+        recipesError=error;
+      }
+    }
+    lastError=recipesError?.message||'';success=!recipesError;
   } catch(e) { lastError = e.message || 'Erreur de partage des modules'; }
-  finally { inFlight = false; api.repaint();if(success)onSave(); }
+  finally {
+    inFlight = false;
+    api.repaint();
+    if (states.recipes?.active && typeof CustomEvent === 'function') window.dispatchEvent?.(new CustomEvent('dobby:recipe-share'));
+    if (success) onSave();
+  }
 }
 function onSave() {
   if (!ctx || !backendReady || applying || inFlight || !DEFINITIONS.some(d=>
