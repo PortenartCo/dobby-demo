@@ -154,12 +154,22 @@ async function scenario(browser, width) {
     assert.equal(await c.locator('[data-e03-card="mission-1"]').count(),0);
     await capture(c,width,'enfant-missions');
     await c.locator('[data-dv7-complete="mission-0"]').click();
+    const receipt = c.waitForResponse(response => response.request().method()==='POST' &&
+      new URL(response.url()).pathname.endsWith('/dobby_missions_v3_write') &&
+      response.request().postDataJSON()?.p_intent?.kind==='complete');
     await button(c,'Confirmer la mission').click();
+    assert.equal((await receipt).status(),200);
     const done = await request('dobby_v2_modules?module=eq.missions',{bearer:parentToken});
     assert.equal(done[0].payload.manualMissions.find(mission=>mission.id==='mission-0').status,'done');
     assert.equal(done[0].payload.manualMissions.find(mission=>mission.id==='mission-1').status,'open');
 
     await c.goto(familyPage+'#access-account');
+    await verified(c);
+    await c.evaluate(async id=>{
+      const api = DobbyFamilyStitchEngine.win().DobbyFamilyUI.access;
+      await api.updateMagic({memberId:id,values:{magicHouseId:'ravenclaw'},expectedRevision:api.state().familyRevision});
+    },first.memberId);
+    assert.equal((await verified(c)).profile.magicProfile.houseId,'ravenclaw');
     await logout(c);
     await button(c,'Continuer').click();
     await button(c,'Mot de passe oublié').click();
@@ -174,9 +184,17 @@ async function scenario(browser, width) {
     await waitTraverse(c);
     assert.equal((await verified(c)).memberId,first.memberId);
 
+    const oldTab = await accounts[0].context.newPage();
+    await oldTab.goto(familyPage+'#members');
+    assert.equal((await verified(oldTab)).memberId,parent.memberId);
     await logout(a);
     await login(a,email('enfant-un'),resetPassword);
     assert.equal((await verified(a)).memberId,first.memberId);
+    await oldTab.waitForFunction(id => {
+      const api = window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI;
+      return api?.childAccessState().active && api.getContext()?.memberId===id;
+    },first.memberId);
+    assert.equal(await oldTab.locator('#invite-member-btn').count(),0);
     assert.ok(!await a.evaluate(secret => {
       const engine = window.DobbyFamilyStitchEngine;
       return JSON.stringify(engine.read()).includes(secret);
@@ -195,8 +213,7 @@ async function scenario(browser, width) {
     });
     assert.equal((await rpc('context',secondBearer,{})).memberId,second.memberId);
     const persisted = await request('dobby_v2_modules?module=eq.family',{bearer:await token(b)});
-    assert.equal(persisted[0].payload.familyMembers.find(member=>member.id===first.memberId).magicProfile.houseId,
-      members[0].magicProfile.houseId);
+    assert.equal(persisted[0].payload.familyMembers.find(member=>member.id===first.memberId).magicProfile.houseId,'ravenclaw');
     assert.deepEqual(accounts.flatMap(account=>account.errors),[]);
     console.log('CHILD_ONBOARDING_LOCAL_PASS',width,'two parents, two canonical children, mail, replay, expiry, recovery, shared device, suspension');
   } finally {

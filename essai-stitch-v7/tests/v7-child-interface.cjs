@@ -83,7 +83,7 @@ async function run(browser,width){
   await page.locator('body > nav [data-e01-destination="1"]').click();
   await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&document.body.dataset.dv7Screen==='missions').catch(async error=>{throw Error(page.url()+' '+JSON.stringify(errors),{cause:error});});
   assert.equal(await page.locator('#btn-nouvelle-mission,[data-e03-card=other],[data-e03-card=auto]').count(),0);
-  assert.ok(await page.locator('[data-e03-card=own]').isVisible());
+  await page.locator('[data-e03-card=own]').waitFor();
   await capture(page,width,'missions');
   await assert.rejects(page.evaluate(()=>DobbyMissionParticipants.open('other')),/participation|Mission/);
   await page.evaluate(()=>{

@@ -3,6 +3,7 @@ export function destination(state = {}, { invitationPending = false, invitationT
   if (state.phase === 'active') {
     if (!state.verified || !state.userId || !state.householdId || !state.memberId) return 'access-unavailable';
     if (invitationPending) return 'access-join';
+    if (state.profile?.memberCategory === 'child') return 'traverse';
     return state.pendingCeremony ? 'traverse' : 'ritual';
   }
   if (state.phase === 'rejected' || state.phase === 'unavailable') return 'access-unavailable';

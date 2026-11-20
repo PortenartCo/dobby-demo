@@ -387,11 +387,16 @@
     },
     "essai-stitch-v7/access-flow.mjs": {
       "beforeSha256": "f615a70034ccccf17065e833c8e1bd750a381d5167df4cc94ffc4919194927a7",
-      "afterSha256": "94760b8a6fa8938a201dc3057444504da29f96f685f9b2ece7460c1408feaf21",
+      "afterSha256": "efad0af9358f8ea0626651e3f64d0e4228745957dfbf7a51869cf2e3e12199af",
       "reason": "Reprise du flux Auth existant pour l’invitation ciblée.",
       "patches": [
         {
-          "line": 11,
+          "line": 5,
+          "before": "",
+          "after": "    if (state.profile?.memberCategory === 'child') return 'traverse';\n"
+        },
+        {
+          "line": 12,
           "before": "  if (state.phase === 'signed-out' && invitationPending && invitationType === 'generic') return 'access-join';\n",
           "after": "  if (state.phase === 'signed-out' && invitationPending) return 'access-join';\n"
         }
@@ -496,7 +501,7 @@
     },
     "essai-stitch-v7/bridge.js": {
       "beforeSha256": "ba338ecaabca7180fe1f3c0255a03cc568e10f4b7a3374a2c08ab3c1aa6b6644",
-      "afterSha256": "278b357305cdf5fb56543127f1d0c648e0de1398530cc31033dea6cce5020d37",
+      "afterSha256": "56a69c2beb6bc472438066d153c91877a8ec0675c1c0b7dd42ce13dccf005b52",
       "reason": "Contexte authentifié et accès aux vues au sein du cadre V7.",
       "patches": [
         {
@@ -522,20 +527,20 @@
         {
           "line": 126,
           "before": "function renderReal(){window.DobbyChrome?.mount();updateMissionAlerts();if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();const data=read();if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}else{window.DobbyStitchRootAdapters.render(currentScreen,data);} sanitizeClaims();document.querySelector('main').style.visibility='visible';document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');}\n",
-          "after": "function renderReal(){\n const access=childAccess(),waiting=access.restricted&&!access.active;\n if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();\n if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();\n if(waiting){window.DobbyHome?.clearDraft();window.DobbyMissions?.clear();}\n else if(!(currentScreen==='famille'&&access.restricted)){\n  const data=read();\n  if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}\n  else window.DobbyStitchRootAdapters.render(currentScreen,data);\n  sanitizeClaims();\n }\n showVerification(waiting);window.DobbyChrome?.mount();updateMissionAlerts();\n document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');\n}\nlet renderedScope='';\nfunction accessChanged(){\n const scope=accountScope();updateMissionAlerts();if(scope===renderedScope)return;\n renderedScope=scope;if(!booted)return;\n close(false);lastTrigger=null;window.DobbyCeremonies?.accessChanged();\n for(const dialog of document.querySelectorAll('.dv7-participant-dialog,#archive-confirm,#access-invite-dialog')){dialog.close();dialog.remove();}\n if(currentScreen==='famille')return window.DobbyFamilyStitch.accessChanged();\n if(currentScreen==='taverne')return window.DobbyCuisine.accessChanged();\n window.DobbyHome?.clearDraft();\n window.DobbyMissions?.clear();\n renderReal();\n}\n"
+          "after": "function renderReal(){\n const access=childAccess(),waiting=access.restricted&&!access.active;\n if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();\n if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();\n if(waiting){window.DobbyHome?.clearDraft();window.DobbyMissions?.clear();}\n else if(!(currentScreen==='famille'&&access.restricted)){\n  const data=read();\n  if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}\n  else window.DobbyStitchRootAdapters.render(currentScreen,data);\n  sanitizeClaims();\n }\n showVerification(waiting);window.DobbyChrome?.mount();updateMissionAlerts();\n document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');\n}\nlet renderedScope='';\nfunction accessChanged(){\n const scope=accountScope();updateMissionAlerts();if(scope===renderedScope)return;\n const [wasRestricted,,,previousUser]=JSON.parse(renderedScope||'[]');\n const [restricted,,,user]=JSON.parse(scope);\n renderedScope=scope;if(!booted||!wasRestricted&&!restricted&&(!previousUser||previousUser===user))return;\n close(false);lastTrigger=null;window.DobbyCeremonies?.accessChanged();\n for(const dialog of document.querySelectorAll('.dv7-participant-dialog,#archive-confirm,#access-invite-dialog')){dialog.close();dialog.remove();}\n if(currentScreen==='famille')return window.DobbyFamilyStitch.accessChanged();\n if(currentScreen==='taverne')return window.DobbyCuisine.accessChanged();\n window.DobbyHome?.clearDraft();\n window.DobbyMissions?.clear();\n renderReal();\n}\n"
         },
         {
-          "line": 171,
+          "line": 173,
           "before": "starting=true;try{window.DobbyHealthRuntime?.connect(w.DobbyFamilyUI,w);bind();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?(renderReal(),window.DobbyFamilyStitch.init(route=>open(route,document.activeElement))):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;\n w.addEventListener('dobby:access-change',updateMissionAlerts);\n",
           "after": "starting=true;try{window.DobbyHealthRuntime?.connect(w.DobbyFamilyUI,w);bind();renderedScope=accountScope();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?window.DobbyFamilyStitch.init(route=>open(route,document.activeElement)):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;\n for(const event of ['dobby:access-change','dobby:account-change'])w.addEventListener(event,()=>Promise.resolve(accessChanged()).catch(console.error));\n"
         },
         {
-          "line": 175,
+          "line": 177,
           "before": " updateMissionAlerts();if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}\n",
           "after": " updateMissionAlerts();if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});return accessChanged();}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);const loading=document.getElementById('dv7-loading');if(loading)loading.textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}\n"
         },
         {
-          "line": 181,
+          "line": 183,
           "before": "window.DobbyStitchV7=Object.freeze({version:7,open,close,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});\n",
           "after": "window.DobbyStitchV7=Object.freeze({version:7,open,close,childAccess,allowFamily,allowCuisine,ownMission,accountScope,showVerification,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});\n"
         }

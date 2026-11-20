@@ -63,7 +63,19 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE,requir
   }
   return next;
  }
- async function refresh(expected={}){
+ let queuedRefresh=Promise.resolve();
+ function refresh(expected={}){
+  if(!requireChildAccessProtocol)return readContext(expected);
+  const requested=current();
+  const work=queuedRefresh.catch(()=>{}).then(()=>{
+   const actual=current();
+   if(actual.userId!==requested.userId||actual.epoch!==requested.epoch)throw Error('Le compte a changé pendant la vérification.');
+   return readContext(expected);
+  });
+  queuedRefresh=work;
+  return work;
+ }
+ async function readContext(expected){
   const ticket=++generation,native=current();clear();
   if(!native.ready)return publish({phase:'unavailable'});
   if(!native.userId){const pending=await driver.meta('v7-auth-pending');guard(native);return publish({phase:pending&&driver.now()-pending.createdAt<86400000?'email-confirmation':'signed-out'});}

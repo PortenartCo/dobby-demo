@@ -6,7 +6,7 @@ const release={familyRoles:true,childAccountLink:true};
 const capabilities={protocol:2,installed:true,familyRolesAvailable:true,familyRolesVerified:true,storagePoliciesVerified:true,childAccountLinkAvailable:true,childAccountLinkVerified:true};
 const householdId='household-fixture',parentId='parent-fixture',childId='legacy-child:01';
 
-function fixture({category='parent',phase='active',protocol=1,childStatus={linked:true,active:true},suspension={linked:true,active:false}}={}){
+function fixture({category='parent',phase='active',protocol=1,childStatus={linked:true,active:true},suspension={linked:true,active:false},beforeContext}={}){
  const memberId=category==='child'?childId:parentId;
  const native={ready:true,configured:true,userId:'fixture-user',householdId,epoch:0,verified:false};
  const calls=[];
@@ -14,9 +14,12 @@ function fixture({category='parent',phase='active',protocol=1,childStatus={linke
   snapshot:()=>({...native}),clearBinding(){native.verified=false;},async bind(){native.verified=true;},
   async rpc(name,body,options){
    calls.push({name,body,options});
-   if(name==='dobby_v7_context')return phase==='rejected'
-    ? {protocol:1,phase,userId:native.userId,reason:'child_access_suspended'}
-    : {protocol:1,phase,userId:native.userId,householdId,memberId,profile:{id:memberId,memberCategory:category},permissions:{canEdit:true,canManageHousehold:true}};
+   if(name==='dobby_v7_context'){
+    await beforeContext?.();
+    return phase==='rejected'
+     ? {protocol:1,phase,userId:native.userId,reason:'child_access_suspended'}
+     : {protocol:1,phase,userId:native.userId,householdId,memberId,profile:{id:memberId,memberCategory:category},permissions:{canEdit:true,canManageHousehold:true}};
+   }
    if(name==='dobby_v7_family_capabilities')return {...capabilities,childAccessProtocol:protocol};
    if(name==='dobby_v7_child_access_status')return childStatus;
    if(name==='dobby_v7_suspend_child_access')return suspension;
@@ -68,4 +71,18 @@ test('a suspended session keeps its rejected context and offers no canonical bin
  assert.equal(context.reason,'child_access_suspended');
  assert.equal(context.verified,false);
  assert.equal(context.memberId,null);
+});
+
+test('background sync cannot supersede a child account confirmation after a mutation',async()=>{
+ const entered=Promise.withResolvers(), unblocked=Promise.withResolvers();
+ const {access,calls}=fixture({category:'child',async beforeContext(){entered.resolve();await unblocked.promise;}});
+ const first=access.refresh();
+ await entered.promise;
+ const second=access.refresh();
+ await Promise.resolve();
+ assert.equal(calls.filter(call=>call.name==='dobby_v7_context').length,1);
+ unblocked.resolve();
+ const results=await Promise.all([first,second]);
+ assert.ok(results.every(result=>result.verified&&result.memberId===childId));
+ assert.equal(calls.filter(call=>call.name==='dobby_v7_context').length,2);
 });

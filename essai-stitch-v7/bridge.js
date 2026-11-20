@@ -141,7 +141,9 @@ function renderReal(){
 let renderedScope='';
 function accessChanged(){
  const scope=accountScope();updateMissionAlerts();if(scope===renderedScope)return;
- renderedScope=scope;if(!booted)return;
+ const [wasRestricted,,,previousUser]=JSON.parse(renderedScope||'[]');
+ const [restricted,,,user]=JSON.parse(scope);
+ renderedScope=scope;if(!booted||!wasRestricted&&!restricted&&(!previousUser||previousUser===user))return;
  close(false);lastTrigger=null;window.DobbyCeremonies?.accessChanged();
  for(const dialog of document.querySelectorAll('.dv7-participant-dialog,#archive-confirm,#access-invite-dialog')){dialog.close();dialog.remove();}
  if(currentScreen==='famille')return window.DobbyFamilyStitch.accessChanged();
