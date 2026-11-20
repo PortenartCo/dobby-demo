@@ -395,10 +395,11 @@ async function healthStorageFetch(method, path, file) {
   if (!healthFileMatches(downloaded, mime)) throw Error('Fichier Santé inattendu.');
   return downloaded;
 }
-async function requireHousehold(startProvider = true) {
+async function requireHousehold(startProvider = true, keepVerified = false) {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
   const epoch = f.epoch;
-  f.checkingEpoch=epoch;f.verifiedContext = null;
+  f.checkingEpoch=epoch;
+  if(!keepVerified)f.verifiedContext=null;
   const rows = await authorized('GET', 'dobby_v2_memberships?select=household_id&active=eq.true&user_id=eq.' +
     encodeURIComponent(f.session.user_id));
   if (epoch !== f.epoch) throw Error('Session remplacée');
@@ -1042,7 +1043,7 @@ function ensureAccess(){
     guard();
     const child=childRelease()&&context.profile.memberCategory==='child';
     try {
-     await requireHousehold(!childRelease());guard();
+     await requireHousehold(!childRelease(),childRelease()&&Boolean(verifiedBinding()));guard();
      if(f.householdId!==context.householdId)throw Error('Le contexte serveur ne correspond pas au foyer autorisé.');
      if(!f.provider?.adoptVerifiedFamily)throw Error('Le registre familial natif est indisponible.');
      const binding={...context,identityVerified:true};

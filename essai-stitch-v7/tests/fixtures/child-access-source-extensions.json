@@ -3,7 +3,7 @@
   "files": {
     "essai-stitch-v5-famille/family-access.mjs": {
       "beforeSha256": "921d788e294786a5cf57c37ddd3ebcee44c31b0be6cec0bafc0a59edfd36ba31",
-      "afterSha256": "c41e6cda593ec26d2f709461d1629fe6701fac70fd2f83a300b3495e689d0162",
+      "afterSha256": "a8d858bd09ba210085863f0d32932e05841654c1dd9cc5fc643bedb54b079c0e",
       "reason": "Cycle de vie de l’invitation ciblée et suspension par le compte autorisé.",
       "patches": [
         {
@@ -37,12 +37,27 @@
           "after": "  if(raw.reason==='existing_member_link_required'||raw.phase==='rejected'&&raw.reason==='child_access_suspended')next.reason=raw.reason;\n"
         },
         {
-          "line": 165,
+          "line": 65,
+          "before": " async function refresh(expected={}){\n  const ticket=++generation,native=current();clear();\n",
+          "after": " let queuedRefresh=Promise.resolve();\n function refresh(expected={}){\n  if(!requireChildAccessProtocol)return readContext(expected);\n  const requested=current();\n  const work=queuedRefresh.catch(()=>{}).then(()=>{\n   const actual=current();\n   if(actual.userId!==requested.userId||actual.epoch!==requested.epoch)throw Error('Le compte a changé pendant la vérification.');\n   return readContext(expected);\n  });\n  queuedRefresh=work;\n  return work;\n }\n async function readContext(expected){\n  const ticket=++generation,native=current();\n  const keepVerified=requireChildAccessProtocol&&native.ready&&native.userId&&state().verified;\n  if(!keepVerified)clear();\n"
+        },
+        {
+          "line": 83,
+          "before": "  publish({phase:'unavailable',userId:native.userId});\n",
+          "after": "  if(!keepVerified)publish({phase:'unavailable',userId:native.userId});\n"
+        },
+        {
+          "line": 87,
+          "before": "",
+          "after": "   else clear();\n"
+        },
+        {
+          "line": 180,
           "before": "",
           "after": " async function readOrSuspendChildAccess(memberId,suspend){\n  const before=requireSession(),live=state();\n  if(!live.verified||live.profile?.memberCategory!=='parent'||live.capabilities.childAccessProtocol!==1||live.permissions.canLinkExistingChild!==true)throw Error('Accès enfant non autorisé pour ce compte.');\n  if(typeof memberId!=='string'||!memberId.trim()||memberId.length>120)throw Error('Profil enfant existant requis.');\n  guardMutation(before);\n  const body={p_member_id:memberId};\n  const raw=suspend?await rpc('dobby_v7_suspend_child_access',body):await rpc('dobby_v7_child_access_status',body,{method:'GET'});\n  guardMutation(before);\n  if(!object(raw)||typeof raw.linked!=='boolean'||typeof raw.active!=='boolean'||raw.active&&!raw.linked)throw Error('État de l’accès enfant non confirmé.');\n  if(suspend&&(!raw.linked||raw.active))throw Error('Suspension de l’accès enfant non confirmée.');\n  return {linked:raw.linked,active:raw.active};\n }\n"
         },
         {
-          "line": 194,
+          "line": 209,
           "before": " return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,reserveMemberId,logout,cleanURL:cleanAuthURL});\n",
           "after": " return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,childAccessStatus:memberId=>readOrSuspendChildAccess(memberId,false),suspendChildAccess:memberId=>readOrSuspendChildAccess(memberId,true),updateMagic,updateMember,reserveMemberId,logout,cleanURL:cleanAuthURL});\n"
         }
@@ -134,7 +149,7 @@
     },
     "essai-stitch-v5-famille/family-v2.js": {
       "beforeSha256": "4ff53520e541c6ff1cc77c821183285bdb0dde33693b246b6db1c14957f5094d",
-      "afterSha256": "54e13d718518b6028228760ac2accf8abcde41e8a9ad1cf37348761f2f10b9aa",
+      "afterSha256": "83868a91a2c45ffa08f9e362d8f01d65842c7158ab84258993534fb0cee619a6",
       "reason": "Autorisation, remplacement de session et séparation des caches du moteur natif.",
       "patches": [
         {
@@ -185,110 +200,115 @@
         {
           "line": 397,
           "before": "async function requireHousehold() {\n",
-          "after": "async function requireHousehold(startProvider = true) {\n"
+          "after": "async function requireHousehold(startProvider = true, keepVerified = false) {\n"
         },
         {
-          "line": 432,
+          "line": 400,
+          "before": "  f.checkingEpoch=epoch;f.verifiedContext = null;\n",
+          "after": "  f.checkingEpoch=epoch;\n  if(!keepVerified)f.verifiedContext=null;\n"
+        },
+        {
+          "line": 433,
           "before": "  if (f.provider?.start) await f.provider.start();\n",
           "after": "  if (startProvider && f.provider?.start && !childAccessState().restricted) await f.provider.start();\n"
         },
         {
-          "line": 453,
+          "line": 454,
           "before": "",
           "after": "  if (childAccessState().restricted) {\n    f.cache = new Map(childAccessState().active ?\n      rows.map(row => [row.id, f.core.mergeRemote(null,row)]) : []);\n    return;\n  }\n"
         },
         {
-          "line": 524,
+          "line": 525,
           "before": "",
           "after": "    if (childAccount && childRelease()) {\n      const controller = await ensureAccess();\n      await controller.refresh();\n      if (epoch !== f.epoch || !childAccessState().active) return;\n      await pull(epoch);\n      if (epoch === f.epoch) await f.provider?.sync();\n      return;\n    }\n"
         },
         {
-          "line": 544,
+          "line": 545,
           "before": "",
           "after": "    if (childAccessState().active) {\n      await pull(epoch);\n      if(epoch===f.epoch)await f.provider?.sync();\n      return;\n    }\n    if (childAccessState().restricted) return;\n"
         },
         {
-          "line": 590,
+          "line": 591,
           "before": "",
           "after": "  const access = childAccessState();\n  if (access.restricted && !access.active) return [];\n"
         },
         {
-          "line": 819,
+          "line": 820,
           "before": "",
           "after": "  childAccount=null;sealDeviceState(true);\n"
         },
         {
-          "line": 833,
+          "line": 834,
           "before": "",
           "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
         },
         {
-          "line": 845,
+          "line": 846,
           "before": "",
           "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
         },
         {
-          "line": 876,
+          "line": 877,
           "before": "",
           "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
         },
         {
-          "line": 1002,
+          "line": 1003,
           "before": "",
           "after": " if(childDevice&&!state.verified)sealDeviceState();\n if(childDevice&&state.phase==='rejected'){\n  f.cache.clear();f.provider?.reset?.();sealDeviceState(true);\n }\n"
         },
         {
-          "line": 1024,
+          "line": 1025,
           "before": "   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),\n",
           "after": "   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):\n    options.method==='GET'?authorized('GET','rpc/'+name+'?'+new URLSearchParams(body)):authorized('POST','rpc/'+name,body),\n"
         },
         {
-          "line": 1037,
+          "line": 1038,
           "before": "    f.session=next;announceAuthSessionChange();repaint();refreshModal();\n",
           "after": "    f.session=next;childAccount=null;sealDeviceState(true);announceAuthSessionChange();repaint();refreshModal();\n"
         },
         {
-          "line": 1041,
+          "line": 1042,
           "before": "    guard();try{await requireHousehold();guard();\n",
-          "after": "    guard();\n    const child=childRelease()&&context.profile.memberCategory==='child';\n    try {\n     await requireHousehold(!childRelease());guard();\n"
+          "after": "    guard();\n    const child=childRelease()&&context.profile.memberCategory==='child';\n    try {\n     await requireHousehold(!childRelease(),childRelease()&&Boolean(verifiedBinding()));guard();\n"
         },
         {
-          "line": 1048,
+          "line": 1049,
           "before": "",
           "after": "     if(child){\n      if(!context.capabilities?.childAccountLinkReady||context.capabilities.childAccessProtocol!==1||!f.provider.adoptChildFamily)\n       throw Error('Les droits du compte enfant ne sont pas vérifiés.');\n      childAccount=context.userId;sealDeviceState();\n      await f.provider.adoptChildFamily(binding);guard();\n      f.accessContext={...context,epoch:f.epoch};return;\n     }\n     if(childDevice||childRelease()){\n      if(context.profile.memberCategory!=='parent')throw Error('Les droits du compte enfant ne sont pas vérifiés.');\n      restoringParentState=true;\n      try{sessionStore?.release();}finally{restoringParentState=false;}\n      await f.provider.start();guard();\n     }\n"
         },
         {
-          "line": 1068,
+          "line": 1069,
           "before": "  });return accessController;\n",
           "after": "  },childRelease()?{release:{familyRoles:true,childAccountLink:true},requireChildAccessProtocol:true}:undefined);return accessController;\n"
         },
         {
-          "line": 1093,
+          "line": 1094,
           "before": " ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),\n",
           "after": " ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','childAccessStatus','suspendChildAccess','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),\n"
         },
         {
-          "line": 1097,
+          "line": 1098,
           "before": "window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,\n",
           "after": "window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,childAccessState,\n  canRestoreParentState:()=>restoringParentState,\n"
         },
         {
-          "line": 1126,
+          "line": 1127,
           "before": "",
           "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
         },
         {
-          "line": 1182,
+          "line": 1183,
           "before": " let config=window.DobbyPublicConfig;\n if(!config)try{if(window.parent&&window.parent!==window&&window.parent.location.origin===window.location.origin)config=window.parent.DobbyPublicConfig;}catch{}\n",
           "after": " const config=publicConfiguration();\n"
         },
         {
-          "line": 1190,
+          "line": 1191,
           "before": "",
           "after": "    childDevice=childRelease()||await meta('v7-child-device')===true;\n    if(childRelease())await putMeta('v7-child-device',true);\n    sealDeviceState();\n"
         },
         {
-          "line": 1200,
+          "line": 1201,
           "before": "",
           "after": "    if(childDevice&&typeof BroadcastChannel==='function'){\n      const channel=new BroadcastChannel('dobby-auth-session-v7');\n      channel.addEventListener('message',async event=>{\n        if(event.data?.type!=='auth-session-change')return;\n        const epoch=f.epoch,saved=await meta('session');\n        if(epoch!==f.epoch||saved?.refresh_token===f.session?.refresh_token&&saved?.user_id===f.session?.user_id)return;\n        f.epoch++;f.accessContext=null;f.verifiedContext=null;f.provider?.reset?.();f.cache.clear();sealDeviceState(true);\n        try{(window.parent||window).location.reload();}catch{window.location.reload();}\n      });\n    }\n"
         }
@@ -756,7 +776,7 @@
     },
     "essai-stitch-v7/cuisine-engine.js": {
       "beforeSha256": "08db285aff3ee09db6170542190be07190f5ff9ca2715f0a2bbabac50ac99aef",
-      "afterSha256": "e01d59b33d909cf5d80eebd1d5f152d6ec918b2706cb1645caad240d88cdaa7a",
+      "afterSha256": "f08e1620773a3f12f079f4899dfcaea20a12dcd8deed12b97e6d1160b1754682",
       "reason": "Retrait des anciennes données Santé des vues de lecture.",
       "patches": [
         {
@@ -770,17 +790,22 @@
           "after": "    childCooking=null;\n"
         },
         {
-          "line": 23,
+          "line": 22,
+          "before": "",
+          "after": "    const access=childAccess();\n    if(access?.restricted&&!access.active)return {\n      state:{planned:{},tmAdaptations:{},famHealth:[],sharedHealthVisits:[],familyDocs:[]},\n      recipes:[],customIds:[],baseIds:[],draft:[],pending:0,batch:null,detailPortions:0,mealStatus:null\n    };\n"
+        },
+        {
+          "line": 28,
           "before": "",
           "after": "    window.DobbyHealthRuntime?.filterHistoricalState(data.state);\n    if(childAccess()?.restricted){\n      const cooking=childAccess().active&&childCooking?.scope===window.DobbyStitchV7.accountScope()?childCooking:null;\n      Object.assign(data.state,{cook:!!cooking,cookMeal:null,cookStep:cooking?.index||0,cookMethod:cooking?.method||null});\n      if(cooking)data.state.detail=cooking.id;\n    }\n"
         },
         {
-          "line": 80,
+          "line": 85,
           "before": "",
           "after": "    if(childAccess()?.restricted){\n      if(!childAccess().active||meal)throw Error('Les données partagées sont en lecture seule pour ce profil.');\n      const data=read(),recipe=data.catalogueRecipes.find(row=>row.id===id);\n      if(!recipe)throw Error('Recette introuvable.');\n      const steps=['classic','tm5'].includes(method)&&window.DobbyCuisineE074?.methods(recipe,data)?.[method];\n      if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible.');\n      const scope=window.DobbyStitchV7.accountScope();\n      const next=index??(childCooking?.scope===scope&&childCooking.id===id&&childCooking.method===method?childCooking.index:0);\n      if(!Number.isInteger(next)||next<0||next>=steps.length)throw Error('Étape de préparation invalide.');\n      childCooking={scope,id,method,index:next};\n      return {id,index:next,method};\n    }\n"
         },
         {
-          "line": 163,
+          "line": 168,
           "before": "",
           "after": "    if(childAccess()?.restricted){\n      if(!childAccess().active||childCooking?.scope!==window.DobbyStitchV7.accountScope())throw Error('Aucune préparation en cours.');\n      childCooking=null;\n      return {prepared:null};\n    }\n"
         }
@@ -937,21 +962,21 @@
     },
     "essai-stitch-v7/family-engine.js": {
       "beforeSha256": "9571410d432feff95d675a53d3c366dd690b1ef80db23ad8f14ba659ddb05f60",
-      "afterSha256": "79e45dcd07791e1e586cdb8f2ee88f7acc68508c75c99643b3d9be72067270b0",
+      "afterSha256": "431e47a55ca2ae4edd8683316f97511af923b3f91b6ec72f6a7f1ed540bf6037",
       "reason": "Retrait du cache Santé historique de la projection Famille.",
       "patches": [
         {
           "line": 9,
-          "before": "  const data=evaluate('return JSON.parse(JSON.stringify({state:st,members:st.familyMembers||[],local:st.famHealth||[],shared:st.sharedHealthVisits||[],events:st.familyEvents||[],contacts:st.famContacts||[]}));');\n",
-          "after": "  const state=evaluate('return JSON.parse(JSON.stringify(st));');\n  window.DobbyHealthRuntime?.filterHistoricalState(state);\n  const data={state,members:state.familyMembers||[],local:state.famHealth||[],shared:state.sharedHealthVisits||[],events:state.familyEvents||[],contacts:state.famContacts||[]};\n"
+          "before": "  const data=evaluate('return JSON.parse(JSON.stringify({state:st,members:st.familyMembers||[],local:st.famHealth||[],shared:st.sharedHealthVisits||[],events:st.familyEvents||[],contacts:st.famContacts||[]}));');\n  data.active=Boolean(win().DobbyFamilyUI?.isModuleActive('family'));data.status=win().DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';\n  data.upcoming=win().DobbyFamilyAgenda?.upcoming()||[];return data;\n",
+          "after": "  const native=win(),access=native.DobbyFamilyUI?.childAccessState?.();\n  const waiting=access?.restricted&&!access.active;\n  const state=waiting?{}:evaluate('return JSON.parse(JSON.stringify(st));');\n  window.DobbyHealthRuntime?.filterHistoricalState(state);\n  const data={state,members:state.familyMembers||[],local:state.famHealth||[],shared:state.sharedHealthVisits||[],events:state.familyEvents||[],contacts:state.famContacts||[]};\n  data.active=!waiting&&Boolean(native.DobbyFamilyUI?.isModuleActive('family'));data.status=waiting?'Accès en cours de vérification.':native.DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';\n  data.upcoming=waiting?[]:native.DobbyFamilyAgenda?.upcoming()||[];return data;\n"
         },
         {
-          "line": 65,
+          "line": 67,
           "before": " function localForm(id,personId){requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}\n function sharedForm(id){requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}\n",
           "after": " function localForm(id,personId){if(!window.DobbyHealthRuntime?.legacyDemo())return;requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}\n function sharedForm(id){if(!window.DobbyHealthRuntime?.legacyDemo())return;requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}\n"
         },
         {
-          "line": 77,
+          "line": 79,
           "before": " function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}\n",
           "after": " function deleteVisit(scope,id){if(!window.DobbyHealthRuntime?.legacyDemo())return false;requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}\n"
         }

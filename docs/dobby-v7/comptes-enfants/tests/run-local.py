@@ -20,12 +20,43 @@ lot1 = run_path(str(DOC / 'runes-lot1/test-postgres.py'))
 docker, sql, rpc, op, uid, quote, encode = (lot1[k] for k in ('docker','sql','rpc','op','uid','quote','encode'))
 container, image = lot1['CONTAINER'], lot1['IMAGE']
 rest = container + '-rest'
+storage = container + '-storage'
 JWT_KEY = uuid4().hex + uuid4().hex
 REST_IMAGE = 'postgrest/postgrest:v14.8@sha256:4173b72e0be29cf15349dc827798c3e464c5f2cc7f9c1697022f9cd1874b4c36'
+STORAGE_IMAGE = 'supabase/storage-api:v1.89.12@sha256:8526956cb462e9f7d392e9848ec77133b2769982ed614e9753cc687e8e4339a6'
 
 
 def setup_storage():
-    sql("""
+    if args.storage_http:
+        docker('run','--rm','--detach','--name',storage,'--network',container,'--publish','127.0.0.1::5000',
+               '-e',f'DATABASE_URL=postgres://dobby_lot1_admin@{container}:5432/dobby_lot1',
+               '-e',f'AUTH_JWT_SECRET={JWT_KEY}','-e','DB_INSTALL_ROLES=true','-e','STORAGE_BACKEND=file',
+               '-e','FILE_STORAGE_BACKEND_PATH=/tmp/dobby-child-files','-e','GLOBAL_S3_BUCKET=fixture',
+               '-e','FILE_SIZE_LIMIT=1048576','-e','NODE_ENV=test','-e','TENANT_ID=fixture',
+               '-e','REGION=local','-e','S3_PROTOCOL_ENABLED=false',STORAGE_IMAGE)
+        global storage_origin
+        storage_origin = 'http://' + docker('port',storage,'5000/tcp')
+        for _ in range(100):
+            try:
+                with urlopen(storage_origin+'/status',timeout=2) as response:
+                    if response.status==200:
+                        break
+            except OSError:
+                time.sleep(.2)
+        else:
+            raise RuntimeError('Le service Storage local ne démarre pas.')
+        sql("""
+          GRANT USAGE ON SCHEMA storage TO postgres;
+          ALTER TABLE storage.objects OWNER TO postgres;
+          ALTER TABLE storage.buckets OWNER TO postgres;
+          INSERT INTO storage.buckets(id,name,public)
+            SELECT bucket,bucket,false FROM unnest(ARRAY['dobby-family-files','dobby-recipe-images','dobby-health-files']) bucket;
+          GRANT SELECT ON storage.buckets TO authenticated;
+          CREATE POLICY fixture_bucket_metadata ON storage.buckets FOR SELECT TO authenticated
+            USING(id='dobby-family-files');
+        """)
+    else:
+        sql("""
         CREATE SCHEMA storage AUTHORIZATION postgres;
         CREATE TABLE storage.buckets(id text PRIMARY KEY,public boolean NOT NULL);
         ALTER TABLE storage.buckets OWNER TO postgres;
@@ -34,6 +65,8 @@ def setup_storage():
         ALTER TABLE storage.objects OWNER TO postgres;
         CREATE FUNCTION storage.foldername(name text) RETURNS text[] LANGUAGE sql IMMUTABLE
           AS $$ SELECT (string_to_array(name,'/'))[1:array_length(string_to_array(name,'/'),1)-1] $$;
+        """)
+    sql("""
         GRANT USAGE ON SCHEMA storage TO authenticated;
         GRANT SELECT,INSERT,UPDATE,DELETE ON storage.objects TO authenticated;
         ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
@@ -49,6 +82,35 @@ def jwt(actor):
         return base64.urlsafe_b64encode(value).decode().rstrip('=')
     body = b64(b'{"alg":"HS256","typ":"JWT"}') + '.' + b64(json.dumps({'sub':actor,'role':'authenticated','exp':int(time.time())+300}).encode())
     return body + '.' + b64(hmac.digest(JWT_KEY.encode(),body.encode(),'sha256'))
+
+
+def check_storage_http(household, a, b, child, sibling, outsider):
+    content = b'%PDF-1.4\nTEST document familial fictif\n'
+    path = household + '/' + op() + '.pdf'
+
+    def storage_request(method, endpoint, who, data=None):
+        headers = {'Content-Type':'application/pdf','Cache-Control':'private, no-store','x-upsert':'false'}
+        if who:
+            headers['Authorization'] = 'Bearer '+jwt(who)
+        try:
+            response = urlopen(Request(storage_origin+endpoint,data=data,headers=headers,method=method),timeout=5)
+        except HTTPError as caught:
+            response = caught
+        with response:
+            return response.code, response.read()
+
+    bucket = 'dobby-family-files/' + path
+    uploaded = storage_request('POST','/object/'+bucket,a,content)
+    assert uploaded[0] in (200,201), uploaded
+    for actor in (a,b):
+        assert storage_request('GET','/object/authenticated/'+bucket,actor)==(200,content)
+    for actor in (None,child,sibling,outsider):
+        assert storage_request('GET','/object/authenticated/'+bucket,actor)[0]>=400
+    for actor in (child,sibling,outsider):
+        alternate = 'dobby-family-files/' + household + '/' + op() + '.pdf'
+        assert storage_request('POST','/object/'+alternate,actor,content)[0]>=400
+    assert storage_request('GET','/object/public/'+bucket,None)[0]>=400
+    print('PASS Storage HTTP 1.89.12 : fichier famille accessible aux deux parents et refusé aux deux enfants, hors foyer et public')
 
 
 def http(origin, path, actor=None, body=None, status=200, token=None):
@@ -111,7 +173,7 @@ def run(a,b,child,outsider,hh,read,write,snapshot,mission):
     sql(f"UPDATE public.dobby_v2_modules SET payload={encode(payload)} WHERE household_id={quote(hh)} AND module='family';",a)
     for module in ('recipes','menus','house','contracts'):
         sql(f"INSERT INTO public.dobby_v2_modules(household_id,module,payload) VALUES({quote(hh)},{quote(module)},'{{}}');",a)
-    sql(f"INSERT INTO storage.objects VALUES('dobby-family-files',{quote(hh+'/private.pdf')}),('dobby-recipe-images',{quote(hh+'/recipe.jpg')}),('dobby-health-files',{quote(hh+'/health.pdf')});")
+    sql(f"INSERT INTO storage.objects(bucket_id,name) VALUES('dobby-family-files',{quote(hh+'/private.pdf')}),('dobby-recipe-images',{quote(hh+'/recipe.jpg')}),('dobby-health-files',{quote(hh+'/health.pdf')});")
     assert raw(child)==['menus','recipes'] and set(raw(a))=={'contracts','family','house','menus','missions','recipes'}
     assert sql("SELECT string_agg(bucket_id,',' ORDER BY bucket_id) FROM storage.objects;",child)=='dobby-health-files,dobby-recipe-images'
     assert sql("SELECT count(*) FROM storage.objects WHERE bucket_id='dobby-family-files';",a)=='1'
@@ -150,6 +212,8 @@ def run(a,b,child,outsider,hh,read,write,snapshot,mission):
     print('PASS deux enfants canoniques, invitation native, RLS et Storage familial, projection Famille et magie propre')
 
     run_missions(a,b,child,sibling,hh,read,write,snapshot,mission)
+    if args.storage_http:
+        check_storage_http(hh,a,b,child,sibling,outsider)
     run_http(a,b,child,sibling,outsider,hh,invite=invitation['token'],acceptance=acceptance)
 
 
@@ -197,7 +261,7 @@ def run_missions(a,b,child,sibling,hh,read,write,snapshot,mission):
         child,error='42501')
     assert read()==before
     assert sql("WITH changed AS(UPDATE public.dobby_v2_modules SET payload='{}' WHERE module='recipes' RETURNING 1) SELECT count(*) FROM changed;",child)=='0'
-    sql(f"INSERT INTO storage.objects VALUES('dobby-family-files',{quote(hh+'/nope')});",child,error='42501')
+    sql(f"INSERT INTO storage.objects(bucket_id,name) VALUES('dobby-family-files',{quote(hh+'/nope')});",child,error='42501')
     print('PASS refus des écritures brutes, du writer V2, des appels privés et des intentions concernant autrui, même membership owner')
 
     first_revision = read()['revision']
@@ -297,7 +361,10 @@ def run_http(a,b,child,sibling,outsider,hh,invite,acceptance):
     assert http(origin,family,status=401)['code']=='42501'
     assert http(origin,family,outsider,status=403)['code']=='42501'
     assert {x['module'] for x in http(origin,raw,child)}=={'menus','recipes'}
-    objects='/objects?select=name&bucket_id=eq.dobby-family-files'
+    unfiltered = http(origin,'/dobby_v2_modules?select=module,household_id',child)
+    assert {row['household_id'] for row in unfiltered}=={hh}
+    assert {row['module'] for row in unfiltered}=={'menus','recipes'}
+    objects='/objects?select=name&bucket_id=eq.dobby-family-files&name=eq.'+hh+'/private.pdf'
     assert http(origin,objects,child)==[] and len(http(origin,objects,a))==1
     status='/rpc/dobby_v7_child_access_status?p_member_id=second-child'
     suspend='/rpc/dobby_v7_suspend_child_access'
@@ -362,12 +429,13 @@ def main():
                'for i in {1..60}; do pg_isready -h 127.0.0.1 -U postgres -d dobby_lot1 >/dev/null && exit 0; sleep 1; done; exit 1')
         lot1['main'](run)
     finally:
-        subprocess.run(['docker','rm','-f',rest,container],capture_output=True)
+        subprocess.run(['docker','rm','-f',storage,rest,container],capture_output=True)
         subprocess.run(['docker','network','rm',container],capture_output=True)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--red',action='store_true')
+    parser.add_argument('--storage-http',action='store_true')
     args = parser.parse_args()
     main()

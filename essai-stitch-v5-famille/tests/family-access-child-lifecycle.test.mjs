@@ -86,3 +86,17 @@ test('background sync cannot supersede a child account confirmation after a muta
  assert.ok(results.every(result=>result.verified&&result.memberId===childId));
  assert.equal(calls.filter(call=>call.name==='dobby_v7_context').length,2);
 });
+
+test('a pending scope read keeps the same verified session until its server result arrives',async()=>{
+ const entered=Promise.withResolvers(), unblocked=Promise.withResolvers();
+ let hold=false;
+ const {access}=fixture({category:'child',async beforeContext(){if(hold){entered.resolve();await unblocked.promise;}}});
+ await access.refresh();
+ hold=true;
+ const refreshing=access.refresh();
+ await entered.promise;
+ assert.equal(access.state().verified,true);
+ assert.equal(access.state().memberId,childId);
+ unblocked.resolve();
+ assert.equal((await refreshing).verified,true);
+});

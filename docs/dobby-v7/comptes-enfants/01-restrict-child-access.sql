@@ -78,8 +78,9 @@ END $$;
 
 CREATE FUNCTION dobby_socle_private.child_raw_module_read(p_household uuid,p_module text) RETURNS boolean
 LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path='' AS $$
-DECLARE c jsonb:=dobby_socle_private.actor_context(p_household,false);
+DECLARE c jsonb;
 BEGIN
+ c:=dobby_socle_private.actor_context(p_household,false);
  RETURN c->>'phase'='active' AND (c->>'category'='parent' OR
    (c->>'category'='child' AND p_module IN ('menus','recipes') AND dobby_socle_private.child_api_ready()));
 EXCEPTION WHEN insufficient_privilege OR invalid_text_representation THEN RETURN false;

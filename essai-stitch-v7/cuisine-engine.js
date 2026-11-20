@@ -20,6 +20,11 @@ window.DobbyCuisineEngine = (() => {
     evaluate('st.extraPage=""; st.detail=p.detail; st.page=p.page; st.cook=false; st.tmEditor=false; st.tmView=false; render();', { page, detail });
   }
   function read(mealContext=null) {
+    const access=childAccess();
+    if(access?.restricted&&!access.active)return {
+      state:{planned:{},tmAdaptations:{},famHealth:[],sharedHealthVisits:[],familyDocs:[]},
+      recipes:[],customIds:[],baseIds:[],draft:[],pending:0,batch:null,detailPortions:0,mealStatus:null
+    };
     const data = evaluate('return {state:JSON.parse(JSON.stringify(st)),recipes:JSON.parse(JSON.stringify(allRecipes())),customIds:custom.map(r=>r.id),baseIds:BASE.map(r=>r.id),draft:shoppingDraft(),pending:pendingMeals().length,batch:batchCandidate,detailPortions:st.detail?(Object.values(st.planned).find(m=>m.id===st.detail)?portionCount(Object.values(st.planned).find(m=>m.id===st.detail)):st.people):st.people};');
     window.DobbyHealthRuntime?.filterHistoricalState(data.state);
     if(childAccess()?.restricted){

@@ -39,10 +39,18 @@ async function showMember(page, member) {
     throw new Error('La session parent ne peut pas ouvrir la fiche: '+detail,{cause:error});
   }
   await page.evaluate(async()=>{
-    await DobbyFamilyStitchEngine.win().DobbyFamilyUI.grocery.sync();
+    await DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.refresh();
     await DobbyFamilyStitch.open('members');
   });
-  await page.locator('[data-fa-member="'+member.id+'"]').click();
+  const card = page.locator('[data-fa-member="'+member.id+'"]');
+  try{await card.click();}catch(error){
+    const detail = await page.evaluate(id => ({
+      view:document.body.dataset.familyView,
+      memberAvailable:DobbyFamilyStitchEngine.read().members.some(m=>m.id===id),
+      access:DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.state().phase
+    }),member.id);
+    throw Error('Fiche enfant indisponible '+JSON.stringify(detail),{cause:error});
+  }
   await heading(page, member.name);
 }
 
@@ -72,7 +80,14 @@ async function openChild(page, link, mail, householdName) {
   await heading(page, householdName);
   assert.equal(await page.getByRole('heading',{name:'Mon profil',exact:true}).count(),0);
   await button(page, 'Rejoindre ce foyer').click();
-  await waitTraverse(page);
+  try{await waitTraverse(page);}catch(error){
+    const status = await page.evaluate(()=>{
+      const state=DobbyFamilyStitchEngine.win().DobbyFamilyUI.access.state();
+      return {view:document.body.dataset.familyView,phase:state.phase,verified:state.verified,
+        notice:document.querySelector('[data-access-status]')?.textContent};
+    });
+    throw Error('Retour après rattachement '+JSON.stringify(status),{cause:error});
+  }
   return verified(page);
 }
 

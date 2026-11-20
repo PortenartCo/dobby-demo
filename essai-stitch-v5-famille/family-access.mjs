@@ -76,13 +76,16 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE,requir
   return work;
  }
  async function readContext(expected){
-  const ticket=++generation,native=current();clear();
+  const ticket=++generation,native=current();
+  const keepVerified=requireChildAccessProtocol&&native.ready&&native.userId&&state().verified;
+  if(!keepVerified)clear();
   if(!native.ready)return publish({phase:'unavailable'});
   if(!native.userId){const pending=await driver.meta('v7-auth-pending');guard(native);return publish({phase:pending&&driver.now()-pending.createdAt<86400000?'email-confirmation':'signed-out'});}
-  publish({phase:'unavailable',userId:native.userId});
+  if(!keepVerified)publish({phase:'unavailable',userId:native.userId});
   try{const raw=await rpc('dobby_v7_context'),caps=await capabilities(native),next=context(raw,native,caps);guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');
    if(expected.householdId&&(next.phase!=='active'||next.householdId!==expected.householdId||next.memberId!==expected.memberId||next.profile?.memberCategory!==expected.category))throw Error('Le profil existant n’a pas été confirmé. Aucun profil local n’a été remplacé.');
    if(next.phase==='active'){await driver.bind(next,native);guard(native);if(ticket!==generation)throw Error('Le contexte d’identité a changé.');next.verified=true;}
+   else clear();
    return publish(next);
   }catch(error){if(ticket===generation&&signature(current())===signature(native)){clear();publish({phase:error.status===401||error.status===403?'rejected':'unavailable',userId:native.userId});}if(error.code==='PGRST202'||error.status===404)return state();throw error;}
  }

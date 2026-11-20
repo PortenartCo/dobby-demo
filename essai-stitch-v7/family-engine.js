@@ -7,11 +7,13 @@ window.DobbyFamilyStitchEngine=(()=>{
  const guardSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.())throw Error('Les données du foyer sont en lecture seule pour ce profil.');};
  function notices(callback){win().alert=message=>{lastError=String(message);callback(lastError);};}
  function read(){
-  const state=evaluate('return JSON.parse(JSON.stringify(st));');
+  const native=win(),access=native.DobbyFamilyUI?.childAccessState?.();
+  const waiting=access?.restricted&&!access.active;
+  const state=waiting?{}:evaluate('return JSON.parse(JSON.stringify(st));');
   window.DobbyHealthRuntime?.filterHistoricalState(state);
   const data={state,members:state.familyMembers||[],local:state.famHealth||[],shared:state.sharedHealthVisits||[],events:state.familyEvents||[],contacts:state.famContacts||[]};
-  data.active=Boolean(win().DobbyFamilyUI?.isModuleActive('family'));data.status=win().DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';
-  data.upcoming=win().DobbyFamilyAgenda?.upcoming()||[];return data;
+  data.active=!waiting&&Boolean(native.DobbyFamilyUI?.isModuleActive('family'));data.status=waiting?'Accès en cours de vérification.':native.DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';
+  data.upcoming=waiting?[]:native.DobbyFamilyAgenda?.upcoming()||[];return data;
  }
  function rewardSummary(memberId){return win().DobbyFamilyMissions?.summary(memberId)||null;}
  function page(extra=''){evaluate('st.page="family";st.extraPage=p.extra;st.detail=null;v23MemberEdit=null;render();',{extra});}
