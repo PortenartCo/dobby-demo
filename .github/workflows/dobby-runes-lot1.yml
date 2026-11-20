@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '22'
       - name: Native Missions, Runes, family and sync regressions
-        run: node --test essai-stitch-v5-famille/tests/*.test.mjs essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs
+        run: node --test essai-stitch-v5-famille/tests/*.test.mjs essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs
       - name: PostgreSQL transactions in an isolated fictional household
         run: |
           git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527

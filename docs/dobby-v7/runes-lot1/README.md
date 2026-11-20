@@ -24,6 +24,7 @@ En cas de retour conservateur après des crédits du lot 1, suspendre l'écritur
 
 ## Vérification
 
+- La provenance PREP-01 retire uniquement les différences exactes du lot sur les six sources historiquement vérifiées avant de vérifier les empreintes originales. Les manifestes précédents restent figés et les modifications étrangères restent refusées.
 - 451 tests natifs réussis avec `node --test essai-stitch-v5-famille/tests/*.test.mjs essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs`.
 - 8 groupes de contrôles réussis sous PostgreSQL 17.11 avec rôles fictifs et `python3 docs/dobby-v7/runes-lot1/test-postgres.py`. Ce test demande le commit V2 `04c58d9ebaf84374820a5e6a727c45dfa4ee3527` et Docker local. Les installateurs antérieurs sont préparés avec une fixture publique et leurs précontrôles privés de catalogue ne sont pas rejoués. Le précontrôle de la migration de ce lot est exécuté intégralement. Les profils parents, la création du foyer, l'invitation et le lien utilisent les vraies fonctions SQL à partir d'identités Auth fictives.
 - Parcours navigateur du journal et des commandes à 320, 390 et 1440 px, historique et dialogue Missions existants, inscription et invitation par fixtures. Le canari Missions V2 à responsable unique contrôle les reçus après réponse perdue et la lecture sur un second compte fictif. Aucune authentification HTTP ou donnée hébergée n'est utilisée.

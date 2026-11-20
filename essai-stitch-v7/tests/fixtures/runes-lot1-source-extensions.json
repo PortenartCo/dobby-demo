@@ -1,0 +1,186 @@
+{
+  "baseCommit": "424ae01815b7392dff1b3e5da9c51f4a734b4140",
+  "files": {
+    "essai-stitch-v5-famille/family-v2.js": {
+      "beforeSha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
+      "afterSha256": "5c54631081bc0bf59cea235570f86eda4003d926991c010df545566df98756b2",
+      "patches": [
+        {
+          "line": 344,
+          "before": "",
+          "after": "      // The first module probe may predate the canonical member binding.\n      // Probe again before syncing with that verified member.\n      if(verifiedBinding()&&f.provider?.start)await f.provider.start();\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-mission-intents.mjs": {
+      "beforeSha256": "557fad9b9808673f3ce535435e7bf00b20a4451c2c39ad2c9cc003dd3a023abe",
+      "afterSha256": "c43b66deabf92868804a0c86052f51237eb8f2c926ff75e1eaad66bc09a0cee9",
+      "patches": [
+        {
+          "line": 19,
+          "before": "export const missionV3Summary=(memberId,credits=[],requests=[])=>runes.memberSummary(memberId,credits.map(knownCredit),requests.map(knownCredit));\n",
+          "after": "const projectCredit=row=>runes.isLot1Entry(row)?row:knownCredit(row);\nexport function missionV3Summary(memberId,credits=[],requests=[]){\n const summary=runes.memberSummary(memberId,credits.map(projectCredit),requests.map(knownCredit));\n const actors=new Map(credits.map(row=>[runes.eventKey(row),row.actorMemberId]));\n return {...summary,credits:summary.credits.map(row=>{\n  const actorMemberId=actors.get(runes.eventKey(row));\n  return id(actorMemberId)?{...row,actorMemberId}:row;\n })};\n}\nexport const missionLot1Capability=value=>missionV3Capability(value)&&value.runesLot1===1;\n"
+        },
+        {
+          "line": 39,
+          "before": " const allowed=value.kind==='snapshot'?['kind','payload']:value.kind==='complete'?['kind','missionId','participantIds']:value.kind==='reopen'?['kind','missionId']:[];\n",
+          "after": " const awardIntent=runes.isLot1Entry(value);\n const allowed=awardIntent?['kind','memberId','amount','reason',...(value.kind==='correction'?['targetEventId','expectedAmount']:[])]:value.kind==='snapshot'?['kind','payload']:value.kind==='complete'?['kind','missionId','participantIds']:value.kind==='reopen'?['kind','missionId']:[];\n"
+        },
+        {
+          "line": 42,
+          "before": "",
+          "after": " if(awardIntent){\n  if(!id(value.memberId)||!Number.isSafeInteger(value.amount)||value.amount<(value.kind==='bonus'?1:0)||\n   !runes.hasRuneReason(value.reason)||value.kind==='correction'&&(typeof value.targetEventId!=='string'||!value.targetEventId.trim()||value.targetEventId.length>240||\n    !Number.isSafeInteger(value.expectedAmount)||value.expectedAmount<0||value.expectedAmount===value.amount)){\n    throw Error('Montant, attribution ou motif de Runes invalide');\n  }\n  return {...value,reason:value.reason.trim()};\n }\n"
+        },
+        {
+          "line": 67,
+          "before": " runes.normalizeCredits(p.runeCredits.map(knownCredit));\n",
+          "after": " const entries=p.runeCredits.filter(runes.isLot1Entry);\n if(entries.length&&p.runeLedgerVersion!==3)throw Error('Bonus et corrections exigent le registre V3');\n runes.lot1Balances(runes.normalizeCredits(p.runeCredits.filter(row=>!runes.isLot1Entry(row)).map(knownCredit)),entries);\n"
+        },
+        {
+          "line": 88,
+          "before": "  if(options.releaseVerified!==true)return false;\n  try{const current=actor(),capability=options.capability();return(current.category!=='child'||current.permissions?.canCompleteMissionsV3===true)&&capability?.token===current.token&&missionV3Capability(capability.value);}catch{return false;}\n",
+          "after": "  try{const current=actor(),capability=options.capability();return(current.category!=='child'||current.permissions?.canCompleteMissionsV3===true)&&capability?.token===current.token&&\n   (missionLot1Capability(capability.value)||options.releaseVerified===true&&missionV3Capability(capability.value));}catch{return false;}\n"
+        },
+        {
+          "line": 99,
+          "before": "",
+          "after": "  if(runes.isLot1Entry(intent)){\n   if(!missionLot1Capability(options.capability()?.value)||!remote)throw Error('Partage des bonus et corrections indisponible');\n   if(intent.kind==='bonus'&&!options.members().some(member=>member.id===intent.memberId&&member.memberCategory==='child'&&runes.isHumanMember(member)))throw Error('Choisissez un enfant du foyer');\n   if(intent.kind==='correction'){\n    const target=missionV3Summary(intent.memberId,remote.payload.runeCredits).correctable.find(entry=>entry.eventId===intent.targetEventId);\n    if(!target||target.amount!==intent.expectedAmount)throw Error('Attribution à corriger modifiée : relisez le journal');\n   }\n   return [];\n  }\n"
+        },
+        {
+          "line": 119,
+          "before": "  const credits=(remote.payload.runeCredits||[]).map(knownCredit);\n",
+          "after": "  const credits=(remote.payload.runeCredits||[]).filter(row=>!runes.isLot1Entry(row)).map(knownCredit);\n"
+        },
+        {
+          "line": 129,
+          "before": "",
+          "after": "   if(runes.isLot1Entry(pending.intent)&&!missionLot1Capability(options.capability()?.value))throw Error('Capacité de Runes à revérifier ; opération conservée');\n"
+        },
+        {
+          "line": 156,
+          "before": "  const noopAllowed=pending.intent.kind!=='snapshot'&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);\n",
+          "after": "  const noopAllowed=['complete','reopen'].includes(pending.intent.kind)&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);\n"
+        },
+        {
+          "line": 164,
+          "before": "",
+          "after": "  if(runes.isLot1Entry(pending.intent)){\n   const entry=events.get('rune:'+pending.id);\n   const keys=['kind','memberId','amount','reason',...(pending.intent.kind==='correction'?['targetEventId']:[])];\n   if(!entry||keys.some(key=>entry[key]!==pending.intent[key])||pending.intent.kind==='correction'&&entry.previousAmount!==pending.intent.expectedAmount||\n    entry.actorMemberId!==current.memberId||entry.revision!==Number(receipt.revision)){\n    throw Error('Écriture de Runes non confirmée ; opération conservée');\n   }\n  }\n"
+        },
+        {
+          "line": 175,
+          "before": "   }else{\n",
+          "after": "   }else if(!runes.isLot1Entry(pending.intent)){\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-missions.js": {
+      "beforeSha256": "20ed02f00bbf4516f169395b0a9d8f945e30cc926e6cccc83738ebbb9dc50a52",
+      "afterSha256": "ae87c41c3e86e751ca209e46303f61ba3bf2a1882fa5a457cfff88e471c0f8e6",
+      "patches": [
+        {
+          "line": 7,
+          "before": "",
+          "after": "const intents=await window.DobbyMissionIntentsReady.catch(()=>null);\n"
+        },
+        {
+          "line": 112,
+          "before": "",
+          "after": "function canCompleteSharedV2(mission){\n  return window.DobbySharedRunesV2?.available?.()===true&&\n    window.DobbyFamilyUI?.isModuleActive?.('missions')===true&&\n    mission?.allFamily!==true&&Boolean(mission?.assigneeId)&&\n    (!mission.assigneeIds||mission.assigneeIds.length===1&&mission.assigneeIds[0]===mission.assigneeId)&&\n    !mission.participants?.length&&core.humanMembers(members()).some(member=>member.id===mission.assigneeId)&&\n    core.runes.ledgerVersion(st.runeCredits)<3&&core.runes.ledgerVersion(st.runeRequests)<3;\n}\nfunction toggleSingleAssignee(current){\n  assertParentWrite();\n  if(requiresSync()&&sharedRunesV2()&&current.status==='open'&&current.rewardVersion===1&&current.assigneeId&&!members().some(member=>member.id===current.assigneeId))throw Error('Choisissez un responsable présent dans le foyer ou retirez l’attribution avant de terminer cette mission.');\n  const date=new Date().toISOString(),previous={manualMissions:st.manualMissions,runeCredits:st.runeCredits,runeRequests:st.runeRequests};\n  const request=current.status==='done'?core.runes.reopeningRequest(current,st.runeCredits,st.runeRequests,date):core.runes.completionRequest(current,members(),st.runeCredits,st.runeRequests,date);\n  if(requiresSync()&&!sharedRunesV2()&&(current.customRunes!==undefined||core.runes.ledgerVersion(st.runeCredits)===2||request&&core.runes.ledgerVersion([request])===2))throw Error('Cette opération de runes nécessite des compensations versionnées. Le partage actuel ne les garantit pas : opération bloquée, mission et solde conservés. Une validation serveur distincte est nécessaire.');\n  // Validate the entire candidate ledger (including safe aggregate totals) before changing status.\n  if(request)core.runes.acceptRequests(st.runeCredits,[...st.runeRequests,request],0);\n  st.manualMissions=st.manualMissions.map(row=>row.id===current.id?{...row,status:row.status==='open'?'done':'open',completedAt:row.status==='open'?date:''}:row);\n  if(request){st.runeRequests=core.runes.normalizeRequests([...st.runeRequests,request]);if(!requiresSync())st.runeCredits=core.runes.acceptRequests(st.runeCredits,[request],0);}\n  try{persist();}catch(error){Object.assign(st,previous);throw error;}\n}\n"
+        },
+        {
+          "line": 204,
+          "before": "      assertParentWrite();\n",
+          "after": ""
+        },
+        {
+          "line": 205,
+          "before": "      if(requiresSync()&&sharedRunesV2()&&current.status==='open'&&current.rewardVersion===1&&current.assigneeId&&!members().some(member=>member.id===current.assigneeId))throw Error('Choisissez un responsable présent dans le foyer ou retirez l’attribution avant de terminer cette mission.');\n      const date=new Date().toISOString(),previous={manualMissions:st.manualMissions,runeCredits:st.runeCredits,runeRequests:st.runeRequests};\n      const request=current.status==='done'?core.runes.reopeningRequest(current,st.runeCredits,st.runeRequests,date):core.runes.completionRequest(current,members(),st.runeCredits,st.runeRequests,date);\n      if(requiresSync()&&!sharedRunesV2()&&(current.customRunes!==undefined||core.runes.ledgerVersion(st.runeCredits)===2||request&&core.runes.ledgerVersion([request])===2))throw Error('Cette opération de runes nécessite des compensations versionnées. Le partage actuel ne les garantit pas : opération bloquée, mission et solde conservés. Une validation serveur distincte est nécessaire.');\n      // Validate the entire candidate ledger (including safe aggregate totals) before changing status.\n      if(request)core.runes.acceptRequests(st.runeCredits,[...st.runeRequests,request],0);\n      st.manualMissions=st.manualMissions.map(row=>row.id===id?{...row,status:row.status==='open'?'done':'open',completedAt:row.status==='open'?date:''}:row);\n      if(request){st.runeRequests=core.runes.normalizeRequests([...st.runeRequests,request]);if(!requiresSync())st.runeCredits=core.runes.acceptRequests(st.runeCredits,[request],0);}\n      try{persist();}catch(error){Object.assign(st,previous);throw error;}\n",
+          "after": "      toggleSingleAssignee(current);\n"
+        },
+        {
+          "line": 231,
+          "before": "    if(!transport?.available?.())throw Error('Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.');\n    return(operation==='complete'?transport.complete(id,participantIds):transport.reopen(id)).then(result=>{close();render();return result;});\n",
+          "after": "    if(transport?.available?.())return(operation==='complete'?transport.complete(id,participantIds):transport.reopen(id)).then(result=>{close();render();return result;});\n    if(!canCompleteSharedV2(current))throw Error('Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.');\n    if(operation==='complete'&&(participantIds.length!==1||participantIds[0]!==current.assigneeId))throw Error('Confirmez le responsable de cette mission.');\n    toggleSingleAssignee(current);close();return true;\n"
+        },
+        {
+          "line": 254,
+          "before": "window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,participantVersion:1,complete:completeMission,reopen:id=>completeMission(id,[],'reopen'),assignmentIds:(mission)=>core.assignmentIds(mission,members()),completionCandidateIds:mission=>core.runes.completionCandidateIds(mission,members()),canCompleteWithoutParticipants:mission=>core.runes.canCompleteWithoutParticipants(mission,members()),requiresSync,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){const v3=window.DobbySharedRunesV3,summary=v3?.available?.()&&v3.summary?v3.summary(memberId):core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests);return{...summary,shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};}});\n",
+          "after": "window.DobbyFamilyMissions=Object.freeze({available:true,recurrenceVersion:1,participantVersion:1,complete:completeMission,reopen:id=>completeMission(id,[],'reopen'),assignmentIds:(mission)=>core.assignmentIds(mission,members()),completionCandidateIds:mission=>core.runes.completionCandidateIds(mission,members()),canCompleteWithoutParticipants:mission=>core.runes.canCompleteWithoutParticipants(mission,members()),canCompleteSharedV2,requiresSync,today:core.brusselsDate,addDays:core.addCalendarDays,countOpen:()=>st.manualMissions.filter(x=>x.status==='open').length,efforts:core.runes.EFFORTS,grades:core.runes.GRADE_CONFIG,summary(memberId){\n const v3=window.DobbySharedRunesV3;\n const v3History=v3?.available?.()||core.runes.ledgerVersion(st.runeCredits)>=3;\n const summary=v3History&&intents?intents.missionV3Summary(memberId,st.runeCredits,st.runeRequests):core.runes.memberSummary(memberId,st.runeCredits,st.runeRequests);\n return {...summary,shared:requiresSync(),syncStatus:window.DobbyFamilyUI?.getModuleStatus('missions')||'Statut du partage indisponible'};\n}});\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "3ee24db4f9e9ed3afd889aae64df6e32438026353a5d4c5c5c586cb3d181df14",
+      "afterSha256": "67ce002c33bef9646934ec7865b5d2d26213d6ab9c071d8bc948e46ed041d283",
+      "patches": [
+        {
+          "line": 502,
+          "before": "function runesV3Available(){return Boolean(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true&&missionV3Transport?.available());}\n",
+          "after": "function runesV3Available(){\n return Boolean(missionV3Transport?.available()&&\n  (missionIntentCore.MISSION_V3_RELEASE_VERIFIED===true||!states.missions?.pendingOperation&&!v3LegacyRequestsPending()));\n}\nfunction runesLot1Available(){\n const state=states.missions;\n return Boolean(runesV3Available()&&missionIntentCore.missionLot1Capability(runeV3Capability?.value)&&\n  state?.active&&!state.conflict&&v3Actor().category==='parent');\n}\n"
+        },
+        {
+          "line": 545,
+          "before": " if(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED!==true||typeof api.updateMeta!=='function')return;\n",
+          "after": " if(!missionIntentCore||typeof api.updateMeta!=='function')return;\n"
+        },
+        {
+          "line": 621,
+          "before": "",
+          "after": "}\nasync function recordSharedRunes(intent){\n if(!runesLot1Available())throw Error('L’écriture de Runes exige un parent vérifié et un partage Missions actif et sans conflit.');\n const state=states.missions;\n return sendMissionsV3(intent,{module:'missions',revision:Number(state.revision),payload:JSON.parse(state.synced)});\n"
+        },
+        {
+          "line": 983,
+          "before": "    if(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true){\n",
+          "after": "    if(missionV3Transport){\n"
+        },
+        {
+          "line": 1000,
+          "before": "",
+          "after": "  if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));\n"
+        },
+        {
+          "line": 1422,
+          "before": "window.DobbySharedRunesV3=Object.freeze({available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}});\n",
+          "after": "window.DobbySharedRunesV3=Object.freeze({\n available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),\n canManageRunes:runesLot1Available, recordRunes:recordSharedRunes,\n summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}\n});\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-runes-core.mjs": {
+      "beforeSha256": "f312f669ebf72635262075c8c16120dfa0782db1465871dc3cd4f683a090deb7",
+      "afterSha256": "3f769bdac2bca9ddaf5f8e0bbf01d912b63960c0f09cbb8f42190543311ed1bc",
+      "patches": [
+        {
+          "line": 15,
+          "before": "export const ledgerVersion=rows=>(rows||[]).some(row=>row?.allocations!==undefined)?3:(rows||[]).some(row=>row?.eventId||row?.customRunes!==undefined)?2:1;\n",
+          "after": "export const isLot1Entry=row=>row?.kind==='bonus'||row?.kind==='correction';\nexport const ledgerVersion=rows=>(rows||[]).some(row=>row?.allocations!==undefined||isLot1Entry(row))?3:(rows||[]).some(row=>row?.eventId||row?.customRunes!==undefined)?2:1;\nexport const hasRuneReason=value=>typeof value==='string'&&Boolean(value.trim())&&Array.from(value).length<=240;\n"
+        },
+        {
+          "line": 151,
+          "before": "",
+          "after": "// Apply rectifications to the original event and beneficiary. A reopened\n// occurrence makes its original contribution inactive, including corrections.\n// The raw journal is immutable. Only this projection changes the balance.\nexport function lot1Balances(credits,entries){\n const awards=new Map();\n const active=new Set(activeCredits(credits).map(eventKey));\n for(const row of credits){\n  if(row.kind==='reversal')continue;\n  awards.set(eventKey(row),{row,active:active.has(eventKey(row)),amounts:new Map(allocationsOf(row).map(part=>[part.memberId,part.amount]))});\n }\n const seen=new Set(credits.map(eventKey));\n let lastRevision=0;\n for(const entry of entries){\n  const correction=entry.kind==='correction';\n  if(!/^rune:[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/.test(entry.eventId)||seen.has(entry.eventId)||\n   !validV3MemberId(entry.memberId)||!validV3MemberId(entry.actorMemberId)||!hasRuneReason(entry.reason)||\n   !Number.isSafeInteger(entry.amount)||entry.amount<(correction?0:1)||\n   !Number.isSafeInteger(entry.revision)||entry.revision<=lastRevision||!Number.isFinite(Date.parse(entry.date))){\n    throw Error('Écriture de Runes invalide');\n  }\n  lastRevision=entry.revision;\n  seen.add(entry.eventId);\n  if(correction){\n   const target=awards.get(entry.targetEventId);\n   if(!target||target.row.revision>=entry.revision||!target.amounts.has(entry.memberId)||\n    target.amounts.get(entry.memberId)!==entry.previousAmount||entry.amount===entry.previousAmount){\n     throw Error('Correction incohérente avec l’attribution d’origine');\n   }\n   target.amounts.set(entry.memberId,entry.amount);\n  }else awards.set(entry.eventId,{row:entry,active:true,amounts:new Map([[entry.memberId,entry.amount]])});\n }\n const totals=new Map();\n for(const award of awards.values()){\n  if(!award.active)continue;\n  for(const [memberId,amount] of award.amounts){\n   const total=(totals.get(memberId)||0)+amount;\n   if(!Number.isSafeInteger(total))throw Error('Le total de runes dépasse la capacité numérique du modèle');\n   totals.set(memberId,total);\n  }\n }\n return {awards,totals};\n}\n"
+        },
+        {
+          "line": 194,
+          "before": " const rows=normalizeCredits(credits),known=new Map(rows.map(c=>[eventKey(c),c])),mine=rows.filter(c=>includesMember(c,memberId)).map(c=>c.allocations?{...c,allocationTotal:c.amount,memberId,amount:memberAmount(c,memberId)}:c),queue=normalizeRequests(requests).filter(c=>includesMember(c,memberId));\n const total=activeCredits(rows).reduce((sum,c)=>sum+memberAmount(c,memberId),0),settledElsewhere=queue.filter(c=>known.has(eventKey(c))&&!sameAward(c,known.get(eventKey(c)))).length;\n",
+          "after": " const entries=credits.filter(isLot1Entry),rows=normalizeCredits(credits.filter(row=>!isLot1Entry(row)));\n const {awards,totals}=lot1Balances(rows,entries);\n const known=new Map(rows.map(c=>[eventKey(c),c])),mine=rows.filter(c=>includesMember(c,memberId)).map(c=>c.allocations?{...c,allocationTotal:c.amount,memberId,amount:memberAmount(c,memberId)}:c),queue=normalizeRequests(requests).filter(c=>includesMember(c,memberId));\n const total=totals.get(memberId)||0,settledElsewhere=queue.filter(c=>known.has(eventKey(c))&&!sameAward(c,known.get(eventKey(c)))).length;\n"
+        },
+        {
+          "line": 204,
+          "before": " return {total,pending,settledElsewhere,grade:gradeFor(total),credits:mine};\n",
+          "after": " const correctable=[...awards.values()].filter(a=>a.active&&a.amounts.has(memberId)).map(a=>({\n  eventId:eventKey(a.row),title:a.row.title||'Bonus exceptionnel',amount:a.amounts.get(memberId)\n }));\n return {total,pending,settledElsewhere,grade:gradeFor(total),credits:[...mine,...entries.filter(row=>row.memberId===memberId)],correctable};\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/family.js": {
+      "beforeSha256": "b5ae977bc97bab8b8a03a4013f4727a73a7207a2559a22c20e9f5d2f26861bce",
+      "afterSha256": "d2861ff1e7ce236e5ae61a8cc013b7fe6be82be759c303ae6381091f386451ac",
+      "patches": [
+        {
+          "line": 69,
+          "before": "  for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl&&!b.closest('.prep-main'))unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');\n",
+          "after": "  for(const b of $$('main button,#fa-supplement button'))if(!b.dataset.faAction&&!b.dataset.faUnavailable&&!b.dataset.magicControl&&!b.matches('.dobby-rune-entry-action')&&!b.closest('.prep-main'))unavailable(b,'Cette fonction de la maquette n’existe pas dans le moteur actuel.');\n"
+        }
+      ]
+    }
+  }
+}
