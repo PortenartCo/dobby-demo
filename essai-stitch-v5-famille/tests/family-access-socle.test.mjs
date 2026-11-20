@@ -17,7 +17,8 @@ function fixture({flags,context=parent(),caps=ready(),guarded=false}={}){
  const native={ready:true,configured:true,userId:USER,householdId:context.householdId||null,epoch:0,verified:false},metadata=new Map(),calls=[];
  let current=context,capabilities=caps,binding=null,intercept=null;
  const driver={crypto:webcrypto,now:()=>Date.now(),snapshot:()=>({...native}),
-  meta:async key=>metadata.get(key)??null,putMeta:async(key,value)=>metadata.set(key,structuredClone(value)),delMeta:async key=>metadata.delete(key),updateMeta:async(key,change)=>metadata.set(key,change(metadata.get(key)??null)),
+  meta:async key=>metadata.get(key)??null,putMeta:async(key,value)=>metadata.set(key,structuredClone(value)),delMeta:async key=>metadata.delete(key),
+  updateMeta:async(key,change)=>{const value=change(metadata.get(key)??null);metadata.set(key,value);return value;},
   clearBinding:()=>{binding=null;native.verified=false;},bind:async value=>{binding=structuredClone(value);native.verified=true;},notify(){},
   rpc:async(name,body,options)=>{if(guarded)assertSharedWrite({method:'POST',query:'rpc/'+name,body,access:api.state()});calls.push({name,body:structuredClone(body),options,actor:native.userId,householdId:native.householdId});if(intercept){const result=await intercept(name,body,options);if(result!==undefined)return result;}
    if(name==='dobby_v7_context')return structuredClone(current);
@@ -149,9 +150,9 @@ test('an account or household replacement in the operation microtask gap prevent
  for(const action of ['create','accept'])for(const scope of ['account','household'])await t.test(action+'/'+scope,async()=>{
   const f=fixture({flags:release,...(action==='accept'?{context:{protocol:1,phase:'profile',userId:USER,profile:null}}:{})});
   await f.api.refresh();if(action==='accept')await f.api.previewChildInvitation(TOKEN);
-  const originalMeta=f.driver.meta;let metaStarted=false,resolveOperation;
+  const updateMeta=f.driver.updateMeta;let metaStarted=false,resolveOperation;
   const operation=new Promise(resolve=>resolveOperation=resolve);
-  f.driver.meta=key=>key.startsWith('v7-operation:')?(metaStarted=true,operation):originalMeta(key);
+  f.driver.updateMeta=(key,change)=>key.startsWith('v7-operation:')?(metaStarted=true,operation):updateMeta(key,change);
   const pending=action==='create'?f.api.createChildInvitation({memberId:CHILD}):f.api.acceptChildInvitation(TOKEN);
   while(!metaStarted)await new Promise(resolve=>setImmediate(resolve));
   // Registered after operation()'s own await: its internal guard sees A, then
@@ -174,8 +175,8 @@ test('legacy operation continuations retain the original account even when anoth
  ];
  for(const[endpoint,invoke,pendingHousehold]of cases)for(const scope of ['account','household'])await t.test(endpoint+'/'+scope,async()=>{
   const f=fixture({context:pendingHousehold?{protocol:1,phase:'household',userId:USER,profile:{firstName:'TEST'}}:parent()});await f.api.refresh();
-  const originalMeta=f.driver.meta;let metaStarted=false,resolveOperation;const operation=new Promise(resolve=>resolveOperation=resolve);
-  f.driver.meta=key=>key.startsWith('v7-operation:')?(metaStarted=true,operation):originalMeta(key);
+  const updateMeta=f.driver.updateMeta;let metaStarted=false,resolveOperation;const operation=new Promise(resolve=>resolveOperation=resolve);
+  f.driver.updateMeta=(key,change)=>key.startsWith('v7-operation:')?(metaStarted=true,operation):updateMeta(key,change);
   const pending=invoke(f.api);while(!metaStarted)await new Promise(resolve=>setImmediate(resolve));
   operation.then(()=>{f.native.householdId='TEST-household-B';if(scope==='account'){f.native.userId='TEST-account-B';f.native.epoch++;}f.setContext({...parent(),userId:f.native.userId,householdId:f.native.householdId});});
   resolveOperation('00000000-0000-4000-8000-000000000100');

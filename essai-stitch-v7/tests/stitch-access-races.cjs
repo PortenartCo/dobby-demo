@@ -106,6 +106,15 @@ async function check(name,options,action){
    await page.getByRole('dialog',{name:'Inviter un proche',exact:true}).waitFor();
    await page.getByRole('button',{name:'Créer un lien d’invitation',exact:true}).waitFor();
   });
+  await check('Members invitation becomes available once the rendered owner is verified',{phase:'household'},async({page,load,native,seedMember})=>{
+   await load('members');await seedMember();
+   const invite=page.locator('#invite-member-btn');
+   await invite.waitFor();
+   assert.equal(await invite.getAttribute('aria-haspopup'),null);
+   await native('window.__accessRace.armRecovery(); return DobbyFamilyUI.access.refresh();');
+   await invite.click();
+   await page.getByRole('button',{name:'Créer un lien d’invitation',exact:true}).waitFor();
+  });
   await check('failed invitation creation has visible inline error outside access screen',{},async({page,load,native})=>{
    await load('members');await page.evaluate(()=>DobbyAccess.invite());
    const dialog=page.getByRole('dialog',{name:'Inviter un proche',exact:true});

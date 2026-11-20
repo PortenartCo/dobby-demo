@@ -55,9 +55,9 @@ const putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });
 const delMeta = id => dbCall(f.db, 'meta', 'delete', id);
 // Atomic metadata mutation on the existing IndexedDB store. E06 draft updates
 // from different tabs must read the latest value inside the same transaction.
-function updateMeta(id,change){return new Promise((resolve,reject)=>{
+function updateMeta(id,change,{deleteNull=false}={}){return new Promise((resolve,reject)=>{
  const tx=f.db.transaction('meta','readwrite'),store=tx.objectStore('meta'),request=store.get(id);let result,error;
- request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');store.put({id,value:result});}catch(e){error=e;tx.abort();}};
+ request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(deleteNull&&result===null)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};
  tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Métadonnées non enregistrées.'));tx.onerror=()=>reject(error||tx.error);
 });}
 
@@ -113,6 +113,18 @@ function assertRequestActor(expected){
   const actual=requestActor();
   if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
 }
+function assertSameSavedSession(saved, session) {
+  if ((saved?.user_id ?? null) !== (session?.user_id ?? null) ||
+      (saved?.refresh_token ?? null) !== (session?.refresh_token ?? null)) {
+    throw Object.assign(Error('Le compte a changé dans un autre onglet.'), { code: 'DOBBY_AUTH_SESSION_CHANGED' });
+  }
+}
+async function assertCurrentOnboardingSession(expected) {
+  assertRequestActor(expected);
+  const saved = await meta('session');
+  assertRequestActor(expected);
+  assertSameSavedSession(saved, f.session);
+}
 async function assertCurrentHealthSession(expected = requestActor(), memberId = verifiedBinding()?.memberId) {
   assertRequestActor(expected);
   if (!expected.userId || !memberId || verifiedBinding()?.memberId !== memberId) {
@@ -133,16 +145,19 @@ function announceAuthSessionChange() {
     finally { channel.close(); }
   } catch {}
 }
-async function keepSession(result,expected=null,refreshCredential=null) {
+function authSession(result) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
-  if(expected)assertRequestActor(expected);
   const old = f.session || {};
-  const next = {
+  return {
     access_token: result.access_token, refresh_token: result.refresh_token,
     expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
     user_id: result.user?.id || old.user_id,
     email: result.user?.email || old.email || ''
   };
+}
+async function keepSession(result,expected=null,refreshCredential=null) {
+  if(expected)assertRequestActor(expected);
+  const next=authSession(result);
   if(expected){
     await updateMeta('session',current=>{
       assertRequestActor(expected);
@@ -190,26 +205,30 @@ async function authorized(method, query, body, headers = {}) {
   const expected=requestActor();
   const health = /^rpc\/dobby_health_(read|write|capabilities)(\?|$)/.test(query);
   const healthMemberId = health ? verifiedBinding()?.memberId : null;
-  if (health) await assertCurrentHealthSession(expected,healthMemberId);
+  const onboarding = /^rpc\/dobby_v7_(update_profile|create_household|create_invitation|accept_invitation)$/.test(query);
+  const checkSession = health ? () => assertCurrentHealthSession(expected,healthMemberId) :
+    onboarding ? () => assertCurrentOnboardingSession(expected) : null;
+  if (health) await checkSession();
   assertNativeSharedWrite(method,query,body);
+  if (onboarding) await checkSession();
   let bearer = await token(expected,healthMemberId);assertRequestActor(expected);
-  if (health) await assertCurrentHealthSession(expected,healthMemberId);
+  if (checkSession) await checkSession();
   assertNativeSharedWrite(method,query,body);
   try {
     const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);
-    if (health) await assertCurrentHealthSession(expected,healthMemberId);
+    if (checkSession) await checkSession();
     return result;
   }
   catch (e) {
     assertRequestActor(expected);
-    if (health) await assertCurrentHealthSession(expected,healthMemberId);
+    if (checkSession) await checkSession();
     if (e.status !== 401) throw e;
     assertNativeSharedWrite(method,query,body);
     await refreshToken(expected,healthMemberId);assertRequestActor(expected);bearer=f.session.access_token;
-    if (health) await assertCurrentHealthSession(expected,healthMemberId);
+    if (checkSession) await checkSession();
     assertNativeSharedWrite(method,query,body);
     const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);
-    if (health) await assertCurrentHealthSession(expected,healthMemberId);
+    if (checkSession) await checkSession();
     return result;
   }
 }
@@ -725,12 +744,17 @@ async function login(form) {
   refreshModal(); repaint();
 }
 async function logout() {
-  const old = f.session;
+  const old = f.session, expected = requestActor();
+  await updateMeta('session', saved => {
+    assertRequestActor(expected);
+    assertSameSavedSession(saved, old);
+    return null;
+  }, { deleteNull:true });
+  assertRequestActor(expected);
   f.epoch += 1;
   f.accessContext = null;
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
-  await delMeta('session');
   announceAuthSessionChange();
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
@@ -920,15 +944,27 @@ function ensureAccess(){
    meta,putMeta,delMeta,updateMeta,
    auth:async(path,method,body,options={})=>{
     if(!options.authenticated)return raw(path,method,body);
-    const expected=requestActor(),jwt=await token(expected);assertRequestActor(expected);
-    const result=await raw(path,method,body,{},jwt);assertRequestActor(expected);return result;
+    const expected=requestActor();
+    await assertCurrentOnboardingSession(expected);
+    const jwt=await token(expected);
+    await assertCurrentOnboardingSession(expected);
+    const result=await raw(path,method,body,{},jwt);
+    await assertCurrentOnboardingSession(expected);
+    return result;
    },
    rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),
    clearBinding:()=>{f.accessContext=null;},
    async installSession(result,before){
-    if(f.epoch!==before.epoch||(f.session?.user_id||null)!==before.userId)throw Error('Le compte a changé pendant la connexion.');
+    const expected=requestActor(),previous=f.session,next=authSession(result);
+    if(expected.epoch!==before.epoch||expected.userId!==before.userId)throw Error('Le compte a changé pendant la connexion.');
+    await updateMeta('session',saved=>{
+     assertRequestActor(expected);
+     assertSameSavedSession(saved,previous);
+     return next;
+    });
+    assertRequestActor(expected);
     f.epoch++;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
-    await keepSession(result);repaint();refreshModal();
+    f.session=next;announceAuthSessionChange();repaint();refreshModal();
    },
    async bind(context,before){
     const guard=()=>{if(f.epoch!==before.epoch||f.session?.user_id!==context.userId)throw Error('Le compte a changé pendant la vérification.');};
