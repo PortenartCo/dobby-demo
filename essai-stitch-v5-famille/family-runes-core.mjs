@@ -13,7 +13,9 @@ export function effortFor(id){const effort=EFFORTS.find(e=>e.id===id);if(!effort
 // rather than separate grants which could multiply or partially award its total.
 const keys=['missionId','memberId','effort','amount','date','title'];
 export const eventKey=row=>row.eventId||row.missionId;
-export const ledgerVersion=rows=>(rows||[]).some(row=>row?.allocations!==undefined)?3:(rows||[]).some(row=>row?.eventId||row?.customRunes!==undefined)?2:1;
+export const isLot1Entry=row=>row?.kind==='bonus'||row?.kind==='correction';
+export const ledgerVersion=rows=>(rows||[]).some(row=>row?.allocations!==undefined||isLot1Entry(row))?3:(rows||[]).some(row=>row?.eventId||row?.customRunes!==undefined)?2:1;
+export const hasRuneReason=value=>typeof value==='string'&&Boolean(value.trim())&&Array.from(value).length<=240;
 const cycleOf=row=>row.cycle??0;
 const compareId=(a,b)=>a<b?-1:a>b?1:0;
 const validMemberId=id=>typeof id==='string'&&Boolean(id.trim())&&id.length<=100;
@@ -147,14 +149,61 @@ export function gradeFor(total){
  if(!Number.isSafeInteger(total)||total<0)throw Error('Total de runes invalide');const levels=GRADE_CONFIG.levels;let index=0;while(index+1<levels.length&&total>=levels[index+1].threshold)index++;
  const current=levels[index],next=levels[index+1]||null;return {...current,next,provisional:GRADE_CONFIG.provisional,progress:next?{value:total-current.threshold,max:next.threshold-current.threshold,remaining:next.threshold-total}:null};
 }
+// Apply rectifications to the original event and beneficiary. A reopened
+// occurrence makes its original contribution inactive, including corrections.
+// The raw journal is immutable. Only this projection changes the balance.
+export function lot1Balances(credits,entries){
+ const awards=new Map();
+ const active=new Set(activeCredits(credits).map(eventKey));
+ for(const row of credits){
+  if(row.kind==='reversal')continue;
+  awards.set(eventKey(row),{row,active:active.has(eventKey(row)),amounts:new Map(allocationsOf(row).map(part=>[part.memberId,part.amount]))});
+ }
+ const seen=new Set(credits.map(eventKey));
+ let lastRevision=0;
+ for(const entry of entries){
+  const correction=entry.kind==='correction';
+  if(!/^rune:[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/.test(entry.eventId)||seen.has(entry.eventId)||
+   !validV3MemberId(entry.memberId)||!validV3MemberId(entry.actorMemberId)||!hasRuneReason(entry.reason)||
+   !Number.isSafeInteger(entry.amount)||entry.amount<(correction?0:1)||
+   !Number.isSafeInteger(entry.revision)||entry.revision<=lastRevision||!Number.isFinite(Date.parse(entry.date))){
+    throw Error('Écriture de Runes invalide');
+  }
+  lastRevision=entry.revision;
+  seen.add(entry.eventId);
+  if(correction){
+   const target=awards.get(entry.targetEventId);
+   if(!target||target.row.revision>=entry.revision||!target.amounts.has(entry.memberId)||
+    target.amounts.get(entry.memberId)!==entry.previousAmount||entry.amount===entry.previousAmount){
+     throw Error('Correction incohérente avec l’attribution d’origine');
+   }
+   target.amounts.set(entry.memberId,entry.amount);
+  }else awards.set(entry.eventId,{row:entry,active:true,amounts:new Map([[entry.memberId,entry.amount]])});
+ }
+ const totals=new Map();
+ for(const award of awards.values()){
+  if(!award.active)continue;
+  for(const [memberId,amount] of award.amounts){
+   const total=(totals.get(memberId)||0)+amount;
+   if(!Number.isSafeInteger(total))throw Error('Le total de runes dépasse la capacité numérique du modèle');
+   totals.set(memberId,total);
+  }
+ }
+ return {awards,totals};
+}
 export function memberSummary(memberId,credits=[],requests=[]){
- const rows=normalizeCredits(credits),known=new Map(rows.map(c=>[eventKey(c),c])),mine=rows.filter(c=>includesMember(c,memberId)).map(c=>c.allocations?{...c,allocationTotal:c.amount,memberId,amount:memberAmount(c,memberId)}:c),queue=normalizeRequests(requests).filter(c=>includesMember(c,memberId));
- const total=activeCredits(rows).reduce((sum,c)=>sum+memberAmount(c,memberId),0),settledElsewhere=queue.filter(c=>known.has(eventKey(c))&&!sameAward(c,known.get(eventKey(c)))).length;
+ const entries=credits.filter(isLot1Entry),rows=normalizeCredits(credits.filter(row=>!isLot1Entry(row)));
+ const {awards,totals}=lot1Balances(rows,entries);
+ const known=new Map(rows.map(c=>[eventKey(c),c])),mine=rows.filter(c=>includesMember(c,memberId)).map(c=>c.allocations?{...c,allocationTotal:c.amount,memberId,amount:memberAmount(c,memberId)}:c),queue=normalizeRequests(requests).filter(c=>includesMember(c,memberId));
+ const total=totals.get(memberId)||0,settledElsewhere=queue.filter(c=>known.has(eventKey(c))&&!sameAward(c,known.get(eventKey(c)))).length;
  // Event order can temporarily exceed Number's safe range before an exact
  // compensation cancels it. Keep the signed sum exact, then enforce the same
  // public Number bounds without changing stored events or their amounts.
  const exactPending=queue.filter(c=>!known.has(eventKey(c))).reduce((sum,c)=>sum+(c.kind==='reversal'?-1n:1n)*BigInt(memberAmount(c,memberId)),0n),limit=BigInt(Number.MAX_SAFE_INTEGER);
  if(exactPending>limit||exactPending< -limit)throw Error('Total de runes en attente invalide');
  const pending=Number(exactPending);
- return {total,pending,settledElsewhere,grade:gradeFor(total),credits:mine};
+ const correctable=[...awards.values()].filter(a=>a.active&&a.amounts.has(memberId)).map(a=>({
+  eventId:eventKey(a.row),title:a.row.title||'Bonus exceptionnel',amount:a.amounts.get(memberId)
+ }));
+ return {total,pending,settledElsewhere,grade:gradeFor(total),credits:[...mine,...entries.filter(row=>row.memberId===memberId)],correctable};
 }

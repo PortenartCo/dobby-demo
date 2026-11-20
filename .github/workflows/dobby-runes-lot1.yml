@@ -1,0 +1,47 @@
+name: DOBBY Runes lot 1
+on:
+  pull_request:
+    paths:
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-stitch-v7/**'
+      - 'docs/dobby-v7/runes-lot1/**'
+      - 'docs/dobby-v7/finalisation-socle/supabase/**'
+      - '.github/workflows/dobby-runes-lot1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  runes-fixtures:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Native Missions, Runes, family and sync regressions
+        run: node --test essai-stitch-v5-famille/tests/*.test.mjs essai-sync-v1/tests/*.test.mjs essai-sync-v2/tests/*.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs
+      - name: PostgreSQL transactions in an isolated fictional household
+        run: |
+          git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527
+          python3 docs/dobby-v7/runes-lot1/test-postgres.py
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: V7 Runes, Missions and onboarding browser fixtures
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8765
+          DOBBY_ACCESS_WIDTHS: 320,390,1440
+          DOBBY_ACCESS_EVIDENCE: ${{ runner.temp }}/dobby-lot1-access
+          DOBBY_PREP_SYNC_EVIDENCE: ${{ runner.temp }}/dobby-lot1-prep-sync
+        run: |
+          set -euo pipefail
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/dobby-lot1-http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          for test in runes-lot1-ui runes-lot1-v2 runes-history missions-intent-ui stitch-access-ui stitch-access-races prep-sync; do
+            node "essai-stitch-v7/tests/$test.cjs"
+          done

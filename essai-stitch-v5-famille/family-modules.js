@@ -500,7 +500,15 @@ async function activateMissionsV2(remote){
 
 // V3 is an independent intent transport. Neither its durable queue nor its
 // events are passed to the historical V2 snapshot writer.
-function runesV3Available(){return Boolean(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true&&missionV3Transport?.available());}
+function runesV3Available(){
+ return Boolean(missionV3Transport?.available()&&
+  (missionIntentCore.MISSION_V3_RELEASE_VERIFIED===true||!states.missions?.pendingOperation&&!v3LegacyRequestsPending()));
+}
+function runesLot1Available(){
+ const state=states.missions;
+ return Boolean(runesV3Available()&&missionIntentCore.missionLot1Capability(runeV3Capability?.value)&&
+  state?.active&&!state.conflict&&v3Actor().category==='parent');
+}
 function v3Actor(){
  const actual=api.getContext(),canonical=api.access?.state?.();
  const coherent=actual?.identityVerified===true&&canonical?.authenticated===true&&canonical.verified===true&&canonical.phase==='active'&&
@@ -535,7 +543,7 @@ async function initializeMissionsV3(){
  const ready=window.DobbyMissionIntentsReady;
  if(!ready)return;
  try{missionIntentCore=await ready;}catch{return;}
- if(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED!==true||typeof api.updateMeta!=='function')return;
+ if(!missionIntentCore||typeof api.updateMeta!=='function')return;
  const current=v3Actor();if(!current.identityVerified||!current.memberId||!current.token)return;
  const owner=JSON.stringify([current.userId,current.householdId,current.memberId]);
  if(missionV3Transport&&missionV3Owner===owner)return;
@@ -611,6 +619,11 @@ async function completeSharedMissionV3(id,participantIds,kind='complete'){
  // The server CAS rejects a peer's intervening edit; pending exact retries keep
  // their originally persisted baseline and operation ID.
  return sendMissionsV3(kind==='complete'?{kind,missionId:id,participantIds}:{kind,missionId:id},displayed);
+}
+async function recordSharedRunes(intent){
+ if(!runesLot1Available())throw Error('L’écriture de Runes exige un parent vérifié et un partage Missions actif et sans conflit.');
+ const state=states.missions;
+ return sendMissionsV3(intent,{module:'missions',revision:Number(state.revision),payload:JSON.parse(state.synced)});
 }
 async function resolveMissionsV3(state,preference){
  if(preference==='local'&&v3Actor().category!=='parent')throw Error('Seul un parent peut proposer des modifications partagées.');
@@ -931,6 +944,27 @@ function applyShared(id, payload) {
     save(); render();
   } finally { applying = false; }
 }
+// Re-probe only Missions after canonical identity is established. A changed
+// member token invalidates the old capability, without taking the rest of
+// the shared modules offline while the two read-only RPCs are in flight.
+async function refreshMissionCapabilities(){
+ const token=liveContextToken();
+ if(!token||!backendReady||!ctx)return;
+ const household=encodeURIComponent(ctx.householdId);
+ const stillCurrent=()=>token===liveContextToken();
+ await initializeMissionsV3();
+ if(!stillCurrent())return;
+ let v3=null,v2=null;
+ if(missionV3Transport){
+  try{v3=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+household);}catch{}
+  if(!stillCurrent())return;
+ }
+ try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}
+ if(!stillCurrent())return;
+ runeV3Capability={token,value:v3};
+ runeCapability={token,available:v2?.protocol===2&&v2.directWritesBlocked===true&&v2.maxPayloadBytes===262144};
+ if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));
+}
 async function start() {
   const c = api.getContext();
   if (!c) return;
@@ -964,18 +998,8 @@ async function start() {
     if (!Array.isArray(shared)) throw Error('Liste des modules partagés invalide');
     sharedAvailable = [...new Set(shared.map(row => row.module))].filter(id => byId.has(id));
     backendReady = true;
-    // Capability is an authenticated, read-only check, never persisted as authority.
-    runeCapability={token:startToken,available:false};
-    await initializeMissionsV3();if(!stillCurrent())return;
-    runeV3Capability={token:startToken,value:null};
-    if(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true){
-      try{const value=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+encodeURIComponent(c.householdId));if(!stillCurrent())return;runeV3Capability={token:startToken,value};}
-      catch{if(!stillCurrent())return;}
-    }
-    try{const capability=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+encodeURIComponent(c.householdId));
-      if(!stillCurrent())return;
-      if(capability?.protocol===2&&capability.directWritesBlocked===true&&capability.maxPayloadBytes===262144)runeCapability={token:startToken,available:true};
-    }catch{if(!stillCurrent())return;}
+    await refreshMissionCapabilities();
+    if (!stillCurrent()) return;
   } catch (e) {
     if (!stillCurrent()) return;
     backendReady = false; sharedAvailable = [];
@@ -1406,8 +1430,12 @@ document.addEventListener('click', async e => {
   }
 },true);
 window.DobbySharedRunesV2=Object.freeze({available:runesV2Available});
-window.DobbySharedRunesV3=Object.freeze({available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}});
-api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,
+window.DobbySharedRunesV3=Object.freeze({
+ available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),
+ canManageRunes:runesLot1Available, recordRunes:recordSharedRunes,
+ summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}
+});
+api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,refreshMissionCapabilities,
   isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }

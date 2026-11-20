@@ -21,6 +21,46 @@ window.DobbyMemberAvatar=(()=>{'use strict';
   try{const summary=E.rewardSummary(member.id);if(!summary){wrap.title='Grade en cours de chargement';return wrap;}const grade=summary.grade,badge=text('span','','dobby-rune-badge');badge.setAttribute('aria-hidden','true');badge.append(emblem(grade));wrap.append(badge);wrap.dataset.runeShape=grade.shape;wrap.dataset.runeMaterial=grade.material;wrap.dataset.runeGrade=String(grade.index);wrap.dataset.runeTotal=String(summary.total);const label=(member.name||'Membre')+' · '+grade.label+' · '+summary.total+' runes'+(grade.provisional?' · grade provisoire':'');wrap.setAttribute('aria-label',label);wrap.title=label;}catch{wrap.title='Historique de runes indisponible';}
   return wrap;
  }
+ function runeAction(member,transport,target=null){
+  const action=text('button',target?'Corriger cette attribution':'Accorder un bonus exceptionnel','dobby-rune-entry-action');
+  action.type='button';
+  action.addEventListener('click',()=>{
+   const dialog=text('dialog','','dv7-participant-dialog dobby-rune-entry-form'),form=text('form',''),status=text('p','');
+   const heading=text('h2',target?'Corriger cette attribution':'Accorder un bonus exceptionnel');
+   heading.id='dobby-rune-entry-title';dialog.setAttribute('aria-labelledby',heading.id);
+   status.setAttribute('role','status');
+   const amountLabel=text('label',target?'Montant correct en Runes':'Montant du bonus en Runes');
+   const amount=text('input','');amount.type='text';amount.inputMode='numeric';amount.pattern='[0-9]+';amount.required=true;
+   if(target)amount.value=String(target.amount);
+   amountLabel.append(amount);
+   const reasonLabel=text('label','Motif'),reason=text('textarea','');
+   reason.required=true;reason.maxLength=240;reasonLabel.append(reason);
+   const submit=text('button',target?'Enregistrer la correction':'Accorder le bonus');submit.type='submit';
+   const cancel=text('button','Annuler');cancel.type='button';cancel.addEventListener('click',()=>dialog.close());
+   form.append(heading,amountLabel,reasonLabel,submit,cancel,status);
+   dialog.append(form);document.body.append(dialog);
+   dialog.addEventListener('close',()=>{dialog.remove();action.focus();},{once:true});
+   dialog.addEventListener('cancel',event=>{if(submit.disabled)event.preventDefault();});
+   form.addEventListener('submit',async event=>{
+    event.preventDefault();
+    if(submit.disabled)return;
+    const intent={kind:target?'correction':'bonus',memberId:member.id,amount:Number(amount.value),reason:reason.value};
+    if(target)Object.assign(intent,{targetEventId:target.eventId,expectedAmount:target.amount});
+    submit.disabled=true;cancel.disabled=true;
+    try{
+     await transport.recordRunes(intent);
+     dialog.close();
+     const current=[...document.querySelectorAll('[data-rune-profile]')].find(el=>el.dataset.runeProfile===member.id);
+     if(!current)return;
+     const updated=profile(member),confirmation=text('p',target?'Correction enregistrée.':'Bonus accordé.');
+     confirmation.setAttribute('role','status');confirmation.tabIndex=-1;
+     updated.append(confirmation);current.replaceWith(updated);confirmation.focus();
+    }catch(error){status.textContent=error.message;submit.disabled=false;cancel.disabled=false;}
+   });
+   dialog.showModal();
+  });
+  return action;
+ }
  function profile(member){
   const box=text('section','','dobby-rune-profile');box.dataset.runeProfile=member.id;box.append(text('h2','Runes & progression','font-headline-sm text-primary'));
   try{const summary=E.rewardSummary(member.id);if(!summary){box.append(text('p','Runes en cours de chargement.'));return box;}const {grade}=summary;box.append(text('strong',summary.total+' runes','dobby-rune-total'),text('p',grade.label));if(grade.provisional)box.append(text('small','Grades et seuils provisoires','dobby-rune-provisional'));
@@ -28,7 +68,28 @@ window.DobbyMemberAvatar=(()=>{'use strict';
    if(summary.pending)box.append(text('p',summary.pending+' runes en attente de synchronisation','dobby-rune-pending'));
    if(summary.settledElsewhere)box.append(text('p','Une mission a déjà reçu sa récompense avec une autre attribution.'));
    if(!summary.shared)box.append(text('small','Gains conservés sur cet appareil.'));else box.append(text('small',summary.syncStatus));
-   const history=document.createElement('details');history.append(text('summary','Historique des gains et annulations'));const list=document.createElement('ul');for(const credit of [...summary.credits].sort((a,b)=>b.date.localeCompare(a.date)||a.missionId.localeCompare(b.missionId))){const cancellation=credit.kind==='reversal',item=text('li',(cancellation?'Annulation — ':'Gain — ')+credit.title);item.dataset.runeEvent=credit.eventId||credit.missionId;item.append(text('span',(cancellation?'−':'+')+credit.amount+' runes · '+new Date(credit.date).toLocaleDateString('fr-BE')));list.append(item);}if(!list.children.length)list.append(text('li','Aucun gain enregistré.'));history.append(list);box.append(history);
+   const transport=E.win().DobbySharedRunesV3,canManage=transport?.canManageRunes?.()===true;
+   if(canManage&&member.memberCategory==='child')box.append(runeAction(member,transport));
+   const history=text('details','');history.append(text('summary','Historique des gains et annulations'));
+   const list=text('ul',''),correctable=new Map((summary.correctable||[]).map(entry=>[entry.eventId,entry]));
+   const actors=summary.credits.some(row=>row.actorMemberId)?E.read().members:[];
+   for(const credit of [...summary.credits].sort((a,b)=>b.date.localeCompare(a.date)||String(a.eventId||a.missionId).localeCompare(String(b.eventId||b.missionId)))){
+    const labels={reversal:'Annulation',bonus:'Bonus exceptionnel',correction:'Correction'};
+    const item=text('li',(labels[credit.kind]||'Gain')+(credit.title?' — '+credit.title:''));
+    const eventId=credit.eventId||credit.missionId;item.dataset.runeEvent=eventId;
+    const amount=credit.kind==='correction'?credit.previousAmount+' → '+credit.amount:(credit.kind==='reversal'?'−':'+')+credit.amount;
+    item.append(text('span',amount+' runes · '+new Date(credit.date).toLocaleDateString('fr-BE')));
+    if(credit.actorMemberId){
+     const actor=actors.find(person=>person.id===credit.actorMemberId);
+     item.append(text('p',[credit.reason,actor?.name||credit.actorMemberId].filter(Boolean).join(' · ')));
+    }
+    if(credit.targetEventId)item.append(text('small','Attribution corrigée '+credit.targetEventId));
+    const target=correctable.get(eventId);
+    if(canManage&&target)item.append(runeAction(member,transport,target));
+    list.append(item);
+   }
+   if(!list.children.length)list.append(text('li','Aucun gain enregistré.'));
+   history.append(list);box.append(history);
   }catch{box.append(text('p','Historique de runes indisponible. Les données sont conservées.'));}return box;
  }
  return Object.freeze({create,profile});

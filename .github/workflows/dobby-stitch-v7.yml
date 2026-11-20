@@ -377,7 +377,7 @@ jobs:
           docker --host=unix:///var/run/docker.sock pull postgres:17.7
           docker --host=unix:///var/run/docker.sock run --detach --pull=never --name dobby-stitch1920-pg-20261113-review --network none --env POSTGRES_USER=dobby_local_test --env POSTGRES_PASSWORD=FICTIONAL_CI_ONLY postgres:17.7
           for attempt in $(seq 1 40); do
-            if docker --host=unix:///var/run/docker.sock exec dobby-stitch1920-pg-20261113-review pg_isready -U dobby_local_test -d postgres; then exit 0; fi
+            if docker --host=unix:///var/run/docker.sock exec dobby-stitch1920-pg-20261113-review pg_isready -h 127.0.0.1 -U dobby_local_test -d postgres; then exit 0; fi
             sleep 1
           done
           exit 1
