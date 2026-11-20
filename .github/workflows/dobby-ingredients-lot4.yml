@@ -1,0 +1,43 @@
+name: DOBBY Avec mes ingrédients lot 4
+on:
+  pull_request:
+    paths:
+      - 'docs/dobby-v7/ingredients-lot4/**'
+      - 'essai-stitch-v7/ingredient-matching.mjs'
+      - 'essai-stitch-v7/cuisine-ingredients.mjs'
+      - 'essai-stitch-v7/tests/ingredient-matching*'
+      - '.github/workflows/dobby-ingredients-lot4.yml'
+permissions:
+  contents: read
+jobs:
+  native-ingredient-search:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Structured matching, existing native modules and source provenance
+        env:
+          DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-ingredients-catalogue-fixture
+        run: node --test essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v7/tests/*.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: Both entry points and four native actions in three viewports
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8774
+          DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-ingredients-catalogue-fixture
+          DOBBY_INGREDIENTS_EVIDENCE: ${{ runner.temp }}/dobby-ingredients-parcours
+        run: |
+          set -euo pipefail
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          python3 -m http.server 8774 --bind 127.0.0.1 > "$RUNNER_TEMP/dobby-lot4-http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
+          node essai-stitch-v7/tests/ingredient-matching-ui.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dobby-ingredients-lot4-parcours
+          path: ${{ runner.temp }}/dobby-ingredients-parcours/

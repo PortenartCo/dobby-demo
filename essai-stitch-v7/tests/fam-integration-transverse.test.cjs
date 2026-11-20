@@ -16,13 +16,24 @@ const finalArchives = require('./fixtures/archives-final-source-extensions.json'
 const runesLot1 = require('./fixtures/runes-lot1-source-extensions.json');
 const runesLot2 = require('./fixtures/runes-lot2-source-extensions.json');
 const catalogueLot3 = require('./fixtures/catalogue-lot3-source-extensions.json');
+const ingredientsLot4 = require('./fixtures/ingredients-lot4-source-extensions.json');
 const {beforeReviewedAmendment}=require('./helpers/reviewed-source.cjs');
 const beforeRunesLot1=(file,source)=>beforeReviewedAmendment(file,source,runesLot1.files[file],'Runes lot 1');
 const beforeRunesLot2=(file,source)=>beforeReviewedAmendment(file,source,runesLot2.files[file],'Runes lot 2');
 const beforeCatalogueLot3=(file,source)=>beforeReviewedAmendment(file,source,catalogueLot3.files[file],'Catalogue lot 3');
-const rawContextSource=file=>fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+const readWorkingSource=file=>fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
+const beforeIngredientsLot4=(file,source)=>beforeReviewedAmendment(file,source,ingredientsLot4.files[file],'Ingrédients lot 4');
+const rawContextSource=file=>beforeIngredientsLot4(file,readWorkingSource(file));
 const rawReviewedSource=file=>beforeCatalogueLot3(file,rawContextSource(file));
 function reviewedSource(file){return beforeRunesLot1(file,beforeRunesLot2(file,rawReviewedSource(file)));}
+test('ingredient search preserves the exact catalogue writer before it adds standalone cooking',()=>{
+  assert.equal(ingredientsLot4.baseCommit,'e4388442253788e04afd92ee9f099ec67dec81df');
+  const file='essai-stitch-v7/cuisine-engine.js';
+  assert.deepEqual(Object.keys(ingredientsLot4.files),[file]);
+  const current=readWorkingSource(file);
+  assert.throws(()=>beforeIngredientsLot4(file,current+'/* changed */'),/complete Ingrédients lot 4 source changed/);
+  assert.notEqual(beforeIngredientsLot4(file,current),current);
+});
 test('Catalogue amendments retain all three exact historical sources',()=>{
   assert.equal(catalogueLot3.baseCommit,'bf3936e9301a8cf25bc76ba781b691b87f341457');
   assert.deepEqual(Object.keys(catalogueLot3.files),['essai-stitch-v5-famille/family-modules.js','essai-stitch-v5-famille/index.html','essai-stitch-v7/cuisine-engine.js']);
