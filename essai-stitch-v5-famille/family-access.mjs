@@ -157,6 +157,20 @@ export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){
  }
  async function updateMagic({memberId,values,expectedRevision,operationId}={}){const before=requireSession(),live=state();if(!live.verified||live.permissions.canMagic!==true||memberId!==live.memberId&&(live.profile?.memberCategory==='child'||live.permissions.canManageDependents!==true&&live.permissions.canManageHousehold!==true))throw Error('Modification de ce membre non autorisée.');if(!object(values)||!Object.keys(values).length||Object.keys(values).some(key=>!['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony'].includes(key)))throw Error('Valeurs du profil magique invalides.');if(!Number.isSafeInteger(expectedRevision)||expectedRevision<1)throw Error('Révision familiale à vérifier avant de modifier le profil.');const id=operationId||await operation('update-magic',JSON.stringify([memberId,expectedRevision,values]));guardMutation(before);return mutate('dobby_v7_update_magic',{p_member_id:memberId,p_values:clone(values),p_expected_revision:expectedRevision,p_operation_id:id},before);}
  async function updateMember({memberId,values,expectedRevision,operationId}={}){const before=requireSession(),live=state();if(!live.verified||live.profile?.memberCategory==='child'||live.permissions.canEdit!==true||memberId!==live.memberId&&live.permissions.canManageDependents!==true&&live.permissions.canManageHousehold!==true)throw Error('Modification de ce membre non autorisée.');const fields=['name','firstName','lastName','profileFirstName','profileLastName','birthdate','avatar','magicAvatarId','nickname','notes','species','memberCategory','clearBirthdate'];if(!object(values)||!Object.keys(values).length||Object.keys(values).some(key=>!fields.includes(key)||typeof values[key]!=='string'))throw Error('Champ du profil non autorisé.');if(!Number.isSafeInteger(expectedRevision)||expectedRevision<1)throw Error('Révision familiale à vérifier avant de modifier le profil.');const id=operationId||await operation('update-member',JSON.stringify([memberId,expectedRevision,values]));guardMutation(before);await mutate('dobby_v7_update_member',{p_member_id:memberId,p_values:clone(values),p_expected_revision:expectedRevision,p_operation_id:id},before);return memberId;}
+ async function reserveMemberId(householdId){
+  const before=requireSession(),live=state();
+  if(!live.verified||live.householdId!==householdId||live.permissions.canCreate!==true)throw Error('Création du membre non autorisée.');
+  let id;
+  try{id=await rpc('dobby_v7_reserve_member_id',{p_household_id:householdId});}
+  catch(error){
+   guardMutation(before);
+   if(error.status===404&&error.code==='PGRST202')return null;
+   throw error;
+  }
+  guardMutation(before);
+  if(typeof id!=='string'||!/^member-v7-[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/.test(id))throw Error('Identité du membre non confirmée par le serveur.');
+  return id;
+ }
  async function logout(){++generation;childPreview=null;const pending=await driver.meta('v7-auth-pending');await driver.logout();await forgetAuthFlow(pending?.id);clear();return publish(blank());}
- return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,logout,cleanURL:cleanAuthURL});
+ return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,reserveMemberId,logout,cleanURL:cleanAuthURL});
 }

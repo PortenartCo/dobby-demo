@@ -15,6 +15,7 @@ const formatDate=(iso)=>core.validDate(iso)?
   new Date(iso+'T12:00:00').toLocaleDateString('fr-BE',{weekday:'short',day:'numeric',month:'short',year:'numeric'}):
   String(iso||'');
 const status=()=>window.DobbyFamilyUI?.getModuleStatus?.('family') || 'Statut de partage non vérifié';
+const upcoming=(today,days)=>core.collectUpcoming(legacyHealthDemo()?st:{...st,sharedHealthVisits:[]},today,days);
 const htmlList=(arr,limit=10)=>arr.slice(0,limit).map(e=>
   '<li class="fp-event"><div class="fp-event-details"><span class="fp-type">'+esc(e.category)+'</span>' +
   '<strong>'+esc(e.title)+'</strong><small>'+esc(formatDate(e.date))+
@@ -42,7 +43,7 @@ function summaryCard(rows,max=8){
 function agendaPanel(){
   const rows=core.validEvents(st.familyEvents).sort(core.eventSort);
   const today=TODAY(),next=rows.filter(e=>e.date>=today),previous=rows.filter(e=>e.date<today).reverse();
-  const deadlines=core.collectUpcoming(st,today,30).filter(x=>x.kind!=='event');
+  const deadlines=upcoming(today,30).filter(x=>x.kind!=='event');
   return '<section id="fpAgenda" class="fp-panel" aria-label="Agenda partagé du foyer">'+
     '<header class="fp-heading"><div><small class="fp-eyebrow">Organisation familiale</small>'+
     '<h2>Agenda du foyer</h2></div><button type="button" class="fp-main-btn" data-fp-action="new">＋ Événement</button></header>'+
@@ -90,7 +91,7 @@ function enhanceHome(){
     else screen.append(card);
     anchor=card;
   }
-  const due=core.collectUpcoming(st,today,14).filter(x=>x.kind!=='event').slice(0,5);
+  const due=upcoming(today,14).filter(x=>x.kind!=='event').slice(0,5);
   if(due.length){
     const card=document.createElement('section');card.className='v2-panel fp-home-due';
     card.innerHTML='<div class="v2-panel-head"><h2>Échéances du foyer</h2>'+
@@ -228,6 +229,6 @@ function submitFamilyEvent(event){
 document.addEventListener('keydown',event=>{
   if(event.key==='Escape' && !document.getElementById('fpDialogLayer')?.hidden)closeDialog();
 });
-window.DobbyFamilyAgenda=Object.freeze({available:true,upcoming:()=>core.collectUpcoming(st,TODAY(),30)});
+window.DobbyFamilyAgenda=Object.freeze({available:true,upcoming:()=>upcoming(TODAY(),30)});
 render();
 })();

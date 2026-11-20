@@ -83,9 +83,12 @@ window.DobbyFamilyAgendaReview=(()=>{
   const filter=data.members.find(member=>member.id===ui.agendaPerson),events=data.events.filter(event=>event.date===ui.day&&(!filter||event.personId===filter.id||event.person===filter.name)).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const list=node('section',undefined,'fam-review-event-list');list.setAttribute('aria-label','Événements du jour');list.append(node('h2',labelDate(ui.day)));
   for(const event of events){const card=node('article',undefined,'fam-review-record');c.bind(card,'event-open',{record:event.id,origin:viewOrigin(c)});card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Consulter '+event.title);card.append(node('h3',event.title),c.paragraph([event.time||'Toute la journée',event.person,event.location].filter(Boolean).join(' · ')));list.append(card);}
-  if(!events.length)list.append(c.paragraph('Aucun événement à cette date.'));
-  const shared=data.shared.filter(visit=>visit.date===ui.day&&(!filter||(visit.personId?visit.personId===filter.id:visit.person===filter.name&&data.members.filter(member=>member.name===visit.person).length===1)));
-  for(const visit of shared){const card=node('article',undefined,'fam-review-record');card.append(node('h3',visit.title||visit.name),c.paragraph([visit.time,visit.person,visit.provider].filter(Boolean).join(' · ')),c.button('medical-edit','Consulter le rendez-vous partagé',{record:visit.id,scope:'shared',person:visit.personId||''}));list.append(card);}main.append(list);
+  if(!events.length){const empty=c.paragraph('Aucun événement à cette date.');empty.classList.add('health-agenda-empty');list.append(empty);}
+  const shared=(!window.DobbyHealthRuntime||window.DobbyHealthRuntime.legacyDemo()?data.shared:[]).filter(visit=>visit.date===ui.day&&(!filter||(visit.personId?visit.personId===filter.id:visit.person===filter.name&&data.members.filter(member=>member.name===visit.person).length===1)));
+  for(const visit of shared){const card=node('article',undefined,'fam-review-record');card.append(node('h3',visit.title||visit.name),c.paragraph([visit.time,visit.person,visit.provider].filter(Boolean).join(' · ')),c.button('medical-edit','Consulter le rendez-vous partagé',{record:visit.id,scope:'shared',person:visit.personId||''}));list.append(card);}
+  const health=document.createElement('div');health.className='fam-review-event-list health-agenda-slots';
+  list.append(health);main.append(list);
+  window.DobbyHealthRuntime?.mountAgenda(health,ui.day,{filtered:Boolean(ui.agendaPerson),embedded:Boolean(c.embedded)});
   const deadlines=data.upcoming.filter(item=>!['event','medical'].includes(item.kind));if(deadlines.length){const details=node('details',undefined,'fam-review-deadlines');details.append(node('summary','Échéances des autres modules'));for(const item of deadlines)details.append(c.paragraph(labelDate(item.date)+' · '+item.title));main.append(details);}
   const footer=node('div',undefined,'fam-review-status');footer.append(c.paragraph(data.status));if(!c.embedded)footer.append(c.button('salon','Revenir au Salon'));main.append(footer);
  }

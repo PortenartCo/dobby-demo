@@ -8,7 +8,7 @@ let busy=false,message='';
 const esc=api.esc;
 const isShared=d=>Boolean(d) &&
   d.retainedLocalOnly!==true && (['Contrats','Assurances'].includes(d.category)||d.sharedToHousehold===true);
-const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs:[];
+const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs.filter(row=>row?.category!=='Santé'):[];
 const byId=id=>documents().find(x=>x.id===id);
 const active=()=>Boolean(api.getContext() && api.isModuleActive('contracts'));
 const detail=()=>typeof docDetail==='string' && docDetail ? byId(docDetail):null;
@@ -46,7 +46,6 @@ function detailPanel(d){
     (shared?'Fiche commune':'Sur cet appareil')+'</span></div>'+
     status()+
     (!enabled?'<p class="fds-hint">Ouvrez « Gérer le foyer » et activez « Documents et contrats » pour partager.</p>':'')+
-    (d.category==='Santé'&&!shared?'<p class="fds-desc">Cette fiche médicale reste privée tant que vous ne choisissez pas de la partager.</p>':'')+
     ((!['Contrats','Assurances'].includes(d.category))?
       '<button type="button" data-fds="toggle" data-id="'+esc(d.id)+'"'+(!enabled?' disabled':'')+'>'+
        (shared?'Arrêter le partage de cette fiche':'Partager cette fiche au foyer')+'</button>':'')+

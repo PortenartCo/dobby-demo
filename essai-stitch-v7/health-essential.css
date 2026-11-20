@@ -71,3 +71,10 @@
 .health-essential-status:empty {
   display: none;
 }
+
+.health-agenda-slots:empty,
+[data-health-today]:empty,
+.fam-detail-health:has(.health-member-slot:empty),
+.fam-review-event-list:has([data-health-agenda-slot]) > .health-agenda-empty {
+  display: none;
+}

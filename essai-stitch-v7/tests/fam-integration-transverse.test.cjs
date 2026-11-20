@@ -17,15 +17,31 @@ const runesLot1 = require('./fixtures/runes-lot1-source-extensions.json');
 const runesLot2 = require('./fixtures/runes-lot2-source-extensions.json');
 const catalogueLot3 = require('./fixtures/catalogue-lot3-source-extensions.json');
 const ingredientsLot4 = require('./fixtures/ingredients-lot4-source-extensions.json');
+const healthIntegration = require('./fixtures/health-integration-source-extensions.json');
 const {beforeReviewedAmendment}=require('./helpers/reviewed-source.cjs');
 const beforeRunesLot1=(file,source)=>beforeReviewedAmendment(file,source,runesLot1.files[file],'Runes lot 1');
 const beforeRunesLot2=(file,source)=>beforeReviewedAmendment(file,source,runesLot2.files[file],'Runes lot 2');
 const beforeCatalogueLot3=(file,source)=>beforeReviewedAmendment(file,source,catalogueLot3.files[file],'Catalogue lot 3');
 const readWorkingSource=file=>fs.readFileSync(path.join(repo,file),'utf8').replace(/\r\n/g,'\n');
 const beforeIngredientsLot4=(file,source)=>beforeReviewedAmendment(file,source,ingredientsLot4.files[file],'Ingrédients lot 4');
-const rawContextSource=file=>beforeIngredientsLot4(file,readWorkingSource(file));
+const beforeHealth=(file,source)=>beforeReviewedAmendment(file,source,healthIntegration.files[file],'Santé');
+const rawContextSource=file=>beforeIngredientsLot4(file,beforeHealth(file,readWorkingSource(file)));
 const rawReviewedSource=file=>beforeCatalogueLot3(file,rawContextSource(file));
 function reviewedSource(file){return beforeRunesLot1(file,beforeRunesLot2(file,rawReviewedSource(file)));}
+test('Health amendments preserve the existing native source history',()=>{
+  assert.equal(healthIntegration.baseCommit,'02ebb9fe5c85ab886680d3d8da9afa1d271462e1');
+  assert.deepEqual(Object.keys(healthIntegration.files),[
+    'essai-stitch-v5-famille/family-access.mjs','essai-stitch-v5-famille/family-files.js','essai-stitch-v5-famille/family-modules.js',
+    'essai-stitch-v5-famille/family-v2.js','essai-stitch-v5-famille/index.html','essai-stitch-v5-famille/stitch-v5.js',
+    'essai-stitch-v7/build-source.cjs','essai-stitch-v7/chat-engine.js','essai-stitch-v7/chat.js','essai-stitch-v7/family-engine.js','essai-stitch-v7/family.js'
+  ]);
+  for(const file of Object.keys(healthIntegration.files)){
+    const current=readWorkingSource(file),previous=beforeHealth(file,current);
+    assert.notEqual(previous,current);
+    assert.throws(()=>beforeHealth(file,current+'/* changed */'),/complete Santé source changed/);
+    assert.throws(()=>beforeHealth(file,previous),/complete Santé source changed/);
+  }
+});
 test('ingredient search preserves the exact catalogue writer before it adds standalone cooking',()=>{
   assert.equal(ingredientsLot4.baseCommit,'e4388442253788e04afd92ee9f099ec67dec81df');
   const file='essai-stitch-v7/cuisine-engine.js';

@@ -12,7 +12,7 @@
  };
  const clone=x=>JSON.parse(JSON.stringify(x)),normalize=x=>String(x??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr');
  const definition=source=>{const def=sources[source];if(!def)throw Error('Source d’archive inconnue.');return def;};
- function rows(source){const def=definition(source),value=source==='recipes'?custom:st[def.key]??[];if(!Array.isArray(value))throw Error('Source illisible. Données conservées.');return value;}
+ function rows(source){const def=definition(source),value=source==='recipes'?custom:st[def.key]??[];if(!Array.isArray(value))throw Error('Source illisible. Données conservées.');return source==='documents'?value.filter(row=>row?.category!=='Santé'):value;}
  function liveContext(){const api=window.DobbyFamilyUI;return {connection:api?.connectionState?.()??null,context:api?.getContext?.()??null};}
  function visible(row){const context=liveContext().context,home=row.archive?.householdId||row.householdId;return !home||home===context?.householdId;}
  function get(source,id){const matches=rows(source).filter(x=>x.id===id);if(matches.length>1)throw Error('Identité de fiche ambiguë. Données conservées.');const row=matches[0];if(!row||!visible(row))throw Error('Fiche introuvable ou accès indisponible.');return clone(row);}

@@ -368,8 +368,7 @@ export function mountHealthEssential(root, { client, getRole, subscribe, person:
     cancel.focus();
   }
 
-  async function onVisibility() {
-    if (doc.visibilityState !== 'visible') return;
+  async function revalidate() {
     if (!editing) return refresh();
     const ticket = revision;
     try {
@@ -378,12 +377,14 @@ export function mountHealthEssential(root, { client, getRole, subscribe, person:
       if (ticket === revision && !disposed) await refresh();
     }
   }
+  const onVisibility = () => { if (doc.visibilityState === 'visible') void revalidate(); };
   const invalidate = () => { selected = undefined; selectionAllowed = true; void refresh(); };
   const unsubscribe = subscribe?.(invalidate);
   doc.addEventListener('visibilitychange', onVisibility);
   void refresh();
   return Object.freeze({
     refresh,
+    revalidate,
     unmount() {
       disposed = true;
       revision++;

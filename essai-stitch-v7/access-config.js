@@ -4,6 +4,7 @@
  * Production accounts/invitations require the separate live-verification gate.
  */
 window.DobbyPublicConfig = Object.freeze({
+  healthEssentialAvailable: false,
   projectRef: 'pqcdkrwljgvgagzwrcmg',
   publicKey: 'sb_publishable_ZIJtdwIFQFFqC7kderuG1A_Itccatg4'
 });

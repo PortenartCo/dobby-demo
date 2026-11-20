@@ -1,38 +1,59 @@
--- Proposition DOBBY personnelle. À exécuter en développement isolé ou après GO distinct.
+-- Application phase. Run after the role and resolver phases, while Santé is closed.
 BEGIN;
 SET LOCAL lock_timeout = '5s';
 SET LOCAL statement_timeout = '60s';
 
 DO $$
+DECLARE writer oid := to_regrole('dobby_health_writer');
 BEGIN
+  IF current_user <> 'postgres' THEN
+    RAISE EXCEPTION USING ERRCODE = '42501', MESSAGE = 'Santé 01 application exige le rôle applicatif postgres';
+  END IF;
+  IF to_regnamespace('dobby_health_private') IS NOT NULL
+     OR to_regprocedure('public.dobby_health_read(uuid,text,text)') IS NOT NULL
+     OR to_regprocedure('public.dobby_health_write(uuid,uuid,text,text,text,integer,uuid,jsonb)') IS NOT NULL
+     OR to_regprocedure('public.dobby_health_capabilities(uuid)') IS NOT NULL THEN
+    RAISE EXCEPTION 'Objets Santé déjà présents. Vérifier avec 00-preflight.sql.';
+  END IF;
+  IF NOT EXISTS (SELECT FROM pg_roles WHERE oid = writer AND NOT rolcanlogin
+                  AND NOT rolbypassrls AND NOT rolsuper AND NOT rolcreaterole)
+     OR NOT EXISTS (SELECT FROM pg_auth_members WHERE roleid = writer
+                    AND member = current_user::regrole AND admin_option AND NOT inherit_option AND NOT set_option)
+     OR EXISTS (SELECT FROM pg_auth_members WHERE member = writer
+                 OR (roleid = writer AND (inherit_option OR set_option OR member <> current_user::regrole))) THEN
+    RAISE EXCEPTION 'Santé 01 exige le writer fermé préparé par 00-role.sql.';
+  END IF;
   IF to_regprocedure('dobby_socle_private.actor_context(uuid,boolean)') IS NULL
-     OR to_regprocedure('dobby_v7_private.actor()') IS NULL
-     OR to_regprocedure('storage.allow_only_operation(text)') IS NULL
-     OR to_regclass('dobby_v7_private.account_links') IS NULL
-     OR NOT EXISTS (SELECT FROM pg_class WHERE oid = 'storage.objects'::regclass AND relrowsecurity)
-     OR EXISTS (SELECT FROM storage.buckets WHERE id = 'dobby-health-files') THEN
-    RAISE EXCEPTION 'Prérequis Santé absents ou bucket déjà présent : vérifier le catalogue.';
+     OR NOT has_function_privilege('dobby_health_writer', 'dobby_socle_private.actor_context(uuid,boolean)', 'EXECUTE') THEN
+    RAISE EXCEPTION USING ERRCODE = '42501', MESSAGE = 'Santé 01 exige la délégation effective 01-delegation-socle.sql';
+  END IF;
+  IF to_regprocedure('dobby_v7_private.actor()') IS NULL
+     OR NOT has_function_privilege('dobby_v7_private.actor()', 'EXECUTE WITH GRANT OPTION')
+     OR NOT has_schema_privilege('dobby_v7_private', 'USAGE WITH GRANT OPTION')
+     OR NOT has_schema_privilege('dobby_socle_private', 'USAGE WITH GRANT OPTION')
+     OR NOT has_schema_privilege('public', 'CREATE WITH GRANT OPTION')
+     OR NOT has_database_privilege(current_database(), 'CREATE')
+     OR NOT EXISTS (SELECT FROM pg_class WHERE oid = to_regclass('public.dobby_v2_modules')
+                    AND relowner = current_user::regrole AND relrowsecurity)
+     OR NOT has_table_privilege('public.dobby_v2_households', 'REFERENCES')
+     OR NOT has_table_privilege('public.dobby_v2_memberships', 'REFERENCES') THEN
+    RAISE EXCEPTION USING ERRCODE = '42501', MESSAGE = 'Santé 01 exige les droits du propriétaire applicatif et les aides Famille attendues';
   END IF;
 END $$;
 
-CREATE ROLE dobby_health_writer NOLOGIN NOINHERIT NOBYPASSRLS;
-GRANT dobby_health_writer TO postgres WITH INHERIT FALSE, SET TRUE;
+-- SET is usable only within this transaction. The automatic ADMIN edge is
+-- revoked by the bootstrap grantor after the application phase (02-fermer-role).
+GRANT dobby_health_writer TO postgres WITH ADMIN FALSE, INHERIT FALSE, SET TRUE;
 CREATE SCHEMA dobby_health_private;
 REVOKE ALL ON SCHEMA dobby_health_private FROM PUBLIC, anon, authenticated, service_role;
-GRANT USAGE, CREATE ON SCHEMA dobby_health_private, public TO dobby_health_writer;
-GRANT USAGE ON SCHEMA dobby_v7_private, dobby_socle_private, storage TO dobby_health_writer;
-GRANT EXECUTE ON FUNCTION dobby_v7_private.actor(), dobby_socle_private.actor_context(uuid,boolean) TO dobby_health_writer;
-DO $$
-BEGIN
-  IF NOT has_schema_privilege('dobby_health_writer','dobby_v7_private','USAGE')
-     OR NOT has_schema_privilege('dobby_health_writer','dobby_socle_private','USAGE')
-     OR NOT has_function_privilege('dobby_health_writer','dobby_v7_private.actor()','EXECUTE')
-     OR NOT has_function_privilege('dobby_health_writer','dobby_socle_private.actor_context(uuid,boolean)','EXECUTE') THEN
-    RAISE EXCEPTION 'Délégations privées du résolveur Famille manquantes.';
-  END IF;
-END $$;
-GRANT SELECT ON public.dobby_v2_modules TO dobby_health_writer;
+GRANT USAGE, CREATE ON SCHEMA dobby_health_private TO dobby_health_writer;
+GRANT CREATE ON SCHEMA public TO dobby_health_writer;
+GRANT USAGE ON SCHEMA dobby_v7_private, dobby_socle_private TO dobby_health_writer;
+GRANT EXECUTE ON FUNCTION dobby_v7_private.actor() TO dobby_health_writer;
+GRANT SELECT (household_id, module, payload) ON public.dobby_v2_modules TO dobby_health_writer;
 CREATE POLICY dobby_health_members_source ON public.dobby_v2_modules
+  FOR SELECT TO dobby_health_writer USING (module = 'family');
+CREATE POLICY dobby_health_members_scope ON public.dobby_v2_modules AS RESTRICTIVE
   FOR SELECT TO dobby_health_writer USING (module = 'family');
 
 -- An explicit authorization binds the caregiver account AND its canonical member ID.
@@ -40,7 +61,9 @@ CREATE POLICY dobby_health_members_source ON public.dobby_v2_modules
 -- Keep the API and downloads closed until the native member lifecycle and routes are verified.
 CREATE TABLE dobby_health_private.install_state (
   singleton boolean PRIMARY KEY CHECK (singleton),
-  enabled boolean NOT NULL DEFAULT false
+  enabled boolean NOT NULL DEFAULT false,
+  legacy_closed boolean NOT NULL DEFAULT false,
+  CHECK (NOT enabled OR legacy_closed)
 );
 INSERT INTO dobby_health_private.install_state (singleton) VALUES (true);
 ALTER TABLE dobby_health_private.install_state ENABLE ROW LEVEL SECURITY;
@@ -48,7 +71,9 @@ ALTER TABLE dobby_health_private.install_state FORCE ROW LEVEL SECURITY;
 REVOKE ALL ON dobby_health_private.install_state FROM PUBLIC, anon, authenticated, service_role;
 GRANT SELECT ON dobby_health_private.install_state TO dobby_health_writer;
 CREATE POLICY dobby_health_state_read ON dobby_health_private.install_state
-  FOR SELECT TO dobby_health_writer USING (true);
+  FOR SELECT TO dobby_health_writer, postgres USING (true);
+CREATE POLICY dobby_health_state_operator ON dobby_health_private.install_state
+  FOR UPDATE TO postgres USING (singleton) WITH CHECK (singleton);
 
 CREATE TABLE dobby_health_private.caregivers (
   household_id uuid NOT NULL,
@@ -65,6 +90,8 @@ REVOKE ALL ON dobby_health_private.caregivers FROM PUBLIC, anon, authenticated, 
 GRANT SELECT ON dobby_health_private.caregivers TO dobby_health_writer;
 CREATE POLICY dobby_health_caregiver_read ON dobby_health_private.caregivers
   FOR SELECT TO dobby_health_writer USING (caregiver_user_id = (SELECT dobby_v7_private.actor()));
+CREATE POLICY dobby_health_caregiver_operator ON dobby_health_private.caregivers
+  TO postgres USING (true) WITH CHECK (true);
 
 CREATE TABLE dobby_health_private.entries (
   household_id uuid NOT NULL REFERENCES public.dobby_v2_households (id),
@@ -91,22 +118,86 @@ REVOKE ALL ON dobby_health_private.entries FROM PUBLIC, anon, authenticated, ser
 GRANT SELECT, INSERT, UPDATE ON dobby_health_private.entries TO dobby_health_writer;
 CREATE POLICY dobby_health_writer_access ON dobby_health_private.entries TO dobby_health_writer USING (true);
 
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES ('dobby-health-files', 'dobby-health-files', false, 10485760,
-        ARRAY['application/pdf', 'image/jpeg', 'image/png', 'image/webp']);
-GRANT SELECT (bucket_id, name, metadata) ON storage.objects TO dobby_health_writer;
-CREATE POLICY dobby_health_finalize_object ON storage.objects FOR SELECT TO dobby_health_writer
-  USING (bucket_id = 'dobby-health-files');
-
 SET LOCAL ROLE dobby_health_writer;
 
-CREATE FUNCTION dobby_health_private.context_for(p_household_id uuid) RETURNS jsonb
+CREATE FUNCTION dobby_health_private.dependencies_ready() RETURNS boolean
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = '' AS $$
+BEGIN
+  IF EXISTS (SELECT FROM pg_catalog.pg_auth_members
+                WHERE roleid = current_user::regrole OR member = current_user::regrole)
+     OR EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = current_user
+                AND (rolcanlogin OR rolinherit OR rolbypassrls OR rolsuper OR rolcreaterole OR rolcreatedb OR rolreplication))
+     OR has_schema_privilege('public', 'CREATE') OR has_schema_privilege('dobby_health_private', 'CREATE')
+     OR NOT has_schema_privilege('dobby_v7_private', 'USAGE')
+     OR NOT has_schema_privilege('dobby_socle_private', 'USAGE')
+     OR NOT has_function_privilege('dobby_v7_private.actor()', 'EXECUTE')
+     OR NOT has_function_privilege('dobby_socle_private.actor_context(uuid,boolean)', 'EXECUTE') THEN
+    RETURN false;
+  END IF;
+  IF EXISTS (
+    SELECT FROM (VALUES
+      ('public.dobby_v2_modules', 'dobby_family_identity_lifecycle', 'dobby_family_identity_private', 'guard_family', 29),
+      ('public.dobby_v2_modules', 'dobby_health_legacy_snapshot_guard', 'dobby_health_private', 'guard_legacy_snapshot', 23),
+      ('dobby_health_private.install_state', 'dobby_health_legacy_activation_guard', 'dobby_health_private', 'guard_legacy_activation', 23)
+    ) AS required(relation_name, trigger_name, function_schema, function_name, trigger_type)
+    WHERE NOT EXISTS (
+      SELECT FROM pg_catalog.pg_trigger t JOIN pg_catalog.pg_proc p ON p.oid = t.tgfoid
+      JOIN pg_catalog.pg_namespace n ON n.oid = p.pronamespace
+      WHERE t.tgrelid = to_regclass(required.relation_name) AND t.tgname = required.trigger_name
+        AND t.tgenabled = 'A' AND t.tgtype = required.trigger_type
+        AND n.nspname = required.function_schema AND p.proname = required.function_name
+    )
+  ) THEN RETURN false; END IF;
+  IF NOT has_schema_privilege('storage', 'USAGE')
+     OR NOT EXISTS (SELECT FROM pg_catalog.pg_class WHERE oid = to_regclass('public.dobby_v2_modules') AND relrowsecurity)
+     OR NOT EXISTS (SELECT FROM pg_catalog.pg_class WHERE oid = to_regclass('storage.objects') AND relrowsecurity)
+     OR NOT EXISTS (SELECT FROM pg_catalog.pg_class WHERE oid = to_regclass('storage.buckets') AND relrowsecurity)
+     OR EXISTS (
+       SELECT FROM (VALUES
+         ('public.dobby_v2_modules', 'dobby_health_members_source', 'r', true, current_user::regrole::oid),
+         ('public.dobby_v2_modules', 'dobby_health_members_scope', 'r', false, current_user::regrole::oid),
+         ('storage.objects', 'dobby_health_finalize_object', 'r', true, current_user::regrole::oid),
+         ('storage.objects', 'dobby_health_finalize_scope', 'r', false, current_user::regrole::oid),
+         ('storage.objects', 'dobby_health_isolate_read', 'r', false, 0::oid),
+         ('storage.objects', 'dobby_health_authorize_read', 'r', false, 'authenticated'::regrole::oid),
+         ('storage.objects', 'dobby_health_isolate_upload', 'a', false, 0::oid),
+         ('storage.objects', 'dobby_health_authorize_upload', 'a', false, 'authenticated'::regrole::oid),
+         ('storage.objects', 'dobby_health_isolate_update', 'w', false, 0::oid),
+         ('storage.objects', 'dobby_health_isolate_delete', 'd', false, 0::oid),
+         ('storage.objects', 'dobby_health_storage_read', 'r', true, 'authenticated'::regrole::oid),
+         ('storage.objects', 'dobby_health_storage_upload', 'a', true, 'authenticated'::regrole::oid),
+         ('storage.buckets', 'dobby_health_bucket_read', 'r', true, current_user::regrole::oid),
+         ('storage.buckets', 'dobby_health_bucket_scope', 'r', false, current_user::regrole::oid),
+         ('storage.buckets', 'dobby_health_bucket_isolate_insert', 'a', false, 0::oid),
+         ('storage.buckets', 'dobby_health_bucket_isolate_update', 'w', false, 0::oid),
+         ('storage.buckets', 'dobby_health_bucket_isolate_delete', 'd', false, 0::oid)
+       ) AS required(relation_name, policy_name, command, permissive, role_oid)
+       WHERE NOT EXISTS (
+         SELECT FROM pg_catalog.pg_policy p
+         WHERE p.polrelid = to_regclass(required.relation_name) AND p.polname = required.policy_name
+           AND p.polcmd::text = required.command AND p.polpermissive = required.permissive
+           AND p.polroles = ARRAY[required.role_oid]
+       )
+     ) THEN RETURN false; END IF;
+  RETURN EXISTS (
+    SELECT FROM storage.buckets WHERE id = 'dobby-health-files' AND NOT public
+      AND file_size_limit = 10485760
+      AND allowed_mime_types = ARRAY['application/pdf', 'image/jpeg', 'image/png', 'image/webp']
+  );
+EXCEPTION WHEN insufficient_privilege OR undefined_function OR undefined_table OR invalid_schema_name THEN RETURN false;
+END $$;
+
+CREATE FUNCTION dobby_health_private.enabled() RETURNS boolean
+LANGUAGE sql STABLE SET search_path = '' AS $$
+  SELECT EXISTS (SELECT FROM dobby_health_private.install_state WHERE singleton AND enabled AND legacy_closed)
+    AND dobby_health_private.dependencies_ready()
+$$;
+
+CREATE FUNCTION dobby_health_private.canonical_context(p_household_id uuid) RETURNS jsonb
 LANGUAGE plpgsql STABLE SET search_path = '' AS $$
 DECLARE actor jsonb;
 BEGIN
-  IF p_household_id IS NULL OR NOT EXISTS (
-    SELECT FROM dobby_health_private.install_state WHERE singleton AND enabled
-  ) THEN RETURN NULL; END IF;
+  IF p_household_id IS NULL THEN RETURN NULL; END IF;
   actor := dobby_socle_private.actor_context(p_household_id, false);
   IF actor->>'phase' = 'active'
      AND actor->>'householdId' = p_household_id::text
@@ -115,7 +206,25 @@ BEGIN
     RETURN actor;
   END IF;
   RETURN NULL;
-EXCEPTION WHEN insufficient_privilege THEN RETURN NULL;
+EXCEPTION WHEN insufficient_privilege OR undefined_function OR invalid_schema_name THEN RETURN NULL;
+END $$;
+
+CREATE FUNCTION dobby_health_private.context_for(p_household_id uuid) RETURNS jsonb
+LANGUAGE sql STABLE SET search_path = '' AS $$
+  SELECT CASE WHEN dobby_health_private.enabled()
+    THEN dobby_health_private.canonical_context(p_household_id) END
+$$;
+
+CREATE FUNCTION dobby_health_private.capabilities(p_household_id uuid) RETURNS jsonb
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = '' AS $$
+DECLARE state dobby_health_private.install_state%ROWTYPE;
+BEGIN
+  SELECT * INTO state FROM dobby_health_private.install_state WHERE singleton;
+  IF state.legacy_closed IS DISTINCT FROM true
+     OR dobby_health_private.canonical_context(p_household_id) IS NULL THEN
+    RETURN '{"enabled":false}'::jsonb;
+  END IF;
+  RETURN jsonb_build_object('enabled', state.enabled AND dobby_health_private.dependencies_ready(), 'legacyClosed', true);
 END $$;
 
 CREATE FUNCTION dobby_health_private.members(p_household_id uuid) RETURNS SETOF jsonb
@@ -388,10 +497,18 @@ BEGIN
 END $$;
 
 REVOKE EXECUTE ON ALL FUNCTIONS IN SCHEMA dobby_health_private FROM PUBLIC, anon, authenticated, service_role;
-GRANT EXECUTE ON FUNCTION dobby_health_private.read_rows(uuid,text,text),
+GRANT EXECUTE ON FUNCTION dobby_health_private.capabilities(uuid), dobby_health_private.read_rows(uuid,text,text),
   dobby_health_private.write_row(uuid,uuid,text,text,text,integer,uuid,jsonb),
   dobby_health_private.storage_allowed(text,boolean) TO authenticated;
-GRANT EXECUTE ON FUNCTION dobby_health_private.lock_caregiver_changes() TO postgres;
+GRANT EXECUTE ON FUNCTION dobby_health_private.dependencies_ready(),
+  dobby_health_private.lock_caregiver_changes() TO postgres;
+
+CREATE FUNCTION public.dobby_health_capabilities(p_household_id uuid)
+RETURNS jsonb LANGUAGE plpgsql STABLE SECURITY INVOKER SET search_path = '' AS $$
+BEGIN
+  PERFORM set_config('response.headers', '[{"Cache-Control":"private, no-store"}]', true);
+  RETURN dobby_health_private.capabilities(p_household_id);
+END $$;
 
 CREATE FUNCTION public.dobby_health_read(p_household_id uuid, p_view text, p_member_id text DEFAULT NULL)
 RETURNS jsonb LANGUAGE plpgsql STABLE SECURITY INVOKER SET search_path = '' AS $$
@@ -406,9 +523,9 @@ CREATE FUNCTION public.dobby_health_write(
   SELECT dobby_health_private.write_row(p_household_id,p_id,p_member_id,p_kind,p_action,p_revision,p_operation_id,p_values)
 $$;
 
-REVOKE ALL ON FUNCTION public.dobby_health_read(uuid,text,text),
+REVOKE ALL ON FUNCTION public.dobby_health_capabilities(uuid), public.dobby_health_read(uuid,text,text),
   public.dobby_health_write(uuid,uuid,text,text,text,integer,uuid,jsonb) FROM PUBLIC, anon, service_role;
-GRANT EXECUTE ON FUNCTION public.dobby_health_read(uuid,text,text),
+GRANT EXECUTE ON FUNCTION public.dobby_health_capabilities(uuid), public.dobby_health_read(uuid,text,text),
   public.dobby_health_write(uuid,uuid,text,text,text,integer,uuid,jsonb) TO authenticated;
 
 RESET ROLE;
@@ -416,32 +533,19 @@ CREATE TRIGGER dobby_health_lock_caregiver_changes BEFORE INSERT OR UPDATE OR DE
   ON dobby_health_private.caregivers FOR EACH ROW
   EXECUTE FUNCTION dobby_health_private.lock_caregiver_changes();
 GRANT USAGE ON SCHEMA dobby_health_private TO authenticated;
+
+-- The object owner must be able to resolve the helper when parsing CREATE POLICY.
+-- The helper itself remains executable only by authenticated and its own writer.
+GRANT USAGE ON SCHEMA dobby_health_private TO supabase_storage_admin;
 REVOKE CREATE ON SCHEMA dobby_health_private, public FROM dobby_health_writer;
-GRANT dobby_health_writer TO postgres WITH INHERIT FALSE, SET FALSE;
-
--- Restrictive policies protect this bucket even in the presence of broader
--- permissive policies. Signed URLs and listing have no matching operation.
-CREATE POLICY dobby_health_isolate_read ON storage.objects AS RESTRICTIVE FOR SELECT TO PUBLIC
-  USING (bucket_id <> 'dobby-health-files' OR current_user IN ('authenticated','dobby_health_writer'));
-CREATE POLICY dobby_health_authorize_read ON storage.objects AS RESTRICTIVE FOR SELECT TO authenticated
-  USING (CASE WHEN bucket_id = 'dobby-health-files' THEN
-    storage.allow_only_operation('storage.object.get_authenticated') AND
-    dobby_health_private.storage_allowed(name, false)
-  ELSE true END);
-CREATE POLICY dobby_health_isolate_upload ON storage.objects AS RESTRICTIVE FOR INSERT TO PUBLIC
-  WITH CHECK (bucket_id <> 'dobby-health-files' OR current_user = 'authenticated');
-CREATE POLICY dobby_health_authorize_upload ON storage.objects AS RESTRICTIVE FOR INSERT TO authenticated
-  WITH CHECK (CASE WHEN bucket_id = 'dobby-health-files' THEN
-    storage.allow_only_operation('storage.object.upload') AND dobby_health_private.storage_allowed(name, true)
-  ELSE true END);
-CREATE POLICY dobby_health_isolate_update ON storage.objects AS RESTRICTIVE FOR UPDATE TO PUBLIC
-  USING (bucket_id <> 'dobby-health-files') WITH CHECK (bucket_id <> 'dobby-health-files');
-CREATE POLICY dobby_health_isolate_delete ON storage.objects AS RESTRICTIVE FOR DELETE TO PUBLIC
-  USING (bucket_id <> 'dobby-health-files');
-
-CREATE POLICY dobby_health_storage_read ON storage.objects FOR SELECT TO authenticated
-  USING (bucket_id = 'dobby-health-files');
-CREATE POLICY dobby_health_storage_upload ON storage.objects FOR INSERT TO authenticated
-  WITH CHECK (bucket_id = 'dobby-health-files');
-
+REVOKE dobby_health_writer FROM postgres GRANTED BY postgres;
+DO $$
+BEGIN
+  IF pg_has_role('postgres', 'dobby_health_writer', 'SET') OR pg_has_role('postgres', 'dobby_health_writer', 'USAGE')
+     OR has_schema_privilege('dobby_health_writer', 'public', 'CREATE')
+     OR has_schema_privilege('dobby_health_writer', 'dobby_health_private', 'CREATE') THEN
+    RAISE EXCEPTION 'Le writer Santé conserve un droit SET, INHERIT ou CREATE inattendu.';
+  END IF;
+END $$;
+NOTIFY pgrst, 'reload schema';
 COMMIT;

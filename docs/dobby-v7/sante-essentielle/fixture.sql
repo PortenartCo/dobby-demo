@@ -1,12 +1,18 @@
 -- Disposable local catalog. Signal identity through a test JWT setting.
+CREATE ROLE postgres LOGIN CREATEROLE NOINHERIT NOSUPERUSER NOBYPASSRLS;
+ALTER DATABASE dobby_health_tests OWNER TO postgres;
+CREATE ROLE dobby_socle_writer NOLOGIN NOSUPERUSER NOBYPASSRLS;
+CREATE ROLE fixture_authenticator LOGIN NOINHERIT PASSWORD 'fixture-only';
 CREATE ROLE anon NOLOGIN;
 CREATE ROLE authenticated NOLOGIN;
 CREATE ROLE service_role NOLOGIN BYPASSRLS;
+GRANT anon, authenticated TO fixture_authenticator WITH INHERIT FALSE, SET TRUE;
 CREATE SCHEMA auth;
 CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS
   $$ SELECT COALESCE(nullif(current_setting('request.jwt.claim.sub', true), ''),
     nullif(current_setting('request.jwt.claims', true), '')::jsonb->>'sub')::uuid $$;
 GRANT USAGE ON SCHEMA auth TO authenticated;
+SET ROLE postgres;
 CREATE SCHEMA dobby_v7_private;
 CREATE SCHEMA dobby_socle_private;
 CREATE TABLE public.dobby_v2_households(id uuid PRIMARY KEY);
@@ -60,3 +66,12 @@ SELECT user_id, household_id,
   CASE right(user_id::text,1) WHEN '1' THEN 'parent-a' WHEN '2' THEN 'parent-b'
        WHEN '4' THEN 'sibling' WHEN '5' THEN 'other-adult' WHEN '7' THEN 'parent-a' END
 FROM public.dobby_v2_memberships WHERE right(user_id::text,1) IN ('1','2','4','5','7');
+
+-- The installed resolver relies on its real owner for SELECT and row locks.
+REVOKE ALL ON FUNCTION dobby_v7_private.actor() FROM PUBLIC;
+GRANT USAGE ON SCHEMA dobby_v7_private, dobby_socle_private TO dobby_socle_writer;
+GRANT EXECUTE ON FUNCTION dobby_v7_private.actor() TO dobby_socle_writer;
+GRANT SELECT ON dobby_v7_private.account_links, dobby_v7_private.pending_profiles, dobby_socle_private.install_state TO dobby_socle_writer;
+GRANT SELECT, UPDATE ON public.dobby_v2_memberships, public.dobby_v2_modules TO dobby_socle_writer;
+CREATE POLICY fixture_socle_modules ON public.dobby_v2_modules TO dobby_socle_writer USING (true) WITH CHECK (true);
+RESET ROLE;

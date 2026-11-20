@@ -227,7 +227,9 @@ async function visibleLabels(page) {
         assert.equal(exported.format, 'dobby-complete-backup');
         assert.equal(exported.version, 1);
         await page.evaluate(data => DobbyFamilyStitchEngine.win().dobbyBackupValidation.validatePayload(data), exported);
-        for (const key of stateKeys) assert.deepEqual(exported.state[key], before[key], 'Native export preserves ' + key);
+        for (const key of stateKeys.filter(key => key !== 'famHealth')) assert.deepEqual(exported.state[key], before[key], 'Native export preserves ' + key);
+        assert.deepEqual(exported.state.famHealth, []);
+        assert.deepEqual((await snapshot(page)).famHealth, before.famHealth, 'Historical Santé remains local after export');
         assert.ok(exported.attachments.length > 0, 'Native archive contains the attached test document');
         const backupReceipt = {filename: download.suggestedFilename(), format: exported.format, version: exported.version, bytes: exportedBytes.length, sha256: crypto.createHash('sha256').update(exportedBytes).digest('hex'), attachments: exported.attachments.length, nativeValidation: 'pass'};
         await page.evaluate(() => DobbyRegister.back());
@@ -256,9 +258,11 @@ async function visibleLabels(page) {
         await familyView(page, 'list-detail');
         assert.deepEqual(await snapshot(page), before, 'List content and checked state survive direct-route reload');
         await open(page, 'health-person', {person: 'menu-member', scope: 'local'});
-        assert.match(await page.locator('main').innerText(), /TEST — Preserved local visit/);
+        assert.doesNotMatch(await page.locator('main').innerText(), /TEST — Preserved local visit|TEST-MENU-HEALTH/);
+        assert.deepEqual(await snapshot(page), before, 'Opening the Santé route preserves the historical local data');
         await page.reload();
         await familyView(page, 'health-person');
+        assert.doesNotMatch(await page.locator('main').innerText(), /TEST — Preserved local visit|TEST-MENU-HEALTH/);
         assert.deepEqual(await snapshot(page), before, 'Health record and its original member identity survive reload');
         assert.equal(await page.evaluate(() => DobbyFamilyStitchEngine.evaluate('return houseRead("family-menu-document").then(blob=>blob.text());')), fixtureBytes, 'Attachment bytes remain intact after all navigation');
 

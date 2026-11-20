@@ -31,7 +31,7 @@ function native({futureFeatures=false}={}){
    return{ok:true,status:200,text:async()=>JSON.stringify(body)};
   }};
  sandbox.document.createElement=tag=>tag==='form'?{children:[],append(child){this.children.push(child);}}:node();
- const source=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,authorized,token,refreshToken,storageFetch};})();');
+ const source=fs.readFileSync(new URL('../family-v2.js',import.meta.url),'utf8').replace("import('./family-access.mjs')",'Promise.resolve(__accessModule)').replace(/void boot\(\);\s*\}\)\(\);\s*$/,'window.__native={f,authorized,token,refreshToken,storageFetch,importOriginalLocal};})();');
  vm.runInNewContext(source,sandbox);const f=sandbox.window.__native.f;f.db=db;f.ready=true;f.key='sb_publishable_test_native_only';f.core=familyCore;f.provider={start:async()=>{},reset(){},adoptVerifiedFamily:async()=>{},html:()=>'',sync:async()=>{}};
  const session=(userId=USER)=>({access_token:'TEST-access-'+userId,refresh_token:'TEST-refresh-'+userId,user_id:userId,expires_at:Math.floor(Date.now()/1000)+3600});
  const establish=async()=>{
@@ -127,6 +127,198 @@ test('a storage 401 cannot refresh or resend the old file operation after an acc
  const f=native();await f.establish();f.intercept(request=>request.path.startsWith('/storage/v1/')?{ok:false,status:401,json:async()=>{queueMicrotask(()=>f.switchAccount());return{};}}:null);
  await assert.rejects(f.transport.storageFetch('DELETE',HH+'/00000000-0000-4000-8000-000000000099.pdf'),/compte|foyer/i);
  assert.equal(f.requests.filter(request=>request.path.startsWith('/storage/v1/')).length,1);assert.equal(f.requests.some(request=>request.path==='/auth/v1/token'),false);
+});
+
+const healthPath = HH + '/00000000-0000-4000-8000-000000000099.pdf';
+const healthPdf = new Blob(['%PDF-1.4 fixture'], {type:'application/pdf'});
+
+test('native Health files use the private bucket and leave household document transport separate', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ fixture.intercept(request=>request.path.includes('/storage/v1/') ? new Response(healthPdf) : null);
+ assert.equal(await fixture.api.healthStorage.upload(healthPath,healthPdf),true);
+ assert.equal(await (await fixture.api.healthStorage.download(healthPath)).text(),'%PDF-1.4 fixture');
+ assert.equal(await fixture.api.storageFetch('POST',healthPath,healthPdf),true);
+
+ const [upload,download,shared]=fixture.requests;
+ assert.equal(upload.path,'/storage/v1/object/dobby-health-files/'+healthPath);
+ assert.equal(upload.options.method,'POST');
+ assert.equal(upload.options.cache,'no-store');
+ assert.equal(upload.options.headers['Content-Type'],'application/pdf');
+ assert.equal(upload.options.headers['Cache-Control'],'private, no-store');
+ assert.equal(upload.options.headers['x-upsert'],'false');
+ assert.equal(upload.options.body,healthPdf);
+ assert.equal(download.path,'/storage/v1/object/authenticated/dobby-health-files/'+healthPath);
+ assert.equal(download.options.method,'GET');
+ assert.equal(download.options.cache,'no-store');
+ for (const request of [upload,download]) {
+  assert.equal(request.query,'');
+  assert.equal(request.options.headers.Authorization,'Bearer TEST-access-'+USER);
+ }
+ assert.equal(shared.path,'/storage/v1/object/dobby-family-files/'+healthPath);
+ assert.equal(shared.options.headers['Cache-Control'],undefined);
+});
+
+test('Health Storage refuses child, unverified and read-only write attempts before issuing a request', async()=>{
+ const child=await linkedChild();
+ await assert.rejects(child.api.healthStorage.upload(healthPath,healthPdf),/parent|vérifi/i);
+ await assert.rejects(child.api.healthStorage.download(healthPath),/parent|vérifi/i);
+ assert.equal(child.requests.length,0);
+
+ const fixture=native();
+ await fixture.establish();
+ fixture.setContext({...active(),permissions:{canEdit:false}});
+ await fixture.api.access.refresh();
+ fixture.requests.length=0;
+ await assert.rejects(fixture.api.healthStorage.upload(healthPath,healthPdf),/lecture seule|vérifi/i);
+ fixture.f.verifiedContext=null;
+ await assert.rejects(fixture.api.healthStorage.download(healthPath),/parent|vérifi/i);
+ assert.equal(fixture.requests.length,0);
+});
+
+test('Health Storage validates the exact household path and matching content type before upload', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ for (const path of [healthPath.replace(HH,HH2),healthPath.replace('.pdf','%2fpiece.pdf'),
+  HH+'/'+'-'.repeat(36)+'.pdf',healthPath+'\n',healthPath+'?token=fixture']) {
+  await assert.rejects(fixture.api.healthStorage.upload(path,healthPdf),/chemin|foyer/i);
+  await assert.rejects(fixture.api.healthStorage.download(path),/chemin|foyer/i);
+ }
+ for (const file of [new Blob(['fixture'],{type:'image/png'}),new Blob([],{type:'application/pdf'})]) {
+  await assert.rejects(fixture.api.healthStorage.upload(healthPath,file),/fichier|pièce|PDF/i);
+ }
+ assert.equal(fixture.requests.length,0);
+});
+
+test('Health Storage retries a 401 with the refreshed bearer in the same epoch', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ let attempts=0;
+ fixture.intercept(request=>request.path.includes('/storage/v1/') ?
+  (++attempts===1 ? new Response(null,{status:401}) : new Response(healthPdf)) : null);
+ const epoch=fixture.f.epoch;
+ assert.equal((await fixture.api.healthStorage.download(healthPath)).type,'application/pdf');
+ const [initial,refresh,retry]=fixture.requests;
+ assert.equal(fixture.f.epoch,epoch);
+ assert.equal(refresh.path,'/auth/v1/token');
+ assert.equal(initial.path,retry.path);
+ assert.equal(retry.options.headers.Authorization,'Bearer TEST-access-refreshed');
+ assert.equal(retry.options.cache,'no-store');
+});
+
+test('Health Storage drops reads and writes when the native epoch changes with the same account', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ const replaceCurrentEpoch=()=>fixture.switchAccount({userId:USER,householdId:HH});
+ let releaseBody;
+ fixture.intercept(request=>request.path.includes('/storage/v1/') ? {
+  ok:true, status:200, blob:()=>new Promise(resolve=>{releaseBody=resolve;})
+ } : null);
+ const download=fixture.api.healthStorage.download(healthPath);
+ while (!releaseBody) {
+  await Promise.race([download,new Promise(resolve=>setImmediate(resolve))]);
+ }
+ replaceCurrentEpoch();
+ releaseBody(healthPdf);
+ await assert.rejects(download,/compte|foyer/i);
+
+ await fixture.establish();
+ replaceWhenTokenReturns(fixture,{userId:USER,householdId:HH});
+ await assert.rejects(fixture.api.healthStorage.upload(healthPath,healthPdf),/compte|foyer/i);
+ assert.equal(fixture.requests.length,0);
+});
+
+test('Health Storage surfaces a denied object without exposing response details', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ fixture.intercept(()=>new Response('raw fixture credential and object URL',{status:403}));
+ await assert.rejects(fixture.api.healthStorage.download(healthPath), error=>{
+  assert.equal(error.status,403);
+  assert.doesNotMatch(error.message,/credential|object URL|dobby-health-files/);
+  return true;
+ });
+ assert.equal(fixture.requests.length,1);
+});
+
+test('Health requests fail closed when another tab replaces the saved Auth session', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ const saved=fixture.db.rows.get('session').value;
+ await fixture.api.assertCurrentHealthSession();
+ fixture.db.rows.set('session',{id:'session',value:{...saved,refresh_token:'TEST-new-tab-session'}});
+ await assert.rejects(fixture.api.assertCurrentHealthSession(),/session|compte/i);
+ await assert.rejects(fixture.api.healthStorage.download(healthPath),/session|compte/i);
+ await assert.rejects(fixture.api.authorized('GET','rpc/dobby_health_read?p_view=people'),/session|compte/i);
+ assert.equal(fixture.requests.length,0);
+ fixture.db.rows.set('session',{id:'session',value:saved});
+ fixture.f.session.expires_at=0;
+ fixture.intercept(request=>{
+  if(request.path!=='/auth/v1/token')return null;
+  fixture.db.rows.set('session',{id:'session',value:{user_id:OTHER,refresh_token:'TEST-other-tab'}});
+  return null;
+ });
+ await assert.rejects(fixture.api.healthStorage.download(healthPath),/session|compte|connexion/i);
+ assert.equal(fixture.db.rows.get('session').value.user_id,OTHER);
+ assert.equal(fixture.requests.some(request=>request.path.includes('/storage/v1/')),false);
+});
+
+test('a native background refresh cannot restore a session replaced in another tab', async()=>{
+ const fixture=native();
+ await fixture.establish();
+ fixture.f.session.expires_at=0;
+ fixture.intercept(request=>{
+  if(request.path==='/auth/v1/token') {
+   fixture.db.rows.set('session',{id:'session',value:{user_id:OTHER,refresh_token:'TEST-other-tab'}});
+  }
+  return null;
+ });
+ await assert.rejects(fixture.api.authorized('GET','dobby_v2_grocery'),/session|compte/i);
+ assert.equal(fixture.db.rows.get('session').value.user_id,OTHER);
+ assert.equal(fixture.requests.some(request=>request.path.endsWith('/dobby_v2_grocery')),false);
+});
+
+test('native login and logout announce durable session changes without credentials', async()=>{
+ const fixture=native();
+ const messages=[];
+ fixture.sandbox.BroadcastChannel=class {
+  constructor(name){this.name=name;}
+  postMessage(message){messages.push({name:this.name,message:JSON.parse(JSON.stringify(message)),
+   saved:Boolean(fixture.db.rows.get('session'))});}
+  close(){}
+ };
+ await fixture.api.access.signIn('fixture@example.test','TEST-fixture-password');
+ await fixture.api.access.logout();
+ assert.deepEqual(messages,[true,false].map(saved=>({name:'dobby-auth-session-v7',
+  message:{type:'auth-session-change'},saved})));
+});
+
+test('legacy local import leaves historical Health in place and out of its generic backup', ()=>{
+ const fixture=native();
+ const state=fixture.sandbox.st;
+ const local=[{id:'legacy-current-visit',note:'TEST private local'}];
+ const shared=[{id:'legacy-current-shared',note:'TEST historical shared'}];
+ const medical={id:'legacy-current-doc',category:'Santé',attachmentName:'private.pdf',attachmentType:'application/pdf'};
+ const currentDocument={id:'current-non-health',category:'Maison'};
+ Object.assign(state,{famHealth:local,sharedHealthVisits:shared,familyDocs:[currentDocument,medical],famLists:[{id:'current-list'}]});
+ const previous=JSON.stringify({famHealth:[{id:'legacy-source-visit'}],sharedHealthVisits:[{id:'legacy-source-shared'}],
+  familyDocs:[{id:'legacy-source-health',category:'Santé'},{id:'legacy-source-doc',category:'Maison',attachmentName:'old.png',attachmentType:'image/png'}],
+  famLists:[{id:'legacy-source-list'}]});
+ const originalKey='dobby-stitch-preview-20261105';
+ const stored=new Map([[originalKey,previous]]);
+ fixture.sandbox.localStorage={getItem:key=>stored.get(key),setItem:(key,value)=>stored.set(key,value)};
+ fixture.sandbox.confirm=()=>true;
+ fixture.transport.importOriginalLocal();
+ assert.equal(state.famHealth,local);
+ assert.equal(state.sharedHealthVisits,shared);
+ const documents=JSON.parse(JSON.stringify(state.familyDocs));
+ assert.deepEqual(documents,[{id:'legacy-source-doc',category:'Maison',attachmentName:'',attachmentType:''},medical]);
+ assert.deepEqual(JSON.parse(JSON.stringify(state.famLists)),[{id:'legacy-source-list'}]);
+ assert.equal(stored.get(originalKey),previous);
+ const backup=JSON.parse([...stored].find(([key])=>key.startsWith('dobby-v5-familial-before-import-'))[1]);
+ assert.equal(Object.hasOwn(backup,'famHealth'),false);
+ assert.equal(Object.hasOwn(backup,'sharedHealthVisits'),false);
+ assert.deepEqual(backup.familyDocs,[currentDocument]);
+ assert.deepEqual(backup.famLists,[{id:'current-list'}]);
 });
 
 test('native account, connection and member permission projections all close together after capability verification is withdrawn',async()=>{

@@ -7,15 +7,16 @@ import hashlib
 import hmac
 import json
 from pathlib import Path
+import runpy
 import subprocess
 import time
 from urllib.parse import urlencode
 from uuid import uuid4
 
 HERE = Path(__file__).resolve().parent
-FAMILY = HERE.parent / 'finalisation-socle/supabase/family/01-install-family.sql'
 CONTAINER = f'dobby-sante-local-{uuid4().hex[:10]}'
 DB = 'dobby_health_tests'
+BOOTSTRAP = 'dobby_fixture_admin'
 STORAGE = CONTAINER + '-storage'
 REST = CONTAINER + '-rest'
 REST_IMAGE = 'postgrest/postgrest:v14.8@sha256:4173b72e0be29cf15349dc827798c3e464c5f2cc7f9c1697022f9cd1874b4c36'
@@ -41,15 +42,18 @@ def quote(value):
     return "'" + str(value).replace("'", "''") + "'"
 
 
-def sql(code, user=None, operation=None, error=None, role=None):
+def sql(code, user=None, operation=None, error=None, role=None, effective=None):
     prefix = ''
     if user:
         prefix = f'SET ROLE authenticated; SET request.jwt.claim.sub = {quote(uid(user))};'
     elif role:
         prefix = f'SET ROLE {role};'
+    elif effective and effective != 'postgres':
+        prefix = f'SET SESSION AUTHORIZATION {effective};'
     if operation:
         prefix += f'SET storage.test.operation = {quote(operation)};'
-    result = subprocess.run(['docker', 'exec', '-i', CONTAINER, 'psql', '-U', 'postgres', '-d', DB,
+    login = 'postgres' if effective == 'postgres' else BOOTSTRAP
+    result = subprocess.run(['docker', 'exec', '-i', CONTAINER, 'psql', '-U', login, '-d', DB,
                              '-XqAt', '-v', 'ON_ERROR_STOP=1', '-v', 'VERBOSITY=verbose'],
                             input=prefix + '\n' + code, text=True, capture_output=True)
     if error:
@@ -326,6 +330,10 @@ def check_rest_http():
                     'agendaVisible':True,'childText':'Par la porte principale'}
     }
     write_target = '/rpc/dobby_health_write'
+    capability_target = '/rpc/dobby_health_capabilities?' + urlencode({'p_household_id': uid(101)})
+    assert rest('GET', capability_target, 1) == (200, 'private, no-store', {'enabled': True, 'legacyClosed': True})
+    assert rest('GET', capability_target, 7) == (200, 'private, no-store', {'enabled': False})
+    assert rest('GET', capability_target, None)[0] in (401,403)
     assert rest('POST',write_target,1,request)[0] == 200
     assert rest('POST',write_target,3,{**request,'p_revision':1})[0] == 403
     assert rest('POST',write_target,2,{**request,'p_revision':1})[0] == 403
@@ -349,8 +357,14 @@ def check_rest_http():
     assert rest('POST',write_target,1,{**request,'p_revision':1,'p_operation_id':str(uuid4()),
         'p_values':{**request['p_values'],'childVisible':False,'agendaVisible':False}})[0] == 200
     assert api_read(3,'practical')[2] == api_read(3,'agenda')[2] == api_read(3,'reminders')[2] == []
+    sql('UPDATE dobby_health_private.install_state SET enabled=false WHERE singleton;', effective='postgres')
+    for actor in (1, 3):
+        assert rest('GET', capability_target, actor) == (200, 'private, no-store', {'enabled': False, 'legacyClosed': True})
+    assert rest('GET', capability_target, 7) == (200, 'private, no-store', {'enabled': False})
+    assert api_read(1, 'people')[0] == rest('POST', write_target, 1, request)[0] == 403
+    sql('UPDATE dobby_health_private.install_state SET enabled=true WHERE singleton;', effective='postgres')
     sql(f"DELETE FROM dobby_health_private.caregivers WHERE caregiver_user_id='{uid(1)}';")
-    print('PASS PostgREST HTTP v14.8: payloads, private no-store, direct account/API refusals and revocation', flush=True)
+    print('PASS PostgREST HTTP v14.8: private no-store, direct account/API refusals, revocation and durable closure on suspension', flush=True)
 
 
 def wait_ready(*command):
@@ -364,10 +378,67 @@ def wait_ready(*command):
 
 
 def install_for_fixtures():
-    sql((HERE / '01-proposition.sql').read_text())
+    def phase(name, *, effective=None, error=None):
+        return sql((HERE / name).read_text(), effective=effective, error=error)
+
+    preflight = phase('00-preflight.sql', effective='postgres')
+    assert 'dobby_socle_writer|f|f' in preflight, preflight
+    assert 'supabase_storage_admin|t||f' in preflight, preflight
+    phase('00-role.sql', effective='postgres')
+    phase('01-delegation-socle.sql', effective='postgres', error='exige le propriétaire effectif')
+    phase('01-proposition.sql', effective='postgres', error='exige la délégation effective')
+    assert sql("SELECT to_regnamespace('dobby_health_private') IS NULL;") == 't'
+    phase('01-delegation-socle.sql', effective='dobby_socle_writer')
+    phase('01-proposition.sql', effective='postgres')
+    phase('01-legacy-guard.sql', effective='postgres')
+    assert rpc('capabilities', [uid(101)], user=1) == {'enabled': False}
     read(1, 'people', error='42501')
-    sql('UPDATE dobby_health_private.install_state SET enabled=true WHERE singleton;')
-    print('PASS migration starts with Santé access closed', flush=True)
+    assert sql("SELECT pg_has_role('postgres','dobby_health_writer','SET'), pg_has_role('postgres','dobby_health_writer','USAGE');") == 'f|f'
+    phase('02-fermer-role.sql', effective='postgres', error='exige le rôle de plateforme')
+    phase('03-storage.sql', effective='postgres', error='exige le propriétaire effectif')
+    phase('03-storage.sql', effective='supabase_storage_admin', error='writer fermé')
+    assert sql("SELECT count(*) FROM storage.buckets WHERE id='dobby-health-files';") == '0'
+    phase('02-fermer-role.sql')
+    assert sql("SELECT count(*) FROM pg_auth_members WHERE roleid='dobby_health_writer'::regrole OR member='dobby_health_writer'::regrole;") == '0'
+    sql('SET ROLE dobby_health_writer;', effective='postgres', error='42501')
+    sql('GRANT dobby_health_writer TO postgres WITH SET TRUE;', effective='postgres', error='42501')
+    phase('03-storage.sql', effective='supabase_storage_admin')
+    phase('00-preflight.sql', effective='postgres')
+    phase('00-preflight.sql', effective='supabase_storage_admin')
+    assert rpc('capabilities', [uid(101)], user=1) == {'enabled': False}
+    assert sql('SELECT enabled, legacy_closed FROM dobby_health_private.install_state;', effective='postgres') == 'f|f'
+    read(1, 'people', error='42501')
+    write(1, 400, 'parent-a', 'profile', {}, error='42501')
+    assert sql("SELECT has_column_privilege('dobby_health_writer', 'storage.objects', 'metadata', 'SELECT'), "
+               "has_table_privilege('dobby_health_writer', 'storage.objects', 'SELECT'), "
+               "has_table_privilege('dobby_health_writer', 'storage.objects', 'INSERT');") == 't|f|f'
+    sql('UPDATE dobby_health_private.install_state SET legacy_closed=true WHERE singleton;',
+        effective='postgres', error='La première activation valide')
+    sql('UPDATE dobby_health_private.install_state SET enabled=true WHERE singleton;',
+        effective='postgres', error='données Santé historiques')
+    assert sql('SELECT enabled, legacy_closed FROM dobby_health_private.install_state;', effective='postgres') == 'f|f'
+    sql(f"UPDATE public.dobby_v2_modules SET payload = payload - 'sharedHealthVisits' "
+        f"WHERE module='family' AND household_id='{uid(101)}';", user=1)
+    sql('UPDATE dobby_health_private.install_state SET enabled=true WHERE singleton;', effective='postgres')
+    assert rpc('capabilities', [uid(101)], user=1) == {'enabled': True, 'legacyClosed': True}
+    assert rpc('capabilities', [uid(101)], user=7) == {'enabled': False}
+    sql('UPDATE dobby_health_private.install_state SET enabled=false WHERE singleton;', effective='postgres')
+    assert rpc('capabilities', [uid(101)], user=1) == {'enabled': False, 'legacyClosed': True}
+    assert rpc('capabilities', [uid(101)], user=7) == {'enabled': False}
+    read(1, 'people', error='42501')
+    write(1, 400, 'parent-a', 'profile', {}, error='42501')
+    sql('UPDATE dobby_health_private.install_state SET legacy_closed=false WHERE singleton;',
+        effective='postgres', error='reste acquise')
+    legacy_snapshot = quote({'sharedHealthVisits': [{'id': 'archived-fixture'}]})
+    sql(f"UPDATE public.dobby_v2_modules SET payload = payload || {legacy_snapshot} "
+        f"WHERE module='family' AND household_id='{uid(101)}';",
+        user=1, error='Données Santé historiques refusées')
+    sql('UPDATE dobby_health_private.install_state SET enabled=true WHERE singleton;', effective='postgres')
+    sql('ALTER TABLE public.dobby_v2_modules DISABLE TRIGGER dobby_family_identity_lifecycle;', effective='postgres')
+    assert rpc('capabilities', [uid(101)], user=1) == {'enabled': False, 'legacyClosed': True}
+    read(1, 'people', error='42501')
+    sql('ALTER TABLE public.dobby_v2_modules ENABLE ALWAYS TRIGGER dobby_family_identity_lifecycle;', effective='postgres')
+    print('PASS read-only preflight, separated owners, scoped grants, closed release and durable legacy write ban', flush=True)
 
 
 def main(with_storage):
@@ -376,21 +447,22 @@ def main(with_storage):
         run('docker','network','create','--internal',network)
     try:
         run('docker','run','--pull=never','--detach','--network',network,'--name',CONTAINER,'--rm',
-            '-e','POSTGRES_PASSWORD=fixture-only','-e',f'POSTGRES_DB={DB}','postgres:17.11')
+            '-e',f'POSTGRES_USER={BOOTSTRAP}','-e','POSTGRES_PASSWORD=fixture-only','-e',f'POSTGRES_DB={DB}','postgres:17.11')
         try:
-            wait_ready('docker','exec',CONTAINER,'pg_isready','-U','postgres','-d',DB,'-h','127.0.0.1')
+            wait_ready('docker','exec',CONTAINER,'pg_isready','-U',BOOTSTRAP,'-d',DB,'-h','127.0.0.1')
             assert run('docker','inspect','-f','{{.HostConfig.NetworkMode}}',CONTAINER) == network
             sql((HERE / 'fixture.sql').read_text())
-            source = FAMILY.read_text()
-            sql(source[source.index('CREATE FUNCTION dobby_socle_private.lock_actor('):
-                       source.index('CREATE FUNCTION dobby_socle_private.invitation_token(')])
-            sql(source[source.index('CREATE FUNCTION dobby_socle_private.actor_context('):
-                       source.index('CREATE FUNCTION dobby_socle_private.is_parent(')])
+            runpy.run_path(str(HERE / 'fixture-identites-famille.py'))['install_family_fixture'](sql)
+            sql('GRANT EXECUTE ON FUNCTION dobby_socle_private.actor_context(uuid,boolean) TO postgres;',
+                effective='dobby_socle_writer')
+            identity_sql = (HERE / '00-identites-famille.sql').read_text()
+            sql(identity_sql, effective='postgres', error='Le rôle de plateforme est requis')
+            sql(identity_sql)
             print('PostgreSQL', sql('SHOW server_version;'), '· native canonical resolver + synthetic Family catalog', flush=True)
             if with_storage:
                 assert run('docker','network','inspect','-f','{{.Internal}}',network) == 'true'
-                run('docker','run','--pull=never','--detach','--network',network,'--name',STORAGE,'--rm',
-                    '-e',f'DATABASE_URL=postgres://postgres:fixture-only@{CONTAINER}:5432/{DB}',
+                run('docker','run','--pull=never','--detach','--network',network,'--name',STORAGE,
+                    '-e',f'DATABASE_URL=postgres://{BOOTSTRAP}:fixture-only@{CONTAINER}:5432/{DB}',
                     '-e',f'AUTH_JWT_SECRET={JWT_KEY.decode()}','-e','DB_INSTALL_ROLES=true',
                     '-e','STORAGE_BACKEND=file','-e','FILE_STORAGE_BACKEND_PATH=/tmp/dobby-health-files',
                     '-e','GLOBAL_S3_BUCKET=fixture','-e','FILE_SIZE_LIMIT=10485760','-e','NODE_ENV=test',
@@ -399,9 +471,15 @@ def main(with_storage):
                 try:
                     wait_ready('docker','exec',STORAGE,'node','-e',
                                "fetch('http://127.0.0.1:5000/status').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))")
+                    # Align standalone Storage's migration owners with hosted DOBBY.
+                    sql("DO $$ BEGIN IF to_regrole('supabase_storage_admin') IS NULL THEN "
+                        'CREATE ROLE supabase_storage_admin NOLOGIN NOSUPERUSER NOBYPASSRLS; END IF; END $$;'
+                        'ALTER SCHEMA storage OWNER TO supabase_storage_admin;'
+                        'ALTER TABLE storage.objects OWNER TO supabase_storage_admin;'
+                        'ALTER TABLE storage.buckets OWNER TO supabase_storage_admin;')
                     install_for_fixtures()
                     run('docker','run','--pull=never','--detach','--network',network,'--name',REST,'--rm',
-                        '-e',f'PGRST_DB_URI=postgres://postgres:fixture-only@{CONTAINER}:5432/{DB}',
+                        '-e',f'PGRST_DB_URI=postgres://fixture_authenticator:fixture-only@{CONTAINER}:5432/{DB}',
                         '-e','PGRST_DB_SCHEMAS=public','-e','PGRST_DB_ANON_ROLE=anon',
                         '-e',f'PGRST_JWT_SECRET={JWT_KEY.decode()}',REST_IMAGE)
                     try:
@@ -416,7 +494,7 @@ def main(with_storage):
                     print(logs.stdout + logs.stderr)
                     raise
                 finally:
-                    run('docker','stop',STORAGE)
+                    run('docker','rm','--force',STORAGE)
             else:
                 sql((HERE / 'fixture-storage.sql').read_text())
                 install_for_fixtures()
