@@ -12,9 +12,15 @@ permissions:
 jobs:
   native-ingredient-search:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Verify the exact pull request head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -28,12 +34,20 @@ jobs:
         env:
           DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-ingredients-catalogue-fixture
         run: node --test essai-stitch-v5-famille/tests/*.test.mjs essai-stitch-v7/tests/*.test.mjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs
+      - name: Local PostgreSQL contracts for Runes and recipe images
+        run: |
+          git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527
+          python3 -u docs/dobby-v7/runes-lot2/test-postgres.py
+          python3 -u docs/dobby-v7/catalogue-lot3/test-postgres.py
       - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
-      - name: Both entry points and four native actions in three viewports
+      - name: Cuisine, import, step images, Runes and ingredient search in three viewports
         env:
           DOBBY_TEST_ORIGIN: http://127.0.0.1:8774
           DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-ingredients-catalogue-fixture
           DOBBY_INGREDIENTS_EVIDENCE: ${{ runner.temp }}/dobby-ingredients-parcours
+          DOBBY_E073_IMPORT_EVIDENCE: ${{ runner.temp }}/dobby-ingredients-parcours/import-e073
+          DOBBY_CATALOGUE_EVIDENCE: ${{ runner.temp }}/dobby-ingredients-parcours/catalogue
+          DOBBY_RUNES_LOT2_EVIDENCE: ${{ runner.temp }}/dobby-ingredients-parcours/runes
         run: |
           set -euo pipefail
           export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
@@ -42,6 +56,10 @@ jobs:
           trap 'kill "$server"' EXIT
           node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
           node essai-stitch-v7/tests/ingredient-matching-ui.cjs
+          node essai-stitch-v7/tests/e07-3-import.cjs
+          node essai-stitch-v7/tests/catalogue-lot3-ui.cjs
+          node essai-stitch-v7/tests/catalogue-lot3-steps-ui.cjs
+          node essai-stitch-v7/tests/runes-lot2-ui.cjs
           test_path="$GITHUB_WORKSPACE/essai-stitch-v7/tests/e07-4-c-ui.cjs"
           cd "$RUNNER_TEMP"
           node "$test_path"
