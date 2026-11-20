@@ -61,6 +61,76 @@ window.DobbyMemberAvatar=(()=>{'use strict';
   });
   return action;
  }
+ function rewardAction(member,transport,goal){
+  const action=text('button',goal?'Confirmer la récompense':'Définir le prochain palier','dobby-rune-entry-action');
+  action.type='button';
+  action.addEventListener('click',()=>{
+   const dialog=text('dialog','','dv7-participant-dialog dobby-rune-entry-form'),form=text('form',''),notice=text('p','');
+   const heading=text('h2',action.textContent);heading.id='dobby-reward-heading';dialog.setAttribute('aria-labelledby',heading.id);
+   notice.setAttribute('role','alert');
+   const titleLabel=text('label','Récompense'),title=text('input','');title.type='text';title.maxLength=160;titleLabel.append(title);
+   const threshold=text('input',''),mode=text('select','');
+   form.append(heading);
+   if(goal){
+    if(goal.mode==='announced')form.append(text('p',goal.title));
+    else{titleLabel.firstChild.textContent='Récompense à révéler (facultatif si déjà préparée)';form.append(titleLabel);}
+   }else{
+    const minimum=text('label','Seuil de Runes cumulées');threshold.type='text';threshold.inputMode='numeric';threshold.pattern='[0-9]+';threshold.required=true;
+    const display=text('label','Visibilité');mode.append(new Option('Annoncée','announced'),new Option('Surprise','surprise'));
+    minimum.append(threshold);display.append(mode);form.append(minimum,display,titleLabel);
+    function visibility(){title.required=mode.value==='announced';titleLabel.firstChild.textContent=title.required?'Récompense annoncée':'Surprise à préparer (facultatif)';}
+    mode.addEventListener('change',visibility);visibility();
+   }
+   const submit=text('button',goal?'Confirmer':'Enregistrer le palier'),cancel=text('button','Annuler');
+   submit.type='submit';cancel.type='button';cancel.onclick=()=>dialog.close();
+   form.append(submit,cancel,notice);dialog.append(form);document.body.append(dialog);
+   dialog.addEventListener('close',()=>{dialog.remove();action.focus();},{once:true});
+   dialog.addEventListener('cancel',event=>{if(submit.disabled)event.preventDefault();});
+   form.addEventListener('submit',async event=>{
+    event.preventDefault();if(submit.disabled)return;
+    submit.disabled=true;cancel.disabled=true;
+    const description=title.value.trim();
+    const intent=goal?{kind:'reward-confirm',memberId:member.id,goalId:goal.id}:
+     {kind:'reward-set',memberId:member.id,threshold:Number(threshold.value),mode:mode.value};
+    if(description)intent.title=description;
+    try{
+     await transport.recordProgress(intent);
+     dialog.close();
+     const current=[...document.querySelectorAll('[data-rune-profile]')].find(el=>el.dataset.runeProfile===member.id);
+     if(current)current.replaceWith(profile(member));
+     window.DobbyStitchV7?.refresh();
+    }catch(error){notice.textContent=error.message;submit.disabled=false;cancel.disabled=false;}
+   });
+   dialog.showModal();
+  });
+  return action;
+ }
+ function rewardPanel(member,transport,summary){
+  const state=transport?.readProgress?.();
+  if(member.memberCategory!=='child'||!state||state.category==='child'&&state.memberId!==member.id)return null;
+  const goal=Object.hasOwn(state.goals,member.id)?state.goals[member.id]:null;
+  const box=text('section','','dobby-rune-reward');box.append(text('h3','Récompense'));
+  if(!goal){
+   box.append(text('p','Aucun palier actif.'));
+   if(state.category==='parent')box.append(rewardAction(member,transport,null));
+  }else{
+   box.append(text('strong',goal.mode==='surprise'?'Récompense mystère':goal.title));
+   if(goal.unlocked){
+    box.append(text('p','Débloquée · En attente de confirmation parentale'));
+    if(state.category==='parent')box.append(rewardAction(member,transport,goal));
+   }else{
+    const bar=document.createElement('progress');bar.max=goal.threshold;bar.value=Math.min(summary.total,goal.threshold);
+    bar.setAttribute('aria-label','Progression vers la récompense');box.append(bar,text('p',summary.total+' / '+goal.threshold+' Runes cumulées'));
+   }
+  }
+  const past=state.rewards.filter(row=>row.memberId===member.id);
+  if(past.length){
+   const history=text('details','');history.open=true;history.append(text('summary','Récompenses accordées'));
+   const items=text('ul','');for(const row of past)items.append(text('li',row.title+' · '+row.threshold+' Runes · '+new Date(row.date).toLocaleDateString('fr-BE')));
+   history.append(items);box.append(history);
+  }
+  return box;
+ }
  function profile(member){
   const box=text('section','','dobby-rune-profile');box.dataset.runeProfile=member.id;box.append(text('h2','Runes & progression','font-headline-sm text-primary'));
   try{const summary=E.rewardSummary(member.id);if(!summary){box.append(text('p','Runes en cours de chargement.'));return box;}const {grade}=summary;box.append(text('strong',summary.total+' runes','dobby-rune-total'),text('p',grade.label));if(grade.provisional)box.append(text('small','Grades et seuils provisoires','dobby-rune-provisional'));
@@ -70,6 +140,7 @@ window.DobbyMemberAvatar=(()=>{'use strict';
    if(!summary.shared)box.append(text('small','Gains conservés sur cet appareil.'));else box.append(text('small',summary.syncStatus));
    const transport=E.win().DobbySharedRunesV3,canManage=transport?.canManageRunes?.()===true;
    if(canManage&&member.memberCategory==='child')box.append(runeAction(member,transport));
+   const rewards=rewardPanel(member,transport,summary);if(rewards)box.append(rewards);
    const history=text('details','');history.append(text('summary','Historique des gains et annulations'));
    const list=text('ul',''),correctable=new Map((summary.correctable||[]).map(entry=>[entry.eventId,entry]));
    const actors=summary.credits.some(row=>row.actorMemberId)?E.read().members:[];

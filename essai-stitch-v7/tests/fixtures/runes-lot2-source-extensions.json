@@ -1,0 +1,184 @@
+{
+  "baseCommit": "c4005809680d8533e1496ff08bef1747400fa741",
+  "files": {
+    "essai-stitch-v5-famille/family-missions-core.mjs": {
+      "beforeSha256": "3e67f4550025aace7d49f66191177652cc674b95f00edb9cef6cc80b20ca8f84",
+      "afterSha256": "c6a9a3d0d12405cd1ab0c0de35d6df948adb711edff8ab8b0bc613379750f708",
+      "patches": [
+        {
+          "line": 56,
+          "before": "",
+          "after": "  if(raw.individualRunes!==undefined&&raw.individualRunes!==true||\n    raw.approvalRequired!==undefined&&(typeof raw.approvalRequired!=='boolean'||raw.individualRunes!==true))\n    throw Error('Mode de participation invalide');\n"
+        },
+        {
+          "line": 84,
+          "before": "export function projectRecurringMissions(rows,today=brusselsDate()){\n",
+          "after": "export function projectRecurringMissions(rows,today=brusselsDate(),{series='all'}={}){\n"
+        },
+        {
+          "line": 88,
+          "before": "    if(raw.recurrence===undefined)continue;\n",
+          "after": "    if(raw.recurrence===undefined||series==='legacy'&&raw.individualRunes===true||series==='individual'&&raw.individualRunes!==true)continue;\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-mission-intents.mjs": {
+      "beforeSha256": "c43b66deabf92868804a0c86052f51237eb8f2c926ff75e1eaad66bc09a0cee9",
+      "afterSha256": "709f2529fc2ad2acb5e6b96ba96f92915edd2a6760f06b9d926d2c946d1421e1",
+      "patches": [
+        {
+          "line": 3,
+          "before": "",
+          "after": "import {projectRecurringMissions,brusselsDate} from './family-missions-core.mjs';\n"
+        },
+        {
+          "line": 5,
+          "before": "",
+          "after": "export {participationStatus} from './family-mission-progress.mjs';\nimport {isProgressIntent,normalizeProgressIntent,PROGRESS_KEYS,validateProgress,validateProgressReceipt} from './family-mission-progress.mjs';\n"
+        },
+        {
+          "line": 32,
+          "before": "",
+          "after": "export const needsIndividualProjection=rows=>projectRecurringMissions(rows,brusselsDate(),{series:'individual'}).length>rows.length;\nexport const missionLot2Capability=value=>missionLot1Capability(value)&&value.runesLot2===1;\n"
+        },
+        {
+          "line": 44,
+          "before": "",
+          "after": " if(isProgressIntent(value))return normalizeProgressIntent(value);\n if(value.kind==='project'&&Object.keys(value).length===1)return {kind:'project'};\n"
+        },
+        {
+          "line": 78,
+          "before": "",
+          "after": " validateProgress(p,previous?.payload,equal);\n"
+        },
+        {
+          "line": 82,
+          "before": "  for(const key of Object.keys(previous.payload||{}))if(!['autoTasks','manualMissions','runeCredits','runeRequests','runeLedgerVersion'].includes(key)&&!equal(p[key],previous.payload[key]))throw Error('Extension Missions confirmée supprimée ou réécrite ; données conservées');\n",
+          "after": "  for(const key of Object.keys(previous.payload||{}))if(!['autoTasks','manualMissions','runeCredits','runeRequests','runeLedgerVersion',...PROGRESS_KEYS].includes(key)&&!equal(p[key],previous.payload[key]))throw Error('Extension Missions confirmée supprimée ou réécrite ; données conservées');\n"
+        },
+        {
+          "line": 104,
+          "before": "",
+          "after": " function allowedIntent(intent,current){\n  if(current.category!=='parent'&&!['complete','project'].includes(intent.kind)&&\n    !(intent.kind==='submit'&&intent.memberId===current.memberId))throw Error('Action réservée au parent ou à l’enfant assigné');\n  if((isProgressIntent(intent)||intent.kind==='project')&&!missionLot2Capability(options.capability()?.value))throw Error('Progression et récompenses en attente de vérification serveur');\n }\n"
+        },
+        {
+          "line": 110,
+          "before": "  if(intent.kind!=='complete'&&current.category!=='parent')throw Error('Seul un parent peut gérer ou rouvrir les Missions');\n",
+          "after": "  allowedIntent(intent,current);\n"
+        },
+        {
+          "line": 112,
+          "before": "",
+          "after": "  if(isProgressIntent(intent)||intent.kind==='project'){\n   if(!remote)throw Error('Partage Missions à activer');\n   return [];\n  }\n"
+        },
+        {
+          "line": 145,
+          "before": "   if(current.category!=='parent'&&pending.intent.kind!=='complete')throw Error('Seul un parent peut reprendre cette opération Missions');\n",
+          "after": "   allowedIntent(pending.intent,current);\n"
+        },
+        {
+          "line": 173,
+          "before": "  const noopAllowed=['complete','reopen'].includes(pending.intent.kind)&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);\n",
+          "after": "  const noopAllowed=pending.intent.kind==='project'||['complete','reopen'].includes(pending.intent.kind)&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);\n"
+        },
+        {
+          "line": 189,
+          "before": "",
+          "after": "  if(isProgressIntent(pending.intent))validateProgressReceipt(module.payload,pending.intent,pending.id,Number(receipt.revision));\n"
+        },
+        {
+          "line": 193,
+          "before": "   }else if(!runes.isLot1Entry(pending.intent)){\n",
+          "after": "   }else if(pending.intent.kind==='project'){\n    const oldRows=pending.baseModule.payload.manualMissions;\n    const known=new Map(module.payload.manualMissions.map(row=>[row.id,row]));\n    if(oldRows.some(row=>!equal(known.get(row.id),row)))throw Error('Projection Missions altérée');\n   }else if(!runes.isLot1Entry(pending.intent)&&!isProgressIntent(pending.intent)){\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-missions.js": {
+      "beforeSha256": "ae87c41c3e86e751ca209e46303f61ba3bf2a1882fa5a457cfff88e471c0f8e6",
+      "afterSha256": "c7a0cf252a4e306abbc4e098cd1c953b938d88dc05f77609d6cc2693cf9b7e0d",
+      "patches": [
+        {
+          "line": 21,
+          "before": "  const rows=core.projectRecurringMissions(st.manualMissions);\n",
+          "after": "  const rows=core.projectRecurringMissions(st.manualMissions,core.brusselsDate(),{series:'legacy'});\n"
+        },
+        {
+          "line": 31,
+          "before": "    ' · '+esc(person(m.assigneeId))+'</small>'+\n",
+          "after": "    ' · '+esc(m.individualRunes?m.assigneeIds.map(person).join(', '):person(m.assigneeId))+'</small>'+\n"
+        },
+        {
+          "line": 34,
+          "before": "    '<button type=\"button\" data-fms-action=\"toggle\" data-id=\"'+esc(m.id)+'\">'+\n      (m.status==='open'?'Terminer':'Rouvrir')+'</button>'+\n",
+          "after": "    (m.individualRunes?'<small>Participations suivies dans Missions V7</small>':\n      '<button type=\"button\" data-fms-action=\"toggle\" data-id=\"'+esc(m.id)+'\">'+\n      (m.status==='open'?'Terminer':'Rouvrir')+'</button>')+\n"
+        },
+        {
+          "line": 87,
+          "before": "",
+          "after": "    '<input type=\"hidden\" name=\"approvalRequired\" value=\"'+String(current?.approvalRequired===true)+'\">'+\n"
+        },
+        {
+          "line": 153,
+          "before": "",
+          "after": "    const advanced=window.DobbySharedRunesV3?.progressAvailable?.()===true;\n    const childOnly=assigneeIds?.length&&!allFamily&&assigneeIds.every(id=>members().some(m=>m.id===id&&m.memberCategory==='child'));\n    const individualRunes=old?.individualRunes===true||!old&&advanced&&participantVersion===1&&childOnly;\n    if(individualRunes&&!childOnly)throw Error('Choisissez un ou plusieurs enfants pour cette mission individuelle.');\n    if(individualRunes&&!advanced)throw Error('Partage avancé des Missions à vérifier avant de modifier cette mission.');\n"
+        },
+        {
+          "line": 165,
+          "before": "",
+          "after": "      ...(individualRunes?{individualRunes:true,approvalRequired:data.get('approvalRequired')==='true'}:{}),\n"
+        },
+        {
+          "line": 187,
+          "before": "",
+          "after": "        if(row.individualRunes){template.individualRunes=true;template.approvalRequired=row.approvalRequired;}\n"
+        },
+        {
+          "line": 198,
+          "before": "    st.manualMissions=core.projectRecurringMissions(existing?st.manualMissions.map(x=>x.id===existing?row:x):[...st.manualMissions,row]);\n",
+          "after": "    st.manualMissions=core.projectRecurringMissions(existing?st.manualMissions.map(x=>x.id===existing?row:x):[...st.manualMissions,row],core.brusselsDate(),{series:'legacy'});\n"
+        },
+        {
+          "line": 218,
+          "before": "",
+          "after": "      if(item.individualRunes)throw Error('Conservez les missions individuelles et leur historique.');\n"
+        },
+        {
+          "line": 238,
+          "before": "",
+          "after": "  if(current.individualRunes)throw Error('Utilisez le suivi de participation individuelle dans Missions V7.');\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "bbb61b569da646a863d5f5f305541b476d140310a07e2fd82296d21fc8daf94b",
+      "afterSha256": "838d36aba391996bedbbdc3aa1c22d63ba8fc5080bf1c7c80e9907a53f971a01",
+      "patches": [
+        {
+          "line": 141,
+          "before": " const multiple=mission=>mission?.allFamily===true||Array.isArray(mission?.assigneeIds)&&mission.assigneeIds.length>1||mission?.recurrence?.rules?.some(rule=>rule.template?.allFamily===true||rule.template?.assigneeIds?.length>1);\n",
+          "after": " const multiple=mission=>mission?.individualRunes===true||mission?.allFamily===true||Array.isArray(mission?.assigneeIds)&&mission.assigneeIds.length>1||mission?.recurrence?.rules?.some(rule=>rule.template?.allFamily===true||rule.template?.assigneeIds?.length>1);\n"
+        },
+        {
+          "line": 511,
+          "before": "",
+          "after": "function runesLot2Available(){\n const state=states.missions;\n return Boolean(state?.active&&!state.conflict&&runesV3Available()&&missionIntentCore.missionLot2Capability(runeV3Capability?.value));\n}\nfunction readMissionProgress(){\n if(!runesLot2Available())return null;\n const {category,memberId}=v3Actor(),p=JSON.parse(states.missions.synced||'{}');\n return {category,memberId,entries:p.missionParticipation||[],goals:p.runeGoals||{},rewards:p.runeRewards||[]};\n}\nasync function recordMissionProgress(intent){\n if(!runesLot2Available())throw Error('Partage avancé des Missions à vérifier ou conflit à résoudre.');\n const state=states.missions,payload=JSON.parse(state.synced);\n if(intent.missionId&&missionDigest(editableMissions(pick('missions')))!==missionDigest(editableMissions(payload)))\n  throw Error('Synchronisez vos modifications Missions avant de traiter la participation.');\n return sendMissionsV3(intent,{module:'missions',revision:Number(state.revision),payload});\n}\n"
+        },
+        {
+          "line": 615,
+          "before": " if(missionDigest(fields)===missionDigest(editableMissions(remote.payload))){applyMissionsV3(remote.payload);Object.assign(state,synchronized('missions',Number(remote.revision),remote.payload));await persist();return;}\n",
+          "after": " if(missionDigest(fields)===missionDigest(editableMissions(remote.payload))){\n  if(missionLot2CanProject(remote))return sendMissionsV3({kind:'project'},remote);\n  applyMissionsV3(remote.payload);Object.assign(state,synchronized('missions',Number(remote.revision),remote.payload));await persist();return;}\n"
+        },
+        {
+          "line": 620,
+          "before": "",
+          "after": "}\nfunction missionLot2CanProject(remote){\n return missionIntentCore.missionLot2Capability(runeV3Capability?.value)&&missionIntentCore.needsIndividualProjection(remote.payload.manualMissions);\n"
+        },
+        {
+          "line": 1456,
+          "before": "",
+          "after": " progressAvailable:runesLot2Available,readProgress:readMissionProgress,recordProgress:recordMissionProgress,\n participationStatus(mission,last,today){return missionIntentCore?.participationStatus(mission,last,today)||'open';},\n"
+        }
+      ]
+    }
+  }
+}

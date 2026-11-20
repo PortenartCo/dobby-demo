@@ -24,3 +24,7 @@
 .dobby-rune-entry-action{min-height:44px;text-align:left}
 body[data-family-view="mission-edit"] .e04-member-avatar-slot{overflow:visible!important}
 body[data-family-view="mission-edit"] [data-e04-member-card]>.member-check{top:4px;right:4px;bottom:auto}
+
+.dobby-rune-reward{display:grid;gap:8px;padding-block:12px;border-block:1px solid #d49b4244}
+.dobby-mission-alert{padding:8px 16px;border:1px solid #d49b4266;color:#fadcd5;background:#271814;overflow-wrap:anywhere}
+.dobby-mission-alert a,.dobby-mission-alert button{color:#f9bb5f;margin-inline-end:12px;min-height:44px}

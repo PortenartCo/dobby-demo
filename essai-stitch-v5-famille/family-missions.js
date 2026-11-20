@@ -19,7 +19,7 @@ let projecting=false;
 function project(){
   if(projecting)return;
   if(requiresSync()&&window.DobbySharedRunesV3?.available?.()&&members().find(member=>member.id===window.DobbyFamilyUI?.getContext()?.memberId)?.memberCategory==='child')return;
-  const rows=core.projectRecurringMissions(st.manualMissions);
+  const rows=core.projectRecurringMissions(st.manualMissions,core.brusselsDate(),{series:'legacy'});
   if(rows.length===st.manualMissions.length)return;
   const previous=st.manualMissions;projecting=true;st.manualMissions=rows;
   try{save();return true;}catch(error){st.manualMissions=previous;throw error;}finally{projecting=false;}
@@ -29,11 +29,12 @@ function panel(){
   const tasks=rows=>'<ul class="fms-list">'+rows.map(m=>
     '<li class="fms-task"><div class="fms-task-content">'+
     '<strong>'+esc(m.title)+'</strong><small>'+esc(m.category)+' · '+esc(fmt(m.due))+
-    ' · '+esc(person(m.assigneeId))+'</small>'+
+    ' · '+esc(m.individualRunes?m.assigneeIds.map(person).join(', '):person(m.assigneeId))+'</small>'+
     (m.note?'<p>'+esc(m.note)+'</p>':'')+'</div>'+
     '<div class="fms-actions">'+
-    '<button type="button" data-fms-action="toggle" data-id="'+esc(m.id)+'">'+
-      (m.status==='open'?'Terminer':'Rouvrir')+'</button>'+
+    (m.individualRunes?'<small>Participations suivies dans Missions V7</small>':
+      '<button type="button" data-fms-action="toggle" data-id="'+esc(m.id)+'">'+
+      (m.status==='open'?'Terminer':'Rouvrir')+'</button>')+
     '<button type="button" data-fms-action="edit" data-id="'+esc(m.id)+'">Modifier</button>'+
     '<button type="button" data-fms-action="delete" data-id="'+esc(m.id)+'" aria-label="Supprimer cette mission">×</button>'+
     '</div></li>').join('')+'</ul>';
@@ -84,6 +85,7 @@ function showForm(id){
       '<option'+(x===(current?.category||'Famille')?' selected':'')+'>'+esc(x)+'</option>').join('')+'</select></label></div>'+
     '<label>Responsable<select name="assigneeId"><option value="">Non attribuée</option>'+selectable+'</select></label>'+
     '<input type="hidden" name="assigneeIds" value="'+esc(JSON.stringify(current?.assigneeIds||[]))+'"><input type="hidden" name="allFamily" value="'+String(current?.allFamily===true)+'"><input type="hidden" name="participantVersion" value="'+(current?.participantVersion||'')+'">'+
+    '<input type="hidden" name="approvalRequired" value="'+String(current?.approvalRequired===true)+'">'+
     '<label>Priorité<select name="priority"><option value="normal">Normale</option><option value="urgent"'+(current?.priority==='urgent'?' selected':'')+'>Urgente</option></select></label>'+
     '<input type="hidden" name="recurrenceStart" value="'+esc(rule?.start||current?.due||core.brusselsDate())+'">'+
     '<label>Effort<select name="effort">'+core.runes.EFFORTS.map(e=>'<option value="'+e.id+'"'+(current?.customRunes===undefined&&e.id===(current?.effort||'regular')?' selected':'')+'>'+esc(e.label)+' — '+e.amount+' runes</option>').join('')+'<option value="custom"'+(current?.customRunes!==undefined?' selected':'')+'>Personnalisée</option></select></label>'+
@@ -149,6 +151,11 @@ function saveForm(event){
     const allFamily=participantVersion===1?data.get('allFamily')==='true':old?.allFamily;
     if(participantVersion===1&&assigneeIds.some(id=>!core.humanMembers(members()).some(m=>m.id===id)&&!old?.assigneeIds?.includes(id)&&old?.assigneeId!==id))throw Error('Un membre choisi n’est plus dans le foyer. Votre formulaire reste ouvert.');
     if(requiresSync()&&!window.DobbySharedRunesV3?.available?.()&&participantVersion===1&&(allFamily||assigneeIds.length>1))throw Error('Attribution multiple partagée en attente de validation serveur. Aucune modification enregistrée.');
+    const advanced=window.DobbySharedRunesV3?.progressAvailable?.()===true;
+    const childOnly=assigneeIds?.length&&!allFamily&&assigneeIds.every(id=>members().some(m=>m.id===id&&m.memberCategory==='child'));
+    const individualRunes=old?.individualRunes===true||!old&&advanced&&participantVersion===1&&childOnly;
+    if(individualRunes&&!childOnly)throw Error('Choisissez un ou plusieurs enfants pour cette mission individuelle.');
+    if(individualRunes&&!advanced)throw Error('Partage avancé des Missions à vérifier avant de modifier cette mission.');
     let row=core.normalizeMission({
       ...old,
       id:existing||('fm-'+crypto.randomUUID()),
@@ -156,6 +163,7 @@ function saveForm(event){
       ...(!old||old.rewardVersion===1?{rewardVersion:1}:{}),
       category:data.get('category'),assigneeId:participantVersion===1?(allFamily?'':assigneeIds[0]||''):data.get('assigneeId'),
       ...(participantVersion===1?{participantVersion,assigneeIds,allFamily}:{}),
+      ...(individualRunes?{individualRunes:true,approvalRequired:data.get('approvalRequired')==='true'}:{}),
       ...(data.get('priority')?{priority:String(data.get('priority'))}:{}),
       note:data.get('note'),status:old?.status||'open',
       createdAt:old?.createdAt||now,completedAt:old?.completedAt||''
@@ -177,6 +185,7 @@ function saveForm(event){
         // ineligible; it does not remove eligibility from genuinely new rows.
         const template={...last?.template,title:row.title,category:row.category,assigneeId:row.assigneeId,assigneeIds:row.assigneeIds,allFamily:row.allFamily,participantVersion:row.participantVersion,priority:row.priority,deadlineOffsetDays:row.deadlineOffsetDays,note:row.note,effort:row.effort,rewardVersion:1,customRunes:row.customRunes};
         if(row.customRunes===undefined)delete template.customRunes;
+        if(row.individualRunes){template.individualRunes=true;template.approvalRequired=row.approvalRequired;}
         const rule={from,start:firstStart,frequency,weekdays:String(data.get('recurrenceWeekdays')||'').split(',').filter(Boolean).map(Number).sort((a,b)=>a-b),monthDay:Number(data.get('recurrenceMonthDay')),shortMonth:'last-day',state:String(data.get('recurrenceState')||last?.state||'active'),template};
         if(!last&&!core.recurrenceMatches(firstStart,rule))throw Error('La première échéance doit correspondre aux jours de récurrence choisis. Ajustez la date ou les jours de la série.');
         const equal=last&&JSON.stringify({...last,from:''})===JSON.stringify({...rule,from:''});
@@ -187,7 +196,7 @@ function saveForm(event){
     }
     if(old&&pendingGrant(old.id)&&['assigneeId','assigneeIds','allFamily','effort','customRunes'].some(key=>JSON.stringify(old[key])!==JSON.stringify(row[key])))throw Error('Synchronisez l’attribution en attente avant de modifier le responsable ou la récompense. Votre formulaire reste ouvert.');
     const previous=st.manualMissions;
-    st.manualMissions=core.projectRecurringMissions(existing?st.manualMissions.map(x=>x.id===existing?row:x):[...st.manualMissions,row]);
+    st.manualMissions=core.projectRecurringMissions(existing?st.manualMissions.map(x=>x.id===existing?row:x):[...st.manualMissions,row],core.brusselsDate(),{series:'legacy'});
     try{persist();close();}catch(error){st.manualMissions=previous;throw error;}
   }catch(err){alert(err?.message||'Enregistrement impossible');}
 }
@@ -207,6 +216,7 @@ document.addEventListener('click',event=>{
     }else if(a==='delete'){
       assertParentWrite();
       const item=find(id);if(!item)return;
+      if(item.individualRunes)throw Error('Conservez les missions individuelles et leur historique.');
       if(pendingEvent(item.id))throw Error('Synchronisez l’attribution en attente avant de supprimer cette mission.');
       if(item.recurrence||item.seriesId)throw Error('L’historique des séries est conservé. Ouvrez la première occurrence pour suspendre ou arrêter la série.');
       if(confirm('Supprimer définitivement « '+item.title+' » de la liste familiale ?')){
@@ -226,6 +236,7 @@ function assertParentWrite(){
 }
 function completeMission(id,participantIds,operation='complete'){
   const current=find(id);if(!current)throw Error('Mission introuvable');
+  if(current.individualRunes)throw Error('Utilisez le suivi de participation individuelle dans Missions V7.');
   if(operation==='complete'&&current.status==='done'||operation==='reopen'&&current.status==='open')return false;
   if(requiresSync()){
     const transport=window.DobbySharedRunesV3;

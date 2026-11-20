@@ -54,6 +54,9 @@ export function normalizeMission(raw){
   if(!['open','done'].includes(status))throw Error('État de mission invalide');
   if(raw.assigneeIds!==undefined&&(!Array.isArray(raw.assigneeIds)||raw.assigneeIds.length>200||raw.assigneeIds.some(id=>raw.participantVersion===1?!runes.validV3MemberId(id):typeof id!=='string'||!id.trim()||id.length>100)))throw Error('Attribution de mission invalide');
   if(raw.participantVersion===1&&raw.assigneeId!==undefined&&raw.assigneeId!==''&&!runes.validV3MemberId(raw.assigneeId))throw Error('Attribution de mission invalide');
+  if(raw.individualRunes!==undefined&&raw.individualRunes!==true||
+    raw.approvalRequired!==undefined&&(typeof raw.approvalRequired!=='boolean'||raw.individualRunes!==true))
+    throw Error('Mode de participation invalide');
   if(raw.allFamily!==undefined&&typeof raw.allFamily!=='boolean')throw Error('Attribution familiale invalide');
   if(raw.participantVersion!==undefined&&raw.participantVersion!==1)throw Error('Version de participation invalide');
   if(raw.priority!==undefined&&!['normal','urgent'].includes(raw.priority))throw Error('Priorité de mission invalide');
@@ -79,11 +82,11 @@ export function normalizeMission(raw){
 }
 // Materialize only the last 30 civil days and today. Previously persisted rows
 // are never removed, including done/open history outside this recovery window.
-export function projectRecurringMissions(rows,today=brusselsDate()){
+export function projectRecurringMissions(rows,today=brusselsDate(),{series='all'}={}){
   if(!Array.isArray(rows)||!validDate(today))throw Error('Projection de missions invalide');
   const known=new Map(rows.map(row=>[row.id,row])),result=[...rows];
   for(const raw of rows){
-    if(raw.recurrence===undefined)continue;
+    if(raw.recurrence===undefined||series==='legacy'&&raw.individualRunes===true||series==='individual'&&raw.individualRunes!==true)continue;
     const root=normalizeMission(raw),rules=root.recurrence.rules;
     for(let day=addCalendarDays(today,-RECURRENCE_LOOKBACK_DAYS);day<=today;day=addCalendarDays(day,1)){
       const rule=rules.findLast(r=>r.from<=day);

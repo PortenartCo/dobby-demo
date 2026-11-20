@@ -6,7 +6,7 @@
  function el(tag,text,cls=''){const n=document.createElement(tag);n.className=cls;n.textContent=text;return n;}
  function field(container,label,id,name,value,type='text'){const row=document.createElement('div'),l=el('label',label),f=document.createElement(type==='textarea'?'textarea':type==='select'?'select':'input');f.id=id;f.name=name;f.className='rg-input';if(f.tagName==='INPUT')f.type=type;f.value=value??'';l.htmlFor=id;row.append(l,f);container.append(row);return f;}
  const nativeMission=id=>{E.evaluate('st.extraPage="";go("missions");');E.action('fmsAction',id?'edit':'new',id?{id}:{});return E.win().document.getElementById('fmsForm');};
- function missionIssue(row,native){if(!row)return '';const known=['id','title','due','category','assigneeId','assigneeIds','allFamily','participantVersion','participants','priority','deadlineOffsetDays','note','status','createdAt','completedAt','effort','customRunes','rewardVersion','recurrence','seriesId','occurrenceDate'];if(row.recurrence&&row.recurrence.version!==1||row.rewardVersion!==undefined&&row.rewardVersion!==1||row.effort!==undefined&&![...native.elements.effort.options].some(o=>o.value===row.effort)||Object.keys(row).some(k=>!known.includes(k))||(row.due&&!native.elements.due.value)||![...native.elements.category.options].some(o=>o.value===row.category))return 'Cette mission contient des informations supplémentaires ou dans un ancien format que ce formulaire ne peut pas conserver. Modification indisponible ; les données restent intactes.';return '';}
+ function missionIssue(row,native){if(!row)return '';const known=['id','title','due','category','assigneeId','assigneeIds','allFamily','participantVersion','participants','priority','deadlineOffsetDays','note','status','createdAt','completedAt','effort','customRunes','rewardVersion','recurrence','seriesId','occurrenceDate','individualRunes','approvalRequired'];if(row.recurrence&&row.recurrence.version!==1||row.rewardVersion!==undefined&&row.rewardVersion!==1||row.effort!==undefined&&![...native.elements.effort.options].some(o=>o.value===row.effort)||Object.keys(row).some(k=>!known.includes(k))||(row.due&&!native.elements.due.value)||![...native.elements.category.options].some(o=>o.value===row.category))return 'Cette mission contient des informations supplémentaires ou dans un ancien format que ce formulaire ne peut pas conserver. Modification indisponible ; les données restent intactes.';return '';}
  function mission(){
   const row=c.data.state.manualMissions.find(x=>x.id===c.ui.record);
   if(c.ui.record&&!row){c.main.replaceChildren(note('Mission introuvable. Aucune tâche recréée.'),button('rg-missions','Bibliothèque des missions'));return;}
@@ -42,6 +42,17 @@
   if(row?.seriesId){recurrence.replaceChildren(el('p','Vous modifiez cette occurrence uniquement. Son état et ses runes sont indépendants.','e04-availability'),button('rg-mission-edit','Modifier ou arrêter la série',{record:row.seriesId}));for(const b of recurrences)b.disabled=true;}
   const efforts=E.win().DobbyFamilyMissions.efforts;all('.effort-btn',deadline).forEach((prototype,index)=>{const effort=efforts[index],card=choice(prototype,'effort',effort.id,effort.label+' — '+effort.amount+' runes');q('input',card).checked=row?.customRunes===undefined&&(row?.effort||'regular')===effort.id;card.removeAttribute('data-reward');q('.font-headline-sm',card).textContent=String(effort.amount);const name=q('span',card);name.textContent=effort.label;name.classList.add('e04-effort-name');prototype.replaceWith(card);});
   const effortLabel=q('#effort-selector').previousElementSibling;effortLabel.replaceChildren(q('.material-symbols-outlined',effortLabel),document.createTextNode('Niveau d’effort & récompenses'));
+  if(row?.individualRunes||!row&&E.win().DobbySharedRunesV3?.progressAvailable?.()){
+   const approvalLabel=el('label','Validation par un parent requise'),approval=document.createElement('input');
+   approval.type='checkbox';approval.name='approvalRequired';approval.value='true';approval.checked=row?.approvalRequired===true;
+   approvalLabel.prepend(approval);deadline.append(approvalLabel);
+   const updateApproval=()=>{
+    const selected=all('[name=assigneeIds]:checked',memberGrid);
+    approval.disabled=Boolean(q('input',everyone)?.checked)||!selected.length||selected.some(input=>members.get(input.value)?.memberCategory!=='child');
+    approvalLabel.hidden=approval.disabled;
+   };
+   assignment.addEventListener('change',updateApproval);updateApproval();
+  }
   const runes=q('#custom-runes');runes.disabled=false;runes.name='customRunes';runes.value=row?.customRunes??'';runes.placeholder='Nombre entier, zéro accepté';runes.inputMode='numeric';runes.pattern='[0-9]+';runes.closest('div').classList.add('e04-runes');q('label[for="custom-runes"]').textContent='Runes personnalisées';
   function rewardUI(){for(const input of all('[name=effort]',deadline))input.required=!runes.value;runes.setCustomValidity(runes.value&&!/^\d+$/.test(runes.value)?'Saisissez un entier positif ou nul.':'');}
   runes.addEventListener('input',()=>{for(const input of all('[name=effort]',deadline))input.checked=false;rewardUI();});for(const input of all('[name=effort]',deadline))input.addEventListener('change',()=>{runes.value='';rewardUI();});
@@ -76,7 +87,7 @@
   if(c.ui.record&&!row)throw Error('Mission introuvable. Aucune tâche recréée.');
   if(JSON.stringify(row||null)!==form.dataset.missionBaseline)throw Error('Cette mission a changé depuis son ouverture. Votre brouillon est conservé ; vérifiez la nouvelle version avant d’enregistrer.');
   const native=nativeMission(row?.id),problem=missionIssue(row,native);if(problem)throw Error(problem);
-  const values=Object.fromEntries(new FormData(form));values.participantVersion='1';values.assigneeIds=JSON.stringify([...form.querySelectorAll('[name=assigneeIds]:checked')].map(x=>x.value));values.allFamily=String(form.querySelector('[name=allFamily]')?.checked===true);values.assigneeId='';if(values.customRunes?.trim())values.effort='custom';else values.customRunes='';values.recurrenceWeekdays=[...form.querySelectorAll('[name=recurrenceDay]:checked')].map(x=>x.value).join(',');
+  const values=Object.fromEntries(new FormData(form));values.participantVersion='1';values.assigneeIds=JSON.stringify([...form.querySelectorAll('[name=assigneeIds]:checked')].map(x=>x.value));values.allFamily=String(form.querySelector('[name=allFamily]')?.checked===true);values.assigneeId='';values.approvalRequired=values.approvalRequired||'false';if(values.customRunes?.trim())values.effort='custom';else values.customRunes='';values.recurrenceWeekdays=[...form.querySelectorAll('[name=recurrenceDay]:checked')].map(x=>x.value).join(',');
   form.dataset.missionSaving='true';try{E.submit('fmsForm',values);if(!E.win().document.getElementById('fmsLayer').hidden)throw Error(E.lastError||'La mission n’a pas été enregistrée.');return goMissions();}catch(error){delete form.dataset.missionSaving;throw error;}
  }
  function chat(variant){window.DobbyChat.mount(c,variant);}
@@ -119,8 +130,56 @@
  function personal(){window.DobbyMagicProfile.render(c);}
 
  R.register({views,prepare(view){if(view==='chat-2')return window.DobbyChat.prepare();if(view==='mission-edit')return R.until(()=>!!E.win().DobbyFamilyMissions?.available);},back(view){return view==='mission-edit'?goMissions():target(view==='settings-magic'?'settings':view==='settings'?'menu':view==='chat-2'?'chat':'salon');},render(view,ctx){c=ctx;if(view==='mission-edit')mission();else if(view==='chat'||view==='chat-2')chat(view==='chat-2');else if(view==='search')search();else if(view==='menu')menu();else if(view==='settings')settings();else if(view==='settings-magic')magicSettings();else personal();},act(action,b,ctx){c={...c,...ctx};const id=b.dataset.record||c.ui.record;if(action==='rg-settings-sync')return R.lock(async()=>{await E.win().DobbyFamilyUI.grocery.sync();settingsSync();});if(action==='rg-mission-back')return q('#rg-form')._missionBack();if(action==='rg-mission-next')return q('#rg-form')._missionNext();if(action==='rg-mission-frequency')return b._missionFrequency();if(action==='rg-mission-date')return missionDates(b.dataset.value);if(action==='rg-mission-unique')return;if(action==='rg-missions')return goMissions();if(action==='rg-home'){location.href='./traverse.html';return;}if(['rg-taverne','rg-recipes','rg-shop'].includes(action)){location.href='./index.html#'+({'rg-taverne':'taverne','rg-recipes':'recipes','rg-shop':'shop'})[action];return;}if(action==='rg-mission-edit')return target('mission-edit',id);if(action.startsWith('rg-chat-'))return window.DobbyChat.act(action,b);if(action==='rg-search-clear'){E.evaluate('st.globalQuery="";');return search();}if(action==='rg-search-open')return result(b.dataset.kind,id);if(action==='rg-menu-clear'){menuQuery='';q('#global-module-search').value='';filterMenu();q('#global-module-search').focus();return;}},submit(form,ctx){return saveMissionForm(form,ctx);}});
+ const participationLabels={open:'À faire',future:'À venir',missed:'Manquée',pending:'En attente d’un parent',refused:'À reprendre',credited:'Terminée'};
+ function individualParticipation(row,state,transport){
+  const returnFocus=document.activeElement,dialog=el('dialog','','dv7-participant-dialog'),progress=transport?.readProgress?.();
+  const problem=el('p','');problem.setAttribute('role','alert');
+  const heading=el('h2',row.title);heading.id='dv7-individual-title';dialog.setAttribute('aria-labelledby',heading.id);dialog.append(heading);
+  if(!progress)dialog.append(el('p','Le partage des participations est indisponible.'));
+  else {
+   const {entries,category,memberId}=progress,today=E.win().DobbyFamilyMissions.today();
+   const ids=(row.assigneeIds||[]).filter(id=>category==='parent'||id===memberId);
+   const firstStatus=id=>entries.findLast(record=>record.missionId===row.id&&record.memberId===id);
+   if(!ids.length)dialog.append(el('p','Cette mission n’est pas attribuée à ce profil.'));
+   for(const id of ids){
+    const person=state.familyMembers.find(m=>m.id===id);
+    const history=entries.filter(record=>record.missionId===row.id&&record.memberId===id),last=firstStatus(id);
+    const status=transport.participationStatus(row,last,today),block=el('section','');
+    block.append(el('h3',person?.name||id),el('p',participationLabels[status]));
+    if(history.some(record=>record.note))block.append(el('p',history.findLast(record=>record.note).note));
+    if(last?.status==='credited')block.append(el('p',last.amount+' Runes'+(last.action==='regularize'?' · Régularisation':'')+'.'));
+    const actions=(status==='open'||status==='refused')?[['submit',row.approvalRequired?'Soumettre':'Terminer']]:
+     category==='parent'&&status==='pending'?[['approve','Valider'],['refuse','Refuser']]:
+     category==='parent'&&status==='missed'?[['regularize','Régulariser']]:[];
+    if(actions.some(([kind])=>kind==='refuse'||kind==='regularize')){
+     const label=el('label','Commentaire facultatif'),input=document.createElement('textarea');input.maxLength=240;
+     label.append(input);block.append(label);
+    }
+    for(const [kind,label] of actions){
+     const button=el('button',label);button.type='button';
+     button.addEventListener('click',async()=>{
+      for(const item of dialog.querySelectorAll('button'))item.disabled=true;
+      problem.textContent='';
+      const note=block.querySelector('textarea')?.value.trim();
+      try{
+       await transport.recordProgress({kind,missionId:row.id,memberId:id,...(note&&['refuse','regularize'].includes(kind)?{note}:{})});
+       dialog.close();window.DobbyStitchV7?.refresh();
+      }catch(error){
+       problem.textContent=error.message;
+       for(const item of dialog.querySelectorAll('button'))item.disabled=false;
+      }
+     });block.append(button);
+    }
+    dialog.append(block);
+   }
+  }
+  const close=el('button','Fermer');close.type='button';close.addEventListener('click',()=>dialog.close());
+  dialog.append(problem,close);document.body.append(dialog);
+  dialog.addEventListener('close',()=>{dialog.remove();returnFocus?.focus();},{once:true});dialog.showModal();
+ }
  function missionParticipants(id){
   const state=E.read().state,row=state.manualMissions.find(m=>m.id===id);if(!row)throw Error('Mission introuvable');
+  if(row.individualRunes){individualParticipation(row,state,E.win().DobbySharedRunesV3);return;}
   const native=E.win().DobbyFamilyMissions,ids=native.completionCandidateIds(row),members=ids.map(id=>state.familyMembers.find(m=>m.id===id)).filter(Boolean),dialog=el('dialog','','dv7-participant-dialog'),form=el('form',''),heading=el('h2','Qui a réellement participé ?'),description=el('p','Une seule récompense totale, répartie uniquement entre les participants choisis.'),problem=el('p','');problem.setAttribute('role','alert');dialog.setAttribute('aria-labelledby','dv7-participant-title');heading.id='dv7-participant-title';form.append(heading,description);
   for(const member of members){const label=el('label',''),input=document.createElement('input');input.type='checkbox';input.name='participant';input.value=member.id;input.setAttribute('aria-label',member.name||member.firstName||'Membre');label.append(input,window.DobbyMemberAvatar.create(member,{className:'e04-avatar'}),document.createTextNode(member.name||member.firstName||'Membre'));form.append(label);}
   const confirm=el('button','Confirmer la mission'),cancel=el('button','Annuler');confirm.type='submit';cancel.type='button';cancel.onclick=()=>dialog.close();form.append(problem,confirm,cancel);dialog.append(form);document.body.append(dialog);const returnFocus=document.activeElement;dialog.addEventListener('close',()=>{dialog.remove();returnFocus?.focus?.();});
