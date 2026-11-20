@@ -23,6 +23,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Install the local WebP encoder
+        run: |
+          if ! command -v convert >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends imagemagick
+          fi
       - name: Catalogue intake, transport and exact source provenance
         env:
           DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-catalogue-fixture
