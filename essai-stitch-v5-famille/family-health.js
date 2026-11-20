@@ -9,7 +9,7 @@ const today=()=>{
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
 };
 const label=d=>d?new Date(d+'T12:00:00').toLocaleDateString('fr-BE'):'—';
-const visits=()=>core.validVisits(st.sharedHealthVisits);
+const visits=()=>legacyHealthDemo()?core.validVisits(st.sharedHealthVisits):[];
 const getVisit=id=>(st.sharedHealthVisits||[]).find(x=>x.id===id);
 function panel(){
   const items=visits(),pending=items.filter(x=>x.date>=today()),old=items.filter(x=>x.date<today()).reverse();
@@ -30,7 +30,7 @@ function panel(){
     '</section>';
 }
 const oldDraw=drawFamily;
-drawFamily=function(){return oldDraw()+panel();};
+drawFamily=function(){return oldDraw()+(legacyHealthDemo()?panel():'');};
 function layer(){
   let el=document.getElementById('fhDialog');
   if(!el){el=document.createElement('div');el.id='fhDialog';el.hidden=true;document.body.append(el);}
@@ -59,12 +59,13 @@ function form(id){
   root.querySelector('form')?.addEventListener('submit',saveForm);
   root.querySelector('[name="title"]')?.focus();
 }
-function close(){const root=document.getElementById('fhDialog');if(root)root.hidden=true;}
+function close(){const root=document.getElementById('fhDialog');if(root){root.hidden=true;root.replaceChildren();}}
 function commit(){save();render();}
 function saveForm(e){
   if(e.target?.getAttribute('id')!=='fhForm')return;
   e.preventDefault();e.stopImmediatePropagation();
   try{
+    if(!legacyHealthDemo()){close();return;}
     if(!api.isModuleActive('family'))throw Error('Le foyer n’est plus connecté');
     const data=new FormData(e.target),key=String(data.get('visitKey')||'');
     if(key&&!getVisit(key))throw Error('Fiche supprimée');
@@ -88,6 +89,7 @@ document.addEventListener('click',e=>{
   e.preventDefault();e.stopImmediatePropagation();
   const a=b.dataset.fh,id=b.dataset.id;
   try{
+    if(!legacyHealthDemo()){close();return;}
     if(a==='new')form();
     else if(a==='edit')form(id);
     else if(a==='close')close();
@@ -101,6 +103,7 @@ document.addEventListener('click',e=>{
     }
   }catch(err){alert(err?.message||'Action indisponible');}
 },true);
+window.addEventListener('dobby:access-change',()=>{if(!legacyHealthDemo())close();});
 window.DobbyFamilyHealth=Object.freeze({available:true,count:()=>visits().length});
 render();
 })();

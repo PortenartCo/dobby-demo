@@ -101,6 +101,76 @@ test('two accounts activate all six modules and receive a shared update without 
   assert.match(b.provider.html(),/Partagé · à jour/);
 });
 
+test('verified Santé cutover retains historical device rows through cleanup and ordinary module writes',async()=>{
+  const backend=makeBackend();
+  let enabled=false,verified=false;
+  const a=makeClient('a',backend,true,true,{window:{
+    DobbyHealthLegacyClosed:()=>verified,
+    async DobbyVerifyHealthLegacyClosure(){verified=enabled;return verified;}
+  }});
+  const historicalVisit={id:'old-visit',title:'TEST historic appointment'};
+  const historicalDocument={id:'old-document',title:'TEST historic document',category:'Santé',sharedToHousehold:true,attachmentName:'retained.pdf'};
+  a.st.sharedHealthVisits.push(historicalVisit);
+  a.st.familyDocs.push(historicalDocument);
+  await a.provider.start();
+  await a.action('activate','family');await a.action('activate','contracts');
+  assert.equal(backend.rows.get('family').payload.sharedHealthVisits[0].id,'old-visit');
+  assert.ok(backend.rows.get('contracts').payload.contracts.some(row=>row.id==='old-document'));
+
+  // Represent the explicit maintenance step before the server opens Santé.
+  const family=backend.rows.get('family'),contracts=backend.rows.get('contracts');
+  backend.rows.set('family',{...family,revision:family.revision+1,payload:{...family.payload,sharedHealthVisits:[]}});
+  backend.rows.set('contracts',{...contracts,revision:contracts.revision+1,payload:{...contracts.payload,contracts:contracts.payload.contracts.filter(row=>row.id!=='old-document')}});
+  enabled=true;
+  await a.provider.sync();
+  assert.equal(a.provider.isActive('family'),true);
+  assert.equal(a.provider.isActive('contracts'),true);
+  assert.deepEqual(a.st.sharedHealthVisits,[historicalVisit]);
+  assert.deepEqual(a.st.familyDocs.find(row=>row.id==='old-document'),historicalDocument);
+  assert.equal(a.st.famHealth[0].id,'medical-1');
+
+  a.st.famContacts.push({id:'contact',name:'TEST ordinary contact'});
+  a.st.familyDocs.find(row=>row.id==='contract-1').title='TEST ordinary contract';
+  await a.provider.sync();
+  assert.equal(backend.rows.get('family').payload.famContacts[0].id,'contact');
+  assert.equal(Object.hasOwn(backend.rows.get('family').payload,'sharedHealthVisits'),false);
+  assert.equal(backend.rows.get('contracts').payload.contracts[0].title,'TEST ordinary contract');
+  assert.equal(backend.rows.get('contracts').payload.contracts.some(row=>row.id==='old-document'),false);
+  assert.deepEqual(a.st.sharedHealthVisits,[historicalVisit]);
+  assert.deepEqual(a.st.familyDocs.find(row=>row.id==='old-document'),historicalDocument);
+
+  const current=backend.rows.get('family');
+  backend.rows.set('family',{...current,payload:{...current.payload,sharedHealthVisits:[{id:'unexpected-remote'}]}});
+  a.st.famContacts.push({id:'unsent',name:'TEST local until review'});
+  await a.provider.sync();
+  assert.equal(backend.rows.get('family').payload.sharedHealthVisits[0].id,'unexpected-remote');
+  assert.equal(backend.rows.get('family').payload.famContacts.length,1);
+  assert.deepEqual(a.st.sharedHealthVisits,[historicalVisit]);
+});
+
+test('a release-configured client preserves local Santé history before its first successful proof',async()=>{
+  const backend=makeBackend(),publisher=makeClient('publisher',backend);
+  publisher.st.sharedHealthVisits.push({id:'remote-history',title:'TEST older shared value'});
+  publisher.st.familyDocs.push({id:'local-health-doc',title:'TEST older shared metadata',category:'Santé',sharedToHousehold:true});
+  await publisher.provider.start();
+  await publisher.action('activate','family');await publisher.action('activate','contracts');
+  const reader=makeClient('reader',backend,false,true,{window:{
+    DobbyHealthLegacyClosed:()=>false,
+    DobbyVerifyHealthLegacyClosure:async()=>false
+  }});
+  const historicalVisit={id:'local-history',title:'TEST original history'};
+  const historicalDocument={id:'local-health-doc',title:'TEST original document',category:'Santé',sharedToHousehold:true,attachmentName:'private-local.pdf'};
+  reader.st.sharedHealthVisits.push(historicalVisit);
+  reader.st.familyDocs.push(historicalDocument);
+  await reader.provider.start();
+  await reader.action('join-family');
+  assert.deepEqual(reader.st.sharedHealthVisits,[historicalVisit]);
+  assert.deepEqual(reader.st.familyDocs.find(row=>row.id==='local-health-doc'),historicalDocument);
+  assert.equal(backend.rows.get('family').payload.sharedHealthVisits[0].id,'remote-history');
+  assert.equal(backend.rows.get('contracts').payload.contracts[0].title,'TEST older shared metadata');
+  reader.provider.reset();publisher.provider.reset();
+});
+
 test('simultaneous module edits create a conflict, not a lost update',async()=>{
   const backend=makeBackend(),a=makeClient('a',backend),b=makeClient('b',backend);
   await a.provider.start(); await b.provider.start();

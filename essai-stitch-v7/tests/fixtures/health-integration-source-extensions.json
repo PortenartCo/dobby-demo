@@ -1,0 +1,602 @@
+{
+  "baseCommit": "02ebb9fe5c85ab886680d3d8da9afa1d271462e1",
+  "files": {
+    "essai-stitch-v5-famille/family-access.mjs": {
+      "beforeSha256": "aebf62597958d3cc255267b969cd4ddf4c6d59c2a0d38a6d04ee871f00a96cab",
+      "afterSha256": "dbc782ab4b6867af79495fa46d0e84b242953abc51aaf9b59bc73a13d1b4cf2e",
+      "reason": "Réservation serveur des identifiants de membre.",
+      "patches": [
+        {
+          "line": 159,
+          "before": "",
+          "after": " async function reserveMemberId(householdId){\n  const before=requireSession(),live=state();\n  if(!live.verified||live.householdId!==householdId||live.permissions.canCreate!==true)throw Error('Création du membre non autorisée.');\n  let id;\n  try{id=await rpc('dobby_v7_reserve_member_id',{p_household_id:householdId});}\n  catch(error){\n   guardMutation(before);\n   if(error.status===404&&error.code==='PGRST202')return null;\n   throw error;\n  }\n  guardMutation(before);\n  if(typeof id!=='string'||!/^member-v7-[\\da-f]{8}-[\\da-f]{4}-4[\\da-f]{3}-[89ab][\\da-f]{3}-[\\da-f]{12}$/.test(id))throw Error('Identité du membre non confirmée par le serveur.');\n  return id;\n }\n"
+        },
+        {
+          "line": 174,
+          "before": " return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,logout,cleanURL:cleanAuthURL});\n",
+          "after": " return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,reserveMemberId,logout,cleanURL:cleanAuthURL});\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-files.js": {
+      "beforeSha256": "d32312e29164402428bc1e3dd30cf8ffbc52f004b53c5fea701f475b6d7307aa",
+      "afterSha256": "cc56005eacb3d1eab7349354386c48616e3346a68c27d78d2ed585a4db4700ec",
+      "reason": "Exclusion des anciens documents Santé de la vue et du partage généraux.",
+      "patches": [
+        {
+          "line": 10,
+          "before": "const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs:[];\n",
+          "after": "const documents=()=>Array.isArray(st.familyDocs)?st.familyDocs.filter(row=>row?.category!=='Santé'):[];\n"
+        },
+        {
+          "line": 48,
+          "before": "    (d.category==='Santé'&&!shared?'<p class=\"fds-desc\">Cette fiche médicale reste privée tant que vous ne choisissez pas de la partager.</p>':'')+\n",
+          "after": ""
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "4de6fa4a7563dc2af2cf5bb53831ac5faaa03d18b93af36e6b6d5a904f3efee7",
+      "afterSha256": "96cf5030dd81c86f5e5507a73dd0c13bf42407e25fb234b4cefede5e67f82949",
+      "reason": "Préservation de la synchronisation ordinaire après fermeture du partage Santé historique.",
+      "patches": [
+        {
+          "line": 20,
+          "before": "",
+          "after": "const healthLegacyClosed=()=>window.DobbyHealthLegacyClosed?.()===true;\nconst preserveHistoricalHealth=()=>typeof window.DobbyVerifyHealthLegacyClosure==='function'||healthLegacyClosed();\nconst legacyHealthDocument=row=>row?.category==='Santé';\nfunction familyWithoutHistoricalHealth(payload,omit=healthLegacyClosed()){\n  if(!omit||!payload||typeof payload!=='object'||Array.isArray(payload))return payload;\n  const {sharedHealthVisits,famHealth,...current}=payload;\n  return current;\n}\nfunction syncedDigest(id,digestValue){\n  if(!digestValue||!['family','contracts'].includes(id)||!healthLegacyClosed())return digestValue;\n  const payload=JSON.parse(digestValue);\n  if(id==='family')return moduleDigest(id,familyWithoutHistoricalHealth(payload));\n  if(Array.isArray(payload.contracts))payload.contracts=payload.contracts.filter(row=>!legacyHealthDocument(row));\n  return moduleDigest(id,payload);\n}\n"
+        },
+        {
+          "line": 36,
+          "before": "  return x && x.retainedLocalOnly!==true && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);\n",
+          "after": "  return x && !(healthLegacyClosed()&&legacyHealthDocument(x)) && x.retainedLocalOnly!==true && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);\n"
+        },
+        {
+          "line": 111,
+          "before": "",
+          "after": "    if(id==='family'&&key==='sharedHealthVisits'&&healthLegacyClosed())continue;\n"
+        },
+        {
+          "line": 118,
+          "before": "",
+          "after": "    return familyWithoutHistoricalHealth(data);\n"
+        },
+        {
+          "line": 271,
+          "before": "function familySnapshot(payload){familyPayload(payload);return{...payload,sharedFamilyNotes:payload.sharedFamilyNotes||[],familyNotesVersion:1,familyPreparationTemplates:payload.familyPreparationTemplates??[],familyEventPreparations:payload.familyEventPreparations??[],familyPreparationsVersion:1};}\n",
+          "after": "function familySnapshot(payload){payload=familyWithoutHistoricalHealth(payload);familyPayload(payload);return{...payload,sharedFamilyNotes:payload.sharedFamilyNotes||[],familyNotesVersion:1,familyPreparationTemplates:payload.familyPreparationTemplates??[],familyEventPreparations:payload.familyEventPreparations??[],familyPreparationsVersion:1};}\n"
+        },
+        {
+          "line": 321,
+          "before": " desired=JSON.parse(JSON.stringify(desired));familyPayload(desired);\n",
+          "after": " desired=familyWithoutHistoricalHealth(JSON.parse(JSON.stringify(desired)));familyPayload(desired);\n"
+        },
+        {
+          "line": 335,
+          "before": " const local=pick('family'),localJson=moduleDigest('family',local),base=JSON.parse(state.synced||'{}'),revision=Number(remote.revision);\n",
+          "after": " const local=pick('family'),localJson=moduleDigest('family',local),synced=syncedDigest('family',state.synced),base=JSON.parse(synced||'{}'),revision=Number(remote.revision);\n"
+        },
+        {
+          "line": 338,
+          "before": "  if(localJson!==state.synced)return familyConflict(state,remote);\n",
+          "after": "  if(localJson!==synced)return familyConflict(state,remote);\n"
+        },
+        {
+          "line": 341,
+          "before": " if(localJson===state.synced&&remote.payload.familyNotesVersion===1&&remote.payload.familyPreparationsVersion===1)return;\n",
+          "after": " if(localJson===synced&&remote.payload.familyNotesVersion===1&&remote.payload.familyPreparationsVersion===1)return;\n"
+        },
+        {
+          "line": 913,
+          "before": "",
+          "after": "  const verify=['family','contracts'].includes(id)&&window.DobbyVerifyHealthLegacyClosure;\n  if(typeof verify==='function'){\n    await verify();\n    if(generation!==contextGeneration||token!==liveContextToken())throw Error('Le contexte familial a changé pendant la vérification Santé.');\n  }\n"
+        },
+        {
+          "line": 920,
+          "before": "",
+          "after": "  if(typeof verify==='function'&&(generation!==contextGeneration||token!==liveContextToken()))throw Error('Le contexte familial a changé pendant la lecture du registre.');\n"
+        },
+        {
+          "line": 922,
+          "before": "  return list[0] || null;\n",
+          "after": "  const row=list[0]||null,payload=row?.payload;\n  if(healthLegacyClosed()&&payload){\n    const containsLegacy=key=>Object.hasOwn(payload,key)&&(!Array.isArray(payload[key])||payload[key].length>0);\n    if(containsLegacy('sharedHealthVisits')||containsLegacy('famHealth')||Array.isArray(payload.contracts)&&payload.contracts.some(legacyHealthDocument))throw Error('Registre Santé historique incohérent. Données locales conservées.');\n  }\n  return row;\n"
+        },
+        {
+          "line": 970,
+          "before": "      const incoming = payload.contracts.filter(isSharedDocument);\n",
+          "after": "      const keepHealth = preserveHistoricalHealth();\n      const incoming = payload.contracts.filter(x=>isSharedDocument(x)&&(!keepHealth||!legacyHealthDocument(x)));\n"
+        },
+        {
+          "line": 974,
+          "before": "      const protectedIds = new Set(old.filter(x=>x.category==='Santé' && !isSharedDocument(x)).map(x=>x.id));\n",
+          "after": "      const protectedIds = new Set(old.filter(x=>legacyHealthDocument(x)&&(keepHealth||!isSharedDocument(x))).map(x=>x.id));\n"
+        },
+        {
+          "line": 977,
+          "before": "        (x.category==='Santé' && !isSharedDocument(x)) ||\n",
+          "after": "        protectedIds.has(x.id) ||\n"
+        },
+        {
+          "line": 979,
+          "before": "          payload.contractsVersion===1&&!incomingIds.has(x.id)&&isSharedDocument(x)?{...x,retainedLocalOnly:true}:x);\n",
+          "after": "          !protectedIds.has(x.id)&&payload.contractsVersion===1&&!incomingIds.has(x.id)&&isSharedDocument(x)?{...x,retainedLocalOnly:true}:x);\n"
+        },
+        {
+          "line": 986,
+          "before": "      if(id==='missions'&&key==='runeCredits')continue;\n",
+          "after": "      if(id==='missions'&&key==='runeCredits'||id==='family'&&key==='sharedHealthVisits'&&preserveHistoricalHealth())continue;\n"
+        },
+        {
+          "line": 1067,
+          "before": "  if(!state?.active||!state.conflict&&moduleDigest('family',pick('family'))===state.synced)return false;\n",
+          "after": "  if(!state?.active||!state.conflict&&moduleDigest('family',pick('family'))===syncedDigest('family',state.synced))return false;\n"
+        },
+        {
+          "line": 1104,
+          "before": "  const pending=()=>{const state=states.family;return Boolean(state?.conflict||state?.active&&moduleDigest('family',pick('family'))!==state.synced);};\n",
+          "after": "  // Binding precedes the first authorized Santé capability read. Ignore the\n  // retained device-only history for identity comparison, never for outgoing writes.\n  const preserveHealth=preserveHistoricalHealth();\n  const bindingDigest=payload=>moduleDigest('family',familyWithoutHistoricalHealth(payload,preserveHealth));\n  const pending=()=>{const state=states.family;return Boolean(state?.conflict||state?.active&&bindingDigest(pick('family'))!==bindingDigest(JSON.parse(state.synced||'{}')));};\n"
+        },
+        {
+          "line": 1120,
+          "before": "  if(!states.family?.active&&byId.get('family').keys.some(key=>Array.isArray(st[key])&&st[key].length)&&\n    moduleDigest('family',pick('family'))!==moduleDigest('family',incoming))\n",
+          "after": "  if(!states.family?.active&&byId.get('family').keys.some(key=>(key!=='sharedHealthVisits'||!preserveHealth)&&Array.isArray(st[key])&&st[key].length)&&\n    bindingDigest(pick('family'))!==bindingDigest(incoming))\n"
+        },
+        {
+          "line": 1444,
+          "before": "  const local = pick(id), localJson = digest(local), remoteRevision = Number(remote.revision);\n",
+          "after": "  const local = pick(id), localJson = digest(local), remoteRevision = Number(remote.revision), synced=syncedDigest(id,state.synced);\n"
+        },
+        {
+          "line": 1446,
+          "before": "    if (localJson !== state.synced) {\n",
+          "after": "    if (localJson !== synced) {\n"
+        },
+        {
+          "line": 1459,
+          "before": "  if (localJson === state.synced) return;\n",
+          "after": "  if (localJson === synced) return;\n"
+        },
+        {
+          "line": 1502,
+          "before": "    states[d.id]?.active && !states[d.id].conflict && (d.id!=='family'||preparationLocalCompatible()) && (moduleDigest(d.id,pick(d.id)) !== states[d.id].synced || d.id==='missions'&&pendingRunes()))) return;\n",
+          "after": "    states[d.id]?.active && !states[d.id].conflict && (d.id!=='family'||preparationLocalCompatible()) && (moduleDigest(d.id,pick(d.id)) !== syncedDigest(d.id,states[d.id].synced) || d.id==='missions'&&pendingRunes()))) return;\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-v2.js": {
+      "beforeSha256": "1ad17c57e501b272b159c2f6d9673b2240cc620807279d4ba4e9507a26f9dbb0",
+      "afterSha256": "000215dea1b20a9bfb1671ffdc6e4a3ba3dae73d4f6cf7c36134e01ae9f5b7a7",
+      "reason": "Transport Santé et réservation de profil sur la session native.",
+      "patches": [
+        {
+          "line": 115,
+          "before": "async function keepSession(result,expected=null) {\n",
+          "after": "async function assertCurrentHealthSession(expected = requestActor(), memberId = verifiedBinding()?.memberId) {\n  assertRequestActor(expected);\n  if (!expected.userId || !memberId || verifiedBinding()?.memberId !== memberId) {\n    throw Error('Session Santé vérifiée requise.');\n  }\n  const saved = await meta('session');\n  assertRequestActor(expected);\n  if (verifiedBinding()?.memberId !== memberId || saved?.user_id !== expected.userId ||\n      !saved.refresh_token || saved.refresh_token !== f.session?.refresh_token) {\n    throw Error('La session Santé a changé.');\n  }\n}\nfunction announceAuthSessionChange() {\n  if (typeof BroadcastChannel !== 'function') return;\n  try {\n    const channel = new BroadcastChannel('dobby-auth-session-v7');\n    try { channel.postMessage({ type: 'auth-session-change' }); }\n    finally { channel.close(); }\n  } catch {}\n}\nasync function keepSession(result,expected=null,refreshCredential=null) {\n"
+        },
+        {
+          "line": 146,
+          "before": "    await updateMeta('session',()=>{assertRequestActor(expected);return next;});\n",
+          "after": "    await updateMeta('session',current=>{\n      assertRequestActor(expected);\n      if (current?.user_id !== expected.userId || current.refresh_token !== refreshCredential) {\n        throw Error('La session a changé pendant son rafraîchissement.');\n      }\n      return next;\n    });\n"
+        },
+        {
+          "line": 154,
+          "before": "  }else{f.session=next;await putMeta('session',f.session);}\n",
+          "after": "  }else{f.session=next;await putMeta('session',f.session);announceAuthSessionChange();}\n"
+        },
+        {
+          "line": 156,
+          "before": "async function refreshToken(expected=requestActor()) {\n",
+          "after": "async function refreshToken(expected=requestActor(), healthMemberId=null) {\n"
+        },
+        {
+          "line": 158,
+          "before": "",
+          "after": "  if (healthMemberId) await assertCurrentHealthSession(expected,healthMemberId);\n"
+        },
+        {
+          "line": 160,
+          "before": "",
+          "after": "  const refreshCredential = f.session.refresh_token;\n"
+        },
+        {
+          "line": 162,
+          "before": "    refresh_token: f.session.refresh_token\n",
+          "after": "    refresh_token: refreshCredential\n"
+        },
+        {
+          "line": 166,
+          "before": "  await keepSession(result,expected);assertRequestActor(expected);\n",
+          "after": "  await keepSession(result,expected,refreshCredential);assertRequestActor(expected);\n"
+        },
+        {
+          "line": 168,
+          "before": "async function token(expected=requestActor()) {\n",
+          "after": "async function token(expected=requestActor(), healthMemberId=null) {\n"
+        },
+        {
+          "line": 171,
+          "before": "  if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken(expected);\n",
+          "after": "  if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken(expected,healthMemberId);\n"
+        },
+        {
+          "line": 190,
+          "before": "",
+          "after": "  const health = /^rpc\\/dobby_health_(read|write|capabilities)(\\?|$)/.test(query);\n  const healthMemberId = health ? verifiedBinding()?.memberId : null;\n  if (health) await assertCurrentHealthSession(expected,healthMemberId);\n"
+        },
+        {
+          "line": 194,
+          "before": "  let bearer = await token(expected);assertRequestActor(expected);\n",
+          "after": "  let bearer = await token(expected,healthMemberId);assertRequestActor(expected);\n  if (health) await assertCurrentHealthSession(expected,healthMemberId);\n"
+        },
+        {
+          "line": 197,
+          "before": "  try { const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result; }\n",
+          "after": "  try {\n    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);\n    if (health) await assertCurrentHealthSession(expected,healthMemberId);\n    return result;\n  }\n"
+        },
+        {
+          "line": 204,
+          "before": "",
+          "after": "    if (health) await assertCurrentHealthSession(expected,healthMemberId);\n"
+        },
+        {
+          "line": 207,
+          "before": "    await refreshToken(expected);assertRequestActor(expected);bearer=f.session.access_token;\n",
+          "after": "    await refreshToken(expected,healthMemberId);assertRequestActor(expected);bearer=f.session.access_token;\n    if (health) await assertCurrentHealthSession(expected,healthMemberId);\n"
+        },
+        {
+          "line": 210,
+          "before": "    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result;\n",
+          "after": "    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);\n    if (health) await assertCurrentHealthSession(expected,healthMemberId);\n    return result;\n"
+        },
+        {
+          "line": 253,
+          "before": "",
+          "after": "}\nconst HEALTH_BUCKET = 'dobby-health-files';\nconst HEALTH_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;\nconst HEALTH_STORAGE_TYPES = new Map([\n  ['pdf','application/pdf'], ['jpg','image/jpeg'], ['png','image/png'], ['webp','image/webp']\n]);\nconst HEALTH_MAX_FILE_SIZE = 10 * 1024 * 1024;\nfunction healthFileMatches(file, mime) {\n  return Boolean(file && file.type === mime && Number.isSafeInteger(file.size) &&\n    file.size > 0 && file.size <= HEALTH_MAX_FILE_SIZE);\n}\nasync function healthStorageFetch(method, path, file) {\n  const expected = requestActor();\n  const memberId = verifiedBinding()?.memberId;\n  const upload = method === 'POST';\n  const guard = () => {\n    assertRequestActor(expected);\n    const binding = verifiedBinding();\n    if (!f.key || !binding || !memberId || binding.memberId !== memberId ||\n        binding.profile?.id !== memberId || binding.profile.memberCategory !== 'parent') {\n      throw Error('Un compte parent vérifié est requis pour les pièces Santé.');\n    }\n    if (upload && binding.permissions.canEdit !== true) throw Error('Stockage Santé en lecture seule.');\n  };\n  guard();\n\n  const [household, name, ...extra] = typeof path === 'string' ? path.split('/') : [];\n  const [id, extension, ...suffix] = typeof name === 'string' ? name.split('.') : [];\n  const mime = HEALTH_STORAGE_TYPES.get(extension);\n  if (household !== expected.householdId || !HEALTH_UUID.test(household) ||\n      !HEALTH_UUID.test(id) || !mime || extra.length || suffix.length) {\n    throw Error('Chemin de pièce Santé invalide pour ce foyer.');\n  }\n  if (upload && !healthFileMatches(file, mime)) throw Error('Fichier Santé invalide pour ce format ou au-delà de 10 Mo.');\n\n  const send = async (retry = false) => {\n    await assertCurrentHealthSession(expected,memberId);\n    let jwt;\n    try {\n      if (retry) await refreshToken(expected,memberId);\n      jwt = await token(expected,memberId);\n    } catch {\n      guard();\n      throw Error('Connexion Santé indisponible.');\n    }\n    await assertCurrentHealthSession(expected,memberId);\n    guard();\n    const headers = { apikey: f.key, Authorization: 'Bearer ' + jwt };\n    if (upload) {\n      headers['Content-Type'] = mime;\n      headers['Cache-Control'] = 'private, no-store';\n      headers['x-upsert'] = 'false';\n    }\n    const target = (upload ? '' : 'authenticated/') + HEALTH_BUCKET + '/' + path;\n    try {\n      return await fetch(PROJECT + '/storage/v1/object/' + target, {\n        method, headers, body: upload ? file : undefined, cache: 'no-store', redirect: 'error'\n      });\n    } catch {\n      guard();\n      throw Error('Stockage Santé indisponible.');\n    }\n  };\n\n  let response = await send();\n  await assertCurrentHealthSession(expected,memberId);\n  guard();\n  if (response.status === 401) {\n    response = await send(true);\n    await assertCurrentHealthSession(expected,memberId);\n    guard();\n  }\n  if (!response.ok) {\n    const error = Error('Accès à la pièce Santé refusé ou indisponible.');\n    error.status = response.status;\n    throw error;\n  }\n  if (upload) return true;\n  const downloaded = await response.blob().catch(() => null);\n  await assertCurrentHealthSession(expected,memberId);\n  guard();\n  if (!healthFileMatches(downloaded, mime)) throw Error('Fichier Santé inattendu.');\n  return downloaded;\n"
+        },
+        {
+          "line": 653,
+          "before": "    'Cette importation est uniquement locale, sans mise en ligne automatique. Les fichiers PDF et images restent dans l’ancien essai. Une sauvegarde du nouvel essai sera créée.')) return;\n  const snapshot = JSON.stringify(st);\n  localStorage.setItem('dobby-v5-familial-before-import-' + Date.now(), snapshot);\n",
+          "after": "    'Les données Santé sont exclues de cet import et de sa sauvegarde. Les fichiers PDF et images restent dans l’ancien essai.')) return;\n  const medical = row => row?.category === 'Santé';\n  const { famHealth, sharedHealthVisits, ...snapshot } = st;\n  if (Array.isArray(snapshot.familyDocs)) snapshot.familyDocs = snapshot.familyDocs.filter(row => !medical(row));\n  localStorage.setItem('dobby-v5-familial-before-import-' + Date.now(), JSON.stringify(snapshot));\n"
+        },
+        {
+          "line": 659,
+          "before": "    'autoTasks','houseItems','houseLogs','familyMembers','famContacts','famLists','famHealth',\n",
+          "after": "    'autoTasks','houseItems','houseLogs','familyMembers','famContacts','famLists',\n"
+        },
+        {
+          "line": 665,
+          "before": "    st.familyDocs = parsed.familyDocs.map(x => {\n",
+          "after": "    const currentMedical = Array.isArray(st.familyDocs) ? st.familyDocs.filter(medical) : [];\n    st.familyDocs = parsed.familyDocs.filter(row => !medical(row)).map(x => {\n"
+        },
+        {
+          "line": 670,
+          "before": "    });\n",
+          "after": "    }).concat(currentMedical);\n"
+        },
+        {
+          "line": 676,
+          "before": "  f.notice='Les données de l’ancien essai V5 ont été copiées localement. Aucune publication sur Supabase.';\n",
+          "after": "  f.notice='L’import local V5 est terminé. Les données Santé restent à leur emplacement actuel.';\n"
+        },
+        {
+          "line": 721,
+          "before": "",
+          "after": "    announceAuthSessionChange();\n"
+        },
+        {
+          "line": 733,
+          "before": "",
+          "after": "  announceAuthSessionChange();\n"
+        },
+        {
+          "line": 970,
+          "before": " ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),\n",
+          "after": " ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),\n"
+        },
+        {
+          "line": 1038,
+          "before": "",
+          "after": "  assertCurrentHealthSession: () => assertCurrentHealthSession(),\n  healthStorage: Object.freeze({\n    upload: (path, file) => healthStorageFetch('POST', path, file),\n    download: path => healthStorageFetch('GET', path)\n  }),\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/index.html": {
+      "beforeSha256": "dbdd10412cc88d9f5a84077c207baa401e9057d1fb45f741425355ad2e25e261",
+      "afterSha256": "c239becd09f0ca30ae345496b983a8e6ce2c503896602560f65ac831a7ef5704",
+      "reason": "Isolation des historiques Santé et réservation de profil dans le moteur natif.",
+      "patches": [
+        {
+          "line": 1191,
+          "before": "if(!st.docFilter)st.docFilter='Tous';\n",
+          "after": "if(!st.docFilter||st.docFilter==='Santé')st.docFilter='Tous';\n"
+        },
+        {
+          "line": 1193,
+          "before": "const docTypes=['Identité et administratif','Assurances','Contrats','Factures et achats','Santé','École et enfants','Maison','Autre'];\n",
+          "after": "const docTypes=['Identité et administratif','Assurances','Contrats','Factures et achats','École et enfants','Maison','Autre'];\nconst isLegacyHealthDocument=row=>row?.category==='Santé';\nconst generalDocuments=rows=>rows.filter(row=>!isLegacyHealthDocument(row));\n"
+        },
+        {
+          "line": 1199,
+          "before": " let q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');let docs=st.familyDocs.filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));\n",
+          "after": " let q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');let docs=generalDocuments(st.familyDocs).filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));\n"
+        },
+        {
+          "line": 1201,
+          "before": " if(docEdit!==null)return drawDocForm(docEdit==='new'?null:st.familyDocs.find(x=>x.id===docEdit));\n",
+          "after": " if(docEdit!==null)return drawDocForm(docEdit==='new'?null:generalDocuments(st.familyDocs).find(x=>x.id===docEdit));\n"
+        },
+        {
+          "line": 1203,
+          "before": " if(docDetail){let d=st.familyDocs.find(x=>x.id===docDetail);if(d)return drawDocDetail(d);docDetail=null}\n",
+          "after": " if(docDetail){let d=generalDocuments(st.familyDocs).find(x=>x.id===docDetail);if(d)return drawDocDetail(d);docDetail=null}\n"
+        },
+        {
+          "line": 1210,
+          "before": "document.addEventListener('click',async e=>{let b=e.target.closest('[data-doc]');if(!b)return;let a=b.dataset.doc,id=b.dataset.id,d=st.familyDocs.find(x=>x.id===id);if(a==='new'){docEdit='new';docDetail=null}if(a==='newnote'){docNoteEdit='new';docDetail=null}if(a==='cancel'){docEdit=null;docNoteEdit=null}if(a==='view'){docDetail=id;docEdit=null}if(a==='back'){docDetail=null;docEdit=null}if(a==='edit'){docEdit=id;docDetail=null}if(a==='editnote'){docNoteEdit=id;docDetail=null}if(a==='delete'&&d&&confirm('Supprimer cette fiche et sa pièce jointe locale ?')){await houseRead('family-'+id,true).catch(()=>{});st.familyDocs=st.familyDocs.filter(x=>x.id!==id);docDetail=null}if(a==='deletenote'&&confirm('Supprimer ce mémo ?')){st.familyNotes=st.familyNotes.filter(x=>x.id!==id);docNoteEdit=null}if(a==='detach'&&d&&confirm('Retirer la pièce jointe ?')){await houseRead('family-'+id,true).catch(()=>{});d.attachmentName='';d.attachmentType=''}if(a==='download'&&d){let blob=await houseRead('family-'+id).catch(()=>null);if(!blob){alert('Pièce jointe introuvable sur cet appareil.');return}let url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=d.attachmentName||'document';link.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}if(a==='export')downloadJson('dobby_documents_memoires.json',{format:'dobby-family-docs',version:1,documents:st.familyDocs,notes:st.familyNotes});docRefresh()});\ndocument.addEventListener('submit',e=>{if(e.target.id==='familyDocForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();if(!d.title)return;d.id=docEdit==='new'?'fd-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docEdit;let i=st.familyDocs.findIndex(x=>x.id===d.id);if(i<0)st.familyDocs.push(d);else st.familyDocs[i]={...st.familyDocs[i],...d};docEdit=null;docDetail=d.id;docRefresh()}if(e.target.id==='familyNoteForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();d.body=String(d.body||'').trim();if(!d.title||!d.body)return;d.id=docNoteEdit==='new'?'fn-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docNoteEdit;let i=st.familyNotes.findIndex(x=>x.id===d.id);if(i<0)st.familyNotes.push(d);else st.familyNotes[i]={...st.familyNotes[i],...d};docNoteEdit=null;docRefresh()}});\n",
+          "after": "document.addEventListener('click',async e=>{let b=e.target.closest('[data-doc]');if(!b)return;let a=b.dataset.doc,id=b.dataset.id,d=st.familyDocs.find(x=>x.id===id);if(isLegacyHealthDocument(d))return;if(a==='new'){docEdit='new';docDetail=null}if(a==='newnote'){docNoteEdit='new';docDetail=null}if(a==='cancel'){docEdit=null;docNoteEdit=null}if(a==='view'){docDetail=id;docEdit=null}if(a==='back'){docDetail=null;docEdit=null}if(a==='edit'){docEdit=id;docDetail=null}if(a==='editnote'){docNoteEdit=id;docDetail=null}if(a==='delete'&&d&&confirm('Supprimer cette fiche et sa pièce jointe locale ?')){await houseRead('family-'+id,true).catch(()=>{});st.familyDocs=st.familyDocs.filter(x=>x.id!==id);docDetail=null}if(a==='deletenote'&&confirm('Supprimer ce mémo ?')){st.familyNotes=st.familyNotes.filter(x=>x.id!==id);docNoteEdit=null}if(a==='detach'&&d&&confirm('Retirer la pièce jointe ?')){await houseRead('family-'+id,true).catch(()=>{});d.attachmentName='';d.attachmentType=''}if(a==='download'&&d){let blob=await houseRead('family-'+id).catch(()=>null);if(!blob){alert('Pièce jointe introuvable sur cet appareil.');return}let url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=d.attachmentName||'document';link.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}if(a==='export')downloadJson('dobby_documents_memoires.json',{format:'dobby-family-docs',version:1,documents:generalDocuments(st.familyDocs),notes:st.familyNotes});docRefresh()});\ndocument.addEventListener('submit',e=>{if(e.target.id==='familyDocForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();if(!d.title||isLegacyHealthDocument(d)||isLegacyHealthDocument(st.familyDocs.find(x=>x.id===docEdit)))return;d.id=docEdit==='new'?'fd-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docEdit;let i=st.familyDocs.findIndex(x=>x.id===d.id);if(i<0)st.familyDocs.push(d);else st.familyDocs[i]={...st.familyDocs[i],...d};docEdit=null;docDetail=d.id;docRefresh()}if(e.target.id==='familyNoteForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();d.body=String(d.body||'').trim();if(!d.title||!d.body)return;d.id=docNoteEdit==='new'?'fn-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docNoteEdit;let i=st.familyNotes.findIndex(x=>x.id===d.id);if(i<0)st.familyNotes.push(d);else st.familyNotes[i]={...st.familyNotes[i],...d};docNoteEdit=null;docRefresh()}});\n"
+        },
+        {
+          "line": 1213,
+          "before": "document.addEventListener('change',async e=>{if(e.target.id==='docFilter'){st.docFilter=e.target.value;docRefresh()}if(e.target.id==='familyDocFile'){let file=e.target.files?.[0],d=st.familyDocs.find(x=>x.id===docDetail);if(!file||!d)return;if(file.size>10*1024*1024||!['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)){alert('PDF ou image (maximum 10 Mo).');return}try{\n",
+          "after": "document.addEventListener('change',async e=>{if(e.target.id==='docFilter'){st.docFilter=e.target.value;docRefresh()}if(e.target.id==='familyDocFile'){let file=e.target.files?.[0],d=generalDocuments(st.familyDocs).find(x=>x.id===docDetail);if(!file||!d)return;if(file.size>10*1024*1024||!['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)){alert('PDF ou image (maximum 10 Mo).');return}try{\n"
+        },
+        {
+          "line": 1218,
+          "before": "}catch(error){alert('Stockage indisponible ou saturé. Conservez le document original. '+(error?.message||''))}}if(e.target.id==='docImport'){let f=e.target.files?.[0];if(!f)return;try{if(f.size>2*1024*1024)throw Error();let p=JSON.parse(await f.text());if(p.format!=='dobby-family-docs'||p.version!==1||!Array.isArray(p.documents)||!Array.isArray(p.notes)||p.documents.length>2000||p.notes.length>2000||p.documents.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||!x.title.trim())||p.notes.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||typeof x.body!=='string'))throw Error();for(const [source,rows,key]of [['documents',p.documents,'familyDocs'],['localNotes',p.notes,'familyNotes']])for(const row of rows)window.DobbyArchiveSources.mergeRestored(source,st[key].find(x=>x.id===row.id),row);if(!confirm('Fusionner les fiches et mémos de la sauvegarde ? Les fichiers joints ne sont pas restaurés.'))return;let docs=new Map(st.familyDocs.map(x=>[x.id,x]));p.documents.forEach(x=>{let prior=docs.get(x.id);docs.set(x.id,window.DobbyFamilyContracts?window.DobbyFamilyContracts.mergeImported(prior,x):{...prior,...x,attachmentName:prior?.attachmentName||'',attachmentType:prior?.attachmentType||''})});st.familyDocs=[...docs.values()];let notes=new Map(st.familyNotes.map(x=>[x.id,x]));p.notes.forEach(x=>notes.set(x.id,window.DobbyArchiveSources.mergeRestored('localNotes',notes.get(x.id),x)));st.familyNotes=[...notes.values()];docRefresh()}catch{alert('Fichier de sauvegarde invalide.')}}});\n",
+          "after": "}catch(error){alert('Stockage indisponible ou saturé. Conservez le document original. '+(error?.message||''))}}if(e.target.id==='docImport'){let f=e.target.files?.[0];if(!f)return;try{if(f.size>2*1024*1024)throw Error();let p=JSON.parse(await f.text());if(p.format!=='dobby-family-docs'||p.version!==1||!Array.isArray(p.documents)||!Array.isArray(p.notes)||p.documents.length>2000||p.notes.length>2000)throw Error();p.documents=generalDocuments(p.documents);if(p.documents.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||!x.title.trim())||p.notes.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||typeof x.body!=='string'))throw Error();for(const [source,rows,key]of [['documents',p.documents,'familyDocs'],['localNotes',p.notes,'familyNotes']])for(const row of rows)window.DobbyArchiveSources.mergeRestored(source,st[key].find(x=>x.id===row.id),row);if(!confirm('Fusionner les fiches et mémos de la sauvegarde ? Les fichiers joints ne sont pas restaurés.'))return;let docs=new Map(st.familyDocs.map(x=>[x.id,x]));p.documents.forEach(x=>{let prior=docs.get(x.id);docs.set(x.id,window.DobbyFamilyContracts?window.DobbyFamilyContracts.mergeImported(prior,x):{...prior,...x,attachmentName:prior?.attachmentName||'',attachmentType:prior?.attachmentType||''})});st.familyDocs=[...docs.values()];let notes=new Map(st.familyNotes.map(x=>[x.id,x]));p.notes.forEach(x=>notes.set(x.id,window.DobbyArchiveSources.mergeRestored('localNotes',notes.get(x.id),x)));st.familyNotes=[...notes.values()];docRefresh()}catch{alert('Fichier de sauvegarde invalide.')}}});\n"
+        },
+        {
+          "line": 1248,
+          "before": " st.famHealth.forEach(r=>add('Santé — essai',r.name,xdate(r.date),[r.name,r.provider,r.reference].join(' '),'healthedit',r.id));\n st.familyDocs.forEach(r=>add('Document',r.title,r.category,[r.title,r.category,r.provider,r.reference,r.tags,r.note].join(' '),'docopen',r.id));\n",
+          "after": " generalDocuments(st.familyDocs).forEach(r=>add('Document',r.title,r.category,[r.title,r.category,r.provider,r.reference,r.tags,r.note].join(' '),'docopen',r.id));\n"
+        },
+        {
+          "line": 1280,
+          "before": "",
+          "after": " if(['healthnew','healthedit','healthdelete'].includes(a)&&!legacyHealthDemo())return;\n"
+        },
+        {
+          "line": 1391,
+          "before": " const existing=g.target==='equipment'?st.houseItems:st.familyDocs;\n",
+          "after": " const existing=g.target==='equipment'?st.houseItems:generalDocuments(st.familyDocs);\n"
+        },
+        {
+          "line": 1516,
+          "before": " const backupUI=()=>`<details class=\"v2-tools-drawer\"><summary>Sauvegarde et restauration complète</summary><div class=\"card\"><h2>Sauvegarde complète</h2><p class=\"helper\">Exporter toutes les fiches et les pièces jointes de cet appareil. Le fichier n’est pas chiffré : conserve-le dans un emplacement protégé. Aucun stockage distant.</p><button class=\"btn full\" data-backup=\"export\">Exporter tout Dobby</button><label>Restaurer une sauvegarde complète</label><input type=\"file\" id=\"dobbyFullRestore\" accept=\".json,application/json\"><p class=\"helper\">Remplace les données locales après validation du fichier. Conserve au préalable une copie de sécurité. Maximum 75 Mo.</p></div></details>`;\n",
+          "after": " const stateHealthKeys=['sharedHealthVisits','v21HealthPerson','v23HealthMemberId'];\n function documentFileKeys(rows){\n  const keys=new Set();\n  for(const row of rows){\n   if(typeof row?.id!=='string')continue;\n   keys.add('family-'+row.id);\n   for(const part of Array.isArray(row.attachments)?row.attachments:[]){\n    if(typeof part?.key==='string')keys.add(part.key);\n   }\n  }\n  return keys;\n }\n function generalFileKeys(state){\n  const keys=documentFileKeys(generalDocuments(state.familyDocs));\n  for(const row of state.houseDocs)if(typeof row?.id==='string')keys.add(row.id);\n  return keys;\n }\n function generalBackupState(state){\n  const result={...state,famHealth:[]};\n  if(Array.isArray(state.familyDocs))result.familyDocs=generalDocuments(state.familyDocs);\n  for(const field of [...stateHealthKeys,'globalQuery','docSearch'])delete result[field];\n  if(result.extraPage?.split?.(':')[0]==='health')result.extraPage='';\n  return result;\n }\n function prepareGeneralBackup(data){\n  if(!isObj(data)||!isObj(data.state)||!Array.isArray(data.attachments)||data.attachments.length>1500)throw Error('Format de sauvegarde invalide');\n  const state=generalBackupState(data.state);\n  validateState(state);\n  const general=generalFileKeys(state),health=documentFileKeys(data.state.familyDocs.filter(isLegacyHealthDocument));\n  const attachments=data.attachments.filter(item=>item==null||general.has(item.id)&&!health.has(item.id));\n  const backup={...data,state,attachments};\n  return {state,attachments:validatePayload(backup)};\n }\n function parseGeneralBackup(raw){try{return JSON.parse(raw);}catch{throw Error('Archive JSON illisible.');}}\n function preserveLocalHealth(state,incoming,existing){\n  const localDocs=st.familyDocs.filter(isLegacyHealthDocument),ids=new Set(localDocs.map(row=>row.id));\n  const protectedFiles=documentFileKeys(localDocs);\n  if(state.familyDocs.some(row=>ids.has(row.id))||incoming.some(item=>protectedFiles.has(item.id)))throw Error('La sauvegarde contient un identifiant local réservé.');\n  state.familyDocs.push(...localDocs);\n  state.famHealth=st.famHealth;\n  for(const field of stateHealthKeys)if(Object.hasOwn(st,field))state[field]=st[field];\n  const previousGeneral=generalFileKeys(st),received=new Set(incoming.map(item=>item.id));\n  return incoming.concat(existing.filter(item=>protectedFiles.has(item.id)||!previousGeneral.has(item.id)&&!received.has(item.id)));\n }\n const backupUI=()=>`<details class=\"v2-tools-drawer\"><summary>Sauvegarde et restauration</summary><div class=\"card\"><h2>Sauvegarde générale</h2><p class=\"helper\">Les données Santé restent dans leur emplacement d’origine. Conservez le fichier JSON non chiffré dans un emplacement protégé.</p><button class=\"btn full\" data-backup=\"export\">Créer une sauvegarde</button><label>Restaurer une sauvegarde</label><input type=\"file\" id=\"dobbyFullRestore\" accept=\".json,application/json\"><p class=\"helper\">Remplace les données couvertes par la sauvegarde après validation du fichier. Maximum 75 Mo.</p></div></details>`;\n"
+        },
+        {
+          "line": 1565,
+          "before": "   const attachments=[];for(const d of await listAttachments()){if(!(d.blob instanceof Blob))throw Error('Pièce jointe corrompue');attachments.push({id:d.id,type:d.blob.type,base64:await toB64(d.blob)})}\n   const state=JSON.parse(JSON.stringify({...st,customRecipes:custom})),payload={format:'dobby-complete-backup',version:1,createdAt:new Date().toISOString(),state,attachments};validatePayload(payload);\n",
+          "after": "   const scope=window.DobbyFamilyHouse?.contextSnapshot?.();\n   window.DobbyFamilyHouse?.assertWritable?.();\n   const state=JSON.parse(JSON.stringify(generalBackupState({...st,customRecipes:custom})));validateState(state);\n   const general=generalFileKeys(state),health=documentFileKeys(st.familyDocs.filter(isLegacyHealthDocument));\n   const attachments=[];for(const d of await listAttachments()){if(!general.has(d.id)||health.has(d.id))continue;if(!(d.blob instanceof Blob))throw Error('Pièce jointe corrompue');attachments.push({id:d.id,type:d.blob.type,base64:await toB64(d.blob)})}\n   window.DobbyFamilyHouse?.assertWritable?.();\n   if(scope!==window.DobbyFamilyHouse?.contextSnapshot?.())throw Error('Le foyer ou le compte a changé pendant la sauvegarde.');\n   const currentHealth=documentFileKeys(st.familyDocs.filter(isLegacyHealthDocument));\n   if(state.familyDocs.some(row=>currentHealth.has('family-'+row.id))||attachments.some(item=>currentHealth.has(item.id)))throw Error('Les documents ont changé pendant la sauvegarde. Recommencez.');\n   const payload={format:'dobby-complete-backup',version:1,createdAt:new Date().toISOString(),state,attachments};validatePayload(payload);\n"
+        },
+        {
+          "line": 1588,
+          "before": "   assertRestoreScope();if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const data=JSON.parse(await file.text()),incoming=validatePayload(data);assertRestoreScope();\n   if(!confirm('Remplacer toutes les données locales par cette sauvegarde ? Les données actuelles seront perdues si tu n’en as pas conservé une copie.'))return;\n",
+          "after": "   assertRestoreScope();if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const {state:incomingState,attachments:incoming}=prepareGeneralBackup(parseGeneralBackup(await file.text()));assertRestoreScope();\n   if(!confirm('Remplacer toutes les données locales couvertes par cette sauvegarde ? Les données Santé restent sur cet appareil.'))return;\n"
+        },
+        {
+          "line": 1592,
+          "before": "   await replaceAttachments(incoming,assertRestoreScope);replaced=true;assertRestoreScope();\n   stateReplaced=true;st=data.state;custom=st.customRecipes;\n",
+          "after": "   const files=preserveLocalHealth(incomingState,incoming,oldFiles);\n   await replaceAttachments(files,assertRestoreScope);replaced=true;assertRestoreScope();\n   stateReplaced=true;st=incomingState;custom=st.customRecipes;\n"
+        },
+        {
+          "line": 1608,
+          "before": " window.dobbyBackupValidation={validatePayload,validateState};\n",
+          "after": " window.dobbyBackupValidation={validatePayload,validateState,preview(data){const {state,attachments}=prepareGeneralBackup(data);return {equipment:state.houseItems.length,files:attachments.length};}};\n"
+        },
+        {
+          "line": 1669,
+          "before": " const q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');const docs=st.familyDocs.filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));const notes=st.familyNotes.filter(x=>[x.title,x.body,x.tags].join(' ').toLocaleLowerCase('fr').includes(q));\n return `${v21Heading('Vos archives','Documents','<button class=\"v21-text-link\" data-action=\"photo\">＋ Importer</button>')}<div class=\"card\"><input id=\"docSearch\" placeholder=\"⌕ Rechercher un document…\" value=\"${safe(st.docSearch||'')}\" aria-label=\"Rechercher un document\"><div class=\"v21-filter-line\" style=\"margin-top:11px\"><button data-v21=\"docs-filter\" data-filter=\"Tous\" class=\"${st.docFilter==='Tous'?'active':''}\">Tous</button>${['Contrats','Factures et achats','Assurances','Santé','Maison'].map(x=>`<button data-v21=\"docs-filter\" data-filter=\"${x}\" class=\"${st.docFilter===x?'active':''}\">${x==='Factures et achats'?'Factures':x}</button>`).join('')}</div><details class=\"v21-doc-advanced\"><summary>Autres catégories</summary><select id=\"docFilter\" style=\"margin-top:8px;max-width:100%\" aria-label=\"Autres catégories\">${['Tous',...docTypes].map(x=>`<option ${st.docFilter===x?'selected':''}>${safe(x)}</option>`).join('')}</select></details></div><section class=\"card\"><div class=\"v2-panel-head\"><h2>Documents</h2><span class=\"v2-count\">${docs.length}</span></div>${docs.map(x=>`<button class=\"v21-entry\" data-doc=\"view\" data-id=\"${safe(x.id)}\"><span class=\"v21-entry-icon ${/facture|contrat/i.test(x.category)?'warm':'cool'}\">${v21TypeIcon(x.category)}</span><span class=\"v21-entry-main\"><strong>${safe(x.title)}</strong><small>${safe(x.category)}${x.date?' · '+v21Date(x.date):''}</small>${x.deadline?`<small style=\"color:#b47936\">Échéance : ${v21Date(x.deadline)}</small>`:''}</span><span class=\"v21-entry-arrow\">›</span></button>`).join('')||v21Empty('Aucun document dans cette catégorie.')}</section><section class=\"card\"><h2>Mémoire familiale</h2>${notes.map(n=>`<button class=\"v21-entry\" data-doc=\"editnote\" data-id=\"${safe(n.id)}\"><span class=\"v21-entry-icon\">✎</span><span class=\"v21-entry-main\"><strong>${safe(n.title)}</strong><small>${safe((n.body||'').slice(0,70))}</small></span><span class=\"v21-entry-arrow\">›</span></button>`).join('')||'<p class=\"v21-mini-note\">Aucun mémo.</p>'}<button class=\"v21-secondary-button\" data-doc=\"newnote\">＋ Ajouter un mémo</button></section><div class=\"v21-card-actions\"><button class=\"btn secondary\" data-extra=\"contracts\">Contrats et échéances</button><button class=\"btn secondary\" data-doc=\"new\">Fiche manuelle</button></div>`;\n",
+          "after": " const q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');const docs=generalDocuments(st.familyDocs).filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));const notes=st.familyNotes.filter(x=>[x.title,x.body,x.tags].join(' ').toLocaleLowerCase('fr').includes(q));\n return `${v21Heading('Vos archives','Documents','<button class=\"v21-text-link\" data-action=\"photo\">＋ Importer</button>')}<div class=\"card\"><input id=\"docSearch\" placeholder=\"⌕ Rechercher un document…\" value=\"${safe(st.docSearch||'')}\" aria-label=\"Rechercher un document\"><div class=\"v21-filter-line\" style=\"margin-top:11px\"><button data-v21=\"docs-filter\" data-filter=\"Tous\" class=\"${st.docFilter==='Tous'?'active':''}\">Tous</button>${['Contrats','Factures et achats','Assurances','Maison'].map(x=>`<button data-v21=\"docs-filter\" data-filter=\"${x}\" class=\"${st.docFilter===x?'active':''}\">${x==='Factures et achats'?'Factures':x}</button>`).join('')}</div><details class=\"v21-doc-advanced\"><summary>Autres catégories</summary><select id=\"docFilter\" style=\"margin-top:8px;max-width:100%\" aria-label=\"Autres catégories\">${['Tous',...docTypes].map(x=>`<option ${st.docFilter===x?'selected':''}>${safe(x)}</option>`).join('')}</select></details></div><section class=\"card\"><div class=\"v2-panel-head\"><h2>Documents</h2><span class=\"v2-count\">${docs.length}</span></div>${docs.map(x=>`<button class=\"v21-entry\" data-doc=\"view\" data-id=\"${safe(x.id)}\"><span class=\"v21-entry-icon ${/facture|contrat/i.test(x.category)?'warm':'cool'}\">${v21TypeIcon(x.category)}</span><span class=\"v21-entry-main\"><strong>${safe(x.title)}</strong><small>${safe(x.category)}${x.date?' · '+v21Date(x.date):''}</small>${x.deadline?`<small style=\"color:#b47936\">Échéance : ${v21Date(x.deadline)}</small>`:''}</span><span class=\"v21-entry-arrow\">›</span></button>`).join('')||v21Empty('Aucun document dans cette catégorie.')}</section><section class=\"card\"><h2>Mémoire familiale</h2>${notes.map(n=>`<button class=\"v21-entry\" data-doc=\"editnote\" data-id=\"${safe(n.id)}\"><span class=\"v21-entry-icon\">✎</span><span class=\"v21-entry-main\"><strong>${safe(n.title)}</strong><small>${safe((n.body||'').slice(0,70))}</small></span><span class=\"v21-entry-arrow\">›</span></button>`).join('')||'<p class=\"v21-mini-note\">Aucun mémo.</p>'}<button class=\"v21-secondary-button\" data-doc=\"newnote\">＋ Ajouter un mémo</button></section><div class=\"v21-card-actions\"><button class=\"btn secondary\" data-extra=\"contracts\">Contrats et échéances</button><button class=\"btn secondary\" data-doc=\"new\">Fiche manuelle</button></div>`;\n"
+        },
+        {
+          "line": 1780,
+          "before": "// One configurable family directory, usable by every module locally. Sync will be native later.\n",
+          "after": "// The family directory is independent of names stored in the old local health notebook.\n"
+        },
+        {
+          "line": 1782,
+          "before": "if(!st.familyMembers.length && (st.famHealth||[]).length){\n const old=[...new Set(st.famHealth.map(x=>String(x.person||'').trim()).filter(Boolean))];\n st.familyMembers=old.map((name,i)=>({id:'legacy-'+i,name,birthdate:'',avatar:'👤'}));\n}\n",
+          "after": ""
+        },
+        {
+          "line": 1786,
+          "before": "",
+          "after": "function legacyHealthDemo(){return Boolean(window.DobbyReview&&!window.DobbyFamilyUI?.connectionState?.()?.userId);}\nwindow.addEventListener?.('dobby:access-change',()=>{\n if(!legacyHealthDemo()&&document.getElementById('xHealthForm'))render();\n});\n"
+        },
+        {
+          "line": 1814,
+          "before": "",
+          "after": " if(!legacyHealthDemo())return false;\n"
+        },
+        {
+          "line": 1862,
+          "before": "window.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,saveMagicChoice:v23SaveMagicChoice,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite});\n",
+          "after": "const v23MemberSaves=new WeakMap();\nwindow.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,saveMagicChoice:v23SaveMagicChoice,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite,memberSubmission:form=>v23MemberSaves.get(form)});\n"
+        },
+        {
+          "line": 1871,
+          "before": "",
+          "after": " const memberButtons=`<div class=\"v23-health-members\">${people.map(p=>`<button class=\"v23-member ${p.id===selected?.id?'active':''}\" data-v23-member=\"choose\" data-id=\"${safe(p.id)}\"><span>${safe(p.avatar||'👤')}</span><strong>${safe(p.name)}</strong></button>`).join('')}<button class=\"v23-member v23-add-member\" data-v23-member=\"new\"><span>＋</span><strong>Ajouter</strong></button></div>`;\n const memberTools=selected?`<div class=\"v23-member-tools\"><button class=\"btn secondary small\" data-v23-member=\"edit\" data-id=\"${safe(selected.id)}\">Modifier ${safe(selected.name)}</button><button class=\"btn small outline\" data-v23-member=\"delete\" data-id=\"${safe(selected.id)}\">Supprimer</button></div>`:'';\n if(!legacyHealthDemo())return `<button class=\"btn secondary small\" data-extra=\"back\">‹ Famille</button><h1>Membres du foyer</h1>${memberButtons}${memberTools}<p>Ouvrez le carnet Santé depuis le menu DOBBY V7.</p>`;\n"
+        },
+        {
+          "line": 1880,
+          "before": " const memberButtons=`<div class=\"v23-health-members\">${people.map(p=>`<button class=\"v23-member ${p.id===selected?.id?'active':''}\" data-v23-member=\"choose\" data-id=\"${safe(p.id)}\"><span>${safe(p.avatar||'👤')}</span><strong>${safe(p.name)}</strong></button>`).join('')}<button class=\"v23-member v23-add-member\" data-v23-member=\"new\"><span>＋</span><strong>Ajouter</strong></button></div>`;\n",
+          "after": ""
+        },
+        {
+          "line": 1898,
+          "before": "  const linked=(st.famHealth||[]).some(r=>r.personId===id||(!r.personId&&r.person===member.name));\n",
+          "after": " const linked=legacyHealthDemo()&&(st.famHealth||[]).some(r=>r.personId===id||(!r.personId&&r.person===member.name));\n"
+        },
+        {
+          "line": 1906,
+          "before": "",
+          "after": "function v23WriteMember(member,existing){\n if(v23Members().some(row=>row.id!==existing?.id&&String(row.name||'').toLocaleLowerCase('fr')===member.name.toLocaleLowerCase('fr')))throw Error('Cette personne est déjà enregistrée.');\n const previousMembers=[...st.familyMembers],previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;\n if(existing){\n  st.familyMembers=st.familyMembers.map(x=>x.id===existing.id?member:x);\n  if(legacyHealthDemo())(st.famHealth||[]).forEach(x=>{if(x.personId===existing.id||(!x.personId&&x.person===existing.name)){x.personId=member.id;x.person=member.name}});\n }\n else st.familyMembers.push(member);\n st.v23HealthMemberId=member.id;v23MemberEdit=null;\n try{save();}catch(error){st.familyMembers=previousMembers;st.famHealth=previousHealth;st.v23HealthMemberId=previousSelected;v23MemberEdit=previousEdit;throw Error('Enregistrement impossible. Les informations précédentes sont conservées.');}\n render();return member.id;\n}\n"
+        },
+        {
+          "line": 1921,
+          "before": "  e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target);\n",
+          "after": "  e.preventDefault();e.stopImmediatePropagation();const form=e.target;\n  if(v23MemberSaves.has(form))return;\n"
+        },
+        {
+          "line": 1925,
+          "before": "  const values=Object.fromEntries(d),proof=v23MagicForms.get(e.target);v23MagicForms.delete(e.target);\n  let member;\n",
+          "after": "  const values=Object.fromEntries(new FormData(form)),proof=v23MagicForms.get(form),context=v23MemberContext();v23MagicForms.delete(form);\n"
+        },
+        {
+          "line": 1928,
+          "before": "   window.DobbyFamilyMemberPolicy.assertWrite(existing,values,v23MemberContext(),{magicResult:confirmed});\n   member=window.DobbyFamilyMemberPolicy.prepare({...existing,id:existing?.id||xuid()},values,window.DobbyMagicIdentity.patch);\n   if(v23Members().some(x=>x.id!==existing?.id&&String(x.name||'').toLocaleLowerCase('fr')===member.name.toLocaleLowerCase('fr')))throw Error('Cette personne est déjà enregistrée.');\n",
+          "after": "   window.DobbyFamilyMemberPolicy.assertWrite(existing,values,context,{magicResult:confirmed});\n   const member=window.DobbyFamilyMemberPolicy.prepare({...existing},values,window.DobbyMagicIdentity.patch);\n   if(existing||!context.verified){v23WriteMember({...member,id:existing?.id||xuid()},existing);return;}\n   const reserve=window.DobbyFamilyUI?.access?.reserveMemberId;\n   if(typeof reserve!=='function')throw Error('Création du membre indisponible.');\n   const pending=reserve(context.householdId).then(id=>{\n    const current=v23MemberContext();\n    if(!form.isConnected||v23MemberEdit!=='new'||!current.verified||current.userId!==context.userId||current.householdId!==context.householdId||current.actorId!==context.actorId)throw Error('Le formulaire ou le compte a changé.');\n    window.DobbyFamilyMemberPolicy.assertWrite(null,values,current);\n    return v23WriteMember({...member,id:id??xuid()},null);\n   });\n   v23MemberSaves.set(form,pending);\n   void pending.then(()=>v23MemberSaves.delete(form),error=>{v23MemberSaves.delete(form);if(form.isConnected)alert(error.message);});\n"
+        },
+        {
+          "line": 1942,
+          "before": "  catch(error){alert(error.message);return;}\n  const previousMembers=[...st.familyMembers],previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;\n  if(existing){const oldName=existing.name;st.familyMembers=st.familyMembers.map(x=>x.id===existing.id?member:x);(st.famHealth||[]).forEach(x=>{if(x.personId===existing.id||(!x.personId&&x.person===oldName)){x.personId=member.id;x.person=member.name}})}\n  else st.familyMembers.push(member);\n  st.v23HealthMemberId=member.id;v23MemberEdit=null;\n  try{save();}catch(error){st.familyMembers=previousMembers;st.famHealth=previousHealth;st.v23HealthMemberId=previousSelected;v23MemberEdit=previousEdit;alert('Enregistrement impossible. Les informations précédentes sont conservées.');return;}\n  render();return;\n",
+          "after": "  catch(error){alert(error.message);}\n  return;\n"
+        },
+        {
+          "line": 2119,
+          "before": " const records=(st.famHealth||[]).length;\n",
+          "after": ""
+        },
+        {
+          "line": 2127,
+          "before": "  +'<button data-extra=\"health\"><strong>♡ Santé</strong>'+records+' fiche(s) et rendez-vous</button>'\n",
+          "after": "  +'<button data-extra=\"health\"><strong>♡ Santé</strong>Carnet de santé</button>'\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/stitch-v5.js": {
+      "beforeSha256": "8ed9bcba671737b6d2b46c01fd75795a702ebbba97df8266d5d705ef767d6424",
+      "afterSha256": "e734feb8ab0f726de91e316145dcdc04d878d39a49c0a19f7c125226d45d37db",
+      "reason": "Restriction des anciens rendez-vous à la démonstration fictive.",
+      "patches": [
+        {
+          "line": 93,
+          "before": "    const upcoming=(st.famHealth||[]).filter(x=>x.date&&x.date>=todayISO())\n",
+          "after": "    const upcoming=(legacyHealthDemo()?st.famHealth||[]:[]).filter(x=>x.date&&x.date>=todayISO())\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/build-source.cjs": {
+      "beforeSha256": "73a1112110032801d1d0150e040d12f8292bca38a47af92a6692ede8b441f0f2",
+      "afterSha256": "9f703065785d5b8d5f77d7591386442b2a02a64913e77efc470111466d0c45e0",
+      "reason": "Chargement du module Santé sur les routes natives.",
+      "patches": [
+        {
+          "line": 33,
+          "before": "html=html.replace('<script src=\"./bridge.js\"></script>','<script src=\"./ceremonies.js\"></script><script src=\"./access.js\"></script><script src=\"./bridge.js\"></script>');\n",
+          "after": "html=html.replace('<script src=\"./bridge.js\"></script>','<script src=\"./ceremonies.js\"></script><script src=\"./access.js\"></script><link rel=\"stylesheet\" href=\"./health-essential.css\"><script src=\"./health-integration.js\"></script><script src=\"./bridge.js\"></script>');\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/chat-engine.js": {
+      "beforeSha256": "b3f7e988ca5aaa8aa0ae978f06b3ccd2ed00baebe464dc2f752bd16d2026c01d",
+      "afterSha256": "53495e7c2fd8217964f0a3ee853d3df371a066cfc8794d99916a77350dfba97b",
+      "reason": "Exclusion des données Santé historiques du contexte de conversation.",
+      "patches": [
+        {
+          "line": 18,
+          "before": "",
+          "after": " function visibleHistory(){\n  const state=E.read().state;\n  const documentIds=new Set((state.familyDocs||[]).filter(row=>row?.category==='Santé').map(row=>row.id));\n  const legacyTitles=(state.sharedHealthVisits||[]).map(row=>row?.title||row?.name).filter(Boolean);\n  return current().map(row=>{\n   const restricted=Array.isArray(row.links)&&row.links.some(link=>{\n    try{\n     const url=new URL(link.href,location.href);\n     if(url.origin!==location.origin||!url.pathname.endsWith('/famille.html'))return false;\n     const [route,query]=url.hash.slice(1).split('?');\n     return (route==='document'&&documentIds.has(new URLSearchParams(query).get('record')))||\n       (route==='agenda'&&legacyTitles.some(title=>row.answer.includes(title)));\n    }catch{return false;}\n   });\n   return restricted?{...row,answer:'Cette réponse historique contient des références privées.',links:[]}:row;\n  });\n }\n"
+        },
+        {
+          "line": 84,
+          "before": "  if(/\\b(?:agenda|rendez-vous|evenement|evenements)\\b/.test(q)){const events=(E.win().DobbyFamilyAgenda?.upcoming()||[]).filter(e=>['event','medical'].includes(e.kind));return {text:events.length?'Dans l’agenda partagé : '+events.slice(0,4).map(e=>[e.date,e.time,e.title].filter(Boolean).join(' · ')).join(' ; ')+'.':'Aucun événement à venir dans l’agenda partagé. Les fiches individuelles restent dans leur carnet.',links:[link('Ouvrir l’Agenda','./famille.html#agenda')]};}\n  for(const [pattern,records,view,label]of [[/\\b(?:document|documents|facture|contrat|contrats|garantie)\\b/,state.familyDocs||[],'document','Documents'],[/\\b(?:equipement|equipements|appareil|appareils|maison)\\b/,state.houseItems||[],'equipment','Équipements']])if(pattern.test(q)){const needle=q.replace(/^.*?(?:documents?|facture|contrats?|garantie|equipements?|appareils?|maison)\\b/,'').replace(/^(?:\\s*(?:de|du|des|sur|pour|le|la))?\\s*/,''),found=records.filter(r=>!needle||norm([r.title,r.name,r.provider,r.brand,r.model].join(' ')).includes(needle)).slice(0,5);return {text:found.length?'Dobby a trouvé : '+found.map(r=>r.title||r.name).join(' ; ')+'.':'Dobby n’a trouvé aucune fiche correspondante.',links:found.length?found.map(r=>link(r.title||r.name,'./famille.html#'+view+'?record='+encodeURIComponent(r.id))):[link(label,'./famille.html#'+(view==='document'?'documents':'house'))]};}\n",
+          "after": "  if(/\\b(?:agenda|rendez-vous|evenement|evenements)\\b/.test(q)){const events=(E.win().DobbyFamilyAgenda?.upcoming()||[]).filter(e=>e.kind==='event');return {text:events.length?'Dans l’agenda partagé : '+events.slice(0,4).map(e=>[e.date,e.time,e.title].filter(Boolean).join(' · ')).join(' ; ')+'.':'Aucun événement à venir dans l’agenda partagé. Les fiches individuelles restent dans leur carnet.',links:[link('Ouvrir l’Agenda','./famille.html#agenda')]};}\n  for(const [pattern,records,view,label]of [[/\\b(?:document|documents|facture|contrat|contrats|garantie)\\b/,(state.familyDocs||[]).filter(row=>row?.category!=='Santé'),'document','Documents'],[/\\b(?:equipement|equipements|appareil|appareils|maison)\\b/,state.houseItems||[],'equipment','Équipements']])if(pattern.test(q)){const needle=q.replace(/^.*?(?:documents?|facture|contrats?|garantie|equipements?|appareils?|maison)\\b/,'').replace(/^(?:\\s*(?:de|du|des|sur|pour|le|la))?\\s*/,''),found=records.filter(r=>!needle||norm([r.title,r.name,r.provider,r.brand,r.model].join(' ')).includes(needle)).slice(0,5);return {text:found.length?'Dobby a trouvé : '+found.map(r=>r.title||r.name).join(' ; ')+'.':'Dobby n’a trouvé aucune fiche correspondante.',links:found.length?found.map(r=>link(r.title||r.name,'./famille.html#'+view+'?record='+encodeURIComponent(r.id))):[link(label,'./famille.html#'+(view==='document'?'documents':'house'))]};}\n"
+        },
+        {
+          "line": 92,
+          "before": " return Object.freeze({identity,token,check,load,current,append,update,remove,reply,execute});\n",
+          "after": " return Object.freeze({identity,token,check,load,current,visibleHistory,append,update,remove,reply,execute});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/chat.js": {
+      "beforeSha256": "a866ff516b711a548db908235daefac8b8390a2c531821adaf54fc441eb56527",
+      "afterSha256": "e579de8b65c3f77d593e939fd8a9bf8f30f31c7fb84057b7f5896585a0e36b3a",
+      "reason": "Retrait des réponses historiques Santé dans la conversation.",
+      "patches": [
+        {
+          "line": 13,
+          "before": " function draw(){if(!active()||!thread?.isConnected)return;thread.replaceChildren();let rows;try{rows=M.current();}catch(error){say(error.message);return;}if(!rows.length)thread.append(node('p','Aucun échange enregistré.','dv7-empty'));\n",
+          "after": " function draw(){if(!active()||!thread?.isConnected)return;thread.replaceChildren();let rows;try{rows=M.visibleHistory();}catch(error){say(error.message);return;}if(!rows.length)thread.append(node('p','Aucun échange enregistré.','dv7-empty'));\n"
+        },
+        {
+          "line": 39,
+          "before": " async function act(name,b){if(name==='rg-chat-send')return send(false);if(name==='rg-chat-confirm')return confirm();if(name==='rg-chat-cancel')return confirm(true);if(name==='rg-chat-delete'){M.check(activeToken);if(pending){say('Validez ou annulez la demande en attente.');return;}pending={kind:'exchange-delete',id:b.dataset.record};draw();return;}if(name==='rg-chat-voice'||name==='rg-chat-resume')return;if(name==='rg-chat-stop')return pauseVoice();if(name==='rg-chat-abort'){cancelVoice();say('Dictée annulée. Le texte saisi avant la dictée est conservé.');}if(name==='rg-chat-replay'){M.check(activeToken);const row=M.current().find(r=>r.id===b.dataset.record);if(row)speak(answerFor(row));}if(name==='rg-chat-silence')stopSpeaking();}\n",
+          "after": " async function act(name,b){if(name==='rg-chat-send')return send(false);if(name==='rg-chat-confirm')return confirm();if(name==='rg-chat-cancel')return confirm(true);if(name==='rg-chat-delete'){M.check(activeToken);if(pending){say('Validez ou annulez la demande en attente.');return;}pending={kind:'exchange-delete',id:b.dataset.record};draw();return;}if(name==='rg-chat-voice'||name==='rg-chat-resume')return;if(name==='rg-chat-stop')return pauseVoice();if(name==='rg-chat-abort'){cancelVoice();say('Dictée annulée. Le texte saisi avant la dictée est conservé.');}if(name==='rg-chat-replay'){M.check(activeToken);const row=M.visibleHistory().find(r=>r.id===b.dataset.record);if(row)speak(answerFor(row));}if(name==='rg-chat-silence')stopSpeaking();}\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/family-engine.js": {
+      "beforeSha256": "8e16805f3007647ef78fde3b21283ce8b81f8e34b61f8c0b0b34511347a93151",
+      "afterSha256": "9571410d432feff95d675a53d3c366dd690b1ef80db23ad8f14ba659ddb05f60",
+      "reason": "Séparation du carnet Santé et de l’état partagé du foyer.",
+      "patches": [
+        {
+          "line": 51,
+          "before": "  submit('v23MemberForm',values);if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');return read().state.v23HealthMemberId;\n",
+          "after": "  submit('v23MemberForm',values);\n  const pending=win().DobbyFamilyMembers.memberSubmission?.(form);\n  if(pending)return pending;\n  if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');\n  return read().state.v23HealthMemberId;\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/family.js": {
+      "beforeSha256": "d2861ff1e7ce236e5ae61a8cc013b7fe6be82be759c303ae6381091f386451ac",
+      "afterSha256": "7d28bb1f8e1ee05c7fcf0d2c2c6a8b7c7f9ccf3389b87143b57b98eea8b9e7d1",
+      "reason": "Branchement du carnet et de l’agenda au routeur Famille.",
+      "patches": [
+        {
+          "line": 37,
+          "before": "",
+          "after": " const secureHealthView = view => window.DobbyHealthRuntime?.handles(view) === true;\n let carnetMount = null;\n function renderSecureHealth(main, view) {\n  main.replaceChildren();\n  const title=document.createElement('h1');title.className='fa-title';title.textContent='Santé';\n  const host=document.createElement('div');host.dataset.healthCarnet='';\n  main.append(title,host);\n  carnetMount=window.DobbyHealthRuntime.mountCarnet(host,view==='health'?undefined:ui.person||undefined);\n }\n"
+        },
+        {
+          "line": 77,
+          "before": "  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','contacts','contact-edit','menu','settings','settings-magic','backup','documents','documents-1','house','house-1','equipment','equipment-edit','equipment-ai','maintenance'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(ui.view.startsWith('health')||ui.view==='medical-edit')$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}\n",
+          "after": "  if(!ui.view.startsWith('contract')&&!['salon','contracts','agenda','memos','memo-edit','contacts','contact-edit','menu','settings','settings-magic','backup','documents','documents-1','house','house-1','equipment','equipment-edit','equipment-ai','maintenance'].includes(ui.view)){$('main').append(paragraph('Membres et agenda : '+data.status,'fa-note fa-sharing-status'));if(!secureHealthView(ui.view)&&(ui.view.startsWith('health')||ui.view==='medical-edit'))$('main').append(paragraph('Fiches individuelles : locales sur cet appareil. Les rendez-vous partagés sont un registre distinct, créé volontairement.'));}\n"
+        },
+        {
+          "line": 183,
+          "before": "",
+          "after": "  carnetMount?.clear();carnetMount=null;\n"
+        },
+        {
+          "line": 186,
+          "before": "",
+          "after": "  const privateHealth=secureHealthView(view);\n"
+        },
+        {
+          "line": 189,
+          "before": "  let main,header;if(!doc){main=rootMain.cloneNode(true);header=rootHeader.cloneNode(true);}else{pristine=doc;main=document.importNode(doc.querySelector('main'),true);header=doc.querySelector('body > header')?.cloneNode(true);const style=document.createElement('style');style.id='fa-source-style';style.textContent=[...doc.querySelectorAll('head style')].map(x=>x.textContent).join('\\n');document.head.append(style);const supplement=document.createElement('div');supplement.id='fa-supplement';for(const node of doc.body.children)if(!node.matches('main,header,nav,script'))supplement.append(document.importNode(node,true));document.body.append(supplement);}\n  if(['members','member-edit','member-detail','agenda','memos','memo-edit'].includes(view))header=rootHeader.cloneNode(true);\n",
+          "after": "  let main,header;if(!doc){main=rootMain.cloneNode(true);header=rootHeader.cloneNode(true);}else{pristine=doc;main=document.importNode(doc.querySelector('main'),true);header=doc.querySelector('body > header')?.cloneNode(true);const style=document.createElement('style');style.id='fa-source-style';style.textContent=[...doc.querySelectorAll('head style')].map(x=>x.textContent).join('\\n');document.head.append(style);if(!privateHealth){const supplement=document.createElement('div');supplement.id='fa-supplement';for(const node of doc.body.children)if(!node.matches('main,header,nav,script'))supplement.append(document.importNode(node,true));document.body.append(supplement);}}\n  if(privateHealth||['members','member-edit','member-detail','agenda','memos','memo-edit'].includes(view))header=rootHeader.cloneNode(true);\n"
+        },
+        {
+          "line": 192,
+          "before": "  if(view==='salon'){window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail')window.DobbyFamilyMemberDetail.render(familyContext(data));else if(window.DobbyAccess?.handles(view))window.DobbyAccess.render(familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);\n  if(['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view))shell(data);gateSharedUI();window.DobbyChrome?.mount();window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=['member-edit','medical-edit'].includes(view)?availability(data):null;main.style.visibility='visible';document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);\n",
+          "after": "  if(privateHealth)renderSecureHealth(main,view);else if(view==='salon'){window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail')window.DobbyFamilyMemberDetail.render(familyContext(data));else if(window.DobbyAccess?.handles(view))window.DobbyAccess.render(familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);\n  if(!privateHealth&&['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view))shell(data);gateSharedUI();window.DobbyChrome?.mount();window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=!privateHealth&&['member-edit','medical-edit'].includes(view)?availability(data):null;main.style.visibility='visible';document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);\n"
+        },
+        {
+          "line": 200,
+          "before": "   const data=E.read();if(!['personal','member-detail'].includes(view)&&!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view)&&!ui.person&&data.members.length&&!(view==='member-edit'&&ui.memberNew))ui.person=data.members[0].id;\n   if(['member-edit','health-person'].includes(view)&&ui.person&&!data.members.some(x=>x.id===ui.person)){ui.person=null;view='members';notice('Cette personne n’est plus dans le registre.');}\n",
+          "after": "   const data=E.read(),privateHealth=secureHealthView(view);if(!privateHealth&&!['personal','member-detail'].includes(view)&&!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view)&&!ui.person&&data.members.length&&!(view==='member-edit'&&ui.memberNew))ui.person=data.members[0].id;\n   if(!privateHealth&&['member-edit','health-person'].includes(view)&&ui.person&&!data.members.some(x=>x.id===ui.person)){ui.person=null;view='members';notice('Cette personne n’est plus dans le registre.');}\n"
+        },
+        {
+          "line": 203,
+          "before": "   if(view==='medical-edit'&&ui.record&&!data[ui.scope==='shared'?'shared':'local'].some(r=>r.id===ui.record)){ui.record=null;ui.visitDraft=null;view=data.members.some(m=>m.id===ui.person)?'health-person':'members';notice('Ce rendez-vous n’existe plus. Le registre est conservé.');}\n",
+          "after": "   if(!privateHealth&&view==='medical-edit'&&ui.record&&!data[ui.scope==='shared'?'shared':'local'].some(r=>r.id===ui.record)){ui.record=null;ui.visitDraft=null;view=data.members.some(m=>m.id===ui.person)?'health-person':'members';notice('Ce rendez-vous n’existe plus. Le registre est conservé.');}\n"
+        },
+        {
+          "line": 229,
+          "before": "  if(['account','menu','documents','home'].includes(action)){if(ui.view==='member-edit')ui.memberDraft=memberDraft();if(ui.view==='medical-edit')ui.visitDraft=visitDraft();return legacy(action);}\n",
+          "after": "  if(['account','menu','documents','home'].includes(action)){if(ui.view==='member-edit')ui.memberDraft=memberDraft();if(ui.view==='medical-edit'&&$('#fa-medical-form'))ui.visitDraft=visitDraft();return legacy(action);}\n"
+        },
+        {
+          "line": 235,
+          "before": "  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,#archive-confirm,.mp-editor:not([hidden])'))return;const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);\n",
+          "after": "  if(!ready||busy||dialogDraft||window.DobbyPreparations?.busy||window.DobbyRegister?.busy||document.querySelector('#rg-form,#rg-log-form,#archive-confirm,.mp-editor:not([hidden])'))return;\n  if(secureHealthView(ui.view)&&carnetMount)return carnetMount.refresh();\n  const data=E.read();for(const status of $$('.fa-sharing-status'))text(status,'Membres et agenda : '+data.status);\n"
+        }
+      ]
+    }
+  }
+}

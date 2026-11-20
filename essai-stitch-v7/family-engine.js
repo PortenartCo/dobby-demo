@@ -49,7 +49,11 @@ window.DobbyFamilyStitchEngine=(()=>{
   if(values.avatar&&![...form.elements.avatar.options].some(o=>o.value===values.avatar))form.elements.avatar.add(new (win().Option)(values.avatar,values.avatar));
   for(const name of ['firstName','lastName','nickname','memberCategory','notes','species','breed','clearBirthdate','magicHouseId','magicPatronusId','magicAvatarId','magicHouseAlgorithm','magicPatronusAlgorithm','magicCeremony','profileFirstName','profileLastName'])if(Object.hasOwn(values,name)){const input=win().document.createElement('input');input.type='hidden';input.name=name;form.append(input);}
   if(values.birthdate){const check=win().document.createElement('input');check.type='date';check.value=values.birthdate;if(check.value!==values.birthdate)throw Error('Date de naissance enregistrée dans un format incompatible. Corrigez explicitement cette date avant d’enregistrer.');}
-  submit('v23MemberForm',values);if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');return read().state.v23HealthMemberId;
+  submit('v23MemberForm',values);
+  const pending=win().DobbyFamilyMembers.memberSubmission?.(form);
+  if(pending)return pending;
+  if(evaluate('return v23MemberEdit!==null;'))throw Error('Indiquez un prénom / nom pour enregistrer ce membre.');
+  return read().state.v23HealthMemberId;
  }
  // Answers, never a caller-selected result ID. The native adapter recomputes
  // with E06 and grants a one-form confirmation capability to its own writer.

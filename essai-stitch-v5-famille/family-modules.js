@@ -18,8 +18,23 @@ let timer = null, applying = false, lastError = '', sharedAvailable = [];
 let runeCapability = null, contextGeneration = 0, missionWriteFlight = null;
 let missionIntentCore = null, runeV3Capability = null, missionV3Transport = null, missionV3Owner = '';
 const esc = api.esc;
+const healthLegacyClosed=()=>window.DobbyHealthLegacyClosed?.()===true;
+const preserveHistoricalHealth=()=>typeof window.DobbyVerifyHealthLegacyClosure==='function'||healthLegacyClosed();
+const legacyHealthDocument=row=>row?.category==='Santé';
+function familyWithoutHistoricalHealth(payload,omit=healthLegacyClosed()){
+  if(!omit||!payload||typeof payload!=='object'||Array.isArray(payload))return payload;
+  const {sharedHealthVisits,famHealth,...current}=payload;
+  return current;
+}
+function syncedDigest(id,digestValue){
+  if(!digestValue||!['family','contracts'].includes(id)||!healthLegacyClosed())return digestValue;
+  const payload=JSON.parse(digestValue);
+  if(id==='family')return moduleDigest(id,familyWithoutHistoricalHealth(payload));
+  if(Array.isArray(payload.contracts))payload.contracts=payload.contracts.filter(row=>!legacyHealthDocument(row));
+  return moduleDigest(id,payload);
+}
 function isSharedDocument(x) {
-  return x && x.retainedLocalOnly!==true && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
+  return x && !(healthLegacyClosed()&&legacyHealthDocument(x)) && x.retainedLocalOnly!==true && (x.category==='Contrats'||x.category==='Assurances'||x.sharedToHousehold===true);
 }
 // Preserve extensible JSON metadata, excluding device-only references and binary
 // values. Old peers may omit new fields; only the versioned list removes pieces.
@@ -94,12 +109,14 @@ function pick(id) {
   if(id==='family'&&!preparationLocalCompatible())throw Error('Version locale des préparations familiales incompatible. Données conservées, synchronisation bloquée.');
   const data = id==='family'||id==='missions'&&runesV3Available()?JSON.parse(states[id]?.synced||'{}'):{};
   for (const key of definition.keys) {
+    if(id==='family'&&key==='sharedHealthVisits'&&healthLegacyClosed())continue;
     if (st[key] !== undefined) data[key] = JSON.parse(JSON.stringify(st[key]));
   }
   if(id==='family'){
     data.sharedFamilyNotes=JSON.parse(JSON.stringify(st.sharedFamilyNotes||[]));data.familyNotesVersion=1;
     for(const key of preparationKeys)data[key]=JSON.parse(JSON.stringify(st[key]!==undefined?st[key]:data[key]??[]));
     data.familyPreparationsVersion=1;
+    return familyWithoutHistoricalHealth(data);
   }
   if(id==='missions'){data.runeCredits=st.runeCredits||[];data.runeLedgerVersion=missionVersion(data);}
   if(id==='house')data.houseVersion=1;
@@ -252,7 +269,7 @@ function familyPayload(payload){
  preparationPayload(payload);
  return payload;
 }
-function familySnapshot(payload){familyPayload(payload);return{...payload,sharedFamilyNotes:payload.sharedFamilyNotes||[],familyNotesVersion:1,familyPreparationTemplates:payload.familyPreparationTemplates??[],familyEventPreparations:payload.familyEventPreparations??[],familyPreparationsVersion:1};}
+function familySnapshot(payload){payload=familyWithoutHistoricalHealth(payload);familyPayload(payload);return{...payload,sharedFamilyNotes:payload.sharedFamilyNotes||[],familyNotesVersion:1,familyPreparationTemplates:payload.familyPreparationTemplates??[],familyEventPreparations:payload.familyEventPreparations??[],familyPreparationsVersion:1};}
 function familyRegistryMissing(state,payload){return Boolean(state?.familyProtocol&&payload.familyNotesVersion!==1||state?.preparationsProtocol&&payload.familyPreparationsVersion!==1);}
 function verifyFamilyProtocol(state,payload){
  familyPayload(payload);
@@ -302,7 +319,7 @@ async function restoredFamily(state,remote){
 }
 async function familyConflict(state,remote,error){state.conflict={remote,...(error?{familyProtocol:true}:{})};await persist();if(error)throw error;}
 async function writeFamily(state,remote,desired,localSnapshot){
- desired=JSON.parse(JSON.stringify(desired));familyPayload(desired);
+ desired=familyWithoutHistoricalHealth(JSON.parse(JSON.stringify(desired)));familyPayload(desired);
  const revision=Number(remote.revision);if(!Number.isSafeInteger(revision)||revision<1)throw Error('Révision familiale invalide');
  const result=await api.authorized('PATCH',rowQuery('family')+'&revision=eq.'+encodeURIComponent(revision),{payload:desired},{Prefer:'return=representation'});
  if(!result?.length)return familyConflict(state,await readRow('family'));
@@ -316,13 +333,13 @@ async function writeFamily(state,remote,desired,localSnapshot){
 }
 async function syncFamily(state,remote){
  try{verifyFamilyProtocol(state,remote.payload);}catch(error){return familyConflict(state,remote,error);}
- const local=pick('family'),localJson=moduleDigest('family',local),base=JSON.parse(state.synced||'{}'),revision=Number(remote.revision);
+ const local=pick('family'),localJson=moduleDigest('family',local),synced=syncedDigest('family',state.synced),base=JSON.parse(synced||'{}'),revision=Number(remote.revision);
  const incoming=familySnapshot({...base,...remote.payload});
  if(revision!==state.revision){
-  if(localJson!==state.synced)return familyConflict(state,remote);
+  if(localJson!==synced)return familyConflict(state,remote);
   applyShared('family',incoming);Object.assign(state,synchronized('family',revision,incoming,remote.payload));await persist();return;
  }
- if(localJson===state.synced&&remote.payload.familyNotesVersion===1&&remote.payload.familyPreparationsVersion===1)return;
+ if(localJson===synced&&remote.payload.familyNotesVersion===1&&remote.payload.familyPreparationsVersion===1)return;
  // Preserve remote fields an earlier client could not know, plus absent fields
  // from old versions. Current client only replaces its explicit family keys.
  return writeFamily(state,remote,{...remote.payload,...local},localJson);
@@ -894,10 +911,21 @@ function rowQuery(id) {
 }
 async function readRow(id) {
   const token=liveContextToken(),generation=contextGeneration;
+  const verify=['family','contracts'].includes(id)&&window.DobbyVerifyHealthLegacyClosure;
+  if(typeof verify==='function'){
+    await verify();
+    if(generation!==contextGeneration||token!==liveContextToken())throw Error('Le contexte familial a changé pendant la vérification Santé.');
+  }
   const list = await api.authorized('GET', rowQuery(id));
   if(id==='missions'&&(!token||generation!==contextGeneration||token!==liveContextToken()))throw Error('Le contexte familial a changé pendant la lecture des Missions.');
+  if(typeof verify==='function'&&(generation!==contextGeneration||token!==liveContextToken()))throw Error('Le contexte familial a changé pendant la lecture du registre.');
   if (!Array.isArray(list) || list.length > 1) throw Error('Réponse module incohérente');
-  return list[0] || null;
+  const row=list[0]||null,payload=row?.payload;
+  if(healthLegacyClosed()&&payload){
+    const containsLegacy=key=>Object.hasOwn(payload,key)&&(!Array.isArray(payload[key])||payload[key].length>0);
+    if(containsLegacy('sharedHealthVisits')||containsLegacy('famHealth')||Array.isArray(payload.contracts)&&payload.contracts.some(legacyHealthDocument))throw Error('Registre Santé historique incohérent. Données locales conservées.');
+  }
+  return row;
 }
 function backupLocal(id) {
   const key = 'dobby-v5-family-before-sync-' + id + '-' + new Date().toISOString();
@@ -940,22 +968,23 @@ function applyShared(id, payload) {
     if (id === 'contracts') {
       if (!Array.isArray(payload.contracts)) throw Error('Fiches de contrats invalides');
       if(payload.contractsVersion!==undefined&&payload.contractsVersion!==1)throw Error('Version de contrats incompatible. Données conservées.');
-      const incoming = payload.contracts.filter(isSharedDocument);
+      const keepHealth = preserveHistoricalHealth();
+      const incoming = payload.contracts.filter(x=>isSharedDocument(x)&&(!keepHealth||!legacyHealthDocument(x)));
       const incomingIds = new Set(incoming.map(x=>x.id));
       const old = Array.isArray(st.familyDocs)?st.familyDocs:[];
-      const protectedIds = new Set(old.filter(x=>x.category==='Santé' && !isSharedDocument(x)).map(x=>x.id));
+      const protectedIds = new Set(old.filter(x=>legacyHealthDocument(x)&&(keepHealth||!isSharedDocument(x))).map(x=>x.id));
       const attachments = new Map(old.map(x=>[x.id,x]));
       const retained = old.filter(x=>
-        (x.category==='Santé' && !isSharedDocument(x)) ||
+        protectedIds.has(x.id) ||
         (!incomingIds.has(x.id) && (!isSharedDocument(x) || Boolean(x.attachmentName) || x.attachments?.some(item=>Boolean(item.key))))).map(x=>
-          payload.contractsVersion===1&&!incomingIds.has(x.id)&&isSharedDocument(x)?{...x,retainedLocalOnly:true}:x);
+          !protectedIds.has(x.id)&&payload.contractsVersion===1&&!incomingIds.has(x.id)&&isSharedDocument(x)?{...x,retainedLocalOnly:true}:x);
       st.familyDocs = retained.concat(incoming.filter(x=>!protectedIds.has(x.id)).map(x=>{
         const prior = attachments.get(x.id);
         return receiveContract(prior,x,payload.contractsVersion===1);
       }));
     }
     for (const key of def.keys) {
-      if(id==='missions'&&key==='runeCredits')continue;
+      if(id==='missions'&&key==='runeCredits'||id==='family'&&key==='sharedHealthVisits'&&preserveHistoricalHealth())continue;
       if (Object.prototype.hasOwnProperty.call(payload,key)) {
         st[key] = JSON.parse(JSON.stringify(payload[key]));
       }
@@ -1036,7 +1065,7 @@ async function start() {
 // the existing snapshot/cache path, never an alternate member writer or upload.
 async function revalidateExistingFamily(binding) {
   const state=states.family;
-  if(!state?.active||!state.conflict&&moduleDigest('family',pick('family'))===state.synced)return false;
+  if(!state?.active||!state.conflict&&moduleDigest('family',pick('family'))===syncedDigest('family',state.synced))return false;
   const token=liveContextToken(),generation=contextGeneration;
   const guard=()=>{
     const actual=api.getContext(),connection=api.connectionState?.();
@@ -1073,7 +1102,11 @@ async function adoptVerifiedFamily(binding) {
       actual.householdId!==binding.householdId||typeof binding.memberId!=='string'||!binding.memberId)
       throw Error('Contexte du foyer non vérifié pour ce membre.');
   };
-  const pending=()=>{const state=states.family;return Boolean(state?.conflict||state?.active&&moduleDigest('family',pick('family'))!==state.synced);};
+  // Binding precedes the first authorized Santé capability read. Ignore the
+  // retained device-only history for identity comparison, never for outgoing writes.
+  const preserveHealth=preserveHistoricalHealth();
+  const bindingDigest=payload=>moduleDigest('family',familyWithoutHistoricalHealth(payload,preserveHealth));
+  const pending=()=>{const state=states.family;return Boolean(state?.conflict||state?.active&&bindingDigest(pick('family'))!==bindingDigest(JSON.parse(state.synced||'{}')));};
   guard();if(inFlight||pending())throw Error('Le registre familial contient des modifications locales en attente ou un conflit.');
   const remote=await readRow('family');guard();
   if(!remote||!Number.isSafeInteger(Number(remote.revision))||Number(remote.revision)<1)throw Error('Registre familial serveur indisponible.');
@@ -1085,8 +1118,8 @@ async function adoptVerifiedFamily(binding) {
   const matches=(remote.payload.familyMembers||[]).filter(member=>member?.id===binding.memberId);
   if(matches.length!==1)throw Error('Le membre canonique est absent ou ambigu dans le foyer.');
   if(inFlight||pending())throw Error('Le registre familial contient des modifications locales en attente ou un conflit.');
-  if(!states.family?.active&&byId.get('family').keys.some(key=>Array.isArray(st[key])&&st[key].length)&&
-    moduleDigest('family',pick('family'))!==moduleDigest('family',incoming))
+  if(!states.family?.active&&byId.get('family').keys.some(key=>(key!=='sharedHealthVisits'||!preserveHealth)&&Array.isArray(st[key])&&st[key].length)&&
+    bindingDigest(pick('family'))!==bindingDigest(incoming))
     throw Error('Un registre familial local existe déjà. Comparez et sauvegardez ses données avant de rejoindre le foyer.');
   backupLocal('family');guard();
   applyShared('family',incoming);
@@ -1409,9 +1442,9 @@ async function syncOne(id) {
   }
   if(id==='missions'){if(state.runeProtocol===2&&!runesV2Available()&&!runesV3Available())throw Error('Protocole familial V2 à revérifier. Historique et demandes conservés.');return syncMissions(state,remote);}
   if(id==='family')return state.conflict?.familyProtocol?restoredFamily(state,remote):syncFamily(state,remote);
-  const local = pick(id), localJson = digest(local), remoteRevision = Number(remote.revision);
+  const local = pick(id), localJson = digest(local), remoteRevision = Number(remote.revision), synced=syncedDigest(id,state.synced);
   if (remoteRevision !== state.revision) {
-    if (localJson !== state.synced) {
+    if (localJson !== synced) {
       state.conflict = {remote};
       await persist();
       return;
@@ -1424,7 +1457,7 @@ async function syncOne(id) {
     return;
   }
   if (id === 'recipes') await stageRecipeImages(local);
-  if (localJson === state.synced) return;
+  if (localJson === synced) return;
   const result = await api.authorized('PATCH', rowQuery(id) +
     '&revision=eq.' + encodeURIComponent(state.revision),
     {payload:local}, {Prefer:'return=representation'});
@@ -1467,7 +1500,7 @@ async function sync() {
 }
 function onSave() {
   if (!ctx || !backendReady || applying || inFlight || !DEFINITIONS.some(d=>
-    states[d.id]?.active && !states[d.id].conflict && (d.id!=='family'||preparationLocalCompatible()) && (moduleDigest(d.id,pick(d.id)) !== states[d.id].synced || d.id==='missions'&&pendingRunes()))) return;
+    states[d.id]?.active && !states[d.id].conflict && (d.id!=='family'||preparationLocalCompatible()) && (moduleDigest(d.id,pick(d.id)) !== syncedDigest(d.id,states[d.id].synced) || d.id==='missions'&&pendingRunes()))) return;
   if (timer) clearTimeout(timer);
   timer = setTimeout(() => { timer = null; void sync(); }, 1500);
 }

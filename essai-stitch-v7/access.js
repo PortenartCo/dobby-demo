@@ -138,7 +138,10 @@ window.DobbyAccess = (() => {
           const previous={token:invitationToken,type:invitationType,userId:lastUser};
           invitationToken='';invitationType='generic';invitation=null;
           void clearInvitation(previous);recovery=false;void api().putMeta(recoveryKey,null);
-          if(!loggingOut&&!(operation&&context?.ui.view==='access-auth'))location.replace('./famille.html#access');
+          if(!loggingOut&&!(operation&&context?.ui.view==='access-auth')){
+            // This subscriber is invoked by the iframe. Resolve the target in the V7 document.
+            window.location.replace(new URL('./famille.html#access',window.location.href).href);
+          }
         }
         lastUser=next.userId;
       });

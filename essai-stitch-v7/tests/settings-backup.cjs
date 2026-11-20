@@ -88,6 +88,63 @@ async function fixture(browser, width = 390) {
       assert.match(await page.locator('#rg-backup-result').innerText(), /téléchargement/i);
     });
 
+    await run('health-history-excluded-from-search-preview-and-general-backup', async ({ page, native, open, archive, choose, accept }) => {
+      const saved = {
+        famHealth: [{ id: 'health-local', name: 'PRIVATE_HEALTH_LEGACY_LOCAL', provider: 'PRIVATE_HEALTH_LEGACY_PROVIDER', person: 'PRIVATE_HEALTH_LEGACY_NAME' }],
+        sharedHealthVisits: [{ id: 'health-shared', title: 'PRIVATE_HEALTH_LEGACY_SHARED', note: 'PRIVATE_HEALTH_LEGACY_NOTE' }],
+        documents: [
+          { id: 'health-doc', title: 'PRIVATE_HEALTH_LEGACY_DOC', category: 'Santé', attachmentName: 'PRIVATE_HEALTH_LEGACY_FILE.pdf' },
+          { id: 'health-archive', title: 'PRIVATE_HEALTH_LEGACY_ARCHIVE', category: 'Santé', archive: { version: 1, archivedAt: '2026-02-02T00:00:00Z' } }
+        ]
+      };
+      await native('st.famHealth=p.famHealth;st.sharedHealthVisits=p.sharedHealthVisits;st.familyDocs.push(...p.documents);save();return houseStore(new Blob(["PRIVATE_HEALTH_LEGACY_BYTES"],{type:"application/pdf"}),"family-health-doc");', saved);
+      await native('return houseStore(new Blob(["PRIVATE_HEALTH_LEGACY_ORPHAN"],{type:"application/pdf"}),"fixture-unlinked");');
+
+      await open('search');
+      await page.locator('#search-input').fill('PRIVATE_HEALTH_LEGACY');
+      assert.match(await page.locator('#state-results-view').innerText(), /Aucun résultat/);
+      assert.doesNotMatch(await native('return xsearch();').then(html => html.replace(/<input[^>]+>/, '')), /PRIVATE_HEALTH_LEGACY/);
+      await page.locator('#search-input').fill('Équipement sauvegardé');
+      assert.match(await page.locator('#state-results-view').innerText(), /Équipement sauvegardé/);
+
+      await open('document-library');
+      assert.match(await page.locator('main').innerText(), /Ancien document autonome/);
+      assert.doesNotMatch(await page.locator('main').innerText(), /PRIVATE_HEALTH_LEGACY/);
+      await open('documents');
+      assert.doesNotMatch(await page.locator('main').innerText(), /PRIVATE_HEALTH_LEGACY/);
+      await page.evaluate(() => DobbyFamilyStitch.open('document', { record: 'health-doc' }));
+      assert.match(await page.locator('main').innerText(), /introuvable|indisponible/i);
+      assert.doesNotMatch(await page.locator('main').innerText(), /PRIVATE_HEALTH_LEGACY/);
+
+      await open('backup');
+      const data = await archive();
+      assert.deepEqual(data.state.famHealth, []);
+      assert.equal(Object.hasOwn(data.state, 'sharedHealthVisits'), false);
+      assert.doesNotMatch(JSON.stringify(data), /PRIVATE_HEALTH_LEGACY|health-doc|health-archive|fixture-unlinked/);
+      assert.deepEqual(data.attachments.map(file => file.id), ['fixture-piece']);
+      data.state.famHealth = [{ id: 'incoming-health', name: 'PRIVATE_HEALTH_LEGACY_UNTRUSTED' }];
+      data.state.sharedHealthVisits = [{ id: 'incoming-shared', title: 'PRIVATE_HEALTH_LEGACY_UNTRUSTED_SHARED' }];
+      data.state.familyDocs.push({ id: 'incoming-health-doc', category: 'Santé', title: 'PRIVATE_HEALTH_LEGACY_UNTRUSTED_DOC', attachmentName: 'private.pdf' });
+      data.attachments.push({ id: 'family-incoming-health-doc', type: 'application/pdf', base64: Buffer.from('PRIVATE_HEALTH_LEGACY_UNTRUSTED_BYTES').toString('base64') });
+      data.state.houseItems[0].name = 'TEST — Équipement restauré';
+      await choose(data);
+      assert.match(await page.locator('#rg-import-preview').innerText(), /1 équipements, 1 fichiers/);
+      assert.doesNotMatch(await page.locator('#rg-import-preview').innerText(), /PRIVATE_HEALTH_LEGACY/);
+      accept(true);
+      await page.locator('[data-fa-action=rg-restore-confirm]').click();
+      await page.waitForFunction(() => /restaurée/i.test(document.querySelector('#rg-backup-result')?.textContent || ''));
+      await page.reload();
+      await page.waitForFunction(() => window.DobbyFamilyStitch?.ready);
+      assert.deepEqual(await native('return st.famHealth;'), saved.famHealth);
+      assert.deepEqual(await native('return st.sharedHealthVisits;'), saved.sharedHealthVisits);
+      assert.deepEqual(await native('return st.familyDocs.filter(d=>d.category==="Santé");'), saved.documents);
+      assert.deepEqual(await native('return st.familyMembers;'), []);
+      assert.match(await native('return st.houseItems[0].name;'), /restauré/);
+      assert.equal(await native('return houseRead("family-health-doc").then(blob=>blob?.text());'), 'PRIVATE_HEALTH_LEGACY_BYTES');
+      assert.equal(await native('return houseRead("fixture-unlinked").then(blob=>blob?.text());'), 'PRIVATE_HEALTH_LEGACY_ORPHAN');
+      assert.equal(await native('return houseRead("family-incoming-health-doc").then(blob=>Boolean(blob));'), false);
+    });
+
     await run('native-export-failure-has-no-false-success', async ({ page, native }) => {
       await native('st.familyNotes=[{id:"fixture-invalid",title:"Invalid fixture",body:null}];save();');
       let downloads = 0; page.on('download', () => downloads++);

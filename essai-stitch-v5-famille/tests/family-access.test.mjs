@@ -72,6 +72,21 @@ test('active identity is accepted only from the matching authenticated server co
  state.permissions.canEdit=false;state.profile.name='Spoof';assert.equal(f.api.state().permissions.canEdit,true);assert.equal(f.api.state().profile.name,'Camille');
  f.setContext({...active(),userId:'another-user'});await assert.rejects(f.api.refresh(),/contexte|identit/i);assert.equal(f.api.state().verified,false);assert.equal(f.binding(),null);
 });
+test('canonical member reservation is scoped to the current Parent and fails on stale identity',async()=>{
+ const f=await fixture(),parent=active();
+ parent.profile.memberCategory='parent';parent.permissions.canCreate=true;
+ f.setContext(parent);await f.api.signIn('camille@example.test','fixture-password');
+ const id='member-v7-00000000-0000-4000-8000-000000000011';
+ f.driver.rpc=async(name,body)=>{assert.equal(name,'dobby_v7_reserve_member_id');assert.deepEqual(body,{p_household_id:HH});return id;};
+ await assert.rejects(f.api.reserveMemberId('another-household'),/non autorisée/);
+ assert.equal(await f.api.reserveMemberId(HH),id);
+ f.driver.rpc=async()=>{throw Object.assign(Error('Ancien catalogue'),{status:404,code:'PGRST202'});};
+ assert.equal(await f.api.reserveMemberId(HH),null);
+ f.driver.rpc=async()=>{throw Object.assign(Error('Réponse privée'),{status:403,code:'42501'});};
+ await assert.rejects(f.api.reserveMemberId(HH),error=>error.code==='42501'&&!error.message.includes('privée'));
+ f.driver.rpc=async()=>{f.native.epoch++;return id;};
+ await assert.rejects(f.api.reserveMemberId(HH),/compte a changé/);
+});
 test('missing backend capability is unavailable and cannot turn membership or local persona into identity',async()=>{
  const f=await fixture();f.driver.rpc=async()=>{throw Object.assign(Error('server internal detail'),{status:404,code:'PGRST202'});};
  await f.api.signIn('camille@example.test','fixture-password');assert.equal(f.api.state().phase,'unavailable');assert.equal(f.api.state().memberId,null);assert.equal(f.binding(),null);assert.equal(f.native.userId,USER);

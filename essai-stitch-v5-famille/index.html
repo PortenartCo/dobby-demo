@@ -1189,32 +1189,34 @@ document.addEventListener('change',async e=>{if(e.target.id==='houseDocFile'){le
 // Dobby V1.3 - personal documents and family notes. Local-only, explicit source type.
 if(!Array.isArray(st.familyDocs))st.familyDocs=[];
 if(!Array.isArray(st.familyNotes))st.familyNotes=[];
-if(!st.docFilter)st.docFilter='Tous';
+if(!st.docFilter||st.docFilter==='Santé')st.docFilter='Tous';
 let docEdit=null, docDetail=null, docNoteEdit=null;
-const docTypes=['Identité et administratif','Assurances','Contrats','Factures et achats','Santé','École et enfants','Maison','Autre'];
+const docTypes=['Identité et administratif','Assurances','Contrats','Factures et achats','École et enfants','Maison','Autre'];
+const isLegacyHealthDocument=row=>row?.category==='Santé';
+const generalDocuments=rows=>rows.filter(row=>!isLegacyHealthDocument(row));
 const docDate=x=>x?houseDateLabel(x):'—';
 const docE=x=>safe(x??'');
 function drawDocuments(){
- let q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');let docs=st.familyDocs.filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));
+ let q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');let docs=generalDocuments(st.familyDocs).filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));
  let notes=st.familyNotes.filter(x=>[x.title,x.body,x.tags].join(' ').toLocaleLowerCase('fr').includes(q));
- if(docEdit!==null)return drawDocForm(docEdit==='new'?null:st.familyDocs.find(x=>x.id===docEdit));
+ if(docEdit!==null)return drawDocForm(docEdit==='new'?null:generalDocuments(st.familyDocs).find(x=>x.id===docEdit));
  if(docNoteEdit!==null)return drawNoteForm(docNoteEdit==='new'?null:st.familyNotes.find(x=>x.id===docNoteEdit));
- if(docDetail){let d=st.familyDocs.find(x=>x.id===docDetail);if(d)return drawDocDetail(d);docDetail=null}
+ if(docDetail){let d=generalDocuments(st.familyDocs).find(x=>x.id===docDetail);if(d)return drawDocDetail(d);docDetail=null}
  return `<div class="eyebrow">Famille · Documents</div><h1>Documents</h1><div class="two"><button class="btn" data-doc="new">＋ Document</button><button class="btn secondary" data-doc="newnote">＋ Mémo</button></div><div class="card"><label for="docSearch">Rechercher partout</label><input id="docSearch" placeholder="Ex. assurance, école, numéro de contrat…" value="${docE(st.docSearch)}"><label for="docFilter">Catégorie</label><select id="docFilter">${['Tous',...docTypes].map(t=>`<option ${st.docFilter===t?'selected':''}>${docE(t)}</option>`).join('')}</select></div><div class="card"><h2>Documents · ${docs.length}</h2>${docs.map(d=>`<div class="doc-row"><div style="min-width:0"><strong>${docE(d.title)}</strong><div class="doc-meta">${docE(d.category)}${d.person?' · '+docE(d.person):''}${d.deadline?' · Échéance '+docDate(d.deadline):''}</div><div class="muted">${docE(d.tags||'')}${d.attachmentName?' · 📎 '+docE(d.attachmentName):''}</div></div><button class="btn secondary small" data-doc="view" data-id="${docE(d.id)}">Voir</button></div>`).join('')||'<div class="empty">Aucun document dans cette catégorie.</div>'}</div><div class="card"><h2>Mémoire familiale · ${notes.length}</h2>${notes.map(n=>`<div class="doc-row"><div style="min-width:0"><strong>${docE(n.title)}</strong><div class="doc-meta">${docE(n.tags||'Note personnelle')}</div><p class="muted">${docE(n.body.slice(0,145))}${n.body.length>145?'…':''}</p></div><button class="btn secondary small" data-doc="editnote" data-id="${docE(n.id)}">Ouvrir</button></div>`).join('')||'<div class="empty">Aucun mémo enregistré.</div>'}</div><div class="card"><h2>Sauvegarde des fiches</h2><p class="helper">Export JSON des métadonnées, notes et mémos. Les fichiers PDF et photos restent dans le navigateur : ils ne sont PAS inclus dans cet export.</p><button class="btn secondary full" data-doc="export">Exporter les fiches et mémos</button><label>Importer des fiches sauvegardées</label><input type="file" id="docImport" accept=".json,application/json"></div><p class="helper">Données locales uniquement. Aucun partage familial ni OCR à ce stade. Gardez les originaux de vos documents en lieu sûr.</p>`;
 }
 function drawDocForm(d){d=d||{};return `<button class="btn secondary small" data-doc="cancel">← Retour</button><h1>${d.id?'Modifier le document':'Ajouter un document'}</h1><form id="familyDocForm"><label>Intitulé *</label><input name="title" maxlength="140" required value="${docE(d.title)}" placeholder="Ex. Assurance habitation 2026"><div class="doc-grid"><div><label>Catégorie</label><select name="category">${docTypes.map(t=>`<option ${d.category===t?'selected':''}>${docE(t)}</option>`).join('')}</select></div><div><label>Personne concernée</label><input name="person" maxlength="80" value="${docE(d.person)}" placeholder="Foyer, enfant…"></div><div><label>Date du document</label><input name="date" type="date" value="${docE(d.date)}"></div><div><label>Échéance / renouvellement</label><input name="deadline" type="date" value="${docE(d.deadline)}"></div></div><label>Organisme / interlocuteur</label><input name="provider" maxlength="120" value="${docE(d.provider)}"><label>Référence (facultatif)</label><input name="reference" maxlength="120" value="${docE(d.reference)}"><label>Mots-clés (séparés par des virgules)</label><input name="tags" maxlength="300" value="${docE(d.tags)}"><label>Notes / informations importantes</label><textarea name="note" maxlength="5000">${docE(d.note)}</textarea><p class="helper">Une date d'échéance enregistrée ne génère pas encore de notification Apple.</p><button class="btn full" type="submit">Enregistrer</button></form>`}
 function drawDocDetail(d){return `<button class="btn secondary small" data-doc="back">← Documents</button><h1>${docE(d.title)}</h1><span class="pill">${docE(d.category)}</span><div class="card">${[['Personne',d.person],['Organisme',d.provider],['Référence',d.reference],['Date du document',docDate(d.date)],['Échéance',docDate(d.deadline)],['Mots-clés',d.tags]].map(([a,b])=>`<p><strong>${a}</strong> : ${docE(b||'—')}</p>`).join('')}<div class="doc-preview-card doc-preview">${docE(d.note||'Aucune note')}</div><div class="actions"><button class="btn secondary small" data-doc="edit" data-id="${docE(d.id)}">Modifier</button><button class="btn outline small" data-doc="delete" data-id="${docE(d.id)}">Supprimer</button></div></div><div class="card"><h2>Pièce jointe</h2><p class="muted">${d.attachmentName?'📎 '+docE(d.attachmentName):'Pas de pièce jointe'}</p>${d.attachmentName?`<div class="actions"><button class="btn small secondary" data-doc="download" data-id="${docE(d.id)}">Ouvrir / enregistrer</button><button class="btn small outline" data-doc="detach" data-id="${docE(d.id)}">Retirer</button></div>`:''}<label>Ajouter ou remplacer un fichier</label><input type="file" id="familyDocFile" accept=".pdf,image/jpeg,image/png,image/webp,application/pdf"><p class="helper">PDF ou image, 10 Mo maximum. Stockage sur cet appareil uniquement.</p></div>`}
 function drawNoteForm(n){n=n||{};return `<button class="btn secondary small" data-doc="cancel">← Retour</button><h1>${n.id?'Modifier un mémo':'Nouveau mémo familial'}</h1><form id="familyNoteForm"><label>Titre *</label><input name="title" required maxlength="140" value="${docE(n.title)}" placeholder="Ex. Consignes garderie"><label>Mots-clés</label><input name="tags" maxlength="300" value="${docE(n.tags)}"><label>Informations à conserver *</label><textarea name="body" required maxlength="10000" style="min-height:200px">${docE(n.body)}</textarea><button class="btn full" type="submit">Enregistrer le mémo</button>${n.id?`<button type="button" class="btn outline full" data-doc="deletenote" data-id="${docE(n.id)}">Supprimer le mémo</button>`:''}</form>`}
 function docRefresh(){if(st.page==='documents'){document.getElementById('screen').innerHTML=drawDocuments();save()}}
-document.addEventListener('click',async e=>{let b=e.target.closest('[data-doc]');if(!b)return;let a=b.dataset.doc,id=b.dataset.id,d=st.familyDocs.find(x=>x.id===id);if(a==='new'){docEdit='new';docDetail=null}if(a==='newnote'){docNoteEdit='new';docDetail=null}if(a==='cancel'){docEdit=null;docNoteEdit=null}if(a==='view'){docDetail=id;docEdit=null}if(a==='back'){docDetail=null;docEdit=null}if(a==='edit'){docEdit=id;docDetail=null}if(a==='editnote'){docNoteEdit=id;docDetail=null}if(a==='delete'&&d&&confirm('Supprimer cette fiche et sa pièce jointe locale ?')){await houseRead('family-'+id,true).catch(()=>{});st.familyDocs=st.familyDocs.filter(x=>x.id!==id);docDetail=null}if(a==='deletenote'&&confirm('Supprimer ce mémo ?')){st.familyNotes=st.familyNotes.filter(x=>x.id!==id);docNoteEdit=null}if(a==='detach'&&d&&confirm('Retirer la pièce jointe ?')){await houseRead('family-'+id,true).catch(()=>{});d.attachmentName='';d.attachmentType=''}if(a==='download'&&d){let blob=await houseRead('family-'+id).catch(()=>null);if(!blob){alert('Pièce jointe introuvable sur cet appareil.');return}let url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=d.attachmentName||'document';link.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}if(a==='export')downloadJson('dobby_documents_memoires.json',{format:'dobby-family-docs',version:1,documents:st.familyDocs,notes:st.familyNotes});docRefresh()});
-document.addEventListener('submit',e=>{if(e.target.id==='familyDocForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();if(!d.title)return;d.id=docEdit==='new'?'fd-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docEdit;let i=st.familyDocs.findIndex(x=>x.id===d.id);if(i<0)st.familyDocs.push(d);else st.familyDocs[i]={...st.familyDocs[i],...d};docEdit=null;docDetail=d.id;docRefresh()}if(e.target.id==='familyNoteForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();d.body=String(d.body||'').trim();if(!d.title||!d.body)return;d.id=docNoteEdit==='new'?'fn-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docNoteEdit;let i=st.familyNotes.findIndex(x=>x.id===d.id);if(i<0)st.familyNotes.push(d);else st.familyNotes[i]={...st.familyNotes[i],...d};docNoteEdit=null;docRefresh()}});
+document.addEventListener('click',async e=>{let b=e.target.closest('[data-doc]');if(!b)return;let a=b.dataset.doc,id=b.dataset.id,d=st.familyDocs.find(x=>x.id===id);if(isLegacyHealthDocument(d))return;if(a==='new'){docEdit='new';docDetail=null}if(a==='newnote'){docNoteEdit='new';docDetail=null}if(a==='cancel'){docEdit=null;docNoteEdit=null}if(a==='view'){docDetail=id;docEdit=null}if(a==='back'){docDetail=null;docEdit=null}if(a==='edit'){docEdit=id;docDetail=null}if(a==='editnote'){docNoteEdit=id;docDetail=null}if(a==='delete'&&d&&confirm('Supprimer cette fiche et sa pièce jointe locale ?')){await houseRead('family-'+id,true).catch(()=>{});st.familyDocs=st.familyDocs.filter(x=>x.id!==id);docDetail=null}if(a==='deletenote'&&confirm('Supprimer ce mémo ?')){st.familyNotes=st.familyNotes.filter(x=>x.id!==id);docNoteEdit=null}if(a==='detach'&&d&&confirm('Retirer la pièce jointe ?')){await houseRead('family-'+id,true).catch(()=>{});d.attachmentName='';d.attachmentType=''}if(a==='download'&&d){let blob=await houseRead('family-'+id).catch(()=>null);if(!blob){alert('Pièce jointe introuvable sur cet appareil.');return}let url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=d.attachmentName||'document';link.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}if(a==='export')downloadJson('dobby_documents_memoires.json',{format:'dobby-family-docs',version:1,documents:generalDocuments(st.familyDocs),notes:st.familyNotes});docRefresh()});
+document.addEventListener('submit',e=>{if(e.target.id==='familyDocForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();if(!d.title||isLegacyHealthDocument(d)||isLegacyHealthDocument(st.familyDocs.find(x=>x.id===docEdit)))return;d.id=docEdit==='new'?'fd-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docEdit;let i=st.familyDocs.findIndex(x=>x.id===d.id);if(i<0)st.familyDocs.push(d);else st.familyDocs[i]={...st.familyDocs[i],...d};docEdit=null;docDetail=d.id;docRefresh()}if(e.target.id==='familyNoteForm'){e.preventDefault();let d=Object.fromEntries(new FormData(e.target).entries());d.title=String(d.title||'').trim();d.body=String(d.body||'').trim();if(!d.title||!d.body)return;d.id=docNoteEdit==='new'?'fn-'+Date.now()+'-'+Math.random().toString(36).slice(2,7):docNoteEdit;let i=st.familyNotes.findIndex(x=>x.id===d.id);if(i<0)st.familyNotes.push(d);else st.familyNotes[i]={...st.familyNotes[i],...d};docNoteEdit=null;docRefresh()}});
 document.addEventListener('input',e=>{if(e.target.id==='docSearch'){st.docSearch=e.target.value;let pos=e.target.selectionStart;docRefresh();let input=document.getElementById('docSearch');input?.focus();input?.setSelectionRange(pos,pos)}});
-document.addEventListener('change',async e=>{if(e.target.id==='docFilter'){st.docFilter=e.target.value;docRefresh()}if(e.target.id==='familyDocFile'){let file=e.target.files?.[0],d=st.familyDocs.find(x=>x.id===docDetail);if(!file||!d)return;if(file.size>10*1024*1024||!['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)){alert('PDF ou image (maximum 10 Mo).');return}try{
+document.addEventListener('change',async e=>{if(e.target.id==='docFilter'){st.docFilter=e.target.value;docRefresh()}if(e.target.id==='familyDocFile'){let file=e.target.files?.[0],d=generalDocuments(st.familyDocs).find(x=>x.id===docDetail);if(!file||!d)return;if(file.size>10*1024*1024||!['application/pdf','image/jpeg','image/png','image/webp'].includes(file.type)){alert('PDF ou image (maximum 10 Mo).');return}try{
  const writer=window.DobbyFamilyContracts,expected=writer?.snapshot(d.id),oldName=d.attachmentName,oldType=d.attachmentType;let committed=false;
  const validate=()=>{window.DobbyArchiveSources?.assertMutable('documents',d.id);if(st.familyDocs.find(x=>x.id===d.id)!==d||expected&&writer.snapshot(d.id)!==expected)throw Error('La fiche ou le foyer a changé pendant la lecture du fichier.');};
  const commit=()=>{d.attachmentName=file.name;d.attachmentType=file.type;try{docRefresh();committed=true;}catch(error){d.attachmentName=oldName;d.attachmentType=oldType;throw error;}return()=>{const current=st.familyDocs.find(x=>x.id===d.id);if(current?.attachmentName===file.name&&current.attachmentType===file.type){current.attachmentName=oldName;current.attachmentType=oldType;save();render();}};};
  await houseStore(file,'family-'+d.id,{validate,commit});if(!committed){validate();commit();}
-}catch(error){alert('Stockage indisponible ou saturé. Conservez le document original. '+(error?.message||''))}}if(e.target.id==='docImport'){let f=e.target.files?.[0];if(!f)return;try{if(f.size>2*1024*1024)throw Error();let p=JSON.parse(await f.text());if(p.format!=='dobby-family-docs'||p.version!==1||!Array.isArray(p.documents)||!Array.isArray(p.notes)||p.documents.length>2000||p.notes.length>2000||p.documents.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||!x.title.trim())||p.notes.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||typeof x.body!=='string'))throw Error();for(const [source,rows,key]of [['documents',p.documents,'familyDocs'],['localNotes',p.notes,'familyNotes']])for(const row of rows)window.DobbyArchiveSources.mergeRestored(source,st[key].find(x=>x.id===row.id),row);if(!confirm('Fusionner les fiches et mémos de la sauvegarde ? Les fichiers joints ne sont pas restaurés.'))return;let docs=new Map(st.familyDocs.map(x=>[x.id,x]));p.documents.forEach(x=>{let prior=docs.get(x.id);docs.set(x.id,window.DobbyFamilyContracts?window.DobbyFamilyContracts.mergeImported(prior,x):{...prior,...x,attachmentName:prior?.attachmentName||'',attachmentType:prior?.attachmentType||''})});st.familyDocs=[...docs.values()];let notes=new Map(st.familyNotes.map(x=>[x.id,x]));p.notes.forEach(x=>notes.set(x.id,window.DobbyArchiveSources.mergeRestored('localNotes',notes.get(x.id),x)));st.familyNotes=[...notes.values()];docRefresh()}catch{alert('Fichier de sauvegarde invalide.')}}});
+}catch(error){alert('Stockage indisponible ou saturé. Conservez le document original. '+(error?.message||''))}}if(e.target.id==='docImport'){let f=e.target.files?.[0];if(!f)return;try{if(f.size>2*1024*1024)throw Error();let p=JSON.parse(await f.text());if(p.format!=='dobby-family-docs'||p.version!==1||!Array.isArray(p.documents)||!Array.isArray(p.notes)||p.documents.length>2000||p.notes.length>2000)throw Error();p.documents=generalDocuments(p.documents);if(p.documents.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||!x.title.trim())||p.notes.some(x=>!x||typeof x.id!=='string'||typeof x.title!=='string'||typeof x.body!=='string'))throw Error();for(const [source,rows,key]of [['documents',p.documents,'familyDocs'],['localNotes',p.notes,'familyNotes']])for(const row of rows)window.DobbyArchiveSources.mergeRestored(source,st[key].find(x=>x.id===row.id),row);if(!confirm('Fusionner les fiches et mémos de la sauvegarde ? Les fichiers joints ne sont pas restaurés.'))return;let docs=new Map(st.familyDocs.map(x=>[x.id,x]));p.documents.forEach(x=>{let prior=docs.get(x.id);docs.set(x.id,window.DobbyFamilyContracts?window.DobbyFamilyContracts.mergeImported(prior,x):{...prior,...x,attachmentName:prior?.attachmentName||'',attachmentType:prior?.attachmentType||''})});st.familyDocs=[...docs.values()];let notes=new Map(st.familyNotes.map(x=>[x.id,x]));p.notes.forEach(x=>notes.set(x.id,window.DobbyArchiveSources.mergeRestored('localNotes',notes.get(x.id),x)));st.familyNotes=[...notes.values()];docRefresh()}catch{alert('Fichier de sauvegarde invalide.')}}});
 
 // Dobby V1.4: local trial tools. Nothing here connects to Apple or a remote server.
 if(!Array.isArray(st.famContacts))st.famContacts=[];
@@ -1244,8 +1246,7 @@ function xsearch(){let q=String(st.globalQuery||'').trim().toLocaleLowerCase('fr
  const add=(kind,label,meta,hay,action,id)=>{if(q&&hay.toLocaleLowerCase('fr').includes(q))result.push({kind,label,meta,action,id})};
  st.famContacts.forEach(r=>add('Contact',r.name,r.role,[r.name,r.role,r.phone,r.email,r.note].join(' '),'contactedit',r.id));
  st.famLists.forEach(r=>add('Liste',r.name,r.items.length+' éléments',[r.name,...r.items.map(v=>v.name)].join(' '),'listopen',r.id));
- st.famHealth.forEach(r=>add('Santé — essai',r.name,xdate(r.date),[r.name,r.provider,r.reference].join(' '),'healthedit',r.id));
- st.familyDocs.forEach(r=>add('Document',r.title,r.category,[r.title,r.category,r.provider,r.reference,r.tags,r.note].join(' '),'docopen',r.id));
+ generalDocuments(st.familyDocs).forEach(r=>add('Document',r.title,r.category,[r.title,r.category,r.provider,r.reference,r.tags,r.note].join(' '),'docopen',r.id));
  st.familyNotes.forEach(r=>add('Mémo',r.title,'Mémoire familiale',[r.title,r.body,r.tags].join(' '),'noteopen',r.id));
  st.houseItems.forEach(r=>add('Équipement',r.name,r.place,[r.name,r.category,r.brand,r.model,r.place,r.notes].join(' '),'houseopen',r.id));
  allRecipes().filter(r=>!r.removedAt).forEach(r=>add('Recette',r.name,r.category,[r.name,r.category,...r.ingredients.map(i=>i[0])].join(' '),'recipeopen',r.id));
@@ -1277,6 +1278,7 @@ document.addEventListener('click',e=>{let b=e.target.closest('[data-extra]');if(
  if(a==='listdelete'&&confirm('Supprimer cette liste ?'))st.famLists=st.famLists.filter(r=>r.id!==id);
  if(a==='listadd'){let r=xfind(st.famLists,id),input=document.getElementById('xListInput'),v=input?.value.trim();if(r&&v)r.items.push({name:v.slice(0,160),done:false})}
  if(a==='listremove'){let r=xfind(st.famLists,id);if(r)r.items.splice(Number(b.dataset.i),1)}
+ if(['healthnew','healthedit','healthdelete'].includes(a)&&!legacyHealthDemo())return;
  if(a==='healthnew')st.extraPage='health:edit';
  if(a==='healthedit')st.extraPage='health:edit:'+id;
  if(a==='healthdelete'){const record=st.famHealth.find(row=>row.id===id);if(!record)return;try{v23AssertHealthWrite(record,null,false);}catch(error){alert(error.message);return}if(confirm('Supprimer cette fiche ?'))st.famHealth=st.famHealth.filter(r=>r.id!==id);}
@@ -1387,7 +1389,7 @@ async function smartCommit(){
  if(smartSaving)return;
  let g={...smartGuess,target:document.getElementById('smartTarget').value,title:document.getElementById('smartTitle').value.trim(),category:document.getElementById('smartCategory').value,date:document.getElementById('smartDate').value,provider:document.getElementById('smartProvider').value.trim(),reference:document.getElementById('smartReference').value.trim(),deadline:document.getElementById('smartDeadline').value,brand:document.getElementById('smartBrand').value.trim(),model:document.getElementById('smartModel').value.trim(),note:document.getElementById('smartNotes').value.trim()};
  if(!g.title){alert('Renseigne un intitulé avant de confirmer.');return}
- const existing=g.target==='equipment'?st.houseItems:st.familyDocs;
+ const existing=g.target==='equipment'?st.houseItems:generalDocuments(st.familyDocs);
  const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
  const duplicate=existing.find(r=>{
    if(g.target==='equipment')return (g.brand&&g.model&&norm(r.brand)===norm(g.brand)&&norm(r.model)===norm(g.model))||norm(r.name)===norm(g.title);
@@ -1512,13 +1514,65 @@ reconcile();existingSave();
   for(const doc of data.state.familyDocs)if(doc.attachmentName&&!ids.has('family-'+doc.id))throw Error('Pièce jointe absente : '+doc.title);
   return items;
  }
- const backupUI=()=>`<details class="v2-tools-drawer"><summary>Sauvegarde et restauration complète</summary><div class="card"><h2>Sauvegarde complète</h2><p class="helper">Exporter toutes les fiches et les pièces jointes de cet appareil. Le fichier n’est pas chiffré : conserve-le dans un emplacement protégé. Aucun stockage distant.</p><button class="btn full" data-backup="export">Exporter tout Dobby</button><label>Restaurer une sauvegarde complète</label><input type="file" id="dobbyFullRestore" accept=".json,application/json"><p class="helper">Remplace les données locales après validation du fichier. Conserve au préalable une copie de sécurité. Maximum 75 Mo.</p></div></details>`;
+ const stateHealthKeys=['sharedHealthVisits','v21HealthPerson','v23HealthMemberId'];
+ function documentFileKeys(rows){
+  const keys=new Set();
+  for(const row of rows){
+   if(typeof row?.id!=='string')continue;
+   keys.add('family-'+row.id);
+   for(const part of Array.isArray(row.attachments)?row.attachments:[]){
+    if(typeof part?.key==='string')keys.add(part.key);
+   }
+  }
+  return keys;
+ }
+ function generalFileKeys(state){
+  const keys=documentFileKeys(generalDocuments(state.familyDocs));
+  for(const row of state.houseDocs)if(typeof row?.id==='string')keys.add(row.id);
+  return keys;
+ }
+ function generalBackupState(state){
+  const result={...state,famHealth:[]};
+  if(Array.isArray(state.familyDocs))result.familyDocs=generalDocuments(state.familyDocs);
+  for(const field of [...stateHealthKeys,'globalQuery','docSearch'])delete result[field];
+  if(result.extraPage?.split?.(':')[0]==='health')result.extraPage='';
+  return result;
+ }
+ function prepareGeneralBackup(data){
+  if(!isObj(data)||!isObj(data.state)||!Array.isArray(data.attachments)||data.attachments.length>1500)throw Error('Format de sauvegarde invalide');
+  const state=generalBackupState(data.state);
+  validateState(state);
+  const general=generalFileKeys(state),health=documentFileKeys(data.state.familyDocs.filter(isLegacyHealthDocument));
+  const attachments=data.attachments.filter(item=>item==null||general.has(item.id)&&!health.has(item.id));
+  const backup={...data,state,attachments};
+  return {state,attachments:validatePayload(backup)};
+ }
+ function parseGeneralBackup(raw){try{return JSON.parse(raw);}catch{throw Error('Archive JSON illisible.');}}
+ function preserveLocalHealth(state,incoming,existing){
+  const localDocs=st.familyDocs.filter(isLegacyHealthDocument),ids=new Set(localDocs.map(row=>row.id));
+  const protectedFiles=documentFileKeys(localDocs);
+  if(state.familyDocs.some(row=>ids.has(row.id))||incoming.some(item=>protectedFiles.has(item.id)))throw Error('La sauvegarde contient un identifiant local réservé.');
+  state.familyDocs.push(...localDocs);
+  state.famHealth=st.famHealth;
+  for(const field of stateHealthKeys)if(Object.hasOwn(st,field))state[field]=st[field];
+  const previousGeneral=generalFileKeys(st),received=new Set(incoming.map(item=>item.id));
+  return incoming.concat(existing.filter(item=>protectedFiles.has(item.id)||!previousGeneral.has(item.id)&&!received.has(item.id)));
+ }
+ const backupUI=()=>`<details class="v2-tools-drawer"><summary>Sauvegarde et restauration</summary><div class="card"><h2>Sauvegarde générale</h2><p class="helper">Les données Santé restent dans leur emplacement d’origine. Conservez le fichier JSON non chiffré dans un emplacement protégé.</p><button class="btn full" data-backup="export">Créer une sauvegarde</button><label>Restaurer une sauvegarde</label><input type="file" id="dobbyFullRestore" accept=".json,application/json"><p class="helper">Remplace les données couvertes par la sauvegarde après validation du fichier. Maximum 75 Mo.</p></div></details>`;
  const prior=drawFamily;drawFamily=function(){return prior()+backupUI()};
  document.addEventListener('click',async e=>{
   const button=e.target.closest('[data-backup]');if(!button||button.dataset.backup!=='export')return;button.disabled=true;
   try{
-   const attachments=[];for(const d of await listAttachments()){if(!(d.blob instanceof Blob))throw Error('Pièce jointe corrompue');attachments.push({id:d.id,type:d.blob.type,base64:await toB64(d.blob)})}
-   const state=JSON.parse(JSON.stringify({...st,customRecipes:custom})),payload={format:'dobby-complete-backup',version:1,createdAt:new Date().toISOString(),state,attachments};validatePayload(payload);
+   const scope=window.DobbyFamilyHouse?.contextSnapshot?.();
+   window.DobbyFamilyHouse?.assertWritable?.();
+   const state=JSON.parse(JSON.stringify(generalBackupState({...st,customRecipes:custom})));validateState(state);
+   const general=generalFileKeys(state),health=documentFileKeys(st.familyDocs.filter(isLegacyHealthDocument));
+   const attachments=[];for(const d of await listAttachments()){if(!general.has(d.id)||health.has(d.id))continue;if(!(d.blob instanceof Blob))throw Error('Pièce jointe corrompue');attachments.push({id:d.id,type:d.blob.type,base64:await toB64(d.blob)})}
+   window.DobbyFamilyHouse?.assertWritable?.();
+   if(scope!==window.DobbyFamilyHouse?.contextSnapshot?.())throw Error('Le foyer ou le compte a changé pendant la sauvegarde.');
+   const currentHealth=documentFileKeys(st.familyDocs.filter(isLegacyHealthDocument));
+   if(state.familyDocs.some(row=>currentHealth.has('family-'+row.id))||attachments.some(item=>currentHealth.has(item.id)))throw Error('Les documents ont changé pendant la sauvegarde. Recommencez.');
+   const payload={format:'dobby-complete-backup',version:1,createdAt:new Date().toISOString(),state,attachments};validatePayload(payload);
    const raw=JSON.stringify(payload);if(new Blob([raw]).size>MAX_FILE)throw Error('Sauvegarde trop volumineuse (>75 Mo)');saveBlob('dobby_sauvegarde_complete_'+todayISO()+'.json',new Blob([raw],{type:'application/json'}));
   }catch(err){alert('Sauvegarde impossible : '+(err?.message||'erreur inconnue'))}finally{button.disabled=false}
  });
@@ -1532,12 +1586,13 @@ reconcile();existingSave();
   const sameRestoreScope=()=>restoreScope===window.DobbyFamilyHouse?.contextSnapshot?.();
   const assertRestoreScope=()=>{window.DobbyFamilyHouse?.assertWritable?.();if(!sameRestoreScope())throw Error('Le foyer ou le compte a changé pendant la restauration.');if(restoreData!==JSON.stringify({state:st,custom}))throw Error('Les données locales ont changé pendant la restauration. Choisissez à nouveau la sauvegarde.');};
   try{
-   assertRestoreScope();if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const data=JSON.parse(await file.text()),incoming=validatePayload(data);assertRestoreScope();
-   if(!confirm('Remplacer toutes les données locales par cette sauvegarde ? Les données actuelles seront perdues si tu n’en as pas conservé une copie.'))return;
+   assertRestoreScope();if(file.size>MAX_FILE)throw Error('Fichier trop volumineux');const {state:incomingState,attachments:incoming}=prepareGeneralBackup(parseGeneralBackup(await file.text()));assertRestoreScope();
+   if(!confirm('Remplacer toutes les données locales couvertes par cette sauvegarde ? Les données Santé restent sur cet appareil.'))return;
    assertRestoreScope();rawBefore=localStorage.getItem(key);oldFiles=await listAttachments();assertRestoreScope();
    // Replacement of all documents is one IndexedDB transaction. Keep prior blobs for rollback.
-   await replaceAttachments(incoming,assertRestoreScope);replaced=true;assertRestoreScope();
-   stateReplaced=true;st=data.state;custom=st.customRecipes;
+   const files=preserveLocalHealth(incomingState,incoming,oldFiles);
+   await replaceAttachments(files,assertRestoreScope);replaced=true;assertRestoreScope();
+   stateReplaced=true;st=incomingState;custom=st.customRecipes;
    st.page='family';st.extraPage='';st.detail=null;st.houseView=null;houseEdit=null;docEdit=null;docDetail=null;docNoteEdit=null;batchCandidate=null;smartReset();
    localStorage.setItem(key,JSON.stringify(st));
    render();
@@ -1551,7 +1606,7 @@ reconcile();existingSave();
   }finally{input.disabled=false}
  });
  // Exposed only for isolated automated tests, not linked from UI.
- window.dobbyBackupValidation={validatePayload,validateState};
+ window.dobbyBackupValidation={validatePayload,validateState,preview(data){const {state,attachments}=prepareGeneralBackup(data);return {equipment:state.houseItems.length,files:attachments.length};}};
 })();
 
 </script><script>
@@ -1612,8 +1667,8 @@ const v21OldHouseForm=houseForm;
 houseForm=function(item){return `<div class="v21-form-wrap">${v21OldHouseForm(item)}</div>`};
 const v21OldDocuments=drawDocuments;
 drawDocuments=function(){if(docEdit!==null||docNoteEdit!==null||docDetail)return `<div class="v21-form-wrap">${v21OldDocuments()}</div>`;
- const q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');const docs=st.familyDocs.filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));const notes=st.familyNotes.filter(x=>[x.title,x.body,x.tags].join(' ').toLocaleLowerCase('fr').includes(q));
- return `${v21Heading('Vos archives','Documents','<button class="v21-text-link" data-action="photo">＋ Importer</button>')}<div class="card"><input id="docSearch" placeholder="⌕ Rechercher un document…" value="${safe(st.docSearch||'')}" aria-label="Rechercher un document"><div class="v21-filter-line" style="margin-top:11px"><button data-v21="docs-filter" data-filter="Tous" class="${st.docFilter==='Tous'?'active':''}">Tous</button>${['Contrats','Factures et achats','Assurances','Santé','Maison'].map(x=>`<button data-v21="docs-filter" data-filter="${x}" class="${st.docFilter===x?'active':''}">${x==='Factures et achats'?'Factures':x}</button>`).join('')}</div><details class="v21-doc-advanced"><summary>Autres catégories</summary><select id="docFilter" style="margin-top:8px;max-width:100%" aria-label="Autres catégories">${['Tous',...docTypes].map(x=>`<option ${st.docFilter===x?'selected':''}>${safe(x)}</option>`).join('')}</select></details></div><section class="card"><div class="v2-panel-head"><h2>Documents</h2><span class="v2-count">${docs.length}</span></div>${docs.map(x=>`<button class="v21-entry" data-doc="view" data-id="${safe(x.id)}"><span class="v21-entry-icon ${/facture|contrat/i.test(x.category)?'warm':'cool'}">${v21TypeIcon(x.category)}</span><span class="v21-entry-main"><strong>${safe(x.title)}</strong><small>${safe(x.category)}${x.date?' · '+v21Date(x.date):''}</small>${x.deadline?`<small style="color:#b47936">Échéance : ${v21Date(x.deadline)}</small>`:''}</span><span class="v21-entry-arrow">›</span></button>`).join('')||v21Empty('Aucun document dans cette catégorie.')}</section><section class="card"><h2>Mémoire familiale</h2>${notes.map(n=>`<button class="v21-entry" data-doc="editnote" data-id="${safe(n.id)}"><span class="v21-entry-icon">✎</span><span class="v21-entry-main"><strong>${safe(n.title)}</strong><small>${safe((n.body||'').slice(0,70))}</small></span><span class="v21-entry-arrow">›</span></button>`).join('')||'<p class="v21-mini-note">Aucun mémo.</p>'}<button class="v21-secondary-button" data-doc="newnote">＋ Ajouter un mémo</button></section><div class="v21-card-actions"><button class="btn secondary" data-extra="contracts">Contrats et échéances</button><button class="btn secondary" data-doc="new">Fiche manuelle</button></div>`;
+ const q=String(st.docSearch||'').trim().toLocaleLowerCase('fr');const docs=generalDocuments(st.familyDocs).filter(x=>(st.docFilter==='Tous'||x.category===st.docFilter)&&[x.title,x.category,x.person,x.tags,x.note,x.provider].join(' ').toLocaleLowerCase('fr').includes(q));const notes=st.familyNotes.filter(x=>[x.title,x.body,x.tags].join(' ').toLocaleLowerCase('fr').includes(q));
+ return `${v21Heading('Vos archives','Documents','<button class="v21-text-link" data-action="photo">＋ Importer</button>')}<div class="card"><input id="docSearch" placeholder="⌕ Rechercher un document…" value="${safe(st.docSearch||'')}" aria-label="Rechercher un document"><div class="v21-filter-line" style="margin-top:11px"><button data-v21="docs-filter" data-filter="Tous" class="${st.docFilter==='Tous'?'active':''}">Tous</button>${['Contrats','Factures et achats','Assurances','Maison'].map(x=>`<button data-v21="docs-filter" data-filter="${x}" class="${st.docFilter===x?'active':''}">${x==='Factures et achats'?'Factures':x}</button>`).join('')}</div><details class="v21-doc-advanced"><summary>Autres catégories</summary><select id="docFilter" style="margin-top:8px;max-width:100%" aria-label="Autres catégories">${['Tous',...docTypes].map(x=>`<option ${st.docFilter===x?'selected':''}>${safe(x)}</option>`).join('')}</select></details></div><section class="card"><div class="v2-panel-head"><h2>Documents</h2><span class="v2-count">${docs.length}</span></div>${docs.map(x=>`<button class="v21-entry" data-doc="view" data-id="${safe(x.id)}"><span class="v21-entry-icon ${/facture|contrat/i.test(x.category)?'warm':'cool'}">${v21TypeIcon(x.category)}</span><span class="v21-entry-main"><strong>${safe(x.title)}</strong><small>${safe(x.category)}${x.date?' · '+v21Date(x.date):''}</small>${x.deadline?`<small style="color:#b47936">Échéance : ${v21Date(x.deadline)}</small>`:''}</span><span class="v21-entry-arrow">›</span></button>`).join('')||v21Empty('Aucun document dans cette catégorie.')}</section><section class="card"><h2>Mémoire familiale</h2>${notes.map(n=>`<button class="v21-entry" data-doc="editnote" data-id="${safe(n.id)}"><span class="v21-entry-icon">✎</span><span class="v21-entry-main"><strong>${safe(n.title)}</strong><small>${safe((n.body||'').slice(0,70))}</small></span><span class="v21-entry-arrow">›</span></button>`).join('')||'<p class="v21-mini-note">Aucun mémo.</p>'}<button class="v21-secondary-button" data-doc="newnote">＋ Ajouter un mémo</button></section><div class="v21-card-actions"><button class="btn secondary" data-extra="contracts">Contrats et échéances</button><button class="btn secondary" data-doc="new">Fiche manuelle</button></div>`;
 };
 // Family is a navigation hub, not a set of non-functioning links to Apple apps.
 drawFamily=function(){const due=v2ActiveTasks();return `${v21Heading('La famille','Famille')}<section class="card"><div class="v2-panel-head"><h2>Organisation</h2><span class="v2-count">${due.length}</span></div>${due.slice(0,3).map(x=>`<div class="v21-entry"><span class="v21-entry-icon warm">☑</span><span class="v21-entry-main"><strong>${safe(x.title)}</strong><small>${safe(x.due)} · ${safe(x.sourceLabel||'')}</small></span></div>`).join('')||'<p class="v21-mini-note">Aucune tâche automatique en attente aujourd’hui.</p>'}<p class="v21-mini-note">Les tâches et événements Apple seront intégrés après le raccordement iOS.</p></section><section class="card"><h2>Outils familiaux</h2>${[['👥','Répertoire familial','Contacts utiles','contacts'],['☑','Listes partagées','Vacances, anniversaire, école…','lists'],['♡','Carnet de santé','Rendez-vous et documents (test)','health']].map(([emoji,title,description,route])=>`<button class="v21-entry" data-extra="${route}"><span class="v21-entry-icon">${emoji}</span><span class="v21-entry-main"><strong>${title}</strong><small>${description}</small></span><span class="v21-entry-arrow">›</span></button>`).join('')}</section>`};
@@ -1723,16 +1778,16 @@ document.addEventListener('click',e=>{
  const member=e.target.closest('[data-v23-member]');if(member){v23MemberAction(member);return}
 });
 
-// One configurable family directory, usable by every module locally. Sync will be native later.
+// The family directory is independent of names stored in the old local health notebook.
 st.familyMembers = Array.isArray(st.familyMembers)?st.familyMembers:[];
-if(!st.familyMembers.length && (st.famHealth||[]).length){
- const old=[...new Set(st.famHealth.map(x=>String(x.person||'').trim()).filter(Boolean))];
- st.familyMembers=old.map((name,i)=>({id:'legacy-'+i,name,birthdate:'',avatar:'👤'}));
-}
 let v23MemberEdit=null;
 const v23Members=()=>st.familyMembers||[];
 const v23MemberById=id=>v23Members().find(x=>x.id===id);
 const v23ActiveMember=()=>v23MemberById(st.v23HealthMemberId)||v23Members()[0]||null;
+function legacyHealthDemo(){return Boolean(window.DobbyReview&&!window.DobbyFamilyUI?.connectionState?.()?.userId);}
+window.addEventListener?.('dobby:access-change',()=>{
+ if(!legacyHealthDemo()&&document.getElementById('xHealthForm'))render();
+});
 // Server identity binding is distinct from household membership and local UI selection.
 const v23MemberContext=()=>{
  if(window.DobbyReview)return{demo:true,actorId:window.DobbyReview.demoMemberId||null,members:v23Members()};
@@ -1757,6 +1812,7 @@ function v23AssertHealthWrite(previous,next,shared=false){
  for(const record of [previous,next].filter(Boolean)){const access=v23HealthPermissions(record,shared);if(!access.canEdit)throw Error(access.reason);}
 }
 function v23GuardLocalHealth(id,next){
+ if(!legacyHealthDemo())return false;
  const previous=(st.famHealth||[]).find(row=>row.id===id);
  try{v23AssertHealthWrite(previous,next,false);return true;}catch(error){alert(error.message);return false;}
 }
@@ -1804,7 +1860,8 @@ const v23FinishMagicCeremony=id=>{
  const complete=window.DobbyMagicIdentity.isCeremonyComplete(member);
  return v23SubmitConfirmedMagic(member,{magicCeremony:complete?'complete':'deferred'});
 };
-window.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,saveMagicChoice:v23SaveMagicChoice,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite});
+const v23MemberSaves=new WeakMap();
+window.DobbyFamilyMembers=Object.freeze({permissions:v23MemberPermissions,category:member=>window.DobbyFamilyMemberPolicy.category(member),mealEligibility:member=>window.DobbyFamilyMemberPolicy.mealEligibility(member),saveMagicResult:v23SaveMagicResult,saveMagicChoice:v23SaveMagicChoice,finishMagicCeremony:v23FinishMagicCeremony,healthPermissions:v23HealthPermissions,assertHealthWrite:v23AssertHealthWrite,memberSubmission:form=>v23MemberSaves.get(form)});
 const v23OldHealth=xhealth;
 xhealth=function(){
  const selected=v23ActiveMember();const people=v23Members();
@@ -1812,13 +1869,15 @@ xhealth=function(){
   const member=v23MemberEdit==='new'?{}:(v23MemberById(v23MemberEdit)||{});
   return `<button class="btn secondary small" data-v23-member="cancel">‹ Carnet de santé</button><h1>${member.id?'Modifier le membre':'Ajouter un membre'}</h1><div class="v21-health-warning">Configuration fictive. Ne pas enregistrer de données médicales réelles dans cette version.</div><form id="v23MemberForm" class="card"><label>Prénom / nom *</label><input required name="name" maxlength="80" value="${safe(member.name||'')}" placeholder="Nom du membre"><label>Date de naissance (facultative)</label><input name="birthdate" type="date" value="${safe(member.birthdate||'')}"><label>Icône</label><select name="avatar">${[...new Set(['👤','👩','👨','👧','👦','🧒',member.avatar].filter(Boolean))].map(icon=>`<option ${member.avatar===icon?'selected':''}>${safe(icon)}</option>`).join('')}</select><button class="v21-main-button" type="submit">Enregistrer le membre</button></form>`;
  }
+ const memberButtons=`<div class="v23-health-members">${people.map(p=>`<button class="v23-member ${p.id===selected?.id?'active':''}" data-v23-member="choose" data-id="${safe(p.id)}"><span>${safe(p.avatar||'👤')}</span><strong>${safe(p.name)}</strong></button>`).join('')}<button class="v23-member v23-add-member" data-v23-member="new"><span>＋</span><strong>Ajouter</strong></button></div>`;
+ const memberTools=selected?`<div class="v23-member-tools"><button class="btn secondary small" data-v23-member="edit" data-id="${safe(selected.id)}">Modifier ${safe(selected.name)}</button><button class="btn small outline" data-v23-member="delete" data-id="${safe(selected.id)}">Supprimer</button></div>`:'';
+ if(!legacyHealthDemo())return `<button class="btn secondary small" data-extra="back">‹ Famille</button><h1>Membres du foyer</h1>${memberButtons}${memberTools}<p>Ouvrez le carnet Santé depuis le menu DOBBY V7.</p>`;
  const extra=st.extraPage.split(':');const action=extra[1],record=(st.famHealth||[]).find(r=>r.id===extra[2])||{};
  const chosen=record.personId?v23MemberById(record.personId):people.find(p=>p.name===record.person);
  if(action==='edit'){
   if(!people.length)return `<button class="btn secondary small" data-extra="health">‹ Carnet de santé</button><div class="v23-health-empty">Ajoutez d’abord une personne.</div><button class="v21-main-button" data-v23-member="new">＋ Ajouter une personne</button>`;
   return `<button class="btn secondary small" data-extra="health">‹ Carnet de santé</button><h1>${record.id?'Modifier le rendez-vous':'Nouveau rendez-vous (test)'}</h1><div class="v21-health-warning">Données fictives uniquement. Le stockage n'est pas adapté aux données médicales réelles.</div><form id="xHealthForm" class="card"><input type="hidden" name="id" value="${safe(record.id||'')}"><label>Personne concernée</label><select name="personId">${people.map(p=>`<option value="${safe(p.id)}" ${(chosen?.id||selected?.id)===p.id?'selected':''}>${safe(p.name)}</option>`).join('')}</select><input type="hidden" name="person" value="${safe(chosen?.name||selected?.name||'')}"><label>Rendez-vous *</label><input required name="name" maxlength="140" value="${safe(record.name||'')}"><label>Date</label><input name="date" type="date" value="${safe(record.date||'')}"><label>Professionnel / établissement</label><input name="provider" value="${safe(record.provider||'')}"><label>Référence de document</label><input name="reference" value="${safe(record.reference||'')}"><label>Notes</label><textarea name="note">${safe(record.note||'')}</textarea><button class="v21-main-button" type="submit">Enregistrer</button></form>`;
  }
- const memberButtons=`<div class="v23-health-members">${people.map(p=>`<button class="v23-member ${p.id===selected?.id?'active':''}" data-v23-member="choose" data-id="${safe(p.id)}"><span>${safe(p.avatar||'👤')}</span><strong>${safe(p.name)}</strong></button>`).join('')}<button class="v23-member v23-add-member" data-v23-member="new"><span>＋</span><strong>Ajouter</strong></button></div>`;
  if(!selected)return `<button class="btn secondary small" data-extra="back">‹ Famille</button><h1>Carnet de santé</h1>${memberButtons}<div class="v23-health-empty">Ajoutez les personnes de votre foyer. Une fiche unique servira de référence pour les modules familiaux.</div><div class="v21-health-warning">Données fictives uniquement. Synchronisation entre iPhone non encore disponible.</div>`;
  const rows=(st.famHealth||[]).filter(r=>r.personId? r.personId===selected.id:r.person===selected.name).sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999'));
  const future=rows.filter(r=>!r.date||r.date>=todayISO()),previous=rows.filter(r=>r.date&&r.date<todayISO()).reverse();
@@ -1837,7 +1896,7 @@ function v23MemberAction(button){
  if(action==='delete'){
   const member=v23MemberById(id);if(!member)return;
   const access=v23MemberPermissions(id);if(!access.canEdit){alert(access.reason);return}
-  const linked=(st.famHealth||[]).some(r=>r.personId===id||(!r.personId&&r.person===member.name));
+ const linked=legacyHealthDemo()&&(st.famHealth||[]).some(r=>r.personId===id||(!r.personId&&r.person===member.name));
   if(linked){alert('Cette personne possède des rendez-vous. Supprimez ou réattribuez ces fiches avant de retirer le membre.');return}
   if(!confirm('Supprimer le profil de '+member.name+' ?'))return;
   const previous=st.familyMembers,selected=st.v23HealthMemberId;
@@ -1845,27 +1904,44 @@ function v23MemberAction(button){
   try{save();}catch(error){st.familyMembers=previous;st.v23HealthMemberId=selected;alert('Suppression impossible. Les informations précédentes sont conservées.');return}render();
  }
 }
+function v23WriteMember(member,existing){
+ if(v23Members().some(row=>row.id!==existing?.id&&String(row.name||'').toLocaleLowerCase('fr')===member.name.toLocaleLowerCase('fr')))throw Error('Cette personne est déjà enregistrée.');
+ const previousMembers=[...st.familyMembers],previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;
+ if(existing){
+  st.familyMembers=st.familyMembers.map(x=>x.id===existing.id?member:x);
+  if(legacyHealthDemo())(st.famHealth||[]).forEach(x=>{if(x.personId===existing.id||(!x.personId&&x.person===existing.name)){x.personId=member.id;x.person=member.name}});
+ }
+ else st.familyMembers.push(member);
+ st.v23HealthMemberId=member.id;v23MemberEdit=null;
+ try{save();}catch(error){st.familyMembers=previousMembers;st.famHealth=previousHealth;st.v23HealthMemberId=previousSelected;v23MemberEdit=previousEdit;throw Error('Enregistrement impossible. Les informations précédentes sont conservées.');}
+ render();return member.id;
+}
 // Capture health events before the legacy submission listener, preserving member IDs.
 document.addEventListener('submit',e=>{
  if(e.target.id==='v23MemberForm'){
-  e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target);
+  e.preventDefault();e.stopImmediatePropagation();const form=e.target;
+  if(v23MemberSaves.has(form))return;
   const existing=v23MemberEdit!=='new'?v23MemberById(v23MemberEdit):null;
   if(v23MemberEdit!=='new'&&!existing){alert('Ce membre n’existe plus. Revenez au registre.');return}
-  const values=Object.fromEntries(d),proof=v23MagicForms.get(e.target);v23MagicForms.delete(e.target);
-  let member;
+  const values=Object.fromEntries(new FormData(form)),proof=v23MagicForms.get(form),context=v23MemberContext();v23MagicForms.delete(form);
   try{
    const confirmed=!!proof&&proof.id===existing?.id&&Object.entries(proof.values).every(([key,value])=>values[key]===value)&&['magicHouseId','magicHouseAlgorithm','magicPatronusId','magicPatronusAlgorithm','magicCeremony'].every(key=>!Object.hasOwn(values,key)||Object.hasOwn(proof.values,key));
-   window.DobbyFamilyMemberPolicy.assertWrite(existing,values,v23MemberContext(),{magicResult:confirmed});
-   member=window.DobbyFamilyMemberPolicy.prepare({...existing,id:existing?.id||xuid()},values,window.DobbyMagicIdentity.patch);
-   if(v23Members().some(x=>x.id!==existing?.id&&String(x.name||'').toLocaleLowerCase('fr')===member.name.toLocaleLowerCase('fr')))throw Error('Cette personne est déjà enregistrée.');
+   window.DobbyFamilyMemberPolicy.assertWrite(existing,values,context,{magicResult:confirmed});
+   const member=window.DobbyFamilyMemberPolicy.prepare({...existing},values,window.DobbyMagicIdentity.patch);
+   if(existing||!context.verified){v23WriteMember({...member,id:existing?.id||xuid()},existing);return;}
+   const reserve=window.DobbyFamilyUI?.access?.reserveMemberId;
+   if(typeof reserve!=='function')throw Error('Création du membre indisponible.');
+   const pending=reserve(context.householdId).then(id=>{
+    const current=v23MemberContext();
+    if(!form.isConnected||v23MemberEdit!=='new'||!current.verified||current.userId!==context.userId||current.householdId!==context.householdId||current.actorId!==context.actorId)throw Error('Le formulaire ou le compte a changé.');
+    window.DobbyFamilyMemberPolicy.assertWrite(null,values,current);
+    return v23WriteMember({...member,id:id??xuid()},null);
+   });
+   v23MemberSaves.set(form,pending);
+   void pending.then(()=>v23MemberSaves.delete(form),error=>{v23MemberSaves.delete(form);if(form.isConnected)alert(error.message);});
   }
-  catch(error){alert(error.message);return;}
-  const previousMembers=[...st.familyMembers],previousHealth=JSON.parse(JSON.stringify(st.famHealth||[])),previousSelected=st.v23HealthMemberId,previousEdit=v23MemberEdit;
-  if(existing){const oldName=existing.name;st.familyMembers=st.familyMembers.map(x=>x.id===existing.id?member:x);(st.famHealth||[]).forEach(x=>{if(x.personId===existing.id||(!x.personId&&x.person===oldName)){x.personId=member.id;x.person=member.name}})}
-  else st.familyMembers.push(member);
-  st.v23HealthMemberId=member.id;v23MemberEdit=null;
-  try{save();}catch(error){st.familyMembers=previousMembers;st.famHealth=previousHealth;st.v23HealthMemberId=previousSelected;v23MemberEdit=previousEdit;alert('Enregistrement impossible. Les informations précédentes sont conservées.');return;}
-  render();return;
+  catch(error){alert(error.message);}
+  return;
  }
  if(e.target.id==='xHealthForm'){
   e.preventDefault();e.stopImmediatePropagation();const d=new FormData(e.target),id=String(d.get('id')||'')||xuid();const member=v23MemberById(String(d.get('personId')||''));
@@ -2041,7 +2117,6 @@ drawFamily=function(){
  const boxes=members.length
   ?members.slice(0,8).map(m=>'<div class="st4-member"><span>'+safe(m.avatar||'♡')+'</span>'+safe(m.name)+'</div>').join('')
   :'<p class="st4-muted">Les membres peuvent être ajoutés dans le module Famille et santé.</p>';
- const records=(st.famHealth||[]).length;
  return '<div class="st4-page st4-family">'
   +'<section class="st4-top"><span class="st4-overline">♡ Le salon des curiosités</span>'
   +'<h1 class="st4-title">Votre maisonnée</h1>'
@@ -2050,7 +2125,7 @@ drawFamily=function(){
   +'<section class="st4-section"><div class="st4-section-head"><h2>Les membres du foyer</h2></div>'
   +'<div class="st4-members">'+boxes+'</div></section>'
   +'<div class="st4-family-links">'
-  +'<button data-extra="health"><strong>♡ Santé</strong>'+records+' fiche(s) et rendez-vous</button>'
+  +'<button data-extra="health"><strong>♡ Santé</strong>Carnet de santé</button>'
   +'<button data-extra="contacts"><strong>♧ Contacts</strong>Répertoire familial</button>'
   +'<button data-extra="lists"><strong>☑ Listes</strong>Organisation partagée</button>'
   +'<button data-go="documents"><strong>▤ Documents</strong>Contrats et informations</button></div>'

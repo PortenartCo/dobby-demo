@@ -66,7 +66,11 @@ function nativeHarness(actorId=null,demo=false){
  const sandbox={window:{...realm.window,...(demo?{DobbyReview:{demoMemberId:actorId}}:{})},st,xhealth:()=>'',render(){},xuid:()=> 'test-created',save(){sandbox.saves++;},saves:0,alert:message=>alerts.push(message),confirm:()=>true,document:{addEventListener:(type,fn)=>handlers[type]=fn},FormData:class{constructor(form){this.values=form.values;}get(key){return this.values[key]??null;}[Symbol.iterator](){return Object.entries(this.values)[Symbol.iterator]();}},WeakMap,JSON,Object,Array,String};
  const ctx=vm.createContext(sandbox);vm.runInContext(html.slice(start,end),ctx);
  const select=id=>vm.runInContext('v23MemberEdit='+JSON.stringify(id)+';',ctx);
- const submit=(id,values)=>{select(id||'new');handlers.submit({target:{id:'v23MemberForm',values},preventDefault(){},stopImmediatePropagation(){}});};
+ const submit=(id,values)=>{
+  select(id||'new');const form={id:'v23MemberForm',values,isConnected:true};
+  handlers.submit({target:form,preventDefault(){},stopImmediatePropagation(){}});
+  return sandbox.window.DobbyFamilyMembers.memberSubmission(form);
+ };
  const remove=id=>vm.runInContext('v23MemberAction({dataset:{v23Member:"delete",id:'+JSON.stringify(id)+'}})',ctx);
  return{st,alerts,submit,remove,get saves(){return sandbox.saves;},ctx};
 }
@@ -94,6 +98,27 @@ test('native direct allowed save preserves unknown fields and refuses direct adu
  h.submit(null,{name:'TEST Parent neuf',memberCategory:'parent'});assert.equal(h.st.familyMembers.length,members.length);
  h.submit(null,{name:'TEST Animal neuf',firstName:'TEST Animal neuf',lastName:'',memberCategory:'pet',notes:'TEST animal',species:'chat'});assert.equal(h.st.familyMembers.length,members.length+1);assert.equal(h.st.familyMembers.at(-1).species,'chat');
  h.remove('test-created');assert.equal(h.st.familyMembers.length,members.length);
+});
+test('connected native creation stages only the ID allocated for the live household',async()=>{
+ const h=nativeHarness();
+ const binding={verified:true,userId:'TEST-U',householdId:'TEST-H',memberId:'parent-a',profile:{id:'parent-a',memberCategory:'parent'}};
+ let finish;
+ h.ctx.window.DobbyFamilyUI={
+  connectionState:()=>({verified:true,access:'verified',userId:binding.userId}),
+  access:{state:()=>binding,reserveMemberId:home=>{assert.equal(home,'TEST-H');return new Promise(resolve=>{finish=resolve;});}},
+  getContext:()=>({...binding,identityVerified:true,permissions:{canEdit:true,canCreate:true}}),
+ };
+ const draft={name:'TEST Création',memberCategory:'child'};
+ const pending=h.submit(null,draft);
+ assert.equal(h.saves,0);
+ finish('member-v7-00000000-0000-4000-8000-000000000012');
+ assert.equal(await pending,'member-v7-00000000-0000-4000-8000-000000000012');
+ assert.equal(h.st.familyMembers.at(-1).id,await pending);
+ const stale=h.submit(null,{name:'TEST Autre création',memberCategory:'baby'});
+ binding.householdId='AUTRE-FOYER';
+ finish('member-v7-00000000-0000-4000-8000-000000000013');
+ await assert.rejects(stale,/formulaire ou le compte a changé/);
+ assert.equal(h.saves,1);
 });
 test('native save and delete failures restore the existing members and health references',()=>{
  const h=nativeHarness('parent-a',true),before=JSON.stringify(h.st);

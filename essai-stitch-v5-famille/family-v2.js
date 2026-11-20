@@ -113,7 +113,27 @@ function assertRequestActor(expected){
   const actual=requestActor();
   if(actual.epoch!==expected.epoch||actual.userId!==expected.userId||actual.householdId!==expected.householdId)throw Error('Le compte ou le foyer a changé pendant cette opération.');
 }
-async function keepSession(result,expected=null) {
+async function assertCurrentHealthSession(expected = requestActor(), memberId = verifiedBinding()?.memberId) {
+  assertRequestActor(expected);
+  if (!expected.userId || !memberId || verifiedBinding()?.memberId !== memberId) {
+    throw Error('Session Santé vérifiée requise.');
+  }
+  const saved = await meta('session');
+  assertRequestActor(expected);
+  if (verifiedBinding()?.memberId !== memberId || saved?.user_id !== expected.userId ||
+      !saved.refresh_token || saved.refresh_token !== f.session?.refresh_token) {
+    throw Error('La session Santé a changé.');
+  }
+}
+function announceAuthSessionChange() {
+  if (typeof BroadcastChannel !== 'function') return;
+  try {
+    const channel = new BroadcastChannel('dobby-auth-session-v7');
+    try { channel.postMessage({ type: 'auth-session-change' }); }
+    finally { channel.close(); }
+  } catch {}
+}
+async function keepSession(result,expected=null,refreshCredential=null) {
   if (!result?.access_token || !result?.refresh_token) throw Error('Jetons de connexion incomplets');
   if(expected)assertRequestActor(expected);
   const old = f.session || {};
@@ -124,24 +144,32 @@ async function keepSession(result,expected=null) {
     email: result.user?.email || old.email || ''
   };
   if(expected){
-    await updateMeta('session',()=>{assertRequestActor(expected);return next;});
+    await updateMeta('session',current=>{
+      assertRequestActor(expected);
+      if (current?.user_id !== expected.userId || current.refresh_token !== refreshCredential) {
+        throw Error('La session a changé pendant son rafraîchissement.');
+      }
+      return next;
+    });
     assertRequestActor(expected);f.session=next;
-  }else{f.session=next;await putMeta('session',f.session);}
+  }else{f.session=next;await putMeta('session',f.session);announceAuthSessionChange();}
 }
-async function refreshToken(expected=requestActor()) {
+async function refreshToken(expected=requestActor(), healthMemberId=null) {
   assertRequestActor(expected);
+  if (healthMemberId) await assertCurrentHealthSession(expected,healthMemberId);
   if (!f.session?.refresh_token) throw Error('Session expirée');
+  const refreshCredential = f.session.refresh_token;
   const result = await raw('/auth/v1/token?grant_type=refresh_token', 'POST', {
-    refresh_token: f.session.refresh_token
+    refresh_token: refreshCredential
   });
   assertRequestActor(expected);
   if(result?.user?.id!==undefined&&result.user.id!==expected.userId)throw Error('Le compte retourné par la connexion ne correspond pas à la session.');
-  await keepSession(result,expected);assertRequestActor(expected);
+  await keepSession(result,expected,refreshCredential);assertRequestActor(expected);
 }
-async function token(expected=requestActor()) {
+async function token(expected=requestActor(), healthMemberId=null) {
   assertRequestActor(expected);
   if (!f.session) throw Error('Connexion requise');
-  if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken(expected);
+  if ((f.session.expires_at || 0) - Math.floor(Date.now() / 1000) < 90) await refreshToken(expected,healthMemberId);
   assertRequestActor(expected);
   return f.session.access_token;
 }
@@ -160,17 +188,29 @@ function assertNativeSharedWrite(method,query,body={}) {
 }
 async function authorized(method, query, body, headers = {}) {
   const expected=requestActor();
+  const health = /^rpc\/dobby_health_(read|write|capabilities)(\?|$)/.test(query);
+  const healthMemberId = health ? verifiedBinding()?.memberId : null;
+  if (health) await assertCurrentHealthSession(expected,healthMemberId);
   assertNativeSharedWrite(method,query,body);
-  let bearer = await token(expected);assertRequestActor(expected);
+  let bearer = await token(expected,healthMemberId);assertRequestActor(expected);
+  if (health) await assertCurrentHealthSession(expected,healthMemberId);
   assertNativeSharedWrite(method,query,body);
-  try { const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result; }
+  try {
+    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);
+    if (health) await assertCurrentHealthSession(expected,healthMemberId);
+    return result;
+  }
   catch (e) {
     assertRequestActor(expected);
+    if (health) await assertCurrentHealthSession(expected,healthMemberId);
     if (e.status !== 401) throw e;
     assertNativeSharedWrite(method,query,body);
-    await refreshToken(expected);assertRequestActor(expected);bearer=f.session.access_token;
+    await refreshToken(expected,healthMemberId);assertRequestActor(expected);bearer=f.session.access_token;
+    if (health) await assertCurrentHealthSession(expected,healthMemberId);
     assertNativeSharedWrite(method,query,body);
-    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);return result;
+    const result=await raw('/rest/v1/' + query, method, body, headers, bearer);assertRequestActor(expected);
+    if (health) await assertCurrentHealthSession(expected,healthMemberId);
+    return result;
   }
 }
 const SHARED_BUCKET='dobby-family-files';
@@ -211,6 +251,89 @@ async function storageFetch(method,path,file){
     assertNativeSharedWrite(method,'storage');
     await refreshToken(expected);assertRequestActor(expected);return send();
   }
+}
+const HEALTH_BUCKET = 'dobby-health-files';
+const HEALTH_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+const HEALTH_STORAGE_TYPES = new Map([
+  ['pdf','application/pdf'], ['jpg','image/jpeg'], ['png','image/png'], ['webp','image/webp']
+]);
+const HEALTH_MAX_FILE_SIZE = 10 * 1024 * 1024;
+function healthFileMatches(file, mime) {
+  return Boolean(file && file.type === mime && Number.isSafeInteger(file.size) &&
+    file.size > 0 && file.size <= HEALTH_MAX_FILE_SIZE);
+}
+async function healthStorageFetch(method, path, file) {
+  const expected = requestActor();
+  const memberId = verifiedBinding()?.memberId;
+  const upload = method === 'POST';
+  const guard = () => {
+    assertRequestActor(expected);
+    const binding = verifiedBinding();
+    if (!f.key || !binding || !memberId || binding.memberId !== memberId ||
+        binding.profile?.id !== memberId || binding.profile.memberCategory !== 'parent') {
+      throw Error('Un compte parent vérifié est requis pour les pièces Santé.');
+    }
+    if (upload && binding.permissions.canEdit !== true) throw Error('Stockage Santé en lecture seule.');
+  };
+  guard();
+
+  const [household, name, ...extra] = typeof path === 'string' ? path.split('/') : [];
+  const [id, extension, ...suffix] = typeof name === 'string' ? name.split('.') : [];
+  const mime = HEALTH_STORAGE_TYPES.get(extension);
+  if (household !== expected.householdId || !HEALTH_UUID.test(household) ||
+      !HEALTH_UUID.test(id) || !mime || extra.length || suffix.length) {
+    throw Error('Chemin de pièce Santé invalide pour ce foyer.');
+  }
+  if (upload && !healthFileMatches(file, mime)) throw Error('Fichier Santé invalide pour ce format ou au-delà de 10 Mo.');
+
+  const send = async (retry = false) => {
+    await assertCurrentHealthSession(expected,memberId);
+    let jwt;
+    try {
+      if (retry) await refreshToken(expected,memberId);
+      jwt = await token(expected,memberId);
+    } catch {
+      guard();
+      throw Error('Connexion Santé indisponible.');
+    }
+    await assertCurrentHealthSession(expected,memberId);
+    guard();
+    const headers = { apikey: f.key, Authorization: 'Bearer ' + jwt };
+    if (upload) {
+      headers['Content-Type'] = mime;
+      headers['Cache-Control'] = 'private, no-store';
+      headers['x-upsert'] = 'false';
+    }
+    const target = (upload ? '' : 'authenticated/') + HEALTH_BUCKET + '/' + path;
+    try {
+      return await fetch(PROJECT + '/storage/v1/object/' + target, {
+        method, headers, body: upload ? file : undefined, cache: 'no-store', redirect: 'error'
+      });
+    } catch {
+      guard();
+      throw Error('Stockage Santé indisponible.');
+    }
+  };
+
+  let response = await send();
+  await assertCurrentHealthSession(expected,memberId);
+  guard();
+  if (response.status === 401) {
+    response = await send(true);
+    await assertCurrentHealthSession(expected,memberId);
+    guard();
+  }
+  if (!response.ok) {
+    const error = Error('Accès à la pièce Santé refusé ou indisponible.');
+    error.status = response.status;
+    throw error;
+  }
+  if (upload) return true;
+  const downloaded = await response.blob().catch(() => null);
+  await assertCurrentHealthSession(expected,memberId);
+  guard();
+  if (!healthFileMatches(downloaded, mime)) throw Error('Fichier Santé inattendu.');
+  return downloaded;
 }
 async function requireHousehold() {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
@@ -528,27 +651,30 @@ function importOriginalLocal() {
   const parsed = JSON.parse(raw);
   if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object') throw Error('Données V5 invalides');
   if (!confirm('Importer les menus, recettes, missions, équipements et informations familiales de l’ancien essai V5 sur cet appareil ?\n' +
-    'Cette importation est uniquement locale, sans mise en ligne automatique. Les fichiers PDF et images restent dans l’ancien essai. Une sauvegarde du nouvel essai sera créée.')) return;
-  const snapshot = JSON.stringify(st);
-  localStorage.setItem('dobby-v5-familial-before-import-' + Date.now(), snapshot);
+    'Les données Santé sont exclues de cet import et de sa sauvegarde. Les fichiers PDF et images restent dans l’ancien essai.')) return;
+  const medical = row => row?.category === 'Santé';
+  const { famHealth, sharedHealthVisits, ...snapshot } = st;
+  if (Array.isArray(snapshot.familyDocs)) snapshot.familyDocs = snapshot.familyDocs.filter(row => !medical(row));
+  localStorage.setItem('dobby-v5-familial-before-import-' + Date.now(), JSON.stringify(snapshot));
   const fields = ['planned','customRecipes','tmAdaptations','shopHistory','shopFinal','shopChoice','extras',
-    'autoTasks','houseItems','houseLogs','familyMembers','famContacts','famLists','famHealth',
+    'autoTasks','houseItems','houseLogs','familyMembers','famContacts','famLists',
     'familyNotes','v2ChatHistory'];
   for (const key of fields) if (Object.prototype.hasOwnProperty.call(parsed,key)) {
     st[key] = JSON.parse(JSON.stringify(parsed[key]));
   }
   if (Array.isArray(parsed.familyDocs)) {
-    st.familyDocs = parsed.familyDocs.map(x => {
+    const currentMedical = Array.isArray(st.familyDocs) ? st.familyDocs.filter(medical) : [];
+    st.familyDocs = parsed.familyDocs.filter(row => !medical(row)).map(x => {
       const d = {...x};
       d.attachmentName = ''; d.attachmentType = '';
       return d;
-    });
+    }).concat(currentMedical);
   }
   if (Array.isArray(st.customRecipes)) custom = st.customRecipes;
   st.demoInitialized = true;
   st.page='home';st.extraPage='';st.detail=null;
   save();render();
-  f.notice='Les données de l’ancien essai V5 ont été copiées localement. Aucune publication sur Supabase.';
+  f.notice='L’import local V5 est terminé. Les données Santé restent à leur emplacement actuel.';
   refreshModal();
 }
 function validateKey(rawKey) {
@@ -593,6 +719,7 @@ async function login(form) {
     f.epoch += 1; f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
     f.cache.clear();
     await delMeta('session');
+    announceAuthSessionChange();
     throw e;
   }
   refreshModal(); repaint();
@@ -604,6 +731,7 @@ async function logout() {
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
   await delMeta('session');
+  announceAuthSessionChange();
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
   if (old?.access_token) void raw('/auth/v1/logout', 'POST', undefined, {}, old.access_token).catch(() => {});
@@ -840,7 +968,7 @@ const accessFacade=Object.freeze({
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
  refresh:refreshPublicAccess,
- ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;
@@ -908,6 +1036,11 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade
   getContext: () => {const binding=verifiedBinding();return f.context ? { householdId: f.householdId, userId: f.session?.user_id,...(binding?{memberId:binding.memberId,permissions:{...binding.permissions},identityVerified:true,familyRevision:binding.familyRevision||null}:{} ) } : null;},
   authorized, meta, putMeta, updateMeta, esc, showMessage, repaint, openModal,
   storageFetch,
+  assertCurrentHealthSession: () => assertCurrentHealthSession(),
+  healthStorage: Object.freeze({
+    upload: (path, file) => healthStorageFetch('POST', path, file),
+    download: path => healthStorageFetch('GET', path)
+  }),
   getModuleStatus(module) { return f.provider?.statusFor?.(module) || 'Module non chargé'; },
   isModuleActive(module) {return Boolean(f.context && f.provider?.isActive?.(module));},
   isModuleConfigured(module) {return f.provider?.isConfigured?.(module)??null;},

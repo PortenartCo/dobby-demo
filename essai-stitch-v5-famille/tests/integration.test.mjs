@@ -15,7 +15,9 @@ test('preview V5 source matches original except isolated storage and approved E0
   const original=source('../../essai-stitch-v5/index.html').replaceAll('\r\n','\n');
   const nativeFile='essai-stitch-v5-famille/index.html';
   const catalogue=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/catalogue-lot3-source-extensions.json'));
-  const composedNative=beforeReviewedAmendment(nativeFile,source('../index.html').replaceAll('\r\n','\n'),catalogue.files[nativeFile],'Catalogue lot 3');
+  const health=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/health-integration-source-extensions.json'));
+  const beforeHealth=beforeReviewedAmendment(nativeFile,source('../index.html').replaceAll('\r\n','\n'),health.files[nativeFile],'Santé');
+  const composedNative=beforeReviewedAmendment(nativeFile,beforeHealth,catalogue.files[nativeFile],'Catalogue lot 3');
   const contactComposition=JSON.parse(source('./fixtures/settings-archives-contacts-native-composition.json'));
   const contacts=JSON.parse(source('./fixtures/contacts-native-extensions.json'));
   const compositionSha=value=>createHash('sha256').update(value).digest('hex');
@@ -301,7 +303,7 @@ test('shared health visits do not automatically upload previous local health rec
 });
 
 
-test('a health document remains local until the user chooses household sharing', () => {
+test('the general document panel excludes historical health documents even if previously shared', () => {
   const files = source('../family-files.js');
   const sandbox = {
     st: {page:'documents', familyDocs:[
@@ -316,10 +318,10 @@ test('a health document remains local until the user chooses household sharing',
     render:()=>{}, save:()=>{}, console
   };
   vm.runInNewContext(files, sandbox);
-  assert.equal(sandbox.window.DobbyFamilyFiles.sharedCount(), 2);
+  assert.equal(sandbox.window.DobbyFamilyFiles.sharedCount(), 1);
   const html = sandbox.drawDocuments();
-  assert.match(html, /Fiche santé choisie/);
   assert.match(html, /Contrat maison/);
-  assert.doesNotMatch(html, /Fiche privée/);
+  assert.doesNotMatch(html, /Fiche privée|Fiche santé choisie/);
+  assert.equal(sandbox.st.familyDocs.length, 3);
   assert.match(html, /Vue V5 initiale/);
 });

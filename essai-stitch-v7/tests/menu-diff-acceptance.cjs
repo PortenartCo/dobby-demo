@@ -265,13 +265,14 @@ async function downloaded(page, selector) {
           assert.equal(archive.format, 'dobby-complete-backup');
           assert.equal(archive.version, 1);
           await page.evaluate(archive => DobbyFamilyStitchEngine.win().dobbyBackupValidation.validatePayload(archive), archive);
-          for (const key of keys) assert.deepEqual(archive.state[key], before[key], 'Export includes original ' + key);
+          for (const key of keys.filter(key => key !== 'famHealth')) assert.deepEqual(archive.state[key], before[key], 'Export includes original ' + key);
+          assert.deepEqual(archive.state.famHealth, []);
           const attachment = archive.attachments.find(a => a.id === 'family-menu-diff-document');
           assert.ok(attachment);
           assert.deepEqual(Buffer.from(attachment.base64, 'base64'), pdf);
 
           // Mutate only this throwaway profile, including bytes, so restore is observable.
-          await native(page, 'st.famContacts=[];st.houseItems=[];st.houseLogs=[];st.familyDocs=[];st.famLists=[];st.famHealth=[];save();return houseStore(new Blob(["TEST — transient bytes"],{type:"application/pdf"}),"family-menu-diff-document");');
+          await native(page, 'st.famContacts=[];st.houseItems=[];st.houseLogs=[];st.familyDocs=[];st.famLists=[];save();return houseStore(new Blob(["TEST — transient bytes"],{type:"application/pdf"}),"family-menu-diff-document");');
           const mutated = await snapshot(page);
           assert.notDeepEqual(mutated, before, 'Transient local data mutation really happened');
           assert.equal(await native(page, 'return houseRead("family-menu-diff-document").then(blob=>blob.text());'), 'TEST — transient bytes');
@@ -282,12 +283,12 @@ async function downloaded(page, selector) {
           assert.deepEqual(await snapshot(page), mutated, 'Preview validates without applying the archive');
           await page.locator('[data-fa-action="rg-restore-confirm"]').click();
           await page.waitForFunction(() => !DobbyRegister.busy && DobbyFamilyStitchEngine.read().state.famContacts.some(c => c.id === 'menu-diff-contact'));
-          assert.ok(dialogs.some(d => d.type === 'confirm' && /^Remplacer toutes les données locales par cette sauvegarde/.test(d.message)), 'Existing native replacement confirmation was shown and accepted');
+          assert.ok(dialogs.some(d => d.type === 'confirm' && /^Remplacer toutes les données locales couvertes par cette sauvegarde/.test(d.message)), 'Native replacement confirmation was shown and accepted');
           assert.deepEqual(await snapshot(page), before, 'All original TEST records restored by native replacement');
           assert.equal(await native(page, 'return houseRead("family-menu-diff-document").then(blob=>blob.text());'), pdf.toString(), 'Original attachment bytes restored by native IndexedDB replacement');
           await assertOldNamespace(page);
           assert.match(await native(page, 'return window.parent.DobbyFamilyStitchEngine.lastError;'), /Sauvegarde restaurée/);
-          active.backupRoundtrip = {filename: original.filename, format: archive.format, version: archive.version, bytes: original.bytes.length, sha256: original.sha256, attachmentCount: archive.attachments.length, nativeValidation: 'pass', previewNonMutating: true, nativeConfirmationAccepted: true, recordsRestored: keys, attachmentBytesRestored: true};
+          active.backupRoundtrip = {filename: original.filename, format: archive.format, version: archive.version, bytes: original.bytes.length, sha256: original.sha256, attachmentCount: archive.attachments.length, nativeValidation: 'pass', previewNonMutating: true, nativeConfirmationAccepted: true, recordsRestored: keys.filter(key => key !== 'famHealth'), historicalHealthPreserved: true, attachmentBytesRestored: true};
           await page.evaluate(() => DobbyRegister.back());
           await view(page, 'settings');
           await page.getByRole('link', {name: 'Retour au Menu', exact: true}).click();

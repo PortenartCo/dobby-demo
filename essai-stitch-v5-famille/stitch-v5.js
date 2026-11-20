@@ -91,7 +91,7 @@
     const people=members.slice(0,8).map(m=>
       '<button class="st5-member" data-extra="health"><span class="avatar">'+safe(m.avatar||'♡')+'</span>'+safe(m.name)+'</button>'
     ).join('');
-    const upcoming=(st.famHealth||[]).filter(x=>x.date&&x.date>=todayISO())
+    const upcoming=(legacyHealthDemo()?st.famHealth||[]:[]).filter(x=>x.date&&x.date>=todayISO())
       .sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,5);
     const events=upcoming.map(e=>{
       let date=String(e.date||'');
