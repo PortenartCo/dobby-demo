@@ -17,5 +17,10 @@
 .dobby-rune-profile li{padding-block:8px;border-bottom:1px solid #d49b4222;overflow-wrap:anywhere}
 .dobby-rune-profile li span{display:block;color:#d4c4b1;font-size:13px}
 .dobby-rune-profile summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#f9bb5f}
+.dv7-participant-dialog.dobby-rune-entry-form :is(form,label){display:grid;gap:8px;min-width:0}
+.dv7-participant-dialog.dobby-rune-entry-form :is(input,textarea,button){box-sizing:border-box;width:100%;height:auto;min-height:44px;padding:8px;border:1px solid currentColor;border-radius:8px;color:inherit;background:#43302c;font:inherit}
+.dobby-rune-entry-form textarea{resize:vertical}
+.dobby-rune-entry-form button,.dobby-rune-entry-action{cursor:pointer;color:#f9bb5f}
+.dobby-rune-entry-action{min-height:44px;text-align:left}
 body[data-family-view="mission-edit"] .e04-member-avatar-slot{overflow:visible!important}
 body[data-family-view="mission-edit"] [data-e04-member-card]>.member-check{top:4px;right:4px;bottom:auto}

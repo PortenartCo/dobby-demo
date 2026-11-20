@@ -8,12 +8,12 @@ const clone=value=>structuredClone(value);
 const capability={protocol:3,intentVersion:1,participantVersion:1,ledgerVersions:[1,2,3],maxPayloadBytes:262144,directWritesBlocked:true,atomicAllocations:true,canonicalAuthorization:true,clientVerified:true,contract:'dobby-missions-intents-v3-1'};
 const members=[{id:'a',memberCategory:'parent'},{id:'b',memberCategory:'child'}];
 const mission={id:'v3-test',title:'TEST — Native intent',category:'Famille',status:'open',effort:'regular',rewardVersion:1,participantVersion:1,assigneeIds:['a','b'],allFamily:false,due:''};
-function setup({verifiedRelease=true,sendHook}={}){
+function setup({verifiedRelease=true,sendHook,lot1=false,clientVerified=true}={}){
  const backend=makeBackend(),normal=backend.authorized,receipts=new Map(),writes=[];
  backend.rows.set('missions',{module:'missions',revision:4,payload:{autoTasks:[],manualMissions:[clone(mission)],runeCredits:[],runeRequests:[],runeLedgerVersion:2,extension:{keep:'TEST-extension'}}});
  let client,context={userId:'account-a',householdId:HH,memberId:'a',identityVerified:true,permissions:{canEdit:true,canCompleteMissionsV3:false}},canonical={authenticated:true,verified:true,phase:'active',userId:'account-a',householdId:HH,memberId:'a',profile:{id:'a',memberCategory:'parent'},permissions:{canEdit:true,canCompleteMissionsV3:false}};
  backend.authorized=async(user,method,path,body)=>{
-  if(path.startsWith('rpc/dobby_missions_v3_capabilities'))return capability;
+  if(path.startsWith('rpc/dobby_missions_v3_capabilities'))return {...capability,clientVerified,...(lot1?{runesLot1:1}:{})};
   if(path.startsWith('rpc/dobby_missions_v2_capabilities'))return{protocol:2,maxPayloadBytes:262144,directWritesBlocked:true};
   if(path==='rpc/dobby_missions_v3_write'){
    writes.push(clone(body));assert.ok([...client.metadata.values()].some(value=>value?.id===body.p_operation_id),'durable queue before native HTTP');
@@ -23,6 +23,10 @@ function setup({verifiedRelease=true,sendHook}={}){
     if(body.p_intent.kind==='complete'){
      const current=next.payload.manualMissions.find(row=>row.id===body.p_intent.missionId),events=R.completionRequests(current,members,body.p_intent.participantIds,next.payload.runeCredits,[],'2026-11-13T12:00:00Z');
      next.payload.runeCredits.push(...events.map(row=>({...row,revision:next.revision})));current.status='done';current.participants=clone(body.p_intent.participantIds);
+    }else if(R.isLot1Entry(body.p_intent)){
+     const {expectedAmount,...intent}=body.p_intent;
+     next.payload.runeCredits.push({...intent,...(intent.kind==='correction'?{previousAmount:expectedAmount}:{}),
+      eventId:'rune:'+body.p_operation_id,actorMemberId:'a',date:'2026-11-20T10:00:00Z',revision:next.revision});
     }else if(body.p_intent.kind==='snapshot'){next.payload={...next.payload,...clone(body.p_intent.payload)};}
     next.payload.runeLedgerVersion=3;backend.rows.set('missions',next);receipt={id:body.p_operation_id,revision:next.revision,changed:true,digest:'a'.repeat(64)};receipts.set(body.p_operation_id,receipt);
    }
@@ -67,4 +71,56 @@ test('native V3 provider never promotes a canonical child using a local parent m
  const h=setup();t.after(()=>h.client.provider.reset());h.client.st.familyMembers.find(row=>row.id==='a').memberCategory='parent';h.setContext({permissions:{canEdit:true,canCompleteMissionsV3:true}});h.setCanonical({profile:{id:'a',memberCategory:'child'},permissions:{canEdit:false,canCompleteMissionsV3:false}});
  await h.client.provider.start();assert.equal(h.client.window.DobbySharedRunesV3.available(),false);const before=clone(h.client.st);
  await assert.rejects(()=>h.client.window.DobbySharedRunesV3.complete('v3-test',['a']),/validation serveur|canonique/);assert.equal(h.writes.length,0);assert.deepEqual(clone(h.client.st),before);
+});
+
+const bonus={kind:'bonus',memberId:'b',amount:55,reason:'Aide exceptionnelle'};
+test('lot 1 reuses the exact native outbox after loss, then records a linked correction',async t=>{
+ let lost=true;
+ const h=setup({verifiedRelease:false,lot1:true,sendHook:response=>{
+  if(lost){lost=false;throw Error('lost lot1 receipt');}
+  return response;
+ }});
+ t.after(()=>h.client.provider.reset());
+ await h.client.provider.start();
+ await h.client.action('activate','missions');
+ const runes=h.client.window.DobbySharedRunesV3;
+ assert.equal(runes.canManageRunes(),true);
+ await assert.rejects(()=>runes.recordRunes(bonus),/lost lot1 receipt/);
+ assert.equal(runes.summary('b').total,0);
+ await h.client.provider.sync();
+ assert.deepEqual(h.writes[0],h.writes[1]);
+ const confirmed=h.client.st.runeCredits[0];
+ assert.equal(runes.summary('b').total,55);
+ assert.equal(runes.summary('b').grade.threshold,50);
+ await runes.recordRunes({kind:'correction',memberId:'b',targetEventId:confirmed.eventId,
+  expectedAmount:55,amount:15,reason:'Erreur de montant'});
+ assert.equal(runes.summary('b').total,15);
+ assert.equal(runes.summary('b').grade.threshold,0);
+ assert.deepEqual(h.client.st.runeCredits[0],confirmed);
+ assert.equal(h.client.st.runeCredits.length,2);
+});
+test('lot 1 rejects a canonical child and refuses an unverified server capability',async t=>{
+ const child=setup({verifiedRelease:false,lot1:true});
+ const closed=setup({verifiedRelease:false,lot1:true,clientVerified:false});
+ t.after(()=>{child.client.provider.reset();closed.client.provider.reset();});
+ child.setCanonical({profile:{id:'a',memberCategory:'child'},permissions:{canCompleteMissionsV3:true}});
+ for(const h of [child,closed]){
+  await h.client.provider.start();
+  await h.client.action('activate','missions');
+  assert.equal(h.client.window.DobbySharedRunesV3.canManageRunes(),false);
+  await assert.rejects(()=>h.client.window.DobbySharedRunesV3.recordRunes(bonus),/parent vérifié/);
+  assert.equal(h.writes.length,0);
+ }
+});
+test('lot 1 holds the outbox when the returned journal does not confirm the requested award',async t=>{
+ const h=setup({verifiedRelease:false,lot1:true,sendHook:response=>{
+  response.module.payload.runeCredits[0].reason='Unexpected';
+  return response;
+ }});
+ t.after(()=>h.client.provider.reset());
+ await h.client.provider.start();
+ await h.client.action('activate','missions');
+ await assert.rejects(()=>h.client.window.DobbySharedRunesV3.recordRunes(bonus),/non confirmée/);
+ assert.equal(h.client.st.runeCredits.length,0);
+ assert.ok([...h.client.metadata.values()].some(entry=>entry?.id===h.writes[0].p_operation_id));
 });

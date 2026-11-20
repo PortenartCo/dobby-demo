@@ -17,7 +17,16 @@ const tuple=actor=>({userId:actor.userId,householdId:actor.householdId,memberId:
 const atomicRejections=new Set(['40001','40P01','23514','23503','23505','42501','22023']);
 const creditKeys=['missionId','memberId','effort','amount','date','title','revision','customRunes','eventId','kind','cycle','reverses','allocations'];
 const knownCredit=row=>Object.fromEntries(creditKeys.filter(key=>Object.hasOwn(row,key)).map(key=>[key,row[key]]));
-export const missionV3Summary=(memberId,credits=[],requests=[])=>runes.memberSummary(memberId,credits.map(knownCredit),requests.map(knownCredit));
+const projectCredit=row=>runes.isLot1Entry(row)?row:knownCredit(row);
+export function missionV3Summary(memberId,credits=[],requests=[]){
+ const summary=runes.memberSummary(memberId,credits.map(projectCredit),requests.map(knownCredit));
+ const actors=new Map(credits.map(row=>[runes.eventKey(row),row.actorMemberId]));
+ return {...summary,credits:summary.credits.map(row=>{
+  const actorMemberId=actors.get(runes.eventKey(row));
+  return id(actorMemberId)?{...row,actorMemberId}:row;
+ })};
+}
+export const missionLot1Capability=value=>missionV3Capability(value)&&value.runesLot1===1;
 const award=row=>Object.fromEntries(['missionId','memberId','effort','amount','customRunes','eventId','kind','cycle','reverses','allocations'].filter(key=>Object.hasOwn(row,key)).map(key=>[key,row[key]]));
 
 export function missionV3Capability(value){
@@ -28,8 +37,17 @@ export function missionV3Capability(value){
 }
 export function normalizeMissionIntent(value){
  if(!object(value))throw Error('Intention Missions invalide');
- const allowed=value.kind==='snapshot'?['kind','payload']:value.kind==='complete'?['kind','missionId','participantIds']:value.kind==='reopen'?['kind','missionId']:[];
+ const awardIntent=runes.isLot1Entry(value);
+ const allowed=awardIntent?['kind','memberId','amount','reason',...(value.kind==='correction'?['targetEventId','expectedAmount']:[])]:value.kind==='snapshot'?['kind','payload']:value.kind==='complete'?['kind','missionId','participantIds']:value.kind==='reopen'?['kind','missionId']:[];
  if(!allowed.length||Object.keys(value).some(key=>!allowed.includes(key)))throw Error('Champ d’intention Missions interdit');
+ if(awardIntent){
+  if(!id(value.memberId)||!Number.isSafeInteger(value.amount)||value.amount<(value.kind==='bonus'?1:0)||
+   !runes.hasRuneReason(value.reason)||value.kind==='correction'&&(typeof value.targetEventId!=='string'||!value.targetEventId.trim()||value.targetEventId.length>240||
+    !Number.isSafeInteger(value.expectedAmount)||value.expectedAmount<0||value.expectedAmount===value.amount)){
+    throw Error('Montant, attribution ou motif de Runes invalide');
+  }
+  return {...value,reason:value.reason.trim()};
+ }
  if(value.kind==='snapshot'){
   if(!object(value.payload)||!Array.isArray(value.payload.autoTasks)||!Array.isArray(value.payload.manualMissions)||value.payload.runeRequests!==undefined&&(!Array.isArray(value.payload.runeRequests)||value.payload.runeRequests.length))throw Error('Snapshot Missions invalide ou attributions locales en attente');
   return copy(value);
@@ -47,7 +65,9 @@ export function validateMissionV3Module(module,previous=null){
  if(new Set(eventIds).size!==eventIds.length)throw Error('Événement confirmé dupliqué');
  // Validate known business fields using the existing domain engine, retaining
  // the exact raw JSON (including unknown extension fields and old date forms).
- runes.normalizeCredits(p.runeCredits.map(knownCredit));
+ const entries=p.runeCredits.filter(runes.isLot1Entry);
+ if(entries.length&&p.runeLedgerVersion!==3)throw Error('Bonus et corrections exigent le registre V3');
+ runes.lot1Balances(runes.normalizeCredits(p.runeCredits.filter(row=>!runes.isLot1Entry(row)).map(knownCredit)),entries);
  for(const row of p.runeCredits)if(row.allocations!==undefined&&!equal(row.allocations,runes.allocateReward(row.amount,row.allocations.map(part=>part.memberId))))throw Error('Répartition confirmée non canonique');
  if(previous){
   const incoming=new Map(p.runeCredits.map(row=>[runes.eventKey(row),row]));
@@ -66,8 +86,8 @@ export function createMissionIntentTransport(options){
   return current;
  }
  function available(){
-  if(options.releaseVerified!==true)return false;
-  try{const current=actor(),capability=options.capability();return(current.category!=='child'||current.permissions?.canCompleteMissionsV3===true)&&capability?.token===current.token&&missionV3Capability(capability.value);}catch{return false;}
+  try{const current=actor(),capability=options.capability();return(current.category!=='child'||current.permissions?.canCompleteMissionsV3===true)&&capability?.token===current.token&&
+   (missionLot1Capability(capability.value)||options.releaseVerified===true&&missionV3Capability(capability.value));}catch{return false;}
  }
  function guard(expected){
   if(!available())throw Error('Participation et partage de Runes en attente de validation serveur. Mission et soldes conservés.');
@@ -77,6 +97,15 @@ export function createMissionIntentTransport(options){
  function expectations(intent,remote,current){
   if(intent.kind!=='complete'&&current.category!=='parent')throw Error('Seul un parent peut gérer ou rouvrir les Missions');
   if(remote)validateMissionV3Module(remote);
+  if(runes.isLot1Entry(intent)){
+   if(!missionLot1Capability(options.capability()?.value)||!remote)throw Error('Partage des bonus et corrections indisponible');
+   if(intent.kind==='bonus'&&!options.members().some(member=>member.id===intent.memberId&&member.memberCategory==='child'&&runes.isHumanMember(member)))throw Error('Choisissez un enfant du foyer');
+   if(intent.kind==='correction'){
+    const target=missionV3Summary(intent.memberId,remote.payload.runeCredits).correctable.find(entry=>entry.eventId===intent.targetEventId);
+    if(!target||target.amount!==intent.expectedAmount)throw Error('Attribution à corriger modifiée : relisez le journal');
+   }
+   return [];
+  }
   if(intent.kind==='snapshot'){
    if(intent.payload.runeCredits!==undefined&&!equal(intent.payload.runeCredits,remote?.payload.runeCredits||[]))throw Error('Un snapshot ne peut pas ajouter ou réécrire de crédit confirmé');
    if((intent.payload.runeLedgerVersion||1)<(remote?.payload.runeLedgerVersion||1))throw Error('Version du registre régressive');
@@ -88,7 +117,7 @@ export function createMissionIntentTransport(options){
    const assigned=mission.assigneeIds?.length?mission.assigneeIds:mission.assigneeId?[mission.assigneeId]:[];
    if(mission.allFamily!==true&&!assigned.includes(current.memberId))throw Error('Cette mission n’est pas attribuée à cet enfant');
   }
-  const credits=(remote.payload.runeCredits||[]).map(knownCredit);
+  const credits=(remote.payload.runeCredits||[]).filter(row=>!runes.isLot1Entry(row)).map(knownCredit);
   return intent.kind==='complete'?runes.completionRequests(mission,options.members(),intent.participantIds,credits,[],'2000-01-01T00:00:00Z'):runes.reopeningRequests(mission,credits,[],'2000-01-01T00:00:00Z');
  }
  async function execute(input,remote,resume=false){
@@ -98,6 +127,7 @@ export function createMissionIntentTransport(options){
    if(pending.protocol!==3||!equal(pending.actor,tuple(current)))throw Error('Une opération d’un autre compte ou foyer est conservée');
    if(!equal(normalizeMissionIntent(pending.intent),pending.intent)||!Number.isSafeInteger(pending.expectedRevision)||pending.expectedRevision<0||typeof pending.id!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pending.id))throw Error('Opération Missions locale invalide ; données conservées');
    if(current.category!=='parent'&&pending.intent.kind!=='complete')throw Error('Seul un parent peut reprendre cette opération Missions');
+   if(runes.isLot1Entry(pending.intent)&&!missionLot1Capability(options.capability()?.value))throw Error('Capacité de Runes à revérifier ; opération conservée');
    if(input&&!equal(normalizeMissionIntent(input),pending.intent))throw Error('Une autre opération Missions attend sa confirmation');
    if(pending.rejection)throw Error('Conflit Missions confirmé : relire le foyer et examiner l’intention conservée');
   }else{
@@ -124,7 +154,7 @@ export function createMissionIntentTransport(options){
   guard(current);
   const receipt=response?.operation,module=response?.module;
   const delta=Number(receipt?.revision)-pending.expectedRevision,desiredStatus=pending.intent.kind==='complete'?'done':'open';
-  const noopAllowed=pending.intent.kind!=='snapshot'&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);
+  const noopAllowed=['complete','reopen'].includes(pending.intent.kind)&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);
   if(response?.protocol!==3||typeof response.replayed!=='boolean'||receipt?.id!==pending.id||![0,1].includes(delta)||delta===0&&!noopAllowed||!/^[a-f0-9]{64}$/i.test(receipt.digest||'')||Number(module?.revision)<Number(receipt.revision)||
    !response.replayed&&(typeof receipt.changed!=='boolean'||receipt.changed!==(delta===1)||Number(module?.revision)!==Number(receipt.revision)))throw Error('Confirmation V3 incohérente ; opération conservée');
   validateMissionV3Module(module,pending.baseModule);
@@ -132,10 +162,18 @@ export function createMissionIntentTransport(options){
   if(delta===0&&Number(module.revision)===Number(receipt.revision)&&!equal(module.payload,pending.baseModule.payload))throw Error('Un reçu sans changement ne peut modifier le module ; opération conservée');
   const events=new Map(module.payload.runeCredits.map(row=>[runes.eventKey(row),row]));
   for(const expected of pending.expectedAwards||[])if(!equal(award(events.get(runes.eventKey(expected))||{}),award(expected)))throw Error('Confirmation des répartitions incomplète ; opération conservée');
+  if(runes.isLot1Entry(pending.intent)){
+   const entry=events.get('rune:'+pending.id);
+   const keys=['kind','memberId','amount','reason',...(pending.intent.kind==='correction'?['targetEventId']:[])];
+   if(!entry||keys.some(key=>entry[key]!==pending.intent[key])||pending.intent.kind==='correction'&&entry.previousAmount!==pending.intent.expectedAmount||
+    entry.actorMemberId!==current.memberId||entry.revision!==Number(receipt.revision)){
+    throw Error('Écriture de Runes non confirmée ; opération conservée');
+   }
+  }
   if(Number(module.revision)===Number(receipt.revision)){
    if(pending.intent.kind==='snapshot'){
     if(!equal(module.payload.autoTasks,pending.intent.payload.autoTasks)||!equal(module.payload.manualMissions,pending.intent.payload.manualMissions))throw Error('Confirmation des modifications Missions incomplète ; opération conservée');
-   }else{
+   }else if(!runes.isLot1Entry(pending.intent)){
     const mission=module.payload.manualMissions.find(row=>row.id===pending.intent.missionId);
     if(!mission||mission.status!==(pending.intent.kind==='complete'?'done':'open'))throw Error('Confirmation de validation Missions incomplète ; opération conservée');
    }
