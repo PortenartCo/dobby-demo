@@ -8,6 +8,13 @@ function beforeReviewedAmendment(file,source,extension,label){
   assert.equal(digest(source),extension.afterSha256,file+' complete '+label+' source changed');
   const lines=source.match(/[^\n]*\n|[^\n]+$/g)||[];
   for(const patch of [...extension.patches].reverse()){
+    if(Number.isInteger(patch.column)){
+      const row=lines[patch.line],end=patch.column+patch.after.length;
+      assert.notEqual(patch.before,patch.after,file+' records a real amendment');
+      assert.equal(row.slice(patch.column,end),patch.after,file+' exact '+label+' amendment');
+      lines[patch.line]=row.slice(0,patch.column)+patch.before+row.slice(end);
+      continue;
+    }
     const expected=patch.after.match(/[^\n]*\n|[^\n]+$/g)||[];
     const old=patch.before.match(/[^\n]*\n|[^\n]+$/g)||[];
     assert.notEqual(patch.before,patch.after,file+' records a real amendment');

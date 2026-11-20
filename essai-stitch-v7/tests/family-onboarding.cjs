@@ -27,9 +27,10 @@ const attempt = randomUUID().slice(0, 8);
 const heading = (page, name) => page.getByRole('heading', { name, exact: true }).waitFor();
 const button = (page, name) => page.getByRole('button', { name, exact: true });
 const field = (page, name) => page.getByLabel(name, { exact: true });
+const waitTraverse = page => page.waitForFunction(() => location.pathname.endsWith('/traverse.html') && window.DobbyStitchV7?.ready);
 const pause = () => new Promise(resolve => setTimeout(resolve, 100));
 
-async function browserAccount(browser, width) {
+async function browserAccount(browser, width, config = {}) {
   const context = await browser.newContext({
     viewport: { width, height: 900 }, locale: 'fr-BE',
     hasTouch: width < 768, isMobile: width < 768, serviceWorkers: 'block'
@@ -42,7 +43,9 @@ async function browserAccount(browser, width) {
     if (url.origin === origin) {
       if (url.pathname === '/essai-stitch-v7/access-config.js') {
         return route.fulfill({ contentType: 'text/javascript',
-          body: "window.DobbyPublicConfig={publicKey:'sb_publishable_dobby_local_fixture_only',healthEssentialAvailable:false};" });
+          body: 'window.DobbyPublicConfig=' + JSON.stringify({
+            publicKey:'sb_publishable_dobby_local_fixture_only', healthEssentialAvailable:false, ...config
+          }) + ';' });
       }
       return route.continue();
     }
@@ -159,7 +162,7 @@ async function createHousehold(page, name) {
   await heading(page, 'Créer mon foyer');
   await field(page, 'Nom du foyer').fill(name);
   await button(page, 'Créer mon foyer').click();
-  await page.waitForURL('**/traverse.html');
+  await waitTraverse(page);
   await page.goto(familyPage + '#members');
   await heading(page, 'Membres de la Maisonnée');
   return verified(page);
@@ -176,7 +179,7 @@ async function login(page, email, secret, refusal) {
   await field(page, 'Mot de passe').fill(secret);
   await button(page, 'Se connecter').click();
   if (refusal) await page.getByRole('status').filter({ hasText: refusal }).waitFor();
-  else await page.waitForURL('**/traverse.html');
+  else await waitTraverse(page);
 }
 
 async function scenario(browser, width) {
@@ -330,7 +333,12 @@ async function scenario(browser, width) {
   }
 }
 
-(async () => {
+module.exports = {
+  browserAccount, heading, button, field, signup, createHousehold, verified, token, request, rpc, capture, mailLink,
+  logout, login, waitTraverse, inviteBody, acceptBody, auth, origin, out, familyPage, password, resetPassword,
+};
+
+if (require.main === module) (async () => {
   if (out) await mkdir(out, { recursive: true });
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium', args: ['--no-sandbox'] });
   try {

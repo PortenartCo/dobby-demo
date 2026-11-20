@@ -12,6 +12,18 @@ test('an authenticated targeted child reaches acceptance without creating a pend
  assert.equal(destination({...state,authenticated:false},{invitationPending:true,invitationType:'child-account'}),'access-welcome');
  assert.equal(destination({...state,phase:'rejected'},{invitationPending:true,invitationType:'child-account'}),'access-unavailable');
 });
+test('a signed-out child invitation opens its preview before starting native Auth',()=>{
+ const invitation={invitationPending:true,invitationType:'child-account'};
+ assert.equal(destination({phase:'signed-out'},invitation),'access-join');
+ assert.equal(destination({phase:'email-confirmation'},invitation),'access-confirmation');
+});
+test('a linked child skips the adult ritual after sign-in or password recovery',()=>{
+ const state={phase:'active',verified:true,userId:'TEST-auth',householdId:'TEST-family',memberId:'TEST-child',
+  profile:{memberCategory:'child'},pendingCeremony:false};
+ assert.equal(destination(state),'traverse');
+ assert.equal(destination(state,{invitationPending:true,invitationType:'child-account'}),'access-join');
+ assert.equal(destination({...state,profile:{memberCategory:'parent'}}),'ritual');
+});
 test('the actual root relay, native entry and exact Auth callback preserve the typed child reference',()=>{
  const reference=childInvitationReference('TEST-existing-TEXT-child-token'),root='https://example.test/dobby/',html=fs.readFileSync(new URL('../../index.html',import.meta.url),'utf8');
  for(const suffix of ['?invite='+encodeURIComponent(reference),'#access?invite='+encodeURIComponent(reference)]){

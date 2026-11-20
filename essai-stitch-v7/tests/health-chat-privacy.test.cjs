@@ -17,6 +17,7 @@ function fixture() {
   };
   const engine = {
     read: () => ({ state }),
+    evaluate: code => vm.runInNewContext(`(function(){${code}})()`, { st: state }),
     win: () => ({
       DobbyFamilyUI: { getContext: () => ({}) },
       DobbyFamilyAgenda: { upcoming: () => [

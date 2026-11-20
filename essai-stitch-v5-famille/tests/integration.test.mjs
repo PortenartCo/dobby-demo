@@ -16,7 +16,9 @@ test('preview V5 source matches original except isolated storage and approved E0
   const nativeFile='essai-stitch-v5-famille/index.html';
   const catalogue=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/catalogue-lot3-source-extensions.json'));
   const health=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/health-integration-source-extensions.json'));
-  const beforeHealth=beforeReviewedAmendment(nativeFile,source('../index.html').replaceAll('\r\n','\n'),health.files[nativeFile],'Santé');
+  const child=JSON.parse(source('../../essai-stitch-v7/tests/fixtures/child-access-source-extensions.json'));
+  const beforeChild=beforeReviewedAmendment(nativeFile,source('../index.html').replaceAll('\r\n','\n'),child.files[nativeFile],'Accès enfant');
+  const beforeHealth=beforeReviewedAmendment(nativeFile,beforeChild,health.files[nativeFile],'Santé');
   const composedNative=beforeReviewedAmendment(nativeFile,beforeHealth,catalogue.files[nativeFile],'Catalogue lot 3');
   const contactComposition=JSON.parse(source('./fixtures/settings-archives-contacts-native-composition.json'));
   const contacts=JSON.parse(source('./fixtures/contacts-native-extensions.json'));

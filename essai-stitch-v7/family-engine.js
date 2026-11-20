@@ -7,9 +7,13 @@ window.DobbyFamilyStitchEngine=(()=>{
  const guardSharedWrite=()=>{if(window.DobbyFamilyStitch?.sharedReadOnly?.())throw Error('Les données du foyer sont en lecture seule pour ce profil.');};
  function notices(callback){win().alert=message=>{lastError=String(message);callback(lastError);};}
  function read(){
-  const data=evaluate('return JSON.parse(JSON.stringify({state:st,members:st.familyMembers||[],local:st.famHealth||[],shared:st.sharedHealthVisits||[],events:st.familyEvents||[],contacts:st.famContacts||[]}));');
-  data.active=Boolean(win().DobbyFamilyUI?.isModuleActive('family'));data.status=win().DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';
-  data.upcoming=win().DobbyFamilyAgenda?.upcoming()||[];return data;
+  const native=win(),access=native.DobbyFamilyUI?.childAccessState?.();
+  const waiting=access?.restricted&&!access.active;
+  const state=waiting?{}:evaluate('return JSON.parse(JSON.stringify(st));');
+  window.DobbyHealthRuntime?.filterHistoricalState(state);
+  const data={state,members:state.familyMembers||[],local:state.famHealth||[],shared:state.sharedHealthVisits||[],events:state.familyEvents||[],contacts:state.famContacts||[]};
+  data.active=!waiting&&Boolean(native.DobbyFamilyUI?.isModuleActive('family'));data.status=waiting?'Accès en cours de vérification.':native.DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';
+  data.upcoming=waiting?[]:native.DobbyFamilyAgenda?.upcoming()||[];return data;
  }
  function rewardSummary(memberId){return win().DobbyFamilyMissions?.summary(memberId)||null;}
  function page(extra=''){evaluate('st.page="family";st.extraPage=p.extra;st.detail=null;v23MemberEdit=null;render();',{extra});}
@@ -61,8 +65,8 @@ window.DobbyFamilyStitchEngine=(()=>{
  const saveMagicChoice=(id,kind,resultId)=>win().DobbyFamilyMembers.saveMagicChoice(id,kind,resultId);
  const finishMagicCeremony=id=>win().DobbyFamilyMembers.finishMagicCeremony(id);
  function deleteMember(id){requireRecord(read().members,id);page('health');action('v23Member','delete',{id});return !read().members.some(x=>x.id===id);}
- function localForm(id,personId){requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}
- function sharedForm(id){requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}
+ function localForm(id,personId){if(!window.DobbyHealthRuntime?.legacyDemo())return;requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}
+ function sharedForm(id){if(!window.DobbyHealthRuntime?.legacyDemo())return;requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}
  function saveVisit(scope,id,values){
   const before=read();
   if(scope==='shared'){sharedForm(id);submit('fhForm',values);}
@@ -73,7 +77,7 @@ window.DobbyFamilyStitchEngine=(()=>{
   const after=read()[scope==='shared'?'shared':'local'],saved=id||after.find(x=>!before[scope==='shared'?'shared':'local'].some(old=>old.id===x.id))?.id;
   return saved;
  }
- function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}
+ function deleteVisit(scope,id){if(!window.DobbyHealthRuntime?.legacyDemo())return false;requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}
  function eventForm(id){requireRecord(read().events,id);page();action('fpAction',id?'edit':'new',id?{id}:{});return win().document.getElementById('fpEventForm');}
  function saveEvent(id,values){guardSharedWrite();const form=eventForm(id);if(Object.hasOwn(values,'preparationTemplateId')&&!form.elements.namedItem('preparationTemplateId')){const input=win().document.createElement('input');input.type='hidden';input.name='preparationTemplateId';form.append(input);}submit('fpEventForm',values);}
  function deleteEvent(id){guardSharedWrite();requireRecord(read().events,id);page();action('fpAction','delete',{id});}

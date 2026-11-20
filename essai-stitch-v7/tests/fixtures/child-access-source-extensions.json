@@ -1,0 +1,1355 @@
+{
+  "baseCommit": "d5e1e4aff6e6c435abbbbe1fdf06d2a15e70a3df",
+  "files": {
+    "essai-stitch-v5-famille/family-access.mjs": {
+      "beforeSha256": "921d788e294786a5cf57c37ddd3ebcee44c31b0be6cec0bafc0a59edfd36ba31",
+      "afterSha256": "a8d858bd09ba210085863f0d32932e05841654c1dd9cc5fc643bedb54b079c0e",
+      "reason": "Cycle de vie de l’invitation ciblée et suspension par le compte autorisé.",
+      "patches": [
+        {
+          "line": 16,
+          "before": "export function verifiedFamilyCapabilities(raw,release=FAMILY_FEATURE_RELEASE){\n",
+          "after": "export function verifiedFamilyCapabilities(raw,release=FAMILY_FEATURE_RELEASE,{requireChildAccessProtocol=false}={}){\n"
+        },
+        {
+          "line": 19,
+          "before": " return{protocol:2,installed:Boolean(installed),familyRolesReady:Boolean(familyRolesReady),childAccountLinkReady:Boolean(familyRolesReady&&release.childAccountLink===true&&raw.childAccountLinkAvailable===true&&raw.childAccountLinkVerified===true)};\n",
+          "after": " const childAccountLinkReady=familyRolesReady&&release.childAccountLink===true&&raw.childAccountLinkAvailable===true&&raw.childAccountLinkVerified===true&&(!requireChildAccessProtocol||raw.childAccessProtocol===1);\n return{protocol:2,installed:Boolean(installed),familyRolesReady:Boolean(familyRolesReady),childAccountLinkReady:Boolean(childAccountLinkReady),...(requireChildAccessProtocol&&childAccountLinkReady?{childAccessProtocol:1}:{})};\n"
+        },
+        {
+          "line": 24,
+          "before": "export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE}={}){\n",
+          "after": "export function createFamilyAccess(driver,{release=FAMILY_FEATURE_RELEASE,requireChildAccessProtocol=false}={}){\n"
+        },
+        {
+          "line": 27,
+          "before": " const blank=()=>({phase:'signed-out',userId:null,householdId:null,memberId:null,profile:null,permissions:{},capabilities:verifiedFamilyCapabilities(null,features),configured:Boolean(driver.snapshot().configured),authenticated:false,verified:false,pendingCeremony:false,familyRevision:null});\n",
+          "after": " const verifyCapabilities=raw=>verifiedFamilyCapabilities(raw,features,{requireChildAccessProtocol});\n const blank=()=>({phase:'signed-out',userId:null,householdId:null,memberId:null,profile:null,permissions:{},capabilities:verifyCapabilities(null),configured:Boolean(driver.snapshot().configured),authenticated:false,verified:false,pendingCeremony:false,familyRevision:null});\n"
+        },
+        {
+          "line": 43,
+          "before": "  if(!features.familyRoles&&!features.childAccountLink)return verifiedFamilyCapabilities(null,features);\n  try{const raw=await rpc('dobby_v7_family_capabilities',{},native.userId?{}:{public:true});guard(native);return verifiedFamilyCapabilities(raw,features);}catch(error){guard(native);return verifiedFamilyCapabilities(null,features);}\n",
+          "after": "  if(!features.familyRoles&&!features.childAccountLink)return verifyCapabilities(null);\n  try{const raw=await rpc('dobby_v7_family_capabilities',{},native.userId?{}:{public:true});guard(native);return verifyCapabilities(raw);}catch(error){guard(native);return verifyCapabilities(null);}\n"
+        },
+        {
+          "line": 49,
+          "before": "  if(raw.reason==='existing_member_link_required')next.reason=raw.reason;\n",
+          "after": "  if(raw.reason==='existing_member_link_required'||raw.phase==='rejected'&&raw.reason==='child_access_suspended')next.reason=raw.reason;\n"
+        },
+        {
+          "line": 65,
+          "before": " async function refresh(expected={}){\n  const ticket=++generation,native=current();clear();\n",
+          "after": " let queuedRefresh=Promise.resolve();\n function refresh(expected={}){\n  if(!requireChildAccessProtocol)return readContext(expected);\n  const requested=current();\n  const work=queuedRefresh.catch(()=>{}).then(()=>{\n   const actual=current();\n   if(actual.userId!==requested.userId||actual.epoch!==requested.epoch)throw Error('Le compte a changé pendant la vérification.');\n   return readContext(expected);\n  });\n  queuedRefresh=work;\n  return work;\n }\n async function readContext(expected){\n  const ticket=++generation,native=current();\n  const keepVerified=requireChildAccessProtocol&&native.ready&&native.userId&&state().verified;\n  if(!keepVerified)clear();\n"
+        },
+        {
+          "line": 83,
+          "before": "  publish({phase:'unavailable',userId:native.userId});\n",
+          "after": "  if(!keepVerified)publish({phase:'unavailable',userId:native.userId});\n"
+        },
+        {
+          "line": 87,
+          "before": "",
+          "after": "   else clear();\n"
+        },
+        {
+          "line": 180,
+          "before": "",
+          "after": " async function readOrSuspendChildAccess(memberId,suspend){\n  const before=requireSession(),live=state();\n  if(!live.verified||live.profile?.memberCategory!=='parent'||live.capabilities.childAccessProtocol!==1||live.permissions.canLinkExistingChild!==true)throw Error('Accès enfant non autorisé pour ce compte.');\n  if(typeof memberId!=='string'||!memberId.trim()||memberId.length>120)throw Error('Profil enfant existant requis.');\n  guardMutation(before);\n  const body={p_member_id:memberId};\n  const raw=suspend?await rpc('dobby_v7_suspend_child_access',body):await rpc('dobby_v7_child_access_status',body,{method:'GET'});\n  guardMutation(before);\n  if(!object(raw)||typeof raw.linked!=='boolean'||typeof raw.active!=='boolean'||raw.active&&!raw.linked)throw Error('État de l’accès enfant non confirmé.');\n  if(suspend&&(!raw.linked||raw.active))throw Error('Suspension de l’accès enfant non confirmée.');\n  return {linked:raw.linked,active:raw.active};\n }\n"
+        },
+        {
+          "line": 209,
+          "before": " return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,updateMagic,updateMember,reserveMemberId,logout,cleanURL:cleanAuthURL});\n",
+          "after": " return Object.freeze({ready:Promise.resolve(),state,refresh,signIn,signUp,recover,confirmFromURL,updatePassword,saveProfile,previewInvitation,createHousehold,acceptInvitation,createInvitation,previewChildInvitation,createChildInvitation,acceptChildInvitation,childAccessStatus:memberId=>readOrSuspendChildAccess(memberId,false),suspendChildAccess:memberId=>readOrSuspendChildAccess(memberId,true),updateMagic,updateMember,reserveMemberId,logout,cleanURL:cleanAuthURL});\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-core.mjs": {
+      "beforeSha256": "9586ea059a9c00b02bf0beb70e0118390523f601d72109c46b4fdc551831e8b9",
+      "afterSha256": "e3baec5df06f502651b8fb686724bf44e90bc034e69b9b72eb7a9c1007ac5ce9",
+      "reason": "Droits locaux limités aux écritures canoniques enfant.",
+      "patches": [
+        {
+          "line": 109,
+          "before": " try{return normalizeMissionIntent(body.p_intent).kind==='complete';}catch{return false;}\n",
+          "after": " try{\n  const intent=normalizeMissionIntent(body.p_intent);\n  return intent.kind==='project'||intent.kind==='submit'&&intent.memberId===access.memberId||\n   intent.kind==='complete'&&intent.participantIds.length===1&&intent.participantIds[0]===access.memberId;\n }catch{return false;}\n"
+        },
+        {
+          "line": 115,
+          "before": "export function assertSharedWrite({method='GET',query='',body={},access=null}={}) {\n",
+          "after": "export function assertSharedWrite({method='GET',query='',body={},access=null,childReleaseVerified=false}={}) {\n"
+        },
+        {
+          "line": 140,
+          "before": " if(MISSION_V3_RELEASE_VERIFIED&&method.toUpperCase()==='POST'&&isCanonicalChildMissionCompletion({query,body,access}))return;\n",
+          "after": " if((MISSION_V3_RELEASE_VERIFIED||childReleaseVerified)&&method.toUpperCase()==='POST'&&isCanonicalChildMissionCompletion({query,body,access}))return;\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "96cf5030dd81c86f5e5507a73dd0c13bf42407e25fb234b4cefede5e67f82949",
+      "afterSha256": "6e807ddc834d12984d9abf1d833842e5ef8ee3e6441efd499e37243b60d6268a",
+      "reason": "Projection serveur enfant dans le moteur de synchronisation existant.",
+      "patches": [
+        {
+          "line": 19,
+          "before": "",
+          "after": "let childProjection = false;\n"
+        },
+        {
+          "line": 524,
+          "before": "",
+          "after": "function verifiedMissionRelease(){\n const access=api.access?.state?.();\n return missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true||\n  access?.capabilities?.childAccessProtocol===1&&access.capabilities.childAccountLinkReady===true&&\n  access.permissions.canCompleteMissionsV3===true;\n}\n"
+        },
+        {
+          "line": 592,
+          "before": "  releaseVerified:missionIntentCore.MISSION_V3_RELEASE_VERIFIED,\n",
+          "after": "  releaseVerified:verifiedMissionRelease(),\n"
+        },
+        {
+          "line": 608,
+          "before": "",
+          "after": "   if(childProjection){\n    applyMissionsV3(remote.payload);\n    states.missions=synchronized('missions',Number(remote.revision),remote.payload);\n    api.repaint();return;\n   }\n"
+        },
+        {
+          "line": 918,
+          "before": "async function persist() { if (ctx) await api.putMeta(storageKey(), states); }\n",
+          "after": "async function persist() { if (ctx&&!childProjection) await api.putMeta(storageKey(), states); }\n"
+        },
+        {
+          "line": 1023,
+          "before": " try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}\n",
+          "after": " if(!childProjection){try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}}\n"
+        },
+        {
+          "line": 1141,
+          "before": "",
+          "after": "async function adoptChildFamily(binding) {\n  const current=api.getContext(),epoch=api.connectionState().epoch;\n  if(binding.profile?.memberCategory!=='child'||current?.userId!==binding.userId||current.householdId!==binding.householdId)\n    throw Error('Contexte enfant non vérifié.');\n  if(!childProjection||ctx?.userId!==current.userId||ctx?.householdId!==current.householdId)reset();\n  childProjection=true;ctx=current;\n  const generation=contextGeneration,scope='p_household_id='+encodeURIComponent(binding.householdId);\n  const projection=id=>api.authorized('GET','rpc/dobby_v7_child_module?'+scope+'&p_module='+id);\n  const [family,missions,menus,recipes]=await Promise.all([\n    projection('family'),projection('missions'),readRow('menus'),readRow('recipes')\n  ]);\n  const session=api.getContext();\n  if(generation!==contextGeneration||api.connectionState().epoch!==epoch||session?.userId!==current.userId||session.householdId!==current.householdId)\n    throw Error('Le compte enfant a changé pendant la lecture.');\n  if(family?.module!=='family'||!family.payload?.familyMembers?.some(member=>member.id===binding.memberId&&member.memberCategory==='child'))\n    throw Error('Le membre enfant n’est pas confirmé dans le foyer.');\n  runes=await window.DobbyRunesReady;\n  if(generation!==contextGeneration||api.connectionState().epoch!==epoch)throw Error('Le compte enfant a changé pendant la lecture.');\n  const rows=[family,missions,menus,recipes].filter(Boolean);\n  for(const {module,payload,revision} of rows){\n    if(module==='missions'&&payload.runeLedgerVersion===3){\n      missionIntentCore ||= await window.DobbyMissionIntentsReady;\n      if(generation!==contextGeneration||api.connectionState().epoch!==epoch)throw Error('Le compte enfant a changé pendant la lecture.');\n      applyMissionsV3(payload);\n    }else applyShared(module,payload);\n    states[module]=synchronized(module,Number(revision),payload);\n  }\n  sharedAvailable=rows.map(row=>row.module);\n  checked=true;backendReady=true;moduleStateRestored=true;\n}\n"
+        },
+        {
+          "line": 1173,
+          "before": "  ctx = null; checked = false; backendReady = false; moduleStateRestored = false; lastError = ''; states = {}; sharedAvailable = [];\n",
+          "after": "  ctx = null; checked = false; backendReady = false; moduleStateRestored = false; lastError = ''; states = {}; sharedAvailable = [];childProjection=false;\n"
+        },
+        {
+          "line": 1517,
+          "before": "",
+          "after": "  if(childProjection){\n    if(!api.childAccessState().active)return;\n    await refreshMissionCapabilities();\n    if(!runesV3Available()||!states.missions?.active)return;\n    if(await missionV3Transport.pending())await sendMissionsV3(null,null);\n    else{\n      const remote={module:'missions',revision:states.missions.revision,payload:JSON.parse(states.missions.synced)};\n      if(missionLot2CanProject(remote))await sendMissionsV3({kind:'project'},remote);\n    }\n    return;\n  }\n"
+        },
+        {
+          "line": 1554,
+          "before": "",
+          "after": "  if(childProjection)return;\n"
+        },
+        {
+          "line": 1640,
+          "before": "api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,refreshMissionCapabilities,\n",
+          "after": "api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,adoptChildFamily,revalidateExistingFamily,refreshMissionCapabilities,\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-v2.js": {
+      "beforeSha256": "4ff53520e541c6ff1cc77c821183285bdb0dde33693b246b6db1c14957f5094d",
+      "afterSha256": "83868a91a2c45ffa08f9e362d8f01d65842c7158ab84258993534fb0cee619a6",
+      "reason": "Autorisation, remplacement de session et séparation des caches du moteur natif.",
+      "patches": [
+        {
+          "line": 13,
+          "before": "",
+          "after": "let childDevice = false, childAccount = null;\nlet restoringParentState = false;\nconst sessionStore = typeof DobbyFamilySessionStore === 'undefined' ? null : DobbyFamilySessionStore;\nfunction publicConfiguration() {\n  if (window.DobbyPublicConfig) return window.DobbyPublicConfig;\n  try { return window.parent?.DobbyPublicConfig; } catch { return null; }\n}\nconst childRelease = () => publicConfiguration()?.childAccountsAvailable === true;\nfunction childAccessState() {\n  const bound = verifiedBinding();\n  const active = Boolean(childRelease() && bound?.profile?.memberCategory === 'child' &&\n    bound.capabilities?.childAccountLinkReady && bound.capabilities.childAccessProtocol === 1);\n  return { restricted: bound?.profile?.memberCategory === 'child' ||\n    ((childDevice || childRelease()) && bound?.profile?.memberCategory !== 'parent'),\n    active, memberId: active ? bound.memberId : null };\n}\nfunction sealDeviceState(clear = false) {\n  if (!childDevice && !childRelease()) return;\n  sessionStore?.enter();\n  if (clear) sessionStore?.clear();\n  if (typeof CustomEvent === 'function') window.dispatchEvent?.(new CustomEvent('dobby:account-change'));\n}\n"
+        },
+        {
+          "line": 74,
+          "before": "const meta = async id => (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;\nconst putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });\nconst delMeta = id => dbCall(f.db, 'meta', 'delete', id);\n",
+          "after": "function assertPrivateChatMeta(id) {\n  if (String(id).startsWith('v7-private-chat:') && childAccessState().restricted) {\n    throw Error('Parler à Dobby est réservé aux parents.');\n  }\n}\nconst meta = async id => {\n  assertPrivateChatMeta(id);\n  const value = (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;\n  assertPrivateChatMeta(id);\n  return value;\n};\nconst putMeta = async (id, value) => {\n  assertPrivateChatMeta(id);\n  return dbCall(f.db, 'meta', 'put', { id, value });\n};\nconst delMeta = async id => {\n  assertPrivateChatMeta(id);\n  return dbCall(f.db, 'meta', 'delete', id);\n};\n"
+        },
+        {
+          "line": 96,
+          "before": "",
+          "after": " assertPrivateChatMeta(id);\n"
+        },
+        {
+          "line": 98,
+          "before": " request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(deleteNull&&result===null)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};\n",
+          "after": " request.onsuccess=()=>{try{assertPrivateChatMeta(id);result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(deleteNull&&result===null)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};\n"
+        },
+        {
+          "line": 236,
+          "before": "  if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state});return;}\n",
+          "after": "  if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state,childReleaseVerified:childAccessState().active});return;}\n"
+        },
+        {
+          "line": 246,
+          "before": "  const onboarding = /^rpc\\/dobby_v7_(update_profile|create_household|create_invitation|accept_invitation)$/.test(query);\n",
+          "after": "  const onboarding = /^rpc\\/dobby_v7_(update_profile|create_household|create_invitation|accept_invitation|create_child_invitation|accept_child_invitation|child_access_status|suspend_child_access|child_module|update_magic)(\\?|$)/.test(query);\n  const scopedChild = childAccessState().restricted && (query.startsWith('dobby_v2_') || /^rpc\\/dobby_missions_v3_/.test(query));\n"
+        },
+        {
+          "line": 249,
+          "before": "    onboarding ? () => assertCurrentOnboardingSession(expected) : null;\n",
+          "after": "    (onboarding || scopedChild) ? () => assertCurrentOnboardingSession(expected) : null;\n"
+        },
+        {
+          "line": 252,
+          "before": "  if (onboarding) await checkSession();\n",
+          "after": "  if (!health && checkSession) await checkSession();\n"
+        },
+        {
+          "line": 282,
+          "before": "",
+          "after": "  if(childAccessState().restricted)throw Error('Les pièces du foyer sont réservées aux parents autorisés.');\n"
+        },
+        {
+          "line": 397,
+          "before": "async function requireHousehold() {\n",
+          "after": "async function requireHousehold(startProvider = true, keepVerified = false) {\n"
+        },
+        {
+          "line": 400,
+          "before": "  f.checkingEpoch=epoch;f.verifiedContext = null;\n",
+          "after": "  f.checkingEpoch=epoch;\n  if(!keepVerified)f.verifiedContext=null;\n"
+        },
+        {
+          "line": 433,
+          "before": "  if (f.provider?.start) await f.provider.start();\n",
+          "after": "  if (startProvider && f.provider?.start && !childAccessState().restricted) await f.provider.start();\n"
+        },
+        {
+          "line": 454,
+          "before": "",
+          "after": "  if (childAccessState().restricted) {\n    f.cache = new Map(childAccessState().active ?\n      rows.map(row => [row.id, f.core.mergeRemote(null,row)]) : []);\n    return;\n  }\n"
+        },
+        {
+          "line": 525,
+          "before": "",
+          "after": "    if (childAccount && childRelease()) {\n      const controller = await ensureAccess();\n      await controller.refresh();\n      if (epoch !== f.epoch || !childAccessState().active) return;\n      await pull(epoch);\n      if (epoch === f.epoch) await f.provider?.sync();\n      return;\n    }\n"
+        },
+        {
+          "line": 545,
+          "before": "",
+          "after": "    if (childAccessState().active) {\n      await pull(epoch);\n      if(epoch===f.epoch)await f.provider?.sync();\n      return;\n    }\n    if (childAccessState().restricted) return;\n"
+        },
+        {
+          "line": 591,
+          "before": "",
+          "after": "  const access = childAccessState();\n  if (access.restricted && !access.active) return [];\n"
+        },
+        {
+          "line": 820,
+          "before": "",
+          "after": "  childAccount=null;sealDeviceState(true);\n"
+        },
+        {
+          "line": 834,
+          "before": "",
+          "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
+        },
+        {
+          "line": 846,
+          "before": "",
+          "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
+        },
+        {
+          "line": 877,
+          "before": "",
+          "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
+        },
+        {
+          "line": 1003,
+          "before": "",
+          "after": " if(childDevice&&!state.verified)sealDeviceState();\n if(childDevice&&state.phase==='rejected'){\n  f.cache.clear();f.provider?.reset?.();sealDeviceState(true);\n }\n"
+        },
+        {
+          "line": 1025,
+          "before": "   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),\n",
+          "after": "   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):\n    options.method==='GET'?authorized('GET','rpc/'+name+'?'+new URLSearchParams(body)):authorized('POST','rpc/'+name,body),\n"
+        },
+        {
+          "line": 1038,
+          "before": "    f.session=next;announceAuthSessionChange();repaint();refreshModal();\n",
+          "after": "    f.session=next;childAccount=null;sealDeviceState(true);announceAuthSessionChange();repaint();refreshModal();\n"
+        },
+        {
+          "line": 1042,
+          "before": "    guard();try{await requireHousehold();guard();\n",
+          "after": "    guard();\n    const child=childRelease()&&context.profile.memberCategory==='child';\n    try {\n     await requireHousehold(!childRelease(),childRelease()&&Boolean(verifiedBinding()));guard();\n"
+        },
+        {
+          "line": 1049,
+          "before": "",
+          "after": "     if(child){\n      if(!context.capabilities?.childAccountLinkReady||context.capabilities.childAccessProtocol!==1||!f.provider.adoptChildFamily)\n       throw Error('Les droits du compte enfant ne sont pas vérifiés.');\n      childAccount=context.userId;sealDeviceState();\n      await f.provider.adoptChildFamily(binding);guard();\n      f.accessContext={...context,epoch:f.epoch};return;\n     }\n     if(childDevice||childRelease()){\n      if(context.profile.memberCategory!=='parent')throw Error('Les droits du compte enfant ne sont pas vérifiés.');\n      restoringParentState=true;\n      try{sessionStore?.release();}finally{restoringParentState=false;}\n      await f.provider.start();guard();\n     }\n"
+        },
+        {
+          "line": 1069,
+          "before": "  });return accessController;\n",
+          "after": "  },childRelease()?{release:{familyRoles:true,childAccountLink:true},requireChildAccessProtocol:true}:undefined);return accessController;\n"
+        },
+        {
+          "line": 1094,
+          "before": " ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),\n",
+          "after": " ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','childAccessStatus','suspendChildAccess','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),\n"
+        },
+        {
+          "line": 1098,
+          "before": "window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,\n",
+          "after": "window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,childAccessState,\n  canRestoreParentState:()=>restoringParentState,\n"
+        },
+        {
+          "line": 1127,
+          "before": "",
+          "after": "  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');\n"
+        },
+        {
+          "line": 1183,
+          "before": " let config=window.DobbyPublicConfig;\n if(!config)try{if(window.parent&&window.parent!==window&&window.parent.location.origin===window.location.origin)config=window.parent.DobbyPublicConfig;}catch{}\n",
+          "after": " const config=publicConfiguration();\n"
+        },
+        {
+          "line": 1191,
+          "before": "",
+          "after": "    childDevice=childRelease()||await meta('v7-child-device')===true;\n    if(childRelease())await putMeta('v7-child-device',true);\n    sealDeviceState();\n"
+        },
+        {
+          "line": 1201,
+          "before": "",
+          "after": "    if(childDevice&&typeof BroadcastChannel==='function'){\n      const channel=new BroadcastChannel('dobby-auth-session-v7');\n      channel.addEventListener('message',async event=>{\n        if(event.data?.type!=='auth-session-change')return;\n        const epoch=f.epoch,saved=await meta('session');\n        if(epoch!==f.epoch||saved?.refresh_token===f.session?.refresh_token&&saved?.user_id===f.session?.user_id)return;\n        f.epoch++;f.accessContext=null;f.verifiedContext=null;f.provider?.reset?.();f.cache.clear();sealDeviceState(true);\n        try{(window.parent||window).location.reload();}catch{window.location.reload();}\n      });\n    }\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/index.html": {
+      "beforeSha256": "c239becd09f0ca30ae345496b983a8e6ce2c503896602560f65ac831a7ef5704",
+      "afterSha256": "0b53278969300fbbcdcda104eb71281b66c5f79bf79a1431e88225e75c105b90",
+      "reason": "État natif enfant en mémoire et arrêt des commandes privées E02.",
+      "patches": [
+        {
+          "line": 1061,
+          "before": "const key='dobby-v5-familial-preview-20261108';let st;try{st=JSON.parse(localStorage.getItem(key))}catch{};st={page:'home',day:todayISO(),slot:'soir',choice:'dobby',filter:'',cat:'Toutes',favorites:false,selection:'chicken',note:'',people:4,adult:2,children:2,childFactor:0.65,detail:null,cook:false,cookStep:0,tmEditor:false,tmView:false,tmAdaptations:{},have:{},bought:{},extras:[],shopChoice:{},shopFinal:null,shopHistory:{},planned:{},...st};\n",
+          "after": "const key='dobby-v5-familial-preview-20261108';\nconst emptyNativeState=()=>({page:'home',day:todayISO(),slot:'soir',choice:'dobby',filter:'',cat:'Toutes',favorites:false,selection:'chicken',note:'',people:4,adult:2,children:2,childFactor:0.65,detail:null,cook:false,cookStep:0,tmEditor:false,tmView:false,tmAdaptations:{},have:{},bought:{},extras:[],shopChoice:{},shopFinal:null,shopHistory:{},planned:{}});\nlet st;try{st=JSON.parse(localStorage.getItem(key))}catch{};st={...emptyNativeState(),...st};\n"
+        },
+        {
+          "line": 1073,
+          "before": "let custom=st.customRecipes||[];function save(){st.customRecipes=custom;try{localStorage.setItem(key,JSON.stringify(st))}catch(e){alert('Stockage local saturé : certaines données ne peuvent pas être enregistrées.');throw e}}function go(p){st.page=p;st.detail=null;st.cook=false;save();render()}function allRecipes(){const overrides=new Map();for(const r of custom)if(!overrides.has(r.id))overrides.set(r.id,r);const recipes=new Map(BASE.map(r=>[r.id,overrides.get(r.id)||r]));for(const [id,r]of overrides)if(!recipes.has(id))recipes.set(id,r);return [...recipes.values()]}function getR(id){return allRecipes().find(x=>x.id===id)}function recipeTM5(id){return st.tmAdaptations?.[id]||getR(id)?.catalogueTM5||null}function fmt(n){return Number(n.toFixed(2)).toLocaleString('fr-BE')}function portionCount(m){return m.adult!==undefined?Number(m.adult)+Number(m.children||0)*Number(m.childFactor??0.65):Number(m.people||4)}function amount(n,people,base){return n===null||n===undefined||!Number.isFinite(Number(base))||Number(base)<=0||!Number.isFinite(Number(people))?'':fmt(n*people/base)}function countLabel(m){return m.adult!==undefined?`${m.adult} adulte(s) · ${m.children} enfant(s)`:m.people+' personnes'}function mealKey(day,slot){return day+'-'+slot}function meal(day,slot){return st.planned[mealKey(day,slot)]}function summary(){let by={};pendingMeals().map(([key,m])=>m).forEach(m=>{let r=m._dessertRecipeSnapshot||getR(m.id);if(!r)return;r.ingredients.forEach(([name,q,u])=>{let k=name+'|'+u,unknown=q===null||q===undefined||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0;if(!by[k])by[k]={name,unit:u,qty:unknown?null:0};if(unknown)by[k].qty=null;else if(by[k].qty!==null)by[k].qty+=Number(q)*portionCount(m)/r.servings})});return Object.values(by).sort((a,b)=>a.name.localeCompare(b.name,'fr'))}function v2ActiveTasks(){return (st.autoTasks||[]).filter(t=>t.state==='open'&&t.due<=todayISO()).sort((a,b)=>a.due.localeCompare(b.due))}\n",
+          "after": "let custom=st.customRecipes||[];\nlet deviceState=null;\nconst DobbyFamilySessionStore=Object.freeze({\n enter(){\n  if(deviceState)return;\n  deviceState={st,custom};\n  st=emptyNativeState();\n  // The child projection starts empty. It never inherits the device's data,\n  // including state carried by old modules or an unconfirmed parent account.\n  for(const name of ['autoTasks','manualMissions','runeCredits','runeRequests','familyMembers','familyEvents',\n    'familyDocs','familyNotes','sharedFamilyNotes','famLists','famContacts','famHealth','sharedHealthVisits',\n    'houseItems','houseDocs','houseLogs','familyPreparationTemplates','familyEventPreparations'])st[name]=[];\n  custom=[];\n },\n clear(){\n  if(!deviceState)return;\n  const original=deviceState;\n  deviceState=null;st=original.st;custom=original.custom;\n  this.enter();\n },\n release(){\n  if(!deviceState||!window.DobbyFamilyUI?.canRestoreParentState())return;\n  st=deviceState.st;custom=deviceState.custom;deviceState=null;\n }\n});\nfunction save(){st.customRecipes=custom;if(deviceState)return;try{localStorage.setItem(key,JSON.stringify(st))}catch(e){alert('Stockage local saturé : certaines données ne peuvent pas être enregistrées.');throw e}}function go(p){st.page=p;st.detail=null;st.cook=false;save();render()}function allRecipes(){const overrides=new Map();for(const r of custom)if(!overrides.has(r.id))overrides.set(r.id,r);const recipes=new Map(BASE.map(r=>[r.id,overrides.get(r.id)||r]));for(const [id,r]of overrides)if(!recipes.has(id))recipes.set(id,r);return [...recipes.values()]}function getR(id){return allRecipes().find(x=>x.id===id)}function recipeTM5(id){return st.tmAdaptations?.[id]||getR(id)?.catalogueTM5||null}function fmt(n){return Number(n.toFixed(2)).toLocaleString('fr-BE')}function portionCount(m){return m.adult!==undefined?Number(m.adult)+Number(m.children||0)*Number(m.childFactor??0.65):Number(m.people||4)}function amount(n,people,base){return n===null||n===undefined||!Number.isFinite(Number(base))||Number(base)<=0||!Number.isFinite(Number(people))?'':fmt(n*people/base)}function countLabel(m){return m.adult!==undefined?`${m.adult} adulte(s) · ${m.children} enfant(s)`:m.people+' personnes'}function mealKey(day,slot){return day+'-'+slot}function meal(day,slot){return st.planned[mealKey(day,slot)]}function summary(){let by={};pendingMeals().map(([key,m])=>m).forEach(m=>{let r=m._dessertRecipeSnapshot||getR(m.id);if(!r)return;r.ingredients.forEach(([name,q,u])=>{let k=name+'|'+u,unknown=q===null||q===undefined||!Number.isFinite(Number(r.servings))||Number(r.servings)<=0;if(!by[k])by[k]={name,unit:u,qty:unknown?null:0};if(unknown)by[k].qty=null;else if(by[k].qty!==null)by[k].qty+=Number(q)*portionCount(m)/r.servings})});return Object.values(by).sort((a,b)=>a.name.localeCompare(b.name,'fr'))}function v2ActiveTasks(){return (st.autoTasks||[]).filter(t=>t.state==='open'&&t.due<=todayISO()).sort((a,b)=>a.due.localeCompare(b.due))}\n"
+        },
+        {
+          "line": 1155,
+          "before": "function v2ChatReply(input){let q=input.trim(),low=q.toLocaleLowerCase('fr');if(!q)return '';if(/(acheter|courses|courses.*ajout|ajout.*courses)/.test(low)){let m=q.match(/(?:ajoute[r]?|acheter|mets?|mettre)\\s+(.+?)(?:\\s+(?:à|dans)\\s+(?:la\\s+)?liste(?:\\s+de)?\\s+courses)?[.?!]?$/i);if(m){let name=m[1].replace(/^(du|de la|de l'|des|le|la|les|un|une)\\s+/i,'').trim();if(name.length>1&&name.length<120){st.extras ||= [];if(!st.extras.some(x=>x.toLocaleLowerCase('fr')===name.toLocaleLowerCase('fr')))st.extras.push(name);save();return 'Dobby a ajouté « '+name+' » à la préparation des courses.'}}return 'Dobby n’a pas compris quel article ajouter. Essaie : « acheter du lait ».'}\n",
+          "after": "const v2ChatAccess=()=>window.DobbyFamilyUI?.childAccessState?.();\nconst v2ChatRestricted=()=>v2ChatAccess()?.restricted===true;\nconst v2ChatUnavailable=()=>'<button class=\"btn small secondary\" data-go=\"home\">‹ Accueil</button><p>Le chat Dobby est réservé aux parents autorisés.</p>';\nfunction v2ChatReply(input){if(v2ChatRestricted())return 'Le chat Dobby est réservé aux parents autorisés.';let q=input.trim(),low=q.toLocaleLowerCase('fr');if(!q)return '';if(/(acheter|courses|courses.*ajout|ajout.*courses)/.test(low)){let m=q.match(/(?:ajoute[r]?|acheter|mets?|mettre)\\s+(.+?)(?:\\s+(?:à|dans)\\s+(?:la\\s+)?liste(?:\\s+de)?\\s+courses)?[.?!]?$/i);if(m){let name=m[1].replace(/^(du|de la|de l'|des|le|la|les|un|une)\\s+/i,'').trim();if(name.length>1&&name.length<120){st.extras ||= [];if(!st.extras.some(x=>x.toLocaleLowerCase('fr')===name.toLocaleLowerCase('fr')))st.extras.push(name);save();return 'Dobby a ajouté « '+name+' » à la préparation des courses.'}}return 'Dobby n’a pas compris quel article ajouter. Essaie : « acheter du lait ».'}\n"
+        },
+        {
+          "line": 1163,
+          "before": "",
+          "after": "if(v2ChatRestricted())return v2ChatUnavailable();",
+          "column": 20
+        },
+        {
+          "line": 1345,
+          "before": "function v2SendChat(q){q=String(q||'').trim();if(!q)return;st.v2ChatHistory ||= [];st.v2ChatHistory.push({by:'user',text:q},{by:'dobby',text:v2ChatReply(q)});st.v2ChatHistory=st.v2ChatHistory.slice(-24);save();render();}\n",
+          "after": "function v2SendChat(q){\n if(v2ChatRestricted())return false;\n q=String(q||'').trim();if(!q)return false;\n st.v2ChatHistory ||= [];st.v2ChatHistory.push({by:'user',text:q},{by:'dobby',text:v2ChatReply(q)});\n st.v2ChatHistory=st.v2ChatHistory.slice(-24);save();render();return true;\n}\n"
+        },
+        {
+          "line": 1720,
+          "before": "",
+          "after": "if(v2ChatRestricted())return v2ChatUnavailable();",
+          "column": 20
+        },
+        {
+          "line": 1780,
+          "before": "let v23Listening=false,v23Recognition=null,v23VoiceReplyPending=false;\n",
+          "after": "let v23Listening=false,v23Recognition=null,v23Utterance=null;\n"
+        },
+        {
+          "line": 1784,
+          "before": "",
+          "after": " if(v2ChatRestricted())return v2ChatUnavailable();\n"
+        },
+        {
+          "line": 1795,
+          "before": "function v23Speak(text){if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window))return;try{window.speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=.96;window.speechSynthesis.speak(u);}catch(_){}}\n",
+          "after": "function v23ChatIdentity(){\n const api=window.DobbyFamilyUI,context=api?.getContext?.();\n return JSON.stringify([context?.userId,context?.householdId,v2ChatAccess()?.memberId??context?.memberId,api?.connectionState?.()?.epoch]);\n}\nfunction v23StopChatVoice(){\n const recognition=v23Recognition;v23Recognition=null;v23Listening=false;\n if(recognition){\n  recognition.onresult=recognition.onerror=recognition.onend=null;\n  recognition.onstart=()=>{try{recognition.abort();}catch{}};\n  try{recognition.abort();}catch{}\n }\n if(v23Utterance){v23Utterance=null;try{window.speechSynthesis?.cancel();}catch{}}\n}\nfunction v23Speak(text){\n if(v2ChatRestricted()||!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window))return;\n try{\n  window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text),expected=v23ChatIdentity();\n  u.lang='fr-FR';u.rate=.96;v23Utterance=u;\n  u.onstart=()=>{if(v23Utterance===u&&(v2ChatRestricted()||v23ChatIdentity()!==expected))v23StopChatVoice();};\n  u.onend=u.onerror=()=>{if(v23Utterance===u)v23Utterance=null;};\n  window.speechSynthesis.speak(u);\n }catch{}\n}\n"
+        },
+        {
+          "line": 1819,
+          "before": " if(v23Listening&&v23Recognition){v23Recognition.stop();v23Listening=false;v23MicStatus('Écoute arrêtée.');return}\n",
+          "after": " if(v2ChatRestricted()){v23StopChatVoice();return;}\n if(v23Recognition){try{v23Recognition.stop();}catch{v23StopChatVoice();}v23Listening=false;v23MicStatus('Écoute arrêtée.');return;}\n"
+        },
+        {
+          "line": 1824,
+          "before": "  const r=new Recognition();r.lang='fr-FR';r.interimResults=false;r.continuous=false;r.maxAlternatives=1;\n  v23Recognition=r;r.onstart=()=>{v23Listening=true;v23MicStatus('Dobby vous écoute…')};\n  r.onerror=event=>{v23Listening=false;v23MicStatus(event.error==='not-allowed'?'Microphone refusé dans ce navigateur.':'Écoute indisponible : '+event.error)};\n  r.onend=()=>{v23Listening=false;v23MicStatus('Appuyez pour parler')};\n  r.onresult=event=>{const q=event.results?.[0]?.[0]?.transcript?.trim();if(!q)return;v2SendChat(q);const rows=st.v2ChatHistory||[];const reply=rows[rows.length-1];if(reply?.by==='dobby')v23Speak(reply.text);};\n",
+          "after": "  const r=new Recognition(),expected=v23ChatIdentity();r.lang='fr-FR';r.interimResults=false;r.continuous=false;r.maxAlternatives=1;\n  const valid=()=>{\n   if(v23Recognition!==r)return false;\n   if(v2ChatRestricted()||v23ChatIdentity()!==expected){v23StopChatVoice();return false;}\n   return true;\n  };\n  v23Recognition=r;r.onstart=()=>{if(!valid())return;v23Listening=true;v23MicStatus('Dobby vous écoute…')};\n  r.onerror=event=>{if(!valid())return;v23Listening=false;v23MicStatus(event.error==='not-allowed'?'Microphone refusé dans ce navigateur.':'Écoute indisponible : '+event.error)};\n  r.onend=()=>{if(!valid())return;v23Recognition=null;v23Listening=false;v23MicStatus('Appuyez pour parler')};\n  r.onresult=event=>{\n   if(!valid()||!v2SendChat(event.results?.[0]?.[0]?.transcript)||!valid())return;\n   const reply=st.v2ChatHistory.at(-1);if(reply?.by==='dobby')v23Speak(reply.text);\n  };\n"
+        },
+        {
+          "line": 1838,
+          "before": " }catch(e){v23Listening=false;v23MicStatus('Microphone indisponible : '+e.message)}\n",
+          "after": " }catch(e){v23StopChatVoice();v23MicStatus('Microphone indisponible : '+e.message)}\n"
+        },
+        {
+          "line": 1840,
+          "before": "",
+          "after": "\nfunction v23RevokeChatAccess(){\n if(!v2ChatRestricted())return;\n v23StopChatVoice();\n const screen=document.getElementById('screen');\n if(screen?.querySelector('#v2ChatForm'))screen.innerHTML=v2ChatUnavailable();\n}\nwindow.addEventListener('dobby:access-change',v23RevokeChatAccess);\nwindow.addEventListener('dobby:account-change',v23RevokeChatAccess);\nwindow.addEventListener('pagehide',v23StopChatVoice);\nwindow.addEventListener('pageshow',v23RevokeChatAccess);\n"
+        },
+        {
+          "line": 2076,
+          "before": "",
+          "after": "  if(v2ChatRestricted())return;\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/access-config.js": {
+      "beforeSha256": "4b5eccf1457bea8d0d6c5937adefb24d566a58e52330a91b719730a4ccb95f47",
+      "afterSha256": "107bf43f5c9e37517e417cea35f134ae38feaaff8ea9873c881444e0998ce95d",
+      "reason": "Configuration publique fermée par défaut.",
+      "patches": [
+        {
+          "line": 6,
+          "before": "",
+          "after": "  childAccountsAvailable: false,\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/access-flow.mjs": {
+      "beforeSha256": "f615a70034ccccf17065e833c8e1bd750a381d5167df4cc94ffc4919194927a7",
+      "afterSha256": "efad0af9358f8ea0626651e3f64d0e4228745957dfbf7a51869cf2e3e12199af",
+      "reason": "Reprise du flux Auth existant pour l’invitation ciblée.",
+      "patches": [
+        {
+          "line": 5,
+          "before": "",
+          "after": "    if (state.profile?.memberCategory === 'child') return 'traverse';\n"
+        },
+        {
+          "line": 12,
+          "before": "  if (state.phase === 'signed-out' && invitationPending && invitationType === 'generic') return 'access-join';\n",
+          "after": "  if (state.phase === 'signed-out' && invitationPending) return 'access-join';\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/access.js": {
+      "beforeSha256": "142eb88a73f7840feb51888163d85ea83aac40ffcb0e6093ce39df1c5c8320bc",
+      "afterSha256": "fdfd17b43dbc27e78ffe0517481e76257ef9b1276db80dbcac0f1adb17ab4570",
+      "reason": "Inscription, changement de compte et acceptation ciblée sur le parcours natif.",
+      "patches": [
+        {
+          "line": 9,
+          "before": "  let callbackError = '', recovery = false, lastUser = null, loggingOut = false;\n",
+          "after": "  let callbackError = '', recovery = false, lastUser = null, loggingOut = false, invitationSwitch = null;\n"
+        },
+        {
+          "line": 96,
+          "before": "",
+          "after": "  async function switchChildAccount(expected) {\n    assertActor(expected.actor);\n    if(invitationToken!==expected.token||invitationType!=='child-account')throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');\n    invitationSwitch=expected;\n    loggingOut=true;\n    try {\n      await account().logout();\n      const signedOut=()=>!state().userId&&!api().connectionState?.().userId;\n      let retained=false;\n      await api().updateMeta(pendingKey,saved=>{\n        if(!signedOut()||saved?.token!==expected.token||saved.type!=='child-account'||saved.userId&&saved.userId!==expected.userId)return saved;\n        retained=true;\n        return {...saved,userId:null};\n      });\n      if(!signedOut())throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');\n      if(!retained)throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');\n      invitationToken=expected.token;invitationType='child-account';\n      await go('access-join');\n    } finally {invitationSwitch=null;loggingOut=false;}\n  }\n"
+        },
+        {
+          "line": 160,
+          "before": "          void clearInvitation(previous);recovery=false;void api().putMeta(recoveryKey,null);\n",
+          "after": "          if(invitationSwitch?.userId!==lastUser||next.userId)void clearInvitation(previous);\n          recovery=false;void api().putMeta(recoveryKey,null);\n"
+        },
+        {
+          "line": 181,
+          "before": "    const current=state();\n    if(invitationToken&&current.userId)await api().putMeta(pendingKey,{token:invitationToken,...(invitationType==='child-account'?{type:invitationType}:{}),userId:current.userId});\n",
+          "after": "    const current=state(),owner=actorToken(current),token=invitationToken,type=invitationType;\n    if(token&&current.userId){\n      let matched=false;\n      await api().updateMeta(pendingKey,saved=>{\n        if(actorToken()!==owner||saved?.token!==token||(saved.type||'generic')!==type||saved.userId&&saved.userId!==current.userId)return saved;\n        matched=true;\n        return {...saved,userId:current.userId};\n      });\n      assertActor(owner);\n      if(!matched||invitationToken!==token||invitationType!==type)throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');\n    }\n"
+        },
+        {
+          "line": 204,
+          "before": "",
+          "after": "    if(invitationType==='child-account'&&state().userId){void go('access-join');return;}\n"
+        },
+        {
+          "line": 206,
+          "before": "    const copy=shell('Entrer dans DOBBY','Retrouvez votre foyer ou commencez une nouvelle aventure.');\n",
+          "after": "    const copy=shell('Entrer dans DOBBY',invitationType==='child-account'?'Utilisez l’adresse e-mail personnelle de l’enfant. Elle doit être distincte de celle de tout autre compte DOBBY.':'Retrouvez votre foyer ou commencez une nouvelle aventure.');\n"
+        },
+        {
+          "line": 263,
+          "before": "    if(state().phase!=='household'){void next();return;}\n",
+          "after": "    if(state().phase!=='household'||invitationType==='child-account'){void next();return;}\n"
+        },
+        {
+          "line": 275,
+          "before": "",
+          "after": "    const startHousehold=button('Créer un nouveau foyer',async()=>{await clearInvitation();if(state().authenticated)await next();else await go('access-auth',{mode:'signup'});},true);\n"
+        },
+        {
+          "line": 277,
+          "before": "",
+          "after": "      if(invitationType==='child-account')startHousehold.remove();\n      else if(!startHousehold.isConnected)copy.append(startHousehold);\n"
+        },
+        {
+          "line": 289,
+          "before": "      result.append(el('p','UNE PLACE VOUS ATTEND','access-kicker'),el('h2',invitation.household.name),el('p','Invitation de '+invitation.inviter.name));\n      if(invitationType==='child-account')result.append(el('p','Cette invitation ouvre l’accès à votre profil enfant existant. Votre avatar, vos choix magiques et votre histoire seront conservés.'));\n",
+          "after": "      const child=invitationType==='child-account',shown=invitation,shownToken=invitationToken,shownType=invitationType;\n      result.append(el('p','UNE PLACE VOUS ATTEND','access-kicker'),el('h2',shown.household.name),el('p','Invitation de '+shown.inviter.name));\n      if(child)result.append(el('p','Cette invitation ouvre l’accès à votre profil enfant existant. Votre avatar, vos choix magiques et votre histoire seront conservés.'));\n"
+        },
+        {
+          "line": 294,
+          "before": "      if(current.authenticated&&(current.phase!=='profile'||invitationType==='child-account')){const owner=actorToken(current);result.append(button('Rejoindre ce foyer',async()=>{assertActor(owner);await account()[invitationType==='child-account'?'acceptChildInvitation':'acceptInvitation'](invitationToken);if(!state().verified)throw Error('Rattachement non confirmé.');await clearInvitation();await go('traverse');}));}\n",
+          "after": "      const owner=actorToken(current);\n      if(child&&current.userId&&!(['profile','household'].includes(current.phase)||current.verified&&current.profile?.memberCategory==='child'&&current.memberId===shown.targetMemberId&&current.householdId===shown.household.id)){\n        result.append(el('p','Cette invitation s’utilise avec le compte personnel de l’enfant.'),button('Se déconnecter pour changer de compte',()=>switchChildAccount({token:shownToken,userId:current.userId,actor:owner})));\n      }\n      else if(current.authenticated&&(current.phase!=='profile'||child))result.append(button('Rejoindre ce foyer',async()=>{\n        assertActor(owner);\n        if(invitationToken!==shownToken||invitationType!==shownType)throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');\n        await account()[child?'acceptChildInvitation':'acceptInvitation'](shownToken);\n        const joined=state(),joinedOwner=actorToken(joined);\n        if(!joined.verified||joined.userId!==current.userId||child&&(joined.memberId!==shown.targetMemberId||joined.householdId!==shown.household.id))throw Error('Rattachement non confirmé.');\n        await clearInvitation({token:shownToken,type:shownType,userId:joined.userId},joinedOwner);\n        assertActor(joinedOwner);\n        await go('traverse');\n      }));\n"
+        },
+        {
+          "line": 310,
+          "before": "        if(invitationType==='generic')result.append(button('Créer mon compte pour rejoindre',()=>go('access-auth',{mode:'signup'})));\n        result.append(button('Me connecter pour rejoindre',()=>go('access-auth',{mode:'login'}),invitationType==='generic'));\n",
+          "after": "        result.append(button('Créer mon compte pour rejoindre',()=>go('access-auth',{mode:'signup'})));\n        result.append(button('Me connecter pour rejoindre',()=>go('access-auth',{mode:'login'}),true));\n"
+        },
+        {
+          "line": 316,
+          "before": "    copy.append(form,result,button('Créer un nouveau foyer',async()=>{await clearInvitation();if(state().authenticated)await next();else await go('access-auth',{mode:'signup'});},true));show();\n",
+          "after": "    copy.append(form,result);show();\n"
+        },
+        {
+          "line": 328,
+          "before": "",
+          "after": "    if(state().reason==='child_access_suspended'){\n      const copy=shell('Accès suspendu','Un parent du foyer a suspendu cet accès. Votre fiche et son historique sont conservés.');\n      copy.append(button('Se déconnecter',performLogout));\n      return;\n    }\n"
+        },
+        {
+          "line": 341,
+          "before": "      setTimeout(()=>{if(recovery)passwordRecovery();else if(callbackError)void go('access-auth',{mode:'login'});else if(initial)void go(initial);else void next();},0);return;\n",
+          "after": "      setTimeout(()=>{if(context!==value||context.ui.view!=='access')return;if(recovery)passwordRecovery();else if(callbackError)void go('access-auth',{mode:'login'});else if(initial)void go(initial);else void next().catch(error=>status(publicError(error),true));},0);return;\n"
+        },
+        {
+          "line": 359,
+          "before": "    if(!current.verified||current.permissions.canInvite!==true)throw Error('Invitation non autorisée.');\n",
+          "after": "    if(!current.verified||(!child&&current.permissions.canInvite!==true))throw Error('Invitation non autorisée.');\n"
+        },
+        {
+          "line": 382,
+          "before": "  function logout(scope) {\n    return run(async()=>{\n      loggingOut=true;\n      try {\n        await account().logout();\n        if(api().connectionState?.().userId||state().userId)throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');\n        callbackError='';recovery=false;\n        await go('access-welcome');\n      } finally {loggingOut=false;}\n    },scope);\n",
+          "after": "  async function performLogout() {\n    loggingOut=true;\n    try {\n      await account().logout();\n      if(api().connectionState?.().userId||state().userId)throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');\n      callbackError='';recovery=false;\n      await go('access-welcome');\n    } finally {loggingOut=false;}\n"
+        },
+        {
+          "line": 391,
+          "before": "",
+          "after": "  function logout(scope) {return run(performLogout,scope);}\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/bridge.js": {
+      "beforeSha256": "ba338ecaabca7180fe1f3c0255a03cc568e10f4b7a3374a2c08ab3c1aa6b6644",
+      "afterSha256": "56a69c2beb6bc472438066d153c91877a8ec0675c1c0b7dd42ce13dccf005b52",
+      "reason": "Contexte authentifié et accès aux vues au sein du cadre V7.",
+      "patches": [
+        {
+          "line": 15,
+          "before": "",
+          "after": "const childAccess=()=>engine()?.DobbyFamilyUI?.childAccessState?.()||{restricted:false,active:false,memberId:null};\nconst childFamilyViews=new Set(['salon','agenda','menu','personal','member-detail','health','settings-magic']);\nconst childCuisineViews=new Set(['plan','taverne','recipes','recipe','cook','tm5','shop','shop-1','shop-final','shop-history']);\nfunction allowFamily(view){\n if(!childAccess().restricted||childFamilyViews.has(view))return true;\n if(!window.DobbyAccess?.handles(view))return false;\n const phase=({ 'access-profile':'profile','access-create':'household' })[view];\n if(!phase)return true;\n const access=engine()?.DobbyFamilyUI?.access?.state?.();\n return access?.authenticated===true&&access.phase===phase&&!access.memberId;\n}\nconst allowCuisine=view=>!childAccess().restricted||childCuisineViews.has(view);\nconst ownMission=(row,access=childAccess())=>Boolean(row&&access.active&&access.memberId&&engine().DobbyFamilyMissions?.assignmentIds(row).includes(access.memberId));\nfunction accountScope(){\n const access=childAccess(),session=engine()?.DobbyFamilyUI?.connectionState?.();\n return JSON.stringify([access.restricted,access.active,access.memberId,session?.userId,session?.householdId,session?.epoch]);\n}\nfunction showVerification(waiting){\n const main=document.querySelector('body > main');main.inert=waiting;main.style.visibility=waiting?'hidden':'visible';\n let status=document.querySelector('[data-child-verification]');\n if(waiting&&!status){status=document.createElement('p');status.dataset.childVerification='';status.className='fa-context';status.style.marginBlockStart='var(--e01-top, 80px)';status.setAttribute('role','status');main.before(status);}\n if(waiting){\n  const state=engine()?.DobbyFamilyUI?.access?.state?.();\n  status.textContent=state?.phase==='rejected'?'L’accès à ce foyer est suspendu ou indisponible.':state?.phase==='signed-out'?'Connecte-toi pour retrouver ton foyer.':'Accès au foyer en cours de vérification.';\n }\n if(!waiting)status?.remove();\n}\n"
+        },
+        {
+          "line": 76,
+          "before": "function open(route,trigger,recipeId=null,date=null){if(route==='mission-new'){location.href='./famille.html#mission-edit';return;}if(route==='family'&&currentScreen==='famille'&&window.DobbyFamilyStitch?.ready){window.DobbyFamilyStitch.open('salon').catch(console.error);return;}if(window.DobbyFamilyStitch?.handles(route)){if(currentScreen==='famille')window.DobbyFamilyStitch.open(route).catch(console.error);else location.href='./famille.html#'+route;return;}if(route==='event-new'){if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)window.DobbyFamilyStitch.open('agenda',{eventNew:true}).catch(console.error);else location.href='./famille.html#agenda?dialog=event';return;}lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;if(window.DobbyCuisine?.handles(route)){\n",
+          "after": "function open(route,trigger,recipeId=null,date=null){\n if(childAccess().restricted){\n  if(route==='account')return window.DobbyMagicProfile?.openAccount();\n  if(window.DobbyFamilyStitch?.handles(route)){if(!allowFamily(route))return false;}\n  else if(!Object.hasOwn(ROOT_PAGES,route)&&!(window.DobbyCuisine?.handles(route)&&allowCuisine(route)))return false;\n  if(date){route='taverne';date=null;}\n  if(!window.DobbyFamilyStitch?.handles(route)&&!window.DobbyCuisine?.handles(route)&&Object.hasOwn(ROOT_PAGES,route)){\n   if(({traverse:'home',missions:'missions',famille:'family',taverne:'plan'})[currentScreen]!==route)location.href='./'+ROOT_PAGES[route];\n   return;\n  }\n }\n if(route==='mission-new'){location.href='./famille.html#mission-edit';return;}if(route==='family'&&currentScreen==='famille'&&window.DobbyFamilyStitch?.ready){window.DobbyFamilyStitch.open('salon').catch(console.error);return;}if(window.DobbyFamilyStitch?.handles(route)){if(currentScreen==='famille')window.DobbyFamilyStitch.open(route).catch(console.error);else location.href='./famille.html#'+route;return;}if(route==='event-new'){if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)window.DobbyFamilyStitch.open('agenda',{eventNew:true}).catch(console.error);else location.href='./famille.html#agenda?dialog=event';return;}lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;if(window.DobbyCuisine?.handles(route)){\n"
+        },
+        {
+          "line": 92,
+          "before": "}const activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}\n",
+          "after": "}if(childAccess().restricted)return false;\nconst activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}\n"
+        },
+        {
+          "line": 105,
+          "before": " const node=document.getElementById('dobby-mission-alert'),state=engine()?.DobbySharedRunesV3?.readProgress?.();\n",
+          "after": " const node=document.getElementById('dobby-mission-alert'),state=childAccess().restricted?null:engine()?.DobbySharedRunesV3?.readProgress?.();\n"
+        },
+        {
+          "line": 126,
+          "before": "function renderReal(){window.DobbyChrome?.mount();updateMissionAlerts();if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();const data=read();if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}else{window.DobbyStitchRootAdapters.render(currentScreen,data);} sanitizeClaims();document.querySelector('main').style.visibility='visible';document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');}\n",
+          "after": "function renderReal(){\n const access=childAccess(),waiting=access.restricted&&!access.active;\n if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();\n if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();\n if(waiting){window.DobbyHome?.clearDraft();window.DobbyMissions?.clear();}\n else if(!(currentScreen==='famille'&&access.restricted)){\n  const data=read();\n  if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}\n  else window.DobbyStitchRootAdapters.render(currentScreen,data);\n  sanitizeClaims();\n }\n showVerification(waiting);window.DobbyChrome?.mount();updateMissionAlerts();\n document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');\n}\nlet renderedScope='';\nfunction accessChanged(){\n const scope=accountScope();updateMissionAlerts();if(scope===renderedScope)return;\n const [wasRestricted,,,previousUser]=JSON.parse(renderedScope||'[]');\n const [restricted,,,user]=JSON.parse(scope);\n renderedScope=scope;if(!booted||!wasRestricted&&!restricted&&(!previousUser||previousUser===user))return;\n close(false);lastTrigger=null;window.DobbyCeremonies?.accessChanged();\n for(const dialog of document.querySelectorAll('.dv7-participant-dialog,#archive-confirm,#access-invite-dialog')){dialog.close();dialog.remove();}\n if(currentScreen==='famille')return window.DobbyFamilyStitch.accessChanged();\n if(currentScreen==='taverne')return window.DobbyCuisine.accessChanged();\n window.DobbyHome?.clearDraft();\n window.DobbyMissions?.clear();\n renderReal();\n}\n"
+        },
+        {
+          "line": 173,
+          "before": "starting=true;try{window.DobbyHealthRuntime?.connect(w.DobbyFamilyUI,w);bind();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?(renderReal(),window.DobbyFamilyStitch.init(route=>open(route,document.activeElement))):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;\n w.addEventListener('dobby:access-change',updateMissionAlerts);\n",
+          "after": "starting=true;try{window.DobbyHealthRuntime?.connect(w.DobbyFamilyUI,w);bind();renderedScope=accountScope();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?window.DobbyFamilyStitch.init(route=>open(route,document.activeElement)):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;\n for(const event of ['dobby:access-change','dobby:account-change'])w.addEventListener(event,()=>Promise.resolve(accessChanged()).catch(console.error));\n"
+        },
+        {
+          "line": 177,
+          "before": " updateMissionAlerts();if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}\n",
+          "after": " updateMissionAlerts();if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});return accessChanged();}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);const loading=document.getElementById('dv7-loading');if(loading)loading.textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}\n"
+        },
+        {
+          "line": 183,
+          "before": "window.DobbyStitchV7=Object.freeze({version:7,open,close,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});\n",
+          "after": "window.DobbyStitchV7=Object.freeze({version:7,open,close,childAccess,allowFamily,allowCuisine,ownMission,accountScope,showVerification,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/ceremonies.js": {
+      "beforeSha256": "7515fb32b4ebfb9290d8a3cdfe03219f44dec86b35be1bd068bdafdbe0e5934c",
+      "afterSha256": "e132d90b3d03e069eaa1707a10ce4b8f32186cea62c936146caee3c772c9eed8",
+      "reason": "Droits sur les cérémonies et abandon de l’interface lors d’un changement de compte.",
+      "patches": [
+        {
+          "line": 4,
+          "before": " let current=null,opening=null;\n",
+          "after": " let current=null,opening=null,generation=0;\n"
+        },
+        {
+          "line": 9,
+          "before": " const contextToken=()=>JSON.stringify(G.context());\n",
+          "after": " const contextToken=()=>JSON.stringify([G.context(),window.DobbyStitchV7?.accountScope()]);\n"
+        },
+        {
+          "line": 11,
+          "before": "",
+          "after": " function accessChanged(){generation++;if(current&&current.context!==contextToken())current.dispose();}\n"
+        },
+        {
+          "line": 22,
+          "before": "   await window.DobbyRegister.lock(task);\n",
+          "after": "   await window.DobbyRegister.lock(()=>{if(current===session&&contextToken()===session.context)return task();});\n"
+        },
+        {
+          "line": 101,
+          "before": "",
+          "after": "   const session=current;\n"
+        },
+        {
+          "line": 103,
+          "before": "   current.refreshPending=true;\n   if(current.auto&&kind==='house'&&!hasChoice(G.member(),'patronus'))await G.go('onboarding-patronus-intro');\n",
+          "after": "   if(current!==session||contextToken()!==session.context)return;\n   session.refreshPending=true;\n   if(session.auto&&kind==='house'&&!hasChoice(G.member(),'patronus'))await G.go('onboarding-patronus-intro');\n"
+        },
+        {
+          "line": 107,
+          "before": "    await G.finish();\n    const session=current;session.busy=false;close();\n",
+          "after": "    if(window.DobbyStitchV7?.childAccess().restricted&&!session.auto)await G.drafts.complete();\n    else await G.finish();\n    if(current!==session||contextToken()!==session.context)return;\n    session.busy=false;close();\n"
+        },
+        {
+          "line": 127,
+          "before": "",
+          "after": "  const token=contextToken(),revision=generation,access=window.DobbyStitchV7?.childAccess();\n  const valid=()=>revision===generation&&contextToken()===token;\n  if(access?.restricted&&(!access.active||access.memberId!==memberId))return false;\n"
+        },
+        {
+          "line": 134,
+          "before": "",
+          "after": "   if(!valid())return false;\n"
+        },
+        {
+          "line": 136,
+          "before": "",
+          "after": "   if(!valid())return false;\n"
+        },
+        {
+          "line": 145,
+          "before": "",
+          "after": "   if(!valid())return false;\n"
+        },
+        {
+          "line": 161,
+          "before": " return Object.freeze({open,openPending,close,get active(){return !!current;}});\n",
+          "after": " return Object.freeze({open,openPending,close,accessChanged,get active(){return !!current;}});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/chat-engine.js": {
+      "beforeSha256": "53495e7c2fd8217964f0a3ee853d3df371a066cfc8794d99916a77350dfba97b",
+      "afterSha256": "da970196be3b8a1bf220c9f80001d0840952709a0a89e79c9638765902a059a0",
+      "reason": "Refus des lectures et commandes privées E02 selon le rôle.",
+      "patches": [
+        {
+          "line": 3,
+          "before": " let owner=undefined,rows=[],loaded=false;\n",
+          "after": " let owner=undefined,rows=[],loaded=false,scopeKey,scopeRevision=0;\n"
+        },
+        {
+          "line": 5,
+          "before": " const identity=()=>{const c=api()?.getContext();return {user:typeof c?.userId==='string'&&c.userId?c.userId:null,household:c?.householdId||null};};\n const token=()=>JSON.stringify(identity());\n const check=expected=>{if(token()!==expected)throw Error('Le compte ou le foyer a changé. La demande n’a pas été exécutée.');};\n",
+          "after": " const identity=()=>{const c=api()?.getContext();return {user:typeof c?.userId==='string'&&c.userId?c.userId:null,household:c?.householdId||null,member:c?.memberId||null};};\n const restrictedMessage='Le chat Dobby est réservé aux parents autorisés.';\n function scope(){\n  const native=api(),access=native?.childAccessState?.(),restricted=access?.restricted===true,actor=identity();\n  const signature=JSON.stringify({...actor,member:access?.memberId??actor.member,epoch:native?.connectionState?.()?.epoch??null,restricted});\n  if(signature!==scopeKey){\n   scopeKey=signature;scopeRevision++;\n   owner=undefined;rows=[];loaded=false;\n  }\n  return {revision:scopeRevision,restricted};\n }\n const token=()=>scope().revision;\n const restricted=()=>scope().restricted;\n function assertAccess(){const access=scope();if(access.restricted)throw Error(restrictedMessage);return access.revision;}\n const check=expected=>{if(assertAccess()!==expected)throw Error('Le compte, le foyer ou les droits ont changé. La demande n’a pas été exécutée.');};\n"
+        },
+        {
+          "line": 21,
+          "before": " async function load(){const current=identity().user,guard=token();if(loaded&&owner===current)return rows;owner=current;loaded=false;rows=[];\n",
+          "after": " async function load(){const guard=assertAccess(),current=identity().user;if(loaded&&owner===current)return rows;owner=current;loaded=false;rows=[];\n"
+        },
+        {
+          "line": 25,
+          "before": " function current(){if(!loaded||owner!==identity().user)throw Error('Le compte a changé ou l’historique est indisponible. Revenez au fil.');return rows;}\n async function persist(){current();const guard=token();if(owner)await api().putMeta(key(owner),{version:1,owner,rows:JSON.parse(JSON.stringify(rows))});check(guard);}\n",
+          "after": " function current(){assertAccess();if(!loaded||owner!==identity().user)throw Error('Le compte a changé ou l’historique est indisponible. Revenez au fil.');return rows;}\n async function persist(){\n  const history=current(),guard=token();\n  if(owner){\n   const value={version:1,owner,rows:JSON.parse(JSON.stringify(history))};\n   await api().updateMeta(key(owner),()=>{check(guard);return value;});\n  }\n  check(guard);\n }\n"
+        },
+        {
+          "line": 38,
+          "before": "  const state=E.read().state;\n  const documentIds=new Set((state.familyDocs||[]).filter(row=>row?.category==='Santé').map(row=>row.id));\n  const legacyTitles=(state.sharedHealthVisits||[]).map(row=>row?.title||row?.name).filter(Boolean);\n  return current().map(row=>{\n",
+          "after": "  const history=current();\n  const { ids, titles }=E.evaluate(`return {\n   ids:(st.familyDocs||[]).filter(row=>row?.category==='Santé').map(row=>row.id),\n   titles:[...(st.sharedHealthVisits||[]),...(st.famHealth||[])].map(row=>row?.title||row?.name).filter(Boolean)\n  };`);\n  const documentIds=new Set(ids);\n  return history.map(row=>{\n"
+        },
+        {
+          "line": 51,
+          "before": "       (route==='agenda'&&legacyTitles.some(title=>row.answer.includes(title)));\n",
+          "after": "       (route==='agenda'&&titles.some(title=>row.answer.includes(title)));\n"
+        },
+        {
+          "line": 59,
+          "before": " // The private conversation is never an alternative shared-data writer for\n // children. Read the current canonical binding again at final confirmation.\n",
+          "after": " // Chat also checks the canonical binding before writing shared data.\n"
+        },
+        {
+          "line": 80,
+          "before": " async function reply(input){const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;\n",
+          "after": " async function reply(input){if(restricted())return {text:restrictedMessage,links:[]};const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;\n"
+        },
+        {
+          "line": 113,
+          "before": " return Object.freeze({identity,token,check,load,current,visibleHistory,append,update,remove,reply,execute});\n",
+          "after": " return Object.freeze({identity,token,restricted,restrictedMessage,assertAccess,check,load,current,visibleHistory,append,update,remove,reply,execute});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/chat.js": {
+      "beforeSha256": "e579de8b65c3f77d593e939fd8a9bf8f30f31c7fb84057b7f5896585a0e36b3a",
+      "afterSha256": "bb3d47821d0c68f1c7b3e8a942cf038d8328161e897c31dcb870ae597b47d231",
+      "reason": "Contrôles E02, historique et voix liés au compte actif.",
+      "patches": [
+        {
+          "line": 3,
+          "before": " let primaryConfirmation=null,ctx=null,thread=null,input=null,composer=null,status=null,prototypes=null,epoch=0,activeToken=null,busy=false,pending=null,draft='',draftVoice=false,draftToken=null,identityTimer=null,frameObserver=null,resizeObserver=null,voicePrimary=null,hold=null;\n",
+          "after": " const accessEvents=['dobby:access-change','dobby:account-change'];\n let primaryConfirmation=null,ctx=null,thread=null,input=null,composer=null,status=null,prototypes=null,epoch=0,activeToken=null,busy=false,pending=null,draft='',draftVoice=false,draftToken=null,identityTimer=null,frameObserver=null,accessWindow=null,resizeObserver=null,voicePrimary=null,hold=null;\n"
+        },
+        {
+          "line": 14,
+          "before": " function draw(){if(!active()||!thread?.isConnected)return;thread.replaceChildren();let rows;try{rows=M.visibleHistory();}catch(error){say(error.message);return;}if(!rows.length)thread.append(node('p','Aucun échange enregistré.','dv7-empty'));\n",
+          "after": " function draw(){if(!permitted()||!active()||!thread?.isConnected)return;thread.replaceChildren();let rows;try{rows=M.visibleHistory();}catch(error){say(error.message);return;}if(!rows.length)thread.append(node('p','Aucun échange enregistré.','dv7-empty'));\n"
+        },
+        {
+          "line": 19,
+          "before": " async function load(){const identity=M.token();if(identity!==activeToken){cancelVoice(false);draft='';draftVoice=false;draftToken=identity;pending=null;if(input)input.value='';}const generation=++epoch;activeToken=identity;thread?.replaceChildren();say('Chargement du fil…');try{await M.load();if(generation!==epoch||!active())return;M.check(activeToken);input.disabled=false;say(M.identity().user?'Fil privé sur cet appareil · synchronisation multi-appareils indisponible.':'Sans connexion : fil temporaire, perdu au rechargement. Connecté, vos nouveaux échanges restent sur cet appareil.');draw();}catch(error){if(generation===epoch){input.disabled=true;say(error.message+' L’historique existant reste intact.');}}}\n function identityChanged(){if(!active())return;if(M.token()!==activeToken){cancelVoice(false);draft='';draftVoice=false;draftToken=M.token();pending=null;stopSpeaking();input.value='';thread.replaceChildren();void load();}}\n function watchIdentity(){clearInterval(identityTimer);frameObserver?.disconnect();identityTimer=setInterval(identityChanged,500);frameObserver=new MutationObserver(identityChanged);frameObserver.observe(window.DobbyFamilyStitchEngine.win().document.body,{childList:true,subtree:true});}\n function cleanup(){epoch++;cancelVoice(false);stopSpeaking();clearInterval(identityTimer);identityTimer=null;frameObserver?.disconnect();resizeObserver?.disconnect();pending=null;document.body.style.removeProperty('--e02-keyboard-inset');}\n function mount(context,variant=false){cleanup();if(draftToken!==M.token()){draft='';draftVoice=false;}draftToken=M.token();ctx=context;const main=context.main,source=context.pristine,hero=main.querySelector('section'),title=hero.querySelector('h1'),sourceThread=source.querySelector(variant?'#chat-stream':'#chat-thread');\n",
+          "after": " function resetSession(identity){\n  epoch++;activeToken=draftToken=identity;draft='';draftVoice=false;pending=null;\n  cancelVoice(false);stopSpeaking();\n  if(input){input.value='';input.disabled=true;}\n  thread?.replaceChildren();\n }\n function showControls(show){\n  for(const element of [composer,voicePrimary])if(element){element.inert=!show;element.style.display=show?'':'none';}\n }\n function permitted(){\n  if(!M.restricted())return true;\n  const identity=M.token();\n  if(identity!==activeToken){\n   resetSession(identity);showControls(false);\n   thread?.append(node('p',M.restrictedMessage,'dv7-empty'));\n  }\n  return false;\n }\n const currentView=generation=>permitted()&&generation===epoch&&active();\n async function load(){\n  if(!permitted())return;\n  const identity=M.token();if(identity!==activeToken)resetSession(identity);\n  const generation=++epoch;showControls(true);thread?.replaceChildren();say('Chargement du fil…');\n  try{\n   await M.load();if(!currentView(generation))return;M.check(identity);\n   input.disabled=false;say(M.identity().user?'Fil privé sur cet appareil · synchronisation multi-appareils indisponible.':'Sans connexion : fil temporaire, perdu au rechargement. Connecté, vos nouveaux échanges restent sur cet appareil.');draw();\n  }catch(error){if(currentView(generation)){input.disabled=true;say(error.message+' L’historique existant reste intact.');}}\n }\n function identityChanged(){if(permitted()&&active()&&input?.isConnected&&M.token()!==activeToken)void load();}\n function unwatchIdentity(){\n  clearInterval(identityTimer);identityTimer=null;frameObserver?.disconnect();\n  for(const event of accessEvents)accessWindow?.removeEventListener(event,identityChanged);\n  accessWindow=null;\n }\n function watchIdentity(){\n  unwatchIdentity();identityTimer=setInterval(identityChanged,500);\n  accessWindow=window.DobbyFamilyStitchEngine.win();\n  for(const event of accessEvents)accessWindow.addEventListener(event,identityChanged);\n  frameObserver=new MutationObserver(identityChanged);frameObserver.observe(accessWindow.document.body,{childList:true,subtree:true});\n }\n function cleanup(){epoch++;cancelVoice(false);stopSpeaking();unwatchIdentity();resizeObserver?.disconnect();pending=null;document.body.style.removeProperty('--e02-keyboard-inset');}\n function mount(context,variant=false){cleanup();if(!permitted()){context.main.replaceChildren(node('p',M.restrictedMessage,'dv7-empty'));return;}if(draftToken!==M.token()){draft='';draftVoice=false;}draftToken=M.token();ctx=context;const main=context.main,source=context.pristine,hero=main.querySelector('section'),title=hero.querySelector('h1'),sourceThread=source.querySelector(variant?'#chat-stream':'#chat-thread');\n"
+        },
+        {
+          "line": 70,
+          "before": "  input.value=draft;input.maxLength=1500;input.disabled=true;input.placeholder='Écrivez votre message à Dobby…';input.setAttribute('aria-label','Message à Dobby');input.onfocus=viewportResize;input.oninput=()=>{if(recognition)pauseVoice();draft=input.value;draftToken=activeToken;};input.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();void send(false);}else if(e.key==='Escape'){cancelVoice();say('Dictée annulée. Le texte saisi avant la dictée est conservé.');}};\n",
+          "after": "  input.value=draft;input.maxLength=1500;input.disabled=true;input.placeholder='Écrivez votre message à Dobby…';input.setAttribute('aria-label','Message à Dobby');input.onfocus=viewportResize;input.oninput=()=>{if(!permitted())return;if(recognition)pauseVoice();draft=input.value;draftToken=activeToken;};input.onkeydown=e=>{if(!permitted())return;if(e.key==='Enter'&&!e.isComposing){e.preventDefault();void send(false);}else if(e.key==='Escape'){cancelVoice();say('Dictée annulée. Le texte saisi avant la dictée est conservé.');}};\n"
+        },
+        {
+          "line": 73,
+          "before": " async function send(voice=false){if(busy||!active()||input.disabled)return;if(pending){say('Validez ou annulez la demande en attente.');return;}const text=input.value.trim();if(!text){say('Écrivez une demande.');return;}if(text.length>1500){say('Le message est limité à 1 500 caractères.');return;}voice=voice||draftVoice;cancelVoice(false);const expected=activeToken,generation=epoch;busy=true;\n  try{await R.lock(async()=>{M.check(expected);const result=await M.reply(text);M.check(expected);const row={id:crypto.randomUUID(),at:new Date().toISOString(),input:text,answer:result.pending?'Demande de suppression non exécutée. Validez ci-dessous ; après rechargement, renvoyez votre demande.':result.text,links:result.links};pending=result.pending?{...result.pending,exchange:row.id,voice}:null;try{await M.append(row);}catch(error){if(M.token()!==expected)throw error;say('La demande a été traitée, mais l’historique n’a pas pu être enregistré sur cet appareil.');}if(generation!==epoch||!active())return;input.value=draft='';draftVoice=false;draw();say(pending?'En attente de votre validation.':'Réponse écrite reçue.');if(voice)speak(pending?answerFor(row):result.text);});}catch(error){if(generation===epoch)say(error.message);}finally{busy=false;identityChanged();}\n",
+          "after": " async function send(voice=false){if(!permitted()||busy||!active()||!input||input.disabled)return;if(pending){say('Validez ou annulez la demande en attente.');return;}const text=input.value.trim();if(!text){say('Écrivez une demande.');return;}if(text.length>1500){say('Le message est limité à 1 500 caractères.');return;}voice=voice||draftVoice;cancelVoice(false);const expected=activeToken,generation=epoch;busy=true;\n  try{await R.lock(async()=>{\n   M.check(expected);const result=await M.reply(text);M.check(expected);\n   const row={id:crypto.randomUUID(),at:new Date().toISOString(),input:text,answer:result.pending?'Demande de suppression non exécutée. Validez ci-dessous ; après rechargement, renvoyez votre demande.':result.text,links:result.links};\n   try{await M.append(row);}catch{M.check(expected);if(currentView(generation))say('La demande a été traitée, mais l’historique n’a pas pu être enregistré sur cet appareil.');}\n   M.check(expected);if(!currentView(generation))return;\n   pending=result.pending?{...result.pending,exchange:row.id,voice}:null;\n   input.value=draft='';draftVoice=false;draw();say(pending?'En attente de votre validation.':'Réponse écrite reçue.');if(voice)speak(pending?answerFor(row):result.text);\n  });}catch(error){if(currentView(generation))say(error.message);}finally{busy=false;identityChanged();}\n"
+        },
+        {
+          "line": 83,
+          "before": " async function confirm(cancel=false){if(busy||!pending)return;const choice=pending;pending=null;busy=true;try{await R.lock(async()=>{M.check(activeToken);let spoken=null;if(cancel){if(choice.exchange)await M.update(choice.exchange,'Dobby a annulé la demande. Aucune mission supprimée.');say('Demande annulée.');spoken='Dobby a annulé la demande. Aucune mission supprimée.';}else if(choice.kind==='exchange-delete'){await M.remove(choice.id);say('Échange supprimé de votre fil sur cet appareil.');}else{const result=M.execute(choice);await M.update(choice.exchange,result.text,result.links);spoken=result.text;}draw();if(choice.voice&&spoken)speak(spoken);});}catch(error){say(error.message);draw();}finally{busy=false;identityChanged();}}\n async function act(name,b){if(name==='rg-chat-send')return send(false);if(name==='rg-chat-confirm')return confirm();if(name==='rg-chat-cancel')return confirm(true);if(name==='rg-chat-delete'){M.check(activeToken);if(pending){say('Validez ou annulez la demande en attente.');return;}pending={kind:'exchange-delete',id:b.dataset.record};draw();return;}if(name==='rg-chat-voice'||name==='rg-chat-resume')return;if(name==='rg-chat-stop')return pauseVoice();if(name==='rg-chat-abort'){cancelVoice();say('Dictée annulée. Le texte saisi avant la dictée est conservé.');}if(name==='rg-chat-replay'){M.check(activeToken);const row=M.visibleHistory().find(r=>r.id===b.dataset.record);if(row)speak(answerFor(row));}if(name==='rg-chat-silence')stopSpeaking();}\n",
+          "after": " async function confirm(cancel=false){\n  if(!permitted()||busy||!pending)return;\n  const choice=pending,expected=activeToken,generation=epoch;pending=null;busy=true;\n  try{await R.lock(async()=>{\n   M.check(expected);let spoken=null,message=null;\n   if(cancel){\n    spoken='Dobby a annulé la demande. Aucune mission supprimée.';\n    if(choice.exchange)await M.update(choice.exchange,spoken);\n    message='Demande annulée.';\n   }else if(choice.kind==='exchange-delete'){\n    await M.remove(choice.id);message='Échange supprimé de votre fil sur cet appareil.';\n   }else{\n    const result=M.execute(choice);await M.update(choice.exchange,result.text,result.links);spoken=result.text;\n   }\n   M.check(expected);if(!currentView(generation))return;\n   if(message)say(message);draw();if(choice.voice&&spoken)speak(spoken);\n  });}catch(error){if(currentView(generation)){say(error.message);draw();}}finally{busy=false;identityChanged();}\n }\n async function act(name,b){if(!permitted()||!active())return;if(name==='rg-chat-send')return send(false);if(name==='rg-chat-confirm')return confirm();if(name==='rg-chat-cancel')return confirm(true);if(name==='rg-chat-delete'){M.check(activeToken);if(pending){say('Validez ou annulez la demande en attente.');return;}pending={kind:'exchange-delete',id:b.dataset.record};draw();return;}if(name==='rg-chat-voice'||name==='rg-chat-resume')return;if(name==='rg-chat-stop')return pauseVoice();if(name==='rg-chat-abort'){cancelVoice();say('Dictée annulée. Le texte saisi avant la dictée est conservé.');}if(name==='rg-chat-replay'){M.check(activeToken);const row=M.visibleHistory().find(r=>r.id===b.dataset.record);if(row)speak(answerFor(row));}if(name==='rg-chat-silence')stopSpeaking();}\n"
+        },
+        {
+          "line": 113,
+          "before": " function pauseVoice(){hold=null;const session=voiceSession;if(!session){voiceButtons();return;}session.phase='stopping';releaseRecognition(true);session.phase='paused';voiceButtons();say('Écoute arrêtée. Le brouillon est conservé ; maintenez pour continuer ou touchez Envoyer.');}\n function startHold(kind,id){if(hold||!active()||busy||input?.disabled||pending)return;hold={kind,id};voiceButtons();listen();}\n",
+          "after": " function pauseVoice(){if(!permitted())return;hold=null;const session=voiceSession;if(!session){voiceButtons();return;}session.phase='stopping';releaseRecognition(true);session.phase='paused';voiceButtons();say('Écoute arrêtée. Le brouillon est conservé ; maintenez pour continuer ou touchez Envoyer.');}\n function startHold(kind,id){if(!permitted()||hold||!active()||busy||input?.disabled||pending)return;hold={kind,id};voiceButtons();listen();}\n"
+        },
+        {
+          "line": 120,
+          "before": "  mic.addEventListener('keydown',event=>{if([' ','Enter'].includes(event.key)){event.preventDefault();if(!event.repeat)startHold('keyboard',event.key);}else if(event.key==='Escape'){event.preventDefault();cancelVoice();}});\n",
+          "after": "  mic.addEventListener('keydown',event=>{if([' ','Enter'].includes(event.key)){event.preventDefault();if(!event.repeat)startHold('keyboard',event.key);}else if(event.key==='Escape'){event.preventDefault();if(permitted())cancelVoice();}});\n"
+        },
+        {
+          "line": 124,
+          "before": " function speak(text){if(!active()||!sound()){say('Activez le bouton Son pour écouter une réponse.');return;}const synth=window.speechSynthesis,Utterance=window.SpeechSynthesisUtterance;if(!synth||typeof synth.speak!=='function'||typeof Utterance!=='function'){say('La lecture vocale est indisponible dans ce navigateur. La réponse reste écrite.');return;}\n",
+          "after": " function speak(text){if(!permitted()||!active())return;if(!sound()){say('Activez le bouton Son pour écouter une réponse.');return;}const synth=window.speechSynthesis,Utterance=window.SpeechSynthesisUtterance;if(!synth||typeof synth.speak!=='function'||typeof Utterance!=='function'){say('La lecture vocale est indisponible dans ce navigateur. La réponse reste écrite.');return;}\n"
+        },
+        {
+          "line": 126,
+          "before": "  const stop=composer?.querySelector('[data-fa-action=rg-chat-silence]');if(stop)stop.hidden=false;message.onstart=()=>{if(utterance!==message)return;if(M.token()===expected&&sound())say('Dobby vous répond…');else stopSpeaking();};message.onend=()=>{if(utterance===message){stopSpeaking();say('Lecture terminée.');}};message.onerror=()=>{if(utterance===message){stopSpeaking();say('Lecture vocale indisponible ou bloquée. Vous pouvez réessayer avec Écouter la réponse.');}};\n  try{synth.speak(message);speechTimer=setTimeout(()=>{if(utterance===message&&!synth.speaking)say('Si Safari bloque la lecture, touchez Écouter la réponse.');},1500);}catch{stopSpeaking();say('Lecture vocale bloquée par le navigateur. La réponse reste écrite.');}measure();\n",
+          "after": "  const currentSpeech=()=>{if(utterance!==message||!permitted())return false;if(M.token()===expected)return true;stopSpeaking();return false;};\n  const stop=composer?.querySelector('[data-fa-action=rg-chat-silence]');if(stop)stop.hidden=false;message.onstart=()=>{if(!currentSpeech())return;if(sound())say('Dobby vous répond…');else stopSpeaking();};message.onend=()=>{if(currentSpeech()){stopSpeaking();say('Lecture terminée.');}};message.onerror=()=>{if(currentSpeech()){stopSpeaking();say('Lecture vocale indisponible ou bloquée. Vous pouvez réessayer avec Écouter la réponse.');}};\n  try{synth.speak(message);speechTimer=setTimeout(()=>{if(currentSpeech()&&!synth.speaking)say('Si Safari bloque la lecture, touchez Écouter la réponse.');},1500);}catch{stopSpeaking();say('Lecture vocale bloquée par le navigateur. La réponse reste écrite.');}measure();\n"
+        },
+        {
+          "line": 130,
+          "before": " function listen(){if(!hold||busy||input?.disabled||pending||recognition)return;const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(typeof Recognition!=='function'){hold=null;voiceButtons();say('La reconnaissance vocale est indisponible. Utilisez le microphone de dictée du clavier de votre iPhone, ou écrivez votre message.');return;}\n",
+          "after": " function listen(){if(!permitted()||!hold||busy||input?.disabled||pending||recognition)return;const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(typeof Recognition!=='function'){hold=null;voiceButtons();say('La reconnaissance vocale est indisponible. Utilisez le microphone de dictée du clavier de votre iPhone, ou écrivez votre message.');return;}\n"
+        },
+        {
+          "line": 132,
+          "before": "  let engine;const valid=()=>!!hold&&voiceSession===session&&recognition===engine&&session.generation===epoch&&session.identity===M.token()&&active();\n",
+          "after": "  let engine;const valid=()=>!!hold&&voiceSession===session&&recognition===engine&&currentView(session.generation)&&session.identity===M.token();\n"
+        },
+        {
+          "line": 142,
+          "before": " window.visualViewport?.addEventListener('resize',viewportResize);window.visualViewport?.addEventListener('scroll',measure);window.addEventListener('resize',viewportResize);window.addEventListener('pagehide',cleanup);window.addEventListener('blur',endHold);for(const name of ['pointerup','pointercancel','mouseup','touchend','touchcancel'])document.addEventListener(name,endHold,true);document.addEventListener('keyup',event=>{if([' ','Enter'].includes(event.key))endHold();},true);window.addEventListener('pageshow',event=>{if(event.persisted&&ctx&&active()){watchIdentity();resizeObserver=new ResizeObserver(measure);resizeObserver.observe(composer);input.disabled=true;void load();measure();}});document.addEventListener('click',event=>{if(event.target.closest('[data-e01-account]')){cancelVoice(false);stopSpeaking();}},true);document.addEventListener('visibilitychange',()=>{if(document.hidden){hold=null;releaseRecognition(true);if(voiceSession){voiceSession.phase='paused';say('Dictée interrompue. Le brouillon est conservé. Reprenez ou touchez Envoyer.');}stopSpeaking();}else identityChanged();});new MutationObserver(()=>{if(!active())cleanup();}).observe(document.body,{attributes:true,attributeFilter:['data-family-view']});\n return Object.freeze({async prepare(){if(!primaryConfirmation){const response=await fetch('./templates/remaining/chat.html');if(!response.ok)throw Error('Confirmation Stitch indisponible.');const doc=new DOMParser().parseFromString(await response.text(),'text/html');primaryConfirmation=doc.querySelector('#action-card-butternut');}},mount,act,get busy(){return busy;},preferencesChanged(){if(!sound())stopSpeaking();},});\n",
+          "after": " window.visualViewport?.addEventListener('resize',viewportResize);window.visualViewport?.addEventListener('scroll',measure);window.addEventListener('resize',viewportResize);window.addEventListener('pagehide',cleanup);window.addEventListener('blur',endHold);for(const name of ['pointerup','pointercancel','mouseup','touchend','touchcancel'])document.addEventListener(name,endHold,true);document.addEventListener('keyup',event=>{if([' ','Enter'].includes(event.key))endHold();},true);window.addEventListener('pageshow',event=>{if(event.persisted&&ctx&&active()&&composer?.isConnected&&permitted()){watchIdentity();resizeObserver=new ResizeObserver(measure);resizeObserver.observe(composer);input.disabled=true;void load();measure();}});document.addEventListener('click',event=>{if(event.target.closest('[data-e01-account]')){cancelVoice(false);stopSpeaking();}},true);document.addEventListener('visibilitychange',()=>{if(!active()||!permitted())return;if(document.hidden){hold=null;releaseRecognition(true);if(voiceSession){voiceSession.phase='paused';say('Dictée interrompue. Le brouillon est conservé. Reprenez ou touchez Envoyer.');}stopSpeaking();}else identityChanged();});new MutationObserver(()=>{if(!active())cleanup();}).observe(document.body,{attributes:true,attributeFilter:['data-family-view']});\n return Object.freeze({async prepare(){const expected=M.assertAccess();if(!primaryConfirmation){const response=await fetch('./templates/remaining/chat.html');M.check(expected);if(!response.ok)throw Error('Confirmation Stitch indisponible.');const html=await response.text();M.check(expected);const doc=new DOMParser().parseFromString(html,'text/html');primaryConfirmation=doc.querySelector('#action-card-butternut');}},mount,act,get busy(){return busy;},preferencesChanged(){if(permitted()&&!sound())stopSpeaking();},});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/chrome.js": {
+      "beforeSha256": "a5c4b5e6ffcae88890898a5d2ae7f384b28aa8fc1a8d6fc2310d9476b9524782",
+      "afterSha256": "aa8da1ccd6d8b9797775cadce7717a3d9f22ddc340a9c6c8726cad1ddc613a46",
+      "reason": "Conservation du header et du dock avec droits enfant.",
+      "patches": [
+        {
+          "line": 44,
+          "before": "",
+          "after": " if(document.querySelector('[data-child-verification]'))return 'DOBBY';\n"
+        },
+        {
+          "line": 108,
+          "before": "window.addEventListener('pageshow',()=>{pageAway=false;if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});\n",
+          "after": "window.addEventListener('pageshow',event=>{pageAway=false;if(event.persisted&&window.DobbyPublicConfig?.childAccountsAvailable===true){location.reload();return;}if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine-engine.js": {
+      "beforeSha256": "08db285aff3ee09db6170542190be07190f5ff9ca2715f0a2bbabac50ac99aef",
+      "afterSha256": "f08e1620773a3f12f079f4899dfcaea20a12dcd8deed12b97e6d1160b1754682",
+      "reason": "Retrait des anciennes données Santé des vues de lecture.",
+      "patches": [
+        {
+          "line": 4,
+          "before": "",
+          "after": "  const childAccess=()=>window.DobbyStitchV7?.childAccess();\n  let childCooking=null;\n"
+        },
+        {
+          "line": 18,
+          "before": "",
+          "after": "    childCooking=null;\n"
+        },
+        {
+          "line": 22,
+          "before": "",
+          "after": "    const access=childAccess();\n    if(access?.restricted&&!access.active)return {\n      state:{planned:{},tmAdaptations:{},famHealth:[],sharedHealthVisits:[],familyDocs:[]},\n      recipes:[],customIds:[],baseIds:[],draft:[],pending:0,batch:null,detailPortions:0,mealStatus:null\n    };\n"
+        },
+        {
+          "line": 28,
+          "before": "",
+          "after": "    window.DobbyHealthRuntime?.filterHistoricalState(data.state);\n    if(childAccess()?.restricted){\n      const cooking=childAccess().active&&childCooking?.scope===window.DobbyStitchV7.accountScope()?childCooking:null;\n      Object.assign(data.state,{cook:!!cooking,cookMeal:null,cookStep:cooking?.index||0,cookMethod:cooking?.method||null});\n      if(cooking)data.state.detail=cooking.id;\n    }\n"
+        },
+        {
+          "line": 85,
+          "before": "",
+          "after": "    if(childAccess()?.restricted){\n      if(!childAccess().active||meal)throw Error('Les données partagées sont en lecture seule pour ce profil.');\n      const data=read(),recipe=data.catalogueRecipes.find(row=>row.id===id);\n      if(!recipe)throw Error('Recette introuvable.');\n      const steps=['classic','tm5'].includes(method)&&window.DobbyCuisineE074?.methods(recipe,data)?.[method];\n      if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible.');\n      const scope=window.DobbyStitchV7.accountScope();\n      const next=index??(childCooking?.scope===scope&&childCooking.id===id&&childCooking.method===method?childCooking.index:0);\n      if(!Number.isInteger(next)||next<0||next>=steps.length)throw Error('Étape de préparation invalide.');\n      childCooking={scope,id,method,index:next};\n      return {id,index:next,method};\n    }\n"
+        },
+        {
+          "line": 168,
+          "before": "",
+          "after": "    if(childAccess()?.restricted){\n      if(!childAccess().active||childCooking?.scope!==window.DobbyStitchV7.accountScope())throw Error('Aucune préparation en cours.');\n      childCooking=null;\n      return {prepared:null};\n    }\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine-shopping.js": {
+      "beforeSha256": "536c1893c384f4b46bed98c1b7cf001d882bb914301c0c4f9fbd0e3404bae89c",
+      "afterSha256": "3115a98565868d69595febf4606eaa4cf5bf52d8a798cec1976b4c206dee2afd",
+      "reason": "Courses enfant en lecture seule.",
+      "patches": [
+        {
+          "line": 7,
+          "before": "",
+          "after": "const restricted=()=>window.DobbyStitchV7?.childAccess().restricted===true;\n"
+        },
+        {
+          "line": 30,
+          "before": "if(!pending.length)holder.append(empty(available.length?'Tous les articles restants sont déjà à la maison.':state.items.length?'Tous les articles sont achetés.':'Votre liste est vide. Ajoutez un article ou les ingrédients de vos menus.'));\n",
+          "after": "if(!pending.length)holder.append(empty(available.length?'Tous les articles restants sont déjà à la maison.':state.items.length?'Tous les articles sont achetés.':restricted()?'La liste du foyer est vide.':'Votre liste est vide. Ajoutez un article ou les ingrédients de vos menus.'));\n"
+        },
+        {
+          "line": 38,
+          "before": "if(state.shared&&state.homeSupported!==true){const message=document.createElement('p');message.textContent=homeWarning(state);message.setAttribute('role','alert');message.dataset.e072BackendGate='';status.append(message);}\nif(!state.shared)status.insertAdjacentHTML('beforeend',button('account','Connecter mon foyer'));\n",
+          "after": "if(!restricted()&&state.shared&&state.homeSupported!==true){const message=document.createElement('p');message.textContent=homeWarning(state);message.setAttribute('role','alert');message.dataset.e072BackendGate='';status.append(message);}\nif(!restricted()&&!state.shared)status.insertAdjacentHTML('beforeend',button('account','Connecter mon foyer'));\n"
+        },
+        {
+          "line": 45,
+          "before": "",
+          "after": "if(restricted()){shopDialog=null;closeOverlay();return;}\n"
+        },
+        {
+          "line": 58,
+          "before": "if(!action.startsWith('e072-'))return false;if(childReadOnly()&&readOnlyActions.has(action))throw Error(readOnlyReason);if(working)return true;const model=window.DobbyCuisineList,state=model.snapshot(E);successMessage='';\n",
+          "after": "if(!action.startsWith('e072-'))return false;if(restricted()||childReadOnly()&&readOnlyActions.has(action))throw Error(readOnlyReason);if(working)return true;const model=window.DobbyCuisineList,state=model.snapshot(E),scope=window.DobbyStitchV7.accountScope();successMessage='';\n"
+        },
+        {
+          "line": 85,
+          "before": "",
+          "after": "if(scope!==window.DobbyStitchV7.accountScope()){shopDialog=null;successMessage='';return true;}\n"
+        },
+        {
+          "line": 129,
+          "before": "return Object.freeze({render,action,mountSettings,close(){shopDialog=null;closeOverlay();}});})();\n",
+          "after": "return Object.freeze({render,action,mountSettings,reset(){shopDialog=null;successMessage='';purchasedOpen=true;closeOverlay();},close(){shopDialog=null;closeOverlay();}});})();\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine.js": {
+      "beforeSha256": "d8f8b56261bdbcdef77fc611eeece4b399f4e895ea1b74a07f7e4829ac5a5a2d",
+      "afterSha256": "d438b458799b840cb331c2b788b6d23c1d24d54b6b329e6332ce36680eea1092",
+      "reason": "Planning et recettes en lecture seule, mode Cuisine tactile.",
+      "patches": [
+        {
+          "line": 5,
+          "before": "",
+          "after": "  const childAccess=()=>window.DobbyStitchV7.childAccess();\n  const childActions=new Set(['home','family','account','menu','missions','back','dismiss','filter','servings','ingredients','steps','e073-week-select','e073-week-shift','e074-tab','e074-method','e074-modal-cancel','e074-festin-close','e07p01-cook','e07p01-cook-component','e07p01-close-move','e072-close','e072-cancel']);\n  const childActionAllowed=action=>childAccess().active&&(childActions.has(action)||routes.includes(action)&&window.DobbyStitchV7.allowCuisine(action)||/^e074-(cook|timer)-/.test(action));\n"
+        },
+        {
+          "line": 339,
+          "before": "",
+          "after": "    const app=window.DobbyStitchV7,scope=app.accountScope(),access=childAccess();\n    if(access.restricted&&!access.active){app.showVerification(true);window.DobbyChrome?.mount();document.documentElement.classList.remove('dv7-loading');return;}\n    if(!app.allowCuisine(view))return open(view,{},false);\n"
+        },
+        {
+          "line": 344,
+          "before": "    if(current!==revision)return;\n",
+          "after": "    if(current!==revision)return;if(scope!==app.accountScope())return accessChanged();\n"
+        },
+        {
+          "line": 353,
+          "before": "    scrub();const data=E.read(view==='recipe'?ui.recipeMealContext:null);if(window.DobbyArchivesUI?.authorizeRecipe(view,data,ui)===false){main.style.visibility='visible';document.documentElement.classList.remove('dv7-loading');shell();window.DobbyChrome?.mount();return;}if(['recipes','pick'].includes(view)&&data.removedIds)data.recipes=data.recipes.filter(r=>!data.removedIds.includes(r.id)&&!r.archive?.archivedAt);const detailed=['recipe','cook','recipe-add','recipe-add-1'].includes(view);const target=matching?[]:detailed?data.recipes.filter(r=>r.id===(view.startsWith('recipe-add')?ui.editId:ui.recipe)):data.recipes;await window.DobbyRecipeImport?.hydrate?.(target,{E,steps:detailed});if(current!==revision)return;\n",
+          "after": "    scrub();const data=E.read(view==='recipe'?ui.recipeMealContext:null);if(window.DobbyArchivesUI?.authorizeRecipe(view,data,ui)===false){if(access.restricted){main.replaceChildren(empty('Cette recette ne figure pas dans le grimoire.'));main.insertAdjacentHTML('beforeend',button('recipes','Retour au grimoire'));}app.showVerification(false);document.documentElement.classList.remove('dv7-loading');shell();window.DobbyChrome?.mount();return;}if(['recipes','pick'].includes(view)&&data.removedIds)data.recipes=data.recipes.filter(r=>!data.removedIds.includes(r.id)&&!r.archive?.archivedAt);const detailed=['recipe','cook','recipe-add','recipe-add-1'].includes(view);const target=matching?[]:detailed?data.recipes.filter(r=>r.id===(view.startsWith('recipe-add')?ui.editId:ui.recipe)):data.recipes;await window.DobbyRecipeImport?.hydrate?.(target,{E,steps:detailed});if(current!==revision)return;if(scope!==app.accountScope())return accessChanged();\n"
+        },
+        {
+          "line": 359,
+          "before": "    if(view==='recipe')window.DobbyArchivesUI?.recipe(data.recipes.find(r=>r.id===ui.recipe),document.querySelector('main'));if(['taverne','recipes'].includes(view))ingredientEntry(view);mountTaverneTabs(view);gateSharedControls();shell();window.DobbyChrome?.mount();window.DobbyCuisineE074?.mountTimers();\n",
+          "after": "    if(view==='recipe'&&!access.restricted)window.DobbyArchivesUI?.recipe(data.recipes.find(r=>r.id===ui.recipe),document.querySelector('main'));if(['taverne','recipes'].includes(view))ingredientEntry(view);mountTaverneTabs(view);gateSharedControls();shell();app.showVerification(false);window.DobbyChrome?.mount();window.DobbyCuisineE074?.mountTimers();\n"
+        },
+        {
+          "line": 366,
+          "before": "",
+          "after": "    const access=childAccess();\n    if(access.restricted&&!access.active){if(history&&routes.includes(view))window.history.pushState({cuisine:view},'','#'+view);return render(view);}\n    if(!window.DobbyStitchV7.allowCuisine(view)){view='taverne';values={};if(!history)window.history.replaceState({cuisine:view},'','#taverne');}\n    if(access.restricted&&view==='cook')values={...values,standalone:true};\n"
+        },
+        {
+          "line": 387,
+          "before": "        if(!E.read().recipes.some(r=>r.id===ui.recipe)){ui.recipe=null;notice('Cette recette n’est plus disponible dans votre grimoire.',true);return open('recipes',{},history);}\n",
+          "after": "        const catalogue=E.read();\n        if(!(access.restricted?catalogue.catalogueRecipes:catalogue.recipes).some(r=>r.id===ui.recipe)){ui.recipe=null;notice('Cette recette n’est plus disponible dans votre grimoire.',true);return open('recipes',{},history);}\n"
+        },
+        {
+          "line": 411,
+          "before": "  async function refresh() {if(!ready||interactions)return;interactions++;try{if(ui.view.startsWith('shop')&&E.read().state.page!=='shop')E.page('shop');await render();}finally{releaseInteraction();}}\n",
+          "after": "  async function refresh() {if(!ready||interactions)return;interactions++;try{const access=childAccess();if((!access.restricted||access.active)&&ui.view.startsWith('shop')&&E.read().state.page!=='shop')E.page('shop');await render();}finally{releaseInteraction();}}\n"
+        },
+        {
+          "line": 414,
+          "before": "  function gateSharedControls(){if(!readOnly())return;for(const el of $$('[data-cu-action]'))if(sharedMutation(el.dataset.cuAction)){el.disabled=true;el.setAttribute('aria-disabled','true');el.title='Les données partagées sont en lecture seule pour ce profil.';}const info=document.createElement('p');info.dataset.mealsReadonly='';info.setAttribute('role','status');info.textContent='Les repas et recettes du foyer sont en lecture seule pour ce profil.';$('main').append(info);}\n",
+          "after": "  function gateSharedControls(){\n    if(childAccess().restricted){\n      for(const el of $$('main [data-cu-action],#cu-supplement [data-cu-action]'))if(!childActionAllowed(el.dataset.cuAction))el.remove();\n      for(const tools of $$('.v7-meal-operations'))if(!tools.querySelector('button'))tools.remove();\n      return;\n    }\n    if(!readOnly())return;for(const el of $$('[data-cu-action]'))if(sharedMutation(el.dataset.cuAction)){el.disabled=true;el.setAttribute('aria-disabled','true');el.title='Les données partagées sont en lecture seule pour ce profil.';}const info=document.createElement('p');info.dataset.mealsReadonly='';info.setAttribute('role','status');info.textContent='Les repas et recettes du foyer sont en lecture seule pour ce profil.';$('main').append(info);\n  }\n"
+        },
+        {
+          "line": 423,
+          "before": "",
+          "after": "    const access=childAccess();\n    if(access.restricted&&!childActionAllowed(action))return;\n"
+        },
+        {
+          "line": 428,
+          "before": "    if(sharedMutation(action)&&readOnly())throw Error('Les données partagées sont en lecture seule pour ce profil.');\n",
+          "after": "    if(!access.restricted&&sharedMutation(action)&&readOnly())throw Error('Les données partagées sont en lecture seule pour ce profil.');\n"
+        },
+        {
+          "line": 469,
+          "before": "",
+          "after": "  function parseHash(){\n    const [view,query]=location.hash.slice(1).split('?'),params=new URLSearchParams(query||''),slot=params.get('slot');\n    return {view:routes.includes(view)?view:'taverne',id:params.get('id'),date:params.get('date')||undefined,slot:['midi','soir'].includes(slot)?slot:undefined,component:params.get('component')||undefined};\n  }\n  function accessChanged(){\n    ++revision;window.DobbyShoppingUI?.reset();window.DobbyCuisineE074?.closeModal();window.DobbyCuisineE074?.leaveEditor();\n    for(const node of $$('#cu-notice,#cu-supplement,dialog.e07p01-meal-dialog')){node.close?.();node.remove();}\n    Object.assign(ui,{recipe:null,selected:null,slot:'soir',filter:'all',query:'',ingredients:new Set(),category:null,date:null,editId:null,recipeDraft:null,recipeMealContext:null,cookMeal:null,method:null,servings:null,note:'',recipeTab:null,collection:null});\n    $('main').replaceChildren();window.DobbyStitchV7.showVerification(true);window.DobbyChrome?.mount();\n    const route=parseHash();return open(route.view,route,false);\n  }\n"
+        },
+        {
+          "line": 483,
+          "before": "    const parseHash=()=>{const [view,query]=location.hash.slice(1).split('?');return {view:routes.includes(view)?view:'taverne',id:new URLSearchParams(query||'').get('id'),date:new URLSearchParams(query||'').get('date')||undefined,slot:['midi','soir'].includes(new URLSearchParams(query||'').get('slot'))?new URLSearchParams(query||'').get('slot'):undefined,component:new URLSearchParams(query||'').get('component')||undefined}};\n",
+          "after": ""
+        },
+        {
+          "line": 491,
+          "before": "",
+          "after": "      if(childAccess().restricted&&!childAccess().active)return;\n"
+        },
+        {
+          "line": 494,
+          "before": "      if(event.target.id==='recipe-search'){ui.query=event.target.value;const query=ui.query,data=E.read();Promise.resolve(window.DobbyRecipeImport?.hydrate?.(data.recipes,{E,steps:false})).then(()=>{if(ui.view==='recipes'&&query===ui.query)renderRecipes(data);}).catch(error=>{console.error(error);notice(error.message,true);});}\n",
+          "after": "      if(event.target.id==='recipe-search'){ui.query=event.target.value;const query=ui.query,data=E.read(),scope=window.DobbyStitchV7.accountScope();Promise.resolve(window.DobbyRecipeImport?.hydrate?.(data.recipes,{E,steps:false})).then(()=>{if(scope===window.DobbyStitchV7.accountScope()&&ui.view==='recipes'&&query===ui.query){renderRecipes(data);gateSharedControls();}}).catch(error=>{console.error(error);notice(error.message,true);});}\n"
+        },
+        {
+          "line": 498,
+          "before": "    document.addEventListener('change',event=>{if(window.DobbyCuisineP01?.change(event,{E,ui,render}))return;if(event.target.matches('[data-e073-import-file],[data-e073-import-choice]')){Promise.resolve(window.DobbyRecipeImport?.change(event,{E,ui,bind,text,button,input,empty,notice,open,render})).catch(error=>{console.error(error);notice(error.message,true);});return;}if(event.target.id==='cu-date'){ui.date=event.target.value;ui.adult=null;ui.children=null;ui.selected=null;render();}if(event.target.dataset.cuIngredient!==undefined){const i=Number(event.target.dataset.cuIngredient);event.target.checked?ui.ingredients.add(i):ui.ingredients.delete(i);text($('#checked-counter'),`${ui.ingredients.size} / ${E.read().recipes.find(r=>r.id===ui.recipe).ingredients.length}`);}});\n",
+          "after": "    document.addEventListener('change',event=>{if(childAccess().restricted&&!event.target.matches('[data-cu-ingredient]'))return;if(window.DobbyCuisineP01?.change(event,{E,ui,render}))return;if(event.target.matches('[data-e073-import-file],[data-e073-import-choice]')){Promise.resolve(window.DobbyRecipeImport?.change(event,{E,ui,bind,text,button,input,empty,notice,open,render})).catch(error=>{console.error(error);notice(error.message,true);});return;}if(event.target.id==='cu-date'){ui.date=event.target.value;ui.adult=null;ui.children=null;ui.selected=null;render();}if(event.target.dataset.cuIngredient!==undefined){const i=Number(event.target.dataset.cuIngredient);event.target.checked?ui.ingredients.add(i):ui.ingredients.delete(i);text($('#checked-counter'),`${ui.ingredients.size} / ${E.read().recipes.find(r=>r.id===ui.recipe).ingredients.length}`);}});\n"
+        },
+        {
+          "line": 709,
+          "before": "",
+          "after": "      if(childAccess().restricted)return;\n"
+        },
+        {
+          "line": 712,
+          "before": "",
+          "after": "        if(childAccess().restricted)return;\n"
+        },
+        {
+          "line": 721,
+          "before": "",
+          "after": "      if(childAccess().restricted)return;\n"
+        },
+        {
+          "line": 764,
+          "before": "  return Object.freeze({init,open,refresh,recipeVisual,get ready(){return ready},get view(){return ui.view},handles:route=>['plan','pick','recipes','shop'].includes(route)});\n",
+          "after": "  return Object.freeze({init,open,refresh,accessChanged,recipeVisual,get ready(){return ready},get view(){return ui.view},handles:route=>route==='plan'||routes.includes(route)});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/family-engine.js": {
+      "beforeSha256": "9571410d432feff95d675a53d3c366dd690b1ef80db23ad8f14ba659ddb05f60",
+      "afterSha256": "431e47a55ca2ae4edd8683316f97511af923b3f91b6ec72f6a7f1ed540bf6037",
+      "reason": "Retrait du cache Santé historique de la projection Famille.",
+      "patches": [
+        {
+          "line": 9,
+          "before": "  const data=evaluate('return JSON.parse(JSON.stringify({state:st,members:st.familyMembers||[],local:st.famHealth||[],shared:st.sharedHealthVisits||[],events:st.familyEvents||[],contacts:st.famContacts||[]}));');\n  data.active=Boolean(win().DobbyFamilyUI?.isModuleActive('family'));data.status=win().DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';\n  data.upcoming=win().DobbyFamilyAgenda?.upcoming()||[];return data;\n",
+          "after": "  const native=win(),access=native.DobbyFamilyUI?.childAccessState?.();\n  const waiting=access?.restricted&&!access.active;\n  const state=waiting?{}:evaluate('return JSON.parse(JSON.stringify(st));');\n  window.DobbyHealthRuntime?.filterHistoricalState(state);\n  const data={state,members:state.familyMembers||[],local:state.famHealth||[],shared:state.sharedHealthVisits||[],events:state.familyEvents||[],contacts:state.famContacts||[]};\n  data.active=!waiting&&Boolean(native.DobbyFamilyUI?.isModuleActive('family'));data.status=waiting?'Accès en cours de vérification.':native.DobbyFamilyUI?.getModuleStatus('family')||'Statut non disponible';\n  data.upcoming=waiting?[]:native.DobbyFamilyAgenda?.upcoming()||[];return data;\n"
+        },
+        {
+          "line": 67,
+          "before": " function localForm(id,personId){requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}\n function sharedForm(id){requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}\n",
+          "after": " function localForm(id,personId){if(!window.DobbyHealthRuntime?.legacyDemo())return;requireRecord(read().local,id);page('health');if(personId)evaluate('st.v23HealthMemberId=p.id;',{id:personId});action('extra',id?'healthedit':'healthnew',id?{id}:{});}\n function sharedForm(id){if(!window.DobbyHealthRuntime?.legacyDemo())return;requireRecord(read().shared,id);page();action('fh',id?'edit':'new',id?{id}:{});}\n"
+        },
+        {
+          "line": 79,
+          "before": " function deleteVisit(scope,id){requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}\n",
+          "after": " function deleteVisit(scope,id){if(!window.DobbyHealthRuntime?.legacyDemo())return false;requireRecord(read()[scope==='shared'?'shared':'local'],id);page(scope==='shared'?'':'health');action(scope==='shared'?'fh':'extra',scope==='shared'?'delete':'healthdelete',{id});return !read()[scope==='shared'?'shared':'local'].some(x=>x.id===id);}\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/family-member-detail.js": {
+      "beforeSha256": "74b9a70418dd9991b5d6c90de90f9461c47ed74e0b46d0d0f054a8b4185dd1e9",
+      "afterSha256": "85dd6a2e9218fc37cd1480b3794ad5b847215009aef6441b27649e7ebef4c97d",
+      "reason": "Invitation personnelle et suspension depuis la fiche existante.",
+      "patches": [
+        {
+          "line": 4,
+          "before": "",
+          "after": " function mountChildAccess(section,member,{E,paragraph,notice},permission){\n  const api=E.win?.()?.DobbyFamilyUI,account=api?.access,initial=account?.state?.();\n  if(api?.childAccessState?.()?.restricted||initial?.profile?.memberCategory==='child')return;\n  const action=(label,handler)=>{\n   const control=node('button',label,'fa-button');control.type='button';control.addEventListener('click',handler);\n   control.setAttribute('aria-describedby','fam-child-access-status');return control;\n  };\n  const status=paragraph('','fam-detail-status');status.id='fam-child-access-status';status.setAttribute('role','status');status.tabIndex=-1;\n  const canInvite=permission.canLinkExistingChild===true&&typeof window.DobbyAccess?.inviteChild==='function';\n  const attach=action('Donner accès à DOBBY',()=>void window.DobbyAccess.inviteChild(member.id).catch(error=>notice?.(error.message)));\n  attach.dataset.backendGate='child-account-link';\n  attach.disabled=!canInvite;attach.title=canInvite?'Créer une invitation pour ce profil existant.':'Le rattachement sécurisé attend une validation serveur.';\n  if(!canInvite||initial?.capabilities?.childAccessProtocol!==1||!account.childAccessStatus||!account.suspendChildAccess){\n   status.textContent=canInvite?'Créer une invitation pour ce profil existant. Son avatar, ses choix magiques, ses missions, ses Runes et son histoire seront conservés.':'Indisponible : le rattachement sécurisé d’un compte au profil existant attend une validation serveur. Le même profil, ses missions, ses Runes et son histoire devront être conservés.';\n   section.append(attach,status);return;\n  }\n  const current=()=>{\n   const live=account.state();\n   return section.isConnected&&live.verified&&live.userId===initial.userId&&live.householdId===initial.householdId&&live.memberId===initial.memberId&&live.permissions?.canLinkExistingChild===true;\n  };\n  const controls=node('div');section.append(status,controls);\n  const confirm=action('Confirmer la suspension',async()=>{\n   if(!current())return;\n   confirm.disabled=true;cancel.disabled=true;status.textContent='Suspension en cours…';\n   try{show(await account.suspendChildAccess(member.id));if(current())status.focus();}\n   catch{if(current())status.textContent='La suspension n’a pas pu être confirmée. Réessayez.';}\n   finally{confirm.disabled=false;cancel.disabled=false;}\n  });\n  const cancel=action('Annuler',()=>{show({linked:true,active:true});if(current())suspend.focus();});\n  const suspend=action('Suspendre l’accès à DOBBY',()=>{\n   if(!current())return;\n   status.textContent='Confirmez la suspension de la connexion de l’enfant. Sa fiche, ses missions et ses Runes seront conservées.';\n   controls.replaceChildren(confirm,cancel);confirm.focus();\n  });\n  function show(access){\n   if(!current())return;\n   if(!access.linked){status.textContent='Créer une invitation pour cette fiche enfant existante.';controls.replaceChildren(attach);}\n   else if(access.active){status.textContent='Ce profil est lié à un compte DOBBY.';controls.replaceChildren(suspend);}\n   else{status.textContent='Accès suspendu. La fiche et son historique sont conservés.';controls.replaceChildren();}\n  }\n  status.textContent='Vérification de l’accès à DOBBY…';\n  const read=()=>void account.childAccessStatus(member.id).then(show,()=>{\n   if(current()){status.textContent='Impossible de vérifier l’accès à DOBBY pour ce profil.';controls.replaceChildren(retry);}\n  });\n  const retry=action('Réessayer',()=>{controls.replaceChildren();status.textContent='Vérification de l’accès à DOBBY…';read();});\n  read();\n }\n"
+        },
+        {
+          "line": 90,
+          "before": "   const attach=button('child-account-access','Donner accès à DOBBY',{person:member.id});attach.disabled=permission.canLinkExistingChild!==true||!window.DobbyAccess?.inviteChild;attach.dataset.backendGate='child-account-link';attach.setAttribute('aria-describedby','fam-child-access-status');const status=paragraph(attach.disabled?'Indisponible : le rattachement sécurisé d’un compte au profil existant attend une validation serveur. Le même profil, ses missions, ses Runes et son histoire devront être conservés.':'Créer une invitation pour ce profil existant. Son avatar, ses choix magiques, ses missions, ses Runes et son histoire seront conservés.','fam-detail-status');status.id='fam-child-access-status';attach.title=status.textContent;attach.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();if(attach.disabled)return;void window.DobbyAccess.inviteChild(member.id).catch(error=>c.notice?.(error.message));});access.append(attach,status);\n",
+          "after": "   if(member.memberCategory==='child')mountChildAccess(access,member,c,permission);\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/family.js": {
+      "beforeSha256": "7d28bb1f8e1ee05c7fcf0d2c2c6a8b7c7f9ccf3389b87143b57b98eea8b9e7d1",
+      "afterSha256": "9a0773b2a6b053e221cbe0e156c1d3d74599265f36a1f47fdb8d1886e46eb767",
+      "reason": "Routage et informations Famille selon les autorisations.",
+      "patches": [
+        {
+          "line": 8,
+          "before": "",
+          "after": " const childAccess=()=>window.DobbyStitchV7.childAccess();\n const childActionAllowed=(action,el)=>{\n  const access=childAccess();\n  if(!access.restricted)return true;\n  if(window.DobbyAccess?.handles(ui.view))return true;\n  if(['account','back','dismiss','home','menu','dialog-close','rg-home','rg-missions','rg-recipes','rg-taverne','rg-shop','rg-menu-clear'].includes(action))return true;\n  if(!access.active)return false;\n  if(action==='member-magic')return el.dataset.person===access.memberId&&['house','patronus'].includes(el.dataset.kind);\n  return ['member-detail-back','event-open','agenda-day','agenda-mode','agenda-shift','agenda-month-shift','agenda-person'].includes(action)||\n   (handles(action)||action==='salon')&&window.DobbyStitchV7.allowFamily(action);\n };\n"
+        },
+        {
+          "line": 37,
+          "before": "",
+          "after": "  if(window.DobbyStitchV7?.childAccess().restricted)return true;\n"
+        },
+        {
+          "line": 50,
+          "before": "",
+          "after": " function existingChildHealth(view){\n  if(view!=='health'||!secureHealthView(view)||window.DobbyPublicConfig?.healthEssentialAvailable!==true||window.DobbyPublicConfig?.childAccountsAvailable===true)return false;\n  const api=E.win().DobbyFamilyUI,access=api?.access?.state?.(),actor=api?.getContext?.();\n  return Boolean(access?.verified&&access.phase==='active'&&access.profile?.memberCategory==='child'&&actor?.identityVerified&&actor.userId===access.userId&&actor.householdId===access.householdId&&actor.memberId===access.memberId);\n }\n"
+        },
+        {
+          "line": 69,
+          "before": "",
+          "after": " }\n function gateChildUI(){\n  if(!childAccess().restricted)return;\n  for(const el of $$('main [data-fa-action],#fa-supplement [data-fa-action],#fa-dialog [data-fa-action]'))if(!childActionAllowed(el.dataset.faAction,el))el.remove();\n"
+        },
+        {
+          "line": 117,
+          "before": "",
+          "after": "  if(childAccess().restricted){\n   const calendar=document.createElement('section');calendar.className='fam-salon-agenda';\n   main.append(button('personal','Mon Profil magique'),calendar);\n   window.DobbyFamilyAgendaReview.renderAgenda({...agendaContext(data),main:calendar,embedded:true});\n   return;\n  }\n"
+        },
+        {
+          "line": 209,
+          "before": "",
+          "after": "  const app=window.DobbyStitchV7,access=childAccess(),scope=app.accountScope();\n  if(!app.allowFamily(view)&&!(access.restricted&&!access.active))return open(view,{},false);\n"
+        },
+        {
+          "line": 214,
+          "before": "  const rev=++revision,data=E.read();ui.view=view;delete document.body.dataset.registerLot;\n",
+          "after": "  const rev=++revision;\n  if(access.restricted&&!access.active&&!existingChildHealth(view)&&(!window.DobbyAccess?.handles(view)||!app.allowFamily(view))){\n   ui.view='salon';document.body.dataset.familyView='salon';app.showVerification(true);window.DobbyChrome?.mount();\n   document.documentElement.classList.remove('dv7-loading');return;\n  }\n  const data=E.read();ui.view=view;delete document.body.dataset.registerLot;\n"
+        },
+        {
+          "line": 221,
+          "before": "  let doc;if(['salon','member-detail'].includes(view)||window.DobbyPreparations?.handles(view)||window.DobbyAccess?.handles(view)){doc=null;}else doc=await template(view);if(window.DobbyRegister?.handles(view))await window.DobbyRegister.prepare(view);if(window.DobbyOnboarding?.handles(view))await window.DobbyOnboarding.prepare(view,{...ui});if(window.DobbyAccess?.handles(view))await window.DobbyAccess.prepare(view,{...ui});if(rev!==revision)return;\n",
+          "after": "  let doc;if(['salon','member-detail'].includes(view)||window.DobbyPreparations?.handles(view)||window.DobbyAccess?.handles(view)){doc=null;}else doc=await template(view);if(rev!==revision)return;if(scope!==app.accountScope())return accessChanged();\n  if(window.DobbyRegister?.handles(view))await window.DobbyRegister.prepare(view);if(window.DobbyOnboarding?.handles(view))await window.DobbyOnboarding.prepare(view,{...ui});if(window.DobbyAccess?.handles(view))await window.DobbyAccess.prepare(view,{...ui});if(rev!==revision)return;\n  if(scope!==app.accountScope()&&!window.DobbyAccess?.handles(view))return accessChanged();\n"
+        },
+        {
+          "line": 228,
+          "before": "  if(privateHealth)renderSecureHealth(main,view);else if(view==='salon'){window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail')window.DobbyFamilyMemberDetail.render(familyContext(data));else if(window.DobbyAccess?.handles(view))window.DobbyAccess.render(familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);\n  if(!privateHealth&&['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view))shell(data);gateSharedUI();window.DobbyChrome?.mount();window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=!privateHealth&&['member-edit','medical-edit'].includes(view)?availability(data):null;main.style.visibility='visible';document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);\n",
+          "after": "  if(privateHealth)renderSecureHealth(main,view);else if(view==='salon'){if(!access.restricted)window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail'&&!access.restricted)window.DobbyFamilyMemberDetail.render(familyContext(data));else if(view==='member-detail')window.DobbyMagicProfile.render(familyContext(data));else if(window.DobbyAccess?.handles(view))window.DobbyAccess.render(familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);\n  if(!privateHealth&&['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view))shell(data);if(!access.restricted)gateSharedUI();gateChildUI();app.showVerification(false);window.DobbyChrome?.mount();if(!access.restricted)window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=!privateHealth&&['member-edit','medical-edit'].includes(view)?availability(data):null;document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);\n"
+        },
+        {
+          "line": 232,
+          "before": "  if(!handles(view)&&view!=='salon')return false;if((view==='personal'||window.DobbyOnboarding?.handles(view))&&values.person===undefined)values={...values,person:null};captureDraft();busy=true;\n",
+          "after": "  if(!handles(view)&&view!=='salon')return false;\n  const access=childAccess();\n  if(access.restricted){\n   const allowed=window.DobbyStitchV7.allowFamily(view);\n   if(!allowed&&access.active){view='salon';values={};}\n   if(!window.DobbyAccess?.handles(view))values={day:values.day,person:['personal','member-detail'].includes(view)?access.memberId:null};\n   if(!access.active&&!existingChildHealth(view)&&(!window.DobbyAccess?.handles(view)||!allowed)){\n    if(history)window.history.pushState({},'','#'+requested);\n    await render(requested,false,false);return true;\n   }\n  }\n  if((view==='personal'||window.DobbyOnboarding?.handles(view))&&values.person===undefined)values={...values,person:null};captureDraft();busy=true;\n"
+        },
+        {
+          "line": 247,
+          "before": "   const data=E.read(),privateHealth=secureHealthView(view);if(!privateHealth&&!['personal','member-detail'].includes(view)&&!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view)&&!ui.person&&data.members.length&&!(view==='member-edit'&&ui.memberNew))ui.person=data.members[0].id;\n",
+          "after": "   const data=E.read(),privateHealth=secureHealthView(view);if(!access.restricted&&!privateHealth&&!['personal','member-detail'].includes(view)&&!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view)&&!ui.person&&data.members.length&&!(view==='member-edit'&&ui.memberNew))ui.person=data.members[0].id;\n"
+        },
+        {
+          "line": 251,
+          "before": "   dialogDraft=null;const routeParams=new URLSearchParams();if(ui.person){routeParams.set('person',ui.person);routeParams.set('memberOrigin',ui.memberOrigin);}if(view==='member-edit'&&ui.memberNew){routeParams.set('mode','new');routeParams.set('category',ui.memberCategory||'child');}if(ui.record&&(view==='medical-edit'||window.DobbyRegister?.handles(view)||window.DobbyPreparations?.handles(view))){routeParams.set('record',ui.record);routeParams.set('scope',ui.scope);}routeParams.set('origin',view==='member-detail'?ui.memberOrigin:ui.origin);if(view==='memo-edit')routeParams.set('mode',ui.memoMode);if(view==='contact-edit')routeParams.set('mode',ui.contactMode);if(window.DobbyAccess?.handles(view)&&ui.accessMode)routeParams.set('mode',ui.accessMode);if(ui.day&&view==='agenda')routeParams.set('day',ui.day);const hash='#'+view+(routeParams.size?'?'+routeParams:'');if(history)window.history.pushState({},'',hash);else if(view!==requested)window.history.replaceState({},'',hash);if(!history){if(view==='member-edit')ui.memberDraft=null;if(view==='medical-edit')ui.visitDraft=null;}await render(view,!history,false);if(values.eventNew)showDialog('event',values.eventId);window.scrollTo(0,0);return true;\n",
+          "after": "   dialogDraft=null;const routeParams=new URLSearchParams();if(ui.person){routeParams.set('person',ui.person);routeParams.set('memberOrigin',ui.memberOrigin);}if(view==='member-edit'&&ui.memberNew){routeParams.set('mode','new');routeParams.set('category',ui.memberCategory||'child');}if(ui.record&&(view==='medical-edit'||window.DobbyRegister?.handles(view)||window.DobbyPreparations?.handles(view))){routeParams.set('record',ui.record);routeParams.set('scope',ui.scope);}routeParams.set('origin',view==='member-detail'?ui.memberOrigin:ui.origin);if(view==='memo-edit')routeParams.set('mode',ui.memoMode);if(view==='contact-edit')routeParams.set('mode',ui.contactMode);if(window.DobbyAccess?.handles(view)&&ui.accessMode)routeParams.set('mode',ui.accessMode);if(ui.day&&view==='agenda')routeParams.set('day',ui.day);const hash='#'+view+(routeParams.size?'?'+routeParams:'');if(history)window.history.pushState({},'',hash);else if(view!==requested||access.restricted&&!window.DobbyAccess?.handles(view))window.history.replaceState({},'',hash);if(!history){if(view==='member-edit')ui.memberDraft=null;if(view==='medical-edit')ui.visitDraft=null;}await render(view,!history,false);if(values.eventNew&&!childAccess().restricted)showDialog('event',values.eventId);window.scrollTo(0,0);return true;\n"
+        },
+        {
+          "line": 256,
+          "before": "",
+          "after": "  if(!childActionAllowed(action,el))return;\n"
+        },
+        {
+          "line": 278,
+          "before": "  return extraAction(action,el);\n",
+          "after": "  const result=await extraAction(action,el);gateChildUI();return result;\n"
+        },
+        {
+          "line": 281,
+          "before": "  if(window.DobbyAccess?.handles(ui.view)){window.DobbyAccess.refresh();return;}\n",
+          "after": "  if(window.DobbyAccess?.handles(ui.view)&&window.DobbyStitchV7.allowFamily(ui.view)){window.DobbyAccess.refresh();return;}\n"
+        },
+        {
+          "line": 292,
+          "before": "",
+          "after": " const parse=()=>{const[v,q]=location.hash.slice(1).split('?'),p=new URLSearchParams(q||'');return{view:handles(v)?v:'salon',day:p.get('day')||undefined,person:p.get('person')||undefined,record:p.get('record')||null,scope:p.get('scope')==='shared'?'shared':'local',mode:p.get('mode')||undefined,category:p.get('category')||undefined,origin:p.get('origin')||undefined,memberOrigin:p.get('memberOrigin')||undefined,eventNew:p.get('dialog')==='event',eventId:p.get('event')||undefined};};\n function accessChanged(){\n  if(window.DobbyAccess?.handles(ui.view)){window.DobbyAccess.refresh();return;}\n  ++revision;formDrafts.clear();mountedDraft=null;dialogDraft=null;pristine=null;formContext=null;\n  Object.assign(ui,{person:null,record:null,scope:'local',query:'',memberDraft:null,visitDraft:null,memberBaseline:null,agendaPerson:null,origin:'salon',memberOrigin:'salon'});\n  for(const node of $$('#fa-dialog,#fa-supplement,#fa-notice'))node.remove();\n  const main=$('main');main.replaceChildren();delete main.dataset.magicProfile;delete main.dataset.profileMember;window.DobbyStitchV7.showVerification(true);window.DobbyChrome?.mount();\n  window.DobbyToolsAccess?.reset();\n  const state=parse();return open(state.view,state,false);\n }\n"
+        },
+        {
+          "line": 304,
+          "before": "  const parse=()=>{const[v,q]=location.hash.slice(1).split('?'),p=new URLSearchParams(q||'');return{view:handles(v)?v:'salon',day:p.get('day')||undefined,person:p.get('person')||undefined,record:p.get('record')||null,scope:p.get('scope')==='shared'?'shared':'local',mode:p.get('mode')||undefined,category:p.get('category')||undefined,origin:p.get('origin')||undefined,memberOrigin:p.get('memberOrigin')||undefined,eventNew:p.get('dialog')==='event',eventId:p.get('event')||undefined};};\n",
+          "after": ""
+        },
+        {
+          "line": 363,
+          "before": "  if(!form.reportValidity())return;\n",
+          "after": "  if(childAccess().restricted||!form.reportValidity())return;\n"
+        },
+        {
+          "line": 398,
+          "before": " return Object.freeze({init,open,refresh,discardDraft,sharedReadOnly,get ready(){return ready},get view(){return ui.view},handles});\n",
+          "after": " return Object.freeze({init,open,refresh,accessChanged,discardDraft,sharedReadOnly,get ready(){return ready},get view(){return ui.view},handles});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/health-integration.js": {
+      "beforeSha256": "c1810b893ab932f7155938a7124e31b47196d55a41d387bf0270a21cdd78028c",
+      "afterSha256": "c7bc7a5d6cb4627becf27e99e6df34879ece46203aa71fd1909faec646393b44",
+      "reason": "Masquage de l’ancien cache Santé pour les sessions réelles.",
+      "patches": [
+        {
+          "line": 30,
+          "before": "",
+          "after": "  }\n\n  function filterHistoricalState(state) {\n    if (legacyDemo()) return state;\n    state.famHealth = [];\n    state.sharedHealthVisits = [];\n    if (Array.isArray(state.familyDocs)) state.familyDocs = state.familyDocs.filter(row => row?.category !== 'Santé');\n    return state;\n"
+        },
+        {
+          "line": 220,
+          "before": "  return Object.freeze({ connect, legacyDemo,\n",
+          "after": "  return Object.freeze({ connect, legacyDemo, filterHistoricalState,\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/home.js": {
+      "beforeSha256": "2bd2ffbfcc2003001298be0889e09f34c0d17bd7bfc924ea34f0cfcc990fbe17",
+      "afterSha256": "c74c5920eb99cdf9b67ab10cf8cc7cd413b32d7ea4c57ff4817520dc1b4925ca",
+      "reason": "Accueil enfant selon les modules autorisés.",
+      "patches": [
+        {
+          "line": 6,
+          "before": "",
+          "after": "const missionSection=()=>document.querySelector('[data-e01-missions]')||section('Missions du Jour');\n"
+        },
+        {
+          "line": 9,
+          "before": "",
+          "after": "const vocal=document.getElementById('btn-vocal'),vocalSlot=document.createComment('Dobby');\nvocal?.before(vocalSlot);\nconst childAccess=()=>window.DobbyStitchV7.childAccess();\n"
+        },
+        {
+          "line": 31,
+          "before": " if(quickBusy)return;const input=document.querySelector('[data-e01-quick-input]');if(!input?.reportValidity())return;quickDraft=input.value;const name=quickDraft.trim();if(!name){input.setCustomValidity('Indiquez un article.');input.reportValidity();input.setCustomValidity('');return;}\n",
+          "after": " if(quickBusy||childAccess().restricted)return;const input=document.querySelector('[data-e01-quick-input]');if(!input?.reportValidity())return;quickDraft=input.value;const name=quickDraft.trim();if(!name){input.setCustomValidity('Indiquez un article.');input.reportValidity();input.setCustomValidity('');return;}\n const scope=window.DobbyStitchV7.accountScope();\n"
+        },
+        {
+          "line": 36,
+          "before": " else{await model.add(engine,{name});const saved=model.snapshot(engine),item=saved.items.find(item=>!item.done&&normalize(item.name)===normalize(name));if(!item)throw Error('L’ajout n’a pas été confirmé. Vérifiez la liste complète.');quickDraft='';quickNotice='« '+name+' » ajouté à la liste. '+(saved.shared?(item.pending?'En attente de synchronisation.':saved.status+'.'):'Conservé sur cet appareil.');}\n }catch(error){quickNotice=error.message;}finally{quickBusy=false;quickCourses();}\n",
+          "after": " else{await model.add(engine,{name});if(scope!==window.DobbyStitchV7.accountScope())return;const saved=model.snapshot(engine),item=saved.items.find(item=>!item.done&&normalize(item.name)===normalize(name));if(!item)throw Error('L’ajout n’a pas été confirmé. Vérifiez la liste complète.');quickDraft='';quickNotice='« '+name+' » ajouté à la liste. '+(saved.shared?(item.pending?'En attente de synchronisation.':saved.status+'.'):'Conservé sur cet appareil.');}\n }catch(error){if(scope===window.DobbyStitchV7.accountScope())quickNotice=error.message;}finally{if(scope===window.DobbyStitchV7.accountScope()){quickBusy=false;quickCourses();}}\n"
+        },
+        {
+          "line": 41,
+          "before": " let row=document.querySelector('[data-e01-days]');if(!row){row=document.createElement('section');row.dataset.e01Days='true';row.setAttribute('aria-label','Choisir une journée, d’aujourd’hui à J+6');section('Missions du Jour').before(row);}\n",
+          "after": " let row=document.querySelector('[data-e01-days]');if(!row){row=document.createElement('section');row.dataset.e01Days='true';row.setAttribute('aria-label','Choisir une journée, d’aujourd’hui à J+6');missionSection().before(row);}\n"
+        },
+        {
+          "line": 49,
+          "before": "function render(data){if(!originals.missions)return;placeBadge();const day=add(localDay(),offset);days(day);\nconst missions=originals.missions.cloneNode(true),list=missions.querySelector('.space-y-2\\\\.5'),sample=list.lastElementChild.cloneNode(true);\nconst rows=[...(data.manualMissions||[]).filter(t=>t.due===day||!t.due&&offset===0).map(t=>({...t,manual:true,done:t.status==='done'})),...(data.autoTasks||[]).filter(t=>t.due===day&&t.state!=='obsolete').map(t=>({...t,done:t.state==='done'}))];\n",
+          "after": "function render(data){if(!originals.missions)return;const access=childAccess(),child=access.restricted;\n if(child)vocal?.remove();else if(vocal&&!vocal.isConnected)vocalSlot.after(vocal);\n placeBadge();const day=add(localDay(),offset);days(day);\nconst missions=originals.missions.cloneNode(true),list=missions.querySelector('.space-y-2\\\\.5'),sample=list.lastElementChild.cloneNode(true);missions.dataset.e01Missions='';\nconst transport=child?E.win().DobbySharedRunesV3:null,progress=transport?.readProgress?.();\nconst rows=[...(data.manualMissions||[]).filter(t=>(t.due===day||!t.due&&offset===0)&&(!child||window.DobbyStitchV7.ownMission(t,access))).map(t=>{\n const participation=child&&t.individualRunes?transport?.participationStatus?.(t,progress?.entries.findLast(entry=>entry.missionId===t.id&&entry.memberId===access.memberId),localDay()):null;\n return {...t,manual:true,done:participation?participation==='credited':t.status==='done',participation};\n}),...(child?[]:data.autoTasks||[]).filter(t=>t.due===day&&t.state!=='obsolete').map(t=>({...t,done:t.state==='done'}))];\n"
+        },
+        {
+          "line": 59,
+          "before": "const addButton=missions.querySelector('button');addButton.dataset.e01Add='true';list.replaceChildren();\n",
+          "after": "const addButton=missions.querySelector('button');if(child)addButton.remove();else addButton.dataset.e01Add='true';list.replaceChildren();\n"
+        },
+        {
+          "line": 62,
+          "before": "const tag=card.querySelector('.font-label-sm');tag.textContent=task.done?'Terminée':'À faire';\nconst by=tag.nextElementSibling;by.textContent=task.manual?'• '+(task.allFamily?'Toute la famille':(task.assigneeIds||[task.assigneeId]).map(id=>data.familyMembers.find(m=>m.id===id)?.name).filter(Boolean).join(' · ')||'Non attribuée'):'• Automatique';\n",
+          "after": "const tag=card.querySelector('.font-label-sm');tag.textContent=task.done?'Terminée':task.participation==='pending'?'En attente d’un parent':'À faire';\nconst by=tag.nextElementSibling;by.textContent=child?'• Ma mission':task.manual?'• '+(task.allFamily?'Toute la famille':(task.assigneeIds||[task.assigneeId]).map(id=>data.familyMembers.find(m=>m.id===id)?.name).filter(Boolean).join(' · ')||'Non attribuée'):'• Automatique';\n"
+        },
+        {
+          "line": 66,
+          "before": "if(task.manual)card.dataset.e01Href='./famille.html#mission-edit?record='+encodeURIComponent(task.id);\n",
+          "after": "if(child){check.remove();card.dataset.e01Href='./missions.html';}\nelse if(task.manual)card.dataset.e01Href='./famille.html#mission-edit?record='+encodeURIComponent(task.id);\n"
+        },
+        {
+          "line": 75,
+          "before": "list.classList.add('p-space-md');missionCard.append(missionHeader,list);missions.append(missionCard);section('Missions du Jour').replaceWith(missions);\n",
+          "after": "list.classList.add('p-space-md');missionCard.append(missionHeader,list);missions.append(missionCard);missionSection().replaceWith(missions);\n"
+        },
+        {
+          "line": 81,
+          "before": " if(!recipe){entry.replaceChildren(slotName,empty('Aucun repas prévu','Choisir un repas dans la Taverne gourmande.'));card.append(entry);continue;}\n",
+          "after": " if(!recipe){entry.replaceChildren(slotName,empty('Aucun repas prévu',''));if(child){delete entry.dataset.e01Href;entry.removeAttribute('role');entry.removeAttribute('aria-label');entry.removeAttribute('tabindex');}else entry.lastElementChild.querySelector('p').textContent='Choisir un repas dans la Taverne gourmande.';card.append(entry);continue;}\n"
+        },
+        {
+          "line": 87,
+          "before": "(document.querySelector('[data-e01-meals]')||section('Festin du Soir')).replaceWith(mealSection);quickCourses();\nconst gazette=originals.gazette.cloneNode(true);gazette.dataset.e01Events='true';const events=(data.agenda||[]).filter(e=>e.date===day).map(e=>({...e,label:e.title,person:e.meta})).sort((a,b)=>(a.time||'').localeCompare(b.time||'')||a.label.localeCompare(b.label,'fr'));\n",
+          "after": "(document.querySelector('[data-e01-meals]')||section('Festin du Soir')).replaceWith(mealSection);\nif(child)document.querySelector('[data-e01-quick]')?.remove();else quickCourses();\nconst gazette=originals.gazette.cloneNode(true);gazette.dataset.e01Events='true';const events=(data.agenda||[]).filter(e=>e.date===day&&(!child||e.kind==='event')).map(e=>({...e,label:e.title,person:e.meta})).sort((a,b)=>(a.time||'').localeCompare(b.time||'')||a.label.localeCompare(b.label,'fr'));\n"
+        },
+        {
+          "line": 99,
+          "before": "const addEvent=document.createElement('a');addEvent.dataset.e01EventAdd='true';addEvent.className='e01-event-add';addEvent.href='./famille.html#agenda?dialog=event&day='+localDay()+'&origin=home';addEvent.textContent='+ Ajouter un événement';eventsBody.append(addEvent);container.append(gazetteHeader,eventsBody);eventSection().replaceWith(gazette);\n",
+          "after": "if(!child){const addEvent=document.createElement('a');addEvent.dataset.e01EventAdd='true';addEvent.className='e01-event-add';addEvent.href='./famille.html#agenda?dialog=event&day='+localDay()+'&origin=home';addEvent.textContent='+ Ajouter un événement';eventsBody.append(addEvent);}container.append(gazetteHeader,eventsBody);eventSection().replaceWith(gazette);\n"
+        },
+        {
+          "line": 107,
+          "before": "",
+          "after": "if((check||addButton)&&childAccess().restricted)return;\n"
+        },
+        {
+          "line": 112,
+          "before": "return {render,eventSaved(){location.href='./traverse.html';return Promise.resolve();},eventCancelled(){location.href='./traverse.html';return Promise.resolve();},reset(){offset=0;if(document.body.dataset.dv7Screen==='traverse')window.DobbyStitchV7?.refresh();}};\n",
+          "after": "return {render,clearDraft(){\n offset=0;quickDraft='';quickNotice='';quickBusy=false;\n for(const block of document.querySelectorAll('[data-e01-missions],[data-e01-meals],[data-e01-events]'))block.replaceChildren();\n for(const block of document.querySelectorAll('[data-e01-quick],[data-health-today]'))block.remove();\n if(childAccess().restricted)vocal?.remove();\n},eventSaved(){location.href='./traverse.html';return Promise.resolve();},eventCancelled(){location.href='./traverse.html';return Promise.resolve();},reset(){offset=0;if(document.body.dataset.dv7Screen==='traverse')window.DobbyStitchV7?.refresh();}};\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/magic-profile.js": {
+      "beforeSha256": "64c2e45a394f390b6caf0e9e5715f5010e93eaa89332136c09183adae1df5fac",
+      "afterSha256": "5d38f9ef22af5bed20d39520cc0f6e00bcd033ac15b614810a5cc5de5abb3ca0",
+      "reason": "Modification par l’enfant de sa Maison et de son Patronus uniquement.",
+      "patches": [
+        {
+          "line": 26,
+          "before": "  const member=c.data.members.find(m=>m.id===c.ui.person),main=c.main;main.replaceChildren();main.className='mp-page';main.dataset.magicProfile='true';\n  const h=make('h1','Profil magique','font-headline-lg-mobile');main.append(c.ui.origin==='member-detail'?c.button('member-detail','← Fiche du membre',{person:c.ui.person,origin:c.ui.memberOrigin||'members'}):c.button('members','← Membres du foyer'),h);\n",
+          "after": "  const app=window.DobbyStitchV7,access=app.childAccess(),child=access.restricted,scope=app.accountScope();\n  const member=c.data.members.find(m=>m.id===(child?access.memberId:c.ui.person)),main=c.main;main.replaceChildren();main.className='mp-page';main.dataset.magicProfile='true';\n  const h=make('h1','Profil magique','font-headline-lg-mobile');main.append(child?c.button('salon','← Famille'):c.ui.origin==='member-detail'?c.button('member-detail','← Fiche du membre',{person:c.ui.person,origin:c.ui.memberOrigin||'members'}):c.button('members','← Membres du foyer'),h);\n"
+        },
+        {
+          "line": 39,
+          "before": "  if(!member){main.append(c.paragraph('Aucun profil n’est associé à ce compte. Choisissez explicitement un membre du foyer pour consulter son profil.'),family(),account());return;}\n",
+          "after": "  if(!member){if(child)main.append(c.paragraph('Ton profil est en cours de chargement.'));else main.append(c.paragraph('Aucun profil n’est associé à ce compte. Choisissez explicitement un membre du foyer pour consulter son profil.'),family(),account());return;}\n"
+        },
+        {
+          "line": 43,
+          "before": "  main.append(runePresentation(member));\n",
+          "after": "  const runes=runePresentation(member);\n  if(child)for(const action of runes.querySelectorAll('.dobby-rune-entry-action'))action.remove();\n  main.append(runes);\n"
+        },
+        {
+          "line": 47,
+          "before": "",
+          "after": "  const startMagic=kind=>window.DobbyRegister.run(()=>{\n   if(app.accountScope()!==scope||child&&(!access.active||access.memberId!==member.id))throw Error('Ce profil n’est plus associé au compte actif.');\n   return window.DobbyOnboarding.restart(kind,member.id);\n  });\n"
+        },
+        {
+          "line": 59,
+          "before": "  const home=card('Ma Maison','mp-house');if(house){home.append(make('h3',house.name));const lore=window.DobbyMagicContent?.houses[house.id];if(lore){const copy=make('p',lore.description,'mp-lore');copy.dataset.magicDescription='house';home.append(copy);}home.append(houseEmblem(house));}else home.append(c.paragraph(identity.houseId?'Maison enregistrée non prise en charge.':'Aucune Maison choisie.'));const houseTest=make('button','Refaire le test','fa-button');houseTest.type='button';houseTest.disabled=!permissions.canMagic;if(houseTest.disabled)houseTest.title=permissions.reason;houseTest.onclick=()=>window.DobbyRegister.run(()=>window.DobbyOnboarding.restart('house',member.id));houseTest.setAttribute('aria-description','Recommencer le questionnaire ; le résultat actuel reste conservé jusqu’à confirmation.');home.append(houseTest,c.paragraph('Ton résultat actuel reste conservé tant que le nouveau n’est pas confirmé.'));main.append(home);\n  const spirit=card('Mon Patronus','mp-patronus');if(patronus){if(patronus.available)spirit.append(sprite(patronus,'patronus'));else spirit.append(c.paragraph('Illustration du Patronus à produire.'));spirit.append(make('h3',patronus.name));const lore=window.DobbyMagicContent?.patronuses[patronus.id];if(lore){const copy=make('p',lore.description,'mp-lore');copy.dataset.magicDescription='patronus';spirit.append(copy);}}else spirit.append(c.paragraph(identity.patronusId?'Patronus enregistré non pris en charge.':'Aucun Patronus choisi.'));const retest=houseTest.cloneNode(true);retest.onclick=()=>window.DobbyRegister.run(()=>window.DobbyOnboarding.restart('patronus',member.id));spirit.append(retest,c.paragraph('Le Patronus est indépendant de votre Maison et de votre grade. Le nouveau résultat attend votre confirmation.'));main.append(spirit);\n",
+          "after": "  const home=card('Ma Maison','mp-house');if(house){home.append(make('h3',house.name));const lore=window.DobbyMagicContent?.houses[house.id];if(lore){const copy=make('p',lore.description,'mp-lore');copy.dataset.magicDescription='house';home.append(copy);}home.append(houseEmblem(house));}else home.append(c.paragraph(identity.houseId?'Maison enregistrée non prise en charge.':'Aucune Maison choisie.'));const houseTest=make('button',child?'Choisir ma Maison':'Refaire le test','fa-button');houseTest.type='button';houseTest.disabled=!permissions.canMagic;if(houseTest.disabled)houseTest.title=permissions.reason;houseTest.onclick=()=>startMagic('house');houseTest.setAttribute('aria-description','Le résultat actuel reste conservé jusqu’à confirmation.');home.append(houseTest,c.paragraph('Ton résultat actuel reste conservé tant que le nouveau n’est pas confirmé.'));main.append(home);\n  const spirit=card('Mon Patronus','mp-patronus');if(patronus){if(patronus.available)spirit.append(sprite(patronus,'patronus'));else spirit.append(c.paragraph('Illustration du Patronus à produire.'));spirit.append(make('h3',patronus.name));const lore=window.DobbyMagicContent?.patronuses[patronus.id];if(lore){const copy=make('p',lore.description,'mp-lore');copy.dataset.magicDescription='patronus';spirit.append(copy);}}else spirit.append(c.paragraph(identity.patronusId?'Patronus enregistré non pris en charge.':'Aucun Patronus choisi.'));const retest=houseTest.cloneNode(true);if(child)retest.textContent='Choisir mon Patronus';retest.onclick=()=>startMagic('patronus');spirit.append(retest,c.paragraph('Le Patronus est indépendant de votre Maison et de votre grade. Le nouveau résultat attend votre confirmation.'));main.append(spirit);\n  if(child)return;\n"
+        },
+        {
+          "line": 66,
+          "before": " function openAccount(){const person=P.linkedMember(E.read().members,E.win().DobbyFamilyUI?.getContext());if(location.pathname.endsWith('famille.html')&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.open('personal',{person:person?.id||null,record:null});location.href='./famille.html#personal'+(person?'?person='+encodeURIComponent(person.id):'');}\n",
+          "after": " function openAccount(){\n  const access=window.DobbyStitchV7.childAccess();\n  const view=access.restricted&&!access.active?'access':'personal';\n  const id=access.restricted?access.memberId:P.linkedMember(E.read().members,E.win().DobbyFamilyUI?.getContext())?.id;\n  if(location.pathname.endsWith('famille.html')&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.open(view,{person:id||null,record:null});\n  location.href='./famille.html#'+view+(id?'?person='+encodeURIComponent(id):'');\n }\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/missions.js": {
+      "beforeSha256": "8d0a462dfc08ff6cc120185297077e461deee90ec6ac78bdad3fbe6f9cb03e0c",
+      "afterSha256": "ff24bbc30bead71e741246cf043e11fc1fe6b77369c7fee10138ddb1ffe32270",
+      "reason": "Missions, réalisations et runes propres à l’enfant.",
+      "patches": [
+        {
+          "line": 5,
+          "before": "",
+          "after": "const create=document.getElementById('btn-nouvelle-mission'),createSlot=document.createComment('Création de mission');\ncreate?.before(createSlot);\n"
+        },
+        {
+          "line": 12,
+          "before": "function rows(){\n",
+          "after": "function rows(access){\n"
+        },
+        {
+          "line": 15,
+          "before": " const manual=(data.manualMissions||[]).filter(row=>!row.individualRunes||progress?.category!=='child'||row.assigneeIds?.includes(progress.memberId));\n",
+          "after": " const manual=(data.manualMissions||[]).filter(row=>access.restricted?window.DobbyStitchV7.ownMission(row,access):!row.individualRunes||progress?.category!=='child'||row.assigneeIds?.includes(progress.memberId));\n"
+        },
+        {
+          "line": 18,
+          "before": "  const ids=(row.assigneeIds||[]).filter(id=>progress?.category!=='child'||id===progress.memberId);\n",
+          "after": "  const ids=(row.assigneeIds||[]).filter(id=>access.restricted?id===access.memberId:progress?.category!=='child'||id===progress.memberId);\n"
+        },
+        {
+          "line": 21,
+          "before": " }),...(data.autoTasks||[]).filter(row=>['open','done'].includes(row.state)).map(row=>({row,manual:false,id:row.key,done:row.state==='done'}))];}\n",
+          "after": " }),...(access.restricted?[]:data.autoTasks||[]).filter(row=>['open','done'].includes(row.state)).map(row=>({row,manual:false,id:row.key,done:row.state==='done'}))];}\n"
+        },
+        {
+          "line": 23,
+          "before": "",
+          "after": "const access=window.DobbyStitchV7.childAccess(),child=access.restricted;\nif(child){create?.remove();member='all';}else if(create&&!create.isConnected)createSlot.after(create);\nfamily.closest('section').hidden=child;document.getElementById('e03-missions-title').lastChild.textContent=child?' Mes missions':' Les missions de la maisonnée';\n"
+        },
+        {
+          "line": 27,
+          "before": "const members=data.familyMembers||[],all=rows(),day=today();if(member!=='all'&&member!=='unassigned'&&!members.some(m=>m.id===member))member='all';\n",
+          "after": "const members=child?(data.familyMembers||[]).filter(row=>row.id===access.memberId):data.familyMembers||[],all=rows(access),day=today();if(member!=='all'&&member!=='unassigned'&&!members.some(m=>m.id===member))member='all';\n"
+        },
+        {
+          "line": 32,
+          "before": "const visible=selected.filter(t=>matches(t,status));list.innerHTML=visible.length?visible.map(t=>{const r=t.row,ids=assigned(t),owner=r.allFamily?'Toute la famille':ids.map(id=>{const m=members.find(m=>m.id===id);return m?.name||m?.firstName||'Membre';}).join(', ')||(r.assigneeId||r.assigneeIds?.length?'Ancien membre':'Non attribuée'),href=t.manual&&t.id?form(t.id):!t.manual?source(r):'';\n",
+          "after": "const visible=selected.filter(t=>matches(t,status));list.innerHTML=visible.length?visible.map(t=>{const r=t.row,ids=assigned(t),owner=child?'Ma mission':r.allFamily?'Toute la famille':ids.map(id=>{const m=members.find(m=>m.id===id);return m?.name||m?.firstName||'Membre';}).join(', ')||(r.assigneeId||r.assigneeIds?.length?'Ancien membre':'Non attribuée'),href=child?'':t.manual&&t.id?form(t.id):!t.manual?source(r):'';\n"
+        },
+        {
+          "line": 35,
+          "before": "",
+          "after": "if(child){\n const label=r.individualRunes?'Ma participation':r.childCompletionAllowed===true&&!t.done?'Terminer':'';\n return `<article class=\"e03-entry\"><details ${attrs}><summary>${content}</summary>${r.note?'<p>'+esc(r.note)+'</p>':''}</details>${label?`<button type=\"button\" class=\"e03-complete\" data-dv7-complete=\"${esc(t.id)}\">${label}</button>`:''}</article>`;\n}\n"
+        },
+        {
+          "line": 42,
+          "before": "family.innerHTML=person('all','Toute la maisonnée','🏠')+members.map(m=>person(m.id,m.name||m.firstName||'Membre',m.avatar)).join('')+person('unassigned','Non attribuées / ancien membre','📜');\n",
+          "after": "family.innerHTML=child?'':person('all','Toute la maisonnée','🏠')+members.map(m=>person(m.id,m.name||m.firstName||'Membre',m.avatar)).join('')+person('unassigned','Non attribuées / ancien membre','📜');\n"
+        },
+        {
+          "line": 45,
+          "before": "document.addEventListener('click',event=>{if(document.body.dataset.dv7Screen!=='missions')return;const button=event.target.closest('[data-e03-status],[data-e03-member]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();if(button.dataset.e03Status)status=button.dataset.e03Status;else member=button.dataset.e03Member;render(data);},true);\nreturn {render};\n",
+          "after": "document.addEventListener('click',event=>{if(document.body.dataset.dv7Screen!=='missions')return;const button=event.target.closest('[data-e03-status],[data-e03-member]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();if(!data||window.DobbyStitchV7.childAccess().restricted&&!window.DobbyStitchV7.childAccess().active)return;if(button.dataset.e03Status)status=button.dataset.e03Status;else member=button.dataset.e03Member;render(data);},true);\nreturn {render,clear(){status='open';member='all';data=null;if(window.DobbyStitchV7.childAccess().restricted)create?.remove();for(const host of document.querySelectorAll('[data-e03-list],[data-e03-family],[data-e03-filters]'))host.replaceChildren();}};\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/tools-register.js": {
+      "beforeSha256": "b175d28469a92459d2e91577fc3229113c0425000bfc6ec1b9325b30969ce72f",
+      "afterSha256": "2bd581bae7a01e9dead57d8581c8f32df48ebc57872033ab4940eed59a7b07c7",
+      "reason": "Menu construit à partir des droits du compte.",
+      "patches": [
+        {
+          "line": 97,
+          "before": "",
+          "after": "  if(window.DobbyStitchV7.childAccess().restricted){\n   const cards=q('#menu-sections');cards.replaceChildren();\n   for(const [view,href,glyph,label] of [\n    ['rg-home','./traverse.html','explore','Accueil'],['rg-missions','./missions.html','history_edu','Missions et participations'],\n    ['rg-taverne','./index.html#taverne','skillet','Repas'],['rg-recipes','./index.html#recipes','menu_book','Grimoire des recettes'],\n    ['rg-shop','./index.html#shop','shopping_cart','Courses'],['salon',rootUrl('salon'),'family_restroom','Famille'],\n    ['personal',rootUrl('personal'),'person','Profil magique'],['settings-magic',rootUrl('settings-magic'),'auto_awesome','Ambiance magique']\n   ]){\n    const card=el('a','','module-item rg-menu-card');card.href=href;bind(card,view);\n    const icon=el('span',glyph,'rg-menu-icon material-symbols-outlined'),arrow=el('span','chevron_right','rg-menu-chevron material-symbols-outlined');\n    icon.setAttribute('aria-hidden','true');arrow.setAttribute('aria-hidden','true');card.append(icon,el('span',label,'rg-menu-label'),arrow);cards.append(card);\n   }\n  }\n"
+        },
+        {
+          "line": 145,
+          "before": "  c.main.classList.add('rg-settings-page');c.main.replaceChildren(button('settings','Retour aux paramètres'),el('h1','Ambiance magique','font-headline-lg-mobile text-headline-lg-mobile text-primary'));\n",
+          "after": "  const restricted=window.DobbyStitchV7.childAccess().restricted;\n  c.main.classList.add('rg-settings-page');c.main.replaceChildren(button(restricted?'menu':'settings',restricted?'Retour au menu':'Retour aux paramètres'),el('h1','Ambiance magique','font-headline-lg-mobile text-headline-lg-mobile text-primary'));\n"
+        },
+        {
+          "line": 165,
+          "before": "   const {entries,category,memberId}=progress,today=E.win().DobbyFamilyMissions.today();\n",
+          "after": "   const access=window.DobbyStitchV7.childAccess(),scope=window.DobbyStitchV7.accountScope();\n   const {entries}=progress,category=access.restricted?'child':progress.category,memberId=access.restricted?access.memberId:progress.memberId,today=E.win().DobbyFamilyMissions.today();\n"
+        },
+        {
+          "line": 187,
+          "before": "",
+          "after": "      if(window.DobbyStitchV7.accountScope()!==scope)return;\n"
+        },
+        {
+          "line": 209,
+          "before": "",
+          "after": "  const app=window.DobbyStitchV7,access=app.childAccess(),scope=app.accountScope();\n  if(access.restricted&&(!app.ownMission(row,access)||!row.individualRunes&&(row.childCompletionAllowed!==true||row.status!=='open')))throw Error('Cette participation n’est pas disponible pour ce compte.');\n"
+        },
+        {
+          "line": 212,
+          "before": "  const native=E.win().DobbyFamilyMissions,ids=native.completionCandidateIds(row),members=ids.map(id=>state.familyMembers.find(m=>m.id===id)).filter(Boolean),dialog=el('dialog','','dv7-participant-dialog'),form=el('form',''),heading=el('h2','Qui a réellement participé ?'),description=el('p','Une seule récompense totale, répartie uniquement entre les participants choisis.'),problem=el('p','');problem.setAttribute('role','alert');dialog.setAttribute('aria-labelledby','dv7-participant-title');heading.id='dv7-participant-title';form.append(heading,description);\n  for(const member of members){const label=el('label',''),input=document.createElement('input');input.type='checkbox';input.name='participant';input.value=member.id;input.setAttribute('aria-label',member.name||member.firstName||'Membre');label.append(input,window.DobbyMemberAvatar.create(member,{className:'e04-avatar'}),document.createTextNode(member.name||member.firstName||'Membre'));form.append(label);}\n",
+          "after": "  const native=E.win().DobbyFamilyMissions,ids=access.restricted?[access.memberId]:native.completionCandidateIds(row),members=ids.map(id=>state.familyMembers.find(m=>m.id===id)).filter(Boolean),dialog=el('dialog','','dv7-participant-dialog'),form=el('form',''),heading=el('h2',access.restricted?'Confirmer ma réalisation':'Qui a réellement participé ?'),description=el('p',access.restricted?row.title:'Une seule récompense totale, répartie uniquement entre les participants choisis.'),problem=el('p','');problem.setAttribute('role','alert');dialog.setAttribute('aria-labelledby','dv7-participant-title');heading.id='dv7-participant-title';form.append(heading,description);\n  if(!access.restricted)for(const member of members){const label=el('label',''),input=document.createElement('input');input.type='checkbox';input.name='participant';input.value=member.id;input.setAttribute('aria-label',member.name||member.firstName||'Membre');label.append(input,window.DobbyMemberAvatar.create(member,{className:'e04-avatar'}),document.createTextNode(member.name||member.firstName||'Membre'));form.append(label);}\n"
+        },
+        {
+          "line": 228,
+          "before": "  form.addEventListener('submit',async event=>{event.preventDefault();if(confirm.disabled)return;submitting=true;confirm.disabled=true;try{const participants=[...new FormData(form).getAll('participant')];await native.complete(id,participants);dialog.close();window.DobbyStitchV7?.refresh();}catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}});dialog.showModal();\n",
+          "after": "  form.addEventListener('submit',async event=>{event.preventDefault();if(confirm.disabled||app.accountScope()!==scope)return;submitting=true;confirm.disabled=true;try{const participants=access.restricted?ids:[...new FormData(form).getAll('participant')];await native.complete(id,participants);dialog.close();window.DobbyStitchV7?.refresh();}catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}});dialog.showModal();\n"
+        },
+        {
+          "line": 231,
+          "before": " document.addEventListener('click',async event=>{const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(!b.dataset.dv7Complete&&b.disabled)return;try{if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);else{b.disabled=true;await E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen);window.DobbyStitchV7?.refresh();}}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}finally{if(b.isConnected)b.disabled=false;}},true);\n",
+          "after": " document.addEventListener('click',async event=>{const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(b.disabled||!b.dataset.dv7Complete&&window.DobbyStitchV7.childAccess().restricted)return;try{if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);else{b.disabled=true;await E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen);window.DobbyStitchV7?.refresh();}}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}finally{if(b.isConnected)b.disabled=false;}},true);\n"
+        },
+        {
+          "line": 234,
+          "before": " document.addEventListener('click',event=>{const b=event.target.closest('[data-dv7-manual],[data-dv7-automatic],[data-dv7-mission-sync]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();try{E.evaluate('st.extraPage=\"\";go(\"missions\");');if(b.dataset.dv7MissionSync){E.action('fvAction','sync');return;}if(b.dataset.dv7Manual){const row=E.read().state.manualMissions.find(m=>m.id===b.dataset.record);if(b.dataset.dv7Manual==='toggle'&&row?.status==='open'){missionParticipants(row.id);return;}E.action('fmsAction',b.dataset.dv7Manual,{id:b.dataset.record});}else{const input=[...E.win().document.querySelectorAll('[data-autotask]')].find(n=>n.dataset.autotask===b.dataset.dv7Automatic);if(!input)throw Error('Mission automatique indisponible.');input.checked=true;input.dispatchEvent(new (E.win().Event)('change',{bubbles:true}));}window.DobbyStitchV7.refresh();}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}},true);\n",
+          "after": " document.addEventListener('click',event=>{const b=event.target.closest('[data-dv7-manual],[data-dv7-automatic],[data-dv7-mission-sync]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(window.DobbyStitchV7.childAccess().restricted)return;try{E.evaluate('st.extraPage=\"\";go(\"missions\");');if(b.dataset.dv7MissionSync){E.action('fvAction','sync');return;}if(b.dataset.dv7Manual){const row=E.read().state.manualMissions.find(m=>m.id===b.dataset.record);if(b.dataset.dv7Manual==='toggle'&&row?.status==='open'){missionParticipants(row.id);return;}E.action('fmsAction',b.dataset.dv7Manual,{id:b.dataset.record});}else{const input=[...E.win().document.querySelectorAll('[data-autotask]')].find(n=>n.dataset.autotask===b.dataset.dv7Automatic);if(!input)throw Error('Mission automatique indisponible.');input.checked=true;input.dispatchEvent(new (E.win().Event)('change',{bubbles:true}));}window.DobbyStitchV7.refresh();}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}},true);\n window.DobbyToolsAccess=Object.freeze({reset(){c=null;menuQuery='';}});\n"
+        }
+      ]
+    }
+  }
+}

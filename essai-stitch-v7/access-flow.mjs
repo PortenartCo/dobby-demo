@@ -3,13 +3,14 @@ export function destination(state = {}, { invitationPending = false, invitationT
   if (state.phase === 'active') {
     if (!state.verified || !state.userId || !state.householdId || !state.memberId) return 'access-unavailable';
     if (invitationPending) return 'access-join';
+    if (state.profile?.memberCategory === 'child') return 'traverse';
     return state.pendingCeremony ? 'traverse' : 'ritual';
   }
   if (state.phase === 'rejected' || state.phase === 'unavailable') return 'access-unavailable';
   if (state.phase === 'email-confirmation') return 'access-confirmation';
   if (state.authenticated && state.userId && state.phase === 'profile') return invitationPending && invitationType === 'child-account' ? 'access-join' : 'access-profile';
   if (state.authenticated && state.userId && state.phase === 'household') return invitationPending ? 'access-join' : 'access-create';
-  if (state.phase === 'signed-out' && invitationPending && invitationType === 'generic') return 'access-join';
+  if (state.phase === 'signed-out' && invitationPending) return 'access-join';
   return 'access-welcome';
 }
 

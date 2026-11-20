@@ -2,6 +2,53 @@
 window.DobbyFamilyMemberDetail=(()=>{'use strict';
  const node=(tag,value='',cls='')=>Object.assign(document.createElement(tag),{textContent:value,className:cls});
  const category=member=>({parent:'Parent',child:'Enfant',baby:'Bébé',pet:'Gardien — animal de compagnie'})[member.memberCategory]||'Membre du foyer';
+ function mountChildAccess(section,member,{E,paragraph,notice},permission){
+  const api=E.win?.()?.DobbyFamilyUI,account=api?.access,initial=account?.state?.();
+  if(api?.childAccessState?.()?.restricted||initial?.profile?.memberCategory==='child')return;
+  const action=(label,handler)=>{
+   const control=node('button',label,'fa-button');control.type='button';control.addEventListener('click',handler);
+   control.setAttribute('aria-describedby','fam-child-access-status');return control;
+  };
+  const status=paragraph('','fam-detail-status');status.id='fam-child-access-status';status.setAttribute('role','status');status.tabIndex=-1;
+  const canInvite=permission.canLinkExistingChild===true&&typeof window.DobbyAccess?.inviteChild==='function';
+  const attach=action('Donner accès à DOBBY',()=>void window.DobbyAccess.inviteChild(member.id).catch(error=>notice?.(error.message)));
+  attach.dataset.backendGate='child-account-link';
+  attach.disabled=!canInvite;attach.title=canInvite?'Créer une invitation pour ce profil existant.':'Le rattachement sécurisé attend une validation serveur.';
+  if(!canInvite||initial?.capabilities?.childAccessProtocol!==1||!account.childAccessStatus||!account.suspendChildAccess){
+   status.textContent=canInvite?'Créer une invitation pour ce profil existant. Son avatar, ses choix magiques, ses missions, ses Runes et son histoire seront conservés.':'Indisponible : le rattachement sécurisé d’un compte au profil existant attend une validation serveur. Le même profil, ses missions, ses Runes et son histoire devront être conservés.';
+   section.append(attach,status);return;
+  }
+  const current=()=>{
+   const live=account.state();
+   return section.isConnected&&live.verified&&live.userId===initial.userId&&live.householdId===initial.householdId&&live.memberId===initial.memberId&&live.permissions?.canLinkExistingChild===true;
+  };
+  const controls=node('div');section.append(status,controls);
+  const confirm=action('Confirmer la suspension',async()=>{
+   if(!current())return;
+   confirm.disabled=true;cancel.disabled=true;status.textContent='Suspension en cours…';
+   try{show(await account.suspendChildAccess(member.id));if(current())status.focus();}
+   catch{if(current())status.textContent='La suspension n’a pas pu être confirmée. Réessayez.';}
+   finally{confirm.disabled=false;cancel.disabled=false;}
+  });
+  const cancel=action('Annuler',()=>{show({linked:true,active:true});if(current())suspend.focus();});
+  const suspend=action('Suspendre l’accès à DOBBY',()=>{
+   if(!current())return;
+   status.textContent='Confirmez la suspension de la connexion de l’enfant. Sa fiche, ses missions et ses Runes seront conservées.';
+   controls.replaceChildren(confirm,cancel);confirm.focus();
+  });
+  function show(access){
+   if(!current())return;
+   if(!access.linked){status.textContent='Créer une invitation pour cette fiche enfant existante.';controls.replaceChildren(attach);}
+   else if(access.active){status.textContent='Ce profil est lié à un compte DOBBY.';controls.replaceChildren(suspend);}
+   else{status.textContent='Accès suspendu. La fiche et son historique sont conservés.';controls.replaceChildren();}
+  }
+  status.textContent='Vérification de l’accès à DOBBY…';
+  const read=()=>void account.childAccessStatus(member.id).then(show,()=>{
+   if(current()){status.textContent='Impossible de vérifier l’accès à DOBBY pour ce profil.';controls.replaceChildren(retry);}
+  });
+  const retry=action('Réessayer',()=>{controls.replaceChildren();status.textContent='Vérification de l’accès à DOBBY…';read();});
+  read();
+ }
  function render(c){
   const {E,ui,main,button,paragraph}=c,member=c.data.members.find(row=>row.id===ui.person);main.replaceChildren();main.className='fam-detail-page';
   const origin=ui.memberOrigin==='members'?'members':'salon',back=button('member-detail-back',origin==='members'?'← Maisonnée':'← Salon',{origin});back.dataset.famDetailBack='';
@@ -41,7 +88,7 @@ window.DobbyFamilyMemberDetail=(()=>{'use strict';
   if(['child','baby'].includes(member.memberCategory)){
    const access=section('Accompagner l’enfant');
    if(!house||!patronus){const begin=button('child-ceremony','Découvrir sa Maison puis son Patronus',{person:member.id});begin.dataset.childCeremony='';begin.disabled=!permission.canMagic;if(begin.disabled)begin.title=permission.reason;access.append(paragraph('Les questionnaires natifs et les choix directs enregistrent les résultats sur ce profil, sans compte Auth.'),begin);}
-   const attach=button('child-account-access','Donner accès à DOBBY',{person:member.id});attach.disabled=permission.canLinkExistingChild!==true||!window.DobbyAccess?.inviteChild;attach.dataset.backendGate='child-account-link';attach.setAttribute('aria-describedby','fam-child-access-status');const status=paragraph(attach.disabled?'Indisponible : le rattachement sécurisé d’un compte au profil existant attend une validation serveur. Le même profil, ses missions, ses Runes et son histoire devront être conservés.':'Créer une invitation pour ce profil existant. Son avatar, ses choix magiques, ses missions, ses Runes et son histoire seront conservés.','fam-detail-status');status.id='fam-child-access-status';attach.title=status.textContent;attach.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();if(attach.disabled)return;void window.DobbyAccess.inviteChild(member.id).catch(error=>c.notice?.(error.message));});access.append(attach,status);
+   if(member.memberCategory==='child')mountChildAccess(access,member,c,permission);
   }
   const rituals=section(pet?'Notes du gardien':'Rituels & Mémoires');rituals.append(paragraph(member.notes||'Aucune mémoire personnelle enregistrée.','fam-detail-memory'));
   const health=section('Carnet de Santé & Soins','fam-detail-health');health.dataset.famDetailHealth='';
