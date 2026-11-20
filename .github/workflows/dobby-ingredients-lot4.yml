@@ -36,6 +36,9 @@ jobs:
           trap 'kill "$server"' EXIT
           node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
           node essai-stitch-v7/tests/ingredient-matching-ui.cjs
+          test_path="$GITHUB_WORKSPACE/essai-stitch-v7/tests/e07-4-c-ui.cjs"
+          cd "$RUNNER_TEMP"
+          node "$test_path"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

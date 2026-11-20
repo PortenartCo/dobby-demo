@@ -20,3 +20,5 @@ L’interface et le modèle ne créent aucun registre de stock. Ce lot ne requie
 ## Preuves
 
 Les tests automatisés fixent les cas de qualificatifs et synonymes, les quatre basiques, les exclusions, les groupes, la diversité, les filtres et le traitement des recettes non analysables. Les deux accès et les quatre actions sont exercés à 320, 390 et 1440 px. Les captures du parcours de recherche et du calendrier sont disponibles dans les artefacts de la CI.
+
+Le scénario E07.4 de Mode Cuisine vérifie également les images d’étapes, les deux méthodes, les minuteurs et leur reprise aux trois largeurs.
