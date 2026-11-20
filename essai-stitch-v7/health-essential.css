@@ -1,0 +1,73 @@
+.health-essential {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.health-essential-group h2,
+.health-essential-record h3 {
+  color: #f9bb5f;
+  margin: 0;
+}
+
+.health-essential .fa-field > :is(input, textarea, select) {
+  box-sizing: border-box;
+}
+
+.health-essential form,
+.health-essential-record {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.health-essential form .fa-field {
+  margin: 0;
+}
+
+.health-essential-record + .health-essential-record {
+  border-top: 1px solid #d49b4244;
+  padding-top: 12px;
+}
+
+.health-essential-record p,
+.health-essential-record dl,
+.health-essential-record dd {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.health-essential-record dt {
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.health-essential-actions,
+.health-essential-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.health-essential-actions {
+  flex-wrap: wrap;
+}
+
+.health-essential-checkbox {
+  min-height: 44px;
+}
+
+.health-essential-checkbox input {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  accent-color: #f9bb5f;
+}
+
+.health-essential-status {
+  padding-inline: 12px;
+}
+
+.health-essential-status:empty {
+  display: none;
+}
