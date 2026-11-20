@@ -13,7 +13,19 @@ window.DobbyRecipeImport=(()=>{'use strict';
  function clearPreview(){for(const url of previewURLs)URL.revokeObjectURL(url);previewURLs.clear();}
  function clearCache(){for(const url of mediaCache.values())URL.revokeObjectURL(url);mediaCache.clear();}
  function previewImage(row){if(!row.media?.bytes)return '';const url=URL.createObjectURL(new Blob([row.media.bytes],{type:row.media.type}));previewURLs.add(url);return `<img src="${url}" alt="Photographie sélectionnée pour ${esc(row.native.name)}">`;}
- async function decodeMedia(bytes,type){const blob=new Blob([bytes],{type});if(typeof createImageBitmap==='function'){const bitmap=await createImageBitmap(blob);try{if(!bitmap.width||!bitmap.height||bitmap.width>16000||bitmap.height>16000||bitmap.width*bitmap.height>40_000_000)throw Error('Image trop grande (40 mégapixels maximum).');}finally{bitmap.close();}}else{const img=new Image(),url=URL.createObjectURL(blob);try{img.src=url;await img.decode();if(!img.naturalWidth||img.naturalWidth>16000||img.naturalHeight>16000||img.naturalWidth*img.naturalHeight>40_000_000)throw Error('Image trop grande (40 mégapixels maximum).');}finally{URL.revokeObjectURL(url);}}}
+ const mediaTools=import(new URL('recipe-media.mjs',base));
+ async function prepareImage(bytes,type,role){
+  const {compressRecipeImageInBrowser}=await mediaTools;
+  const optimized=await compressRecipeImageInBrowser(bytes,type,role);
+  const sha256=await F.sha256(optimized.bytes);
+  return {...optimized,key:'recipe-media-'+sha256,sha256,sourceBytes:bytes.byteLength,sourceSha256:await F.sha256(bytes)};
+ }
+ async function imageFromFile(file,role){
+  const zip=await import(new URL('recipe-import-zip.mjs',base));
+  if(!file||file.size>zip.RECIPE_ZIP_LIMITS.imageBytes)throw Error('Image attendue : 10 Mo maximum.');
+  const bytes=new Uint8Array(await file.arrayBuffer()),{type}=zip.inspectRecipeImage(file.name,bytes);
+  return prepareImage(bytes,type,role);
+ }
  async function prepare(file,{E}){
   await ready;const token=context(E),original=snapshot(E),parsed=await F.parseFile(file),data=E.read(),names=new Set(),keys=new Set(),targets=new Set();
   for(const row of parsed.entries){if(!row.native)continue;const checked=E.evaluate('return validateBatch(JSON.stringify(p));',{format:'dobby-recipes',version:2,recipes:[row.native]});row.errors.push(...checked.errors);row.warnings.push(...(checked.warnings||[]));
@@ -22,7 +34,18 @@ window.DobbyRecipeImport=(()=>{'use strict';
    const existing=data.recipes.find(r=>r.importDetails?.key===row.details.key||r.id===row.details.key)||(row.native.name?data.recipes.find(r=>normalized(r.name)===normalized(row.native.name)&&!!r.thermomix===(row.native.device==='tm5')):null);
    if(existing){if(targets.has(existing.id))row.errors.push('Plusieurs entrées ciblent la même recette existante : gardez une seule action par recette.');targets.add(existing.id);const other=data.recipes.find(r=>r.id!==existing.id&&normalized(r.name)===normalized(row.native.name)&&!!r.thermomix===(row.native.device==='tm5'));if(other&&row.native.name)row.errors.push('Ce nom correspond déjà à une autre recette : choisissez un nom ou une clé d’import sans ambiguïté.');row.existingId=existing.id;row.existingName=existing.name;row.existingCustom=data.customIds.includes(existing.id);row.existingTM5=!!data.state.tmAdaptations?.[existing.id];}
    row.mediaList=[];
-   for(const path of row.mediaPaths||[]){const item=parsed.images.get(path);if(!item)continue;try{await decodeMedia(item.bytes,item.type);const hash=await F.sha256(item.bytes);row.mediaList.push({...item,path,key:'recipe-media-'+hash,sha256:hash});}catch(error){row.errors.push('Image non décodable : '+error.message);}}
+   const originals=new Set(),optimized=new Set();
+   for(const path of row.mediaPaths||[]){
+    const item=parsed.images.get(path);
+    if(!item)continue;
+    try{
+     const media=await prepareImage(item.bytes,item.type,path===row.coverPath?'cover':'step');
+     if(row.strictMedia&&(originals.has(media.sourceSha256)||optimized.has(media.sha256)))row.errors.push(path+' : image identique à un autre média de la recette.');
+     originals.add(media.sourceSha256);optimized.add(media.sha256);
+     if(media.bytes.length>media.target)row.warnings.push(path+' : WebP au-dessus de la cible de poids, conservé pour la lisibilité.');
+     row.mediaList.push({...media,path});
+    }catch(error){row.errors.push(path+' : '+error.message);}
+   }
    row.media=row.mediaList.find(item=>item.path===row.coverPath)||null;row.warnings=[...new Set(row.warnings)];
   }
   if(context(E)!==token||snapshot(E)!==original)throw Error('Le foyer ou le grimoire a changé pendant l’analyse. Recommencez.');
@@ -31,8 +54,8 @@ window.DobbyRecipeImport=(()=>{'use strict';
  }
  async function preparePhoto(file,id,{E}){
   await ready;const token=context(E),original=snapshot(E),data=E.read(),r=data.recipes.find(r=>r.id===id);if(!r||!data.customIds.includes(id))throw Error('Choisissez une recette ajoutée dans votre Grimoire.');
-  const zip=await import(new URL('recipe-import-zip.mjs',base));if(file.size>zip.RECIPE_ZIP_LIMITS.imageBytes)throw Error('Image trop volumineuse : 10 Mo maximum.');const bytes=new Uint8Array(await file.arrayBuffer()),{type}=zip.inspectRecipeImage(file.name,bytes);await decodeMedia(bytes,type);const hash=await F.sha256(bytes),native=nativeRecipe(r),details={...(r.importDetails||{version:2,key:r.id,durations:{preparation:null,cooking:null,rest:null,total:r.minutes??null},equipment:[],notes:[],missing:[],uncertain:[]})};details.coverProvenance=null;details.coverDescription='';details.fingerprint=await F.sha256(F.canonical({native,media:hash}));
-  if(context(E)!==token||snapshot(E)!==original)throw Error('Le foyer ou le grimoire a changé pendant l’analyse.');const media={bytes,type,key:'recipe-media-'+hash,sha256:hash};return{version:2,fileName:file.name,photoOnly:true,context:token,snapshot:original,errors:[],warnings:[],entries:[{index:0,native,details,tm5:null,errors:[],warnings:[],existingId:id,existingName:r.name,existingCustom:true,media,mediaList:[media]}]};
+  const media=await imageFromFile(file,'cover'),hash=media.sha256,native=nativeRecipe(r),details={...(r.importDetails||{version:2,key:r.id,durations:{preparation:null,cooking:null,rest:null,total:r.minutes??null},equipment:[],notes:[],missing:[],uncertain:[]})};details.coverProvenance=null;details.coverDescription='';details.fingerprint=await F.sha256(F.canonical({native,media:hash}));
+  if(context(E)!==token||snapshot(E)!==original)throw Error('Le foyer ou le grimoire a changé pendant l’analyse.');return{version:2,fileName:file.name,photoOnly:true,context:token,snapshot:original,errors:[],warnings:[],entries:[{index:0,native,details,tm5:null,errors:[],warnings:[],existingId:id,existingName:r.name,existingCustom:true,media,mediaList:[media]}]};
  }
  const mediaScope=E=>{
   const status=E.win().DobbyFamilyUI?.connectionState?.()||{};
@@ -41,7 +64,26 @@ window.DobbyRecipeImport=(()=>{'use strict';
  async function hydrate(recipes,{E,steps=true}){
   await ready;const scope=mediaScope(E);if(cacheScope!==scope){clearCache();cacheScope=scope;}activeScope=scope;
   async function urlFor(ref){if(!ref||!/^recipe-media-[a-f0-9]{64}$/.test(ref.key))return null;let url=mediaCache.get(ref.key);if(!url){const engine=E.win();const blob=await engine.houseRead(ref.key).catch(()=>null)||await engine.DobbySharedRecipeImages?.read(ref).catch(()=>null);if(!blob||mediaScope(E)!==scope)return null;const bytes=new Uint8Array(await blob.arrayBuffer());if(await F.sha256(bytes)!==ref.sha256||mediaScope(E)!==scope)return null;url=URL.createObjectURL(blob);mediaCache.set(ref.key,url);}return mediaScope(E)===scope?url:null;}
-  await Promise.all(recipes.map(async r=>{const url=await urlFor(r.localMedia);if(url)r.image=url;if(!steps)return;r.stepImages=[];for(const d of r.importDetails?.stepDetails||[]){const images=[];for(const ref of d.images||[]){const url=r.catalogue&&ref.url?ref.url:await urlFor(ref);if(url)images.push({...ref,url});}if(mediaScope(E)===scope)r.stepImages.push({method:d.method||'classic',stepIndex:d.stepIndex,images});}}));
+  const cooking=document.body.dataset.cuisineView==='cook'?
+   E.evaluate("return st.cook?{method:st.cookMethod||'classic',index:st.cookStep||0}:null;"):null;
+  await Promise.all(recipes.map(async recipe=>{
+   if(!cooking){
+    const cover=await urlFor(recipe.localMedia);
+    if(cover)recipe.image=cover;
+   }
+   if(!steps)return;
+   recipe.stepImages=[];
+   for(const detail of recipe.importDetails?.stepDetails||[]){
+    const method=detail.method||'classic';
+    if(cooking&&(cooking.method!==method||cooking.index!==detail.stepIndex))continue;
+    const images=[];
+    for(const ref of detail.images||[]){
+     const url=recipe.catalogue&&ref.url?ref.url:await urlFor(ref);
+     if(url)images.push({...ref,url});
+    }
+    if(mediaScope(E)===scope)recipe.stepImages.push({method,stepIndex:detail.stepIndex,images});
+   }
+  }));
  }
  async function commit(candidate,selection,{E,valid=()=>true}={}){
   await ready;if(context(E)!==candidate.context||snapshot(E)!==candidate.snapshot)throw Error('Le foyer ou le grimoire a changé : analysez à nouveau le fichier.');
@@ -65,9 +107,10 @@ window.DobbyRecipeImport=(()=>{'use strict';
   await ready;const token=context(E),original=snapshot(E),recipe=E.read().recipes.find(r=>r.id===target?.recipeId);if(!recipe)throw Error('Recette introuvable.');
   if(!['cover','step'].includes(target?.target)||target.provenance!=null&&!['photo-originale','illustration-IA'].includes(target.provenance))throw Error('Cible ou provenance de photo invalide.');
   const method=target.method||'classic';if(target.target==='step'&&(!['classic','tm5'].includes(method)||!Number.isInteger(target.stepIndex)||target.stepIndex<0))throw Error('Étape de photo invalide.');
-  const zip=await import(new URL('recipe-import-zip.mjs',base));if(!file||file.size>zip.RECIPE_ZIP_LIMITS.imageBytes)throw Error('Photo attendue : 10 Mo maximum.');const bytes=new Uint8Array(await file.arrayBuffer()),{type}=zip.inspectRecipeImage(file.name,bytes);await decodeMedia(bytes,type);const hash=await F.sha256(bytes);
+  const media=await imageFromFile(file,target.target);
   if(context(E)!==token||snapshot(E)!==original)throw Error('Le foyer ou le grimoire a changé pendant la préparation de la photo.');
-  const previewURL=URL.createObjectURL(new Blob([bytes],{type}));return {recipeId:recipe.id,target:target.target,method,stepIndex:target.stepIndex??null,provenance:target.provenance??null,description:typeof target.description==='string'?target.description.slice(0,400):'',bytes,type,key:'recipe-media-'+hash,sha256:hash,previewURL,context:token,snapshot:original};
+  const previewURL=URL.createObjectURL(new Blob([media.bytes],{type:media.type}));
+  return {...media,recipeId:recipe.id,target:target.target,method,stepIndex:target.stepIndex??null,provenance:target.provenance??null,description:typeof target.description==='string'?target.description.slice(0,400):'',previewURL,context:token,snapshot:original};
  }
  async function saveEdit(payload,id,options,{E}){
   await ready;const token=context(E),original=snapshot(E),media=options.media||[],created=[];let saved=false;
@@ -84,7 +127,7 @@ window.DobbyRecipeImport=(()=>{'use strict';
  }
  function render(data,{E}){
   const main=$('main');main.classList.add('e073-import');main.replaceChildren();clearPreview();
-  main.innerHTML='<h1>Importer avec mon IA</h1><p>Photographiez vos recettes, utilisez le prompt ci-dessous dans votre IA personnelle, puis récupérez et choisissez le fichier obtenu. DOBBY n’appelle aucune IA et ne reçoit aucun fichier automatiquement.</p><ol><li>Copiez le prompt et transmettez vos photos successives à votre IA.</li><li>Confirmez que toutes vos recettes sont transmises pour obtenir le fichier final.</li><li>Téléchargez le JSON ou le ZIP sur votre appareil, puis sélectionnez-le ici.</li></ol>'+button('copy','Copier le prompt pour mon IA')+'<details class="e073-import-prompt"><summary>Lire ou sélectionner le prompt</summary><textarea id="e073-import-prompt" readonly aria-label="Prompt complet pour mon IA">'+esc(F?.externalPrompt||'Chargement du prompt…')+'</textarea></details><label class="cu-field">Importer mes recettes<input id="e073-import-file" data-e073-import-file="batch" type="file" accept=".json,.zip,application/json,application/zip" '+(busy?'disabled':'')+'></label><p class="e073-import-help">JSON : 2 Mo et 150 recettes maximum. ZIP : 40 Mo, images JPEG/PNG/WebP de 10 Mo maximum chacune. Les photos sont enregistrées sur cet appareil. Elles sont envoyées au foyer lors de la synchronisation si le partage Recettes et le service d’images sont actifs.</p>';
+  main.innerHTML='<h1>Importer avec mon IA</h1><p>Photographiez vos recettes, utilisez le prompt ci-dessous dans votre IA personnelle, puis récupérez et choisissez le fichier obtenu. DOBBY n’appelle aucune IA et ne reçoit aucun fichier automatiquement.</p><ol><li>Copiez le prompt et transmettez vos photos successives à votre IA.</li><li>Confirmez que toutes vos recettes sont transmises pour obtenir le fichier final.</li><li>Téléchargez le JSON ou le ZIP sur votre appareil, puis sélectionnez-le ici.</li></ol>'+button('copy','Copier le prompt pour mon IA')+'<details class="e073-import-prompt"><summary>Lire ou sélectionner le prompt</summary><textarea id="e073-import-prompt" readonly aria-label="Prompt complet pour mon IA">'+esc(F?.externalPrompt||'Chargement du prompt…')+'</textarea></details><label class="cu-field">Importer mes recettes<input id="e073-import-file" data-e073-import-file="batch" type="file" accept=".json,.zip,application/json,application/zip" '+(busy?'disabled':'')+'></label><p class="e073-import-help">JSON : 2 Mo et 150 recettes maximum. ZIP : 40 Mo, images JPEG/PNG/WebP de 10 Mo maximum chacune. Les photos sont optimisées en WebP avant l’enregistrement. Elles sont envoyées au foyer lors de la synchronisation si le partage Recettes et le service d’images sont actifs.</p>';
   if(message){const p=document.createElement('p');p.className='e073-import-status';p.setAttribute('role','status');p.textContent=message;main.append(p);}
   if(prepared){const section=document.createElement('section');section.dataset.e073ImportPreview='';section.className='e073-import-preview';section.innerHTML='<h2>Vérifier avant d’enregistrer</h2><p>'+esc(prepared.fileName)+' · '+prepared.entries.filter(r=>!r.errors.length).length+' recette(s) admissible(s)</p>';
    for(const row of prepared.entries){const card=document.createElement('article');card.dataset.e073ImportRow=row.index;card.innerHTML=(row.native?'<h3>'+esc(row.native.name||'Recette sans titre — À compléter')+'</h3>':'<h3>Entrée non reconnue</h3>')+previewImage(row)+(row.native?'<p>'+esc(row.native.category)+' · '+(row.native.minutes===null?'Durée totale inconnue':esc(row.native.minutes)+' min')+' · '+esc(row.native.servings??'Portions à compléter')+' portions de référence</p>':'')+(row.tm5?'<p class="e073-import-warning">Thermomix TM5 associé · À vérifier avant utilisation.</p>':'')+(row.existingId?'<p class="e073-import-warning">Doublon possible : '+esc(row.existingName)+'. La recette et ses variantes sont conservées par défaut.</p>':'')+row.errors.map(e=>'<p class="e073-import-error">'+esc(e)+'</p>').join('')+row.warnings.map(w=>'<p class="e073-import-warning">'+esc(w)+'</p>').join('');

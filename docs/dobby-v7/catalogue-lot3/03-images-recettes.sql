@@ -8,12 +8,12 @@ GRANT CREATE ON SCHEMA dobby_socle_private,public TO dobby_socle_writer;
 CREATE TABLE dobby_socle_private.recipe_media (
   household_id uuid NOT NULL REFERENCES public.dobby_v2_households(id),
   sha256 text NOT NULL CHECK (sha256 ~ '^[0-9a-f]{64}$'),
-  mime text NOT NULL CHECK (mime IN ('image/jpeg','image/png','image/webp')),
-  data bytea NOT NULL CHECK (octet_length(data) BETWEEN 1 AND 10485760),
+  mime text NOT NULL CHECK (mime='image/webp'),
+  data bytea NOT NULL CHECK (octet_length(data) BETWEEN 16 AND 131072),
   PRIMARY KEY (household_id,sha256)
 );
 ALTER TABLE dobby_socle_private.recipe_media ENABLE ROW LEVEL SECURITY;
-REVOKE ALL ON dobby_socle_private.recipe_media FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON dobby_socle_private.recipe_media FROM PUBLIC, anon, authenticated, service_role;
 ALTER TABLE dobby_socle_private.recipe_media OWNER TO dobby_socle_writer;
 
 -- The private function owner can read the existing Recipes snapshot. The
@@ -29,19 +29,26 @@ RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path='' AS $$
 DECLARE bytes bytea;
 BEGIN
   IF p_household IS NULL THEN RAISE EXCEPTION USING ERRCODE='42501',MESSAGE='Foyer requis'; END IF;
+  -- parent_context locks this household until the transaction ends.
   PERFORM dobby_socle_private.parent_context(p_household);
-  IF p_base64 IS NULL OR length(p_base64)>13981016 OR
+  IF p_base64 IS NULL OR length(p_base64)>174764 OR
      p_sha256 IS NULL OR p_sha256 !~ '^[0-9a-f]{64}$' THEN
     RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Image ou empreinte invalide';
   END IF;
   bytes:=decode(p_base64,'base64');
-  IF octet_length(bytes) NOT BETWEEN 1 AND 10485760 OR encode(sha256(bytes),'hex')<>p_sha256 OR
-     NOT coalesce(CASE p_mime
-       WHEN 'image/png' THEN substring(bytes FROM 1 FOR 8)=decode('89504e470d0a1a0a','hex')
-       WHEN 'image/jpeg' THEN substring(bytes FROM 1 FOR 3)=decode('ffd8ff','hex')
-       WHEN 'image/webp' THEN substring(bytes FROM 1 FOR 4)=decode('52494646','hex') AND substring(bytes FROM 9 FOR 4)=decode('57454250','hex')
-     END,false) THEN
-    RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='Type, taille ou empreinte de l’image invalide';
+  IF octet_length(bytes) NOT BETWEEN 16 AND 131072 OR encode(sha256(bytes),'hex')<>p_sha256 OR
+     p_mime IS DISTINCT FROM 'image/webp' OR
+     substring(bytes FROM 1 FOR 4)<>decode('52494646','hex') OR
+     substring(bytes FROM 9 FOR 4)<>decode('57454250','hex') OR
+     substring(bytes FROM 13 FOR 4) NOT IN (decode('56503820','hex'),decode('5650384c','hex'),decode('56503858','hex')) THEN
+    RAISE EXCEPTION USING ERRCODE='22023',MESSAGE='WebP optimisé, taille ou empreinte invalide';
+  END IF;
+  IF EXISTS (SELECT 1 FROM dobby_socle_private.recipe_media WHERE household_id=p_household AND sha256=p_sha256) THEN
+    RETURN true;
+  END IF;
+  IF octet_length(bytes)+(SELECT coalesce(sum(octet_length(data)),0) FROM dobby_socle_private.recipe_media
+     WHERE household_id=p_household)>67108864 THEN
+    RAISE EXCEPTION USING ERRCODE='23514',MESSAGE='Budget privé des images de recettes atteint (64 Mio). Les photos locales sont conservées.';
   END IF;
   INSERT INTO dobby_socle_private.recipe_media(household_id,sha256,mime,data)
     VALUES (p_household,p_sha256,p_mime,bytes) ON CONFLICT (household_id,sha256) DO NOTHING;

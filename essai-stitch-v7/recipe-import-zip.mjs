@@ -166,11 +166,11 @@ function imageType(name,data){
   const jpeg=data.length>=3&&data[0]===255&&data[1]===216&&data[2]===255;
   const webp=data.length>=12&&String.fromCharCode(...data.subarray(0,4))==='RIFF'&&String.fromCharCode(...data.subarray(8,12))==='WEBP';
   const type=ext==='png'&&png?'image/png':['jpg','jpeg'].includes(ext)&&jpeg?'image/jpeg':ext==='webp'&&webp?'image/webp':null;
-  if(type){imageDimensions(type,data);return type;}
+  if(type)return {type,...imageDimensions(type,data)};
   reject('IMAGE_TYPE','Le contenu d’une image ne correspond pas à un fichier JPEG, PNG ou WebP autorisé.');
 }
 
-export function inspectRecipeImage(name,input){const data=bytesOf(input);if(data.length>RECIPE_ZIP_LIMITS.imageBytes)reject('LIMIT','Image trop volumineuse : 10 Mo maximum.');return {type:imageType(name,data)};}
+export function inspectRecipeImage(name,input){const data=bytesOf(input);if(data.length>RECIPE_ZIP_LIMITS.imageBytes)reject('LIMIT','Image trop volumineuse : 10 Mo maximum.');return imageType(name,data);}
 
 export async function readRecipeZip(input,{inflate}={}){
   const data=bytesOf(input),limit=RECIPE_ZIP_LIMITS;
@@ -265,7 +265,7 @@ export async function readRecipeZip(input,{inflate}={}){
     if(entry.name.toLowerCase().endsWith('.json')){
       try{jsonText=utf8.decode(output).replace(/^\ufeff/,'');}catch{reject('INVALID_JSON','Le JSON doit être enregistré en UTF-8.');}
       jsonPath=entry.name;
-    }else images.set(entry.name,{bytes:output,type:imageType(entry.name,output)});
+    }else images.set(entry.name,{bytes:output,...imageType(entry.name,output)});
   }
   return{jsonText,jsonPath,images,warnings:[]};
 }

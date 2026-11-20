@@ -4,6 +4,9 @@ on:
     paths:
       - 'docs/dobby-v7/catalogue-lot3/**'
       - 'essai-stitch-v7/build-recipe-catalogue.mjs'
+      - 'essai-stitch-v7/catalogue-image-codec.mjs'
+      - 'essai-stitch-v7/recipe-media.mjs'
+      - 'essai-stitch-v7/recipe-import*'
       - 'essai-stitch-v7/tests/catalogue-lot3*'
       - 'essai-stitch-v5-famille/catalogue/**'
       - '.github/workflows/dobby-catalogue-lot3.yml'
@@ -23,8 +26,10 @@ jobs:
       - name: Catalogue intake, transport and exact source provenance
         env:
           DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-catalogue-fixture
+          DOBBY_CATALOGUE_EVIDENCE: ${{ runner.temp }}/dobby-catalogue-evidence
         run: |
-          node --test essai-stitch-v7/tests/{catalogue-lot3.test.mjs,e07-3-import-format.test.mjs,e07-4-import-format.test.mjs,fam-integration-transverse.test.cjs}
+          command -v convert
+          node --test essai-stitch-v7/tests/{catalogue-lot3.test.mjs,e07-3-import-format.test.mjs,e07-4-import-format.test.mjs,e07-3-zip.test.mjs,fam-integration-transverse.test.cjs}
       - name: Shared media in a fictional PostgreSQL instance
         run: |
           git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527
@@ -42,6 +47,7 @@ jobs:
           trap 'kill "$server"' EXIT
           node -e "(async()=>{for(let i=0;i<50;i++){try{if((await fetch(process.env.DOBBY_TEST_ORIGIN)).ok)return}catch{}await new Promise(r=>setTimeout(r,100))}process.exit(1)})()"
           node essai-stitch-v7/tests/catalogue-lot3-ui.cjs
+          node essai-stitch-v7/tests/catalogue-lot3-steps-ui.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

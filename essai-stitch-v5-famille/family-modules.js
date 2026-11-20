@@ -1338,7 +1338,8 @@ async function stageRecipeImages(payload) {
   const token = liveContextToken();
   if (!token) throw Error('Foyer Recettes à revérifier.');
   if (stagedRecipeImages.token !== token) stagedRecipeImages = {token, hashes:new Set()};
-  const refs = [...allRefs].filter(([hash]) => !stagedRecipeImages.hashes.has(hash));
+  // Historic files remain on their device. Only newly optimized WebP travels.
+  const refs = [...allRefs].filter(([hash,ref]) => ref.type==='image/webp' && !stagedRecipeImages.hashes.has(hash));
   const household = ctx.householdId;
   const guard = () => {
     if (token !== liveContextToken()) throw Error('Le foyer a changé. Photos locales conservées.');
@@ -1362,8 +1363,8 @@ async function stageRecipeImages(payload) {
         const blob = await houseRead(ref.key);
         guard();
         if (!blob) continue; // Legacy reference from another device.
-        // readAsDataURL is bounded by the importer limit and avoids a large JS argument list.
-        if (blob.size > 10485760) throw Error('Image de recette trop volumineuse.');
+        // Match the size and format enforced by the media RPC.
+        if (blob.type !== ref.type || blob.size > 128*1024) throw Error('Image WebP locale invalide ou trop volumineuse.');
         const base64 = await new Promise((resolve,reject) => {
           const reader = new FileReader();
           reader.onerror = () => reject(Error('Lecture de la photographie impossible.'));
@@ -1445,8 +1446,17 @@ async function sync() {
   if (!ctx || !checked || !backendReady || inFlight) return;
   inFlight = true;let success=false;
   try {
-    for (const def of DEFINITIONS) if (states[def.id]?.active) await syncOne(def.id);
-    lastError = '';success=true;
+    let recipesError=null;
+    for (const def of DEFINITIONS) {
+      if (!states[def.id]?.active) continue;
+      try { await syncOne(def.id); }
+      catch (error) {
+        if (def.id!=='recipes') throw error;
+        // A failed upload leaves Recettes pending while other native modules sync.
+        recipesError=error;
+      }
+    }
+    lastError=recipesError?.message||'';success=!recipesError;
   } catch(e) { lastError = e.message || 'Erreur de partage des modules'; }
   finally {
     inFlight = false;
