@@ -15,14 +15,14 @@ jobs:
     timeout-minutes: 12
     env:
       DOBBY_TEST_ORIGIN: http://127.0.0.1:8773
-      DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-catalogue-fixture
-      DOBBY_CATALOGUE_EVIDENCE: ${{ runner.temp }}/dobby-catalogue-evidence
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Catalogue intake, transport and exact source provenance
+        env:
+          DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-catalogue-fixture
         run: |
           node --test essai-stitch-v7/tests/{catalogue-lot3.test.mjs,e07-3-import-format.test.mjs,e07-4-import-format.test.mjs,fam-integration-transverse.test.cjs}
       - name: Shared media in a fictional PostgreSQL instance
@@ -31,6 +31,9 @@ jobs:
           python3 -u docs/dobby-v7/catalogue-lot3/test-postgres.py
       - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
       - name: ZIP, native CAS, independent profiles, reload, planning and cook views
+        env:
+          DOBBY_CATALOGUE_FIXTURE: ${{ runner.temp }}/dobby-catalogue-fixture
+          DOBBY_CATALOGUE_EVIDENCE: ${{ runner.temp }}/dobby-catalogue-evidence
         run: |
           set -euo pipefail
           export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
