@@ -27,6 +27,7 @@ Pour Chromium, définir `DOBBY_TEST_ORIGIN=http://127.0.0.1:8767`, `CHROMIUM_PAT
 - La suite autonome Réglages/Sauvegarde passe ses 17 scénarios. Le Menu garde ses six entrées historiques quand Santé est fermée. Le test natif Santé vérifie sa nouvelle entrée lorsque les deux contrôles sont disponibles.
 - Les deux pages de smoke test V5 passent sous Chromium, y compris la conservation des anciennes lignes Santé dans le stockage local et leur absence dans Famille. La reconstruction des quatre pages V7 produit les fichiers versionnés à l’octet près. Les 28 contrôles de provenance et d’intégration V5/V7 passent.
 - La campagne élargie Node s’arrête à 707 réussites sur 709, avec deux échecs comptés pour un seul défaut hérité. `menu-review-build.test.cjs` et son test parent échouent sur la ressource locale `../../assets/contacts/stitch24.png`. La reproduction dans une copie complète au SHA de #45 donne le même résultat.
+- La campagne navigateur `npm run test:all --prefix essai-stitch-v7/tests` passe les parcours jusqu’à la consolidation commune, puis s’arrête dans `e01-consolidation.cjs` sur le texte attendu de la récurrence de mission. Le même test échoue sur la même assertion au SHA de #45. Les scénarios suivants de cette commande restent non exécutés par la campagne. Les parcours ciblés cités dans ce rapport ont été lancés indépendamment.
 
 ## Comparaison des parcours historiques
 

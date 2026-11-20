@@ -209,15 +209,6 @@ async function waitNative(page) {
   }
 }
 
-async function signIn(page, role) {
-  await waitNative(page);
-  await page.evaluate(async email => {
-    const access = document.querySelector('#dv7-engine').contentWindow.DobbyFamilyUI.access;
-    await access.signIn(email, 'fictional-browser-test');
-  }, role+'@example.test');
-  await waitActor(page, role);
-}
-
 async function waitActor(page, role) {
   await page.waitForFunction(userId => {
     const api = document.querySelector('#dv7-engine')?.contentWindow.DobbyFamilyUI;
@@ -295,7 +286,8 @@ async function testWidth(browser, width) {
     assert.equal(fixture.requests.length, 0);
     await noHealthText(page, localCanary, sharedCanary);
 
-    await signIn(page, 'A');
+    await signInViaForm(page, family, 'A');
+    await page.goto(family+'#health');
     await page.locator(carnet).getByText(/actuellement indisponible/).waitFor();
     if (!fixture.clientReleased) {
       assert.deepEqual(fixture.requests, []);
@@ -432,7 +424,7 @@ async function caregiverAndAccount(page, fixture, family) {
     })]);
     await page.evaluate(() => document.querySelector('#dv7-engine').contentWindow.DobbyFamilyUI.access.logout());
     await page.waitForURL(family+'#access');
-    await signIn(page, 'B');
+    await signInViaForm(page, family, 'B');
     await page.goto(childRoute);
     await page.locator(carnet).getByText(/Carnet indisponible pour ce compte/).waitFor();
   } finally {
@@ -465,8 +457,8 @@ async function testCrossTabAndHistory(browser) {
         }
       });
     }, privateCanary);
+    await signInViaForm(page, family, 'A');
     await page.goto(route);
-    await signIn(page, 'A');
     await page.locator(carnet).getByText(privateCanary, {exact:true}).waitFor();
 
     const second = await context.newPage();
