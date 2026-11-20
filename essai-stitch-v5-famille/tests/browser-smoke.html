@@ -9,7 +9,14 @@
   'use strict';
   const sentinel = '{"sentinel":"existing-stitch-data-must-remain"}';
   const oldKey = 'dobby-stitch-preview-20261105';
+  const familyKey = 'dobby-v5-familial-preview-20261108';
+  const localHealth = {id:'legacy-health-smoke',name:'Carnet médical fictif',date:'2040-01-02'};
+  const sharedHealth = {id:'legacy-shared-smoke',title:'Rendez-vous médical fictif',date:'2040-01-02'};
   localStorage.setItem(oldKey, sentinel);
+  localStorage.setItem(familyKey, JSON.stringify({
+    famHealth:[localHealth],
+    sharedHealthVisits:[sharedHealth]
+  }));
   const iframe = document.createElement('iframe');
   iframe.id='preview';iframe.src='../index.html';
   document.body.append(iframe);
@@ -99,12 +106,15 @@
         throw Error('La mission créée n’est pas affichée');
       }
       w.go('family');
-      const healthPanel=d.getElementById('fhVisits');
-      if(!healthPanel || !healthPanel.textContent.includes('Rendez-vous médicaux du foyer')) {
-        throw Error('Le suivi médical choisi n’apparaît pas dans la page Famille');
+      const familyScreen=d.querySelector('#screen');
+      if(d.getElementById('fhVisits') ||
+         [localHealth.name,sharedHealth.title].some(text=>familyScreen.textContent.includes(text))) {
+        throw Error('Des données de l’ancien carnet Santé apparaissent dans Famille');
       }
-      if(!healthPanel.textContent.includes('Vos anciennes fiches du carnet de santé restent sur cet appareil')) {
-        throw Error('L’exclusion des anciennes fiches médicales n’est pas expliquée');
+      const legacy=JSON.parse(localStorage.getItem(familyKey)||'{}');
+      if(!legacy.famHealth?.some(row=>row.id===localHealth.id&&row.name===localHealth.name) ||
+         !legacy.sharedHealthVisits?.some(row=>row.id===sharedHealth.id&&row.title===sharedHealth.title)) {
+        throw Error('Les anciennes données Santé n’ont pas été conservées sur cet appareil');
       }
       w.go('documents');
       const addDocument=d.querySelector('[data-doc="new"]');
@@ -141,7 +151,7 @@
       }
       completed=true;clearInterval(timer);
       const s=document.getElementById('status');
-      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, missions, documents volontaires et stockage isolé';
+      s.dataset.result='PASS';s.textContent='PASS - courses, agenda, missions, documents, confinement et conservation Santé';
     }catch(e){
       if(e.message === 'Le chargeur familial n’a pas démarré' && ticks<75)return;
       completed=true;clearInterval(timer);
