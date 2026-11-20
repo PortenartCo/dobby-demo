@@ -16,6 +16,11 @@ test('an invitation keeps its confirmation even for an existing account', () => 
   assert.equal(destination(active, { invitationPending: true }), 'access-join');
   assert.equal(destination({ phase: 'household', authenticated: true, userId: 'TEST-account' }, { invitationPending: true }), 'access-join');
 });
+test('a signed-out parent follows an invitation directly to the household preview', () => {
+  const signedOut = { phase: 'signed-out', authenticated: false };
+  assert.equal(destination(signedOut, { invitationPending: true }), 'access-join');
+  assert.equal(destination({ phase: 'email-confirmation' }, { invitationPending: true }), 'access-confirmation');
+});
 test('profile and household stages require the authenticated account', () => {
   assert.equal(destination({ phase: 'profile', authenticated: true, userId: 'TEST-account' }), 'access-profile');
   assert.equal(destination({ phase: 'household', authenticated: true, userId: 'TEST-account' }), 'access-create');

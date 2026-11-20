@@ -101,6 +101,14 @@ test('household creation is server-confirmed and retry uses the same durable ope
  await assert.rejects(f.api.createHousehold('  Chez nous  '),/réseau|indisponible/i);assert.equal(f.binding(),null);fail=false;await f.api.createHousehold('Chez nous');
  const creates=f.calls.filter(x=>x.name==='dobby_v7_create_household');assert.equal(creates.length,2);assert.equal(creates[0].body.p_name,'Chez nous');assert.equal(creates[0].body.p_operation_id,creates[1].body.p_operation_id);assert.equal(f.api.state().phase,'active');
 });
+test('two tabs reserve one household creation operation before either receives a receipt',async()=>{
+ const f=await fixture();await f.api.signIn('camille@example.test','fixture-password');
+ f.driver.rpc=async(name,body)=>{f.calls.push({name,body});throw TypeError('TEST response lost');};
+ await Promise.all([f.api,f.reload()].map(api=>assert.rejects(api.createHousehold('Chez nous'))));
+ const creates=f.calls.filter(call=>call.name==='dobby_v7_create_household');
+ assert.equal(creates.length,2);
+ assert.equal(creates[0].body.p_operation_id,creates[1].body.p_operation_id);
+});
 test('invitation preview has one server status and never exposes the token in public state',async()=>{
  const f=await fixture();f.driver.rpc=async(name,body,options)=>{f.calls.push({name,body,options});return {status:'expired',household:{id:HH,name:'must be discarded'},inviter:{name:'must be discarded'}};};
  const value=await f.api.previewInvitation('opaque-invite-code');assert.deepEqual(value,{status:'expired'});assert.deepEqual(f.api.state().invitation,{status:'expired'});assert.doesNotMatch(JSON.stringify(f.api.state()),/opaque-invite-code|discarded/);assert.equal(f.calls.at(-1).options.public,true);

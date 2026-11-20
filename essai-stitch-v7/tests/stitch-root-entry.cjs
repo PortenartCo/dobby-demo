@@ -103,7 +103,7 @@ async function check(name,{suffix='',session=false}={},verify){
    assert.equal((await native('return window.__rootEntry.calls;')).filter(call=>call.kind==='password').length,1,'The corrected first password must permit one recovery update');
   });
   await check('root invitation survives forwarding despite an ordinary legacy hash',{suffix:'?invite=TEST-INVITATION#agenda'},async({page,native})=>{
-   await page.getByRole('heading',{name:'Bienvenue dans DOBBY',exact:true}).waitFor();assert.equal((await native('return DobbyFamilyUI.meta("v7-incoming-invitation");')).token,'TEST-INVITATION');
+   await page.getByRole('heading',{name:'Rejoindre un foyer',exact:true}).waitFor();assert.equal((await native('return DobbyFamilyUI.meta("v7-incoming-invitation");')).token,'TEST-INVITATION');
   });
  }finally{await browser.close();}
  console.log(JSON.stringify({liveBackend:false,canonical:'https://portenartco.github.io/dobby-demo/',results},null,2));

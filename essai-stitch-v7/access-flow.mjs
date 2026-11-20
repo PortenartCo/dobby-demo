@@ -9,6 +9,7 @@ export function destination(state = {}, { invitationPending = false, invitationT
   if (state.phase === 'email-confirmation') return 'access-confirmation';
   if (state.authenticated && state.userId && state.phase === 'profile') return invitationPending && invitationType === 'child-account' ? 'access-join' : 'access-profile';
   if (state.authenticated && state.userId && state.phase === 'household') return invitationPending ? 'access-join' : 'access-create';
+  if (state.phase === 'signed-out' && invitationPending && invitationType === 'generic') return 'access-join';
   return 'access-welcome';
 }
 

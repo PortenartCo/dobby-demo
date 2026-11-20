@@ -123,6 +123,34 @@ test('authenticated password updates and storage mutations share the same token-
  });
 });
 
+test('another tab replacing the saved session blocks invitation and password writes in the old tab',async()=>{
+ const f=native();await f.establish();
+ const original=f.db.rows.get('session').value;
+ f.db.rows.set('session',{id:'session',value:{...original,user_id:OTHER,refresh_token:'TEST-other-tab'}});
+ for(const mutate of [
+  ()=>f.api.access.createInvitation({operationId:'00000000-0000-4000-8000-000000000010'}),
+  ()=>f.api.access.acceptInvitation(TOKEN),
+  ()=>f.api.access.updatePassword('TEST-new-fixture-password'),
+  ()=>f.api.access.logout()
+ ]){
+  await assert.rejects(mutate(),{code:'DOBBY_AUTH_SESSION_CHANGED'});
+  assert.deepEqual(f.requests,[]);
+ }
+ assert.equal(f.db.rows.get('session').value.user_id,OTHER);
+});
+
+test('a late V7 sign-in response cannot overwrite an account installed in another tab',async()=>{
+ const f=native();await f.establish();let reply;
+ f.intercept(request=>request.path==='/auth/v1/token'?new Promise(resolve=>reply=resolve):null);
+ const pending=f.api.access.signIn('fixture@example.test','TEST-fixture-password');
+ while(!reply)await new Promise(resolve=>setImmediate(resolve));
+ const replacement={user_id:OTHER,refresh_token:'TEST-other-tab',access_token:'TEST-other-access'};
+ f.db.rows.set('session',{id:'session',value:replacement});
+ reply({ok:true,status:200,text:async()=>JSON.stringify({user:{id:USER},access_token:'TEST-late',refresh_token:'TEST-late-refresh'})});
+ await assert.rejects(pending,{code:'DOBBY_AUTH_SESSION_CHANGED'});
+ assert.deepEqual(f.db.rows.get('session').value,replacement);
+});
+
 test('a storage 401 cannot refresh or resend the old file operation after an account replacement',async()=>{
  const f=native();await f.establish();f.intercept(request=>request.path.startsWith('/storage/v1/')?{ok:false,status:401,json:async()=>{queueMicrotask(()=>f.switchAccount());return{};}}:null);
  await assert.rejects(f.transport.storageFetch('DELETE',HH+'/00000000-0000-4000-8000-000000000099.pdf'),/compte|foyer/i);

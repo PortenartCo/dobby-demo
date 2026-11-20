@@ -7,7 +7,7 @@ window.DobbyAccess = (() => {
   const model = import('./access-flow.mjs');
   const pendingKey = 'v7-incoming-invitation', recoveryKey='v7-access-recovery';
   let context, initialized, operation, unsubscribe, invitationToken = '', invitationType='generic', invitation = null;
-  let callbackError = '', recovery = false, lastUser = null, creatingInvitation = null, loggingOut = false;
+  let callbackError = '', recovery = false, lastUser = null, loggingOut = false;
   const api = () => E.win().DobbyFamilyUI;
   const account = () => api().access;
   const state = () => account().state();
@@ -27,6 +27,7 @@ window.DobbyAccess = (() => {
     // contain account details and must never become a support diagnostic.
     const stage=error?.stage,code=error?.code;
     const http=Number.isInteger(error?.status)&&error.status>=100&&error.status<=599?String(error.status):'INDISPONIBLE';
+    if(code==='DOBBY_AUTH_SESSION_CHANGED')return 'Votre session a changé dans un autre onglet. Rechargez cette page avant de continuer.';
     if(stage==='auth'){
       if(code==='invalid_credentials')return 'L’adresse e-mail ou le mot de passe n’a pas été reconnu. Référence : CONNEXION-'+http+'-IDENTIFIANTS.';
       if(code==='email_not_confirmed')return 'Votre adresse e-mail doit être confirmée avant la connexion. Référence : CONNEXION-'+http+'-EMAIL.';
@@ -229,6 +230,7 @@ window.DobbyAccess = (() => {
   }
   function createHousehold() {
     if(!state().authenticated){void go('access-auth',{mode:'login'});return;}
+    if(state().phase!=='household'){void next();return;}
     const owner=actorToken();
     const copy=shell('Créer mon foyer','Donnez un nom à votre foyer. Vos proches pourront ensuite vous rejoindre sur invitation.');
     const form=el('form','','access-form'),name=field(form,'Nom du foyer','householdName',{required:true,maxLength:100,autocomplete:'off'});
@@ -256,11 +258,15 @@ window.DobbyAccess = (() => {
       if(invitation.expiresAt){const when=new Date(invitation.expiresAt);if(Number.isFinite(when.getTime()))result.append(el('p','Valable jusqu’au '+when.toLocaleDateString('fr-FR'),'access-note'));}
       const current=state();
       if(current.authenticated&&(current.phase!=='profile'||invitationType==='child-account')){const owner=actorToken(current);result.append(button('Rejoindre ce foyer',async()=>{assertActor(owner);await account()[invitationType==='child-account'?'acceptChildInvitation':'acceptInvitation'](invitationToken);if(!state().verified)throw Error('Rattachement non confirmé.');await clearInvitation();await go('traverse');}));}
-      else result.append(button(current.authenticated?'Créer mon profil':'Me connecter pour rejoindre',()=>go(current.authenticated?'access-profile':'access-auth',{mode:'login'})));
+      else if(current.authenticated)result.append(button('Créer mon profil',()=>go('access-profile')));
+      else {
+        if(invitationType==='generic')result.append(button('Créer mon compte pour rejoindre',()=>go('access-auth',{mode:'signup'})));
+        result.append(button('Me connecter pour rejoindre',()=>go('access-auth',{mode:'login'}),invitationType==='generic'));
+      }
     }
     token.addEventListener('input',()=>{invitation=null;show();});
     submit(form,'Vérifier l’invitation',async()=>{await rememberInvitation(invitationInput(token.value));invitation=await account()[invitationType==='child-account'?'previewChildInvitation':'previewInvitation'](invitationToken);status('');show();});
-    copy.append(form,result,button('Créer un nouveau foyer',async()=>{await clearInvitation();await go(state().authenticated?'access-create':'access-auth',{mode:'signup'});},true));show();
+    copy.append(form,result,button('Créer un nouveau foyer',async()=>{await clearInvitation();if(state().authenticated)await next();else await go('access-auth',{mode:'signup'});},true));show();
   }
   function confirmation() {
     const copy=shell('Consultez votre messagerie','Si votre adresse permet cette opération, un message contient le lien pour continuer.');
@@ -295,18 +301,27 @@ window.DobbyAccess = (() => {
     catch {if(context)status('La connexion au foyer n’a pas pu être vérifiée. Réessayez.',true);}
   }
   async function invitationDialog(memberId=null) {
-    await initialize();const current=state(),child=memberId!==null;
+    await initialize();
+    if(!state().verified&&api().connectionState().householdId)await account().refresh();
+    const current=state(),child=memberId!==null;
     if(!current.verified||current.permissions.canInvite!==true)throw Error('Invitation non autorisée.');
     let target;
     if(child){target=E.read().members.find(member=>member.id===memberId);if(!target||target.memberCategory!=='child'||current.permissions.canLinkExistingChild!==true||E.memberPermissions(memberId).canLinkExistingChild!==true)throw Error('Le rattachement sécurisé d’un compte enfant n’est pas encore disponible.');}
     const owner=actorToken(current);
+    const operationKey='v7-create-invitation:'+current.userId+':'+current.householdId+':'+(child?'child:'+memberId:'generic');
     const title=child?'Donner accès à DOBBY':'Inviter un proche',dialog=el('dialog','','access-invite-dialog');dialog.id='access-invite-dialog';dialog.setAttribute('aria-label',title);
     const close=button('Fermer',()=>{dialog.close();dialog.remove();},true),info=el('p',child?'Ce lien ouvrira l’accès au profil existant de '+(target.name||target.firstName||'cet enfant')+'. Son avatar, ses choix magiques et son histoire seront conservés.':'Ce lien personnel donnera accès à votre foyer après confirmation.');
     const output=el('textarea');output.readOnly=true;output.setAttribute('aria-label','Lien personnel d’invitation');output.hidden=true;
     const generate=button('Créer un lien d’invitation',async()=>{
-      assertActor(owner);const scope=child?'child:'+memberId:'generic';if(creatingInvitation?.scope!==scope)creatingInvitation={scope,id:crypto.randomUUID()};
-      const created=await account()[child?'createChildInvitation':'createInvitation']({...(child?{memberId}:{}),operationId:creatingInvitation.id});assertActor(owner);creatingInvitation=null;
-      const {childInvitationReference}=await model;const link=new URL('../',location.href);link.searchParams.set('invite',child?childInvitationReference(created.token):created.token);output.value=link.href;output.hidden=false;info.textContent='Lien créé pour '+created.household.name+'. Partagez-le uniquement avec la personne invitée.';
+      assertActor(owner);
+      const operationId=await api().updateMeta(operationKey,pending=>pending||crypto.randomUUID());
+      assertActor(owner);
+      const created=await account()[child?'createChildInvitation':'createInvitation']({...(child?{memberId}:{}),operationId});
+      const {childInvitationReference}=await model;
+      assertActor(owner);
+      const link=new URL('../',location.href);link.searchParams.set('invite',child?childInvitationReference(created.token):created.token);
+      output.value=link.href;output.hidden=false;info.textContent='Lien créé pour '+created.household.name+'. Partagez-le uniquement avec la personne invitée.';
+      await api().updateMeta(operationKey,pending=>pending===operationId?null:pending);
     });
     const message=el('p','','access-status');message.dataset.accessStatus='';message.setAttribute('role','status');message.setAttribute('aria-live','polite');message.hidden=true;
     dialog.append(el('h2',title),info,message,generate,output,button('Copier le lien',async()=>{if(!output.hidden){await navigator.clipboard.writeText(output.value);status('Lien copié.',false,dialog);}},true),close);
