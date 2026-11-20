@@ -13,6 +13,33 @@ const plusDays=(iso,n)=>{const d=new Date(iso+'T12:00:00');d.setDate(d.getDate()
 function section(text){const h=[...document.querySelectorAll('main h2')].find(x=>x.textContent.includes(text));return h?.closest('.px-gutter-mobile')||null;}
 function sectionContaining(text){return [...document.querySelectorAll('main .px-gutter-mobile')].find(x=>x.textContent.includes(text))||null;}
 function engine(){return frame.contentWindow;}
+const childAccess=()=>engine()?.DobbyFamilyUI?.childAccessState?.()||{restricted:false,active:false,memberId:null};
+const childFamilyViews=new Set(['salon','agenda','menu','personal','member-detail','health','settings-magic']);
+const childCuisineViews=new Set(['plan','taverne','recipes','recipe','cook','tm5','shop','shop-1','shop-final','shop-history']);
+function allowFamily(view){
+ if(!childAccess().restricted||childFamilyViews.has(view))return true;
+ if(!window.DobbyAccess?.handles(view))return false;
+ const phase=({ 'access-profile':'profile','access-create':'household' })[view];
+ if(!phase)return true;
+ const access=engine()?.DobbyFamilyUI?.access?.state?.();
+ return access?.authenticated===true&&access.phase===phase&&!access.memberId;
+}
+const allowCuisine=view=>!childAccess().restricted||childCuisineViews.has(view);
+const ownMission=(row,access=childAccess())=>Boolean(row&&access.active&&access.memberId&&engine().DobbyFamilyMissions?.assignmentIds(row).includes(access.memberId));
+function accountScope(){
+ const access=childAccess(),session=engine()?.DobbyFamilyUI?.connectionState?.();
+ return JSON.stringify([access.restricted,access.active,access.memberId,session?.userId,session?.householdId,session?.epoch]);
+}
+function showVerification(waiting){
+ const main=document.querySelector('body > main');main.inert=waiting;main.style.visibility=waiting?'hidden':'visible';
+ let status=document.querySelector('[data-child-verification]');
+ if(waiting&&!status){status=document.createElement('p');status.dataset.childVerification='';status.className='fa-context';status.style.marginBlockStart='var(--e01-top, 80px)';status.setAttribute('role','status');main.before(status);}
+ if(waiting){
+  const state=engine()?.DobbyFamilyUI?.access?.state?.();
+  status.textContent=state?.phase==='rejected'?'L’accès à ce foyer est suspendu ou indisponible.':state?.phase==='signed-out'?'Connecte-toi pour retrouver ton foyer.':'Accès au foyer en cours de vérification.';
+ }
+ if(!waiting)status?.remove();
+}
 function read(){const w=engine(),legacyHealth=window.DobbyHealthRuntime?.legacyDemo()===true;return w.eval(`(()=>{const all=[...BASE,...(st.customRecipes||[])];return {day:st.day,agenda:(window.DobbyFamilyAgenda?.upcoming()||[]).filter(x=>x.kind==='event'||(${legacyHealth}&&x.kind==='medical')),planned:JSON.parse(JSON.stringify(st.planned||{})),recipes:all.map(r=>({id:r.id,name:r.name,emoji:r.emoji,image:r.image,photo:r.photo,minutes:r.minutes,servings:r.servings,ingredients:r.ingredients||[]})),basket:shoppingDraft().map(row=>({name:row.name,qty:row.qty,unit:row.unit})),manualMissions:JSON.parse(JSON.stringify(st.manualMissions||[])),autoTasks:JSON.parse(JSON.stringify(st.autoTasks||[])),familyMembers:JSON.parse(JSON.stringify(st.familyMembers||[])),familyEvents:JSON.parse(JSON.stringify(st.familyEvents||[])),sharedHealthVisits:${legacyHealth}?JSON.parse(JSON.stringify(st.sharedHealthVisits||[])):[],familyNotes:JSON.parse(JSON.stringify(st.familyNotes||[])),familyDocs:JSON.parse(JSON.stringify(st.familyDocs||[])),famContacts:JSON.parse(JSON.stringify(st.famContacts||[])),famLists:JSON.parse(JSON.stringify(st.famLists||[])),houseItems:JSON.parse(JSON.stringify(st.houseItems||[]))}})()`);}
 function recipeOf(data,id){return data.recipes.find(r=>r.id===id);}
 function action(route,name){return `<button type="button" data-dv7-route="${esc(route)}" class="dv7-action dv7-focus rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold px-4 py-3 min-h-11">${esc(name)}</button>`;}
@@ -47,12 +74,24 @@ if(currentScreen==='missions'){for(const el of document.querySelectorAll('main b
  const tip=[...document.querySelectorAll('main p')].find(x=>x.textContent.includes('Dobby a déjà regroupé les ingrédients'));if(tip)tip.textContent='Dobby vous aide à organiser les repas et les provisions réellement enregistrés dans votre foyer.';
 }
 function removeUnfounded(){const falseSecurity=sectionContaining('SCEAU DE PROTECTION LOCALE DOBBY');if(falseSecurity)falseSecurity.remove();const tip=sectionContaining('ASTUCE DE DOBBY');if(tip){const p=tip.querySelector('p');if(p)p.textContent='Dobby vous aide à organiser vos repas et provisions à partir des données de votre foyer.';}}
-function open(route,trigger,recipeId=null,date=null){if(route==='mission-new'){location.href='./famille.html#mission-edit';return;}if(route==='family'&&currentScreen==='famille'&&window.DobbyFamilyStitch?.ready){window.DobbyFamilyStitch.open('salon').catch(console.error);return;}if(window.DobbyFamilyStitch?.handles(route)){if(currentScreen==='famille')window.DobbyFamilyStitch.open(route).catch(console.error);else location.href='./famille.html#'+route;return;}if(route==='event-new'){if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)window.DobbyFamilyStitch.open('agenda',{eventNew:true}).catch(console.error);else location.href='./famille.html#agenda?dialog=event';return;}lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;if(window.DobbyCuisine?.handles(route)){
+function open(route,trigger,recipeId=null,date=null){
+ if(childAccess().restricted){
+  if(route==='account')return window.DobbyMagicProfile?.openAccount();
+  if(window.DobbyFamilyStitch?.handles(route)){if(!allowFamily(route))return false;}
+  else if(!Object.hasOwn(ROOT_PAGES,route)&&!(window.DobbyCuisine?.handles(route)&&allowCuisine(route)))return false;
+  if(date){route='taverne';date=null;}
+  if(!window.DobbyFamilyStitch?.handles(route)&&!window.DobbyCuisine?.handles(route)&&Object.hasOwn(ROOT_PAGES,route)){
+   if(({traverse:'home',missions:'missions',famille:'family',taverne:'plan'})[currentScreen]!==route)location.href='./'+ROOT_PAGES[route];
+   return;
+  }
+ }
+ if(route==='mission-new'){location.href='./famille.html#mission-edit';return;}if(route==='family'&&currentScreen==='famille'&&window.DobbyFamilyStitch?.ready){window.DobbyFamilyStitch.open('salon').catch(console.error);return;}if(window.DobbyFamilyStitch?.handles(route)){if(currentScreen==='famille')window.DobbyFamilyStitch.open(route).catch(console.error);else location.href='./famille.html#'+route;return;}if(route==='event-new'){if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)window.DobbyFamilyStitch.open('agenda',{eventNew:true}).catch(console.error);else location.href='./famille.html#agenda?dialog=event';return;}lastTrigger=trigger||document.activeElement;const w=engine();if(!w||!booted)return;if(window.DobbyCuisine?.handles(route)){
  const view=recipeId?'recipe':route==='plan'?(date?'pick':'taverne'):route;
  if(currentScreen==='taverne'){window.DobbyCuisine.open(view,{id:recipeId,date:date||undefined}).catch(e=>console.error(e));}
  else location.href='./index.html#'+view+(recipeId?'?id='+encodeURIComponent(recipeId):date?'?date='+encodeURIComponent(date):'');
  return;
-}const activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}
+}if(childAccess().restricted)return false;
+const activeRoute=({taverne:'plan',traverse:'home',missions:'missions',famille:'family'})[currentScreen];if(!recipeId&&!date&&ROOT_PAGES[route]&&route!==activeRoute){location.href='./'+ROOT_PAGES[route];return;}
 try{if(date){w.eval('st.day='+JSON.stringify(date)+'; st.slot="soir"; save();');route='plan';}
 if(route==='mission-new'){w.eval('go("missions")');w.document.querySelector('[data-fms-action="new"]')?.click();title.textContent='Créer une mission';}
 else if(route==='event-new'){w.eval('go("family")');w.document.querySelector('[data-fp-action="new"]')?.click();title.textContent='Nouvel événement';}
@@ -64,7 +103,7 @@ panel.hidden=false;frame.removeAttribute('aria-hidden');frame.removeAttribute('t
 function close(refresh=true){panel.hidden=true;frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;document.body.classList.remove('dv7-panel-visible');if(!refresh)return;if(currentScreen==='traverse')window.DobbyHome?.reset();try{renderReal();}catch(e){console.error(e)}(lastTrigger?.isConnected?lastTrigger:document.querySelector('[data-e01-account]'))?.focus?.();}
 let deferredMissionAlerts='';
 function updateMissionAlerts(){
- const node=document.getElementById('dobby-mission-alert'),state=engine()?.DobbySharedRunesV3?.readProgress?.();
+ const node=document.getElementById('dobby-mission-alert'),state=childAccess().restricted?null:engine()?.DobbySharedRunesV3?.readProgress?.();
  if(state?.category!=='parent'){node?.remove();deferredMissionAlerts='';return;}
  const latest=new Map(state.entries.map(row=>[JSON.stringify([row.missionId,row.memberId]),row]));
  const pending=[...latest.values()].filter(row=>row.status==='pending'),unlocked=Object.entries(state.goals).filter(([,goal])=>goal.unlocked);
@@ -85,7 +124,32 @@ function updateMissionAlerts(){
  later.onclick=()=>{deferredMissionAlerts=fingerprint;notice.remove();};notice.append(later);
  if(node)node.replaceWith(notice);else document.querySelector('main')?.before(notice);
 }
-function renderReal(){window.DobbyChrome?.mount();updateMissionAlerts();if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();const data=read();if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}else{window.DobbyStitchRootAdapters.render(currentScreen,data);} sanitizeClaims();document.querySelector('main').style.visibility='visible';document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');}
+function renderReal(){
+ const access=childAccess(),waiting=access.restricted&&!access.active;
+ if(currentScreen==='famille'&&window.DobbyFamilyStitch?.ready)return window.DobbyFamilyStitch.refresh();
+ if(currentScreen==='taverne'&&window.DobbyCuisine?.ready)return window.DobbyCuisine.refresh();
+ if(waiting){window.DobbyHome?.clearDraft();window.DobbyMissions?.clear();}
+ else if(!(currentScreen==='famille'&&access.restricted)){
+  const data=read();
+  if(currentScreen==='taverne'){dinner(data);week(data);basket(data);removeUnfounded();}
+  else window.DobbyStitchRootAdapters.render(currentScreen,data);
+  sanitizeClaims();
+ }
+ showVerification(waiting);window.DobbyChrome?.mount();updateMissionAlerts();
+ document.documentElement.classList.remove('dv7-loading');document.body.classList.remove('dv7-loading');
+}
+let renderedScope='';
+function accessChanged(){
+ const scope=accountScope();updateMissionAlerts();if(scope===renderedScope)return;
+ renderedScope=scope;if(!booted)return;
+ close(false);lastTrigger=null;window.DobbyCeremonies?.accessChanged();
+ for(const dialog of document.querySelectorAll('.dv7-participant-dialog,#archive-confirm,#access-invite-dialog')){dialog.close();dialog.remove();}
+ if(currentScreen==='famille')return window.DobbyFamilyStitch.accessChanged();
+ if(currentScreen==='taverne')return window.DobbyCuisine.accessChanged();
+ window.DobbyHome?.clearDraft();
+ window.DobbyMissions?.clear();
+ renderReal();
+}
 function bind(){document.getElementById('dv7-close').addEventListener('click',close);
 // Destinations already integrated return from remaining V5 tools to Stitch.
 frame.contentDocument.addEventListener('click',ev=>{if(panel.hidden)return;const familyTarget=ev.target.closest('[data-go="family"],[data-extra="health"]')||(engine().eval('st.page')==='family'?ev.target.closest('[data-extra="back"]'):null);if(familyTarget){ev.preventDefault();ev.stopImmediatePropagation();panel.hidden=true;document.body.classList.remove('dv7-panel-visible');const view=familyTarget.dataset.extra==='health'?'health':'salon';if(currentScreen==='famille')window.DobbyFamilyStitch.open(view).catch(console.error);else location.href='./famille.html#'+view;return;}const target=ev.target.closest('[data-go]');const view=({plan:'taverne',pick:'pick',recipes:'recipes',shop:'shop'})[target?.dataset.go];if(!view)return;ev.preventDefault();ev.stopImmediatePropagation();panel.hidden=true;document.body.classList.remove('dv7-panel-visible');if(currentScreen==='taverne')window.DobbyCuisine.open(view).catch(console.error);else location.href='./index.html#'+view;},true);
@@ -105,15 +169,15 @@ for(const icon of document.querySelectorAll('header .material-symbols-outlined')
 const hero=document.querySelector('main img[alt*="Dobby"]');if(hero){const img=({taverne:'taverne',traverse:'traverse',missions:'missions',famille:'famille'})[currentScreen];hero.src='../essai-v6-preview/assets/v6/'+img+'.png';hero.alt='Dobby dans '+({taverne:'la Taverne',traverse:'la Traverse',missions:'la Bibliothèque des Missions',famille:'le Salon des Curiosités'})[currentScreen];}
 }
 function start(){if(booted||starting)return;const w=engine();try{if(!w||!w.DobbyFamilyHealth||!w.DobbyFamilyAgenda||!w.DobbyFamilyMissions?.available||w.eval('typeof st!=="object"||typeof go!=="function"||typeof shoppingDraft!=="function"'))return;}catch{return;}
-starting=true;try{window.DobbyHealthRuntime?.connect(w.DobbyFamilyUI,w);bind();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?(renderReal(),window.DobbyFamilyStitch.init(route=>open(route,document.activeElement))):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;
- w.addEventListener('dobby:access-change',updateMissionAlerts);
+starting=true;try{window.DobbyHealthRuntime?.connect(w.DobbyFamilyUI,w);bind();renderedScope=accountScope();Promise.resolve(window.DobbyChrome.ready).then(()=>{window.DobbyChrome.mount();return (currentScreen==='taverne'?window.DobbyCuisine.init(route=>open(route,document.activeElement)):currentScreen==='famille'?window.DobbyFamilyStitch.init(route=>open(route,document.activeElement)):renderReal());}).then(()=>{window.DobbyChrome.mount();booted=true;starting=false;
+ for(const event of ['dobby:access-change','dobby:account-change'])w.addEventListener(event,()=>Promise.resolve(accessChanged()).catch(console.error));
  w.addEventListener('dobby:missions-capability',updateMissionAlerts);
  new MutationObserver(updateMissionAlerts).observe(w.document.getElementById('screen'),{childList:true});
- updateMissionAlerts();if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);document.getElementById('dv7-loading').textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}
+ updateMissionAlerts();if(['missions','traverse'].includes(currentScreen))new MutationObserver(()=>{if(panel.hidden)try{renderReal();}catch(error){console.error(error);}}).observe(w.document.getElementById('screen'),{childList:true});return accessChanged();}).catch(e=>{starting=false;console.error('DOBBY V7 boot error:',e);const loading=document.getElementById('dv7-loading');if(loading)loading.textContent='Impossible de charger les données de votre foyer. Rechargez cette page.';});}catch(e){starting=false;console.error(e);}}
 
 const attempt=()=>{if(booted)return;start();if(!booted)setTimeout(attempt,200);};
 frame.addEventListener('load',attempt);
 if(frame.contentDocument?.readyState==='complete')attempt();
 setTimeout(()=>{if(!booted){document.getElementById('dv7-loading').textContent='Dobby ne parvient pas à ouvrir le foyer. Réessayez en rechargeant la page.';}},20000);
-window.DobbyStitchV7=Object.freeze({version:7,open,close,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
+window.DobbyStitchV7=Object.freeze({version:7,open,close,childAccess,allowFamily,allowCuisine,ownMission,accountScope,showVerification,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
 })();

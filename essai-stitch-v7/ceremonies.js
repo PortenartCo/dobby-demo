@@ -2,13 +2,14 @@
    No account creation, inferred identity, alternative scoring or remote transport. */
 window.DobbyCeremonies=(()=>{'use strict';
  const E=window.DobbyFamilyStitchEngine,G=window.DobbyOnboardingEngine,M=window.DobbyMagicIdentity;
- let current=null,opening=null;
+ let current=null,opening=null,generation=0;
  const make=(tag,text='',className='')=>Object.assign(document.createElement(tag),{textContent:text,className});
  const catalogue=kind=>kind==='house'?M.houses:M.patronuses;
  const hasChoice=(member,kind)=>catalogue(kind).some(row=>row.id===member?.magicProfile?.[kind==='house'?'houseId':'patronusId']);
  const api=()=>E.win().DobbyFamilyUI;
- const contextToken=()=>JSON.stringify(G.context());
+ const contextToken=()=>JSON.stringify([G.context(),window.DobbyStitchV7?.accountScope()]);
  function close(){if(!current||current.busy)return false;const session=current;current=null;session.dialog.close();session.dialog.remove();removeEventListener('pagehide',session.dispose);session.previousFocus?.focus?.({preventScroll:true});return true;}
+ function accessChanged(){generation++;if(current&&current.context!==contextToken())current.dispose();}
  function action(label,task,className='dc-button'){
   const button=make('button',label,className);button.type='button';
   button.onclick=event=>{event.preventDefault();event.stopImmediatePropagation();run(task);};return button;
@@ -19,7 +20,7 @@ window.DobbyCeremonies=(()=>{'use strict';
   for(const control of session.dialog.querySelectorAll('button,input'))control.disabled=true;
   try{
    if(contextToken()!==session.context)throw Error('Le compte ou le foyer a changé. Fermez cette fenêtre avant de reprendre.');
-   await window.DobbyRegister.lock(task);
+   await window.DobbyRegister.lock(()=>{if(current===session&&contextToken()===session.context)return task();});
    if(current===session)render();
   }catch(error){if(current===session&&contextToken()===session.context){session.error=error.message;render();}}
   finally{
@@ -98,12 +99,16 @@ window.DobbyCeremonies=(()=>{'use strict';
   current.panel.append(make('p',manual?'Choix direct · confirmation manuelle':'Résultat du questionnaire natif','dc-progress'),figure,make('p',window.DobbyMagicContent[kind==='house'?'houses':'patronuses'][id].description,'dc-description'),make('p','Ce résultat sera enregistré uniquement après ta confirmation.','dc-caption'));
   const controls=make('div','','dc-actions');
   controls.append(action('Revenir à mon choix',()=>manual?G.go('onboarding-'+kind+'-gallery'):G.go('onboarding-'+kind,Math.max(0,draft[kind].length-1)),'dc-button dc-secondary'),action(kind==='house'?'Confirmer ma Maison':'Confirmer mon Patronus',async()=>{
+   const session=current;
    if(manual)await G.confirmChoice(kind);else await G.confirm(kind);
-   current.refreshPending=true;
-   if(current.auto&&kind==='house'&&!hasChoice(G.member(),'patronus'))await G.go('onboarding-patronus-intro');
+   if(current!==session||contextToken()!==session.context)return;
+   session.refreshPending=true;
+   if(session.auto&&kind==='house'&&!hasChoice(G.member(),'patronus'))await G.go('onboarding-patronus-intro');
    else{
-    await G.finish();
-    const session=current;session.busy=false;close();
+    if(window.DobbyStitchV7?.childAccess().restricted&&!session.auto)await G.drafts.complete();
+    else await G.finish();
+    if(current!==session||contextToken()!==session.context)return;
+    session.busy=false;close();
     session.confirmed={memberId:session.memberId,kind};
    }
   },'dc-button dc-primary'));
@@ -120,11 +125,16 @@ window.DobbyCeremonies=(()=>{'use strict';
  }
  async function open({memberId,kind='house',auto=false}={}){
   if(opening)return opening;
+  const token=contextToken(),revision=generation,access=window.DobbyStitchV7?.childAccess();
+  const valid=()=>revision===generation&&contextToken()===token;
+  if(access?.restricted&&(!access.active||access.memberId!==memberId))return false;
   opening=(async()=>{
    if(!['house','patronus'].includes(kind))throw Error('Cérémonie invalide.');
    if(current){if(current.memberId===memberId&&current.context===contextToken())return true;if(!close())return false;}
    if(window.DobbyRegister.busy)await window.DobbyRegister.wait();
+   if(!valid())return false;
    await G.load(memberId);
+   if(!valid())return false;
    const member=G.member();if(!member)throw Error('Le profil canonique est introuvable.');
    const rights=E.memberPermissions(memberId);if(!rights.canMagic)throw Error(rights.reason);
    let draft=G.drafts.read();
@@ -133,6 +143,7 @@ window.DobbyCeremonies=(()=>{'use strict';
     const next=hasChoice(member,'house')?'patronus':'house';
     if(!draft.pending||!draft.step.startsWith('onboarding-'+next)||draft.step==='onboarding-final')draft=await G.drafts.update(d=>{d.pending=true;d.selection=null;d.index=0;d.step='onboarding-'+next+'-intro';});
    }else draft=await G.drafts.update(d=>{d.pending=false;d.selection=null;d.index=0;d.step='onboarding-'+kind+'-intro';});
+   if(!valid())return false;
    const dialog=make('dialog','','dc-dialog');dialog.id='dobby-ceremonies';dialog.setAttribute('aria-labelledby','dobby-ceremony-title');
    const panel=make('section','','dc-panel');dialog.append(panel);
    const session={dialog,panel,memberId,kind,auto,busy:false,context:contextToken(),previousFocus:document.activeElement};
@@ -148,5 +159,5 @@ window.DobbyCeremonies=(()=>{'use strict';
   if(!access.pendingCeremony)return false;
   return open({memberId:context.memberId,auto:true});
  }
- return Object.freeze({open,openPending,close,get active(){return !!current;}});
+ return Object.freeze({open,openPending,close,accessChanged,get active(){return !!current;}});
 })();

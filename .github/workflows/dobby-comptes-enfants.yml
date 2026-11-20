@@ -1,0 +1,50 @@
+name: DOBBY V7 - Comptes enfants
+on:
+  pull_request:
+    paths:
+      - 'docs/dobby-v7/comptes-enfants/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-stitch-v7/**'
+      - '.github/workflows/dobby-comptes-enfants.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  comptes-enfants-local:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: RLS, invitations, projections, mutations et révocation
+        run: |
+          git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527
+          python3 -u docs/dobby-v7/comptes-enfants/tests/run-local.py
+      - name: Parcours Auth avec PostgreSQL, PostgREST et Mailpit locaux
+        run: |
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          python3 -u docs/dobby-v7/comptes-enfants/tests/onboarding-local.py --evidence "$RUNNER_TEMP/dobby-enfants/auth"
+      - name: Interface, confidentialité Santé et refus des commandes E02
+        run: |
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          export DOBBY_TEST_ORIGIN=http://127.0.0.1:8765
+          export DOBBY_HEALTH_EVIDENCE="$RUNNER_TEMP/dobby-enfants/sante"
+          export DOBBY_CHILD_EVIDENCE="$RUNNER_TEMP/dobby-enfants/interface"
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/dobby-enfants-http.log" 2>&1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          for i in {1..30}; do curl --fail --silent "$DOBBY_TEST_ORIGIN/" > /dev/null && break; sleep 1; done
+          node essai-stitch-v7/tests/child-invitation-ui.cjs
+          node essai-stitch-v7/tests/v7-child-interface.cjs
+          node essai-stitch-v7/tests/e02-child-voice.cjs
+          node essai-stitch-v7/tests/health-native-ui.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dobby-v7-comptes-enfants
+          path: ${{ runner.temp }}/dobby-enfants/
+          if-no-files-found: ignore

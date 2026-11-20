@@ -12,6 +12,11 @@ test('an authenticated targeted child reaches acceptance without creating a pend
  assert.equal(destination({...state,authenticated:false},{invitationPending:true,invitationType:'child-account'}),'access-welcome');
  assert.equal(destination({...state,phase:'rejected'},{invitationPending:true,invitationType:'child-account'}),'access-unavailable');
 });
+test('a signed-out child invitation opens its preview before starting native Auth',()=>{
+ const invitation={invitationPending:true,invitationType:'child-account'};
+ assert.equal(destination({phase:'signed-out'},invitation),'access-join');
+ assert.equal(destination({phase:'email-confirmation'},invitation),'access-confirmation');
+});
 test('the actual root relay, native entry and exact Auth callback preserve the typed child reference',()=>{
  const reference=childInvitationReference('TEST-existing-TEXT-child-token'),root='https://example.test/dobby/',html=fs.readFileSync(new URL('../../index.html',import.meta.url),'utf8');
  for(const suffix of ['?invite='+encodeURIComponent(reference),'#access?invite='+encodeURIComponent(reference)]){

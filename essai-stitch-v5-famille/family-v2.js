@@ -11,6 +11,28 @@ const f = {
   cache: new Map(), syncing: false, again: false, epoch: 0, editing: null,
   homeSupported: null, lastSync: null, error: '', notice: '', ready: false, verifiedContext: null, membershipRejected: false, checkingEpoch: null, modalOpen: false, provider: null, accessContext: null
 };
+let childDevice = false, childAccount = null;
+let restoringParentState = false;
+const sessionStore = typeof DobbyFamilySessionStore === 'undefined' ? null : DobbyFamilySessionStore;
+function publicConfiguration() {
+  if (window.DobbyPublicConfig) return window.DobbyPublicConfig;
+  try { return window.parent?.DobbyPublicConfig; } catch { return null; }
+}
+const childRelease = () => publicConfiguration()?.childAccountsAvailable === true;
+function childAccessState() {
+  const bound = verifiedBinding();
+  const active = Boolean(childRelease() && bound?.profile?.memberCategory === 'child' &&
+    bound.capabilities?.childAccountLinkReady && bound.capabilities.childAccessProtocol === 1);
+  return { restricted: bound?.profile?.memberCategory === 'child' ||
+    ((childDevice || childRelease()) && bound?.profile?.memberCategory !== 'parent'),
+    active, memberId: active ? bound.memberId : null };
+}
+function sealDeviceState(clear = false) {
+  if (!childDevice && !childRelease()) return;
+  sessionStore?.enter();
+  if (clear) sessionStore?.clear();
+  if (typeof CustomEvent === 'function') window.dispatchEvent?.(new CustomEvent('dobby:account-change'));
+}
 let syncCycle=null,publicContextRead=null;
 const verificationOwner=()=>({epoch:f.epoch,userId:f.session?.user_id,householdId:f.householdId});
 const sameVerificationOwner=owner=>Boolean(owner&&owner.epoch===f.epoch&&owner.userId===f.session?.user_id&&(!owner.householdId||owner.householdId===f.householdId));
@@ -50,14 +72,31 @@ function dbCall(db, store, operation, arg) {
     tx.onabort = () => reject(tx.error || Error('Transaction annulée'));
   });
 }
-const meta = async id => (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;
-const putMeta = (id, value) => dbCall(f.db, 'meta', 'put', { id, value });
-const delMeta = id => dbCall(f.db, 'meta', 'delete', id);
+function assertPrivateChatMeta(id) {
+  if (String(id).startsWith('v7-private-chat:') && childAccessState().restricted) {
+    throw Error('Parler à Dobby est réservé aux parents.');
+  }
+}
+const meta = async id => {
+  assertPrivateChatMeta(id);
+  const value = (await dbCall(f.db, 'meta', 'get', id))?.value ?? null;
+  assertPrivateChatMeta(id);
+  return value;
+};
+const putMeta = async (id, value) => {
+  assertPrivateChatMeta(id);
+  return dbCall(f.db, 'meta', 'put', { id, value });
+};
+const delMeta = async id => {
+  assertPrivateChatMeta(id);
+  return dbCall(f.db, 'meta', 'delete', id);
+};
 // Atomic metadata mutation on the existing IndexedDB store. E06 draft updates
 // from different tabs must read the latest value inside the same transaction.
 function updateMeta(id,change,{deleteNull=false}={}){return new Promise((resolve,reject)=>{
+ assertPrivateChatMeta(id);
  const tx=f.db.transaction('meta','readwrite'),store=tx.objectStore('meta'),request=store.get(id);let result,error;
- request.onsuccess=()=>{try{result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(deleteNull&&result===null)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};
+ request.onsuccess=()=>{try{assertPrivateChatMeta(id);result=change(request.result?.value??null);if(result?.then)throw Error('La mise à jour des métadonnées doit être synchrone.');if(deleteNull&&result===null)store.delete(id);else store.put({id,value:result});}catch(e){error=e;tx.abort();}};
  tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(error||tx.error||Error('Métadonnées non enregistrées.'));tx.onerror=()=>reject(error||tx.error);
 });}
 
@@ -195,7 +234,7 @@ function assertNativeSharedWrite(method,query,body={}) {
   if(f.session&&(!f.session.user_id||state?.userId!==f.session.user_id||state?.authenticated!==true)){
     state={phase:'unavailable',userId:f.session.user_id||null,authenticated:true,verified:false};
   }
-  if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state});return;}
+  if(f.core?.assertSharedWrite){f.core.assertSharedWrite({method,query,body,access:state,childReleaseVerified:childAccessState().active});return;}
   const rpc=query.split('?')[0].replace(/^rpc\//,'');
   if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase())||['dobby_v7_context','dobby_v7_preview_invitation','dobby_v7_family_capabilities','dobby_v7_preview_child_invitation','dobby_missions_v2_capabilities','dobby_missions_v3_capabilities'].includes(rpc))return;
   if(!state?.userId&&!state?.authenticated&&!state?.memberId&&!state?.profile?.memberCategory&&state?.phase!=='active')return;
@@ -205,12 +244,13 @@ async function authorized(method, query, body, headers = {}) {
   const expected=requestActor();
   const health = /^rpc\/dobby_health_(read|write|capabilities)(\?|$)/.test(query);
   const healthMemberId = health ? verifiedBinding()?.memberId : null;
-  const onboarding = /^rpc\/dobby_v7_(update_profile|create_household|create_invitation|accept_invitation)$/.test(query);
+  const onboarding = /^rpc\/dobby_v7_(update_profile|create_household|create_invitation|accept_invitation|create_child_invitation|accept_child_invitation|child_access_status|suspend_child_access|child_module|update_magic)(\?|$)/.test(query);
+  const scopedChild = childAccessState().restricted && (query.startsWith('dobby_v2_') || /^rpc\/dobby_missions_v3_/.test(query));
   const checkSession = health ? () => assertCurrentHealthSession(expected,healthMemberId) :
-    onboarding ? () => assertCurrentOnboardingSession(expected) : null;
+    (onboarding || scopedChild) ? () => assertCurrentOnboardingSession(expected) : null;
   if (health) await checkSession();
   assertNativeSharedWrite(method,query,body);
-  if (onboarding) await checkSession();
+  if (!health && checkSession) await checkSession();
   let bearer = await token(expected,healthMemberId);assertRequestActor(expected);
   if (checkSession) await checkSession();
   assertNativeSharedWrite(method,query,body);
@@ -240,6 +280,7 @@ function validStoragePath(path){
     /^[a-f0-9-]{36}\.(pdf|jpg|png|webp)$/i.test(sections[1]);
 }
 async function storageFetch(method,path,file){
+  if(childAccessState().restricted)throw Error('Les pièces du foyer sont réservées aux parents autorisés.');
   const expected=requestActor();
   assertNativeSharedWrite(method,'storage');
   if(!validStoragePath(path))throw Error('Fichier hors du foyer');
@@ -354,7 +395,7 @@ async function healthStorageFetch(method, path, file) {
   if (!healthFileMatches(downloaded, mime)) throw Error('Fichier Santé inattendu.');
   return downloaded;
 }
-async function requireHousehold() {
+async function requireHousehold(startProvider = true) {
   if (!f.session?.user_id) throw Error('Compte sans identifiant utilisateur');
   const epoch = f.epoch;
   f.checkingEpoch=epoch;f.verifiedContext = null;
@@ -389,7 +430,7 @@ async function requireHousehold() {
   // Also initialize modules when an existing, previously verified household was
   // restored from IndexedDB. The context-equality shortcut must not skip this.
   // start() is idempotent once its backend probe has succeeded.
-  if (f.provider?.start) await f.provider.start();
+  if (startProvider && f.provider?.start && !childAccessState().restricted) await f.provider.start();
 }
 async function restoreCachedHousehold() {
   if (!f.session?.user_id) return;
@@ -410,6 +451,11 @@ async function pull(epoch) {
     encodeURIComponent(f.householdId) + '&order=created_at.asc');
   if (epoch !== f.epoch) return;
   if (!Array.isArray(rows)) throw Error('Réponse serveur incohérente');
+  if (childAccessState().restricted) {
+    f.cache = new Map(childAccessState().active ?
+      rows.map(row => [row.id, f.core.mergeRemote(null,row)]) : []);
+    return;
+  }
   for (const row of rows) {
     if (epoch !== f.epoch) return;
     await updateItem(row.id,local=>{const merged=f.core.mergeRemote(local,row);return {...merged,import_source_id:row.import_source_id||merged.import_source_id||null};},epoch);
@@ -476,6 +522,14 @@ async function sync() {
       try {await publicContextRead.promise;}catch {}
       if(epoch!==f.epoch)return;
     }
+    if (childAccount && childRelease()) {
+      const controller = await ensureAccess();
+      await controller.refresh();
+      if (epoch !== f.epoch || !childAccessState().active) return;
+      await pull(epoch);
+      if (epoch === f.epoch) await f.provider?.sync();
+      return;
+    }
     await requireHousehold();
     cycle.householdId=f.householdId;
     if (epoch !== f.epoch) return;
@@ -488,6 +542,12 @@ async function sync() {
       // Probe again before syncing with that verified member.
       if(verifiedBinding())await f.provider?.refreshMissionCapabilities?.();
     }
+    if (childAccessState().active) {
+      await pull(epoch);
+      if(epoch===f.epoch)await f.provider?.sync();
+      return;
+    }
+    if (childAccessState().restricted) return;
     await pull(epoch);
     const queue = [...f.cache.values()].filter(x => x.syncState === 'pending')
       .sort((a, b) => String(a.updated_at).localeCompare(String(b.updated_at)));
@@ -528,6 +588,8 @@ function status() {
   return f.lastSync ? 'Liste partagée à jour' : 'Liste locale disponible';
 }
 function visible() {
+  const access = childAccessState();
+  if (access.restricted && !access.active) return [];
   return [...f.cache.values()].filter(x => !x.deleted_at || x.syncState === 'conflict')
     .sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
 }
@@ -755,6 +817,7 @@ async function logout() {
   f.accessContext = null;
   f.session = null; f.context = null; f.householdId = null; f.verifiedContext = null; f.checkingEpoch=null;
   f.cache.clear(); f.lastSync = null; f.error = ''; f.membershipRejected=false;
+  childAccount=null;sealDeviceState(true);
   announceAuthSessionChange();
   if (f.provider?.reset) f.provider.reset();
   repaint(); refreshModal();
@@ -768,6 +831,7 @@ function validQuantity(input) {
   return Math.round(n * 100) / 100;
 }
 async function add(title, quantity, unit, id = crypto.randomUUID(), checked = false, importId = null) {
+  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');
   if (!f.context) throw Error('Connectez votre foyer');
   const label = String(title || '').trim();
   if (!label || label.length > 200) throw Error('Nom de l’article invalide');
@@ -779,6 +843,7 @@ async function add(title, quantity, unit, id = crypto.randomUUID(), checked = fa
   repaint();
 }
 async function change(id, values) {
+  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');
   await updateItem(id,current=>{if(!current)throw Error('Article introuvable sur cet appareil');return f.core.editLocal(current,values,now());});
   repaint(); void sync();
 }
@@ -809,6 +874,7 @@ async function editGroceryGroup(changes,context){
   if(f.epoch===epoch&&f.context===context){for(const item of saved)f.cache.set(item.id,item);repaint();void sync();}
 }
 async function choose(id, mode) {
+  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');
   const current = getItem(id);
   if (!current) throw Error('Article introuvable');
   await updateItem(id,latest=>{if(!latest||latest.clientRev!==current.clientRev||latest.baseRevision!==current.baseRevision||!f.core.sameFields(latest,current)||JSON.stringify(latest.remoteShadow)!==JSON.stringify(current.remoteShadow))throw Error('Le conflit a changé. Vérifiez de nouveau les versions.');return {...f.core.resolveConflict(latest,mode),import_source_id:latest.import_source_id||null};});
@@ -934,6 +1000,10 @@ const accessListeners=new Set();
 function notifyAccess(){
  const state=accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false};
  const signature=JSON.stringify(state);if(signature===lastAccessEvent)return;lastAccessEvent=signature;
+ if(childDevice&&!state.verified)sealDeviceState();
+ if(childDevice&&state.phase==='rejected'){
+  f.cache.clear();f.provider?.reset?.();sealDeviceState(true);
+ }
  for(const listener of accessListeners){try{listener(JSON.parse(signature));}catch{}}
  if(typeof window.dispatchEvent==='function'&&typeof CustomEvent==='function')window.dispatchEvent(new CustomEvent('dobby:access-change'));
 }
@@ -952,7 +1022,8 @@ function ensureAccess(){
     await assertCurrentOnboardingSession(expected);
     return result;
    },
-   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):authorized('POST','rpc/'+name,body),
+   rpc:(name,body,options={})=>options.public?raw('/rest/v1/rpc/'+name,'POST',body):
+    options.method==='GET'?authorized('GET','rpc/'+name+'?'+new URLSearchParams(body)):authorized('POST','rpc/'+name,body),
    clearBinding:()=>{f.accessContext=null;},
    async installSession(result,before){
     const expected=requestActor(),previous=f.session,next=authSession(result);
@@ -964,14 +1035,30 @@ function ensureAccess(){
     });
     assertRequestActor(expected);
     f.epoch++;f.accessContext=null;f.context=null;f.householdId=null;f.verifiedContext=null;f.checkingEpoch=null;f.membershipRejected=false;f.cache.clear();f.provider?.reset?.();
-    f.session=next;announceAuthSessionChange();repaint();refreshModal();
+    f.session=next;childAccount=null;sealDeviceState(true);announceAuthSessionChange();repaint();refreshModal();
    },
    async bind(context,before){
     const guard=()=>{if(f.epoch!==before.epoch||f.session?.user_id!==context.userId)throw Error('Le compte a changé pendant la vérification.');};
-    guard();try{await requireHousehold();guard();
+    guard();
+    const child=childRelease()&&context.profile.memberCategory==='child';
+    try {
+     await requireHousehold(!childRelease());guard();
      if(f.householdId!==context.householdId)throw Error('Le contexte serveur ne correspond pas au foyer autorisé.');
      if(!f.provider?.adoptVerifiedFamily)throw Error('Le registre familial natif est indisponible.');
      const binding={...context,identityVerified:true};
+     if(child){
+      if(!context.capabilities?.childAccountLinkReady||context.capabilities.childAccessProtocol!==1||!f.provider.adoptChildFamily)
+       throw Error('Les droits du compte enfant ne sont pas vérifiés.');
+      childAccount=context.userId;sealDeviceState();
+      await f.provider.adoptChildFamily(binding);guard();
+      f.accessContext={...context,epoch:f.epoch};return;
+     }
+     if(childDevice||childRelease()){
+      if(context.profile.memberCategory!=='parent')throw Error('Les droits du compte enfant ne sont pas vérifiés.');
+      restoringParentState=true;
+      try{sessionStore?.release();}finally{restoringParentState=false;}
+      await f.provider.start();guard();
+     }
      const revalidated=await f.provider.revalidateExistingFamily?.(binding);guard();
      if(revalidated!==true){await f.provider.adoptVerifiedFamily(binding);guard();}
      f.accessContext={...context,epoch:f.epoch};
@@ -979,7 +1066,7 @@ function ensureAccess(){
    },
    logout,
    notify:notifyAccess
-  });return accessController;
+  },childRelease()?{release:{familyRoles:true,childAccountLink:true},requireChildAccessProtocol:true}:undefined);return accessController;
  });return accessPromise;
 }
 async function refreshPublicAccess(){
@@ -1004,11 +1091,12 @@ const accessFacade=Object.freeze({
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
  refresh:refreshPublicAccess,
- ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
+ ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','childAccessStatus','suspendChildAccess','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });
 window.DobbyFamilyAccess=accessFacade;
-window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,
+window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade,childAccessState,
+  canRestoreParentState:()=>restoringParentState,
   // V7 consumes the existing cache and writers directly, without a second basket.
   grocery: Object.freeze({
     read: () => ({context:f.context, status:status(), error:f.error, homeSupported:f.homeSupported, items:visible().map(x=>({...x})), ready:f.ready}),
@@ -1036,6 +1124,7 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade
       return result;
     },
     async importRows(rows,context,options={}) {
+  if(childAccessState().restricted)throw Error('Les courses sont en lecture seule pour ce compte.');
       if(!f.context||f.context!==context)throw Error('Le foyer a changé. Vérifiez le récapitulatif.');
       const epoch=f.epoch,householdId=f.householdId,receipts=[];
       const guard=()=>{if(f.epoch!==epoch||f.context!==context||f.householdId!==householdId)throw Error('Le foyer a changé.');};
@@ -1091,8 +1180,7 @@ window.DobbyFamilyUI = Object.freeze({connectionState,signIn,access:accessFacade
 });
 async function loadPublicKey(){
  const existing=await meta('publicKey');if(existing){try{return validateKey(existing);}catch{return null;}}
- let config=window.DobbyPublicConfig;
- if(!config)try{if(window.parent&&window.parent!==window&&window.parent.location.origin===window.location.origin)config=window.parent.DobbyPublicConfig;}catch{}
+ const config=publicConfiguration();
  if(!config||config.projectRef&&config.projectRef!=='pqcdkrwljgvgagzwrcmg')return null;
  try{const key=validateKey(config.publicKey);await putMeta('publicKey',key);return key;}catch{return null;}
 }
@@ -1100,6 +1188,9 @@ async function boot() {
   try {
     f.core = await import('./family-core.mjs');
     f.db = await openDb(DB_NAME, 1, true);
+    childDevice=childRelease()||await meta('v7-child-device')===true;
+    if(childRelease())await putMeta('v7-child-device',true);
+    sealDeviceState();
     f.key = await loadPublicKey();
     f.session = await meta('session');
     // Access initialization observes ready. Restore the cached household first,
@@ -1107,6 +1198,16 @@ async function boot() {
     if (f.session) await restoreCachedHousehold();
     f.ready = true;
     repaint();
+    if(childDevice&&typeof BroadcastChannel==='function'){
+      const channel=new BroadcastChannel('dobby-auth-session-v7');
+      channel.addEventListener('message',async event=>{
+        if(event.data?.type!=='auth-session-change')return;
+        const epoch=f.epoch,saved=await meta('session');
+        if(epoch!==f.epoch||saved?.refresh_token===f.session?.refresh_token&&saved?.user_id===f.session?.user_id)return;
+        f.epoch++;f.accessContext=null;f.verifiedContext=null;f.provider?.reset?.();f.cache.clear();sealDeviceState(true);
+        try{(window.parent||window).location.reload();}catch{window.location.reload();}
+      });
+    }
     if (f.session) void sync();
   } catch (e) { showMessage('Initialisation familiale impossible : ' + fail(e)); }
 }

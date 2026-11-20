@@ -42,6 +42,7 @@ const destinations=[['Accueil','explore','./traverse.html'],['Tâches','history_
 const preferences=()=>E.evaluate('return {effects:true,sound:false,...st.stitchPreferences};');
 function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){for(const b of document.querySelectorAll(`[data-e01-toggle="${name}"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(b.dataset.settingsPreference){b.setAttribute('aria-checked',String(!!p[name]));}if(name==='effects'&&!b.dataset.settingsPreference){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}
 function sectionTitle(){
+ if(document.querySelector('[data-child-verification]'))return 'DOBBY';
  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
  const heading=document.querySelector('body > main h1')?.cloneNode(true);for(const icon of heading?.querySelectorAll('.material-symbols-outlined,[aria-hidden="true"]')||[])icon.remove();
  if(['chat','chat-2'].includes(document.body.dataset.familyView))return 'Parler à Dobby';
@@ -105,7 +106,7 @@ document.addEventListener('click',async event=>{
  if([2,3].includes(index)&&window.DobbyCuisine?.ready){window.DobbyStitchV7.close(false);window.DobbyCuisine.open(index===3?'shop':'taverne').catch(console.error);return;}
  location.href=destinations[index][2];
 },true);
-window.addEventListener('pageshow',()=>{pageAway=false;if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});
+window.addEventListener('pageshow',event=>{pageAway=false;if(event.persisted&&window.DobbyPublicConfig?.childAccountsAvailable===true){location.reload();return;}if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});
 window.addEventListener('popstate',()=>setTimeout(mount,0));
 return {ready,mount,apply,timerAlert:()=>feedback({}, {visual:false,sound:true})};
 })();

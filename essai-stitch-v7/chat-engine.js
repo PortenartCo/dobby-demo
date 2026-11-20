@@ -1,33 +1,55 @@
 /* E02 facade: native reads/writers and native metadata store; no remote sync or LLM. */
 window.DobbyChatEngine=(()=>{'use strict';
  const E=window.DobbyFamilyStitchEngine,C=window.DobbyCuisineEngine;
- let owner=undefined,rows=[],loaded=false;
+ let owner=undefined,rows=[],loaded=false,scopeKey,scopeRevision=0;
  const api=()=>E.win().DobbyFamilyUI;
- const identity=()=>{const c=api()?.getContext();return {user:typeof c?.userId==='string'&&c.userId?c.userId:null,household:c?.householdId||null};};
- const token=()=>JSON.stringify(identity());
- const check=expected=>{if(token()!==expected)throw Error('Le compte ou le foyer a changé. La demande n’a pas été exécutée.');};
+ const identity=()=>{const c=api()?.getContext();return {user:typeof c?.userId==='string'&&c.userId?c.userId:null,household:c?.householdId||null,member:c?.memberId||null};};
+ const restrictedMessage='Le chat Dobby est réservé aux parents autorisés.';
+ function scope(){
+  const native=api(),access=native?.childAccessState?.(),restricted=access?.restricted===true,actor=identity();
+  const signature=JSON.stringify({...actor,member:access?.memberId??actor.member,epoch:native?.connectionState?.()?.epoch??null,restricted});
+  if(signature!==scopeKey){
+   scopeKey=signature;scopeRevision++;
+   owner=undefined;rows=[];loaded=false;
+  }
+  return {revision:scopeRevision,restricted};
+ }
+ const token=()=>scope().revision;
+ const restricted=()=>scope().restricted;
+ function assertAccess(){const access=scope();if(access.restricted)throw Error(restrictedMessage);return access.revision;}
+ const check=expected=>{if(assertAccess()!==expected)throw Error('Le compte, le foyer ou les droits ont changé. La demande n’a pas été exécutée.');};
  const key=user=>'v7-private-chat:'+encodeURIComponent(user);
- async function load(){const current=identity().user,guard=token();if(loaded&&owner===current)return rows;owner=current;loaded=false;rows=[];
+ async function load(){const guard=assertAccess(),current=identity().user;if(loaded&&owner===current)return rows;owner=current;loaded=false;rows=[];
   if(current){const stored=await api().meta(key(current));check(guard);if(stored&&(stored.version!==1||stored.owner!==current||!Array.isArray(stored.rows)))throw Error('Historique individuel invalide. Aucune donnée remplacée.');if(stored?.rows.some(r=>!r||typeof r.id!=='string'||typeof r.input!=='string'||typeof r.answer!=='string'))throw Error('Historique individuel invalide. Aucune donnée remplacée.');rows=stored?.rows||[];}
   loaded=true;return rows;
  }
- function current(){if(!loaded||owner!==identity().user)throw Error('Le compte a changé ou l’historique est indisponible. Revenez au fil.');return rows;}
- async function persist(){current();const guard=token();if(owner)await api().putMeta(key(owner),{version:1,owner,rows:JSON.parse(JSON.stringify(rows))});check(guard);}
+ function current(){assertAccess();if(!loaded||owner!==identity().user)throw Error('Le compte a changé ou l’historique est indisponible. Revenez au fil.');return rows;}
+ async function persist(){
+  const history=current(),guard=token();
+  if(owner){
+   const value={version:1,owner,rows:JSON.parse(JSON.stringify(history))};
+   await api().updateMeta(key(owner),()=>{check(guard);return value;});
+  }
+  check(guard);
+ }
  async function append(row){current().push(row);await persist();}
  async function update(id,answer,links=[]){const row=current().find(r=>r.id===id);if(!row)throw Error('Échange introuvable.');row.answer=answer;row.links=links;await persist();}
  async function remove(id){current();rows=rows.filter(r=>r.id!==id);await persist();}
  function visibleHistory(){
-  const state=E.read().state;
-  const documentIds=new Set((state.familyDocs||[]).filter(row=>row?.category==='Santé').map(row=>row.id));
-  const legacyTitles=(state.sharedHealthVisits||[]).map(row=>row?.title||row?.name).filter(Boolean);
-  return current().map(row=>{
+  const history=current();
+  const { ids, titles }=E.evaluate(`return {
+   ids:(st.familyDocs||[]).filter(row=>row?.category==='Santé').map(row=>row.id),
+   titles:[...(st.sharedHealthVisits||[]),...(st.famHealth||[])].map(row=>row?.title||row?.name).filter(Boolean)
+  };`);
+  const documentIds=new Set(ids);
+  return history.map(row=>{
    const restricted=Array.isArray(row.links)&&row.links.some(link=>{
     try{
      const url=new URL(link.href,location.href);
      if(url.origin!==location.origin||!url.pathname.endsWith('/famille.html'))return false;
      const [route,query]=url.hash.slice(1).split('?');
      return (route==='document'&&documentIds.has(new URLSearchParams(query).get('record')))||
-       (route==='agenda'&&legacyTitles.some(title=>row.answer.includes(title)));
+       (route==='agenda'&&titles.some(title=>row.answer.includes(title)));
     }catch{return false;}
    });
    return restricted?{...row,answer:'Cette réponse historique contient des références privées.',links:[]}:row;
@@ -35,8 +57,7 @@ window.DobbyChatEngine=(()=>{'use strict';
  }
  const norm=s=>String(s||'').toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/\s+/g,' ').trim();
  const link=(label,href)=>({label,href});
- // The private conversation is never an alternative shared-data writer for
- // children. Read the current canonical binding again at final confirmation.
+ // Chat also checks the canonical binding before writing shared data.
  function writeRestriction(){const context=api()?.getContext?.(),bound=api()?.access?.state?.();
   if(!context?.userId&&!context?.householdId)return null; // offline personal data
   if(!context?.identityVerified||!bound?.verified||context.userId!==bound.userId||context.householdId!==bound.householdId||context.memberId!==bound.memberId)return 'L’identité familiale doit être vérifiée avant toute modification. Aucune donnée partagée modifiée.';
@@ -57,7 +78,7 @@ window.DobbyChatEngine=(()=>{'use strict';
   let stored;try{stored=persisted();}catch{stored=before;}const values={};for(const field of fields)values[field]=Object.hasOwn(stored,field)?stored[field]:before[field];E.evaluate('for(const field of p.fields){if(Object.hasOwn(p.values,field))st[field]=p.values[field];else delete st[field];}',{fields,values});
   throw Error('L’enregistrement natif n’a pas été confirmé. Vérifiez les données avant de réessayer.');}}
  function persisted(){return E.evaluate('return JSON.parse(localStorage.getItem(key)||"{}");');}
- async function reply(input){const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;
+ async function reply(input){if(restricted())return {text:restrictedMessage,links:[]};const text=input.trim().replace(/^(?:Dobby[, ]+)?(?:peux[- ]tu|pouvez[- ]vous)\s+/i,'').replace(/[?!]+$/,'').trim(),q=norm(text),state=E.read().state;
   const add=text.match(/^(?:s['’]il (?:te|vous) pla[iî]t[, ]+)?(?:ajoute[r]?|acheter|mets?|mettre)\s+(.+?)(?:\s+(?:aux courses|[àa] (?:la |ma )?liste (?:de |des )?courses|dans (?:la |ma )?liste (?:de |des )?courses))?[.!]?$/i);
   if(add){const restriction=writeRestriction();if(restriction)return {text:restriction,links:[]};const destination=/(?:aux courses|liste (?:de |des )?courses)/i.test(text);if(!destination&&(/^(?:un|une)\s/.test(norm(add[1]))||/\b(?:billets?|abonnements?)\b/.test(norm(add[1]))))return {text:'Souhaitez-vous l’ajouter à la liste de courses ? Écrivez la demande avec cette destination. Aucune modification effectuée.',links:[]};if(!/^acheter\b/i.test(text)&&!destination)return {text:'Dobby a besoin de la destination : précisez « ajoute cet article aux courses ». Aucune modification effectuée.',links:[]};const name=add[1].replace(/^(?:du|de la|des|le|la|les|un|une)\s+|^de l['’]/i,'').trim();if(name.length<2||name.length>119||/[\n;]/.test(name)||/\b(?:puis|ensuite|supprime|ajoute)\b/i.test(name))return unknown();
    // E07.2 keeps an active list independently of its archives. Use its existing
@@ -90,5 +111,5 @@ window.DobbyChatEngine=(()=>{'use strict';
   E.evaluate('st.extraPage="";go("missions");');const w=E.win(),original=w.confirm;try{w.confirm=message=>message==='Supprimer définitivement « '+row.title+' » de la liste familiale ?';nativeWrite(()=>E.action('fmsAction','delete',{id:row.id}),['manualMissions']);}finally{w.confirm=original;}
   if(E.read().state.manualMissions.some(r=>r.id===row.id)||(persisted().manualMissions||[]).some(r=>r.id===row.id))throw Error('La mission n’a pas été supprimée.');return {text:'Dobby a supprimé la mission « '+row.title+' » du foyer.',links:[link('Voir les missions','./missions.html')]};
  }
- return Object.freeze({identity,token,check,load,current,visibleHistory,append,update,remove,reply,execute});
+ return Object.freeze({identity,token,restricted,restrictedMessage,assertAccess,check,load,current,visibleHistory,append,update,remove,reply,execute});
 })();

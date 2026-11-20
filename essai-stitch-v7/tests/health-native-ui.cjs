@@ -217,7 +217,10 @@ async function waitActor(page, role) {
 }
 
 async function signInViaForm(page, family, role) {
-  await page.goto(family+'#access-auth?mode=login');
+  const login = new URL(family);
+  login.searchParams.set('fixture-login', role);
+  login.hash = 'access-auth?mode=login';
+  await page.goto(login.href);
   await page.getByLabel('Adresse e-mail', {exact:true}).fill(role+'@example.test');
   await page.getByLabel('Mot de passe', {exact:true}).fill('fictional-browser-test');
   await page.getByRole('button', {name:'Se connecter', exact:true}).click();
@@ -309,8 +312,10 @@ async function testWidth(browser, width) {
     await select.selectOption(child);
     await page.locator(carnet).getByText(privateCanary, {exact:true}).waitFor();
     await noHealthText(page, localCanary, sharedCanary);
-    assert.equal(await page.evaluate(() => DobbyFamilyStitchEngine.read().shared
-      .find(row => row.id === 'legacy-shared-fixture')?.title), sharedCanary);
+    assert.equal(await page.evaluate(() => DobbyFamilyStitchEngine.evaluate(
+      'return st.sharedHealthVisits.find(row => row.id === "legacy-shared-fixture")?.title;')), sharedCanary);
+    assert.deepEqual(await page.evaluate(() => DobbyFamilyStitchEngine.read().shared), [],
+      'Device-only Health history must stay out of the V7 projection before any account change');
     await screenshot(page, 'health-parent', width);
 
     await page.goto(family+'#member-detail?person='+encodeURIComponent(child));
@@ -340,6 +345,7 @@ async function testWidth(browser, width) {
     await screenshot(page, 'health-agenda', width);
 
     await page.goto(base+'traverse.html');
+    await waitActor(page, 'A');
     const today = page.locator('[data-health-today]');
     await today.getByRole('listitem').filter({hasText:/10:42/}).waitFor();
     await noHealthText(page, privateCanary, otherCanary, 'NOTE_CLINIQUE_FICTIVE', practicalText, localCanary, sharedCanary);
@@ -359,14 +365,14 @@ async function testWidth(browser, width) {
     assert.ok(childReads.every(request => !['private', 'people'].includes(request.view)));
     await screenshot(page, 'health-child', width);
 
-    const original = await page.evaluate(() => {
-      const { local, shared, events } = DobbyFamilyStitchEngine.read();
-      return { local, shared, events };
-    });
-    assert.equal(original.local.find(row => row.id === 'health-legacy-local')?.name, localCanary);
+    const original = await page.evaluate(() => ({...DobbyFamilyStitchEngine.read(), cuisine: DobbyCuisineEngine.read().state}));
+    assert.equal(await page.evaluate(() => DobbyFamilyStitchEngine.evaluate(
+      'return st.famHealth.find(row => row.id === "health-legacy-local")?.name;')), localCanary);
+    assert.deepEqual(original.local, [], 'Device-only notes never enter the child projection');
     assert.equal(original.shared.some(row => row.id === 'legacy-shared-fixture'), false,
       'The previous account’s shared cache must not be reused by the child');
     assert.deepEqual(original.events, []);
+    assert.doesNotMatch(JSON.stringify(original), new RegExp([localCanary, sharedCanary, privateCanary].join('|')));
     const browserState = await page.evaluate(() => JSON.stringify([Object.values(localStorage), Object.values(sessionStorage)]));
     for (const secret of [privateCanary, 'Nouvelle information privée fictive', 'Pièce synthétique locale']) {
       assert.ok(!browserState.includes(secret), 'Health data leaked into browser web storage');

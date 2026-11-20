@@ -2,6 +2,8 @@
 window.DobbyCuisineEngine = (() => {
   'use strict';
   const win = () => document.getElementById('dv7-engine').contentWindow;
+  const childAccess=()=>window.DobbyStitchV7?.childAccess();
+  let childCooking=null;
   const evaluate = (code, values = {}) => win().eval(`(function(p){${code}})(${JSON.stringify(values)})`);
   const field = (name, value) => {
     const input = win().document.getElementById(name);
@@ -14,10 +16,17 @@ window.DobbyCuisineEngine = (() => {
     button.click();
   };
   function page(page, detail = null) {
+    childCooking=null;
     evaluate('st.extraPage=""; st.detail=p.detail; st.page=p.page; st.cook=false; st.tmEditor=false; st.tmView=false; render();', { page, detail });
   }
   function read(mealContext=null) {
     const data = evaluate('return {state:JSON.parse(JSON.stringify(st)),recipes:JSON.parse(JSON.stringify(allRecipes())),customIds:custom.map(r=>r.id),baseIds:BASE.map(r=>r.id),draft:shoppingDraft(),pending:pendingMeals().length,batch:batchCandidate,detailPortions:st.detail?(Object.values(st.planned).find(m=>m.id===st.detail)?portionCount(Object.values(st.planned).find(m=>m.id===st.detail)):st.people):st.people};');
+    window.DobbyHealthRuntime?.filterHistoricalState(data.state);
+    if(childAccess()?.restricted){
+      const cooking=childAccess().active&&childCooking?.scope===window.DobbyStitchV7.accountScope()?childCooking:null;
+      Object.assign(data.state,{cook:!!cooking,cookMeal:null,cookStep:cooking?.index||0,cookMethod:cooking?.method||null});
+      if(cooking)data.state.detail=cooking.id;
+    }
     data.state.tmAdaptations||={};
     for(const recipe of data.recipes)if(recipe.catalogueTM5&&!data.state.tmAdaptations[recipe.id])data.state.tmAdaptations[recipe.id]=recipe.catalogueTM5;
     const context=data.state.cook&&data.state.cookMeal?data.state.cookMeal:mealContext,key=context?.key||(context?.date&&context?.slot?context.date+'-'+context.slot+(context.component==='dessert'?'-dessert':''):null),record=key?data.state.planned[key]:null,batch=data.state.planned.__dobbyDessertPreparationsV1?.batches?.[context?.batchId||record?.dessertPreparationId];
@@ -69,6 +78,18 @@ window.DobbyCuisineEngine = (() => {
   }
   function cookAt(id,index=null,method='classic',meal=null,standalone=false) {
     if(read().customIds.includes(id))win().DobbyArchiveSources?.get('recipes',id);
+    if(childAccess()?.restricted){
+      if(!childAccess().active||meal)throw Error('Les données partagées sont en lecture seule pour ce profil.');
+      const data=read(),recipe=data.catalogueRecipes.find(row=>row.id===id);
+      if(!recipe)throw Error('Recette introuvable.');
+      const steps=['classic','tm5'].includes(method)&&window.DobbyCuisineE074?.methods(recipe,data)?.[method];
+      if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible.');
+      const scope=window.DobbyStitchV7.accountScope();
+      const next=index??(childCooking?.scope===scope&&childCooking.id===id&&childCooking.method===method?childCooking.index:0);
+      if(!Number.isInteger(next)||next<0||next>=steps.length)throw Error('Étape de préparation invalide.');
+      childCooking={scope,id,method,index:next};
+      return {id,index:next,method};
+    }
     if(meal)componentKey(meal);
     return transaction(`const requested=(p.standalone?null:p.meal||(st.cook&&st.detail===p.id?st.cookMeal:null)),requestedKey=requested?requested.date+'-'+requested.slot+(requested.component==='dessert'?'-dessert':''):null,priorBatch=requested?.component==='dessert'?preparationRegistry()?.batches[st.planned[requestedKey]?.dessertPreparationId]:null,r=priorBatch?.recipeSnapshot||getR(p.id),adaptation=priorBatch?priorBatch.tm5Snapshot:recipeTM5(p.id);if(!r)throw Error('Recette introuvable.');if(!['classic','tm5'].includes(p.method))throw Error('Méthode de préparation invalide.');const steps=p.method==='tm5'?(adaptation?.steps||(r.thermomix?r.steps:null)):(r.thermomix?null:r.steps);if(!steps?.length)throw Error('Cette méthode de préparation n’est pas disponible ; complétez ses étapes.');if(p.index!==null&&(!Number.isInteger(p.index)||p.index<0||p.index>=steps.length))throw Error('Étape de préparation invalide.');st.cookProgress||={};if(typeof st.cookProgress!=='object'||Array.isArray(st.cookProgress))throw Error('Progression de cuisson invalide.');const context=(p.standalone?null:p.meal||(st.cook&&st.detail===p.id?st.cookMeal:null));if(context){const key=context.date+'-'+context.slot+(context.component==='dessert'?'-dessert':''),record=st.planned[key];if(!record||record.id!==p.id||record.status==='annulé')throw Error('Ce repas a changé. Actualisez le planning.');if(Object.prototype.hasOwnProperty.call(context,'expectedMeal')&&JSON.stringify(record)!==JSON.stringify(context.expectedMeal))throw Error('Ce repas a changé. Actualisez le planning.');let batch=null;if(context.component==='dessert'){batch=ensurePreparation(key);if(context.expectedBatch&&JSON.stringify(batch)!==JSON.stringify(context.expectedBatch))throw Error('La préparation dessert a changé pendant la cuisine.');if(batch.status==='prepared')throw Error('Ce dessert est déjà préparé. Utilisez ses portions disponibles.');}st.cookMeal={...context,key,id:p.id,expectedMeal:JSON.parse(JSON.stringify(st.planned[key])),...(batch?{batchId:batch.id,expectedBatch:JSON.parse(JSON.stringify(batch))}:{})};}else st.cookMeal=null;const progressKey=st.cookMeal?.batchId?st.cookMeal.batchId+'|'+p.id:st.cookMeal?st.cookMeal.key+'|'+p.id:p.id,progress=st.cookProgress[progressKey]||{},saved=progress[p.method],index=p.index===null?(Number.isInteger(saved)&&saved>=0?Math.min(saved,steps.length-1):0):p.index;st.cookProgress[progressKey]={...progress,[p.method]:index};st.extraPage='';st.detail=p.id;st.page='recipes';st.cook=true;st.cookStep=index;st.cookMethod=p.method;st.tmEditor=false;st.tmView=false;result={id:p.id,index,method:p.method};`,{id,index,method,meal,standalone});
   }
@@ -140,6 +161,11 @@ window.DobbyCuisineEngine = (() => {
       else if(p.action==='portions')st.planned[p.key]={...source,adult:p.adult,children:p.children,people:p.adult+p.children,...(source.dessertPreparationId?{dessertPortions:p.adult+p.children*Number(source.childFactor??.65)}:{})};else{if(p.status==='préparé'){const batch=ensurePreparation(p.key);if(batch.status!=='prepared'){batch.status='prepared';batch.preparedAt=new Date().toISOString();batch.revision++;}}st.planned[p.key]={...st.planned[p.key],status:p.status};}result={date:p.action==='move'?p.destination:p.date,slot:p.slot,meal:JSON.parse(JSON.stringify(st.planned[p.action==='move'?p.destinationKey:p.key]))};`,{...values,action,key,destinationKey});
   }
   function finishCook(){
+    if(childAccess()?.restricted){
+      if(!childAccess().active||childCooking?.scope!==window.DobbyStitchV7.accountScope())throw Error('Aucune préparation en cours.');
+      childCooking=null;
+      return {prepared:null};
+    }
     return transaction(`if(!st.cook)throw Error('Aucune préparation en cours.');const currentBatch=st.cookMeal?.batchId?preparationRegistry()?.batches[st.cookMeal.batchId]:null,recipe=currentBatch?.recipeSnapshot||getR(st.detail),adaptation=currentBatch?currentBatch.tm5Snapshot:recipeTM5(st.detail),steps=st.cookMethod==='tm5'?(adaptation?.steps||(recipe?.thermomix?recipe.steps:null)):recipe?.steps;if(!steps?.length||st.cookStep!==steps.length-1)throw Error('Terminez la dernière étape avant de confirmer la préparation.');const context=st.cookMeal;if(context){const record=st.planned[context.key];if(!record||record.id!==context.id||record.status==='annulé'||JSON.stringify(record)!==JSON.stringify(context.expectedMeal))throw Error('Le repas a changé pendant la préparation. Vérifiez le planning.');if(context.batchId){const batch=preparationRegistry()?.batches[context.batchId];if(!batch||JSON.stringify(batch)!==JSON.stringify(context.expectedBatch))throw Error('La préparation dessert a changé pendant la cuisine.');batch.status='prepared';batch.preparedAt=new Date().toISOString();batch.revision++;}st.planned[context.key]={...record,status:'préparé'};}st.cook=false;st.cookMeal=null;result={prepared:context?.key||null};`);
   }
   function favorite(id) { if(read().customIds.includes(id))win().DobbyArchiveSources?.assertMutable('recipes',id);assertSharedWrite();page('recipes', id); click('fav', { id }); }

@@ -17,6 +17,7 @@ let ctx = null, backendReady = false, checked = false, moduleStateRestored = fal
 let timer = null, applying = false, lastError = '', sharedAvailable = [];
 let runeCapability = null, contextGeneration = 0, missionWriteFlight = null;
 let missionIntentCore = null, runeV3Capability = null, missionV3Transport = null, missionV3Owner = '';
+let childProjection = false;
 const esc = api.esc;
 const healthLegacyClosed=()=>window.DobbyHealthLegacyClosed?.()===true;
 const preserveHistoricalHealth=()=>typeof window.DobbyVerifyHealthLegacyClosure==='function'||healthLegacyClosed();
@@ -521,6 +522,12 @@ function runesV3Available(){
  return Boolean(missionV3Transport?.available()&&
   (missionIntentCore.MISSION_V3_RELEASE_VERIFIED===true||!states.missions?.pendingOperation&&!v3LegacyRequestsPending()));
 }
+function verifiedMissionRelease(){
+ const access=api.access?.state?.();
+ return missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true||
+  access?.capabilities?.childAccessProtocol===1&&access.capabilities.childAccountLinkReady===true&&
+  access.permissions.canCompleteMissionsV3===true;
+}
 function runesLot1Available(){
  const state=states.missions;
  return Boolean(runesV3Available()&&missionIntentCore.missionLot1Capability(runeV3Capability?.value)&&
@@ -583,7 +590,7 @@ async function initializeMissionsV3(){
  const key='v3-mission-intent:'+current.userId+'|'+current.householdId+'|'+current.memberId;
  missionV3Owner=owner;
  missionV3Transport=missionIntentCore.createMissionIntentTransport({
-  releaseVerified:missionIntentCore.MISSION_V3_RELEASE_VERIFIED,
+  releaseVerified:verifiedMissionRelease(),
   context:v3Actor,capability:()=>runeV3Capability,
   members:()=>clone(st.familyMembers||[]),uuid:()=>crypto.randomUUID(),
   readPending:()=>api.meta(key),
@@ -599,6 +606,11 @@ async function initializeMissionsV3(){
   async confirm(remote,{actor,operation}){
    if(actor.token!==liveContextToken()||JSON.stringify([actor.userId,actor.householdId,actor.memberId])!==missionV3Owner)throw Error('Le contexte familial a changé ; opération conservée.');
    const state=states.missions||(states.missions={active:false});verifyRemoteV3(state,remote);
+   if(childProjection){
+    applyMissionsV3(remote.payload);
+    states.missions=synchronized('missions',Number(remote.revision),remote.payload);
+    api.repaint();return;
+   }
    const current=editableMissions(pick('missions')),base=editableMissions(operation.baseModule?.payload||current);
    const merged=mergeMissionEdits(base,current,remote.payload);
    applyMissionsV3(merged?{...remote.payload,...merged}:remote.payload,Boolean(merged));
@@ -904,7 +916,7 @@ function seededExampleMeals() {
   ));
 }
 function storageKey() { return 'v2-module-state:' + ctx.userId + '|' + ctx.householdId; }
-async function persist() { if (ctx) await api.putMeta(storageKey(), states); }
+async function persist() { if (ctx&&!childProjection) await api.putMeta(storageKey(), states); }
 function rowQuery(id) {
   return 'dobby_v2_modules?select=module,payload,revision,updated_at&household_id=eq.' +
     encodeURIComponent(ctx.householdId) + '&module=eq.' + encodeURIComponent(id);
@@ -1009,7 +1021,7 @@ async function refreshMissionCapabilities(){
   try{v3=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+household);}catch{}
   if(!stillCurrent())return;
  }
- try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}
+ if(!childProjection){try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}}
  if(!stillCurrent())return;
  runeV3Capability={token,value:v3};
  runeCapability={token,available:v2?.protocol===2&&v2.directWritesBlocked===true&&v2.maxPayloadBytes===262144};
@@ -1127,9 +1139,39 @@ async function adoptVerifiedFamily(binding) {
   if(!sharedAvailable.includes('family'))sharedAvailable.push('family');
   await persist();guard();api.repaint();
 }
+async function adoptChildFamily(binding) {
+  const current=api.getContext(),epoch=api.connectionState().epoch;
+  if(binding.profile?.memberCategory!=='child'||current?.userId!==binding.userId||current.householdId!==binding.householdId)
+    throw Error('Contexte enfant non vérifié.');
+  if(!childProjection||ctx?.userId!==current.userId||ctx?.householdId!==current.householdId)reset();
+  childProjection=true;ctx=current;
+  const generation=contextGeneration,scope='p_household_id='+encodeURIComponent(binding.householdId);
+  const projection=id=>api.authorized('GET','rpc/dobby_v7_child_module?'+scope+'&p_module='+id);
+  const [family,missions,menus,recipes]=await Promise.all([
+    projection('family'),projection('missions'),readRow('menus'),readRow('recipes')
+  ]);
+  const session=api.getContext();
+  if(generation!==contextGeneration||api.connectionState().epoch!==epoch||session?.userId!==current.userId||session.householdId!==current.householdId)
+    throw Error('Le compte enfant a changé pendant la lecture.');
+  if(family?.module!=='family'||!family.payload?.familyMembers?.some(member=>member.id===binding.memberId&&member.memberCategory==='child'))
+    throw Error('Le membre enfant n’est pas confirmé dans le foyer.');
+  runes=await window.DobbyRunesReady;
+  if(generation!==contextGeneration||api.connectionState().epoch!==epoch)throw Error('Le compte enfant a changé pendant la lecture.');
+  const rows=[family,missions,menus,recipes].filter(Boolean);
+  for(const {module,payload,revision} of rows){
+    if(module==='missions'&&payload.runeLedgerVersion===3){
+      missionIntentCore ||= await window.DobbyMissionIntentsReady;
+      if(generation!==contextGeneration||api.connectionState().epoch!==epoch)throw Error('Le compte enfant a changé pendant la lecture.');
+      applyMissionsV3(payload);
+    }else applyShared(module,payload);
+    states[module]=synchronized(module,Number(revision),payload);
+  }
+  sharedAvailable=rows.map(row=>row.module);
+  checked=true;backendReady=true;moduleStateRestored=true;
+}
 function reset() {
   contextGeneration++;runeCapability=null;missionWriteFlight=null;runeV3Capability=null;missionV3Transport=null;missionV3Owner='';
-  ctx = null; checked = false; backendReady = false; moduleStateRestored = false; lastError = ''; states = {}; sharedAvailable = [];
+  ctx = null; checked = false; backendReady = false; moduleStateRestored = false; lastError = ''; states = {}; sharedAvailable = [];childProjection=false;
   if (timer) { clearTimeout(timer); timer = null; }
 }
 function stateLabel(def) {
@@ -1473,6 +1515,17 @@ async function syncOne(id) {
 }
 async function sync() {
   if(inFlight||!liveContextToken())return;
+  if(childProjection){
+    if(!api.childAccessState().active)return;
+    await refreshMissionCapabilities();
+    if(!runesV3Available()||!states.missions?.active)return;
+    if(await missionV3Transport.pending())await sendMissionsV3(null,null);
+    else{
+      const remote={module:'missions',revision:states.missions.revision,payload:JSON.parse(states.missions.synced)};
+      if(missionLot2CanProject(remote))await sendMissionsV3({kind:'project'},remote);
+    }
+    return;
+  }
   // Canonical binding publishes memberId after the initial membership check.
   // Re-read capabilities for that changed token before draining old V2 queues.
   await start();
@@ -1499,6 +1552,7 @@ async function sync() {
   }
 }
 function onSave() {
+  if(childProjection)return;
   if (!ctx || !backendReady || applying || inFlight || !DEFINITIONS.some(d=>
     states[d.id]?.active && !states[d.id].conflict && (d.id!=='family'||preparationLocalCompatible()) && (moduleDigest(d.id,pick(d.id)) !== syncedDigest(d.id,states[d.id].synced) || d.id==='missions'&&pendingRunes()))) return;
   if (timer) clearTimeout(timer);
@@ -1584,7 +1638,7 @@ window.DobbySharedRunesV3=Object.freeze({
  participationStatus(mission,last,today){return missionIntentCore?.participationStatus(mission,last,today)||'open';},
  summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}
 });
-api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,refreshMissionCapabilities,
+api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,adoptChildFamily,revalidateExistingFamily,refreshMissionCapabilities,
   isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }

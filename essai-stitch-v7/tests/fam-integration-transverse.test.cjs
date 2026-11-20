@@ -19,6 +19,7 @@ const catalogueLot3 = require('./fixtures/catalogue-lot3-source-extensions.json'
 const ingredientsLot4 = require('./fixtures/ingredients-lot4-source-extensions.json');
 const healthIntegration = require('./fixtures/health-integration-source-extensions.json');
 const familyOnboarding = require('./fixtures/family-onboarding-source-extensions.json');
+const childAccess = require('./fixtures/child-access-source-extensions.json');
 const {beforeReviewedAmendment}=require('./helpers/reviewed-source.cjs');
 const beforeRunesLot1=(file,source)=>beforeReviewedAmendment(file,source,runesLot1.files[file],'Runes lot 1');
 const beforeRunesLot2=(file,source)=>beforeReviewedAmendment(file,source,runesLot2.files[file],'Runes lot 2');
@@ -27,9 +28,22 @@ const readWorkingSource=file=>fs.readFileSync(path.join(repo,file),'utf8').repla
 const beforeIngredientsLot4=(file,source)=>beforeReviewedAmendment(file,source,ingredientsLot4.files[file],'Ingrédients lot 4');
 const beforeHealth=(file,source)=>beforeReviewedAmendment(file,source,healthIntegration.files[file],'Santé');
 const beforeOnboarding=(file,source)=>beforeReviewedAmendment(file,source,familyOnboarding.files[file],'Onboarding familial');
-const rawContextSource=file=>beforeIngredientsLot4(file,beforeHealth(file,beforeOnboarding(file,readWorkingSource(file))));
+const beforeChildAccess=(file,source)=>beforeReviewedAmendment(file,source,childAccess.files[file],'Accès enfant');
+const rawOnboardingSource=file=>beforeChildAccess(file,readWorkingSource(file));
+const rawContextSource=file=>beforeIngredientsLot4(file,beforeHealth(file,beforeOnboarding(file,rawOnboardingSource(file))));
 const rawReviewedSource=file=>beforeCatalogueLot3(file,rawContextSource(file));
 function reviewedSource(file){return beforeRunesLot1(file,beforeRunesLot2(file,rawReviewedSource(file)));}
+test('Child accounts preserve the exact onboarding parent and reject unrelated source changes',()=>{
+  assert.equal(childAccess.baseCommit,'d5e1e4aff6e6c435abbbbe1fdf06d2a15e70a3df');
+  assert.ok(childAccess.files['essai-stitch-v5-famille/family-v2.js']);
+  assert.ok(childAccess.files['essai-stitch-v7/health-integration.js']);
+  for(const [file,extension] of Object.entries(childAccess.files)){
+    const current=readWorkingSource(file);
+    assert.ok(extension.reason);
+    assert.equal(digest(beforeChildAccess(file,current)),extension.beforeSha256);
+    assert.throws(()=>beforeChildAccess(file,current+'/* changed */'),/complete Accès enfant source changed/);
+  }
+});
 test('Family onboarding preserves the complete reviewed Santé transport and access routes',()=>{
   assert.equal(familyOnboarding.baseCommit,'a54d0a14c738499a4148d28ca47564215a57c633');
   assert.deepEqual(Object.keys(familyOnboarding.files),[
@@ -37,7 +51,7 @@ test('Family onboarding preserves the complete reviewed Santé transport and acc
     'essai-stitch-v7/access-flow.mjs','essai-stitch-v7/access.js','essai-stitch-v7/family-members-review.js'
   ]);
   for(const file of Object.keys(familyOnboarding.files)){
-    const current=readWorkingSource(file),previous=beforeOnboarding(file,current);
+    const current=rawOnboardingSource(file),previous=beforeOnboarding(file,current);
     assert.notEqual(previous,current);
     assert.throws(()=>beforeOnboarding(file,current+'/* changed */'),/complete Onboarding familial source changed/);
   }
@@ -50,7 +64,7 @@ test('Health amendments preserve the existing native source history',()=>{
     'essai-stitch-v7/build-source.cjs','essai-stitch-v7/chat-engine.js','essai-stitch-v7/chat.js','essai-stitch-v7/family-engine.js','essai-stitch-v7/family.js'
   ]);
   for(const file of Object.keys(healthIntegration.files)){
-    const current=beforeOnboarding(file,readWorkingSource(file)),previous=beforeHealth(file,current);
+    const current=beforeOnboarding(file,rawOnboardingSource(file)),previous=beforeHealth(file,current);
     assert.notEqual(previous,current);
     assert.throws(()=>beforeHealth(file,current+'/* changed */'),/complete Santé source changed/);
     assert.throws(()=>beforeHealth(file,previous),/complete Santé source changed/);
@@ -60,7 +74,7 @@ test('ingredient search preserves the exact catalogue writer before it adds stan
   assert.equal(ingredientsLot4.baseCommit,'e4388442253788e04afd92ee9f099ec67dec81df');
   const file='essai-stitch-v7/cuisine-engine.js';
   assert.deepEqual(Object.keys(ingredientsLot4.files),[file]);
-  const current=readWorkingSource(file);
+  const current=rawOnboardingSource(file);
   assert.throws(()=>beforeIngredientsLot4(file,current+'/* changed */'),/complete Ingrédients lot 4 source changed/);
   assert.notEqual(beforeIngredientsLot4(file,current),current);
 });

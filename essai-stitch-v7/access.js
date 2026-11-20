@@ -7,7 +7,7 @@ window.DobbyAccess = (() => {
   const model = import('./access-flow.mjs');
   const pendingKey = 'v7-incoming-invitation', recoveryKey='v7-access-recovery';
   let context, initialized, operation, unsubscribe, invitationToken = '', invitationType='generic', invitation = null;
-  let callbackError = '', recovery = false, lastUser = null, loggingOut = false;
+  let callbackError = '', recovery = false, lastUser = null, loggingOut = false, invitationSwitch = null;
   const api = () => E.win().DobbyFamilyUI;
   const account = () => api().access;
   const state = () => account().state();
@@ -94,6 +94,26 @@ window.DobbyAccess = (() => {
     if(matched&&(state().userId||null)===expected.userId&&invitationToken===expected.token&&invitationType===(expected.type||'generic')){invitationToken='';invitationType='generic';invitation=null;}
     return matched;
   }
+  async function switchChildAccount(expected) {
+    assertActor(expected.actor);
+    if(invitationToken!==expected.token||invitationType!=='child-account')throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');
+    invitationSwitch=expected;
+    loggingOut=true;
+    try {
+      await account().logout();
+      const signedOut=()=>!state().userId&&!api().connectionState?.().userId;
+      let retained=false;
+      await api().updateMeta(pendingKey,saved=>{
+        if(!signedOut()||saved?.token!==expected.token||saved.type!=='child-account'||saved.userId&&saved.userId!==expected.userId)return saved;
+        retained=true;
+        return {...saved,userId:null};
+      });
+      if(!signedOut())throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');
+      if(!retained)throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');
+      invitationToken=expected.token;invitationType='child-account';
+      await go('access-join');
+    } finally {invitationSwitch=null;loggingOut=false;}
+  }
   async function resumeHousehold() {
     const pending={token:invitationToken,type:invitationType,userId:state().userId||null};
     if(!pending.userId)throw Error('Connexion requise.');
@@ -138,7 +158,8 @@ window.DobbyAccess = (() => {
         if(lastUser&&next.userId!==lastUser){
           const previous={token:invitationToken,type:invitationType,userId:lastUser};
           invitationToken='';invitationType='generic';invitation=null;
-          void clearInvitation(previous);recovery=false;void api().putMeta(recoveryKey,null);
+          if(invitationSwitch?.userId!==lastUser||next.userId)void clearInvitation(previous);
+          recovery=false;void api().putMeta(recoveryKey,null);
           if(!loggingOut&&!(operation&&context?.ui.view==='access-auth')){
             // This subscriber is invoked by the iframe. Resolve the target in the V7 document.
             window.location.replace(new URL('./famille.html#access',window.location.href).href);
@@ -158,8 +179,17 @@ window.DobbyAccess = (() => {
   }
   async function next() {
     const {destination}=await model;
-    const current=state();
-    if(invitationToken&&current.userId)await api().putMeta(pendingKey,{token:invitationToken,...(invitationType==='child-account'?{type:invitationType}:{}),userId:current.userId});
+    const current=state(),owner=actorToken(current),token=invitationToken,type=invitationType;
+    if(token&&current.userId){
+      let matched=false;
+      await api().updateMeta(pendingKey,saved=>{
+        if(actorToken()!==owner||saved?.token!==token||(saved.type||'generic')!==type||saved.userId&&saved.userId!==current.userId)return saved;
+        matched=true;
+        return {...saved,userId:current.userId};
+      });
+      assertActor(owner);
+      if(!matched||invitationToken!==token||invitationType!==type)throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');
+    }
     await go(destination(current,{invitationPending:!!invitationToken,invitationType}));
   }
   async function prepare(view) {
@@ -172,8 +202,9 @@ window.DobbyAccess = (() => {
     copy.append(el('p','Missions, repas, courses, événements, contrats et assurances : retrouvez les informations de votre foyer dans un même grimoire.','access-description'),button('Continuer',()=>go('access-auth',{mode:'login'})));
   }
   function authentication() {
+    if(invitationType==='child-account'&&state().userId){void go('access-join');return;}
     const mode=context.ui.accessMode||'login';
-    const copy=shell('Entrer dans DOBBY','Retrouvez votre foyer ou commencez une nouvelle aventure.');
+    const copy=shell('Entrer dans DOBBY',invitationType==='child-account'?'Utilisez l’adresse e-mail personnelle de l’enfant. Elle doit être distincte de celle de tout autre compte DOBBY.':'Retrouvez votre foyer ou commencez une nouvelle aventure.');
     const tabs=el('div','','access-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','Accès à DOBBY');
     for(const [id,label]of [['login','Connexion'],['signup','Inscription'],['invite','Invitation']]){
       const tab=button(label,()=>id==='invite'?go('access-join'):go('access-auth',{mode:id}),true);
@@ -230,7 +261,7 @@ window.DobbyAccess = (() => {
   }
   function createHousehold() {
     if(!state().authenticated){void go('access-auth',{mode:'login'});return;}
-    if(state().phase!=='household'){void next();return;}
+    if(state().phase!=='household'||invitationType==='child-account'){void next();return;}
     const owner=actorToken();
     const copy=shell('Créer mon foyer','Donnez un nom à votre foyer. Vos proches pourront ensuite vous rejoindre sur invitation.');
     const form=el('form','','access-form'),name=field(form,'Nom du foyer','householdName',{required:true,maxLength:100,autocomplete:'off'});
@@ -242,7 +273,10 @@ window.DobbyAccess = (() => {
     const form=el('form','','access-form'),token=field(form,'Code ou lien d’invitation','invitation',{required:true,maxLength:2048,autocomplete:'off'});
     token.value=invitationToken?(invitationType==='child-account'?'child:':'')+invitationToken:'';token.spellcheck=false;
     const result=el('section','','access-invitation');result.dataset.accessInvitation='';result.setAttribute('aria-live','polite');
+    const startHousehold=button('Créer un nouveau foyer',async()=>{await clearInvitation();if(state().authenticated)await next();else await go('access-auth',{mode:'signup'});},true);
     function show() {
+      if(invitationType==='child-account')startHousehold.remove();
+      else if(!startHousehold.isConnected)copy.append(startHousehold);
       result.replaceChildren();
       delete result.dataset.invitationState;
       if(!invitation){result.append(el('p','Vérifiez votre invitation avant de rejoindre le foyer.'));return;}
@@ -253,20 +287,34 @@ window.DobbyAccess = (() => {
         if(current.userId)result.append(button(current.phase==='active'&&current.verified?'Accéder à mon foyer':'Vérifier mon accès au foyer',resumeHousehold));
         return;
       }
-      result.append(el('p','UNE PLACE VOUS ATTEND','access-kicker'),el('h2',invitation.household.name),el('p','Invitation de '+invitation.inviter.name));
-      if(invitationType==='child-account')result.append(el('p','Cette invitation ouvre l’accès à votre profil enfant existant. Votre avatar, vos choix magiques et votre histoire seront conservés.'));
+      const child=invitationType==='child-account',shown=invitation,shownToken=invitationToken,shownType=invitationType;
+      result.append(el('p','UNE PLACE VOUS ATTEND','access-kicker'),el('h2',shown.household.name),el('p','Invitation de '+shown.inviter.name));
+      if(child)result.append(el('p','Cette invitation ouvre l’accès à votre profil enfant existant. Votre avatar, vos choix magiques et votre histoire seront conservés.'));
       if(invitation.expiresAt){const when=new Date(invitation.expiresAt);if(Number.isFinite(when.getTime()))result.append(el('p','Valable jusqu’au '+when.toLocaleDateString('fr-FR'),'access-note'));}
       const current=state();
-      if(current.authenticated&&(current.phase!=='profile'||invitationType==='child-account')){const owner=actorToken(current);result.append(button('Rejoindre ce foyer',async()=>{assertActor(owner);await account()[invitationType==='child-account'?'acceptChildInvitation':'acceptInvitation'](invitationToken);if(!state().verified)throw Error('Rattachement non confirmé.');await clearInvitation();await go('traverse');}));}
+      const owner=actorToken(current);
+      if(child&&current.userId&&!(['profile','household'].includes(current.phase)||current.verified&&current.profile?.memberCategory==='child'&&current.memberId===shown.targetMemberId&&current.householdId===shown.household.id)){
+        result.append(el('p','Cette invitation s’utilise avec le compte personnel de l’enfant.'),button('Se déconnecter pour changer de compte',()=>switchChildAccount({token:shownToken,userId:current.userId,actor:owner})));
+      }
+      else if(current.authenticated&&(current.phase!=='profile'||child))result.append(button('Rejoindre ce foyer',async()=>{
+        assertActor(owner);
+        if(invitationToken!==shownToken||invitationType!==shownType)throw Error('L’invitation a changé. Vérifiez le lien actuel avant de continuer.');
+        await account()[child?'acceptChildInvitation':'acceptInvitation'](shownToken);
+        const joined=state(),joinedOwner=actorToken(joined);
+        if(!joined.verified||joined.userId!==current.userId||child&&(joined.memberId!==shown.targetMemberId||joined.householdId!==shown.household.id))throw Error('Rattachement non confirmé.');
+        await clearInvitation({token:shownToken,type:shownType,userId:joined.userId},joinedOwner);
+        assertActor(joinedOwner);
+        await go('traverse');
+      }));
       else if(current.authenticated)result.append(button('Créer mon profil',()=>go('access-profile')));
       else {
-        if(invitationType==='generic')result.append(button('Créer mon compte pour rejoindre',()=>go('access-auth',{mode:'signup'})));
-        result.append(button('Me connecter pour rejoindre',()=>go('access-auth',{mode:'login'}),invitationType==='generic'));
+        result.append(button('Créer mon compte pour rejoindre',()=>go('access-auth',{mode:'signup'})));
+        result.append(button('Me connecter pour rejoindre',()=>go('access-auth',{mode:'login'}),true));
       }
     }
     token.addEventListener('input',()=>{invitation=null;show();});
     submit(form,'Vérifier l’invitation',async()=>{await rememberInvitation(invitationInput(token.value));invitation=await account()[invitationType==='child-account'?'previewChildInvitation':'previewInvitation'](invitationToken);status('');show();});
-    copy.append(form,result,button('Créer un nouveau foyer',async()=>{await clearInvitation();if(state().authenticated)await next();else await go('access-auth',{mode:'signup'});},true));show();
+    copy.append(form,result);show();
   }
   function confirmation() {
     const copy=shell('Consultez votre messagerie','Si votre adresse permet cette opération, un message contient le lien pour continuer.');
@@ -278,6 +326,11 @@ window.DobbyAccess = (() => {
     submit(form,'Enregistrer mon mot de passe',async()=>{if(password.value!==confirm.value){confirm.setCustomValidity('Les mots de passe doivent être identiques.');status('Les mots de passe doivent être identiques.',true);return;}await account().updatePassword(password.value);recovery=false;await api().putMeta(recoveryKey,null);await next();});const clearMismatch=()=>confirm.setCustomValidity('');confirm.addEventListener('input',clearMismatch);password.addEventListener('input',clearMismatch);copy.append(form);
   }
   function unavailable() {
+    if(state().reason==='child_access_suspended'){
+      const copy=shell('Accès suspendu','Un parent du foyer a suspendu cet accès. Votre fiche et son historique sont conservés.');
+      copy.append(button('Se déconnecter',performLogout));
+      return;
+    }
     const copy=shell('Le foyer n’est pas encore accessible','Votre accès n’a pas pu être confirmé. Vos données existantes sont conservées.');
     copy.append(button('Réessayer',async()=>{await account().refresh();await next();}),button('Revenir à la connexion',()=>go('access-auth',{mode:'login'}),true));
   }
@@ -286,7 +339,7 @@ window.DobbyAccess = (() => {
     if(context.ui.view==='access'){
       const current=state();const initial=!current.authenticated&&current.phase==='unavailable'?'access-welcome':null;
       const copy=shell('Ouverture de DOBBY','Votre foyer est en cours de vérification.');copy.setAttribute('aria-busy','true');
-      setTimeout(()=>{if(recovery)passwordRecovery();else if(callbackError)void go('access-auth',{mode:'login'});else if(initial)void go(initial);else void next();},0);return;
+      setTimeout(()=>{if(context!==value||context.ui.view!=='access')return;if(recovery)passwordRecovery();else if(callbackError)void go('access-auth',{mode:'login'});else if(initial)void go(initial);else void next().catch(error=>status(publicError(error),true));},0);return;
     }
     if(recovery){passwordRecovery();return;}
     const renderer={'access-welcome':welcome,'access-auth':authentication,'access-profile':profile,'access-create':createHousehold,'access-join':invitationView,'access-confirmation':confirmation,'access-unavailable':unavailable}[context.ui.view];
@@ -304,7 +357,7 @@ window.DobbyAccess = (() => {
     await initialize();
     if(!state().verified&&api().connectionState().householdId)await account().refresh();
     const current=state(),child=memberId!==null;
-    if(!current.verified||current.permissions.canInvite!==true)throw Error('Invitation non autorisée.');
+    if(!current.verified||(!child&&current.permissions.canInvite!==true))throw Error('Invitation non autorisée.');
     let target;
     if(child){target=E.read().members.find(member=>member.id===memberId);if(!target||target.memberCategory!=='child'||current.permissions.canLinkExistingChild!==true||E.memberPermissions(memberId).canLinkExistingChild!==true)throw Error('Le rattachement sécurisé d’un compte enfant n’est pas encore disponible.');}
     const owner=actorToken(current);
@@ -327,17 +380,16 @@ window.DobbyAccess = (() => {
     dialog.append(el('h2',title),info,message,generate,output,button('Copier le lien',async()=>{if(!output.hidden){await navigator.clipboard.writeText(output.value);status('Lien copié.',false,dialog);}},true),close);
     dialog.addEventListener('cancel',event=>{if(operation)event.preventDefault();else dialog.remove();});document.body.append(dialog);dialog.showModal();
   }
-  function logout(scope) {
-    return run(async()=>{
-      loggingOut=true;
-      try {
-        await account().logout();
-        if(api().connectionState?.().userId||state().userId)throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');
-        callbackError='';recovery=false;
-        await go('access-welcome');
-      } finally {loggingOut=false;}
-    },scope);
+  async function performLogout() {
+    loggingOut=true;
+    try {
+      await account().logout();
+      if(api().connectionState?.().userId||state().userId)throw Error('Le compte a changé. Reconnectez-vous avant de continuer.');
+      callbackError='';recovery=false;
+      await go('access-welcome');
+    } finally {loggingOut=false;}
   }
+  function logout(scope) {return run(performLogout,scope);}
   window.addEventListener('pageshow',event=>{if(event.persisted)void boot();});
   window.addEventListener('load',()=>void boot(),{once:true});
   return Object.freeze({handles:view=>views.has(view),prepare,render,refresh,leave,invite:()=>invitationDialog(),inviteChild:memberId=>invitationDialog(memberId),logout,editProfile:()=>go('access-profile',{mode:'edit'}),get busy(){return !!operation;}});

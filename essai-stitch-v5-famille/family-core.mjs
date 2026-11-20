@@ -107,9 +107,13 @@ export function isCanonicalChildMissionCompletion({query='',body={},access=null}
  if(!canonicalActiveIdentity(access)||access.profile.memberCategory!=='child'||access.permissions?.canCompleteMissionsV3!==true||typeof query!=='string'||!body||typeof body!=='object'||Array.isArray(body)||
   query.split('?')[0].replace(/^rpc\//,'')!=='dobby_missions_v3_write'||Object.keys(body).some(key=>!['p_household_id','p_expected_revision','p_operation_id','p_intent'].includes(key))||
   body.p_household_id!==access.householdId||!Number.isSafeInteger(body.p_expected_revision)||body.p_expected_revision<1||body.p_expected_revision>=Number.MAX_SAFE_INTEGER||typeof body.p_operation_id!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.p_operation_id))return false;
- try{return normalizeMissionIntent(body.p_intent).kind==='complete';}catch{return false;}
+ try{
+  const intent=normalizeMissionIntent(body.p_intent);
+  return intent.kind==='project'||intent.kind==='submit'&&intent.memberId===access.memberId||
+   intent.kind==='complete'&&intent.participantIds.length===1&&intent.participantIds[0]===access.memberId;
+ }catch{return false;}
 }
-export function assertSharedWrite({method='GET',query='',body={},access=null}={}) {
+export function assertSharedWrite({method='GET',query='',body={},access=null,childReleaseVerified=false}={}) {
  if(['GET','HEAD','OPTIONS'].includes(method.toUpperCase()))return;
  const category=access?.profile?.memberCategory;
  const rpc=query.split('?')[0].replace(/^rpc\//,'');
@@ -134,6 +138,6 @@ export function assertSharedWrite({method='GET',query='',body={},access=null}={}
  const target=typeof body?.p_member_id==='string'&&body.p_member_id.length>0,own=body?.p_member_id===access?.memberId,dependent=category==='parent'&&access?.permissions?.canManageDependents===true&&target,household=category==='parent'&&access?.permissions?.familyRolesVerified===true&&access.permissions.canManageHousehold===true&&access.capabilities?.familyRolesReady===true&&target;
  if(['parent','child'].includes(category)&&canonical&&access.permissions?.canMagic===true&&
     rpc==='dobby_v7_update_magic'&&(own||dependent||household)&&magicOnly)return;
- if(MISSION_V3_RELEASE_VERIFIED&&method.toUpperCase()==='POST'&&isCanonicalChildMissionCompletion({query,body,access}))return;
+ if((MISSION_V3_RELEASE_VERIFIED||childReleaseVerified)&&method.toUpperCase()==='POST'&&isCanonicalChildMissionCompletion({query,body,access}))return;
  throw Error('Données partagées en lecture seule : identité et catégorie canoniques vérifiées requises. Un enfant peut uniquement confirmer sa propre Maison et son propre Patronus avec les valeurs magiques prévues.');
 }

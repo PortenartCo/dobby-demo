@@ -30,6 +30,14 @@ window.DobbyHealthRuntime = (() => {
     return Boolean(demo && !access?.userId && !access?.authenticated);
   }
 
+  function filterHistoricalState(state) {
+    if (legacyDemo()) return state;
+    state.famHealth = [];
+    state.sharedHealthVisits = [];
+    if (Array.isArray(state.familyDocs)) state.familyDocs = state.familyDocs.filter(row => row?.category !== 'Santé');
+    return state;
+  }
+
   function capabilities(actor) {
     if (window.DobbyPublicConfig?.healthEssentialAvailable !== true) return Promise.resolve({});
     if (pendingProbe?.key === actor.key) return pendingProbe.promise;
@@ -210,7 +218,7 @@ window.DobbyHealthRuntime = (() => {
     if (document.visibilityState === 'visible') refreshAll({ recheck: false });
   });
 
-  return Object.freeze({ connect, legacyDemo,
+  return Object.freeze({ connect, legacyDemo, filterHistoricalState,
     handles: view => healthRoutes.has(view) && !legacyDemo(),
     mountCarnet, mountMenu, mountMember, mountAgenda, mountToday });
 })();

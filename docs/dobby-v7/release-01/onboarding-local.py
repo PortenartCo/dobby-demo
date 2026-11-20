@@ -66,13 +66,15 @@ def sql(source, user=ADMIN):
                   '-U', user, '-d', DATABASE, input=source)
 
 
-def install_family_sources():
+def install_family_sources(catalog_fixture=None):
     stitch = SOURCE / 'stitch19-20/supabase'
     catalog = (stitch / 'tests/catalog-fixture.sql').read_text()
     start = catalog.index('CREATE SCHEMA auth;')
     end = catalog.index('GRANT USAGE ON SCHEMA public,auth', start)
     sql(catalog[:start])
     sql(catalog[end:], 'postgres')
+    if catalog_fixture:
+        catalog_fixture(sql)
     sql((stitch / '01-apply.sql').read_text(), 'postgres')
     # The catalog fixture uses local owners and Auth's real helper. Reproduce
     # the repaired JWT lookup and module stamp without production fingerprints.
@@ -105,7 +107,7 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass  # Auth callback and invitation URLs contain short-lived credentials.
 
 
-def main():
+def main(fixture=None, browser_test='family-onboarding.cjs', catalog_fixture=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--evidence', type=Path, required=True)
     options = parser.parse_args()
@@ -141,7 +143,9 @@ def main():
         ), port=(auth_port, 9999))
         wait_until(lambda: http_ready(auth_origin + '/health'))
         sql("ALTER TABLE auth.users OWNER TO postgres; ALTER FUNCTION auth.uid() OWNER TO postgres;")
-        install_family_sources()
+        install_family_sources(catalog_fixture)
+        if fixture:
+            fixture(sql)
         sql(f"""
           CREATE ROLE dobby_fixture_rest LOGIN NOINHERIT PASSWORD '{PASSWORD}';
           GRANT anon, authenticated TO dobby_fixture_rest;
@@ -155,7 +159,7 @@ def main():
         env = dict(os.environ, DOBBY_TEST_ORIGIN=site, DOBBY_LOCAL_AUTH=auth_origin,
                    DOBBY_LOCAL_REST=rest_origin, DOBBY_LOCAL_MAIL=mail_origin,
                    DOBBY_LOCAL_PG_CONTAINER=NAME+'-db', DOBBY_ONBOARDING_EVIDENCE=str(options.evidence.resolve()))
-        subprocess.run(['node', 'essai-stitch-v7/tests/family-onboarding.cjs'], env=env, cwd=ROOT, check=True)
+        subprocess.run(['node', 'essai-stitch-v7/tests/' + browser_test], env=env, cwd=ROOT, check=True)
     finally:
         for service in ('-rest', '-auth', '-mail', '-db'):
             subprocess.run(['docker', 'rm', '-f', NAME+service], check=False, capture_output=True)
