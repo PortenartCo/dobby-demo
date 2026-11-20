@@ -15,6 +15,7 @@ for(const route of routes){
   const layout='essai-stitch-v7/'+route.view+'-layout.html';
   html=fs.readFileSync(path.resolve(__dirname,'..',layout),'utf8');
   entry.layout={source:layout,sha256:crypto.createHash('sha256').update(html).digest('hex'),decisions:'Contacts review 2026-11-16 / Stitch 24'};
+  html=html.replaceAll('src="./assets/contacts/','src="../../assets/contacts/');
  }else html=html.replace(/<body\b/,`<body data-stitch-source="${route.id}"`);
  fs.writeFileSync(path.join(target,route.view+'.html'),html);provenance.push(entry);
 }
