@@ -3,12 +3,12 @@
   "files": {
     "essai-stitch-v5-famille/family-v2.js": {
       "beforeSha256": "8fd12f7e4bb69e321cb347d63383ec1483688c84a327dba7c088c474532f7971",
-      "afterSha256": "5c54631081bc0bf59cea235570f86eda4003d926991c010df545566df98756b2",
+      "afterSha256": "1ad17c57e501b272b159c2f6d9673b2240cc620807279d4ba4e9507a26f9dbb0",
       "patches": [
         {
           "line": 344,
           "before": "",
-          "after": "      // The first module probe may predate the canonical member binding.\n      // Probe again before syncing with that verified member.\n      if(verifiedBinding()&&f.provider?.start)await f.provider.start();\n"
+          "after": "      // The first module probe may predate the canonical member binding.\n      // Probe again before syncing with that verified member.\n      if(verifiedBinding())await f.provider?.refreshMissionCapabilities?.();\n"
         }
       ]
     },
@@ -111,7 +111,7 @@
     },
     "essai-stitch-v5-famille/family-modules.js": {
       "beforeSha256": "3ee24db4f9e9ed3afd889aae64df6e32438026353a5d4c5c5c586cb3d181df14",
-      "afterSha256": "67ce002c33bef9646934ec7865b5d2d26213d6ab9c071d8bc948e46ed041d283",
+      "afterSha256": "bbb61b569da646a863d5f5f305541b476d140310a07e2fd82296d21fc8daf94b",
       "patches": [
         {
           "line": 502,
@@ -129,19 +129,19 @@
           "after": "}\nasync function recordSharedRunes(intent){\n if(!runesLot1Available())throw Error('L’écriture de Runes exige un parent vérifié et un partage Missions actif et sans conflit.');\n const state=states.missions;\n return sendMissionsV3(intent,{module:'missions',revision:Number(state.revision),payload:JSON.parse(state.synced)});\n"
         },
         {
-          "line": 983,
-          "before": "    if(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true){\n",
-          "after": "    if(missionV3Transport){\n"
+          "line": 946,
+          "before": "",
+          "after": "// Re-probe only Missions after canonical identity is established. A changed\n// member token invalidates the old capability, without taking the rest of\n// the shared modules offline while the two read-only RPCs are in flight.\nasync function refreshMissionCapabilities(){\n const token=liveContextToken();\n if(!token||!backendReady||!ctx)return;\n const household=encodeURIComponent(ctx.householdId);\n const stillCurrent=()=>token===liveContextToken();\n await initializeMissionsV3();\n if(!stillCurrent())return;\n let v3=null,v2=null;\n if(missionV3Transport){\n  try{v3=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+household);}catch{}\n  if(!stillCurrent())return;\n }\n try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}\n if(!stillCurrent())return;\n runeV3Capability={token,value:v3};\n runeCapability={token,available:v2?.protocol===2&&v2.directWritesBlocked===true&&v2.maxPayloadBytes===262144};\n if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));\n}\n"
         },
         {
           "line": 1000,
-          "before": "",
-          "after": "  if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));\n"
+          "before": "    // Capability is an authenticated, read-only check, never persisted as authority.\n    runeCapability={token:startToken,available:false};\n    await initializeMissionsV3();if(!stillCurrent())return;\n    runeV3Capability={token:startToken,value:null};\n    if(missionIntentCore?.MISSION_V3_RELEASE_VERIFIED===true){\n      try{const value=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+encodeURIComponent(c.householdId));if(!stillCurrent())return;runeV3Capability={token:startToken,value};}\n      catch{if(!stillCurrent())return;}\n    }\n    try{const capability=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+encodeURIComponent(c.householdId));\n      if(!stillCurrent())return;\n      if(capability?.protocol===2&&capability.directWritesBlocked===true&&capability.maxPayloadBytes===262144)runeCapability={token:startToken,available:true};\n    }catch{if(!stillCurrent())return;}\n",
+          "after": "    await refreshMissionCapabilities();\n    if (!stillCurrent()) return;\n"
         },
         {
-          "line": 1422,
-          "before": "window.DobbySharedRunesV3=Object.freeze({available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}});\n",
-          "after": "window.DobbySharedRunesV3=Object.freeze({\n available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),\n canManageRunes:runesLot1Available, recordRunes:recordSharedRunes,\n summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}\n});\n"
+          "line": 1432,
+          "before": "window.DobbySharedRunesV3=Object.freeze({available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}});\napi.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,\n",
+          "after": "window.DobbySharedRunesV3=Object.freeze({\n available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),\n canManageRunes:runesLot1Available, recordRunes:recordSharedRunes,\n summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}\n});\napi.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,refreshMissionCapabilities,\n"
         }
       ]
     },

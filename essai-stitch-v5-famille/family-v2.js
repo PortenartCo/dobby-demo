@@ -344,7 +344,7 @@ async function sync() {
       if(epoch!==f.epoch)return;
       // The first module probe may predate the canonical member binding.
       // Probe again before syncing with that verified member.
-      if(verifiedBinding()&&f.provider?.start)await f.provider.start();
+      if(verifiedBinding())await f.provider?.refreshMissionCapabilities?.();
     }
     await pull(epoch);
     const queue = [...f.cache.values()].filter(x => x.syncState === 'pending')

@@ -31,7 +31,7 @@ async function expectRegistry(page,key,expected){await page.waitForFunction(({ke
     if(url.pathname==='/auth/v1/token')return reply({access_token:'fixture-prep-'+index,refresh_token:'fixture-prep-refresh-'+index,expires_in:3600,user:{id:user(index),email:'prep-'+index+'@fixture.example.test'}});
     if(url.pathname==='/rest/v1/dobby_v2_memberships')return reply([{household_id:HH,user_id:user(index),active:true,role:'owner'}]);
     if(url.pathname==='/rest/v1/dobby_v2_households')return reply([{id:HH}]);
-    if(url.pathname==='/rest/v1/rpc/dobby_missions_v2_capabilities')return reply({});
+    if(/^\/rest\/v1\/rpc\/dobby_missions_v[23]_capabilities$/.test(url.pathname))return reply({});
     // Shared PREP writes require the real native client to verify a canonical
     // parent and adopt the existing family registry from the HTTP boundary.
     if(url.pathname==='/rest/v1/rpc/dobby_v7_context'){

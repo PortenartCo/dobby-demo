@@ -944,6 +944,27 @@ function applyShared(id, payload) {
     save(); render();
   } finally { applying = false; }
 }
+// Re-probe only Missions after canonical identity is established. A changed
+// member token invalidates the old capability, without taking the rest of
+// the shared modules offline while the two read-only RPCs are in flight.
+async function refreshMissionCapabilities(){
+ const token=liveContextToken();
+ if(!token||!backendReady||!ctx)return;
+ const household=encodeURIComponent(ctx.householdId);
+ const stillCurrent=()=>token===liveContextToken();
+ await initializeMissionsV3();
+ if(!stillCurrent())return;
+ let v3=null,v2=null;
+ if(missionV3Transport){
+  try{v3=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+household);}catch{}
+  if(!stillCurrent())return;
+ }
+ try{v2=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+household);}catch{}
+ if(!stillCurrent())return;
+ runeV3Capability={token,value:v3};
+ runeCapability={token,available:v2?.protocol===2&&v2.directWritesBlocked===true&&v2.maxPayloadBytes===262144};
+ if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));
+}
 async function start() {
   const c = api.getContext();
   if (!c) return;
@@ -977,18 +998,8 @@ async function start() {
     if (!Array.isArray(shared)) throw Error('Liste des modules partagés invalide');
     sharedAvailable = [...new Set(shared.map(row => row.module))].filter(id => byId.has(id));
     backendReady = true;
-    // Capability is an authenticated, read-only check, never persisted as authority.
-    runeCapability={token:startToken,available:false};
-    await initializeMissionsV3();if(!stillCurrent())return;
-    runeV3Capability={token:startToken,value:null};
-    if(missionV3Transport){
-      try{const value=await api.authorized('GET','rpc/dobby_missions_v3_capabilities?p_household_id='+encodeURIComponent(c.householdId));if(!stillCurrent())return;runeV3Capability={token:startToken,value};}
-      catch{if(!stillCurrent())return;}
-    }
-    try{const capability=await api.authorized('GET','rpc/dobby_missions_v2_capabilities?p_household_id='+encodeURIComponent(c.householdId));
-      if(!stillCurrent())return;
-      if(capability?.protocol===2&&capability.directWritesBlocked===true&&capability.maxPayloadBytes===262144)runeCapability={token:startToken,available:true};
-    }catch{if(!stillCurrent())return;}
+    await refreshMissionCapabilities();
+    if (!stillCurrent()) return;
   } catch (e) {
     if (!stillCurrent()) return;
     backendReady = false; sharedAvailable = [];
@@ -998,7 +1009,6 @@ async function start() {
   }
   if (!stillCurrent()) return;
   checked = true;
-  if(typeof CustomEvent==='function')window.dispatchEvent?.(new CustomEvent('dobby:missions-capability'));
   api.repaint();
 }
 // Access onboarding adopts only a server-confirmed canonical registry. This is
@@ -1425,7 +1435,7 @@ window.DobbySharedRunesV3=Object.freeze({
  canManageRunes:runesLot1Available, recordRunes:recordSharedRunes,
  summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}
 });
-api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,
+api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,refreshMissionCapabilities,
   isConfigured(id){return ctx?Boolean(states[id]?.active):null;},
   isActive(id) {return Boolean(ctx && backendReady && states[id]?.active && !states[id]?.conflict);},
   statusFor(id) { const def=byId.get(id); return def?stateLabel(def):'Module inconnu'; }
