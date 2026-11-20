@@ -68,7 +68,7 @@ def without_catalog_preflight(path):
     return result
 
 
-def main():
+def main(continuation=None):
     sql(old_file('tests/shared-runes-v2/bootstrap.sql'))
     sql("""
       CREATE ROLE service_role NOLOGIN;
@@ -246,17 +246,23 @@ def main():
     sql(migration,error='P0001',installer=True)
     assert read()==old
     print('PASS précontrôle: réexécution refusée sans mutation')
+    if continuation:
+        continuation(a,b,child,outsider,hh,read,write,snapshot,mission)
 
 
-try:
-    docker('run','--rm','--detach','--name',CONTAINER,'--network','none',
-           '--tmpfs','/var/lib/postgresql/data:rw,size=256m',
-           '-e','POSTGRES_HOST_AUTH_METHOD=trust','-e','POSTGRES_DB=dobby_lot1',
-           '-e','POSTGRES_USER=dobby_lot1_admin',IMAGE)
-    info = json.loads(docker('inspect',CONTAINER))[0]
-    assert info['HostConfig']['NetworkMode']=='none' and not info['HostConfig']['PortBindings']
-    docker('exec',CONTAINER,'bash','-c',
-           'for i in {1..60}; do pg_isready -h 127.0.0.1 -U postgres -d dobby_lot1 >/dev/null && exit 0; sleep 1; done; exit 1')
-    main()
-finally:
-    subprocess.run([*DOCKER,'stop',CONTAINER],capture_output=True)
+def run_fixture(continuation=None):
+    try:
+        docker('run','--rm','--detach','--name',CONTAINER,'--network','none',
+               '--tmpfs','/var/lib/postgresql/data:rw,size=256m',
+               '-e','POSTGRES_HOST_AUTH_METHOD=trust','-e','POSTGRES_DB=dobby_lot1',
+               '-e','POSTGRES_USER=dobby_lot1_admin',IMAGE)
+        info = json.loads(docker('inspect',CONTAINER))[0]
+        assert info['HostConfig']['NetworkMode']=='none' and not info['HostConfig']['PortBindings']
+        docker('exec',CONTAINER,'bash','-c',
+               'for i in {1..60}; do pg_isready -h 127.0.0.1 -U postgres -d dobby_lot1 >/dev/null && exit 0; sleep 1; done; exit 1')
+        main(continuation)
+    finally:
+        subprocess.run([*DOCKER,'stop',CONTAINER],capture_output=True)
+
+if __name__ == '__main__':
+    run_fixture()

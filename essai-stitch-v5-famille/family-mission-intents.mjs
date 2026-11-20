@@ -1,7 +1,10 @@
 /* Shared Missions V3 transport. Server owns credits, dates, cycles and totals.
  * This module does not authorize a user or certify a deployed backend.
  */
+import {projectRecurringMissions,brusselsDate} from './family-missions-core.mjs';
 import * as runes from './family-runes-core.mjs';
+export {participationStatus} from './family-mission-progress.mjs';
+import {isProgressIntent,normalizeProgressIntent,PROGRESS_KEYS,validateProgress,validateProgressReceipt} from './family-mission-progress.mjs';
 
 // Change only after the real installation and security recipe are recorded.
 // A capability response, browser flag or saved metadata cannot open this gate.
@@ -27,6 +30,8 @@ export function missionV3Summary(memberId,credits=[],requests=[]){
  })};
 }
 export const missionLot1Capability=value=>missionV3Capability(value)&&value.runesLot1===1;
+export const needsIndividualProjection=rows=>projectRecurringMissions(rows,brusselsDate(),{series:'individual'}).length>rows.length;
+export const missionLot2Capability=value=>missionLot1Capability(value)&&value.runesLot2===1;
 const award=row=>Object.fromEntries(['missionId','memberId','effort','amount','customRunes','eventId','kind','cycle','reverses','allocations'].filter(key=>Object.hasOwn(row,key)).map(key=>[key,row[key]]));
 
 export function missionV3Capability(value){
@@ -37,6 +42,8 @@ export function missionV3Capability(value){
 }
 export function normalizeMissionIntent(value){
  if(!object(value))throw Error('Intention Missions invalide');
+ if(isProgressIntent(value))return normalizeProgressIntent(value);
+ if(value.kind==='project'&&Object.keys(value).length===1)return {kind:'project'};
  const awardIntent=runes.isLot1Entry(value);
  const allowed=awardIntent?['kind','memberId','amount','reason',...(value.kind==='correction'?['targetEventId','expectedAmount']:[])]:value.kind==='snapshot'?['kind','payload']:value.kind==='complete'?['kind','missionId','participantIds']:value.kind==='reopen'?['kind','missionId']:[];
  if(!allowed.length||Object.keys(value).some(key=>!allowed.includes(key)))throw Error('Champ d’intention Missions interdit');
@@ -69,10 +76,11 @@ export function validateMissionV3Module(module,previous=null){
  if(entries.length&&p.runeLedgerVersion!==3)throw Error('Bonus et corrections exigent le registre V3');
  runes.lot1Balances(runes.normalizeCredits(p.runeCredits.filter(row=>!runes.isLot1Entry(row)).map(knownCredit)),entries);
  for(const row of p.runeCredits)if(row.allocations!==undefined&&!equal(row.allocations,runes.allocateReward(row.amount,row.allocations.map(part=>part.memberId))))throw Error('Répartition confirmée non canonique');
+ validateProgress(p,previous?.payload,equal);
  if(previous){
   const incoming=new Map(p.runeCredits.map(row=>[runes.eventKey(row),row]));
   for(const row of previous.payload?.runeCredits||[])if(!equal(incoming.get(runes.eventKey(row)),row))throw Error('Historique confirmé supprimé ou réécrit ; opération conservée');
-  for(const key of Object.keys(previous.payload||{}))if(!['autoTasks','manualMissions','runeCredits','runeRequests','runeLedgerVersion'].includes(key)&&!equal(p[key],previous.payload[key]))throw Error('Extension Missions confirmée supprimée ou réécrite ; données conservées');
+  for(const key of Object.keys(previous.payload||{}))if(!['autoTasks','manualMissions','runeCredits','runeRequests','runeLedgerVersion',...PROGRESS_KEYS].includes(key)&&!equal(p[key],previous.payload[key]))throw Error('Extension Missions confirmée supprimée ou réécrite ; données conservées');
   if((previous.payload?.runeLedgerVersion||1)>p.runeLedgerVersion)throw Error('Version du registre régressive');
  }
  return module;
@@ -94,9 +102,18 @@ export function createMissionIntentTransport(options){
   const current=actor();if(expected&&(!equal(tuple(current),tuple(expected))||current.token!==expected.token||current.category!==expected.category))throw Error('Le contexte familial a changé ; opération conservée');
   return current;
  }
+ function allowedIntent(intent,current){
+  if(current.category!=='parent'&&!['complete','project'].includes(intent.kind)&&
+    !(intent.kind==='submit'&&intent.memberId===current.memberId))throw Error('Action réservée au parent ou à l’enfant assigné');
+  if((isProgressIntent(intent)||intent.kind==='project')&&!missionLot2Capability(options.capability()?.value))throw Error('Progression et récompenses en attente de vérification serveur');
+ }
  function expectations(intent,remote,current){
-  if(intent.kind!=='complete'&&current.category!=='parent')throw Error('Seul un parent peut gérer ou rouvrir les Missions');
+  allowedIntent(intent,current);
   if(remote)validateMissionV3Module(remote);
+  if(isProgressIntent(intent)||intent.kind==='project'){
+   if(!remote)throw Error('Partage Missions à activer');
+   return [];
+  }
   if(runes.isLot1Entry(intent)){
    if(!missionLot1Capability(options.capability()?.value)||!remote)throw Error('Partage des bonus et corrections indisponible');
    if(intent.kind==='bonus'&&!options.members().some(member=>member.id===intent.memberId&&member.memberCategory==='child'&&runes.isHumanMember(member)))throw Error('Choisissez un enfant du foyer');
@@ -126,7 +143,7 @@ export function createMissionIntentTransport(options){
   if(pending){
    if(pending.protocol!==3||!equal(pending.actor,tuple(current)))throw Error('Une opération d’un autre compte ou foyer est conservée');
    if(!equal(normalizeMissionIntent(pending.intent),pending.intent)||!Number.isSafeInteger(pending.expectedRevision)||pending.expectedRevision<0||typeof pending.id!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(pending.id))throw Error('Opération Missions locale invalide ; données conservées');
-   if(current.category!=='parent'&&pending.intent.kind!=='complete')throw Error('Seul un parent peut reprendre cette opération Missions');
+   allowedIntent(pending.intent,current);
    if(runes.isLot1Entry(pending.intent)&&!missionLot1Capability(options.capability()?.value))throw Error('Capacité de Runes à revérifier ; opération conservée');
    if(input&&!equal(normalizeMissionIntent(input),pending.intent))throw Error('Une autre opération Missions attend sa confirmation');
    if(pending.rejection)throw Error('Conflit Missions confirmé : relire le foyer et examiner l’intention conservée');
@@ -154,7 +171,7 @@ export function createMissionIntentTransport(options){
   guard(current);
   const receipt=response?.operation,module=response?.module;
   const delta=Number(receipt?.revision)-pending.expectedRevision,desiredStatus=pending.intent.kind==='complete'?'done':'open';
-  const noopAllowed=['complete','reopen'].includes(pending.intent.kind)&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);
+  const noopAllowed=pending.intent.kind==='project'||['complete','reopen'].includes(pending.intent.kind)&&pending.baseModule?.payload.runeLedgerVersion===3&&pending.baseModule.payload.manualMissions.some(row=>row.id===pending.intent.missionId&&row.status===desiredStatus);
   if(response?.protocol!==3||typeof response.replayed!=='boolean'||receipt?.id!==pending.id||![0,1].includes(delta)||delta===0&&!noopAllowed||!/^[a-f0-9]{64}$/i.test(receipt.digest||'')||Number(module?.revision)<Number(receipt.revision)||
    !response.replayed&&(typeof receipt.changed!=='boolean'||receipt.changed!==(delta===1)||Number(module?.revision)!==Number(receipt.revision)))throw Error('Confirmation V3 incohérente ; opération conservée');
   validateMissionV3Module(module,pending.baseModule);
@@ -170,10 +187,15 @@ export function createMissionIntentTransport(options){
     throw Error('Écriture de Runes non confirmée ; opération conservée');
    }
   }
+  if(isProgressIntent(pending.intent))validateProgressReceipt(module.payload,pending.intent,pending.id,Number(receipt.revision));
   if(Number(module.revision)===Number(receipt.revision)){
    if(pending.intent.kind==='snapshot'){
     if(!equal(module.payload.autoTasks,pending.intent.payload.autoTasks)||!equal(module.payload.manualMissions,pending.intent.payload.manualMissions))throw Error('Confirmation des modifications Missions incomplète ; opération conservée');
-   }else if(!runes.isLot1Entry(pending.intent)){
+   }else if(pending.intent.kind==='project'){
+    const oldRows=pending.baseModule.payload.manualMissions;
+    const known=new Map(module.payload.manualMissions.map(row=>[row.id,row]));
+    if(oldRows.some(row=>!equal(known.get(row.id),row)))throw Error('Projection Missions altérée');
+   }else if(!runes.isLot1Entry(pending.intent)&&!isProgressIntent(pending.intent)){
     const mission=module.payload.manualMissions.find(row=>row.id===pending.intent.missionId);
     if(!mission||mission.status!==(pending.intent.kind==='complete'?'done':'open'))throw Error('Confirmation de validation Missions incomplète ; opération conservée');
    }

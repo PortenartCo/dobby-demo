@@ -139,7 +139,7 @@ function assertParticipantSharing(payload={}){
 function assertV2ParticipantCompatibility(payload={}){
  const rows=[...(Array.isArray(payload.runeCredits)?payload.runeCredits:[]),...(Array.isArray(payload.runeRequests)?payload.runeRequests:[]),...(Array.isArray(st.runeCredits)?st.runeCredits:[]),...(Array.isArray(st.runeRequests)?st.runeRequests:[])];
  const remembered=JSON.parse(states.missions?.synced||'{}');
- const multiple=mission=>mission?.allFamily===true||Array.isArray(mission?.assigneeIds)&&mission.assigneeIds.length>1||mission?.recurrence?.rules?.some(rule=>rule.template?.allFamily===true||rule.template?.assigneeIds?.length>1);
+ const multiple=mission=>mission?.individualRunes===true||mission?.allFamily===true||Array.isArray(mission?.assigneeIds)&&mission.assigneeIds.length>1||mission?.recurrence?.rules?.some(rule=>rule.template?.allFamily===true||rule.template?.assigneeIds?.length>1);
  const multiMissions=[...(Array.isArray(payload.manualMissions)?payload.manualMissions:[]),...(Array.isArray(st.manualMissions)?st.manualMissions:[])].some(multiple);
  if(multiMissions||payload.runeLedgerVersion>=3||remembered.runeLedgerVersion>=3||rows.some(row=>row&&Object.hasOwn(row,'allocations'))||runes?.ledgerVersion?.(rows)>=3)throw Error('Partage des participants en attente de validation serveur. Missions et historique local conservés.');
 }
@@ -509,6 +509,22 @@ function runesLot1Available(){
  return Boolean(runesV3Available()&&missionIntentCore.missionLot1Capability(runeV3Capability?.value)&&
   state?.active&&!state.conflict&&v3Actor().category==='parent');
 }
+function runesLot2Available(){
+ const state=states.missions;
+ return Boolean(state?.active&&!state.conflict&&runesV3Available()&&missionIntentCore.missionLot2Capability(runeV3Capability?.value));
+}
+function readMissionProgress(){
+ if(!runesLot2Available())return null;
+ const {category,memberId}=v3Actor(),p=JSON.parse(states.missions.synced||'{}');
+ return {category,memberId,entries:p.missionParticipation||[],goals:p.runeGoals||{},rewards:p.runeRewards||[]};
+}
+async function recordMissionProgress(intent){
+ if(!runesLot2Available())throw Error('Partage avancé des Missions à vérifier ou conflit à résoudre.');
+ const state=states.missions,payload=JSON.parse(state.synced);
+ if(intent.missionId&&missionDigest(editableMissions(pick('missions')))!==missionDigest(editableMissions(payload)))
+  throw Error('Synchronisez vos modifications Missions avant de traiter la participation.');
+ return sendMissionsV3(intent,{module:'missions',revision:Number(state.revision),payload});
+}
 function v3Actor(){
  const actual=api.getContext(),canonical=api.access?.state?.();
  const coherent=actual?.identityVerified===true&&canonical?.authenticated===true&&canonical.verified===true&&canonical.phase==='active'&&
@@ -597,9 +613,14 @@ async function syncMissionsV3(state,remote){
  verifyRemoteV3(state,remote);
  const local=pick('missions'),base=JSON.parse(state.synced||'{}'),fields=mergeMissionEdits(base,local,remote.payload);
  if(!fields){applyMissionsV3(remote.payload,false);state.conflict={remote};await persist();return;}
- if(missionDigest(fields)===missionDigest(editableMissions(remote.payload))){applyMissionsV3(remote.payload);Object.assign(state,synchronized('missions',Number(remote.revision),remote.payload));await persist();return;}
+ if(missionDigest(fields)===missionDigest(editableMissions(remote.payload))){
+  if(missionLot2CanProject(remote))return sendMissionsV3({kind:'project'},remote);
+  applyMissionsV3(remote.payload);Object.assign(state,synchronized('missions',Number(remote.revision),remote.payload));await persist();return;}
  if(v3Actor().category!=='parent')throw Error('Les modifications locales ne peuvent pas être publiées par ce compte enfant. Elles sont conservées.');
  return sendMissionsV3({kind:'snapshot',payload:{...remote.payload,...fields,runeRequests:[]}},remote);
+}
+function missionLot2CanProject(remote){
+ return missionIntentCore.missionLot2Capability(runeV3Capability?.value)&&missionIntentCore.needsIndividualProjection(remote.payload.manualMissions);
 }
 async function activateMissionsV3(remote){
  const state=states.missions||(states.missions={active:false});
@@ -1433,6 +1454,8 @@ window.DobbySharedRunesV2=Object.freeze({available:runesV2Available});
 window.DobbySharedRunesV3=Object.freeze({
  available:runesV3Available,complete:(id,participantIds)=>completeSharedMissionV3(id,participantIds),reopen:id=>completeSharedMissionV3(id,[],'reopen'),
  canManageRunes:runesLot1Available, recordRunes:recordSharedRunes,
+ progressAvailable:runesLot2Available,readProgress:readMissionProgress,recordProgress:recordMissionProgress,
+ participationStatus(mission,last,today){return missionIntentCore?.participationStatus(mission,last,today)||'open';},
  summary(memberId){if(!runesV3Available())throw Error('Résumé V3 en attente de validation serveur.');return missionIntentCore.missionV3Summary(memberId,st.runeCredits||[],st.runeRequests||[]);}
 });
 api.registerModules({start,reset,html,labelFor,sync,onSave,adoptVerifiedFamily,revalidateExistingFamily,refreshMissionCapabilities,
