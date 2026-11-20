@@ -30,7 +30,7 @@ Les commandes ci-dessous utilisent des services et identités fictifs. Le client
 
 ```sh
 npm ci --ignore-scripts --prefix essai-stitch-v7/tests
-python3 -u docs/dobby-v7/comptes-enfants/tests/run-local.py
+python3 -u docs/dobby-v7/comptes-enfants/tests/run-local.py --storage-http
 python3 -u docs/dobby-v7/comptes-enfants/tests/onboarding-local.py --evidence /tmp/dobby-enfants-auth
 docker pull supabase/storage-api:v1.89.12@sha256:8526956cb462e9f7d392e9848ec77133b2769982ed614e9753cc687e8e4339a6
 python3 docs/dobby-v7/sante-essentielle/test-postgres.py --storage

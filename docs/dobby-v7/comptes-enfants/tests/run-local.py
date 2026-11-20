@@ -27,18 +27,21 @@ STORAGE_IMAGE = 'supabase/storage-api:v1.89.12@sha256:8526956cb462e9f7d392e9848e
 
 
 def setup_storage():
+    origin = None
     if args.storage_http:
+        # The baseline SQL fixture has a placeholder service role. Storage uses
+        # the platform bypass role for internal bucket lookup before object RLS.
+        sql("ALTER ROLE service_role BYPASSRLS;")
         docker('run','--rm','--detach','--name',storage,'--network',container,'--publish','127.0.0.1::5000',
                '-e',f'DATABASE_URL=postgres://dobby_lot1_admin@{container}:5432/dobby_lot1',
                '-e',f'AUTH_JWT_SECRET={JWT_KEY}','-e','DB_INSTALL_ROLES=true','-e','STORAGE_BACKEND=file',
                '-e','FILE_STORAGE_BACKEND_PATH=/tmp/dobby-child-files','-e','GLOBAL_S3_BUCKET=fixture',
                '-e','FILE_SIZE_LIMIT=1048576','-e','NODE_ENV=test','-e','TENANT_ID=fixture',
                '-e','REGION=local','-e','S3_PROTOCOL_ENABLED=false',STORAGE_IMAGE)
-        global storage_origin
-        storage_origin = 'http://' + docker('port',storage,'5000/tcp')
+        origin = 'http://' + docker('port',storage,'5000/tcp')
         for _ in range(100):
             try:
-                with urlopen(storage_origin+'/status',timeout=2) as response:
+                with urlopen(origin+'/status',timeout=2) as response:
                     if response.status==200:
                         break
             except OSError:
@@ -75,6 +78,7 @@ def setup_storage():
     """)
     install = DOC / 'finalisation-socle/supabase/family/03-install-storage-policies.sql'
     sql(install.read_text(), installer=True)
+    return origin
 
 
 def jwt(actor):
@@ -84,7 +88,7 @@ def jwt(actor):
     return body + '.' + b64(hmac.digest(JWT_KEY.encode(),body.encode(),'sha256'))
 
 
-def check_storage_http(household, a, b, child, sibling, outsider):
+def check_storage_http(origin, household, a, b, child, sibling, outsider):
     content = b'%PDF-1.4\nTEST document familial fictif\n'
     path = household + '/' + op() + '.pdf'
 
@@ -93,7 +97,7 @@ def check_storage_http(household, a, b, child, sibling, outsider):
         if who:
             headers['Authorization'] = 'Bearer '+jwt(who)
         try:
-            response = urlopen(Request(storage_origin+endpoint,data=data,headers=headers,method=method),timeout=5)
+            response = urlopen(Request(origin+endpoint,data=data,headers=headers,method=method),timeout=5)
         except HTTPError as caught:
             response = caught
         with response:
@@ -132,7 +136,7 @@ def http(origin, path, actor=None, body=None, status=200, token=None):
 
 def run(a,b,child,outsider,hh,read,write,snapshot,mission):
     sql((DOC/'runes-lot2/02-participations-recompenses.sql').read_text(), installer=True)
-    setup_storage()
+    storage_origin = setup_storage()
     raw = lambda who: sql(f"SELECT module FROM public.dobby_v2_modules WHERE household_id={quote(hh)} ORDER BY module;",who).splitlines()
     if args.red:
         assert raw(child) == [], 'The child directly reads the raw Famille and Missions payloads'
@@ -212,8 +216,8 @@ def run(a,b,child,outsider,hh,read,write,snapshot,mission):
     print('PASS deux enfants canoniques, invitation native, RLS et Storage familial, projection Famille et magie propre')
 
     run_missions(a,b,child,sibling,hh,read,write,snapshot,mission)
-    if args.storage_http:
-        check_storage_http(hh,a,b,child,sibling,outsider)
+    if storage_origin:
+        check_storage_http(storage_origin,hh,a,b,child,sibling,outsider)
     run_http(a,b,child,sibling,outsider,hh,invite=invitation['token'],acceptance=acceptance)
 
 

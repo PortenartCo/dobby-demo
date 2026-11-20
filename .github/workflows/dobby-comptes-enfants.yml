@@ -20,10 +20,10 @@ jobs:
         with:
           node-version: '22'
       - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
-      - name: RLS, invitations, projections, mutations et révocation
+      - name: RLS, Storage local, invitations, projections, mutations et révocation
         run: |
           git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527
-          python3 -u docs/dobby-v7/comptes-enfants/tests/run-local.py
+          python3 -u docs/dobby-v7/comptes-enfants/tests/run-local.py --storage-http
       - name: Parcours Auth avec PostgreSQL, PostgREST et Mailpit locaux
         run: |
           export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"

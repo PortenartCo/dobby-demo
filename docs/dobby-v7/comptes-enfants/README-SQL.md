@@ -24,7 +24,7 @@ La suspension utilise le verrou du foyer et l’appartenance cible. Après valid
 Depuis la racine du dépôt, avec Docker, Python 3 et Node :
 
 ```sh
-python -u docs/dobby-v7/comptes-enfants/tests/run-local.py
+python3 -u docs/dobby-v7/comptes-enfants/tests/run-local.py --storage-http
 ```
 
-Le runner crée les services temporaires PostgreSQL 17.11 et PostgREST 14.8 et expose PostgREST sur l’interface locale. Les profils, foyers et JWT sont fictifs. Le test vérifie la RLS de `storage.objects` en SQL et via PostgREST avec un catalogue Storage de test. La livraison de fichiers par le service Storage géré et les e-mails Auth relèvent de la recette séparée. La commande imprime l’empreinte SHA-256 du candidat SQL.
+Le runner crée les services temporaires PostgreSQL 17.11, PostgREST 14.8 et Storage 1.89.12. Les profils, foyers et JWT sont fictifs. La recette vérifie la RLS de `storage.objects` en SQL et via PostgREST. Avec `--storage-http`, elle vérifie aussi l’écriture et la lecture du même fichier familial via l’API Storage pour les parents et les refus pour les enfants, un autre foyer et l’accès public. La commande imprime l’empreinte SHA-256 du candidat SQL. Les e-mails Auth relèvent de la recette Chromium.
