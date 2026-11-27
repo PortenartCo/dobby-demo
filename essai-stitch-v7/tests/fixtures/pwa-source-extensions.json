@@ -1,0 +1,27 @@
+{
+  "baseCommit": "defffab85a769d49f53b50c05b076001d52d52ab",
+  "files": {
+    "essai-stitch-v7/build-source.cjs": {
+      "beforeSha256": "9f703065785d5b8d5f77d7591386442b2a02a64913e77efc470111466d0c45e0",
+      "afterSha256": "83a11061d8ae8eeb37bf58c0fecba307aeeaa82d44b9ce3a202c5aa9d4f80aa4",
+      "patches": [
+        {
+          "line": 33,
+          "before": "",
+          "after": "html=html.replace('</head>','<link rel=\"manifest\" href=\"./manifest.webmanifest\"><meta name=\"theme-color\" content=\"#180b07\"><meta name=\"apple-mobile-web-app-capable\" content=\"yes\"><meta name=\"apple-mobile-web-app-title\" content=\"DOBBY\"><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"./assets/pwa/apple-touch-icon.png\"><link rel=\"stylesheet\" href=\"./pwa-install.css\"><script defer src=\"./pwa-install.js\"></script></head>');\n// A fixed fragment identifies the V7 embedding without changing the V5 HTTP URL.\nhtml=html.replace('id=\"dv7-engine\" src=\"../essai-stitch-v5-famille/index.html\"', 'id=\"dv7-engine\" referrerpolicy=\"same-origin\" src=\"../essai-stitch-v5-famille/index.html#dobby-v7-engine\"');\n"
+        }
+      ]
+    },
+    "essai-stitch-v5-famille/family-modules.js": {
+      "beforeSha256": "6e807ddc834d12984d9abf1d833842e5ef8ee3e6441efd499e37243b60d6268a",
+      "afterSha256": "d6522dfee0ee13924777a244971ab22a2264fb0a3291512e7acada9c09b5db7d",
+      "patches": [
+        {
+          "line": 1119,
+          "before": "  const bindingDigest=payload=>moduleDigest('family',familyWithoutHistoricalHealth(payload,preserveHealth));\n",
+          "after": "  const bindingDigest=payload=>{\n    // famHealth is a device-only field, even if an old server row still has it.\n    const {famHealth,...registry}=familyWithoutHistoricalHealth(payload,preserveHealth);\n    return moduleDigest('family',registry);\n  };\n"
+        }
+      ]
+    }
+  }
+}

@@ -153,7 +153,7 @@ async function downloaded(page, selector) {
           assert.deepEqual(await visibleLabels(page), labels);
           assert.equal(await page.locator('main img,main header,main [data-e01-context]').count(), 0, 'No decorative hero or duplicate contextual header');
           assert.equal(await page.locator('main input').count(), 1);
-          assert.equal(await page.locator('main button:not(#clear-search-btn)').count(), 0);
+          assert.equal(await page.locator('main button:not(#clear-search-btn, #dobby-pwa-install)').count(), 0);
           assert.doesNotMatch(await page.locator('main').innerText(), /Index & Clés|Grand Sommaire|Tous les Outils|Note d.intendant|Autres accès|OMNISCIENT|Entrer en Audience|Revenir à l.Accueil/);
           for (const [index, destination] of destinations.entries()) {
             const card = page.locator('main a.module-item').nth(index);

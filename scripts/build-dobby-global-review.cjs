@@ -12,7 +12,15 @@ const config=fs.readFileSync(path.join(__dirname,'review/global-config.js')),dem
 fs.writeFileSync(path.join(out,'review-config.js'),config);fs.writeFileSync(path.join(out,'global-demo.js'),demo);
 for(const record of manifest.files){const file=path.join(out,record.path);let bytes=fs.readFileSync(file);
  if(record.path.endsWith('.html')){const relative=path.relative(path.dirname(file),path.join(out,'global-demo.js')).split(path.sep).join('/');let html=bytes.toString();const marker=/(<script src="[^"]*review-runtime\.js"><\/script>)/;if(/<head>/.test(html)&&!marker.test(html))throw Error('Missing isolation runtime: '+record.path);html=html.replace(marker,'$1<script src="'+relative+'"></script>');
-  if(/^essai-stitch-v7\/(index|traverse|missions|famille)\.html$/.test(record.path)){const frame='id="dv7-engine" src="../essai-stitch-v5-famille/index.html"';if(html.split(frame).length!==2)throw Error('Native review iframe changed: '+record.path);html=html.replace(frame,'id="dv7-engine" data-global-engine-src="../essai-stitch-v5-famille/index.html"');}
+  if(/^essai-stitch-v7\/(index|traverse|missions|famille)\.html$/.test(record.path)){
+   const frames=[
+    'id="dv7-engine" referrerpolicy="same-origin" src="../essai-stitch-v5-famille/index.html#dobby-v7-engine"',
+    'id="dv7-engine" src="../essai-stitch-v5-famille/index.html"',
+   ];
+   const matches=frames.flatMap(frame=>Array(html.split(frame).length-1).fill(frame));
+   if(matches.length!==1)throw Error('Native review iframe changed: '+record.path);
+   html=html.replace(matches[0],'id="dv7-engine" data-global-engine-src="../essai-stitch-v5-famille/index.html"');
+  }
   bytes=Buffer.from(html);
  }
  if(record.path==='essai-stitch-v5-famille/family-v2.js'){let source=bytes.toString();const project="const PROJECT = 'https://pqcdkrwljgvgagzwrcmg.supabase.co';",boot='void boot();';if(!source.includes(project)||source.split(boot).length!==2)throw Error('Native family adapter changed; review required.');source=source.replace(project,"const PROJECT = '"+origin+"';").replace(boot,'void window.DobbyGlobalDemo.ready.then(boot);');bytes=Buffer.from(source);}

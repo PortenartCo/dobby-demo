@@ -30,18 +30,26 @@ const field = (page, name) => page.getByLabel(name, { exact: true });
 const waitTraverse = page => page.waitForFunction(() => location.pathname.endsWith('/traverse.html') && window.DobbyStitchV7?.ready);
 const pause = () => new Promise(resolve => setTimeout(resolve, 100));
 
-async function browserAccount(browser, width, config = {}) {
+async function browserAccount(browser, width, config = {}, {pwa = false} = {}) {
   const context = await browser.newContext({
     viewport: { width, height: 900 }, locale: 'fr-BE',
-    hasTouch: width < 768, isMobile: width < 768, serviceWorkers: 'block'
+    hasTouch: width < 768, isMobile: width < 768, serviceWorkers: pwa ? 'allow' : 'block'
   });
+  let backendOnline = true;
+  if (pwa) await context.addInitScript(overrides => {
+    let configuration;
+    Object.defineProperty(window,'DobbyPublicConfig',{
+      get:()=>configuration,
+      set:value=>{configuration=Object.freeze({...value,...overrides});}
+    });
+  }, {publicKey:'sb_publishable_dobby_local_fixture_only',healthEssentialAvailable:false,...config});
   const invitationWrites = [];
   let dropInvitationReceipt = false;
   await context.route('**/*', async route => {
     const request = route.request();
     const url = new URL(request.url());
     if (url.origin === origin) {
-      if (url.pathname === '/essai-stitch-v7/access-config.js') {
+      if (!pwa && url.pathname === '/essai-stitch-v7/access-config.js') {
         return route.fulfill({ contentType: 'text/javascript',
           body: 'window.DobbyPublicConfig=' + JSON.stringify({
             publicKey:'sb_publishable_dobby_local_fixture_only', healthEssentialAvailable:false, ...config
@@ -51,6 +59,7 @@ async function browserAccount(browser, width, config = {}) {
     }
     if (url.origin === auth && url.pathname === '/verify') return route.continue();
     if (url.origin !== project) return route.abort();
+    if (!backendOnline) return route.abort('internetdisconnected');
     const prefix = url.pathname.startsWith('/auth/v1/') ? '/auth/v1' : '/rest/v1';
     if (!url.pathname.startsWith(prefix + '/')) return route.abort();
     const target = localOrigin(prefix === '/auth/v1' ? auth : rest) + url.pathname.slice(prefix.length) + url.search;
@@ -82,7 +91,8 @@ async function browserAccount(browser, width, config = {}) {
   page.setDefaultTimeout(15000);
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  return { context, page, errors, invitationWrites, loseInvitationReceipt: () => { dropInvitationReceipt = true; } };
+  return { context, page, errors, invitationWrites, loseInvitationReceipt: () => { dropInvitationReceipt = true; },
+    setBackendOnline: value => { backendOnline = value; } };
 }
 
 async function mailLink(email, type) {

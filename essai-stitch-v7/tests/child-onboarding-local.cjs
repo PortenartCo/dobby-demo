@@ -9,8 +9,10 @@ const {
   browserAccount, heading, button, field, signup, createHousehold, verified, token, request, rpc, capture,
   mailLink, logout, login, waitTraverse, acceptBody, origin, out, familyPage, password, resetPassword
 } = require('./family-onboarding.cjs');
+const {verifyParentsOnSharedDevice,verifyChildOnSharedDevice} = require('./helpers/pwa-account.cjs');
 
 const fixtureConfig = {childAccountsAvailable:true};
+const pwa = process.env.DOBBY_ONBOARDING_PWA==='1';
 const members = [
   {id:'test-enfant-un',name:'TEST Enfant Un',memberCategory:'child',avatar:'👤',
     magicProfile:{version:1,houseId:'hufflepuff',avatarId:'portrait-2',patronusId:'otter'}},
@@ -92,7 +94,7 @@ async function openChild(page, link, mail, householdName) {
 }
 
 async function scenario(browser, width) {
-  const accounts = await Promise.all(Array.from({length:4}, () => browserAccount(browser,width,fixtureConfig)));
+  const accounts = await Promise.all(Array.from({length:4}, () => browserAccount(browser,width,fixtureConfig,{pwa})));
   const [a,b,c,d] = accounts.map(account => account.page);
   const run = randomUUID().slice(0,8);
   const email = name => 'dobby-'+run+'-'+name+'@example.test';
@@ -202,6 +204,7 @@ async function scenario(browser, width) {
     const oldTab = await accounts[0].context.newPage();
     await oldTab.goto(familyPage+'#members');
     assert.equal((await verified(oldTab)).memberId,parent.memberId);
+    if(pwa)await verifyParentsOnSharedDevice(accounts[0],oldTab,parent,secondParent,email,width);
     await logout(a);
     await login(a,email('enfant-un'),resetPassword);
     assert.equal((await verified(a)).memberId,first.memberId);
@@ -214,6 +217,7 @@ async function scenario(browser, width) {
       const engine = window.DobbyFamilyStitchEngine;
       return JSON.stringify(engine.read()).includes(secret);
     },sentinel));
+    if(pwa)await verifyChildOnSharedDevice(a,width);
     await showMember(b,members[0]);
     await button(b,'Suspendre l’accès à DOBBY').click();
     await button(b,'Confirmer la suspension').click();
@@ -238,7 +242,8 @@ async function scenario(browser, width) {
 
 (async () => {
   if (out) await mkdir(out,{recursive:true});
-  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
+  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',
+    args:['--no-sandbox','--host-resolver-rules=MAP pqcdkrwljgvgagzwrcmg.supabase.co 127.0.0.1']});
   try {
     console.log('CHROMIUM',browser.version());
     for (const width of (process.env.DOBBY_ONBOARDING_WIDTHS||'320,390,1440').split(',').map(Number)) await scenario(browser,width);

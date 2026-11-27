@@ -1,0 +1,49 @@
+name: DOBBY V7 - Installation et hors ligne
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'pwa-sw.js'
+      - 'essai-stitch-v7/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-v6-preview/assets/**'
+      - 'scripts/build-dobby-v7-pwa.cjs'
+      - 'docs/dobby-v7/pwa/**'
+      - '.github/workflows/dobby-v7-pwa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pwa-installation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: Manifeste, empreinte du cache et contrôles automatisés
+        run: |
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/build-dobby-v7-pwa.cjs --check
+          node --test essai-stitch-v7/tests/pwa-*.test.cjs essai-stitch-v7/tests/fam-integration-transverse.test.cjs
+      - name: Chromium sous un préfixe et hors ligne
+        run: |
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          DOBBY_PWA_EVIDENCE="$RUNNER_TEMP/dobby-pwa/installation" node essai-stitch-v7/tests/pwa-browser.cjs
+      - name: Sessions parent A, parent B et enfant avec Auth local
+        env:
+          DOBBY_ONBOARDING_PWA: '1'
+          DOBBY_ONBOARDING_WIDTHS: '390'
+        run: |
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          git fetch --no-tags --depth=1 origin 04c58d9ebaf84374820a5e6a727c45dfa4ee3527
+          python3 -u docs/dobby-v7/comptes-enfants/tests/onboarding-local.py --evidence "$RUNNER_TEMP/dobby-pwa/sessions"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dobby-v7-pwa
+          path: ${{ runner.temp }}/dobby-pwa/
+          if-no-files-found: ignore

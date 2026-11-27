@@ -1,0 +1,20 @@
+{
+  "id": "../",
+  "name": "DOBBY",
+  "short_name": "DOBBY",
+  "description": "Les missions, les repas et l’agenda de votre maisonnée.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./famille.html#access",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#180b07",
+  "theme_color": "#180b07",
+  "categories": ["lifestyle", "productivity"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/pwa/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
