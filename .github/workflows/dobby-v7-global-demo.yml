@@ -1,0 +1,71 @@
+name: DOBBY V7 - Démonstration locale
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.github/workflows/dobby-v7-global-demo.yml'
+      - 'essai-stitch-v7/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-v6-preview/assets/**'
+      - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/build-dobby-review.cjs'
+      - 'scripts/serve-dobby-global-demo.cjs'
+      - 'scripts/verify-dobby-global-http.py'
+      - 'scripts/review/**'
+      - 'docs/dobby-v7/demo-rejouable/**'
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: Vérifier les générateurs et le transport fictif
+        run: |
+          node --test essai-stitch-v7/tests/global-build.test.cjs \
+            essai-stitch-v7/tests/global-launch-*.test.cjs \
+            essai-stitch-v7/tests/global-roles.test.cjs
+      - name: Construire et rejouer sur une origine loopback isolée
+        env:
+          DOBBY_GLOBAL_LAUNCH_EVIDENCE: ${{ runner.temp }}/dobby-global-launch/evidence
+        run: |
+          set -euo pipefail
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          bundle="$RUNNER_TEMP/dobby-global-launch/bundle"
+          mkdir -p "$DOBBY_GLOBAL_LAUNCH_EVIDENCE"
+          node scripts/build-dobby-global-review.cjs --scenario launch --output "$bundle"
+          cp "$bundle/review-manifest.json" "$bundle/demo-data-manifest.json" "$DOBBY_GLOBAL_LAUNCH_EVIDENCE/"
+          log="$DOBBY_GLOBAL_LAUNCH_EVIDENCE/serveur.log"
+          node scripts/serve-dobby-global-demo.cjs --bundle "$bundle" --port 0 > "$log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            DOBBY_GLOBAL_LAUNCH_BASE="$(awk '/^GLOBAL_DEMO_LOCAL / { print $2; exit }' "$log")"
+            if [[ -n "$DOBBY_GLOBAL_LAUNCH_BASE" ]]; then break; fi
+            if ! kill -0 "$server" 2>/dev/null; then cat "$log"; exit 1; fi
+            sleep 1
+          done
+          test -n "$DOBBY_GLOBAL_LAUNCH_BASE"
+          export DOBBY_GLOBAL_LAUNCH_BASE
+          python3 scripts/verify-dobby-global-http.py --base "$DOBBY_GLOBAL_LAUNCH_BASE" \
+            --bundle "$bundle" --output "$DOBBY_GLOBAL_LAUNCH_EVIDENCE/integrite-http.json"
+          node essai-stitch-v7/tests/global-launch-browser.cjs
+          node essai-stitch-v7/tests/global-launch-reset.cjs | tee "$DOBBY_GLOBAL_LAUNCH_EVIDENCE/reinitialisation.log"
+          node essai-stitch-v7/tests/global-launch-origin.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dobby-v7-demonstration-locale
+          path: ${{ runner.temp }}/dobby-global-launch/evidence/
+          if-no-files-found: ignore

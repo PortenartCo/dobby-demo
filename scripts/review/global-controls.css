@@ -1,0 +1,203 @@
+body[data-dobby-global-demo] {
+  padding-top: var(--global-demo-banner-height, 60px) !important;
+}
+
+html body[data-dobby-global-demo] > header[data-e01-chrome],
+html body[data-dobby-global-demo].e06-active > header {
+  top: var(--global-demo-banner-height, 60px) !important;
+}
+
+body[data-dobby-global-demo] > [data-review-banner] {
+  box-sizing: border-box;
+  height: auto !important;
+  min-height: 60px;
+  padding: 6px max(12px, calc((100vw - var(--dobby-shell-width, 1280px)) / 2 + 16px)) !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+  gap: 12px !important;
+  background: #271814;
+  color: #fadcd5;
+  font: 400 1rem/1.2 "EB Garamond", Georgia, serif;
+}
+
+.global-demo-label {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.global-demo-label strong {
+  color: #ffddb2;
+  font: 600 0.875rem/1.2 "Playfair Display", Georgia, serif;
+}
+
+.global-demo-identity {
+  overflow-wrap: anywhere;
+  font-size: 0.875rem;
+}
+
+body[data-dobby-global-demo] [data-global-panel],
+#dobby-global-panel button {
+  min-height: 44px !important;
+  padding: 8px 12px !important;
+  border: 1px solid #9d8e7e;
+  border-radius: 8px;
+  background: #43302c;
+  color: #ffddb2;
+  font: 600 0.8125rem/1.3 Literata, Georgia, serif !important;
+  cursor: pointer;
+}
+
+body[data-dobby-global-demo] [data-global-panel] {
+  flex: none;
+  max-width: 44%;
+  border-color: #d49b42;
+}
+
+body[data-dobby-global-demo] [data-global-panel]:hover:enabled,
+#dobby-global-panel button:hover:enabled {
+  background: #504537;
+}
+
+body[data-dobby-global-demo] [data-global-panel]:focus-visible,
+#dobby-global-panel button:focus-visible {
+  outline: 2px solid #f9bb5f;
+  outline-offset: 3px;
+}
+
+body[data-dobby-global-demo] [data-global-panel]:disabled,
+#dobby-global-panel button:disabled {
+  color: #d4c4b1;
+  border-color: #504537;
+  background: #271814;
+  cursor: default;
+}
+
+#dobby-global-panel {
+  box-sizing: border-box;
+  width: min(580px, calc(100% - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0 clamp(12px, 4vw, 24px) 20px;
+  margin: auto;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #9d8e7e;
+  border-radius: 16px;
+  background: #2c1c18;
+  color: #fadcd5;
+  box-shadow: 0 12px 32px #180b0799;
+  font: 400 1.0625rem/1.4 "EB Garamond", Georgia, serif;
+}
+
+#dobby-global-panel::backdrop {
+  background: #180b07b3;
+}
+
+.global-demo-title {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #504537;
+  background: #2c1c18;
+}
+
+#dobby-global-panel h2,
+#dobby-global-panel h3 {
+  margin: 0;
+  color: #f9bb5f;
+  font: 600 1.25rem/1.25 "Playfair Display", Georgia, serif;
+}
+
+#dobby-global-panel h3 {
+  margin-bottom: 8px;
+  font-size: 1.0625rem;
+}
+
+#dobby-global-panel section {
+  margin-top: 16px;
+  scroll-margin-top: 76px;
+}
+
+.global-demo-profiles {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.global-demo-profiles li {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 8px;
+  padding: 6px 8px;
+  border: 1px solid #504537;
+  border-radius: 8px;
+  background: #271814;
+}
+
+.global-demo-profile {
+  min-width: 0;
+  display: grid;
+  overflow-wrap: anywhere;
+}
+
+.global-demo-profile small {
+  color: #d4c4b1;
+  font-size: 0.875rem;
+}
+
+.global-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.global-demo-status {
+  margin: 0 0 6px;
+}
+
+.global-demo-result {
+  margin: 0;
+  color: #ffddb2;
+}
+
+.global-demo-result:not(:empty) {
+  margin-top: 6px;
+}
+
+.global-demo-limits {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 8px;
+}
+
+.global-demo-limits dt {
+  font-weight: 700;
+}
+
+.global-demo-limits dd {
+  margin: 0;
+  color: #d4c4b1;
+}
+
+.global-demo-health-examples {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.global-demo-health-examples li {
+  display: grid;
+  gap: 2px;
+  padding: 6px 8px;
+  border-inline-start: 2px solid #d49b42;
+  background: #271814;
+}
