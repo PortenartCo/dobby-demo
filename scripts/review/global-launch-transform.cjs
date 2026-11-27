@@ -141,13 +141,23 @@ const locked=task=>lifecycle.locked(async()=>{
     'const nativeFetch=window.fetch.bind(window);');
   // Native sync can coalesce with a cycle already in flight. Its access
   // facade waits for that cycle before reading the current account again.
-  source = replace(source, 'await api.grocery.sync();window.DobbyCuisine', 'await api.grocery.sync();await api.access.refresh();window.DobbyCuisine');
+  source = replace(source, 'await api.grocery.sync();window.DobbyCuisine?.refresh();window.DobbyFamilyStitch?.refresh?.();',
+    'await api.grocery.sync();await api.access.refresh();await refreshSyncedView();');
   source = replace(source, 'updateStatus();const result=api.grocery.read();', 'lifecycle.notify();const result=api.grocery.read();');
   source = replace(source, 'if(result.error)throw Error(result.error);return clone(read());}', 'if(result.error)throw Error(result.error);return visibleState();}');
   return between(source, 'function prepareReset(', '})();', `
 function currentActor(){
  const state=native()?.access.state();
  return state?.verified&&state.memberId===profile.memberId&&state.userId===user&&!lifecycle.signedOut()&&read().suspended[client]!==true;
+}
+async function refreshSyncedView(){
+ window.DobbyCuisine?.refresh();
+ const family=window.DobbyFamilyStitch,requested=location.hash.slice(1).split('?')[0];
+ if(currentActor()&&family?.ready&&family.handles(requested)&&document.body.dataset.familyView!==requested){
+  // Native verification may temporarily replace the view while retaining its URL.
+  // Reuse the native route and permission check once the same actor is confirmed.
+  await family.accessChanged();
+ }else await family?.refresh?.();
 }
 async function visibleState(){
  const state=await lifecycle.latest();

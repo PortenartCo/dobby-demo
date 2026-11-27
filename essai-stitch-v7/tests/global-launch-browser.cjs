@@ -144,6 +144,13 @@ async function useOfflineControl(page, offline) {
   await dialog.getByRole('button', { name: 'Fermer', exact: true }).click();
 }
 
+async function openMemoRegister(page) {
+  await page.bringToFront();
+  await active(page);
+  await page.evaluate(() => DobbyFamilyStitch.open('memos', { record: null }));
+  await page.waitForFunction(() => document.body.dataset.familyView === 'memos');
+}
+
 async function waitForMemoDelivery(page, id) {
   await page.waitForFunction(async id => {
     const family = (await DobbyGlobalDemo.state()).modules?.family;
@@ -154,8 +161,7 @@ async function waitForMemoDelivery(page, id) {
     try {
       await page.waitForFunction(id => DobbyFamilyStitchEngine.read().state.sharedFamilyNotes?.some(row => row.id === id),
         id, { polling: 250, timeout: 3500 });
-      await page.bringToFront();
-      await page.evaluate(() => DobbyFamilyStitch.open('memos', { record: null }));
+      await openMemoRegister(page);
       return;
     } catch (error) {
       if (error.name !== 'TimeoutError') throw error;
@@ -199,6 +205,7 @@ async function verifySharedMemo(pages, width, report) {
     return shared?.some(row => row.id === id);
   }, saved.id, { polling: 250 });
   await waitForMemoDelivery(pages.B, saved.id);
+  await openMemoRegister(pages.A);
   await pages.A.getByRole('button', { name: 'Consulter ' + title, exact: true }).waitFor();
   await pages.B.getByRole('button', { name: 'Consulter ' + title, exact: true }).waitFor();
   assert.ok((await snapshot(pages.B)).sharedFamilyNotes.some(row => row.id === saved.id));
