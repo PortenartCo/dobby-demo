@@ -7,6 +7,7 @@ const DOBBY_V7_SHELL = [
     'chrome-source.html', 'contacts-layout.html', 'contact-edit-layout.html',
     'menu-layout.html', 'missions-layout.html',
     'access-config.js', 'access-entry.js', 'access.js', 'access-flow.mjs', 'access.css',
+    'admin-access.js', 'admin-access.css',
     'bridge.js', 'engine-policy.js', 'root-adapters.js',
     'chrome.js?v=20261110-e06-1', 'chrome.css', 'consolidation.css', 'responsive.css', 'stitch-tailwind.css',
     'magic-audio.js', 'seasonal-calendar.js', 'seasonal-effects.js', 'seasonal-effects.css',

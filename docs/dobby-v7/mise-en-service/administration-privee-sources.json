@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "repository": "PortenartCo/dobby-demo",
+  "groups": [
+    {
+      "pullRequest": 28,
+      "commit": "f91dfde4972b20dcc5b7364d6017e56ee8a5ead9",
+      "files": [
+        {
+          "path": "supabase/migrations/20261117203208_dobby_private_access_foundation.sql",
+          "sha256": "94465429f7f80315904634d6ca85f1a4723972324fe398bb560e9977e3f6c35a"
+        },
+        {
+          "path": "supabase/functions/_shared/dobby-access-contract.ts",
+          "sha256": "e815c14f6f7f98d7739d4d851685e2669ed054da7f67ab7249a1e46687737529"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/deploiement/preflight.md",
+          "sha256": "965e94e489d604d154db7b0bcd26432beb4951ac70e35786d025b796dc3f9314"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/deploiement/verification.md",
+          "sha256": "6f4a99de8960b4d09c792ba8adb106be9767051fc75d57d661622e497f36acfe"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/deploiement/rollback.md",
+          "sha256": "f542b7d4a573a8e211bae21a6f472c57358c4880515369ce4968bc715c88d0df"
+        }
+      ]
+    },
+    {
+      "pullRequest": 29,
+      "commit": "1012d90537305fd66c3a5cf2f6d8e4ca7b1fe95a",
+      "files": [
+        {
+          "path": "supabase/migrations/20261117215619_dobby_private_access_tables_rpc.sql",
+          "sha256": "b491737bbb9c45fb7be5b1677b19f1dda4c7488980f8636d7d076635376f5c81"
+        },
+        {
+          "path": "supabase/rollbacks/20261117215619_dobby_private_access_tables_rpc.sql",
+          "sha256": "4cba8f95402b15f811008c641f9d0b10ca6664bfcdc28f0f4d8ce81ef4c27cd2"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot2a/REPRISE.md",
+          "sha256": "42bef547eea80f6a1c2d6b6b4cebe7dfe8916e683868c6eca20af212b4311948"
+        }
+      ]
+    },
+    {
+      "pullRequest": 30,
+      "commit": "24ab5b7944c34c9f29ede5867f4715111b5c2f47",
+      "files": [
+        {
+          "path": "supabase/migrations/20261118112535_dobby_private_access_storage.sql",
+          "sha256": "1ae625ba58d97fd43a18bfec7206e24401c73ca820e156e56e1fdb72a95fc466"
+        },
+        {
+          "path": "supabase/rollbacks/20261118112535_dobby_private_access_storage.sql",
+          "sha256": "950d91c37718a3ea8608ead181a509f38065c4166f99491be3966e8d82940f2f"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot2b/REPRISE.md",
+          "sha256": "14691afadd31250953ce049e456f0a64d168fdd5af09849d6bd0a2fffdce5949"
+        }
+      ]
+    },
+    {
+      "pullRequest": 31,
+      "commit": "3c850d5e2235aedbafbbdc0d1e4fb9e9f358956c",
+      "files": [
+        {
+          "path": "supabase/migrations/20261118120207_dobby_private_access_administration.sql",
+          "sha256": "9e6ee7141898b0e00f7297353818f495d80bebb970030423b669e07413688ae5"
+        },
+        {
+          "path": "supabase/rollbacks/20261118120207_dobby_private_access_administration.sql",
+          "sha256": "32b4c5350aea34e32930456b2da2bae70b562262db3cc0a9e6b45449fc7899b9"
+        },
+        {
+          "path": "supabase/functions/dobby-access-admin/index.ts",
+          "sha256": "987da249e10ec237c3d71be41826bd6872658ed2177a046951498d314f5a9917"
+        },
+        {
+          "path": "supabase/functions/_shared/dobby-admin-handler.ts",
+          "sha256": "270b9ebc58e97cd063510d805dfc7713a99cf8e78cb61946b9ed99c9e039a190"
+        },
+        {
+          "path": "supabase/functions/_shared/dobby-admin-validation.ts",
+          "sha256": "185c16779cf0cb6484ba487ba68ea38ae9a4de56e4ec8cef3378e611c0d32b56"
+        },
+        {
+          "path": "supabase/functions/_shared/dobby-auth-admin.ts",
+          "sha256": "7dfd4e1ea7c45a0695afb798d3ec1f7ebb1269c929051ed0edd0241f5c698867"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot3/REPRISE.md",
+          "sha256": "fff49bd8fd496721fceb0751174b0ec0a8be91719f33c92570e764af5f900356"
+        }
+      ]
+    },
+    {
+      "pullRequest": 34,
+      "commit": "90edf17a5e87485d9ef0dd5e8ee3cc0f558a7028",
+      "files": [
+        {
+          "path": "supabase/compatibility/lot5b/README.md",
+          "sha256": "1f818157d9f6763a78c4fe04405d52696deabf50d4bbc395e3ff1319b3498cb7"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/approved-catalogue.json",
+          "sha256": "ba21ddb871f13fec0985690ce1cf624e470e99ea45805733bee1ed9475007b98"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/catalogue.preflight.sql",
+          "sha256": "c299518b6c7730c0e3963d633373232560e346838040af3538c20ed3e5685177"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/maintenance-roles.preflight.sql",
+          "sha256": "c75f6049069458b0e29e8b166d7b4f0181a3c9c686c0f529960edb18dca73f3e"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/missions.preflight.sql",
+          "sha256": "bdcf7bd37c3b68e471017c38346db5950b9ac2de517caf0557e56f4324bff244"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/v7-preserved.roles.preflight.sql",
+          "sha256": "bdf0a5994679cae6eeaecf308fa859c1352f634ccbb15aaf61422b8b19973ce7"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/auth-bridge.candidate.sql",
+          "sha256": "7433b0d09252e268ee46529466364c7c27a3ce0c2604b16e906db7f24f141437"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/auth-bridge.rollback.sql",
+          "sha256": "d2207c702ebd00edcd404269a89a9e5c3809bdbf968cac7d7c0348d650c2672a"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/lot2a-compatible.candidate.sql",
+          "sha256": "2eb172f7943b833b7f430373a580aa443bcd6bdec5c4ac55a83f168951b23ccb"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/lot2a-compatible.rollback.sql",
+          "sha256": "e9e028892504835fe5b2a55e4316bbecd376bfb64bf31d865cfe316b64f54c76"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/v7-preserved.candidate.sql",
+          "sha256": "22b52d282fb687f25183a306e74e93b3cc59f15185705c851103ea476e69152d"
+        },
+        {
+          "path": "supabase/compatibility/lot5b/v7-preserved.rollback.sql",
+          "sha256": "051c35669f4c34d6f039850f900c243eb59701d4160c8a8424accddb9ea39850"
+        },
+        {
+          "path": "supabase/integration/lot5c/README.md",
+          "sha256": "5cd423d08b8b02a2c49627d51b5dcf32da019f89c4bc698771c265eff5e8258f"
+        },
+        {
+          "path": "supabase/integration/lot5c/manifest.json",
+          "sha256": "84afc36706bcd0970c316d3b6ede29c6a5ce785197ec8d49f99a36199da0cc7d"
+        },
+        {
+          "path": "supabase/integration/lot5c/00-preflight.sql",
+          "sha256": "cd2fcaafe55eb47504a497906db7ee58941f88e44a8e4a52b827d17d86423c7e"
+        },
+        {
+          "path": "supabase/integration/lot5c/10-install.sql",
+          "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
+        },
+        {
+          "path": "supabase/integration/lot5c/20-activate.sql",
+          "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
+        },
+        {
+          "path": "supabase/integration/lot5c/30-postflight.sql",
+          "sha256": "69715284f0a3abf7055e3588ebf612aefff9f28a6e11682350f26e7602e532ea"
+        },
+        {
+          "path": "supabase/integration/lot5c/80-stop-admin.sql",
+          "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
+        },
+        {
+          "path": "supabase/integration/lot5c/90-close.sql",
+          "sha256": "9d6f3e125506ca78fb83f16ed90395fcc2a5500321f8dbf80bcc04cc9f85f63e"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot5c/CORRECTION-LECTURES.md",
+          "sha256": "32e0f94a49176cfcadd117796aaa42ff70391511cc005d1194bd987f18897b91"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot5c/PROCEDURE.md",
+          "sha256": "4c0da6d37566f3c0748f77fd848c6a8e430eeb4311bae69deb36106174d9fc13"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot5c/RESTAURATION.md",
+          "sha256": "5232137d6497376d80f63b036fef55be4ebc11dce5caae004c3cfef38956e3f4"
+        },
+        {
+          "path": "docs/dobby-v7/administration-privee/lot5c/VALIDATION-REPRISE.md",
+          "sha256": "cd3e660fca53256afa814b5e404ea779e4fe0ea4cb09cd5e0a5e2774bfc3c9b5"
+        }
+      ]
+    }
+  ]
+}

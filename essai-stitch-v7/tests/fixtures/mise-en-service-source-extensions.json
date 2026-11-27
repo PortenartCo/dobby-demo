@@ -1,0 +1,183 @@
+{
+  "baseCommit": "0f51fb76ffe95f54c5e2b5e4493b2fc149ad39f6",
+  "files": {
+    "essai-stitch-v5-famille/family-v2.js": {
+      "reason": "Raccord borné du transport Auth propriétaire au contrat Edge existant.",
+      "beforeSha256": "83868a91a2c45ffa08f9e362d8f01d65842c7158ab84258993534fb0cee619a6",
+      "afterSha256": "f357e63c0330e264d585fa8113284941416b6463602eacf7377df41d2ea5669f",
+      "patches": [
+        {
+          "line": 1089,
+          "before": "",
+          "after": "const PRIVATE_ADMIN_COMMANDS = new Set(['listAccess','listDecisions','invite','decide','revokeAdmission','setStatus','resumeDelivery']);\nasync function privateAdminCommand(command, payload = {}) {\n  if (!PRIVATE_ADMIN_COMMANDS.has(command) || !payload || typeof payload !== 'object' || Array.isArray(payload)) {\n    throw Error('Commande d’administration invalide.');\n  }\n  const expected = requestActor();\n  const assertAdminSession = async () => {\n    if (publicConfiguration()?.privateAdministrationAvailable !== true || window.DobbyReview ||\n        !expected.userId || f.membershipRejected || childAccessState().restricted) {\n      throw Object.assign(Error('Session d’administration indisponible.'), { status: 403 });\n    }\n    await assertCurrentOnboardingSession(expected);\n  };\n  await assertAdminSession();\n  const bearer = await token(expected);\n  await assertAdminSession();\n  let response;\n  try {\n    // The Edge handler revalidates the owner role on every command. Never\n    // retry a decision whose commit or email delivery may have succeeded.\n    response = await raw('/functions/v1/dobby-access-admin', 'POST', { command, payload }, {}, bearer);\n  } catch (error) {\n    await assertAdminSession();\n    throw Object.assign(Error('L’administration n’a pas confirmé cette opération.'), {\n      status: Number.isInteger(error?.status) ? error.status : undefined,\n    });\n  }\n  await assertAdminSession();\n  if (response?.ok !== true || !Object.hasOwn(response, 'result')) {\n    throw Error('La réponse d’administration n’a pas été confirmée.');\n  }\n  return response.result;\n}\n"
+        },
+        {
+          "line": 1127,
+          "before": "",
+          "after": " admin:privateAdminCommand,\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/access-config.js": {
+      "reason": "Porte publique Administration privée fermée.",
+      "beforeSha256": "107bf43f5c9e37517e417cea35f134ae38feaaff8ea9873c881444e0998ce95d",
+      "afterSha256": "f0964f959d64105cb5930909e6a54fd0918c795373e90a6a007149c2b043de7a",
+      "patches": [
+        {
+          "line": 8,
+          "before": "",
+          "after": "  privateAdministrationAvailable: false,\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/build-source.cjs": {
+      "reason": "Chargement des ressources console uniquement sur la racine Famille.",
+      "beforeSha256": "15717da8dd51014dbfaa0e2a1780047b35e4322d78ccc9de5bb33022c9664a5e",
+      "afterSha256": "b72cb47e6edca99613231d375ecc64a0e1ba6e7343812ac9c46c641bbcad829e",
+      "patches": [
+        {
+          "line": 37,
+          "before": "",
+          "after": "// The owner console is mounted only on the Famille root.\nif(screen==='famille')html=html.replace('<script src=\"./bridge.js\"></script>','<link rel=\"stylesheet\" href=\"./admin-access.css\"><script src=\"./admin-access.js\"></script><script src=\"./bridge.js\"></script>');\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/chrome.js": {
+      "reason": "Destination Menu active pendant les vues propriétaire.",
+      "beforeSha256": "1e64e00169a61ce4877bae6707ba293080e6b6dc4acd4e84814b9b17721ee415",
+      "afterSha256": "4277e0ea95d6422f2c7210419d9660d4969e8aca07a5f6c2c4b61454fb28399d",
+      "patches": [
+        {
+          "line": 72,
+          "column": 119,
+          "before": "",
+          "after": "window.DobbyAdminAccess?.handles(family)||"
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine.js": {
+      "reason": "Chargement différé des couvertures du catalogue dans le Grimoire et le sélecteur de repli.",
+      "beforeSha256": "d438b458799b840cb331c2b788b6d23c1d24d54b6b329e6332ce36680eea1092",
+      "afterSha256": "1c3ccd252f986edcbc848405e28c201d2c15947e2d0e9309f1d5af24e8dec3b7",
+      "patches": [
+        {
+          "line": 121,
+          "before": "    for (const image of card.querySelectorAll('img')) recipeVisual(image, recipe);\n",
+          "after": "    for (const image of card.querySelectorAll('img')) {\n      if (recipe.catalogue) image.loading = 'lazy';\n      recipeVisual(image, recipe);\n    }\n"
+        },
+        {
+          "line": 232,
+          "before": "",
+          "after": "    if(image&&recipe.catalogue)image.loading='lazy';\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine-p01.js": {
+      "reason": "Chargement différé des couvertures dans le sélecteur de repas natif.",
+      "beforeSha256": "23413675d792ffe1a0a201b6bbbe3d29b6d9ce41c1316c4a76c2ce35515732a6",
+      "afterSha256": "3f708e02b7794c5906c068f0dd3ce3ad4b049e43f7f95dc158b2de41f5271a2c",
+      "patches": [
+        {
+          "line": 56,
+          "column": 932,
+          "before": ".r",
+          "after": "onst imag"
+        },
+        {
+          "line": 56,
+          "column": 942,
+          "before": "cipeVisual(",
+          "after": "="
+        },
+        {
+          "line": 56,
+          "column": 968,
+          "before": "",
+          "after": ";if(r.catalogue)image.loading='lazy';c.recipeVisual(image"
+        }
+      ]
+    },
+    "essai-stitch-v7/family.js": {
+      "reason": "Routage, protection et cycle de vie du propriétaire.",
+      "beforeSha256": "9a0773b2a6b053e221cbe0e156c1d3d74599265f36a1f47fdb8d1886e46eb767",
+      "afterSha256": "9dc49037483109ba32816369ecfb5f272608d59f9b91ed4e4e15db7a8944afc2",
+      "patches": [
+        {
+          "line": 4,
+          "before": " const handles=view=>routes.includes(view)||window.DobbyRegister?.handles(view)||window.DobbyOnboarding?.handles(view)||window.DobbyPreparations?.handles(view)||window.DobbyAccess?.handles(view);\n",
+          "after": " const adminView=view=>window.DobbyAdminAccess?.handles(view)===true;\n const handles=view=>adminView(view)||routes.includes(view)||window.DobbyRegister?.handles(view)||window.DobbyOnboarding?.handles(view)||window.DobbyPreparations?.handles(view)||window.DobbyAccess?.handles(view);\n"
+        },
+        {
+          "line": 213,
+          "before": "",
+          "after": "  if(!adminView(view))window.DobbyAdminAccess?.leave();\n"
+        },
+        {
+          "line": 223,
+          "before": "  let doc;if(['salon','member-detail'].includes(view)||window.DobbyPreparations?.handles(view)||window.DobbyAccess?.handles(view)){doc=null;}else doc=await template(view);if(rev!==revision)return;if(scope!==app.accountScope())return accessChanged();\n  if(window.DobbyRegister?.handles(view))await window.DobbyRegister.prepare(view);if(window.DobbyOnboarding?.handles(view))await window.DobbyOnboarding.prepare(view,{...ui});if(window.DobbyAccess?.handles(view))await window.DobbyAccess.prepare(view,{...ui});if(rev!==revision)return;\n",
+          "after": "  let doc;if(['salon','member-detail'].includes(view)||window.DobbyPreparations?.handles(view)||window.DobbyAccess?.handles(view)||adminView(view)){doc=null;}else doc=await template(view);if(rev!==revision)return;if(scope!==app.accountScope())return accessChanged();\n  if(window.DobbyRegister?.handles(view))await window.DobbyRegister.prepare(view);if(window.DobbyOnboarding?.handles(view))await window.DobbyOnboarding.prepare(view,{...ui});if(window.DobbyAccess?.handles(view))await window.DobbyAccess.prepare(view,{...ui});if(adminView(view))await window.DobbyAdminAccess.prepare(view);if(rev!==revision)return;\n"
+        },
+        {
+          "line": 230,
+          "before": "  if(privateHealth)renderSecureHealth(main,view);else if(view==='salon'){if(!access.restricted)window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail'&&!access.restricted)window.DobbyFamilyMemberDetail.render(familyContext(data));else if(view==='member-detail')window.DobbyMagicProfile.render(familyContext(data));else if(window.DobbyAccess?.handles(view))window.DobbyAccess.render(familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);\n  if(!privateHealth&&['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view))shell(data);if(!access.restricted)gateSharedUI();gateChildUI();app.showVerification(false);window.DobbyChrome?.mount();if(!access.restricted)window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=!privateHealth&&['member-edit','medical-edit'].includes(view)?availability(data):null;document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);\n",
+          "after": "  if(privateHealth)renderSecureHealth(main,view);else if(view==='salon'){if(!access.restricted)window.DobbyStitchRootAdapters.render('famille',data.state);renderSalon(data);}else if(view==='member-detail'&&!access.restricted)window.DobbyFamilyMemberDetail.render(familyContext(data));else if(view==='member-detail')window.DobbyMagicProfile.render(familyContext(data));else if(window.DobbyAccess?.handles(view))window.DobbyAccess.render(familyContext(data));else if(adminView(view))window.DobbyAdminAccess.render(view,familyContext(data));else if(window.DobbyPreparations?.handles(view))window.DobbyPreparations.render(familyContext(data));else if(window.DobbyOnboarding?.handles(view))window.DobbyOnboarding.render({data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,rememberMember(id){if(!E.read().members.some(m=>m.id===id))throw Error('Membre non enregistré.');ui.person=id;window.history.replaceState({},'','#'+ui.view+'?person='+encodeURIComponent(id));}});else if(window.DobbyRegister?.handles(view))window.DobbyRegister.render(view,{data,ui,pristine,main,bind,button,paragraph,context,notice,open,legacy,unavailable,heading,text,selected,esc});else if(view==='members')renderMembers(data);else if(view==='member-edit')renderMemberEdit(data);else if(view==='agenda')renderAgenda(data);else if(view==='medical-edit')renderMedical(data);else healthSections(data);\n  if(!privateHealth&&['medical-edit','health','health-person','health-history'].includes(view))gateMedicalUI();if(!adminView(view)){if(!window.DobbyOnboarding?.handles(view)&&!window.DobbyAccess?.handles(view))shell(data);if(!access.restricted)gateSharedUI();}gateChildUI();app.showVerification(false);window.DobbyChrome?.mount();if(!access.restricted)window.DobbyFamilyReviewEffects?.mount();mountDraft(view,restoreDraft,previous,capture);formContext=!privateHealth&&['member-edit','medical-edit'].includes(view)?availability(data):null;document.documentElement.classList.remove('dv7-loading');if(dialogDraft)showDialog(dialogDraft.kind,dialogDraft.id,dialogDraft.values);if(formContext)setTimeout(()=>refresh().catch(e=>notice(e.message)),0);\n"
+        },
+        {
+          "line": 236,
+          "before": "",
+          "after": "  if(adminView(view)&&(!window.DobbyAdminAccess.enabled()||access.restricted)){view='salon';values={};}\n"
+        },
+        {
+          "line": 246,
+          "before": "",
+          "after": "  if(adminView(view))values={person:null};\n"
+        },
+        {
+          "line": 251,
+          "column": 97,
+          "before": "",
+          "after": "&&!adminView(view)"
+        },
+        {
+          "line": 264,
+          "before": "",
+          "after": "  if(adminView(ui.view))return action==='back'?open('menu'):undefined;\n"
+        },
+        {
+          "line": 288,
+          "before": "",
+          "after": "  if(adminView(ui.view))return;\n"
+        },
+        {
+          "line": 301,
+          "before": "",
+          "after": "  window.DobbyAdminAccess?.leave();\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/tools-register.js": {
+      "reason": "Lien Menu associé à une vérification serveur propriétaire.",
+      "beforeSha256": "4a0f6ee027bace449ac174f759251406e9f2955c43be18f317336cdf9a59bfbb",
+      "afterSha256": "9d84a0b6e129cee027569d4df5acdf19399c74ad85c5019330f09b2b06f8a973",
+      "patches": [
+        {
+          "line": 122,
+          "before": "",
+          "after": "  if(window.DobbyAdminAccess?.enabled())void window.DobbyAdminAccess.decorateMenu({...c,filterMenu});\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/pwa-shell.js": {
+      "reason": "Deux ressources publiques versionnées de la console dans le shell PWA.",
+      "beforeSha256": "1c94be73bcf37c927719526a1b24ee3f91ba6c203c269e490913495231704078",
+      "afterSha256": "53b42d3173897103877abd3f8b3f63cde08b1b7bfd639b359d25f5c4a57a5f4e",
+      "patches": [
+        {
+          "line": 9,
+          "before": "",
+          "after": "    'admin-access.js', 'admin-access.css',\n"
+        }
+      ]
+    }
+  }
+}

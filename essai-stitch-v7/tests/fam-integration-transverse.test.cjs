@@ -22,6 +22,7 @@ const familyOnboarding = require('./fixtures/family-onboarding-source-extensions
 const childAccess = require('./fixtures/child-access-source-extensions.json');
 const pwa = require('./fixtures/pwa-source-extensions.json');
 const sons = require('./fixtures/sons-source-extensions.json');
+const operations = require('./fixtures/mise-en-service-source-extensions.json');
 const {beforeReviewedAmendment}=require('./helpers/reviewed-source.cjs');
 const beforeRunesLot1=(file,source)=>beforeReviewedAmendment(file,source,runesLot1.files[file],'Runes lot 1');
 const beforeRunesLot2=(file,source)=>beforeReviewedAmendment(file,source,runesLot2.files[file],'Runes lot 2');
@@ -33,15 +34,26 @@ const beforeOnboarding=(file,source)=>beforeReviewedAmendment(file,source,family
 const beforeChildAccess=(file,source)=>beforeReviewedAmendment(file,source,childAccess.files[file],'Accès enfant');
 const beforePwa=(file,source)=>beforeReviewedAmendment(file,source,pwa.files[file],'PWA');
 const beforeSons=(file,source)=>beforeReviewedAmendment(file,source,sons.files[file],'Sons et ambiances');
-const readPwaSource=file=>beforeSons(file,readWorkingSource(file));
+const beforeOperations=(file,source)=>beforeReviewedAmendment(file,source,operations.files[file],'Mise en service');
+const readSonsSource=file=>beforeOperations(file,readWorkingSource(file));
+const readPwaSource=file=>beforeSons(file,readSonsSource(file));
 const rawOnboardingSource=file=>beforeChildAccess(file,beforePwa(file,readPwaSource(file)));
 const rawContextSource=file=>beforeIngredientsLot4(file,beforeHealth(file,beforeOnboarding(file,rawOnboardingSource(file))));
 const rawReviewedSource=file=>beforeCatalogueLot3(file,rawContextSource(file));
 function reviewedSource(file){return beforeRunesLot1(file,beforeRunesLot2(file,rawReviewedSource(file)));}
+test('Operational amendments reverse to the exact proven candidate',()=>{
+  assert.equal(operations.baseCommit,'0f51fb76ffe95f54c5e2b5e4493b2fc149ad39f6');
+  for(const [file,extension] of Object.entries(operations.files)){
+    const source=readWorkingSource(file);
+    assert.ok(extension.reason);
+    assert.equal(digest(beforeOperations(file,source)),extension.beforeSha256);
+    assert.throws(()=>beforeOperations(file,source+'/* changed */'),/complete Mise en service source changed/);
+  }
+});
 test('Sound and seasonal amendments reverse to the exact #53 application sources',()=>{
   assert.equal(sons.baseCommit,'ae815199225d277fb8ed0dbb6925f4aebf24f99b');
   for(const [file,extension] of Object.entries(sons.files)){
-    const source=readWorkingSource(file);
+    const source=readSonsSource(file);
     assert.ok(extension.reason);
     assert.equal(digest(beforeSons(file,source)),extension.beforeSha256);
     assert.throws(()=>beforeSons(file,source+'/* changed */'),/complete Sons et ambiances source changed/);
