@@ -152,6 +152,7 @@ if (launch) {
  Object.assign(manifest, {
   scenario, publication: 'local-only', base: '88278faa26568cf6ca8348baf8008401712161fb',
   storagePrefix: dataManifest.namespace + 'client-{A|B|C|D}|', sharedFixtureKey: dataManifest.namespace + 'backend-v1',
+  sharedFixtureDatabase: dataManifest.namespace + 'shared-fixture',
   syntheticDataManifest: { path: file, sha256: hash(bytes) },
   simulation: 'native-family-client/core/writers; browser-only HTTP fixture; same-browser A/B/C/D clients',
   simulationRequires: 'isolated loopback origin; Web Locks, IndexedDB, localStorage',

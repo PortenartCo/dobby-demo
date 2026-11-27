@@ -326,6 +326,19 @@ async function run(base, browser) {
     await checkSourceIsolation(tabs.get('C'), base);
     assert.deepEqual(await witnessSnapshot(neutral, names, config.prefix), initialSentinels, 'Opening all four personas preserves the sibling and production storage');
 
+    phase = 'stale shared mirror';
+    const mirror = await neutral.evaluate(key => localStorage.getItem(key), config.backend);
+    const title = 'TEST Article de reprise inter-onglets';
+    const author = tabs.get('A'), receiver = tabs.get('B');
+    await author.evaluate(title => DobbyFamilyStitchEngine.win().DobbyFamilyUI.grocery.add({ title, quantity: 1, unit: 'pièce' }), title);
+    await author.evaluate(() => DobbyGlobalDemo.sync());
+    await author.waitForFunction(async title => (await DobbyGlobalDemo.rows()).some(item => item.title === title), title);
+    await neutral.evaluate(({ key, mirror }) => localStorage.setItem(key, mirror), { key: config.backend, mirror });
+    const observed = await receiver.evaluate(async title => (await DobbyGlobalDemo.rows()).filter(item => item.title === title).length, title);
+    assert.equal(observed, 1, 'A stale browser mirror cannot replace the endorsed shared state');
+    await receiver.evaluate(() => DobbyGlobalDemo.sync());
+    await receiver.waitForFunction(title => DobbyFamilyStitchEngine.win().DobbyFamilyUI.grocery.read().items.some(item => item.title === title), title);
+
     phase = 'visible reset';
     await sharedProbe(neutral, config, 'shared change before visible reset');
     const parentB = tabs.get('B'), childD = tabs.get('D');

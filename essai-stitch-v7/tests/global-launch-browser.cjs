@@ -124,6 +124,8 @@ async function verifyPersonas(context, width, report, data) {
     await page.locator('[data-review-banner]').getByText(profile.name, { exact: false }).waitFor();
     people.push({ code, role, name: profile.name });
     assert.deepEqual(await page.evaluate(async () => (await navigator.serviceWorker.getRegistrations()).map(row => row.scope)), []);
+    await page.bringToFront();
+    await page.locator('body > main').waitFor();
     await capture(page, width, `persona-${code}`, report);
     await page.reload();
     await ready(page, code);

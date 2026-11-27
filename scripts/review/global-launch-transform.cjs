@@ -116,10 +116,10 @@ const locked=task=>lifecycle.locked(async()=>{
 `);
   source = between(source, " if(url.pathname==='/auth/v1/token'", " if(method==='POST'?body?.household_id", `
  const body=options.body===undefined?null:JSON.parse(options.body);
- const fixtureSuspended=()=>read().suspended[client]===true;
+ const fixtureSuspended=async()=> (await lifecycle.latest()).suspended[client]===true;
  if(url.pathname==='/auth/v1/token'&&method==='POST'&&url.searchParams.get('grant_type')==='refresh_token'){
   const session=newSession();
-  if(fixtureSuspended()||lifecycle.signedOut()||body?.refresh_token!==session.refresh_token)return denied();
+  if(await fixtureSuspended()||await lifecycle.sessionClosed()||body?.refresh_token!==session.refresh_token)return denied();
   return respond({access_token:session.access_token,refresh_token:session.refresh_token,expires_in:86400,user:{id:user,email:profile.email}});
  }
  if(headers.get('Authorization')!=='Bearer fictional-global-'+client||lifecycle.signedOut())return denied();
@@ -130,7 +130,7 @@ const locked=task=>lifecycle.locked(async()=>{
   if(JSON.stringify(state)!==before)write(state);
   return result||respond({message:'Ce service n’est pas reproduit dans la démonstration.'},404);
  });
- if(fixtureSuspended())return denied();
+ if(await fixtureSuspended()||await lifecycle.sessionClosed())return denied();
  if(url.pathname==='/rest/v1/dobby_v2_memberships'&&method==='GET')return url.searchParams.get('user_id')==='eq.'+user?respond([{household_id:household,user_id:user,active:true}]):denied();
  if(url.pathname==='/rest/v1/dobby_v2_households'&&method==='GET')return url.searchParams.get('id')==='eq.'+household?respond([{id:household,name:scenario.household.name}]):denied();
  if(profile.role==='child'&&(method!=='GET'||url.pathname==='/rest/v1/dobby_v2_modules'&&!['eq.menus','eq.recipes'].includes(url.searchParams.get('module'))))return denied();
@@ -149,14 +149,14 @@ function currentActor(){
  const state=native()?.access.state();
  return state?.verified&&state.memberId===profile.memberId&&state.userId===user&&!lifecycle.signedOut()&&read().suspended[client]!==true;
 }
-function visibleState(){
- const state=read();
- if(profile.role==='parent'&&currentActor())return clone(state);
+async function visibleState(){
+ const state=await lifecycle.latest();
+ if(profile.role==='parent'&&currentActor()&&!await lifecycle.sessionClosed())return state;
  return {version:state.version,generation:state.generation,day:state.day};
 }
 async function profiles(){
  await ready;
- const {suspended}=read();
+ const {suspended}=await lifecycle.latest();
  return scenario.profiles.map(({code,name,role})=>({code,name,role,suspended:suspended[code]===true}));
 }
 async function setSuspended(code,value){
@@ -180,8 +180,8 @@ async function setSuspended(code,value){
 window.DobbyGlobalDemo=Object.freeze({client,ready,realBackend:false,sync,profiles,setSuspended,
  reset:lifecycle.reset,resetPending,setOffline:lifecycle.setOffline,isOffline:lifecycle.isOffline,selectClient:lifecycle.selectClient,
  signedOut:lifecycle.signedOut,endSession:lifecycle.endSession,startSession:lifecycle.startSession,
- state:async()=>{await ready;return visibleState();},rows:async()=>{await ready;return currentActor()?clone(read().grocery):[];},
- requests:async()=>{await ready;return currentActor()?clone(read().requests.filter(request=>request.client===client)):[];}});
+ state:async()=>{await ready;return visibleState();},rows:async()=>{await ready;return currentActor()?(await lifecycle.latest()).grocery:[];},
+ requests:async()=>{await ready;return currentActor()?(await lifecycle.latest()).requests.filter(request=>request.client===client):[];}});
 if(window===top)document.addEventListener('DOMContentLoaded',()=>{
  void ready.then(()=>{
   if(resetPending())return;

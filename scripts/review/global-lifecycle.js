@@ -6,6 +6,7 @@
   const prefix = window.DobbyGlobalScenario.namespace;
   const backendKey = `${prefix}backend-v1`;
   const resetKey = `${prefix}reset-in-progress`;
+  const backendDB = `${prefix}shared-fixture`;
   const selectedKey = `${prefix}selected-client`;
   const sessionKey = 'globalFixtureSignedOut';
   const sessionMarker = 'global-fixture-session-closed';
@@ -31,7 +32,7 @@
   }
   async function deleteOwnedDatabases() {
     const databases = await indexedDB.databases();
-    await Promise.all(databases.filter(database => database.name?.startsWith(prefix)).map(database => new Promise((resolve, reject) => {
+    await Promise.all(databases.filter(database => database.name?.startsWith(prefix) && database.name !== backendDB).map(database => new Promise((resolve, reject) => {
       const request = IDBFactory.prototype.deleteDatabase.call(indexedDB, database.name);
       request.onsuccess = resolve;
       request.onerror = () => reject(request.error);
@@ -40,18 +41,19 @@
       request.onblocked = () => window.dispatchEvent(new Event('dobby:demo-reset-blocked'));
     })));
   }
-  function database(action) {
+  function database(action, { shared = false, mode = 'readwrite' } = {}) {
     return new Promise((resolve, reject) => {
-      const open = scopedOpen(nativeDB, 1);
+      const stores = shared ? [['state', 'id']] : [['items', 'storageKey'], ['meta', 'id']];
+      const open = shared ? IDBFactory.prototype.open.call(indexedDB, backendDB, 1) : scopedOpen(nativeDB, 1);
       open.onupgradeneeded = () => {
-        for (const [name, keyPath] of [['items', 'storageKey'], ['meta', 'id']]) {
+        for (const [name, keyPath] of stores) {
           if (!open.result.objectStoreNames.contains(name)) open.result.createObjectStore(name, { keyPath });
         }
       };
       open.onerror = () => reject(open.error);
       open.onsuccess = () => {
         const db = open.result;
-        const transaction = db.transaction(['meta', 'items'], 'readwrite');
+        const transaction = db.transaction(stores.map(([name]) => name), mode);
         let result;
         transaction.oncomplete = () => { db.close(); resolve(result?.result); };
         transaction.onabort = () => { db.close(); reject(transaction.error || Error('Initialisation de la session fictive interrompue.')); };
@@ -72,13 +74,27 @@
     let previouslySuspended;
     let previouslySignedOut;
     let reloading = false;
-    const read = () => JSON.parse(readLocal(backendKey));
-    const write = value => putLocal(backendKey, JSON.stringify(value));
+    let transactionState, written;
+    const mirrored = () => JSON.parse(readLocal(backendKey));
+    const read = () => transactionState ?? mirrored();
+    const write = value => {
+      if (!transactionState) throw Error('La simulation exige un verrou pour modifier le foyer.');
+      transactionState = value;
+      written = true;
+    };
+    const latest = async () => (await database(tx => tx.objectStore('state').get('backend'), { shared: true, mode: 'readonly' }))?.value;
+    const notifyBackend = state => putLocal(backendKey, JSON.stringify(state));
+    async function publish(state) {
+      // The durable row is the only source for simulated reads and writes.
+      // localStorage remains a notification mirror for other documents.
+      await database(tx => tx.objectStore('state').put({ id: 'backend', value: state }), { shared: true });
+      notifyBackend(state);
+    }
     const suspended = state => state.suspended?.[client] === true;
     const signedOut = () => readLocal(shellStorage(sessionKey)) === 'true';
     // Unlike the localStorage UI mirror, this read follows the acknowledged
     // transaction of another renderer that held the same Web Lock.
-    const sessionClosed = async () => (await database(tx => tx.objectStore('meta').get(sessionMarker)))?.value === true;
+    const sessionClosed = async () => (await database(tx => tx.objectStore('meta').get(sessionMarker), { mode: 'readonly' }))?.value === true;
     function writeSession(metadata, state, closed) {
       if (closed || suspended(state)) {
         metadata.delete('session');
@@ -96,9 +112,18 @@
     const pending = () => Boolean(readLocal(resetKey) || generation !== undefined && read()?.generation !== generation);
     const isOffline = () => sessionStorage.getItem('globalFixtureOffline') === 'true';
     const setOffline = value => { sessionStorage.setItem('globalFixtureOffline', String(Boolean(value))); notify(); };
-    const locked = task => withLock(() => {
-      if (pending()) throw Error('Réinitialisation de la démonstration en cours.');
-      return task();
+    const locked = task => withLock(async () => {
+      const state = await latest();
+      if (readLocal(resetKey) || state?.generation !== generation) throw Error('Réinitialisation de la démonstration en cours.');
+      transactionState = state;
+      written = false;
+      try {
+        const result = await task();
+        if (written) await publish(transactionState);
+        return result;
+      } finally {
+        transactionState = undefined;
+      }
     });
     function reconcile() {
       if (window !== top || reloading || generation === undefined) return;
@@ -112,21 +137,23 @@
     async function finishReset() {
       const value = readLocal(resetKey);
       if (!value) return;
-      const previous = read();
+      const previous = await latest() || mirrored();
       const marker = decodeMarker(value, previous?.generation ?? 0);
       if ((previous?.generation ?? 0) < marker.targetGeneration) {
         await deleteOwnedDatabases();
         clearOwned(localStorage, [resetKey, backendKey]);
         clearOwned(sessionStorage);
-        write(seed(previous?.day, marker.targetGeneration));
-      }
+        await publish(seed(previous?.day, marker.targetGeneration));
+      } else notifyBackend(previous);
       removeLocal(resetKey);
       resetChannel?.postMessage({ type: 'complete' });
     }
     const ready = withLock(async () => {
       await finishReset();
-      if (!read()) write(seed());
-      const state = read();
+      const stored = await latest();
+      const state = stored || mirrored() || seed();
+      if (stored) notifyBackend(stored);
+      else await publish(state);
       const revision = String(state.generation);
       const fresh = readLocal(shellStorage(generationKey)) !== revision;
       await database(transaction => {
@@ -198,7 +225,7 @@
       url.searchParams.set('client', code);
       location.assign(url);
     }
-    return { read, write, ready, pending, locked, reset, setOffline, isOffline, selectClient, signedOut, sessionClosed,
+    return { read, write, latest, ready, pending, locked, reset, setOffline, isOffline, selectClient, signedOut, sessionClosed,
       endSession: () => setSession(false), startSession: () => setSession(true), notify };
   }
   window.DobbyGlobalLifecycle = Object.freeze({ create });
