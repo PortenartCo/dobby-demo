@@ -123,7 +123,8 @@ async function visibleLabels(page) {
         assert.deepEqual(await visibleLabels(page), labels, 'Five final categories in order');
         assert.equal(await page.locator('main img').count(), 0, 'No decorative hero illustration');
         assert.equal(await page.locator('main input').count(), 1, 'Only the Menu filter');
-        assert.equal(await page.locator('main button:not(#clear-search-btn)').count(), 0, 'No decorative or additional Menu buttons');
+        assert.equal(await page.locator('main button:not(#clear-search-btn, #dobby-pwa-install)').count(), 0, 'Only the filter and PWA action add Menu buttons');
+        await page.getByRole('button', {name:'Installer DOBBY',exact:true}).waitFor();
         assert.ok(!/Index & Clés|Grand Sommaire|Tous les Outils|Note d.intendant|Autres accès|OMNISCIENT|Entrer en Audience|Revenir à l.Accueil/.test(await page.locator('main').innerText()), 'Removed Menu ornaments stay absent');
         for (const [index, destination] of destinations.entries()) {
           const card = page.locator('main a.module-item').nth(index);

@@ -1117,7 +1117,11 @@ async function adoptVerifiedFamily(binding) {
   // Binding precedes the first authorized Santé capability read. Ignore the
   // retained device-only history for identity comparison, never for outgoing writes.
   const preserveHealth=preserveHistoricalHealth();
-  const bindingDigest=payload=>moduleDigest('family',familyWithoutHistoricalHealth(payload,preserveHealth));
+  const bindingDigest=payload=>{
+    // famHealth is a device-only field, even if an old server row still has it.
+    const {famHealth,...registry}=familyWithoutHistoricalHealth(payload,preserveHealth);
+    return moduleDigest('family',registry);
+  };
   const pending=()=>{const state=states.family;return Boolean(state?.conflict||state?.active&&bindingDigest(pick('family'))!==bindingDigest(JSON.parse(state.synced||'{}')));};
   guard();if(inFlight||pending())throw Error('Le registre familial contient des modifications locales en attente ou un conflit.');
   const remote=await readRow('family');guard();
