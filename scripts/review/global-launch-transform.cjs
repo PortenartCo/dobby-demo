@@ -67,12 +67,14 @@ const publishable='sb_publishable_global_simulation_only_123456789';
 const clone=value=>JSON.parse(JSON.stringify(value));
 const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;
 const digest=value=>JSON.stringify(canonical(value));
-const definitions={menus:['planned','shopHistory','shopFinal','shopChoice'],recipes:['customRecipes','tmAdaptations'],missions:['autoTasks','manualMissions','runeCredits'],house:['houseItems','houseLogs'],family:['familyMembers','famContacts','famLists','familyEvents','sharedFamilyNotes','familyPreparationTemplates','familyEventPreparations']};
+const definitions={menus:['planned','shopHistory','shopFinal','shopChoice'],recipes:['customRecipes','tmAdaptations'],missions:['autoTasks','manualMissions','runeCredits'],house:['houseItems','houseLogs'],family:['familyMembers','famContacts','famLists','familyEvents','sharedHealthVisits','sharedFamilyNotes','familyPreparationTemplates','familyEventPreparations']};
 const {goal}=scenario;
 function seed(day=new Date().toLocaleDateString('en-CA'),generation=1){
  const initial=config.initialState(day),modules={},stamp=day+'T00:00:00.000Z';
  for(const [module,keys] of Object.entries(definitions)){
   const payload=Object.fromEntries(keys.map(key=>[key,clone(initial[key]??[])]));
+  // The dormant historical field is empty, matching the native initial snapshot.
+  // Omitting it would look like an unsaved edit when another parent advances the revision.
   if(module==='family') Object.assign(payload,{familyNotesVersion:1,familyPreparationsVersion:1});
   if(module==='missions') Object.assign(payload,{runeLedgerVersion:3,runeRequests:[],missionParticipation:[],runeRewards:[],
     runeGoals:{[goal.memberId]:{id:goal.id,threshold:goal.threshold,mode:'announced',unlocked:false,title:goal.title,date:stamp}}});
@@ -99,13 +101,18 @@ function prepare(state){
 const newSession=()=>({key:publishable,access_token:'fictional-global-'+client,refresh_token:'fictional-global-refresh-'+client,
  user_id:user,email:profile.email,expires_at:Math.floor(Date.now()/1000)+86400});
 const lifecycle=window.DobbyGlobalLifecycle.create({seed,client,session:newSession(),prepare});
-const {read,write,ready,locked,pending:resetPending}=lifecycle;
+const {read,write,ready,pending:resetPending}=lifecycle;
+const ensureOnline=()=>{if(lifecycle.isOffline())throw Error('Simulation hors ligne : modification conservée sur ce navigateur.');};
+const locked=task=>lifecycle.locked(async()=>{
+ ensureOnline();
+ return await lifecycle.sessionClosed()?denied():task();
+});
 `);
   source = between(source, ' const paths=new Set(', ' const method=String(', `
  if(url.origin!==project)return nativeFetch(input,options);
  await ready;
  if(resetPending())throw Error('Réinitialisation de la démonstration en cours.');
- if(lifecycle.isOffline())throw Error('Simulation hors ligne : modification conservée sur ce navigateur.');
+ ensureOnline();
 `);
   source = between(source, " if(url.pathname==='/auth/v1/token'", " if(method==='POST'?body?.household_id", `
  const body=options.body===undefined?null:JSON.parse(options.body);
@@ -155,10 +162,18 @@ async function profiles(){
 async function setSuspended(code,value){
  await ready;
  const target=scenario.profiles.find(actor=>actor.code===code&&actor.role==='child');
- const api=native(),viewer=api?.access.state();
- if(!target||profile.role!=='parent'||!viewer?.verified||viewer.userId!==user||!viewer.permissions?.canManageDependents||lifecycle.isOffline())throw Error('Utilisez une session parent active en ligne dans la simulation.');
+ const api=native();
+ const assertParent=()=>{
+  if(!target||profile.role!=='parent'||!currentActor()||!api?.access.state().permissions?.canManageDependents||lifecycle.isOffline())
+   throw Error('Utilisez une session parent active en ligne dans la simulation.');
+ };
+ assertParent();
  if(value===true) await api.access.suspendChildAccess(target.memberId);
- else if(value===false) await locked(()=>{const state=read();state.suspended[code]=false;write(state);});
+ else if(value===false) await lifecycle.locked(async()=>{
+  if(await lifecycle.sessionClosed())throw Error('Cette session parent est fermée.');
+  assertParent();
+  const state=read();state.suspended[code]=false;write(state);
+ });
  else throw Error('État du compte fictif invalide.');
  lifecycle.notify();
 }

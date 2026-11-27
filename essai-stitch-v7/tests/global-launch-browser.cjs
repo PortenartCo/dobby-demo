@@ -142,6 +142,32 @@ async function useOfflineControl(page, offline) {
   await dialog.getByRole('button', { name: 'Fermer', exact: true }).click();
 }
 
+async function waitForMemoDelivery(page, id) {
+  await page.waitForFunction(async id => {
+    const family = (await DobbyGlobalDemo.state()).modules?.family;
+    return family?.payload?.sharedFamilyNotes?.some(row => row.id === id);
+  }, id, { polling: 250 });
+  for (let attempt = 0; attempt < 4; attempt++) {
+    await fixture(page, 'sync');
+    try {
+      await page.waitForFunction(id => DobbyFamilyStitchEngine.read().state.sharedFamilyNotes?.some(row => row.id === id),
+        id, { polling: 250, timeout: 3500 });
+      await page.evaluate(() => DobbyFamilyStitch.refresh());
+      return;
+    } catch (error) {
+      if (error.name !== 'TimeoutError') throw error;
+    }
+  }
+  const diagnostic = await page.evaluate(async id => {
+    const api = DobbyFamilyStitchEngine.win().DobbyFamilyUI;
+    const family = (await DobbyGlobalDemo.state()).modules?.family;
+    return { status: api.getModuleStatus('family'), identityRevision: api.access.state().familyRevision,
+      fixtureRevision: family?.revision, presentInFixture: family?.payload?.sharedFamilyNotes?.some(row => row.id === id),
+      presentInNativeState: DobbyFamilyStitchEngine.read().state.sharedFamilyNotes?.some(row => row.id === id) };
+  }, id);
+  assert.fail(`Parent B did not receive the memo through native synchronization: ${JSON.stringify(diagnostic)}`);
+}
+
 async function verifySharedMemo(pages, width, report) {
   const title = `DÉMO — Mémo de la recette ${width}`;
   await open(pages.A, 'famille.html', '#memos', 'A', 'memos');
@@ -169,7 +195,7 @@ async function verifySharedMemo(pages, width, report) {
     const shared = (await DobbyGlobalDemo.state()).modules?.family?.payload?.sharedFamilyNotes;
     return shared?.some(row => row.id === id);
   }, saved.id, { polling: 250 });
-  await fixture(pages.B, 'sync');
+  await waitForMemoDelivery(pages.B, saved.id);
   await pages.A.getByRole('button', { name: 'Consulter ' + title, exact: true }).waitFor();
   await pages.B.getByRole('button', { name: 'Consulter ' + title, exact: true }).waitFor();
   assert.ok((await snapshot(pages.B)).sharedFamilyNotes.some(row => row.id === saved.id));

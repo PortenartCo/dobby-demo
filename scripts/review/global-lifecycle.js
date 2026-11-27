@@ -8,6 +8,7 @@
   const resetKey = `${prefix}reset-in-progress`;
   const selectedKey = `${prefix}selected-client`;
   const sessionKey = 'globalFixtureSignedOut';
+  const sessionMarker = 'global-fixture-session-closed';
   const generationKey = 'globalFixtureGeneration';
   const nativeDB = 'dobby-v5-household-preview-v2';
   const stateKey = 'dobby-v5-familial-preview-20261108';
@@ -51,9 +52,10 @@
       open.onsuccess = () => {
         const db = open.result;
         const transaction = db.transaction(['meta', 'items'], 'readwrite');
-        transaction.oncomplete = () => { db.close(); resolve(); };
+        let result;
+        transaction.oncomplete = () => { db.close(); resolve(result?.result); };
         transaction.onabort = () => { db.close(); reject(transaction.error || Error('Initialisation de la session fictive interrompue.')); };
-        try { action(transaction); }
+        try { result = action(transaction); }
         catch (error) { transaction.abort(); reject(error); }
       };
     });
@@ -74,6 +76,23 @@
     const write = value => putLocal(backendKey, JSON.stringify(value));
     const suspended = state => state.suspended?.[client] === true;
     const signedOut = () => readLocal(shellStorage(sessionKey)) === 'true';
+    // Unlike the localStorage UI mirror, this read follows the acknowledged
+    // transaction of another renderer that held the same Web Lock.
+    const sessionClosed = async () => (await database(tx => tx.objectStore('meta').get(sessionMarker)))?.value === true;
+    function writeSession(metadata, state, closed) {
+      if (closed || suspended(state)) {
+        metadata.delete('session');
+        metadata.delete('verifiedContext');
+      } else {
+        metadata.put({ id: 'session', value: session });
+        metadata.put({ id: 'verifiedContext', value: session.user_id + '|' + state.household });
+      }
+    }
+    function reflectSession(closed) {
+      if (closed) putLocal(shellStorage(sessionKey), 'true');
+      else removeLocal(shellStorage(sessionKey));
+    }
+
     const pending = () => Boolean(readLocal(resetKey) || generation !== undefined && read()?.generation !== generation);
     const isOffline = () => sessionStorage.getItem('globalFixtureOffline') === 'true';
     const setOffline = value => { sessionStorage.setItem('globalFixtureOffline', String(Boolean(value))); notify(); };
@@ -121,13 +140,12 @@
         }
         metadata.put({ id: 'publicKey', value: session.key });
         metadata.put({ id: 'deviceHouseholdId', value: state.household });
-        if (signedOut() || suspended(state)) {
-          metadata.delete('session');
-          metadata.delete('verifiedContext');
-        } else {
-          metadata.put({ id: 'session', value: session });
-          metadata.put({ id: 'verifiedContext', value: session.user_id + '|' + state.household });
-        }
+        const request = metadata.get(sessionMarker);
+        request.onsuccess = () => {
+          const closed = request.result?.value === true;
+          writeSession(metadata, state, closed);
+          reflectSession(closed);
+        };
       });
       putLocal(shellStorage(generationKey), revision);
       generation = state.generation;
@@ -159,10 +177,15 @@
     }
     async function setSession(enabled) {
       await ready;
-      await locked(() => {
-        if (enabled && suspended(read())) throw Error('Ce profil fictif est suspendu.');
-        if (enabled) removeLocal(shellStorage(sessionKey));
-        else putLocal(shellStorage(sessionKey), 'true');
+      await locked(async () => {
+        const state = read();
+        if (enabled && suspended(state)) throw Error('Ce profil fictif est suspendu.');
+        await database(tx => {
+          const metadata = tx.objectStore('meta');
+          metadata.put({ id: sessionMarker, value: !enabled });
+          writeSession(metadata, state, !enabled);
+        });
+        reflectSession(!enabled);
       });
       location.reload();
     }
@@ -175,7 +198,7 @@
       url.searchParams.set('client', code);
       location.assign(url);
     }
-    return { read, write, ready, pending, locked, reset, setOffline, isOffline, selectClient, signedOut,
+    return { read, write, ready, pending, locked, reset, setOffline, isOffline, selectClient, signedOut, sessionClosed,
       endSession: () => setSession(false), startSession: () => setSession(true), notify };
   }
   window.DobbyGlobalLifecycle = Object.freeze({ create });

@@ -209,6 +209,49 @@ async function replayResetMessages(tabs, neutral, channel, messages) {
   assert.deepEqual(freshNavigations, [], 'Delayed messages from an already applied reset do not reload fresh tabs');
 }
 
+async function verifyQueuedChildAccessAfterSignOut(parent, otherTab, neutral, config) {
+  const readSuspension = () => neutral.evaluate(key => JSON.parse(localStorage.getItem(key)).suspended.C, config.backend);
+  const outcomes = [];
+  for (const suspend of [true, false]) {
+    await Promise.all([ready(parent, 'A'), ready(otherTab, 'A')]);
+    await parent.evaluate(value => DobbyGlobalDemo.setSuspended('C', value), !suspend);
+    assert.equal(await readSuspension(), !suspend, 'The requested action would change the child’s access');
+
+    await neutral.evaluate(lock => {
+      void navigator.locks.request(lock, () => new Promise(resolve => { window.releaseSessionRaceLock = resolve; }));
+    }, config.lock);
+    try {
+      await neutral.waitForFunction(() => typeof window.releaseSessionRaceLock === 'function');
+      const waitForQueue = count => neutral.waitForFunction(async ({ lock, count }) =>
+        (await navigator.locks.query()).pending.filter(item => item.name === lock).length >= count,
+      { lock: config.lock, count });
+      await parent.evaluate(() => { void DobbyGlobalDemo.endSession(); });
+      await waitForQueue(1);
+      await otherTab.evaluate(value => { void DobbyGlobalDemo.setSuspended('C', value).catch(() => {}); }, suspend);
+      await waitForQueue(2);
+
+      // A final request on the real lock waits for both commands, even if a
+      // session-change notification reloads an initiating document first.
+      await neutral.evaluate(lock => {
+        const drained = navigator.locks.request(lock, () => {});
+        window.releaseSessionRaceLock();
+        delete window.releaseSessionRaceLock;
+        return drained;
+      }, config.lock);
+      await Promise.all([parent, otherTab].map(tab => tab.locator('[data-review-banner]').getByText(/Session fermée/i).waitFor()));
+      outcomes.push({ action: suspend ? 'suspend' : 'reactivate', suspended: await readSuspension() });
+    } finally {
+      await neutral.evaluate(() => {
+        window.releaseSessionRaceLock?.();
+        delete window.releaseSessionRaceLock;
+      });
+    }
+    if (suspend) await parent.evaluate(() => { void DobbyGlobalDemo.startSession(); });
+  }
+  assert.deepEqual(outcomes, [{ action: 'suspend', suspended: false }, { action: 'reactivate', suspended: true }],
+    'A queued child access change cannot take effect after the parent session closes');
+}
+
 async function run(base, browser) {
   const manifestURL = new URL('review-manifest.json', base);
   const context = await browser.newContext({ viewport: { width: 390, height: 900 }, locale: 'fr-BE',
@@ -319,6 +362,14 @@ async function run(base, browser) {
     assert.deepEqual(await sharedProbe(neutral, config), { generation: generation + 2, probe: null });
     phase = 'stale reset messages';
     await replayResetMessages(tabs, neutral, config.channel, resetMessages);
+    phase = 'queued child access after sign-out';
+    const otherParentTab = await context.newPage();
+    try {
+      await otherParentTab.goto(entry('A'));
+      await verifyQueuedChildAccessAfterSignOut(tabs.get('A'), otherParentTab, neutral, config);
+    } finally {
+      await otherParentTab.close();
+    }
     assert.deepEqual(await witnessSnapshot(neutral, names, config.prefix), initialSentinels);
     assert.deepEqual(egress, [], 'The browser only uses local demo resources');
     assert.deepEqual(errors, []);
