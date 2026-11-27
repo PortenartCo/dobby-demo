@@ -50,6 +50,11 @@ async function cleanDetail(p){assert.equal(await p.locator('main [data-seasonal-
    // Same-document Family/Cuisine view changes must mount and reclaim their hosts.
    await visit(p,4);
    for(const view of ['members','agenda','health','memos','contacts','house','contracts','contracts-1','document-library','settings']){await p.evaluate(view=>DobbyFamilyStitch.open(view),view);await p.waitForFunction(view=>document.body.dataset.familyView===view,view);assert.equal(await p.locator('main [data-seasonal-page]').count(),1,'First-level '+view+' keeps the event');}
+   await p.evaluate(()=>DobbyFamilyStitch.open('documents'));
+   await p.locator('[data-archives-hero] [data-seasonal-section]').waitFor();
+   const badge=p.locator('[data-archives-title]');
+   assert.equal(await badge.getAttribute('data-seasonal-page-host'),null,'The seasonal frame does not restyle the Archives badge');
+   assert.equal(await badge.evaluate(node=>getComputedStyle(node).position),'absolute');
    await p.evaluate(()=>DobbyFamilyStitch.open('mission-edit'));await p.waitForFunction(()=>document.body.dataset.familyView==='mission-edit');await cleanDetail(p);await p.locator('#quest-title').fill('TEST — Preserved local draft');await p.evaluate(()=>{document.body.dataset.cuisineView='taverne';DobbyChrome.apply();});await cleanDetail(p);await p.evaluate(()=>delete document.body.dataset.cuisineView);assert.equal(await p.locator('#quest-title').inputValue(),'TEST — Preserved local draft');
    await p.goto(base+'famille.html#agenda?dialog=event');await p.waitForFunction(()=>document.body.dataset.familyView==='agenda'&&document.getElementById('fa-dialog'));assert.equal(await p.locator('#fa-dialog [data-seasonal-decoration]').count(),0);await p.keyboard.press('Escape');await p.locator('#fa-dialog').waitFor({state:'detached'});
    await visit(p,2);await p.evaluate(()=>DobbyCuisine.open('recipes'));await p.waitForFunction(()=>document.body.dataset.cuisineView==='recipes');assert.equal(await p.locator('main [data-seasonal-page]').count(),1,'Recipe catalogue keeps the event');

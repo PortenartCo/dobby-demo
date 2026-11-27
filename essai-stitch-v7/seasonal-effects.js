@@ -112,7 +112,8 @@ window.DobbySeasonal=(()=>{
   const home=body.dv7Screen==='traverse'&&!family&&!cuisine;
   const primary=family?familyPages.has(family):cuisine?cuisinePages.has(cuisine):body.dv7Screen==='missions';
   const image=main?.querySelector('img[alt*="Dobby"],img[alt="La Taverne Gourmande"]');
-  const heading=primary?main?.querySelector('h1'):null;
+  // V7 Archives uses its h1 as an absolutely positioned badge inside the art.
+  const heading=primary?main?.querySelector('h1:not([data-archives-title])'):null;
   const ledger=cuisine?.startsWith('shop')?heading?.closest('.bg-surface-container'):null;
   return {home,scene:home?image?.parentElement:null,title:ledger||heading,section:!home&&primary?image?.parentElement:null,composition:ledger?'ledger':'heading'};
  }

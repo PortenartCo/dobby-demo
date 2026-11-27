@@ -22,7 +22,7 @@ Les cinq gestes sont une note ronde, un arpège léger, un souffle montant, un a
 
 ## Comparaison avec #26
 
-La branche #26 et le SHA demandé de #53 ont pour ancêtre commun `2f2f38b1`. Le SHA `682e09b9f0c57652da01588bb4f4118d4da7cbe0` de #26 et l’aperçu saisonnier isolé déjà présent dans #53 contiennent les mêmes trois fichiers de calendrier, JS et CSS. Les trois fichiers ont été repris octet pour octet. L’application de #53 utilisait encore les effets dorés natifs sans charger cet adaptateur.
+La branche #26 et le SHA demandé de #53 ont pour ancêtre commun `2f2f38b1`. Le SHA `682e09b9f0c57652da01588bb4f4118d4da7cbe0` de #26 et l’aperçu saisonnier isolé déjà présent dans #53 contiennent les mêmes trois fichiers de calendrier, JS et CSS. Le calendrier et la feuille de style sont identiques à #26. L’adaptateur JS conserve la composition d’origine avec une exclusion ciblée pour le titre des Archives, qui sert de badge dans l’image V7. L’application de #53 utilisait encore les effets dorés natifs sans charger cet adaptateur.
 
 Les hunks de raccord historiques ne s’appliquent plus directement aux versions de `build-source.cjs`, `chrome.js` et `tools-register.js` de #53. Le chargement est réintroduit aux quatre racines actuelles et l’adaptateur de #26 s’applique à côté des effets existants. Il conserve le calendrier Europe/Brussels, les fêtes fixes et mobiles, les préférences, le mouvement réduit et les six rubriques. Les modules Auth, enfants, Santé et le moteur de synchronisation restent ceux du socle V7. [Diff de #26](https://github.com/PortenartCo/dobby-demo/pull/26/files) · [Calendrier #21](https://github.com/PortenartCo/dobby-demo/issues/21)
 
