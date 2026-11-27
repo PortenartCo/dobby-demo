@@ -257,7 +257,11 @@ async function verifyRunes(pages, width, report, data) {
   assert.equal(await child.getByRole('button', { name: 'Confirmer la récompense', exact: true }).count(), 0);
   await capture(child, width, 'runes-palier-enfant', report);
   await open(pages.B, 'famille.html', profileURL, 'B', 'personal');
+  await active(pages.B);
   await fixture(pages.B, 'sync');
+  await pages.B.waitForFunction(memberId => DobbyFamilyStitchEngine.win()?.DobbySharedRunesV3?.readProgress()?.goals?.[memberId]?.unlocked === true,
+    goal.memberId);
+  await pages.B.evaluate(() => DobbyFamilyStitch.refresh());
   await pages.B.getByRole('button', { name: 'Confirmer la récompense', exact: true }).click();
   const reward = pages.B.getByRole('dialog', { name: 'Confirmer la récompense', exact: true });
   await reward.getByRole('button', { name: 'Confirmer', exact: true }).click();
@@ -270,6 +274,36 @@ async function verifyRunes(pages, width, report, data) {
   await child.locator('[data-rune-profile]').getByText(goal.title, { exact: false }).waitFor();
 }
 
+async function verifyMagic(pages, width, report, data) {
+  const own = data.profiles.find(profile => profile.code === 'C');
+  const sibling = data.profiles.find(profile => profile.code === 'D');
+  const child = pages.C;
+  await open(child, 'famille.html', '#personal?person=' + encodeURIComponent(own.memberId), 'C', 'personal');
+  await active(child);
+  const values = { magicHouseId: 'slytherin', magicPatronusId: 'cat' };
+  const update = (page, memberId) => page.evaluate(({ memberId, values }) => {
+    const access = DobbyFamilyStitchEngine.win().DobbyFamilyUI.access;
+    return access.updateMagic({ memberId, expectedRevision: access.state().familyRevision, values });
+  }, { memberId, values });
+  await active(pages.D);
+  await assert.rejects(update(pages.D, own.memberId), /non autorisée/i);
+  await update(child, own.memberId);
+  const parent = await fixture(pages.A, 'state');
+  const members = parent.modules.family.payload.familyMembers;
+  assert.equal(members.find(row => row.id === own.memberId).magicProfile.houseId, values.magicHouseId);
+  assert.equal(members.find(row => row.id === own.memberId).magicProfile.patronusId, values.magicPatronusId);
+  assert.equal(members.find(row => row.id === sibling.memberId).magicProfile.houseId, sibling.houseId);
+  assert.equal(members.find(row => row.id === sibling.memberId).magicProfile.patronusId, sibling.patronusId);
+  await child.reload();
+  await ready(child, 'C');
+  await active(child);
+  const profile = (await actor(child)).access.profile.magicProfile;
+  assert.equal(profile.houseId, values.magicHouseId);
+  assert.equal(profile.patronusId, values.magicPatronusId);
+  await child.locator(`[data-magic-theme="${values.magicHouseId}"]`).waitFor();
+  await capture(child, width, 'maison-patronus', report);
+}
+
 async function verifySession(pages) {
   let dialog = await openPanel(pages.B);
   await dialog.locator('[data-global-session]').click();
@@ -278,12 +312,15 @@ async function verifySession(pages) {
   await pages.B.reload();
   await ready(pages.B, 'B');
   await pages.B.locator('[data-review-banner]').getByText(/Session fermée/i).waitFor();
-  await pages.B.waitForFunction(() => window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI?.access?.state()?.authenticated === false);
-  assert.equal((await actor(pages.B)).access.authenticated, false);
+  await pages.B.waitForFunction(() => window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI?.access?.state()?.phase === 'signed-out');
+  const closed = await actor(pages.B);
+  assert.equal(closed.access.verified, false);
+  assert.notEqual(closed.access.authenticated, true);
+  assert.notEqual(closed.context?.identityVerified, true);
   dialog = await openPanel(pages.B);
   assert.equal(await dialog.locator('[data-global-health-example]').count(), 0);
   await dialog.locator('[data-global-session]').click();
-  await pages.B.waitForFunction(() => window.DobbyFamilyStitchEngine?.win()?.DobbyFamilyUI?.access?.state()?.phase === 'active');
+  await active(pages.B);
   assert.equal((await actor(pages.B)).context.identityVerified, true);
 }
 
@@ -407,7 +444,10 @@ async function run(browser, width, data) {
     await step('synthetic health examples remain read-only and scoped', () => verifyHealth(pages, width, report, data));
     const memo = await step('native offline edit survives reload and reaches Parent B on reconnect', () => verifySharedMemo(pages, width, report));
     await step('own child missions and restricted adult routes', () => verifyPermissions(pages, memo, width, report, data));
-    if (width === 390) await step('child mission unlocks the Rune reward confirmed by Parent B', () => verifyRunes(pages, width, report, data));
+    if (width === 390) {
+      await step('child mission unlocks the Rune reward confirmed by Parent B', () => verifyRunes(pages, width, report, data));
+      await step('in-scope native House and Patronus choices persist across reload', () => verifyMagic(pages, width, report, data));
+    }
     await step('one parent session closes and resumes without impacting the other', () => verifySession(pages));
     await step('parent suspends and restores either child independently', () => verifySuspension(pages, width, report));
     assert.deepEqual(report.network, [], 'All browser traffic stays within the loopback bundle and is read-only HTTP');

@@ -41,7 +41,8 @@ function config(source) {
 }
 function review(source) {
   source = replace(source, 'if(!localStorage.getItem(key)){', 'if(!window.DobbyGlobalLaunch&&!localStorage.getItem(key)){');
-  source = replace(source, "async reset(){if(!confirm(", "async reset(){if(window.DobbyGlobalLaunch)return window.DobbyGlobalDemo.reset();if(!confirm(");
+  source = replace(source, "localStorage.clear();sessionStorage.clear();for(const db",
+    "if(window.DobbyGlobalLaunch)return window.DobbyGlobalDemo.reset();localStorage.clear();sessionStorage.clear();for(const db");
   return replace(source, "navigator.sendBeacon=()=>false;", `navigator.sendBeacon=()=>false;
 const localNavigation=input=>{
  const url=new URL(input,location.href);
