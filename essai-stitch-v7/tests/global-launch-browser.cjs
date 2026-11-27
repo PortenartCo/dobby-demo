@@ -154,7 +154,8 @@ async function waitForMemoDelivery(page, id) {
     try {
       await page.waitForFunction(id => DobbyFamilyStitchEngine.read().state.sharedFamilyNotes?.some(row => row.id === id),
         id, { polling: 250, timeout: 3500 });
-      await page.evaluate(() => DobbyFamilyStitch.refresh());
+      await page.bringToFront();
+      await page.evaluate(() => DobbyFamilyStitch.open('memos', { record: null }));
       return;
     } catch (error) {
       if (error.name !== 'TimeoutError') throw error;
