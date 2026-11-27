@@ -139,10 +139,9 @@ const locked=task=>lifecycle.locked(async()=>{
   source = replace(source,
     "const nativeFetch=window.fetch.bind(window),runesReady=import(new URL('essai-stitch-v5-famille/family-runes-core.mjs',DobbyReview.root).href);\nconst sha256=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),byte=>byte.toString(16).padStart(2,'0')).join('');",
     'const nativeFetch=window.fetch.bind(window);');
-  // Native sync can coalesce with a cycle already in flight. Its access
-  // facade waits for that cycle before reading the current account again.
+  // Let the existing grocery cycle verify the account and drain native queues.
   source = replace(source, 'await api.grocery.sync();window.DobbyCuisine?.refresh();window.DobbyFamilyStitch?.refresh?.();',
-    'await api.grocery.sync();await api.access.refresh();await refreshSyncedView();');
+    'await api.grocery.sync();await refreshSyncedView();');
   source = replace(source, 'updateStatus();const result=api.grocery.read();', 'lifecycle.notify();const result=api.grocery.read();');
   source = replace(source, 'if(result.error)throw Error(result.error);return clone(read());}', 'if(result.error)throw Error(result.error);return visibleState();}');
   return between(source, 'function prepareReset(', '})();', `
