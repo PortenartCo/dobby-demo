@@ -44,6 +44,7 @@ jobs:
           DOBBY_E074: '1'
           DOBBY_E013_EVIDENCE_DIR: ${{ runner.temp }}/dobby-sons/accueil
           DOBBY_E073_EFFECTS_EVIDENCE: ${{ runner.temp }}/dobby-sons/cuisine
+          DOBBY_E0601_EVIDENCE: ${{ runner.temp }}/dobby-sons/cheminette
           DOBBY_STITCH_RITUAL_EVIDENCE: ${{ runner.temp }}/dobby-sons/rituel
           DOBBY_E0601_ERROR_EVIDENCE: ${{ runner.temp }}/dobby-sons/rituel-erreurs
         run: |
@@ -67,6 +68,7 @@ jobs:
           node essai-stitch-v7/tests/seasonal-pages.cjs
           node essai-stitch-v7/tests/e01-3.cjs
           node essai-stitch-v7/tests/e07-3-effects.cjs
+          node essai-stitch-v7/tests/e06-ritual.cjs
           node essai-stitch-v7/tests/stitch-entry-ritual.cjs
           node essai-stitch-v7/tests/e06-ritual-errors.cjs
       - name: Vérifier la réalisation et la récompense dans la démo isolée
