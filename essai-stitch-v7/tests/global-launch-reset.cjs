@@ -334,8 +334,13 @@ async function run(base, browser) {
     await author.evaluate(() => DobbyGlobalDemo.sync());
     await author.waitForFunction(async title => (await DobbyGlobalDemo.rows()).some(item => item.title === title), title);
     await neutral.evaluate(({ key, mirror }) => localStorage.setItem(key, mirror), { key: config.backend, mirror });
-    const observed = await receiver.evaluate(async title => (await DobbyGlobalDemo.rows()).filter(item => item.title === title).length, title);
-    assert.equal(observed, 1, 'A stale browser mirror cannot replace the endorsed shared state');
+    // A receiver temporarily exposes no rows while the native account is
+    // being reverified. Check the shared row under its confirmed identity.
+    await receiver.waitForFunction(async title => {
+      const context = DobbyFamilyStitchEngine.win().DobbyFamilyUI.getContext();
+      return context?.identityVerified === true &&
+        (await DobbyGlobalDemo.rows()).filter(item => item.title === title).length === 1;
+    }, title, { polling: 150, timeout: 5000 });
     await receiver.evaluate(() => DobbyGlobalDemo.sync());
     await receiver.waitForFunction(title => DobbyFamilyStitchEngine.win().DobbyFamilyUI.grocery.read().items.some(item => item.title === title), title);
 
