@@ -2,7 +2,8 @@
 'use strict';
 
 const assert = require('node:assert/strict');
-const { mkdtemp, rm, writeFile } = require('node:fs/promises');
+const { createHash } = require('node:crypto');
+const { mkdtemp, readFile, rm, writeFile } = require('node:fs/promises');
 const { tmpdir } = require('node:os');
 const { join } = require('node:path');
 const { chromium, devices } = require('playwright');
@@ -20,6 +21,8 @@ const foreignCache = 'unrelated-fixture-cache';
 const foreignPath = '/outside-pwa-fixture/';
 const privacyToken = 'PWA_FIXTURE_PRIVATE_VALUE';
 const legacyEngine = 'essai-stitch-v5-famille/index.html';
+const audioAssets = ['confirm', 'reward', 'transition', 'notification', 'timer']
+  .map(name => `essai-stitch-v7/assets/audio/${name}.wav`);
 
 const url = (fixture, relative) => new URL(relative, fixture.base).href;
 const browserContext = (browser, width, options = {}) => browser.newContext({ ...options,
@@ -306,11 +309,85 @@ async function verifyPrivateTraffic(page, fixture) {
 }
 
 async function verifyPrivateOffline(page, fixture) {
-  const result = await page.evaluate(async ({ paths, foreignPath }) => Promise.all([...paths, foreignPath].map(async path => {
-    try { return { url: path, status: (await fetch(path)).status }; }
+  const result = await page.evaluate(async ({ paths, foreignPath, audio, token }) => Promise.all([
+    ...[...paths, foreignPath, `${audio}?token=${token}`].map(path => [path]),
+    [audio, { headers: { Authorization: `Bearer ${token}` } }],
+    [audio, { headers: { Range: 'bytes=0-10' } }],
+  ].map(async ([path, options]) => {
+    try { return { url: path, status: (await fetch(path, options)).status }; }
     catch (error) { return { url: path, error: error.name }; }
-  })), { paths: privatePaths.map(path => url(fixture, path)), foreignPath });
+  })), { paths: privatePaths.map(path => url(fixture, path)), foreignPath, audio: url(fixture, audioAssets[0]), token: privacyToken });
   for (const record of result) assert.equal(record.error, 'TypeError', `No offline read for ${record.url}`);
+}
+
+async function verifyOfflineSounds(page, fixture) {
+  const addresses = audioAssets.map(asset => url(fixture, asset));
+  const paths = new Set(addresses.map(address => new URL(address).pathname));
+  const audioRequestCount = () => fixture.requests.filter(request => paths.has(request.path)).length;
+  const before = audioRequestCount();
+  const received = await page.evaluate(async addresses => Promise.all(addresses.map(async address => {
+    const response = await fetch(address);
+    const body = await response.arrayBuffer();
+    const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', body));
+    return { status: response.status, contentType: response.headers.get('content-type'), bytes: body.byteLength,
+      sha256: Array.from(digest, byte => byte.toString(16).padStart(2, '0')).join('') };
+  })), addresses);
+  for (const [index, asset] of audioAssets.entries()) {
+    const body = await readFile(join(__dirname, '../..', asset));
+    assert.equal(body.toString('ascii', 0, 4), 'RIFF', asset);
+    assert.equal(body.toString('ascii', 8, 12), 'WAVE', asset);
+    assert.deepEqual(received[index], { status: 200, contentType: 'audio/wav', bytes: body.length,
+      sha256: createHash('sha256').update(body).digest('hex') }, asset);
+  }
+  assert.equal(audioRequestCount(), before, 'Offline audio is served entirely by the worker cache');
+  return { offlineWav: received.length, bytes: received.reduce((sum, probe) => sum + probe.bytes, 0) };
+}
+
+async function verifyOfflinePlayback(context, fixture) {
+  const page = await context.newPage();
+  page.setDefaultTimeout(15000);
+  try {
+    await page.addInitScript(() => {
+      if (window !== top) return;
+      window.pwaAudioStarts = [];
+      const start = AudioBufferSourceNode.prototype.start;
+      AudioBufferSourceNode.prototype.start = function (...args) {
+        const result = start.apply(this, args);
+        const buffer = this.buffer;
+        window.pwaAudioStarts.push({ duration: buffer?.duration, state: this.context.state,
+          hasSignal: buffer?.getChannelData(0).some(sample => sample !== 0), loop: this.loop });
+        return result;
+      };
+    });
+    await page.bringToFront();
+    const entry = await page.goto(url(fixture, 'essai-stitch-v7/traverse.html'));
+    assert.ok(entry.fromServiceWorker(), 'Playback starts from a freshly opened offline document');
+    await ready(page);
+    await controlled(page);
+    const sound = page.locator('body > header [data-e01-toggle="sound"]');
+    assert.equal(await sound.getAttribute('aria-pressed'), 'false');
+    assert.deepEqual(await page.evaluate(() => window.pwaAudioStarts), []);
+
+    const [response] = await Promise.all([
+      page.waitForResponse(response => response.url() === url(fixture, audioAssets[0])),
+      sound.click(),
+    ]);
+    assert.equal(await sound.getAttribute('aria-pressed'), 'true');
+    assert.ok(response.fromServiceWorker(), 'The confirmation is fetched entirely from the active worker cache');
+    await page.waitForFunction(() => window.pwaAudioStarts.length > 0);
+    const sources = await page.evaluate(() => window.pwaAudioStarts);
+    assert.equal(sources.length, 1);
+    const [source] = sources;
+    assert.ok(source.duration > 0 && source.duration < 1);
+    assert.equal(source.state, 'running');
+    assert.equal(source.hasSignal, true);
+    assert.equal(source.loop, false);
+    await sound.click();
+    assert.equal(await sound.getAttribute('aria-pressed'), 'false');
+    return { confirmationFromWorker: true, duration: source.duration, sources: sources.length };
+  } finally {
+    await page.close();
+  }
 }
 
 async function contactValue(page, name) {
@@ -500,6 +577,8 @@ async function run(browser, fixture, width) {
     await step('offline reload, native create and edit', async () => {
       contact = await verifyOffline(page, context, fixture, width, `TEST PWA — Contact fictif ${width}`);
     });
+    await step('WAV audio bytes and MIME types in the offline worker cache', () => verifyOfflineSounds(page, fixture));
+    await step('Web Audio confirmation from the offline worker after sound opt-in', () => verifyOfflinePlayback(context, fixture));
     await step('waiting worker, explicit update and durable local data', () => verifyUpdate(page, context, fixture, width, baseline, contact));
     assert.deepEqual(report.pageErrors, []);
     report.passed = true;

@@ -146,7 +146,7 @@
   const restricted=window.DobbyStitchV7.childAccess().restricted;
   c.main.classList.add('rg-settings-page');c.main.replaceChildren(button(restricted?'menu':'settings',restricted?'Retour au menu':'Retour aux paramètres'),el('h1','Ambiance magique','font-headline-lg-mobile text-headline-lg-mobile text-primary'));
   const panel=el('section','','rg-settings-panel');panel.setAttribute('aria-label','Effets visuels et sons de DOBBY');
-  for(const [name,label]of [['effects','Effets magiques'],['sound','Sons']]){
+  for(const [name,label]of [['effects','Effets magiques'],['seasonalDecorations','Décorations saisonnières'],['sound','Sons']]){
    const control=el('button','','rg-settings-switch');control.type='button';control.dataset.e01Toggle=name;control.dataset.settingsPreference=name;control.dataset.magicControl='true';control.setAttribute('role','switch');control.setAttribute('aria-label',label);
    const track=el('span','','rg-settings-track');track.setAttribute('aria-hidden','true');control.append(el('span',label),track);panel.append(control);
   }
@@ -190,7 +190,7 @@
       problem.textContent='';
       const note=block.querySelector('textarea')?.value.trim();
       try{
-       await transport.recordProgress({kind,missionId:row.id,memberId:id,...(note&&['refuse','regularize'].includes(kind)?{note}:{})});
+       await window.DobbyStitchV7.withMissionSound(()=>transport.recordProgress({kind,missionId:row.id,memberId:id,...(note&&['refuse','regularize'].includes(kind)?{note}:{})}));
        dialog.close();window.DobbyStitchV7?.refresh();
       }catch(error){
        problem.textContent=error.message;
@@ -226,10 +226,27 @@
   for(const event of ['dobby:access-change','dobby:missions-capability'])engine.addEventListener(event,updateEligibility,{signal:listeners.signal});
   dialog.addEventListener('close',()=>listeners.abort(),{once:true});
   updateEligibility();
-  form.addEventListener('submit',async event=>{event.preventDefault();if(confirm.disabled||app.accountScope()!==scope)return;submitting=true;confirm.disabled=true;try{const participants=access.restricted?ids:[...new FormData(form).getAll('participant')];await native.complete(id,participants);dialog.close();window.DobbyStitchV7?.refresh();}catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}});dialog.showModal();
+  form.addEventListener('submit',async event=>{
+   event.preventDefault();if(confirm.disabled||app.accountScope()!==scope)return;
+   submitting=true;confirm.disabled=true;
+   try{
+    const participants=access.restricted?ids:[...new FormData(form).getAll('participant')];
+    await app.withMissionSound(()=>native.complete(id,participants));
+    dialog.close();app.refresh();
+   }catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}
+  });dialog.showModal();
  }
  window.DobbyMissionParticipants=Object.freeze({open:missionParticipants});
- document.addEventListener('click',async event=>{const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(b.disabled||!b.dataset.dv7Complete&&window.DobbyStitchV7.childAccess().restricted)return;try{if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);else{b.disabled=true;await E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen);window.DobbyStitchV7?.refresh();}}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}finally{if(b.isConnected)b.disabled=false;}},true);
+ document.addEventListener('click',async event=>{
+  const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;
+  const app=window.DobbyStitchV7;
+  event.preventDefault();event.stopImmediatePropagation();if(b.disabled||!b.dataset.dv7Complete&&app.childAccess().restricted)return;
+  try{
+   if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);
+   else{b.disabled=true;await app.withMissionSound(()=>E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen));app.refresh();}
+  }catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}
+  finally{if(b.isConnected)b.disabled=false;}
+ },true);
  // The existing Missions root uses the same original source, with separate native manual/automatic actions.
  window.DobbyToolsRoots={missions(data){const main=document.querySelector('main'),section=[...main.querySelectorAll('section')].find(s=>s.querySelector('h2')?.textContent.includes('Missions Prioritaires')||s.querySelector('h2')?.textContent.includes('Bibliothèque des Missions'));if(!section)return false;section.dataset.stitchMissions='true';const sample=section.querySelector('[class*=rounded]')?.cloneNode(false);function group(label,rows,manual){const block=document.createElement('section');block.className='space-y-3';block.append(el('h3',label,'font-headline-sm text-primary'));for(const row of rows){const card=sample?.cloneNode(false)||document.createElement('article');card.className='rg-root-mission rounded-xl bg-surface-container p-4 flex flex-col gap-2';card.append(el('h4',row.title,'font-headline-sm text-on-surface'),el('p',manual?[row.category,data.familyMembers?.find(m=>m.id===row.assigneeId)?.name||'Non attribuée',row.due||'Sans échéance'].join(' · '):[row.sourceLabel,row.due||'Sans échéance'].filter(Boolean).join(' · ')));if(manual){const edit=document.createElement('a');edit.href=rootUrl('mission-edit',row.id);edit.dataset.dv7MissionEdit=row.id;edit.className='fa-button';edit.textContent='Modifier';card.append(edit);for(const[action,label]of [['toggle',row.status==='done'?'Rouvrir':'Terminer'],['delete','Supprimer']]){const b=el('button',label,'fa-button');b.type='button';b.dataset.dv7Manual=action;b.dataset.record=row.id;card.append(b);}}else if(row.state==='open'){const b=el('button','Terminer','fa-button');b.type='button';b.dataset.dv7Automatic=row.key;card.append(b);}block.append(card);}if(!rows.length)block.append(el('p','Aucune mission dans ce registre.','font-body-md text-on-surface-variant'));return block;}section.replaceChildren(el('h2','La Bibliothèque des Missions','font-headline-sm text-on-surface'));const add=document.createElement('a');add.href=rootUrl('mission-edit');add.className='fa-button';add.textContent='Créer une mission';add.dataset.dv7MissionEdit='';const status=el('p',E.win().DobbyFamilyUI?.getModuleStatus('missions')||'Partage à vérifier','font-body-md text-on-surface-variant'),sync=el('button','Synchroniser le foyer','fa-button');sync.dataset.dv7MissionSync='true';section.append(status,sync,add,group('Missions manuelles — À faire ensemble',(data.manualMissions||[]).filter(m=>m.status!=='done'),true),group('Missions manuelles terminées',(data.manualMissions||[]).filter(m=>m.status==='done'),true),group('Missions automatiques',(data.autoTasks||[]).filter(m=>m.state==='open'),false),group('Missions automatiques terminées',(data.autoTasks||[]).filter(m=>m.state==='done'),false));return true;}};
  document.addEventListener('click',event=>{const b=event.target.closest('[data-dv7-manual],[data-dv7-automatic],[data-dv7-mission-sync]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(window.DobbyStitchV7.childAccess().restricted)return;try{E.evaluate('st.extraPage="";go("missions");');if(b.dataset.dv7MissionSync){E.action('fvAction','sync');return;}if(b.dataset.dv7Manual){const row=E.read().state.manualMissions.find(m=>m.id===b.dataset.record);if(b.dataset.dv7Manual==='toggle'&&row?.status==='open'){missionParticipants(row.id);return;}E.action('fmsAction',b.dataset.dv7Manual,{id:b.dataset.record});}else{const input=[...E.win().document.querySelectorAll('[data-autotask]')].find(n=>n.dataset.autotask===b.dataset.dv7Automatic);if(!input)throw Error('Mission automatique indisponible.');input.checked=true;input.dispatchEvent(new (E.win().Event)('change',{bubbles:true}));}window.DobbyStitchV7.refresh();}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}},true);

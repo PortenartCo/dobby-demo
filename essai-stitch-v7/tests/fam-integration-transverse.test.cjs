@@ -21,6 +21,7 @@ const healthIntegration = require('./fixtures/health-integration-source-extensio
 const familyOnboarding = require('./fixtures/family-onboarding-source-extensions.json');
 const childAccess = require('./fixtures/child-access-source-extensions.json');
 const pwa = require('./fixtures/pwa-source-extensions.json');
+const sons = require('./fixtures/sons-source-extensions.json');
 const {beforeReviewedAmendment}=require('./helpers/reviewed-source.cjs');
 const beforeRunesLot1=(file,source)=>beforeReviewedAmendment(file,source,runesLot1.files[file],'Runes lot 1');
 const beforeRunesLot2=(file,source)=>beforeReviewedAmendment(file,source,runesLot2.files[file],'Runes lot 2');
@@ -31,15 +32,26 @@ const beforeHealth=(file,source)=>beforeReviewedAmendment(file,source,healthInte
 const beforeOnboarding=(file,source)=>beforeReviewedAmendment(file,source,familyOnboarding.files[file],'Onboarding familial');
 const beforeChildAccess=(file,source)=>beforeReviewedAmendment(file,source,childAccess.files[file],'Accès enfant');
 const beforePwa=(file,source)=>beforeReviewedAmendment(file,source,pwa.files[file],'PWA');
-const rawOnboardingSource=file=>beforeChildAccess(file,beforePwa(file,readWorkingSource(file)));
+const beforeSons=(file,source)=>beforeReviewedAmendment(file,source,sons.files[file],'Sons et ambiances');
+const readPwaSource=file=>beforeSons(file,readWorkingSource(file));
+const rawOnboardingSource=file=>beforeChildAccess(file,beforePwa(file,readPwaSource(file)));
 const rawContextSource=file=>beforeIngredientsLot4(file,beforeHealth(file,beforeOnboarding(file,rawOnboardingSource(file))));
 const rawReviewedSource=file=>beforeCatalogueLot3(file,rawContextSource(file));
 function reviewedSource(file){return beforeRunesLot1(file,beforeRunesLot2(file,rawReviewedSource(file)));}
+test('Sound and seasonal amendments reverse to the exact #53 application sources',()=>{
+  assert.equal(sons.baseCommit,'ae815199225d277fb8ed0dbb6925f4aebf24f99b');
+  for(const [file,extension] of Object.entries(sons.files)){
+    const source=readWorkingSource(file);
+    assert.ok(extension.reason);
+    assert.equal(digest(beforeSons(file,source)),extension.beforeSha256);
+    assert.throws(()=>beforeSons(file,source+'/* changed */'),/complete Sons et ambiances source changed/);
+  }
+});
 test('PWA metadata and the isolated registry comparison preserve the exact #51 source',()=>{
   assert.equal(pwa.baseCommit,'defffab85a769d49f53b50c05b076001d52d52ab');
   assert.deepEqual(Object.keys(pwa.files),['essai-stitch-v7/build-source.cjs','essai-stitch-v5-famille/family-modules.js']);
   for(const [file,extension] of Object.entries(pwa.files)){
-    const source=readWorkingSource(file);
+    const source=readPwaSource(file);
     assert.equal(digest(beforePwa(file,source)),extension.beforeSha256);
     assert.throws(()=>beforePwa(file,source+'/* changed */'),/complete PWA source changed/);
   }
@@ -49,7 +61,7 @@ test('Child accounts preserve the exact onboarding parent and reject unrelated s
   assert.ok(childAccess.files['essai-stitch-v5-famille/family-v2.js']);
   assert.ok(childAccess.files['essai-stitch-v7/health-integration.js']);
   for(const [file,extension] of Object.entries(childAccess.files)){
-    const current=beforePwa(file,readWorkingSource(file));
+    const current=beforePwa(file,readPwaSource(file));
     assert.ok(extension.reason);
     assert.equal(digest(beforeChildAccess(file,current)),extension.beforeSha256);
     assert.throws(()=>beforeChildAccess(file,current+'/* changed */'),/complete Accès enfant source changed/);

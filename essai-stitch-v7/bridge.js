@@ -101,12 +101,47 @@ else{w.eval('go('+JSON.stringify(route)+')');title.textContent=({recipes:'Grimoi
 panel.hidden=false;frame.removeAttribute('aria-hidden');frame.removeAttribute('tabindex');document.body.classList.add('dv7-panel-visible');window.DobbyChrome?.mount();document.getElementById('dv7-close').focus();}catch(e){console.error('Dobby V7: action non disponible',e);}
 }
 function close(refresh=true){panel.hidden=true;frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;document.body.classList.remove('dv7-panel-visible');if(!refresh)return;if(currentScreen==='traverse')window.DobbyHome?.reset();try{renderReal();}catch(e){console.error(e)}(lastTrigger?.isConnected?lastTrigger:document.querySelector('[data-e01-account]'))?.focus?.();}
-let deferredMissionAlerts='';
+let deferredMissionAlerts='',missionAlertOwner=null;
+const knownMissionAlerts=new Set(),localMissionWrites=new Set();
+function soundMissionAlerts(pending,unlocked){
+ const api=engine()?.DobbyFamilyUI,actor=api?.getContext?.(),connection=api?.connectionState?.();
+ if(!actor?.identityVerified||!actor.userId||!actor.householdId||!actor.memberId)return;
+ const owner=JSON.stringify([actor.userId,actor.householdId,actor.memberId,connection?.epoch]);
+ const first=owner!==missionAlertOwner;
+ // A restored or replaced session can already have alerts. Keep their visual
+ // notice, and only sound new IDs observed by the same verified parent.
+ if(first){missionAlertOwner=owner;knownMissionAlerts.clear();}
+ const liveScope=accountScope();
+ const local=[...localMissionWrites].some(write=>write.scope===liveScope);
+ let fresh=false;
+ for(const [id,external] of [
+  ...pending.map(row=>['pending:'+row.id,Boolean(row.actorMemberId)&&row.actorMemberId!==actor.memberId]),
+  ...unlocked.map(([,goal])=>['reward:'+goal.id,!local])
+ ]){
+  if(!knownMissionAlerts.has(id)&&external)fresh=true;
+  knownMissionAlerts.add(id);
+ }
+ if(!first&&fresh)window.DobbyMagicAudio?.play('notification');
+}
+async function withMissionSound(write,cue='confirm'){
+ const action={scope:accountScope()};localMissionWrites.add(action);
+ try{
+  const confirmed=await write();
+  if(confirmed!==false&&accountScope()===action.scope)window.DobbyMagicAudio?.play(cue);
+  return confirmed;
+ }finally{
+  // Consume unlocked goals from the successful local write under the same
+  // guard, including when the deferred render has not reported them yet.
+  try{if(accountScope()===action.scope)updateMissionAlerts();}
+  finally{localMissionWrites.delete(action);}
+ }
+}
 function updateMissionAlerts(){
  const node=document.getElementById('dobby-mission-alert'),state=childAccess().restricted?null:engine()?.DobbySharedRunesV3?.readProgress?.();
  if(state?.category!=='parent'){node?.remove();deferredMissionAlerts='';return;}
  const latest=new Map(state.entries.map(row=>[JSON.stringify([row.missionId,row.memberId]),row]));
  const pending=[...latest.values()].filter(row=>row.status==='pending'),unlocked=Object.entries(state.goals).filter(([,goal])=>goal.unlocked);
+ soundMissionAlerts(pending,unlocked);
  const fingerprint=JSON.stringify([...pending.map(row=>row.id),...unlocked.map(([,goal])=>goal.id)]);
  if(!pending.length&&!unlocked.length||fingerprint===deferredMissionAlerts){node?.remove();return;}
  if(node?.dataset.notice===fingerprint)return;
@@ -140,6 +175,7 @@ function renderReal(){
 }
 let renderedScope='';
 function accessChanged(){
+ window.DobbyMagicAudio?.accountChanged?.();
  const scope=accountScope();updateMissionAlerts();if(scope===renderedScope)return;
  const [wasRestricted,,,previousUser]=JSON.parse(renderedScope||'[]');
  const [restricted,,,user]=JSON.parse(scope);
@@ -181,5 +217,5 @@ const attempt=()=>{if(booted)return;start();if(!booted)setTimeout(attempt,200);}
 frame.addEventListener('load',attempt);
 if(frame.contentDocument?.readyState==='complete')attempt();
 setTimeout(()=>{if(!booted){document.getElementById('dv7-loading').textContent='Dobby ne parvient pas à ouvrir le foyer. Réessayez en rechargeant la page.';}},20000);
-window.DobbyStitchV7=Object.freeze({version:7,open,close,childAccess,allowFamily,allowCuisine,ownMission,accountScope,showVerification,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
+window.DobbyStitchV7=Object.freeze({version:7,open,close,childAccess,allowFamily,allowCuisine,ownMission,accountScope,withMissionSound,showVerification,get source(){return currentScreen},get ready(){return booted},refresh:()=>booted&&renderReal()});
 })();

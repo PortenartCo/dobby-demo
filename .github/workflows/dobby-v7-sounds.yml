@@ -1,0 +1,97 @@
+name: DOBBY V7 - Sons et ambiances
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/dobby-v7-sounds.yml'
+      - 'essai-stitch-v7/**'
+      - 'essai-stitch-v5-famille/**'
+      - 'essai-v6-preview/assets/**'
+      - 'scripts/build-dobby-v7-sounds.py'
+      - 'scripts/build-dobby-review.cjs'
+      - 'scripts/build-dobby-global-review.cjs'
+      - 'scripts/serve-dobby-global-demo.cjs'
+      - 'scripts/review/**'
+      - 'docs/dobby-v7/sons/**'
+
+permissions:
+  contents: read
+
+jobs:
+  sounds-and-seasons:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix essai-stitch-v7/tests
+      - name: Vérifier les WAV et les calendriers de saison
+        run: |
+          python3 scripts/build-dobby-v7-sounds.py --check
+          node --test essai-stitch-v7/tests/magic-audio.test.cjs \
+            essai-stitch-v7/tests/magic-mission-feedback.test.cjs \
+            essai-stitch-v7/tests/seasonal-calendar.test.cjs
+      - name: Tester les parcours audio et saisonniers dans Chromium
+        env:
+          DOBBY_TEST_ORIGIN: http://127.0.0.1:8765
+          DOBBY_MAGIC_AUDIO_EVIDENCE: ${{ runner.temp }}/dobby-sons/audio
+          DOBBY_SEASONAL_EVIDENCE: ${{ runner.temp }}/dobby-sons/saisons
+          DOBBY_SEASONAL_PAGES_EVIDENCE: ${{ runner.temp }}/dobby-sons/pages
+          DOBBY_E074: '1'
+          DOBBY_E013_EVIDENCE_DIR: ${{ runner.temp }}/dobby-sons/accueil
+          DOBBY_E073_EFFECTS_EVIDENCE: ${{ runner.temp }}/dobby-sons/cuisine
+          DOBBY_STITCH_RITUAL_EVIDENCE: ${{ runner.temp }}/dobby-sons/rituel
+          DOBBY_E0601_ERROR_EVIDENCE: ${{ runner.temp }}/dobby-sons/rituel-erreurs
+        run: |
+          set -euo pipefail
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          mkdir -p "$RUNNER_TEMP/dobby-sons"
+          log="$RUNNER_TEMP/dobby-sons/serveur.log"
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --noproxy '*' --fail --silent --output /dev/null "$DOBBY_TEST_ORIGIN/essai-stitch-v7/index.html"; then break; fi
+            if ! kill -0 "$server" 2>/dev/null; then cat "$log"; exit 1; fi
+            sleep 1
+          done
+          curl --noproxy '*' --fail --silent --output /dev/null "$DOBBY_TEST_ORIGIN/essai-stitch-v7/index.html"
+          for width in 320 390 768 1440; do
+            node essai-stitch-v7/tests/magic-audio-browser.cjs --width="$width"
+          done
+          node essai-stitch-v7/tests/seasonal-browser.cjs
+          node essai-stitch-v7/tests/seasonal-pages.cjs
+          node essai-stitch-v7/tests/e01-3.cjs
+          node essai-stitch-v7/tests/e07-3-effects.cjs
+          node essai-stitch-v7/tests/stitch-entry-ritual.cjs
+          node essai-stitch-v7/tests/e06-ritual-errors.cjs
+      - name: Vérifier la réalisation et la récompense dans la démo isolée
+        run: |
+          set -euo pipefail
+          export CHROMIUM_PATH="$(command -v google-chrome || command -v chromium)"
+          output="$RUNNER_TEMP/dobby-sons-launch/bundle"
+          mkdir -p "$RUNNER_TEMP/dobby-sons"
+          node scripts/build-dobby-global-review.cjs --scenario launch --output "$output"
+          log="$RUNNER_TEMP/dobby-sons/serveur-demo.log"
+          node scripts/serve-dobby-global-demo.cjs --bundle "$output" --port 0 > "$log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            DOBBY_GLOBAL_LAUNCH_BASE="$(awk '/^GLOBAL_DEMO_LOCAL / { print $2; exit }' "$log")"
+            if [[ -n "$DOBBY_GLOBAL_LAUNCH_BASE" ]]; then break; fi
+            if ! kill -0 "$server" 2>/dev/null; then cat "$log"; exit 1; fi
+            sleep 1
+          done
+          test -n "$DOBBY_GLOBAL_LAUNCH_BASE"
+          export DOBBY_GLOBAL_LAUNCH_BASE
+          node essai-stitch-v7/tests/magic-mission-browser.cjs | tee "$RUNNER_TEMP/dobby-sons/missions.log"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dobby-v7-sons-ambiances
+          path: ${{ runner.temp }}/dobby-sons/
+          if-no-files-found: ignore

@@ -42,7 +42,7 @@ const types = {
   '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8', '.mjs': 'application/javascript; charset=utf-8',
   '.mp3': 'audio/mpeg', '.pdf': 'application/pdf', '.png': 'image/png', '.svg': 'image/svg+xml',
-  '.ttf': 'font/ttf', '.wasm': 'application/wasm', '.webp': 'image/webp', '.woff': 'font/woff', '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf', '.wasm': 'application/wasm', '.wav': 'audio/wav', '.webp': 'image/webp', '.woff': 'font/woff', '.woff2': 'font/woff2',
 };
 
 const server = createServer((request, response) => {

@@ -47,11 +47,36 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   await page.emulateMedia({reducedMotion:'reduce'});await page.waitForFunction(()=>document.body.dataset.e013State==='reduced');assert.equal(await page.locator('#e013-ambience,.e013-scene,.magical-ripple,.magic-sparkle-dot').count(),0);assert.equal(await star().getAttribute('aria-pressed'),'true');assert.notEqual(await star().evaluate(el=>getComputedStyle(el).boxShadow),'none','static indicator retained');assert.match(await star().getAttribute('aria-description'),/réduites/);
   await page.screenshot({path:path.join(out,`${engine}-reduced-${width}.png`),scale:'css'});await page.emulateMedia({reducedMotion:'no-preference'});await page.locator('#e013-ambience').waitFor();assert.doesNotMatch(await star().getAttribute('aria-description'),/réduites/);
   // Sound API calls are observable, while the original audio path stays real.
-  await page.evaluate(()=>{window.__e013Audio={tones:0,vibrations:0};Object.defineProperty(navigator,'vibrate',{configurable:true,value:()=>{window.__e013Audio.vibrations++;return false;}});const Original=window.AudioContext||window.webkitAudioContext;window.AudioContext=function(...args){const ctx=new Original(...args),original=ctx.createOscillator.bind(ctx);ctx.createOscillator=(...a)=>{window.__e013Audio.tones++;return original(...a);};return ctx;};});
-  await page.locator('[data-e01-toggle=sound]').click();const sounds=await page.evaluate(()=>({...window.__e013Audio}));assert.ok(sounds.tones>0&&sounds.vibrations>0,'sound control has its own feedback');
+  await page.evaluate(()=>{
+   window.__e013Audio={tones:0,vibrations:0};
+   Object.defineProperty(navigator,'vibrate',{configurable:true,value:()=>{window.__e013Audio.vibrations++;return false;}});
+   const original=AudioBufferSourceNode.prototype.start;
+   AudioBufferSourceNode.prototype.start=function(...args){window.__e013Audio.tones++;return original.apply(this,args);};
+  });
+  await page.locator('[data-e01-toggle=sound]').click();
+  await page.waitForFunction(()=>window.__e013Audio.tones>0);
+  const sounds=await page.evaluate(()=>({...window.__e013Audio}));
+  assert.ok(sounds.vibrations>0,'sound control keeps haptic feedback');
   await toggle();await toggle();assert.deepEqual(await page.evaluate(()=>window.__e013Audio),sounds,'star never invokes sound or vibration, even when sound is ON');
   await page.reload();await ready();assert.equal(await star().getAttribute('aria-pressed'),'true');await page.locator('#e013-ambience').waitFor();
-  for(const destination of [1,2,3,4]){await page.locator(`[data-e01-destination="${destination}"]`).click();await page.waitForURL(url=>url.href.endsWith(['','missions.html','index.html','famille.html','famille.html#menu'][destination]));await page.waitForFunction(()=>DobbyStitchV7?.ready);assert.equal(await star().getAttribute('aria-pressed'),'true');if(destination===2){await page.locator('#e013-ambience').waitFor();assert.equal(await page.locator('#e013-ambience').count(),1,'Taverne uses the shared native ambience');assert.equal(await page.locator('.e013-particle').count(),count,'Navigation keeps the bounded native particle population');}else assert.equal(await page.locator('#e013-ambience,.e013-scene').count(),0,'Missions, Salon and Menu have no ambient deployment');await page.locator('[data-e01-destination="0"]').click();await page.waitForURL(/traverse.html/);await ready();await page.locator('#e013-ambience').waitFor();}
+  const routes=['traverse.html','missions.html','index.html#taverne','index.html#shop','famille.html','famille.html#menu'];
+  for(const [destination,route] of routes.entries()){
+   if(destination===0)continue;
+   await page.locator(`[data-e01-destination="${destination}"]`).click();
+   await page.waitForURL(url=>(url.pathname+url.hash).endsWith(route));
+   await ready();
+   await page.locator(`[data-e01-destination="${destination}"][aria-current="page"]`).waitFor();
+   assert.equal(await star().getAttribute('aria-pressed'),'true');
+   if(destination===2||destination===3){
+    await page.locator('#e013-ambience').waitFor();
+    assert.equal(await page.locator('#e013-ambience').count(),1,'Cuisine uses the shared native ambience');
+    assert.equal(await page.locator('.e013-particle').count(),count,'Navigation preserves the bounded particle population');
+   }else assert.equal(await page.locator('#e013-ambience,.e013-scene').count(),0,'Missions, Salon and Menu keep their own visual ambience');
+   await page.locator('[data-e01-destination="0"]').click();
+   await page.waitForURL(/traverse.html/);
+   await ready();
+   await page.locator('#e013-ambience').waitFor();
+  }
   assert.equal(await business(),original,'only existing preferences changed; household data intact');
   const cadence=await page.evaluate(()=>new Promise(resolve=>{const gaps=[];let start=performance.now(),last=start;function tick(now){gaps.push(now-last);last=now;if(now-start<1200)requestAnimationFrame(tick);else{const sorted=gaps.slice(1).sort((a,b)=>a-b);resolve({frames:sorted.length,medianMs:sorted[Math.floor(sorted.length/2)],over50ms:sorted.filter(n=>n>50).length});}}requestAnimationFrame(tick);}));
   await toggle();assert.equal(await page.locator('#e013-ambience,.e013-scene,.magical-ripple,.magic-sparkle-dot').count(),0);await page.reload();await ready();assert.equal(await star().getAttribute('aria-pressed'),'false');

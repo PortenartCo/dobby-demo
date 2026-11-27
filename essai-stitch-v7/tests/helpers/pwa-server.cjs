@@ -22,7 +22,7 @@ const contentTypes = {
   '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.js': 'text/javascript', '.json': 'application/json',
   '.mjs': 'text/javascript', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.png': 'image/png',
   '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.webmanifest': 'application/manifest+json',
-  '.webp': 'image/webp', '.woff': 'font/woff', '.woff2': 'font/woff2',
+  '.wav': 'audio/wav', '.webp': 'image/webp', '.woff': 'font/woff', '.woff2': 'font/woff2',
 };
 
 async function startServer() {

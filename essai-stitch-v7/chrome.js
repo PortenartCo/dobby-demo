@@ -2,7 +2,7 @@
    live in native st and use native save(); no additional persistence layer. */
 window.DobbyChrome=(()=>{'use strict';
 const E=window.DobbyFamilyStitchEngine;
-let template=null,audio=null;
+let template=null;
 // Standard / Gold only. CSS variables carry palette, light and drift settings;
 // this small descriptor leaves particle shape/density changeable for later work.
 const ambienceTheme=Object.freeze({name:'standard-gold',particles:22,kind:'e013-mote'});
@@ -39,8 +39,8 @@ reducedMotion.addEventListener('change',()=>{if(window.DobbyStitchV7?.ready)appl
 document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTransient();syncAmbience();});
 window.addEventListener('pagehide',()=>{pageAway=true;clearTransient();syncAmbience();});
 const destinations=[['Accueil','explore','./traverse.html'],['Tâches','history_edu','./missions.html'],['Repas','skillet','./index.html#taverne'],['Courses','shopping_cart','./index.html#shop'],['Famille','family_restroom','./famille.html'],['Menu','more_horiz','./famille.html#menu']];
-const preferences=()=>E.evaluate('return {effects:true,sound:false,...st.stitchPreferences};');
-function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){for(const b of document.querySelectorAll(`[data-e01-toggle="${name}"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(b.dataset.settingsPreference){b.setAttribute('aria-checked',String(!!p[name]));}if(name==='effects'&&!b.dataset.settingsPreference){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}
+const preferences=()=>E.evaluate('return {effects:true,sound:false,seasonalDecorations:true,...st.stitchPreferences};');
+function apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound','seasonalDecorations']){for(const b of document.querySelectorAll(`[data-e01-toggle="${name}"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(b.dataset.settingsPreference){b.setAttribute('aria-checked',String(!!p[name]));}if(name==='effects'&&!b.dataset.settingsPreference){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbySeasonal?.refresh(p);window.DobbyMagicAudio?.preferencesChanged();window.DobbyChat?.preferencesChanged();}
 function sectionTitle(){
  if(document.querySelector('[data-child-verification]'))return 'DOBBY';
  const panel=document.getElementById('dv7-panel');if(panel&&!panel.hidden)return document.getElementById('dv7-panel-title').textContent.trim();
@@ -87,20 +87,21 @@ function animateSparkles(event){
   spark.className='magic-sparkle-dot';spark.style.left=x+'px';spark.style.top=y+'px';spark.style.width=size+'px';spark.style.height=size+'px';spark.style.backgroundColor=colors[i%colors.length];spark.style.boxShadow='0 0 8px '+colors[i%colors.length];spark.style.setProperty('--tx',Math.round(Math.cos(angle)*dist)+'px');spark.style.setProperty('--ty',Math.round(Math.sin(angle)*dist)+'px');temporary(spark,650);
  }
 }
-function feedback(event,{visual=true,sound=true}={}){
- const p=preferences();if(visual&&p.effects)animateSparkles(event);
- if(sound&&p.sound){try{navigator.vibrate?.(20)}catch{}try{const Audio=window.AudioContext||window.webkitAudioContext;if(Audio){audio||=new Audio();audio.resume().catch(()=>{});const osc=audio.createOscillator(),gain=audio.createGain();osc.frequency.value=660;gain.gain.setValueAtTime(.025,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.12);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+.13);}}catch{}}
-}
+function feedback(event){if(preferences().effects)animateSparkles(event);}
+function haptic(){try{navigator.vibrate?.(20);}catch{}}
 document.addEventListener('click',async event=>{
  const toggle=event.target.closest('[data-e01-toggle]');const account=event.target.closest('[data-e01-account]');const nav=event.target.closest('[data-e01-destination]');
  if(!toggle&&!account&&!nav){if(event.target.closest('button,a,[role=link],[role=button]'))feedback(event);return;}event.preventDefault();event.stopImmediatePropagation();
- if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();feedback(event,name==='effects'?{sound:false}:{visual:false});}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
+ if(toggle){const name=toggle.dataset.e01Toggle;try{E.evaluate('st.stitchPreferences={effects:true,sound:false,seasonalDecorations:true,...st.stitchPreferences};st.stitchPreferences[p.name]=!st.stitchPreferences[p.name];save();',{name});apply();if(name==='sound'){if(preferences().sound){haptic();window.DobbyMagicAudio?.play('confirm',event);}}else feedback(event);}catch(error){toggle.setAttribute('aria-description',error.message);}return;}
  feedback(event);
  const onboardingWait=window.DobbyOnboarding?.handles(document.body.dataset.familyView)?window.DobbyOnboarding.wait({leave:true}):null;
  if(window.DobbyRegister?.busy)await window.DobbyRegister.wait();
  if(onboardingWait)await onboardingWait;
  if(account){window.DobbyStitchV7.close(false);window.DobbyMagicProfile.openAccount()?.catch?.(console.error);return;}
- const index=Number(nav.dataset.e01Destination);if(index===0&&location.pathname.endsWith('traverse.html')){window.DobbyStitchV7.close(false);window.DobbyHome.reset();return;}
+ const index=Number(nav.dataset.e01Destination);
+ const inPage=(index===4||index===5)?window.DobbyFamilyStitch?.ready:[2,3].includes(index)&&window.DobbyCuisine?.ready;
+ if(inPage&&nav.getAttribute('aria-current')!=='page')window.DobbyMagicAudio?.play('transition',event);
+ if(index===0&&location.pathname.endsWith('traverse.html')){window.DobbyStitchV7.close(false);window.DobbyHome.reset();return;}
  if(index===4&&window.DobbyFamilyStitch?.ready){window.DobbyStitchV7.close(false);window.DobbyFamilyStitch.open('salon').catch(console.error);return;}
  if(index===5&&window.DobbyFamilyStitch?.ready){window.DobbyStitchV7.close(false);window.DobbyFamilyStitch.open('menu').catch(console.error);return;}
  if([2,3].includes(index)&&window.DobbyCuisine?.ready){window.DobbyStitchV7.close(false);window.DobbyCuisine.open(index===3?'shop':'taverne').catch(console.error);return;}
@@ -108,5 +109,5 @@ document.addEventListener('click',async event=>{
 },true);
 window.addEventListener('pageshow',event=>{pageAway=false;if(event.persisted&&window.DobbyPublicConfig?.childAccountsAvailable===true){location.reload();return;}if(window.DobbyStitchV7?.ready){window.DobbyHome?.reset();mount();}});
 window.addEventListener('popstate',()=>setTimeout(mount,0));
-return {ready,mount,apply,timerAlert:()=>feedback({}, {visual:false,sound:true})};
+return {ready,mount,apply,soundEnabled:()=>preferences().sound===true,timerAlert:()=>{if(!document.hidden&&preferences().sound)haptic();window.DobbyMagicAudio?.play('timer');}};
 })();

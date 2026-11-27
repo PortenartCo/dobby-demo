@@ -3,7 +3,7 @@
 importScripts('./essai-stitch-v7/pwa-shell.js');
 
 // Maintained by scripts/build-dobby-v7-pwa.cjs.
-const VERSION = '6dd6df308ed5ce5e2b5ac5fc';
+const VERSION = '8d803fabba2c3eebad31f616';
 const ROOT = new URL(self.registration.scope);
 const CACHE_PREFIX = `dobby-v7-static:${encodeURIComponent(ROOT.href)}:`;
 const CACHE = `${CACHE_PREFIX}${VERSION}`;

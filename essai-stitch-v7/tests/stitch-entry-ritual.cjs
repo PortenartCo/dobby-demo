@@ -4,6 +4,8 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const {chromium}=require(process.env.DOBBY_PLAYWRIGHT_MODULE||'playwright');
+const {setTimeout:delay}=require('node:timers/promises');
+const {traceRitualAudio,ritualAudioStates,ritualAudioStopped,ritualAudioPlaying}=require('./helpers/ritual-audio.cjs');
 const origin=process.env.DOBBY_TEST_ORIGIN||'http://127.0.0.1:8819';
 const base=process.env.DOBBY_NATIVE_PATH||'/essai-stitch-v7';
 const evidence=process.env.DOBBY_STITCH_RITUAL_EVIDENCE||path.resolve(__dirname,'../../docs/dobby-v7/evidence/stitch19-20/ritual');
@@ -12,16 +14,21 @@ const results=[];
 let browser;
 
 async function fixture(options={}){
- const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'no-preference',locale:'fr-BE'});
+ const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'no-preference',locale:'fr-BE',serviceWorkers:'block'});
  const external=[];
  await context.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():(external.push(new URL(r.request().url()).origin),r.abort()));
  let releaseHearth;
  if(options.deferHearth){const gate=new Promise(resolve=>{releaseHearth=resolve;});await context.route('**/ritual-hearth-original.png',async route=>{await gate;await route.continue();});}
+ let releaseTransition,transitionRequested;
+ if(options.deferTransition){
+  const gate=new Promise(resolve=>{releaseTransition=resolve;});
+  let requested;transitionRequested=new Promise(resolve=>{requested=resolve;});
+  await context.route('**/assets/audio/transition.wav',async route=>{requested();await gate;await route.continue();});
+ }
+ await context.addInitScript(traceRitualAudio);
  await context.addInitScript(()=>{
   if(window!==top)return;
-  window.__ritualBrowser={audio:[],frames:new Set()};
-  const Original=window.AudioContext||window.webkitAudioContext;
-  if(Original){const Traced=class extends Original{constructor(...args){super(...args);window.__ritualBrowser.audio.push({context:this,ritual:new Error().stack.includes('ritual-effects.js'),openedAt:performance.now()});}close(){const row=window.__ritualBrowser.audio.find(row=>row.context===this);if(row)row.closedAt=performance.now();return super.close();}};if(window.AudioContext)window.AudioContext=Traced;else window.webkitAudioContext=Traced;}
+  window.__ritualBrowser={frames:new Set()};
   const request=window.requestAnimationFrame.bind(window),cancel=window.cancelAnimationFrame.bind(window);
   window.requestAnimationFrame=callback=>{const ritual=new Error().stack.includes('ritual-effects.js');let id;id=request(time=>{window.__ritualBrowser.frames.delete(id);callback(time);});if(ritual)window.__ritualBrowser.frames.add(id);return id;};
   window.cancelAnimationFrame=id=>{window.__ritualBrowser.frames.delete(id);cancel(id);};
@@ -32,17 +39,17 @@ async function fixture(options={}){
  await page.waitForFunction(()=>window.DobbyStitchV7?.ready&&document.body.dataset.familyView==='onboarding-ritual');
  if(!options.deferHearth)await page.locator('#dobby-hearth-img').evaluate(i=>i.decode());
  const native=(code,values={})=>page.evaluate(({code,values})=>DobbyFamilyStitchEngine.evaluate(code,values),{code,values});
- const audio=()=>page.evaluate(()=>__ritualBrowser.audio.filter(row=>row.ritual).map(row=>row.context.state));
+ const audio=()=>ritualAudioStates(page);
  const replay=async()=>{await page.evaluate(()=>DobbyFamilyStitch.open('onboarding-ritual',{record:'replay',person:null}));await page.locator('#dobby-hearth-img').evaluate(i=>i.decode());};
  const prefs=async(effects,sound)=>{await native('st.stitchPreferences={effects:p.effects,sound:p.sound};save();',{effects,sound});await page.evaluate(()=>DobbyChrome.mount());};
- return {context,page,native,audio,replay,prefs,external,errors,releaseHearth};
+ return {context,page,native,audio,replay,prefs,external,errors,releaseHearth,releaseTransition,transitionRequested};
 }
 
 async function check(name,run,options){
  const f=await fixture(options);
  try{await run(f);assert.deepEqual(f.errors,[],'No browser exception');assert.equal(f.external.some(x=>/supabase/.test(x)),false,'No real family backend is contacted');results.push({name,status:'PASS'});console.log('PASS',name);}
  catch(error){results.push({name,status:'FAIL',message:error.message});console.error('FAIL',name,error.message);}
- finally{f.releaseHearth?.();await f.context.close();}
+ finally{f.releaseHearth?.();f.releaseTransition?.();await f.context.close();}
 }
 
 (async()=>{
@@ -78,21 +85,22 @@ async function check(name,run,options){
     const states=await audio();
     if(sound&&await page.evaluate(()=>!!(window.AudioContext||window.webkitAudioContext)))assert.ok(states.length>0,'Sound ON starts the real ritual audio independently from animation');
     else assert.deepEqual(states,[],'Sound OFF never starts ritual audio');
-    await page.waitForFunction(()=>__ritualBrowser.audio.filter(row=>row.ritual).every(row=>row.context.state==='closed')&&__ritualBrowser.frames.size===0);
+    await page.waitForFunction(ritualAudioStopped);await page.waitForFunction(()=>__ritualBrowser.frames.size===0);
     assert.deepEqual(await native('return st.stitchPreferences;'),{effects,sound},'The explicit preferences survive navigation');
    });
   }
 
   for(const [effects,reduced]of [[false,false],[true,true]]){
-   await check(`late image decode preserves short sound with effects ${effects} reduced ${reduced}`,async({page,prefs,releaseHearth})=>{
+   await check(`late image decode preserves short sound with effects ${effects} reduced ${reduced}`,async({page,prefs,releaseHearth,audio})=>{
     await prefs(effects,true);if(reduced)await page.emulateMedia({reducedMotion:'reduce'});
+    await page.locator('#btn-floo-trigger').evaluate(trigger=>trigger.addEventListener('click',()=>{window.__ritualTapAt=performance.now();},{once:true}));
     await page.locator('#btn-floo-trigger').tap();
     await page.waitForTimeout(20);releaseHearth();
     await page.waitForURL(/#onboarding-foyer(?:\?|$)/,{timeout:1800});
-    const sounds=await page.evaluate(()=>__ritualBrowser.audio.filter(row=>row.ritual).map(row=>({duration:row.closedAt-row.openedAt,state:row.context.state})));
+    const sounds=await audio();
     assert.ok(sounds.length>0,'The gesture starts the real ritual sound');
-    assert.ok(sounds.every(row=>row.duration>=140),'Image decoding must not truncate the short sound: '+JSON.stringify(sounds));
-    assert.ok(sounds.every(row=>row.state==='closed'),'The short sound is cleaned up after navigation');
+    assert.ok(await page.evaluate(()=>performance.now()-window.__ritualTapAt)>=140,'Image decoding must not shorten the transition handoff');
+    await page.waitForFunction(ritualAudioStopped);
    },{deferHearth:true});
   }
 
@@ -125,12 +133,13 @@ async function check(name,run,options){
    await page.locator('#btn-floo-trigger').tap();await page.waitForURL(/\/traverse\.html(?:[?#]|$)/);
   });
 
-  await check('leaving a running traversal closes audio and animation without late navigation',async({page,prefs,audio})=>{
+  await check('leaving a running traversal stops audio and animation without late navigation',async({page,prefs})=>{
    await prefs(true,true);await page.locator('#btn-floo-trigger').tap();
    await page.waitForFunction(()=>document.querySelector('.ritual-crossing'));
-   assert.ok((await audio()).length>0);
+   await page.waitForFunction(ritualAudioPlaying);
    await page.evaluate(()=>DobbyFamilyStitch.open('salon'));
-   await page.waitForFunction(()=>!DobbyRitual.active&&__ritualBrowser.frames.size===0&&__ritualBrowser.audio.filter(row=>row.ritual).every(row=>row.context.state==='closed'));
+   await page.waitForFunction(()=>!DobbyRitual.active&&__ritualBrowser.frames.size===0);
+   await page.waitForFunction(ritualAudioStopped);
    await page.waitForTimeout(2700);
    assert.equal(await page.evaluate(()=>document.body.dataset.familyView),'salon','An abandoned timer cannot navigate later');
   });
@@ -138,16 +147,29 @@ async function check(name,run,options){
   await check('hidden traversal can be retried without duplicate animation or audio',async({page,prefs,audio})=>{
    await prefs(true,true);await page.locator('#btn-floo-trigger').tap();
    await page.waitForFunction(()=>document.querySelector('.ritual-crossing'));
+   await page.waitForFunction(ritualAudioPlaying);
    await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));});
-   await page.waitForFunction(()=>__ritualBrowser.frames.size===0&&__ritualBrowser.audio.filter(row=>row.ritual).every(row=>row.context.state==='closed'));
+   await page.waitForFunction(()=>__ritualBrowser.frames.size===0);
+   await page.waitForFunction(ritualAudioStopped);
    assert.equal(await page.locator('#btn-floo-trigger').isEnabled(),true);
    assert.match(await page.locator('.ritual-status').innerText(),/interrompue/);
    await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'));});
-   await page.locator('#btn-floo-trigger').tap();await page.waitForTimeout(200);
-   assert.equal((await audio()).filter(state=>state!=='closed').length,1,'Retry creates only one active ritual audio context');
+   await page.locator('#btn-floo-trigger').tap();await page.waitForFunction(ritualAudioPlaying);
+   assert.equal((await audio()).filter(state=>state==='playing').length,1,'Retry plays only one Ritual source');
    await page.waitForURL(/#onboarding-foyer(?:\?|$)/);
-   await page.waitForFunction(()=>!DobbyRitual.active&&__ritualBrowser.frames.size===0&&__ritualBrowser.audio.filter(row=>row.ritual).every(row=>row.context.state==='closed'));
+   await page.waitForFunction(()=>!DobbyRitual.active&&__ritualBrowser.frames.size===0);
+   await page.waitForFunction(ritualAudioStopped);
   });
+
+  await check('muting a traversal cancels playback even if the WAV is still loading',async({page,prefs,audio,releaseTransition,transitionRequested})=>{
+   await prefs(true,true);await page.locator('#btn-floo-trigger').tap();
+   await Promise.race([transitionRequested,delay(1200).then(()=>assert.fail('The traversal should request its local transition WAV'))]);
+   await page.locator('.ritual-preferences [data-e01-toggle=sound]').tap();
+   const response=page.waitForResponse(response=>response.url().endsWith('/assets/audio/transition.wav'));
+   releaseTransition();assert.equal((await response).ok(),true);
+   await page.waitForURL(/#onboarding-foyer(?:\?|$)/);
+   assert.deepEqual(await audio(),[],'A cue cancelled before decoding cannot start when the buffer arrives');
+  },{deferTransition:true});
  }finally{await browser.close();fs.writeFileSync(path.join(evidence,'results.json'),JSON.stringify({origin,base,realAccounts:false,externalBackend:'blocked',businessMocks:false,results},null,2)+'\n');}
  assert.equal(results.filter(row=>row.status==='FAIL').length,0,'Cheminette regressions: '+JSON.stringify(results.filter(row=>row.status==='FAIL')));
  console.log('STITCH_ENTRY_RITUAL_PASS default first touch/green flames; effects/sound/reduced independence; session/legacy entry; lifecycle cleanup');
