@@ -84,6 +84,57 @@ async function verifyManifest(page, session, fixture) {
   return { manifestURL: result.url, startURL: url(fixture, family + '#access'), iconSizes };
 }
 
+async function verifyColdCuisine(page, context, fixture, width) {
+  assert.equal(await page.evaluate(() => document.body.dataset.cuisineView), undefined,
+    'No Cuisine view was visited before going offline');
+  const templates = new Map();
+  const trackTemplate = response => {
+    const prefix = url(fixture, 'essai-stitch-v7/templates/');
+    if (response.url().startsWith(prefix)) templates.set(response.url().slice(prefix.length), response.fromServiceWorker());
+  };
+  page.on('response', trackTemplate);
+  await context.setOffline(true);
+  try {
+    const destination = url(fixture, 'essai-stitch-v7/index.html#taverne');
+    const [entry] = await Promise.all([
+      page.waitForResponse(response => response.url() === destination.split('#')[0]),
+      page.getByRole('link', { name: 'Repas', exact: true }).click(),
+    ]);
+    assert.equal(entry.fromServiceWorker(), true, 'The Cuisine document is opened offline under the installation scope');
+    await page.waitForFunction(() => window.DobbyCuisine?.ready && document.body.dataset.cuisineView === 'taverne');
+    await page.getByRole('tab', { name: 'Grimoire des recettes', exact: true }).click();
+    await page.waitForFunction(() => document.body.dataset.cuisineView === 'recipes');
+    const recipe = await page.evaluate(() => DobbyCuisineEngine.read().recipes.find(row => !row.thermomix && row.steps?.length)?.id);
+    assert.ok(recipe, 'A local traditional recipe is available');
+    await page.evaluate(id => DobbyCuisine.open('recipe', { id }), recipe);
+    await page.locator('#mode-trad-btn').click();
+    await page.evaluate(() => DobbyCuisine.open('cook'));
+    await page.locator('[data-e074-step-hero]').getByText(/Étape 1\//).waitFor();
+    for (const name of ['taverne.html', 'recipes.html', 'recipe.html', 'cook.html']) {
+      assert.equal(templates.get(name), true, `${name} is served by the worker on first use`);
+    }
+    await page.locator('[data-cu-action=e074-cook-jump]').last().click();
+    await page.getByRole('button', { name: 'Terminer la recette', exact: true }).click();
+    const image = page.getByRole('dialog', { name: 'Bon appétit !', exact: true }).locator('img');
+    await image.waitFor();
+    const celebration = await image.evaluate(async element => {
+      try {
+        await element.decode();
+        return { width: element.naturalWidth, height: element.naturalHeight, url: element.src };
+      } catch (error) {
+        return { error: error.name, url: element.src };
+      }
+    });
+    assert.ok(celebration.width > 0 && celebration.height > 0,
+      `The public Cuisine celebration must decode offline: ${JSON.stringify(celebration)}`);
+    if (width === 390) await capture(page, width, 'cuisine-premiere-ouverture-hors-ligne');
+    return { templates: Object.fromEntries(templates), celebration };
+  } finally {
+    page.off('response', trackTemplate);
+    await context.setOffline(false);
+  }
+}
+
 async function verifyStandalone(fixture, width, startURL) {
   const profile = await mkdtemp(join(tmpdir(), 'dobby-pwa-app-'));
   let context;
@@ -114,7 +165,8 @@ async function verifyStandalone(fixture, width, startURL) {
     await openMenu(page, fixture);
     assert.equal(await page.locator(installButton).count(), 0, 'An app window has no install action in its Menu');
     await capture(page, width, 'menu-autonome');
-    return { startURL, installabilityErrors, displayMode: 'native Chromium app window', osInstallation: 'not exercised' };
+    const coldCuisine = await verifyColdCuisine(page, context, fixture, width);
+    return { startURL, installabilityErrors, displayMode: 'native Chromium app window', osInstallation: 'not exercised', coldCuisine };
   } finally {
     await context?.close();
     await rm(profile, { recursive: true, force: true });
