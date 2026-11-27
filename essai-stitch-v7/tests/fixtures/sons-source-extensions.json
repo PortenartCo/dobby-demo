@@ -1,0 +1,223 @@
+{
+  "baseCommit": "ae815199225d277fb8ed0dbb6925f4aebf24f99b",
+  "files": {
+    "essai-stitch-v7/bridge.js": {
+      "reason": "Emettre les nouveaux signaux Missions/Runes et invalider les sons au changement de compte.",
+      "beforeSha256": "56a69c2beb6bc472438066d153c91877a8ec0675c1c0b7dd42ce13dccf005b52",
+      "afterSha256": "083fea1d539d087221da0621aa53be1e90af01eabc1a82a7a15fe6bae1b407ce",
+      "patches": [
+        {
+          "line": 103,
+          "before": "let deferredMissionAlerts='';\n",
+          "after": "let deferredMissionAlerts='',missionAlertOwner=null;\nconst knownMissionAlerts=new Set(),localMissionWrites=new Set();\nfunction soundMissionAlerts(pending,unlocked){\n const api=engine()?.DobbyFamilyUI,actor=api?.getContext?.(),connection=api?.connectionState?.();\n if(!actor?.identityVerified||!actor.userId||!actor.householdId||!actor.memberId)return;\n const owner=JSON.stringify([actor.userId,actor.householdId,actor.memberId,connection?.epoch]);\n const first=owner!==missionAlertOwner;\n // A restored or replaced session can already have alerts. Keep their visual\n // notice, and only sound new IDs observed by the same verified parent.\n if(first){missionAlertOwner=owner;knownMissionAlerts.clear();}\n const liveScope=accountScope();\n const local=[...localMissionWrites].some(write=>write.scope===liveScope);\n let fresh=false;\n for(const [id,external] of [\n  ...pending.map(row=>['pending:'+row.id,Boolean(row.actorMemberId)&&row.actorMemberId!==actor.memberId]),\n  ...unlocked.map(([,goal])=>['reward:'+goal.id,!local])\n ]){\n  if(!knownMissionAlerts.has(id)&&external)fresh=true;\n  knownMissionAlerts.add(id);\n }\n if(!first&&fresh)window.DobbyMagicAudio?.play('notification');\n}\nasync function withMissionSound(write,cue='confirm'){\n const action={scope:accountScope()};localMissionWrites.add(action);\n try{\n  const confirmed=await write();\n  if(confirmed!==false&&accountScope()===action.scope)window.DobbyMagicAudio?.play(cue);\n  return confirmed;\n }finally{\n  // Consume unlocked goals from the successful local write under the same\n  // guard, including when the deferred render has not reported them yet.\n  try{if(accountScope()===action.scope)updateMissionAlerts();}\n  finally{localMissionWrites.delete(action);}\n }\n}\n"
+        },
+        {
+          "line": 143,
+          "before": "",
+          "after": " soundMissionAlerts(pending,unlocked);\n"
+        },
+        {
+          "line": 177,
+          "before": "",
+          "after": " window.DobbyMagicAudio?.accountChanged?.();\n"
+        },
+        {
+          "line": 219,
+          "column": 118,
+          "before": "",
+          "after": "withMissionSound,"
+        }
+      ]
+    },
+    "essai-stitch-v7/build-source.cjs": {
+      "reason": "Charger le lecteur partagé et les ressources saisonnières reprises de #26 sur les quatre racines.",
+      "beforeSha256": "83a11061d8ae8eeb37bf58c0fecba307aeeaa82d44b9ce3a202c5aa9d4f80aa4",
+      "afterSha256": "15717da8dd51014dbfaa0e2a1780047b35e4322d78ccc9de5bb33022c9664a5e",
+      "patches": [
+        {
+          "line": 30,
+          "column": 478,
+          "before": "",
+          "after": "><script src=\"./magic-audio.js\"></script"
+        },
+        {
+          "line": 30,
+          "column": 3218,
+          "before": "",
+          "after": "script src=\"./seasonal-calendar.js\"></script><link rel=\"stylesheet\" href=\"./seasonal-effects.css\"><script src=\"./seasonal-effects.js\"></script><"
+        }
+      ]
+    },
+    "essai-stitch-v7/chrome.js": {
+      "reason": "Remplacer le bip global par des signaux ciblés, conserver les préférences indépendantes et raccorder #26.",
+      "beforeSha256": "aa8da1ccd6d8b9797775cadce7717a3d9f22ddc340a9c6c8726cad1ddc613a46",
+      "afterSha256": "1e64e00169a61ce4877bae6707ba293080e6b6dc4acd4e84814b9b17721ee415",
+      "patches": [
+        {
+          "line": 4,
+          "column": 17,
+          "before": ",audio=null",
+          "after": ""
+        },
+        {
+          "line": 41,
+          "before": "const preferences=()=>E.evaluate('return {effects:true,sound:false,...st.stitchPreferences};');\nfunction apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound']){for(const b of document.querySelectorAll(`[data-e01-toggle=\"${name}\"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(b.dataset.settingsPreference){b.setAttribute('aria-checked',String(!!p[name]));}if(name==='effects'&&!b.dataset.settingsPreference){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbyChat?.preferencesChanged();}\n",
+          "after": "const preferences=()=>E.evaluate('return {effects:true,sound:false,seasonalDecorations:true,...st.stitchPreferences};');\nfunction apply(){const p=preferences();document.documentElement.classList.toggle('e01-effects-off',!p.effects);document.documentElement.classList.toggle('e01-effects-on',!!p.effects);for(const name of ['effects','sound','seasonalDecorations']){for(const b of document.querySelectorAll(`[data-e01-toggle=\"${name}\"]`)){b.setAttribute('aria-pressed',String(!!p[name]));if(b.dataset.settingsPreference){b.setAttribute('aria-checked',String(!!p[name]));}if(name==='effects'&&!b.dataset.settingsPreference){const home=document.body.dataset.dv7Screen==='traverse',text=home?(p.effects?'Désactiver l’ambiance magique':'Activer l’ambiance magique'):(p.effects?'Désactiver les effets visuels':'Activer les effets visuels');b.setAttribute('aria-description',p.effects&&reducedMotion.matches?'Magie activée ; animations réduites selon votre préférence système.':'Effets visuels uniquement, sans son ni vibration.');b.setAttribute('aria-label',text);b.title=text;}}}const icon=document.getElementById('magic-sound-icon');if(icon)icon.textContent=p.sound?'volume_up':'volume_off';const indicator=document.getElementById('magic-sound-indicator');if(indicator)indicator.hidden=!p.sound;syncAmbience(p.effects);window.DobbySeasonal?.refresh(p);window.DobbyMagicAudio?.preferencesChanged();window.DobbyChat?.preferencesChanged();}\n"
+        },
+        {
+          "line": 89,
+          "before": "function feedback(event,{visual=true,sound=true}={}){\n const p=preferences();if(visual&&p.effects)animateSparkles(event);\n if(sound&&p.sound){try{navigator.vibrate?.(20)}catch{}try{const Audio=window.AudioContext||window.webkitAudioContext;if(Audio){audio||=new Audio();audio.resume().catch(()=>{});const osc=audio.createOscillator(),gain=audio.createGain();osc.frequency.value=660;gain.gain.setValueAtTime(.025,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.12);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+.13);}}catch{}}\n}\n",
+          "after": "function feedback(event){if(preferences().effects)animateSparkles(event);}\nfunction haptic(){try{navigator.vibrate?.(20);}catch{}}\n"
+        },
+        {
+          "line": 94,
+          "column": 111,
+          "before": "",
+          "after": "seasonalDecorations:true,"
+        },
+        {
+          "line": 94,
+          "column": 245,
+          "before": "",
+          "after": "if(name==='sound'){if(preferences().sound){haptic();window.DobbyMagicAudio?.play('confirm',event);}}else "
+        },
+        {
+          "line": 94,
+          "column": 364,
+          "before": ",name==='effects'?{sound:false}:{visual:false}",
+          "after": ""
+        },
+        {
+          "line": 100,
+          "before": " const index=Number(nav.dataset.e01Destination);if(index===0&&location.pathname.endsWith('traverse.html')){window.DobbyStitchV7.close(false);window.DobbyHome.reset();return;}\n",
+          "after": " const index=Number(nav.dataset.e01Destination);\n const inPage=(index===4||index===5)?window.DobbyFamilyStitch?.ready:[2,3].includes(index)&&window.DobbyCuisine?.ready;\n if(inPage&&nav.getAttribute('aria-current')!=='page')window.DobbyMagicAudio?.play('transition',event);\n if(index===0&&location.pathname.endsWith('traverse.html')){window.DobbyStitchV7.close(false);window.DobbyHome.reset();return;}\n"
+        },
+        {
+          "line": 111,
+          "column": 26,
+          "before": "",
+          "after": "soundEnabled:()=>preferences().sound===true,"
+        },
+        {
+          "line": 111,
+          "column": 85,
+          "before": "",
+          "after": "{if(!document.hidden&&pre"
+        },
+        {
+          "line": 111,
+          "column": 112,
+          "before": "",
+          "after": "r"
+        },
+        {
+          "line": 111,
+          "column": 114,
+          "before": "dba",
+          "after": "n"
+        },
+        {
+          "line": 111,
+          "column": 116,
+          "before": "k",
+          "after": "es"
+        },
+        {
+          "line": 111,
+          "column": 119,
+          "before": "{}, {visual:false,",
+          "after": ")."
+        },
+        {
+          "line": 111,
+          "column": 126,
+          "before": ":",
+          "after": ")hap"
+        },
+        {
+          "line": 111,
+          "column": 131,
+          "before": "",
+          "after": "ic();window.DobbyMagicAudio?.play('time"
+        },
+        {
+          "line": 111,
+          "column": 171,
+          "before": "ue",
+          "after": "');"
+        },
+        {
+          "line": 111,
+          "column": 175,
+          "before": ")",
+          "after": ""
+        }
+      ]
+    },
+    "essai-stitch-v7/cuisine-e074.js": {
+      "reason": "Confirmer une planification aboutie avec le signal commun.",
+      "beforeSha256": "0c47ded8d015864a5da3a3d2fc08f051a2f0359f971098e0791aa077353a12c2",
+      "afterSha256": "1b01b79071b5a562cfe730a3e4f9983de4755d2d655e8b7a34fbc911ab30cce2",
+      "patches": [
+        {
+          "line": 69,
+          "column": 504,
+          "before": "",
+          "after": "window.DobbyMagicAudio?.play('confirm');"
+        }
+      ]
+    },
+    "essai-stitch-v7/member-avatar.js": {
+      "reason": "Associer le signal Récompense aux validations Runes réussies.",
+      "beforeSha256": "947be315fba76bf93dde892df12fafd69dd306ce98be661f21151144f6250bef",
+      "afterSha256": "13a988604fe557cd3626b39ad6182ef0d4b6de4c66825c803fc35ad30384bb1a",
+      "patches": [
+        {
+          "line": 50,
+          "before": "     await transport.recordRunes(intent);\n",
+          "after": "     const commit=()=>transport.recordRunes(intent);\n     await (window.DobbyStitchV7?.withMissionSound?.(commit,target?'confirm':'reward')??commit());\n"
+        },
+        {
+          "line": 97,
+          "before": "     await transport.recordProgress(intent);\n",
+          "after": "     const commit=()=>transport.recordProgress(intent);\n     await (window.DobbyStitchV7?.withMissionSound?.(commit,goal?'reward':'confirm')??commit());\n"
+        }
+      ]
+    },
+    "essai-stitch-v7/tools-register.js": {
+      "reason": "Ajouter le réglage Décorations de #26 et les signaux sur les confirmations Missions.",
+      "beforeSha256": "2bd581bae7a01e9dead57d8581c8f32df48ebc57872033ab4940eed59a7b07c7",
+      "afterSha256": "4a0f6ee027bace449ac174f759251406e9f2955c43be18f317336cdf9a59bfbb",
+      "patches": [
+        {
+          "line": 148,
+          "column": 61,
+          "before": "",
+          "after": "easonalDecorations','Décorations saisonnières'],['s"
+        },
+        {
+          "line": 192,
+          "column": 13,
+          "before": "",
+          "after": "window.DobbyStitchV7.withMissionSound(()=>"
+        },
+        {
+          "line": 192,
+          "column": 176,
+          "before": "",
+          "after": ")"
+        },
+        {
+          "line": 228,
+          "before": "  form.addEventListener('submit',async event=>{event.preventDefault();if(confirm.disabled||app.accountScope()!==scope)return;submitting=true;confirm.disabled=true;try{const participants=access.restricted?ids:[...new FormData(form).getAll('participant')];await native.complete(id,participants);dialog.close();window.DobbyStitchV7?.refresh();}catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}});dialog.showModal();\n",
+          "after": "  form.addEventListener('submit',async event=>{\n   event.preventDefault();if(confirm.disabled||app.accountScope()!==scope)return;\n   submitting=true;confirm.disabled=true;\n   try{\n    const participants=access.restricted?ids:[...new FormData(form).getAll('participant')];\n    await app.withMissionSound(()=>native.complete(id,participants));\n    dialog.close();app.refresh();\n   }catch(error){submitting=false;updateEligibility();problem.textContent=error.message;}\n  });dialog.showModal();\n"
+        },
+        {
+          "line": 239,
+          "before": " document.addEventListener('click',async event=>{const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;event.preventDefault();event.stopImmediatePropagation();if(b.disabled||!b.dataset.dv7Complete&&window.DobbyStitchV7.childAccess().restricted)return;try{if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);else{b.disabled=true;await E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen);window.DobbyStitchV7?.refresh();}}catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}finally{if(b.isConnected)b.disabled=false;}},true);\n",
+          "after": " document.addEventListener('click',async event=>{\n  const b=event.target.closest('[data-dv7-complete],[data-dv7-reopen]');if(!b)return;\n  const app=window.DobbyStitchV7;\n  event.preventDefault();event.stopImmediatePropagation();if(b.disabled||!b.dataset.dv7Complete&&app.childAccess().restricted)return;\n  try{\n   if(b.dataset.dv7Complete)missionParticipants(b.dataset.dv7Complete);\n   else{b.disabled=true;await app.withMissionSound(()=>E.win().DobbyFamilyMissions.reopen(b.dataset.dv7Reopen));app.refresh();}\n  }catch(error){const status=el('p',error.message,'fa-note');status.setAttribute('role','alert');document.querySelector('main').prepend(status);}\n  finally{if(b.isConnected)b.disabled=false;}\n },true);\n"
+        }
+      ]
+    }
+  }
+}

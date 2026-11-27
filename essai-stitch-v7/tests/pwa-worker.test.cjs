@@ -15,6 +15,8 @@ const css = `${v7}stitch-tailwind.css`;
 const enginePage = `${engine}index.html`;
 const engineFrame = `${enginePage}#dobby-v7-engine`;
 const engineScript = `${engine}stitch-v5.js?v=20261110-e06-1`;
+const cues = ['confirm', 'reward', 'transition', 'notification', 'timer']
+  .map(name => `${v7}assets/audio/${name}.wav`);
 
 function loadWorker({ missing = [], stores = new Map() } = {}) {
   assert.ok(fs.existsSync(workerPath), 'Le service worker du shell DOBBY V7 doit exister.');
@@ -144,6 +146,18 @@ test('précache les dépendances locales des quatre pages V7', async () => {
   }
 });
 
+test('sert les sons et les animations saisonnières publiques du shell hors ligne', async () => {
+  const { emit, request, calls } = loadWorker();
+  await emit('install');
+  const scripts = ['magic-audio.js', 'seasonal-calendar.js', 'seasonal-effects.js', 'seasonal-effects.css'];
+  for (const asset of [...cues, ...scripts.map(file => `${v7}${file}`)]) {
+    const response = await request(asset);
+    assert.ok(response, `${asset} passe par le shell`);
+    assert.equal(await response.text(), `cached ${new URL(asset, scope).href}`);
+  }
+  assert.deepEqual(calls.network, []);
+});
+
 test('conserve la cohérence du shell et reconnaît le moteur V5 imbriqué depuis une page V7', async () => {
   const { emit, request, calls } = loadWorker();
   await emit('install');
@@ -175,6 +189,10 @@ test('laisse passer Auth, RPC, Storage, données privées, catalogue et navigati
     [css, { method: 'POST' }],
     [css, { headers: new Headers({ Authorization: 'Bearer fixture' }) }],
     [css, { headers: new Headers({ Range: 'bytes=0-1024' }) }],
+    [`${cues[0]}?token=fixture`, {}],
+    [cues[0], { headers: new Headers({ Authorization: 'Bearer fixture' }) }],
+    [cues[0], { headers: new Headers({ Range: 'bytes=0-1024' }) }],
+    [`${v7}assets/audio/user-recording.wav`, {}],
     [new URL(css, 'https://elsewhere.test/dobby/').href, {}],
     ['auth/v1/token', {}],
     ['rest/v1/rpc/family_health', {}],

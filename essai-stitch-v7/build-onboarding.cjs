@@ -9,7 +9,7 @@ html=html.replace(/\s+src="https:\/\/lh3\.googleusercontent\.com\/[^"]*"/g,' dat
 fs.writeFileSync(path.join(out,'provenance.json'),JSON.stringify(provenance,null,2)+'\n');fs.writeFileSync(path.join(__dirname,'onboarding-route-data.js'),'window.DobbyOnboardingRoutes='+JSON.stringify(routes)+';\n');
 const file=path.join(__dirname,'route-manifest.json'),m=JSON.parse(fs.readFileSync(file));m.onboarding={mission:'E06',document:'docs/dobby-v7/E06-PREMIERE-CONNEXION.md',sourceCount:routes.length,scoring:'design/e06/references/scoring/dobby-e06-scoring-v1.json',cheminette:{status:'source-backed-functional',view:'onboarding-ritual',document:'docs/dobby-v7/E06-01-RITUEL.md',illustration:'original local adaptation; not the unavailable Stitch media'},accountMemberAssociation:'NOT DELIVERED',parentalPermissions:'NOT DELIVERED',serverProvisioning:'NOT DELIVERED',interversionIntegrity:'NOT DELIVERED',routes:routes.map(r=>({...r,route:'famille.html#'+r.view,template:'templates/onboarding/'+r.view+'.html',source:provenance.find(p=>p.view===r.view).source,tests:r.view==='onboarding-ritual'?['tests/e06-ritual.cjs','tests/e06-ritual-errors.cjs']:['tests/e06.cjs','tests/e06-edge.cjs','tests/e06-auth.cjs'],widths:[320,390,1440]}))};fs.writeFileSync(file,JSON.stringify(m,null,2)+'\n');console.log('E06_TEMPLATES',routes.length);
 
-// Retain the supplied particle/audio algorithms; adapt only lifetime and focal
+// Retain the supplied particle algorithms; adapt only lifetime and focal
 // geometry to the existing router and the explicitly substituted local image.
 const ritual=fs.readFileSync(path.join(root,'design/e06/references/stitch/dobby_le_rituel_de_la_chemin_e/code.html'),'utf8'),script=[...ritual.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].at(-1)[1];
 let effects=script.slice(0,script.indexOf('// MOTEUR AUDIO WEB'));
@@ -17,9 +17,7 @@ effects=effects.replace(/document.getElementById\('([^']+)'\)/g,(_,id)=>"main.qu
 effects=effects.replace(/function getHearthCenter\(\) \{[\s\S]*?\n    \}/,`function getHearthCenter() { const img=main.querySelector('#dobby-hearth-img'),iw=img.naturalWidth||1024,ih=img.naturalHeight||1536,scale=Math.min(width/iw,height/ih);return {x:(width-iw*scale)/2+iw*scale*.25,y:(height-ih*scale)/2+ih*scale*.63}; }`);
 effects=effects.replaceAll('ellipse at 50% 72%','ellipse at ${center.x/width*100}% ${center.y/height*100}%');
 effects=effects.replace('function renderLoop(now) {','function renderLoop(now) { if(stopped || !canvas.isConnected)return;').replaceAll('requestAnimationFrame(renderLoop);','raf=requestAnimationFrame(renderLoop);');
-const audio=script.slice(script.indexOf('let audioCtx = null;'),script.indexOf('function triggerHapticPulse()')).replace('audioCtx.resume();','audioCtx.resume()?.catch(()=>{});');
-fs.writeFileSync(path.join(__dirname,'ritual-effects.js'),`/* Derived from immutable Ritual source ${crypto.createHash('sha256').update(ritual).digest('hex')}; original particles/audio, scoped lifetime and substituted hearth focus. */
+fs.writeFileSync(path.join(__dirname,'ritual-effects.js'),`/* Derived from immutable Ritual source ${crypto.createHash('sha256').update(ritual).digest('hex')}; original particles, scoped lifetime and substituted hearth focus. */
 window.DobbyRitualEffects=Object.freeze({start(main){let stopped=false,raf=0;${effects}
-return {floo(){targetFlooProgress=1;},dispose(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('resize',resizeCanvas);ctx.clearRect(0,0,width,height);}};},audio(){${audio}
-try{initAudioEngine();playFlooWhooshSound();}catch{if(audioCtx)audioCtx.close().catch(()=>{});}return ()=>{if(audioCtx)audioCtx.close().catch(()=>{});};}});
+return {floo(){targetFlooProgress=1;},dispose(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('resize',resizeCanvas);ctx.clearRect(0,0,width,height);}};}});
 `);

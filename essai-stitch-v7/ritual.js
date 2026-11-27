@@ -23,20 +23,29 @@ window.DobbyRitual=(()=>{'use strict';
   const stopAudio=()=>{session.stopAudio?.();session.stopAudio=null;};
   async function finish(){
    if(!active()||session.finishing)return;
-   session.finishing=true;session.awaitingWrite=true;const attempt=++session.attempt;clearTimeout(session.timer);
+   session.finishing=true;session.awaitingWrite=true;const attempt=++session.attempt;clearTimeout(session.timer);stopAudio();
    try{if(!entry.session)await write({seen:true,suppressed:never.checked});if(!active()||attempt!==session.attempt)return;
-    session.awaitingWrite=false;session.transition=false;stopAudio();session.effects?.dispose();session.effects=null;
+    session.awaitingWrite=false;session.transition=false;session.effects?.dispose();session.effects=null;
     if(entry.session){dispose();location.assign(new URL('./traverse.html',location.href).href);return;}
     await c.open('onboarding-foyer',{person:entry.person||null,record:null});
    }catch(error){if(!active()||attempt!==session.attempt)return;
-    stopAudio();session.effects?.dispose();session.effects=null;session.transition=false;session.finishing=false;session.awaitingWrite=false;
+    session.effects?.dispose();session.effects=null;session.transition=false;session.finishing=false;session.awaitingWrite=false;
     main.classList.remove('ritual-crossing');cross.disabled=false;skip.disabled=false;never.disabled=false;
     status.textContent='Introduction non enregistrée : '+error.message;sync();
    }
   }
   const sync=()=>{if(!active())return;session.effects?.dispose();session.effects=null;if(!preferences().sound)stopAudio();if(movement()&&!document.hidden){session.effects=window.DobbyRitualEffects.start(main);if(session.transition)session.effects.floo();}if(session.transition&&!movement()&&main.classList.contains('ritual-crossing'))finish();};
   never.onchange=async()=>{never.disabled=true;try{await write({suppressed:never.checked});status.textContent='Préférence enregistrée sur cet appareil.';}catch(error){never.checked=!!state.suppressed;status.textContent='Préférence non enregistrée : '+error.message;}finally{never.disabled=false;}};
-  cross.onclick=()=>{if(!active()||session.transition)return;session.transition=true;cross.disabled=true;never.disabled=true;status.textContent='Traversée en cours…';if(preferences().sound){try{session.stopAudio=window.DobbyRitualEffects.audio();}catch{}try{navigator.vibrate?.([16,30,12]);}catch{}}if(!movement()){if(session.stopAudio)session.timer=setTimeout(finish,180);else finish();return;}main.classList.add('ritual-crossing');session.effects||=window.DobbyRitualEffects.start(main);session.effects.floo();session.timer=setTimeout(finish,2500);};
+  cross.onclick=event=>{
+   if(!active()||session.transition)return;
+   session.transition=true;cross.disabled=true;never.disabled=true;status.textContent='Traversée en cours…';
+   if(preferences().sound){
+    try{session.stopAudio=window.DobbyMagicAudio?.play('transition',event);}catch{}
+    try{navigator.vibrate?.([16,30,12]);}catch{}
+   }
+   if(!movement()){if(session.stopAudio)session.timer=setTimeout(finish,180);else finish();return;}
+   main.classList.add('ritual-crossing');session.effects||=window.DobbyRitualEffects.start(main);session.effects.floo();session.timer=setTimeout(finish,2500);
+  };
   skip.onclick=()=>{if(!active())return;skip.disabled=true;finish();};
   session.dispose=dispose;session.sync=sync;session.hash=()=>{if(!location.hash.startsWith('#onboarding-ritual'))dispose();};
   session.visibility=()=>{if(!active())return;if(document.hidden){clearTimeout(session.timer);session.effects?.dispose();session.effects=null;stopAudio();if(session.transition||session.awaitingWrite){session.attempt++;session.finishing=false;session.awaitingWrite=false;session.transition=false;main.classList.remove('ritual-crossing');cross.disabled=false;skip.disabled=false;never.disabled=false;status.textContent='Traversée interrompue. Vous pouvez réessayer ou passer.';}}else sync();};

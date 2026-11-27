@@ -20,7 +20,31 @@ fs.mkdirSync(out,{recursive:true});
  assert.equal(await page.locator('#iphone-app-frame').count(),1,'The supplied Stitch Ritual composition is the first E06 entry');await view('onboarding-ritual');
  const image=page.locator('#dobby-hearth-img');await image.evaluate(i=>i.decode());const art=await image.evaluate(i=>({loaded:i.complete&&i.naturalWidth>0,width:i.getBoundingClientRect().width,height:i.getBoundingClientRect().height,visible:i.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}),src:i.currentSrc}));assert.ok(art.loaded&&art.visible&&art.width>=250&&art.height>=240,'Central illustration is decoded and visibly substantial: '+JSON.stringify(art));assert.ok(art.src.startsWith(origin+'/'),'Central art is served locally');assert.doesNotMatch(art.src,/\/screen\.png(?:$|\?)/,'A complete reference screenshot is not the central art');
  assert.deepEqual(await page.evaluate(()=>window.__ritualBrowser),{audioContexts:0,vibrations:0},'No audio/haptic autoplay on first opening');
- assert.equal(await page.locator('body > nav').evaluate(n=>getComputedStyle(n).display),'none','The permanent dock must not cover the original Ritual controls');for(const control of [page.locator('label').filter({has:page.locator('#chk-never-again')}),page.locator('#e06-ritual-skip')]){const geometry=await control.evaluate(n=>{const r=n.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return{top:r.top,bottom:r.bottom,visible:r.width>0&&r.height>0&&r.top>=0&&r.bottom<=innerHeight,uncovered:hit===n||n.contains(hit)};});assert.ok(geometry.visible&&geometry.uncovered,'Secondary action is visible and uncovered: '+JSON.stringify(geometry));}await shot('ritual');
+ const dock=page.locator('body > nav[data-e01-chrome]');
+ await dock.waitFor({state:'visible'});
+ assert.equal(await page.locator('body > nav').count(),1,'Ritual uses one shared dock');
+ assert.equal(await dock.getByRole('link').count(),6,'All six destinations are available during the Ritual');
+ assert.equal(await dock.locator('[aria-current="page"]').getAttribute('data-e01-destination'),'4','Famille stays active during the Ritual');
+ const actions=[
+  ['Effets',page.locator('.ritual-preferences [data-e01-toggle="effects"]')],
+  ['Son',page.locator('.ritual-preferences [data-e01-toggle="sound"]')],
+  ['Traverser',page.locator('#btn-floo-trigger')],
+  ['Passer',page.locator('#e06-ritual-skip')],
+  ['Ne plus afficher',page.locator('label').filter({has:page.locator('#chk-never-again')})],
+ ];
+ const ritualControls=[];
+ for(const [name,control] of actions){
+  await control.click({trial:true});
+  const geometry=await control.evaluate(element=>{
+   const rect=element.getBoundingClientRect(),dockRect=document.querySelector('body > nav[data-e01-chrome]').getBoundingClientRect();
+   const hit=document.elementFromPoint(rect.x+rect.width/2,rect.y+rect.height/2);
+   return {top:rect.top,bottom:rect.bottom,width:rect.width,height:rect.height,dockTop:dockRect.top,uncovered:element===hit||element.contains(hit)};
+  });
+  assert.ok(geometry.width>0&&geometry.height>=44&&geometry.top>=0&&geometry.bottom<=geometry.dockTop+1&&geometry.uncovered,
+   `${name} is reachable above the dock: ${JSON.stringify(geometry)}`);
+  ritualControls.push({name,...geometry});
+ }
+ await shot('ritual');
  // Skip is immediate, records only intro metadata and leaves the native business data alone.
  const initial=await native('return JSON.stringify({members:st.familyMembers,credits:st.runeCredits,planned:st.planned});');
  const skipStarted=Date.now();await page.locator('#e06-ritual-skip').click();await page.waitForURL(/#onboarding-foyer(?:\?|$)/,{timeout:1600});const skipMs=Date.now()-skipStarted;await view('onboarding-foyer');assert.deepEqual(await page.evaluate(()=>window.__ritualBrowser),{audioContexts:0,vibrations:0});assert.equal(await native('return JSON.stringify({members:st.familyMembers,credits:st.runeCredits,planned:st.planned});'),initial);assert.equal((await meta()).seen,true);
@@ -37,15 +61,20 @@ fs.mkdirSync(out,{recursive:true});
  await page.emulateMedia({reducedMotion:'reduce'});await replay();assert.equal(await page.locator('#dobby-hearth-img').evaluate(i=>getComputedStyle(i).animationName),'none','Reduced motion disables ambient image animation');await page.locator('#btn-floo-trigger').click();await page.waitForURL(/#onboarding-foyer(?:\?|$)/,{timeout:1600});await view('onboarding-foyer');
  // Sound ON is tested through the real supported WebAudio API after a gesture.
  await page.emulateMedia({reducedMotion:'no-preference'});await prefs(true,true);await replay();const audioBefore=await page.evaluate(()=>window.__ritualBrowser.audioContexts),audioSupported=await page.evaluate(()=>!!(window.AudioContext||window.webkitAudioContext));await page.locator('#btn-floo-trigger').click();await page.waitForURL(/#onboarding-foyer(?:\?|$)/);await view('onboarding-foyer');if(audioSupported)assert.ok(await page.evaluate(()=>window.__ritualBrowser.audioContexts)>audioBefore,'Supported browser starts real WebAudio only after an explicit Sound ON traversal');await prefs(true,false);
+ // Both journeys start with profiles already present in this browser's native state.
+ const id='test-ritual-complete',legacyId='test-ritual-legacy';
+ await page.evaluate(({id,legacyId})=>DobbyFamilyStitchEngine.evaluate('st.familyMembers.push(...p.profiles);save();',{profiles:[
+  {id,name:'TEST — Rituel préservé',memberCategory:'parent',avatar:'👤',magicProfile:{version:1,ceremonyStatus:'complete'}},
+  {id:legacyId,name:'TEST — Ancien profil magique',memberCategory:'parent',avatar:'🧙',magicProfile:{version:1,houseId:'ravenclaw',patronusId:'fox',avatarId:'portrait-3'}},
+ ]}),{id,legacyId});
  // A ceremony already saved for an explicit member is never gated by intro.
- const id=await page.evaluate(()=>DobbyFamilyStitchEngine.saveMember(null,{name:'TEST — Rituel préservé',avatar:'👤',magicCeremony:'complete'}));
  await page.evaluate(key=>DobbyFamilyStitchEngine.win().DobbyFamilyUI.updateMeta(key,()=>({seen:false,suppressed:false})),key);await page.goto(route('onboarding-ritual','person='+encodeURIComponent(id)));await ready();await view('onboarding-foyer');
  // An older complete magical profile also bypasses intro without inventing a ceremony flag.
- const legacyId=await page.evaluate(()=>DobbyFamilyStitchEngine.saveMember(null,{name:'TEST — Ancien profil magique',avatar:'🧙',magicHouseId:'ravenclaw',magicPatronusId:'fox',magicAvatarId:'portrait-3'}));assert.notEqual((await native('return st.familyMembers.find(m=>m.id==='+JSON.stringify(legacyId)+');')).magicProfile.ceremonyStatus,'complete');await page.evaluate(key=>DobbyFamilyStitchEngine.win().DobbyFamilyUI.updateMeta(key,()=>({seen:false,suppressed:false})),key);await page.goto(route('onboarding-ritual','person='+encodeURIComponent(legacyId)));await ready();await view('onboarding-foyer');
+ assert.notEqual((await native('return st.familyMembers.find(m=>m.id==='+JSON.stringify(legacyId)+');')).magicProfile.ceremonyStatus,'complete');await page.evaluate(key=>DobbyFamilyStitchEngine.win().DobbyFamilyUI.updateMeta(key,()=>({seen:false,suppressed:false})),key);await page.goto(route('onboarding-ritual','person='+encodeURIComponent(legacyId)));await ready();await view('onboarding-foyer');
  // Native answers and canonical member/ledger survive intro visits and history navigation.
  await page.evaluate(async id=>{await DobbyOnboardingEngine.load(id);await DobbyOnboardingEngine.go('onboarding-house',0);await DobbyOnboardingEngine.answer('house',0,'B');},id);const data=await native('return JSON.stringify({members:st.familyMembers,credits:st.runeCredits});');const resume=await page.evaluate(()=>DobbyOnboardingEngine.drafts.resume());
  await open('onboarding-foyer',{person:null,record:null});await page.emulateMedia({reducedMotion:'no-preference'});await prefs(true,false);await replay();await page.locator('#btn-floo-trigger').click();await page.waitForTimeout(120);await page.goBack();await view('onboarding-foyer');await page.waitForTimeout(2700);assert.equal(await page.evaluate(()=>document.body.dataset.familyView),'onboarding-foyer','A departed transition cannot navigate later');assert.equal(await page.evaluate(()=>!!DobbyRitual.active),false,'Animation is disposed after navigation');assert.equal(await native('return JSON.stringify({members:st.familyMembers,credits:st.runeCredits});'),data);assert.deepEqual(await page.evaluate(()=>DobbyOnboardingEngine.drafts.resume()),resume);await page.evaluate(id=>DobbyOnboardingEngine.load(id),id);assert.deepEqual(await page.evaluate(()=>DobbyOnboardingEngine.drafts.read().house),['B']);
  // The same real preference remains reachable from the existing profile settings.
  await open('personal',{person:id,record:null});await page.locator('#magic-account').evaluate(n=>n.open=true);const profileSetting=page.locator('#magic-account [data-e06-ritual-settings] [data-e06-ritual-pref]');assert.equal(await profileSetting.count(),1);await profileSetting.uncheck();await page.waitForFunction(key=>DobbyFamilyStitchEngine.win().DobbyFamilyUI.meta(key).then(p=>p?.suppressed===true),key);assert.deepEqual(errors,[]);assert.equal(external.some(url=>/\/(auth|rest)\/v1\//.test(url)),false,'No external backend/auth request from the Ritual');assert.equal(external.some(url=>url.includes('lh3.googleusercontent.com/aida/')),false,'Original remote Ritual art is not requested');if(process.env.DOBBY_REVIEW_PATH)assert.deepEqual(external,[],'Isolated bundle has no external dependency');
- const result={width,status:'PASS',skipMs,traversalMs,image:art,preference:await meta(),browserAudio:await page.evaluate(()=>window.__ritualBrowser),audioSupported,blockedLegacyDecorationRequests:external.length};results.push(result);fs.writeFileSync(path.join(out,'results-'+width+'.json'),JSON.stringify(result,null,2)+'\n');await context.close();console.log('E06_RITUAL_PASS',width,'source composition, decoded art, native local intro preference, skip/traverse/reduce, replay/settings, native member+answers retained, no autoplay and late callback cleanup');
+ const result={width,status:'PASS',skipMs,traversalMs,image:art,ritualControls,preference:await meta(),browserAudio:await page.evaluate(()=>window.__ritualBrowser),audioSupported,blockedLegacyDecorationRequests:external.length};results.push(result);fs.writeFileSync(path.join(out,'results-'+width+'.json'),JSON.stringify(result,null,2)+'\n');await context.close();console.log('E06_RITUAL_PASS',width,'shared dock and five reachable Ritual controls, decoded art, native local intro preference, skip/traverse/reduce, replay/settings, native member+answers retained, no autoplay and late callback cleanup');
  }fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({status:'PASS',origin,base,widths,results,realAccounts:false,businessMocks:false},null,2)+'\n');}finally{await browser.close();}})().catch(error=>{console.error(error);process.exitCode=1});

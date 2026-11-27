@@ -48,7 +48,8 @@ window.DobbyMemberAvatar=(()=>{'use strict';
     if(target)Object.assign(intent,{targetEventId:target.eventId,expectedAmount:target.amount});
     submit.disabled=true;cancel.disabled=true;
     try{
-     await transport.recordRunes(intent);
+     const commit=()=>transport.recordRunes(intent);
+     await (window.DobbyStitchV7?.withMissionSound?.(commit,target?'confirm':'reward')??commit());
      dialog.close();
      const current=[...document.querySelectorAll('[data-rune-profile]')].find(el=>el.dataset.runeProfile===member.id);
      if(!current)return;
@@ -94,7 +95,8 @@ window.DobbyMemberAvatar=(()=>{'use strict';
      {kind:'reward-set',memberId:member.id,threshold:Number(threshold.value),mode:mode.value};
     if(description)intent.title=description;
     try{
-     await transport.recordProgress(intent);
+     const commit=()=>transport.recordProgress(intent);
+     await (window.DobbyStitchV7?.withMissionSound?.(commit,goal?'reward':'confirm')??commit());
      dialog.close();
      const current=[...document.querySelectorAll('[data-rune-profile]')].find(el=>el.dataset.runeProfile===member.id);
      if(current)current.replaceWith(profile(member));

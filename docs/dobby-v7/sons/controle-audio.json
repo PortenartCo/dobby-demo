@@ -1,0 +1,214 @@
+{
+  "result": "PASS",
+  "dateUtc": "2026-11-27T13:26:54.344181+00:00",
+  "inputs": "Original PCM files in essai-stitch-v7/assets/audio. The generator was neither imported nor run.",
+  "gainSource": "essai-stitch-v7/magic-audio.js",
+  "gainCoefficient": 0.72,
+  "gainDb": -2.8533500713746314,
+  "interruptionFadeMsInPlayerSource": 15.0,
+  "method": "Python wave and PCM samples, independent metadata with ffprobe, 64-bit floating PCM after ffmpeg volume filter. dBFS reference = PCM magnitude 32768. The calculated output excludes WebAudio resampling and device volume.",
+  "tools": {
+    "ffprobe": "ffprobe version 7.1.5-0+deb13u1 Copyright (c) 2007-2026 the FFmpeg developers",
+    "ffmpeg": "ffmpeg version 7.1.5-0+deb13u1 Copyright (c) 2000-2026 the FFmpeg developers",
+    "python": "3.12.14"
+  },
+  "fileCount": 5,
+  "totalBytes": 96700,
+  "files": [
+    {
+      "file": "confirm.wav",
+      "sha256": "6fe6e8228cf88934db41262e7103a2d658ca363c7308cf9a9cdc747413a4ebfa",
+      "bytes": 10604,
+      "pcmFormat": "pcm_s16le",
+      "channels": 1,
+      "sampleRateHz": 24000,
+      "bitsPerSample": 16,
+      "frames": 5280,
+      "durationMs": 220.0,
+      "pcm": {
+        "absPeakFractionFullScale": 0.158477783203125,
+        "peakDbfs": -16.000632247293233,
+        "rmsDbfs": -26.387085757352654,
+        "dcOffsetFractionFullScale": -3.525705048532197e-07,
+        "dcOffsetDbfs": -129.05508044965526,
+        "railSamples": 0,
+        "firstSample": 0,
+        "lastSample": 0,
+        "firstThree10msRmsDbfs": [
+          -29.093292957050952,
+          -19.912803550603652,
+          -19.909531157062926
+        ],
+        "lastThree10msRmsDbfs": [
+          -51.38781604392224,
+          -60.41279512430268,
+          -76.27922420555784
+        ],
+        "trailingZeroSamples": 53
+      },
+      "ffmpegFloatAfterGain": {
+        "peakDbfs": -18.853982318667864,
+        "rmsDbfs": -29.24043582872729,
+        "headroomDb": 18.853982318667864,
+        "railSamples": 0,
+        "maximumSampleDifferenceVersusPcmTimesGain": 0.0
+      }
+    },
+    {
+      "file": "notification.wav",
+      "sha256": "798510b5a4c9f39eb26c9691ab57e470f50f81c30a1adf04d80a80effab57e26",
+      "bytes": 15884,
+      "pcmFormat": "pcm_s16le",
+      "channels": 1,
+      "sampleRateHz": 24000,
+      "bitsPerSample": 16,
+      "frames": 7920,
+      "durationMs": 330.0,
+      "pcm": {
+        "absPeakFractionFullScale": 0.158477783203125,
+        "peakDbfs": -16.000632247293233,
+        "rmsDbfs": -26.727277469300212,
+        "dcOffsetFractionFullScale": -1.2022076231060605e-06,
+        "dcOffsetDbfs": -118.40041045061538,
+        "railSamples": 0,
+        "firstSample": 0,
+        "lastSample": 0,
+        "firstThree10msRmsDbfs": [
+          -34.88522475355373,
+          -24.59780893318715,
+          -22.4475910528743
+        ],
+        "lastThree10msRmsDbfs": [
+          -50.87631711085257,
+          -59.458457735595346,
+          -75.10580129178285
+        ],
+        "trailingZeroSamples": 47
+      },
+      "ffmpegFloatAfterGain": {
+        "peakDbfs": -18.853982318667864,
+        "rmsDbfs": -29.58062754067484,
+        "headroomDb": 18.853982318667864,
+        "railSamples": 0,
+        "maximumSampleDifferenceVersusPcmTimesGain": 0.0
+      }
+    },
+    {
+      "file": "reward.wav",
+      "sha256": "904bda0b03a129c03b6b7b02d226678f98e8b8fbb58ad21a4aecf3909f9fb1e6",
+      "bytes": 23564,
+      "pcmFormat": "pcm_s16le",
+      "channels": 1,
+      "sampleRateHz": 24000,
+      "bitsPerSample": 16,
+      "frames": 11760,
+      "durationMs": 490.0,
+      "pcm": {
+        "absPeakFractionFullScale": 0.177825927734375,
+        "peakDbfs": -15.000098337391359,
+        "rmsDbfs": -26.637796275080603,
+        "dcOffsetFractionFullScale": -7.162288743622449e-07,
+        "dcOffsetDbfs": -122.8989634926924,
+        "railSamples": 0,
+        "firstSample": 0,
+        "lastSample": 0,
+        "firstThree10msRmsDbfs": [
+          -34.774787997160864,
+          -23.669909408357206,
+          -22.027181720510804
+        ],
+        "lastThree10msRmsDbfs": [
+          -55.70947282439319,
+          -63.830281046132036,
+          -79.58404885120012
+        ],
+        "trailingZeroSamples": 58
+      },
+      "ffmpegFloatAfterGain": {
+        "peakDbfs": -17.85344840876599,
+        "rmsDbfs": -29.491146346455235,
+        "headroomDb": 17.85344840876599,
+        "railSamples": 0,
+        "maximumSampleDifferenceVersusPcmTimesGain": 0.0
+      }
+    },
+    {
+      "file": "timer.wav",
+      "sha256": "66e7d43aea9dd245d19dcca2a2e27c3321c113c45731b1bb3641bad30ce723d2",
+      "bytes": 26924,
+      "pcmFormat": "pcm_s16le",
+      "channels": 1,
+      "sampleRateHz": 24000,
+      "bitsPerSample": 16,
+      "frames": 13440,
+      "durationMs": 560.0,
+      "pcm": {
+        "absPeakFractionFullScale": 0.19952392578125,
+        "peakDbfs": -14.000100374307355,
+        "rmsDbfs": -24.225784123596277,
+        "dcOffsetFractionFullScale": -6.062643868582589e-07,
+        "dcOffsetDbfs": -124.34675884625898,
+        "railSamples": 0,
+        "firstSample": 0,
+        "lastSample": 0,
+        "firstThree10msRmsDbfs": [
+          -33.80418777034263,
+          -22.8794869762983,
+          -19.644020476707283
+        ],
+        "lastThree10msRmsDbfs": [
+          -49.80641949768294,
+          -58.5493650529103,
+          -73.95039294897018
+        ],
+        "trailingZeroSamples": 47
+      },
+      "ffmpegFloatAfterGain": {
+        "peakDbfs": -16.853450445681986,
+        "rmsDbfs": -27.07913419497091,
+        "headroomDb": 16.853450445681986,
+        "railSamples": 0,
+        "maximumSampleDifferenceVersusPcmTimesGain": 0.0
+      }
+    },
+    {
+      "file": "transition.wav",
+      "sha256": "37ccf5bffed9c2d5ee220bee7662b254c66c3796a362807a7315f191c5a3e616",
+      "bytes": 19724,
+      "pcmFormat": "pcm_s16le",
+      "channels": 1,
+      "sampleRateHz": 24000,
+      "bitsPerSample": 16,
+      "frames": 9840,
+      "durationMs": 410.0,
+      "pcm": {
+        "absPeakFractionFullScale": 0.1412353515625,
+        "peakDbfs": -17.00113169360012,
+        "rmsDbfs": -27.984859653197137,
+        "dcOffsetFractionFullScale": -1.8918417333587398e-07,
+        "dcOffsetDbfs": -134.46230396760586,
+        "railSamples": 0,
+        "firstSample": 0,
+        "lastSample": 0,
+        "firstThree10msRmsDbfs": [
+          -44.376570590847145,
+          -30.434575977006443,
+          -24.59712856578352
+        ],
+        "lastThree10msRmsDbfs": [
+          -52.12506802909112,
+          -62.65513859864761,
+          -79.76382569851285
+        ],
+        "trailingZeroSamples": 46
+      },
+      "ffmpegFloatAfterGain": {
+        "peakDbfs": -19.85448176497475,
+        "rmsDbfs": -30.838209724571772,
+        "headroomDb": 19.85448176497475,
+        "railSamples": 0,
+        "maximumSampleDifferenceVersusPcmTimesGain": 0.0
+      }
+    }
+  ]
+}

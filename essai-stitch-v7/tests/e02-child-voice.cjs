@@ -72,7 +72,12 @@ test('legacy V5 clears the chat and stops the microphone on role change', () => 
   await page.goto(origin + '/essai-stitch-v5-famille/index.html', { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.DobbyFamilyUI?.connectionState().ready);
   await page.evaluate(() => go('chat'));
-  await page.locator('#v2ChatForm input').evaluate(input => { input.value = 'Repas privé du soir'; input.form.requestSubmit(); });
+  // Family module startup may replace the composer. Resolve and submit the current form in one page task.
+  await page.evaluate(() => {
+    const form = document.getElementById('v2ChatForm');
+    form.elements.message.value = 'Repas privé du soir';
+    form.requestSubmit();
+  });
   await page.getByText('Repas privé du soir', { exact: true }).waitFor();
   await page.locator('[data-v23-mic]').click();
   await page.evaluate(() => {

@@ -1,4 +1,4 @@
-/* Derived from immutable Ritual source 4e49be83d86f00d0ea267f58332d73012373807b4e65964b549e7797249f4054; original particles/audio, scoped lifetime and substituted hearth focus. */
+/* Derived from immutable Ritual source 4e49be83d86f00d0ea267f58332d73012373807b4e65964b549e7797249f4054; original particles, scoped lifetime and substituted hearth focus. */
 window.DobbyRitualEffects=Object.freeze({start(main){let stopped=false,raf=0;
     // Initialisation Canvas 60 FPS
     const canvas = main.querySelector('#fireCanvas');
@@ -257,72 +257,4 @@ window.DobbyRitualEffects=Object.freeze({start(main){let stopped=false,raf=0;
     raf=requestAnimationFrame(renderLoop);
 
     
-return {floo(){targetFlooProgress=1;},dispose(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('resize',resizeCanvas);ctx.clearRect(0,0,width,height);}};},audio(){let audioCtx = null;
-    let crackleGain = null;
-
-    function initAudioEngine() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        startGentleHearthCrackle();
-      }
-    }
-
-    function startGentleHearthCrackle() {
-      try {
-        const bufferSize = audioCtx.sampleRate * 2;
-        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          output[i] = (Math.random() * 2 - 1) * 0.04;
-        }
-
-        const whiteNoise = audioCtx.createBufferSource();
-        whiteNoise.buffer = noiseBuffer;
-        whiteNoise.loop = true;
-
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 800;
-        filter.Q.value = 3.0;
-
-        crackleGain = audioCtx.createGain();
-        crackleGain.gain.setValueAtTime(0.025, audioCtx.currentTime);
-
-        whiteNoise.connect(filter);
-        filter.connect(crackleGain);
-        crackleGain.connect(audioCtx.destination);
-        whiteNoise.start();
-      } catch (e) {
-        console.warn('Audio non initialisé', e);
-      }
-    }
-
-    function playFlooWhooshSound() {
-      try {
-        initAudioEngine();
-        const now = audioCtx.currentTime;
-
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        notes.forEach((freq, idx) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.14);
-          osc.frequency.exponentialRampToValueAtTime(freq * 1.2, now + idx * 0.14 + 1.2);
-
-          gain.gain.setValueAtTime(0.001, now + idx * 0.14);
-          gain.gain.linearRampToValueAtTime(0.08, now + idx * 0.14 + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.14 + 1.6);
-
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start(now + idx * 0.14);
-          osc.stop(now + idx * 0.14 + 1.7);
-        });
-      } catch (e) {
-        console.warn('Audio floo non joué', e);
-      }
-    }
-
-    
-try{initAudioEngine();playFlooWhooshSound();}catch{if(audioCtx)audioCtx.close().catch(()=>{});}return ()=>{if(audioCtx)audioCtx.close().catch(()=>{});};}});
+return {floo(){targetFlooProgress=1;},dispose(){stopped=true;cancelAnimationFrame(raf);window.removeEventListener('resize',resizeCanvas);ctx.clearRect(0,0,width,height);}};}});
