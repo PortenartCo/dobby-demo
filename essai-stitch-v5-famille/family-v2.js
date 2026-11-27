@@ -1087,11 +1087,45 @@ async function refreshPublicAccess(){
  });publicContextRead=entry;
  try{return await entry.promise;}finally{if(publicContextRead===entry)publicContextRead=null;}
 }
+const PRIVATE_ADMIN_COMMANDS = new Set(['listAccess','listDecisions','invite','decide','revokeAdmission','setStatus','resumeDelivery']);
+async function privateAdminCommand(command, payload = {}) {
+  if (!PRIVATE_ADMIN_COMMANDS.has(command) || !payload || typeof payload !== 'object' || Array.isArray(payload)) {
+    throw Error('Commande d’administration invalide.');
+  }
+  const expected = requestActor();
+  const assertAdminSession = async () => {
+    if (publicConfiguration()?.privateAdministrationAvailable !== true || window.DobbyReview ||
+        !expected.userId || f.membershipRejected || childAccessState().restricted) {
+      throw Object.assign(Error('Session d’administration indisponible.'), { status: 403 });
+    }
+    await assertCurrentOnboardingSession(expected);
+  };
+  await assertAdminSession();
+  const bearer = await token(expected);
+  await assertAdminSession();
+  let response;
+  try {
+    // The Edge handler revalidates the owner role on every command. Never
+    // retry a decision whose commit or email delivery may have succeeded.
+    response = await raw('/functions/v1/dobby-access-admin', 'POST', { command, payload }, {}, bearer);
+  } catch (error) {
+    await assertAdminSession();
+    throw Object.assign(Error('L’administration n’a pas confirmé cette opération.'), {
+      status: Number.isInteger(error?.status) ? error.status : undefined,
+    });
+  }
+  await assertAdminSession();
+  if (response?.ok !== true || !Object.hasOwn(response, 'result')) {
+    throw Error('La réponse d’administration n’a pas été confirmée.');
+  }
+  return response.result;
+}
 const accessFacade=Object.freeze({
  get ready(){return ensureAccess();},
  state:()=>accessController?.state()||{phase:f.session?'unavailable':'signed-out',userId:f.session?.user_id||null,householdId:null,memberId:null,profile:null,permissions:{},configured:Boolean(f.key),verified:false,pendingCeremony:false},
  subscribe(listener){if(typeof listener!=='function')throw Error('Écouteur de connexion invalide.');accessListeners.add(listener);return()=>accessListeners.delete(listener);},
  refresh:refreshPublicAccess,
+ admin:privateAdminCommand,
  ...Object.fromEntries(['signIn','signUp','recover','confirmFromURL','updatePassword','saveProfile','previewInvitation','createHousehold','acceptInvitation','createInvitation','createChildInvitation','previewChildInvitation','acceptChildInvitation','childAccessStatus','suspendChildAccess','updateMagic','updateMember','reserveMemberId','logout'].map(name=>[name,(...args)=>ensureAccess().then(controller=>controller[name](...args))])),
  cleanURL:value=>{if(!accessController)throw Error('Le gestionnaire de connexion est en cours de chargement.');return accessController.cleanURL(value);}
 });

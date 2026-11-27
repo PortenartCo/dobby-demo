@@ -120,6 +120,7 @@
    });
   }
   filterMenu();
+  if(window.DobbyAdminAccess?.enabled())void window.DobbyAdminAccess.decorateMenu({...c,filterMenu});
  }
  function filterMenu(){const clear=q('#clear-search-btn');if(clear)clear.hidden=!menuQuery;const needle=menuQuery.trim().toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'');let count=0;for(const card of all('#menu-sections .module-item')){const label=q('.rg-menu-label',card).textContent.toLocaleLowerCase('fr').normalize('NFD').replace(/[\u0300-\u036f]/g,'');card.hidden=!label.includes(needle);if(!card.hidden)count++;}q('#no-module-found').hidden=count>0;}
  function settings(){

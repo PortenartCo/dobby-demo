@@ -35,6 +35,8 @@ html=html.replace('</head>','<link rel="manifest" href="./manifest.webmanifest">
 // A fixed fragment identifies the V7 embedding without changing the V5 HTTP URL.
 html=html.replace('id="dv7-engine" src="../essai-stitch-v5-famille/index.html"', 'id="dv7-engine" referrerpolicy="same-origin" src="../essai-stitch-v5-famille/index.html#dobby-v7-engine"');
 html=html.replace('<script src="./bridge.js"></script>','<script src="./ceremonies.js"></script><script src="./access.js"></script><link rel="stylesheet" href="./health-essential.css"><script src="./health-integration.js"></script><script src="./bridge.js"></script>');
+// The owner console is mounted only on the Famille root.
+if(screen==='famille')html=html.replace('<script src="./bridge.js"></script>','<link rel="stylesheet" href="./admin-access.css"><script src="./admin-access.js"></script><script src="./bridge.js"></script>');
 // Shared rules follow all module styles; new access/dialog styles are locally scoped.
 html=html.replace('</body>','<link rel="stylesheet" href="./responsive.css"><link rel="stylesheet" href="./access.css"><link rel="stylesheet" href="./ceremonies.css"></body>');
 if(screen==='taverne'){

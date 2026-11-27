@@ -119,7 +119,10 @@ window.DobbyCuisine = (() => {
     card.dataset.cuRecipe = recipe.id;
     text(card.querySelector('h2,h3,h4'), recipe.name);
     const description = card.querySelector('p'); if (description) text(description, `${durationLabel(recipe)} · ${recipe.servings == null ? 'Portions non renseignées' : recipe.servings+' portions'} · ${recipe.category || 'Recette du foyer'}`);
-    for (const image of card.querySelectorAll('img')) recipeVisual(image, recipe);
+    for (const image of card.querySelectorAll('img')) {
+      if (recipe.catalogue) image.loading = 'lazy';
+      recipeVisual(image, recipe);
+    }
     // Keep card geometry and original controls; replace fictional badges and meta.
     for (const span of card.querySelectorAll('span')) if (!span.children.length && !span.classList.contains('material-symbols-outlined')) {
       const value = span.textContent.trim();
@@ -227,6 +230,7 @@ window.DobbyCuisine = (() => {
   function catalogueCard(sample,recipe,data){
     const card=sample.cloneNode(true);card.dataset.cuRecipe=recipe.id;card.dataset.fav=String(!!recipe.fav);card.dataset.stitchComponent='.recipe-card';card.classList.add('e073-recipe-card');
     const visual=card.firstElementChild,image=visual.querySelector('img'),favorite=visual.querySelector('.fav-toggle'),overlay=visual.querySelector('.absolute.inset-0');
+    if(image&&recipe.catalogue)image.loading='lazy';
     visual.replaceChildren(...[image,overlay,favorite].filter(Boolean));recipeVisual(image,recipe);
     favorite.setAttribute('aria-pressed',String(!!recipe.fav));favorite.setAttribute('aria-label',(recipe.fav?'Retirer des favoris : ':'Ajouter aux favoris : ')+recipe.name);bind(favorite,'favorite',{id:recipe.id});
     // The supplied Material Symbols file is static, so FILL variations cannot

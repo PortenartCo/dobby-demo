@@ -6,6 +6,7 @@
 window.DobbyPublicConfig = Object.freeze({
   childAccountsAvailable: false,
   healthEssentialAvailable: false,
+  privateAdministrationAvailable: false,
   projectRef: 'pqcdkrwljgvgagzwrcmg',
   publicKey: 'sb_publishable_ZIJtdwIFQFFqC7kderuG1A_Itccatg4'
 });
