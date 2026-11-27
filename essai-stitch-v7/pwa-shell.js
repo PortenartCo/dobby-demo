@@ -35,7 +35,7 @@ const DOBBY_V7_SHELL = [
     'ritual.js', 'ritual.css', 'ritual-effects.js', 'tools-register.js',
     'assets/pwa/icon-192.png', 'assets/pwa/icon-512.png', 'assets/pwa/icon-maskable-512.png',
     'assets/pwa/apple-touch-icon.png', 'assets/material-symbols-full.ttf',
-    'assets/cuisine/e07-taverne.png', 'assets/cuisine/e07-courses.png',
+    'assets/cuisine/e07-taverne.png', 'assets/cuisine/e07-courses.png', 'assets/cuisine/e074-festin.png',
     'assets/onboarding/fonts/cinzel.ttf', 'assets/onboarding/fonts/jakarta.ttf',
     'assets/onboarding/sorting-hat-original.svg',
     'assets/family/fallback-salon.png', 'assets/remaining/fallback-salon.png',
